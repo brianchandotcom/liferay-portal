@@ -52,6 +52,12 @@ definition {
 		Close(locator1 = "title=Tests - Analytics Cloud");
 	}
 
+	macro changeExperienceABTest {
+		Select(
+			locator1 = "ABTest#CHANGE_EXPERIENCE",
+			value1 = "${experience}");
+	}
+
 	macro createABTest {
 		while (IsElementNotPresent(locator1 = "ABTest#CREATE_TEST_BUTTON")) {
 			Click(locator1 = "ABTest#AB_TEST_BUTTON");
@@ -101,9 +107,15 @@ definition {
 	macro editOrDeleteABTest {
 		Click(locator1 = "ABTest#KEBAB_AB_TEST");
 
-		Click(
+		ClickNoError(
 			locator1 = "ABTest#KEBAB_OPTIONS_AB_TEST",
 			value = "${value}");
+
+		if ("${value}" == "Delete") {
+			AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro editVariantName {

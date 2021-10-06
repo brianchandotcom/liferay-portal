@@ -150,92 +150,37 @@ public class CommerceTestUtil {
 			commerceCurrencyId);
 	}
 
-	public static CommerceOrder addCheckoutDetailsToUserOrder(
+	public static CommerceOrder addCheckoutDetailsToCommerceOrder(
 			CommerceOrder commerceOrder, long userId,
 			boolean paymentSubscription)
 		throws Exception {
 
-		long groupId = commerceOrder.getGroupId();
-
-		BigDecimal price = BigDecimal.valueOf(RandomTestUtil.randomDouble());
-
-		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
-			groupId, price);
-
-		if (paymentSubscription) {
-			cpInstance.setOverrideSubscriptionInfo(true);
-			cpInstance.setSubscriptionEnabled(true);
-			cpInstance.setSubscriptionLength(1);
-			cpInstance.setSubscriptionType(CPConstants.DAILY_SUBSCRIPTION_TYPE);
-			cpInstance.setMaxSubscriptionCycles(2);
-		}
-
-		CPInstanceLocalServiceUtil.updateCPInstance(cpInstance);
-
-		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				ServiceContextTestUtil.getServiceContext(groupId));
-
-		CommerceChannel commerceChannel =
-			CommerceChannelLocalServiceUtil.getCommerceChannelByOrderGroupId(
-				commerceOrder.getGroupId());
-
-		addWarehouseCommerceChannelRel(
-			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			commerceChannel.getCommerceChannelId());
-
-		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
-			userId, commerceInventoryWarehouse, cpInstance.getSku(), 10);
-
-		addCommerceOrderItem(
-			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			4);
-
-		CommerceAddress billingCommerceAddress = addUserCommerceAddress(
-			groupId, userId);
-		CommerceAddress shippingCommerceAddress = addUserCommerceAddress(
-			groupId, userId);
-
-		commerceOrder.setBillingAddressId(
-			billingCommerceAddress.getCommerceAddressId());
-		commerceOrder.setShippingAddressId(
-			shippingCommerceAddress.getCommerceAddressId());
-
-		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
-			addCommercePaymentMethodGroupRel(
-				userId, commerceChannel.getGroupId());
-
-		commerceOrder.setCommercePaymentMethodKey(
-			commercePaymentMethodGroupRel.getEngineKey());
-
-		CommerceShippingMethod commerceShippingMethod =
-			addCommerceShippingMethod(userId, commerceChannel.getGroupId());
-
-		commerceOrder.setCommerceShippingMethodId(
-			commerceShippingMethod.getCommerceShippingMethodId());
-
-		CommerceShippingFixedOption commerceShippingFixedOption =
-			addCommerceShippingFixedOption(commerceShippingMethod);
-
-		commerceOrder.setShippingOptionName(
-			commerceShippingFixedOption.getName());
-
-		commerceOrder.setShippingAmount(
-			commerceShippingFixedOption.getAmount());
-
-		return CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
+		return addCheckoutDetailsToCommerceOrder(
+			commerceOrder, userId, paymentSubscription, false,
+			RandomTestUtil.randomDouble());
 	}
 
-	public static CommerceOrder addCheckoutDetailsToUserOrder(
+	public static CommerceOrder addCheckoutDetailsToCommerceOrder(
 			CommerceOrder commerceOrder, long userId,
 			boolean paymentSubscription, boolean deliverySubscription)
+		throws Exception {
+
+		return addCheckoutDetailsToCommerceOrder(
+			commerceOrder, userId, paymentSubscription, deliverySubscription,
+			RandomTestUtil.randomDouble());
+	}
+
+	public static CommerceOrder addCheckoutDetailsToCommerceOrder(
+			CommerceOrder commerceOrder, long userId,
+			boolean paymentSubscription, boolean deliverySubscription,
+			double cpInstancePrice)
 		throws Exception {
 
 		long groupId = commerceOrder.getGroupId();
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(groupId);
 
-		cpInstance.setPrice(BigDecimal.valueOf(RandomTestUtil.randomDouble()));
+		cpInstance.setPrice(BigDecimal.valueOf(cpInstancePrice));
 
 		if (paymentSubscription) {
 			cpInstance.setOverrideSubscriptionInfo(true);

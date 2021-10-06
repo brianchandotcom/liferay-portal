@@ -540,7 +540,6 @@ definition {
 		task ("Select the blogs entry and custom template in Content Display") {
 			PageEditor.editContentDisplay(
 				blogs = "true",
-				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
 				fragmentName = "Content Display",
 				template = "Blogs Entry Information Template");
@@ -559,7 +558,6 @@ definition {
 				documentandmedia = "true",
 				fragmentName = "Content Display",
 				imageFileName = "Document Title",
-				sourceFileName = "Document_1.jpg",
 				template = "Document Information Template");
 		}
 

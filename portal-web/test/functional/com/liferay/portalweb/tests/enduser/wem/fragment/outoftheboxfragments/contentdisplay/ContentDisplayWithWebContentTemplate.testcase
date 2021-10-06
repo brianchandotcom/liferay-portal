@@ -117,7 +117,6 @@ definition {
 			fragmentName = "Content Display",
 			template = "WC Template Name",
 			webcontent = "true",
-			webContentContent = "${siteID}",
 			webContentTitle = "Webcontent Title");
 
 		PageEditor.clickPublish();

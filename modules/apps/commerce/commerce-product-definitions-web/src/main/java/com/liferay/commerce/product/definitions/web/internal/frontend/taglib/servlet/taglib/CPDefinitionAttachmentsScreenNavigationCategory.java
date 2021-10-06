@@ -110,10 +110,10 @@ public class CPDefinitionAttachmentsScreenNavigationCategory
 
 		if (_portletResourcePermission.contains(
 				permissionChecker, cpDefinition.getGroupId(),
-				CPActionKeys.MANAGE_COMMERCE_PRODUCT_ATTACHMENTS) &&
+				CPActionKeys.VIEW_COMMERCE_PRODUCT_ATTACHMENTS) &&
 			_portletResourcePermission.contains(
 				permissionChecker, cpDefinition.getGroupId(),
-				CPActionKeys.MANAGE_COMMERCE_PRODUCT_IMAGES) &&
+				CPActionKeys.VIEW_COMMERCE_PRODUCT_IMAGES) &&
 			cpType.isMediaEnabled()) {
 
 			return true;

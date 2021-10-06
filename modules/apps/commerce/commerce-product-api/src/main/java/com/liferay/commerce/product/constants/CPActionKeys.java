@@ -48,6 +48,12 @@ public class CPActionKeys {
 	public static final String VIEW_COMMERCE_CHANNELS =
 		"VIEW_COMMERCE_CHANNELS";
 
+	public static final String VIEW_COMMERCE_PRODUCT_ATTACHMENTS =
+		"VIEW_COMMERCE_PRODUCT_ATTACHMENTS";
+
+	public static final String VIEW_COMMERCE_PRODUCT_IMAGES =
+		"VIEW_COMMERCE_PRODUCT_IMAGES";
+
 	public static final String VIEW_PRICE = "VIEW_PRICE";
 
 }

@@ -46,6 +46,10 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 	public PortletURL getPortletURL() {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
+		).setMVCRenderCommandName(
+			"/batch_planner/view_batch_planner_plans"
+		).setNavigation(
+			ParamUtil.getString(_renderRequest, "navigation", "all")
 		).setTabs1(
 			"batch-planner-plans"
 		).setParameter(

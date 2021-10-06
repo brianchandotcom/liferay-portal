@@ -66,9 +66,7 @@ public class InfoCollectionProviderDisplayContext {
 					_httpServletRequest, "there-are-no-collection-providers"));
 
 		List<InfoCollectionProvider<?>> infoCollectionProviders =
-			(List<InfoCollectionProvider<?>>)
-				(List<?>)_infoItemServiceTracker.getAllInfoItemServices(
-					InfoCollectionProvider.class);
+			_getInfoCollectionProviders();
 
 		searchContainer.setResults(
 			ListUtil.subList(
@@ -94,6 +92,16 @@ public class InfoCollectionProviderDisplayContext {
 
 	public String getTitle(InfoCollectionProvider<?> infoCollectionProvider) {
 		return infoCollectionProvider.getLabel(_themeDisplay.getLocale());
+	}
+
+	private List<InfoCollectionProvider<?>> _getInfoCollectionProviders() {
+		List<InfoCollectionProvider<?>> infoCollectionProviders =
+			(List<InfoCollectionProvider<?>>)
+				(List<?>)_infoItemServiceTracker.getAllInfoItemServices(
+					InfoCollectionProvider.class);
+
+		return ListUtil.filter(
+			infoCollectionProviders, InfoCollectionProvider::isAvailable);
 	}
 
 	private PortletURL _getPortletURL() {

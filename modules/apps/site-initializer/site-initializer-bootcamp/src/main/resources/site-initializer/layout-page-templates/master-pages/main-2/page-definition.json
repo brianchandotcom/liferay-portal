@@ -79,6 +79,7 @@
 												"siteNavigationMenuName": "Main Navigation",
 												"siteNavigationMenuType": "-1"
 											},
+											"widgetInstanceId": "nav",
 											"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
 										}
 									]

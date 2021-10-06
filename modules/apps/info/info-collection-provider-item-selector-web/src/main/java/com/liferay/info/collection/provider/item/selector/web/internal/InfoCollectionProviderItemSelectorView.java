@@ -23,6 +23,7 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
@@ -103,21 +104,26 @@ public class InfoCollectionProviderItemSelectorView
 		InfoCollectionProviderItemSelectorCriterion
 			infoCollectionProviderItemSelectorCriterion) {
 
-		List<InfoCollectionProvider<?>> infoCollectionProviders =
+		List<InfoCollectionProvider<?>> infoCollectionProviders1 =
 			new ArrayList<>();
 
 		List<String> itemTypes =
 			infoCollectionProviderItemSelectorCriterion.getItemTypes();
 
 		for (String itemType : itemTypes) {
-			infoCollectionProviders.addAll(
+			List<InfoCollectionProvider<?>> infoCollectionProviders2 =
 				_infoItemServiceTracker.getAllInfoItemServices(
 					(Class<InfoCollectionProvider<?>>)
 						(Class<?>)InfoCollectionProvider.class,
-					itemType));
+					itemType);
+
+			infoCollectionProviders2 = ListUtil.filter(
+				infoCollectionProviders2, InfoCollectionProvider::isAvailable);
+
+			infoCollectionProviders1.addAll(infoCollectionProviders2);
 		}
 
-		return Collections.unmodifiableList(infoCollectionProviders);
+		return Collections.unmodifiableList(infoCollectionProviders1);
 	}
 
 	private static final List<ItemSelectorReturnType>

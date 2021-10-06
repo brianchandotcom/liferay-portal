@@ -1053,6 +1053,10 @@ definition {
 
 		Button.clickAdd();
 
+		SelectFrameTop();
+
+		FormPortlet.waitFormRenderer(text = "Save");
+
 		Form.save();
 
 		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");

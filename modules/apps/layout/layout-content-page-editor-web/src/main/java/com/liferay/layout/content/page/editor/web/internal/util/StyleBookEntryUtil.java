@@ -77,7 +77,9 @@ public class StyleBookEntryUtil {
 					frontendTokensValues.put(
 						frontendTokenJSONObject.getString("name"),
 						_getProcessedFrontendTokenValue(
+							frontendTokenCategoryJSONObject.getString("label"),
 							frontendTokenJSONObject,
+							frontendTokenSetJSONObject.getString("label"),
 							frontendTokenValuesJSONObject));
 				}
 			}
@@ -99,7 +101,8 @@ public class StyleBookEntryUtil {
 	}
 
 	private static Map<String, Object> _getProcessedFrontendTokenValue(
-		JSONObject frontendTokenJSONObject,
+		String frontendTokenCategoryLabel, JSONObject frontendTokenJSONObject,
+		String frontendTokenSetLabel,
 		JSONObject frontendTokenValuesJSONObject) {
 
 		String name = frontendTokenJSONObject.getString("name");
@@ -142,6 +145,10 @@ public class StyleBookEntryUtil {
 			"label", frontendTokenJSONObject.get("label")
 		).put(
 			"name", name
+		).put(
+			"tokenCategoryLabel", frontendTokenCategoryLabel
+		).put(
+			"tokenSetLabel", frontendTokenSetLabel
 		).put(
 			"value", value
 		).build();

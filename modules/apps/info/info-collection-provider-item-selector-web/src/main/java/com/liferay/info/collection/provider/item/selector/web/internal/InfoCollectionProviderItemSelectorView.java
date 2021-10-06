@@ -104,26 +104,31 @@ public class InfoCollectionProviderItemSelectorView
 		InfoCollectionProviderItemSelectorCriterion
 			infoCollectionProviderItemSelectorCriterion) {
 
-		List<InfoCollectionProvider<?>> infoCollectionProviders1 =
+		List<InfoCollectionProvider<?>> infoCollectionProviders =
 			new ArrayList<>();
 
 		List<String> itemTypes =
 			infoCollectionProviderItemSelectorCriterion.getItemTypes();
 
 		for (String itemType : itemTypes) {
-			List<InfoCollectionProvider<?>> infoCollectionProviders2 =
-				_infoItemServiceTracker.getAllInfoItemServices(
-					(Class<InfoCollectionProvider<?>>)
-						(Class<?>)InfoCollectionProvider.class,
-					itemType);
-
-			infoCollectionProviders2 = ListUtil.filter(
-				infoCollectionProviders2, InfoCollectionProvider::isAvailable);
-
-			infoCollectionProviders1.addAll(infoCollectionProviders2);
+			infoCollectionProviders.addAll(
+				_getInfoCollectionProviders(itemType));
 		}
 
-		return Collections.unmodifiableList(infoCollectionProviders1);
+		return Collections.unmodifiableList(infoCollectionProviders);
+	}
+
+	private List<InfoCollectionProvider<?>> _getInfoCollectionProviders(
+		String itemClassName) {
+
+		List<InfoCollectionProvider<?>> infoCollectionProviders =
+			_infoItemServiceTracker.getAllInfoItemServices(
+				(Class<InfoCollectionProvider<?>>)
+					(Class<?>)InfoCollectionProvider.class,
+				itemClassName);
+
+		return ListUtil.filter(
+			infoCollectionProviders, InfoCollectionProvider::isAvailable);
 	}
 
 	private static final List<ItemSelectorReturnType>

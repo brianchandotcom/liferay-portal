@@ -171,7 +171,9 @@ public class FreeMarkerFragmentEntryProcessor
 					FreeMarkerFragmentEntryProcessorConfiguration.class,
 					CompanyThreadLocal.getCompanyId());
 
-		if (!freeMarkerFragmentEntryProcessorConfiguration.enable()) {
+		if (!freeMarkerFragmentEntryProcessorConfiguration.enable() ||
+			!_isFreemarkerTemplate(html)) {
+
 			return;
 		}
 
@@ -274,6 +276,14 @@ public class FreeMarkerFragmentEntryProcessor
 		).orElse(
 			fragmentEntryLink
 		);
+	}
+
+	private boolean _isFreemarkerTemplate(String html) {
+		if (html.contains("${") || html.contains("<#") || html.contains("<@")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isRelated(Layout layout, long plid) {

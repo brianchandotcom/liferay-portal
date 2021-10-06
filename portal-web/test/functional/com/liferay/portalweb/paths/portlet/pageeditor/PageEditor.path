@@ -871,11 +871,6 @@
 </tr>
 <tr>
 	<td>ITEM_SELECTOR_CONTENT_INPUT</td>
-	<td>//input[contains(@class,'item-selector__content-input')][contains(@value,'${key_contentName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ITEM_SELECTOR_CONTENT_INPUT_WITH_LABEL</td>
 	<td>//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div//input[contains(@class,'item-selector__content-input')]</td>
 	<td></td>
 </tr>

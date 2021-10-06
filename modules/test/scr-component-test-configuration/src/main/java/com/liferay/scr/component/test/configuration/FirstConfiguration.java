@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Mariano Álvaro Sáiz
  */
-@ExtendedObjectClassDefinition(category = "infrastructure")
+@ExtendedObjectClassDefinition(category = "infrastructure", generateUI = false)
 @Meta.OCD(
 	id = "com.liferay.scr.component.test.configuration.FirstConfiguration"
 )

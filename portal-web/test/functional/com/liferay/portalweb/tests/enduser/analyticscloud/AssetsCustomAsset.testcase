@@ -171,7 +171,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-8737
+		// AC Refactor ticket: LRAC-9174
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");

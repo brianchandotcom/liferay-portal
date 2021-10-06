@@ -1,8 +1,10 @@
 .selected-quote h1 {
 	font-size: 37px;
+	font-weight: 800;
 }
 
 .selected-quote h3 {
 	color: #606167;
 	font-size: 24px;
+	font-weight: 700;
 }

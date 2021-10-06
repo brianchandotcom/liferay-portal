@@ -216,6 +216,7 @@ definition {
 		}
 	}
 
+	@summary = "Assert the Individual Activity Chart displays"
 	macro viewRechartsBarOnIndividualsActivitiesChart {
 		if (!(isSet(index))) {
 			var index = "1";
@@ -227,6 +228,10 @@ definition {
 			ACTimeFilter.clickTimeFilterButton();
 
 			ACTimeFilter.setLast24Hours();
+
+			// The pause is necessary for the loop to capture the element.
+
+			Pause(locator1 = "2000");
 		}
 
 		AssertVisible(

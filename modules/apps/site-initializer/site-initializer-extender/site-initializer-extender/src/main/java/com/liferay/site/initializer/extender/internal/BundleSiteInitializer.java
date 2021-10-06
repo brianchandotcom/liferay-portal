@@ -1790,6 +1790,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return taxonomyCategory;
 	}
 
+	private String _getThemeId(long companyId, String themeName) {
+		List<Theme> themes = ListUtil.filter(
+			_themeLocalService.getThemes(companyId),
+			theme -> Objects.equals(theme.getName(), themeName));
+
+		if (ListUtil.isNotEmpty(themes)) {
+			Theme theme = themes.get(0);
+
+			return theme.getThemeId();
+		}
+
+		return null;
+	}
+
 	private void _invoke(UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
@@ -1901,15 +1915,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		String themeName = settingsJSONObject.getString("themeName");
 
 		if (Validator.isNotNull(themeName)) {
-			List<Theme> themes = ListUtil.filter(
-				_themeLocalService.getThemes(draftLayout.getCompanyId()),
-				theme -> Objects.equals(theme.getName(), themeName));
-
-			if (ListUtil.isNotEmpty(themes)) {
-				Theme theme = themes.get(0);
-
-				themeId = theme.getThemeId();
-			}
+			themeId = _getThemeId(draftLayout.getCompanyId(), themeName);
 		}
 
 		draftLayout = _layoutLocalService.updateLookAndFeel(
@@ -1956,12 +1962,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 			resourcePath += "/public";
 		}
 
+		JSONObject settingsJSONObject = JSONFactoryUtil.createJSONObject(
+			_read(resourcePath + "/settings.json"));
+
+		String themeName = settingsJSONObject.getString("themeName", "Classic");
+
+		String themeId = StringPool.BLANK;
+
+		if (Validator.isNotNull(themeName)) {
+			themeId = _getThemeId(serviceContext.getCompanyId(), themeName);
+		}
+
 		String css = _read(resourcePath + "/css.css");
 
 		if (css != null) {
 			_layoutSetLocalService.updateLookAndFeel(
-				serviceContext.getScopeGroupId(), privateLayout,
-				layoutSet.getThemeId(), layoutSet.getColorSchemeId(), css);
+				serviceContext.getScopeGroupId(), privateLayout, themeId,
+				layoutSet.getColorSchemeId(), css);
 		}
 
 		URL url = _servletContext.getResource(resourcePath + "/logo.png");

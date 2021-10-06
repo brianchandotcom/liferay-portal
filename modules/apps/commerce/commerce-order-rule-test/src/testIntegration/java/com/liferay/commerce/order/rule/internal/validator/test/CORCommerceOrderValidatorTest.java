@@ -1,0 +1,586 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.commerce.order.rule.internal.validator.test;
+
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.model.CommerceAccountGroup;
+import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
+import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.exception.CommerceOrderValidatorException;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
+import com.liferay.commerce.order.rule.constants.COREntryConstants;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.service.COREntryLocalService;
+import com.liferay.commerce.order.rule.service.COREntryRelLocalService;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceOrderTypeLocalService;
+import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.Calendar;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Luca Pellizzon
+ */
+@RunWith(Arquillian.class)
+@Sync
+public class CORCommerceOrderValidatorTest {
+
+	@ClassRule
+	@Rule
+	public static AggregateTestRule aggregateTestRule = new AggregateTestRule(
+		new LiferayIntegrationTestRule(),
+		PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+
+		_user = UserTestUtil.addUser(_company);
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		PrincipalThreadLocal.setName(_user.getUserId());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		_group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(), 0);
+
+		_commerceAccount =
+			_commerceAccountLocalService.getPersonalCommerceAccount(
+				_user.getUserId());
+
+		_commerceAccountGroup =
+			_commerceAccountGroupLocalService.addCommerceAccountGroup(
+				_user.getCompanyId(), RandomTestUtil.randomString(), 0, false,
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_group.getCompanyId());
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
+
+		_commerceChannel = CommerceTestUtil.addCommerceChannel(
+			_group.getGroupId(), _commerceCurrency.getCode());
+
+		Calendar calendar = Calendar.getInstance();
+
+		_commerceOrderType =
+			_commerceOrderTypeLocalService.addCommerceOrderType(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+				calendar.get(Calendar.MINUTE), 1, calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+				calendar.get(Calendar.MINUTE), true, _serviceContext);
+
+		_commerceOrderRuleEntry =
+			_commerceOrderRuleEntryLocalService.addCOREntry(
+				RandomTestUtil.randomString(), _user.getUserId(), true,
+				RandomTestUtil.randomString(), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+				calendar.get(Calendar.MINUTE), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+				calendar.get(Calendar.MINUTE), true,
+				RandomTestUtil.randomString(), 100,
+				COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT,
+				UnicodePropertiesBuilder.put(
+					COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_AMOUNT,
+					"20"
+				).put(
+					COREntryConstants.
+						TYPE_MINIMUM_ORDER_AMOUNT_FIELD_CURRENCY_CODE,
+					"EUR"
+				).buildString(),
+				_serviceContext);
+	}
+
+	@Test
+	public void testRulesCommerceOrderValidatorByAccount() throws Exception {
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), AccountEntry.class.getName(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		CommerceTestUtil.addCheckoutDetailsToUserOrder(
+			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
+
+		try {
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _user.getUserId());
+		}
+		catch (PortalException portalException) {
+			Throwable throwable = portalException.getCause();
+
+			Assert.assertSame(
+				CommerceOrderValidatorException.class, throwable.getClass());
+		}
+	}
+
+	@Test
+	public void testRulesCommerceOrderValidatorByAccountAndChannel()
+		throws Exception {
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), AccountEntry.class.getName(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceChannel.class.getName(),
+			_commerceChannel.getCommerceChannelId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		CommerceTestUtil.addCheckoutDetailsToUserOrder(
+			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
+
+		try {
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _user.getUserId());
+		}
+		catch (PortalException portalException) {
+			Throwable throwable = portalException.getCause();
+
+			Assert.assertSame(
+				CommerceOrderValidatorException.class, throwable.getClass());
+		}
+	}
+
+	@Test
+	public void testRulesCommerceOrderValidatorByAccountAndChannelAndOrderType()
+		throws Exception {
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), AccountEntry.class.getName(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceChannel.class.getName(),
+			_commerceChannel.getCommerceChannelId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceOrderType.class.getName(),
+			_commerceOrderType.getCommerceOrderTypeId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		commerceOrder.setCommerceOrderTypeId(
+			_commerceOrderType.getCommerceOrderTypeId());
+
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
+
+		CommerceTestUtil.addCheckoutDetailsToUserOrder(
+			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
+
+		try {
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _user.getUserId());
+		}
+		catch (PortalException portalException) {
+			Throwable throwable = portalException.getCause();
+
+			Assert.assertSame(
+				CommerceOrderValidatorException.class, throwable.getClass());
+		}
+	}
+
+	@Test
+	public void testRulesCommerceOrderValidatorByAccountAndOrderType()
+		throws Exception {
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), AccountEntry.class.getName(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceOrderType.class.getName(),
+			_commerceOrderType.getCommerceOrderTypeId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		commerceOrder.setCommerceOrderTypeId(
+			_commerceOrderType.getCommerceOrderTypeId());
+
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
+
+		CommerceTestUtil.addCheckoutDetailsToUserOrder(
+			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
+
+		try {
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _user.getUserId());
+		}
+		catch (PortalException portalException) {
+			Throwable throwable = portalException.getCause();
+
+			Assert.assertSame(
+				CommerceOrderValidatorException.class, throwable.getClass());
+		}
+	}
+
+	@Test
+	public void testRulesCommerceOrderValidatorByAccountGroup()
+		throws Exception {
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), AccountGroup.class.getName(),
+			_commerceAccountGroup.getCommerceAccountGroupId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		CommerceTestUtil.addCheckoutDetailsToUserOrder(
+			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
+
+		try {
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _user.getUserId());
+		}
+		catch (PortalException portalException) {
+			Throwable throwable = portalException.getCause();
+
+			Assert.assertSame(
+				CommerceOrderValidatorException.class, throwable.getClass());
+		}
+	}
+
+	@Test
+	public void testRulesCommerceOrderValidatorByAccountGroupAndChannel()
+		throws Exception {
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), AccountGroup.class.getName(),
+			_commerceAccountGroup.getCommerceAccountGroupId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceChannel.class.getName(),
+			_commerceChannel.getCommerceChannelId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		CommerceTestUtil.addCheckoutDetailsToUserOrder(
+			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
+
+		try {
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _user.getUserId());
+		}
+		catch (PortalException portalException) {
+			Throwable throwable = portalException.getCause();
+
+			Assert.assertSame(
+				CommerceOrderValidatorException.class, throwable.getClass());
+		}
+	}
+
+	@Test
+	public void testRulesCommerceOrderValidatorByAccountGroupAndChannelAndOrderType()
+		throws Exception {
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), AccountGroup.class.getName(),
+			_commerceAccountGroup.getCommerceAccountGroupId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceChannel.class.getName(),
+			_commerceChannel.getCommerceChannelId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceOrderType.class.getName(),
+			_commerceOrderType.getCommerceOrderTypeId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		commerceOrder.setCommerceOrderTypeId(
+			_commerceOrderType.getCommerceOrderTypeId());
+
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
+
+		CommerceTestUtil.addCheckoutDetailsToUserOrder(
+			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
+
+		try {
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _user.getUserId());
+		}
+		catch (PortalException portalException) {
+			Throwable throwable = portalException.getCause();
+
+			Assert.assertSame(
+				CommerceOrderValidatorException.class, throwable.getClass());
+		}
+	}
+
+	@Test
+	public void testRulesCommerceOrderValidatorByAccountGroupAndOrderType()
+		throws Exception {
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), AccountGroup.class.getName(),
+			_commerceAccountGroup.getCommerceAccountGroupId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceOrderType.class.getName(),
+			_commerceOrderType.getCommerceOrderTypeId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		commerceOrder.setCommerceOrderTypeId(
+			_commerceOrderType.getCommerceOrderTypeId());
+
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
+
+		CommerceTestUtil.addCheckoutDetailsToUserOrder(
+			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
+
+		try {
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _user.getUserId());
+		}
+		catch (PortalException portalException) {
+			Throwable throwable = portalException.getCause();
+
+			Assert.assertSame(
+				CommerceOrderValidatorException.class, throwable.getClass());
+		}
+	}
+
+	@Test
+	public void testRulesCommerceOrderValidatorByChannel() throws Exception {
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceChannel.class.getName(),
+			_commerceChannel.getCommerceChannelId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		CommerceTestUtil.addCheckoutDetailsToUserOrder(
+			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
+
+		try {
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _user.getUserId());
+		}
+		catch (PortalException portalException) {
+			Throwable throwable = portalException.getCause();
+
+			Assert.assertSame(
+				CommerceOrderValidatorException.class, throwable.getClass());
+		}
+	}
+
+	@Test
+	public void testRulesCommerceOrderValidatorByChannelAndOrderType()
+		throws Exception {
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceChannel.class.getName(),
+			_commerceChannel.getCommerceChannelId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceOrderType.class.getName(),
+			_commerceOrderType.getCommerceOrderTypeId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		commerceOrder.setCommerceOrderTypeId(
+			_commerceOrderType.getCommerceOrderTypeId());
+
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
+
+		CommerceTestUtil.addCheckoutDetailsToUserOrder(
+			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
+
+		try {
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _user.getUserId());
+		}
+		catch (PortalException portalException) {
+			Throwable throwable = portalException.getCause();
+
+			Assert.assertSame(
+				CommerceOrderValidatorException.class, throwable.getClass());
+		}
+	}
+
+	@Test
+	public void testRulesCommerceOrderValidatorByOrderType() throws Exception {
+		_commerceOrderRuleEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceOrderType.class.getName(),
+			_commerceOrderType.getCommerceOrderTypeId(),
+			_commerceOrderRuleEntry.getCOREntryId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		commerceOrder.setCommerceOrderTypeId(
+			_commerceOrderType.getCommerceOrderTypeId());
+
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
+
+		CommerceTestUtil.addCheckoutDetailsToUserOrder(
+			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
+
+		try {
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _user.getUserId());
+		}
+		catch (PortalException portalException) {
+			Throwable throwable = portalException.getCause();
+
+			Assert.assertSame(
+				CommerceOrderValidatorException.class, throwable.getClass());
+		}
+	}
+
+	private static Company _company;
+	private static User _user;
+
+	private CommerceAccount _commerceAccount;
+	private CommerceAccountGroup _commerceAccountGroup;
+
+	@Inject
+	private CommerceAccountGroupLocalService _commerceAccountGroupLocalService;
+
+	@Inject
+	private CommerceAccountLocalService _commerceAccountLocalService;
+
+	private CommerceChannel _commerceChannel;
+	private CommerceCurrency _commerceCurrency;
+
+	@Inject
+	private CommerceOrderEngine _commerceOrderEngine;
+
+	@Inject
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	private COREntry _commerceOrderRuleEntry;
+
+	@Inject
+	private COREntryLocalService _commerceOrderRuleEntryLocalService;
+
+	@Inject
+	private COREntryRelLocalService _commerceOrderRuleEntryRelLocalService;
+
+	private CommerceOrderType _commerceOrderType;
+
+	@Inject
+	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
+
+	private Group _group;
+	private ServiceContext _serviceContext;
+
+}

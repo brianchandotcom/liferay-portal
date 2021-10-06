@@ -703,11 +703,11 @@ definition {
 		}
 
 		task ("View the title and content of web content are shown") {
-			for (var content : list "Title,Content") {
+			for (var text : list "Title,Content") {
 				AssertTextEquals.assertPartialText(
 					key_fragmentName = "button",
 					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Web Content ${content}");
+					value1 = "Web Content ${text}");
 			}
 		}
 

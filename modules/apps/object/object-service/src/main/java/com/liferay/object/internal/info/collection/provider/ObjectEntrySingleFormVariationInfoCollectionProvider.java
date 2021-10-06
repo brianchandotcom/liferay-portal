@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -190,6 +191,17 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 	@Override
 	public List<InfoFilter> getSupportedInfoFilters() {
 		return Arrays.asList(new KeywordsInfoFilter());
+	}
+
+	@Override
+	public boolean isAvailable() {
+		if (_objectDefinition.getCompanyId() !=
+				CompanyThreadLocal.getCompanyId()) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private SearchContext _buildSearchContext(CollectionQuery collectionQuery)

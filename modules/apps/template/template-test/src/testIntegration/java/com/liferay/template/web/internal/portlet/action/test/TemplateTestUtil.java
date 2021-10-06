@@ -96,7 +96,7 @@ public class TemplateTestUtil {
 		return TemplateEntryLocalServiceUtil.addTemplateEntry(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			ddmTemplate.getTemplateId(), infoItemClassName,
-			infoItemFormVariationKey);
+			infoItemFormVariationKey, serviceContext);
 	}
 
 	public static InfoItemFormVariation getFirstInfoItemFormVariation(

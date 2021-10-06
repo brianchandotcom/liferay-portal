@@ -334,9 +334,6 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/edit_fragment_entry_link")
 			).put(
-				"fragmentsHidingEnabled",
-				_ffLayoutContentPageEditorConfiguration.fragmentsHidingEnabled()
-			).put(
 				"frontendTokens",
 				() -> {
 					LayoutSet layoutSet =
@@ -560,6 +557,10 @@ public class ContentPageEditorDisplayContext {
 				"styleBooks", _getStyleBooks()
 			).put(
 				"themeColorsCssClasses", _getThemeColorsCssClasses()
+			).put(
+				"tokenOptimizationEnabled",
+				_ffLayoutContentPageEditorConfiguration.
+					tokenOptimizationEnabled()
 			).put(
 				"unmarkItemForDeletionURL",
 				getFragmentEntryActionURL(

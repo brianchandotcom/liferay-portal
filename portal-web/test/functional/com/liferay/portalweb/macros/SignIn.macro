@@ -19,6 +19,15 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
+	@summary = "Agree to Liferay Commerce Terms of Use"
+	macro agreeToCommerceTermsOfUse {
+		AssertClick(
+			locator1 = "Button#DONE",
+			value1 = "Done");
+
+		AssertElementNotPresent(locator1 = "Button#DONE");
+	}
+
 	@summary = "Agree to Liferay Portal Terms of Use"
 	macro agreeToTermsOfUse {
 		AssertClick(

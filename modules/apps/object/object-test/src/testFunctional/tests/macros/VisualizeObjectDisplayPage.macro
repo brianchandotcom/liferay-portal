@@ -34,6 +34,8 @@ definition {
 		Select(
 			locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE",
 			value1 = "${contentType}");
+
+		Click(locator1 = "VisualizeObjectCollectionDisplay#SAVE_BUTTON");
 	}
 
 	macro openDisplayPage {

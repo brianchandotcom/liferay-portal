@@ -53,7 +53,7 @@ definition {
 
 		VisualizeObjectDisplayPage.createObjectPageTemplate(
 			contentType = "Custom Object",
-			displayPageName = "Blank Display Page");
+			pageTemplateName = "Blank Display Page");
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
@@ -109,7 +109,7 @@ definition {
 
 		VisualizeObjectDisplayPage.createObjectPageTemplate(
 			contentType = "Custom Object",
-			displayPageName = "Blank Display Page");
+			pageTemplateName = "Blank Display Page");
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
@@ -176,7 +176,7 @@ definition {
 
 		VisualizeObjectDisplayPage.createObjectPageTemplate(
 			contentType = "Custom Object",
-			displayPageName = "Blank Display Page");
+			pageTemplateName = "Blank Display Page");
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",

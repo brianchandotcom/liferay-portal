@@ -98,11 +98,9 @@ definition {
 
 		PageEditor.clickPublish();
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Content Page Name",
-			siteName = "${siteName}");
+		SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "Test Content Page Name");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123.123456");
 	}
@@ -147,11 +145,9 @@ definition {
 
 		PageEditor.clickPublish();
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Content Page Name",
-			siteName = "${siteName}");
+		SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "Test Content Page Name");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "true");
 	}
@@ -205,11 +201,9 @@ definition {
 
 		PageEditor.clickPublish();
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Content Page Name",
-			siteName = "${siteName}");
+		SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "Test Content Page Name");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1.54");
 	}
@@ -254,11 +248,9 @@ definition {
 
 		PageEditor.clickPublish();
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Content Page Name",
-			siteName = "${siteName}");
+		SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "Test Content Page Name");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123456789");
 	}
@@ -303,11 +295,9 @@ definition {
 
 		PageEditor.clickPublish();
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Content Page Name",
-			siteName = "${siteName}");
+		SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "Test Content Page Name");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123456789123456789");
 	}
@@ -354,11 +344,9 @@ definition {
 
 		PageEditor.clickPublish();
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Content Page Name",
-			siteName = "${siteName}");
+		SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "Test Content Page Name");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Test text");
 	}
@@ -375,9 +363,17 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		VisualizeObjectDisplayPage.createObjectPageTemplate(
-			contentType = "Custom Object",
-			pageTemplateName = "Object Display Page Template");
+		VisualizeObjectDisplayPage.openPageTemplate();
+
+		Click(locator1 = "VisualizeObjectDisplayPage#SELECT_BLANK_OBJECT_DISPLAY_PAGE_TEMPLATE");
+
+		Type(
+			locator1 = "VisualizeObjectDisplayPage#NAME_OBJECT_DISPLAY_PAGE_TEMPLATE",
+			value1 = "Object Display Page Template");
+
+		Select(
+			locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE",
+			value1 = "Custom Object");
 
 		VisualizeObjectDisplayPage.validateObjectContentType(contentType = "Custom Object");
 	}

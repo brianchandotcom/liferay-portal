@@ -44,7 +44,6 @@ definition {
 	@description = "LPS-136595 - Verify it is possible to cancel the update of a Picklist"
 	@priority = "4"
 	test CanCancelUpdatePicklist {
-
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
 		Picklist.gotoPicklists();
@@ -58,7 +57,6 @@ definition {
 		Picklist.cancelUpdatePicklist();
 
 		Picklist.assertPicklistNotPresent(picklistName = "Update Picklist Test");
-
 	}
 
 	@description = "LPS-136595 - Verify it is possible to create a Picklist"
@@ -84,9 +82,13 @@ definition {
 
 		Picklist.gotoPicklistView(picklistName = "Picklist Test");
 
-		Picklist.addPicklistItemViaUI(picklistItemName = "Picklist Item Name Test", picklistItemKey = "PicklistItemKeyTest");
+		Picklist.addPicklistItemViaUI(
+			picklistItemKey = "PicklistItemKeyTest",
+			picklistItemName = "Picklist Item Name Test");
 
-		Picklist.assertPicklistItem(picklistItemName = "Picklist Item Name Test", picklistItemKey = "PicklistItemKeyTest");
+		Picklist.assertPicklistItem(
+			picklistItemKey = "PicklistItemKeyTest",
+			picklistItemName = "Picklist Item Name Test");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to delete a Picklist"

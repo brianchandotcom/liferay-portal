@@ -10,7 +10,7 @@ const formatValue = (value) => {
 		return JSON.parse(value);
 	}
 
-	return currencyIntl.format(value);
+	return `$${currencyIntl.format(value)}`;
 };
 
 const getClassName = (value) =>

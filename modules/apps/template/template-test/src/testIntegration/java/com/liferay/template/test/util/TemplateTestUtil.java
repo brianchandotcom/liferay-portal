@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -89,9 +88,8 @@ public class TemplateTestUtil {
 		throws PortalException {
 
 		DDMTemplate ddmTemplate = addDDMTemplate(
-			PortalUtil.getClassNameId(InfoItemFormProvider.class), 0,
-			PortalUtil.getClassNameId(InfoItemFormProvider.class),
-			serviceContext);
+			PortalUtil.getClassNameId(TemplateEntry.class), 0,
+			PortalUtil.getClassNameId(TemplateEntry.class), serviceContext);
 
 		return TemplateEntryLocalServiceUtil.addTemplateEntry(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),

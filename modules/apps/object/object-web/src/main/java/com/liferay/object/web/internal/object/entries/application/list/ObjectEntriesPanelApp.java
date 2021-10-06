@@ -19,6 +19,8 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.Locale;
 
@@ -61,6 +63,19 @@ public class ObjectEntriesPanelApp extends BasePanelApp {
 		).setParameter(
 			"objectDefinitionId", _objectDefinition.getObjectDefinitionId()
 		).buildPortletURL();
+	}
+
+	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		if (permissionChecker.getCompanyId() !=
+				_objectDefinition.getCompanyId()) {
+
+			return false;
+		}
+
+		return super.isShow(permissionChecker, group);
 	}
 
 	private final ObjectDefinition _objectDefinition;

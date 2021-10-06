@@ -22,6 +22,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -29,6 +30,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -167,12 +170,20 @@ public class FragmentEntryProcessorRegistryImpl
 	public void validateFragmentEntryHTML(String html, String configuration)
 		throws PortalException {
 
+		Set<String> validHtmls = _validHtmlsThreadLocal.get();
+
+		if (validHtmls.contains(html)) {
+			return;
+		}
+
 		for (FragmentEntryProcessor fragmentEntryProcessor :
 				_serviceTrackerList) {
 
 			fragmentEntryProcessor.validateFragmentEntryHTML(
 				html, configuration);
 		}
+
+		validHtmls.add(html);
 	}
 
 	@Activate
@@ -188,6 +199,12 @@ public class FragmentEntryProcessorRegistryImpl
 	protected void deactivate() {
 		_serviceTrackerList.close();
 	}
+
+	private static final ThreadLocal<Set<String>> _validHtmlsThreadLocal =
+		new CentralizedThreadLocal(
+			FragmentEntryProcessorRegistryImpl.class.getName() +
+				"._validHtmlsThreadLocal",
+			HashSet::new);
 
 	@Reference
 	private JSONFactory _jsonFactory;

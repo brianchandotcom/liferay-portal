@@ -132,6 +132,30 @@ definition {
 		}
 	}
 
+	macro getHTMLBodyFormattedText {
+		MockMock._gotoMail(newTab = "${newTab}");
+
+		AssertVisible(
+			key_columnEntry = "${subject}",
+			key_sender = "${sender}",
+			locator1 = "MockMock#MOCKMOCK_FROM_FIELD");
+
+		AssertVisible(
+			key_columnEntry = "${subject}",
+			key_recipient = "${recipient}",
+			locator1 = "MockMock#MOCKMOCK_TO_FIELD");
+
+		MockMock._gotoMailMessage(
+			asset = "${subject}",
+			recipient = "${recipient}");
+
+		WaitForVisible(locator1 = "MockMock#MOCKMOCK_HTML_BODY_FORMATTED_FIELD");
+
+		var text = selenium.getText("MockMock#MOCKMOCK_HTML_BODY_FORMATTED_FIELD");
+
+		return "${text}";
+	}
+
 	macro openBodyLink {
 		var key_asset = "${asset}";
 

@@ -1965,9 +1965,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONObject settingsJSONObject = JSONFactoryUtil.createJSONObject(
 			_read(resourcePath + "/settings.json"));
 
-		String themeName = settingsJSONObject.getString("themeName", "Classic");
-
 		String themeId = StringPool.BLANK;
+		String themeName = settingsJSONObject.getString("themeName", "Classic");
 
 		if (Validator.isNotNull(themeName)) {
 			themeId = _getThemeId(serviceContext.getCompanyId(), themeName);

@@ -36,10 +36,8 @@ definition {
 	}
 
 	@description = "Verify that the user can assign a a different Workflow to a Subfolder"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAssignDifferentWorkflowToSubfolder {
-
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
 			folderName = "WC Folder Name");
@@ -78,10 +76,8 @@ definition {
 	}
 
 	@description = "Verify that the user can assign a Workflow to the Home folder"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAssignWorkflowToHomeFolder {
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -102,7 +98,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "WorkflowWebContent#WEB_CONTENT_STATUS",
 			value1 = "Pending");
-
 	}
 
 	@priority = "4"
@@ -244,19 +239,99 @@ definition {
 	}
 
 	@description = "Verify that, when a Web Content is moved to a Folder, it's Workflow changes"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test MoveWebContentToFolderChangeItsWorkflow {
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
-		// TODO LRQA-69293 MoveWebContentToFolderChangeItsWorkflow pending implementation
+		Navigator.openURL();
 
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithWorkflowCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		Click(
+			key_webContentTitle = "Web Content Title",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+
+		WebContent.viewStatus(
+			webContentContent = "Web Content Content",
+			webContentStatus = "Pending",
+			webContentTitle = "Web Content Title");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		AssertElementPresent(
+			key_workflowItemSubject = "Web Content Article: Web Content Title",
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_ITEM_SUBJECT");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Title");
+
+		WebContentFolder.configureWorkflowCP(
+			folderName = "WC Folder Title",
+			workflowDefinition = "Copy of Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		WebContent.moveToFolderCP(
+			folderName = "WC Folder Title",
+			webContentTitle = "Web Content Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		Workflow.withdrawTaskByActions(
+			workflowAssetTitle = "Web Content Title",
+			workflowAssetType = "Web Content Article",
+			workflowDefinition = "Single Approver",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		Click(
+			key_webContentTitle = "WC Folder Title",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+
+		Click(
+			key_webContentTitle = "Web Content Title",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+
+		PortletEntry.submitForPublication();
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Copy of Single Approver");
+
+		AssertElementPresent(
+			key_workflowItemSubject = "Web Content Article: Web Content Title",
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_ITEM_SUBJECT");
 	}
 
 	@description = "Verify that the Subfolder can use the Workflow of the Parent Folder"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test SubfolderCanUseWorkflowOfParentFolder {
-
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
 			folderName = "WC Folder Name");

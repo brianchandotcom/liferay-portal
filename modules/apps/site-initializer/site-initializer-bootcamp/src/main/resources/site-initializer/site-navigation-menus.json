@@ -15,5 +15,22 @@
 				"privateLayout": false
 			}
 		]
+	},
+	{
+		"name": "Private Area Navigation",
+		"pages": [
+			{
+				"friendlyURL": "/my-courses",
+				"privateLayout": false
+			},
+			{
+				"friendlyURL": "/notifications",
+				"privateLayout": false
+			},
+			{
+				"friendlyURL": "/account-settings",
+				"privateLayout": false
+			}
+		]
 	}
 ]

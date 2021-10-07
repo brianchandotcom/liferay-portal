@@ -115,3 +115,26 @@ a:hover {
 	text-transform: uppercase;
 	width: 100%;
 }
+
+/*Navigation Menu*/
+
+.list-menu ul {
+	font-family: var(--font-family-sans-serif);
+	font-size: var(--font-size-sm);
+    list-style: none;
+	padding-left: 0;
+}
+
+.list-menu .lfr-nav-item {
+	padding-bottom: 10px;	
+	padding-top: 10px;
+}
+
+.list-menu .lfr-nav-item {
+	color: var(--secondary);
+}
+
+.list-menu .lfr-nav-item.active {
+	color: var(--primary);
+	font-weight: var(--font-weight-bold);
+}

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
+import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 
 import java.util.List;
@@ -63,7 +64,8 @@ public class DDMTemplateActionDropdownItemsProvider {
 					DropdownItemListBuilder.add(
 						() ->
 							(!scopeGroup.hasLocalOrRemoteStagingGroup() ||
-							 scopeGroup.isStagingGroup()) &&
+							 !scopeGroup.isStagedPortlet(
+								 TemplatePortletKeys.TEMPLATE)) &&
 							DDMTemplatePermission.contains(
 								_themeDisplay.getPermissionChecker(),
 								_ddmTemplate, ActionKeys.UPDATE),
@@ -92,7 +94,8 @@ public class DDMTemplateActionDropdownItemsProvider {
 					DropdownItemListBuilder.add(
 						() ->
 							(!scopeGroup.hasLocalOrRemoteStagingGroup() ||
-							 scopeGroup.isStagingGroup()) &&
+							 !scopeGroup.isStagedPortlet(
+								 TemplatePortletKeys.TEMPLATE)) &&
 							DDMTemplatePermission.contains(
 								_themeDisplay.getPermissionChecker(),
 								_ddmTemplate, ActionKeys.PERMISSIONS),

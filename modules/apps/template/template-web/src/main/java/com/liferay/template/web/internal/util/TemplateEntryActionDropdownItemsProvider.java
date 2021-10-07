@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
+import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.web.internal.security.permissions.resource.TemplateEntryPermission;
 
@@ -65,7 +66,8 @@ public class TemplateEntryActionDropdownItemsProvider {
 					DropdownItemListBuilder.add(
 						() ->
 							(!scopeGroup.hasLocalOrRemoteStagingGroup() ||
-							 scopeGroup.isStagingGroup()) &&
+							 !scopeGroup.isStagedPortlet(
+								 TemplatePortletKeys.TEMPLATE)) &&
 							TemplateEntryPermission.contains(
 								_themeDisplay.getPermissionChecker(),
 								_templateEntry, ActionKeys.UPDATE),
@@ -88,7 +90,8 @@ public class TemplateEntryActionDropdownItemsProvider {
 					DropdownItemListBuilder.add(
 						() ->
 							(!scopeGroup.hasLocalOrRemoteStagingGroup() ||
-							 scopeGroup.isStagingGroup()) &&
+							 !scopeGroup.isStagedPortlet(
+								 TemplatePortletKeys.TEMPLATE)) &&
 							TemplateEntryPermission.contains(
 								_themeDisplay.getPermissionChecker(),
 								_templateEntry, ActionKeys.PERMISSIONS),

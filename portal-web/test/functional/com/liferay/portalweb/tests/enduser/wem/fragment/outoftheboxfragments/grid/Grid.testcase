@@ -128,10 +128,16 @@ definition {
 				key_fragmentName = "Grid",
 				locator1 = "Fragment#FRAGMENT_HEADER");
 
-			DragAndDrop.dragAndDrop(
-				key_position = "3",
-				locator1 = "PageEditor#GRID_COLUMN_RESIZER",
-				value1 = "530,0");
+			var n = "0";
+
+			while ("${n}" != "4") {
+				DragAndDrop.dragAndDrop(
+					key_position = "3",
+					locator1 = "PageEditor#GRID_COLUMN_RESIZER",
+					value1 = "100,0");
+
+				var n = ${n} + 1;
+			}
 
 			PageEditor.waitForAutoSave();
 

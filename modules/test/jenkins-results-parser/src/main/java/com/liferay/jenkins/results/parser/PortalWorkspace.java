@@ -21,14 +21,37 @@ import org.json.JSONObject;
  */
 public class PortalWorkspace extends BaseWorkspace {
 
+	public String getPortalBuildProfile() {
+		return jsonObject.optString("portal_build_profile", "dxp");
+	}
+
+	public void setPortalBuildProfile(String portalBuildProfile) {
+		portalBuildProfile = portalBuildProfile.toLowerCase();
+
+		if (!portalBuildProfile.equals("dxp") &&
+			!portalBuildProfile.equals("portal")) {
+
+			throw new RuntimeException(
+				"Invalid portal build profile " + portalBuildProfile);
+		}
+
+		jsonObject.put("portal_build_profile", portalBuildProfile);
+	}
+
 	@Override
 	public void setUp() {
-		WorkspaceGitRepository primaryWorkspaceGitRepository =
-			getPrimaryWorkspaceGitRepository();
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_getPortalWorkspaceGitRepository();
 
-		primaryWorkspaceGitRepository.setUp();
+		portalWorkspaceGitRepository.setUp();
 
-		_setUpPortalProfile();
+		String portalBuildProfile = getPortalBuildProfile();
+
+		if (portalBuildProfile.equals("dxp")) {
+			portalWorkspaceGitRepository.setUpPortalProfile();
+		}
+
+		portalWorkspaceGitRepository.setUpTCKHome();
 
 		_updateBladeSamplesWorkspaceGitRepository();
 		_updatePluginsWorkspaceGitRepository();
@@ -49,20 +72,15 @@ public class PortalWorkspace extends BaseWorkspace {
 		super(primaryRepositoryName, upstreamBranchName);
 	}
 
-	private void _setUpPortalProfile() {
-		WorkspaceGitRepository primaryWorkspaceGitRepository =
+	private PortalWorkspaceGitRepository _getPortalWorkspaceGitRepository() {
+		WorkspaceGitRepository workspaceGitRepository =
 			getPrimaryWorkspaceGitRepository();
 
-		if (!(primaryWorkspaceGitRepository instanceof
-				PortalWorkspaceGitRepository)) {
-
-			return;
+		if (!(workspaceGitRepository instanceof PortalWorkspaceGitRepository)) {
+			return null;
 		}
 
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			(PortalWorkspaceGitRepository)primaryWorkspaceGitRepository;
-
-		portalWorkspaceGitRepository.setUpPortalProfile();
+		return (PortalWorkspaceGitRepository)workspaceGitRepository;
 	}
 
 	private void _updateBladeSamplesWorkspaceGitRepository() {

@@ -32,7 +32,7 @@ public abstract class BaseWorkspace implements Workspace {
 
 	@Override
 	public JSONObject getJSONObject() {
-		return _jsonObject;
+		return jsonObject;
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public abstract class BaseWorkspace implements Workspace {
 
 		_workspaceGitRepositories = new HashMap<>();
 
-		String workspaceRepositoryDirNames = _jsonObject.getString(
+		String workspaceRepositoryDirNames = jsonObject.getString(
 			"workspace_repository_dir_names");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(
@@ -180,14 +180,14 @@ public abstract class BaseWorkspace implements Workspace {
 	}
 
 	protected BaseWorkspace(JSONObject jsonObject) {
-		_jsonObject = jsonObject;
+		this.jsonObject = jsonObject;
 
 		_validateKeys();
 
 		_primaryWorkspaceGitRepository =
 			GitRepositoryFactory.getWorkspaceGitRepository(
-				_jsonObject.getString("primary_repository_name"),
-				_jsonObject.getString("primary_upstream_branch_name"));
+				this.jsonObject.getString("primary_repository_name"),
+				this.jsonObject.getString("primary_upstream_branch_name"));
 	}
 
 	protected BaseWorkspace(
@@ -197,20 +197,20 @@ public abstract class BaseWorkspace implements Workspace {
 			GitRepositoryFactory.getWorkspaceGitRepository(
 				primaryRepositoryName, upstreamBranchName);
 
-		_jsonObject = new JSONObject();
+		jsonObject = new JSONObject();
 
-		_jsonObject.put(
+		jsonObject.put(
 			"primary_repository_dir_name",
 			_primaryWorkspaceGitRepository.getDirectoryName());
-		_jsonObject.put(
+		jsonObject.put(
 			"primary_repository_name",
 			_primaryWorkspaceGitRepository.getName());
-		_jsonObject.put(
+		jsonObject.put(
 			"primary_upstream_branch_name",
 			_primaryWorkspaceGitRepository.getUpstreamBranchName());
 
 		try {
-			_jsonObject.put(
+			jsonObject.put(
 				"workspace_repository_dir_names",
 				JenkinsResultsParserUtil.getProperty(
 					JenkinsResultsParserUtil.getBuildProperties(),
@@ -238,9 +238,11 @@ public abstract class BaseWorkspace implements Workspace {
 	protected static final ThreadPoolExecutor threadPoolExecutor =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(16, true);
 
+	protected final JSONObject jsonObject;
+
 	private void _validateKeys() {
 		for (String requiredKey : _REQUIRED_KEYS) {
-			if (!_jsonObject.has(requiredKey)) {
+			if (!jsonObject.has(requiredKey)) {
 				throw new RuntimeException("Missing " + requiredKey);
 			}
 		}
@@ -251,7 +253,6 @@ public abstract class BaseWorkspace implements Workspace {
 		"primary_upstream_branch_name", "workspace_repository_dir_names"
 	};
 
-	private final JSONObject _jsonObject;
 	private final WorkspaceGitRepository _primaryWorkspaceGitRepository;
 	private Map<String, WorkspaceGitRepository> _workspaceGitRepositories;
 

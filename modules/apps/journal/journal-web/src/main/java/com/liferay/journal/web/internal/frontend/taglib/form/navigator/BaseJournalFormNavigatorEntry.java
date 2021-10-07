@@ -70,7 +70,7 @@ public abstract class BaseJournalFormNavigatorEntry
 			group = themeDisplay.getScopeGroup();
 		}
 
-		if ((group != null) && (group.isCompany() || group.isDepot())) {
+		if ((group != null) && group.isCompany()) {
 			return true;
 		}
 

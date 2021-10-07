@@ -257,8 +257,48 @@ definition {
 	@priority = "4"
 	test SubfolderCanUseWorkflowOfParentFolder {
 
-		// TODO LRQA-69289 SubfolderCanUseWorkflowOfParentFolder pending implementation
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name");
 
+		WebContentFolder.configureWorkflowCP(
+			folderName = "WC Folder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		WebContentFolder.addSubfolderCP(
+			folderName = "WC Folder Name",
+			subfolderDescription = "WC Subfolder Description",
+			subfolderName = "WC Subfolder Name");
+
+		WebContentFolder.gotoEditCP(
+			folderName = "WC Subfolder Name",
+			webContentTitle = "WC Subfolder Name");
+
+		AssertElementPresent(
+			locator1 = "Radio#WORKFLOW_PARENT_FOLDER",
+			value1 = "Use Structure Restrictions and Workflow of the Parent Folder (WC Folder Name)");
+
+		Button.clickCancel();
+
+		Click(
+			key_webContentTitle = "WC Subfolder Name",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithWorkflowCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Name");
+
+		Click(
+			key_webContentTitle = "Web Content Name",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+
+		WebContent.viewStatus(
+			webContentContent = "Web Content Content",
+			webContentStatus = "Pending",
+			webContentTitle = "Web Content Name");
 	}
 
 }

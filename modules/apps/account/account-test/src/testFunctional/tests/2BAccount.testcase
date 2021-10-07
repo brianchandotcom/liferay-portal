@@ -231,6 +231,45 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Account Name");
 	}
 
+	@description = "This test asserts that an Account Admin can set a billing address to an Account."
+	@priority = "5"
+	test AccountAdminCanSetDefaultBillingAddress {
+		Search.searchPG(
+			portletName = "Account Management",
+			searchTerm = "Account Name");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		Accounts.addAddressViaSetDefaultAddress(
+			addressCity = "Diamond Bar",
+			addressCountry = "United States",
+			addressName = "Liferay, Inc.",
+			addressPostalCode = "91765",
+			addressRegion = "California",
+			addressStreet1 = "1400 Montefino Ave",
+			addressType = "Billing",
+			phoneNumber = "+1-877-543-3729");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Details");
+
+		Accounts.setDefaultBillingAddress(addressName = "Liferay, Inc.");
+
+		AssertElementPresent(
+			key_tab = "Details",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+		Accounts.viewDefaultBillingAddress(
+			addressCity = "Diamond Bar",
+			addressCountry = "United States",
+			addressName = "Liferay, Inc.",
+			addressPostalCode = "91765",
+			addressRegion = "California",
+			addressStreet1 = "1400 Montefino Ave",
+			phoneNumber = "+1-877-543-3729");
+	}
+
 	@description = "This test asserts that an Account Admin can add and unassign organization in bulk"
 	@priority = "5"
 	test AccountAdminCanUnassignOrganizationsInBulk {

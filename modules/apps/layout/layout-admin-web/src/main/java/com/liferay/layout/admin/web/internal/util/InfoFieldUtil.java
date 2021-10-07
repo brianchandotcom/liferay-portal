@@ -96,12 +96,6 @@ public class InfoFieldUtil {
 	private static List<FragmentEntryLink> _getFragmentEntryLinks(
 		Layout layout, long segmentsExperienceId) {
 
-		if (segmentsExperienceId == SegmentsExperienceConstants.ID_DEFAULT) {
-			return FragmentEntryLinkLocalServiceUtil.
-				getFragmentEntryLinksByPlid(
-					layout.getGroupId(), layout.getPlid());
-		}
-
 		return FragmentEntryLinkLocalServiceUtil.
 			getFragmentEntryLinksBySegmentsExperienceId(
 				layout.getGroupId(), segmentsExperienceId, layout.getPlid());

@@ -198,6 +198,71 @@ public abstract class BaseOrderTypeResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrderRuleOrderTypeOrderType() throws Exception {
+		OrderType postOrderType =
+			testGetOrderRuleOrderTypeOrderType_addOrderType();
+
+		OrderType getOrderType =
+			orderTypeResource.getOrderRuleOrderTypeOrderType(null);
+
+		assertEquals(postOrderType, getOrderType);
+		assertValid(getOrderType);
+	}
+
+	protected OrderType testGetOrderRuleOrderTypeOrderType_addOrderType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderRuleOrderTypeOrderType() throws Exception {
+		OrderType orderType = testGraphQLOrderType_addOrderType();
+
+		Assert.assertTrue(
+			equals(
+				orderType,
+				OrderTypeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderRuleOrderTypeOrderType",
+								new HashMap<String, Object>() {
+									{
+										put("orderRuleOrderTypeId", null);
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/orderRuleOrderTypeOrderType"))));
+	}
+
+	@Test
+	public void testGraphQLGetOrderRuleOrderTypeOrderTypeNotFound()
+		throws Exception {
+
+		Long irrelevantOrderRuleOrderTypeId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderRuleOrderTypeOrderType",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"orderRuleOrderTypeId",
+									irrelevantOrderRuleOrderTypeId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetOrderTypesPage() throws Exception {
 		Page<OrderType> page = orderTypeResource.getOrderTypesPage(
 			null, null, Pagination.of(1, 10), null);

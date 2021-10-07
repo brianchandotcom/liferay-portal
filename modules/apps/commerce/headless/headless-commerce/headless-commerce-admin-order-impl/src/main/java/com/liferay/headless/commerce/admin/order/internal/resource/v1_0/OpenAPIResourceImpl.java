@@ -83,6 +83,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(AccountResourceImpl.class);
 
+			add(AccountGroupResourceImpl.class);
+
 			add(BillingAddressResourceImpl.class);
 
 			add(ChannelResourceImpl.class);
@@ -92,6 +94,16 @@ public class OpenAPIResourceImpl {
 			add(OrderItemResourceImpl.class);
 
 			add(OrderNoteResourceImpl.class);
+
+			add(OrderRuleResourceImpl.class);
+
+			add(OrderRuleAccountResourceImpl.class);
+
+			add(OrderRuleAccountGroupResourceImpl.class);
+
+			add(OrderRuleChannelResourceImpl.class);
+
+			add(OrderRuleOrderTypeResourceImpl.class);
 
 			add(OrderTypeResourceImpl.class);
 

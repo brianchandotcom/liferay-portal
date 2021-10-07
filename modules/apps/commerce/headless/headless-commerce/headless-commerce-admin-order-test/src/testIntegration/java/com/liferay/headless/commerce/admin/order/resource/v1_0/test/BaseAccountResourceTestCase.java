@@ -195,6 +195,68 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrderRuleAccountAccount() throws Exception {
+		Account postAccount = testGetOrderRuleAccountAccount_addAccount();
+
+		Account getAccount = accountResource.getOrderRuleAccountAccount(null);
+
+		assertEquals(postAccount, getAccount);
+		assertValid(getAccount);
+	}
+
+	protected Account testGetOrderRuleAccountAccount_addAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderRuleAccountAccount() throws Exception {
+		Account account = testGraphQLAccount_addAccount();
+
+		Assert.assertTrue(
+			equals(
+				account,
+				AccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderRuleAccountAccount",
+								new HashMap<String, Object>() {
+									{
+										put("orderRuleAccountId", null);
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/orderRuleAccountAccount"))));
+	}
+
+	@Test
+	public void testGraphQLGetOrderRuleAccountAccountNotFound()
+		throws Exception {
+
+		Long irrelevantOrderRuleAccountId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderRuleAccountAccount",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"orderRuleAccountId",
+									irrelevantOrderRuleAccountId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetOrderByExternalReferenceCodeAccount() throws Exception {
 		Account postAccount =
 			testGetOrderByExternalReferenceCodeAccount_addAccount();

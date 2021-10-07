@@ -54,6 +54,9 @@ public interface AccountResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Account getOrderRuleAccountAccount(Long orderRuleAccountId)
+		throws Exception;
+
 	public Account getOrderByExternalReferenceCodeAccount(
 			String externalReferenceCode)
 		throws Exception;

@@ -58,6 +58,9 @@ public interface OrderTypeResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public OrderType getOrderRuleOrderTypeOrderType(Long orderRuleOrderTypeId)
+		throws Exception;
+
 	public Page<OrderType> getOrderTypesPage(
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;

@@ -21,6 +21,7 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
+import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
@@ -134,6 +135,12 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 					httpServletResponse.sendRedirect(
 						getOrderDetailsURL(renderRequest));
 				}
+				else if (!_commerceOrderValidatorRegistry.isValid(
+							null, commerceOrder)) {
+
+					httpServletResponse.sendRedirect(
+						getOrderDetailsURLWithValidatorProperty(renderRequest));
+				}
 				else if (!commerceOrder.isOpen() &&
 						 (continueAsGuest || commerceOrder.isGuestOrder())) {
 
@@ -218,6 +225,24 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 		return portletURL.toString();
 	}
 
+	protected String getOrderDetailsURLWithValidatorProperty(
+			PortletRequest portletRequest)
+		throws PortalException {
+
+		PortletURL portletURL =
+			_commerceOrderHttpHelper.getCommerceCartPortletURL(
+				_portal.getHttpServletRequest(portletRequest),
+				getCommerceOrder(portletRequest));
+
+		if (portletURL == null) {
+			return StringPool.BLANK;
+		}
+
+		portletURL.addProperty("validateOrder", "true");
+
+		return portletURL.toString();
+	}
+
 	protected boolean isOrderApproved(CommerceOrder commerceOrder)
 		throws PortalException {
 
@@ -260,6 +285,9 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

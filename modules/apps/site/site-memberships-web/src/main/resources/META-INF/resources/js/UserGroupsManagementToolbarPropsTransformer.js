@@ -33,8 +33,8 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
 			multiple: true,
-			onSelect(selectedItem) {
-				if (selectedItem) {
+			onSelect(selectedItems) {
+				if (selectedItems) {
 					const form = document.getElementById(
 						`${portletNamespace}fm`
 					);
@@ -43,9 +43,12 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 						return;
 					}
 
-					selectedItem.forEach((item) => {
-						form.appendChild(item);
-					});
+					const input = document.createElement('input');
+
+					input.name = `${portletNamespace}rowIdsRole`;
+					input.value = selectedItems.map((item) => item.value);
+
+					form.appendChild(input);
 
 					submitForm(form, itemData?.editUserGroupsRolesURL);
 				}

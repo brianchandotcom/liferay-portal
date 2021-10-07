@@ -218,15 +218,9 @@ public class TemplateInfoItemFieldSetProviderTest {
 		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
 			"name");
 
-		Value nameValue = null;
+		DDMFormFieldValue nameDDMFormFieldValue = ddmFormFieldValues.get(0);
 
-		if ((ddmFormFieldValues != null) && !ddmFormFieldValues.isEmpty()) {
-			DDMFormFieldValue nameDDMFormFieldValue = ddmFormFieldValues.get(0);
-
-			nameValue = nameDDMFormFieldValue.getValue();
-		}
-
-		Assert.assertNotNull(nameValue);
+		Value nameValue = nameDDMFormFieldValue.getValue();
 
 		TemplateEntry articleTemplateEntry = TemplateTestUtil.addTemplateEntry(
 			JournalArticle.class.getName(),

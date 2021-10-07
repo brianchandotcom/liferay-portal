@@ -117,7 +117,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		_objectEntryLocalService.updateObjectEntry(
-			userId, primaryKey1,
+			userId, primaryKey2,
 			HashMapBuilder.<String, Serializable>put(
 				() -> {
 					ObjectRelationship objectRelationship =

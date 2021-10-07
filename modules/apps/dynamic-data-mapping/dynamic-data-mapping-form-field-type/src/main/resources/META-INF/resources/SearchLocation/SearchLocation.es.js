@@ -65,7 +65,7 @@ const Field = ({
 			setValid(initialValid);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [pageValidationFailed]);
+	}, [initialValid, pageValidationFailed]);
 
 	return (
 		<FieldBase

@@ -1511,7 +1511,7 @@ definition {
 		task ("Assert assets' title are displayed in Collection Display with Content Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				infoListProviderName = "Most Viewed Asset");
+				infoListProviderName = "Most Viewed Assets");
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Content Display",

@@ -1489,6 +1489,8 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 	</macrodef>
 
 	<macrodef name="get-testcase-property">
+		<attribute default="false" name="append" />
+		<attribute default="," name="delimiter" />
 		<attribute name="property.name" />
 
 		<sequential>
@@ -1534,7 +1536,10 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 							String propertyValue = project.getProperty(sb.toString());
 
-							if (propertyValue == null) {
+							if (@{append} && (propertyValue != null)) {
+								propertyValue = propertyValueDefault + "@{delimiter}" + propertyValue;
+							}
+							else if (propertyValue == null) {
 								sb = new StringBuilder();
 
 								sb.append(testNamespace);

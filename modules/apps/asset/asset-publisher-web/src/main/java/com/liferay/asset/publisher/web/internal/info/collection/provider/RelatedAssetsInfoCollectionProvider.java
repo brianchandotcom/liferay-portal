@@ -66,7 +66,7 @@ public class RelatedAssetsInfoCollectionProvider
 		}
 
 		AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
-			Field.MODIFIED_DATE, "DESC", collectionQuery.getPagination());
+			collectionQuery.getPagination());
 
 		assetEntryQuery.setLinkedAssetEntryId(assetEntryId);
 
@@ -107,9 +107,7 @@ public class RelatedAssetsInfoCollectionProvider
 		return true;
 	}
 
-	private AssetEntryQuery _getAssetEntryQuery(
-		String orderByCol, String orderByType, Pagination pagination) {
-
+	private AssetEntryQuery _getAssetEntryQuery(Pagination pagination) {
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
 		ServiceContext serviceContext =
@@ -143,8 +141,8 @@ public class RelatedAssetsInfoCollectionProvider
 			assetEntryQuery.setEnd(pagination.getEnd());
 		}
 
-		assetEntryQuery.setOrderByCol1(orderByCol);
-		assetEntryQuery.setOrderByType1(orderByType);
+		assetEntryQuery.setOrderByCol1(Field.MODIFIED_DATE);
+		assetEntryQuery.setOrderByType1("DESC");
 
 		assetEntryQuery.setOrderByCol2(Field.CREATE_DATE);
 		assetEntryQuery.setOrderByType2("DESC");

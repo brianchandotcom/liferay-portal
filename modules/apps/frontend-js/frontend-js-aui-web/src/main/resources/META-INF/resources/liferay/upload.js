@@ -156,13 +156,10 @@ AUI.add(
 
 			'<div class="hide manage-upload-target clearfix" id="{$ns}manageUploadTarget">',
 			'<tpl if="multipleFiles">',
-			'<span class="field field-choice select-files">',
-			'<span class="field-content">',
-			'<span class="field-element">',
-			'<input class="select-all-files" id="{$ns}allRowIds" name="{$ns}allRowIds" type="checkbox" />',
-			'</span>',
-			'</span>',
-			'</span>',
+			'<div class="form-check select-files">',
+			'<input class="form-check-input select-all-files" id="{$ns}allRowIds" name="{$ns}allRowIds" type="checkbox" />',
+			'<label class="form-check-label" for="{$ns}allRowIds"> {[ this.strings.selectAllText ]}</label>',
+			'</div>',
 			'</tpl>',
 
 			'<a class="cancel-uploads hide lfr-button" href="javascript:;">{[ this.cancelUploadsText ]}</a>',
@@ -291,6 +288,7 @@ AUI.add(
 						pendingFileText: Liferay.Language.get(
 							'these-files-have-been-previously-uploaded-but-not-actually-saved.-please-save-or-delete-them-before-they-are-removed'
 						),
+						selectAllText: Liferay.Language.get('select-all'),
 						selectFileText: Liferay.Language.get('select-file'),
 						selectFilesText: Liferay.Language.get('select-files'),
 						unexpectedErrorOnDeleteText: Liferay.Language.get(

@@ -1,0 +1,17 @@
+definition {
+
+	macro selectSingleApprover {
+		Click.clickAt(locator1 = "Icon#INFO");
+
+		Click(locator1 = "WorkflowWebContent#KEBAB_DROPDOWN");
+
+		Click(locator1 = "WorkflowWebContent#EDIT_OPTION_MENU");
+
+		Select(
+			locator1 = "Select#WORKFLOW_DEFAULT",
+			value1 = "Single Approver");
+
+		Button.clickSave();
+	}
+
+}

@@ -49,7 +49,26 @@ definition {
 	@priority = "3"
 	test CanAssignWorkflowToHomeFolder {
 
-		// TODO LRQA-69290 CanAssignWorkflowToHomeFolder pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WorkflowWebContent.selectSingleApprover();
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		AssertTextEquals(
+			locator1 = "WorkflowWebContent#WEB_CONTENT_STATUS",
+			value1 = "Pending");
 
 	}
 

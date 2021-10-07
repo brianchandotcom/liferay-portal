@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>WorkflowWebContent</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WorkflowWebContent</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>EDIT_OPTION_MENU</td>
+	<td>//ul[contains(@class,'list-unstyled')]//a[contains(@class, 'dropdown-item') and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KEBAB_DROPDOWN</td>
+	<td>//button[contains(@class, 'dropdown-toggle component-action btn btn-monospaced btn-unstyled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_STATUS</td>
+	<td>//span[@class='label-item label-item-expand']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -9887,6 +9887,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<if>
 			<equals arg1="${browser.type}" arg2="chrome" />
 			<then>
+				<get-testcase-property append="true" delimiter=" " property.name="browser.chrome.bin.args" />
+
 				<if>
 					<isset property="browser.chrome.bin.args" />
 					<then>

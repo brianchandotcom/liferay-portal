@@ -61,7 +61,7 @@ definition {
 
 		PageEditor.editCollectionDisplay(
 			fragmentName = "Collection Display",
-			infoListProviderName = "Custom Object");
+			infoListProviderName = "Custom Objects");
 
 		DoubleClick(
 			collectionName = "Collection Display",
@@ -184,7 +184,7 @@ definition {
 
 		PageEditor.editCollectionDisplay(
 			fragmentName = "Collection Display",
-			infoListProviderName = "Custom Object");
+			infoListProviderName = "Custom Objects");
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 

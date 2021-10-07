@@ -53,6 +53,10 @@ definition {
 
 		var key_picklistItemKey = "${picklistItemKey}";
 
+		if (IsElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM")) {
+			Picklist.gotoPicklistView(picklistName = "${picklistItemName}");
+		}
+
 		AssertElementPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM");
 	}
 

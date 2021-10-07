@@ -77,7 +77,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_PICKLIST_ITEM</td>
-		<td>//a[contains(.,'${key_picklistItemName}')]/../../..//div[contains(.,'${picklistItemKey}')]</td>
+		<td>//a[contains(.,'${key_picklistItemName}')]/../../..//div[contains(.,'${key_picklistItemKey}')]</td>
 		<td></td>
 	</tr>
 	<tr>

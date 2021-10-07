@@ -40,8 +40,41 @@ definition {
 	@priority = "4"
 	test CanAssignDifferentWorkflowToSubfolder {
 
-		// TODO LRQA-69291 CanAssignDifferentWorkflowToSubfolder pending implementation
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name");
 
+		WebContentFolder.configureWorkflowCP(
+			folderName = "WC Folder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		WebContentFolder.addSubfolderCP(
+			folderName = "WC Folder Name",
+			subfolderDescription = "WC Subfolder Description",
+			subfolderName = "WC Subfolder Name");
+
+		WebContentFolder.configureWorkflowCP(
+			folderName = "WC Subfolder Name",
+			workflowDefinition = "No Workflow",
+			workflowRestriction = "Default Workflow");
+
+		Click(
+			key_webContentTitle = "WC Subfolder Name",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+
+		WebContent.addArticleCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Name");
+
+		Click(
+			key_webContentTitle = "Web Content Name",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+
+		WebContent.viewStatus(
+			webContentContent = "Web Content Content",
+			webContentStatus = "Approved",
+			webContentTitle = "Web Content Name");
 	}
 
 	@description = "Verify that the user can assign a Workflow to the Home folder"

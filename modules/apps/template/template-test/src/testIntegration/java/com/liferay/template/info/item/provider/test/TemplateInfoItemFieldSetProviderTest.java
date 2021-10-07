@@ -302,12 +302,10 @@ public class TemplateInfoItemFieldSetProviderTest {
 				categoryTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
 
-		Locale defaultLocale = _portal.getSiteDefaultLocale(
-			_group.getGroupId());
-
 		Assert.assertEquals(
 			infoFieldValue.toString(), _assetCategory.getName(),
-			infoFieldValue.getValue(defaultLocale));
+			infoFieldValue.getValue(
+				_portal.getSiteDefaultLocale(_group.getGroupId())));
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(

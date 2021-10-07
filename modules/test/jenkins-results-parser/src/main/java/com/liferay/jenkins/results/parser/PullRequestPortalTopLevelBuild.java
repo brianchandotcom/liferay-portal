@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.net.URL;
@@ -23,6 +24,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.dom4j.Element;
 
@@ -68,6 +71,54 @@ public class PullRequestPortalTopLevelBuild
 		sb.append(getParameterValue("GITHUB_PULL_REQUEST_NUMBER"));
 
 		_pullRequest = PullRequestFactory.newPullRequest(sb.toString());
+	}
+
+	@Override
+	public BranchInformation getOSBAsahBranchInformation() {
+		Workspace workspace = getWorkspace();
+
+		return new WorkspaceBranchInformation(
+			workspace.getWorkspaceGitRepository(
+				"com-liferay-osb-asah-private"));
+	}
+
+	@Override
+	public BranchInformation getOSBFaroBranchInformation() {
+		Workspace workspace = getWorkspace();
+
+		return new WorkspaceBranchInformation(
+			workspace.getWorkspaceGitRepository(
+				"com-liferay-osb-faro-private"));
+	}
+
+	@Override
+	public BranchInformation getPluginsBranchInformation() {
+		Workspace workspace = getWorkspace();
+
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		String pluginsUpstreamBranchName =
+			workspaceGitRepository.getUpstreamBranchName();
+
+		if (!pluginsUpstreamBranchName.startsWith("ee-")) {
+			pluginsUpstreamBranchName = "7.0.x";
+		}
+
+		return new WorkspaceBranchInformation(
+			workspace.getWorkspaceGitRepository(
+				JenkinsResultsParserUtil.getGitDirectoryName(
+					"liferay-plugins-ee", pluginsUpstreamBranchName)));
+	}
+
+	@Override
+	public BranchInformation getPortalBranchInformation() {
+		Workspace workspace = getWorkspace();
+
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		return new WorkspaceBranchInformation(workspaceGitRepository);
 	}
 
 	@Override
@@ -244,6 +295,97 @@ public class PullRequestPortalTopLevelBuild
 		}
 
 		return false;
+	}
+
+	public static class WorkspaceBranchInformation
+		implements BranchInformation {
+
+		@Override
+		public String getCachedRemoteGitRefName() {
+			return _workspaceGitRepository.getGitHubDevBranchName();
+		}
+
+		@Override
+		public String getOriginName() {
+			return _workspaceGitRepository.getSenderBranchUsername();
+		}
+
+		@Override
+		public Integer getPullRequestNumber() {
+			Matcher matcher = _pattern.matcher(
+				_workspaceGitRepository.getGitHubURL());
+
+			if (!matcher.find()) {
+				return 0;
+			}
+
+			return Integer.parseInt(matcher.group("pullNumber"));
+		}
+
+		@Override
+		public String getReceiverUsername() {
+			Matcher matcher = _pattern.matcher(
+				_workspaceGitRepository.getGitHubURL());
+
+			if (!matcher.find()) {
+				return "liferay";
+			}
+
+			return matcher.group("username");
+		}
+
+		@Override
+		public String getRepositoryName() {
+			return _workspaceGitRepository.getName();
+		}
+
+		@Override
+		public String getSenderBranchName() {
+			return _workspaceGitRepository.getSenderBranchName();
+		}
+
+		@Override
+		public String getSenderBranchSHA() {
+			return _workspaceGitRepository.getSenderBranchSHA();
+		}
+
+		@Override
+		public RemoteGitRef getSenderRemoteGitRef() {
+			String remoteURL = JenkinsResultsParserUtil.combine(
+				"git@github.com:", getSenderUsername(), "/",
+				getRepositoryName(), ".git");
+
+			return GitUtil.getRemoteGitRef(
+				getSenderBranchName(), new File("."), remoteURL);
+		}
+
+		@Override
+		public String getSenderUsername() {
+			return _workspaceGitRepository.getSenderBranchUsername();
+		}
+
+		@Override
+		public String getUpstreamBranchName() {
+			return _workspaceGitRepository.getUpstreamBranchName();
+		}
+
+		@Override
+		public String getUpstreamBranchSHA() {
+			return _workspaceGitRepository.getBaseBranchSHA();
+		}
+
+		protected WorkspaceBranchInformation(
+			WorkspaceGitRepository workspaceGitRepository) {
+
+			_workspaceGitRepository = workspaceGitRepository;
+		}
+
+		private static final Pattern _pattern = Pattern.compile(
+			"https://github.com/(?<username>[^/]+)/[^/]/pull/" +
+				"(?<pullNumber>\\d+)");
+
+		private final WorkspaceGitRepository _workspaceGitRepository;
+
 	}
 
 	protected Element getFailedStableJobSummaryElement() {

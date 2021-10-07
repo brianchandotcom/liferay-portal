@@ -101,6 +101,7 @@
 		</field>
 		<field localized="true" name="description" type="String">
 			<hint-collection name="CLOB" />
+			<hint name="display-height">105</hint>
 			<hint name="display-width">350</hint>
 		</field>
 		<field name="vocabularyId" type="long" />

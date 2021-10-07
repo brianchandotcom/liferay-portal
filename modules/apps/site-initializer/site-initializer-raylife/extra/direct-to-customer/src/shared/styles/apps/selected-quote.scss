@@ -77,12 +77,12 @@
 
 		button {
 			background-color: $primary-default-light;
-			font-size: 16px;
+			border-radius: 4px;
 			color: $background;
+			cursor: pointer;
+			font-size: 16px;
 			font-weight: 700;
 			padding: 16px 18px;
-			border-radius: 4px;
-			cursor: pointer;
 		}
 	}
 
@@ -144,7 +144,6 @@
 							right: 38px;
 							top: 2px;
 							width: 36px;
-							fill: $neutral-default;
 							filter: drop-shadow(
 								0px 5px 15px rgba(77, 133, 255, 0.12)
 							);
@@ -168,8 +167,8 @@
 							img {
 								border-radius: 16px;
 								height: 176px;
-								width: 176px;
 								object-fit: cover;
+								width: 176px;
 							}
 						}
 					}
@@ -186,13 +185,13 @@
 							border-radius: 50%;
 							cursor: pointer;
 							display: flex;
+							fill: $neutral-default;
 							height: 36px;
 							justify-content: center;
-							position: relative;
 							left: 137px;
+							position: relative;
 							top: -196px;
 							width: 36px;
-							fill: $neutral-default;
 							filter: drop-shadow(
 								0px 5px 15px rgba(77, 133, 255, 0.12)
 							);
@@ -200,59 +199,59 @@
 
 						.div-document {
 							display: flex;
-							text-align: center;
 							flex-direction: column;
+							text-align: center;
 
 							span {
 								color: $neutral-dark;
-								margin-top: 4px;
 								font-size: 13px;
-								white-space: nowrap;
+								margin-top: 4px;
 								overflow: hidden;
 								text-overflow: ellipsis;
+								white-space: nowrap;
 								width: 176px;
 							}
 
 							.content {
-								border-radius: 16px;
-								width: 176px;
-								height: 176px;
 								background-color: #fafafa;
 								border: 1px solid #e2e2e4;
+								border-radius: 16px;
+								height: 176px;
 								object-fit: cover;
+								width: 176px;
 
+								align-items: center;
 								display: flex;
 								justify-content: center;
-								align-items: center;
 
 								.lexicon-icon-document-pdf {
 									fill: #af78ff;
-									width: 64px !important;
 									height: 64px !important;
+									width: 64px !important;
 								}
 
 								.lexicon-icon-document-text {
 									fill: #4d85ff;
-									width: 64px !important;
 									height: 64px !important;
+									width: 64px !important;
 								}
 
 								.lexicon-icon-document-table {
 									fill: #50d2a0;
-									width: 64px !important;
 									height: 64px !important;
+									width: 64px !important;
 								}
 
 								.lexicon-icon-document-presentation {
 									fill: #ffb46e;
-									width: 64px !important;
 									height: 64px !important;
+									width: 64px !important;
 								}
 
 								.lexicon-icon-document-unknown {
 									fill: $neutral-default;
-									width: 64px !important;
 									height: 64px !important;
+									width: 64px !important;
 								}
 							}
 						}
@@ -295,8 +294,8 @@
 							display: flex;
 							font-size: 14px;
 							font-weight: 700;
-							padding: 8px 12px;
 							justify-content: center;
+							padding: 8px 12px;
 						}
 
 						.input-file {

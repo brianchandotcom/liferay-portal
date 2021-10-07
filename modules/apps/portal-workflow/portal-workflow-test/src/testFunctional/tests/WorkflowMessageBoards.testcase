@@ -208,8 +208,6 @@ definition {
 		AssertElementPresent(
 			key_resultBarMessage = "Pending",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
-		
-
 	}
 
 	@description = "This is a test for LRQA-69703. Verify that user can reply to an approved thread. "

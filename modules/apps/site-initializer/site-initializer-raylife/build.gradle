@@ -3,6 +3,12 @@ import aQute.bnd.version.Version
 import com.liferay.gradle.util.OSDetector
 import com.liferay.gradle.util.StringUtil
 
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
+import java.util.Date
+import java.util.TimeZone
+
 import org.gradle.util.GUtil
 
 apply plugin: "com.liferay.node"
@@ -15,7 +21,13 @@ task buildExtra
 task forceDeploy
 task zipExtra(type: Zip)
 
-Version extraVersion = Version.parseVersion("0.0.0")
+Version extraVersion = Version.parseVersion("00000000.0000")
+
+DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd.HHmm")
+
+dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
+
+String dateString = dateFormat.format(new Date())
 
 artifacts {
 	extra zipExtra
@@ -58,23 +70,10 @@ uploadExtra {
 
 		String content = buildGradleFile.getText("UTF-8")
 
-		content = content.replaceFirst(~/Version extraVersion = Version.parseVersion\("(\w+\.\w+\.\w+)"\)/) {
+		content = content.replaceFirst(~/Version extraVersion = Version.parseVersion\("(\w+\.\w+)"\)/) {
 			String all, String versionString ->
 
-			int major = extraVersion.getMajor()
-			int minor = extraVersion.getMinor()
-			int micro = extraVersion.getMicro()
-
-			if (major < 1) {
-				major = 1
-				minor = 0
-				micro = 0
-			}
-			else {
-				micro = micro + 1
-			}
-
-			all.replace versionString, new Version(major, minor, micro) as String
+			all.replace versionString, dateString
 		}
 
 		buildGradleFile.setText content, "UTF-8"
@@ -85,7 +84,7 @@ uploadExtra {
 			pom {
 				artifactId = GUtil.loadProperties(file("bnd.bnd"))["Bundle-SymbolicName"] + ".extra"
 				groupId = "com.liferay"
-				version = (extraVersion.getMajor() > 0) ? new Version(extraVersion.getMajor(), extraVersion.getMinor(), extraVersion.getMicro() + 1) : "1.0.0"
+				version = dateString
 			}
 		}
 	}

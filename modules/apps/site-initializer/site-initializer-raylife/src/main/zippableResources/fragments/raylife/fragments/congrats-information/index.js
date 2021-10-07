@@ -12,145 +12,115 @@
  * details.
  */
 
-const applicationIdKey = 'raylife-application-id';
+const applicationId = localStorage.getItem('raylife-application-id');
+const productId = localStorage.getItem('raylife-product-id');
+const businessType = JSON.parse(localStorage.getItem('raylife-business-home'));
 
-const check = fragmentElement.querySelector("#hidden-images #check");
-const uncheck = fragmentElement.querySelector("#hidden-images #uncheck");
+const fetchHeadless = async (url) => {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(`${window.location.origin}/${url}`, {
+		headers: {
+			'Content-Type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+	});
 
-const data = {
-    productName: "Business Owners Policy",
-    policyTerm: "10/1/2019 - 10/1/2020",
-    price: "1,225",
-    infoOne: {
-        checked: true,
-        value: "1,000,000"
-    },
-    infoTwo: {
-        checked: true,
-        value: "2,000,000"
-    },
-    infoThree: {
-        checked: true,
-        value: "50,000"
-    },
-    infoFour: {
-        checked: true,
-        value: "100,000"
-    },
-    infoFive: {
-        checked: true,
-        value: "500,000"
-    },
+	const data = await response.json();
+
+	return data;
 };
 
-const productName = document.getElementById(
-    'congrats-information-title'
-);
-productName.innerHTML = data.productName;
+const setValueToElement = (element, value) => {
+	if (element) {
+		element.innerHTML = value;
+	}
+};
 
-const newPolicyNumber = localStorage.getItem(applicationIdKey);
-if (newPolicyNumber) {
-    document.getElementById('congrats-information-policy').textContent =
-        'Policy: #' + newPolicyNumber;
-}
+var currencyIntl = new Intl.NumberFormat('en-US', {
+	currency: 'USD',
+});
 
-const policyTerm = document.getElementById(
-    'congrats-information-date'
-);
-policyTerm.innerHTML = data.policyTerm;
+const formatValue = (value) => {
+	if (value === 'true' || value === 'false' || typeof value === 'boolean') {
+		return JSON.parse(value);
+	}
 
+	return `$${currencyIntl.format(value)}`;
+};
 
-const policyAmount = document.getElementById(
-    'congrats-information-price-first'
-);
-policyAmount.innerHTML = "$" + data.price;
+const buildList = (items = []) => {
+	const tbody = document.querySelector('.congrats-table-info tbody');
 
-const imageOne = document.getElementById(
-    'congrats-table-info-check-one'
-);
-const priceOneChecked = document.getElementById(
-    'price-one'
-);
-const priceOneUnchecked = document.getElementById(
-    'list-info'
-);
-if (data.infoOne.checked) {
-    imageOne.src = check.currentSrc;
-    priceOneChecked.innerHTML = "$" + data.infoOne.value;
-} else {
-    priceOne.innerHTML = "&nbsp;";
-    imageOne.src = uncheck.currentSrc;
-    priceOneUnchecked.style.color = "#A0A0A4";
-}
+	tbody.innerHTML = items
+		.map(({title, value}) => {
+			const formattedValue = formatValue(value);
+			const imageSrc = formattedValue
+				? document.querySelector('.congrats-information #check')
+						?.currentSrc
+				: document.querySelector('.congrats-information #close')
+						?.currentSrc;
 
-const imageTwo = document.getElementById(
-    'congrats-table-info-check-two'
-);
-const priceTwoChecked = document.getElementById(
-    'price-two'
-);
-const priceTwoUnchecked = document.getElementById(
-    'list-info'
-);
-if (data.infoTwo.checked) {
-    imageTwo.src = check.currentSrc;
-    priceTwoChecked.innerHTML = "$" + data.infoTwo.value;
-} else {
-    priceTwo.innerHTML = "&nbsp;";
-    imageTwo.src = uncheck.currentSrc;
-    priceTwoUnchecked.style.color = "#A0A0A4";
-}
+			return `<tr>
+			<td>
+				<img alt="icon" src="${imageSrc}" />
+				${title}
+			</td>
+			<td>${typeof formattedValue === 'string' ? formattedValue : ''}</td>
+			</tr>`;
+		})
+		.join('');
+};
 
-const imageThree = document.getElementById(
-    'congrats-table-info-check-three'
-);
-const priceThreeChecked = document.getElementById(
-    'price-three'
-);
-const priceThreeUnchecked = document.getElementById(
-    'list-info'
-);
-if (data.infoThree.checked) {
-    imageThree.src = check.currentSrc;
-    priceThreeChecked.innerHTML = "$" + data.infoThree.value;
-} else {
-    priceThree.innerHTML = "&nbsp;";
-    imageThree.src = uncheck.currentSrc;
-    priceThreeUnchecked.style.color = "#A0A0A4";
-}
+const main = async () => {
+	const [application, quoteComparison] = await Promise.all([
+		fetchHeadless(`o/c/raylifeapplications/${applicationId}`),
+		fetchHeadless(`o/c/quotecomparisons/${productId}`),
+	]);
 
-const imageFour = document.getElementById(
-    'congrats-table-info-check-four'
-);
-const priceFourChecked = document.getElementById(
-    'price-four'
-);
-const priceFourUnchecked = document.getElementById(
-    'list-info'
-);
-if (data.infoFour.checked) {
-    imageFour.src = check.currentSrc;
-    priceFourChecked.innerHTML = "$" + data.infoFour.value;
-} else {
-    priceFour.innerHTML = "&nbsp;";
-    imageFour.src = uncheck.currentSrc;
-    priceFourUnchecked.style.color = "#A0A0A4";
-}
+	const quoteDate = new Date(application.dateCreated);
+	const quoteDateNextYear = new Date(
+		new Date(quoteDate).setFullYear(quoteDate.getFullYear() + 1)
+	);
 
-const imageFive = document.getElementById(
-    'congrats-table-info-check-five'
-);
-const priceFiveChecked = document.getElementById(
-    'price-five'
-);
-const priceFiveUnchecked = document.getElementById(
-    'list-info'
-);
-if (data.infoFive.checked) {
-    imageFive.src = check.currentSrc;
-    priceFiveChecked.innerHTML = "$" + data.infoFive.value;
-} else {
-    priceFive.innerHTML = "&nbsp;";
-    imageFive.src = uncheck.currentSrc;
-    priceFiveUnchecked.style.color = "#A0A0A4";
-}
+	setValueToElement(
+		document.querySelector('#congrats-info-title'),
+		businessType.product
+	);
+	setValueToElement(
+		document.querySelector('#congrats-info-policy'),
+		`Policy: #${applicationId}`
+	);
+	setValueToElement(
+		document.querySelector('#congrats-price'),
+		`$${quoteComparison.price}`
+	);
+	setValueToElement(
+		document.querySelector('#congrats-info-date'),
+		`${quoteDate.toLocaleDateString()} - ${quoteDateNextYear.toLocaleDateString()}`
+	);
+
+	buildList([
+		{
+			title: 'Per Occurrence Limit',
+			value: quoteComparison.perOccuranceLimit,
+		},
+		{
+			title: 'Aggregate Limit',
+			value: quoteComparison.aggregateLimit,
+		},
+		{
+			title: 'Business Personal Property',
+			value: quoteComparison.businessPersonalProperty,
+		},
+		{
+			title: 'Product Recall or Replacement',
+			value: quoteComparison.productRecallOrReplacement,
+		},
+		{
+			title: 'Money & Securities',
+			value: quoteComparison.moneyAndSecurities || false,
+		},
+	]);
+};
+
+main();

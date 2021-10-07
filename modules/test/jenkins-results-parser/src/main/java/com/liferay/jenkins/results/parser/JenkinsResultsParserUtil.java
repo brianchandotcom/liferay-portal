@@ -2977,7 +2977,7 @@ public class JenkinsResultsParserUtil {
 
 		Matcher matcher = _shaPattern.matcher(sha);
 
-		return matcher.find();
+		return matcher.matches();
 	}
 
 	public static boolean isWindows() {

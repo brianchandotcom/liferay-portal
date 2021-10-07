@@ -3,27 +3,11 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_change_tracking_web_portlet_PublicationsConfigurationPortlet</portlet-name>
-		<permissions>
-			<supports>
-				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-unsupported>
-				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
-				<action-key>VIEW</action-key>
-			</guest-unsupported>
-		</permissions>
-	</portlet-resource>
-	<portlet-resource>
 		<portlet-name>com_liferay_change_tracking_web_portlet_PublicationsPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
+				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
@@ -32,6 +16,7 @@
 			</site-member-defaults>
 			<guest-unsupported>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
+				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>

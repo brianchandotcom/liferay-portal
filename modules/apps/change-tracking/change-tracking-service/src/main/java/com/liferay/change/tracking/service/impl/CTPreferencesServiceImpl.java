@@ -108,7 +108,7 @@ public class CTPreferencesServiceImpl extends CTPreferencesServiceBaseImpl {
 		throws PortalException {
 
 		_portletPermission.check(
-			getPermissionChecker(), CTPortletKeys.PUBLICATIONS_CONFIGURATION,
+			getPermissionChecker(), CTPortletKeys.PUBLICATIONS,
 			ActionKeys.CONFIGURATION);
 
 		if (enable) {

@@ -215,6 +215,10 @@ public class PortalWorkspace extends BaseWorkspace {
 		String gitCommit = primaryWorkspaceGitRepository.getFileContent(
 			gitCommitFilePath);
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(gitCommit)) {
+			return;
+		}
+
 		if (JenkinsResultsParserUtil.isSHA(gitCommit)) {
 			workspaceGitRepository.setSenderBranchSHA(gitCommit);
 

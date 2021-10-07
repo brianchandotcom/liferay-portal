@@ -72,7 +72,7 @@ public class InformationTemplatesTemplateDisplayContext
 	public String getTemplateEntryEditURL(TemplateEntry templateEntry)
 		throws PortalException {
 
-		if (!isAddButtonEnabled() ||
+		if (!isStagingGroup() ||
 			!TemplateEntryPermission.contains(
 				themeDisplay.getPermissionChecker(), templateEntry,
 				ActionKeys.UPDATE)) {

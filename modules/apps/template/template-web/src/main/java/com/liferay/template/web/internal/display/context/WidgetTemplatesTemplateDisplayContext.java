@@ -95,7 +95,7 @@ public class WidgetTemplatesTemplateDisplayContext
 	public String getDDMTemplateEditURL(DDMTemplate ddmTemplate)
 		throws PortalException {
 
-		if (!isAddButtonEnabled() ||
+		if (!isStagingGroup() ||
 			!DDMTemplatePermission.contains(
 				themeDisplay.getPermissionChecker(), ddmTemplate,
 				ActionKeys.UPDATE)) {

@@ -176,12 +176,39 @@ definition {
 
 	}
 
-	@description = "This is a test for LRQA-69701. Verify that the user can reject a thread. "
-	@ignore = "Test Stub"
+	@description = "This is a test for LRQA-69701. Verify that the user can reject a thread."
 	@priority = "3"
 	test CanRejectAThread {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
 
-		// TODO LRQA-69701 CanRejectAThread pending implementation
+		MessageboardsThread.addWithWorkflowCP(
+			threadBody = "Thread Message Body",
+			threadSubject = "Thread Message Subject");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Thread Message Subject",
+			workflowAssetType = "Message Boards Message",
+			workflowTask = "Review");
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Thread Message Subject",
+			workflowAssetType = "Message Boards Message",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
+
+		AssertElementPresent(
+			key_resultBarMessage = "Pending",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+		
 
 	}
 

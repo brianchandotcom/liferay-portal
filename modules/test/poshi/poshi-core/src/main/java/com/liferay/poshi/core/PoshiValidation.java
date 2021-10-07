@@ -950,8 +950,8 @@ public class PoshiValidation {
 
 		if (attributeName.contains("Url")) {
 			_exceptions.add(
-				new ValidationException(
-					element, "Please change Url to URL\n", filePath));
+					new ValidationException(element, "Invalid macro command name: ", attributeName, ". Use 'URL' instead of 'Url'.\n", filePath));
+
 		}
 	}
 

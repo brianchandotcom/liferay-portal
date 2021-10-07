@@ -541,7 +541,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				_commerceOrderThreadLocal.set(persistenceCommerceOrder);
 			}
 
-			if ((commerceAccount.getCommerceAccountId() ==
+			if ((commerceAccount == null) ||
+				(commerceAccount.getCommerceAccountId() ==
 					CommerceAccountConstants.ACCOUNT_ID_GUEST) ||
 				(commerceAccount.getCommerceAccountId() ==
 					commerceOrder.getCommerceAccountId())) {

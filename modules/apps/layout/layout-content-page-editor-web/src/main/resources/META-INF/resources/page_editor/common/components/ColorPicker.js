@@ -16,9 +16,10 @@ import DropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
-import React, {useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 
 import {config} from '../../app/config/index';
+import SearchForm from '../../common/components/SearchForm';
 
 const ColorPicker = ({
 	colors,
@@ -32,6 +33,49 @@ const ColorPicker = ({
 	const dropdownContainerRef = useRef(null);
 
 	const [active, setActive] = useState(false);
+	const [searchValue, setSearchValue] = useState(false);
+
+	const getFilteredColors = (colors, searchValue) => {
+		const isFoundValue = (value) =>
+			value.toLowerCase().includes(searchValue);
+
+		return Object.entries(colors).reduce((acc, [category, tokenSets]) => {
+			const newTokenSets = isFoundValue(category)
+				? tokenSets
+				: Object.entries(tokenSets).reduce(
+						(acc, [tokenSet, tokenColors]) => {
+							const newColors = isFoundValue(tokenSet)
+								? tokenColors
+								: tokenColors.filter((color) =>
+										isFoundValue(color.label || color.value)
+								  );
+
+							return {
+								...acc,
+								...(newColors.length && {
+									[tokenSet]: newColors,
+								}),
+							};
+						},
+						{}
+				  );
+
+			return {
+				...acc,
+				...(Object.keys(newTokenSets).length && {
+					[category]: newTokenSets,
+				}),
+			};
+		}, {});
+	};
+
+	const filteredColors = useMemo(
+		() =>
+			config.tokenOptimizationEnabled && searchValue
+				? getFilteredColors(colors, searchValue.toLowerCase())
+				: colors,
+		[colors, searchValue]
+	);
 
 	return (
 		<FocusScope arrowKeysUpDown={false}>
@@ -72,8 +116,12 @@ const ColorPicker = ({
 					>
 						{config.tokenOptimizationEnabled ? (
 							<>
+								<SearchForm
+									className="flex-grow-1"
+									onChange={setSearchValue}
+								/>
 								<ColorPalette
-									colors={colors}
+									colors={filteredColors}
 									onSetActive={setActive}
 									onValueChange={onValueChange}
 									splotchRef={splotchRef}

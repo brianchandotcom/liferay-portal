@@ -358,13 +358,16 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 				active={menuActive}
 				onActiveChange={setMenuActive}
 				trigger={
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('actions')}
+					<ClayButton
 						className="component-action dropdown-toggle ml-1"
 						disabled={loading}
 						displayType="unstyled"
-						symbol="ellipsis-v"
-					/>
+					>
+						<ClayIcon symbol="ellipsis-v" />
+						<span className="sr-only">
+							{Liferay.Language.get('actions')}
+						</span>
+					</ClayButton>
 				}
 			>
 				<ClayDropDown.ItemList>

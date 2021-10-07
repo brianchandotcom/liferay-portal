@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
@@ -56,16 +56,16 @@ const FieldsSelectorDropdown = ({fields}) => {
 			className="ml-auto"
 			onActiveChange={setActive}
 			trigger={
-				<ClayButtonWithIcon
-					aria-label={
-						active
+				<ClayButton borderless displayType="secondary">
+					<ClayIcon
+						symbol={active ? 'caret-top' : 'caret-bottom'}
+					/>
+					<span className="sr-only">
+						{active
 							? Liferay.Language.get('close-fields-menu')
-							: Liferay.Language.get('open-fields-menu')
-					}
-					borderless
-					displayType="secondary"
-					symbol={active ? 'caret-top' : 'caret-bottom'}
-				/>
+							: Liferay.Language.get('open-fields-menu')}
+					</span>
+				</ClayButton>
 			}
 		>
 			<ClayDropDown.Search

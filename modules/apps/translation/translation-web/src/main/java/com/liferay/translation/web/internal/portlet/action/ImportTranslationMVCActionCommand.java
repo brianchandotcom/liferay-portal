@@ -52,6 +52,7 @@ import com.liferay.translation.service.TranslationEntryService;
 import com.liferay.translation.snapshot.TranslationSnapshot;
 import com.liferay.translation.snapshot.TranslationSnapshotProvider;
 import com.liferay.translation.url.provider.TranslationURLProvider;
+import com.liferay.translation.web.internal.display.context.ImportTranslationResultsDisplayContext;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -165,8 +166,13 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			HttpSession httpSession = httpServletRequest.getSession();
 
-			httpSession.setAttribute("failureEntries", failureEntries);
-			httpSession.setAttribute("successEntries", successEntries);
+			httpSession.setAttribute(
+				ImportTranslationResultsDisplayContext.class.getName(),
+				new ImportTranslationResultsDisplayContext(
+					classNameId, classPK, groupId, failureEntries, fileName,
+					httpServletRequest,
+					_portal.getLiferayPortletResponse(actionResponse),
+					successEntries, title));
 		}
 		catch (Exception exception) {
 			try {

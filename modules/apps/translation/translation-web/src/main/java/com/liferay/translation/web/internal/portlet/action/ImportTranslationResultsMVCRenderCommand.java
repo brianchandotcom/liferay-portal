@@ -15,13 +15,9 @@
 package com.liferay.translation.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.web.internal.display.context.ImportTranslationResultsDisplayContext;
-
-import java.util.List;
-import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -49,34 +45,19 @@ public class ImportTranslationResultsMVCRenderCommand
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
-		long classPK = ParamUtil.getLong(renderRequest, "classPK");
-		long groupId = ParamUtil.getLong(renderRequest, "groupId");
-		String fileName = ParamUtil.getString(renderRequest, "fileName");
-		String title = ParamUtil.getString(renderRequest, "title");
-
 		HttpServletRequest httpServletRequest =
 			_portal.getOriginalServletRequest(
 				_portal.getHttpServletRequest(renderRequest));
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		Map<String, String> failureEntries =
-			(Map<String, String>)httpSession.getAttribute("failureEntries");
-
-		List<String> successEntries = (List<String>)httpSession.getAttribute(
-			"successEntries");
-
 		renderRequest.setAttribute(
 			ImportTranslationResultsDisplayContext.class.getName(),
-			new ImportTranslationResultsDisplayContext(
-				classNameId, classPK, groupId, failureEntries, fileName,
-				_portal.getHttpServletRequest(renderRequest),
-				_portal.getLiferayPortletResponse(renderResponse),
-				successEntries, title));
+			httpSession.getAttribute(
+				ImportTranslationResultsDisplayContext.class.getName()));
 
-		httpSession.removeAttribute("failureEntries");
-		httpSession.removeAttribute("successEntries");
+		httpSession.removeAttribute(
+			ImportTranslationResultsDisplayContext.class.getName());
 
 		return "/import_translation_results.jsp";
 	}

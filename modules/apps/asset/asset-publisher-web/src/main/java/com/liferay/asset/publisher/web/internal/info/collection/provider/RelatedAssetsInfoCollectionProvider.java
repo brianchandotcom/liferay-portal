@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.internal.info.collection.provider;
+package com.liferay.asset.publisher.web.internal.info.collection.provider;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;

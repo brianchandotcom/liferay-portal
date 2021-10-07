@@ -13,6 +13,7 @@
 .courses .btn {
 	border-radius: 0;
 	font-size: 15px;
+	margin: 0;
 }
 
 .courses .btn-play.active {
@@ -23,8 +24,10 @@
 
 .courses .btn-play.active:before {
 	content: '▶';
-	font-size: 12px;
-	margin-right: 6px;
+    font-size: 12px;
+    position: absolute;
+    left: 24px;
+    margin-top: 2px;
 }
 
 .courses .fullscreen {

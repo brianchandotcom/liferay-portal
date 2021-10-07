@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 public class CommerceOrderRuleEntryImpl extends CommerceOrderRuleEntryBaseImpl {
 
 	@Override
-	public void setTypeSettingsProperties(UnicodeProperties unicodeProperties) {
-		super.setTypeSettings(unicodeProperties.toString());
+	public void setTypeSettingsUnicodeProperties(
+		UnicodeProperties typeSettingsUnicodeProperties) {
+
+		super.setTypeSettings(typeSettingsUnicodeProperties.toString());
 	}
 
 }

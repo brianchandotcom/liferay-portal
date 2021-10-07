@@ -130,7 +130,7 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 				typeSettings
 			).build();
 
-		commerceOrderRuleEntry.setTypeSettingsProperties(
+		commerceOrderRuleEntry.setTypeSettingsUnicodeProperties(
 			typeSettingsUnicodeProperties);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
@@ -447,7 +447,7 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 				typeSettings
 			).build();
 
-		commerceOrderRuleEntry.setTypeSettingsProperties(
+		commerceOrderRuleEntry.setTypeSettingsUnicodeProperties(
 			typeSettingsUnicodeProperties);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {

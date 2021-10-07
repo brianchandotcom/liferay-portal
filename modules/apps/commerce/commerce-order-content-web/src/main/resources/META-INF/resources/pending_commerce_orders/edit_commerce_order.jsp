@@ -56,7 +56,21 @@ if (commerceOrder != null) {
 
 List<CommerceAddress> shippingAddresses = commerceOrderContentDisplayContext.getShippingCommerceAddresses(commerceAccount.getCommerceAccountId(), commerceAccount.getCompanyId());
 List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getBillingCommerceAddresses(commerceAccount.getCommerceAccountId(), commerceAccount.getCompanyId());
+
+List<String> errorMessages = (List<String>)request.getAttribute("errorMessages");
 %>
+
+<c:if test="<%= (errorMessages != null) && !errorMessages.isEmpty() %>">
+	<script>
+		Liferay.Util.openModal({
+			bodyHTML: '<%= errorMessages.get(0) %>',
+			title: '<liferay-ui:message key="warning" />',
+			center: true,
+			size: 'm',
+			status: 'warning',
+		});
+	</script>
+</c:if>
 
 <portlet:actionURL name="/commerce_open_order_content/edit_commerce_order" var="editCommerceOrderActionURL">
 	<portlet:param name="mvcRenderCommandName" value="/commerce_open_order_content/edit_commerce_order" />

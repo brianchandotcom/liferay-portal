@@ -63,6 +63,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -180,6 +181,14 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private static String _getMustHaveValidIdMessage(String className) {
+		if (className.equals(Layout.class.getName())) {
+			return "the-translation-file-does-not-correspond-to-this-page";
+		}
+
+		return "the-translation-file-does-not-correspond-to-this-web-content";
+	}
+
 	private void _checkContentType(String contentType)
 		throws XLIFFFileException {
 
@@ -233,14 +242,6 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, className, classPK, ActionKeys.UPDATE);
 		}
-	}
-
-	private String _getMustHaveValidIdMessage(String className) {
-		if (className.equals(Layout.class.getName())) {
-			return "the-translation-file-does-not-correspond-to-this-page";
-		}
-
-		return "the-translation-file-does-not-correspond-to-this-web-content";
 	}
 
 	private String _getRedirect(
@@ -347,46 +348,47 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				locale, getClass());
 
-			if (xliffFileException instanceof
-					XLIFFFileException.MustHaveValidId) {
+			Function<String, String> exceptionMessageFunction =
+				_exceptionMessageFunctions.get(xliffFileException.getClass());
 
-				failureEntries.put(
-					fileName,
-					_language.get(
-						resourceBundle, _getMustHaveValidIdMessage(className)));
-			}
-			else {
-				failureEntries.put(
-					fileName,
-					_language.get(
-						resourceBundle,
-						_exceptionMessageMap.get(
-							xliffFileException.getClass())));
-			}
+			failureEntries.put(
+				fileName,
+				_language.get(
+					resourceBundle, exceptionMessageFunction.apply(className)));
 		}
 	}
 
-	private static final Map<Class<?>, String> _exceptionMessageMap =
-		HashMapBuilder.<Class<?>, String>put(
-			XLIFFFileException.MustBeSupportedLanguage.class,
-			"the-xliff-file-has-an-unavailable-language-translation"
-		).put(
-			XLIFFFileException.MustBeValid.class,
-			"the-file-is-an-invalid-xliff-file"
-		).put(
-			XLIFFFileException.MustBeWellFormed.class,
-			"the-xliff-file-does-not-have-all-needed-fields"
-		).put(
-			XLIFFFileException.MustHaveCorrectEncoding.class,
-			"the-translation-file-has-an-incorrect-encoding.the-supported-" +
-				"encoding-format-is-utf-8"
-		).put(
-			XLIFFFileException.MustHaveValidParameter.class,
-			"the-xliff-file-has-invalid-parameters"
-		).put(
-			XLIFFFileException.MustNotHaveMoreThanOne.class,
-			"the-xliff-file-is-invalid"
-		).build();
+	private static final Map
+		<Class<? extends Exception>, Function<String, String>>
+			_exceptionMessageFunctions =
+				HashMapBuilder.
+					<Class<? extends Exception>, Function<String, String>>put(
+						XLIFFFileException.MustBeSupportedLanguage.class,
+						s ->
+							"the-xliff-file-has-an-unavailable-language-" +
+								"translation"
+					).put(
+						XLIFFFileException.MustBeValid.class,
+						s -> "the-file-is-an-invalid-xliff-file"
+					).put(
+						XLIFFFileException.MustBeWellFormed.class,
+						s -> "the-xliff-file-does-not-have-all-needed-fields"
+					).put(
+						XLIFFFileException.MustHaveCorrectEncoding.class,
+						s ->
+							"the-translation-file-has-an-incorrect-encoding." +
+								"the-supported-encoding-format-is-utf-8"
+					).put(
+						XLIFFFileException.MustHaveValidId.class,
+						ImportTranslationMVCActionCommand::
+							_getMustHaveValidIdMessage
+					).put(
+						XLIFFFileException.MustHaveValidParameter.class,
+						s -> "the-xliff-file-has-invalid-parameters"
+					).put(
+						XLIFFFileException.MustNotHaveMoreThanOne.class,
+						s -> "the-xliff-file-is-invalid"
+					).build();
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

@@ -136,9 +136,31 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 			setCanDrag(true);
 
 			if (nextSizes) {
+
+				// When we are resizing some columns in a viewport that is not
+				// Desktop, we need to set a size for all columns that does not
+				// have one, so they don't inherit it anymore
+
+				const siblingSizes = {};
+
+				if (selectedViewportSize !== VIEWPORT_SIZES.desktop) {
+					const siblingsWithoutSize = parentItem.children.filter(
+						(sibling) => !nextSizes[sibling]
+					);
+
+					siblingsWithoutSize.forEach((sibling) => {
+						const siblingItem = layoutData.items[sibling];
+
+						siblingSizes[sibling] = getResponsiveColumnSize(
+							siblingItem.config,
+							selectedViewportSize
+						);
+					});
+				}
+
 				const nextLayoutData = getNextLayoutData(
 					layoutData,
-					nextSizes,
+					{...nextSizes, ...siblingSizes},
 					selectedViewportSize
 				);
 
@@ -159,7 +181,7 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 		[
 			dispatch,
 			layoutData,
-			parentItem.itemId,
+			parentItem,
 			segmentsExperienceId,
 			selectedViewportSize,
 			setCanDrag,

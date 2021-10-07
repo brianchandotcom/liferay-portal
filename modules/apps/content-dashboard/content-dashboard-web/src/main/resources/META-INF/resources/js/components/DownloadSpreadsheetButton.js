@@ -18,40 +18,12 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classnames from 'classnames';
-import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-let controller = null;
-let defaultDelayTimeout = null
-let feedbackDelayTimeout = null
-
-const fetchFile = async (url) => {
-	controller = new AbortController();
-
-	const response = await fetch(url, {
-		method: 'GET',
-		signal: controller.signal,
-	});
-
-	const blob = await response.blob();
-
-	return blob;
-};
-
-const downloadFileFromBlob = (blob) => {
-	const file = URL.createObjectURL(blob);
-
-	var fileLink = document.createElement('a');
-	fileLink.href = file;
-
-	const today = new Date();
-	const filename = `content-dashboard-report-${today.toLocaleDateString(
-		'en-US'
-	)}`;
-	fileLink.download = filename;
-
-	fileLink.click();
-};
+import {
+	downloadFileFromBlob,
+	fetchFile,
+} from '../utils/downloadSpreadsheetUtils';
 
 const initialToastState = {
 	content: null,
@@ -65,10 +37,15 @@ const initialFeedbackState = {
 	type: null,
 };
 
+let fetchController = null;
+
 const DownloadSpreadsheetButton = ({fileURL, total}) => {
 	const [loading, setLoading] = useState(false);
 	const [toastMessage, setToastMessage] = useState(initialToastState);
 	const [feedbackStatus, setFeedbackStatus] = useState(initialFeedbackState);
+
+	let defaultDelayTimeout = null;
+	let feedbackDelayTimeout = null;
 
 	const handleSuccess = () => {
 		setToastMessage((current) => ({
@@ -152,24 +129,26 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 		setLoading(true);
 
 		try {
-			const blob = await fetchFile(fileURL);
+			fetchController = new AbortController();
+			const blob = await fetchFile({
+				controller: fetchController,
+				url: fileURL,
+			});
 
 			downloadFileFromBlob(blob);
 
 			handleSuccess();
-		}
-		catch (error) {
+		} catch (error) {
 			const abortedRequest = error.name === 'AbortError' ? true : false;
 
 			handleError({abortedRequest, error});
-		}
-		finally {
+		} finally {
 			handleUIState();
 		}
 	};
 
 	const handleCancelRequest = () => {
-		controller.abort();
+		fetchController.abort();
 	};
 
 	const handleToastClose = () => {

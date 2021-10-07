@@ -61,8 +61,11 @@ public class InfoFieldUtil {
 			return;
 		}
 
-		List<FragmentEntryLink> fragmentEntryLinks = _getFragmentEntryLinks(
-			layout, segmentsExperienceId);
+		List<FragmentEntryLink> fragmentEntryLinks =
+			FragmentEntryLinkLocalServiceUtil.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					layout.getGroupId(), segmentsExperienceId,
+					layout.getPlid());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			String defaultElementName =
@@ -91,14 +94,6 @@ public class InfoFieldUtil {
 				}
 			}
 		}
-	}
-
-	private static List<FragmentEntryLink> _getFragmentEntryLinks(
-		Layout layout, long segmentsExperienceId) {
-
-		return FragmentEntryLinkLocalServiceUtil.
-			getFragmentEntryLinksBySegmentsExperienceId(
-				layout.getGroupId(), segmentsExperienceId, layout.getPlid());
 	}
 
 	private static String _getHtml(

@@ -22,6 +22,11 @@ html#{$cadmin-selector} {
 			line-height: 32px;
 			text-align: center;
 			width: 32px;
+
+			.portlet-options {
+				display: flex;
+				height: 32px;
+			}
 		}
 
 		a.control-menu-icon,
@@ -259,7 +264,7 @@ html#{$cadmin-selector} {
 			height: 16px;
 			margin-right: 16px;
 			position: relative;
-			top: 9px;
+			top: 8px;
 			width: 1px;
 		}
 

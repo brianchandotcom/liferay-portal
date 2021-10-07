@@ -59,7 +59,6 @@ import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.test.util.TemplateTestUtil;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -249,11 +248,10 @@ public class TemplateInfoItemFieldSetProviderTest {
 				articleTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
 
-		Locale defaultLocale = _portal.getSiteDefaultLocale(
-			_group.getGroupId());
-
 		Assert.assertEquals(
-			infoFieldValue.toString(), nameValue.getString(defaultLocale),
+			infoFieldValue.toString(),
+			nameValue.getString(
+				_portal.getSiteDefaultLocale(_group.getGroupId())),
 			infoFieldValue.getValue());
 	}
 

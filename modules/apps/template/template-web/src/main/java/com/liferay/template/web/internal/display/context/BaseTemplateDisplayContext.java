@@ -94,10 +94,16 @@ public abstract class BaseTemplateDisplayContext {
 	}
 
 	public boolean isAddButtonEnabled() {
-		if (!_ddmWebConfiguration.enableTemplateCreation()) {
+		if (!_ddmWebConfiguration.enableTemplateCreation() ||
+			!isStagingGroup()) {
+
 			return false;
 		}
 
+		return true;
+	}
+
+	public boolean isStagingGroup() {
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		if (!scopeGroup.hasLocalOrRemoteStagingGroup() ||

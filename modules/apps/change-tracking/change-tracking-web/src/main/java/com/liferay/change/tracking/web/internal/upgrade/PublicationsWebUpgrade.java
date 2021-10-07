@@ -55,7 +55,8 @@ public class PublicationsWebUpgrade implements UpgradeStepRegistrator {
 						{
 							"com_liferay_change_tracking_web_portlet_" +
 								"ChangeListsConfigurationPortlet",
-							CTPortletKeys.PUBLICATIONS_CONFIGURATION
+							"com_liferay_change_tracking_web_portlet_" +
+								"PublicationsConfigurationPortlet"
 						}
 					};
 				}

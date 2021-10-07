@@ -22,6 +22,10 @@ public class CTPortletKeys {
 	public static final String PUBLICATIONS =
 		"com_liferay_change_tracking_web_portlet_PublicationsPortlet";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String PUBLICATIONS_CONFIGURATION =
 		"com_liferay_change_tracking_web_portlet_" +
 			"PublicationsConfigurationPortlet";

@@ -256,6 +256,10 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void setUp() {
+		if (_setUp) {
+			return;
+		}
+
 		System.out.println(toString());
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
@@ -269,6 +273,10 @@ public abstract class BaseWorkspaceGitRepository
 		gitWorkingDirectory.clean();
 
 		gitWorkingDirectory.displayLog();
+
+		writePropertiesFiles();
+
+		_setUp = true;
 	}
 
 	@Override
@@ -690,6 +698,7 @@ public abstract class BaseWorkspaceGitRepository
 	private LocalGitBranch _localGitBranch;
 	private final Set<String> _propertyOptions = new HashSet<>();
 	private RemoteGitRef _senderRemoteGitRef;
+	private boolean _setUp;
 	private RemoteGitRef _upstreamRemoteGitRef;
 
 }

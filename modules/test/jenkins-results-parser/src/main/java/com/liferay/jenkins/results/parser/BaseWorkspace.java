@@ -106,8 +106,6 @@ public abstract class BaseWorkspace implements Workspace {
 				public Object call() {
 					workspaceGitRepository.setUp();
 
-					workspaceGitRepository.writePropertiesFiles();
-
 					return null;
 				}
 

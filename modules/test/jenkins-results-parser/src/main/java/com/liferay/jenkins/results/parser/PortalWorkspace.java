@@ -14,10 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Callable;
-
 import org.json.JSONObject;
 
 /**
@@ -32,8 +28,6 @@ public class PortalWorkspace extends BaseWorkspace {
 
 		primaryWorkspaceGitRepository.setUp();
 
-		primaryWorkspaceGitRepository.writePropertiesFiles();
-
 		_setUpPortalProfile();
 
 		_updateBladeSamplesWorkspaceGitRepository();
@@ -42,35 +36,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		_updatePortalsPlutoWorkspaceGitRepository();
 		_updateReleaseWorkspaceGitRepository();
 
-		List<Callable<Object>> callables = new ArrayList<>();
-
-		for (final WorkspaceGitRepository workspaceGitRepository :
-				getWorkspaceGitRepositories()) {
-
-			if (workspaceGitRepository.equals(primaryWorkspaceGitRepository)) {
-				continue;
-			}
-
-			Callable<Object> callable = new Callable<Object>() {
-
-				@Override
-				public Object call() {
-					workspaceGitRepository.setUp();
-
-					workspaceGitRepository.writePropertiesFiles();
-
-					return null;
-				}
-
-			};
-
-			callables.add(callable);
-		}
-
-		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
-			callables, threadPoolExecutor);
-
-		parallelExecutor.execute();
+		super.setUp();
 	}
 
 	protected PortalWorkspace(JSONObject jsonObject) {

@@ -1497,6 +1497,8 @@ definition {
 
 		Button.clickSubmitButton();
 
+		Refresh();
+
 		for (var column : list "3;United States - Southwest,5;1") {
 			key_columnNumber = StringUtil.extractFirst("${column}",";");
 			var currentValue = StringUtil.extractLast("${column}",";");

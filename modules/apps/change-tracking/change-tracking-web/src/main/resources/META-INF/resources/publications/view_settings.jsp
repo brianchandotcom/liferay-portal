@@ -34,7 +34,6 @@ if (publicationsConfigurationDisplayContext.isPublicationsEnabled()) {
 >
 	<aui:form action="<%= publicationsConfigurationDisplayContext.getActionURL() %>" method="post" name="fm">
 		<aui:input name="navigation" type="hidden" value="<%= publicationsConfigurationDisplayContext.getNavigation() %>" />
-		<aui:input name="redirectToOverview" type="hidden" value="<%= false %>" />
 
 		<clay:sheet>
 			<%@ include file="/publications/global_settings.jspf" %>

@@ -15,7 +15,7 @@
 --%>
 
 <clay:sheet-header>
-	<h2 class="sheet-title"><liferay-ui:message key="global-settings" /></h2>
+	<h2 class="sheet-title"><liferay-ui:message key="settings" /></h2>
 </clay:sheet-header>
 
 <clay:sheet-section>
@@ -26,45 +26,10 @@
 	<liferay-ui:error key="stagingEnabled" message="staging-is-enabled-for-at-least-one-site-or-asset-library-in-the-current-virtual-instance" />
 
 	<div class="form-group">
-		<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enablePublications" onClick='<%= liferayPortletResponse.getNamespace() + "updateSubmitRedirectToOverview()" %>' type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isPublicationsEnabled() %>" />
+		<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enablePublications" type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isPublicationsEnabled() %>" />
 	</div>
 </clay:sheet-section>
 
-<%
-boolean hasConfigurationPermission = PortletPermissionUtil.contains(permissionChecker, CTPortletKeys.PUBLICATIONS, ActionKeys.CONFIGURATION);
-%>
-
 <clay:sheet-footer>
-	<aui:button disabled="<%= !hasConfigurationPermission %>" primary="<%= true %>" type="submit" value="submit" />
-
-	<aui:button disabled="<%= !hasConfigurationPermission || !publicationsConfigurationDisplayContext.isPublicationsEnabled() %>" name="submitRedirectToOverview" onClick='<%= liferayPortletResponse.getNamespace() + "doSubmitRedirectToOverview()" %>' primary="<%= false %>" type="submit" value="save-and-go-to-overview" />
+	<aui:button primary="<%= true %>" type="submit" value="save" />
 </clay:sheet-footer>
-
-<script>
-	function <portlet:namespace />doSubmitRedirectToOverview() {
-		event.preventDefault();
-
-		var form = document.<portlet:namespace />fm;
-
-		var redirectToOverviewInput = form.<portlet:namespace />redirectToOverview;
-
-		redirectToOverviewInput.value = true;
-
-		submitForm(form);
-	}
-
-	function <portlet:namespace />updateSubmitRedirectToOverview() {
-		if (<%= !hasConfigurationPermission %>) {
-			return;
-		}
-
-		var form = document.<portlet:namespace />fm;
-
-		var enablePublicationsInput = form.<portlet:namespace />enablePublications;
-
-		Liferay.Util.toggleDisabled(
-			'#<portlet:namespace />submitRedirectToOverview',
-			!enablePublicationsInput.checked
-		);
-	}
-</script>

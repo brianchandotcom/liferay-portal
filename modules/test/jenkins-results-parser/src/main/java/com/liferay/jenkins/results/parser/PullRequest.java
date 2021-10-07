@@ -364,16 +364,15 @@ public class PullRequest {
 	}
 
 	public List<String> getPassingTestSuites() {
-		List<String> passingTestSuites = new ArrayList<>();
+		List<String> testSuiteNames = new ArrayList<>();
 
 		JSONArray statusesJSONArray = getSenderSHAStatusesJSONArray();
 
 		for (int i = 0; i < statusesJSONArray.length(); i++) {
 			JSONObject jsonObject = statusesJSONArray.getJSONObject(i);
 
-			String description = jsonObject.getString("description");
-
-			Matcher matcher = _passingStatusPattern.matcher(description);
+			Matcher matcher = _liferayContextPattern.matcher(
+				jsonObject.getString("context"));
 
 			if (!matcher.find()) {
 				continue;
@@ -381,14 +380,16 @@ public class PullRequest {
 
 			String testSuiteName = matcher.group("testSuiteName");
 
-			if (passingTestSuites.contains(testSuiteName)) {
+			if (testSuiteNames.contains(testSuiteName) ||
+				!Objects.equals("success", jsonObject.getString("state"))) {
+
 				continue;
 			}
 
-			passingTestSuites.add(testSuiteName);
+			testSuiteNames.add(testSuiteName);
 		}
 
-		return passingTestSuites;
+		return testSuiteNames;
 	}
 
 	public String getReceiverUsername() {
@@ -517,7 +518,7 @@ public class PullRequest {
 		return false;
 	}
 
-	public boolean hasRequiredPassingSuites() {
+	public boolean hasRequiredPassingTestSuites() {
 		String requiredPassingSuites;
 
 		try {
@@ -1022,8 +1023,8 @@ public class PullRequest {
 		JenkinsResultsParserUtil.combine(
 			"https://github.com/(?<owner>[^/]+)/",
 			"(?<gitHubRemoteGitRepositoryName>[^/]+)/pull/(?<number>\\d+)"));
-	private static final Pattern _passingStatusPattern = Pattern.compile(
-		"\"ci:test:(?<testSuiteName>[^\"]+)\"\\s*has PASSED.");
+	private static final Pattern _liferayContextPattern = Pattern.compile(
+		"liferay/ci:test:(?<testSuiteName>[^:]+)");
 
 	private Boolean _autoCloseCommentAvailable;
 	private String _ciMergeSHA = "";

@@ -42,7 +42,7 @@
 			<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="52l34J8D" name="Module1Name" type="text">
-			<dynamic-content language-id="en_US"><![CDATA[Product Design Fundamentals]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[Design Fundamentals]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="jvTFfCuc" name="Module1Duration" type="text">
 			<dynamic-content language-id="en_US"><![CDATA[1 week]]></dynamic-content>

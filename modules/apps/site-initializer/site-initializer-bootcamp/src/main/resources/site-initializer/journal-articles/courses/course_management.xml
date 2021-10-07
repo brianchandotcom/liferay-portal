@@ -74,7 +74,7 @@
 			<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="l17Ounw6" name="Module3Name" type="text">
-			<dynamic-content language-id="en_US"><![CDATA[Building and Refining Products]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[Refining Products]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="CQRGFie1" name="Module3Duration" type="text">
 			<dynamic-content language-id="en_US"><![CDATA[2 weeks]]></dynamic-content>

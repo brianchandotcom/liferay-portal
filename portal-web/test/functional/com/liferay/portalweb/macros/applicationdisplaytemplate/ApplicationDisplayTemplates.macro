@@ -76,9 +76,9 @@ definition {
 
 		PortletEntry.save();
 
-		AssertTextEquals(
-			locator1 = "ApplicationDisplayTemplates#ADT_TABLE_NAME_1",
-			value1 = "${adtType} Test ADT");
+		AssertVisible(
+			key_tableEntry = "${adtType} Test ADT",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 	}
 
 	macro editADTScript {
@@ -128,9 +128,9 @@ definition {
 	macro searchGlobalADT {
 		Search.searchCP(searchTerm = "${templateName}");
 
-		AssertTextEquals(
-			locator1 = "ApplicationDisplayTemplates#ADT_TABLE_NAME_1",
-			value1 = "${templateName}");
+		AssertVisible(
+			key_tableEntry = "${templateName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 	}
 
 	macro selectPortletADT {
@@ -156,9 +156,9 @@ definition {
 	}
 
 	macro viewTemplate {
-		AssertTextEquals(
-			locator1 = "ApplicationDisplayTemplates#ADT_TABLE_NAME_1",
-			value1 = "${adtType} Test ADT");
+		AssertVisible(
+			key_tableEntry = "${adtType} Test ADT",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 	}
 
 }

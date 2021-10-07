@@ -293,9 +293,9 @@ definition {
 			fieldName = "Asset Entry",
 			portletName = "Asset Publisher");
 
-		AssertTextEquals(
-			locator1 = "ApplicationDisplayTemplates#ADT_TABLE_NAME_1",
-			value1 = "Asset Publisher Test ADT");
+		AssertVisible(
+			key_tableEntry = "Asset Publisher Test ADT",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 
 		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name");
 
@@ -303,9 +303,9 @@ definition {
 			fieldName = "Blog Entries",
 			portletName = "Blogs");
 
-		AssertTextEquals(
-			locator1 = "ApplicationDisplayTemplates#ADT_TABLE_NAME_2",
-			value1 = "Blogs Test ADT");
+		AssertVisible(
+			key_tableEntry = "Blogs Test ADT",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 	}
 
 	@priority = "4"

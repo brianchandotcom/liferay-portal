@@ -57,9 +57,7 @@ const FieldsSelectorDropdown = ({fields}) => {
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton borderless displayType="secondary">
-					<ClayIcon
-						symbol={active ? 'caret-top' : 'caret-bottom'}
-					/>
+					<ClayIcon symbol={active ? 'caret-top' : 'caret-bottom'} />
 					<span className="sr-only">
 						{active
 							? Liferay.Language.get('close-fields-menu')

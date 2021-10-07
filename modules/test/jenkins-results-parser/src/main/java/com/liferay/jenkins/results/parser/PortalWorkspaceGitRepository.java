@@ -17,7 +17,10 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.json.JSONObject;
@@ -68,6 +71,26 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 		}
 	}
 
+	public void setUpTCKHome() {
+		Map<String, String> parameters = new HashMap<>();
+
+		String tckHome = JenkinsResultsParserUtil.getProperty(
+			_getPortalTestProperties(), "tck.home");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(tckHome)) {
+			parameters.put("tck.home", tckHome);
+		}
+
+		try {
+			AntUtil.callTarget(
+				getDirectory(), "build-test-tck.xml", "prepare-tck",
+				parameters);
+		}
+		catch (AntException antException) {
+			throw new RuntimeException(antException);
+		}
+	}
+
 	@Override
 	public void writePropertiesFiles() {
 		_writeAppServerPropertiesFile();
@@ -100,6 +123,10 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 		propertyOptions.add(getUpstreamBranchName());
 
 		return propertyOptions;
+	}
+
+	private Properties _getPortalTestProperties() {
+		return getProperties("portal.test.properties");
 	}
 
 	private void _writeAppServerPropertiesFile() {
@@ -144,7 +171,7 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 				getDirectory(),
 				JenkinsResultsParserUtil.combine(
 					"test.", System.getenv("HOSTNAME"), ".properties")),
-			getProperties("portal.test.properties"), true);
+			_getPortalTestProperties(), true);
 	}
 
 }

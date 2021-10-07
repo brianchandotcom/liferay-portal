@@ -46,8 +46,8 @@ public class CommerceOrderRuleEntryServiceImpl
 
 	@Override
 	public CommerceOrderRuleEntry addCommerceOrderRuleEntry(
-		String externalReferenceCode, boolean active, String description, String name,
-			int priority, String type, String typeSettings,
+			String externalReferenceCode, boolean active, String description,
+			String name, int priority, String type, String typeSettings,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -64,11 +64,12 @@ public class CommerceOrderRuleEntryServiceImpl
 			CommerceOrderRuleEntryActionKeys.ADD_COMMERCE_ORDER_RULE);
 
 		return commerceOrderRuleEntryLocalService.addCommerceOrderRuleEntry(
-			externalReferenceCode, getUserId(), active, description, name, priority, type,
-			typeSettings, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			externalReferenceCode, getUserId(), active, description, name,
+			priority, type, typeSettings, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override

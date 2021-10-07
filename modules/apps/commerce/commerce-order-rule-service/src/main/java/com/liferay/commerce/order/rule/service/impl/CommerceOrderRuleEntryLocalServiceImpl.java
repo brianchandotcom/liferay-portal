@@ -77,13 +77,14 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderRuleEntry addCommerceOrderRuleEntry(
-		String externalReferenceCode, long userId, boolean active, String description, String name,
-		int priority, String type, String typeSettings,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute,
-		boolean neverExpire, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, boolean active,
+			String description, String name, int priority, String type,
+			String typeSettings, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceOrderRuleEntry commerceOrderRuleEntry =
@@ -161,7 +162,7 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceOrderRuleEntry deleteCommerceOrderRuleEntry(
-		CommerceOrderRuleEntry commerceOrderRuleEntry)
+			CommerceOrderRuleEntry commerceOrderRuleEntry)
 		throws PortalException {
 
 		commerceOrderRuleEntryPersistence.remove(commerceOrderRuleEntry);
@@ -185,7 +186,7 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 
 	@Override
 	public CommerceOrderRuleEntry deleteCommerceOrderRuleEntry(
-		long commerceOrderRuleEntryId)
+			long commerceOrderRuleEntryId)
 		throws PortalException {
 
 		CommerceOrderRuleEntry commerceOrderRuleEntry =
@@ -198,9 +199,9 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 
 	@Override
 	public List<CommerceOrderRuleEntry>
-	getAccountAndChannelAndOrderTypeCommerceRuleEntries(
-		long companyId, long accountEntryId, long commerceChannelId,
-		long commerceOrderTypeId) {
+		getAccountAndChannelAndOrderTypeCommerceRuleEntries(
+			long companyId, long accountEntryId, long commerceChannelId,
+			long commerceOrderTypeId) {
 
 		return dslQuery(
 			_getGroupByStep(
@@ -231,8 +232,8 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 
 	@Override
 	public List<CommerceOrderRuleEntry>
-	getAccountAndOrderTypeCommerceRuleEntries(
-		long companyId, long accountEntryId, long commerceOrderTypeId) {
+		getAccountAndOrderTypeCommerceRuleEntries(
+			long companyId, long accountEntryId, long commerceOrderTypeId) {
 
 		return dslQuery(
 			_getGroupByStep(
@@ -262,9 +263,9 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 
 	@Override
 	public List<CommerceOrderRuleEntry>
-	getAccountGroupsAndChannelAndOrderTypeCommerceRuleEntries(
-		long companyId, long[] accountGroupIds, long commerceChannelId,
-		long commerceOrderTypeId) {
+		getAccountGroupsAndChannelAndOrderTypeCommerceRuleEntries(
+			long companyId, long[] accountGroupIds, long commerceChannelId,
+			long commerceOrderTypeId) {
 
 		return dslQuery(
 			_getGroupByStep(
@@ -280,8 +281,8 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 
 	@Override
 	public List<CommerceOrderRuleEntry>
-	getAccountGroupsAndChannelCommerceRuleEntries(
-		long companyId, long[] accountGroupIds, long commerceChannelId) {
+		getAccountGroupsAndChannelCommerceRuleEntries(
+			long companyId, long[] accountGroupIds, long commerceChannelId) {
 
 		return dslQuery(
 			_getGroupByStep(
@@ -296,8 +297,8 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 
 	@Override
 	public List<CommerceOrderRuleEntry>
-	getAccountGroupsAndOrderTypeCommerceRuleEntries(
-		long companyId, long[] accountGroupIds, long commerceOrderTypeId) {
+		getAccountGroupsAndOrderTypeCommerceRuleEntries(
+			long companyId, long[] accountGroupIds, long commerceOrderTypeId) {
 
 		return dslQuery(
 			_getGroupByStep(
@@ -327,8 +328,8 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 
 	@Override
 	public List<CommerceOrderRuleEntry>
-	getChannelAndOrderTypeCommerceRuleEntries(
-		long companyId, long commerceChannelId, long commerceOrderTypeId) {
+		getChannelAndOrderTypeCommerceRuleEntries(
+			long companyId, long commerceChannelId, long commerceOrderTypeId) {
 
 		return dslQuery(
 			_getGroupByStep(
@@ -398,13 +399,13 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderRuleEntry updateCommerceOrderRuleEntry(
-		long userId, long commerceOrderRuleEntryId, boolean active,
-		String description, String name, int priority, String typeSettings,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute,
-		boolean neverExpire, ServiceContext serviceContext)
+			long userId, long commerceOrderRuleEntryId, boolean active,
+			String description, String name, int priority, String typeSettings,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceOrderRuleEntry commerceOrderRuleEntry =
@@ -466,8 +467,8 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderRuleEntry updateStatus(
-		long userId, long commerceOrderRuleEntryId, int status,
-		ServiceContext serviceContext)
+			long userId, long commerceOrderRuleEntryId, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceOrderRuleEntry commerceOrderRuleEntry =
@@ -493,7 +494,7 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 			}
 
 			if (commerceOrderRuleEntry.getStatus() ==
-				WorkflowConstants.STATUS_SCHEDULED) {
+					WorkflowConstants.STATUS_SCHEDULED) {
 
 				commerceOrderRuleEntry.setActive(true);
 			}
@@ -525,7 +526,7 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 				new Date(), WorkflowConstants.STATUS_SCHEDULED);
 
 		for (CommerceOrderRuleEntry commerceOrderRuleEntry :
-			commerceOrderRuleEntries) {
+				commerceOrderRuleEntries) {
 
 			long userId = _portal.getValidUserId(
 				commerceOrderRuleEntry.getCompanyId(),
@@ -551,11 +552,11 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Expiring " + commerceOrderRuleEntries.size() +
-				" commerce order rule entries");
+					" commerce order rule entries");
 		}
 
 		for (CommerceOrderRuleEntry commerceOrderRuleEntry :
-			commerceOrderRuleEntries) {
+				commerceOrderRuleEntries) {
 
 			long userId = _portal.getValidUserId(
 				commerceOrderRuleEntry.getCompanyId(),
@@ -577,20 +578,20 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 
 		CommerceOrderRuleEntryRelTable
 			aliasCommerceOrderRuleEntryAccountEntryRel =
-			CommerceOrderRuleEntryRelTable.INSTANCE.as(
-				"aliasCommerceOrderRuleEntryAccountEntryRel");
+				CommerceOrderRuleEntryRelTable.INSTANCE.as(
+					"aliasCommerceOrderRuleEntryAccountEntryRel");
 		CommerceOrderRuleEntryRelTable
 			aliasCommerceOrderRuleEntryAccountGroupRel =
-			CommerceOrderRuleEntryRelTable.INSTANCE.as(
-				"aliasCommerceOrderRuleEntryAccountGroupRel");
+				CommerceOrderRuleEntryRelTable.INSTANCE.as(
+					"aliasCommerceOrderRuleEntryAccountGroupRel");
 		CommerceOrderRuleEntryRelTable
 			aliasCommerceOrderRuleEntryCommerceChannelRel =
-			CommerceOrderRuleEntryRelTable.INSTANCE.as(
-				"aliasCommerceOrderRuleEntryCommerceChannelRel");
+				CommerceOrderRuleEntryRelTable.INSTANCE.as(
+					"aliasCommerceOrderRuleEntryCommerceChannelRel");
 		CommerceOrderRuleEntryRelTable
 			aliasCommerceOrderRuleEntryCommerceOrderTypeRel =
-			CommerceOrderRuleEntryRelTable.INSTANCE.as(
-				"aliasCommerceOrderRuleEntryCommerceOrderTypeRel");
+				CommerceOrderRuleEntryRelTable.INSTANCE.as(
+					"aliasCommerceOrderRuleEntryCommerceOrderTypeRel");
 
 		JoinStep joinStep = fromStep.from(
 			CommerceOrderRuleEntryTable.INSTANCE
@@ -702,8 +703,8 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 	}
 
 	private CommerceOrderRuleEntry _startWorkflowInstance(
-		long userId, CommerceOrderRuleEntry commerceOrderRuleEntry,
-		ServiceContext serviceContext)
+			long userId, CommerceOrderRuleEntry commerceOrderRuleEntry,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Map<String, Serializable> workflowContext = new HashMap<>();

@@ -60,6 +60,11 @@ const FieldsSelectorDropdown = ({fields}) => {
 					borderless
 					displayType="secondary"
 					symbol={active ? 'caret-top' : 'caret-bottom'}
+					aria-label={
+						active
+							? Liferay.Language.get('close-fields-menu')
+							: Liferay.Language.get('open-fields-menu')
+					}
 				/>
 			}
 		>

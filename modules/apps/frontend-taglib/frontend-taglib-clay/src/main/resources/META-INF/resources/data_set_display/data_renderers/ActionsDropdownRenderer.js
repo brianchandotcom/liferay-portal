@@ -363,6 +363,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 						disabled={loading}
 						displayType="unstyled"
 						symbol="ellipsis-v"
+						title={Liferay.Language.get('actions')}
 					/>
 				}
 			>

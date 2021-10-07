@@ -141,9 +141,23 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			actionRequest.setAttribute(
 				WebKeys.REDIRECT,
-				_getRedirect(
-					classNameId, classPK, groupId, actionResponse, fileName,
-					ParamUtil.getString(actionRequest, "redirect"), title));
+				PortletURLBuilder.createRenderURL(
+					_portal.getLiferayPortletResponse(actionResponse)
+				).setMVCRenderCommandName(
+					"/translation/import_translation_results"
+				).setRedirect(
+					ParamUtil.getString(actionRequest, "redirect")
+				).setParameter(
+					"classNameId", classNameId
+				).setParameter(
+					"classPK", classPK
+				).setParameter(
+					"fileName", fileName
+				).setParameter(
+					"groupId", groupId
+				).setParameter(
+					"title", title
+				).buildString());
 
 			HttpServletRequest httpServletRequest =
 				_portal.getOriginalServletRequest(
@@ -242,30 +256,6 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, className, classPK, ActionKeys.UPDATE);
 		}
-	}
-
-	private String _getRedirect(
-		long classNameId, long classPK, long groupId,
-		ActionResponse actionResponse, String fileName, String redirect,
-		String title) {
-
-		return PortletURLBuilder.createRenderURL(
-			_portal.getLiferayPortletResponse(actionResponse)
-		).setMVCRenderCommandName(
-			"/translation/import_translation_results"
-		).setRedirect(
-			redirect
-		).setParameter(
-			"classNameId", classNameId
-		).setParameter(
-			"classPK", classPK
-		).setParameter(
-			"fileName", fileName
-		).setParameter(
-			"groupId", groupId
-		).setParameter(
-			"title", title
-		).buildString();
 	}
 
 	private void _importXLIFFFile(

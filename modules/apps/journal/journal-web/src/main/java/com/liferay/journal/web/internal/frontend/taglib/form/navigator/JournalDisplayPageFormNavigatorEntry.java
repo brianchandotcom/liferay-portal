@@ -41,7 +41,7 @@ public class JournalDisplayPageFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
-		if (isDepotOrGlobalScopeArticle(article)) {
+		if (isGlobalScopeArticle(article)) {
 			return false;
 		}
 

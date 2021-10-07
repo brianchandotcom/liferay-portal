@@ -26,7 +26,7 @@ catch (error) {
 module.exports = {
 	...config,
 	rules: {
-		'@liferay/group-imports': 'off',
+		'@liferay/liferay/group-imports': 'off',
 		'@liferay/portal/no-loader-import-specifier': 'off',
 		'@liferay/portal/no-react-dom-render': 'off',
 		'no-case-declarations': 'off',

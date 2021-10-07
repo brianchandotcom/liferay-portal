@@ -17,6 +17,9 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -149,8 +152,18 @@ public class BuildDatabaseUtil {
 			return;
 		}
 
-		String buildDatabaseURL = JenkinsResultsParserUtil.getBuildArtifactURL(
-			topLevelBuild.getBuildURL(), buildDatabaseFile.getName());
+		String buildDatabaseURL = JenkinsResultsParserUtil.getLocalURL(
+			JenkinsResultsParserUtil.getBuildArtifactURL(
+				topLevelBuild.getBuildURL(), buildDatabaseFile.getName()));
+
+		try {
+			if (!JenkinsResultsParserUtil.exists(new URL(buildDatabaseURL))) {
+				return;
+			}
+		}
+		catch (MalformedURLException malformedURLException) {
+			return;
+		}
 
 		String buildDatabaseFilePath = buildDatabaseURL.replaceAll(
 			".*/(userContent/.*)", "/opt/java/jenkins/$1");

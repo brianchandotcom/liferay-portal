@@ -38,11 +38,12 @@ const ACTIONS = {
 							)
 						)
 					) {
-						selectedItems.forEach((item) => {
-							layoutPageTemplateCollectionsForm.appendChild(
-								item.cloneNode(true)
-							);
-						});
+						const input = document.createElement('input');
+
+						input.name = `${portletNamespace}rowIds`;
+						input.value = selectedItems.map((item) => item.value);
+
+						layoutPageTemplateCollectionsForm.appendChild(input);
 
 						submitForm(
 							layoutPageTemplateCollectionsForm,

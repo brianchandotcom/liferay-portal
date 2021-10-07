@@ -30,10 +30,12 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -107,7 +109,19 @@ public class PublicationsPortlet extends MVCPortlet {
 				permissionChecker.getCompanyId(), 0);
 
 		if (ctPreferences == null) {
-			throw new PrincipalException("Publications are not enabled");
+			String actionName = ParamUtil.getString(
+				portletRequest, ActionRequest.ACTION_NAME);
+			String mvcRenderCommandName = ParamUtil.getString(
+				portletRequest, "mvcRenderCommandName");
+
+			if (!actionName.equals(
+					"/change_tracking" +
+						"/update_global_publications_configuration") &&
+				!mvcRenderCommandName.equals(
+					"/change_tracking/view_settings")) {
+
+				throw new PrincipalException("Publications are not enabled");
+			}
 		}
 
 		_portletPermission.check(

@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS_CONFIGURATION,
+		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
 		"mvc.command.name=/change_tracking/update_global_publications_configuration"
 	},
 	service = MVCActionCommand.class
@@ -100,6 +100,10 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
+		PortletURL redirectURL = PortletURLFactoryUtil.create(
+			actionRequest, CTPortletKeys.PUBLICATIONS,
+			PortletRequest.RENDER_PHASE);
+
 		boolean redirectToOverview = ParamUtil.getBoolean(
 			actionRequest, "redirectToOverview");
 
@@ -110,19 +114,18 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 				httpServletRequest, "requestProcessed",
 				_language.get(
 					httpServletRequest, "the-configuration-has-been-saved"));
-
-			PortletURL redirectURL = PortletURLFactoryUtil.create(
-				actionRequest, CTPortletKeys.PUBLICATIONS,
-				PortletRequest.RENDER_PHASE);
-
-			sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 		}
 		else {
 			SessionMessages.add(
 				actionRequest, "requestProcessed",
 				_language.get(
 					httpServletRequest, "the-configuration-has-been-saved"));
+
+			redirectURL.setParameter(
+				"mvcRenderCommandName", "/change_tracking/view_settings");
 		}
+
+		sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 	}
 
 	@Reference

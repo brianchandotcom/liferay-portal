@@ -14,21 +14,18 @@
 
 package com.liferay.change.tracking.web.internal.portlet.configuration.icon;
 
-import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.taglib.security.PermissionsURLTag;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.permission.PortletPermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -37,59 +34,54 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Preston Crary
+ * @author Samuel Trong Tran
  */
 @Component(
 	immediate = true,
 	property = "javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
 	service = PortletConfigurationIcon.class
 )
-public class PermissionsPortletConfigurationIcon
+public class SettingsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(getLocale(portletRequest), "permissions");
+		return LanguageUtil.get(getLocale(portletRequest), "settings");
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			return PermissionsURLTag.doTag(
-				StringPool.BLANK, CTConstants.RESOURCE_NAME, null, null,
-				CTConstants.RESOURCE_NAME, LiferayWindowState.POP_UP.toString(),
-				new int[] {RoleConstants.TYPE_REGULAR},
-				themeDisplay.getRequest());
-		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
-		}
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				portletRequest, CTPortletKeys.PUBLICATIONS,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/change_tracking/view_settings"
+		).buildString();
 	}
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		if (!CTCollectionThreadLocal.isProductionMode()) {
+		try {
+			return _portletPermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				CTPortletKeys.PUBLICATIONS, ActionKeys.CONFIGURATION);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException, portalException);
+			}
+
 			return false;
 		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return _portletResourcePermission.contains(
-			themeDisplay.getPermissionChecker(), null, ActionKeys.PERMISSIONS);
 	}
 
-	@Override
-	public boolean isUseDialog() {
-		return true;
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		SettingsPortletConfigurationIcon.class);
 
-	@Reference(target = "(resource.name=" + CTConstants.RESOURCE_NAME + ")")
-	private PortletResourcePermission _portletResourcePermission;
+	@Reference
+	private PortletPermission _portletPermission;
 
 }

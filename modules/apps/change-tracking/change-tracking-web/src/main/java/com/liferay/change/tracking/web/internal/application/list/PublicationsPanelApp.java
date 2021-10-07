@@ -26,6 +26,12 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,19 +55,51 @@ public class PublicationsPanelApp extends BasePanelApp {
 	}
 
 	@Override
+	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		PortletURL portletURL = super.getPortletURL(httpServletRequest);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.fetchCTPreferences(
+				themeDisplay.getCompanyId(), 0);
+
+		if (ctPreferences == null) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/change_tracking/view_settings");
+		}
+
+		return portletURL;
+	}
+
+	@Override
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
+
+		if (_portletPermission.contains(
+				permissionChecker, CTPortletKeys.PUBLICATIONS,
+				ActionKeys.CONFIGURATION)) {
+
+			return true;
+		}
 
 		CTPreferences ctPreferences =
 			_ctPreferencesLocalService.fetchCTPreferences(
 				group.getCompanyId(), 0);
 
-		if (ctPreferences == null) {
-			return false;
+		if ((ctPreferences != null) &&
+			_portletPermission.contains(
+				permissionChecker, CTPortletKeys.PUBLICATIONS,
+				ActionKeys.VIEW)) {
+
+			return true;
 		}
 
-		return _portletPermission.contains(
-			permissionChecker, CTPortletKeys.PUBLICATIONS, ActionKeys.VIEW);
+		return false;
 	}
 
 	@Override

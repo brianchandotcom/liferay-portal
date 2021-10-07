@@ -31,7 +31,7 @@
 </clay:sheet-section>
 
 <%
-boolean hasConfigurationPermission = PortletPermissionUtil.contains(permissionChecker, CTPortletKeys.PUBLICATIONS_CONFIGURATION, ActionKeys.CONFIGURATION);
+boolean hasConfigurationPermission = PortletPermissionUtil.contains(permissionChecker, CTPortletKeys.PUBLICATIONS, ActionKeys.CONFIGURATION);
 %>
 
 <clay:sheet-footer>

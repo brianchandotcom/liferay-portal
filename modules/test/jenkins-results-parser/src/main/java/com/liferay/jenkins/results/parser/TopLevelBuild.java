@@ -843,8 +843,18 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 		String baseGitRepositorySHA = null;
 
-		if (!baseGitRepositoryName.equals("liferay-jenkins-ee") &&
-			baseGitRepositoryName.endsWith("-ee")) {
+		if (this instanceof WorkspaceBuild) {
+			WorkspaceBuild workspaceBuild = (WorkspaceBuild)this;
+
+			Workspace workspace = workspaceBuild.getWorkspace();
+
+			WorkspaceGitRepository workspaceGitRepository =
+				workspace.getPrimaryWorkspaceGitRepository();
+
+			baseGitRepositorySHA = workspaceGitRepository.getBaseBranchSHA();
+		}
+		else if (!baseGitRepositoryName.equals("liferay-jenkins-ee") &&
+				 baseGitRepositoryName.endsWith("-ee")) {
 
 			baseGitRepositorySHA = getBaseGitRepositorySHA(
 				baseGitRepositoryName.substring(

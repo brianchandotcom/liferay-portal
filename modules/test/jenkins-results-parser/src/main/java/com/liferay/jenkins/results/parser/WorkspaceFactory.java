@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.lang.reflect.Proxy;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,9 +55,7 @@ public class WorkspaceFactory {
 
 		_workspaces.put(primaryRepositoryDirName, workspace);
 
-		return (Workspace)Proxy.newProxyInstance(
-			Workspace.class.getClassLoader(), new Class<?>[] {Workspace.class},
-			new MethodLogger(workspace));
+		return workspace;
 	}
 
 	public static Workspace newWorkspace(
@@ -98,9 +94,7 @@ public class WorkspaceFactory {
 
 		buildDatabase.putWorkspace(gitDirectoryName, workspace);
 
-		return (Workspace)Proxy.newProxyInstance(
-			Workspace.class.getClassLoader(), new Class<?>[] {Workspace.class},
-			new MethodLogger(workspace));
+		return workspace;
 	}
 
 	private static final Map<String, Workspace> _workspaces = new HashMap<>();

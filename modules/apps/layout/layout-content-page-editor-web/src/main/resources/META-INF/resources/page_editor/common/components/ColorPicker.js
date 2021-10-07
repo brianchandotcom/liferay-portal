@@ -18,6 +18,8 @@ import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
 import React, {useRef, useState} from 'react';
 
+import {config} from '../../app/config/index';
+
 const ColorPicker = ({
 	colors,
 	disabled,
@@ -68,28 +70,42 @@ const ColorPicker = ({
 						onSetActive={setActive}
 						ref={dropdownContainerRef}
 					>
-						<div className="clay-color-swatch">
-							{colors.map(({label, name, value}, i) => (
-								<div className="clay-color-swatch-item" key={i}>
-									<Splotch
-										onClick={() => {
-											onValueChange({
-												label,
-												name,
-												value,
-											});
-											setActive((active) => !active);
+						{config.tokenOptimizationEnabled ? (
+							<>
+								<ColorPalette
+									colors={colors}
+									onSetActive={setActive}
+									onValueChange={onValueChange}
+									splotchRef={splotchRef}
+								/>
+							</>
+						) : (
+							<div className="clay-color-swatch">
+								{colors.map(({label, name, value}, i) => (
+									<div
+										className="clay-color-swatch-item"
+										key={i}
+									>
+										<Splotch
+											onClick={() => {
+												onValueChange({
+													label,
+													name,
+													value,
+												});
+												setActive((active) => !active);
 
-											if (splotchRef.current) {
-												splotchRef.current.focus();
-											}
-										}}
-										title={label}
-										value={value}
-									/>
-								</div>
-							))}
-						</div>
+												if (splotchRef.current) {
+													splotchRef.current.focus();
+												}
+											}}
+											title={label}
+											value={value}
+										/>
+									</div>
+								))}
+							</div>
+						)}
 					</DropDown.Menu>
 				</ClayInput.Group>
 			</div>
@@ -102,7 +118,7 @@ const Splotch = React.forwardRef(
 		return (
 			<button
 				className={classNames(
-					'btn clay-color-btn clay-color-btn-bordered',
+					'btn clay-color-btn clay-color-btn-bordered rounded',
 					{
 						active,
 						[className]: !!className,
@@ -121,5 +137,44 @@ const Splotch = React.forwardRef(
 		);
 	}
 );
+
+const ColorPalette = ({colors, onSetActive, onValueChange, splotchRef}) =>
+	Object.keys(colors).map((category, i) => (
+		<div
+			className="page-editor__ColorPicker__color-palette"
+			key={`${category}_${i}`}
+		>
+			<span className="mb-3 sheet-subtitle">{category}</span>
+			{Object.keys(colors[category]).map((tokenSet, i) => (
+				<div key={`${tokenSet}_${i}`}>
+					<span className="text-secondary">{tokenSet}</span>
+					<div className="clay-color-swatch mb-0 mt-3">
+						{colors[category][tokenSet].map(
+							({label, name, value}, i) => (
+								<div className="clay-color-swatch-item" key={i}>
+									<Splotch
+										onClick={() => {
+											onValueChange({
+												label,
+												name,
+												value,
+											});
+											onSetActive((active) => !active);
+
+											if (splotchRef.current) {
+												splotchRef.current.focus();
+											}
+										}}
+										title={label}
+										value={value}
+									/>
+								</div>
+							)
+						)}
+					</div>
+				</div>
+			))}
+		</div>
+	));
 
 export default ColorPicker;

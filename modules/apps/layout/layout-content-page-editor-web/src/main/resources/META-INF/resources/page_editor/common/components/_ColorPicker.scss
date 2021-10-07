@@ -8,5 +8,10 @@ html#{$cadmin-selector} {
 			> .input-group-text.page-editor__ColorPicker__input-group-text--rounded-left {
 			border-radius: 4px 0 0 4px;
 		}
+
+		.page-editor__ColorPicker__color-palette .sheet-subtitle {
+			border-color: $cadmin-secondary-l3;
+			font-size: 0.75rem;
+		}
 	}
 }

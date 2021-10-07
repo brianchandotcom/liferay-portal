@@ -359,11 +359,11 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 				onActiveChange={setMenuActive}
 				trigger={
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('actions')}
 						className="component-action dropdown-toggle ml-1"
 						disabled={loading}
 						displayType="unstyled"
 						symbol="ellipsis-v"
-						title={Liferay.Language.get('actions')}
 					/>
 				}
 			>

@@ -1172,7 +1172,10 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public String getSelectAssetListEventName() {
-		return _portletResponse.getNamespace() + "selectAssetList";
+		String portletNamespace = PortalUtil.getPortletNamespace(
+			AssetPublisherPortletKeys.ASSET_PUBLISHER);
+
+		return portletNamespace + "selectAssetList";
 	}
 
 	public String getSelectionStyle() {

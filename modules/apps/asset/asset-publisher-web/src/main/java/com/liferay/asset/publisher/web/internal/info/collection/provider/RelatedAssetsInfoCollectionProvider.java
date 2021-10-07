@@ -14,21 +14,27 @@
 
 package com.liferay.asset.publisher.web.internal.info.collection.provider;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
+import com.liferay.info.pagination.Pagination;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -46,7 +52,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = InfoCollectionProvider.class)
 public class RelatedAssetsInfoCollectionProvider
-	extends BaseAssetsInfoCollectionProvider
 	implements InfoCollectionProvider<AssetEntry> {
 
 	@Override
@@ -60,7 +65,7 @@ public class RelatedAssetsInfoCollectionProvider
 				Collections.emptyList(), collectionQuery.getPagination(), 0);
 		}
 
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+		AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
 			Field.MODIFIED_DATE, "DESC", collectionQuery.getPagination());
 
 		assetEntryQuery.setLinkedAssetEntryId(assetEntryId);
@@ -102,6 +107,51 @@ public class RelatedAssetsInfoCollectionProvider
 		return true;
 	}
 
+	private AssetEntryQuery _getAssetEntryQuery(
+		String orderByCol, String orderByType, Pagination pagination) {
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		long[] availableClassNameIds =
+			AssetRendererFactoryRegistryUtil.getClassNameIds(
+				serviceContext.getCompanyId(), true);
+
+		availableClassNameIds = ArrayUtil.filter(
+			availableClassNameIds,
+			availableClassNameId -> {
+				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
+					_portal.getClassName(availableClassNameId));
+
+				if (indexer == null) {
+					return false;
+				}
+
+				return true;
+			});
+
+		assetEntryQuery.setClassNameIds(availableClassNameIds);
+
+		assetEntryQuery.setEnablePermissions(true);
+		assetEntryQuery.setGroupIds(
+			new long[] {serviceContext.getScopeGroupId()});
+
+		if (pagination != null) {
+			assetEntryQuery.setStart(pagination.getStart());
+			assetEntryQuery.setEnd(pagination.getEnd());
+		}
+
+		assetEntryQuery.setOrderByCol1(orderByCol);
+		assetEntryQuery.setOrderByType1(orderByType);
+
+		assetEntryQuery.setOrderByCol2(Field.CREATE_DATE);
+		assetEntryQuery.setOrderByType2("DESC");
+
+		return assetEntryQuery;
+	}
+
 	private long _getLayoutAssetEntryId() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -127,5 +177,8 @@ public class RelatedAssetsInfoCollectionProvider
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

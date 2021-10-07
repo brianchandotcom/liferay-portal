@@ -1966,14 +1966,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		String css = _read(resourcePath + "/css.css");
 
-		if (css != null) {
-			_layoutSetLocalService.updateLookAndFeel(
-				serviceContext.getScopeGroupId(), privateLayout,
-				_getThemeId(
-					serviceContext.getCompanyId(), StringPool.BLANK,
-					metadataJSONObject.getString("themeName")),
-				layoutSet.getColorSchemeId(), css);
-		}
+		_layoutSetLocalService.updateLookAndFeel(
+			serviceContext.getScopeGroupId(), privateLayout,
+			_getThemeId(
+				serviceContext.getCompanyId(), StringPool.BLANK,
+				metadataJSONObject.getString("themeName")),
+			layoutSet.getColorSchemeId(), css);
 
 		URL url = _servletContext.getResource(resourcePath + "/logo.png");
 

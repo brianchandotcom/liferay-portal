@@ -36,6 +36,18 @@ components:
                     maximum: 2
                     minimum: 0
                     type: integer
+        AccountGroup:
+            properties:
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                name:
+                    example: AccountGroup Name
+                    type: string
+            type: object
         BillingAddress:
             properties:
                 city:
@@ -698,6 +710,236 @@ components:
                     example: true
                     type: boolean
             type: object
+        OrderRule:
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                active:
+                    example: true
+                    type: boolean
+                author:
+                    example: admin
+                    type: string
+                createDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
+                description:
+                    example: Laptops, Beverages
+                    type: string
+                displayDate:
+                    example: "2017-07-21"
+                    format: date
+                    type: string
+                expirationDate:
+                    example: "2017-08-21"
+                    format: date
+                    type: string
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                name:
+                    example: Laptops, Beverages
+                    type: string
+                neverExpire:
+                    example: true
+                    type: boolean
+                orderRuleAccount:
+                    items:
+                        $ref: "#/components/schemas/OrderRuleAccount"
+                    type: array
+                orderRuleAccountGroup:
+                    items:
+                        $ref: "#/components/schemas/OrderRuleAccountGroup"
+                    type: array
+                orderRuleChannel:
+                    items:
+                        $ref: "#/components/schemas/OrderRuleChannel"
+                    type: array
+                orderRuleOrderType:
+                    items:
+                        $ref: "#/components/schemas/OrderRuleOrderType"
+                    type: array
+                priority:
+                    example: 1.2
+                    format: double
+                    type: number
+                type:
+                    example: order-limit
+                    type: string
+                typeSettings:
+                    example: "22.50"
+                    type: string
+                workflowStatusInfo:
+                    allOf:
+                        - $ref: "#/components/schemas/Status"
+                    readOnly: true
+            required:
+                - name
+                - type
+            type: object
+        OrderRuleAccount:
+            properties:
+                account:
+                    $ref: "#/components/schemas/Account"
+                    readOnly: true
+                accountExternalReferenceCode:
+                    example: DAB-34098-789-N
+                    type: string
+                accountId:
+                    example: 30324
+                    format: int64
+                    minimum: 0
+                    type: integer
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                orderRuleAccountId:
+                    example: 30643
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                orderRuleExternalReferenceCode:
+                    example: PAB-34098-789-N
+                    type: string
+                orderRuleId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+            required:
+                - accountId
+                - orderRuleId
+            type: object
+        OrderRuleAccountGroup:
+            properties:
+                accountGroup:
+                    $ref: "#/components/schemas/AccountGroup"
+                    readOnly: true
+                accountGroupExternalReferenceCode:
+                    example: DAB-34098-789-N
+                    type: string
+                accountGroupId:
+                    example: 30324
+                    format: int64
+                    minimum: 0
+                    type: integer
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                orderRuleAccountGroupId:
+                    example: 30643
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                orderRuleExternalReferenceCode:
+                    example: PAB-34098-789-N
+                    type: string
+                orderRuleId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+            required:
+                - accountGroupId
+                - orderRuleId
+            type: object
+        OrderRuleChannel:
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                channel:
+                    $ref: "#/components/schemas/Channel"
+                    readOnly: true
+                channelExternalReferenceCode:
+                    example: DAB-34098-789-N
+                    type: string
+                channelId:
+                    example: 30324
+                    format: int64
+                    minimum: 0
+                    type: integer
+                orderRuleChannelId:
+                    example: 30643
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                orderRuleExternalReferenceCode:
+                    example: PAB-34098-789-N
+                    type: string
+                orderRuleId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+            required:
+                - channelId
+                - orderRuleId
+            type: object
+        OrderRuleOrderType:
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                orderRuleExternalReferenceCode:
+                    example: PAB-34098-789-N
+                    type: string
+                orderRuleId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                orderRuleOrderTypeId:
+                    example: 30643
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                orderType:
+                    $ref: "#/components/schemas/OrderType"
+                    readOnly: true
+                orderTypeExternalReferenceCode:
+                    example: DAB-34098-789-N
+                    type: string
+                orderTypeId:
+                    example: 30324
+                    format: int64
+                    minimum: 0
+                    type: integer
+            required:
+                - orderRuleId
+                - orderTypeId
+            type: object
         OrderType:
             properties:
                 actions:
@@ -901,6 +1143,2245 @@ info:
     version: v1.0
 openapi: 3.0.0
 paths:
+    /order-rule-account-groups/{orderRuleAccountGroupId}:
+        delete:
+            parameters:
+                - in: path
+                  explode: false
+                  name: orderRuleAccountGroupId
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Deletes a Order Rule Account Group by ID.
+            tags: ["OrderRuleAccountGroup"]
+    /order-rule-account-groups/{orderRuleAccountGroupId}/account-group:
+        get:
+            operationId: getOrderRuleAccountGroupAccountGroup
+            parameters:
+                - in: path
+                  name: orderRuleAccountGroupId
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets account group associated to the pricing object.
+            tags: ["AccountGroup"]
+    /order-rule-accounts/{orderRuleAccountId}:
+        delete:
+            operationId: deleteOrderRuleAccount
+            parameters:
+                - in: path
+                  explode: false
+                  name: orderRuleAccountId
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Deletes a Order Rule Account by ID.
+            tags: ["OrderRuleAccount"]
+    /order-rule-accounts/{orderRuleAccountId}/account:
+        get:
+            operationId: getOrderRuleAccountAccount
+            parameters:
+                - in: path
+                  name: orderRuleAccountId
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets account associated to the pricing object.
+            tags: ["Account"]
+    /order-rule-channels/{orderRuleChannelId}:
+        delete:
+            operationId: deleteOrderRuleChannel
+            parameters:
+                - in: path
+                  explode: false
+                  name: orderRuleChannelId
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Deletes a Order Rule Channel by ID.
+            tags: ["OrderRuleChannel"]
+    /order-rule-channels/{orderRuleChannelId}/channel:
+        get:
+            operationId: getOrderRuleChannelChannel
+            parameters:
+                - in: path
+                  name: orderRuleChannelId
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets channel associated to the pricing object.
+            tags: ["Channel"]
+    /order-rule-order-types/{orderRuleOrderTypeId}:
+        delete:
+            operationId: deleteOrderRuleOrderType
+            parameters:
+                - in: path
+                  explode: false
+                  name: orderRuleOrderTypeId
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Deletes a Order Rule Order Type by ID.
+            tags: ["OrderRuleOrderType"]
+    /order-rule-order-types/{orderRuleOrderTypeId}/order-type:
+        get:
+            operationId: getOrderRuleOrderTypeOrderType
+            parameters:
+                - in: path
+                  name: orderRuleOrderTypeId
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderType"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderType"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets order type associated to the pricing object.
+            tags: ["OrderType"]
+    /order-rules:
+        get:
+            operationId: getOrderRulesPage
+            parameters:
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRule"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRule"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets a list of Order Rules.
+            tags: ["OrderRule"]
+        post:
+            operationId: postOrderRule
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderRule"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderRule"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderRule"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderRule"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Creates or updates a Order Rule.
+            tags: ["OrderRule"]
+    /order-rules/by-externalReferenceCode/{externalReferenceCode}:
+        delete:
+            operationId: deleteOrderRuleByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Deletes a Order Rule by external reference code.
+            tags: ["OrderRule"]
+        get:
+            operationId: getOrderRuleByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderRule"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderRule"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets a Order Rule by external reference code.
+            tags: ["OrderRule"]
+        patch:
+            operationId: patchOrderRuleByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderRule"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderRule"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderRule"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderRule"
+                    description:
+                        Succesfully update the order Rule
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Updates a Order Rule by external reference code.
+            tags: ["OrderRule"]
+    /order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-account-groups:
+        get:
+            operationId: getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+                - in: query
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleAccountGroup"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleAccountGroup"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets a list of Order Rule Account Groups.
+            tags: ["OrderRuleAccountGroup"]
+        post:
+            operationId: postOrderRuleByExternalReferenceCodeOrderRuleAccountGroup
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleAccountGroup"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleAccountGroup"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleAccountGroup"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleAccountGroup"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Creates or updates a Order Rule Account Group.
+            tags: ["OrderRuleAccountGroup"]
+    /order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-accounts:
+        get:
+            operationId: getOrderRuleByExternalReferenceCodeOrderRuleAccountsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+                - in: query
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleAccount"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleAccount"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets a list of Order Rule Account.
+            tags: ["OrderRuleAccount"]
+        post:
+            operationId: postOrderRuleByExternalReferenceCodeOrderRuleAccount
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleAccount"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleAccount"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleAccount"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Creates or updates a Order Rule Account.
+            tags: ["OrderRuleAccount"]
+    /order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-channels:
+        get:
+            operationId: getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+                - in: query
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleChannel"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleChannel"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets a list of Order Rule Channel.
+            tags: ["OrderRuleChannel"]
+        post:
+            operationId: postOrderRuleByExternalReferenceCodeOrderRuleChannel
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleChannel"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleChannel"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleChannel"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleChannel"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Creates or updates a Order Rule Channel.
+            tags: ["OrderRuleChannel"]
+    /order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-order-types:
+        get:
+            operationId: getOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+                - in: query
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleOrderType"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleOrderType"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets a list of Order Rule Order Types.
+            tags: ["OrderRuleOrderType"]
+        post:
+            operationId: postOrderRuleByExternalReferenceCodeOrderRuleOrderType
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleOrderType"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleOrderType"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleOrderType"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleOrderType"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Creates or updates a Order Rule Order Type.
+            tags: ["OrderRuleOrderType"]
+    /order-rules/{id}:
+        delete:
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Deletes an OrderRule by ID.
+            tags:
+                - OrderRule
+        get:
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderRule"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderRule"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets an OrderRule by ID.
+            tags:
+                - OrderRule
+        patch:
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderRule"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderRule"
+                required: true
+            responses:
+                202:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderRule"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderRule"
+                    description:
+                        Succesfully update the Order Rule
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Updates an OrderRule by ID.
+            tags:
+                - OrderRule
+    /order-rules/{id}/order-rule-account-groups:
+        get:
+            operationId: getOrderRuleIdOrderRuleAccountGroupsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleAccountGroup"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleAccountGroup"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets a list of Order rule Account Groups.
+            tags: ["OrderRuleAccountGroup"]
+        post:
+            operationId: postOrderRuleIdOrderRuleAccountGroup
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleAccountGroup"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleAccountGroup"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleAccountGroup"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleAccountGroup"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Creates or updates a Order rule Account Group.
+    /order-rules/{id}/order-rule-accounts:
+        get:
+            operationId: getOrderRuleIdOrderRuleAccountsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleAccount"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleAccount"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets a list of Order rule Accounts.
+            tags: ["OrderRuleAccount"]
+        post:
+            operationId: postOrderRuleIdOrderRuleAccount
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleAccount"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleAccount"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleAccount"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Creates or updates a Order rule Account.
+    /order-rules/{id}/order-rule-channels:
+        get:
+            operationId: getOrderRuleIdOrderRuleChannelsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleChannel"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleChannel"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets a list of Order rule Channels.
+            tags: ["OrderRuleChannel"]
+        post:
+            operationId: postOrderRuleIdOrderRuleChannel
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleChannel"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleChannel"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleChannel"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleChannel"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Creates or updates a Order rule Channel.
+            tags: ["OrderRuleChannel"]
+    /order-rules/{id}/order-rule-order-types:
+        get:
+            operationId: getOrderRuleIdOrderRuleOrderTypesPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleOrderType"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderRuleOrderType"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets a list of Order rule Order Types.
+            tags: ["OrderRuleOrderType"]
+        post:
+            operationId: postOrderRuleIdOrderRuleOrderType
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleOrderType"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderRuleOrderType"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleOrderType"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderRuleOrderType"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.write
+            summary: Creates or updates a Order rule Order Type.
     /order-type-channels/{orderTypeChannelId}:
         delete:
             operationId: deleteOrderTypeChannel

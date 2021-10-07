@@ -15,14 +15,14 @@ task buildExtra
 task forceDeploy
 task zipExtra(type: Zip)
 
-Version extraZipVersion = Version.parseVersion("0.0.0")
+Version extraVersion = Version.parseVersion("0.0.0")
 
 artifacts {
 	extra zipExtra
 }
 
 dependencies {
-	extra ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.extra", version: extraZipVersion
+	extra ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.extra", version: extraVersion
 }
 
 forceDeploy {
@@ -40,7 +40,9 @@ node {
 }
 
 processResources {
-	if (gradle.startParameter.taskNames.contains("forceDeploy") || (extraZipVersion.major < 1)) {
+	ResolvedConfiguration extraResolvedConfiguration = configurations.extra.getResolvedConfiguration()
+
+	if (gradle.startParameter.taskNames.contains("forceDeploy") || extraResolvedConfiguration.hasError()) {
 		dependsOn buildExtra
 
 		into("site-initializer/documents/extra") {
@@ -55,12 +57,39 @@ processResources {
 }
 
 uploadExtra {
+	doLast {
+		File buildGradleFile = file("build.gradle")
+
+		String content = buildGradleFile.getText("UTF-8")
+
+		content = content.replaceFirst(~/Version extraVersion = Version.parseVersion\("(\w+\.\w+\.\w+)"\)/) {
+			String all, String versionString ->
+
+			int major = extraVersion.getMajor()
+			int minor = extraVersion.getMinor()
+			int micro = extraVersion.getMicro()
+
+			if (major < 1) {
+				major = 1
+				minor = 0
+				micro = 0
+			}
+			else {
+				micro = micro + 1
+			}
+
+			all.replace versionString, new Version(major, minor, micro) as String
+		}
+
+		buildGradleFile.setText content, "UTF-8"
+	}
+
 	repositories {
 		mavenDeployer {
 			pom {
 				artifactId = GUtil.loadProperties(file("bnd.bnd"))["Bundle-SymbolicName"] + ".extra"
 				groupId = "com.liferay"
-				version = extraZipVersion
+				version = (extraVersion.getMajor() > 0) ? new Version(extraVersion.getMajor(), extraVersion.getMinor(), extraVersion.getMicro() + 1) : "1.0.0"
 			}
 		}
 	}
@@ -132,6 +161,6 @@ private void _createExtraTasks() {
 			}
 		}
 
-		buildExtra.dependsOn yarnBuildTask
+		buildExtra.finalizedBy yarnBuildTask
 	}
 }

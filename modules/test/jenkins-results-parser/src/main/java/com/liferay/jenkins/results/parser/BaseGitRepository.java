@@ -79,6 +79,10 @@ public abstract class BaseGitRepository implements GitRepository {
 		return _jsonObject.optString(key);
 	}
 
+	protected String optString(String key, String defaultValue) {
+		return _jsonObject.optString(key, defaultValue);
+	}
+
 	protected void put(String key, Object value) {
 		_jsonObject.put(key, value);
 	}

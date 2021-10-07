@@ -208,7 +208,7 @@ public class QuartzSchedulerEngineTest {
 	}
 
 	@Test
-	public void testDescriptionMaxLength() throws Exception {
+	public void testDescriptionMaxLength() {
 		int descriptionMaxLength =
 			_quartzSchedulerEngine.getDescriptionMaxLength() +
 				RandomTestUtil.randomInt();
@@ -251,7 +251,7 @@ public class QuartzSchedulerEngineTest {
 	}
 
 	@Test
-	public void testGroupNameMaxLength() throws Exception {
+	public void testGroupNameMaxLength() {
 		int groupNameMaxLength =
 			_quartzSchedulerEngine.getGroupNameMaxLength() +
 				RandomTestUtil.randomInt();
@@ -300,7 +300,7 @@ public class QuartzSchedulerEngineTest {
 	}
 
 	@Test
-	public void testJobNameMaxLength() throws Exception {
+	public void testJobNameMaxLength() {
 		int jobNameMaxLength =
 			_quartzSchedulerEngine.getJobNameMaxLength() +
 				RandomTestUtil.randomInt();

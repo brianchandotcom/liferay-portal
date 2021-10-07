@@ -8,6 +8,7 @@ import org.gradle.util.GUtil
 apply plugin: "com.liferay.node"
 
 configurations {
+	cloud
 	extra
 }
 
@@ -22,6 +23,9 @@ artifacts {
 }
 
 dependencies {
+	cloud group: "com.liferay.cloud", name: "aws.lambda.commerce.order.demo", version: "1.0.0"
+	cloud group: "com.liferay.cloud", name: "gcp.function.commerce.order.demo", version: "1.0.0"
+
 	extra ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.extra", version: extraVersion
 }
 
@@ -52,6 +56,14 @@ processResources {
 	else {
 		into("site-initializer/documents/extra") {
 			from zipTree(configurations.extra.singleFile)
+		}
+	}
+
+	ResolvedConfiguration cloudResolvedConfiguration = configurations.cloud.getResolvedConfiguration()
+
+	if (!cloudResolvedConfiguration.hasError()) {
+		into("site-initializer/documents/extra") {
+			from configurations.cloud
 		}
 	}
 }

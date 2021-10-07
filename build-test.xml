@@ -9901,6 +9901,9 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 
 	<target name="prepare-selenium-browser">
 		<get-testcase-property property.name="browser.type" />
+		<get-testcase-property property.name="browser.${browser.type}.version" />
+
+		<propertycopy from="browser.${browser.type}.version" name="browser.version" override="true" />
 
 		<echo append="true" file="${test.ext.properties.file}">
 			browser.type=${browser.type}

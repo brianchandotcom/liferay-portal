@@ -73,6 +73,54 @@ public class PullRequestPortalTopLevelBuild
 		_pullRequest = PullRequestFactory.newPullRequest(sb.toString());
 	}
 
+	public boolean bypassCITestRelevant() {
+		String testSuiteName = getTestSuiteName();
+
+		if ((testSuiteName == null) || !testSuiteName.equals("relevant")) {
+			return false;
+		}
+
+		Workspace workspace = getWorkspace();
+
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		workspaceGitRepository.setUp();
+
+		String ciTestRelevantBypassFilePathPatterns =
+			JenkinsResultsParserUtil.getCIProperty(
+				workspaceGitRepository.getUpstreamBranchName(),
+				"ci.test.relevant.bypass.file.path.patterns",
+				workspaceGitRepository.getName());
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(
+				ciTestRelevantBypassFilePathPatterns)) {
+
+			return false;
+		}
+
+		MultiPattern multiPattern = new MultiPattern(
+			ciTestRelevantBypassFilePathPatterns.split("\\s*,\\s*"));
+
+		List<String> modifiedFilePaths = new ArrayList<>();
+
+		GitWorkingDirectory gitWorkingDirectory =
+			workspaceGitRepository.getGitWorkingDirectory();
+
+		for (File modifiedFile : gitWorkingDirectory.getModifiedFilesList()) {
+			modifiedFilePaths.add(
+				JenkinsResultsParserUtil.getCanonicalPath(modifiedFile));
+		}
+
+		if (!multiPattern.matchesAll(
+				modifiedFilePaths.toArray(new String[0]))) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	@Override
 	public BranchInformation getOSBAsahBranchInformation() {
 		Workspace workspace = getWorkspace();

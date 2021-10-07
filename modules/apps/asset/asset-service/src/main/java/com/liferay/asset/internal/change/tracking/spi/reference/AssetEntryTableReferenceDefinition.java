@@ -15,6 +15,7 @@
 package com.liferay.asset.internal.change.tracking.spi.reference;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntryTable;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
@@ -156,6 +157,8 @@ public class AssetEntryTableReferenceDefinition
 						TrashVersionTable.INSTANCE.classPK)
 				)
 			)
+		).systemEventReference(
+			AssetEntryTable.INSTANCE.entryId, AssetEntry.class
 		);
 	}
 

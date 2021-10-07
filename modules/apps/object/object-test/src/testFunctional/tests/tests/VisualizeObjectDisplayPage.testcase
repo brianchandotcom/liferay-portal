@@ -203,7 +203,6 @@ definition {
 			siteName = "${siteName}");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "2021-01-01");
-
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Double type for a specific Object"

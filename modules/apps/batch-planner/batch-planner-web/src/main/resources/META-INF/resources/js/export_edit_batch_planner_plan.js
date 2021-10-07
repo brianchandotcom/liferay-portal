@@ -74,11 +74,12 @@ export default function ({namespace}) {
 						return;
 					}
 
-					const path = properties['x-class-name'].default;
+					const value = properties['x-class-name'].default;
 
-					const value = path.substr(path.lastIndexOf('.') + 1);
-
-					const optionElement = getOptionElement(key, value);
+					const optionElement = getOptionElement(
+						trimPackage(value),
+						value
+					);
 
 					internalClassNameSelect.appendChild(optionElement);
 				});
@@ -109,7 +110,9 @@ export default function ({namespace}) {
 
 	function handleClassNameSelectChange() {
 		const headlessEnpointValue = headlessEnpointSelect.value;
-		const internalClassNameValue = internalClassNameSelect.value;
+		const internalClassNameValue = trimPackage(
+			internalClassNameSelect.value
+		);
 
 		if (!headlessEnpointValue || !internalClassNameValue) {
 			Liferay.fire('schema-selected', {
@@ -147,5 +150,13 @@ export default function ({namespace}) {
 
 				console.error(`Failed to fetch ${response}`);
 			});
+	}
+
+	function trimPackage(name) {
+		if (!name || name.lastIndexOf('.') < 0) {
+			return name;
+		}
+
+		return name.substr(name.lastIndexOf('.') + 1);
 	}
 }

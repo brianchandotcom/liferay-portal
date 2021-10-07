@@ -110,7 +110,7 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 
 			_batchPlannerPolicyService.addBatchPlannerPolicy(
 				batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",
-				_getValue(actionRequest));
+				_getCheckboxValue(actionRequest, "containsHeaders"));
 
 			List<BatchPlannerMapping> batchPlannerMappings =
 				_getBatchPlannerMappings(actionRequest);
@@ -183,8 +183,8 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 		return batchPlannerMappings;
 	}
 
-	private String _getValue(ActionRequest actionRequest) {
-		String value = actionRequest.getParameter("containsHeaders");
+	private String _getCheckboxValue(ActionRequest actionRequest, String name) {
+		String value = actionRequest.getParameter(name);
 
 		if (value == null) {
 			return Boolean.FALSE.toString();

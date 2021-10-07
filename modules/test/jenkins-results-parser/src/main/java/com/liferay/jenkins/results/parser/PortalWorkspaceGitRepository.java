@@ -17,6 +17,9 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.json.JSONObject;
 
 /**
@@ -88,6 +91,15 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
 		super(remoteGitRef, upstreamBranchName);
+	}
+
+	@Override
+	protected Set<String> getPropertyOptions() {
+		Set<String> propertyOptions = new HashSet<>(super.getPropertyOptions());
+
+		propertyOptions.add(getUpstreamBranchName());
+
+		return propertyOptions;
 	}
 
 	private void _writeAppServerPropertiesFile() {

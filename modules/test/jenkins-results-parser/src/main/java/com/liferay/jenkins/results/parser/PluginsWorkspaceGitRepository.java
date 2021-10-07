@@ -16,12 +16,23 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
 public class PluginsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
+
+	public String getPortalUpstreamBranchName() {
+		return optString("portal_upstream_branch_name", "master");
+	}
+
+	public void setPortalUpstreamBranchName(String portalUpstreamBranchName) {
+		put("portal_upstream_branch_name", portalUpstreamBranchName);
+	}
 
 	@Override
 	public void writePropertiesFiles() {
@@ -44,13 +55,22 @@ public class PluginsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 		super(remoteGitRef, upstreamBranchName);
 	}
 
+	@Override
+	protected Set<String> getPropertyOptions() {
+		Set<String> propertyOptions = new HashSet<>(super.getPropertyOptions());
+
+		propertyOptions.add(getPortalUpstreamBranchName());
+
+		return propertyOptions;
+	}
+
 	private void _writeBuildPropertiesFile() {
 		JenkinsResultsParserUtil.writePropertiesFile(
 			new File(
 				getDirectory(),
 				JenkinsResultsParserUtil.combine(
 					"build.", System.getenv("HOSTNAME"), ".properties")),
-			getProperties("plugins.build.property"), true);
+			getProperties("plugins.build.properties"), true);
 	}
 
 }

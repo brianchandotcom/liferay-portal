@@ -481,7 +481,7 @@ public abstract class BaseWorkspaceGitRepository
 
 			propertyOptions.add(propertyName);
 
-			propertyOptions.addAll(_getPropertyOptions());
+			propertyOptions.addAll(getPropertyOptions());
 
 			propertyOptions.removeAll(Collections.singleton(null));
 
@@ -497,6 +497,16 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		return properties;
+	}
+
+	protected Set<String> getPropertyOptions() {
+		Set<String> propertyOptions = new HashSet<>(_propertyOptions);
+
+		if (JenkinsResultsParserUtil.isWindows()) {
+			propertyOptions.add("windows");
+		}
+
+		return propertyOptions;
 	}
 
 	private LocalGitBranch _createPullRequestLocalGitBranch() {
@@ -595,18 +605,6 @@ public abstract class BaseWorkspaceGitRepository
 
 	private String _getBaseBranchUsername() {
 		return getString("base_branch_username");
-	}
-
-	private Set<String> _getPropertyOptions() {
-		Set<String> propertyOptions = new HashSet<>(_propertyOptions);
-
-		propertyOptions.add(getUpstreamBranchName());
-
-		if (JenkinsResultsParserUtil.isWindows()) {
-			propertyOptions.add("windows");
-		}
-
-		return propertyOptions;
 	}
 
 	private String _getSenderBranchHeadSHA() {

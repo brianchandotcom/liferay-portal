@@ -15,7 +15,7 @@
 					"fragment": {
 						"collectionName": "Basic Components",
 						"key": "BASIC_COMPONENT-button",
-						"name": "Button"
+						"name": Button
 					},
 					"fragmentConfig": {
 						"buttonAlign": "left",

@@ -18,6 +18,9 @@ $foreground: var(--light, #f9f9f9);
 $error-default: var(--danger, #ea6136);
 $error-light: var(--danger-background, #ffe4dc);
 
+$info-default: var(--info, #295ccc);
+$info-light: var(--info-background, #e5ebf9);
+
 $font-family: var(
 	--font-family-sans-serif,
 	'Segoe UI',

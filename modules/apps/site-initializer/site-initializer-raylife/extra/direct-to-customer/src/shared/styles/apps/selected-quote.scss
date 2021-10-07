@@ -17,3 +17,336 @@
 		}
 	}
 }
+
+.selected-quote {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+
+	.selected-quote-right-page {
+		margin-left: 36px;
+		width: 100%;
+	}
+}
+
+.panel-container {
+	border-bottom: 1px solid #d3d3d4;
+	padding: 34px 48px;
+	width: 100%;
+
+	.panel-header {
+		cursor: pointer;
+		display: flex;
+		justify-content: space-between;
+
+		.panel-title {
+			color: $neutral-darker;
+			font-size: 24px;
+			font-weight: 700;
+		}
+
+		.panel-title-icon {
+			align-items: center;
+			background-color: #d2d2d3;
+			border-radius: 50%;
+			display: flex;
+			fill: $background;
+			height: 32px;
+			justify-content: center;
+			width: 32px;
+		}
+	}
+
+	.panel-content {
+		display: none;
+
+		&.show {
+			display: block;
+		}
+	}
+}
+
+.upload-container {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+
+	.upload-footer {
+		display: flex;
+		justify-content: end;
+
+		button {
+			background-color: $primary-default-light;
+			font-size: 16px;
+			color: $background;
+			font-weight: 700;
+			padding: 16px 18px;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+	}
+
+	.upload-section {
+		padding: 48px 0px 16px 22px;
+
+		.header {
+			margin-bottom: 16px;
+
+			.title {
+				font-size: 18px;
+				font-weight: 700;
+				margin-bottom: 4px;
+
+				span.required {
+					color: $error-default;
+				}
+
+				span.optional {
+					color: $neutral-dark;
+				}
+			}
+
+			.subtitle {
+				color: $neutral-dark;
+				font-size: 16px;
+				font-weight: 500;
+			}
+		}
+
+		.upload-content {
+			display: flex;
+			flex-direction: column;
+
+			.upload-file {
+				display: flex;
+				flex-direction: row;
+
+				.view-file {
+					display: flex;
+					flex-direction: row;
+					flex-wrap: wrap;
+
+					.view-file-image {
+						display: flex;
+						flex-direction: row;
+						margin-right: -16px;
+
+						.close-icon {
+							align-items: center;
+							background: $background;
+							border-radius: 50%;
+							cursor: pointer;
+							display: flex;
+							fill: $neutral-default;
+							height: 36px;
+							justify-content: center;
+							position: relative;
+							right: 38px;
+							top: 2px;
+							width: 36px;
+							fill: $neutral-default;
+							filter: drop-shadow(
+								0px 5px 15px rgba(77, 133, 255, 0.12)
+							);
+						}
+
+						.div-image {
+							display: flex;
+							flex-direction: column;
+							text-align: center;
+
+							span {
+								color: $neutral-dark;
+								font-size: 13px;
+								margin-top: 4px;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								white-space: nowrap;
+								width: 176px;
+							}
+
+							img {
+								border-radius: 16px;
+								height: 176px;
+								width: 176px;
+								object-fit: cover;
+							}
+						}
+					}
+
+					.view-file-document {
+						display: flex;
+						flex-direction: row;
+						margin-bottom: -36px;
+						margin-right: 16px;
+
+						.close-icon {
+							align-items: center;
+							background: $background;
+							border-radius: 50%;
+							cursor: pointer;
+							display: flex;
+							height: 36px;
+							justify-content: center;
+							position: relative;
+							left: 137px;
+							top: -196px;
+							width: 36px;
+							fill: $neutral-default;
+							filter: drop-shadow(
+								0px 5px 15px rgba(77, 133, 255, 0.12)
+							);
+						}
+
+						.div-document {
+							display: flex;
+							text-align: center;
+							flex-direction: column;
+
+							span {
+								color: $neutral-dark;
+								margin-top: 4px;
+								font-size: 13px;
+								white-space: nowrap;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								width: 176px;
+							}
+
+							.content {
+								border-radius: 16px;
+								width: 176px;
+								height: 176px;
+								background-color: #fafafa;
+								border: 1px solid #e2e2e4;
+								object-fit: cover;
+
+								display: flex;
+								justify-content: center;
+								align-items: center;
+
+								.lexicon-icon-document-pdf {
+									fill: #af78ff;
+									width: 64px !important;
+									height: 64px !important;
+								}
+
+								.lexicon-icon-document-text {
+									fill: #4d85ff;
+									width: 64px !important;
+									height: 64px !important;
+								}
+
+								.lexicon-icon-document-table {
+									fill: #50d2a0;
+									width: 64px !important;
+									height: 64px !important;
+								}
+
+								.lexicon-icon-document-presentation {
+									fill: #ffb46e;
+									width: 64px !important;
+									height: 64px !important;
+								}
+
+								.lexicon-icon-document-unknown {
+									fill: $neutral-default;
+									width: 64px !important;
+									height: 64px !important;
+								}
+							}
+						}
+					}
+				}
+
+				.drop-area {
+					align-items: center;
+					background: #f0f5ff;
+					border: 2px dashed #a8c4ff;
+					border-radius: 16px;
+					color: $neutral-dark;
+					display: flex;
+					flex-direction: row;
+					flex-wrap: wrap;
+					font-size: 16px;
+					font-weight: 500;
+					justify-content: center;
+					left: 0px;
+					position: static;
+					top: 64px;
+
+					&.hide {
+						display: none;
+					}
+
+					.upload-button {
+						align-items: center;
+						display: flex;
+						flex-wrap: wrap;
+						justify-content: center;
+
+						.link-button {
+							align-items: center;
+							background: none;
+							border: 1px solid $primary-default-light;
+							border-radius: 4px;
+							color: $primary-default-light;
+							cursor: pointer;
+							display: flex;
+							font-size: 14px;
+							font-weight: 700;
+							padding: 8px 12px;
+							justify-content: center;
+						}
+
+						.input-file {
+							border-radius: 16px;
+							display: none;
+							position: relative;
+						}
+
+						svg {
+							fill: $primary-default-light;
+							height: 12px !important;
+							margin-right: 9px;
+							width: 12px !important;
+						}
+					}
+				}
+			}
+		}
+
+		.upload-info {
+			margin-top: 16px;
+
+			.badge {
+				height: 56px;
+
+				svg {
+					flex-shrink: 0;
+					height: 24px !important;
+					width: 24px !important;
+				}
+			}
+
+			.info-content {
+				align-items: center;
+				display: flex;
+				justify-content: space-between;
+				width: 100%;
+
+				.info-description {
+					font-size: 16px;
+				}
+
+				.closeIcon {
+					align-items: center;
+					cursor: pointer;
+					display: flex;
+					fill: $info-default;
+					justify-content: center;
+				}
+			}
+		}
+	}
+}

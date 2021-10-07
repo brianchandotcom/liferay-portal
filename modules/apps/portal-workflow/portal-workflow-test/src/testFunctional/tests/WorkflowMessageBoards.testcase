@@ -255,13 +255,39 @@ definition {
 
 	}
 
-	@description = "This is a test for LRQA-69694. Verify that the process status is Pending when the user creates a new thread with workflow associated. "
-	@ignore = "Test Stub"
+	@description = "This is a test for LRQA-69694. Verify that the process status is Pending when the user creates a new thread with workflow associated."
 	@priority = "3"
 	test WorkflowPendingForMessageBoard {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
 
-		// TODO LRQA-69694 WorkflowPendingForMessageBoard pending implementation
+		MessageboardsThread.addWithWorkflowCP(
+			threadBody = "Thread Message Body",
+			threadSubject = "Thread Message Subject");
 
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.viewPendingTasks(
+			workflowAssetTitle = "Thread Message Subject",
+			workflowAssetType = "Message Boards Message",
+			workflowTask = "Review");
+
+		AssertClick(
+			key_resultBarMessage = "Thread Message Subject",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR",
+			value1 = "Thread Message Subject");
+
+		Workflow.gotoPreviewView();
+
+		AssertElementPresent(
+			key_resultBarMessage = "Pending",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+
+		
 	}
 
 }

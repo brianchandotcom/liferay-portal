@@ -45,8 +45,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		throws ModelListenerException {
 
 		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
-			objectEntry);
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null, objectEntry);
 	}
 
 	@Override

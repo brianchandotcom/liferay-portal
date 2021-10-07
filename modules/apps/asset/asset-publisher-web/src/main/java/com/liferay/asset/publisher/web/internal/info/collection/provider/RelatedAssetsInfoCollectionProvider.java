@@ -18,10 +18,12 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
+import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,11 +33,10 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
@@ -96,15 +97,24 @@ public class RelatedAssetsInfoCollectionProvider
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		String itemSelectorPortletNamespace = _portal.getPortletNamespace(
+			ItemSelectorPortletKeys.ITEM_SELECTOR);
+
+		String itemSelectedEventName = ParamUtil.getString(
+			themeDisplay.getRequest(),
+			itemSelectorPortletNamespace + "itemSelectedEventName");
+
+		String assetPublisherPortletNamespace = _portal.getPortletNamespace(
+			AssetPublisherPortletKeys.ASSET_PUBLISHER);
 
 		if (Objects.equals(
-				portletDisplay.getPortletName(), PortletKeys.ITEM_SELECTOR)) {
+				itemSelectedEventName,
+				assetPublisherPortletNamespace + "selectAssetList")) {
 
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(Pagination pagination) {

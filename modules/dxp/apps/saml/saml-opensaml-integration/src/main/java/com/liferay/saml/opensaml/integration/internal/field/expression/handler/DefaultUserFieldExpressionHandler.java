@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.exportimport.UserImporter;
+import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 import com.liferay.saml.opensaml.integration.field.expression.handler.UserFieldExpressionHandler;
 import com.liferay.saml.opensaml.integration.processor.context.ProcessorContext;
 import com.liferay.saml.opensaml.integration.processor.context.UserProcessorContext;
@@ -92,17 +92,18 @@ public class DefaultUserFieldExpressionHandler
 		throws Exception {
 
 		if (userIdentifierExpression.equals(CompanyConstants.AUTH_TYPE_EA)) {
-			return _userImporter.importUser(
+			return _ldapUserImporter.importUser(
 				companyId, userIdentifier, StringPool.BLANK);
 		}
 		else if (userIdentifierExpression.equals(
 					CompanyConstants.AUTH_TYPE_SN)) {
 
-			return _userImporter.importUser(
+			return _ldapUserImporter.importUser(
 				companyId, StringPool.BLANK, userIdentifier);
 		}
 		else if (userIdentifierExpression.equals("uuid")) {
-			return _userImporter.importUserByUuid(companyId, userIdentifier);
+			return _ldapUserImporter.importUserByUuid(
+				companyId, userIdentifier);
 		}
 
 		return null;
@@ -285,10 +286,11 @@ public class DefaultUserFieldExpressionHandler
 
 	private final Set<String> _authFieldExpressions = new HashSet<>(
 		Arrays.asList("emailAddress", "screenName", "uuid"));
-	private int _processingIndex;
 
 	@Reference
-	private UserImporter _userImporter;
+	private LDAPUserImporter _ldapUserImporter;
+
+	private int _processingIndex;
 
 	@Reference
 	private UserLocalService _userLocalService;

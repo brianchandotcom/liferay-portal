@@ -363,6 +363,34 @@ public class PullRequest {
 		return _ownerUsername;
 	}
 
+	public List<String> getPassingTestSuites() {
+		List<String> passingTestSuites = new ArrayList<>();
+
+		JSONArray statusesJSONArray = getSenderSHAStatusesJSONArray();
+
+		for (int i = 0; i < statusesJSONArray.length(); i++) {
+			JSONObject jsonObject = statusesJSONArray.getJSONObject(i);
+
+			String description = jsonObject.getString("description");
+
+			Matcher matcher = _passingStatusPattern.matcher(description);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			String testSuiteName = matcher.group("testSuiteName");
+
+			if (passingTestSuites.contains(testSuiteName)) {
+				continue;
+			}
+
+			passingTestSuites.add(testSuiteName);
+		}
+
+		return passingTestSuites;
+	}
+
 	public String getReceiverUsername() {
 		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
 
@@ -487,6 +515,32 @@ public class PullRequest {
 		}
 
 		return false;
+	}
+
+	public boolean hasRequiredPassingSuites() {
+		String requiredPassingSuites;
+
+		try {
+			requiredPassingSuites = JenkinsResultsParserUtil.getBuildProperty(
+				"pull.request.forward.required.passing.suites");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(requiredPassingSuites)) {
+			return true;
+		}
+
+		List<String> passingTestSuites = getPassingTestSuites();
+
+		for (String requiredPassingSuite : requiredPassingSuites.split(",")) {
+			if (!passingTestSuites.contains(requiredPassingSuite)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public boolean isAutoCloseCommentAvailable() {
@@ -968,6 +1022,8 @@ public class PullRequest {
 		JenkinsResultsParserUtil.combine(
 			"https://github.com/(?<owner>[^/]+)/",
 			"(?<gitHubRemoteGitRepositoryName>[^/]+)/pull/(?<number>\\d+)"));
+	private static final Pattern _passingStatusPattern = Pattern.compile(
+		"\"ci:test:(?<testSuiteName>[^\"]+)\"\\s*has PASSED.");
 
 	private Boolean _autoCloseCommentAvailable;
 	private String _ciMergeSHA = "";

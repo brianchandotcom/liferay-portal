@@ -1320,6 +1320,8 @@ public class PortletTracker
 				new long[] {companyId}, portletModel,
 				ArrayUtil.toStringArray(categoryNames), false, false);
 
+			_portletLocalService.clearCache();
+
 			return;
 		}
 

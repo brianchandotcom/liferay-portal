@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.search.document.Document;
@@ -1516,6 +1517,10 @@ public class ObjectEntryLocalServiceImpl
 			}
 
 			if (objectField.getListTypeDefinitionId() == 0) {
+				if (StringUtil.equals(objectField.getType(), "String")) {
+					_validateObjectStringTypeLength(entry);
+				}
+
 				continue;
 			}
 
@@ -1537,6 +1542,19 @@ public class ObjectEntryLocalServiceImpl
 					"Object field name \"" + entry.getKey() +
 						"\" is not mapped to a valid list type entry");
 			}
+		}
+	}
+
+	private void _validateObjectStringTypeLength(
+			Map.Entry<String, Serializable> entry)
+		throws ObjectEntryValuesException {
+
+		String value = (String)entry.getValue();
+
+		if (value.length() > 75) {
+			throw new ObjectEntryValuesException(
+				"Object field \"" + entry.getKey() +
+					"\" value exceeds 75 characters.");
 		}
 	}
 

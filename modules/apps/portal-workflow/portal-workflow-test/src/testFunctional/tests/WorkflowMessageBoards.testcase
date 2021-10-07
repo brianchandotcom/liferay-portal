@@ -165,8 +165,6 @@ definition {
 		AssertElementPresent(
 			key_resultBarMessage = "Approved",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
-			
-
 	}
 
 	@description = "This is a test for LRQA-70151. Verify that the user cannot reply to a Pending Thread. "

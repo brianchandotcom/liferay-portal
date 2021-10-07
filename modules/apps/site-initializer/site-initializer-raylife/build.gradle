@@ -29,10 +29,6 @@ forceDeploy {
 	finalizedBy deploy
 }
 
-classes {
-	dependsOn buildExtra
-}
-
 node {
 	global = false
 	nodeVersion = "14.17.6"

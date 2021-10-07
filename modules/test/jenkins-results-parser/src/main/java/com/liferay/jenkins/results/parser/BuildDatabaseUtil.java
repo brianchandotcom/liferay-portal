@@ -17,9 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -183,8 +180,7 @@ public class BuildDatabaseUtil {
 		try {
 			_downloadBuildDatabaseFileFromDistNodes(
 				buildDatabaseFile, jenkinsMaster.getName(),
-				buildDatabaseFilePath.replaceAll(
-					"(.*)/[^/]+", "$1"));
+				buildDatabaseFilePath.replaceAll("(.*)/[^/]+", "$1"));
 
 			return;
 		}

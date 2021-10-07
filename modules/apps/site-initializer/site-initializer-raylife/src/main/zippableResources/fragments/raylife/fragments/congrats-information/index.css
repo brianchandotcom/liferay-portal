@@ -1,0 +1,206 @@
+.congrats-information {
+	border-radius: 8px;
+	border: 1px solid #A6C2FF;
+	box-shadow: 0px 10px 30px rgba(77, 133, 255, 0.09);
+	box-sizing: border-box;
+	height: 396px;
+	margin-bottom: 38px;
+	margin-top: 56px;
+	width: 749px;
+}
+
+.congrats-information .column-top {
+	margin-left: 45px;
+}
+
+.congrats-information .column-bot {
+	margin-bottom: 40px;
+	margin-left: 45px;
+	margin-top: -60px;
+}
+
+.congrats-information h1 {
+	color: #09101D;
+	font-size: 32px;
+	font-weight: bold;
+	Height: 40px;
+	line-height: 40px;
+	margin-top: 40px;
+	width: 334px;
+}
+
+.congrats-information h2 {
+	color: #2F313D;
+	font-size: 18px;
+	font-weight: bold;
+	Height: 20px;
+	line-height: 20px;
+	Top: 8px;
+	Width: 207px;
+}
+
+.congrats-information h3 {
+	color: #09101D;
+	font-size: 16px;
+	font-weight: 500;
+	height: 24px;
+	left: 0;
+	line-height: 24px;
+	margin-bottom: 0px;
+	top: 32px;
+	width: 200px;
+}
+
+.congrats-information p {
+	color: #2F313D;
+	font-size: 32px;
+	font-weight: 300;
+	height: 40px;
+	left: 92px;
+	line-height: 40px;
+	margin-top: 44px;
+	top: 0px;
+	width: 38px;
+}
+
+.congrats-information span {
+	color: #09101D;
+	font-size: 32px;
+	font-weight: bold;
+	height: 40px;
+	left: 0px;
+	line-height: 40px;
+	margin-left: 390px;
+	position: static;
+	top: 0px;
+	width: 92px;
+}
+
+.congrats-information .congrats-table-info {
+	color: #606167;
+	font-size: 13px;
+	font-weight: 500;
+	Height: 20px;
+	Left: 20px;
+	line-height: 35px;
+	margin-top: 90px;
+	Width: 260px;
+}
+
+.congrats-information #congrats-table-info-check-one {
+	margin-right: 4px;
+}
+
+.congrats-information #congrats-table-info-check-two {
+	margin-right: 4px;
+}
+
+.congrats-information #congrats-table-info-check-three {
+	margin-right: 4px;
+}
+
+.congrats-information #congrats-table-info-check-four {
+	margin-right: 4px;
+}
+
+.congrats-information #congrats-table-info-check-five {
+	margin-right: 4px;
+}
+
+.congrats-information .congrats-table-price {
+	color: #606167;
+	font-size: 13px;
+	font-weight: 500;
+	Height: 20px;
+	Left: 20px;
+	line-height: 35px;
+	margin-top: 30px;
+	text-align: right;
+	Width: 260px;
+}
+
+.congrats-information .dummy-buttons {
+	margin-top: 30px;
+	text-align: right;
+}
+
+.congrats-information .download {
+	background: none;
+	border: none;
+	color: #7D7E85;
+	font-size: 18px;
+	font-style: normal;
+	font-variant: small-caps;
+	font-weight: 600;
+	height: 24px;
+	left: 12px;
+	letter-spacing: 0.01em;
+	line-height: 24px;
+	margin-bottom: 20px;
+	margin-right: 6px;
+	position: static;
+	top: 8px;
+}
+
+.congrats-information .download #download {
+	border-radius: 0px;
+	height: 16px;
+	left: 0px;
+	margin-left: 6px;
+	top: 0px;
+	width: 16px;
+}
+
+.congrats-information .print {
+	background: none;
+	border: none;
+	color: #7D7E85;
+	font-size: 18px;
+	font-style: normal;
+	font-variant: small-caps;
+	font-weight: 600;
+	height: 24px;
+	left: 12px;
+	letter-spacing: 0.01em;
+	line-height: 24px;
+	margin-bottom: 20px;
+	margin-right: 6px;
+	position: static;
+	top: 8px;
+}
+
+.congrats-information .print #print {
+	border-radius: 0px;
+	height: 16px;
+	left: 0px;
+	margin-left: 6px;
+	top: 0px;
+	width: 16px;
+}
+
+.congrats-information .share {
+	background: none;
+	border: none;
+	color: #7D7E85;
+	font-size: 18px;
+	font-style: normal;
+	font-variant: small-caps;
+	font-weight: 600;
+	height: 24px;
+	left: 12px;
+	letter-spacing: 0.01em;
+	line-height: 24px;
+	margin-bottom: 20px;
+	margin-right: 6px;
+	position: static;
+	top: 8px;
+}
+
+.congrats-information .share #share {
+	border-radius: 0px;
+	height: 16px;
+	left: 0px;
+	margin-left: 6px;
+	top: 0px;
+	width: 16px;
+}

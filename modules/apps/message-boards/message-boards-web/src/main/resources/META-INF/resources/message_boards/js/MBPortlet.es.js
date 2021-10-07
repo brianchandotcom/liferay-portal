@@ -270,7 +270,7 @@ class MBPortlet {
 					const id = index;
 					const value = item.value;
 
-					return `<input id="${namespace}selectedFileName${id}" name="${namespace}selectedFileName" type="hidden" value="${value}" />`;
+					return `<input id="${namespace}selectedFileName${id}" name="${namespace}selectedFileName" type="hidden" value="${Liferay.Util.escapeHTML(value)}" />`;
 				})
 				.join('');
 

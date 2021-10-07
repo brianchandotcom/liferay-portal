@@ -12,15 +12,21 @@
  * details.
  */
 
-import {cleanup, fireEvent, render, waitForElement} from '@testing-library/react';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	waitForElement,
+} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
 import DownloadSpreadsheetButton from '../../../src/main/resources/META-INF/resources/js/components/DownloadSpreadsheetButton';
+import * as utils from '../../../src/main/resources/META-INF/resources/js/utils/downloadSpreadsheetUtils';
 
-const getComponent = () => {
-	return <DownloadSpreadsheetButton {...{fileURL: 'demo-file-url', total: 12}}/>;
+const getComponent = (fileURL = 'demo-file-url') => {
+	return <DownloadSpreadsheetButton {...{fileURL, total: 12}} />;
 };
 
 describe('DownloadSpreadsheetButton', () => {
@@ -106,5 +112,40 @@ describe('DownloadSpreadsheetButton', () => {
 		expect(
 			container.getElementsByClassName('loading-animation').length
 		).toBe(0);
+	});
+
+	it('...that calls the proper functions on events', async () => {
+		/* eslint-disable no-import-assign */
+		const fileURL = 'demo-file-url';
+		const {getByText} = render(getComponent(fileURL));
+		const exportButton = getByText('export-xls');
+
+		utils.downloadFileFromBlob = jest.fn();
+
+		const mockedFetch = jest.fn();
+		utils.fetchFile = jest.fn(mockedFetch);
+
+		const blob = new Blob();
+
+		mockedFetch.mockReturnValue(blob);
+
+		const controller = new AbortController();
+
+		fireEvent(
+			exportButton,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		await waitForElement(() => getByText('generating-xls'));
+		expect(getByText('generating-xls')).toBeInTheDocument();
+
+		await expect(mockedFetch).toHaveBeenCalledWith({
+			controller,
+			url: fileURL,
+		});
+		expect(utils.downloadFileFromBlob).toHaveBeenCalledWith(blob);
 	});
 });

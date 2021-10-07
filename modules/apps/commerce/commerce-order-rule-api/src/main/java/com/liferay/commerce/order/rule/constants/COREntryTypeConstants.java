@@ -22,4 +22,10 @@ public class COREntryTypeConstants {
 	public static final String TYPE_MINIMUM_ORDER_AMOUNT =
 		"minimum-order-amount";
 
+	public static final String TYPE_MINIMUM_ORDER_AMOUNT_FIELD_AMOUNT =
+		"minimum-order-amount-field-amount";
+
+	public static final String TYPE_MINIMUM_ORDER_AMOUNT_FIELD_CURRENCY_CODE =
+		"minimum-order-amount-field-currency-code";
+
 }

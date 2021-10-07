@@ -25,13 +25,21 @@ public interface WorkspaceGitRepository extends LocalGitRepository {
 
 	public String getBaseBranchSHA();
 
+	public String getBranchName();
+
 	public String getFileContent(String filePath);
+
+	public String getGitHubDevBranchName();
 
 	public String getGitHubURL();
 
 	public List<LocalGitCommit> getHistoricalLocalGitCommits();
 
+	public String getSenderBranchName();
+
 	public String getSenderBranchSHA();
+
+	public String getSenderBranchUsername();
 
 	public List<List<LocalGitCommit>> partitionLocalGitCommits(
 		List<LocalGitCommit> localGitCommits, int count);

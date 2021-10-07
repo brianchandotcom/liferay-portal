@@ -14,8 +14,57 @@
 
 package com.liferay.commerce.order.rule.model.impl;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.io.IOException;
+
 /**
  * @author Luca Pellizzon
  */
 public class CommerceOrderRuleEntryImpl extends CommerceOrderRuleEntryBaseImpl {
+
+	@Override
+	public UnicodeProperties getSettingsProperties() {
+		if (_unicodeProperties == null) {
+			_unicodeProperties = new UnicodeProperties(true);
+
+			try {
+				_unicodeProperties.load(super.getTypeSettings());
+			}
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
+			}
+		}
+
+		return _unicodeProperties;
+	}
+
+	@Override
+	public String getSettingsProperty(String key) {
+		UnicodeProperties unicodeProperties = getSettingsProperties();
+
+		return unicodeProperties.getProperty(key);
+	}
+
+	@Override
+	public void setTypeSettings(String settings) {
+		_unicodeProperties = null;
+
+		super.setTypeSettings(settings);
+	}
+
+	@Override
+	public void setTypeSettingsProperties(UnicodeProperties unicodeProperties) {
+		_unicodeProperties = unicodeProperties;
+
+		super.setTypeSettings(unicodeProperties.toString());
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceOrderRuleEntryImpl.class);
+
+	private UnicodeProperties _unicodeProperties;
+
 }

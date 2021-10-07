@@ -70,7 +70,15 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 	<%
 	String fullContentRedirect = themeDisplay.getURLCurrent();
 
-	if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(assetEntry.getCompanyId(), assetEntry.getGroupId(), assetEntry.getClassName())) {
+	int displayPageType = AssetDisplayPageConstants.TYPE_NONE;
+
+	AssetDisplayPageEntry assetDisplayPageEntry = AssetDisplayPageEntryLocalServiceUtil.fetchAssetDisplayPageEntry(assetEntry.getGroupId(), assetEntry.getClassNameId(), assetEntry.getClassPK());
+
+	if (assetDisplayPageEntry != null) {
+		displayPageType = assetDisplayPageEntry.getType();
+	}
+
+	if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(assetEntry.getCompanyId(), assetEntry.getGroupId(), assetEntry.getClassName()) && (displayPageType != AssetDisplayPageConstants.TYPE_SPECIFIC)) {
 		fullContentRedirect = redirect;
 	}
 

@@ -101,9 +101,6 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 
 		commerceOrderRuleEntry.setActive(active);
 		commerceOrderRuleEntry.setDescription(description);
-
-		Date date = new Date();
-
 		commerceOrderRuleEntry.setDisplayDate(
 			_portal.getDate(
 				displayDateMonth, displayDateDay, displayDateYear,
@@ -132,6 +129,8 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 
 		commerceOrderRuleEntry.setTypeSettingsUnicodeProperties(
 			typeSettingsUnicodeProperties);
+
+		Date date = new Date();
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commerceOrderRuleEntry.setStatus(WorkflowConstants.STATUS_DRAFT);

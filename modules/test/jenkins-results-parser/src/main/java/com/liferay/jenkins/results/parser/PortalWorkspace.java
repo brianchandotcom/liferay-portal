@@ -57,7 +57,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		_updatePluginsWorkspaceGitRepository();
 		_updatePortalPrivateWorkspaceGitRepository();
 		_updatePortalsPlutoWorkspaceGitRepository();
-		_updateReleaseWorkspaceGitRepository();
+		_updateReleaseToolWorkspaceGitRepository();
 
 		super.setUp();
 	}
@@ -72,6 +72,27 @@ public class PortalWorkspace extends BaseWorkspace {
 		super(primaryRepositoryName, upstreamBranchName);
 	}
 
+	private PluginsWorkspaceGitRepository _getPluginsWorkspaceGitRepository() {
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_getPortalWorkspaceGitRepository();
+
+		if (portalWorkspaceGitRepository == null) {
+			return null;
+		}
+
+		WorkspaceGitRepository workspaceGitRepository =
+			getWorkspaceGitRepository(
+				portalWorkspaceGitRepository.getPluginsRepositoryDirName());
+
+		if (!(workspaceGitRepository instanceof
+				PluginsWorkspaceGitRepository)) {
+
+			return null;
+		}
+
+		return (PluginsWorkspaceGitRepository)workspaceGitRepository;
+	}
+
 	private PortalWorkspaceGitRepository _getPortalWorkspaceGitRepository() {
 		WorkspaceGitRepository workspaceGitRepository =
 			getPrimaryWorkspaceGitRepository();
@@ -83,27 +104,54 @@ public class PortalWorkspace extends BaseWorkspace {
 		return (PortalWorkspaceGitRepository)workspaceGitRepository;
 	}
 
+	private ReleaseToolWorkspaceGitRepository
+		_getReleaseToolWorkspaceGitRepository() {
+
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_getPortalWorkspaceGitRepository();
+
+		if (portalWorkspaceGitRepository == null) {
+			return null;
+		}
+
+		WorkspaceGitRepository workspaceGitRepository =
+			getWorkspaceGitRepository("liferay-release-tool-ee");
+
+		if (!(workspaceGitRepository instanceof
+				ReleaseToolWorkspaceGitRepository)) {
+
+			return null;
+		}
+
+		return (ReleaseToolWorkspaceGitRepository)workspaceGitRepository;
+	}
+
 	private void _updateBladeSamplesWorkspaceGitRepository() {
 		_updateWorkspaceGitRepository(
 			"git-commit-blade-samples", "liferay-blade-samples");
 	}
 
 	private void _updatePluginsWorkspaceGitRepository() {
-		WorkspaceGitRepository primaryWorkspaceGitRepository =
-			getPrimaryWorkspaceGitRepository();
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_getPortalWorkspaceGitRepository();
 
-		if (!(primaryWorkspaceGitRepository instanceof
-				PortalWorkspaceGitRepository)) {
-
+		if (portalWorkspaceGitRepository == null) {
 			return;
 		}
-
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			(PortalWorkspaceGitRepository)primaryWorkspaceGitRepository;
 
 		_updateWorkspaceGitRepository(
 			"git-commit-plugins",
 			portalWorkspaceGitRepository.getPluginsRepositoryDirName());
+
+		PluginsWorkspaceGitRepository pluginsWorkspaceGitRepository =
+			_getPluginsWorkspaceGitRepository();
+
+		if (pluginsWorkspaceGitRepository == null) {
+			return;
+		}
+
+		pluginsWorkspaceGitRepository.setPortalUpstreamBranchName(
+			portalWorkspaceGitRepository.getUpstreamBranchName());
 	}
 
 	private void _updatePortalPrivateWorkspaceGitRepository() {
@@ -129,9 +177,26 @@ public class PortalWorkspace extends BaseWorkspace {
 			"git-commit-portals-pluto", "portals-pluto");
 	}
 
-	private void _updateReleaseWorkspaceGitRepository() {
+	private void _updateReleaseToolWorkspaceGitRepository() {
 		_updateWorkspaceGitRepository(
 			"git-commit/liferay-release-tool-ee", "liferay-release-tool-ee");
+
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_getPortalWorkspaceGitRepository();
+
+		if (portalWorkspaceGitRepository == null) {
+			return;
+		}
+
+		ReleaseToolWorkspaceGitRepository releaseToolWorkspaceGitRepository =
+			_getReleaseToolWorkspaceGitRepository();
+
+		if (releaseToolWorkspaceGitRepository == null) {
+			return;
+		}
+
+		releaseToolWorkspaceGitRepository.setPortalUpstreamBranchName(
+			portalWorkspaceGitRepository.getUpstreamBranchName());
 	}
 
 	private void _updateWorkspaceGitRepository(

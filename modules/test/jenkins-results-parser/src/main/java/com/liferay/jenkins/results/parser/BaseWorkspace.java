@@ -94,6 +94,17 @@ public abstract class BaseWorkspace implements Workspace {
 	}
 
 	@Override
+	public WorkspaceGitRepository getWorkspaceGitRepository(
+		String repositoryDirName) {
+
+		if (_workspaceGitRepositories == null) {
+			getWorkspaceGitRepositories();
+		}
+
+		return _workspaceGitRepositories.get(repositoryDirName);
+	}
+
+	@Override
 	public void setUp() {
 		List<Callable<Object>> callables = new ArrayList<>();
 
@@ -223,16 +234,6 @@ public abstract class BaseWorkspace implements Workspace {
 		}
 
 		_validateKeys();
-	}
-
-	protected WorkspaceGitRepository getWorkspaceGitRepository(
-		String repositoryDirName) {
-
-		if (_workspaceGitRepositories == null) {
-			getWorkspaceGitRepositories();
-		}
-
-		return _workspaceGitRepositories.get(repositoryDirName);
 	}
 
 	protected static final ThreadPoolExecutor threadPoolExecutor =

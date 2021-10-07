@@ -29,6 +29,9 @@ public interface Workspace {
 
 	public List<WorkspaceGitRepository> getWorkspaceGitRepositories();
 
+	public WorkspaceGitRepository getWorkspaceGitRepository(
+		String gitDirectoryName);
+
 	public void setUp();
 
 	public void synchronizeToGitHubDev();

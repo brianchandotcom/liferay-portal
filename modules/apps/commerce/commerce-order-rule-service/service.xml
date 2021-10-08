@@ -4,11 +4,11 @@
 <service-builder auto-namespace-tables="false" mvcc-enabled="false" package-path="com.liferay.commerce.order.rule">
 	<author>Luca Pellizzon</author>
 	<namespace>Commerce</namespace>
-	<entity external-reference-code="true" local-service="true" name="CommerceOrderRuleEntry" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="COREntry" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="commerceOrderRuleEntryId" primary="true" type="long" />
+		<column name="COREntryId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -64,11 +64,11 @@
 			<finder-column comparator="LIKE" name="type" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CommerceOrderRuleEntryRel" remote-service="true">
+	<entity local-service="true" name="COREntryRel" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="commerceOrderRuleEntryRelId" primary="true" type="long" />
+		<column name="COREntryRelId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -82,7 +82,7 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="commerceOrderRuleEntryId" type="long" />
+		<column name="COREntryId" type="long" />
 
 		<!-- Order -->
 
@@ -92,21 +92,21 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CommerceOrderRuleEntryId" return-type="Collection">
-			<finder-column name="commerceOrderRuleEntryId" />
+		<finder name="COREntryId" return-type="Collection">
+			<finder-column name="COREntryId" />
 		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />
-			<finder-column name="commerceOrderRuleEntryId" />
+			<finder-column name="COREntryId" />
 		</finder>
-		<finder name="C_C_C" return-type="CommerceOrderRuleEntryRel" unique="true">
+		<finder name="C_C_C" return-type="COREntryRel" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
-			<finder-column name="commerceOrderRuleEntryId" />
+			<finder-column name="COREntryId" />
 		</finder>
 	</entity>
 	<exceptions>
-		<exception>CommerceOrderRuleEntryDisplayDate</exception>
-		<exception>CommerceOrderRuleEntryExpirationDate</exception>
+		<exception>COREntryDisplayDate</exception>
+		<exception>COREntryExpirationDate</exception>
 	</exceptions>
 </service-builder>

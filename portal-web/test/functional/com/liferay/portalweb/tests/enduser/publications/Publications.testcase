@@ -84,6 +84,11 @@ definition {
 				roleTitle = "Publications Role");
 		}
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Publications Role");
+
 		for (var resourceActionIndex : list "ADD_PUBLICATION,PERMISSIONS") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "${resourceActionIndex}",

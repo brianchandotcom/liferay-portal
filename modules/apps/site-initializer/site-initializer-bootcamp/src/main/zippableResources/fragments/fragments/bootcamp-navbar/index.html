@@ -4,6 +4,9 @@
 	publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
 	publicSiteNavbarClass =""
 	userName = themeDisplay.getUser().getFirstName()
+	myCourses = publicFriendlyURL + "/my-courses"
+	notifications = publicFriendlyURL + "/notifications"
+	accountSettings = publicFriendlyURL + "/account-settings"
 /]
 
 [#if !themeDisplay.isSignedIn()]
@@ -37,17 +40,17 @@
 
 						<ul aria-labelledby="${fragmentEntryLinkNamespace}_dropdown_menu" class="dropdown-menu right">
 							<li>
-								<a class="dropdown-item" href="http://localhost:8080/en/web/bootcamp/my-courses">
+								<a class="dropdown-item" href="${myCourses}">
 									My Courses
 								</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="${privateUserFriendlyURL}">
+								<a class="dropdown-item" href="${notifications}">
 									Notifications
 								</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="http://localhost:8080/en/web/bootcamp/account-settings">
+								<a class="dropdown-item" href="accountSettings">
 									Account Settings
 								</a>
 							</li>

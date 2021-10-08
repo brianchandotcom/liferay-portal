@@ -1,0 +1,82 @@
+definition {
+
+	@summary = "Helper function to add a blog entry via Headless"
+	macro _addBlogEntry {
+		Variables.assertDefined(parameterList = "${content},${groupId},${title}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (!(isSet(coverImageCaption))) {
+			var coverImageCaption = "";
+		}
+
+		if (!(isSet(coverImageId))) {
+			var coverImageId = "0";
+		}
+
+		if (!(isSet(subtitle))) {
+			var subtitle = "";
+		}
+
+		if (!(isSet(description))) {
+			var description = "";
+		}
+
+		if (isSet(assetTagNames)) {
+			var assetTagNames = '''"${assetTagNames}"''';
+		}
+		else {
+			var assetTagNames = "";
+		}
+
+		if (!(isSet(assetCategoryIds))) {
+			var assetCategoryIds = "0";
+		}
+
+		if (!(isSet(viewableBy))) {
+			var viewableBy = "Anyone";
+		}
+
+		var content = '''<p>${content}</p>''';
+
+		var os = OSDetector.isWindows();
+
+		if ("${os}" == "true") {
+			var content = StringUtil.replace("${content}", ">", "^>");
+			var content = StringUtil.replace("${content}", "<", "^<");
+		}
+
+		var curl = '''
+				${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-postings \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-u ${userEmailAddress}:${userPassword} \
+				-d {
+					"alternativeHeadline": "${subtitle}",
+					"articleBody": "${content}",
+					"headline": "${title}",
+					"description": "${description}",
+					"image": {
+						"caption": "${coverImageCaption}",
+						"imageId": ${coverImageId}
+					},
+					"keywords": [${assetTagNames}],
+					"taxonomyCategoryIds": [${assetCategoryIds}],
+					"viewableBy": "${viewableBy}"
+				}
+		''';
+
+		var entryId = JSONCurlUtil.post("${curl}", "$.id");
+
+		return "${entryId}";
+	}
+
+}

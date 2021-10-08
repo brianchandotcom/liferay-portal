@@ -1,0 +1,28 @@
+definition {
+
+	@summary = "Add a blog entry with title '${title}' and content '${content}' via Headless"
+	macro addBlogEntry {
+		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(grandParentGroupName = "${grandParentGroupName}", groupName = "${groupName}", site = "${site}", parentGroupName = "${parentGroupName}");
+
+		var entryId = HeadlessBlogAPI._addBlogEntry(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			content = "${content}",
+			coverImageId = "${coverImageId}",
+			description = "${description}",
+			groupId = "${groupId}",
+			title = "${title}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}",
+			viewableBy = "${viewableBy}");
+
+		return "${entryId}";
+	}
+
+}

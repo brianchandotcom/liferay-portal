@@ -293,21 +293,21 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				uploadPortletRequest.getContentType("file"),
 				ContentTypes.APPLICATION_ZIP)) {
 
-			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-					"file")) {
+			try (InputStream inputStream1 =
+					uploadPortletRequest.getFileAsStream("file")) {
 
 				ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
-					inputStream);
+					inputStream1);
 
 				try {
 					for (String entry : zipReader.getEntries()) {
-						try (InputStream entryInputStream =
+						try (InputStream inputStream2 =
 								zipReader.getEntryAsInputStream(entry)) {
 
 							_processXLIFFFile(
 								actionRequest, groupId, className, classPK,
 								entry, successMessages, failureMessages,
-								entryInputStream, locale);
+								inputStream2, locale);
 						}
 					}
 				}

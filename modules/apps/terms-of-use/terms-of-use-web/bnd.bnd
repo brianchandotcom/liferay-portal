@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Terms of Use Web
+Bundle-SymbolicName: com.liferay.terms.of.use.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /terms-of-use-web

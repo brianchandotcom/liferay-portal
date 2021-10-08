@@ -628,9 +628,11 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Address Name");
 
-		AssertTextEquals(
-			locator1 = "TextInput#EMAIL",
-			value1 = "buyer@liferay.com");
+		var guestAccountEmail = CommerceJSONAccountsAPI._getCommerceAccountEmail(accountName = "Address Name", accountType = "Guest");
+
+		TestUtils.assertEquals(
+			actual = "${guestAccountEmail}",
+			expected = "buyer@liferay.com");
 	}
 
 	test GuestAccountIsNotCombinedWithExistingUserAccount {
@@ -782,7 +784,7 @@ definition {
 		CommerceEntry.viewAccountsEntry(
 			accountEmail = "buyer@liferay.com",
 			accountName = "Buyer User",
-			accountType = "Personal",
+			accountType = "Person",
 			isAccountActive = "true");
 
 		Click(locator1 = "Icon#BACK");
@@ -1316,7 +1318,7 @@ definition {
 		CommerceEntry.viewAccountsEntry(
 			accountEmail = "buyer@liferay.com",
 			accountName = "Buyer User",
-			accountType = "Personal",
+			accountType = "Person",
 			isAccountActive = "true");
 	}
 

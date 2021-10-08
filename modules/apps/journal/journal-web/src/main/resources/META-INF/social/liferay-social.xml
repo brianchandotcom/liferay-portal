@@ -4,6 +4,12 @@
 <liferay-social>
 	<activity>
 		<model-name>com.liferay.journal.model.JournalArticle</model-name>
+		<activity-type>${com.liferay.social.kernel.model.SocialActivityConstants.TYPE_ADD_COMMENT}</activity-type>
+		<language-key>ADD_COMMENT</language-key>
+		<log-activity>true</log-activity>
+	</activity>
+	<activity>
+		<model-name>com.liferay.journal.model.JournalArticle</model-name>
 		<activity-type>${com.liferay.social.kernel.model.SocialActivityConstants.TYPE_MOVE_TO_TRASH}</activity-type>
 		<log-activity>true</log-activity>
 		<counters-enabled>false</counters-enabled>

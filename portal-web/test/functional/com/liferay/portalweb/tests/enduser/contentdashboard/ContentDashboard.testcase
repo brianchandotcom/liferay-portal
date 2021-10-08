@@ -1514,31 +1514,24 @@ definition {
 	test EditWebContent {
 		property portal.acceptance = "true";
 
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Test Site Name",
-			title = "WC Title");
+		task ("Create a Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task ("Go to edit the asset") {
+			ContentDashboard.goToContentDashboard();
 
-		Pause(locator1 = "3000");
+			ContentDashboard.editAsset(assetTitle = "WC Title Edited");
+		}
 
-		ContentDashboard.editAsset(assetTitle = "WC Title Edited");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title Edited");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title Edited");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title Edited");
+		task ("Assert in title was porperty edited") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title Edited");
+		}
 	}
 
 	@description = "Validate if the user can access to the Content Dashboard after s/he has expired a Web Content"

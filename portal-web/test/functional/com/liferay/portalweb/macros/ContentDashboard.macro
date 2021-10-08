@@ -343,6 +343,8 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}/group/guest/~/control_panel/manage?p_p_id=com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet");
 
 		WaitForPageLoad();
+
+		WaitForElementPresent(locator1 = "ContentDashboard#CONTENT_CHART_SVG");
 	}
 
 	macro moveToPage {

@@ -130,6 +130,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_CHART_SVG</td>
+	<td>//*[@class = 'recharts-surface']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETE_SECOND_FILTER_SELECTED</td>
 	<td>//*[contains(@class, 'tbar-item-expand')]//*[contains(@class, 'close')]</td>
 	<td></td>

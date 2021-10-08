@@ -266,17 +266,27 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public boolean isAvailable() {
-		try {
-			JenkinsResultsParserUtil.toString(
-				"http://" + getName(), false, 0, 0, 0);
-		}
-		catch (IOException ioException) {
-			System.out.println(getName() + " is unreachable.");
+		if ((_availableTimestamp == -1) ||
+			((System.currentTimeMillis() - _availableTimestamp) >
+				_AVAILABLE_TIMEOUT)) {
 
-			return false;
+			try {
+				JenkinsResultsParserUtil.toString(
+					"http://" + getName(), false, 0, 0, 0);
+
+				_available = true;
+			}
+			catch (IOException ioException) {
+				System.out.println(getName() + " is unreachable.");
+
+				_available = false;
+			}
+			finally {
+				_availableTimestamp = System.currentTimeMillis();
+			}
 		}
 
-		return true;
+		return _available;
 	}
 
 	@Override
@@ -530,9 +540,13 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return recentBatchSizesTotal;
 	}
 
+	private static final long _AVAILABLE_TIMEOUT = 1000 * 60 * 5;
+
 	private static final Map<String, JenkinsMaster> _jenkinsMasters =
 		Collections.synchronizedMap(new HashMap<String, JenkinsMaster>());
 
+	private boolean _available;
+	private long _availableTimestamp = -1;
 	private final Map<Long, Integer> _batchSizes = new TreeMap<>();
 	private final List<String> _buildURLs = new CopyOnWriteArrayList<>();
 	private final Map<String, JenkinsSlave> _jenkinsSlavesMap =

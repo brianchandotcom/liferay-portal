@@ -304,8 +304,9 @@ public class PullRequestPortalTopLevelBuild
 		if (workspace instanceof PortalWorkspace) {
 			PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
 
-			portalWorkspace.setPortalBuildProfile(
-				getParameterValue("TEST_PORTAL_BUILD_PROFILE"));
+			portalWorkspace.setOSBAsahGitHubURL(_getOSBAsahGitHubURL());
+			portalWorkspace.setOSBFaroGitHubURL(_getOSBFaroGitHubURL());
+			portalWorkspace.setPortalBuildProfile(_getPortalBuildProfile());
 		}
 
 		WorkspaceGitRepository workspaceGitRepository =
@@ -592,6 +593,49 @@ public class PullRequestPortalTopLevelBuild
 		}
 
 		return rootElement;
+	}
+
+	private String _getOSBAsahGitHubURL() {
+		String osbAsahGitHubURL = getParameterValue("OSB_ASAH_GITHUB_URL");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(osbAsahGitHubURL)) {
+			return osbAsahGitHubURL;
+		}
+
+		Build controllerBuild = getControllerBuild();
+
+		if (controllerBuild != null) {
+			return controllerBuild.getParameterValue("OSB_ASAH_GITHUB_URL");
+		}
+
+		return null;
+	}
+
+	private String _getOSBFaroGitHubURL() {
+		String osbFaroGitHubURL = getParameterValue("OSB_FARO_GITHUB_URL");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(osbFaroGitHubURL)) {
+			return osbFaroGitHubURL;
+		}
+
+		Build controllerBuild = getControllerBuild();
+
+		if (controllerBuild != null) {
+			return controllerBuild.getParameterValue("OSB_FARO_GITHUB_URL");
+		}
+
+		return null;
+	}
+
+	private String _getPortalBuildProfile() {
+		String portalBuildProfile = getParameterValue(
+			"TEST_PORTAL_BUILD_PROFILE");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBuildProfile)) {
+			return "dxp";
+		}
+
+		return portalBuildProfile;
 	}
 
 	private String _getSenderBranchSHA() {

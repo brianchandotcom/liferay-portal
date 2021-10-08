@@ -25,6 +25,14 @@ public class PortalWorkspace extends BaseWorkspace {
 		return jsonObject.optString("portal_build_profile", "dxp");
 	}
 
+	public void setOSBAsahGitHubURL(String osbAsahGitHubURL) {
+		_osbAsahGitHubURL = osbAsahGitHubURL;
+	}
+
+	public void setOSBFaroGitHubURL(String osbFaroGitHubURL) {
+		_osbFaroGitHubURL = osbFaroGitHubURL;
+	}
+
 	public void setPortalBuildProfile(String portalBuildProfile) {
 		portalBuildProfile = portalBuildProfile.toLowerCase();
 
@@ -54,6 +62,8 @@ public class PortalWorkspace extends BaseWorkspace {
 		portalWorkspaceGitRepository.setUpTCKHome();
 
 		_updateBladeSamplesWorkspaceGitRepository();
+		_updateOSBAsahWorkspaceGitRepository();
+		_updateOSBFaroWorkspaceGitRepository();
 		_updatePluginsWorkspaceGitRepository();
 		_updatePortalPrivateWorkspaceGitRepository();
 		_updatePortalsPlutoWorkspaceGitRepository();
@@ -131,6 +141,40 @@ public class PortalWorkspace extends BaseWorkspace {
 			"git-commit-blade-samples", "liferay-blade-samples");
 	}
 
+	private void _updateOSBAsahWorkspaceGitRepository() {
+		boolean updated = _updateWorkspaceGitRepository(
+			"modules/dxp/apps/osb/osb-asah/ci-merge",
+			"com-liferay-osb-asah-private");
+
+		if (updated || (_osbAsahGitHubURL == null)) {
+			return;
+		}
+
+		WorkspaceGitRepository workspaceGitRepository =
+			getWorkspaceGitRepository("com-liferay-osb-asah-private");
+
+		if (workspaceGitRepository == null) {
+			return;
+		}
+
+		workspaceGitRepository.setGitHubURL(_osbAsahGitHubURL);
+	}
+
+	private void _updateOSBFaroWorkspaceGitRepository() {
+		if (_osbFaroGitHubURL == null) {
+			return;
+		}
+
+		WorkspaceGitRepository workspaceGitRepository =
+			getWorkspaceGitRepository("com-liferay-osb-faro-private");
+
+		if (workspaceGitRepository == null) {
+			return;
+		}
+
+		workspaceGitRepository.setGitHubURL(_osbFaroGitHubURL);
+	}
+
 	private void _updatePluginsWorkspaceGitRepository() {
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			_getPortalWorkspaceGitRepository();
@@ -199,14 +243,14 @@ public class PortalWorkspace extends BaseWorkspace {
 			portalWorkspaceGitRepository.getUpstreamBranchName());
 	}
 
-	private void _updateWorkspaceGitRepository(
+	private boolean _updateWorkspaceGitRepository(
 		String gitCommitFilePath, String gitRepositoryName) {
 
 		WorkspaceGitRepository workspaceGitRepository =
 			getWorkspaceGitRepository(gitRepositoryName);
 
 		if (workspaceGitRepository == null) {
-			return;
+			return false;
 		}
 
 		WorkspaceGitRepository primaryWorkspaceGitRepository =
@@ -216,20 +260,27 @@ public class PortalWorkspace extends BaseWorkspace {
 			gitCommitFilePath);
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(gitCommit)) {
-			return;
+			return false;
 		}
 
 		if (JenkinsResultsParserUtil.isSHA(gitCommit)) {
 			workspaceGitRepository.setSenderBranchSHA(gitCommit);
 
-			return;
+			return true;
 		}
 
-		if (GitUtil.isValidGitHubRefURL(gitCommit) ||
-			PullRequest.isValidGitHubPullRequestURL(gitCommit)) {
+		if (!GitUtil.isValidGitHubRefURL(gitCommit) &&
+			!PullRequest.isValidGitHubPullRequestURL(gitCommit)) {
 
-			workspaceGitRepository.setGitHubURL(gitCommit);
+			return false;
 		}
+
+		workspaceGitRepository.setGitHubURL(gitCommit);
+
+		return true;
 	}
+
+	private String _osbAsahGitHubURL;
+	private String _osbFaroGitHubURL;
 
 }

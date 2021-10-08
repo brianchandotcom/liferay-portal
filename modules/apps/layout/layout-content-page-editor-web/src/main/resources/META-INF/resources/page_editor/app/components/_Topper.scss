@@ -196,6 +196,7 @@ html#{$cadmin-selector} {
 
 		& > .page-editor__topper__content {
 			height: 100%;
+			min-height: 5px;
 		}
 	}
 }

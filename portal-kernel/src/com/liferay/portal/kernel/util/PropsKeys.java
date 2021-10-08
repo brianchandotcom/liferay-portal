@@ -1210,6 +1210,9 @@ public interface PropsKeys {
 	public static final String EHCACHE_SOCKET_START_PORT =
 		"ehcache.socket.start.port";
 
+	public static final String ENTERPRISE_PRODUCT_NOTIFICATION_ENABLED =
+		"enterprise.product.notification.enabled";
+
 	public static final String ETAG_RESPONSE_SIZE_MAX =
 		"etag.response.size.max";
 

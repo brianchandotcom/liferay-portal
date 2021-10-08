@@ -12,7 +12,7 @@ definition {
 			var newItemCount = ${currentItemCount} + 1;
 		}
 
-		Click(locator1 = "CommerceAccelerators#MINI_CART_CLOSE");
+		Refresh();
 
 		Type(
 			key_productName = "${productName}",

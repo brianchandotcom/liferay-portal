@@ -28,10 +28,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "indexer.class.name=com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry",
+	property = "indexer.class.name=com.liferay.commerce.order.rule.model.COREntry",
 	service = ModelSummaryContributor.class
 )
-public class CommerceOrderRuleEntryModelSummaryContributor
+public class COREntryModelSummaryContributor
 	implements ModelSummaryContributor {
 
 	@Override

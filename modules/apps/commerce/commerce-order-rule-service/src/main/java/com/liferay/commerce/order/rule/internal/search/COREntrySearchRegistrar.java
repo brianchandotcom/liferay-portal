@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.rule.internal.search;
 
-import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
+import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
@@ -32,12 +32,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(enabled = false, immediate = true, service = {})
-public class CommerceOrderRuleEntrySearchRegistrar {
+public class COREntrySearchRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = _modelSearchRegistrarHelper.register(
-			CommerceOrderRuleEntry.class, bundleContext,
+			COREntry.class, bundleContext,
 			modelSearchDefinition -> {
 				modelSearchDefinition.setDefaultSelectedFieldNames(
 					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
@@ -57,21 +57,21 @@ public class CommerceOrderRuleEntrySearchRegistrar {
 	}
 
 	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry)"
+		target = "(indexer.class.name=com.liferay.commerce.order.rule.model.COREntry)"
 	)
-	private ModelIndexerWriterContributor<CommerceOrderRuleEntry>
+	private ModelIndexerWriterContributor<COREntry>
 		_modelIndexWriterContributor;
 
 	@Reference
 	private ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
 
 	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry)"
+		target = "(indexer.class.name=com.liferay.commerce.order.rule.model.COREntry)"
 	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry)"
+		target = "(indexer.class.name=com.liferay.commerce.order.rule.model.COREntry)"
 	)
 	private ModelVisibilityContributor _modelVisibilityContributor;
 

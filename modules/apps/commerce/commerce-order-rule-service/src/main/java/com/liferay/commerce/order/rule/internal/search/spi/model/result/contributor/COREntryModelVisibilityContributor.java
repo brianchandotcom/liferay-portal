@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.order.rule.internal.search.spi.model.result.contributor;
 
-import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
-import com.liferay.commerce.order.rule.service.CommerceOrderRuleEntryLocalService;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.service.COREntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,20 +30,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "indexer.class.name=com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry",
+	property = "indexer.class.name=com.liferay.commerce.order.rule.model.COREntry",
 	service = ModelVisibilityContributor.class
 )
-public class CommerceOrderRuleEntryModelVisibilityContributor
+public class COREntryModelVisibilityContributor
 	implements ModelVisibilityContributor {
 
 	@Override
 	public boolean isVisible(long classPK, int status) {
 		try {
-			CommerceOrderRuleEntry commerceOrderRuleEntry =
-				_commerceOrderRuleEntryLocalService.getCommerceOrderRuleEntry(
-					classPK);
+			COREntry corEntry = _corEntryLocalService.getCOREntry(classPK);
 
-			return _isVisible(commerceOrderRuleEntry.getStatus(), status);
+			return _isVisible(corEntry.getStatus(), status);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -68,10 +66,9 @@ public class CommerceOrderRuleEntryModelVisibilityContributor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceOrderRuleEntryModelVisibilityContributor.class);
+		COREntryModelVisibilityContributor.class);
 
 	@Reference
-	private CommerceOrderRuleEntryLocalService
-		_commerceOrderRuleEntryLocalService;
+	private COREntryLocalService _corEntryLocalService;
 
 }

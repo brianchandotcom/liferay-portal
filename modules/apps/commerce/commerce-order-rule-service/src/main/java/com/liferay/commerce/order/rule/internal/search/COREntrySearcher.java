@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.rule.internal.search;
 
-import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
+import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.Field;
 
@@ -25,12 +25,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "model.class.name=com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry",
+	property = "model.class.name=com.liferay.commerce.order.rule.model.COREntry",
 	service = BaseSearcher.class
 )
-public class CommerceOrderRuleEntrySearcher extends BaseSearcher {
+public class COREntrySearcher extends BaseSearcher {
 
-	public CommerceOrderRuleEntrySearcher() {
+	public COREntrySearcher() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.NAME);
@@ -43,7 +43,6 @@ public class CommerceOrderRuleEntrySearcher extends BaseSearcher {
 		return _CLASS_NAME;
 	}
 
-	private static final String _CLASS_NAME =
-		CommerceOrderRuleEntry.class.getName();
+	private static final String _CLASS_NAME = COREntry.class.getName();
 
 }

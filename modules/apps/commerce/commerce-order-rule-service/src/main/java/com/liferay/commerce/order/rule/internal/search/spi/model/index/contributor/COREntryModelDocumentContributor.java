@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.rule.internal.search.spi.model.index.contributor;
 
-import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
+import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -26,17 +26,15 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "indexer.class.name=com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry",
+	property = "indexer.class.name=com.liferay.commerce.order.rule.model.COREntry",
 	service = ModelDocumentContributor.class
 )
-public class CommerceOrderRuleEntryModelDocumentContributor
-	implements ModelDocumentContributor<CommerceOrderRuleEntry> {
+public class COREntryModelDocumentContributor
+	implements ModelDocumentContributor<COREntry> {
 
 	@Override
-	public void contribute(
-		Document document, CommerceOrderRuleEntry commerceOrderRuleEntry) {
-
-		document.addText(Field.NAME, commerceOrderRuleEntry.getName());
+	public void contribute(Document document, COREntry corEntry) {
+		document.addText(Field.NAME, corEntry.getName());
 	}
 
 }

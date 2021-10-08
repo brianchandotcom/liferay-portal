@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.order.rule.internal.search.spi.model.index.contributor;
 
-import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
-import com.liferay.commerce.order.rule.service.CommerceOrderRuleEntryLocalService;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.service.COREntryLocalService;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -30,11 +30,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "indexer.class.name=com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry",
+	property = "indexer.class.name=com.liferay.commerce.order.rule.model.COREntry",
 	service = ModelIndexerWriterContributor.class
 )
-public class CommerceOrderRuleEntryModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<CommerceOrderRuleEntry> {
+public class COREntryModelIndexerWriterContributor
+	implements ModelIndexerWriterContributor<COREntry> {
 
 	@Override
 	public void customize(
@@ -42,35 +42,29 @@ public class CommerceOrderRuleEntryModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(CommerceOrderRuleEntry commerceOrderRuleEntry) ->
-				batchIndexingActionable.addDocuments(
-					modelIndexerWriterDocumentHelper.getDocument(
-						commerceOrderRuleEntry)));
+			(COREntry corEntry) -> batchIndexingActionable.addDocuments(
+				modelIndexerWriterDocumentHelper.getDocument(corEntry)));
 	}
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
 		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				_commerceOrderRuleEntryLocalService.
-					getIndexableActionableDynamicQuery());
+				_corEntryLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
-	public long getCompanyId(CommerceOrderRuleEntry commerceOrderRuleEntry) {
-		return commerceOrderRuleEntry.getCompanyId();
+	public long getCompanyId(COREntry corEntry) {
+		return corEntry.getCompanyId();
 	}
 
 	@Override
-	public IndexerWriterMode getIndexerWriterMode(
-		CommerceOrderRuleEntry commerceOrderRuleEntry) {
-
+	public IndexerWriterMode getIndexerWriterMode(COREntry corEntry) {
 		return IndexerWriterMode.UPDATE;
 	}
 
 	@Reference
-	private CommerceOrderRuleEntryLocalService
-		_commerceOrderRuleEntryLocalService;
+	private COREntryLocalService _corEntryLocalService;
 
 	@Reference
 	private DynamicQueryBatchIndexingActionableFactory

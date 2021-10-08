@@ -29,10 +29,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "indexer.class.name=com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry",
+	property = "indexer.class.name=com.liferay.commerce.order.rule.model.COREntry",
 	service = KeywordQueryContributor.class
 )
-public class CommerceOrderRuleEntryKeywordQueryContributor
+public class COREntryKeywordQueryContributor
 	implements KeywordQueryContributor {
 
 	@Override

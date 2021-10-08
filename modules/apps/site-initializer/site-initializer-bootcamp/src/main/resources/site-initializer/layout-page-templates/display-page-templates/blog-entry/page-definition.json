@@ -160,7 +160,7 @@
 										},
 										"text": {
 											"mapping": {
-												"fieldKey": "Text32559244",
+												"fieldKey": "Subtitle",
 												"itemReference": {
 													"contextSource": "DisplayPageItem"
 												}
@@ -193,7 +193,7 @@
 										"fragmentImage": {
 											"url": {
 												"mapping": {
-													"fieldKey": "Image25779272",
+													"fieldKey": "MainImage",
 													"itemReference": {
 														"contextSource": "DisplayPageItem"
 													}
@@ -232,7 +232,7 @@
 										},
 										"text": {
 											"mapping": {
-												"fieldKey": "Text50283173",
+												"fieldKey": "ImageAuthor",
 												"itemReference": {
 													"contextSource": "DisplayPageItem"
 												}
@@ -268,7 +268,7 @@
 										},
 										"text": {
 											"mapping": {
-												"fieldKey": "RichText54473626",
+												"fieldKey": "Body",
 												"itemReference": {
 													"contextSource": "DisplayPageItem"
 												}

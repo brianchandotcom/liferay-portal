@@ -325,7 +325,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"mapping": {
-																							"fieldKey": "Image25779272",
+																							"fieldKey": "MainImage",
 																							"itemReference": {
 																								"contextSource": "CollectionItem"
 																							}
@@ -581,7 +581,7 @@
 																"fragmentImage": {
 																	"url": {
 																		"mapping": {
-																			"fieldKey": "Image25779272",
+																			"fieldKey": "MainImage",
 																			"itemReference": {
 																				"contextSource": "CollectionItem"
 																			}

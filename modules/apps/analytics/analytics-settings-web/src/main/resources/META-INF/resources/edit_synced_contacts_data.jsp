@@ -105,8 +105,8 @@ else {
 
 		<div class="pr-3">
 			<clay:sticker
-				cssClass="sticker-light"
-				displayType="light"
+				cssClass="sticker-dark"
+				displayType="dark"
 				icon="user"
 			/>
 		</div>
@@ -149,8 +149,8 @@ else {
 
 		<div class="pr-3">
 			<clay:sticker
-				cssClass="sticker-light"
-				displayType="light"
+				cssClass="sticker-dark"
+				displayType="dark"
 				icon="check-square"
 			/>
 		</div>

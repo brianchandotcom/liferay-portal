@@ -44,7 +44,7 @@ function Menu({spritemap}) {
 								<ClayList.Item flex key={component.entry}>
 									<ClayList.ItemField>
 										<ClaySticker
-											displayType="light"
+											displayType="dark"
 											size="sm"
 										>
 											<ClayIcon

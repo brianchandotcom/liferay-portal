@@ -116,7 +116,7 @@ const FieldType = (props) => {
 			>
 				<ClaySticker
 					className="data-layout-builder-field-sticker"
-					displayType="light"
+					displayType="dark"
 					size="md"
 				>
 					<ClayIcon symbol={fieldIcon} />

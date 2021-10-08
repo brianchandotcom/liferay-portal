@@ -18,7 +18,7 @@ exports[`CriteriaSidebarItem renders 1`] = `
       </svg>
     </span>
     <span
-      class="criteria-sidebar-item-type sticker sticker-light"
+      class="criteria-sidebar-item-type sticker sticker-dark"
     >
       <span
         class="inline-item"

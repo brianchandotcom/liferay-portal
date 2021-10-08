@@ -105,7 +105,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -139,7 +139,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -173,7 +173,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -207,7 +207,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -241,7 +241,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -275,7 +275,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -309,7 +309,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -343,7 +343,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -377,7 +377,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -411,7 +411,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -445,7 +445,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -479,7 +479,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -513,7 +513,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -547,7 +547,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -581,7 +581,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -615,7 +615,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -649,7 +649,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -683,7 +683,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -892,7 +892,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -926,7 +926,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -960,7 +960,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -994,7 +994,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -1028,7 +1028,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -1062,7 +1062,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -1096,7 +1096,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -1130,7 +1130,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -1164,7 +1164,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -1198,7 +1198,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -1232,7 +1232,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -1266,7 +1266,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -1300,7 +1300,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -1334,7 +1334,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -1368,7 +1368,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -1402,7 +1402,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -1436,7 +1436,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"
@@ -1470,7 +1470,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       </svg>
                     </span>
                     <span
-                      class="criteria-sidebar-item-type sticker sticker-light"
+                      class="criteria-sidebar-item-type sticker sticker-dark"
                     >
                       <span
                         class="inline-item"

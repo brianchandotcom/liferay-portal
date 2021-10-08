@@ -120,8 +120,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 
 				<div class="pr-3">
 					<clay:sticker
-						cssClass="sticker-light"
-						displayType="light"
+						cssClass="sticker-dark"
+						displayType="dark"
 						icon="users"
 					/>
 				</div>
@@ -161,8 +161,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 
 				<div class="pr-3">
 					<clay:sticker
-						cssClass="sticker-light"
-						displayType="light"
+						cssClass="sticker-dark"
+						displayType="dark"
 						icon="organizations"
 					/>
 				</div>

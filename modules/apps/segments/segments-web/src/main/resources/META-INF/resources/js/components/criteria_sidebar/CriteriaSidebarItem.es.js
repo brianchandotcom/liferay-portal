@@ -82,7 +82,7 @@ class CriteriaSidebarItem extends Component {
 					<ClayIcon symbol="drag" />
 				</span>
 
-				<span className="criteria-sidebar-item-type sticker sticker-light">
+				<span className="criteria-sidebar-item-type sticker sticker-dark">
 					<span className="inline-item">
 						<ClayIcon symbol={TYPE_ICON_MAP[type] || 'text'} />
 					</span>

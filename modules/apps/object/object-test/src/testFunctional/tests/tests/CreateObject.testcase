@@ -80,6 +80,15 @@ definition {
 		ObjectAdmin.assertObjectFieldNotPresent(fieldLabel = "Custom Field");
 	}
 
+	@description = "LPS-135400 - Verify it is possible to cancel the creation of a Relationship"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCancelRelationshipCreation {
+
+		// TODO LPS-140586 CanCancelRelationshipCreation pending implementation
+
+	}
+
 	@description = "LPS-135549 - Verify it is possible to create a BigDecimal field"
 	@priority = "4"
 	test CanCreateBigDecimalField {
@@ -246,6 +255,15 @@ definition {
 			fieldType = "Long");
 	}
 
+	@description = "LPS-135400 - Verify it is possible to create a One to Many Relationship"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCreateOneToManyRelationship {
+
+		// TODO LPS-140587 CanCreateOneToManyRelationship pending implementation
+
+	}
+
 	@description = "LPS-136595 - Verify it is possible to create a Picklist field"
 	@priority = "4"
 	test CanCreatePicklistField {
@@ -304,6 +322,15 @@ definition {
 			fieldType = "String");
 	}
 
+	@description = "LPS-135400 - Verify it is possible to delete a Relationship"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDeleteRelationship {
+
+		// TODO LPS-140591 CanDeleteRelationship pending implementation
+
+	}
+
 	@description = "LPS-135549 - Verify that it is not possible to create a Field with a duplicated Field Name"
 	@priority = "4"
 	test CannotCreateDuplicatedFieldName {
@@ -353,6 +380,25 @@ definition {
 		ObjectAdmin.saveCustomObject();
 
 		ObjectAdmin.viewFieldErrorMessage(message = "Duplicate name C_CustomObject");
+	}
+
+	@description = "LPS-135400 - Verify it is not possible to create duplicated Relationship name"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotCreateDuplicatedRelationshipName {
+
+		// TODO LPS-140585 CannotCreateDuplicatedRelationshipName pending implementation
+
+	}
+
+	@description = "LPS-135400 - Verify it is not possible to delete a Relationship when an Object is published"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CannotDeleteRelationshipWhenPublished {
+		property portal.acceptance = "true";
+
+		// TODO LPS-140592 CannotDeleteRelationshipWhenPublished pending implementation
+
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Field Name field blank"
@@ -436,6 +482,33 @@ definition {
 		ObjectAdmin.saveCustomObject();
 
 		ObjectAdmin.assertObjectNameFieldRequired();
+	}
+
+	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Name blank"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotLeaveRelationshipNameBlank {
+
+		// TODO LPS-140582 CannotLeaveRelationshipNameBlank pending implementation
+
+	}
+
+	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Object blank"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotLeaveRelationshipObjectBlank {
+
+		// TODO LPS-140584 CannotLeaveRelationshipObjectBlank pending implementation
+
+	}
+
+	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Type blank"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotLeaveRelationshipTypeBlank {
+
+		// TODO LPS-140583 CannotLeaveRelationshipTypeBlank pending implementation
+
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Type field blank"
@@ -1152,6 +1225,25 @@ definition {
 		ObjectPortlet.viewEntry(entry = "site");
 	}
 
+	@description = "LPS-135400 - Verify it is possible to update a Relationship"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanUpdateRelationship {
+		property portal.acceptance = "true";
+
+		// TODO LPS-140590 CanUpdateRelationship pending implementation
+
+	}
+
+	@description = "LPS-135400 - There is an explanation about each Relationship type"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewExplanationRelationshipTypes {
+
+		// TODO LPS-140581 CanViewExplanationRelationshipTypes pending implementation
+
+	}
+
 	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on the eye icon"
 	@priority = "4"
 	test CanViewFieldsDetailsByClickingEyeIcon {
@@ -1238,6 +1330,16 @@ definition {
 		ObjectAdmin.assertObjectDetailsPage();
 	}
 
+	@description = "LPS-135400 - Verify it is possible to view a Relationship"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewRelationship {
+		property portal.acceptance = "true";
+
+		// TODO LPS-140589 CanViewRelationship pending implementation
+
+	}
+
 	@description = "LPS-135549 - Verify that the columns Name and Type are displayed for the Fields table"
 	@priority = "4"
 	test ColumnsAreDisplayedFieldsTable {
@@ -1270,6 +1372,15 @@ definition {
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.assertObjectColumnsAreDisplayed();
+	}
+
+	@description = "LPS-135400 - Verify the empty state message when there is no Relationship"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EmptyStateWhenNoRelationship {
+
+		// TODO LPS-140580 EmptyStateWhenNoRelationship pending implementation
+
 	}
 
 	@description = "LPS-135549 - Verify that the Field Name is autofilled when Label is filled"
@@ -1379,6 +1490,16 @@ definition {
 			pluralLabelName = "");
 
 		CreateObject.assertObjectDefinitionName(objectName = "CustomObject");
+	}
+
+	@description = "LPS-135400 - Verify that relationship field is automatically created"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test RelationshipFieldAutomaticallyCreated {
+		property portal.acceptance = "true";
+
+		// TODO LPS-140588 RelationshipFieldAutomaticallyCreated pending implementation
+
 	}
 
 	@description = "LPS-135549 - Verify that the columns Name, System and Status displays the correct value on the Objects table when a Custom Object is created"

@@ -285,7 +285,9 @@ public class LayoutActionDropdownItemsProvider {
 											layout.getGroupId(),
 											PortalUtil.getClassNameId(
 												Layout.class.getName()),
-											layout.getPlid(),
+											BeanPropertiesUtil.getLong(
+												draftLayout, "plid",
+												layout.getPlid()),
 											RequestBackedPortletURLFactoryUtil.
 												create(_httpServletRequest))
 								).setRedirect(

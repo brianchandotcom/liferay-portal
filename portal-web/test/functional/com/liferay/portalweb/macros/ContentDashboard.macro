@@ -337,6 +337,14 @@ definition {
 		Click(locator1 = "ContentDashboard#FLIP_AXES_BUTTON");
 	}
 
+	macro goToContentDashboard {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/group/guest/~/control_panel/manage?p_p_id=com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet");
+
+		WaitForPageLoad();
+	}
+
 	macro moveToPage {
 		Click(locator1 = "ContentDashboard#PAGINATION_MOVE_TO_PAGE");
 	}

@@ -207,8 +207,6 @@ definition {
 		Search.searchCP(searchTerm = "Promotion System");
 
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Promotion System");
-		
-
 	}
 
 	@description = "Verify that the user can search for process name field with alphanumeric/special character."

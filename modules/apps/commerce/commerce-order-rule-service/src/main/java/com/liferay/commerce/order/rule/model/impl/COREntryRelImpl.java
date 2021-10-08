@@ -14,23 +14,19 @@
 
 package com.liferay.commerce.order.rule.model.impl;
 
-import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
-import com.liferay.commerce.order.rule.service.CommerceOrderRuleEntryLocalServiceUtil;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.service.COREntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
  */
-public class CommerceOrderRuleEntryRelImpl
-	extends CommerceOrderRuleEntryRelBaseImpl {
+public class COREntryRelImpl extends COREntryRelBaseImpl {
 
 	@Override
-	public CommerceOrderRuleEntry getCommerceOrderRuleEntry()
-		throws PortalException {
-
-		return CommerceOrderRuleEntryLocalServiceUtil.getCommerceOrderRuleEntry(
-			getCommerceOrderRuleEntryId());
+	public COREntry getCOREntry() throws PortalException {
+		return COREntryLocalServiceUtil.getCOREntry(getCOREntryId());
 	}
 
 }

@@ -1539,33 +1539,25 @@ definition {
 	test ExpiredWebContent {
 		property portal.acceptance = "true";
 
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Test Site Name",
-			title = "WC Title");
+		task ("Create expired Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+			
+			JSONWebcontent.updateStatus(
+				groupName = "Test Site Name",
+				statusKey = "EXPIRE",
+				title = "WC Title");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("View experired assset in Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
 
-		WebContent.expireSpecificVersionCP(webContentTitle = "WC Title");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#EXPIRED_LABEL",
-			value1 = "EXPIRED");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#EXPIRED_LABEL",
+				value1 = "EXPIRED");
+		}
 	}
 
 	@description = "Validate if the user can filter by Author, using different display types"

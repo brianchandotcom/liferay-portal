@@ -24,7 +24,7 @@ DataSetDisplayContext dataSetDisplayContext = (DataSetDisplayContext)request.get
 	apiURL="<%= dataSetDisplayContext.getAPIURL() %>"
 	clayDataSetActionDropdownItems="<%= dataSetDisplayContext.getClayDataSetActionDropdownItems() %>"
 	formId="fm"
-	id="dataSetDisplay"
+	id="<%= DataSetDisplaySamplePortletKeys.DATA_SET_DISPLAY_NAME %>"
 	itemsPerPage="20"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="1"

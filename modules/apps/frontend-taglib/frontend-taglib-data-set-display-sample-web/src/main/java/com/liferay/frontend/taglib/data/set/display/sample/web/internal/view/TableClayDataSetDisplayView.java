@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.frontend.taglib.data.set.display.sample.web.constants.DataSetDisplaySamplePortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,7 +30,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier de Arcos
  */
 @Component(
-	enabled = true, property = "clay.data.set.display.name=dataSetDisplay",
+	enabled = true,
+	property = "clay.data.set.display.name=" + DataSetDisplaySamplePortletKeys.DATA_SET_DISPLAY_NAME,
 	service = ClayDataSetDisplayView.class
 )
 public class TableClayDataSetDisplayView

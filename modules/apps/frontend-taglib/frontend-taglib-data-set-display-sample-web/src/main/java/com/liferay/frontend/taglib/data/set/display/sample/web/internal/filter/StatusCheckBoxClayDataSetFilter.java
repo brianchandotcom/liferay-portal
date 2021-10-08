@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.data.set.display.sample.web.internal.filter;
 import com.liferay.frontend.taglib.clay.data.set.filter.BaseCheckBoxClayDataSetFilter;
 import com.liferay.frontend.taglib.clay.data.set.filter.CheckBoxClayDataSetFilterItem;
 import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
+import com.liferay.frontend.taglib.data.set.display.sample.web.constants.DataSetDisplaySamplePortletKeys;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -29,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Javier de Arcos
  */
 @Component(
-	property = "clay.data.set.display.name=dataSetDisplay",
+	property = "clay.data.set.display.name=" + DataSetDisplaySamplePortletKeys.DATA_SET_DISPLAY_NAME,
 	service = ClayDataSetFilter.class
 )
 public class StatusCheckBoxClayDataSetFilter

@@ -19,6 +19,8 @@ package com.liferay.frontend.taglib.data.set.display.sample.web.constants;
  */
 public class DataSetDisplaySamplePortletKeys {
 
+	public static final String DATA_SET_DISPLAY_NAME = "fooDataSetDisplay";
+
 	public static final String DATA_SET_DISPLAY_SAMPLE =
 		"com_liferay_data_set_display_sample_web_portlet_" +
 			"DataSetDisplaySamplePortlet";

@@ -16,6 +16,7 @@ package com.liferay.frontend.taglib.data.set.display.sample.web.internal.view;
 
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.list.BaseListClayDataSetDisplayView;
+import com.liferay.frontend.taglib.data.set.display.sample.web.constants.DataSetDisplaySamplePortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,7 +24,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Javier de Arcos
  */
 @Component(
-	enabled = false, property = "clay.data.set.display.name=dataSetDisplay",
+	enabled = false,
+	property = "clay.data.set.display.name=" + DataSetDisplaySamplePortletKeys.DATA_SET_DISPLAY_NAME,
 	service = ClayDataSetDisplayView.class
 )
 public class ListClayDataSetDisplayView extends BaseListClayDataSetDisplayView {

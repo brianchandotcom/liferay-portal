@@ -134,11 +134,80 @@ definition {
 	}
 
 	@description = "Verify that the user can search by process name."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchByProcessName {
+		KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70666 CanSearchByProcessName pending implementation
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Promotion System Description",
+			kfProcessName = "Promotion System");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "Contacts",
+			kfProcessName = "Promotion System");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "Promotion System",
+			workflowDefinitionTitle = "Single Approver");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.assignForm(
+			kfProcessName = "Promotion System",
+			workflowTask = "create");
+
+		KaleoFormsAdmin.addForm(kfFormName = "Promotion System Task Form");
+
+		KaleoFormsAdmin.saveForm();
+
+		KaleoFormsAdmin.chooseForm(kfFormName = "Promotion System Task Form");
+
+		KaleoFormsAdmin.saveProcess(kfProcessName = "Promotion System");
+
+		Refresh();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Shutdown ProcessDescription",
+			kfProcessName = "Shutdown Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "Contacts",
+			kfProcessName = "Shutdown Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "Shutdown Process",
+			workflowDefinitionTitle = "Single Approver");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.assignForm(
+			kfProcessName = "Shutdown Process",
+			workflowTask = "create");
+
+		KaleoFormsAdmin.addForm(kfFormName = "Shutdown Process Task Form");
+
+		KaleoFormsAdmin.saveForm();
+
+		KaleoFormsAdmin.chooseForm(kfFormName = "Shutdown Process Task Form");
+
+		KaleoFormsAdmin.saveProcess(kfProcessName = "Shutdown Process");
+
+		Refresh();
+
+		Search.searchCP(searchTerm = "Promotion System");
+
+		KaleoFormsAdmin.viewProcess(kfProcessName = "Promotion System");
+		
 
 	}
 

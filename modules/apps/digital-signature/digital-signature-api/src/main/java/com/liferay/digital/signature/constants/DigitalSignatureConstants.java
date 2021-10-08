@@ -21,8 +21,8 @@ public class DigitalSignatureConstants {
 
 	public static final String[] ALLOWED_FILE_EXTENSIONS = {
 		"csv", "doc", "docm", "docx", "dot", "dotm", "dotx", "gif", "htm",
-		"html", "jpeg", "jpg", "msg", "pdf", "pdf", "png", "pot", "potx", "pps",
-		"ppt", "pptm", "pptx", "rtf", "rtf", "tif", "tiff", "txt", "wpd", "xls",
+		"html", "jpeg", "jpg", "msg", "pdf", "png", "pot", "potx", "pps", "ppt",
+		"pptm", "pptx", "rtf", "rtf", "tif", "tiff", "txt", "wpd", "xls",
 		"xlsm", "xlsx", "xps"
 	};
 

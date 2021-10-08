@@ -1469,7 +1469,7 @@ definition {
 
 			ABTest.createABTest(
 				goal = "Bounce Rate",
-				testTitle = "AB test title");	
+				testTitle = "AB test title");
 		}
 
 		task ("Go back to DXP") {

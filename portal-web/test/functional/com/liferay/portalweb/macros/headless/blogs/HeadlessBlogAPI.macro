@@ -31,8 +31,17 @@ definition {
 		}
 
 		if (isSet(assetTagNames)) {
-			var assetTagNames = '''"${assetTagNames}"''';
+			var list = ListUtil.newList();
+
+			for (var assetTagName : list "${assetTagNames}") {
+				var assetTagName = '''"${assetTagName}"''';
+
+				ListUtil.add("${list}","${assetTagName}");
+			}
+
+			var assetTagNames = ListUtil.toString("${list}");
 		}
+
 		else {
 			var assetTagNames = "";
 		}

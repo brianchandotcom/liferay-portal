@@ -15,7 +15,9 @@
 package com.liferay.batch.planner.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
+import com.liferay.petra.string.StringPool;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -43,12 +45,19 @@ public class EditBatchPlannerPlanDisplayContext {
 
 		Stream<Map.Entry<String, String>> stream = entries.stream();
 
-		return stream.map(
-			stringStringEntry -> new SelectOption(
-				stringStringEntry.getKey(), stringStringEntry.getValue())
-		).collect(
-			Collectors.toList()
-		);
+		List<SelectOption> options = new ArrayList<>();
+
+		options.add(new SelectOption(StringPool.BLANK, StringPool.BLANK));
+
+		options.addAll(
+			stream.map(
+				stringStringEntry -> new SelectOption(
+					stringStringEntry.getKey(), stringStringEntry.getValue())
+			).collect(
+				Collectors.toList()
+			));
+
+		return options;
 	}
 
 	private final Map<String, String> _headlessEndpoints;

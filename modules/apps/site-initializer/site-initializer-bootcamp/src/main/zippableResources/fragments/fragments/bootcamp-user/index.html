@@ -1,0 +1,41 @@
+[#assign
+	navUserClass = ""
+	privateUserFriendlyURL = themeDisplay.getPathFriendlyURLPrivateUser() + "/" + themeDisplay.getUser().getFirstName()
+	publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
+	publicSiteNavbarClass =""
+	userName = themeDisplay.getUser().getFirstName()
+/]
+
+[#if !themeDisplay.isSignedIn()]
+	[#assign publicSiteNavbarClass = "logged-in" /]
+[/#if]
+
+			<ul class="navbar-nav bootcamp-navbar-user">
+				[#if themeDisplay.isSignedIn()]
+					<li class="dropdown">
+						<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link p-0" data-toggle="liferay-dropdown" id="${fragmentEntryLinkNamespace}_dropdown_menu" type="button">
+							<img alt="" class="btn btn-monospaced" src="[resources:icon_user_logged.svg]" />
+
+							<span class="ml-1 mr-2">${userName}</span>
+						</a>
+
+						<ul aria-labelledby="${fragmentEntryLinkNamespace}_dropdown_menu" class="dropdown-menu right">
+							<li>
+								<a class="dropdown-item" href="${htmlUtil.escape(themeDisplay.getURLSignOut())}?referer=${publicFriendlyURL}">
+									Sign Out
+								</a>
+							</li>
+						</ul>
+					</li>
+				[#else]
+					[#assign navUserClass = "navbar-brand-bg-color-3" /]
+
+					<li class="nav-item">
+						<a class="nav-link" href="/web/bootcamp/sign-in">
+							<img alt="" class="btn btn-monospaced p-1" src="[resources:icon_user_not_logged.svg]" />
+
+							<span class="text-uppercase small">Sign In</span>
+						</a>
+					</li>
+				[/#if]
+			</ul>

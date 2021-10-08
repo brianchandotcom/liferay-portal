@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.order.rule.internal.security.permission.resource;
 
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.commerce.order.rule.constants.COREntryConstants;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionLogic;
+import com.liferay.portal.kernel.security.permission.resource.definition.PortletResourcePermissionDefinition;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,21 +25,23 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false, immediate = true,
-	service = CommerceOrderRuleServicePortletResourcePermissionLogic.class
+	service = PortletResourcePermissionDefinition.class
 )
-public class CommerceOrderRuleServicePortletResourcePermissionLogic
-	implements PortletResourcePermissionLogic {
+public class COREntryPortletResourcePermissionDefinition
+	implements PortletResourcePermissionDefinition {
 
 	@Override
-	public Boolean contains(
-		PermissionChecker permissionChecker, String name, Group group,
-		String actionId) {
+	public PortletResourcePermissionLogic[]
+		getPortletResourcePermissionLogics() {
 
-		if (permissionChecker.hasPermission(group, name, 0, actionId)) {
-			return true;
-		}
+		return new PortletResourcePermissionLogic[] {
+			new CORServicePortletResourcePermissionLogic()
+		};
+	}
 
-		return false;
+	@Override
+	public String getResourceName() {
+		return COREntryConstants.RESOURCE_NAME;
 	}
 
 }

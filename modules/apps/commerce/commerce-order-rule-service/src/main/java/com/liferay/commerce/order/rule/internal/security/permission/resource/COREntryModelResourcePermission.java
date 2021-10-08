@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.order.rule.internal.security.permission.resource;
 
-import com.liferay.commerce.order.rule.constants.CommerceOrderRuleEntryConstants;
-import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
-import com.liferay.commerce.order.rule.permission.CommerceOrderRuleEntryPermission;
+import com.liferay.commerce.order.rule.constants.COREntryConstants;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.permission.COREntryPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -30,55 +30,53 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "model.class.name=com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry",
+	property = "model.class.name=com.liferay.commerce.order.rule.model.COREntry",
 	service = ModelResourcePermission.class
 )
-public class CommerceOrderRuleEntryModelResourcePermission
-	implements ModelResourcePermission<CommerceOrderRuleEntry> {
+public class COREntryModelResourcePermission
+	implements ModelResourcePermission<COREntry> {
 
 	@Override
 	public void check(
-			PermissionChecker permissionChecker,
-			CommerceOrderRuleEntry commerceOrderRuleEntry, String actionId)
+			PermissionChecker permissionChecker, COREntry corEntry,
+			String actionId)
 		throws PortalException {
 
-		_commerceOrderRuleEntryPermission.check(
-			permissionChecker, commerceOrderRuleEntry, actionId);
+		_corEntryPermission.check(permissionChecker, corEntry, actionId);
 	}
 
 	@Override
 	public void check(
-			PermissionChecker permissionChecker, long commercePriceListId,
+			PermissionChecker permissionChecker, long corEntryId,
 			String actionId)
 		throws PortalException {
 
-		_commerceOrderRuleEntryPermission.check(
-			permissionChecker, commercePriceListId, actionId);
+		_corEntryPermission.check(permissionChecker, corEntryId, actionId);
 	}
 
 	@Override
 	public boolean contains(
-			PermissionChecker permissionChecker,
-			CommerceOrderRuleEntry commercePriceList, String actionId)
+			PermissionChecker permissionChecker, COREntry corEntry,
+			String actionId)
 		throws PortalException {
 
-		return _commerceOrderRuleEntryPermission.contains(
-			permissionChecker, commercePriceList, actionId);
+		return _corEntryPermission.contains(
+			permissionChecker, corEntry, actionId);
 	}
 
 	@Override
 	public boolean contains(
-			PermissionChecker permissionChecker, long commercePriceListId,
+			PermissionChecker permissionChecker, long corEntryId,
 			String actionId)
 		throws PortalException {
 
-		return _commerceOrderRuleEntryPermission.contains(
-			permissionChecker, commercePriceListId, actionId);
+		return _corEntryPermission.contains(
+			permissionChecker, corEntryId, actionId);
 	}
 
 	@Override
 	public String getModelName() {
-		return CommerceOrderRuleEntry.class.getName();
+		return COREntry.class.getName();
 	}
 
 	@Override
@@ -87,10 +85,10 @@ public class CommerceOrderRuleEntryModelResourcePermission
 	}
 
 	@Reference
-	private CommerceOrderRuleEntryPermission _commerceOrderRuleEntryPermission;
+	private COREntryPermission _corEntryPermission;
 
 	@Reference(
-		target = "(resource.name=" + CommerceOrderRuleEntryConstants.RESOURCE_NAME + ")"
+		target = "(resource.name=" + COREntryConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

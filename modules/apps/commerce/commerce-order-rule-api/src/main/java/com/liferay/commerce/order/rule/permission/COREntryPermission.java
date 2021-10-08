@@ -14,38 +14,38 @@
 
 package com.liferay.commerce.order.rule.permission;
 
-import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
+import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public interface CommerceOrderRuleEntryPermission {
+public interface COREntryPermission {
 
 	public void check(
-			PermissionChecker permissionChecker,
-			CommerceOrderRuleEntry commerceOrderRuleEntry, String actionId)
+			PermissionChecker permissionChecker, COREntry corEntry,
+			String actionId)
 		throws PortalException;
 
 	public void check(
-			PermissionChecker permissionChecker, long commerceOrderRuleEntryId,
+			PermissionChecker permissionChecker, long corEntryId,
 			String actionId)
 		throws PortalException;
 
 	public boolean contains(
-			PermissionChecker permissionChecker,
-			CommerceOrderRuleEntry commerceOrderRuleEntry, String actionId)
-		throws PortalException;
-
-	public boolean contains(
-			PermissionChecker permissionChecker, long commerceOrderRuleEntryId,
+			PermissionChecker permissionChecker, COREntry corEntry,
 			String actionId)
 		throws PortalException;
 
 	public boolean contains(
-			PermissionChecker permissionChecker,
-			long[] commerceOrderRuleEntryIds, String actionId)
+			PermissionChecker permissionChecker, long corEntryId,
+			String actionId)
+		throws PortalException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long[] corEntryIds,
+			String actionId)
 		throws PortalException;
 
 }

@@ -185,10 +185,6 @@ definition {
 			siteName = "Guest");
 
 		PageEditor.assertPaginationSimpleTypeIsDisplayed();
-
-
-
-
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Big Decimal type for a specific Object"

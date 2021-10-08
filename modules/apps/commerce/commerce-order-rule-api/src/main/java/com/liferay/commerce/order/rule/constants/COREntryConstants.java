@@ -17,7 +17,7 @@ package com.liferay.commerce.order.rule.constants;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceOrderRuleEntryConstants {
+public class COREntryConstants {
 
 	public static final String RESOURCE_NAME =
 		"com.liferay.commerce.order.rule";

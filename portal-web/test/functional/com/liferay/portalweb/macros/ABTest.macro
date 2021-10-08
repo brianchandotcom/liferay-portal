@@ -1,6 +1,8 @@
 definition {
 
 	macro changeExperienceABTest {
+		WaitForElementPresent(locator1 = "ABTest#CHANGE_EXPERIENCE");
+
 		Select(
 			locator1 = "ABTest#CHANGE_EXPERIENCE",
 			value1 = "${experience}");

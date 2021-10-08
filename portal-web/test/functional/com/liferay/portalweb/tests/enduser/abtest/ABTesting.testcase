@@ -1434,6 +1434,15 @@ definition {
 	test SwitchSitePage {
 		property portal.acceptance = "true";
 
+		task ("Create content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page 2",
+				type = "content");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-2");
+		}
+
 		task ("Create an experience and add on content page") {
 			ContentPages.clickPencil();
 
@@ -1448,24 +1457,29 @@ definition {
 			Button.clickPublish();
 		}
 
-		task ("Select the new experience") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		task ("Create a new A/B test with a new experience") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-2");
+
+			if (IsVisible(locator1 = "ABTest#AB_TEST_SIDE_BAR")) {
+				Click(locator1 = "ABTest#AB_TEST_BUTTON");
+			}
+			Click(locator1 = "ABTest#AB_TEST_BUTTON");
 
 			ABTest.changeExperienceABTest(experience = "NewAnyoneExperience");
-		}
 
-		task ("Create a new A/B test") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",
-				testTitle = "AB test title");
+				testTitle = "AB test title");	
 		}
 
-		task ("Go to Home Page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/home");
+		task ("Go back to DXP") {
+			Navigator.openURL();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 		}
 
 		task ("Click on the A/B Test icon and Assert ceate AB Test icon is present") {
-			if (IsElementPresent(locator1 = "ABTest#AB_TEST_SIDE_BAR")) {
+			if (IsVisible(locator1 = "ABTest#AB_TEST_SIDE_BAR")) {
 				Click(locator1 = "ABTest#AB_TEST_BUTTON");
 			}
 			Click(locator1 = "ABTest#AB_TEST_BUTTON");

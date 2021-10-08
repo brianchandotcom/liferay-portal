@@ -143,10 +143,10 @@ definition {
 		}
 
 		task ("Create a new blog") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Add public and internal categories to Blogs") {

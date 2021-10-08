@@ -72,10 +72,10 @@ definition {
 		}
 
 		task ("Add a blogs entry") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Select the display page template in blogs entry") {

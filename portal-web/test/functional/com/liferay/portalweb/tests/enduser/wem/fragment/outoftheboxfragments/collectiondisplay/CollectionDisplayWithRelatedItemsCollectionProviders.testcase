@@ -66,11 +66,11 @@ definition {
 		}
 
 		task ("Add a blogs entry with the first and second categories") {
-			JSONBlog.addEntry(
+			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = "${firstCategoryId},${secondCategoryId}",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document entry with all three categories") {
@@ -293,11 +293,11 @@ definition {
 		}
 
 		task ("Add a blogs entry with the category") {
-			JSONBlog.addEntry(
+			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = "${categoryId}",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document entry with category") {
@@ -461,10 +461,10 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
@@ -811,10 +811,10 @@ definition {
 		}
 
 		task ("Add a blogs entry") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document entry") {
@@ -933,11 +933,11 @@ definition {
 		}
 
 		task ("Add a blogs entry with category") {
-			JSONBlog.addEntry(
+			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = "${categoryId}",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document with category") {
@@ -1527,11 +1527,11 @@ definition {
 		}
 
 		task ("Add a blogs entry with category") {
-			JSONBlog.addEntry(
+			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = "${categoryId}",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document with category") {
@@ -1648,11 +1648,11 @@ definition {
 		}
 
 		task ("Add a blogs entry with category") {
-			JSONBlog.addEntry(
+			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = "${categoryId}",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document with category") {
@@ -1752,11 +1752,11 @@ definition {
 		}
 
 		task ("Add a blogs entry with category") {
-			JSONBlog.addEntry(
+			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = "${categoryId}",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document with category") {
@@ -1872,11 +1872,11 @@ definition {
 		}
 
 		task ("Add a blogs entry with category") {
-			JSONBlog.addEntry(
+			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = "${categoryId}",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document with category") {
@@ -2007,11 +2007,11 @@ definition {
 		}
 
 		task ("Add a blogs entry with category") {
-			JSONBlog.addEntry(
+			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = "${categoryId}",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document with category") {
@@ -2179,10 +2179,10 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document Title",
@@ -2468,11 +2468,11 @@ definition {
 		}
 
 		task ("Add a blogs entry with all three categories") {
-			JSONBlog.addEntry(
+			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = "${firstCategoryId},${secondCategoryId},${thirdCategoryId}",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Select the display page template in blogs entry") {

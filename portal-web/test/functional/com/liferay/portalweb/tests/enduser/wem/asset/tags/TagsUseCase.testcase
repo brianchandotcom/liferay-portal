@@ -375,11 +375,11 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Blogs");
 
-		JSONBlog.addEntry(
+		HeadlessBlog.addBlogEntry(
 			assetTagNames = "tag name 1,tag name 2,tag name 3",
-			entryContent = "Entry Content",
-			entryTitle = "Entry Title",
-			groupName = "Site Name");
+			content = "Entry Content",
+			groupName = "Site Name",
+			title = "Entry Title");
 
 		for (var tagName : list "tag name 1,tag name 2,tag name 3") {
 			Navigator.gotoSitePage(
@@ -439,11 +439,11 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Blogs");
 
-		JSONBlog.addEntry(
+		HeadlessBlog.addBlogEntry(
 			assetTagNames = "tag name 1,tag name 2,tag name 3",
-			entryContent = "Entry Content",
-			entryTitle = "Entry Title",
-			groupName = "Site Name");
+			content = "Entry Content",
+			groupName = "Site Name",
+			title = "Entry Title");
 
 		for (var tagName : list "tag name 1,tag name 2,tag name 3") {
 			Navigator.gotoSitePage(
@@ -504,23 +504,23 @@ definition {
 			pageName = "search",
 			pageTemplateName = "Search");
 
-		JSONBlog.addEntry(
+		HeadlessBlog.addBlogEntry(
 			assetTagNames = "blue",
-			entryContent = "Entry Content 1",
-			entryTitle = "Entry Title 1",
-			groupName = "Site Name");
+			content = "Entry Content 1",
+			groupName = "Site Name",
+			title = "Entry Title 1");
 
-		JSONBlog.addEntry(
+		HeadlessBlog.addBlogEntry(
 			assetTagNames = "blue green",
-			entryContent = "Entry Content 2",
-			entryTitle = "Entry Title 2",
-			groupName = "Site Name");
+			content = "Entry Content 2",
+			groupName = "Site Name",
+			title = "Entry Title 2");
 
-		JSONBlog.addEntry(
+		HeadlessBlog.addBlogEntry(
 			assetTagNames = "yellow",
-			entryContent = "Entry Content 3",
-			entryTitle = "Entry Title 3",
-			groupName = "Site Name");
+			content = "Entry Content 3",
+			groupName = "Site Name",
+			title = "Entry Title 3");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",

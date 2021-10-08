@@ -207,11 +207,11 @@ definition {
 				site = "false",
 				widgetName = "Blogs");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
 				groupName = "Test Site Name (Staging)",
-				site = "false");
+				site = "false",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Move web content and blog entry to recycle bin") {

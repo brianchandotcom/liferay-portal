@@ -40,10 +40,10 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
@@ -190,10 +190,10 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
@@ -1408,10 +1408,10 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
@@ -1485,10 +1485,10 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
@@ -2088,10 +2088,10 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document Title",

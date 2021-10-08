@@ -787,9 +787,10 @@ definition {
 			pageName = "Panel Test Page",
 			portletNameList = "Blogs,Message Boards");
 
-		JSONBlog.addEntry(
-			entryContent = "This is Blog Post 1 Content",
-			entryTitle = "Blog Post 1");
+		HeadlessBlog.addBlogEntry(
+			content = "This is Blog Post 1 Content",
+			groupName = "Guest",
+			title = "Blog Post 1");
 
 		Navigator.gotoPage(pageName = "Panel Test Page");
 

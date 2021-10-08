@@ -84,10 +84,10 @@ definition {
 				layoutName = "Test Page 2",
 				widgetName = "Blogs");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Create folders") {

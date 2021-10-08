@@ -130,11 +130,11 @@ definition {
 			site = "false",
 			title = "Webcontent Title");
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
+		HeadlessBlog.addBlogEntry(
+			content = "Blogs Entry Content",
 			groupName = "Test Site Name (Staging)",
-			site = "false");
+			site = "false",
+			title = "Blogs Entry Title");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document Title",

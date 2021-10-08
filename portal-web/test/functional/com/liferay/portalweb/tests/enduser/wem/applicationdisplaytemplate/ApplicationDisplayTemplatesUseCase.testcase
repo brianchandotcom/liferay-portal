@@ -347,23 +347,23 @@ definition {
 		}
 
 		task ("Add three blogs entry with tag") {
-			JSONBlog.addEntry(
+			HeadlessBlog.addBlogEntry(
 				assetTagNames = "tag name 1,tag name 2,tag name 3",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 
-			JSONBlog.addEntry(
+			HeadlessBlog.addBlogEntry(
 				assetTagNames = "tag name 2,tag name 3",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 
-			JSONBlog.addEntry(
+			HeadlessBlog.addBlogEntry(
 				assetTagNames = "tag name 3",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("View the displayed content in Tags Navigation") {

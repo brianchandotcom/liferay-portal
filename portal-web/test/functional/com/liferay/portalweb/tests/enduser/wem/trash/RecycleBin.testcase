@@ -43,10 +43,10 @@ definition {
 				groupName = "Site Name",
 				title = "Web Content Title");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Site Name",
+				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document_1.png",
@@ -116,10 +116,10 @@ definition {
 				layoutName = "Test Page",
 				widgetName = "Blogs");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Move blog entry to recycle bin") {
@@ -332,10 +332,10 @@ definition {
 				layoutName = "Test Page",
 				widgetName = "Blogs");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Move blog entry to recycle bin") {
@@ -377,12 +377,13 @@ definition {
 				widgetName = "Blogs");
 
 			for (var n : list "1,2,3") {
-				JSONBlog.addEntry(
-					entryContent = "Blogs Entry Content ${n}",
-					entryTitle = "Blogs Entry Title ${n}",
-					groupName = "Site Name");
+				HeadlessBlog.addBlogEntry(
+					content = "Blogs Entry Content ${n}",
+					groupName = "Site Name",
+					title = "Blogs Entry Title ${n}");
 			}
 		}
+
 		task ("Go to page and remove 3 blog entries") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page",
@@ -698,10 +699,10 @@ definition {
 
 		task ("Add two blogs entries") {
 			for (var n : list "1,2") {
-				JSONBlog.addEntry(
-					entryContent = "Blogs Entry Content ${n}",
-					entryTitle = "Blogs Entry Title ${n}",
-					groupName = "Site Name");
+				HeadlessBlog.addBlogEntry(
+					content = "Blogs Entry Content ${n}",
+					groupName = "Site Name",
+					title = "Blogs Entry Title ${n}");
 			}
 		}
 

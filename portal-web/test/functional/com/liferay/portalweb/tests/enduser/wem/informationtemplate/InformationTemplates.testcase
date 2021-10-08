@@ -400,11 +400,11 @@ definition {
 		}
 
 		task ("Add a blogs entry with description") {
-			JSONBlog.addEntry(
-				entryAbstractDescription = "Blogs Entry Description",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				description = "Blogs Entry Description",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document entry") {
@@ -593,11 +593,11 @@ definition {
 		}
 
 		task ("Add a blogs entry with description") {
-			JSONBlog.addEntry(
-				entryAbstractDescription = "Blogs Entry Description",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				description = "Blogs Entry Description",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Navigate to the Information Templates admin") {

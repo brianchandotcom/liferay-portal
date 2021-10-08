@@ -145,11 +145,11 @@ definition {
 		}
 
 		task ("Add a blogs entry") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
 				groupName = "Test Site Name (Staging)",
-				site = "false");
+				site = "false",
+				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document with an image") {

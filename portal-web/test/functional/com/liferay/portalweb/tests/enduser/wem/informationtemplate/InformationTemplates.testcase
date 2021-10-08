@@ -223,8 +223,7 @@ definition {
 
 			InformationTemplates.addCP(
 				informationTemplateName = "Test Information Template",
-				itemSubtype = "Additional Order",
-				itemType = "Object");
+				itemType = "Additional Order");
 		}
 
 		task ("Add the User Name and Order Number fields") {
@@ -244,8 +243,7 @@ definition {
 		task ("View the information template entry") {
 			InformationTemplates.viewTemplate(
 				informationTemplateName = "Test Information Template",
-				itemSubtype = "Additional Order",
-				itemType = "Object");
+				itemType = "Additional Order");
 		}
 
 		task ("Grant the View permission of information template to Power User") {

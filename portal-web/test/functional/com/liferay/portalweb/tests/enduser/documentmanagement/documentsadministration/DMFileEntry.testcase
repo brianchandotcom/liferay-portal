@@ -92,6 +92,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.pdf",
@@ -145,6 +149,10 @@ definition {
 			sourceFileName = "Document_1.doc");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.checkoutPG(dmDocumentTitle = "DM Document Title");
 
@@ -468,6 +476,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.deletePG(dmDocumentTitle = "/D/M/Document Title");
 
 		DMDocument.viewDefault();
@@ -673,6 +685,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.downloadPG(dmDocumentTitle = "/D/M/@!# Title");
 
 		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "/D/M/Document Title");
@@ -814,6 +830,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder1 Name");
 
 		DMDocument.moveToFolderPG(
@@ -847,6 +867,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.moveToFolderPG(
 			dmDocumentTitle = "/D/M/Document Title",
 			dmFolderName = "DM Folder Name");
@@ -869,6 +893,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.addPG(
 			dmDocument = "Duplicate",
 			dmDocumentDescription = "DM Document Description",
@@ -880,6 +908,8 @@ definition {
 	@refactordone
 	test CannotAddSpecialCharacterToName {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
 
 		DMFolder.addPG(
 			dmFolder = "Invalid",
@@ -921,6 +951,10 @@ definition {
 			sourceFileName = "Document_1.doc");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder1 Name");
 
@@ -1193,6 +1227,10 @@ definition {
 	test CanPublishTitleWithSpecialCharacters {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpg",
@@ -1259,6 +1297,10 @@ definition {
 			sourceFileName = "Document_1.doc");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.editPG(
 			dmDocumentFileEdit = "Document_2.doc",
@@ -1564,6 +1606,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.addPG(
 			categoryName = "Apple",
 			dmDocumentDescription = "Document Description",
@@ -1685,6 +1731,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Expired",
 			dmDocumentTitle = "Document_5.txt");
@@ -1702,6 +1752,10 @@ definition {
 			sourceFileName = "Document_2.jpg");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
@@ -1754,6 +1808,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.editPG(
 			dmDocumentDescriptionEdit = "DM Document Description Edited",
 			dmDocumentTitle = "DM Document Title");
@@ -1800,6 +1858,10 @@ definition {
 		Button.clickPublish();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMNavigator.gotoRelatedAssetPG(
 			assetTitle = "Document_2.jpg",

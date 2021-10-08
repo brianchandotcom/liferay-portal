@@ -46,6 +46,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addPG(
@@ -64,6 +68,10 @@ definition {
 			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -93,6 +101,10 @@ definition {
 			parentFolderName = "DM Folder Name");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -130,6 +142,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMFolder.viewPG(dmFolderName = "DM SubFolder1 Name");
@@ -143,6 +159,10 @@ definition {
 		property portal.acceptance = "true";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
@@ -181,6 +201,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMFolder.deletePG(dmFolderName = "DM Folder Name");
 	}
 
@@ -199,6 +223,10 @@ definition {
 			parentFolderName = "DM Folder Name");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -241,6 +269,12 @@ definition {
 			dmFolderName = "DM SubFolder Name",
 			groupName = "Guest",
 			parentFolderName = "DM Folder Name");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -302,6 +336,10 @@ definition {
 			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.moveToFolderPG(
 			dmDocumentTitle = "/D/M/Document Title",

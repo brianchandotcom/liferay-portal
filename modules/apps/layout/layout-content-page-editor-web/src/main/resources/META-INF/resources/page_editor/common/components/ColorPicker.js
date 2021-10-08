@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import {FocusScope} from '@clayui/shared';
@@ -120,12 +121,35 @@ const ColorPicker = ({
 									className="flex-grow-1"
 									onChange={setSearchValue}
 								/>
-								<ColorPalette
-									colors={filteredColors}
-									onSetActive={setActive}
-									onValueChange={onValueChange}
-									splotchRef={splotchRef}
-								/>
+								{Object.keys(filteredColors).length ? (
+									<ColorPalette
+										colors={filteredColors}
+										onSetActive={setActive}
+										onValueChange={onValueChange}
+										splotchRef={splotchRef}
+									/>
+								) : (
+									<div className="mb-4 page-editor__ColorPicker__empty-result taglib-empty-result-message text-center">
+										<div className="mb-3 mt-4 taglib-empty-state" />
+										<div className="taglib-empty-result-message-title">
+											{Liferay.Language.get(
+												'no-results-found'
+											)}
+										</div>
+
+										<p className="taglib-empty-result-message-description">
+											{Liferay.Language.get(
+												'try-again-with-a-different-search'
+											)}
+										</p>
+										<ClayButton
+											displayType="secondary"
+											small
+										>
+											{Liferay.Language.get('new-search')}
+										</ClayButton>
+									</div>
+								)}
 							</>
 						) : (
 							<div className="clay-color-swatch">

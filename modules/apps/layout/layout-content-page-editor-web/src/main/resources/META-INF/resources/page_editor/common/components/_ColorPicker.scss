@@ -9,9 +9,33 @@ html#{$cadmin-selector} {
 			border-radius: 4px 0 0 4px;
 		}
 
-		.page-editor__ColorPicker__color-palette .sheet-subtitle {
-			border-color: $cadmin-secondary-l3;
-			font-size: 0.75rem;
+		.page-editor__ColorPicker {
+			&__color-palette .sheet-subtitle {
+				border-color: $cadmin-secondary-l3;
+				font-size: 0.75rem;
+			}
+
+			&__empty-result.taglib-empty-result-message {
+				.taglib-empty-state {
+					background-image: url(@theme_image_path@/states/empty_state.gif);
+					background-size: cover;
+					margin: auto;
+					max-width: 120px;
+					padding-top: 120px;
+
+					& + .taglib-empty-result-message-title {
+						font-size: 1rem;
+						font-weight: bold;
+						text-align: center;
+					}
+
+					& ~ .taglib-empty-result-message-description {
+						color: $cadmin-secondary;
+						font-size: 0.875rem;
+						text-align: center;
+					}
+				}
+			}
 		}
 	}
 }

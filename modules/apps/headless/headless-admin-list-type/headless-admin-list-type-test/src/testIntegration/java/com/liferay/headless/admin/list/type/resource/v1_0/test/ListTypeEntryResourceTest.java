@@ -19,6 +19,7 @@ import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -56,6 +57,16 @@ public class ListTypeEntryResourceTest
 	@Override
 	@Test
 	public void testGraphQLGetListTypeEntryNotFound() throws Exception {
+	}
+
+	@Override
+	protected ListTypeEntry randomListTypeEntry() throws Exception {
+		ListTypeEntry listTypeEntry = super.randomListTypeEntry();
+
+		listTypeEntry.setName_i18n(
+			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+
+		return listTypeEntry;
 	}
 
 	protected ListTypeEntry testDeleteListTypeEntry_addListTypeEntry()

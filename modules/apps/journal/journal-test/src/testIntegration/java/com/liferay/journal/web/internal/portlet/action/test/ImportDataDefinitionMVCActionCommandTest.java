@@ -68,7 +68,9 @@ public class ImportDataDefinitionMVCActionCommandTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testDataLayoutUpdatesWithTheNewFieldNames() throws Exception {
+	public void testDataLayoutFieldNamesAreEqualToDataDefinitionFieldNames()
+		throws Exception {
+
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_createMockLiferayPortletActionRequest(
 				"valid_data_definition.json", "Imported Structure");

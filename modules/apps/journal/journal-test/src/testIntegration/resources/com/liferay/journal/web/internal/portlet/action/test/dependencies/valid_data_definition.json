@@ -18,7 +18,7 @@
 				],
 				"displayStyle": "singleline",
 				"fieldNamespace": "",
-				"fieldReference": "Text32861154",
+				"fieldReference": "Text12293201",
 				"hideField": false,
 				"labelAtStructureLevel": true,
 				"nativeField": false,
@@ -47,7 +47,7 @@
 				"en_US": "Text"
 			},
 			"localizable": true,
-			"name": "Text32861154",
+			"name": "Text12293201",
 			"nestedDataDefinitionFields": [
 			],
 			"readOnly": false,
@@ -56,6 +56,151 @@
 			"showLabel": true,
 			"tip": {
 				"en_US": ""
+			}
+		},
+		{
+			"customProperties": {
+				"collapsible": false,
+				"ddmStructureId": "",
+				"ddmStructureLayoutId": "",
+				"fieldReference": "FieldsGroup19507604",
+				"labelAtStructureLevel": true,
+				"rows": [
+					{
+						"columns": [
+							{
+								"fields": [
+									"Numeric34461674"
+								],
+								"size": 5
+							},
+							{
+								"fields": [
+									"Date46675757"
+								],
+								"size": 7
+							}
+						]
+					}
+				],
+				"upgradedStructure": false
+			},
+			"defaultValue": {
+			},
+			"fieldType": "fieldset",
+			"indexable": false,
+			"label": {
+				"en_US": "Fields Group"
+			},
+			"localizable": false,
+			"name": "FieldsGroup19507604",
+			"nestedDataDefinitionFields": [
+				{
+					"customProperties": {
+						"characterOptions": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataType": "integer",
+						"direction": [
+							"vertical"
+						],
+						"fieldNamespace": "",
+						"fieldReference": "Numeric34461674",
+						"hideField": false,
+						"inputMask": false,
+						"inputMaskFormat": {
+							"en_US": ""
+						},
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"numericInputMask": {
+							"en_US": {
+								"append": "",
+								"appendType": "prefix",
+								"symbols": {
+									"decimalSymbol": ".",
+									"thousandsSeparator": "none"
+								}
+							}
+						},
+						"objectFieldName": "",
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "numeric",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Numeric"
+					},
+					"localizable": true,
+					"name": "Numeric34461674",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"dataType": "date",
+						"fieldNamespace": "",
+						"fieldReference": "Date46675757",
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "date",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Date"
+					},
+					"localizable": true,
+					"name": "Date46675757",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				}
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
 			}
 		}
 	],
@@ -70,7 +215,17 @@
 							{
 								"columnSize": 12,
 								"fieldNames": [
-									"Text32861154"
+									"Text12293201"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"FieldsGroup19507604"
 								]
 							}
 						]

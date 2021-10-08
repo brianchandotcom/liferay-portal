@@ -15,6 +15,11 @@
 package com.liferay.journal.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
+import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
+import com.liferay.data.engine.rest.dto.v2_0.DataLayoutRow;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -35,6 +40,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -48,6 +57,7 @@ import org.springframework.mock.web.MockMultipartHttpServletRequest;
 
 /**
  * @author Rodrigo Paulino
+ * @author Rebeca Silva
  */
 @RunWith(Arquillian.class)
 public class ImportDataDefinitionMVCActionCommandTest {
@@ -56,6 +66,85 @@ public class ImportDataDefinitionMVCActionCommandTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testDataLayoutUpdatesWithTheNewFieldNames() throws Exception {
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_createMockLiferayPortletActionRequest(
+				"valid_data_definition.json", "Imported Structure");
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		DataDefinition dataDefinition = _getImportedDataDefinition();
+
+		DataDefinitionField[] dataDefinitionFields =
+			dataDefinition.getDataDefinitionFields();
+
+		DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
+
+		DataLayoutRow[] dataLayoutRows =
+			dataLayout.getDataLayoutPages()[0].getDataLayoutRows();
+
+		String dataDefinitionlTextFieldName = dataDefinitionFields[0].getName();
+
+		String dataDefinitionFieldsGroupFieldName =
+			dataDefinitionFields[1].getName();
+
+		String dataLayoutTextFieldName =
+			dataLayoutRows[0].getDataLayoutColumns()[0].getFieldNames()[0];
+
+		String dataLayoutFieldsGroupFieldName =
+			dataLayoutRows[1].getDataLayoutColumns()[0].getFieldNames()[0];
+
+		Assert.assertEquals(
+			dataDefinitionlTextFieldName, dataLayoutTextFieldName);
+
+		Assert.assertEquals(
+			dataDefinitionFieldsGroupFieldName, dataLayoutFieldsGroupFieldName);
+	}
+
+	@Test
+	public void testExpectImportedStructureWithUniqueFieldNames()
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_createMockLiferayPortletActionRequest(
+				"valid_data_definition.json", "Imported Structure");
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		DataDefinition dataDefinition = _getImportedDataDefinition();
+
+		DataDefinitionField[] dataDefinitionFields =
+			dataDefinition.getDataDefinitionFields();
+
+		String previousTextFieldName = "Text12293201";
+
+		String previousFieldsGroupFieldName = "FieldsGroup19507604";
+
+		Assert.assertNotEquals(
+			previousTextFieldName, dataDefinitionFields[0].getName());
+
+		Assert.assertNotEquals(
+			previousFieldsGroupFieldName, dataDefinitionFields[1].getName());
+
+		DataDefinitionField[] nestedDataDefinitionFields =
+			dataDefinitionFields[1].getNestedDataDefinitionFields();
+
+		String previousNumericFieldName = "Numeric34461674";
+
+		String previousDateFieldName = "Date46675757";
+
+		Assert.assertNotEquals(
+			previousNumericFieldName, nestedDataDefinitionFields[0].getName());
+
+		Assert.assertNotEquals(
+			previousDateFieldName, nestedDataDefinitionFields[1].getName());
+	}
 
 	@Test
 	public void testProcessActionWithInvalidDataDefinition() throws Exception {
@@ -175,6 +264,25 @@ public class ImportDataDefinitionMVCActionCommandTest {
 		return ArrayUtil.append(start.getBytes(), bytes, end.getBytes());
 	}
 
+	private DataDefinition _getImportedDataDefinition() throws Exception {
+		DataDefinitionResource.Builder builder =
+			DataDefinitionResource.builder();
+
+		_dataDefinitionResource = builder.user(
+			TestPropsValues.getUser()
+		).build();
+
+		Page<DataDefinition> page =
+			_dataDefinitionResource.
+				getSiteDataDefinitionByContentTypeContentTypePage(
+					TestPropsValues.getGroupId(), "journal",
+					"Imported Structure", Pagination.of(1, 1), null);
+
+		List<DataDefinition> items = (List<DataDefinition>)page.getItems();
+
+		return items.get(0);
+	}
+
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -190,6 +298,9 @@ public class ImportDataDefinitionMVCActionCommandTest {
 
 		return themeDisplay;
 	}
+
+	@Inject
+	private DataDefinitionResource _dataDefinitionResource;
 
 	@Inject
 	private File _file;

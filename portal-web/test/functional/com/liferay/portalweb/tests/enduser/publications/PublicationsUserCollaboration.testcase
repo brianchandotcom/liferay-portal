@@ -1,6 +1,7 @@
 @component-name = "portal-publications"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Publications";
@@ -35,8 +36,6 @@ definition {
 
 	@priority = "5"
 	test InviteUserAsEditor {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -110,8 +109,6 @@ definition {
 
 	@priority = "5"
 	test InviteUserAsInviter {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		for (var userNumber : list "1,2") {
 			JSONUser.addUser(
 				userEmailAddress = "userea${userNumber}@liferay.com",
@@ -192,8 +189,6 @@ definition {
 
 	@priority = "5"
 	test InviteUserAsPublisher {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -272,8 +267,6 @@ definition {
 
 	@priority = "5"
 	test InviteUserAsViewer {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

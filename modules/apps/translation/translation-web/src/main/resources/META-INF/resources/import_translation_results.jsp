@@ -60,7 +60,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 			>
 				<h3 class="mb-4"><%= importTranslationResultsDisplayContext.getFileName() %></h3>
 
-				<c:if test="<%= importTranslationResultsDisplayContext.getSuccessEntriesCount() > 0 %>">
+				<c:if test="<%= importTranslationResultsDisplayContext.getSuccessMessagesCount() > 0 %>">
 					<h4 class="text-success">
 						<span class="mr-2">
 							<clay:icon
@@ -69,11 +69,11 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 						</span>
 
 						<c:choose>
-							<c:when test="<%= (importTranslationResultsDisplayContext.getSuccessEntriesCount() > 1) && (importTranslationResultsDisplayContext.getFailureEntriesCount() == 0) %>">
+							<c:when test="<%= (importTranslationResultsDisplayContext.getSuccessMessagesCount() > 1) && (importTranslationResultsDisplayContext.getFailureMessagesCount() == 0) %>">
 								<liferay-ui:message key="all-files-published" />
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:message arguments="<%= importTranslationResultsDisplayContext.getSuccessEntriesCount() %>" key='<%= (importTranslationResultsDisplayContext.getSuccessEntriesCount() == 1) ? "x-file-published" : "x-files-published" %>' />
+								<liferay-ui:message arguments="<%= importTranslationResultsDisplayContext.getSuccessMessagesCount() %>" key='<%= (importTranslationResultsDisplayContext.getSuccessMessagesCount() == 1) ? "x-file-published" : "x-files-published" %>' />
 							</c:otherwise>
 						</c:choose>
 					</h4>
@@ -81,15 +81,13 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 					<ul class="list-group list-group-no-bordered list-group-sm">
 
 						<%
-						List<String> successEntriesFiles = importTranslationResultsDisplayContext.getSuccessEntriesEntries();
-
-						for (String successEntryFile : successEntriesFiles) {
+						for (String successMessage : importTranslationResultsDisplayContext.getSuccessMessages()) {
 						%>
 
 							<li class="align-items-center list-group-item list-group-item-flex">
 								<div class="autofit-col autofit-col-expand">
 									<section class="autofit-section">
-										<div class="list-group-title"><%= successEntryFile %></div>
+										<div class="list-group-title"><%= successMessage %></div>
 									</section>
 								</div>
 
@@ -109,7 +107,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 					</ul>
 				</c:if>
 
-				<c:if test="<%= importTranslationResultsDisplayContext.getFailureEntriesCount() > 0 %>">
+				<c:if test="<%= importTranslationResultsDisplayContext.getFailureMessagesCount() > 0 %>">
 					<h4 class="text-danger">
 						<span class="mr-2">
 							<clay:icon
@@ -117,7 +115,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 							/>
 						</span>
 
-						<liferay-ui:message arguments="<%= importTranslationResultsDisplayContext.getFailureEntriesCount() %>" key='<%= (importTranslationResultsDisplayContext.getFailureEntriesCount() == 1) ? "x-error" : "x-errors" %>' />
+						<liferay-ui:message arguments="<%= importTranslationResultsDisplayContext.getFailureMessagesCount() %>" key='<%= (importTranslationResultsDisplayContext.getFailureMessagesCount() == 1) ? "x-error" : "x-errors" %>' />
 
 						<small><liferay-ui:message key="some-files-could-not-be-published-check-them-and-upload-another-file" /></small>
 					</h4>
@@ -125,15 +123,15 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 					<ul class="list-group list-group-no-bordered">
 
 						<%
-						Map<String, String> failureEntriesFilesMap = importTranslationResultsDisplayContext.getFailureEntriesMap();
+						Map<String, String> failureMessages = importTranslationResultsDisplayContext.getFailureMessages();
 
-						for (Map.Entry<String, String> failureEntryError : failureEntriesFilesMap.entrySet()) {
+						for (Map.Entry<String, String> entry : failureMessages.entrySet()) {
 						%>
 
 							<li class="align-items-center list-group-item list-group-item-flex">
 								<div class="autofit-col autofit-col-expand">
-									<div class="list-group-title"><%= failureEntryError.getKey() %></div>
-									<div class="text-danger"><%= failureEntryError.getValue() %></div>
+									<div class="list-group-title"><%= entry.getKey() %></div>
+									<div class="text-danger"><%= entry.getValue() %></div>
 								</div>
 
 								<div class="autofit-col text-danger text-right">

@@ -31,28 +31,28 @@ public class ImportTranslationResultsDisplayContext {
 
 	public ImportTranslationResultsDisplayContext(
 		long classNameId, long classPK, long groupId,
-		Map<String, String> failureEntries, String fileName,
+		Map<String, String> failureMessages, String fileName,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		List<String> successEntries, String title) {
+		List<String> successMessages, String title) {
 
 		_classNameId = classNameId;
 		_classPK = classPK;
 		_groupId = groupId;
-		_failureEntries = failureEntries;
+		_failureMessages = failureMessages;
 		_fileName = fileName;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_successEntries = successEntries;
+		_successMessages = successMessages;
 		_title = title;
 	}
 
-	public int getFailureEntriesCount() {
-		return _failureEntries.size();
+	public Map<String, String> getFailureMessages() {
+		return _failureMessages;
 	}
 
-	public Map<String, String> getFailureEntriesMap() {
-		return _failureEntries;
+	public int getFailureMessagesCount() {
+		return _failureMessages.size();
 	}
 
 	public String getFileName() {
@@ -85,12 +85,12 @@ public class ImportTranslationResultsDisplayContext {
 		return _redirect;
 	}
 
-	public int getSuccessEntriesCount() {
-		return _successEntries.size();
+	public List<String> getSuccessMessages() {
+		return _successMessages;
 	}
 
-	public List<String> getSuccessEntriesEntries() {
-		return _successEntries;
+	public int getSuccessMessagesCount() {
+		return _successMessages.size();
 	}
 
 	public String getTitle() {
@@ -99,13 +99,13 @@ public class ImportTranslationResultsDisplayContext {
 
 	private final long _classNameId;
 	private final long _classPK;
-	private final Map<String, String> _failureEntries;
+	private final Map<String, String> _failureMessages;
 	private final String _fileName;
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
-	private final List<String> _successEntries;
+	private final List<String> _successMessages;
 	private final String _title;
 
 }

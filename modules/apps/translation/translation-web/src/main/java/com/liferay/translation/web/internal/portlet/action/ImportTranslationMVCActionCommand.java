@@ -120,14 +120,14 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				className, classPK, object,
 				themeDisplay.getPermissionChecker());
 
-			Map<String, String> failureEntries = new HashMap<>();
-			List<String> successEntries = new ArrayList<>();
+			Map<String, String> failureMessages = new HashMap<>();
+			List<String> successMessages = new ArrayList<>();
 
 			String fileName = uploadPortletRequest.getFileName("file");
 
 			_processUploadedFile(
-				classPK, groupId, className, actionRequest, failureEntries,
-				fileName, themeDisplay.getLocale(), successEntries,
+				classPK, groupId, className, actionRequest, failureMessages,
+				fileName, themeDisplay.getLocale(), successMessages,
 				uploadPortletRequest);
 
 			String portletResource = ParamUtil.getString(
@@ -169,10 +169,10 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			httpSession.setAttribute(
 				ImportTranslationResultsDisplayContext.class.getName(),
 				new ImportTranslationResultsDisplayContext(
-					classNameId, classPK, groupId, failureEntries, fileName,
+					classNameId, classPK, groupId, failureMessages, fileName,
 					httpServletRequest,
 					_portal.getLiferayPortletResponse(actionResponse),
-					successEntries, title));
+					successMessages, title));
 		}
 		catch (Exception exception) {
 			try {
@@ -284,8 +284,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _processUploadedFile(
 			long classPK, long groupId, String className,
-			ActionRequest actionRequest, Map<String, String> failureEntries,
-			String fileName, Locale locale, List<String> successEntries,
+			ActionRequest actionRequest, Map<String, String> failureMessages,
+			String fileName, Locale locale, List<String> successMessages,
 			UploadPortletRequest uploadPortletRequest)
 		throws IOException, PortalException {
 
@@ -306,8 +306,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 							_processXLIFFFile(
 								classPK, groupId, className, actionRequest,
-								failureEntries, entry, entryInputStream, locale,
-								successEntries);
+								failureMessages, entry, entryInputStream,
+								locale, successMessages);
 						}
 					}
 				}
@@ -321,24 +321,24 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 					"file")) {
 
 				_processXLIFFFile(
-					classPK, groupId, className, actionRequest, failureEntries,
-					fileName, inputStream, locale, successEntries);
+					classPK, groupId, className, actionRequest, failureMessages,
+					fileName, inputStream, locale, successMessages);
 			}
 		}
 	}
 
 	private void _processXLIFFFile(
 			long classPK, long groupId, String className,
-			ActionRequest actionRequest, Map<String, String> failureEntries,
+			ActionRequest actionRequest, Map<String, String> failureMessages,
 			String fileName, InputStream inputStream, Locale locale,
-			List<String> successEntries)
+			List<String> successMessages)
 		throws IOException, PortalException {
 
 		try {
 			_importXLIFFFile(
 				actionRequest, groupId, className, classPK, inputStream);
 
-			successEntries.add(fileName);
+			successMessages.add(fileName);
 		}
 		catch (XLIFFFileException xliffFileException) {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -347,7 +347,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			Function<String, String> exceptionMessageFunction =
 				_exceptionMessageFunctions.get(xliffFileException.getClass());
 
-			failureEntries.put(
+			failureMessages.put(
 				fileName,
 				_language.get(
 					resourceBundle, exceptionMessageFunction.apply(className)));

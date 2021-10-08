@@ -201,8 +201,12 @@ function FieldBase({
 		tip,
 	});
 
-	const fieldDetailsId = id || name;
+	let fieldDetailsId = id ?? name;
 
+	fieldDetailsId = fieldDetailsId + '_fieldDetails';
+
+	const accessibleProps =
+		accessible && fieldDetails ? {'aria-labelledby': fieldDetailsId} : null;
 	const hiddenTranslations = useMemo(() => {
 		const array = [];
 
@@ -303,7 +307,7 @@ function FieldBase({
 					{showLegend ? (
 						<fieldset>
 							<legend
-								aria-labelledby={fieldDetailsId}
+								{...accessibleProps}
 								className="lfr-ddm-legend"
 								tabIndex="0"
 							>
@@ -323,11 +327,12 @@ function FieldBase({
 					) : (
 						<>
 							<label
+								{...accessibleProps}
 								className={classNames({
 									'ddm-empty': !showLabel && !required,
 									'ddm-label': showLabel || required,
 								})}
-								htmlFor={fieldDetailsId}
+								htmlFor={id ?? name}
 								tabIndex="0"
 							>
 								{showLabel && label && (

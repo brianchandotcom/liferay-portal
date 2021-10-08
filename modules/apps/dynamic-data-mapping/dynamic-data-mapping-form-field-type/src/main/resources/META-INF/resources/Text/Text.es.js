@@ -92,7 +92,6 @@ const Text = ({
 
 	return (
 		<ClayInput
-			aria-labelledby={id}
 			className="ddm-field-text"
 			dir={Liferay.Language.direction[editingLanguageId]}
 			disabled={disabled}
@@ -148,7 +147,6 @@ const Textarea = ({
 
 	return (
 		<textarea
-			aria-labelledby={id}
 			className="ddm-field-text form-control"
 			dir={Liferay.Language.direction[editingLanguageId]}
 			disabled={disabled}
@@ -250,7 +248,6 @@ const Autocomplete = ({
 	return (
 		<ClayAutocomplete>
 			<ClayAutocomplete.Input
-				aria-labelledby={id}
 				dir={Liferay.Language.direction[editingLanguageId]}
 				disabled={disabled}
 				id={id}
@@ -380,8 +377,6 @@ const Main = ({
 				: displayStyle ?? `singleline`
 		];
 
-	const fieldDetailsId = id ? id + '_fieldDetails' : name + '_fieldDetails';
-
 	return (
 		<FieldBase
 			{...otherProps}
@@ -396,7 +391,7 @@ const Main = ({
 				disabled={readOnly}
 				editingLanguageId={locale}
 				fieldName={fieldName}
-				id={fieldDetailsId}
+				id={id}
 				invalidCharacters={invalidCharacters}
 				localizable={localizable}
 				localizedValue={localizedValue}

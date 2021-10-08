@@ -346,12 +346,59 @@ definition {
 
 	}
 
-	@description = "This is a test for LRQA-70150. Verify that the user can edit an approved thread and the status returns to Pending. "
-	@ignore = "Test Stub"
+	@description = "This is a test for LRQA-70150. Verify that the user can edit an approved thread and the status returns to Pending."
 	@priority = "3"
 	test StatusReturnstoPendingWhenApprovedThreadIsEdited {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
 
-		// TODO LRQA-70150 StatusReturnstoPendingWhenApprovedThreadIsEdited pending implementation
+		MessageboardsThread.addWithWorkflowCP(
+			threadBody = "Thread Message Body",
+			threadSubject = "Thread Message Subject");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Thread Message Subject",
+			workflowAssetType = "Message Boards Message",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Thread Message Subject",
+			workflowAssetType = "Message Boards Message",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
+
+		AssertElementPresent(
+			key_resultBarMessage = "Approved",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY");
+
+		SelectFrame.selectFrameNoLoading(
+			key_title = "Rich Text Editor",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "Thread Message Body Edit");
+
+		SelectFrameTop();
+
+		PortletEntry.submitForPublication();
+
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Pending");
+			
 
 	}
 

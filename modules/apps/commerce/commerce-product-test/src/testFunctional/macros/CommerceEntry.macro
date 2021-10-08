@@ -976,12 +976,15 @@ definition {
 			locator1 = "TextInput#NAME",
 			value1 = "${accountName}");
 
-		AssertTextEquals(
-			locator1 = "TextInput#EMAIL",
-			value1 = "${accountEmail}");
+		var accountActualEmail = CommerceJSONAccountsAPI._getCommerceAccountEmail(accountName = "${accountName}", accountType = "${accountType}");
 
-		AssertSelectedLabel(
-			locator1 = "Select#TYPE",
+		TestUtils.assertEquals(
+			actual = "${accountActualEmail}",
+			expected = "${accountEmail}");
+
+		AssertTextEquals(
+			key_typeName = "${accountType}",
+			locator1 = "TextInput#TYPE",
 			value1 = "${accountType}");
 
 		if (isSet(accountVATNumber)) {
@@ -1006,10 +1009,10 @@ definition {
 		}
 
 		if ("${isAccountActive}" == "true") {
-			AssertChecked(locator1 = "Checkbox#ACTIVE");
+			AssertChecked.assertCheckedNotVisible(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
 		}
 		else {
-			AssertNotChecked(locator1 = "Checkbox#ACTIVE");
+			AssertNotChecked.assertNotCheckedNotVisible(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
 		}
 	}
 

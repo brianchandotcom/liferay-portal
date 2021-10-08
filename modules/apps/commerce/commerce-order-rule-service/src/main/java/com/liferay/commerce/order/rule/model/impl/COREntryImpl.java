@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
  */
-public class CommerceOrderRuleEntryImpl extends CommerceOrderRuleEntryBaseImpl {
+public class COREntryImpl extends COREntryBaseImpl {
 
 	@Override
 	public void setTypeSettingsUnicodeProperties(

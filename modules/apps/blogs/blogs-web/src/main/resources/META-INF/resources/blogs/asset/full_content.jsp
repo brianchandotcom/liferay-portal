@@ -40,7 +40,7 @@ String entryTitle = BlogsEntryUtil.getDisplayTitle(resourceBundle, entry);
 				%>
 
 				<c:if test="<%= Validator.isNotNull(coverImageURL) %>">
-					<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image" style="background-image: url(<%= coverImageURL %>);"></div>
+					<div aria-label="<%= HtmlUtil.escapeAttribute(HtmlUtil.stripHtml(entry.getCoverImageCaption())) %>" class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image" role="img" style="background-image: url(<%= coverImageURL %>);"></div>
 				</c:if>
 
 				<%= entry.getContent() %>

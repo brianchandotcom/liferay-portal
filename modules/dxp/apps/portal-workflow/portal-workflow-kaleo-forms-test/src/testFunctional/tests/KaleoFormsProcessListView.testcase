@@ -145,8 +145,6 @@ definition {
 		Search.searchCP(searchTerm = "123");
 
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process 123 (カレオフォームプロセス)");
-		
-
 	}
 
 	@description = "Verify that the user can select edit option."

@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.order.rule.service.impl;
 
-import com.liferay.commerce.order.rule.constants.CommerceOrderRuleEntryActionKeys;
-import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
-import com.liferay.commerce.order.rule.service.base.CommerceOrderRuleEntryServiceBaseImpl;
+import com.liferay.commerce.order.rule.constants.COREntryActionKeys;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.service.base.COREntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -37,15 +37,14 @@ import org.osgi.service.component.annotations.Component;
 	enabled = false,
 	property = {
 		"json.web.service.context.name=commerce",
-		"json.web.service.context.path=CommerceOrderRuleEntry"
+		"json.web.service.context.path=COREntry"
 	},
 	service = AopService.class
 )
-public class CommerceOrderRuleEntryServiceImpl
-	extends CommerceOrderRuleEntryServiceBaseImpl {
+public class COREntryServiceImpl extends COREntryServiceBaseImpl {
 
 	@Override
-	public CommerceOrderRuleEntry addCommerceOrderRuleEntry(
+	public COREntry addCOREntry(
 			String externalReferenceCode, boolean active, String description,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -56,14 +55,13 @@ public class CommerceOrderRuleEntryServiceImpl
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
-			_commerceOrderRuleEntryModelResourcePermission.
-				getPortletResourcePermission();
+			_corEntryModelResourcePermission.getPortletResourcePermission();
 
 		portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CommerceOrderRuleEntryActionKeys.ADD_COMMERCE_ORDER_RULE);
+			COREntryActionKeys.ADD_COMMERCE_ORDER_RULE);
 
-		return commerceOrderRuleEntryLocalService.addCommerceOrderRuleEntry(
+		return corEntryLocalService.addCOREntry(
 			externalReferenceCode, getUserId(), active, description,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -72,72 +70,63 @@ public class CommerceOrderRuleEntryServiceImpl
 	}
 
 	@Override
-	public CommerceOrderRuleEntry deleteCommerceOrderRuleEntry(
-			long commerceOrderRuleEntryId)
-		throws PortalException {
+	public COREntry deleteCOREntry(long corEntryId) throws PortalException {
+		_corEntryModelResourcePermission.check(
+			getPermissionChecker(), corEntryId, ActionKeys.DELETE);
 
-		_commerceOrderRuleEntryModelResourcePermission.check(
-			getPermissionChecker(), commerceOrderRuleEntryId,
-			ActionKeys.DELETE);
-
-		return commerceOrderRuleEntryLocalService.deleteCommerceOrderRuleEntry(
-			commerceOrderRuleEntryId);
+		return corEntryLocalService.deleteCOREntry(corEntryId);
 	}
 
 	@Override
-	public List<CommerceOrderRuleEntry> getCommerceOrderRuleEntries(
+	public List<COREntry> getCOREntries(
 			long companyId, boolean active, int start, int end)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
-			_commerceOrderRuleEntryModelResourcePermission.
-				getPortletResourcePermission();
+			_corEntryModelResourcePermission.getPortletResourcePermission();
 
 		portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CommerceOrderRuleEntryActionKeys.VIEW_COMMERCE_ORDER_RULES);
+			COREntryActionKeys.VIEW_COMMERCE_ORDER_RULES);
 
-		return commerceOrderRuleEntryLocalService.getCommerceOrderRuleEntries(
+		return corEntryLocalService.getCOREntries(
 			companyId, active, start, end);
 	}
 
 	@Override
-	public List<CommerceOrderRuleEntry> getCommerceOrderRuleEntries(
+	public List<COREntry> getCOREntries(
 			long companyId, boolean active, String type, int start, int end)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
-			_commerceOrderRuleEntryModelResourcePermission.
-				getPortletResourcePermission();
+			_corEntryModelResourcePermission.getPortletResourcePermission();
 
 		portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CommerceOrderRuleEntryActionKeys.VIEW_COMMERCE_ORDER_RULES);
+			COREntryActionKeys.VIEW_COMMERCE_ORDER_RULES);
 
-		return commerceOrderRuleEntryLocalService.getCommerceOrderRuleEntries(
+		return corEntryLocalService.getCOREntries(
 			companyId, active, type, start, end);
 	}
 
 	@Override
-	public List<CommerceOrderRuleEntry> getCommerceOrderRuleEntries(
+	public List<COREntry> getCOREntries(
 			long companyId, String type, int start, int end)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
-			_commerceOrderRuleEntryModelResourcePermission.
-				getPortletResourcePermission();
+			_corEntryModelResourcePermission.getPortletResourcePermission();
 
 		portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CommerceOrderRuleEntryActionKeys.VIEW_COMMERCE_ORDER_RULES);
+			COREntryActionKeys.VIEW_COMMERCE_ORDER_RULES);
 
-		return commerceOrderRuleEntryLocalService.getCommerceOrderRuleEntries(
-			companyId, type, start, end);
+		return corEntryLocalService.getCOREntries(companyId, type, start, end);
 	}
 
 	@Override
-	public CommerceOrderRuleEntry updateCommerceOrderRuleEntry(
-			long commerceOrderRuleEntryId, boolean active, String description,
+	public COREntry updateCOREntry(
+			long corEntryId, boolean active, String description,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -146,23 +135,21 @@ public class CommerceOrderRuleEntryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_commerceOrderRuleEntryModelResourcePermission.check(
-			getPermissionChecker(), commerceOrderRuleEntryId,
-			ActionKeys.UPDATE);
+		_corEntryModelResourcePermission.check(
+			getPermissionChecker(), corEntryId, ActionKeys.UPDATE);
 
-		return commerceOrderRuleEntryLocalService.updateCommerceOrderRuleEntry(
-			getUserId(), commerceOrderRuleEntryId, active, description,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, name, priority, typeSettings, serviceContext);
+		return corEntryLocalService.updateCOREntry(
+			getUserId(), corEntryId, active, description, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, name,
+			priority, typeSettings, serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<CommerceOrderRuleEntry>
-		_commerceOrderRuleEntryModelResourcePermission =
+	private static volatile ModelResourcePermission<COREntry>
+		_corEntryModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(
-				CommerceOrderRuleEntryServiceImpl.class,
-				"_commerceOrderRuleEntryModelResourcePermission",
-				CommerceOrderRuleEntry.class);
+				COREntryServiceImpl.class, "_corEntryModelResourcePermission",
+				COREntry.class);
 
 }

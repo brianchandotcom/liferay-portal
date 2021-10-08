@@ -154,7 +154,7 @@ public class COREntryRelLocalServiceImpl
 		return dslQueryCount(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.countDistinct(
-					COREntryRelTable.INSTANCE.COREntryId),
+					COREntryRelTable.INSTANCE.COREntryRelId),
 				AccountEntryTable.INSTANCE,
 				AccountEntryTable.INSTANCE.accountEntryId.eq(
 					COREntryRelTable.INSTANCE.classPK),
@@ -186,7 +186,7 @@ public class COREntryRelLocalServiceImpl
 		return dslQueryCount(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.countDistinct(
-					COREntryRelTable.INSTANCE.COREntryId),
+					COREntryRelTable.INSTANCE.COREntryRelId),
 				AccountGroupTable.INSTANCE,
 				AccountGroupTable.INSTANCE.accountGroupId.eq(
 					COREntryRelTable.INSTANCE.classPK),
@@ -218,7 +218,7 @@ public class COREntryRelLocalServiceImpl
 		return dslQueryCount(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.countDistinct(
-					COREntryRelTable.INSTANCE.COREntryId),
+					COREntryRelTable.INSTANCE.COREntryRelId),
 				CommerceChannelTable.INSTANCE,
 				CommerceChannelTable.INSTANCE.commerceChannelId.eq(
 					COREntryRelTable.INSTANCE.classPK),
@@ -250,7 +250,7 @@ public class COREntryRelLocalServiceImpl
 		return dslQueryCount(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.countDistinct(
-					COREntryRelTable.INSTANCE.COREntryId),
+					COREntryRelTable.INSTANCE.COREntryRelId),
 				CommerceOrderTypeTable.INSTANCE,
 				CommerceOrderTypeTable.INSTANCE.commerceOrderTypeId.eq(
 					COREntryRelTable.INSTANCE.classPK),

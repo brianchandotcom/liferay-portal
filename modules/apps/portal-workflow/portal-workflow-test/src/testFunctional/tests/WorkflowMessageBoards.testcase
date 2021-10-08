@@ -210,13 +210,65 @@ definition {
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
-	@description = "This is a test for LRQA-69703. Verify that user can reply to an approved thread. "
-	@ignore = "Test Stub"
+	@description = "This is a test for LRQA-69703. Verify that user can reply to an approved thread."
 	@priority = "3"
 	test CanReplyToApprovedThread {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
 
-		// TODO LRQA-69703 CanReplyToThread pending implementation
+		MessageboardsThread.addWithWorkflowCP(
+			threadBody = "Thread Message Body",
+			threadSubject = "Thread Message Subject");
 
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Thread Message Subject",
+			workflowAssetType = "Message Boards Message",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Thread Message Subject",
+			workflowAssetType = "Message Boards Message",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
+
+		AssertElementPresent(
+			key_resultBarMessage = "Approved",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+
+		AssertClick(
+			key_threadSubject = "Thread Message Subject",
+			locator1 = "MessageBoards#THREAD_LIST_THREAD",
+			value1 = "Thread Message Subject");
+
+		AssertClick(
+			locator1 = "Button#REPLY",
+			value1 = "Reply");
+
+		SelectFrame.selectFrameNoLoading(
+			key_title = "Rich Text Editor",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "Reply Text");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
+
+		Button.clickSubmitForPublication();
+
+		AssertElementPresent(
+			key_resultBarMessage = "Pending",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+
+			
 	}
 
 	@description = "This is a test for LRQA-70153. Verify that the user can review the thread through My Workflow Tasks. "

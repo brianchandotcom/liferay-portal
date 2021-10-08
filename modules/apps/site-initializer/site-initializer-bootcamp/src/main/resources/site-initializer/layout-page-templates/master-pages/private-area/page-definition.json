@@ -57,9 +57,9 @@
 									"fragmentStyle": {
 										"borderWidth": "0",
 										"height": "100vh",
-										"paddingBottom": "5",
-										"paddingLeft": "5",
-										"paddingRight": "5",
+										"paddingBottom": "6",
+										"paddingLeft": "6",
+										"paddingRight": "6",
 										"paddingTop": "6"
 									},
 									"layout": {
@@ -68,9 +68,9 @@
 										"marginLeft": 0,
 										"marginRight": 0,
 										"marginTop": 0,
-										"paddingBottom": 4,
-										"paddingLeft": 4,
-										"paddingRight": 4,
+										"paddingBottom": 6,
+										"paddingLeft": 6,
+										"paddingRight": 6,
 										"paddingTop": 6,
 										"widthType": "Fluid"
 									}
@@ -109,6 +109,17 @@
 															}
 														},
 														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"itemReference": {
+																			"className": "com.liferay.portal.kernel.model.Layout",
+																			"fieldName": "plid",
+																			"fieldValue": "356"
+																		}
+																	}
+																}
+															},
 															"value_i18n": {
 															}
 														}
@@ -124,6 +135,9 @@
 									},
 									{
 										"definition": {
+											"fragmentStyle": {
+												"marginBottom": "4"
+											},
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayDepth": "0",
@@ -135,10 +149,30 @@
 													"siteNavigationMenuName": "Private Area Navigation",
 													"siteNavigationMenuType": "-1"
 												},
+												"widgetInstanceId": "nav",
 												"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
 											}
 										},
 										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "bootcamp-user"
+											},
+											"fragmentConfig": {
+												"position": "static"
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"fontFamily": "fontFamilySansSerif",
+												"fontSize": "fontSizeSm",
+												"fontWeight": "fontWeightBold",
+												"marginTop": "3"
+											}
+										},
+										"type": "Fragment"
 									}
 								],
 								"type": "Section"

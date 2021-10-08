@@ -169,8 +169,6 @@ definition {
 	test AddShippingOptionFedEx {
 		property portal.acceptance = "false";
 
-		// TODO Review
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -213,6 +211,23 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+
+		Refresh();
+
+		Click(
+			key_entryName = "FedEx",
+			locator1 = "CommerceEntry#CHANNELS_GENERAL_TAB_EDITS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(
+			locator1 = "CommerceEntry#PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS",
+			navItem = "Configuration");
+
+		AssertTextEquals(
+			key_fieldLabel = "URL",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
 	}
 
 	@description = "This is a test for COMMERCE-6111. AddShippingOptionFlatRate"

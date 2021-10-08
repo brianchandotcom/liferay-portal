@@ -228,6 +228,16 @@
 																			"id": "link",
 																			"value": {
 																				"fragmentLink": {
+																					"value": {
+																						"href": {
+																							"mapping": {
+																								"fieldKey": "displayPageURL",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					},
 																					"value_i18n": {
 																					}
 																				},

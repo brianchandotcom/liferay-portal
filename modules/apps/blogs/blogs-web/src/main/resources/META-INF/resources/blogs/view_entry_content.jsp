@@ -140,7 +140,12 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 				<c:if test="<%= Validator.isNotNull(coverImageURL) %>">
 					<a href="<%= viewEntryURL.toString() %>">
-						<div aria-label="<%= HtmlUtil.escapeAttribute(HtmlUtil.stripHtml(entry.getCoverImageCaption())) %>" class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image" role="img" style="background-image: url(<%= coverImageURL %>);"></div>
+
+						<%
+						String coverImageCaption = HtmlUtil.escapeAttribute(HtmlUtil.stripHtml(entry.getCoverImageCaption()));
+						%>
+
+						<div <%= Validator.isNotNull(coverImageCaption) ? "aria-label=\"" + coverImageCaption + "\" role=\"img\"" : StringPool.BLANK %> class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image" style="background-image: url(<%= coverImageURL %>);"></div>
 					</a>
 				</c:if>
 

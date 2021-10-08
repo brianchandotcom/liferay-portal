@@ -78,6 +78,35 @@ public class COREntryServiceImpl extends COREntryServiceBaseImpl {
 	}
 
 	@Override
+	public COREntry fetchByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		COREntry corEntry =
+			corEntryLocalService.fetchCOREntryByExternalReferenceCode(
+				companyId, externalReferenceCode);
+
+		if (corEntry != null) {
+			_corEntryModelResourcePermission.check(
+				getPermissionChecker(), corEntry, ActionKeys.VIEW);
+		}
+
+		return corEntry;
+	}
+
+	@Override
+	public COREntry fetchCOREntry(long corEntryId) throws PortalException {
+		COREntry corEntry = corEntryLocalService.fetchCOREntry(corEntryId);
+
+		if (corEntry != null) {
+			_corEntryModelResourcePermission.check(
+				getPermissionChecker(), corEntry, ActionKeys.VIEW);
+		}
+
+		return corEntry;
+	}
+
+	@Override
 	public List<COREntry> getCOREntries(
 			long companyId, boolean active, int start, int end)
 		throws PortalException {
@@ -122,6 +151,14 @@ public class COREntryServiceImpl extends COREntryServiceBaseImpl {
 			COREntryActionKeys.VIEW_COMMERCE_ORDER_RULES);
 
 		return corEntryLocalService.getCOREntries(companyId, type, start, end);
+	}
+
+	@Override
+	public COREntry getCOREntry(long corEntryId) throws PortalException {
+		_corEntryModelResourcePermission.check(
+			getPermissionChecker(), corEntryId, ActionKeys.VIEW);
+
+		return corEntryLocalService.getCOREntry(corEntryId);
 	}
 
 	@Override

@@ -42,6 +42,13 @@ definition {
 			var api = "sites/${groupId}/structured-contents";
 		}
 
+		var os = OSDetector.isWindows();
+
+		if ("${os}" == "true") {
+			var content = StringUtil.replace("${content}", ">", "^>");
+			var content = StringUtil.replace("${content}", "<", "^<");
+		}
+
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
 				-u ${userEmailAddress}:${userPassword} \

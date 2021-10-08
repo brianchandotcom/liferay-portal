@@ -175,8 +175,6 @@ definition {
 		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process");
-		
-
 	}
 
 	@description = "Verify that the page displays columns Id, Name, Description and Modified Date."

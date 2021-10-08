@@ -182,11 +182,10 @@ const SelectionControls = ({
 						<span className="navbar-text">
 							{selectedItems === itemsTotal
 								? Liferay.Language.get('all-selected')
-								: `${Liferay.Util.sub(
-										Liferay.Language.get('x-of-x'),
-										selectedItems,
-										itemsTotal
-								  )} ${Liferay.Language.get('selected')}`}
+								: Liferay.Util.sub(
+										Liferay.Language.get('x-of-x-selected'),
+										[selectedItems, itemsTotal]
+								  )}
 						</span>
 					</ClayManagementToolbar.Item>
 

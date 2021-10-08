@@ -124,7 +124,6 @@ const TransLateActionBar = ({
 								<ClayButton
 									disabled={saveButtonDisabled}
 									displayType="secondary"
-									onClick={onSaveButtonClick}
 									small
 									type="submit"
 								>
@@ -133,6 +132,7 @@ const TransLateActionBar = ({
 								<ClayButton
 									disabled={publishButtonDisabled}
 									displayType="primary"
+									onClick={onSaveButtonClick}
 									small
 									type="submit"
 								>

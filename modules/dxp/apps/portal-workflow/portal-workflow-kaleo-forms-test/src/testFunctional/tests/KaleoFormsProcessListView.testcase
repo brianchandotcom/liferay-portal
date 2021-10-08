@@ -104,11 +104,48 @@ definition {
 	}
 
 	@description = "Verify that the user can search for process name field with alphanumeric/special character."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSearchForFieldNameWithAlphanumericOrSpecialCharacter {
+		KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70663 CanSearchForFieldNameWithAlphanumericOrSpecialCharacter pending implementation
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process 123 (カレオフォームプロセス)");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "Contacts",
+			kfProcessName = "Kaleo Forms Process 123 (カレオフォームプロセス)");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "Kaleo Forms Process 123 (カレオフォームプロセス)",
+			workflowDefinitionTitle = "Single Approver");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.assignForm(
+			kfProcessName = "Kaleo Forms Process 123 (カレオフォームプロセス)",
+			workflowTask = "create");
+
+		KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveForm();
+
+		KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process 123 (カレオフォームプロセス)");
+
+		Search.searchCP(searchTerm = "カレオフォームプロセス");
+
+		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process 123 (カレオフォームプロセス)");
+
+		Search.searchCP(searchTerm = "123");
+
+		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process 123 (カレオフォームプロセス)");
+		
 
 	}
 

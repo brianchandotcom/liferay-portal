@@ -103,13 +103,13 @@ definition {
 
 		PublicationsChanges.deleteComment(commentValue = "It is not ready to Publish");
 
-		Publications.selectPublication(publicationName = "${publicationName}");
+		Publications.gotoPublish(
+			gotoManagePublications = "true",
+			publicationName = "New ${publicationName}");
 
-		// Workaround LPS-140292
+		Publications.publishPublication(publicationName = "New ${publicationName}");
 
-		/*Publications.publishPublication(publicationName = "${publicationName}");
-
-		Publications.viewPublicationPublished(publicationName = "${publicationName}");*/
+		Publications.viewPublicationPublished(publicationName = "New ${publicationName}");
 	}
 
 	macro assertPublisherPermissions {
@@ -162,13 +162,13 @@ definition {
 
 		PublicationsChanges.deleteComment(commentValue = "It is not ready to Publish");
 
-		Publications.selectPublication(publicationName = "${publicationName}");
+		Publications.gotoPublish(
+			gotoManagePublications = "true",
+			publicationName = "New ${publicationName}");
 
-		// Workaround LPS-140292
+		Publications.publishPublication(publicationName = "New ${publicationName}");
 
-		/*Publications.publishPublication(publicationName = "${publicationName}");
-
-		Publications.viewPublicationPublished(publicationName = "${publicationName}");*/
+		Publications.viewPublicationPublished(publicationName = "New ${publicationName}");
 	}
 
 	macro assertScheduledPublicationPublished {

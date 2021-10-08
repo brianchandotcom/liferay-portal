@@ -45,6 +45,8 @@ definition {
 			fieldLabelName = "${fieldLabelName}",
 			fieldName = "${fieldName}",
 			fieldType = "${fieldType}",
+			indexed = "${indexed}",
+			indexedAsKeyword = "${indexedAsKeyword}",
 			isRequired = "${isRequired}",
 			objectName = "${objectName}",
 			picklistName = "${picklistName}",
@@ -107,7 +109,9 @@ definition {
 		JSONObject.addObject(
 			labelName = "${labelName}",
 			objectName = "${objectName}",
+			panelCategoryKey = "${panelCategoryKey}",
 			pluralLabelName = "${pluralLabelName}",
+			scope = "${scope}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
 	}

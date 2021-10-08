@@ -12,6 +12,14 @@ definition {
 			var userPassword = "test";
 		}
 
+		if (!(isSet(panelCategoryKey))) {
+			var panelCategoryKey = "control_panel.object";
+		}
+
+		if (!(isSet(scope))) {
+			var scope = "company";
+		}
+
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions \
 			-H 'Content-Type: application/json' \
@@ -22,11 +30,11 @@ definition {
 			},
 			"name": "${objectName}",
 			"objectFields": [],
-			"panelCategoryKey": "control_panel.object",
+			"panelCategoryKey": "${panelCategoryKey}",
 			"pluralLabel": {
 				"en_US": "${pluralLabelName}"
 			},
-			"scope": "company"
+			"scope": "${scope}"
 			}'
 		''';
 
@@ -59,13 +67,21 @@ definition {
 				userPassword = "${userPassword}");
 		}
 
+		if (!(isSet(indexed))) {
+			var indexed = "true";
+		}
+
+		if (!(isSet(indexedAsKeyword))) {
+			var indexedAsKeyword = "true";
+		}
+
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectID}/object-fields \
 			-H 'Content-Type: application/json' \
 			-u ${userEmailAddress}:${userPassword} \
 			-d '{
-			"indexed": true,
-			"indexedAsKeyword": true,
+			"indexed": ${indexed},
+			"indexedAsKeyword": ${indexedAsKeyword},
 			"label": {
 				"en_US": "${fieldLabelName}"
 			},

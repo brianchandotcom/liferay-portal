@@ -25,11 +25,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "orders", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.order.rule.configuration.CommerceOrderRuleEntryConfiguration",
+	id = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration",
 	localization = "content/Language",
 	name = "commerce-order-rule-entry-configuration-name"
 )
-public interface CommerceOrderRuleEntryConfiguration {
+public interface COREntryConfiguration {
 
 	@Meta.AD(deflt = "15", name = "check-interval", required = false)
 	public int checkInterval();

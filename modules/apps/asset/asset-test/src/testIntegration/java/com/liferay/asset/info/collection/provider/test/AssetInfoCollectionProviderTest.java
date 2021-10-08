@@ -283,8 +283,8 @@ public class AssetInfoCollectionProviderTest {
 		InfoCollectionProvider<AssetEntry> infoCollectionProvider =
 			_infoItemServiceTracker.getInfoItemService(
 				InfoCollectionProvider.class,
-				"com.liferay.asset.internal.info.collection.provider." +
-					"RelatedAssetsInfoCollectionProvider");
+				"com.liferay.asset.publisher.web.internal.info.collection." +
+					"provider.RelatedAssetsInfoCollectionProvider");
 
 		InfoPage<AssetEntry> assetEntriesInfoPage =
 			infoCollectionProvider.getCollectionInfoPage(new CollectionQuery());

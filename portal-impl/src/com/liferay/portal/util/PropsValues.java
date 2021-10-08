@@ -1046,6 +1046,10 @@ public class PropsValues {
 	public static final String EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
 		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
 
+	public static final boolean ENTERPRISE_PRODUCT_NOTIFICATION_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.ENTERPRISE_PRODUCT_NOTIFICATION_ENABLED));
+
 	public static final int ETAG_RESPONSE_SIZE_MAX = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.ETAG_RESPONSE_SIZE_MAX));
 

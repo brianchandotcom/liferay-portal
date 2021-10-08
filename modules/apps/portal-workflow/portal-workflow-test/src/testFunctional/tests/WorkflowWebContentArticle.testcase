@@ -29,7 +29,6 @@ definition {
 	}
 
 	@description = "Verify that the user can modify the Web Content's workflow"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanChangeWorkflowWebContent {
 		property test.name.skip.portal.instance = "WorkflowWebContentArticle#CanChangeWorkflowWebContent";
@@ -106,7 +105,6 @@ definition {
 	@description = "Verify that a workflow can be assigned to Web Content in the DXP Configuration > Workflow"
 	@priority = "4"
 	test CanConfigureWorkflowWebContent {
-
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
@@ -138,18 +136,53 @@ definition {
 	}
 
 	@description = "Verify that the user can reject a Web Content Article"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanRejectWebContentArticle {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-69392 CanRejectWebContentArticle pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithWorkflowCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Web Content Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reject");
+
+		Workflow.confirmWorkflowAction();
+
+		Workflow.viewRejectedTask(
+			workflowAssetTitle = "Web Content Title",
+			workflowAssetType = "Web Content Article");
 	}
 
 	@description = "Verify that a Web Content draft is not submitted as a Workflow task"
 	@priority = "3"
 	test CanSaveAsDraft {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

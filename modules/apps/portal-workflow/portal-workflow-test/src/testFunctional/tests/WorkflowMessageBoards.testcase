@@ -167,12 +167,33 @@ definition {
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
-	@description = "This is a test for LRQA-70151. Verify that the user cannot reply to a Pending Thread. "
-	@ignore = "Test Stub"
+	@description = "This is a test for LRQA-70151. Verify that the user cannot reply to a Pending Thread."
 	@priority = "3"
 	test CannotReplyToPendingThread {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
 
-		// TODO LRQA-70151 CannotReplyToPendingThread pending implementation
+		MessageboardsThread.addWithWorkflowCP(
+			threadBody = "Thread Message Body",
+			threadSubject = "Thread Message Subject");
+
+		Navigator.gotoBack();
+
+		AssertElementPresent(
+			key_resultBarMessage = "Pending",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+
+		AssertClick(
+			key_threadSubject = "Thread Message Subject",
+			locator1 = "MessageBoards#THREAD_LIST_THREAD",
+			value1 = "Thread Message Subject");
+
+		AssertElementNotPresent(
+			locator1 = "Button#REPLY",
+			value1 = "Reply");
+			
 
 	}
 

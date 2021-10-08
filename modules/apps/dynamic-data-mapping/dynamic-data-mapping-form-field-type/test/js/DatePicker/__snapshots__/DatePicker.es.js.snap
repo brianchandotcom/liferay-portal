@@ -3,14 +3,13 @@
 exports[`DatePicker has a predefinedValue 1`] = `
 <div>
   <div
-    aria-labelledby="dateField"
+    aria-labelledby="dateField_fieldDetails"
     class="form-group hide"
     data-field-name="dateField"
     tabindex="0"
   >
     <input
       aria-hidden="true"
-      id="dateField_fieldDetails"
       name="dateField"
       type="hidden"
       value="2020-06-02"
@@ -31,7 +30,6 @@ exports[`DatePicker has a predefinedValue 1`] = `
             value="06/02/2020"
           />
           <input
-            aria-labelledby="dateField_fieldDetails"
             class="form-control input-group-inset input-group-inset-after"
             type="text"
             value="06/02/2020"

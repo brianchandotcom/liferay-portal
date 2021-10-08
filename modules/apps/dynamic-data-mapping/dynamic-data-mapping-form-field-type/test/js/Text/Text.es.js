@@ -436,7 +436,7 @@ describe('Field Text', () => {
 			);
 
 			const confirmationField = document.getElementById(
-				'textFieldconfirmationField_fieldDetails'
+				'textFieldconfirmationField'
 			);
 
 			expect(confirmationField).not.toBeNull();

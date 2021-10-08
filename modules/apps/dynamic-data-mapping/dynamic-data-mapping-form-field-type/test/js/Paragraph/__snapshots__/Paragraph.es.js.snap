@@ -3,7 +3,7 @@
 exports[`Field Paragraph has a key 1`] = `
 <div>
   <div
-    aria-labelledby="textField"
+    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
@@ -60,7 +60,7 @@ exports[`Field Paragraph has a label 1`] = `
 exports[`Field Paragraph has a placeholder 1`] = `
 <div>
   <div
-    aria-labelledby="textField"
+    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
@@ -86,7 +86,7 @@ exports[`Field Paragraph has a placeholder 1`] = `
 exports[`Field Paragraph has a value 1`] = `
 <div>
   <div
-    aria-labelledby="textField"
+    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
@@ -112,7 +112,7 @@ exports[`Field Paragraph has a value 1`] = `
 exports[`Field Paragraph has an id 1`] = `
 <div>
   <div
-    aria-labelledby="Id"
+    aria-labelledby="Id_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
@@ -138,7 +138,7 @@ exports[`Field Paragraph has an id 1`] = `
 exports[`Field Paragraph is not required 1`] = `
 <div>
   <div
-    aria-labelledby="textField"
+    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
@@ -164,7 +164,7 @@ exports[`Field Paragraph is not required 1`] = `
 exports[`Field Paragraph is readOnly 1`] = `
 <div>
   <div
-    aria-labelledby="textField"
+    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"

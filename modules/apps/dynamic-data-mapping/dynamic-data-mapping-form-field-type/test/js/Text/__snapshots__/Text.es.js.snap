@@ -3,15 +3,13 @@
 exports[`Field Text has a helptext 1`] = `
 <div>
   <div
-    aria-labelledby="textField"
+    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
   >
     <input
-      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
-      id="textField_fieldDetails"
       name="textField"
       type="text"
       value=""
@@ -29,7 +27,7 @@ exports[`Field Text has a helptext 1`] = `
     </span>
     <span
       class="sr-only"
-      id="textField"
+      id="textField_fieldDetails"
     >
       Type something
       <br />
@@ -52,9 +50,7 @@ exports[`Field Text has a label 1`] = `
       label
     </label>
     <input
-      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
-      id="textField_fieldDetails"
       name="textField"
       type="text"
       value=""
@@ -72,15 +68,13 @@ exports[`Field Text has a label 1`] = `
 exports[`Field Text has a placeholder 1`] = `
 <div>
   <div
-    aria-labelledby="textField"
+    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
   >
     <input
-      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
-      id="textField_fieldDetails"
       name="textField"
       placeholder="Placeholder"
       type="text"
@@ -99,15 +93,13 @@ exports[`Field Text has a placeholder 1`] = `
 exports[`Field Text has a value 1`] = `
 <div>
   <div
-    aria-labelledby="textField"
+    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
   >
     <input
-      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
-      id="textField_fieldDetails"
       name="textField"
       type="text"
       value="value"
@@ -125,15 +117,14 @@ exports[`Field Text has a value 1`] = `
 exports[`Field Text has an id 1`] = `
 <div>
   <div
-    aria-labelledby="Id"
+    aria-labelledby="Id_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
   >
     <input
-      aria-labelledby="Id_fieldDetails"
       class="form-control ddm-field-text"
-      id="Id_fieldDetails"
+      id="Id"
       name="textField"
       type="text"
       value=""
@@ -151,15 +142,13 @@ exports[`Field Text has an id 1`] = `
 exports[`Field Text is not readOnly 1`] = `
 <div>
   <div
-    aria-labelledby="textField"
+    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
   >
     <input
-      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
-      id="textField_fieldDetails"
       name="textField"
       type="text"
       value=""
@@ -177,15 +166,13 @@ exports[`Field Text is not readOnly 1`] = `
 exports[`Field Text is not required 1`] = `
 <div>
   <div
-    aria-labelledby="textField"
+    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
   >
     <input
-      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
-      id="textField_fieldDetails"
       name="textField"
       type="text"
       value=""
@@ -203,16 +190,14 @@ exports[`Field Text is not required 1`] = `
 exports[`Field Text is readOnly 1`] = `
 <div>
   <div
-    aria-labelledby="textField"
+    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
   >
     <input
-      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
       disabled=""
-      id="textField_fieldDetails"
       name="textField"
       type="text"
       value=""
@@ -241,9 +226,7 @@ exports[`Field Text renders Label if showLabel is true 1`] = `
       text
     </label>
     <input
-      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
-      id="textField_fieldDetails"
       name="textField"
       type="text"
       value=""

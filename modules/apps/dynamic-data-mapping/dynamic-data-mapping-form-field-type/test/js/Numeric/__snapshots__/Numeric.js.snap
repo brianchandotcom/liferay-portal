@@ -3,7 +3,7 @@
 exports[`Field Numeric Integer Input Mask toggle has an inputMaskFormat 1`] = `
 <div>
   <div
-    aria-labelledby="numericField"
+    aria-labelledby="numericField_fieldDetails"
     class="form-group hide"
     data-field-name="numericField"
     tabindex="0"
@@ -33,6 +33,7 @@ exports[`Field Numeric Integer Input Mask toggle has an inputMaskFormat 1`] = `
 exports[`Field Numeric renders the default markup 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >

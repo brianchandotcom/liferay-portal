@@ -305,9 +305,9 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 								zipReader.getEntryAsInputStream(entry)) {
 
 							_processXLIFFFile(
-								classPK, groupId, className, actionRequest,
-								failureMessages, entry, entryInputStream,
-								locale, successMessages);
+								actionRequest, groupId, className, classPK,
+								entry, successMessages, failureMessages,
+								entryInputStream, locale);
 						}
 					}
 				}
@@ -321,17 +321,17 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 					"file")) {
 
 				_processXLIFFFile(
-					classPK, groupId, className, actionRequest, failureMessages,
-					fileName, inputStream, locale, successMessages);
+					actionRequest, groupId, className, classPK, fileName,
+					successMessages, failureMessages, inputStream, locale);
 			}
 		}
 	}
 
 	private void _processXLIFFFile(
-			long classPK, long groupId, String className,
-			ActionRequest actionRequest, Map<String, String> failureMessages,
-			String fileName, InputStream inputStream, Locale locale,
-			List<String> successMessages)
+			ActionRequest actionRequest, long groupId, String className,
+			long classPK, String fileName, List<String> successMessages,
+			Map<String, String> failureMessages, InputStream inputStream,
+			Locale locale)
 		throws IOException, PortalException {
 
 		try {

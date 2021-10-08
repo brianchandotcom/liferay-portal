@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.order.rule.internal.messaging;
 
-import com.liferay.commerce.order.rule.configuration.CommerceOrderRuleEntryConfiguration;
-import com.liferay.commerce.order.rule.service.CommerceOrderRuleEntryLocalService;
+import com.liferay.commerce.order.rule.configuration.COREntryConfiguration;
+import com.liferay.commerce.order.rule.service.COREntryLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -39,12 +39,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	configurationPid = "com.liferay.commerce.order.rule.configuration.CommerceOrderRuleEntryConfiguration",
+	configurationPid = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration",
 	enabled = false, immediate = true,
-	service = CheckCommerceOrderRuleEntryMessageListener.class
+	service = CheckCOREntryMessageListener.class
 )
-public class CheckCommerceOrderRuleEntryMessageListener
-	extends BaseMessageListener {
+public class CheckCOREntryMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
@@ -52,15 +51,13 @@ public class CheckCommerceOrderRuleEntryMessageListener
 
 		String className = clazz.getName();
 
-		CommerceOrderRuleEntryConfiguration
-			commerceOrderRuleEntryConfiguration =
-				ConfigurableUtil.createConfigurable(
-					CommerceOrderRuleEntryConfiguration.class, properties);
+		COREntryConfiguration corEntryConfiguration =
+			ConfigurableUtil.createConfigurable(
+				COREntryConfiguration.class, properties);
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
-			commerceOrderRuleEntryConfiguration.checkInterval(),
-			TimeUnit.MINUTE);
+			corEntryConfiguration.checkInterval(), TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -76,7 +73,7 @@ public class CheckCommerceOrderRuleEntryMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_commerceOrderRuleEntryLocalService.checkCommerceOrderRuleEntries();
+		_corEntryLocalService.checkCOREntries();
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -85,8 +82,7 @@ public class CheckCommerceOrderRuleEntryMessageListener
 	}
 
 	@Reference
-	private CommerceOrderRuleEntryLocalService
-		_commerceOrderRuleEntryLocalService;
+	private COREntryLocalService _corEntryLocalService;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

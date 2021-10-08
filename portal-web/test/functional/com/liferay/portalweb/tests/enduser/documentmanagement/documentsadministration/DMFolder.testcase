@@ -148,9 +148,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMFolder.viewPG(dmFolderName = "DM SubFolder1 Name");
+		DMFolder.viewEntryPresent(dmFolderName = "DM SubFolder1 Name");
 
-		DMFolder.viewPG(dmFolderName = "DM SubFolder2 Name");
+		DMFolder.viewEntryPresent(dmFolderName = "DM SubFolder2 Name");
 	}
 
 	@priority = "5"

@@ -877,9 +877,7 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "/D/M/Document Title");
+		DMDocument.viewPG(dmDocumentTitle = "/D/M/Document Title");
 	}
 
 	@priority = "4"

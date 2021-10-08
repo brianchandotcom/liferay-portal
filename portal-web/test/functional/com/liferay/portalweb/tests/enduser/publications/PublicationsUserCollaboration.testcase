@@ -10,8 +10,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-
-		JSONPublications.enablePublications();
 	}
 
 	tearDown {
@@ -60,7 +58,19 @@ definition {
 			roleTitle = "Publications User",
 			userEmailAddress = "userea@liferay.com");
 
+		JSONPublications.enablePublications();
+
 		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Publications.inviteUsers(
+			publicationName = "Publication Name",
+			publicationRole = "Editor",
+			userInvite = "userea@liferay.com");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
@@ -75,19 +85,11 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		SignOut.signOut();
 
-		Publications.inviteUsers(
-			publicationName = "Publication Name",
-			publicationRole = "Editor",
-			userInvite = "userea@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Notifications.gotoNotifications();
 
@@ -140,7 +142,19 @@ definition {
 			resourceName = "com.liferay.change.tracking.model.CTCollection",
 			roleTitle = "Publications User");
 
+		JSONPublications.enablePublications();
+
 		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Publications.inviteUsers(
+			publicationName = "Publication Name",
+			publicationRole = "Inviter",
+			userInvite = "userea1@liferay.com");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
@@ -155,19 +169,11 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		SignOut.signOut();
 
-		Publications.inviteUsers(
-			publicationName = "Publication Name",
-			publicationRole = "Inviter",
-			userInvite = "userea1@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea1@liferay.com",
-			userLoginFullName = "userfn1 userln1");
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
 
 		Notifications.gotoNotifications();
 
@@ -218,7 +224,19 @@ definition {
 			resourceName = "com.liferay.change.tracking.model.CTCollection",
 			roleTitle = "Publications User");
 
+		JSONPublications.enablePublications();
+
 		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Publications.inviteUsers(
+			publicationName = "Publication Name",
+			publicationRole = "Publisher",
+			userInvite = "userea@liferay.com");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
@@ -233,19 +251,11 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		SignOut.signOut();
 
-		Publications.inviteUsers(
-			publicationName = "Publication Name",
-			publicationRole = "Publisher",
-			userInvite = "userea@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Notifications.gotoNotifications();
 
@@ -287,7 +297,19 @@ definition {
 			roleTitle = "Site Administrator",
 			userEmailAddress = "userea@liferay.com");
 
+		JSONPublications.enablePublications();
+
 		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Publications.inviteUsers(
+			publicationName = "Publication Name",
+			userInvite = "userea@liferay.com",
+			userMissingPublicationsRole = "true");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
@@ -302,19 +324,11 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		SignOut.signOut();
 
-		Publications.inviteUsers(
-			publicationName = "Publication Name",
-			userInvite = "userea@liferay.com",
-			userMissingPublicationsRole = "true");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Notifications.gotoNotifications();
 

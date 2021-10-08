@@ -171,15 +171,14 @@ definition {
 
 			var dateLength = StringUtil.length("${date}");
 
-			if ("${dateLength}" == "10") {
+			if ("${dateLength}" == "9" || "${dateLength}" == "10" || "${dateLength}" == "11") {
 				ACUtils.assertDatePattern(
-					date = "${date}",
-					format = "MMM d - d");
-			}
-			else {
+				date = "${date}",
+				format = "MMM d - d");
+			} else {
 				ACUtils.assertDatePattern(
-					date = "${date}",
-					format = "MMM d - MMM d");
+				date = "${date}",
+				format = "MMM d - MMM d");
 			}
 		}
 

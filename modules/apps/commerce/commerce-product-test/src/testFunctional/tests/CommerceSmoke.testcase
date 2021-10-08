@@ -58,7 +58,7 @@ definition {
 
 	test PublishSimpleProduct {
 		property environment.acceptance = "true";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

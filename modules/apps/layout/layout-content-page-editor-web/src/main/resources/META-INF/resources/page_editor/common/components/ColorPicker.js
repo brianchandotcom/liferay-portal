@@ -17,7 +17,7 @@ import DropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {config} from '../../app/config/index';
 import SearchForm from '../../common/components/SearchForm';
@@ -29,12 +29,20 @@ const ColorPicker = ({
 	small,
 	value = '#FFFFFF',
 }) => {
-	const triggerElementRef = useRef(null);
-	const splotchRef = useRef(null);
 	const dropdownContainerRef = useRef(null);
+	const searchFormClearRef = useRef(null);
+	const searchFormInputRef = useRef(null);
+	const splotchRef = useRef(null);
+	const triggerElementRef = useRef(null);
 
 	const [active, setActive] = useState(false);
 	const [searchValue, setSearchValue] = useState(false);
+
+	useEffect(() => {
+		if (searchFormClearRef?.current && !active) {
+			searchFormClearRef.current.click();
+		}
+	}, [active]);
 
 	const getFilteredColors = (colors, searchValue) => {
 		const isFoundValue = (value) =>
@@ -120,6 +128,8 @@ const ColorPicker = ({
 								<SearchForm
 									className="flex-grow-1"
 									onChange={setSearchValue}
+									searchFormClearRef={searchFormClearRef}
+									searchFormInputRef={searchFormInputRef}
 								/>
 								{Object.keys(filteredColors).length ? (
 									<ColorPalette
@@ -144,6 +154,10 @@ const ColorPicker = ({
 										</p>
 										<ClayButton
 											displayType="secondary"
+											onClick={() => {
+												searchFormClearRef.current.click();
+												searchFormInputRef.current.focus();
+											}}
 											small
 										>
 											{Liferay.Language.get('new-search')}

@@ -21,7 +21,12 @@ import React, {useRef, useState} from 'react';
 
 let nextInputId = 0;
 
-export default function SearchForm({className, onChange}) {
+export default function SearchForm({
+	className,
+	onChange,
+	searchFormClearRef,
+	searchFormInputRef,
+}) {
 	const id = `pageEditorSearchFormInput${nextInputId++}`;
 	const onChangeDebounce = useRef(debounce((value) => onChange(value), 100));
 	const [searchValue, setSearchValue] = useState('');
@@ -41,6 +46,7 @@ export default function SearchForm({className, onChange}) {
 							onChangeDebounce.current(event.target.value);
 						}}
 						placeholder={`${Liferay.Language.get('search')}...`}
+						ref={searchFormInputRef}
 						sizing="sm"
 						value={searchValue}
 					/>
@@ -54,6 +60,7 @@ export default function SearchForm({className, onChange}) {
 									setSearchValue('');
 									onChangeDebounce.current('');
 								}}
+								ref={searchFormClearRef}
 								small
 								symbol={searchValue ? 'times' : 'search'}
 								title={Liferay.Language.get('clear')}

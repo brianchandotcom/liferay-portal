@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -79,7 +78,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
@@ -689,22 +687,6 @@ public class ObjectDefinitionLocalServiceImpl
 		runSQL(dynamicObjectDefinitionTable.getCreateTableSQL());
 	}
 
-	private void _deleteWorkflowInstanceLinks(ObjectDefinition objectDefinition)
-		throws PortalException {
-
-		List<ObjectEntry> objectEntries =
-			_objectEntryPersistence.findByODI_NotS(
-				objectDefinition.getObjectDefinitionId(),
-				WorkflowConstants.STATUS_APPROVED);
-
-		for (ObjectEntry objectEntry : objectEntries) {
-			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-				objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
-				objectDefinition.getClassName(),
-				objectEntry.getObjectEntryId());
-		}
-	}
-
 	private void _dropTable(String dbTableName) {
 		String sql = "drop table " + dbTableName;
 
@@ -818,23 +800,6 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 	}
 
-	private void _startWorkflowInstanceLinks(ObjectDefinition objectDefinition)
-		throws PortalException {
-
-		List<ObjectEntry> objectEntries =
-			_objectEntryPersistence.findByODI_NotS(
-				objectDefinition.getObjectDefinitionId(),
-				WorkflowConstants.STATUS_APPROVED);
-
-		for (ObjectEntry objectEntry : objectEntries) {
-			WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
-				objectEntry.getUserId(), objectDefinition.getClassName(),
-				objectEntry.getObjectEntryId(), objectEntry,
-				ServiceContextThreadLocal.getServiceContext());
-		}
-	}
-
 	private ObjectDefinition _updateObjectDefinition(
 			ObjectDefinition objectDefinition, long descriptionObjectFieldId,
 			long titleObjectFieldId, boolean active, String dbTableName,
@@ -862,16 +827,12 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (objectDefinition.isApproved()) {
 			if (!active && originalActive) {
-				_deleteWorkflowInstanceLinks(objectDefinition);
-
 				objectDefinitionLocalService.undeployObjectDefinition(
 					objectDefinition);
 			}
 			else if (active) {
 				objectDefinitionLocalService.deployObjectDefinition(
 					objectDefinition);
-
-				_startWorkflowInstanceLinks(objectDefinition);
 			}
 
 			return objectDefinitionPersistence.update(objectDefinition);

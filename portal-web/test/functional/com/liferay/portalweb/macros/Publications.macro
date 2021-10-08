@@ -85,12 +85,12 @@ definition {
 			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 
 		Publications.inviteUsers(
-			publicationName = "${publicationName}",
+			publicationName = "New ${publicationName}",
 			userInvite = "userea2@liferay.com");
 
 		Publications.gotoReviewChanges(
 			gotoManagePublications = "true",
-			publicationName = "${publicationName}");
+			publicationName = "New ${publicationName}");
 
 		PublicationsChanges.openCommentsSidebar();
 

@@ -1083,7 +1083,7 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		for (var emptyStateInfo : list "No preview available,Hmm... looks like this item doesn't have a preview we can show you.") {
+		for (var emptyStateInfo : list "No preview available,Hmm... looks like this item does not have a preview we can show you.") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_EMPTY_STATE_PREVIEW",
 				value1 = "${emptyStateInfo}");

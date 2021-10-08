@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.order.rule.internal.workflow;
 
-import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
-import com.liferay.commerce.order.rule.service.CommerceOrderRuleEntryLocalService;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.service.COREntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -37,15 +37,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false,
-	property = "model.class.name=com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry",
+	property = "model.class.name=com.liferay.commerce.order.rule.model.COREntry",
 	service = WorkflowHandler.class
 )
-public class CommerceOrderRuleEntryWorkflowHandler
-	extends BaseWorkflowHandler<CommerceOrderRuleEntry> {
+public class COREntryWorkflowHandler extends BaseWorkflowHandler<COREntry> {
 
 	@Override
 	public String getClassName() {
-		return CommerceOrderRuleEntry.class.getName();
+		return COREntry.class.getName();
 	}
 
 	@Override
@@ -54,7 +53,7 @@ public class CommerceOrderRuleEntryWorkflowHandler
 	}
 
 	@Override
-	public CommerceOrderRuleEntry updateStatus(
+	public COREntry updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {
 
@@ -67,12 +66,11 @@ public class CommerceOrderRuleEntryWorkflowHandler
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
-		return _commerceOrderRuleEntryLocalService.updateStatus(
+		return _corEntryLocalService.updateStatus(
 			userId, classPK, status, serviceContext);
 	}
 
 	@Reference
-	private CommerceOrderRuleEntryLocalService
-		_commerceOrderRuleEntryLocalService;
+	private COREntryLocalService _corEntryLocalService;
 
 }

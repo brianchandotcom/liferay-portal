@@ -1433,7 +1433,7 @@ definition {
 			value1 = "Please allow me to join the Restricted Site.");
 	}
 
-	macro viewPrivateVirtualHostUrlUserLoginRedirect {
+	macro viewPrivateVirtualHostURLUserLoginRedirect {
 		AssertTextEquals(
 			locator1 = "TextInput#EMAIL_ADDRESS",
 			value1 = "${userEmailAddress}");

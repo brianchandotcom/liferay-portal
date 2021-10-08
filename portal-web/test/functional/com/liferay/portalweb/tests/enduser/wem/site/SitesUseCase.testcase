@@ -420,7 +420,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080/test-private-page");
 
-		Site.viewPrivateVirtualHostUrlUserLoginRedirect(userEmailAddress = "@liferay.com");
+		Site.viewPrivateVirtualHostURLUserLoginRedirect(userEmailAddress = "@liferay.com");
 
 		User.loginUserPG(
 			password = "test",

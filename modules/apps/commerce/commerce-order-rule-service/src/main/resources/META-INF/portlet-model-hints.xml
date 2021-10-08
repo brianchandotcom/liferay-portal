@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry">
+	<model name="com.liferay.commerce.order.rule.model.COREntry">
 		<field name="externalReferenceCode" type="String" />
-		<field name="commerceOrderRuleEntryId" type="long" />
+		<field name="COREntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
@@ -23,8 +23,8 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel">
-		<field name="commerceOrderRuleEntryRelId" type="long" />
+	<model name="com.liferay.commerce.order.rule.model.COREntryRel">
+		<field name="COREntryRelId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
@@ -32,6 +32,6 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="commerceOrderRuleEntryId" type="long" />
+		<field name="COREntryId" type="long" />
 	</model>
 </model-hints>

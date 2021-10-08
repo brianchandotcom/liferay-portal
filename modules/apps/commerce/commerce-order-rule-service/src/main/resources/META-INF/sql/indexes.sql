@@ -1,10 +1,9 @@
-create index IX_D585F2B on CommerceOrderRuleEntry (companyId, active_, type_[$COLUMN_LENGTH:75$]);
-create index IX_28877FDE on CommerceOrderRuleEntry (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
-create index IX_CE335E76 on CommerceOrderRuleEntry (companyId, type_[$COLUMN_LENGTH:75$]);
-create index IX_6E9FF03D on CommerceOrderRuleEntry (displayDate, status);
-create index IX_FDBBEE20 on CommerceOrderRuleEntry (expirationDate, status);
-create index IX_30ADB7AC on CommerceOrderRuleEntry (type_[$COLUMN_LENGTH:75$]);
+create index IX_E0154022 on COREntry (companyId, active_, type_[$COLUMN_LENGTH:75$]);
+create index IX_4BD0EB07 on COREntry (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create index IX_FDA23B9F on COREntry (companyId, type_[$COLUMN_LENGTH:75$]);
+create index IX_44FA9674 on COREntry (displayDate, status);
+create index IX_9CB08889 on COREntry (expirationDate, status);
 
-create unique index IX_C286F5C3 on CommerceOrderRuleEntryRel (classNameId, classPK, commerceOrderRuleEntryId);
-create index IX_84C4F644 on CommerceOrderRuleEntryRel (classNameId, commerceOrderRuleEntryId);
-create index IX_6FFD80AE on CommerceOrderRuleEntryRel (commerceOrderRuleEntryId);
+create index IX_F1A53EE on COREntryRel (COREntryId);
+create index IX_27438A76 on COREntryRel (classNameId, COREntryId);
+create unique index IX_25C71E83 on COREntryRel (classNameId, classPK, COREntryId);

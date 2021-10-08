@@ -21,7 +21,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry</model-name>
+		<model-name>com.liferay.commerce.order.rule.model.COREntry</model-name>
 		<portlet-ref/>
 		<weight>2</weight>
 		<permissions>

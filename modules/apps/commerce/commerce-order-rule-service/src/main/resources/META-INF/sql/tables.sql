@@ -1,6 +1,6 @@
-create table CommerceOrderRuleEntry (
+create table COREntry (
 	externalReferenceCode VARCHAR(75) null,
-	commerceOrderRuleEntryId LONG not null primary key,
+	COREntryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -21,8 +21,8 @@ create table CommerceOrderRuleEntry (
 	statusDate DATE null
 );
 
-create table CommerceOrderRuleEntryRel (
-	commerceOrderRuleEntryRelId LONG not null primary key,
+create table COREntryRel (
+	COREntryRelId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -30,5 +30,5 @@ create table CommerceOrderRuleEntryRel (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	commerceOrderRuleEntryId LONG
+	COREntryId LONG
 );

@@ -241,6 +241,8 @@ definition {
 	@description = "Verify that, when a Web Content is moved to a Folder, it's Workflow changes"
 	@priority = "4"
 	test MoveWebContentToFolderChangeItsWorkflow {
+		property test.name.skip.portal.instance = "WorkflowWebContent#MoveWebContentToFolderChangeItsWorkflow";
+
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
 		Navigator.openURL();

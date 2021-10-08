@@ -84,27 +84,18 @@ public class ImportDataDefinitionMVCActionCommandTest {
 		DataDefinitionField[] dataDefinitionFields =
 			dataDefinition.getDataDefinitionFields();
 
-		String dataDefinitionlTextFieldName = dataDefinitionFields[0].getName();
-
-		String dataDefinitionFieldsGroupFieldName =
-			dataDefinitionFields[1].getName();
-
 		DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
 
 		DataLayoutRow[] dataLayoutRows =
 			dataLayout.getDataLayoutPages()[0].getDataLayoutRows();
 
-		String dataLayoutTextFieldName =
-			dataLayoutRows[0].getDataLayoutColumns()[0].getFieldNames()[0];
-
-		String dataLayoutFieldsGroupFieldName =
-			dataLayoutRows[1].getDataLayoutColumns()[0].getFieldNames()[0];
+		Assert.assertEquals(
+			dataDefinitionFields[0].getName(),
+			dataLayoutRows[0].getDataLayoutColumns()[0].getFieldNames()[0]);
 
 		Assert.assertEquals(
-			dataDefinitionlTextFieldName, dataLayoutTextFieldName);
-
-		Assert.assertEquals(
-			dataDefinitionFieldsGroupFieldName, dataLayoutFieldsGroupFieldName);
+			dataDefinitionFields[1].getName(),
+			dataLayoutRows[1].getDataLayoutColumns()[0].getFieldNames()[0]);
 	}
 
 	@Test

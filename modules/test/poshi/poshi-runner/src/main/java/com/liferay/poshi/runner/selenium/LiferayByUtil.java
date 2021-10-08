@@ -75,12 +75,12 @@ public class LiferayByUtil {
 					By.ByCssSelector byCssSelector = new By.ByCssSelector(
 						partialCssSelectors[i]);
 
-					WebElement nextRoot = byCssSelector.findElement(
+					WebElement webElement = byCssSelector.findElement(
 						searchContext);
 
 					searchContext =
 						(WebElement)javascriptExecutor.executeScript(
-							"return arguments[0].shadowRoot", nextRoot);
+							"return arguments[0].shadowRoot", webElement);
 				}
 
 				By.ByCssSelector byCssSelector = new By.ByCssSelector(
@@ -90,7 +90,7 @@ public class LiferayByUtil {
 			}
 
 			throw new WebDriverException(
-				"Unable to find element using CSS selector: " + _cssSelector);
+				"Unable to find elements using CSS selector: " + _cssSelector);
 		}
 
 		@Override

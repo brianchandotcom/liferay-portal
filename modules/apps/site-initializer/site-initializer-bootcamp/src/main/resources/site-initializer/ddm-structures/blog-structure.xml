@@ -68,7 +68,7 @@
 							"direction": "[vertical]",
 							"displayStyle": "multiline",
 							"fieldNamespace": "",
-							"fieldReference": "Text32559244",
+							"fieldReference": "Subtitle",
 							"hideField": false,
 							"indexType": "keyword",
 							"label": {
@@ -76,7 +76,7 @@
 							},
 							"labelAtStructureLevel": true,
 							"localizable": true,
-							"name": "Text32559244",
+							"name": "Subtitle",
 							"nativeField": false,
 							"objectFieldName": "",
 							"placeholder": {
@@ -105,13 +105,13 @@
 						{
 							"dataType": "image",
 							"fieldNamespace": "",
-							"fieldReference": "Image25779272",
+							"fieldReference": "MainImage",
 							"indexType": "text",
 							"label": {
 								"en_US": "Main Image"
 							},
 							"localizable": true,
-							"name": "Image25779272",
+							"name": "MainImage",
 							"objectFieldName": "",
 							"predefinedValue": {
 								"en_US": "{}"
@@ -140,7 +140,7 @@
 							"direction": "[vertical]",
 							"displayStyle": "singleline",
 							"fieldNamespace": "",
-							"fieldReference": "Text50283173",
+							"fieldReference": "ImageAuthor",
 							"hideField": false,
 							"indexType": "keyword",
 							"label": {
@@ -148,7 +148,7 @@
 							},
 							"labelAtStructureLevel": true,
 							"localizable": true,
-							"name": "Text50283173",
+							"name": "ImageAuthor",
 							"nativeField": false,
 							"objectFieldName": "",
 							"placeholder": {
@@ -177,13 +177,13 @@
 						{
 							"dataType": "string",
 							"fieldNamespace": "",
-							"fieldReference": "RichText54473626",
+							"fieldReference": "Body",
 							"indexType": "text",
 							"label": {
 								"en_US": "Body"
 							},
 							"localizable": true,
-							"name": "RichText54473626",
+							"name": "Body",
 							"objectFieldName": "",
 							"predefinedValue": {
 								"en_US": ""

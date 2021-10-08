@@ -198,9 +198,6 @@ definition {
 		Search.searchCP(searchTerm = "Promotion System Test");
 
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Promotion System Test");
-
-
-
 	}
 
 	@description = "Verify that the user can search by process name."

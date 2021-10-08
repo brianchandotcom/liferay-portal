@@ -144,6 +144,88 @@ public class COREntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.order.rule.model.COREntry
+			fetchByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, long companyId,
+				String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				COREntryServiceUtil.class, "fetchByExternalReferenceCode",
+				_fetchByExternalReferenceCodeParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, externalReferenceCode);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.order.rule.model.COREntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.order.rule.model.COREntry fetchCOREntry(
+			HttpPrincipal httpPrincipal, long corEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				COREntryServiceUtil.class, "fetchCOREntry",
+				_fetchCOREntryParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, corEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.order.rule.model.COREntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List<com.liferay.commerce.order.rule.model.COREntry>
 			getCOREntries(
 				HttpPrincipal httpPrincipal, long companyId, boolean active,
@@ -153,7 +235,7 @@ public class COREntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				COREntryServiceUtil.class, "getCOREntries",
-				_getCOREntriesParameterTypes2);
+				_getCOREntriesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, active, start, end);
@@ -196,7 +278,7 @@ public class COREntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				COREntryServiceUtil.class, "getCOREntries",
-				_getCOREntriesParameterTypes3);
+				_getCOREntriesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, active, type, start, end);
@@ -239,7 +321,7 @@ public class COREntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				COREntryServiceUtil.class, "getCOREntries",
-				_getCOREntriesParameterTypes4);
+				_getCOREntriesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, type, start, end);
@@ -273,6 +355,46 @@ public class COREntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.order.rule.model.COREntry getCOREntry(
+			HttpPrincipal httpPrincipal, long corEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				COREntryServiceUtil.class, "getCOREntry",
+				_getCOREntryParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, corEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.order.rule.model.COREntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.commerce.order.rule.model.COREntry updateCOREntry(
 			HttpPrincipal httpPrincipal, long corEntryId, boolean active,
 			String description, int displayDateMonth, int displayDateDay,
@@ -287,7 +409,7 @@ public class COREntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				COREntryServiceUtil.class, "updateCOREntry",
-				_updateCOREntryParameterTypes5);
+				_updateCOREntryParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, corEntryId, active, description, displayDateMonth,
@@ -335,15 +457,24 @@ public class COREntryServiceHttp {
 	};
 	private static final Class<?>[] _deleteCOREntryParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getCOREntriesParameterTypes2 =
+	private static final Class<?>[]
+		_fetchByExternalReferenceCodeParameterTypes2 = new Class[] {
+			long.class, String.class
+		};
+	private static final Class<?>[] _fetchCOREntryParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getCOREntriesParameterTypes4 =
 		new Class[] {long.class, boolean.class, int.class, int.class};
-	private static final Class<?>[] _getCOREntriesParameterTypes3 =
+	private static final Class<?>[] _getCOREntriesParameterTypes5 =
 		new Class[] {
 			long.class, boolean.class, String.class, int.class, int.class
 		};
-	private static final Class<?>[] _getCOREntriesParameterTypes4 =
+	private static final Class<?>[] _getCOREntriesParameterTypes6 =
 		new Class[] {long.class, String.class, int.class, int.class};
-	private static final Class<?>[] _updateCOREntryParameterTypes5 =
+	private static final Class<?>[] _getCOREntryParameterTypes7 = new Class[] {
+		long.class
+	};
+	private static final Class<?>[] _updateCOREntryParameterTypes8 =
 		new Class[] {
 			long.class, boolean.class, String.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,

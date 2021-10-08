@@ -59,6 +59,24 @@ public class COREntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.order.rule.model.COREntry
+			fetchByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _corEntryService.fetchByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	@Override
+	public com.liferay.commerce.order.rule.model.COREntry fetchCOREntry(
+			long corEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _corEntryService.fetchCOREntry(corEntryId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.commerce.order.rule.model.COREntry>
 			getCOREntries(long companyId, boolean active, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -82,6 +100,14 @@ public class COREntryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _corEntryService.getCOREntries(companyId, type, start, end);
+	}
+
+	@Override
+	public com.liferay.commerce.order.rule.model.COREntry getCOREntry(
+			long corEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _corEntryService.getCOREntry(corEntryId);
 	}
 
 	/**

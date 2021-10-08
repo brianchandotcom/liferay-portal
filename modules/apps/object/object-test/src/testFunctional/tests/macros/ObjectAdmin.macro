@@ -82,6 +82,18 @@ definition {
 		Button.clickSave();
 	}
 
+	macro addObjectRelationshipViaAPI {
+		JSONObject.addObjectRelationship(
+			deletionType = "${deletionType}",
+			objectName_1 = "${objectName_1}",
+			objectName_2 = "${objectName_2}",
+			relationshipLabel = "${relationshipLabel}",
+			relationshipName = "${relationshipName}",
+			relationshipType = "${relationshipType}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+	}
+
 	macro addObjectSingleFieldEntryViaAPI {
 		JSONObject.addObjectSingleFieldEntry(
 			fieldName = "${fieldName}",

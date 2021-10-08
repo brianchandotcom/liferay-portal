@@ -79,6 +79,51 @@ definition {
 		JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to add a relationship in an object"
+	macro addObjectRelationship {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var objectID_1 = JSONObject.getObjectId(
+			objectName_1 = "${objectName_1}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+
+		var objectID_2 = JSONObject.getObjectId(
+			objectName_2 = "${objectName_2}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (!(isSet(deletionType))) {
+			var deletionType = "prevent";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectID_1}/object-relationships \
+			-H 'Content-Type: application/json' \
+			-u ${userEmailAddress}:${userPassword} \
+			-d '{
+			"deletionType": "${deletionType}",
+			"label": {
+			  "en_US": "${relationshipLabel}"
+			},
+			"name": "${relationshipName}",
+			"objectDefinitionId1": ${objectID_1},
+			"objectDefinitionId2": ${objectID_2},
+			"objectDefinitionName2": "${objectName_2}",
+			"type": "${relationshipType}"
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to add a single field entry in an object"
 	macro addObjectSingleFieldEntry {
 		var portalURL = JSONCompany.getPortalURL();

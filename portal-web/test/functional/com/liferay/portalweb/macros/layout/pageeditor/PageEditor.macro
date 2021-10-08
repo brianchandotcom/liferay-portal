@@ -1007,6 +1007,15 @@ definition {
 		AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR_LOADED");
 	}
 
+	macro assertPaginationSimpleTypeIsDisplayed {
+		AssertElementPresent(locator1 = "PageEditor#COLLECTION_ITEM_PREVIOUS_BUTTON");
+
+		AssertElementPresent(locator1 = "PageEditor#COLLECTION_ITEM_NEXT_BUTTON");
+
+
+		
+	}
+
 	macro assertTrueEntryIsPresent {
 		AssertVisible(locator1 = "PageEditor#COLLECTION_ITEM_TRUE_ENTRY");
 	}

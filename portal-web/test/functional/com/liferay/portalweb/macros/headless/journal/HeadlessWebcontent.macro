@@ -26,6 +26,8 @@ definition {
 		}
 
 		HeadlessWebcontentAPI._addWebContent(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
 			content = "${content}",
 			description = "${description}",
 			folderId = "${folderId}",
@@ -33,7 +35,8 @@ definition {
 			structureId = "${structureId}",
 			title = "${title}",
 			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			userPassword = "${userPassword}",
+			viewableBy = "${viewableBy}");
 	}
 
 }

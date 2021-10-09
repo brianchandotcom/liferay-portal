@@ -16,7 +16,10 @@ package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
 import com.liferay.commerce.exception.NoSuchOrderTypeException;
 import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.order.rule.model.COREntryRel;
+import com.liferay.commerce.order.rule.service.COREntryRelService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleOrderType;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderTypeDTOConverter;
 import com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0.OrderTypeEntityModel;
@@ -38,6 +41,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -56,9 +61,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/order-type.properties",
-	scope = ServiceScope.PROTOTYPE, service = OrderTypeResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {NestedFieldSupport.class, OrderTypeResource.class}
 )
-public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
+public class OrderTypeResourceImpl
+	extends BaseOrderTypeResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public void deleteOrderType(Long id) throws Exception {
@@ -89,6 +96,18 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		throws Exception {
 
 		return _entityModel;
+	}
+
+	@NestedField(parentClass = OrderRuleOrderType.class, value = "orderType")
+	@Override
+	public OrderType getOrderRuleOrderTypeOrderType(Long id) throws Exception {
+		COREntryRel corEntryRel = _corEntryRelService.getCOREntryRel(id);
+
+		CommerceOrderType commerceOrderType =
+			_commerceOrderTypeService.getCommerceOrderType(
+				corEntryRel.getClassPK());
+
+		return _toOrderType(commerceOrderType.getCommerceOrderTypeId());
 	}
 
 	@Override
@@ -299,6 +318,9 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 
 	@Reference
 	private CommerceOrderTypeService _commerceOrderTypeService;
+
+	@Reference
+	private COREntryRelService _corEntryRelService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

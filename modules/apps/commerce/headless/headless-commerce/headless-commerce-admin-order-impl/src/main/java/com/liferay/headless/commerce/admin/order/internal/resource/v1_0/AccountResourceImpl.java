@@ -14,11 +14,16 @@
 
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.rule.model.COREntryRel;
+import com.liferay.commerce.order.rule.service.COREntryRelService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccount;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.AccountDTOConverter;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.AccountResource;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -68,6 +73,18 @@ public class AccountResourceImpl
 		return _toAccount(commerceOrder.getCommerceAccountId());
 	}
 
+	@NestedField(parentClass = OrderRuleAccount.class, value = "account")
+	@Override
+	public Account getOrderRuleAccountAccount(Long id) throws Exception {
+		COREntryRel corEntryRel = _corEntryRelService.getCOREntryRel(id);
+
+		CommerceAccount commerceAccount =
+			_commerceAccountService.getCommerceAccount(
+				corEntryRel.getClassPK());
+
+		return _toAccount(commerceAccount.getCommerceAccountId());
+	}
+
 	private Account _toAccount(long commerceAccountId) throws Exception {
 		return _accountDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -78,6 +95,12 @@ public class AccountResourceImpl
 	private AccountDTOConverter _accountDTOConverter;
 
 	@Reference
+	private CommerceAccountService _commerceAccountService;
+
+	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private COREntryRelService _corEntryRelService;
 
 }

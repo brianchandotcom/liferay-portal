@@ -137,6 +137,99 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-127658 - Verified that the last portlet configuration can be restorable after deleting portlet"
+	@priority = "3"
+	test CanBeRestorableLastConfigurationWhenDeletingPortlet {
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages",
+			site = "Test Site Name");
+
+		SitePages.addPublicPage(
+			pageName = "Web Content Display Page",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WebContent Content",
+			webContentTitle = "WebContent Title");
+
+		WebContent.viewPGViaWCD(webContentContent = "WebContent Content");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Look and Feel Configuration");
+
+		IFrame.selectConfigurationFrame();
+
+		Portlet.configureCustomBorderStylesViaLookandfeelPG(
+			borderColorAttributeList = "Right-FF0D0D",
+			borderStyleAttributeList = "StyleRight-Solid",
+			borderWidthAttributeList = "WidthRight-100",
+			borderWidthUnitList = "WidthRight-px");
+
+		Refresh();
+
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Look and Feel Configuration");
+
+		IFrame.selectConfigurationFrame();
+
+		Portlet.configureCustomBorderStylesViaLookandfeelPG(
+			borderColorAttributeList = "Left-2BA676",
+			borderStyleAttributeList = "StyleLeft-Solid",
+			borderWidthAttributeList = "WidthLeft-100",
+			borderWidthUnitList = "WidthLeft-px");
+
+		Refresh();
+
+		Portlet.deletePG(portletName = "Web Content Display");
+
+		Staging.deleteHistory();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name");
+
+		WebContent.viewPGViaWCD(webContentContent = "WebContent Content");
+
+		for (var borderType : list "right,left") {
+			AssertCssValue(
+				locator1 = "Portlet#PORTLET_CONTENT",
+				locator2 = "border-${borderType}-width",
+				value1 = "100px");
+		}
+
+		for (var borderType : list "right,left") {
+			AssertCssValue(
+				locator1 = "Portlet#PORTLET_CONTENT",
+				locator2 = "border-${borderType}-style",
+				value1 = "solid");
+		}
+
+		AssertCssValue(
+			locator1 = "Portlet#PORTLET_CONTENT",
+			locator2 = "border-right-color",
+			value1 = "rgba(255, 13, 13, 1)");
+
+		AssertCssValue(
+			locator1 = "Portlet#PORTLET_CONTENT",
+			locator2 = "border-left-color",
+			value1 = "rgba(43, 166, 118, 1)");
+	}
+
 	@priority = "4"
 	test CannotRepublishExpiredWebContent {
 		property testray.component.names = "Web Content Administration";

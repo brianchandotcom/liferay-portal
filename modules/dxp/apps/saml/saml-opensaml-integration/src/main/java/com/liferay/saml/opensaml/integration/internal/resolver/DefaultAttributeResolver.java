@@ -182,6 +182,10 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 		Serializable value = expandoBridge.getAttribute(attributeName, false);
 
+		if (value == null) {
+			value = StringPool.BLANK;
+		}
+
 		if (!namespaceEnabled) {
 			attributePublisher.publish(
 				attributeName, Attribute.UNSPECIFIED,

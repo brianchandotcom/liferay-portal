@@ -21,7 +21,7 @@ html#{$cadmin-selector} {
 			display: block;
 			left: 0;
 			max-width: 100vw;
-			position: absolute;
+			position: fixed;
 			top: 0;
 			width: 808px;
 			z-index: $modalZIndex + 1;

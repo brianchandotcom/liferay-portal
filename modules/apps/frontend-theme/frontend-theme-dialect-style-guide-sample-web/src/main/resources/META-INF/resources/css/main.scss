@@ -19,8 +19,12 @@
 	width: 6rem;
 }
 
-.token-group-shadows .token-sample {
-	border: none;
+.token-group-shadows,
+.token-group-buttons,
+.token-group-form {
+	.token-sample {
+		border: none;
+	}
 }
 
 .token-group-spacers .token-sample {
@@ -37,8 +41,4 @@
 
 .token-group-ratios .token-sample {
 	width: 6rem;
-}
-
-.token-group-buttons .token-sample {
-	border: none;
 }

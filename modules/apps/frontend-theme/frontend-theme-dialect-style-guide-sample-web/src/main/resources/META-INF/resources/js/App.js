@@ -19,6 +19,7 @@ import React, {useState} from 'react';
 import '../css/main.scss';
 import ButtonGuide from './guides/ButtonGuide';
 import ColorGuide from './guides/ColorGuide';
+import FormGuide from './guides/FormGuide';
 import GeneralGuide from './guides/GeneralGuide';
 import TypographyGuide from './guides/TypographyGuide';
 
@@ -38,6 +39,10 @@ const TABS = [
 	{
 		content: <ButtonGuide />,
 		label: Liferay.Language.get('buttons'),
+	},
+	{
+		content: <FormGuide />,
+		label: Liferay.Language.get('forms'),
 	},
 ];
 

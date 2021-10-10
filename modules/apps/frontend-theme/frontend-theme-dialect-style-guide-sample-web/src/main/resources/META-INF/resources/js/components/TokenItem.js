@@ -28,6 +28,11 @@ const SIZES_MAP = {
 		colSm: '12',
 	},
 	small: {
+		colLg: '3',
+		colMd: '4',
+		colSm: '6',
+	},
+	smaller: {
 		colLg: '2',
 		colMd: '4',
 		colSm: '6',
@@ -35,7 +40,7 @@ const SIZES_MAP = {
 };
 
 const TokenItem = (props) => {
-	const {children, className, label, size = 'small'} = props;
+	const {children, className, label, size = 'smaller'} = props;
 
 	return (
 		<ClayLayout.Col

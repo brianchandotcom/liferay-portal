@@ -1,3 +1,17 @@
+// Font Family
+
+.font-family-base {
+	font-family: var(--font-family-base);
+}
+
+.font-family-monospace {
+	font-family: var(--font-family-monospace);
+}
+
+.font-family-sans-serif {
+	font-family: var(--font-family-sans-serif);
+}
+
 // Paragraphs
 
 .text-paragraph-lg {

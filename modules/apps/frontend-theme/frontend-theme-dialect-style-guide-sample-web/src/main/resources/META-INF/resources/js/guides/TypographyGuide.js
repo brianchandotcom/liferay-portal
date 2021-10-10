@@ -36,6 +36,18 @@ const FONT_WEIGHTS = [
 
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
+const PARAGRAPHS = [
+	'text-paragraph-lg',
+	'text-paragraph',
+	'text-paragraph-sm',
+	'text-paragraph-xs',
+	'text-paragraph-xxs',
+];
+
+const SMALL_CAPS = ['text-small-caps'];
+
+const LINKS = ['text-link-lg', 'text-link-md', 'text-link-sm'];
+
 const SAMPLE_TEXT = 'The quick brown fox jumps over the lazy dog';
 
 const TypographyGuide = () => {
@@ -43,11 +55,15 @@ const TypographyGuide = () => {
 		<>
 			<TokenGroup
 				group="texts"
-				md="4"
 				title={Liferay.Language.get('font-families')}
 			>
 				{FONT_FAMILIES.map((item) => (
-					<TokenItem key={item} sample={item}>
+					<TokenItem
+						className={item}
+						key={item}
+						label={item}
+						size="large"
+					>
 						{SAMPLE_TEXT}
 					</TokenItem>
 				))}
@@ -59,19 +75,12 @@ const TypographyGuide = () => {
 				title={Liferay.Language.get('font-weights')}
 			>
 				{FONT_WEIGHTS.map((item) => (
-					<TokenItem key={item} sample={item}>
-						{SAMPLE_TEXT}
-					</TokenItem>
-				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="texts"
-				md="6"
-				title={Liferay.Language.get('headings')}
-			>
-				{HEADINGS.map((item) => (
-					<TokenItem key={item} sample={item}>
+					<TokenItem
+						className={item}
+						key={item}
+						label={item}
+						size="large"
+					>
 						{SAMPLE_TEXT}
 					</TokenItem>
 				))}
@@ -79,22 +88,73 @@ const TypographyGuide = () => {
 
 			<TokenGroup group="texts" title={Liferay.Language.get('displays')}>
 				{DISPLAYS.map((item) => (
-					<TokenItem key={item} sample={item}>
+					<TokenItem
+						className={item}
+						key={item}
+						label={item}
+						size="large"
+					>
 						{SAMPLE_TEXT}
 					</TokenItem>
 				))}
 			</TokenGroup>
 
-			<TokenGroup group="texts" title={Liferay.Language.get('others')}>
-				<TokenItem sample="lead">{SAMPLE_TEXT}</TokenItem>
-				<TokenItem sample="text-muted">{SAMPLE_TEXT}</TokenItem>
-				<TokenItem label="blockquote">
-					<span className="blockquote">{SAMPLE_TEXT}</span>
-					<span className="blockquote-footer">Liferay</span>
-				</TokenItem>
-				<TokenItem label="separator">
-					<hr />
-				</TokenItem>
+			<TokenGroup group="texts" title={Liferay.Language.get('headings')}>
+				{HEADINGS.map((item) => (
+					<TokenItem
+						className={item}
+						key={item}
+						label={item}
+						size="large"
+					>
+						{SAMPLE_TEXT}
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="texts"
+				title={Liferay.Language.get('paragraphs')}
+			>
+				{PARAGRAPHS.map((item) => (
+					<TokenItem
+						className={item}
+						key={item}
+						label={item}
+						size="large"
+					>
+						{SAMPLE_TEXT}
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="texts"
+				title={Liferay.Language.get('small-caps')}
+			>
+				{SMALL_CAPS.map((item) => (
+					<TokenItem
+						className={item}
+						key={item}
+						label={item}
+						size="large"
+					>
+						{SAMPLE_TEXT}
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup group="texts" title={Liferay.Language.get('links')}>
+				{LINKS.map((item) => (
+					<TokenItem
+						className={item}
+						key={item}
+						label={item}
+						size="large"
+					>
+						{SAMPLE_TEXT}
+					</TokenItem>
+				))}
 			</TokenGroup>
 		</>
 	);

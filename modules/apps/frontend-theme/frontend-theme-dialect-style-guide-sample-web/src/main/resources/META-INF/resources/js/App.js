@@ -16,8 +16,6 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import '../css/main.scss';
-
-import '../css/tokens.scss';
 import ButtonGuide from './guides/ButtonGuide';
 import ColorGuide from './guides/ColorGuide';
 import GeneralGuide from './guides/GeneralGuide';
@@ -25,21 +23,23 @@ import TypographyGuide from './guides/TypographyGuide';
 
 export default function App() {
 	return (
-		<div className="ccp">
+		<div className="dialect-style-guide">
 			<ClayLayout.ContainerFluid>
 				<ClayLayout.Row>
 					<ClayLayout.Col>
-						<h1>{Liferay.Language.get('style-guide-sample')}</h1>
+						<h1>
+							{Liferay.Language.get('dialect-style-guide-sample')}
+						</h1>
 					</ClayLayout.Col>
-
-					<ColorGuide />
-
-					<GeneralGuide />
-
-					<TypographyGuide />
-
-					<ButtonGuide />
 				</ClayLayout.Row>
+
+				<ColorGuide />
+
+				<TypographyGuide />
+
+				<GeneralGuide />
+
+				<ButtonGuide />
 			</ClayLayout.ContainerFluid>
 		</div>
 	);

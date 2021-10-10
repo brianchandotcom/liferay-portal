@@ -17,49 +17,209 @@ import React from 'react';
 import TokenGroup from '../components/TokenGroup';
 import TokenItem from '../components/TokenItem';
 
-const GRAYS = [
-	'white',
-	'gray-100',
-	'gray-200',
-	'gray-300',
-	'gray-400',
-	'gray-500',
-	'gray-600',
-	'gray-700',
-	'gray-800',
-	'gray-900',
-	'black',
-	'transparent',
+const BRAND_PRIMARY_COLORS = [
+	'brand-primary-darken-5',
+	'brand-primary-darken-4',
+	'brand-primary-darken-3',
+	'brand-primary-darken-2',
+	'brand-primary-darken-1',
+	'brand-primary',
+	'brand-primary-lighten-1',
+	'brand-primary-lighten-2',
+	'brand-primary-lighten-3',
+	'brand-primary-lighten-4',
+	'brand-primary-lighten-5',
+	'brand-primary-lighten-6',
 ];
 
-const THEME_COLORS = [
-	'primary',
-	'secondary',
-	'success',
-	'info',
-	'warning',
-	'danger',
-	'light',
-	'lighter',
-	'gray',
-	'dark',
+const BRAND_SECONDARY_COLORS = [
+	'brand-secondary-darken-5',
+	'brand-secondary-darken-4',
+	'brand-secondary-darken-3',
+	'brand-secondary-darken-2',
+	'brand-secondary-darken-1',
+	'brand-secondary',
+	'brand-secondary-lighten-1',
+	'brand-secondary-lighten-2',
+	'brand-secondary-lighten-3',
+	'brand-secondary-lighten-4',
+	'brand-secondary-lighten-5',
+	'brand-secondary-lighten-6',
 ];
+
+const NEUTRAL_COLORS = [
+	'neutral-0',
+	'neutral-1',
+	'neutral-2',
+	'neutral-3',
+	'neutral-4',
+	'neutral-5',
+	'neutral-6',
+	'neutral-7',
+	'neutral-8',
+	'neutral-9',
+	'neutral-10',
+];
+
+const STATE_COLORS = ['success', 'info', 'warning', 'danger'];
+
+const ACCENT_COLORS = [
+	'accent-1',
+	'accent-1-lighten',
+	'accent-2',
+	'accent-2-lighten',
+	'accent-3',
+	'accent-3-lighten',
+	'accent-4',
+	'accent-4-lighten',
+	'accent-5',
+	'accent-5-lighten',
+	'accent-6',
+	'accent-7-lighten',
+];
+
+const SAMPLE_TEXT = 'Sample';
 
 const ColorGuide = () => {
 	return (
 		<>
-			<TokenGroup group="colors" title={Liferay.Language.get('grays')}>
-				{GRAYS.map((item) => (
-					<TokenItem key={item} label={item} sample={`bg-${item}`} />
+			<TokenGroup
+				group="colors"
+				title={Liferay.Language.get('background-primary')}
+			>
+				{BRAND_PRIMARY_COLORS.map((item) => (
+					<TokenItem
+						className={`bg-${item}`}
+						key={item}
+						label={`bg-${item}`}
+					/>
 				))}
 			</TokenGroup>
 
 			<TokenGroup
 				group="colors"
-				title={Liferay.Language.get('theme-colors')}
+				title={Liferay.Language.get('background-secondary')}
 			>
-				{THEME_COLORS.map((item) => (
-					<TokenItem key={item} label={item} sample={`bg-${item}`} />
+				{BRAND_SECONDARY_COLORS.map((item) => (
+					<TokenItem
+						className={`bg-${item}`}
+						key={item}
+						label={`bg-${item}`}
+					/>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="colors"
+				title={Liferay.Language.get('background-neutral')}
+			>
+				{NEUTRAL_COLORS.map((item) => (
+					<TokenItem
+						className={`bg-${item}`}
+						key={item}
+						label={`bg-${item}`}
+					/>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="colors"
+				title={Liferay.Language.get('background-accent')}
+			>
+				{ACCENT_COLORS.map((item) => (
+					<TokenItem
+						className={`bg-${item}`}
+						key={item}
+						label={`bg-${item}`}
+					/>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="colors"
+				title={Liferay.Language.get('background-state')}
+			>
+				{STATE_COLORS.map((item) => (
+					<TokenItem
+						className={`bg-${item}`}
+						key={item}
+						label={`bg-${item}`}
+					/>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="texts"
+				title={Liferay.Language.get('text-primary')}
+			>
+				{BRAND_PRIMARY_COLORS.map((item) => (
+					<TokenItem
+						className={`text-${item}`}
+						key={item}
+						label={`text-${item}`}
+					>
+						{SAMPLE_TEXT}
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="texts"
+				title={Liferay.Language.get('text-secondary')}
+			>
+				{BRAND_SECONDARY_COLORS.map((item) => (
+					<TokenItem
+						className={`text-${item}`}
+						key={item}
+						label={`text-${item}`}
+					>
+						{SAMPLE_TEXT}
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="texts"
+				title={Liferay.Language.get('text-neutral')}
+			>
+				{NEUTRAL_COLORS.map((item) => (
+					<TokenItem
+						className={`text-${item}`}
+						key={item}
+						label={`text-${item}`}
+					>
+						{SAMPLE_TEXT}
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="texts"
+				title={Liferay.Language.get('text-accent')}
+			>
+				{ACCENT_COLORS.map((item) => (
+					<TokenItem
+						className={`text-${item}`}
+						key={item}
+						label={`text-${item}`}
+					>
+						{SAMPLE_TEXT}
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="texts"
+				title={Liferay.Language.get('text-state')}
+			>
+				{STATE_COLORS.map((item) => (
+					<TokenItem
+						className={`text-${item}`}
+						key={item}
+						label={`text-${item}`}
+					>
+						{SAMPLE_TEXT}
+					</TokenItem>
 				))}
 			</TokenGroup>
 		</>

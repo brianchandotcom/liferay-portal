@@ -12,20 +12,44 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import React from 'react';
 
-const TokenItem = ({children, label, sample}) => {
-	return (
-		<div className="token-item">
-			<span className={classNames('token-sample', sample)}>
-				{children}
-			</span>
+const SIZES_MAP = {
+	large: {
+		colLg: '12',
+		colMd: '12',
+		colSm: '12',
+	},
+	medium: {
+		colLg: '4',
+		colMd: '6',
+		colSm: '12',
+	},
+	small: {
+		colLg: '2',
+		colMd: '4',
+		colSm: '6',
+	},
+};
 
-			{(label || sample) && (
-				<span className="token-label">{label || sample}</span>
-			)}
-		</div>
+const TokenItem = (props) => {
+	const {children, className, label, size = 'small'} = props;
+
+	return (
+		<ClayLayout.Col
+			className="my-2 token-item"
+			lg={SIZES_MAP[size]['colLg']}
+			md={SIZES_MAP[size]['colMd']}
+			sm={SIZES_MAP[size]['colSm']}
+		>
+			<div className={classNames('token-sample', className)}>
+				{children}
+			</div>
+
+			{label && <div className="token-label">{label}</div>}
+		</ClayLayout.Col>
 	);
 };
 

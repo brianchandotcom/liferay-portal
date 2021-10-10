@@ -25,15 +25,174 @@ const BUTTONS = [
 	'link',
 ];
 
+const BUTTON_SIZES = [
+	'btn btn-primary btn-sm',
+	'btn btn-primary',
+	'btn btn-primary btn-lg',
+];
+
+const BUTTON_SOLID = [
+	'btn btn-solid btn-variant-primary',
+	'btn btn-solid btn-variant-secondary',
+	'btn btn-solid btn-variant-neutral',
+];
+
+const BUTTON_SOLID_INVERTED = [
+	'btn btn-solid btn-inverted btn-variant-primary',
+	'btn btn-solid btn-inverted btn-variant-secondary',
+	'btn btn-solid btn-inverted btn-variant-neutral',
+];
+
+const BUTTON_GHOST = [
+	'btn btn-ghost btn-variant-primary',
+	'btn btn-ghost btn-variant-secondary',
+	'btn btn-ghost btn-variant-neutral',
+];
+
+const BUTTON_GHOST_INVERTED = [
+	'btn btn-ghost btn-inverted btn-variant-primary',
+	'btn btn-ghost btn-inverted btn-variant-secondary',
+	'btn btn-ghost btn-inverted btn-variant-neutral',
+];
+
+const BUTTON_BORDERLESS = [
+	'btn btn-borderless btn-variant-primary',
+	'btn btn-borderless btn-variant-secondary',
+	'btn btn-borderless btn-variant-neutral',
+];
+
+const BUTTON_BORDERLESS_INVERTED = [
+	'btn btn-borderless btn-inverted btn-variant-primary',
+	'btn btn-borderless btn-inverted btn-variant-secondary',
+	'btn btn-borderless btn-inverted btn-variant-neutral',
+];
+
+const BUTTON_ROUNDED = [
+	'btn btn-rounded btn-variant-primary',
+	'btn btn-rounded btn-variant-secondary',
+	'btn btn-rounded btn-variant-neutral',
+];
+
+const BUTTON_ROUNDED_INVERTED = [
+	'btn btn-rounded btn-inverted btn-variant-primary',
+	'btn btn-rounded btn-inverted btn-variant-secondary',
+	'btn btn-rounded btn-inverted btn-variant-neutral',
+];
+
 const ButtonGuide = () => {
 	return (
-		<TokenGroup group="buttons" title={Liferay.Language.get('buttons')}>
-			{BUTTONS.map((item) => (
-				<TokenItem key={item} sample={item}>
-					<button className={'btn btn-' + item}>Button</button>
-				</TokenItem>
-			))}
-		</TokenGroup>
+		<>
+			<TokenGroup group="buttons" title={Liferay.Language.get('buttons')}>
+				{BUTTONS.map((item) => (
+					<TokenItem key={item} label={`btn-${item}`} size="medium">
+						<button className={'btn btn-' + item}>Button</button>
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="buttons"
+				title={Liferay.Language.get('button-sizes')}
+			>
+				{BUTTON_SIZES.map((item) => (
+					<TokenItem key={item} label={item} size="medium">
+						<button className={item}>Button</button>
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="buttons"
+				title={Liferay.Language.get('button-solid')}
+			>
+				{BUTTON_SOLID.map((item) => (
+					<TokenItem key={item} label={item} size="medium">
+						<button className={item}>Button</button>
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				className="bg-neutral-7 px-2"
+				group="buttons"
+				title={Liferay.Language.get('button-solid-inverted')}
+			>
+				{BUTTON_SOLID_INVERTED.map((item) => (
+					<TokenItem key={item} label={item} size="medium">
+						<button className={item}>Button</button>
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="buttons"
+				title={Liferay.Language.get('button-ghost')}
+			>
+				{BUTTON_GHOST.map((item) => (
+					<TokenItem key={item} label={item} size="medium">
+						<button className={item}>Button</button>
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				className="bg-neutral-7 px-2"
+				group="buttons"
+				title={Liferay.Language.get('button-ghost-inverted')}
+			>
+				{BUTTON_GHOST_INVERTED.map((item) => (
+					<TokenItem key={item} label={item} size="medium">
+						<button className={item}>Button</button>
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="buttons"
+				title={Liferay.Language.get('button-borderless')}
+			>
+				{BUTTON_BORDERLESS.map((item) => (
+					<TokenItem key={item} label={item} size="medium">
+						<button className={item}>Button</button>
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				className="bg-neutral-7 px-2"
+				group="buttons"
+				title={Liferay.Language.get('button-borderless-inverted')}
+			>
+				{BUTTON_BORDERLESS_INVERTED.map((item) => (
+					<TokenItem key={item} label={item} size="medium">
+						<button className={item}>Button</button>
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				group="buttons"
+				title={Liferay.Language.get('button-rounded')}
+			>
+				{BUTTON_ROUNDED.map((item) => (
+					<TokenItem key={item} label={item} size="medium">
+						<button className={item}>Button</button>
+					</TokenItem>
+				))}
+			</TokenGroup>
+
+			<TokenGroup
+				className="bg-neutral-7 px-2"
+				group="buttons"
+				title={Liferay.Language.get('button-rounded-inverted')}
+			>
+				{BUTTON_ROUNDED_INVERTED.map((item) => (
+					<TokenItem key={item} label={item} size="medium">
+						<button className={item}>Button</button>
+					</TokenItem>
+				))}
+			</TokenGroup>
+		</>
 	);
 };
 

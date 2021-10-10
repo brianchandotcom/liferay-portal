@@ -13,21 +13,30 @@
  */
 
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React from 'react';
 
 import TokenGroup from '../components/TokenGroup';
 import TokenItem from '../components/TokenItem';
 
 const BORDERS = [
-	'border-radius',
-	'border-radius-sm',
-	'border-radius-lg',
-	'border-radius-rounded',
-	'border-radius-circle',
-	'border-radius-pill',
+	'rounded-xs',
+	'rounded-sm',
+	'rounded',
+	'rounded-lg',
+	'rounded-xl',
+	'rounded-xxl',
+	'rounded-circle',
+	'rounded-pill',
 ];
 
-const SHADOWS = ['shadow', 'shadow-sm', 'shadow-lg'];
+const RATIOS = [
+	'aspect-ratio',
+	'aspect-ratio-16-to-9',
+	'aspect-ratio-8-to-3',
+	'aspect-ratio-4-to-3',
+];
+
+const SHADOWS = ['shadow-sm', 'shadow', 'shadow-lg'];
 
 const SPACERS = [
 	'spacer-1',
@@ -42,106 +51,46 @@ const SPACERS = [
 	'spacer-10',
 ];
 
-const RATIOS = [
-	'aspect-ratio',
-	'aspect-ratio-16-to-9',
-	'aspect-ratio-8-to-3',
-	'aspect-ratio-4-to-3',
-];
-
 const GeneralGuide = () => {
-	const [fade, setFade] = useState(false);
-	const [collapse, setCollapse] = useState(false);
-
 	return (
 		<>
-			<TokenGroup
-				group="spacers"
-				md="4"
-				title={Liferay.Language.get('spacers')}
-			>
+			<TokenGroup group="spacers" title={Liferay.Language.get('spacers')}>
 				{SPACERS.map((item) => (
 					<TokenItem
+						className={item.replace('spacer', 'pr')}
 						key={item}
 						label={item}
-						sample={item.replace('spacer', 'pr')}
+						size="large"
 					/>
 				))}
 			</TokenGroup>
 
-			<TokenGroup
-				group="borders"
-				md="4"
-				title={Liferay.Language.get('borders')}
-			>
+			<TokenGroup group="borders" title={Liferay.Language.get('borders')}>
 				{BORDERS.map((item) => (
-					<TokenItem
-						key={item}
-						label={item}
-						sample={item.replace('border-radius', 'rounded')}
-					/>
+					<TokenItem className={item} key={item} label={item} />
 				))}
 			</TokenGroup>
 
 			<TokenGroup
 				group="shadows"
-				md="4"
 				title={Liferay.Language.get('box-shadow')}
 			>
 				{SHADOWS.map((item) => (
-					<TokenItem key={item} sample={item} />
+					<TokenItem className={item} key={item} label={item} />
 				))}
 			</TokenGroup>
 
 			<TokenGroup
 				group="ratios"
-				md="4"
 				title={Liferay.Language.get('aspect-ratios')}
 			>
 				{RATIOS.map((item) => (
-					<TokenItem key={item} label={item}>
+					<TokenItem key={item} label={item} size="medium">
 						<span
 							className={classNames('aspect-ratio', item)}
 						></span>
 					</TokenItem>
 				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="transitions"
-				md="4"
-				title={Liferay.Language.get('transitions')}
-			>
-				<label className="token-item">
-					<span className="token-sample">
-						<span
-							className={classNames('fade', {
-								show: !fade,
-							})}
-						></span>
-					</span>
-					<span className="token-label">transition-fade</span>
-					<input
-						onChange={() => setFade(!fade)}
-						type="checkbox"
-						value={fade}
-					/>
-				</label>
-				<label className="token-item">
-					<span className="token-sample">
-						<span
-							className={classNames('collapsing', {
-								show: !collapse,
-							})}
-						></span>
-					</span>
-					<span className="token-label">transition-collapse</span>
-					<input
-						onChange={() => setCollapse(!collapse)}
-						type="checkbox"
-						value={collapse}
-					/>
-				</label>
 			</TokenGroup>
 		</>
 	);

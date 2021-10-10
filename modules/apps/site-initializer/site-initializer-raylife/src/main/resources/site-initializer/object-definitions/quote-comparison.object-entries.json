@@ -24,12 +24,12 @@
 	{
 		"aggregateLimit": "2000000",
 		"businessPersonalProperty": "50000",
-		"category": "basic",
-		"moneyAndSecurities": "",
+		"category": "premium",
+		"moneyAndSecurities": "500000",
 		"mostPopular": false,
 		"perOccuranceLimit": "1000000",
 		"price": "1225",
-		"productRecallOrReplacement": false,
+		"productRecallOrReplacement": true,
 		"promo": "862.5"
 	}
 ]

@@ -7,32 +7,32 @@
 				) - 0.5em
 		)
 	);
+	--current-form-input-disabled-border-color: var(
+		--condensed-form-input-disabled-border-color,
+		var(--condensed-form-input-disabled-background-color)
+	);
 	--form-feedback-item-margin: var(--condensed-form-feedback-item-margin);
 	--form-input-background-color: var(--condensed-form-input-background-color);
 	--form-input-border-color: var(
 		--condensed-form-input-border-color,
 		var(--condensed-form-input-background-color)
 	);
+	--form-input-disabled-background-color: var(
+		--condensed-form-input-disabled-background-color
+	);
 	--form-input-label-font-weight: var(
 		--condensed-form-input-label-font-weight
 	);
 	--form-text-font-size: var(--condensed-form-text-font-size);
 	--form-text-font-weight: var(--condensed-form-text-font-weight);
-	--form-input-disabled-background-color: var(
-		--condensed-form-input-disabled-background-color
-	);
-	--current-form-input-disabled-border-color: var(
-		--condensed-form-input-disabled-border-color,
-		var(--condensed-form-input-disabled-background-color)
-	);
 
 	&.form-group,
 	.form-group {
 		&:not(.filled):not(:focus-within):not(.toggle-switch) {
-			--form-input-placeholder-color: transparent;
-			--form-input-placeholder-disabled-color: transparent;
 			--form-input-color: transparent;
 			--form-input-disabled-color: transparent;
+			--form-input-placeholder-color: transparent;
+			--form-input-placeholder-disabled-color: transparent;
 
 			> label {
 				pointer-events: none;
@@ -71,10 +71,10 @@
 }
 
 .filled {
+	--condensed-form-input-background-color: #{$form-white-color};
 	--condensed-form-input-border-color: var(
 		--condensed-form-input-filled-border-color
 	);
-	--condensed-form-input-background-color: #{$form-white-color};
 	--condensed-form-input-disabled-border-color: var(
 		--form-input-disabled-border-color
 	);

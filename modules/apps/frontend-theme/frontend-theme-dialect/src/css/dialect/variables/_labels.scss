@@ -4,41 +4,41 @@ $label-border-radius: $border-radius-sm;
 
 $label-primary: (
 	border-color: var(--color-action-primary-default),
-	color: var(--color-action-primary-default),
-	hover: (
-		border-color: var(--color-action-primary-default),
-		color: var(--color-action-primary-hover),
-	),
-	focus: (
-		color: var(--color-action-primary-hover),
-	),
 	close: (
-		hover: (
-			color: var(--color-action-primary-hover),
-		),
 		focus: (
 			color: var(--color-action-primary-hover),
 		),
+		hover: (
+			color: var(--color-action-primary-hover),
+		),
+	),
+	color: var(--color-action-primary-default),
+	focus: (
+		color: var(--color-action-primary-hover),
+	),
+	hover: (
+		border-color: var(--color-action-primary-default),
+		color: var(--color-action-primary-hover),
 	),
 );
 
 $label-secondary: (
 	border-color: var(--color-action-secondary-default),
-	color: var(--color-action-secondary-default),
-	hover: (
-		border-color: var(--color-action-secondary-default),
-		color: var(--color-action-secondary-hover),
-	),
-	focus: (
-		color: var(--color-action-secondary-hover),
-	),
 	close: (
-		hover: (
-			color: var(--color-action-secondary-hover),
-		),
 		focus: (
 			color: var(--color-action-secondary-hover),
 		),
+		hover: (
+			color: var(--color-action-secondary-hover),
+		),
+	),
+	color: var(--color-action-secondary-default),
+	focus: (
+		color: var(--color-action-secondary-hover),
+	),
+	hover: (
+		border-color: var(--color-action-secondary-default),
+		color: var(--color-action-secondary-hover),
 	),
 );
 
@@ -46,21 +46,21 @@ $label-success-hover-color: $success-d1;
 
 $label-success: (
 	border-color: $dialect-success,
-	color: $dialect-success,
-	hover: (
-		border-color: $dialect-success,
-		color: $label-success-hover-color,
-	),
-	focus: (
-		color: $label-success-hover-color,
-	),
 	close: (
-		hover: (
-			color: $label-success-hover-color,
-		),
 		focus: (
 			color: $label-success-hover-color,
 		),
+		hover: (
+			color: $label-success-hover-color,
+		),
+	),
+	color: $dialect-success,
+	focus: (
+		color: $label-success-hover-color,
+	),
+	hover: (
+		border-color: $dialect-success,
+		color: $label-success-hover-color,
 	),
 );
 
@@ -68,21 +68,21 @@ $label-info-hover-color: $info-d1;
 
 $label-info: (
 	border-color: $dialect-info,
-	color: $dialect-info,
-	hover: (
-		border-color: $dialect-info,
-		color: $label-info-hover-color,
-	),
-	focus: (
-		color: $label-info-hover-color,
-	),
 	close: (
-		hover: (
-			color: $label-info-hover-color,
-		),
 		focus: (
 			color: $label-info-hover-color,
 		),
+		hover: (
+			color: $label-info-hover-color,
+		),
+	),
+	color: $dialect-info,
+	focus: (
+		color: $label-info-hover-color,
+	),
+	hover: (
+		border-color: $dialect-info,
+		color: $label-info-hover-color,
 	),
 );
 
@@ -90,21 +90,21 @@ $label-warning-hover-color: $warning-d1;
 
 $label-warning: (
 	border-color: $dialect-warning,
-	color: $dialect-warning,
-	hover: (
-		border-color: $dialect-warning,
-		color: $label-warning-hover-color,
-	),
-	focus: (
-		color: $label-warning-hover-color,
-	),
 	close: (
-		hover: (
-			color: $label-warning-hover-color,
-		),
 		focus: (
 			color: $label-warning-hover-color,
 		),
+		hover: (
+			color: $label-warning-hover-color,
+		),
+	),
+	color: $dialect-warning,
+	focus: (
+		color: $label-warning-hover-color,
+	),
+	hover: (
+		border-color: $dialect-warning,
+		color: $label-warning-hover-color,
 	),
 );
 
@@ -112,65 +112,65 @@ $label-danger-hover-color: $danger-d1;
 
 $label-danger: (
 	border-color: $dialect-danger,
-	color: $dialect-danger,
-	hover: (
-		border-color: $dialect-danger,
-		color: $label-danger-hover-color,
-	),
-	focus: (
-		color: $label-danger-hover-color,
-	),
 	close: (
-		hover: (
-			color: $label-danger-hover-color,
-		),
 		focus: (
 			color: $label-danger-hover-color,
 		),
+		hover: (
+			color: $label-danger-hover-color,
+		),
+	),
+	color: $dialect-danger,
+	focus: (
+		color: $label-danger-hover-color,
+	),
+	hover: (
+		border-color: $dialect-danger,
+		color: $label-danger-hover-color,
 	),
 );
 
 $label-light: (
 	background-color: var(--color-neutral-1),
 	border-color: var(--color-neutral-9),
+	close: (
+		focus: (
+			color: var(--color-neutral-7),
+		),
+		hover: (
+			color: var(--color-neutral-7),
+		),
+	),
 	color: var(--color-neutral-9),
+	focus: (
+		color: var(--color-neutral-9),
+	),
 	hover: (
 		background-color: var(--color-neutral-1),
 		border-color: var(--color-neutral-9),
 		color: var(--color-neutral-9),
-	),
-	focus: (
-		color: var(--color-neutral-9),
-	),
-	close: (
-		hover: (
-			color: var(--color-neutral-7),
-		),
-		focus: (
-			color: var(--color-neutral-7),
-		),
 	),
 );
 
 $label-dark: (
 	background-color: var(--color-neutral-9),
 	border-color: var(--color-neutral-1),
+	close: (
+		focus: (
+			color: var(--color-neutral-0),
+		),
+		hover: (
+			color: var(--color-neutral-0),
+		),
+	),
 	color: var(--color-neutral-1),
+	focus: (
+		color: var(--color-neutral-1),
+	),
 	hover: (
 		background-color: var(--color-neutral-9),
 		border-color: var(--color-neutral-1),
 		color: var(--color-neutral-1),
-	),
-	focus: (
-		color: var(--color-neutral-1),
-	),
-	close: (
-		hover: (
-			color: var(--color-neutral-0),
-		),
-		focus: (
-			color: var(--color-neutral-0),
-		),
 	),
 );
 
@@ -179,6 +179,11 @@ $label-dark: (
 $label-inverse-primary: (
 	background-color: var(--color-action-primary-default),
 	border-color: var(--color-action-primary-default),
+	close: (
+		hover: (
+			color: var(--color-action-primary-hover-lighten),
+		),
+	),
 	color: var(--color-action-primary-inverted),
 	hover: (
 		background-color: var(--color-action-primary-hover),
@@ -186,11 +191,6 @@ $label-inverse-primary: (
 		color: var(--color-action-primary-inverted),
 	),
 	link: (
-		hover: (
-			color: var(--color-action-primary-hover-lighten),
-		),
-	),
-	close: (
 		hover: (
 			color: var(--color-action-primary-hover-lighten),
 		),
@@ -221,6 +221,11 @@ $label-inverse-secondary: (
 $label-inverse-success: (
 	background-color: $dialect-success,
 	border-color: $dialect-success,
+	close: (
+		hover: (
+			color: $success-l2,
+		),
+	),
 	color: $dialect-white,
 	hover: (
 		background-color: $dialect-success,
@@ -228,11 +233,6 @@ $label-inverse-success: (
 		color: $dialect-white,
 	),
 	link: (
-		hover: (
-			color: $success-l2,
-		),
-	),
-	close: (
 		hover: (
 			color: $success-l2,
 		),
@@ -263,6 +263,11 @@ $label-inverse-info: (
 $label-inverse-warning: (
 	background-color: $dialect-warning,
 	border-color: $dialect-warning,
+	close: (
+		hover: (
+			color: $warning-l2,
+		),
+	),
 	color: $dialect-white,
 	hover: (
 		background-color: $dialect-warning,
@@ -274,16 +279,16 @@ $label-inverse-warning: (
 			color: $warning-l2,
 		),
 	),
-	close: (
-		hover: (
-			color: $warning-l2,
-		),
-	),
 );
 
 $label-inverse-danger: (
 	background-color: $dialect-danger,
 	border-color: $dialect-danger,
+	close: (
+		hover: (
+			color: $danger-l2,
+		),
+	),
 	color: $dialect-white,
 	hover: (
 		background-color: $dialect-danger,
@@ -295,16 +300,16 @@ $label-inverse-danger: (
 			color: $danger-l2,
 		),
 	),
-	close: (
-		hover: (
-			color: $danger-l2,
-		),
-	),
 );
 
 $label-inverse-light: (
 	background-color: var(--color-neutral-9),
 	border-color: var(--color-neutral-9),
+	close: (
+		hover: (
+			color: var(--color-neutral-3),
+		),
+	),
 	color: var(--color-neutral-1),
 	hover: (
 		background-color: var(--color-neutral-9),
@@ -316,16 +321,16 @@ $label-inverse-light: (
 			color: var(--color-neutral-3),
 		),
 	),
-	close: (
-		hover: (
-			color: var(--color-neutral-3),
-		),
-	),
 );
 
 $label-inverse-dark: (
 	background-color: var(--color-neutral-1),
 	border-color: var(--color-neutral-1),
+	close: (
+		hover: (
+			color: var(--color-neutral-7),
+		),
+	),
 	color: var(--color-neutral-9),
 	hover: (
 		background-color: var(--color-neutral-1),
@@ -333,11 +338,6 @@ $label-inverse-dark: (
 		color: var(--color-neutral-9),
 	),
 	link: (
-		hover: (
-			color: var(--color-neutral-7),
-		),
-	),
-	close: (
 		hover: (
 			color: var(--color-neutral-7),
 		),

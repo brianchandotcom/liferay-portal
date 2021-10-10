@@ -430,5 +430,9 @@
 }
 
 .btn-outline-secondary {
-	@extend .btn-ghost, .btn-variant-secondary, :not(.btn-inverted);
+	@extend .btn-ghost, .btn-variant-neutral, :not(.btn-inverted);
+}
+
+.btn-outline-borderless {
+	@extend .btn-borderless, :not(.btn-inverted);
 }

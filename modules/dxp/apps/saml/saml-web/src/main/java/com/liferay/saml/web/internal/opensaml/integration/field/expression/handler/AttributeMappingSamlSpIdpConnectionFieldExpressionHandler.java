@@ -111,19 +111,6 @@ public class AttributeMappingSamlSpIdpConnectionFieldExpressionHandler
 					String.class,
 					prefix + ":userAttributeMappingFieldExpression-" + index));
 
-			if (Objects.equals(
-					index,
-					samlSpIdpConnectionProcessorContext.getValue(
-						String.class, "userIdentifierExpressionIndex")) &&
-				Objects.equals(
-					prefix,
-					samlSpIdpConnectionProcessorContext.getValue(
-						String.class, "userIdentifierExpressionPrefix"))) {
-
-				samlSpIdpConnection.setUserIdentifierExpression(
-					"attribute:" + fieldExpression);
-			}
-
 			String attributeName = GetterUtil.getString(
 				samlSpIdpConnectionProcessorContext.getValue(
 					String.class,
@@ -152,6 +139,19 @@ public class AttributeMappingSamlSpIdpConnectionFieldExpressionHandler
 
 			if (!Validator.isBlank(prefix)) {
 				fieldExpression = prefix + ":" + fieldExpression;
+			}
+
+			if (Objects.equals(
+					index,
+					samlSpIdpConnectionProcessorContext.getValue(
+						String.class, "userIdentifierExpressionIndex")) &&
+				Objects.equals(
+					prefix,
+					samlSpIdpConnectionProcessorContext.getValue(
+						String.class, "userIdentifierExpressionPrefix"))) {
+
+				samlSpIdpConnection.setUserIdentifierExpression(
+					"attribute:" + fieldExpression);
 			}
 
 			userAttributeMappingsProperties.put(attributeName, fieldExpression);

@@ -1509,38 +1509,10 @@ definition {
 		}
 
 		task ("Edit inline Content of Heading in the first column") {
-			Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
-
-			Click.clickNoWaitForVisible(
-				key_colPosition = "1",
-				key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
-
-			Click(
-				key_colPosition = "1",
-				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
-
-			DoubleClick(
-				key_colPosition = "1",
-				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
-
-			Type(
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
 				id = "element-text",
-				key_fragmentName = "Heading",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_CK_EDITOR",
-				value1 = "Modified Text");
-
-			PageEditor.clickManagementBar();
-
-			PageEditor.waitForAutoSave();
+				text = "Modified Text");
 		}
 
 		task ("Assert propagate changes of inline content to other cells") {

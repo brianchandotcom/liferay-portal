@@ -14,7 +14,7 @@
 
 const applicationId = localStorage.getItem('raylife-application-id');
 const productId = localStorage.getItem('raylife-product-id');
-const businessType = JSON.parse(localStorage.getItem('raylife-business-home'));
+const businessType = JSON.parse(localStorage.getItem('raylife-product'));
 
 const fetchHeadless = async (url) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -49,15 +49,15 @@ const formatValue = (value) => {
 };
 
 const buildList = (items = []) => {
-	const tbody = document.querySelector('.congrats-table-info tbody');
+	const tbody = fragmentElement.querySelector('.congrats-table-info tbody');
 
 	tbody.innerHTML = items
 		.map(({title, value}) => {
 			const formattedValue = formatValue(value);
 			const imageSrc = formattedValue
-				? document.querySelector('.congrats-information #check')
+				? fragmentElement.querySelector('.congrats-information #check')
 						?.currentSrc
-				: document.querySelector('.congrats-information #close')
+				: fragmentElement.querySelector('.congrats-information #close')
 						?.currentSrc;
 
 			return `<tr>
@@ -83,19 +83,19 @@ const main = async () => {
 	);
 
 	setValueToElement(
-		document.querySelector('#congrats-info-title'),
-		businessType.product
+		fragmentElement.querySelector('#congrats-info-title'),
+		businessType.productName
 	);
 	setValueToElement(
-		document.querySelector('#congrats-info-policy'),
+		fragmentElement.querySelector('#congrats-info-policy'),
 		`Policy: #${applicationId}`
 	);
 	setValueToElement(
-		document.querySelector('#congrats-price'),
+		fragmentElement.querySelector('#congrats-price'),
 		`$${quoteComparison.price}`
 	);
 	setValueToElement(
-		document.querySelector('#congrats-info-date'),
+		fragmentElement.querySelector('#congrats-info-date'),
 		`${quoteDate.toLocaleDateString()} - ${quoteDateNextYear.toLocaleDateString()}`
 	);
 

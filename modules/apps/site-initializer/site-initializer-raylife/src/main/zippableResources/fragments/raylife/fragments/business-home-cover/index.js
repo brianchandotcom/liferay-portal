@@ -13,6 +13,8 @@
  * details.
  */
 
+const product = fragmentElement.querySelector('#product');
+
 const fetchHeadless = async (url) => {
 	const response = await fetch(`${window.location.origin}/${url}`, {
 		headers: {
@@ -81,6 +83,16 @@ continueQuoteButton.onclick = function () {
 		});
 };
 
+const getProductName = (productId) => {
+	const options = product.options;
+
+	for (let i = 0; i < options.length; i++) {
+		if (options[i].value === productId) {
+			return options[i].label;
+		}
+	}
+};
+
 getQuoteForm.onsubmit = function (event) {
 	event.preventDefault();
 	const formData = new FormData(event.target);
@@ -107,7 +119,13 @@ getQuoteForm.onsubmit = function (event) {
 		}
 	}
 	else {
-		localStorage.setItem('raylife-product', JSON.stringify(formProps));
+		localStorage.setItem(
+			'raylife-product',
+			JSON.stringify({
+				...formProps,
+				productName: getProductName(formProps.product),
+			})
+		);
 
 		const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
 
@@ -134,8 +152,6 @@ fragmentElement.querySelector('#zip').onkeypress = (event) => {
 		const taxonomyCategories = await fetchHeadless(
 			`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularies.items[0].id}/taxonomy-categories`
 		);
-
-		const product = fragmentElement.querySelector('#product');
 
 		taxonomyCategories?.items.forEach((taxonomyVocabulary) => {
 			product.add(

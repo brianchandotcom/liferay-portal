@@ -1,0 +1,154 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "congrats"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							]
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginBottom": "5",
+								"marginTop": "6"
+							},
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 4,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 4,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "congrats-information"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									]
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"marginTop": "5"
+									},
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 4,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "congrats-actions"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											]
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "quote-footer"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"fragmentStyle": {
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "",
+						"marginLeft": "",
+						"marginRight": "",
+						"marginTop": "",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "",
+						"paddingLeft": "",
+						"paddingRight": "",
+						"paddingTop": "",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					}
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "public-quote"
+		}
+	}
+}

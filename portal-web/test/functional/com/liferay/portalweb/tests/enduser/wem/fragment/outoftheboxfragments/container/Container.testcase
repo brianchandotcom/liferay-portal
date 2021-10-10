@@ -1120,9 +1120,10 @@ definition {
 
 			PageEditor.waitForAutoSave();
 
-			AssertVisible(
-				key_text = "WC WebContent Content",
-				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
+			PageEditor.viewFragmentEditableText(
+				editableText = "WC WebContent Content",
+				fragmentName = "Heading",
+				id = "element-text");
 		}
 
 		task ("Assert mapped content duplicated with nested Heading") {

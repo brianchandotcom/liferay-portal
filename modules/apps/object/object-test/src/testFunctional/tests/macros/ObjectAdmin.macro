@@ -219,6 +219,15 @@ definition {
 		Click(locator1 = "ObjectAdmin#SAVE_CUSTOM_OBJECT");
 	}
 
+	macro changeLabelLanguage {
+		Click(locator1 = "ObjectAdmin#DROPDOWN_LANGUAGEM");
+
+		Click(
+			key_newLanguage = "${newLanguage}",
+			locator1 = "ObjectAdmin#SELECT_LANGUAGE");
+
+	}
+
 	macro deleteAllCustomObjectsViaAPI {
 		JSONObject.deleteAllCustomObjects(
 			userEmailAddress = "${userEmailAddress}",

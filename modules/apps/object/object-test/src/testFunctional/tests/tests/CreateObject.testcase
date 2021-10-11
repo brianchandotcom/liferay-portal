@@ -777,12 +777,33 @@ definition {
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for an Object Label"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanSetDifferentLanguageForObjectLabel {
 		property portal.acceptance = "true";
 
-		// TODO LPS-138859 CanSetDifferentLanguageForObjectLabel pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.changeLabelLanguage(newLanguage = "pt-BR");
+
+		CreateObject.editLabel(labelName = "Objeto Costumizado");
+
+		CreateObject.editPluralLabel(pluralLabelName = "Objetos Costumizados");
+
+		CreateObject.saveObject();
+
+		MyAccount.configureDisplaySettingsLanguage(languageName = "português (Brasil)");
+
+		ObjectAdmin.openObjectAdmin();
+
+		CreateObject.assertCustomObject(labelName = "Objeto Costumizado");
 
 	}
 

@@ -41,6 +41,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>DROPDOWN_LANGUAGEM</td>
+		<td>//button[@class = 'btn btn-monospaced btn-secondary dropdown-toggle input-localized-trigger']//span[contains(text(),'en-US')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ENTRY_BOOLEAN_CHECKBOX</td>
 		<td>//input[contains(@class,'custom-control-input')]</td>
 		<td></td>
@@ -163,6 +168,11 @@
 	<tr>
 		<td>SELECT_OBJECT_SCOPE</td>
 		<td>//select[@id = '_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_scope']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_LANGUAGE</td>
+		<td>//span[contains(text(),'${key_newLanguage}')]</td>
 		<td></td>
 	</tr>
 	<tr>

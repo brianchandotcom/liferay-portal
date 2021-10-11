@@ -304,6 +304,103 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 	}
 
 	@Test
+	public void testGetSameResponseAfterCalculateDDMFormRuleEvaluations()
+		throws Exception {
+
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.addDDMFormField(
+			createDDMFormField("field0", "text", FieldConstants.STRING));
+		ddmForm.addDDMFormField(
+			createDDMFormField("field1", "numeric", FieldConstants.DOUBLE));
+
+		BigDecimal expectedResponseFirstCalculateDDMFormRule = new BigDecimal(
+			1);
+
+		ddmForm.addDDMFormRule(
+			new DDMFormRule(
+				Arrays.asList(
+					String.format(
+						"calculate(\"field1\", %s)",
+						expectedResponseFirstCalculateDDMFormRule.toString())),
+				"equals(getValue(\"field0\"),\"field0_value\")"));
+
+		BigDecimal expectedResponseSecondCalculateDDMFormRule = new BigDecimal(
+			2);
+
+		ddmForm.addDDMFormRule(
+			new DDMFormRule(
+				Arrays.asList(
+					String.format(
+						"calculate(\"field1\", %s)",
+						expectedResponseSecondCalculateDDMFormRule.toString())),
+				"equals(getValue(\"field0\"),\"field0_value2\")"));
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_instanceId", "field0",
+				new UnlocalizedValue("field0_value")));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field1_instanceId", "field1", new UnlocalizedValue("")));
+
+		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
+			evaluate(ddmForm, ddmFormValues);
+
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey =
+			new DDMFormEvaluatorFieldContextKey("field1", "field1_instanceId");
+
+		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+			ddmFormFieldsPropertyChanges =
+				ddmFormEvaluatorEvaluateResponse.
+					getDDMFormFieldsPropertyChanges();
+
+		Map<String, Object> ddmFormFieldPropertyChanges =
+			ddmFormFieldsPropertyChanges.get(ddmFormEvaluatorFieldContextKey);
+
+		Assert.assertEquals(
+			expectedResponseFirstCalculateDDMFormRule,
+			ddmFormFieldPropertyChanges.get("value"));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_instanceId", "field0",
+				new UnlocalizedValue("field0_value2")));
+
+		ddmFormEvaluatorEvaluateResponse = evaluate(ddmForm, ddmFormValues);
+
+		ddmFormFieldsPropertyChanges =
+			ddmFormEvaluatorEvaluateResponse.getDDMFormFieldsPropertyChanges();
+
+		ddmFormFieldPropertyChanges = ddmFormFieldsPropertyChanges.get(
+			ddmFormEvaluatorFieldContextKey);
+
+		Assert.assertEquals(
+			expectedResponseSecondCalculateDDMFormRule,
+			ddmFormFieldPropertyChanges.get("value"));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_instanceId", "field0",
+				new UnlocalizedValue("field0_value")));
+
+		ddmFormEvaluatorEvaluateResponse = evaluate(ddmForm, ddmFormValues);
+
+		ddmFormFieldsPropertyChanges =
+			ddmFormEvaluatorEvaluateResponse.getDDMFormFieldsPropertyChanges();
+
+		ddmFormFieldPropertyChanges = ddmFormFieldsPropertyChanges.get(
+			ddmFormEvaluatorFieldContextKey);
+
+		Assert.assertEquals(
+			expectedResponseFirstCalculateDDMFormRule,
+			ddmFormFieldPropertyChanges.get("value"));
+	}
+
+	@Test
 	public void testInvalidConfirmationValueWithTextField() throws Exception {
 		DDMForm ddmForm = new DDMForm();
 

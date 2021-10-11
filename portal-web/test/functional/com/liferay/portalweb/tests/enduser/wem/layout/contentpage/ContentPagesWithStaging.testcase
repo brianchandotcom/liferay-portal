@@ -35,6 +35,191 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140136. As a page viewer with only page view permission, the draft actions are invisible in staging and live site."
+	@priority = "4"
+	test CannotPreviewAndDiscardDraftAsUserWithoutUpdatePermission {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "Userfn",
+				userLastName = "Userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a new site role") {
+			JSONRole.addSiteRole(
+				roleKey = "Roles Siterole Name",
+				roleTitle = "Roles Siterole Name");
+		}
+
+		task ("Define the permissions of new role") {
+			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+					roleTitle = "Roles Siterole Name",
+					roleType = "site");
+			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.depot.model.DepotEntry",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.layout.seocom.liferay.layout.seo",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+
+			for (var resourceActionIndex : list "ADD_LAYOUT,VIEW_SITE_ADMINISTRATION,VIEW_STAGING") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.portal.kernel.model.Group",
+					roleTitle = "Roles Siterole Name",
+					roleType = "site");
+			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+		}
+
+		task ("Assign the site role to new user") {
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Roles Siterole Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a Heading fragment below the Button") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
+		}
+
+		task ("Publish to Live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Navigate to the Pages admin in live site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("View the Preview and Discard Draft actions are invisible") {
+			SitePages.clickPageMenu(pageName = "Test Page Name");
+
+			for (var itemName : list "Preview Draft,Discard Draft") {
+				MenuItem.viewNotPresent(menuItem = "${itemName}");
+			}
+		}
+
+		task ("View only the Button fragment shown in page") {
+			MenuItem.click(menuItem = "View");
+
+			AssertTextEquals(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
+
+			AssertElementNotPresent(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT");
+		}
+
+		task ("View the ellipsis button not shown in Page Tree") {
+			PagesFinder.goToFindAPage();
+
+			AssertElementNotPresent(
+				key_pageName = "Test Page Name*",
+				locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
+		}
+
+		task ("Navigate to the Pages admin in staging site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+		}
+
+		task ("View the Preview and Discard Draft actions are invisible") {
+			SitePages.clickPageMenu(pageName = "Test Page Name");
+
+			for (var itemName : list "Preview Draft,Discard Draft") {
+				MenuItem.viewNotPresent(menuItem = "${itemName}");
+			}
+		}
+
+		task ("View only the Button fragment shown in page") {
+			MenuItem.click(menuItem = "View");
+
+			AssertTextEquals(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
+
+			AssertElementNotPresent(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT");
+		}
+
+		task ("View the Preview Draft action is invisible in Page Tree") {
+			PagesFinder.goToFindAPage();
+
+			Click.mouseOverClick(
+				key_pageName = "Test Page Name*",
+				locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
+
+			MenuItem.viewNotVisible(menuItem = "Preview Draft");
+		}
+	}
+
 	@description = "This is a test for LPS-109854. Cannot view the sitemap of staging site as Guest."
 	@priority = "4"
 	test CannotViewSiteMapOfStagingSiteAsGuest {

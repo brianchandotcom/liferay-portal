@@ -10,7 +10,6 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-account-api")
 	compileOnly project(":apps:commerce:commerce-media-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
-	compileOnly project(":apps:commerce:commerce-product-service")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:item-selector:item-selector-taglib")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")

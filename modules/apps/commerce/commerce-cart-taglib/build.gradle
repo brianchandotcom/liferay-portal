@@ -17,8 +17,6 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-api")
 	compileOnly project(":apps:commerce:commerce-currency-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
-	compileOnly project(":apps:commerce:commerce-product-service")
-	compileOnly project(":apps:commerce:commerce-service")
 	compileOnly project(":apps:commerce:commerce-taglib")
 	compileOnly project(":apps:frontend-js:frontend-js-loader-modules-extender-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")

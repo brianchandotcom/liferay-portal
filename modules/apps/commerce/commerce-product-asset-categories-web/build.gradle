@@ -12,7 +12,6 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-media-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
 	compileOnly project(":apps:commerce:commerce-product-definitions-web")
-	compileOnly project(":apps:commerce:commerce-product-service")
 	compileOnly project(":apps:friendly-url:friendly-url-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")

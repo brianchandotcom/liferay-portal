@@ -10,7 +10,6 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-api")
 	compileOnly project(":apps:commerce:commerce-media-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
-	compileOnly project(":apps:commerce:commerce-product-service")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	compileOnly project(":apps:friendly-url:friendly-url-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")

@@ -13,7 +13,6 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-currency-api")
 	compileOnly project(":apps:commerce:commerce-frontend-taglib")
 	compileOnly project(":apps:commerce:commerce-product-api")
-	compileOnly project(":apps:commerce:commerce-service")
 	compileOnly project(":apps:commerce:commerce-shipping-origin-locator-api")
 	compileOnly project(":apps:commerce:commerce-shipping-web")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")

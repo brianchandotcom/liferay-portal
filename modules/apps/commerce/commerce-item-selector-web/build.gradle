@@ -13,7 +13,6 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-price-list-api")
 	compileOnly project(":apps:commerce:commerce-pricing-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
-	compileOnly project(":apps:commerce:commerce-product-service")
 	compileOnly project(":apps:commerce:commerce-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:item-selector:item-selector-api")

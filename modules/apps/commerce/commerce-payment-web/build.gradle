@@ -10,8 +10,6 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-item-selector-api")
 	compileOnly project(":apps:commerce:commerce-payment-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
-	compileOnly project(":apps:commerce:commerce-product-service")
-	compileOnly project(":apps:commerce:commerce-service")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:petra:petra-portlet-url-builder")

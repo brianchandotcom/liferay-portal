@@ -7,7 +7,6 @@ dependencies {
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:commerce:commerce-api")
 	compileOnly project(":apps:commerce:commerce-application-list")
-	compileOnly project(":apps:commerce:commerce-service")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":core:petra:petra-lang")

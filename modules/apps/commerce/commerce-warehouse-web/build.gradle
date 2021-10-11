@@ -10,8 +10,6 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-inventory-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
 	compileOnly project(":apps:commerce:commerce-product-definitions-web")
-	compileOnly project(":apps:commerce:commerce-product-service")
-	compileOnly project(":apps:commerce:commerce-service")
 	compileOnly project(":apps:commerce:commerce-taglib")
 	compileOnly project(":apps:expando:expando-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")

@@ -58,23 +58,6 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public List<BlogsStatsUser> getCompanyStatsUsers(
-		long companyId, int start, int end) {
-
-		return blogsStatsUserPersistence.findByC_NotE(
-			companyId, 0, start, end, new StatsUserLastPostDateComparator());
-	}
-
-	@Override
-	public List<BlogsStatsUser> getCompanyStatsUsers(
-		long companyId, int start, int end,
-		OrderByComparator<BlogsStatsUser> orderByComparator) {
-
-		return blogsStatsUserPersistence.findByC_NotE(
-			companyId, 0, start, end, orderByComparator);
-	}
-
-	@Override
 	public int getCompanyStatsUsersCount(long companyId) {
 		return blogsStatsUserPersistence.countByC_NotE(companyId, 0);
 	}

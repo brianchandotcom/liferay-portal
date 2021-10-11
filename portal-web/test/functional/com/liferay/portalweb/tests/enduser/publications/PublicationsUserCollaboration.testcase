@@ -25,11 +25,9 @@ definition {
 			ApplicationsMenu.gotoPortlet(
 				category = "Publications",
 				panel = "Applications",
-				portlet = "Settings");
+				portlet = "Publications");
 
 			Publications.disablePublications();
-
-			Click(locator1 = "Button#SUBMIT");
 		}
 	}
 

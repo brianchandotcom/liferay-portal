@@ -33,7 +33,7 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
-			portlet = "Settings");
+			portlet = "Publications");
 
 		Check.checkToggleSwitch(locator1 = "PublicationsSettings#PUBLICATIONS_TOGGLE_SWITCH");
 
@@ -49,14 +49,14 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
-			portlet = "Settings");
+			portlet = "Publications");
 
 		Publications.enablePublications();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
-			portlet = "Settings");
+			portlet = "Publications");
 
 		Publications.disablePublications();
 
@@ -68,7 +68,7 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
-			portlet = "Settings");
+			portlet = "Publications");
 
 		Publications.enablePublications(gotoOverview = "true");
 

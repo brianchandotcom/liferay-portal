@@ -36,6 +36,8 @@ const FONT_WEIGHTS = [
 
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
+const LINKS = ['text-link-lg', 'text-link-md', 'text-link-sm'];
+
 const PARAGRAPHS = [
 	'text-paragraph-lg',
 	'text-paragraph',
@@ -44,11 +46,9 @@ const PARAGRAPHS = [
 	'text-paragraph-xxs',
 ];
 
-const SMALL_CAPS = ['text-small-caps'];
-
-const LINKS = ['text-link-lg', 'text-link-md', 'text-link-sm'];
-
 const SAMPLE_TEXT = 'The quick brown fox jumps over the lazy dog';
+
+const SMALL_CAPS = ['text-small-caps'];
 
 const TypographyGuide = () => {
 	return (

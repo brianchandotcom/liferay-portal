@@ -21,27 +21,6 @@ import TokenItem from '../components/TokenItem';
 
 const FORM_STATES = ['', 'error', 'warning', 'success'];
 
-const STATE_CLASS_NAME_MAP = {
-	error: 'has-error',
-	success: 'has-success',
-	warning: 'has-warning',
-};
-
-const SELECT_OPTIONS = [
-	{
-		label: '--Please choose an option--',
-		value: '',
-	},
-	{
-		label: 'Option 1',
-		value: '1',
-	},
-	{
-		label: 'Option 2',
-		value: '2',
-	},
-];
-
 const INPUT_VARIANTS = [
 	{
 		categoryLabel: Liferay.Language.get('inputs'),
@@ -94,6 +73,27 @@ const INPUT_VARIANTS = [
 		value: true,
 	},
 ];
+
+const SELECT_OPTIONS = [
+	{
+		label: '--Please choose an option--',
+		value: '',
+	},
+	{
+		label: 'Option 1',
+		value: '1',
+	},
+	{
+		label: 'Option 2',
+		value: '2',
+	},
+];
+
+const STATE_CLASS_NAME_MAP = {
+	error: 'has-error',
+	success: 'has-success',
+	warning: 'has-warning',
+};
 
 const Input = (props) => {
 	const {

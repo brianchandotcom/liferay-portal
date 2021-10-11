@@ -894,9 +894,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			parentResourcePath = resourcePath.substring(
 				0, resourcePath.length() - 1);
 
-			if (resourcePath.endsWith("/") &&
-				resourcePaths.contains(parentResourcePath + ".metadata.json")) {
-
+			if (resourcePath.endsWith("/")) {
 				_addJournalArticles(
 					ddmStructureLocalService, ddmTemplateLocalService,
 					_addStructuredContentFolders(
@@ -908,7 +906,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			if (resourcePath.endsWith(".metadata.json") ||
-				resourcePath.endsWith(".xml") || resourcePath.endsWith("/")) {
+				resourcePath.endsWith(".xml") ||
+				resourcePath.endsWith(".gitkeep")) {
 
 				continue;
 			}
@@ -1551,6 +1550,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		String json = _read(parentResourcePath + ".metadata.json");
+
+		if (json == null) {
+			json = String.valueOf(
+				JSONUtil.put(
+					"name", FileUtil.getShortFileName(parentResourcePath)));
+		}
 
 		StructuredContentFolder structuredContentFolder =
 			StructuredContentFolder.toDTO(json);

@@ -313,10 +313,8 @@ definition {
 			value1 = "Thread Message Subject");
 
 		MyWorkflowTasks.viewTaskAssignedAndAssertTextsPresent(
-			titleMessageBoard = "Thread Message Subject",
-			nameAuthor = "Test Test");
-
-
+			nameAuthor = "Test Test",
+			titleMessageBoard = "Thread Message Subject");
 	}
 
 	@description = "This is a test for LRQA-69705. Assert that the user can create a thread within a category. "

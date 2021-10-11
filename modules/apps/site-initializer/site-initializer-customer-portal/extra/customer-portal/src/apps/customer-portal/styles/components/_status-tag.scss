@@ -1,0 +1,7 @@
+.status-tag {
+    border-radius: var(--border-radius-xs);
+
+    &.label-success {
+        background-color: var(--color-state-success-lighten-1);
+    }
+}

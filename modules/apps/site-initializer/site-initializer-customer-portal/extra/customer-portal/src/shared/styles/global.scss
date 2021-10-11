@@ -1,0 +1,19 @@
+@import "base";
+
+@import "typograph";
+
+@import "components/button";
+@import "components/input";
+
+:host {
+    --box-shadow-lg: var(--elevation-fluffy-3) rgba(11, 95, 255, 0.09);
+    --color-state-success-lighten-1: #EEF8EC;
+    --display-line-height: 48px;
+    --form-input-error-bg: #FEEFEF;
+    --form-input-success-bg: var(--color-state-success-lighten-1);
+    --form-input-font-weight: 700;
+    --form-input-label-font-weight: 700;
+    --form-input-placeholder-font-weight: 700;
+    --font-weight-normal: 400;
+    --text-paragraph-lg-line-height: 1.4;
+}

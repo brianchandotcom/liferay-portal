@@ -1,21 +1,5 @@
 definition {
 
-	    	macro assertPicklistItemNotPresent {
-		var key_picklistItemName = "${picklistItemName}";
-
-		var key_picklistItemKey = "${picklistItemKey}";
-
-		AssertElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM");
-	}
-
-    macro cancelPicklistButton {
-		Click(locator1 = "Picklist#CANCEL_PICKLIST");
-	}
-
-	macro picklistSaveButton {
-		Button.clickSave();
-	}
-
 	macro addPicklistItemViaAPI {
 		JSONObject.addPicklistItem(
 			itemKey = "${itemKey}",
@@ -74,10 +58,22 @@ definition {
 		AssertElementPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM");
 	}
 
+	macro assertPicklistItemNotPresent {
+		var key_picklistItemName = "${picklistItemName}";
+
+		var key_picklistItemKey = "${picklistItemKey}";
+
+		AssertElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM");
+	}
+
 	macro assertPicklistNotPresent {
 		var key_picklistName = "${picklistName}";
 
 		AssertElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST");
+	}
+
+	macro cancelPicklistButton {
+		Click(locator1 = "Picklist#CANCEL_PICKLIST");
 	}
 
 	macro cancelUpdatePicklist {
@@ -117,6 +113,10 @@ definition {
 		Click.javaScriptClick(
 			key_picklistOption = "${picklistOption}",
 			locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+	}
+
+	macro picklistSaveButton {
+		Button.clickSave();
 	}
 
 	macro updatePicklistName {

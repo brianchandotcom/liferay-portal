@@ -10,7 +10,7 @@
 </thead>
 
 <tbody>
-    <tr>
+	<tr>
 		<td>CANCEL_PICKLIST</td>
 		<td>//button[@class='btn btn-secondary']</td>
 		<td></td>

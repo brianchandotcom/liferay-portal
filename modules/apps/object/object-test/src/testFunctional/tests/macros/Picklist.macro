@@ -32,16 +32,6 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
-	macro cancelPicklist {
-		Click.javaScriptClick(locator1 = "Picklist#ADD_PICKLIST_BUTTON");
-
-		Type(
-			locator1 = "Picklist#ADD_PICKLIST_NAME",
-			value1 = "${picklistName}");
-
-		Click(locator1 = "Picklist#CANCEL_BUTTON");
-	}
-
 	macro addPicklistViaUI {
 		Click.javaScriptClick(locator1 = "Picklist#ADD_PICKLIST_BUTTON");
 
@@ -74,6 +64,16 @@ definition {
 		var key_picklistName = "${picklistName}";
 
 		AssertElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST");
+	}
+
+	macro cancelPicklist {
+		Click.javaScriptClick(locator1 = "Picklist#ADD_PICKLIST_BUTTON");
+
+		Type(
+			locator1 = "Picklist#ADD_PICKLIST_NAME",
+			value1 = "${picklistName}");
+
+		Click(locator1 = "Picklist#CANCEL_BUTTON");
 	}
 
 	macro cancelUpdatePicklist {

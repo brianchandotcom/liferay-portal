@@ -32,6 +32,16 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
+	macro cancelPicklist {
+		Click.javaScriptClick(locator1 = "Picklist#ADD_PICKLIST_BUTTON");
+
+		Type(
+			locator1 = "Picklist#ADD_PICKLIST_NAME",
+			value1 = "${picklistName}");
+
+		Click(locator1 = "Picklist#CANCEL_BUTTON");
+	}
+
 	macro addPicklistViaUI {
 		Click.javaScriptClick(locator1 = "Picklist#ADD_PICKLIST_BUTTON");
 

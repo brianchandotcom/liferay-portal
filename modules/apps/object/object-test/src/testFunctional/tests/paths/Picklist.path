@@ -85,6 +85,11 @@
 		<td>//button[@class='btn btn-primary']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>CANCEL_BUTTON</td>
+		<td>//button[@class='btn btn-secondary']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

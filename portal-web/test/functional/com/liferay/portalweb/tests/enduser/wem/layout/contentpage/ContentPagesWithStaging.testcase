@@ -474,6 +474,159 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140136. As a page creator with page update permissions, the draft actions are only visible in staging site."
+	@priority = "4"
+	test PreviewAndDiscardDraftInStagingSite {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a Heading fragment below the Button") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
+		}
+
+		task ("Publish to Live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Navigate to the Pages admin in live site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("View the Preview and Discard Draft actions are invisible") {
+			SitePages.clickPageMenu(pageName = "Test Page Name");
+
+			for (var itemName : list "Preview Draft,Discard Draft") {
+				MenuItem.viewNotPresent(menuItem = "${itemName}");
+			}
+		}
+
+		task ("View only the Button fragment shown in page") {
+			MenuItem.click(menuItem = "View");
+
+			AssertTextEquals(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
+
+			AssertElementNotPresent(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT");
+		}
+
+		task ("View the ellipsis button not shown in Page Tree") {
+			PagesFinder.goToFindAPage();
+
+			AssertElementNotPresent(
+				key_pageName = "Test Page Name*",
+				locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
+		}
+
+		task ("Preview the draft content page via Pages admin in staging site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Preview Draft",
+				pageName = "Test Page Name");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+
+			AssertTextEquals(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
+
+			Navigator.closeWindow();
+		}
+
+		task ("Preview the draft content page via Page Tree in staging site") {
+			Click(locator1 = "ProductMenu#GO_TO_SITES_LINK");
+
+			PagesFinder.gotoPageEllipsisItem(
+				item = "Preview Draft",
+				pageName = "Test Page Name*");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+
+			AssertTextEquals(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
+
+			Navigator.closeWindow();
+		}
+
+		task ("Discard the draft content page via Pages admin in staging site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			SitePages.clickPageMenu(pageName = "Test Page Name");
+
+			MenuItem.clickNoError(menuItem = "Discard Draft");
+
+			AssertConfirm(value1 = "Are you sure you want to discard current draft and apply latest published changes?");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("View the Preview Draft action is not shown") {
+			SitePages.clickPageMenu(pageName = "Test Page Name");
+
+			MenuItem.viewNotPresent(menuItem = "Preview Draft");
+		}
+
+		task ("View only the Button fragment shown in page editor") {
+			MenuItem.click(menuItem = "Edit");
+
+			AssertTextEquals(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
+
+			AssertElementNotPresent(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT");
+		}
+	}
+
 	@description = "Content pages only appear in live view after being published and should appear properly."
 	@priority = "5"
 	test PublishContentPageToLive {

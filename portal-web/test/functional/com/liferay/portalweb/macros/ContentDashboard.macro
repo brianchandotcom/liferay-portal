@@ -74,6 +74,8 @@ definition {
 			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
+
+		WaitForElementPresent(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 	}
 
 	macro filterByAuthorList {
@@ -112,6 +114,8 @@ definition {
 			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
+
+		WaitForElementPresent(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 	}
 
 	macro filterByAuthorMe {
@@ -162,6 +166,8 @@ definition {
 			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
+
+		WaitForElementPresent(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 	}
 
 	macro filterByCategory {
@@ -194,6 +200,8 @@ definition {
 			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
+
+		WaitForElementPresent(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 	}
 
 	macro filterBySiteGlobal {

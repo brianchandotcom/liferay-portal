@@ -1565,53 +1565,42 @@ definition {
 	test FilterByAuthor {
 		property portal.acceptance = "true";
 
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Test Site Name",
-			title = "WC Title");
+		task ("Create a Web Content"){
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		ContentDashboard.goToContentDashboard();
 
-		Pause(locator1 = "5000");
+		task ("Filter author using table") {
+			ContentDashboard.filterByAuthorTable(filterOption = "Author");
 
-		ContentDashboard.filterByAuthorTable(filterOption = "Author");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title");
+		}
 
-		Pause(locator1 = "3000");
+		task ("Filter author using list") {
+			ContentDashboard.clearFilters();
 
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title");
+			ContentDashboard.filterByAuthorList(filterOption = "Author");
 
-		ContentDashboard.clearFilters();
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title");
+		}
 
-		ContentDashboard.filterByAuthorList(filterOption = "Author");
+		task ("Filter author using cards") {
+			ContentDashboard.clearFilters();
 
-		Pause(locator1 = "3000");
+			ContentDashboard.filterByAuthorCard(filterOption = "Author");
 
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title");
-
-		ContentDashboard.clearFilters();
-
-		ContentDashboard.filterByAuthorCard(filterOption = "Author");
-
-		Pause(locator1 = "3000");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title");
+		}
 	}
 
 	@description = "Validate if the user can filter by category"
@@ -1619,47 +1608,42 @@ definition {
 	test FilterByCategory {
 		property portal.acceptance = "true";
 
-		JSONCategory.addVocabulary(
-			groupName = "Test Site Name",
-			title = "Vocabulary Name");
+		task ("Create a vocabulary and a category for it") {	
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
 
-		var categoryId = JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name",
-			vocabularyName = "Vocabulary Name");
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 
-		JSONWebcontent.addWebContent(
-			assetCategoryIds = "${categoryId}",
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
+		task ("Create a Web Content using the category created") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		ContentDashboard.goToContentDashboard();
 
-		Pause(locator1 = "5000");
+		task ("Filter by category") {
+			ContentDashboard.filterByCategory(
+				categoryName = "Category Name",
+				filterOption = "Categories");
+		
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC WebContent Title");
+		}
 
-		ContentDashboard.filterByCategory(
-			categoryName = "Category Name",
-			filterOption = "Categories");
+		task ("Delete the vocabulary") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Pause(locator1 = "3000");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC WebContent Title");
-
-		JSONWebcontent.deleteWebContent(
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.deleteCategoryByMenuCP(
-			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name");
+			Vocabulary.deleteByMenuCP(vocabularyName = "Vocabulary Name");
+		}
 	}
 
 	@description = "Validate if the user can filter by multiple tags"

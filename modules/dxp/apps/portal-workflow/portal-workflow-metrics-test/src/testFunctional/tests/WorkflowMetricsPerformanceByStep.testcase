@@ -432,9 +432,98 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test PageConsidersClosedInstancesInChosenVersion {
+		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#PageConsidersClosedInstancesInChosenVersion";
 
-		// TODO LRQA-68936 PageConsidersClosedInstancesInChosenVersion pending implementation
+		var documentTitle1 = "Blogs Entry Title 1";
+		var documentTitle2 = "Blogs Entry Title 2";
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "${documentTitle1}");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "${documentTitle1}",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "${documentTitle1}",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "single_approver_updated.xml",
+			workflowDefinitionTitle = "Single Approver Updated");
+
+		Navigator.openURL();
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "${documentTitle2}");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "${documentTitle2}",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "review2");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "${documentTitle2}",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "review2");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver Updated");
+
+		Navigator.gotoNavItem(navItem = "Performance");
+
+		Click(
+			key_stepsNumber = "3",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
+
+		for (var stepName : list "Review,review2,update2") {
+			AssertElementPresent(
+				key_stepName = "${stepName}",
+				locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
+		}
+
+		WorkflowMetricsPerformanceByStep.assertStepNameByProcessVersion(
+			rowName = "Review",
+			rowNumber = "1",
+			version = "1.0");
+
+		WorkflowMetricsPerformanceByStep.assertStepNameByProcessVersion(
+			rowName = "review2",
+			rowNumber = "1",
+			version = "2.0");
 	}
 
 	@description = "LPS-101075 - Verify that when the user clicks on View All Steps the Performance by Step page displays the same steps displayed in the card"

@@ -1,5 +1,22 @@
 definition {
 
+	macro assertStepNameByProcessVersion {
+		var key_dateRange = "${version}";
+		var key_rowName = "${rowName}";
+		var key_rowNumber = "${rowNumber}";
+
+		Click(locator1 = "WorkflowMetricsPerformanceByStep#PROCESS_VERSION_DROPDOWN");
+
+		Click(
+			key_dateRange = "${version}",
+			locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
+
+		AssertElementPresent(
+			key_rowName = "${rowName}",
+			key_rowNumber = "${rowNumber}",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
+	}
+
 	macro searchForStep {
 		var key_stepName = "${stepName}";
 

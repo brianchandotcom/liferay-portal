@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"target": "ES6",
+		"module": "commonjs",
+		"paths": {
+			"~/*": ["src/*"],
+			"~/shared/*": ["src/shared/*"],
+			"~/apps/*": ["src/apps/*"]
+		}
+	},
+	"exclude": ["node_modules"]
+}

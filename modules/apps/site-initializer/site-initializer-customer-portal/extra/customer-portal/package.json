@@ -1,0 +1,54 @@
+{
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "dependencies": {
+    "@clayui/card": "^3.36.0",
+    "@clayui/core": "^3.36.0",
+    "@clayui/css": "^3.36.0",
+    "@clayui/form": "^3.36.0",
+    "@clayui/label": "^3.32.0",
+    "@clayui/icon": "^3.32.0",
+    "@clayui/layout": "^3.32.0",
+    "@craco/craco": "^6.3.0",
+    "formik": "^2.2.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^4.0.3",
+    "sass": "^1.39.0",
+    "sass-loader": "^8.0.2"
+  },
+  "devDependencies": {
+    "sass-to-string": "1.1.0",
+    "babel-plugin-root-import": "^6.6.0"
+  },
+  "name": "@liferay/cp-react",
+  "private": true,
+  "scripts": {
+    "build": "craco build",
+    "build:liferay": "yarn build && ./setup-liferay.sh",
+    "run:liferay": "yarn build:liferay && npx serve ./build",
+    "serve:liferay": "npx serve ./build",
+    "start": "craco start"
+  },
+  "version": "1.0.0"
+}

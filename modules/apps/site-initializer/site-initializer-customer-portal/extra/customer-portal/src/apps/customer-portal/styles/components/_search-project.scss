@@ -1,0 +1,20 @@
+.search-project {
+    width: 439px;
+    padding: 1.125rem var(--form-input-padding-x) 1.125rem 4rem;
+    border: 1px solid rgba(0, 74, 215, 0.1);
+
+    &.h5 {
+        font-size: var(--h5-font-size);
+        line-height: 20px;
+    }
+
+    &::placeholder {
+        font-weight: var(--font-weight-semi-bold);
+    }
+
+    & + .lexicon-icon {
+        bottom: 25.63px;
+        left: 28.63px;
+        font-size: 1.421rem;
+    }
+}

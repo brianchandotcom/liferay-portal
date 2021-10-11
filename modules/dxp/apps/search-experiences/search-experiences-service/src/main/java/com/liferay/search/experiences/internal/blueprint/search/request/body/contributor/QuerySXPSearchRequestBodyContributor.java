@@ -15,17 +15,18 @@
 package com.liferay.search.experiences.internal.blueprint.search.request.body.contributor;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.search.experiences.internal.blueprint.query.QueryConverter;
 import com.liferay.search.experiences.rest.dto.v1_0.Clause;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+
+import java.beans.ExceptionListener;
 
 /**
  * @author Petteri Karttunen
@@ -35,10 +36,10 @@ public class QuerySXPSearchRequestBodyContributor
 
 	public QuerySXPSearchRequestBodyContributor(
 		ComplexQueryPartBuilderFactory complexQueryPartBuilderFactory,
-		Queries queries) {
+		QueryConverter queryConverter) {
 
 		_complexQueryPartBuilderFactory = complexQueryPartBuilderFactory;
-		_queries = queries;
+		_queryConverter = queryConverter;
 	}
 
 	@Override
@@ -54,9 +55,15 @@ public class QuerySXPSearchRequestBodyContributor
 			return;
 		}
 
-		ArrayUtil.isNotEmptyForEach(
-			queryConfiguration.getQueryEntries(),
-			queryEntry -> _processQueryEntry(queryEntry, searchRequestBuilder));
+		RuntimeException runtimeException = new RuntimeException();
+
+		_processQueryEntries(
+			queryConfiguration.getQueryEntries(), searchRequestBuilder,
+			runtimeException::addSuppressed);
+
+		if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
+			throw runtimeException;
+		}
 
 		if (queryConfiguration.getApplyIndexerClauses() != null) {
 			searchRequestBuilder.withSearchContext(
@@ -79,25 +86,58 @@ public class QuerySXPSearchRequestBodyContributor
 			).occur(
 				clause.getOccur()
 			).query(
-				_queries.wrapper(
-					JSONUtil.toString((JSONObject)clause.getQuery()))
+				_queryConverter.toQuery((JSONObject)clause.getQuery())
 			).build());
 	}
 
+	private void _processQueryEntries(
+		QueryEntry[] queryEntries, SearchRequestBuilder searchRequestBuilder,
+		ExceptionListener exceptionListener) {
+
+		if (ArrayUtil.isEmpty(queryEntries)) {
+			return;
+		}
+
+		for (int index = 0; index < queryEntries.length; index++) {
+			try {
+				_processQueryEntry(
+					index, queryEntries[index], searchRequestBuilder);
+			}
+			catch (Exception exception) {
+				exceptionListener.exceptionThrown(exception);
+			}
+		}
+	}
+
 	private void _processQueryEntry(
-		QueryEntry queryEntry, SearchRequestBuilder searchRequestBuilder) {
+		int index, QueryEntry queryEntry,
+		SearchRequestBuilder searchRequestBuilder) {
 
 		if (!GetterUtil.getBoolean(queryEntry.getEnabled())) {
 			return;
 		}
 
+		InvalidQueryEntryException invalidQueryEntryException =
+			InvalidQueryEntryException.at(index);
+
 		ArrayUtil.isNotEmptyForEach(
 			queryEntry.getClauses(),
-			clause -> _processClause(clause, searchRequestBuilder));
+			clause -> {
+				try {
+					_processClause(clause, searchRequestBuilder);
+				}
+				catch (Exception exception) {
+					invalidQueryEntryException.addSuppressed(exception);
+				}
+			});
+
+		if (ArrayUtil.isNotEmpty(invalidQueryEntryException.getSuppressed())) {
+			throw invalidQueryEntryException;
+		}
 	}
 
 	private final ComplexQueryPartBuilderFactory
 		_complexQueryPartBuilderFactory;
-	private final Queries _queries;
+	private final QueryConverter _queryConverter;
 
 }

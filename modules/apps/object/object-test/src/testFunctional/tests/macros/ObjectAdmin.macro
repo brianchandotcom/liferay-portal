@@ -203,6 +203,14 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#TYPE_FIELD_REQUIRED");
 	}
 
+	macro changeLabelLanguage {
+		Click(locator1 = "ObjectAdmin#DROPDOWN_LANGUAGEM");
+
+		Click(
+			key_newLanguage = "${newLanguage}",
+			locator1 = "ObjectAdmin#SELECT_LANGUAGE");
+	}
+
 	macro clickFieldsSearchableSectionRadioOption {
 		Click.javaScriptClick(
 			key_radioOption = "${radioOption}",
@@ -217,15 +225,6 @@ definition {
 			value1 = "${name}");
 
 		Click(locator1 = "ObjectAdmin#SAVE_CUSTOM_OBJECT");
-	}
-
-	macro changeLabelLanguage {
-		Click(locator1 = "ObjectAdmin#DROPDOWN_LANGUAGEM");
-
-		Click(
-			key_newLanguage = "${newLanguage}",
-			locator1 = "ObjectAdmin#SELECT_LANGUAGE");
-
 	}
 
 	macro deleteAllCustomObjectsViaAPI {

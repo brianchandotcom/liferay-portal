@@ -781,7 +781,6 @@ definition {
 	test CanSetDifferentLanguageForObjectLabel {
 		property portal.acceptance = "true";
 
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -804,7 +803,6 @@ definition {
 		ObjectAdmin.openObjectAdmin();
 
 		CreateObject.assertCustomObject(labelName = "Objeto Costumizado");
-
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for an Object Plural Label"

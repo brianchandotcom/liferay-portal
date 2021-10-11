@@ -156,17 +156,6 @@ definition {
 		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
-
-		Click(locator1 = "Button#PLUS");
-
-		CommerceEntry.addNewChannelsEntry(
-			channelCurrency = "US Dollar",
-			channelName = "Test Channel",
-			channelType = "Site");
-
-		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
 

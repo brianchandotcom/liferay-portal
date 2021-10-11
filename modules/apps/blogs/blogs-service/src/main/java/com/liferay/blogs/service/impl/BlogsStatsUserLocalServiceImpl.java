@@ -53,14 +53,6 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public void deleteStatsUser(long statsUserId) throws PortalException {
-		BlogsStatsUser statsUsers = blogsStatsUserPersistence.findByPrimaryKey(
-			statsUserId);
-
-		deleteStatsUser(statsUsers);
-	}
-
-	@Override
 	public void deleteStatsUserByGroupId(long groupId) {
 		List<BlogsStatsUser> statsUsers =
 			blogsStatsUserPersistence.findByGroupId(groupId);

@@ -1,0 +1,65 @@
+@component-name = "portal-workflow"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Workflow";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WebContent.tearDownCP();
+
+			Workflow.tearDownPortalWorkflow();
+
+			Workflow.tearDownSiteWorkflow();
+		}
+	}
+
+	@description = "Verify that the user can Approve a Translation"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanApproveTranslation {
+
+		// TODO LRQA-70760 CanApproveTranslation pending implementation
+
+	}
+
+	@description = "Verify that a notification is sent when the Translation is rejected"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test NotificationIsSentOnReject {
+
+		// TODO LRQA-70762 NotificationIsSentOnReject pending implementation
+
+	}
+
+	@description = "Verify that the Translation status changes after approval"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TranslationStatusChangesAfterApproval {
+
+		// TODO LRQA-70761 TranslationStatusChangesAfterApproval pending implementation
+
+	}
+
+	@description = "Verify that the Translation status does not change when the Translation is rejected"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TranslationStatusDoesNotChangeAfterReject {
+
+		// TODO LRQA-70763 TranslationStatusDoesNotChangeAfterReject pending implementation
+
+	}
+
+}

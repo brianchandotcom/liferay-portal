@@ -94,6 +94,11 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 		catch (CTStagingEnabledException ctStagingEnabledException) {
 			SessionErrors.add(actionRequest, "stagingEnabled");
 
+			redirectURL.setParameter(
+				"mvcRenderCommandName", "/change_tracking/view_settings");
+
+			sendRedirect(actionRequest, actionResponse, redirectURL.toString());
+
 			return;
 		}
 

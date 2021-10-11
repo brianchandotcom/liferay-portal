@@ -773,8 +773,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			if (resourcePath.endsWith(".metadata.json") ||
-				resourcePath.endsWith(".gitkeep")) {
+			if (resourcePath.endsWith(".gitkeep") ||
+				resourcePath.endsWith(".metadata.json")) {
 
 				continue;
 			}
@@ -905,9 +905,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			if (resourcePath.endsWith(".metadata.json") ||
-				resourcePath.endsWith(".xml") ||
-				resourcePath.endsWith(".gitkeep")) {
+			if (resourcePath.endsWith(".gitkeep") ||
+				resourcePath.endsWith(".metadata.json") ||
+				resourcePath.endsWith(".xml")) {
 
 				continue;
 			}

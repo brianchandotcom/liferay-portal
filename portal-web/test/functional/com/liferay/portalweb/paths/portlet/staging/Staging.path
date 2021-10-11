@@ -43,6 +43,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROCESS_IN_PROGRESS</td>
+	<td>//*[@data-qa-id='processResult'][contains(.,'In Progress')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROCESS_RESULT</td>
 	<td>//*[@data-qa-id='processResult'] | //h6[contains(@class,'background-task-status-row')]</td>
 	<td></td>

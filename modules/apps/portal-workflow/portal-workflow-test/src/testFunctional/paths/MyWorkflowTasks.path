@@ -221,6 +221,11 @@
 	<td>//li[contains(@class,'page-item active')]/a[contains(.,'${key_pageNumber}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUMMARY_TEXT_CONTENT</td>
+	<td>//div[contains(@class,'widget-content')]/p | //div[contains(@class,'asset-summary')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

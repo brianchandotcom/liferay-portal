@@ -288,12 +288,34 @@ definition {
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
-	@description = "This is a test for LRQA-70153. Verify that the user can review the thread through My Workflow Tasks. "
-	@ignore = "Test Stub"
+	@description = "This is a test for LRQA-70153. Verify that the user can review the thread through My Workflow Tasks."
 	@priority = "3"
 	test CanReviewThreadThroughMyWorkflowTasks {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
 
-		// TODO LRQA-70153 CanReviewThreadThroughMyWorkflowTasks pending implementation
+		MessageboardsThread.addWithWorkflowCP(
+			threadBody = "Thread Message Body",
+			threadSubject = "Thread Message Subject");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Thread Message Subject",
+			workflowAssetType = "Message Boards Message",
+			workflowTask = "Review");
+
+		AssertClick(
+			key_resultBarMessage = "Thread Message Subject",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR",
+			value1 = "Thread Message Subject");
+
+		MyWorkflowTasks.viewTaskAssignedAndAssertTextsPresent(
+			titleMessageBoard = "Thread Message Subject",
+			nameAuthor = "Test Test");
+
 
 	}
 

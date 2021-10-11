@@ -18,6 +18,8 @@ definition {
 	function uploadTempFileHiddenNoMouseOver {
 		WaitForSPARefresh();
 
+		selenium.waitForElementPresent();
+
 		selenium.uploadTempFile();
 
 		selenium.assertJavaScriptErrors();

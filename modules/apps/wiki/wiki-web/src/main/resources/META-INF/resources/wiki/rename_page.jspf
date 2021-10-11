@@ -36,11 +36,11 @@
 		</div>
 	</c:if>
 
-	<aui:button-row>
+	<div class="sheet-footer">
 		<aui:button disabled="<%= pending %>" type="submit" value='<%= hasWorkflowDefinitionLink ? "submit-for-publication" : "rename" %>' />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
+	</div>
 </aui:form>
 
 <aui:script>

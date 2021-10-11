@@ -51,72 +51,70 @@ childPages.remove(wikiPage);
 	<aui:input name="title" type="hidden" value="<%= title %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
-	<aui:fieldset>
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-		<aui:input name="currentParent" type="resource" value="<%= parentText %>" />
+	<aui:input name="currentParent" type="resource" value="<%= parentText %>" />
 
-		<%
-		boolean newParentAvailable = true;
-		%>
+	<%
+	boolean newParentAvailable = true;
+	%>
 
-		<c:choose>
-			<c:when test="<%= childPages.isEmpty() %>">
+	<c:choose>
+		<c:when test="<%= childPages.isEmpty() %>">
+
+			<%
+			newParentAvailable = false;
+			%>
+
+			<aui:select disabled="<%= true %>" label="new-parent" name="newParentTitle">
+				<aui:option label="not-available" value="" />
+			</aui:select>
+		</c:when>
+		<c:otherwise>
+			<aui:select label="new-parent" name="newParentTitle">
+				<aui:option label="none" selected="<%= Validator.isNull(wikiPage.getParentTitle()) %>" value="" />
 
 				<%
-				newParentAvailable = false;
+				for (WikiPage childPage : childPages) {
 				%>
 
-				<aui:select disabled="<%= true %>" label="new-parent" name="newParentTitle">
-					<aui:option label="not-available" value="" />
-				</aui:select>
+					<c:if test="<%= Validator.isNull(childPage.getRedirectTitle()) %>">
+
+						<%
+						request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_DEPTH, 1);
+						request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_PAGE, wikiPage);
+						request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_PARENT, childPage);
+						%>
+
+						<liferay-util:include page="/wiki/page_tree.jsp" servletContext="<%= application %>" />
+					</c:if>
+
+				<%
+				}
+				%>
+
+			</aui:select>
+		</c:otherwise>
+	</c:choose>
+
+	<c:if test="<%= pending %>">
+		<div class="alert alert-info">
+			<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+		</div>
+	</c:if>
+
+	<div class="sheet-footer">
+		<c:choose>
+			<c:when test="<%= hasWorkflowDefinitionLink %>">
+				<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= liferayPortletResponse.getNamespace() + "publishPage();" %>' value="submit-for-publication" />
 			</c:when>
 			<c:otherwise>
-				<aui:select label="new-parent" name="newParentTitle">
-					<aui:option label="none" selected="<%= Validator.isNull(wikiPage.getParentTitle()) %>" value="" />
-
-					<%
-					for (WikiPage childPage : childPages) {
-					%>
-
-						<c:if test="<%= Validator.isNull(childPage.getRedirectTitle()) %>">
-
-							<%
-							request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_DEPTH, 1);
-							request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_PAGE, wikiPage);
-							request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_PARENT, childPage);
-							%>
-
-							<liferay-util:include page="/wiki/page_tree.jsp" servletContext="<%= application %>" />
-						</c:if>
-
-					<%
-					}
-					%>
-
-				</aui:select>
+				<aui:button disabled="<%= !newParentAvailable %>" type="submit" value="change-parent" />
 			</c:otherwise>
 		</c:choose>
 
-		<c:if test="<%= pending %>">
-			<div class="alert alert-info">
-				<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-			</div>
-		</c:if>
-
-		<aui:button-row>
-			<c:choose>
-				<c:when test="<%= hasWorkflowDefinitionLink %>">
-					<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= liferayPortletResponse.getNamespace() + "publishPage();" %>' value="submit-for-publication" />
-				</c:when>
-				<c:otherwise>
-					<aui:button disabled="<%= !newParentAvailable %>" type="submit" value="change-parent" />
-				</c:otherwise>
-			</c:choose>
-
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</aui:fieldset>
+		<aui:button href="<%= redirect %>" type="cancel" />
+	</div>
 </aui:form>
 
 <aui:script>

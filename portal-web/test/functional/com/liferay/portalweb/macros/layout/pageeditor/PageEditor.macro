@@ -3032,29 +3032,6 @@ definition {
 		Navigator.gotoNavTab(navTab = "General");
 	}
 
-	macro gotoContentConfiguration {
-		if (isSet(entryContent)) {
-			Click.clickNoMouseOver(
-				key_colPosition = "${colPosition}",
-				key_entryContent = "${entryContent}",
-				key_fragmentName = "${fragmentName}",
-				key_rowPosition = "${rowPosition}",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
-		}
-		else {
-			Click(
-				key_fragmentName = "${fragmentName}",
-				key_rowPosition = "${rowPosition}",
-				locator1 = "Fragment#CONTENT_FRAGMENT_BODY");
-		}
-
-		AssertVisible(
-			key_sidebarButton = "Browser",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-
-		Navigator.gotoNavTab(navTab = "General");
-	}
-
 	macro gotoDuplicate {
 		var key_fragmentName = "${fragmentName}";
 

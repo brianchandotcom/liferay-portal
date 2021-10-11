@@ -115,33 +115,21 @@ definition {
 			var n = ${n} + 1;
 		}
 
-		PageEditor.gotoContentConfiguration(
-			colPosition = "1",
-			entryContent = "Report",
-			fragmentName = "Content Flags",
-			rowPosition = "1");
+		PageEditor.gotoConfiguration(fragmentName = "Content Flags");
 
 		AssertTextEquals(
 			key_text = "Item",
 			locator1 = "TextInput#ANY",
 			value1 = "WC WebContent Title 3");
 
-		PageEditor.gotoContentConfiguration(
-			colPosition = "1",
-			entryContent = "0.0",
-			fragmentName = "Content Ratings",
-			rowPosition = "1");
+		PageEditor.gotoConfiguration(fragmentName = "Content Ratings");
 
 		AssertTextEquals(
 			key_text = "Item",
 			locator1 = "TextInput#ANY",
 			value1 = "WC WebContent Title 3");
 
-		PageEditor.gotoContentConfiguration(
-			colPosition = "1",
-			entryContent = "WC WebContent Content 3",
-			fragmentName = "Content Display",
-			rowPosition = "1");
+		PageEditor.gotoConfiguration(fragmentName = "Content Display");
 
 		AssertTextEquals(
 			key_text = "Item",
@@ -1867,27 +1855,25 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		PageEditor.gotoContentConfiguration(
-			fragmentName = "Content Ratings",
-			rowPosition = "1");
+		PageEditor.gotoConfiguration(fragmentName = "Content Flags");
 
 		AssertTextEquals(
 			key_text = "Item",
 			locator1 = "TextInput#ANY",
 			value1 = "WC WebContent Title 3");
 
-		PageEditor.gotoContentConfiguration(
-			fragmentName = "Content Ratings",
-			rowPosition = "2");
+		PageEditor.gotoConfiguration(
+			fragmentName = "Content Flags",
+			index = "2");
 
 		AssertTextEquals(
 			key_text = "Item",
 			locator1 = "TextInput#ANY",
 			value1 = "WC WebContent Title 2");
 
-		PageEditor.gotoContentConfiguration(
-			fragmentName = "Content Ratings",
-			rowPosition = "3");
+		PageEditor.gotoConfiguration(
+			fragmentName = "Content Flags",
+			index = "3");
 
 		AssertTextEquals(
 			key_text = "Item",
@@ -2637,9 +2623,9 @@ definition {
 		var n = "1";
 
 		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
-			PageEditor.gotoContentConfiguration(
+			PageEditor.gotoConfiguration(
 				fragmentName = "Content Ratings",
-				rowPosition = "${n}");
+				index = "${n}");
 
 			AssertTextEquals(
 				key_text = "Item",

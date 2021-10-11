@@ -15,7 +15,6 @@
 package com.liferay.blogs.service.persistence.impl;
 
 import com.liferay.blogs.model.BlogsStatsUser;
-import com.liferay.blogs.service.persistence.BlogsStatsUserPersistence;
 import com.liferay.blogs.service.persistence.impl.constants.BlogsPersistenceConstants;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -61,8 +60,5 @@ public abstract class BlogsStatsUserFinderBaseImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	@Reference
-	protected BlogsStatsUserPersistence blogsStatsUserPersistence;
 
 }

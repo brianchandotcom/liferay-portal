@@ -58,16 +58,4 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.blogs.model.BlogsStatsUser">
-		<field name="mvccVersion" type="long" />
-		<field name="statsUserId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="entryCount" type="int" />
-		<field name="lastPostDate" type="Date" />
-		<field name="ratingsTotalEntries" type="int" />
-		<field name="ratingsTotalScore" type="double" />
-		<field name="ratingsAverageScore" type="double" />
-	</model>
 </model-hints>

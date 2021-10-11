@@ -57,7 +57,7 @@ if (commerceOrder != null) {
 List<CommerceAddress> shippingAddresses = commerceOrderContentDisplayContext.getShippingCommerceAddresses(commerceAccount.getCommerceAccountId(), commerceAccount.getCompanyId());
 List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getBillingCommerceAddresses(commerceAccount.getCommerceAccountId(), commerceAccount.getCompanyId());
 
-List<String> errorMessages = (List<String>)request.getAttribute("errorMessages");
+List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.COMMERCE_ORDER_ERROR_MESSAGES);
 %>
 
 <c:if test="<%= (errorMessages != null) && !errorMessages.isEmpty() %>">

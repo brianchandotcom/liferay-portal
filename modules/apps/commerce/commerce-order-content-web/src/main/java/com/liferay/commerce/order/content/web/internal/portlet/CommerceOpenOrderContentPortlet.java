@@ -16,6 +16,7 @@ package com.liferay.commerce.order.content.web.internal.portlet;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
@@ -133,7 +134,8 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 					commerceOrderValidatorResult.getLocalizedMessage());
 			}
 
-			renderRequest.setAttribute("errorMessages", errorMessages);
+			renderRequest.setAttribute(
+				CommerceWebKeys.COMMERCE_ORDER_ERROR_MESSAGES, errorMessages);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,

@@ -3735,7 +3735,7 @@ definition {
 			AssertVisible(
 				key_fragmentClass = "${fragmentClass}",
 				key_image = "${imageFileName}",
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE");
+				locator1 = "Fragment#EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
 		else {
 			AssertVisible(

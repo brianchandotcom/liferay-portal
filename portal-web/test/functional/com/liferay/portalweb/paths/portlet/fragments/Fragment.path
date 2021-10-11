@@ -106,11 +106,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_EDITOR_FRAGMENT_IMAGE</td>
-	<td>//*[contains(@class,'fragment-${key_fragmentClass}')]//img[contains(@src,'${key_image}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_EDITOR_NO_FRAGMENTS_MESSAGE</td>
 	<td>xpath=(//*[contains(@class,'fragment-${key_fragmentClass}')]//lfr-drop-zone//div[contains(@class,'no-fragments-message__title') and contains(.,'${key_content}')])[${key_position}]</td>
 	<td></td>
@@ -370,6 +365,11 @@
 <tr>
 	<td>EDITABLE_FIELD_CONTENT</td>
 	<td>//div[contains(.,'${key_text}') and contains(@id,'fragment-')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDITABLE_FIELD_IMAGE_PROPERTIES</td>
+	<td>//*[contains(@class,'fragment-${key_fragmentClass}')]//img[contains(@src,'${key_image}')]</td>
 	<td></td>
 </tr>
 <tr>

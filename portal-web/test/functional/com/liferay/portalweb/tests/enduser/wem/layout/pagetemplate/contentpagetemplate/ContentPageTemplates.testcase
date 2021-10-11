@@ -76,11 +76,10 @@ definition {
 		}
 
 		task ("Assert the Image fragment's image was changed") {
-			AssertVisible(
-				key_fragmentClass = "image",
-				key_image = "Document_1.png",
-				key_position = "1",
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE");
+			PageEditor.viewFragmentEditableImage(
+				contributed = "false",
+				fragmentClass = "image",
+				imageFileName = "Document_1.jpg");
 		}
 	}
 

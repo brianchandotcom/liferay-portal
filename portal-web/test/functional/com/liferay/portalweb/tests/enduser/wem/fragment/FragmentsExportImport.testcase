@@ -317,10 +317,10 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		AssertVisible(
-			key_fragmentClass = "content",
-			key_image = "Document_1.jpg",
-			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE");
+		PageEditor.viewFragmentEditableImage(
+			id = "image-square",
+			imageDescription = "",
+			imageFileName = "Document_1.jpg");
 
 		PageEditor.gotoSaveAsFragment(fragmentName = "Container");
 
@@ -364,10 +364,10 @@ definition {
 			composition = "true",
 			fragmentName = "New Fragment Name");
 
-		AssertVisible(
-			key_fragmentClass = "content",
-			key_image = "Document_1.jpg",
-			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE");
+		PageEditor.viewFragmentEditableImage(
+			id = "image-square",
+			imageDescription = "",
+			imageFileName = "Document_1.jpg");
 	}
 
 	@description = "This is a test case for LPS-101255. The composition of fragments can be saved in an existing collection."

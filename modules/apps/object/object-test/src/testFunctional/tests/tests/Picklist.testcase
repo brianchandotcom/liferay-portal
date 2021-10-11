@@ -32,13 +32,26 @@ definition {
 
 	}
 
-	@description = "LPS-136595 - Verify it is possible to cancel the creation of a Picklist item"
-	@ignore = "Test Stub"
+    @description = "LPS-136595 - Verify it is possible to cancel the creation of a Picklist item"
 	@priority = "4"
 	test CanCancelCreatePicklistItem {
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		// TODO LPS-139763 CanCancelCreatePicklistItem pending implementation
+		Picklist.gotoPicklists();
 
+		Picklist.optionsPicklist(
+			picklistName = "Picklist Test",
+			picklistOption = "View");
+
+		Picklist.addPicklistItemViaUI(
+			picklistItemKey = "PicklistItemKeyTest",
+			picklistItemName = "Picklist Item Name Test");
+
+		Picklist.cancelPicklistButton();
+
+		Picklist.assertPicklistItemNotPresent(
+			picklistItemKey = "PicklistItemKeyTest",
+			picklistItemName = "Picklist Item Name Test");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to cancel the update of a Picklist"
@@ -85,6 +98,8 @@ definition {
 		Picklist.addPicklistItemViaUI(
 			picklistItemKey = "PicklistItemKeyTest",
 			picklistItemName = "Picklist Item Name Test");
+			
+		Picklist.picklistSaveButton();
 
 		Picklist.assertPicklistItem(
 			picklistItemKey = "PicklistItemKeyTest",

@@ -3802,8 +3802,7 @@ definition {
 			AssertVisible(
 				key_content = "Submit",
 				key_fragmentClass = "footer",
-				key_position = "1",
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
+				locator1 = "Fragment#FRAGMENT");
 
 			for (var button : list "Submit,Cancel") {
 				Button.viewPresent(button = "${button}");

@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
@@ -56,17 +57,22 @@ import {
 	dateToBriefInternationalHuman,
 	deleteCacheKey,
 	getContextLink,
+	getErrorObject,
 	getFullPath,
+	historyPushWithSlug,
 } from '../../utils/utils.es';
 
 export default withRouter(
 	({
+		history,
 		match: {
 			params: {questionId, sectionTitle},
 			url,
 		},
 	}) => {
 		const context = useContext(AppContext);
+
+		const historyPushParser = historyPushWithSlug(history.push);
 
 		const [error, setError] = useState(null);
 
@@ -97,10 +103,17 @@ export default withRouter(
 				.then(
 					({data: {messageBoardThreadByFriendlyUrlPath}, error}) => {
 						if (error) {
-							setError({
-								message: 'Loading question',
-								title: 'Error',
-							});
+							const errorObject = getErrorObject(
+								error.graphQLErrors[0].extensions.exception
+									.errno,
+								Liferay.Language.get(
+									'the-link-you-followed-may-be-broken-or-the-question-no-longer-exists'
+								),
+								Liferay.Language.get(
+									'the-question-is-not-found'
+								)
+							);
+							setError(errorObject);
 							setLoading(false);
 						}
 						else {
@@ -113,7 +126,12 @@ export default withRouter(
 					if (process.env.NODE_ENV === 'development') {
 						console.error(error);
 					}
-					setError({message: 'Loading question', title: 'Error'});
+					const errorObject = getErrorObject(
+						error.graphQLErrors[0].extensions.exception.errno,
+						'the-link-you-followed-may-be-broken-or-the-question-no-longer-exists',
+						'the-question-is-not-found'
+					);
+					setError(errorObject);
 					setLoading(false);
 				});
 		}, [questionId, context.siteKey]);
@@ -180,6 +198,30 @@ export default withRouter(
 						question.messageBoardSection || context.rootTopicId
 					}
 				/>
+
+				{error && (
+					<div className="questions-container row">
+						<div className="c-mx-auto c-px-0 col-xl-10">
+							<ClayEmptyState
+								description={error.message}
+								imgSrc={
+									context.includeContextPath +
+									'/assets/empty_questions_list.png'
+								}
+								title={error.title}
+							>
+								<ClayButton
+									displayType="primary"
+									onClick={() =>
+										historyPushParser('/questions')
+									}
+								>
+									{Liferay.Language.get('home')}
+								</ClayButton>
+							</ClayEmptyState>
+						</div>
+					</div>
+				)}
 
 				<div className="c-mt-5">
 					{!loading && !error && (

@@ -111,6 +111,29 @@ export function timeDifference(previous, current = new Date()) {
 	}
 }
 
+export function getErrorObjectsByStatusCode(message, title) {
+	return [
+		{
+			code: 404,
+			message,
+			title,
+		},
+	];
+}
+
+export function getErrorObject(statusCode, message, title) {
+	const errorObject = getErrorObjectsByStatusCode(message, title).find(
+		(errorObject) => errorObject.code === statusCode
+	);
+
+	return errorObject
+		? errorObject
+		: {
+				code: statusCode,
+				message: Liferay.Language.get('error'),
+		  };
+}
+
 export function useDebounceCallback(callback, milliseconds) {
 	const callbackRef = useRef(debounce(callback, milliseconds));
 

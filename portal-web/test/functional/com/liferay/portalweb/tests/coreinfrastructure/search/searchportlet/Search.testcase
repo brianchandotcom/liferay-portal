@@ -409,6 +409,25 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test CanViewTermsOfUseWhenEnterpriseSearchIsEnabled {
+		property custom.properties = "enterprise.product.notification.enabled=true";
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Terms of Use");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Modal#BODY",
+			value1 = "Use of Liferay Enterprise Search (LES) apps and features is not covered by Liferay Support and other subscription benefits without an active LES add-on subscription. If you do not want to use or have access to LES, access can be disabled completely by following these steps");
+
+		Click(locator1 = "Button#DONE");
+
+		AssertElementNotPresent(locator1 = "Modal#MODAL");
+	}
+
 	@description = "This is a use case for LPS-115435."
 	@priority = "3"
 	test ModifyPaginationConfigurationProperties {

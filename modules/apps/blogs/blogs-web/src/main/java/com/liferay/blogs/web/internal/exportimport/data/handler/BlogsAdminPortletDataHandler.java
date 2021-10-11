@@ -116,9 +116,6 @@ public class BlogsAdminPortletDataHandler extends BasePortletDataHandler {
 		_blogsEntryLocalService.deleteEntries(
 			portletDataContext.getScopeGroupId());
 
-		_blogsStatsUserLocalService.deleteStatsUserByGroupId(
-			portletDataContext.getScopeGroupId());
-
 		return portletPreferences;
 	}
 

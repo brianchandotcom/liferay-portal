@@ -461,7 +461,7 @@ public class DefaultWorkflowEngineImpl
 			WorkflowModelSearchResult<WorkflowInstance>
 				workflowModelSearchResult = searchWorkflowInstances(
 					userId, assetClassName, assetTitle, assetDescription,
-					nodeName, kaleoDefinitionName, completed, start, end,
+					nodeName, kaleoDefinitionName, completed, false, start, end,
 					orderByComparator, serviceContext);
 
 			return workflowModelSearchResult.getWorkflowModels();

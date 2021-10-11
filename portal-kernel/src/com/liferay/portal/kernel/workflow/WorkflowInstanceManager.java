@@ -115,24 +115,6 @@ public interface WorkflowInstanceManager {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	public default WorkflowModelSearchResult<WorkflowInstance>
-			searchWorkflowInstances(
-				long companyId, Long userId, String assetClassName,
-				String assetTitle, String assetDescription, String nodeName,
-				String kaleoDefinitionName, Boolean completed, int start,
-				int end, OrderByComparator<WorkflowInstance> orderByComparator)
-		throws WorkflowException {
-
-		return searchWorkflowInstances(
-			companyId, userId, assetClassName, assetTitle, assetDescription,
-			nodeName, kaleoDefinitionName, completed, false, start, end,
-			orderByComparator);
-	}
-
 	public WorkflowInstance signalWorkflowInstance(
 			long companyId, long userId, long workflowInstanceId,
 			String transitionName, Map<String, Serializable> workflowContext)

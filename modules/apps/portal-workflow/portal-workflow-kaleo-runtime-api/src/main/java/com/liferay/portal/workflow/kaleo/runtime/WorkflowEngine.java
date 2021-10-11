@@ -136,25 +136,6 @@ public interface WorkflowEngine {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	public default WorkflowModelSearchResult<WorkflowInstance>
-			searchWorkflowInstances(
-				Long userId, String assetClassName, String assetTitle,
-				String assetDescription, String nodeName,
-				String kaleoDefinitionName, Boolean completed, int start,
-				int end, OrderByComparator<WorkflowInstance> orderByComparator,
-				ServiceContext serviceContext)
-		throws WorkflowException {
-
-		return searchWorkflowInstances(
-			userId, assetClassName, assetTitle, assetDescription, nodeName,
-			kaleoDefinitionName, completed, false, start, end,
-			orderByComparator, serviceContext);
-	}
-
 	public WorkflowInstance signalWorkflowInstance(
 			long workflowInstanceId, String transitionName,
 			Map<String, Serializable> workflowContext,

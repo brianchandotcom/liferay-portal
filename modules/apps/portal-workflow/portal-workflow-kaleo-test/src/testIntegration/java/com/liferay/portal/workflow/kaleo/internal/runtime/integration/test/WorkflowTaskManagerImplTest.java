@@ -1224,7 +1224,7 @@ public class WorkflowTaskManagerImplTest {
 			_workflowTaskManager.searchWorkflowTasks(
 				_adminUser.getCompanyId(), _adminUser.getUserId(), null, null,
 				null, null, User.class.getName(),
-				new Long[] {_adminUser.getUserId()}, null, null, true, false,
+				new Long[] {_adminUser.getUserId()}, null, null, true, false, false,
 				null, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(
 					true));
@@ -1235,7 +1235,7 @@ public class WorkflowTaskManagerImplTest {
 		workflowModelSearchResult = _workflowTaskManager.searchWorkflowTasks(
 			_adminUser.getCompanyId(), _adminUser.getUserId(), null, null, null,
 			null, User.class.getName(), new Long[] {_adminUser.getUserId()},
-			null, null, true, false, null, null, false, QueryUtil.ALL_POS,
+			null, null, true, false, false, null, null, false, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS,
 			WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(false));
 

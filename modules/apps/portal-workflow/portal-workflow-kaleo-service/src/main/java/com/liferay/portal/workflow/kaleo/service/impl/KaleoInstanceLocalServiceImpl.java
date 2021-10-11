@@ -342,7 +342,7 @@ public class KaleoInstanceLocalServiceImpl
 			BaseModelSearchResult<KaleoInstance> baseModelSearchResult =
 				searchKaleoInstances(
 					userId, assetClassName, assetTitle, assetDescription,
-					nodeName, kaleoDefinitionName, completed, start, end,
+					nodeName, kaleoDefinitionName, completed, false, start, end,
 					orderByComparator, serviceContext);
 
 			return baseModelSearchResult.getBaseModels();
@@ -364,7 +364,7 @@ public class KaleoInstanceLocalServiceImpl
 
 		return _kaleoInstanceTokenLocalService.searchCount(
 			userId, assetClassName, assetTitle, assetDescription, nodeName,
-			kaleoDefinitionName, completed, serviceContext);
+			kaleoDefinitionName, completed, false, serviceContext);
 	}
 
 	@Override
@@ -398,25 +398,6 @@ public class KaleoInstanceLocalServiceImpl
 		}
 
 		return new BaseModelSearchResult<>(kaleoInstances, hits.getLength());
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public BaseModelSearchResult<KaleoInstance> searchKaleoInstances(
-			Long userId, String assetClassName, String assetTitle,
-			String assetDescription, String nodeName,
-			String kaleoDefinitionName, Boolean completed, int start, int end,
-			OrderByComparator<KaleoInstance> orderByComparator,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return searchKaleoInstances(
-			userId, assetClassName, assetTitle, assetDescription, nodeName,
-			kaleoDefinitionName, completed, false, start, end,
-			orderByComparator, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

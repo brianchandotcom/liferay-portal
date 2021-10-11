@@ -304,23 +304,6 @@ public class KaleoInstanceTokenLocalServiceImpl
 		}
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public Hits search(
-		Long userId, String assetClassName, String assetTitle,
-		String assetDescription, String currentKaleoNodeName,
-		String kaleoDefinitionName, Boolean completed, int start, int end,
-		Sort[] sorts, ServiceContext serviceContext) {
-
-		return search(
-			userId, assetClassName, assetTitle, assetDescription,
-			currentKaleoNodeName, kaleoDefinitionName, completed, false, start,
-			end, sorts, serviceContext);
-	}
-
 	@Override
 	public int searchCount(
 		Long userId, String assetClassName, String assetTitle,
@@ -355,23 +338,6 @@ public class KaleoInstanceTokenLocalServiceImpl
 		catch (SearchException searchException) {
 			throw new SystemException(searchException);
 		}
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public int searchCount(
-		Long userId, String assetClassName, String assetTitle,
-		String assetDescription, String currentKaleoNodeName,
-		String kaleoDefinitionName, Boolean completed,
-		ServiceContext serviceContext) {
-
-		return searchCount(
-			userId, assetClassName, assetTitle, assetDescription,
-			currentKaleoNodeName, kaleoDefinitionName, completed, false,
-			serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

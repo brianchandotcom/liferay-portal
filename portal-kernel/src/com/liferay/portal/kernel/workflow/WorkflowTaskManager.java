@@ -191,28 +191,6 @@ public interface WorkflowTaskManager {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	public default WorkflowModelSearchResult<WorkflowTask> searchWorkflowTasks(
-			long companyId, long userId, String assetTitle, String[] taskNames,
-			String[] assetTypes, Long[] assetPrimaryKeys,
-			String assigneeClassName, Long[] assigneeIds, Date dueDateGT,
-			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
-			Long workflowDefinitionId, Long[] workflowInstanceIds,
-			Boolean andOperator, int start, int end,
-			OrderByComparator<WorkflowTask> orderByComparator)
-		throws WorkflowException {
-
-		return searchWorkflowTasks(
-			companyId, userId, assetTitle, taskNames, assetTypes,
-			assetPrimaryKeys, assigneeClassName, assigneeIds, dueDateGT,
-			dueDateLT, completed, false, searchByUserRoles,
-			workflowDefinitionId, workflowInstanceIds, andOperator, start, end,
-			orderByComparator);
-	}
-
 	public WorkflowTask updateDueDate(
 			long companyId, long userId, long workflowTaskId, String comment,
 			Date dueDate)

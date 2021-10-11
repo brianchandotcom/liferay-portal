@@ -419,7 +419,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 					workflowTasksBulkSelection.getAssigneeIds(),
 					workflowTasksBulkSelection.getDateDueStart(),
 					workflowTasksBulkSelection.getDateDueEnd(),
-					workflowTasksBulkSelection.getCompleted(),
+					workflowTasksBulkSelection.getCompleted(), false,
 					workflowTasksBulkSelection.getSearchByUserRoles(),
 					workflowTasksBulkSelection.getWorkflowDefinitionId(),
 					workflowTasksBulkSelection.getWorkflowInstanceIds(),

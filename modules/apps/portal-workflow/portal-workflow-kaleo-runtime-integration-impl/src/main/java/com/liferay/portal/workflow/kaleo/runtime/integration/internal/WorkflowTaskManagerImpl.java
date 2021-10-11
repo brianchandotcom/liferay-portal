@@ -735,7 +735,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				searchWorkflowTasks(
 					companyId, userId, assetTitle, taskNames, assetTypes,
 					assetPrimaryKeys, assigneeClassName, assigneeIds, dueDateGT,
-					dueDateLT, completed, searchByUserRoles,
+					dueDateLT, completed, false, searchByUserRoles,
 					workflowDefinitionId, workflowInstanceIds, andOperator,
 					start, end, orderByComparator);
 

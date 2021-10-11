@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import {FocusScope} from '@clayui/shared';
@@ -30,8 +29,6 @@ const ColorPicker = ({
 	value = '#FFFFFF',
 }) => {
 	const dropdownContainerRef = useRef(null);
-	const searchFormClearRef = useRef(null);
-	const searchFormInputRef = useRef(null);
 	const splotchRef = useRef(null);
 	const triggerElementRef = useRef(null);
 
@@ -39,8 +36,8 @@ const ColorPicker = ({
 	const [searchValue, setSearchValue] = useState(false);
 
 	useEffect(() => {
-		if (searchFormClearRef?.current && !active) {
-			searchFormClearRef.current.click();
+		if (!active) {
+			setSearchValue(false);
 		}
 	}, [active]);
 
@@ -124,47 +121,37 @@ const ColorPicker = ({
 						ref={dropdownContainerRef}
 					>
 						{config.tokenOptimizationEnabled ? (
-							<>
-								<SearchForm
-									className="flex-grow-1"
-									onChange={setSearchValue}
-									searchFormClearRef={searchFormClearRef}
-									searchFormInputRef={searchFormInputRef}
-								/>
-								{Object.keys(filteredColors).length ? (
-									<ColorPalette
-										colors={filteredColors}
-										onSetActive={setActive}
-										onValueChange={onValueChange}
-										splotchRef={splotchRef}
+							active ? (
+								<>
+									<SearchForm
+										className="flex-grow-1"
+										onChange={setSearchValue}
 									/>
-								) : (
-									<div className="mb-4 page-editor__ColorPicker__empty-result taglib-empty-result-message text-center">
-										<div className="mb-3 mt-4 taglib-empty-state" />
-										<div className="taglib-empty-result-message-title">
-											{Liferay.Language.get(
-												'no-results-found'
-											)}
-										</div>
+									{Object.keys(filteredColors).length ? (
+										<ColorPalette
+											colors={filteredColors}
+											onSetActive={setActive}
+											onValueChange={onValueChange}
+											splotchRef={splotchRef}
+										/>
+									) : (
+										<div className="mb-4 page-editor__ColorPicker__empty-result taglib-empty-result-message text-center">
+											<div className="mb-3 mt-4 taglib-empty-state" />
+											<div className="taglib-empty-result-message-title">
+												{Liferay.Language.get(
+													'no-results-found'
+												)}
+											</div>
 
-										<p className="taglib-empty-result-message-description">
-											{Liferay.Language.get(
-												'try-again-with-a-different-search'
-											)}
-										</p>
-										<ClayButton
-											displayType="secondary"
-											onClick={() => {
-												searchFormClearRef.current.click();
-												searchFormInputRef.current.focus();
-											}}
-											small
-										>
-											{Liferay.Language.get('new-search')}
-										</ClayButton>
-									</div>
-								)}
-							</>
+											<p className="taglib-empty-result-message-description">
+												{Liferay.Language.get(
+													'try-again-with-a-different-search'
+												)}
+											</p>
+										</div>
+									)}
+								</>
+							) : null
 						) : (
 							<div className="clay-color-swatch">
 								{colors.map(({label, name, value}, i) => (

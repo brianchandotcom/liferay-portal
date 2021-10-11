@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.wiki.internal.model.listener.test;
+package com.liferay.wiki.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -39,9 +40,10 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Tomas Polesovsky
+ * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)
-public class CycleDetectorWikiPageModelListenerTest {
+public class WikiPageLocalServiceHierarchyCycleValidationTest {
 
 	@ClassRule
 	@Rule
@@ -87,10 +89,12 @@ public class CycleDetectorWikiPageModelListenerTest {
 			Assert.fail();
 		}
 		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
+
 			Assert.assertEquals(
-				"Unable to update wiki page Title3 because a cycle was " +
-					"detected",
-				runtimeException.getMessage());
+				"Unable to save wiki page Title3 because a hierarchy cycle " +
+					"was detected",
+				throwable.getMessage());
 		}
 
 		try {
@@ -105,9 +109,12 @@ public class CycleDetectorWikiPageModelListenerTest {
 			Assert.fail();
 		}
 		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
+
 			Assert.assertEquals(
-				"Unable to update wiki page Other because a cycle was detected",
-				runtimeException.getMessage());
+				"Unable to save wiki page Other because a hierarchy cycle was" +
+					" detected",
+				throwable.getMessage());
 		}
 	}
 
@@ -126,11 +133,11 @@ public class CycleDetectorWikiPageModelListenerTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException runtimeException) {
+		catch (PortalException portalException) {
 			Assert.assertEquals(
-				"Unable to create wiki page " + title +
-					" because a cycle was detected",
-				runtimeException.getMessage());
+				"Unable to save wiki page " + title +
+					" because a hierarchy cycle was detected",
+				portalException.getMessage());
 		}
 	}
 
@@ -148,9 +155,12 @@ public class CycleDetectorWikiPageModelListenerTest {
 			Assert.fail();
 		}
 		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
+
 			Assert.assertEquals(
-				"Unable to update wiki page Title because a cycle was detected",
-				runtimeException.getMessage());
+				"Unable to save wiki page Title because a hierarchy cycle " +
+					"was detected",
+				throwable.getMessage());
 		}
 
 		try {
@@ -165,10 +175,12 @@ public class CycleDetectorWikiPageModelListenerTest {
 			Assert.fail();
 		}
 		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
+
 			Assert.assertEquals(
-				"Unable to update wiki page Other Title because a cycle was " +
-					"detected",
-				runtimeException.getMessage());
+				"Unable to save wiki page Other Title because a hierarchy " +
+					"cycle was detected",
+				throwable.getMessage());
 		}
 	}
 

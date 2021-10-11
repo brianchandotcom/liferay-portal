@@ -1093,6 +1093,12 @@ definition {
 		AssertElementPresent(locator1 = "BlogsAggregator#NO_ENTRY_MESSAGE");
 	}
 
+	macro viewNoInlineImage {
+		AssertElementNotPresent(
+			key_uploadFileName = "${inlineImageName}",
+			locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE");
+	}
+
 	macro viewNoPG {
 		AssertElementNotPresent(
 			key_entryTitle = "${entryTitle}",

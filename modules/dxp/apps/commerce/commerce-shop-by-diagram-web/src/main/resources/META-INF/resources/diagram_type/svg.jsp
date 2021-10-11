@@ -16,32 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-CSDiagramSettingDisplayContext csDiagramSettingDisplayContext = (CSDiagramSettingDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-CPDefinition cpDefinition = csDiagramSettingDisplayContext.getCPDefinition();
-CSDiagramSetting csDiagramSetting = csDiagramSettingDisplayContext.fetchCSDiagramSetting();
-%>
-
 <div>
 	<span aria-hidden="true" class="loading-animation"></span>
 
 	<react:component
 		module="js/diagram/DiagramWithAutomapping"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"datasetDisplayId", CSDiagramDataSetConstants.CS_DIAGRAM_MAPPED_PRODUCTS_DATA_SET_KEY
-			).put(
-				"diagramId", csDiagramSetting.getCSDiagramSettingId()
-			).put(
-				"imageURL", csDiagramSettingDisplayContext.getImageURL()
-			).put(
-				"isAdmin", true
-			).put(
-				"pinsCSSSelectors", csDiagramSettingDisplayContext.getImageCSSSelectors()
-			).put(
-				"productId", cpDefinition.getCProductId()
-			).build()
-		%>'
+		props="<%= (HashMap<String, Object>)request.getAttribute(CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_PROPS) %>"
 	/>
 </div>

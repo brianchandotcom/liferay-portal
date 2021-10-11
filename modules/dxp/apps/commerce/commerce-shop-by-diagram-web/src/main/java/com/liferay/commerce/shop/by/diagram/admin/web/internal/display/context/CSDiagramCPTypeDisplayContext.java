@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.shop.by.diagram.admin.web.internal.util.CSDiagramSettingUtil;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
@@ -34,6 +35,13 @@ public class CSDiagramCPTypeDisplayContext {
 		_csDiagramSettingService = csDiagramSettingService;
 		_csDiagramTypeRegistry = csDiagramTypeRegistry;
 		_dlURLHelper = dlURLHelper;
+	}
+
+	public String getCSDiagramMappedProductsAPIURL(
+		CPCatalogEntry cpCatalogEntry) {
+
+		return "/o/headless-commerce-admin-catalog/v1.0/products/" +
+			cpCatalogEntry.getCProductId() + "/mapped-products";
 	}
 
 	public CSDiagramSetting getCSDiagramSetting(long cpDefinitionId)

@@ -35,6 +35,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -47,7 +48,8 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.cluster.Clusterable;
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -70,6 +72,8 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -314,19 +318,15 @@ public class ObjectDefinitionLocalServiceImpl
 			_dropTable(objectDefinition.getDBTableName());
 			_dropTable(objectDefinition.getExtensionDBTableName());
 
-			TransactionCommitCallbackUtil.registerCallback(
-				() -> {
-					objectDefinitionLocalService.undeployObjectDefinition(
-						objectDefinition);
+			undeployObjectDefinition(objectDefinition);
 
-					return null;
-				});
+			_registerTransactionCallbackForCluster(
+				_undeployObjectDefinitionMethodKey, objectDefinition);
 		}
 
 		return objectDefinition;
 	}
 
-	@Clusterable
 	@Override
 	public void deployObjectDefinition(ObjectDefinition objectDefinition) {
 		if (objectDefinition.isSystem()) {
@@ -417,15 +417,10 @@ public class ObjectDefinitionLocalServiceImpl
 		_createTable(
 			objectDefinition.getExtensionDBTableName(), objectDefinition);
 
-		ObjectDefinition finalObjectDefinition = objectDefinition;
+		deployObjectDefinition(objectDefinition);
 
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				objectDefinitionLocalService.deployObjectDefinition(
-					finalObjectDefinition);
-
-				return null;
-			});
+		_registerTransactionCallbackForCluster(
+			_deployObjectDefinitionMethodKey, objectDefinition);
 
 		return objectDefinition;
 	}
@@ -496,7 +491,6 @@ public class ObjectDefinitionLocalServiceImpl
 			});
 	}
 
-	@Clusterable
 	@Override
 	public void undeployObjectDefinition(ObjectDefinition objectDefinition) {
 		if (objectDefinition.isSystem()) {
@@ -804,6 +798,26 @@ public class ObjectDefinitionLocalServiceImpl
 		return false;
 	}
 
+	private void _registerTransactionCallbackForCluster(
+		MethodKey methodKey, ObjectDefinition objectDefinition) {
+
+		if (ClusterExecutorUtil.isEnabled()) {
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					ClusterRequest clusterRequest =
+						ClusterRequest.createMulticastRequest(
+							new MethodHandler(methodKey, objectDefinition),
+							true);
+
+					clusterRequest.setFireAndForget(true);
+
+					ClusterExecutorUtil.execute(clusterRequest);
+
+					return null;
+				});
+		}
+	}
+
 	private void _startWorkflowInstanceLinks(ObjectDefinition objectDefinition)
 		throws PortalException {
 
@@ -1072,6 +1086,15 @@ public class ObjectDefinitionLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionLocalServiceImpl.class);
+
+	private static final MethodKey _deployObjectDefinitionMethodKey =
+		new MethodKey(
+			ObjectDefinitionLocalServiceUtil.class, "deployObjectDefinition",
+			ObjectDefinition.class);
+	private static final MethodKey _undeployObjectDefinitionMethodKey =
+		new MethodKey(
+			ObjectDefinitionLocalServiceUtil.class, "undeployObjectDefinition",
+			ObjectDefinition.class);
 
 	private BundleContext _bundleContext;
 

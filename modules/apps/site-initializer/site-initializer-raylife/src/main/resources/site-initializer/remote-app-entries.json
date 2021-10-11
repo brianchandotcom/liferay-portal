@@ -8,7 +8,7 @@
 		],
 		"htmlElementName": "liferay-raylife-d2c",
 		"name_i18n": {
-			"en_US": "Direct to Customer"
+			"en_US": "Direct to Customer - Get a Quote"
 		},
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
@@ -31,8 +31,7 @@
 		},
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
-			"APPLICATION": "quote-comparison",
-			"GOOGLE_PLACES_KEY": ""
+			"APPLICATION": "quote-comparison"
 		},
 		"remoteAppEntryKey": "RAYLIFE-QUOTE-COMPARISON",
 		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:RAYLIFE-QUOTE-COMPARISON$]"
@@ -50,8 +49,7 @@
 		},
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
-			"APPLICATION": "selected-quote",
-			"GOOGLE_PLACES_KEY": ""
+			"APPLICATION": "selected-quote"
 		},
 		"remoteAppEntryKey": "RAYLIFE-SELECTED-QUOTE",
 		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:RAYLIFE-SELECTED-QUOTE$]"

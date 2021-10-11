@@ -53,16 +53,6 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public void deleteStatsUserByUserId(long userId) {
-		List<BlogsStatsUser> statsUsers =
-			blogsStatsUserPersistence.findByUserId(userId);
-
-		for (BlogsStatsUser statsUser : statsUsers) {
-			deleteStatsUser(statsUser);
-		}
-	}
-
-	@Override
 	public BlogsStatsUser fetchStatsUser(long groupId, long userId) {
 		return blogsStatsUserPersistence.fetchByG_U(groupId, userId);
 	}

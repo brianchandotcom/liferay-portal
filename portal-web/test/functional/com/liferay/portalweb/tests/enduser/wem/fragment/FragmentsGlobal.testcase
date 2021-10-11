@@ -244,9 +244,9 @@ definition {
 				entry = "Global Fragment Name",
 				item = "View Site Usages");
 
-			var key_siteName = "Site Name";
-
-			Check(locator1 = "Fragment#FRAGMENT_SITE_USAGE_CHECKBOX");
+			Check(
+				key_tableEntry = "Site Name",
+				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 
 			Click(locator1 = "Button#PROPAGATE");
 

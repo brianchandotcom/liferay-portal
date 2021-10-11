@@ -76,11 +76,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_SITE_USAGE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAGMENT_SITE_USAGE_NAV_ITEM</td>
 	<td>//li[contains(@class,'navbar-breakpoint')]</td>
 	<td></td>

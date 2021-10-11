@@ -443,8 +443,6 @@ definition {
 		AssertElementNotPresent(
 			key_resultBarMessage = "Pending",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
-
-
 	}
 
 	@description = "This is a test for LRQA-70150. Verify that the user can edit an approved thread and the status returns to Pending."

@@ -63,13 +63,14 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 		throws PortalException {
 
 		BatchPlannerLog batchPlannerLog =
-			batchPlannerLogPersistence.fetchByPrimaryKey(batchPlannerLogId);
+			batchPlannerLogPersistence.findByPrimaryKey(batchPlannerLogId);
 
 		_batchPlannerPlanModelResourcePermission.check(
 			getPermissionChecker(), batchPlannerLog.getBatchPlannerPlanId(),
 			ActionKeys.UPDATE);
 
-		return batchPlannerLogPersistence.remove(batchPlannerLogId);
+		return batchPlannerLogLocalService.deleteBatchPlannerLog(
+			batchPlannerLogId);
 	}
 
 	@Override
@@ -79,7 +80,7 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 		_batchPlannerPlanModelResourcePermission.check(
 			getPermissionChecker(), batchPlannerPlanId, ActionKeys.VIEW);
 
-		return batchPlannerLogPersistence.findByBatchPlannerPlanId(
+		return batchPlannerLogLocalService.getBatchPlannerLogs(
 			batchPlannerPlanId);
 	}
 
@@ -91,7 +92,7 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 		_batchPlannerPlanModelResourcePermission.check(
 			getPermissionChecker(), batchPlannerPlanId, ActionKeys.VIEW);
 
-		return batchPlannerLogPersistence.findByBatchPlannerPlanId(
+		return batchPlannerLogLocalService.getBatchPlannerLogs(
 			batchPlannerPlanId, start, end);
 	}
 
@@ -101,7 +102,7 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 		_batchPlannerPlanModelResourcePermission.check(
 			getPermissionChecker(), batchPlannerPlanId, ActionKeys.VIEW);
 
-		return batchPlannerLogPersistence.countByBatchPlannerPlanId(
+		return batchPlannerLogLocalService.getBatchPlannerLogsCount(
 			batchPlannerPlanId);
 	}
 
@@ -113,7 +114,7 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 
 		checkPermission(companyId, ActionKeys.VIEW);
 
-		return batchPlannerLogPersistence.findByCompanyId(
+		return batchPlannerLogLocalService.getCompanyBatchPlannerLogs(
 			companyId, start, end, orderByComparator);
 	}
 
@@ -123,7 +124,8 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 
 		checkPermission(companyId, ActionKeys.VIEW);
 
-		return batchPlannerLogPersistence.countByCompanyId(companyId);
+		return batchPlannerLogLocalService.getCompanyBatchPlannerLogsCount(
+			companyId);
 	}
 
 	protected void checkPermission(long companyId, String actionKey)

@@ -114,7 +114,27 @@ public class BatchPlannerLogLocalServiceImpl
 	}
 
 	@Override
+	public List<BatchPlannerLog> getBatchPlannerLogs(long batchPlannerPlanId) {
+		return batchPlannerLogPersistence.findByBatchPlannerPlanId(
+			batchPlannerPlanId);
+	}
+
+	@Override
 	public List<BatchPlannerLog> getBatchPlannerLogs(
+		long batchPlannerPlanId, int start, int end) {
+
+		return batchPlannerLogPersistence.findByBatchPlannerPlanId(
+			batchPlannerPlanId, start, end);
+	}
+
+	@Override
+	public int getBatchPlannerLogsCount(long batchPlannerPlanId) {
+		return batchPlannerLogPersistence.countByBatchPlannerPlanId(
+			batchPlannerPlanId);
+	}
+
+	@Override
+	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
 		long companyId, int start, int end,
 		OrderByComparator<BatchPlannerLog> orderByComparator) {
 
@@ -123,7 +143,7 @@ public class BatchPlannerLogLocalServiceImpl
 	}
 
 	@Override
-	public int getBatchPlannerLogsCount(long companyId) {
+	public int getCompanyBatchPlannerLogsCount(long companyId) {
 		return batchPlannerLogPersistence.countByCompanyId(companyId);
 	}
 

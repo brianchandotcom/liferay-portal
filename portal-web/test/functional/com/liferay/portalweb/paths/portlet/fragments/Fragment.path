@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_CONTENT</td>
+	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_IMAGE</td>
 	<td>//div[contains(@class,'layout-content')]//section[${key_position}]//*[contains(@class,'fragment-${key_fragmentClass}')]//img[contains(@src,'${key_image}')]</td>
 	<td></td>

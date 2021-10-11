@@ -72,6 +72,10 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 						).length;
 
 						if (!validLiferayForm) {
+							Liferay.fire('ddmFormError', {
+								formWrapperId: event.target.id,
+							});
+
 							return;
 						}
 
@@ -97,6 +101,11 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 				})
 				.catch((error) => {
 					console.error(error);
+
+					Liferay.fire('ddmFormError', {
+						error,
+						formWrapperId: event.target.id,
+					});
 				});
 		},
 		[apiRef, containerRef, submittable]

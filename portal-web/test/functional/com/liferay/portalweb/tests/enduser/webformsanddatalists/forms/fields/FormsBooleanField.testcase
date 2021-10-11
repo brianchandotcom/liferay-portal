@@ -117,6 +117,42 @@ definition {
 			fieldValue = "Test Help Text");
 	}
 
+	@description = "Verify that a form with the boolean field can be edited"
+	@priority = "5"
+	test CanBeEdited {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Boolean");
+
+		FormFields.viewField(fieldName = "Boolean");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormFields.viewField(fieldName = "Boolean");
+
+		FormFields.gotoFormField(formFieldName = "Boolean");
+
+		FormFields.editText(
+			fieldName = "label",
+			fieldValue = "Test Boolean Field");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormFields.viewField(fieldName = "Boolean");
+	}
+
 	@description = "Verify that a form with the boolean field can be required"
 	@priority = "5"
 	test CanBeRequired {

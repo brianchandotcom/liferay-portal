@@ -179,7 +179,9 @@ public class RestrictedLiferayObjectWrapper extends LiferayObjectWrapper {
 
 		Class<?> clazz = object.getClass();
 
-		if (object instanceof BaseModel) {
+		if ((object instanceof BaseModel) &&
+			!CompanyThreadLocal.isInitializingPortalInstance()) {
+
 			long currentCompanyId = CompanyThreadLocal.getCompanyId();
 
 			if (currentCompanyId != CompanyConstants.SYSTEM) {

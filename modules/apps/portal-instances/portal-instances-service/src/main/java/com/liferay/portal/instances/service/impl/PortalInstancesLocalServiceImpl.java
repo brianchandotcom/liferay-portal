@@ -14,6 +14,7 @@
 
 package com.liferay.portal.instances.service.impl;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.instances.service.base.PortalInstancesLocalServiceBaseImpl;
 import com.liferay.portal.kernel.cluster.Clusterable;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -118,10 +118,6 @@ public class PortalInstancesLocalServiceImpl
 				"Invalid site initializer key " + siteInitializerKey);
 		}
 
-		long companyThreadLocalCompanyId = CompanyThreadLocal.getCompanyId();
-
-		CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
-
 		Role role = _roleLocalService.fetchRole(
 			companyId, RoleConstants.ADMINISTRATOR);
 
@@ -139,14 +135,15 @@ public class PortalInstancesLocalServiceImpl
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
-		try {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setInitializingPortalInstance(true)) {
+
 			Group group = _groupLocalService.getGroup(
 				company.getCompanyId(), GroupConstants.GUEST);
 
 			siteInitializer.initialize(group.getGroupId());
 		}
 		finally {
-			CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 			PrincipalThreadLocal.setName(name);
 		}

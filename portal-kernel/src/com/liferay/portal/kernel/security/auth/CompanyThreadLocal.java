@@ -53,6 +53,10 @@ public class CompanyThreadLocal {
 		return _deleteInProcess.get();
 	}
 
+	public static boolean isInitializingPortalInstance() {
+		return _initializingPortalInstance.get();
+	}
+
 	public static boolean isLocked() {
 		return _locked.get();
 	}
@@ -100,6 +104,13 @@ public class CompanyThreadLocal {
 		}
 
 		return _companyId.setWithSafeCloseable(CompanyConstants.SYSTEM);
+	}
+
+	public static SafeCloseable setInitializingPortalInstance(
+		boolean initializingPortalInstance) {
+
+		return _initializingPortalInstance.setWithSafeCloseable(
+			initializingPortalInstance);
 	}
 
 	/**
@@ -246,6 +257,10 @@ public class CompanyThreadLocal {
 	private static final ThreadLocal<Boolean> _deleteInProcess =
 		new CentralizedThreadLocal<>(
 			CompanyThreadLocal.class + "._deleteInProcess",
+			() -> Boolean.FALSE);
+	private static final CentralizedThreadLocal<Boolean>
+		_initializingPortalInstance = new CentralizedThreadLocal<>(
+			CompanyThreadLocal.class + "._initializingPortalInstance",
 			() -> Boolean.FALSE);
 	private static final ThreadLocal<Boolean> _locked =
 		new CentralizedThreadLocal<>(

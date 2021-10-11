@@ -25,6 +25,7 @@ import java.io.Serializable;
 
 import java.nio.ByteBuffer;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
@@ -155,14 +156,10 @@ public class SessionReplicationHttpSessionWrapper extends HttpSessionWrapper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SessionReplicationHttpSessionWrapper.class);
 
-	private static final Set<ClassLoader> _safeClassLoaders =
-		new HashSet<ClassLoader>() {
-			{
-				add(String.class.getClassLoader());
-				add(HttpSession.class.getClassLoader());
-				add(Logger.class.getClassLoader());
-			}
-		};
+	private static final Set<ClassLoader> _safeClassLoaders = new HashSet<>(
+		Arrays.asList(
+			String.class.getClassLoader(), HttpSession.class.getClassLoader(),
+			Logger.class.getClassLoader()));
 
 	private final Map<String, TransientValue<?>> _transientValues =
 		new ConcurrentHashMap<>();

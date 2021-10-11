@@ -25,12 +25,10 @@ import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
 import com.liferay.commerce.shop.by.diagram.type.CSDiagramType;
 import com.liferay.commerce.shop.by.diagram.type.CSDiagramTypeRegistry;
-import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -55,7 +53,7 @@ public class CSDiagramSettingDisplayContext
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 		CSDiagramSettingImageConfiguration csDiagramSettingImageConfiguration,
 		CSDiagramSettingService csDiagramSettingService,
-		CSDiagramTypeRegistry csDiagramTypeRegistry, DLURLHelper dlURLHelper,
+		CSDiagramTypeRegistry csDiagramTypeRegistry,
 		ItemSelector itemSelector) {
 
 		super(actionHelper, httpServletRequest);
@@ -64,7 +62,6 @@ public class CSDiagramSettingDisplayContext
 			csDiagramSettingImageConfiguration;
 		_csDiagramSettingService = csDiagramSettingService;
 		_csDiagramTypeRegistry = csDiagramTypeRegistry;
-		_dlURLHelper = dlURLHelper;
 		_itemSelector = itemSelector;
 	}
 
@@ -121,10 +118,6 @@ public class CSDiagramSettingDisplayContext
 		return _csDiagramTypeRegistry.getCSDiagramTypes();
 	}
 
-	public String[] getImageCSSSelectors() {
-		return _csDiagramSettingImageConfiguration.imageCSSSelectors();
-	}
-
 	public String[] getImageExtensions() {
 		return _csDiagramSettingImageConfiguration.imageExtensions();
 	}
@@ -150,23 +143,6 @@ public class CSDiagramSettingDisplayContext
 
 	public long getImageMaxSize() {
 		return _csDiagramSettingImageConfiguration.imageMaxSize();
-	}
-
-	public String getImageURL() {
-		try {
-			FileEntry fileEntry = fetchFileEntry();
-
-			if (fileEntry != null) {
-				return _dlURLHelper.getDownloadURL(
-					fileEntry, fileEntry.getFileVersion(), null,
-					StringPool.BLANK);
-			}
-
-			return StringPool.BLANK;
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
 	}
 
 	public double getRadius() {
@@ -199,7 +175,6 @@ public class CSDiagramSettingDisplayContext
 		_csDiagramSettingImageConfiguration;
 	private final CSDiagramSettingService _csDiagramSettingService;
 	private final CSDiagramTypeRegistry _csDiagramTypeRegistry;
-	private final DLURLHelper _dlURLHelper;
 	private final ItemSelector _itemSelector;
 
 }

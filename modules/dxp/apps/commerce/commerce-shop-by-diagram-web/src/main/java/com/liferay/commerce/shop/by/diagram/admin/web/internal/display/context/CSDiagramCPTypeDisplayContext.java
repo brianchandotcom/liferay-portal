@@ -14,15 +14,13 @@
 
 package com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context;
 
-import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException;
-import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.shop.by.diagram.admin.web.internal.util.CSDiagramSettingUtil;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
+import com.liferay.commerce.shop.by.diagram.type.CSDiagramType;
+import com.liferay.commerce.shop.by.diagram.type.CSDiagramTypeRegistry;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Andrea Sbarra
@@ -31,55 +29,31 @@ public class CSDiagramCPTypeDisplayContext {
 
 	public CSDiagramCPTypeDisplayContext(
 		CSDiagramSettingService csDiagramSettingService,
-		DLURLHelper dlURLHelper) {
+		CSDiagramTypeRegistry csDiagramTypeRegistry, DLURLHelper dlURLHelper) {
 
 		_csDiagramSettingService = csDiagramSettingService;
+		_csDiagramTypeRegistry = csDiagramTypeRegistry;
 		_dlURLHelper = dlURLHelper;
 	}
 
+	public CSDiagramSetting getCSDiagramSetting(long cpDefinitionId)
+		throws PortalException {
+
+		return _csDiagramSettingService.fetchCSDiagramSettingByCPDefinitionId(
+			cpDefinitionId);
+	}
+
+	public CSDiagramType getCSDiagramType(String type) {
+		return _csDiagramTypeRegistry.getCSDiagramType(type);
+	}
+
 	public String getImageURL(long cpDefinitionId) throws Exception {
-		FileEntry fileEntry = _fetchFileEntry(cpDefinitionId);
-
-		if (fileEntry != null) {
-			return _dlURLHelper.getDownloadURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
-		}
-
-		return StringPool.BLANK;
+		return CSDiagramSettingUtil.getImageURL(
+			getCSDiagramSetting(cpDefinitionId), _dlURLHelper);
 	}
-
-	private FileEntry _fetchFileEntry(long cpDefinitionId) throws Exception {
-		CSDiagramSetting csDiagramSetting =
-			_csDiagramSettingService.fetchCSDiagramSettingByCPDefinitionId(
-				cpDefinitionId);
-
-		if (csDiagramSetting == null) {
-			return null;
-		}
-
-		try {
-			CPAttachmentFileEntry cpAttachmentFileEntry =
-				csDiagramSetting.getCPAttachmentFileEntry();
-
-			return cpAttachmentFileEntry.fetchFileEntry();
-		}
-		catch (NoSuchCPAttachmentFileEntryException
-					noSuchCPAttachmentFileEntryException) {
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					noSuchCPAttachmentFileEntryException,
-					noSuchCPAttachmentFileEntryException);
-			}
-
-			return null;
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CSDiagramCPTypeDisplayContext.class);
 
 	private final CSDiagramSettingService _csDiagramSettingService;
+	private final CSDiagramTypeRegistry _csDiagramTypeRegistry;
 	private final DLURLHelper _dlURLHelper;
 
 }

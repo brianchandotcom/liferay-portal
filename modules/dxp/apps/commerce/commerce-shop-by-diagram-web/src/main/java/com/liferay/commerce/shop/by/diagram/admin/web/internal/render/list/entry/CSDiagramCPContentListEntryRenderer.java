@@ -19,6 +19,7 @@ import com.liferay.commerce.product.content.render.list.entry.CPContentListEntry
 import com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context.CSDiagramCPTypeDisplayContext;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramWebKeys;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
+import com.liferay.commerce.shop.by.diagram.type.CSDiagramTypeRegistry;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -75,7 +76,8 @@ public class CSDiagramCPContentListEntryRenderer
 		httpServletRequest.setAttribute(
 			CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_DISPLAY_CONTEXT,
 			new CSDiagramCPTypeDisplayContext(
-				_csDiagramSettingService, _dlURLHelper));
+				_csDiagramSettingService, _csDiagramTypeRegistry,
+				_dlURLHelper));
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
@@ -84,6 +86,9 @@ public class CSDiagramCPContentListEntryRenderer
 
 	@Reference
 	private CSDiagramSettingService _csDiagramSettingService;
+
+	@Reference
+	private CSDiagramTypeRegistry _csDiagramTypeRegistry;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

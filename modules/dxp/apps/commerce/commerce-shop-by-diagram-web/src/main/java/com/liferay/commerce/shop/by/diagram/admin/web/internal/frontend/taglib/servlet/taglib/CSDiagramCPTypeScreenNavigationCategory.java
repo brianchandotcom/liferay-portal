@@ -21,7 +21,6 @@ import com.liferay.commerce.shop.by.diagram.configuration.CSDiagramSettingImageC
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramCPTypeConstants;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
 import com.liferay.commerce.shop.by.diagram.type.CSDiagramTypeRegistry;
-import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -111,7 +110,7 @@ public class CSDiagramCPTypeScreenNavigationCategory
 			new CSDiagramSettingDisplayContext(
 				_actionHelper, httpServletRequest,
 				_csDiagramSettingImageConfiguration, _csDiagramSettingService,
-				_csDiagramTypeRegistry, _dlURLHelper, _itemSelector);
+				_csDiagramTypeRegistry, _itemSelector);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, csDiagramSettingDisplayContext);
@@ -140,9 +139,6 @@ public class CSDiagramCPTypeScreenNavigationCategory
 
 	@Reference
 	private CSDiagramTypeRegistry _csDiagramTypeRegistry;
-
-	@Reference
-	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private ItemSelector _itemSelector;

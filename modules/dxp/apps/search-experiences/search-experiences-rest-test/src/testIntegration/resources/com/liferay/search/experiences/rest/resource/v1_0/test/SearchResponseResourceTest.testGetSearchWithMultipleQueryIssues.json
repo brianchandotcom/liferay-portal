@@ -1,0 +1,48 @@
+{
+	"configuration": {
+		"queryConfiguration": {
+			"queryEntries": [
+				{
+					"clauses": [
+						{
+							"occur": "should",
+							"query": {
+								"term": {
+									"version": {
+										"value__": "7.4"
+									}
+								}
+							}
+						}
+					],
+					"enabled": true
+				},
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"function_score": {
+									"boost": 2,
+									"gauss": {
+										"expando__keyword__custom_fields__location_geolocation": {
+											"decay": 0.3,
+											"offset": 0,
+											"origin": {
+												"lat": "${ipstack.latitude}",
+												"lon": "${ipstack.longitude}"
+											},
+											"scale": "100km"
+										}
+									}
+								}
+							}
+						}
+					],
+					"enabled": true
+				}
+			]
+		}
+	}
+}

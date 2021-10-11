@@ -181,11 +181,17 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is possible to view a Picklist"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewPicklist {
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		// TODO LPS-139755 CanViewPicklist pending implementation
+		Picklist.gotoPicklists();
+
+		Picklist.optionsPicklist(
+			picklistName = "Picklist Test",
+			picklistOption = "View");
+
+		Picklist.assertPicklistDetails(title = "Basic Info");
 
 	}
 

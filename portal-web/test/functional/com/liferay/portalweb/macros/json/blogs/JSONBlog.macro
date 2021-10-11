@@ -243,6 +243,28 @@ definition {
 		echo("## * Blogs ID: ${entryId}");
 	}
 
+	macro getBlogImageId {
+		Variables.assertDefined(parameterList = "${groupName},${imageTitle}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-posting-images \
+			-H 'Content-Type: application/json' \
+			-u 'test@liferay.com:test'
+		''';
+
+		var imageId = JSONCurlUtil.get("${curl}", "$..[?(@['title'] == '${imageTitle}')]['id']");
+
+		return "${imageId}";
+	}
+
 	macro moveEntryToTrash {
 		Variables.assertDefined(parameterList = "${entryTitle},${groupName}");
 
@@ -268,6 +290,25 @@ definition {
 		''';
 
 		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
+	macro removeBlogImage {
+		Variables.assertDefined(parameterList = "${groupName},${imageTitle}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var imageId = JSONBlog.getBlogImageId(
+			groupName = "${groupName}",
+			imageTitle = "${imageTitle}",
+			site = "${site}");
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/blog-posting-images/${imageId} \
+			-H 'Content-Type: application/json' \
+			-u 'test@liferay.com:test'
+		''';
+
+		JSONCurlUtil.delete("${curl}");
 	}
 
 	@summary = "This calls the JSON WS API to update a blog entry"

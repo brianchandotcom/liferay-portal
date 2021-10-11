@@ -463,7 +463,7 @@ definition {
 			key_content = "Place fragments here.",
 			key_fragmentClass = "content",
 			key_position = "${position}",
-			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+			locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 

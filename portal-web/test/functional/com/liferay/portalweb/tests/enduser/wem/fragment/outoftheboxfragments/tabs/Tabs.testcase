@@ -277,7 +277,7 @@ definition {
 				key_content = "Place fragments here.",
 				key_fragmentClass = "content",
 				key_position = "1",
-				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
 		}
 
 		task ("Add a card fragment to tab1") {
@@ -298,7 +298,7 @@ definition {
 					key_content = "Place fragments here.",
 					key_fragmentClass = "content",
 					key_position = "1",
-					locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+					locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
 
 				AssertElementNotPresent(
 					key_index = "2",
@@ -363,7 +363,7 @@ definition {
 				key_content = "Place fragments here.",
 				key_fragmentClass = "content",
 				key_position = "1",
-				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
 		}
 
 		task ("Assert could not add fragment in Tab 2,3,4") {
@@ -456,7 +456,7 @@ definition {
 					key_content = "Place fragments here.",
 					key_fragmentClass = "content",
 					key_position = "${position}",
-					locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+					locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
 
 				var position = ${position} + 1;
 			}

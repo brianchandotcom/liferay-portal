@@ -159,7 +159,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
 			value1 = "${fieldFieldLabel}");
 
-		if (IsTextEqual(locator1 = "DataEngineBuilder#SIDEBAR_FIELD_NAME_BUTTON", value1 = "Grid")) {
+		if (IsTextEqual(locator1 = "Sidebar#TITLE", value1 = "Grid")) {
 			var index = "1";
 
 			for (var optionLabel : list "${optionLabelList}") {
@@ -172,7 +172,7 @@ definition {
 				var index = ${index} + 1;
 			}
 		}
-		else if (IsTextEqual(locator1 = "DataEngineBuilder#SIDEBAR_FIELD_NAME_BUTTON", value1 = "Select from List")) {
+		else if (IsTextEqual(locator1 = "Sidebar#TITLE", value1 = "Select from List")) {
 			var index = "1";
 
 			for (var optionLabel : list "${optionLabelList}") {
@@ -268,7 +268,7 @@ definition {
 
 	macro assertFieldType {
 		AssertTextEquals(
-			locator1 = "DataEngineBuilder#SIDEBAR_FIELD_NAME_BUTTON",
+			locator1 = "Sidebar#TITLE",
 			value1 = "${fieldType}");
 	}
 

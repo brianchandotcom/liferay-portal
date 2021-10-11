@@ -37,14 +37,6 @@
 		.sidebar-body {
 			height: calc(100vh - (224px - #{$displaySettingsHeight}));
 		}
-
-		.sidebar-header {
-			padding-top: 0;
-
-			.component-title {
-				display: none;
-			}
-		}
 	}
 }
 

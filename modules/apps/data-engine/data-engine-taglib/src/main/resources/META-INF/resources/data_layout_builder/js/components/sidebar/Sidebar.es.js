@@ -131,8 +131,8 @@ const SidebarTabContent = ({children}) => {
 	);
 };
 
-const SidebarTitle = ({title}) => (
-	<ClayLayout.ContentRow className="mb-3 sidebar-section">
+const SidebarTitle = ({className, title}) => (
+	<ClayLayout.ContentRow className={classNames('sidebar-section', className)}>
 		<ClayLayout.ContentCol expand>
 			<div className="component-title">
 				<span className="text-truncate-inline">{title}</span>

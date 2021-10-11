@@ -33,17 +33,18 @@ export const FieldsSidebar = ({title}) => {
 			className={classNames({['display-settings']: hasFocusedField})}
 		>
 			<Sidebar.Header>
-				<Sidebar.Title title={title} />
-
 				{hasFocusedField ? (
 					<FieldsSidebarSettingsHeader />
 				) : (
-					<ClayForm onSubmit={(event) => event.preventDefault()}>
-						<Sidebar.SearchInput
-							onSearch={(keywords) => setKeywords(keywords)}
-							searchText={keywords}
-						/>
-					</ClayForm>
+					<>
+						<Sidebar.Title className="mb-3" title={title} />
+						<ClayForm onSubmit={(event) => event.preventDefault()}>
+							<Sidebar.SearchInput
+								onSearch={(keywords) => setKeywords(keywords)}
+								searchText={keywords}
+							/>
+						</ClayForm>
+					</>
 				)}
 			</Sidebar.Header>
 

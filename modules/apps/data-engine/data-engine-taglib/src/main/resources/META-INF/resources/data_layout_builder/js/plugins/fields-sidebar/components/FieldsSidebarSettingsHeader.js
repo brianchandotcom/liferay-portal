@@ -12,61 +12,31 @@
  * details.
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
+import {ClayButtonWithIcon} from '@clayui/button';
 import {useConfig, useForm, useFormState} from 'data-engine-js-components-web';
 import React from 'react';
 
+import Sidebar from '../../../components/sidebar/Sidebar.es';
 import {EVENT_TYPES} from '../../../eventTypes';
+
+import './FieldsSidebarSettingsHeader.scss';
 
 export default function FieldsSidebarSettingsHeader() {
 	const dispatch = useForm();
-
 	const {fieldTypes} = useConfig();
-
 	const {focusedField} = useFormState();
-
-	const {icon, label} = fieldTypes.find(
-		({name}) => name === focusedField.type
-	);
+	const {label} = fieldTypes.find(({name}) => name === focusedField.type);
 
 	return (
-		<div className="d-flex">
+		<div className="data-engine__field-sidebar-settings-title">
 			<ClayButtonWithIcon
-				className="mr-2"
+				className="mr-3"
 				displayType="secondary"
 				monospaced={false}
-				onClick={() => {
-					dispatch({
-						type: EVENT_TYPES.SIDEBAR.FIELD.BLUR,
-					});
-				}}
+				onClick={() => dispatch({type: EVENT_TYPES.SIDEBAR.FIELD.BLUR})}
 				symbol="angle-left"
 			/>
-
-			<ClayDropDown
-				className="d-inline-flex flex-grow-1"
-				onActiveChange={() => {}}
-				trigger={
-					<ClayButton
-						className="d-inline-flex flex-grow-1"
-						disabled={true}
-						displayType="secondary"
-					>
-						<ClayIcon className="mr-2 mt-1" symbol={icon} />
-
-						{label}
-
-						<span className="d-inline-flex ml-auto navbar-breakpoint-down-d-none pt-2">
-							<ClayIcon
-								className="inline-item inline-item-after"
-								symbol="caret-bottom"
-							/>
-						</span>
-					</ClayButton>
-				}
-			></ClayDropDown>
+			<Sidebar.Title title={label} />
 		</div>
 	);
 }

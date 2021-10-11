@@ -1450,7 +1450,7 @@ definition {
 			}
 		}
 
-		if (IsTextEqual(locator1 = "DataEngineBuilder#SIDEBAR_FIELD_NAME_BUTTON", value1 = "Fields Group")) {
+		if (IsTextEqual(locator1 = "Sidebar#TITLE", value1 = "Fields Group")) {
 			var tab = "Basic";
 		}
 		else {
@@ -1483,8 +1483,7 @@ definition {
 		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		AssertTextEquals(
-			key_text = "${fieldName}",
-			locator1 = "Button#ANY",
+			locator1 = "Sidebar#TITLE",
 			value1 = "${fieldName}");
 
 		AssertTextEquals.assertValue(

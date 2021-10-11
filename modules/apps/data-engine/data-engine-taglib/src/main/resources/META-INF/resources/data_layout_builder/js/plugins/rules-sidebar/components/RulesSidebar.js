@@ -68,7 +68,7 @@ const RulesSidebar = ({title}) => {
 	return (
 		<Sidebar>
 			<Sidebar.Header>
-				<Sidebar.Title title={title} />
+				<Sidebar.Title className="mb-3" title={title} />
 
 				<ClayLayout.ContentRow className="sidebar-section">
 					<ClayLayout.ContentCol expand>

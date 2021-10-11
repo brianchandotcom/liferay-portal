@@ -115,11 +115,6 @@
 	<td>//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'ddm-field-text')][@value='${key_optionValue}']</td>
 	<td></td>
 </tr>
-<tr>
-	<td>SIDEBAR_FIELD_NAME_BUTTON</td>
-	<td>//div[contains(@class,'sidebar-header')]//button[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

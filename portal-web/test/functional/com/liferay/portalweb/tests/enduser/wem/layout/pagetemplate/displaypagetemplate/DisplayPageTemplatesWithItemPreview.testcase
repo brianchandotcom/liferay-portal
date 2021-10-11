@@ -1231,7 +1231,7 @@ definition {
 					key_entryContent = "${categoryName}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 				var n = ${n} + 1;
 			}
@@ -1356,7 +1356,7 @@ definition {
 					key_entryContent = "${categoryName}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 				var n = ${n} + 1;
 			}
@@ -1482,7 +1482,7 @@ definition {
 					key_entryContent = "${categoryName}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 				var n = ${n} + 1;
 			}

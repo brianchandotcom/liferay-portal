@@ -300,11 +300,13 @@ definition {
 	}
 
 	macro disablePublications {
+		Click.waitForMenuToggleJSClick(locator1 = "Publications#PUBLICATIONS_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Settings");
+
 		Uncheck.uncheckToggleSwitch(locator1 = "PublicationsSettings#PUBLICATIONS_TOGGLE_SWITCH");
 
 		Click(locator1 = "Button#SAVE");
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro discardChanges {

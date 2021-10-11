@@ -16,16 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLICATIONS_INDICATOR_BUTTON</td>
-	<td>//button[contains(@class,'dropdown-toggle change-tracking-indicator-button')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLICATIONS_INDICATOR_TITLE</td>
-	<td>//button[contains(@class,'change-tracking-indicator-title')] and contains(.,'${key_publicationName}')</td>
-	<td></td>
-</tr>
-<tr>
 	<td>COLUMN_VALUE_IN_PRODUCTION</td>
 	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInProduction}')]</td>
 	<td></td>
@@ -163,6 +153,21 @@
 <tr>
 	<td>PUBLICATION_ROLE_BUTTON</td>
 	<td>//button[strong[contains(.,'${key_publicationRole}')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLICATIONS_ELLIPSIS</td>
+	<td>//div[contains(@class,'control-menu-icon')]//span[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLICATIONS_INDICATOR_BUTTON</td>
+	<td>//button[contains(@class,'dropdown-toggle change-tracking-indicator-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLICATIONS_INDICATOR_TITLE</td>
+	<td>//button[contains(@class,'change-tracking-indicator-title')] and contains(.,'${key_publicationName}')</td>
 	<td></td>
 </tr>
 <tr>

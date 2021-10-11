@@ -164,6 +164,10 @@ public class ExpandoUserFieldExpressionHandler
 			String userIdentifierExpression)
 		throws PortalException {
 
+		if (userIdentifier == null) {
+			return null;
+		}
+
 		List<ExpandoValue> expandoValues =
 			_expandoValueLocalService.getColumnValues(
 				companyId, User.class.getName(),

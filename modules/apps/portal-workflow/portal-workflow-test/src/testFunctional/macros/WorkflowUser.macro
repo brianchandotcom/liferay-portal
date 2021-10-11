@@ -1,7 +1,7 @@
 definition {
 
-    macro disableCaptchaToCreateNewUser{
-        ApplicationsMenu.gotoPortlet(
+	macro disableCaptchaToCreateNewUser {
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");

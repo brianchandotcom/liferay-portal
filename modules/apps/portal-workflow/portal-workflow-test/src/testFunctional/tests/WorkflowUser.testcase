@@ -202,8 +202,6 @@ definition {
 		AssertElementPresent(
 			key_state = "Review",
 			locator1 = "AssetWorkflow#ASSET_STATE");
-		
-
 	}
 
 	@priority = "5"

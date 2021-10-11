@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -136,7 +137,7 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 						getOrderDetailsURL(renderRequest));
 				}
 				else if (!_commerceOrderValidatorRegistry.isValid(
-							null, commerceOrder)) {
+							LocaleUtil.getSiteDefault(), commerceOrder)) {
 
 					httpServletResponse.sendRedirect(
 						getOrderDetailsURLWithValidatorProperty(renderRequest));

@@ -103,7 +103,7 @@ definition {
 		}
 
 		if ("${showAllItems}" == "true") {
-			Check.checkToggleSwitch(locator1 = "PublicationsSettings#SHOW_ALL_ITEMS_TOGGLE_SWITCH");
+			Check.checkToggleSwitch(locator1 = "PublicationsChanges#SHOW_ALL_ITEMS_TOGGLE_SWITCH");
 		}
 
 		Pause(locator1 = "3000");
@@ -144,7 +144,7 @@ definition {
 		Pause(locator1 = "3000");
 
 		if ("${showAllItems}" == "true") {
-			Check.checkToggleSwitch(locator1 = "PublicationsSettings#SHOW_ALL_ITEMS_TOGGLE_SWITCH");
+			Check.checkToggleSwitch(locator1 = "PublicationsChanges#SHOW_ALL_ITEMS_TOGGLE_SWITCH");
 		}
 
 		var key_changeCategory = "${changeCategory}";

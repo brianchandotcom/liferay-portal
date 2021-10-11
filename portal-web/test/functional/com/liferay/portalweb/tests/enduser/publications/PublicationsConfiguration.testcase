@@ -35,7 +35,7 @@ definition {
 			panel = "Applications",
 			portlet = "Publications");
 
-		Check.checkToggleSwitch(locator1 = "PublicationsSettings#PUBLICATIONS_TOGGLE_SWITCH");
+		Check.checkToggleSwitch(locator1 = "Publications#PUBLICATIONS_TOGGLE_SWITCH");
 
 		Click(locator1 = "Button#SUBMIT");
 
@@ -59,8 +59,6 @@ definition {
 			portlet = "Publications");
 
 		Publications.disablePublications();
-
-		AssertElementPresent(locator1 = "PublicationsSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
 	}
 
 	@priority = "5"

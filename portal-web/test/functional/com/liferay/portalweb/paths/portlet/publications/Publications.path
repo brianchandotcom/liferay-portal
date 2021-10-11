@@ -171,6 +171,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLICATIONS_TOGGLE_SWITCH</td>
+	<td>//input[contains(@id,'enablePublications')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[contains(.,'Publish')]</td>
 	<td></td>

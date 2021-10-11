@@ -304,7 +304,7 @@ definition {
 
 		MenuItem.click(menuItem = "Settings");
 
-		Uncheck.uncheckToggleSwitch(locator1 = "PublicationsSettings#PUBLICATIONS_TOGGLE_SWITCH");
+		Uncheck.uncheckToggleSwitch(locator1 = "Publications#PUBLICATIONS_TOGGLE_SWITCH");
 
 		Click(locator1 = "Button#SAVE");
 	}
@@ -356,7 +356,7 @@ definition {
 	macro enablePublications {
 		Pause(locator1 = "2000");
 
-		Check.checkToggleSwitch(locator1 = "PublicationsSettings#PUBLICATIONS_TOGGLE_SWITCH");
+		Check.checkToggleSwitch(locator1 = "Publications#PUBLICATIONS_TOGGLE_SWITCH");
 
 		Click(locator1 = "Button#SAVE");
 	}

@@ -1,0 +1,49 @@
+{
+	"queryConfiguration": {
+		"applyIndexerClauses": true,
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"occur": "must_not",
+						"query": {
+							"term": {
+								"status": 0
+							}
+						}
+					}
+				],
+				"enabled": true
+			},
+			{
+				"clauses": [
+					{
+						"occur": "should",
+						"query": {
+							"term": {
+								"version": {
+									"boost": 142857,
+									"value": "7.4"
+								}
+							}
+						}
+					}
+				],
+				"enabled": true
+			},
+			{
+				"clauses": [
+					{
+						"occur": "must",
+						"query": {
+							"match": {
+								"status": 0
+							}
+						}
+					}
+				],
+				"enabled": true
+			}
+		]
+	}
+}

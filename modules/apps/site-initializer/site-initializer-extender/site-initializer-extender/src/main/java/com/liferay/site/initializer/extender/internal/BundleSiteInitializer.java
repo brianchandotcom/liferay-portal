@@ -719,20 +719,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		if (json != null) {
 			documentFolder = DocumentFolder.toDTO(json);
 		}
-		else if (resourcePath.contains(
-					"/site-initializer/documents/remote-apps")) {
-
+		else {
 			documentFolder = DocumentFolder.toDTO(
 				JSONUtil.put(
 					"name", FileUtil.getShortFileName(resourcePath)
 				).put(
 					"viewableBy", "Anyone"
-				).toString());
-		}
-		else {
-			documentFolder = DocumentFolder.toDTO(
-				JSONUtil.put(
-					"name", FileUtil.getShortFileName(resourcePath)
 				).toString());
 		}
 
@@ -781,7 +773,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			if (resourcePath.endsWith(".metadata.json")) {
+			if (resourcePath.endsWith(".metadata.json") ||
+				resourcePath.endsWith(".gitkeep")) {
+
 				continue;
 			}
 
@@ -798,9 +792,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (json != null) {
 				values = Collections.singletonMap("document", json);
 			}
-			else if (resourcePath.contains(
-						"/site-initializer/documents/remote-apps")) {
-
+			else {
 				values = Collections.singletonMap(
 					"document",
 					JSONUtil.put(

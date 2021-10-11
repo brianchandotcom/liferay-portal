@@ -1,4 +1,4 @@
-const Header = ({ greetings, title, helper }) => {
+const Header = ({ greetings, helper, title }) => {
   return (
     <header className="p-4">
       {greetings && <h6 className="mb-1 text-brand-primary text-small-caps">{greetings}</h6>}

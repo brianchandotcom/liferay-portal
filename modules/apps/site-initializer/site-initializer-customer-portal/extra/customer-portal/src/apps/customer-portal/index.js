@@ -1,5 +1,5 @@
-import Pages from "./pages";
 import CustomerPortalStyles from "~/apps/customer-portal/styles/app.scss";
+import Pages from "./pages";
 
 const CustomerPortal = () => {
   return (

@@ -2,7 +2,7 @@ import ClayForm, { ClaySelectWithOption } from "@clayui/form";
 import { useField } from "formik";
 import { required, validate } from "../utils/validations.form";
 
-const Select = ({ label, groupStyle, helper, validations, ...props }) => {
+const Select = ({ groupStyle, helper, label, validations, ...props }) => {
     if (props.required) {
         validations = validations ? [...validations, (value) => required(value)] : [(value) => required(value)];
     }

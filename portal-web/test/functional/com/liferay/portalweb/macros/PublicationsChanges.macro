@@ -82,7 +82,7 @@ definition {
 
 			Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE");
 
-			Click(locator1 = "PublicationsChanges#PUBLICATIONS_ELLIPSIS");
+			Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Edit");
 		}

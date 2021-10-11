@@ -96,7 +96,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLICATIONS_ELLIPSIS</td>
+	<td>PUBLICATIONS_CHANGE_ELLIPSIS</td>
 	<td>//div[contains(@class,'autofit-col')]//button[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>

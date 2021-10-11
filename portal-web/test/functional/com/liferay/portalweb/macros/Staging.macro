@@ -1345,6 +1345,8 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 		else {
+			WaitForElementNotPresent(locator1 = "Staging#PROCESS_IN_PROGRESS");
+
 			AssertTextEquals(
 				locator1 = "Staging#PROCESS_SUCCESSFUL",
 				value1 = "Successful");

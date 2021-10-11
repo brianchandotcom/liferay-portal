@@ -10,6 +10,7 @@
 </thead>
 
 <tbody>
+<!--COLLECTION_DISPLAY_CELL-->
 <tr>
 	<td>CONTENT_DISPLAY_FRAGMENT_CONTENT</td>
 	<td>//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}][contains(.,'${key_entryContent}')]</td>
@@ -56,11 +57,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_IMAGE</td>
-	<td>//div[contains(@class,'layout-content')]//section[${key_position}]//*[contains(@class,'fragment-${key_fragmentClass}')]//img[contains(@src,'${key_image}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAGMENT_LINK</td>
 	<td>//a[contains(@href,'${key_URL}')]${key_append}</td>
 	<td></td>
@@ -73,11 +69,6 @@
 <tr>
 	<td>FRAGMENT_SECTION_CONTENT</td>
 	<td>//section[contains(@id,'content')]//p[contains(.,'${key_content}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SITE_USAGE_NAV_ITEM</td>
-	<td>//li[contains(@class,'navbar-breakpoint')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -101,7 +92,7 @@
 	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//button[*[name()='svg'][contains(@class,'icon-comments')]]</td>
 	<td></td>
 </tr>
-<!--CUSTOM_FRAGMENT_STYLE-->
+<!--FRAGMENT_CUSTOM_STYLE-->
 <tr>
 	<td>ALIGN</td>
 	<td>//div[contains(@class,'video')]/parent::div[contains(@style,'justify-content: ${key_alignment}')]</td>
@@ -158,12 +149,7 @@
 	<td>//button[contains(@class,'dropdown-fragment-toggle')]</td>
 	<td></td>
 </tr>
-<!--FRAGMENT_CONFIGURAION-->
-<tr>
-	<td>FRAGMENT_CHECKBOX</td>
-	<td>//div[contains(@class,'floating-toolbar')]//label[contains(.,'${checkboxName}')]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
+<!--FRAGMENT_COMMON_STYLE-->
 <tr>
 	<td>FRAGMENT_CONFIGURATION_ALIGNMENT</td>
 	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'text-${key_alignment}')]</td>
@@ -343,11 +329,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDITABLE_FIELD_CK_EDITOR</td>
-	<td>//div[contains(@class,'page-editor__topper')]//div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${id}')]//div[contains(@class,'cke_editable_inline')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EDITABLE_FIELD_CONTENT</td>
 	<td>//div[contains(.,'${key_text}') and contains(@id,'fragment-')]</td>
 	<td></td>
@@ -398,7 +379,7 @@
 	<td>xpath=(//div[contains(@class,'page-editor__topper__bar tbar')])[${key_position}]//li[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
-<!--FRAGMENT_TABS-->
+<!--TABS_FRAGMENT-->
 <tr>
 	<td>ACTIVE_NAV_ITEM_TAB</td>
 	<td>//div[contains(@class,'navbar')]//button[contains(@aria-selected,'true') and normalize-space()='${key_navItem}']</td>

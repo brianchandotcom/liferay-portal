@@ -128,10 +128,12 @@
 				<name>Approve</name>
 				<description>Approve</description>
 				<script>
-					<![CDATA[import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
+					<![CDATA[
+						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 						import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);]]>
+						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);
+					]]>
 				</script>
 				<script-language>groovy</script-language>
 				<execution-type>onEntry</execution-type>

@@ -99,6 +99,9 @@ import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -1303,15 +1306,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 				objectEntriesJSON);
 
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject jsonObject = jsonArray.getJSONObject(i);
+			try {
+				ObjectDefinition finalObjectDefinition = objectDefinition;
 
-				_objectEntryLocalService.addObjectEntry(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), objectDefinition.getId(),
-					ObjectMapperUtil.readValue(
-						Serializable.class, jsonObject.toString()),
-					serviceContext);
+				TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					() -> {
+						for (int i = 0; i < jsonArray.length(); i++) {
+							JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+							_objectEntryLocalService.addObjectEntry(
+								serviceContext.getUserId(),
+								serviceContext.getScopeGroupId(),
+								finalObjectDefinition.getId(),
+								ObjectMapperUtil.readValue(
+									Serializable.class, jsonObject.toString()),
+								serviceContext);
+						}
+
+						return null;
+					});
+			}
+			catch (Throwable throwable) {
+				throw new Exception(throwable);
 			}
 		}
 	}
@@ -2010,6 +2027,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		BundleSiteInitializer.class);
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;

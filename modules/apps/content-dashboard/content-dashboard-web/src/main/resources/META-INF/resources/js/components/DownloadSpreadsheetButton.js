@@ -18,6 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {
@@ -138,11 +139,13 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 			downloadFileFromBlob(blob);
 
 			handleSuccess();
-		} catch (error) {
+		}
+		catch (error) {
 			const abortedRequest = error.name === 'AbortError' ? true : false;
 
 			handleError({abortedRequest, error});
-		} finally {
+		}
+		finally {
 			handleUIState();
 		}
 	};
@@ -160,6 +163,7 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 			clearTimeout(defaultDelayTimeout);
 			clearTimeout(feedbackDelayTimeout);
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
@@ -167,8 +171,8 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 			<ClayTooltipProvider>
 				<ClayButton
 					borderless
-					className={classnames('download-xls-button', {
-						'download-xls-button--loading': loading,
+					className={classnames('download-spreadsheet-button', {
+						'download-spreadsheet-button--loading': loading,
 						'text-danger':
 							feedbackStatus.show &&
 							feedbackStatus.type === 'danger',
@@ -216,7 +220,7 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 				<ClayAlert.ToastContainer>
 					<ClayAlert
 						autoClose={5000}
-						className="download-xls-button__alert"
+						className="download-spreadsheet-button__alert"
 						displayType={toastMessage.type}
 						onClose={handleToastClose}
 					>
@@ -226,6 +230,11 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 			)}
 		</>
 	);
+};
+
+DownloadSpreadsheetButton.propTypes = {
+	fileURL: PropTypes.string.isRequired,
+	total: PropTypes.number.isRequired,
 };
 
 export default DownloadSpreadsheetButton;

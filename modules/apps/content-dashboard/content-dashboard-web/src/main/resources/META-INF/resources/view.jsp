@@ -88,17 +88,19 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 			cssClass="c-mt-5"
 			size="<%= StringPool.BLANK %>"
 		>
-			<h2 class="align-items-center d-flex justify-content-between sheet-title">
-				<span class="component-title">
-					<%= LanguageUtil.format(request, "content-x", contentDashboardAdminDisplayContext.getSearchContainer().getTotal(), false) %>
-				</span>
-				<span>
+			<div class="align-items-center d-flex justify-content-between mb-4">
+				<h2 class="mb-0 sheet-title">
+					<span class="component-title">
+						<%= LanguageUtil.format(request, "content-x", contentDashboardAdminDisplayContext.getSearchContainer().getTotal(), false) %>
+					</span>
+				</h2>
+				<div>
 					<react:component
 						module="js/components/DownloadSpreadsheetButton"
 						props="<%= contentDashboardAdminDisplayContext.getXLSXProps() %>"
 					/>
-				</span>
-			</h2>
+				</div>
+			</div>
 
 			<clay:management-toolbar
 				cssClass="content-dashboard-management-toolbar"

@@ -111,6 +111,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEPARATOR_STYLE</td>
+	<td>//div[contains(@class, 'separator') and contains(@style, '${key_styleValue}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SINGLE_SELECTION_OPTION_INDEXED</td>
 	<td>xpath=((//legend[normalize-space(text())='${key_fieldLabel}'])[${fieldIndex}]//following-sibling::div//input//following-sibling::span[normalize-space()='${key_optionValue}']//preceding-sibling::input)[${optionIndex}]</td>
 	<td></td>

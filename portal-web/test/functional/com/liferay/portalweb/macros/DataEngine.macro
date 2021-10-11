@@ -1215,6 +1215,25 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro editStyle {
+		Click(
+			key_fieldFieldLabel = "${fieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		Type(
+			key_fieldName = "",
+			locator1 = "DDMField#TEXT_BOX",
+			value1 = "${styleValue}");
+
+		AssertElementPresent(
+			key_styleValue = "${styleValue}",
+			locator1 = "DataEngineRenderer#SEPARATOR_STYLE");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro gotoCreateNewFieldset {
 		Navigator.gotoSidebarTab(tabName = "Builder");
 

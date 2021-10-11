@@ -1,0 +1,153 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test case for LPS-139864. Can enable staging in a site that has different types of Collection Page."
+	@priority = "4"
+	test ActivateStagingPageVersioning {
+		task ("Add a manual collection for all types") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Manual Collection");
+		}
+
+		task ("Add a dynamic collection for all types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add the First collection page based on manual collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Manual Collection",
+				pageName = "First Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Add a Button fragment to First collection page and publish") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Container");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add the Second collection page based on dynamic collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Dynamic Collection",
+				pageName = "Second Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Add a HTML fragment to Second collection page and publish") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML",
+				targetFragmentName = "Container");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add the Third collection page based on collection providers") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Most Viewed Assets",
+				pageName = "Third Collection Page Name",
+				tabName = "Collection Providers");
+		}
+
+		task ("Add a Heading fragment to Third collection page and let it as Draft") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Container");
+		}
+
+		task ("Activate local live staging") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+			Staging.activateStagingCP(
+				pageVersioningEnabled = "true",
+				siteName = "Test Site Name");
+		}
+
+		task ("View the workflow message is not shown in staging") {
+			for (var pageNumber : list "First,Second") {
+				ContentPagesNavigator.openViewContentPage(
+					pageName = "${pageNumber} Collection Page Name",
+					siteName = "Test Site Name Staging");
+
+				AssertElementNotPresent(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION");
+			}
+		}
+
+		task ("View the Button fragment is shown in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "First Collection Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go somewhere");
+		}
+
+		task ("View the HTML fragment is shown in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Second Collection Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "html",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "HTML Example");
+		}
+
+		task ("Assert View action of the third collection page is disabled in live") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(
+				key_pageName = "Third Collection Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			AssertVisible(
+				key_menuItem = "View",
+				locator1 = "MenuItem#DISABLED_MENU_ITEM");
+		}
+	}
+
+}

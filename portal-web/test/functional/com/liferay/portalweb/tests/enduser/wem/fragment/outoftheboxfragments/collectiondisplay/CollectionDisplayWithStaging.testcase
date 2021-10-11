@@ -121,8 +121,9 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
 
 			AssertTextEquals(
-				key_rowPosition = "${i}",
-				locator1 = "Fragment#CONTENT_FRAGMENT_BODY",
+				index = "${i}",
+				key_fragmentName = "Content Flags",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
 				value1 = "Report");
 		}
 

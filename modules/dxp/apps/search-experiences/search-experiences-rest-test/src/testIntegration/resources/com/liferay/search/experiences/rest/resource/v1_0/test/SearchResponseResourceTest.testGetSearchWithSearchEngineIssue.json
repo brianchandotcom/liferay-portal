@@ -1,0 +1,20 @@
+{
+	"configuration": {
+		"queryConfiguration": {
+			"queryEntries": [
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "filter",
+							"query": {
+								"deliberately mistyped": "search engine fails"
+							}
+						}
+					],
+					"enabled": true
+				}
+			]
+		}
+	}
+}

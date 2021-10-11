@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
@@ -131,7 +132,8 @@ public class PendingCommerceOrderStatusImpl implements CommerceOrderStatus {
 				CommercePaymentConstants.
 					COMMERCE_PAYMENT_METHOD_TYPE_OFFLINE)) {
 
-			return _commerceOrderValidatorRegistry.isValid(null, commerceOrder);
+			return _commerceOrderValidatorRegistry.isValid(
+				LocaleUtil.getSiteDefault(), commerceOrder);
 		}
 
 		return false;

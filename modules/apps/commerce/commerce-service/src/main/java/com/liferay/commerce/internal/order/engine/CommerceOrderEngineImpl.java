@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -534,7 +535,9 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 	private void _validateCheckout(CommerceOrder commerceOrder)
 		throws Exception {
 
-		if (!_commerceOrderValidatorRegistry.isValid(null, commerceOrder)) {
+		if (!_commerceOrderValidatorRegistry.isValid(
+				LocaleUtil.getSiteDefault(), commerceOrder)) {
+
 			throw new CommerceOrderValidatorException();
 		}
 

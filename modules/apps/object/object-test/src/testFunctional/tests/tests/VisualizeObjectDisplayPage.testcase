@@ -58,8 +58,6 @@ definition {
 
 		ObjectAdmin.addObjectBoleanFieldEntryViaUI();
 
-		ApplicationsMenu.gotoSite(site = "Liferay DXP");
-
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
 		PageEditor.addFragment(
@@ -92,9 +90,9 @@ definition {
 
 		PageEditor.publishPage();
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Guest");
+		SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "Test Content Page Name");
 
 		PageEditor.assertTrueEntryIsPresent();
 
@@ -320,11 +318,9 @@ definition {
 
 		PageEditor.clickPublish();
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Content Page Name",
-			siteName = "${siteName}");
+		SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "Test Content Page Name");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "2021-01-01");
 	}

@@ -17,7 +17,7 @@
 	</tr>
 	<tr>
 		<td>ARROW_DOWN_ICON</td>
-		<td>//button[contains(@class,'dropdown-toggle btn btn-monospaced btn-outline-borderless btn-outline-secondary')]</td>
+		<td>//div[contains(@class,'dropdown ml-auto')]//button[contains(@class,'dropdown-toggle')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -27,7 +27,7 @@
 	</tr>
 	<tr>
 		<td>PICKLIST_KEBAB_MENU</td>
-		<td>//div[(@class='dnd-td') and contains(.,'${key_picklistName}')]/..//button[@class='dropdown-toggle component-action dropdown-toggle ml-1 btn btn-monospaced btn-unstyled']</td>
+		<td>//div[(@class='dnd-td') and contains(.,'${key_picklistName}')]/..//button</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -52,7 +52,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_PICKLIST_VIEW</td>
-		<td>//a[contains(.,'${key_picklistName}')]/../../..//button[@class='dropdown-toggle component-action dropdown-toggle ml-1 btn btn-monospaced btn-unstyled']</td>
+		<td>//a[contains(.,'${key_picklistName}')]/../../..//button</td>
 		<td></td>
 	</tr>
 	<tr>

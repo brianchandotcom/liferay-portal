@@ -1273,7 +1273,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			Page<ObjectDefinition> objectDefinitionsPage =
 				objectDefinitionResource.getObjectDefinitionsPage(
-					objectDefinition.getName(), null, null, null, null);
+					null, null,
+					objectDefinitionResource.toFilter(
+						StringBundler.concat(
+							"name eq '", objectDefinition.getName(), "'")),
+					null, null);
 
 			ObjectDefinition existingObjectDefinition =
 				objectDefinitionsPage.fetchFirstItem();

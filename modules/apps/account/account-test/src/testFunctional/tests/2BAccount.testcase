@@ -190,63 +190,37 @@ definition {
 	@description = "This test asserts that an Account Admin can assign roles to users."
 	@priority = "5"
 	test AccountAdminCanAssignRolesToUsers {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+		task ("Add a new user into the 'Account Name' account") {
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
 
-		for (var accountRoles : list "Test Account Role,Test Account Role 2") {
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
-			Accounts.addOwnedAccountRole(accountRoleTitle = "${accountRoles}");
-		}
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "2B Account Page");
-
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Manage Users",
-			rowEntry = "Account Name");
-
-		for (var n : list "1,2") {
 			Accounts.addNewUserToBusinessAccount(
 				accountName = "Account Name",
-				assigneeName = "user${n}",
-				userEmailAddress = "user${n}@liferay.com",
-				userFirstName = "user${n}",
-				userLastName = "user${n}",
-				userScreenName = "user${n}");
+				assigneeName = "user1",
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
 
-			AssertTextEquals(
-				key_columnName = "lfr-account-roles-column",
-				key_rowEntry = "user${n} user${n}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
-				value1 = "");
-
-			Accounts.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Test Account Role",
-				accountUserName = "user${n} user${n}");
-
-			AssertTextEquals(
-				key_columnName = "lfr-account-roles-column",
-				key_rowEntry = "user${n} user${n}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
-				value1 = "Test Account Role");
+			WaitForElementPresent(
+				key_rowEntry = "user1 user1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 		}
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Test Account Role 2",
-			accountUserName = "user2 user2");
+		task ("Assign new user the role of 'Account Administrator'") {
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "user1 user1");
+		}
 
-		AssertTextEquals(
-			key_columnName = "lfr-account-roles-column",
-			key_rowEntry = "user2 user2",
-			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
-			value1 = "Test Account Role, Test Account Role 2");
+		task ("Assert that the new user has 'Account Administator' listed in their role") {
+			AssertTextEquals(
+				key_columnName = "lfr-account-roles-column",
+				key_rowEntry = "user1 user1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+				value1 = "Account Administrator");
+		}
 	}
 
 	@description = "This test asserts that an Account can be deactivated and will show Active and Inactive filters."

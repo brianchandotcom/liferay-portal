@@ -2,7 +2,7 @@ import ClayForm, { ClayInput } from "@clayui/form";
 import { useField } from "formik";
 import { email, required, validate } from "../utils/validations.form";
 
-const Input = ({ label, groupStyle, helper, validations, ...props }) => {
+const Input = ({ groupStyle, helper, label, validations, ...props }) => {
     if (props.type === "email") {
         validations = validations ? [(value) => email(value), ...validations] : [(value) => email(value)];
     }
@@ -30,7 +30,7 @@ const Input = ({ label, groupStyle, helper, validations, ...props }) => {
                 {label} {props.required && <span className="ml-n1 text-danger text-paragraph-sm">*</span>}
                 <ClayInput {...field} {...props} />
             </label>
-            {helper && <div className="text-neutral-3 text-paragraph-sm ml-3 pl-3">
+            {helper && <div className="ml-3 pl-3 text-neutral-3 text-paragraph-sm">
                 {helper}
             </div>}
         </ClayForm.Group>

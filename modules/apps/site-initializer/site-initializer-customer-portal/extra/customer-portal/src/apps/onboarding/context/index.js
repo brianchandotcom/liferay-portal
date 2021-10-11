@@ -1,43 +1,44 @@
-import { createContext, useReducer } from "react";
-import FormProvider from "~/shared/providers/FormProvider";
-import { getInitialInvite, getInitialDxpAdmin, roles, steps } from "../utils/constants";
-import reducer from "./reducer";
+import {createContext, useReducer} from 'react';
+import FormProvider from '~/shared/providers/FormProvider';
+import {
+	getInitialDxpAdmin,
+	getInitialInvite,
+	roles,
+	steps,
+} from '../utils/constants';
+import reducer from './reducer';
 
 const initialApp = {
-  step: steps.welcome,
-  dxp: {
-    organization: "SuperBank",
-    version: "7.3"
-  },
+	dxp: {
+		organization: 'SuperBank',
+		version: '7.3',
+	},
+	step: steps.welcome,
 };
 
 const initialForm = {
-  invites: [
-    getInitialInvite(roles.creator.id),
-    getInitialInvite(roles.watcher.id),
-    getInitialInvite(roles.watcher.id)
-  ],
-  dxp: {
-    projectId: "",
-    dataCenterRegion: "",
-    admins: [
-      getInitialDxpAdmin()
-    ],
-  }
+	dxp: {
+		admins: [getInitialDxpAdmin()],
+		dataCenterRegion: '',
+		projectId: '',
+	},
+	invites: [
+		getInitialInvite(roles.creator.id),
+		getInitialInvite(roles.watcher.id),
+		getInitialInvite(roles.watcher.id),
+	],
 };
 
 const AppContext = createContext();
 
-const AppProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialApp);
+const AppProvider = ({children}) => {
+	const [state, dispatch] = useReducer(reducer, initialApp);
 
-  return (
-    <AppContext.Provider value={[state, dispatch]}>
-      <FormProvider initialValues={initialForm}>
-        {children}
-      </FormProvider>
-    </AppContext.Provider>
-  );
+	return (
+		<AppContext.Provider value={[state, dispatch]}>
+			<FormProvider initialValues={initialForm}>{children}</FormProvider>
+		</AppContext.Provider>
+	);
 };
 
-export { AppContext, AppProvider };
+export {AppContext, AppProvider};

@@ -1,7 +1,7 @@
 import { Button } from "@clayui/core";
 import ClayIcon from '@clayui/icon';
 
-const BaseButton = ({ children, prependIcon, appendIcon, ...props }) => {
+const BaseButton = ({ appendIcon, children, prependIcon, ...props }) => {
     return (
         <Button {...props}>
             {prependIcon && <span className="inline-item inline-item-before">

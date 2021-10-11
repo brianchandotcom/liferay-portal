@@ -2,7 +2,7 @@ import ClayCard from '@clayui/card';
 import BaseButton from '~/shared/components/BaseButton';
 import StatusTag from './StatusTag';
 
-const ProjectCard = ({ title, status, endDate, state, onClick, small }) => {
+const ProjectCard = ({ endDate, onClick, small, state, status, title }) => {
 
   return (
     <ClayCard className={`project-card${small ? "-sm" : ""} m-0`} onClick={() => onClick}>
@@ -10,17 +10,20 @@ const ProjectCard = ({ title, status, endDate, state, onClick, small }) => {
         <ClayCard.Description className="text-neutral-3" displayType="title" tag={`${small ? "h4" : "h3"}`}>
           {title}
         </ClayCard.Description>
+
         <div className={`${small ? "" : "align-items-end "}d-flex justify-content-between`}>
-          <ClayCard.Description truncate={false} displayType="text" tag="div" title={null}>
+          <ClayCard.Description displayType="text" tag="div" title={null} truncate={false}>
             <StatusTag currentStatus={status} />
+
             <div className={`text-paragraph-sm text-neutral-5${small ? " sm-mb" : " my-1"}`}>
-              Ends on <span className="text-paragraph font-weight-bold">{endDate}</span>
+              Ends on <span className="font-weight-bold text-paragraph">{endDate}</span>
             </div>
-            <div className="text-paragraph-sm text-neutral-5">
+
+            <div className="text-neutral-5 text-paragraph-sm">
               {state}
             </div>
           </ClayCard.Description>
-          {!small && <BaseButton className="p-0 text-brand-primary" appendIcon="angle-right" borderless>
+          {!small && <BaseButton appendIcon="angle-right" borderless className="p-0 text-brand-primary">
             See details
           </BaseButton>}
         </div>

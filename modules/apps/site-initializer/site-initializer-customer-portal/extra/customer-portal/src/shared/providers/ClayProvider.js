@@ -1,4 +1,4 @@
-import { ClayIconSpriteContext } from '@clayui/icon';
+import {ClayIconSpriteContext} from '@clayui/icon';
 import React from 'react';
 
 const getIconSpriteMap = () => {
@@ -13,11 +13,12 @@ const getIconSpriteMap = () => {
 	} catch (error) {
 		console.warn(error.message);
 
+		// eslint-disable-next-line no-undef
 		return require('@clayui/css/lib/images/icons/icons.svg').default;
 	}
 };
 
-const ClayProvider = ({ children }) => {
+const ClayProvider = ({children}) => {
 	return (
 		<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
 			{children}

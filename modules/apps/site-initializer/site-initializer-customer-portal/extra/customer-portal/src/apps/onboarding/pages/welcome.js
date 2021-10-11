@@ -36,7 +36,7 @@ const Welcome = () => {
         width={391.58}
       />
 
-      <p className="mb-0 px-1 text-neutral-2 text-center">
+      <p className="mb-0 px-1 text-center text-neutral-2">
         Let’s download your DXP activation keys, add any team members to your
         projects and give you a quick tour of the space.
       </p>

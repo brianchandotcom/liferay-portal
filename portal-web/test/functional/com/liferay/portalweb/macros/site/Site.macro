@@ -773,12 +773,6 @@ definition {
 	}
 
 	macro importSiteFromTempFolder {
-		AssertClick(
-			locator1 = "Button#SELECT_FILE",
-			value1 = "Select File");
-
-		SikuliClick(locator1 = "OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG");
-
 		var siteLARFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "Public_Pages-*.lar");
 
 		UploadTempFile.uploadTempFileHiddenNoMouseOver(

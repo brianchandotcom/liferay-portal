@@ -225,19 +225,19 @@ const Splotch = React.forwardRef(
 );
 
 const ColorPalette = ({colors, onSetActive, onValueChange, splotchRef}) =>
-	Object.keys(colors).map((category, i) => (
-		<div
-			className="page-editor__ColorPicker__color-palette"
-			key={`${category}_${i}`}
-		>
+	Object.keys(colors).map((category) => (
+		<div className="page-editor__ColorPicker__color-palette" key={category}>
 			<span className="mb-3 sheet-subtitle">{category}</span>
-			{Object.keys(colors[category]).map((tokenSet, i) => (
-				<div key={`${tokenSet}_${i}`}>
+			{Object.keys(colors[category]).map((tokenSet) => (
+				<div key={tokenSet}>
 					<span className="text-secondary">{tokenSet}</span>
 					<div className="clay-color-swatch mb-0 mt-3">
 						{colors[category][tokenSet].map(
-							({label, name, value}, i) => (
-								<div className="clay-color-swatch-item" key={i}>
+							({label, name, value}) => (
+								<div
+									className="clay-color-swatch-item"
+									key={name}
+								>
 									<Splotch
 										onClick={() => {
 											onValueChange({

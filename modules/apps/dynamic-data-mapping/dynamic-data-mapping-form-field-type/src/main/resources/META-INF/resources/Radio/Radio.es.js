@@ -19,6 +19,8 @@ import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 import {setJSONArrayValue} from '../util/setters.es';
 
+import './Radio.scss';
+
 const Radio = ({
 	editingLanguageId,
 	inline,
@@ -60,7 +62,7 @@ const Radio = ({
 
 	return (
 		<FieldBase {...otherProps} name={name} readOnly={disabled}>
-			<div className="ddm-radio" onBlur={onBlur} onFocus={onFocus}>
+			<div className="ddm__radio" onBlur={onBlur} onFocus={onFocus}>
 				{options.map((option, index) => (
 					<ClayRadio
 						checked={currentValue === option.value}

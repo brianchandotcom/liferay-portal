@@ -460,24 +460,6 @@ public class KaleoInstanceTokenLocalServiceWrapper
 			searchByActiveWorkflowHandlers, start, end, sorts, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.search.Hits search(
-		Long userId, String assetClassName, String assetTitle,
-		String assetDescription, String currentKaleoNodeName,
-		String kaleoDefinitionName, Boolean completed, int start, int end,
-		com.liferay.portal.kernel.search.Sort[] sorts,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-
-		return _kaleoInstanceTokenLocalService.search(
-			userId, assetClassName, assetTitle, assetDescription,
-			currentKaleoNodeName, kaleoDefinitionName, completed, start, end,
-			sorts, serviceContext);
-	}
-
 	@Override
 	public int searchCount(
 		Long userId, String assetClassName, String assetTitle,
@@ -490,23 +472,6 @@ public class KaleoInstanceTokenLocalServiceWrapper
 			userId, assetClassName, assetTitle, assetDescription,
 			currentKaleoNodeName, kaleoDefinitionName, completed,
 			searchByActiveWorkflowHandlers, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public int searchCount(
-		Long userId, String assetClassName, String assetTitle,
-		String assetDescription, String currentKaleoNodeName,
-		String kaleoDefinitionName, Boolean completed,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-
-		return _kaleoInstanceTokenLocalService.searchCount(
-			userId, assetClassName, assetTitle, assetDescription,
-			currentKaleoNodeName, kaleoDefinitionName, completed,
-			serviceContext);
 	}
 
 	/**

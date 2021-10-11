@@ -482,23 +482,6 @@ public interface KaleoTaskInstanceTokenLocalService
 				ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<KaleoTaskInstanceToken>
-			searchKaleoTaskInstanceTokens(
-				String assetTitle, String[] taskNames, String[] assetTypes,
-				Long[] assetPrimaryKeys, String assigneeClassName,
-				Long[] assigneeClassPKs, Date dueDateGT, Date dueDateLT,
-				Boolean completed, Long kaleoDefinitionId,
-				Long[] kaleoInstanceIds, Boolean searchByUserRoles,
-				boolean andOperator, int start, int end,
-				OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
-				ServiceContext serviceContext)
-		throws PortalException;
-
 	public KaleoTaskInstanceToken updateDueDate(
 			long kaleoTaskInstanceTokenId, Date dueDate,
 			ServiceContext serviceContext)

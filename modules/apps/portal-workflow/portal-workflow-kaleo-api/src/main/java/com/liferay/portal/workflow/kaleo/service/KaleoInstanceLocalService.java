@@ -346,19 +346,6 @@ public interface KaleoInstanceLocalService
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<KaleoInstance> searchKaleoInstances(
-			Long userId, String assetClassName, String assetTitle,
-			String assetDescription, String nodeName,
-			String kaleoDefinitionName, Boolean completed, int start, int end,
-			OrderByComparator<KaleoInstance> orderByComparator,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
 	 * Updates the kaleo instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * <p>

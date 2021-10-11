@@ -55,8 +55,10 @@ public class BatchEngineExportTaskSoap implements Serializable {
 		soapModel.setFieldNames(model.getFieldNames());
 		soapModel.setExecuteStatus(model.getExecuteStatus());
 		soapModel.setParameters(model.getParameters());
+		soapModel.setProcessedItemsCount(model.getProcessedItemsCount());
 		soapModel.setStartTime(model.getStartTime());
 		soapModel.setTaskItemDelegateName(model.getTaskItemDelegateName());
+		soapModel.setTotalItemsCount(model.getTotalItemsCount());
 
 		return soapModel;
 	}
@@ -247,6 +249,14 @@ public class BatchEngineExportTaskSoap implements Serializable {
 		_parameters = parameters;
 	}
 
+	public int getProcessedItemsCount() {
+		return _processedItemsCount;
+	}
+
+	public void setProcessedItemsCount(int processedItemsCount) {
+		_processedItemsCount = processedItemsCount;
+	}
+
 	public Date getStartTime() {
 		return _startTime;
 	}
@@ -261,6 +271,14 @@ public class BatchEngineExportTaskSoap implements Serializable {
 
 	public void setTaskItemDelegateName(String taskItemDelegateName) {
 		_taskItemDelegateName = taskItemDelegateName;
+	}
+
+	public int getTotalItemsCount() {
+		return _totalItemsCount;
+	}
+
+	public void setTotalItemsCount(int totalItemsCount) {
+		_totalItemsCount = totalItemsCount;
 	}
 
 	private long _mvccVersion;
@@ -279,7 +297,9 @@ public class BatchEngineExportTaskSoap implements Serializable {
 	private String _fieldNames;
 	private String _executeStatus;
 	private Map<String, Serializable> _parameters;
+	private int _processedItemsCount;
 	private Date _startTime;
 	private String _taskItemDelegateName;
+	private int _totalItemsCount;
 
 }

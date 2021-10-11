@@ -87,7 +87,9 @@ public class BatchEngineExportTaskModelImpl
 		{"contentType", Types.VARCHAR}, {"endTime", Types.TIMESTAMP},
 		{"errorMessage", Types.CLOB}, {"fieldNames", Types.VARCHAR},
 		{"executeStatus", Types.VARCHAR}, {"parameters", Types.CLOB},
-		{"startTime", Types.TIMESTAMP}, {"taskItemDelegateName", Types.VARCHAR}
+		{"processedItemsCount", Types.INTEGER}, {"startTime", Types.TIMESTAMP},
+		{"taskItemDelegateName", Types.VARCHAR},
+		{"totalItemsCount", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -110,12 +112,14 @@ public class BatchEngineExportTaskModelImpl
 		TABLE_COLUMNS_MAP.put("fieldNames", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("executeStatus", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("parameters", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("processedItemsCount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("startTime", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("taskItemDelegateName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("totalItemsCount", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchEngineExportTask (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,batchEngineExportTaskId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,callbackURL VARCHAR(75) null,className VARCHAR(255) null,content BLOB,contentType VARCHAR(75) null,endTime DATE null,errorMessage TEXT null,fieldNames VARCHAR(1000) null,executeStatus VARCHAR(75) null,parameters TEXT null,startTime DATE null,taskItemDelegateName VARCHAR(75) null)";
+		"create table BatchEngineExportTask (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,batchEngineExportTaskId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,callbackURL VARCHAR(75) null,className VARCHAR(255) null,content BLOB,contentType VARCHAR(75) null,endTime DATE null,errorMessage TEXT null,fieldNames VARCHAR(1000) null,executeStatus VARCHAR(75) null,parameters TEXT null,processedItemsCount INTEGER,startTime DATE null,taskItemDelegateName VARCHAR(75) null,totalItemsCount INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table BatchEngineExportTask";
@@ -205,8 +209,10 @@ public class BatchEngineExportTaskModelImpl
 		model.setFieldNames(soapModel.getFieldNames());
 		model.setExecuteStatus(soapModel.getExecuteStatus());
 		model.setParameters(soapModel.getParameters());
+		model.setProcessedItemsCount(soapModel.getProcessedItemsCount());
 		model.setStartTime(soapModel.getStartTime());
 		model.setTaskItemDelegateName(soapModel.getTaskItemDelegateName());
+		model.setTotalItemsCount(soapModel.getTotalItemsCount());
 
 		return model;
 	}
@@ -462,6 +468,13 @@ public class BatchEngineExportTaskModelImpl
 			(BiConsumer<BatchEngineExportTask, Map<String, Serializable>>)
 				BatchEngineExportTask::setParameters);
 		attributeGetterFunctions.put(
+			"processedItemsCount",
+			BatchEngineExportTask::getProcessedItemsCount);
+		attributeSetterBiConsumers.put(
+			"processedItemsCount",
+			(BiConsumer<BatchEngineExportTask, Integer>)
+				BatchEngineExportTask::setProcessedItemsCount);
+		attributeGetterFunctions.put(
 			"startTime", BatchEngineExportTask::getStartTime);
 		attributeSetterBiConsumers.put(
 			"startTime",
@@ -474,6 +487,12 @@ public class BatchEngineExportTaskModelImpl
 			"taskItemDelegateName",
 			(BiConsumer<BatchEngineExportTask, String>)
 				BatchEngineExportTask::setTaskItemDelegateName);
+		attributeGetterFunctions.put(
+			"totalItemsCount", BatchEngineExportTask::getTotalItemsCount);
+		attributeSetterBiConsumers.put(
+			"totalItemsCount",
+			(BiConsumer<BatchEngineExportTask, Integer>)
+				BatchEngineExportTask::setTotalItemsCount);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -830,6 +849,21 @@ public class BatchEngineExportTaskModelImpl
 
 	@JSON
 	@Override
+	public int getProcessedItemsCount() {
+		return _processedItemsCount;
+	}
+
+	@Override
+	public void setProcessedItemsCount(int processedItemsCount) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_processedItemsCount = processedItemsCount;
+	}
+
+	@JSON
+	@Override
 	public Date getStartTime() {
 		return _startTime;
 	}
@@ -861,6 +895,21 @@ public class BatchEngineExportTaskModelImpl
 		}
 
 		_taskItemDelegateName = taskItemDelegateName;
+	}
+
+	@JSON
+	@Override
+	public int getTotalItemsCount() {
+		return _totalItemsCount;
+	}
+
+	@Override
+	public void setTotalItemsCount(int totalItemsCount) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_totalItemsCount = totalItemsCount;
 	}
 
 	@Override
@@ -943,9 +992,12 @@ public class BatchEngineExportTaskModelImpl
 		batchEngineExportTaskImpl.setFieldNames(getFieldNames());
 		batchEngineExportTaskImpl.setExecuteStatus(getExecuteStatus());
 		batchEngineExportTaskImpl.setParameters(getParameters());
+		batchEngineExportTaskImpl.setProcessedItemsCount(
+			getProcessedItemsCount());
 		batchEngineExportTaskImpl.setStartTime(getStartTime());
 		batchEngineExportTaskImpl.setTaskItemDelegateName(
 			getTaskItemDelegateName());
+		batchEngineExportTaskImpl.setTotalItemsCount(getTotalItemsCount());
 
 		batchEngineExportTaskImpl.resetOriginalValues();
 
@@ -987,10 +1039,14 @@ public class BatchEngineExportTaskModelImpl
 			this.<String>getColumnOriginalValue("executeStatus"));
 		batchEngineExportTaskImpl.setParameters(
 			this.<Map>getColumnOriginalValue("parameters"));
+		batchEngineExportTaskImpl.setProcessedItemsCount(
+			this.<Integer>getColumnOriginalValue("processedItemsCount"));
 		batchEngineExportTaskImpl.setStartTime(
 			this.<Date>getColumnOriginalValue("startTime"));
 		batchEngineExportTaskImpl.setTaskItemDelegateName(
 			this.<String>getColumnOriginalValue("taskItemDelegateName"));
+		batchEngineExportTaskImpl.setTotalItemsCount(
+			this.<Integer>getColumnOriginalValue("totalItemsCount"));
 
 		return batchEngineExportTaskImpl;
 	}
@@ -1167,6 +1223,9 @@ public class BatchEngineExportTaskModelImpl
 
 		batchEngineExportTaskCacheModel.parameters = getParameters();
 
+		batchEngineExportTaskCacheModel.processedItemsCount =
+			getProcessedItemsCount();
+
 		Date startTime = getStartTime();
 
 		if (startTime != null) {
@@ -1188,12 +1247,14 @@ public class BatchEngineExportTaskModelImpl
 			batchEngineExportTaskCacheModel.taskItemDelegateName = null;
 		}
 
+		batchEngineExportTaskCacheModel.totalItemsCount = getTotalItemsCount();
+
 		return batchEngineExportTaskCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{\"mvccVersion\": ");
 
@@ -1255,6 +1316,10 @@ public class BatchEngineExportTaskModelImpl
 
 		sb.append("\"" + getParameters() + "\"");
 
+		sb.append(", \"processedItemsCount\": ");
+
+		sb.append(getProcessedItemsCount());
+
 		sb.append(", \"startTime\": ");
 
 		sb.append("\"" + getStartTime() + "\"");
@@ -1263,6 +1328,10 @@ public class BatchEngineExportTaskModelImpl
 
 		sb.append("\"" + getTaskItemDelegateName() + "\"");
 
+		sb.append(", \"totalItemsCount\": ");
+
+		sb.append(getTotalItemsCount());
+
 		sb.append("}");
 
 		return sb.toString();
@@ -1270,7 +1339,7 @@ public class BatchEngineExportTaskModelImpl
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.batch.engine.model.BatchEngineExportTask");
@@ -1367,6 +1436,12 @@ public class BatchEngineExportTaskModelImpl
 
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>processedItemsCount</column-name><column-value><![CDATA[");
+
+		sb.append(getProcessedItemsCount());
+
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>startTime</column-name><column-value><![CDATA[");
 
 		sb.append(getStartTime());
@@ -1376,6 +1451,12 @@ public class BatchEngineExportTaskModelImpl
 			"<column><column-name>taskItemDelegateName</column-name><column-value><![CDATA[");
 
 		sb.append(getTaskItemDelegateName());
+
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>totalItemsCount</column-name><column-value><![CDATA[");
+
+		sb.append(getTotalItemsCount());
 
 		sb.append("]]></column-value></column>");
 
@@ -1408,8 +1489,10 @@ public class BatchEngineExportTaskModelImpl
 	private String _fieldNames;
 	private String _executeStatus;
 	private Map<String, Serializable> _parameters;
+	private int _processedItemsCount;
 	private Date _startTime;
 	private String _taskItemDelegateName;
+	private int _totalItemsCount;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1456,9 +1539,11 @@ public class BatchEngineExportTaskModelImpl
 		_columnOriginalValues.put("fieldNames", _fieldNames);
 		_columnOriginalValues.put("executeStatus", _executeStatus);
 		_columnOriginalValues.put("parameters", _parameters);
+		_columnOriginalValues.put("processedItemsCount", _processedItemsCount);
 		_columnOriginalValues.put("startTime", _startTime);
 		_columnOriginalValues.put(
 			"taskItemDelegateName", _taskItemDelegateName);
+		_columnOriginalValues.put("totalItemsCount", _totalItemsCount);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1514,9 +1599,13 @@ public class BatchEngineExportTaskModelImpl
 
 		columnBitmasks.put("parameters", 32768L);
 
-		columnBitmasks.put("startTime", 65536L);
+		columnBitmasks.put("processedItemsCount", 65536L);
 
-		columnBitmasks.put("taskItemDelegateName", 131072L);
+		columnBitmasks.put("startTime", 131072L);
+
+		columnBitmasks.put("taskItemDelegateName", 262144L);
+
+		columnBitmasks.put("totalItemsCount", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

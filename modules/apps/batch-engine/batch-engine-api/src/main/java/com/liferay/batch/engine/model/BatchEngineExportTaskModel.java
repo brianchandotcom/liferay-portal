@@ -321,6 +321,20 @@ public interface BatchEngineExportTaskModel
 	public void setParameters(Map<String, Serializable> parameters);
 
 	/**
+	 * Returns the processed items count of this batch engine export task.
+	 *
+	 * @return the processed items count of this batch engine export task
+	 */
+	public int getProcessedItemsCount();
+
+	/**
+	 * Sets the processed items count of this batch engine export task.
+	 *
+	 * @param processedItemsCount the processed items count of this batch engine export task
+	 */
+	public void setProcessedItemsCount(int processedItemsCount);
+
+	/**
 	 * Returns the start time of this batch engine export task.
 	 *
 	 * @return the start time of this batch engine export task
@@ -348,6 +362,20 @@ public interface BatchEngineExportTaskModel
 	 * @param taskItemDelegateName the task item delegate name of this batch engine export task
 	 */
 	public void setTaskItemDelegateName(String taskItemDelegateName);
+
+	/**
+	 * Returns the total items count of this batch engine export task.
+	 *
+	 * @return the total items count of this batch engine export task
+	 */
+	public int getTotalItemsCount();
+
+	/**
+	 * Sets the total items count of this batch engine export task.
+	 *
+	 * @param totalItemsCount the total items count of this batch engine export task
+	 */
+	public void setTotalItemsCount(int totalItemsCount);
 
 	@Override
 	public BatchEngineExportTask cloneWithOriginalValues();

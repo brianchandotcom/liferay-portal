@@ -15,8 +15,10 @@ create table BatchEngineExportTask (
 	fieldNames VARCHAR(1000) null,
 	executeStatus VARCHAR(75) null,
 	parameters TEXT null,
+	processedItemsCount INTEGER,
 	startTime DATE null,
-	taskItemDelegateName VARCHAR(75) null
+	taskItemDelegateName VARCHAR(75) null,
+	totalItemsCount INTEGER
 );
 
 create table BatchEngineImportTask (

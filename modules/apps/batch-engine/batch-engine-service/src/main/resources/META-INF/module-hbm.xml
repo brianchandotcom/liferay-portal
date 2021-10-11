@@ -23,8 +23,10 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fieldNames" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="executeStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="parameters" type="com.liferay.portal.dao.orm.hibernate.MapType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="processedItemsCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="startTime" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="taskItemDelegateName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="totalItemsCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class dynamic-update="true" lazy="true" name="com.liferay.batch.engine.model.BatchEngineExportTaskContentBlobModel" table="BatchEngineExportTask">
 		<id column="batchEngineExportTaskId" name="batchEngineExportTaskId">

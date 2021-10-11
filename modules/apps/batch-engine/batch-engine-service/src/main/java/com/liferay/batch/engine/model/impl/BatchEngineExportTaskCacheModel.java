@@ -80,7 +80,7 @@ public class BatchEngineExportTaskCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -112,10 +112,14 @@ public class BatchEngineExportTaskCacheModel
 		sb.append(executeStatus);
 		sb.append(", parameters=");
 		sb.append(parameters);
+		sb.append(", processedItemsCount=");
+		sb.append(processedItemsCount);
 		sb.append(", startTime=");
 		sb.append(startTime);
 		sb.append(", taskItemDelegateName=");
 		sb.append(taskItemDelegateName);
+		sb.append(", totalItemsCount=");
+		sb.append(totalItemsCount);
 		sb.append("}");
 
 		return sb.toString();
@@ -204,6 +208,7 @@ public class BatchEngineExportTaskCacheModel
 		}
 
 		batchEngineExportTaskImpl.setParameters(parameters);
+		batchEngineExportTaskImpl.setProcessedItemsCount(processedItemsCount);
 
 		if (startTime == Long.MIN_VALUE) {
 			batchEngineExportTaskImpl.setStartTime(null);
@@ -219,6 +224,8 @@ public class BatchEngineExportTaskCacheModel
 			batchEngineExportTaskImpl.setTaskItemDelegateName(
 				taskItemDelegateName);
 		}
+
+		batchEngineExportTaskImpl.setTotalItemsCount(totalItemsCount);
 
 		batchEngineExportTaskImpl.resetOriginalValues();
 
@@ -247,8 +254,12 @@ public class BatchEngineExportTaskCacheModel
 		fieldNames = objectInput.readUTF();
 		executeStatus = objectInput.readUTF();
 		parameters = (Map<String, Serializable>)objectInput.readObject();
+
+		processedItemsCount = objectInput.readInt();
 		startTime = objectInput.readLong();
 		taskItemDelegateName = objectInput.readUTF();
+
+		totalItemsCount = objectInput.readInt();
 	}
 
 	@Override
@@ -315,6 +326,8 @@ public class BatchEngineExportTaskCacheModel
 		}
 
 		objectOutput.writeObject(parameters);
+
+		objectOutput.writeInt(processedItemsCount);
 		objectOutput.writeLong(startTime);
 
 		if (taskItemDelegateName == null) {
@@ -323,6 +336,8 @@ public class BatchEngineExportTaskCacheModel
 		else {
 			objectOutput.writeUTF(taskItemDelegateName);
 		}
+
+		objectOutput.writeInt(totalItemsCount);
 	}
 
 	public long mvccVersion;
@@ -340,7 +355,9 @@ public class BatchEngineExportTaskCacheModel
 	public String fieldNames;
 	public String executeStatus;
 	public Map<String, Serializable> parameters;
+	public int processedItemsCount;
 	public long startTime;
 	public String taskItemDelegateName;
+	public int totalItemsCount;
 
 }

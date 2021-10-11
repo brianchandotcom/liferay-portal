@@ -131,36 +131,14 @@ $label-danger: (
 );
 
 $label-light: (
-	background-color: var(--color-neutral-1),
-	border-color: var(--color-neutral-9),
-	close: (
-		focus: (
-			color: var(--color-neutral-7),
-		),
-		hover: (
-			color: var(--color-neutral-7),
-		),
-	),
-	color: var(--color-neutral-9),
-	focus: (
-		color: var(--color-neutral-9),
-	),
-	hover: (
-		background-color: var(--color-neutral-1),
-		border-color: var(--color-neutral-9),
-		color: var(--color-neutral-9),
-	),
-);
-
-$label-dark: (
 	background-color: var(--color-neutral-9),
 	border-color: var(--color-neutral-1),
 	close: (
 		focus: (
-			color: var(--color-neutral-0),
+			color: var(--color-neutral-3),
 		),
 		hover: (
-			color: var(--color-neutral-0),
+			color: var(--color-neutral-3),
 		),
 	),
 	color: var(--color-neutral-1),
@@ -171,6 +149,28 @@ $label-dark: (
 		background-color: var(--color-neutral-9),
 		border-color: var(--color-neutral-1),
 		color: var(--color-neutral-1),
+	),
+);
+
+$label-dark: (
+	background-color: var(--color-neutral-1),
+	border-color: var(--color-neutral-9),
+	close: (
+		focus: (
+			color: var(--color-neutral-10),
+		),
+		hover: (
+			color: var(--color-neutral-10),
+		),
+	),
+	color: var(--color-neutral-9),
+	focus: (
+		color: var(--color-neutral-9),
+	),
+	hover: (
+		background-color: var(--color-neutral-1),
+		border-color: var(--color-neutral-9),
+		color: var(--color-neutral-9),
 	),
 );
 
@@ -303,27 +303,6 @@ $label-inverse-danger: (
 );
 
 $label-inverse-light: (
-	background-color: var(--color-neutral-9),
-	border-color: var(--color-neutral-9),
-	close: (
-		hover: (
-			color: var(--color-neutral-3),
-		),
-	),
-	color: var(--color-neutral-1),
-	hover: (
-		background-color: var(--color-neutral-9),
-		border-color: var(--color-neutral-9),
-		color: var(--color-neutral-1),
-	),
-	link: (
-		hover: (
-			color: var(--color-neutral-3),
-		),
-	),
-);
-
-$label-inverse-dark: (
 	background-color: var(--color-neutral-1),
 	border-color: var(--color-neutral-1),
 	close: (
@@ -340,6 +319,27 @@ $label-inverse-dark: (
 	link: (
 		hover: (
 			color: var(--color-neutral-7),
+		),
+	),
+);
+
+$label-inverse-dark: (
+	background-color: var(--color-neutral-9),
+	border-color: var(--color-neutral-9),
+	close: (
+		hover: (
+			color: var(--color-neutral-3),
+		),
+	),
+	color: var(--color-neutral-1),
+	hover: (
+		background-color: var(--color-neutral-9),
+		border-color: var(--color-neutral-9),
+		color: var(--color-neutral-1),
+	),
+	link: (
+		hover: (
+			color: var(--color-neutral-3),
 		),
 	),
 );

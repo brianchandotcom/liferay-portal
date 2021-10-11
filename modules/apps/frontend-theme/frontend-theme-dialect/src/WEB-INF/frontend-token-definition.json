@@ -331,66 +331,66 @@
 						{
 							"defaultValue": "#1d1c21",
 							"editorType": "ColorPicker",
-							"label": "color-neutral-0",
+							"label": "color-neutral-10",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "color-neutral-0"
+									"value": "color-neutral-10"
 								}
 							],
-							"name": "colorNeutral0",
+							"name": "colorNeutral10",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#332b4a",
 							"editorType": "ColorPicker",
-							"label": "color-neutral-1",
+							"label": "color-neutral-9",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "color-neutral-1"
+									"value": "color-neutral-9"
 								}
 							],
-							"name": "colorNeutral1",
+							"name": "colorNeutral9",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#3f3851",
 							"editorType": "ColorPicker",
-							"label": "color-neutral-2",
+							"label": "color-neutral-8",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "color-neutral-2"
+									"value": "color-neutral-8"
 								}
 							],
-							"name": "colorNeutral2",
+							"name": "colorNeutral8",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#5a5469",
 							"editorType": "ColorPicker",
-							"label": "color-neutral-3",
+							"label": "color-neutral-7",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "color-neutral-3"
+									"value": "color-neutral-7"
 								}
 							],
-							"name": "colorNeutral3",
+							"name": "colorNeutral7",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#716c7f",
 							"editorType": "ColorPicker",
-							"label": "color-neutral-4",
+							"label": "color-neutral-6",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "color-neutral-4"
+									"value": "color-neutral-6"
 								}
 							],
-							"name": "colorNeutral4",
+							"name": "colorNeutral6",
 							"type": "String"
 						},
 						{
@@ -409,66 +409,66 @@
 						{
 							"defaultValue": "#a7a3b2",
 							"editorType": "ColorPicker",
-							"label": "color-neutral-6",
+							"label": "color-neutral-4",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "color-neutral-6"
+									"value": "color-neutral-4"
 								}
 							],
-							"name": "colorNeutral6",
+							"name": "colorNeutral4",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#dcd9e2",
 							"editorType": "ColorPicker",
-							"label": "color-neutral-7",
+							"label": "color-neutral-3",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "color-neutral-7"
+									"value": "color-neutral-3"
 								}
 							],
-							"name": "colorNeutral7",
+							"name": "colorNeutral3",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#eeecf3",
 							"editorType": "ColorPicker",
-							"label": "color-neutral-8",
+							"label": "color-neutral-2",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "color-neutral-8"
+									"value": "color-neutral-2"
 								}
 							],
-							"name": "colorNeutral8",
+							"name": "colorNeutral2",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#f7f6f9",
 							"editorType": "ColorPicker",
-							"label": "color-neutral-9",
+							"label": "color-neutral-1",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "color-neutral-9"
+									"value": "color-neutral-1"
 								}
 							],
-							"name": "colorNeutral9",
+							"name": "colorNeutral1",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#fff",
 							"editorType": "ColorPicker",
-							"label": "color-neutral-10",
+							"label": "color-neutral-0",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "color-neutral-10"
+									"value": "color-neutral-0"
 								}
 							],
-							"name": "colorNeutral10",
+							"name": "colorNeutral0",
 							"type": "String"
 						}
 					],
@@ -2052,7 +2052,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "var(--color-neutral-2)",
+							"defaultValue": "var(--color-neutral-8)",
 							"editorType": "ColorPicker",
 							"label": "form-input-label-color",
 							"mappings": [
@@ -2065,7 +2065,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-2)",
+							"defaultValue": "var(--color-neutral-8)",
 							"editorType": "ColorPicker",
 							"label": "form-input-disabled-label-color",
 							"mappings": [
@@ -2180,7 +2180,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "var(--color-neutral-10)",
+							"defaultValue": "var(--color-neutral-0)",
 							"editorType": "ColorPicker",
 							"label": "form-input-background-color",
 							"mappings": [
@@ -2206,7 +2206,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-8)",
+							"defaultValue": "var(--color-neutral-2)",
 							"editorType": "ColorPicker",
 							"label": "form-input-disabled-border-color",
 							"mappings": [
@@ -2243,7 +2243,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-2)",
+							"defaultValue": "var(--color-neutral-8)",
 							"editorType": "ColorPicker",
 							"label": "form-input-color",
 							"mappings": [
@@ -2256,7 +2256,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-6)",
+							"defaultValue": "var(--color-neutral-4)",
 							"editorType": "ColorPicker",
 							"label": "form-input-disabled-color",
 							"mappings": [
@@ -2335,7 +2335,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "var(--color-neutral-6)",
+							"defaultValue": "var(--color-neutral-4)",
 							"editorType": "ColorPicker",
 							"label": "form-input-placeholder-color",
 							"mappings": [
@@ -2348,7 +2348,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-7)",
+							"defaultValue": "var(--color-neutral-3)",
 							"editorType": "ColorPicker",
 							"label": "form-input-placeholder-disabled-color",
 							"mappings": [
@@ -2361,7 +2361,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-6)",
+							"defaultValue": "var(--color-neutral-4)",
 							"editorType": "ColorPicker",
 							"label": "form-input-placeholder-focus-color",
 							"mappings": [
@@ -2494,7 +2494,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "var(--color-neutral-3)",
+							"defaultValue": "var(--color-neutral-7)",
 							"editorType": "ColorPicker",
 							"label": "form-text-color",
 							"mappings": [
@@ -2728,7 +2728,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-8)",
+							"defaultValue": "var(--color-neutral-2)",
 							"editorType": "ColorPicker",
 							"label": "condensed-form-input-background-color",
 							"mappings": [
@@ -2777,7 +2777,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-2)",
+							"defaultValue": "var(--color-neutral-8)",
 							"editorType": "ColorPicker",
 							"label": "condensed-form-input-filled-label-color",
 							"mappings": [
@@ -2827,7 +2827,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-6)",
+							"defaultValue": "var(--color-neutral-4)",
 							"editorType": "ColorPicker",
 							"label": "condensed-form-input-disabled-label-color",
 							"mappings": [
@@ -2840,7 +2840,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-9)",
+							"defaultValue": "var(--color-neutral-1)",
 							"editorType": "ColorPicker",
 							"label": "condensed-form-input-disabled-background-color",
 							"mappings": [
@@ -2878,7 +2878,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-4)",
+							"defaultValue": "var(--color-neutral-6)",
 							"editorType": "ColorPicker",
 							"label": "brand-color-2",
 							"mappings": [
@@ -2904,7 +2904,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-1)",
+							"defaultValue": "var(--color-neutral-9)",
 							"editorType": "ColorPicker",
 							"label": "brand-color-4",
 							"mappings": [
@@ -2923,7 +2923,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "var(--color-neutral-10)",
+							"defaultValue": "var(--color-neutral-0)",
 							"editorType": "ColorPicker",
 							"label": "white",
 							"mappings": [
@@ -2936,7 +2936,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-9)",
+							"defaultValue": "var(--color-neutral-1)",
 							"editorType": "ColorPicker",
 							"label": "gray-100",
 							"mappings": [
@@ -2949,7 +2949,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-8)",
+							"defaultValue": "var(--color-neutral-2)",
 							"editorType": "ColorPicker",
 							"label": "gray-200",
 							"mappings": [
@@ -2962,7 +2962,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-7)",
+							"defaultValue": "var(--color-neutral-3)",
 							"editorType": "ColorPicker",
 							"label": "gray-300",
 							"mappings": [
@@ -2975,7 +2975,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-6)",
+							"defaultValue": "var(--color-neutral-4)",
 							"editorType": "ColorPicker",
 							"label": "gray-400",
 							"mappings": [
@@ -3001,7 +3001,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-4)",
+							"defaultValue": "var(--color-neutral-6)",
 							"editorType": "ColorPicker",
 							"label": "gray-600",
 							"mappings": [
@@ -3014,7 +3014,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-3)",
+							"defaultValue": "var(--color-neutral-7)",
 							"editorType": "ColorPicker",
 							"label": "gray-700",
 							"mappings": [
@@ -3027,7 +3027,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-2)",
+							"defaultValue": "var(--color-neutral-8)",
 							"editorType": "ColorPicker",
 							"label": "gray-800",
 							"mappings": [
@@ -3040,7 +3040,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-1)",
+							"defaultValue": "var(--color-neutral-9)",
 							"editorType": "ColorPicker",
 							"label": "gray-900",
 							"mappings": [
@@ -3053,7 +3053,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-0)",
+							"defaultValue": "var(--color-neutral-10)",
 							"editorType": "ColorPicker",
 							"label": "black",
 							"mappings": [
@@ -3085,7 +3085,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-4)",
+							"defaultValue": "var(--color-neutral-6)",
 							"editorType": "ColorPicker",
 							"label": "secondary",
 							"mappings": [
@@ -3150,7 +3150,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-2)",
+							"defaultValue": "var(--color-neutral-8)",
 							"editorType": "ColorPicker",
 							"label": "gray-dark",
 							"mappings": [
@@ -3163,7 +3163,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-1)",
+							"defaultValue": "var(--color-neutral-9)",
 							"editorType": "ColorPicker",
 							"label": "dark",
 							"mappings": [
@@ -3176,7 +3176,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-8)",
+							"defaultValue": "var(--color-neutral-2)",
 							"editorType": "ColorPicker",
 							"label": "light",
 							"mappings": [
@@ -3189,7 +3189,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-9)",
+							"defaultValue": "var(--color-neutral-1)",
 							"editorType": "ColorPicker",
 							"label": "lighter",
 							"mappings": [
@@ -3960,7 +3960,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-6)",
+							"defaultValue": "var(--color-neutral-4)",
 							"editorType": "ColorPicker",
 							"label": "text-muted",
 							"mappings": [
@@ -3985,7 +3985,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-4)",
+							"defaultValue": "var(--color-neutral-6)",
 							"editorType": "ColorPicker",
 							"label": "blockquote-small-color",
 							"mappings": [

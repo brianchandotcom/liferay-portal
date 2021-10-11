@@ -292,14 +292,18 @@ public class BatchPlannerLogLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.batch.planner.model.BatchPlannerLog>
-		getBatchPlannerLogs(
-			long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.batch.planner.model.BatchPlannerLog>
-					orderByComparator) {
+		getBatchPlannerLogs(long batchPlannerPlanId) {
 
 		return _batchPlannerLogLocalService.getBatchPlannerLogs(
-			companyId, start, end, orderByComparator);
+			batchPlannerPlanId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.batch.planner.model.BatchPlannerLog>
+		getBatchPlannerLogs(long batchPlannerPlanId, int start, int end) {
+
+		return _batchPlannerLogLocalService.getBatchPlannerLogs(
+			batchPlannerPlanId, start, end);
 	}
 
 	/**
@@ -313,8 +317,27 @@ public class BatchPlannerLogLocalServiceWrapper
 	}
 
 	@Override
-	public int getBatchPlannerLogsCount(long companyId) {
-		return _batchPlannerLogLocalService.getBatchPlannerLogsCount(companyId);
+	public int getBatchPlannerLogsCount(long batchPlannerPlanId) {
+		return _batchPlannerLogLocalService.getBatchPlannerLogsCount(
+			batchPlannerPlanId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.batch.planner.model.BatchPlannerLog>
+		getCompanyBatchPlannerLogs(
+			long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.batch.planner.model.BatchPlannerLog>
+					orderByComparator) {
+
+		return _batchPlannerLogLocalService.getCompanyBatchPlannerLogs(
+			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCompanyBatchPlannerLogsCount(long companyId) {
+		return _batchPlannerLogLocalService.getCompanyBatchPlannerLogsCount(
+			companyId);
 	}
 
 	@Override

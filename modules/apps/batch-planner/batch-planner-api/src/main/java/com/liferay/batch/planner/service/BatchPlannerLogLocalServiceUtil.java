@@ -263,11 +263,15 @@ public class BatchPlannerLogLocalServiceUtil {
 	}
 
 	public static List<BatchPlannerLog> getBatchPlannerLogs(
-		long companyId, int start, int end,
-		OrderByComparator<BatchPlannerLog> orderByComparator) {
+		long batchPlannerPlanId) {
 
-		return getService().getBatchPlannerLogs(
-			companyId, start, end, orderByComparator);
+		return getService().getBatchPlannerLogs(batchPlannerPlanId);
+	}
+
+	public static List<BatchPlannerLog> getBatchPlannerLogs(
+		long batchPlannerPlanId, int start, int end) {
+
+		return getService().getBatchPlannerLogs(batchPlannerPlanId, start, end);
 	}
 
 	/**
@@ -279,8 +283,20 @@ public class BatchPlannerLogLocalServiceUtil {
 		return getService().getBatchPlannerLogsCount();
 	}
 
-	public static int getBatchPlannerLogsCount(long companyId) {
-		return getService().getBatchPlannerLogsCount(companyId);
+	public static int getBatchPlannerLogsCount(long batchPlannerPlanId) {
+		return getService().getBatchPlannerLogsCount(batchPlannerPlanId);
+	}
+
+	public static List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+		long companyId, int start, int end,
+		OrderByComparator<BatchPlannerLog> orderByComparator) {
+
+		return getService().getCompanyBatchPlannerLogs(
+			companyId, start, end, orderByComparator);
+	}
+
+	public static int getCompanyBatchPlannerLogsCount(long companyId) {
+		return getService().getCompanyBatchPlannerLogsCount(companyId);
 	}
 
 	public static

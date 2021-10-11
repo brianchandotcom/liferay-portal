@@ -236,9 +236,11 @@ public interface BatchPlannerLogLocalService
 	public List<BatchPlannerLog> getBatchPlannerLogs(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerLog> getBatchPlannerLogs(long batchPlannerPlanId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchPlannerLog> getBatchPlannerLogs(
-		long companyId, int start, int end,
-		OrderByComparator<BatchPlannerLog> orderByComparator);
+		long batchPlannerPlanId, int start, int end);
 
 	/**
 	 * Returns the number of batch planner logs.
@@ -249,7 +251,15 @@ public interface BatchPlannerLogLocalService
 	public int getBatchPlannerLogsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getBatchPlannerLogsCount(long companyId);
+	public int getBatchPlannerLogsCount(long batchPlannerPlanId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+		long companyId, int start, int end,
+		OrderByComparator<BatchPlannerLog> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyBatchPlannerLogsCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

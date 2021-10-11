@@ -139,8 +139,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntryInfoItemFieldValuesProvider(
 					_assetDisplayPageFriendlyURLProvider,
 					_infoItemFieldReaderFieldSetProvider, _jsonFactory,
-					_objectFieldLocalService, _templateInfoItemFieldSetProvider,
-					_userLocalService),
+					_objectEntryLocalService, _objectFieldLocalService,
+					_templateInfoItemFieldSetProvider, _userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.class.name", objectDefinition.getClassName()
 				).build()),

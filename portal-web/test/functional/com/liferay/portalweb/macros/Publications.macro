@@ -358,14 +358,7 @@ definition {
 
 		Check.checkToggleSwitch(locator1 = "PublicationsSettings#PUBLICATIONS_TOGGLE_SWITCH");
 
-		if (isSet(gotoOverview)) {
-			Click(locator1 = "PublicationsSettings#SAVE_AND_GO_TO_OVERVIEW_BUTTON");
-		}
-		else {
-			Click(locator1 = "Button#SUBMIT");
-		}
-
-		Alert.viewSuccessMessage();
+		Click(locator1 = "Button#SAVE");
 	}
 
 	macro gotoPublish {

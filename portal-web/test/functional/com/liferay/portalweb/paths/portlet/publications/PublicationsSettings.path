@@ -21,11 +21,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_AND_GO_TO_OVERVIEW_BUTTON</td>
-	<td>//button[contains(.,'Save and Go to Overview')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SHOW_ALL_ITEMS_TOGGLE_SWITCH</td>
 	<td>//input[contains(@class,'toggle-switch-check')]</td>
 	<td></td>

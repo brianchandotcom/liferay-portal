@@ -12,24 +12,19 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Add a site via JSON") {
-			JSONGroup.addGroup(groupName = "Test Site Name 1");
+		task ("Add two sites via JSON") {
+			for (var n : list "1,2") {
+				JSONGroup.addGroup(groupName = "Test Site Name ${n}");
+			}
 		}
 
-		task ("Activate local live staging for the first site") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-1");
-
-			Staging.activateStagingCP(siteName = "Test Site Name 1");
-		}
-
-		task ("Add a second site via JSON") {
-			JSONGroup.addGroup(groupName = "Test Site Name 2");
-		}
-
-		task ("Activate local live staging for the second site") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-2");
-
-			Staging.activateStagingCP(siteName = "Test Site Name 2");
+		task ("Activate local live staging for two sites") {
+			for (var n : list "1,2") {
+				JSONStaging.enableLocalStaging(
+					branchingPrivate = "false",
+					branchingPublic = "false",
+					groupName = "Test Site Name ${n}");
+			}
 		}
 
 		task ("Import test fragments from dependencies folder to the first site") {

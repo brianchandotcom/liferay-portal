@@ -1067,10 +1067,15 @@ definition {
 	}
 
 	macro clickConfigurableField {
-		var key_fragmentName = "${fragmentName}";
+		if (!(isSet(index))) {
+			var index = "1";
+		}
 
-		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
+		var key_fragmentName = "${fragmentName}";
+		var key_index = "${index}";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY")) {
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 		}
 	}
 
@@ -3012,7 +3017,9 @@ definition {
 	}
 
 	macro gotoConfiguration {
-		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+		PageEditor.clickConfigurableField(
+			fragmentName = "${fragmentName}",
+			index = "${index}");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",

@@ -997,13 +997,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			jsonObject.getBoolean("private"),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			_toMap(jsonObject.getString("name_i18n")),
-			_toMap(jsonObject.getString("title_i18n")),
-			_toMap(jsonObject.getString("description_i18n")),
-			_toMap(jsonObject.getString("keywords_i18n")),
-			_toMap(jsonObject.getString("robots_i18n")), type, null,
+			_toMap(null, jsonObject.getString("name_i18n")),
+			_toMap(null, jsonObject.getString("title_i18n")),
+			_toMap(null, jsonObject.getString("description_i18n")),
+			_toMap(null, jsonObject.getString("keywords_i18n")),
+			_toMap(null, jsonObject.getString("robots_i18n")), type, null,
 			jsonObject.getBoolean("hidden"), jsonObject.getBoolean("system"),
-			_toMap(jsonObject.getString("friendlyURL_i18n")), serviceContext);
+			_toMap(null, jsonObject.getString("friendlyURL_i18n")),
+			serviceContext);
 
 		String json = _read(resourcePath + "page-definition.json");
 
@@ -1334,6 +1335,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
+		Group group = serviceContext.getScopeGroup();
+
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
@@ -1368,7 +1371,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 							StringPool.NEW_LINE),
 						"[$", "$]", documentsStringUtilReplaceValues),
 					jsonObject.getBoolean("instanceable"),
-					_toMap(jsonObject.getString("name_i18n")),
+					_toMap(
+						group.getName(LocaleUtil.getSiteDefault()) + " - ",
+						jsonObject.getString("name_i18n")),
 					jsonObject.getString("portletCategoryName"), sb.toString());
 
 			remoteAppEntryIdsStringUtilReplaceValues.put(
@@ -1459,7 +1464,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getBoolean("defaultSAPEntry", true),
 					jsonObject.getBoolean("enabled", true),
 					jsonObject.getString("name"),
-					_toMap(jsonObject.getString("title_i18n")), serviceContext);
+					_toMap(null, jsonObject.getString("title_i18n")),
+					serviceContext);
 			}
 			else {
 				_sapEntryLocalService.updateSAPEntry(
@@ -1472,7 +1478,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getBoolean("defaultSAPEntry", true),
 					jsonObject.getBoolean("enabled", true),
 					jsonObject.getString("name"),
-					_toMap(jsonObject.getString("title_i18n")), serviceContext);
+					_toMap(null, jsonObject.getString("title_i18n")),
+					serviceContext);
 			}
 		}
 	}
@@ -1865,9 +1872,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return StringUtil.read(entryURL.openStream());
 	}
 
-	private Map<Locale, String> _toMap(String values) {
+	private Map<Locale, String> _toMap(String prefix, String values) {
 		if (Validator.isBlank(values)) {
 			return Collections.emptyMap();
+		}
+
+		if (prefix == null) {
+			prefix = StringPool.BLANK;
 		}
 
 		Map<Locale, String> map = new HashMap<>();
@@ -1877,7 +1888,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (Map.Entry<String, String> entry : valuesMap.entrySet()) {
 			map.put(
-				LocaleUtil.fromLanguageId(entry.getKey()), entry.getValue());
+				LocaleUtil.fromLanguageId(entry.getKey()),
+				prefix + entry.getValue());
 		}
 
 		return map;

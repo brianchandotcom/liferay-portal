@@ -1,0 +1,10 @@
+{
+	"configuration": {
+		"general": {
+			"incorrectFirst": "this is reported"
+		},
+		"queryConfiguration": {
+			"incorrectSecond": "this is not reported but it should"
+		}
+	}
+}

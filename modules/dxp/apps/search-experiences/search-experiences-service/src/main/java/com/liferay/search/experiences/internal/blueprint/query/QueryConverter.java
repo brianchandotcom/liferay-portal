@@ -14,15 +14,17 @@
 
 package com.liferay.search.experiences.internal.blueprint.query;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
-import com.liferay.portal.search.query.TermQuery;
 
 import java.util.Iterator;
 import java.util.Objects;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Petteri Karttunen
@@ -39,38 +41,49 @@ public class QueryConverter {
 		String type = iterator.next();
 
 		if (Objects.equals(type, "term")) {
-			Object object = jsonObject.get("term");
-
-			Float boost = 0.0F;
-			String keywords = null;
-
-			if (object instanceof JSONObject) {
-				JSONObject termJSONObject = (JSONObject)object;
-
-				boost = GetterUtil.getFloat(termJSONObject.get("boost"));
-				keywords = termJSONObject.getString("value");
-			}
-			else if (object instanceof String) {
-				keywords = (String)object;
-			}
-
-			if (Validator.isNull(keywords)) {
-				return null;
-			}
-
-			TermQuery termQuery = _queries.term("term", keywords);
-
-			if (boost > 0.0) {
-				termQuery.setBoost(boost);
-			}
-
-			return termQuery;
-		}
-		else if (Objects.equals(type, "wrapper")) {
-			return _queries.wrapper(jsonObject.getString("query"));
+			return _toTermQuery(jsonObject.getJSONObject(type));
 		}
 
-		return null;
+		return _queries.wrapper(_validate(JSONUtil.toString(jsonObject)));
+	}
+
+	private Query _toTermQuery(JSONObject jsonObject1) {
+		Iterator<String> iterator = jsonObject1.keys();
+
+		String field = iterator.next();
+
+		Object object = jsonObject1.get(field);
+
+		if (object instanceof JSONObject) {
+			JSONObject jsonObject2 = (JSONObject)object;
+
+			Query query = _queries.term(
+				field,
+				_validate(
+					Objects.requireNonNull(
+						jsonObject2.getString("value", null),
+						"value parameter is required")));
+
+			if (jsonObject2.get("boost") != null) {
+				query.setBoost((float)jsonObject2.getDouble("boost"));
+			}
+
+			return query;
+		}
+
+		return _queries.term(field, _validate(object));
+	}
+
+	private <T> T _validate(T object) {
+		String[] variables = StringUtils.substringsBetween(
+			object.toString(), StringPool.DOLLAR_AND_OPEN_CURLY_BRACE,
+			StringPool.CLOSE_CURLY_BRACE);
+
+		if (ArrayUtil.isNotEmpty(variables)) {
+			throw UnresolvedTemplateVariableException.with(variables);
+		}
+
+		return object;
 	}
 
 	private final Queries _queries;

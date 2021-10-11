@@ -93,7 +93,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 			new GeneralSXPSearchRequestBodyContributor(),
 			new HighlightSXPSearchRequestBodyContributor(highlightConverter),
 			new QuerySXPSearchRequestBodyContributor(
-				_complexQueryPartBuilderFactory, _queries),
+				_complexQueryPartBuilderFactory, queryConverter),
 			new SuggestSXPSearchRequestBodyContributor(),
 			new SortSXPSearchRequestBodyContributor(
 				_geoBuilders, queryConverter, scriptConverter, _sorts));
@@ -116,15 +116,26 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 			return;
 		}
 
+		RuntimeException runtimeException = new RuntimeException();
+
 		for (SXPSearchRequestBodyContributor sxpSearchRequestBodyContributor :
 				_sxpSearchRequestBodyContributors) {
 
 			if (!ArrayUtil.contains(
 					names, sxpSearchRequestBodyContributor.getName())) {
 
-				sxpSearchRequestBodyContributor.contribute(
-					searchRequestBuilder, sxpBlueprint);
+				try {
+					sxpSearchRequestBodyContributor.contribute(
+						searchRequestBuilder, sxpBlueprint);
+				}
+				catch (Exception exception) {
+					runtimeException.addSuppressed(exception);
+				}
 			}
+		}
+
+		if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
+			throw runtimeException;
 		}
 	}
 

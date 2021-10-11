@@ -263,6 +263,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		_validateExternalReferenceCode(
 			externalReferenceCode, node.getGroupId());
 
+		_validateHierarchyCycle(nodeId, title, parentTitle);
+
 		content = SanitizerUtil.sanitize(
 			user.getCompanyId(), node.getGroupId(), userId,
 			WikiPage.class.getName(), pageId, "text/" + format, content);
@@ -504,6 +506,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		return TempFileEntryUtil.addTempFileEntry(
 			groupId, userId, folderName, fileName, inputStream, mimeType);
+	}
+
+	@Override
+	public WikiPage addWikiPage(WikiPage wikiPage) {
+		try {
+			_validateHierarchyCycle(
+				wikiPage.getNodeId(), wikiPage.getTitle(),
+				wikiPage.getParentTitle());
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+
+		return super.addWikiPage(wikiPage);
 	}
 
 	@Override
@@ -2282,8 +2298,31 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public WikiPage updateWikiPage(WikiPage wikiPage) {
+		try {
+			_validateHierarchyCycle(
+				wikiPage.getNodeId(), wikiPage.getTitle(),
+				wikiPage.getParentTitle());
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+
+		return super.updateWikiPage(wikiPage);
+	}
+
+	@Override
 	public WikiPage updateWikiPage(
 		WikiPage wikiPage, ServiceContext serviceContext) {
+
+		try {
+			_validateHierarchyCycle(
+				wikiPage.getNodeId(), wikiPage.getTitle(),
+				wikiPage.getParentTitle());
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 
 		return wikiPagePersistence.update(wikiPage, serviceContext);
 	}
@@ -3279,6 +3318,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		if (!Validator.isBlank(parentTitle) &&
+			!parentTitle.equals(oldPage.getParentTitle())) {
+
+			_validateHierarchyCycle(
+				oldPage.getNodeId(), oldPage.getTitle(), parentTitle);
+		}
+
 		User user = _userLocalService.getUser(userId);
 
 		long pageId = 0;
@@ -3428,6 +3474,36 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				StringBundler.concat(
 					"Duplicate page external reference code ",
 					externalReferenceCode, " in group ", groupId));
+		}
+	}
+
+	private void _validateHierarchyCycle(
+			long nodeId, String title, String parentTitle)
+		throws PortalException {
+
+		if (Validator.isNull(title) || Validator.isNull(parentTitle)) {
+			return;
+		}
+
+		title = title.trim();
+
+		while (Validator.isNotNull(parentTitle)) {
+			parentTitle = parentTitle.trim();
+
+			if (StringUtil.equalsIgnoreCase(title, parentTitle)) {
+				throw new PortalException(
+					"Unable to save wiki page " + title +
+						" because a hierarchy cycle was detected");
+			}
+
+			WikiPage parentPage = fetchPage(nodeId, parentTitle);
+
+			if (parentPage != null) {
+				parentTitle = parentPage.getParentTitle();
+			}
+			else {
+				parentTitle = StringPool.BLANK;
+			}
 		}
 	}
 

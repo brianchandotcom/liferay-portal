@@ -74,15 +74,6 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public List<BlogsStatsUser> getGroupStatsUsers(
-		long groupId, int start, int end,
-		OrderByComparator<BlogsStatsUser> orderByComparator) {
-
-		return blogsStatsUserPersistence.findByG_NotE(
-			groupId, 0, start, end, orderByComparator);
-	}
-
-	@Override
 	public int getGroupStatsUsersCount(long groupId) {
 		return blogsStatsUserPersistence.countByG_NotE(groupId, 0);
 	}

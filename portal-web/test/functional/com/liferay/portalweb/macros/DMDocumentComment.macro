@@ -12,15 +12,11 @@ definition {
 			locator1 = "CKEditor#BODY",
 			value1 = "${commentBody}");
 
-		Pause(locator1 = "3000");
-
 		SelectFrame(value1 = "relative=top");
 
 		AssertClick(
 			locator1 = "Button#REPLY",
 			value1 = "Reply");
-
-		Pause(locator1 = "3000");
 
 		Alert.viewSuccessMessage();
 	}

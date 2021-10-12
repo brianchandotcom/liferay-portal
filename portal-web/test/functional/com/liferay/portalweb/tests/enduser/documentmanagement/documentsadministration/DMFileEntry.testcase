@@ -1312,7 +1312,10 @@ definition {
 			dmDocumentTitle = "DM Document Title Version 2",
 			dmDocumentVersionNumber = "2.0");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title Version 2",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.revertPG(
 			dmDocumentTitle = "DM Document Title",

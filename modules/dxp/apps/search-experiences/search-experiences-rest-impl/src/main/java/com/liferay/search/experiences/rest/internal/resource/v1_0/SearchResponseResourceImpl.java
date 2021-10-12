@@ -78,7 +78,7 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 						pagination.getPageSize()
 					).withSearchRequestBuilder(
 						searchRequestBuilder -> {
-							if (!Validator.isBlank(sxpBlueprintJSON)) {
+							if (Validator.isNotNull(sxpBlueprintJSON)) {
 								_sxpBlueprintSearchRequestEnhancer.enhance(
 									searchRequestBuilder, sxpBlueprintJSON);
 							}

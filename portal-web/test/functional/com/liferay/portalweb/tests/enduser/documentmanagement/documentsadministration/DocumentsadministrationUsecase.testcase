@@ -222,7 +222,7 @@ definition {
 
 	@description = "This test ensures that a checked out document cannot be edited by another user."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CannotEditCheckedOutDocument {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -237,39 +237,13 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
 		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
 			userEmailAddress = "userea@liferay.com");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONLayout.addPublicLayout(
+		JSONUser.addUserToSite(
 			groupName = "Guest",
-			layoutName = "Documents and Media Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Documents and Media Page",
-			widgetName = "Documents and Media");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+			userEmailAddress = "userea@liferay.com");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -279,6 +253,8 @@ definition {
 			sourceFileName = "Document_1.doc");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.enableActionsMenuOnPortlet();
 

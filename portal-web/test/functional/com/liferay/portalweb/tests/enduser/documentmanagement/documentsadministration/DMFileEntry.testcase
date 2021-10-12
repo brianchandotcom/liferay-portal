@@ -1725,10 +1725,6 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.enableActionsMenuOnPortlet();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Expired",
 			dmDocumentTitle = "Document_5.txt");

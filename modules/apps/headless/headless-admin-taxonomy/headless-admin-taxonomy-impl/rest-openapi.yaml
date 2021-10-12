@@ -176,6 +176,9 @@ components:
                         type: string
                     type: object
                 externalReferenceCode:
+                    # @review
+                    description:
+                        The category's external reference code
                     type: string
                 id:
                     description:
@@ -217,6 +220,12 @@ components:
                             type: string
                     readOnly: true
                     type: object
+                siteId:
+                    description:
+                        The ID of the site to which this category is scoped.
+                    format: int64
+                    readOnly: true
+                    type: integer
                 taxonomyCategoryProperties:
                     # @review
                     description:
@@ -226,6 +235,11 @@ components:
                     type: array
                 taxonomyCategoryUsageCount:
                     readOnly: true
+                    type: integer
+                taxonomyVocabularyId:
+                    description:
+                        The `TaxonomyVocabulary` id, only if the category does not have a parent category.
+                    format: int64
                     type: integer
                 viewableBy:
                     description:
@@ -1431,6 +1445,90 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyCategory"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyCategory"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyCategory"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyCategory"
+            tags: ["TaxonomyCategory"]
+    "/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories/by-externalReferenceCode/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the site's taxonomy category by external reference code.
+            parameters:
+                - in: path
+                  name: taxonomyVocabularyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["TaxonomyCategory"]
+        get:
+            # @review
+            description:
+                Retrieves the site's taxonomy category by external reference code.
+            parameters:
+                - in: path
+                  name: taxonomyVocabularyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyCategory"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyCategory"
+            tags: ["TaxonomyCategory"]
+        put:
+            # @review
+            description:
+                Updates the site's taxonomy category with the given external reference code, or creates it if it not
+                exists.
+            parameters:
+                - in: path
+                  name: taxonomyVocabularyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:

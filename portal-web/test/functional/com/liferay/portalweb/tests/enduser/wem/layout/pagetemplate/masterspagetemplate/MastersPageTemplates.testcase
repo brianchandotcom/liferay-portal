@@ -1793,25 +1793,83 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-102566. Master page can be used in page, page template and display page, changes in master page will be propagated to page, page template and display page"
+	@description = "This is a test for LPS-102566 and LPS-140318. Master page can be used in page, page template and display page, changes in master page will be propagated to page, page template and display page"
 	@priority = "5"
 	test PropagateChangesFromCustomMastersToAllBasedOnCustomMasters {
 		property portal.acceptance = "true";
 
-		task ("Add a page based on custom masters") {
+		task ("Add two navigation menus") {
+			for (var n : list "1,2") {
+				JSONSitenavigation.addSiteNavigationMenu(
+					groupName = "Test Site Name",
+					siteNavigationMenuName = "Navigation Menu Name ${n}");
+			}
+		}
+
+		task ("Add an URL type item to the first navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				siteNavigationMenuItemName = "Liferay",
+				siteNavigationMenuName = "Navigation Menu Name 1",
+				type = "url",
+				url = "https://www.liferay.com",
+				useNewTab = "false");
+		}
+
+		task ("Add an URL type item to the second navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				siteNavigationMenuItemName = "Google",
+				siteNavigationMenuName = "Navigation Menu Name 2",
+				type = "url",
+				url = "https://www.google.com",
+				useNewTab = "false");
+		}
+
+		task ("Add a Footer Nav Dark fragment to master page") {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Footers",
+				dropTarget = "Footer",
+				fragmentName = "Footer Nav Dark",
+				scope = "Master");
+		}
+
+		task ("Select the first navigation menu in Footer Nav Dark fragment") {
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.chooseMenu(menuName = "Navigation Menu Name 1");
+
+			Portlet.saveAndCloseConfig();
 
 			Button.click(button = "Publish Master");
 
 			Alert.viewSuccessMessage();
+		}
 
+		task ("Add a page based on custom masters") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
 				pageName = "Test Page Name");
 
+			AssertVisible(
+				key_tab = "Liferay",
+				locator1 = "NavTab#TAB_LINK");
+
 			PageEditor.clickPublish();
+		}
+
+		task ("View the Liferay item is shown in page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(
+				key_tab = "Liferay",
+				locator1 = "NavTab#TAB_LINK");
 		}
 
 		task ("Add a content page template based on custom masters") {
@@ -1835,6 +1893,10 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
+			AssertVisible(
+				key_tab = "Liferay",
+				locator1 = "NavTab#TAB_LINK");
+
 			PageEditor.clickPublish();
 		}
 
@@ -1850,41 +1912,50 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
+			AssertVisible(
+				key_tab = "Liferay",
+				locator1 = "NavTab#TAB_LINK");
+
 			PageEditor.clickPublish();
 		}
 
-		task ("Add a Heading fragment to custom masters") {
+		task ("Edit the master page") {
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",
 				masterLayoutName = "Custom Masters Page Template");
 
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				dropTarget = "Header",
-				fragmentName = "Heading",
-				scope = "Master");
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("Select the second navigation menu in Footer Nav Dark fragment") {
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.chooseMenu(menuName = "Navigation Menu Name 2");
+
+			Portlet.saveAndCloseConfig();
 
 			MastersPageTemplates.propagateChange();
 		}
 
-		task ("Assert the Heading fragment exist in page based on custom masters") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		task ("View the Google item is shown in page based on custom masters") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-			ContentPages.viewFragmentText(
-				fragmentName = "heading",
-				id = "element-text",
-				text = "Heading Example");
+			AssertVisible(
+				key_tab = "Google",
+				locator1 = "NavTab#TAB_LINK");
 
 			ContentPages.gotoPageEditor();
 
 			AssertVisible(
-				key_fragmentName = "heading",
-				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+				key_tab = "Google",
+				locator1 = "NavTab#TAB_LINK");
 		}
 
-		task ("Assert the Heading fragment exist in content page template based on custom masters") {
+		task ("View the Google item is shown in content page template based on custom masters") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
@@ -1894,11 +1965,11 @@ definition {
 				pageTemplateName = "Page Template Name");
 
 			AssertVisible(
-				key_fragmentName = "heading",
-				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+				key_tab = "Google",
+				locator1 = "NavTab#TAB_LINK");
 		}
 
-		task ("Assert the Heading fragment exist in display page template based on custom masters") {
+		task ("View the Google item is shown in display page template based on custom masters") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
@@ -1906,8 +1977,8 @@ definition {
 				item = "Edit");
 
 			AssertVisible(
-				key_fragmentName = "heading",
-				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+				key_tab = "Google",
+				locator1 = "NavTab#TAB_LINK");
 		}
 	}
 

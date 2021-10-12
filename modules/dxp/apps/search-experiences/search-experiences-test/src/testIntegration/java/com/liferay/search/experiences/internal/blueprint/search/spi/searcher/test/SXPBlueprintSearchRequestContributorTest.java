@@ -19,6 +19,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -39,7 +40,9 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -52,6 +55,7 @@ import org.junit.runner.RunWith;
  * @author Wade Cao
  * @author André de Oliveira
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class SXPBlueprintSearchRequestContributorTest {
 
@@ -90,18 +94,19 @@ public class SXPBlueprintSearchRequestContributorTest {
 
 	private void _addJournalArticles(String... titles) throws Exception {
 		for (String title : titles) {
-			JournalTestUtil.addArticle(
-				TestPropsValues.getGroupId(), 0,
-				PortalUtil.getClassNameId(JournalArticle.class),
-				HashMapBuilder.put(
-					LocaleUtil.US, title
-				).build(),
-				null,
-				HashMapBuilder.put(
-					LocaleUtil.US, ""
-				).build(),
-				LocaleUtil.getSiteDefault(), false, true,
-				ServiceContextTestUtil.getServiceContext());
+			_journalArticles.add(
+				JournalTestUtil.addArticle(
+					TestPropsValues.getGroupId(), 0,
+					PortalUtil.getClassNameId(JournalArticle.class),
+					HashMapBuilder.put(
+						LocaleUtil.US, title
+					).build(),
+					null,
+					HashMapBuilder.put(
+						LocaleUtil.US, ""
+					).build(),
+					LocaleUtil.getSiteDefault(), false, true,
+					ServiceContextTestUtil.getServiceContext()));
 		}
 	}
 
@@ -143,6 +148,9 @@ public class SXPBlueprintSearchRequestContributorTest {
 			searchResponse.getRequestString(),
 			searchResponse.getDocumentsStream(), fieldName, expected);
 	}
+
+	@DeleteAfterTestRun
+	private List<JournalArticle> _journalArticles = new ArrayList<>();
 
 	@Inject
 	private Searcher _searcher;

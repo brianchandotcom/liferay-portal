@@ -192,98 +192,28 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test Comments {
+	@refactordone
+	test CanAddCommentToDocument {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMFolder.addCP(dmFolderName = "Folder1");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.addCP(
-			dmFolderDescription = "Description of Folder2",
-			dmFolderName = "Folder2");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.viewCP(dmFolderName = "Folder1");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "This is a file with zero bytes",
-			dmDocumentTitle = "Zero Document File",
-			nullFile = "true");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.viewCP(dmFolderName = "Folder1");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Zero Document File");
-
-		DMDocument.viewCP(
-			dmDocumentSize = "0 B",
-			dmDocumentTitle = "Zero Document File");
-
-		JSONLayout.addPublicLayout(
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest",
-			layoutName = "Documents and Media Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Documents and Media Page",
-			widgetName = "Documents and Media");
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Portlet.addPG(portletName = "Activities");
-
-		AssertTextEquals(
-			key_dmFolderName = "Folder1",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "Folder1");
-
-		AssertClick(
-			key_assetName = "Zero Document File",
-			locator1 = "Activities#ACTIVITY_TITLE_ASSET_NAME",
-			value1 = "Zero Document File");
-
-		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "Zero Document File");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "Folder1");
 
 		DMDocumentComment.addPG(
-			commentBody = "This is the first comment",
-			dmDocumentTitle = "Zero Document File");
+			commentBody = "This is a comment",
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "Folder1");
-
-		DMDocumentComment.addPG(
-			commentBody = "This is comment #2",
-			dmDocumentTitle = "Zero Document File");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "Folder1");
 
 		DMDocumentComment.viewPG(
-			commentBody = "This is the first comment",
-			dmDocumentTitle = "Zero Document File");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "Folder1");
-
-		DMDocumentComment.viewPG(
-			commentBody = "This is comment #2",
-			dmDocumentTitle = "Zero Document File");
+			commentBody = "This is a comment",
+			dmDocumentTitle = "DM Document Title");
 	}
 
 	@priority = "3"

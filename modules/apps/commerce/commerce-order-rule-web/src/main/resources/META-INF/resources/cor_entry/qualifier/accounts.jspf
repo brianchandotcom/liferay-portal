@@ -1,0 +1,92 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<c:if test="<%= hasPermission %>">
+	<div id="item-finder-root"></div>
+
+	<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
+		var OrderRuleAccountsResource = ServiceProvider.default.AdminOrderAPI(
+			'v1'
+		);
+
+		var corEntryExternalReferenceCode =
+			'<%= HtmlUtil.escapeJS(corEntry.getExternalReferenceCode()) %>';
+		var id = <%= corEntryId %>;
+
+		function selectItem(account) {
+			var accountData = {
+				accountExternalReferenceCode: account.externalReferenceCode,
+				accountId: account.id,
+				orderRuleExternalReferenceCode: corEntryExternalReferenceCode,
+				orderRuleId: id,
+			};
+
+			return OrderRuleAccountsResource.addOrderRuleAccount(id, accountData)
+				.then(() => {
+					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+						id:
+							'<%= COREntryDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_ACCOUNT_ENTRIES %>',
+					});
+				})
+				.catch((error) => {
+					return Promise.reject(error);
+				});
+		}
+
+		function getSelectedItems() {
+			return Promise.resolve([]);
+		}
+
+		itemFinder.default('itemFinder', 'item-finder-root', {
+			apiUrl: '/o/headless-commerce-admin-account/v1.0/accounts/',
+			getSelectedItems: getSelectedItems,
+			inputPlaceholder: '<%= LanguageUtil.get(request, "find-an-account") %>',
+			itemCreation: false,
+			itemSelectedMessage: '<%= LanguageUtil.get(request, "account-selected") %>',
+			itemsKey: 'id',
+			linkedDatasetsId: [
+				'<%= COREntryDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_ACCOUNT_ENTRIES %>',
+			],
+			onItemSelected: selectItem,
+			pageSize: 10,
+			panelHeaderLabel: '<%= LanguageUtil.get(request, "add-accounts") %>',
+			portletId: '<%= portletDisplay.getRootPortletId() %>',
+			schema: [
+				{
+					fieldName: 'name',
+				},
+			],
+			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+			titleLabel: '<%= LanguageUtil.get(request, "add-existing-account") %>',
+		});
+	</aui:script>
+
+	<commerce-ui:panel
+		bodyClasses="p-0"
+		title='<%= LanguageUtil.get(request, "accounts") %>'
+	>
+		<clay:headless-data-set-display
+			apiURL="<%= corEntryQualifiersDisplayContext.getCOREntryAccountsAPIURL() %>"
+			clayDataSetActionDropdownItems="<%= corEntryQualifiersDisplayContext.getAccountEntryClayDataSetActionDropdownItems() %>"
+			formId="fm"
+			id="<%= COREntryDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_ACCOUNT_ENTRIES %>"
+			itemsPerPage="<%= 10 %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
+			portletURL="<%= currentURLObj %>"
+		/>
+	</commerce-ui:panel>
+</c:if>

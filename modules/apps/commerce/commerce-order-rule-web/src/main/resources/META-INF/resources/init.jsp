@@ -26,14 +26,19 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.order.rule.exception.CommerceOrderRuleEntryExpirationDateException" %><%@
-page import="com.liferay.commerce.order.rule.exception.NoSuchOrderRuleEntryException" %><%@
-page import="com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry" %><%@
-page import="com.liferay.commerce.order.rule.web.internal.display.context.CommerceOrderRuleEntryDisplayContext" %><%@
-page import="com.liferay.commerce.order.rule.web.internal.display.context.CommerceOrderRuleEntryQualifiersDisplayContext" %><%@
-page import="com.liferay.commerce.order.rule.web.internal.frontend.constants.CommerceOrderRuleEntryDataSetConstants" %><%@
-page import="com.liferay.commerce.order.rule.web.internal.frontend.taglib.servlet.taglib.constants.CommerceOrderRuleEntryScreenNavigationConstants" %><%@
+<%@ page import="com.liferay.commerce.order.rule.constants.COREntryConstants" %><%@
+page import="com.liferay.commerce.order.rule.entry.type.COREntryType" %><%@
+page import="com.liferay.commerce.order.rule.entry.type.COREntryTypeJSPContributor" %><%@
+page import="com.liferay.commerce.order.rule.exception.COREntryExpirationDateException" %><%@
+page import="com.liferay.commerce.order.rule.exception.NoSuchCOREntryException" %><%@
+page import="com.liferay.commerce.order.rule.model.COREntry" %><%@
+page import="com.liferay.commerce.order.rule.web.internal.display.context.COREntryDisplayContext" %><%@
+page import="com.liferay.commerce.order.rule.web.internal.display.context.COREntryQualifiersDisplayContext" %><%@
+page import="com.liferay.commerce.order.rule.web.internal.frontend.constants.COREntryDataSetConstants" %><%@
+page import="com.liferay.commerce.order.rule.web.internal.frontend.taglib.servlet.taglib.constants.COREntryScreenNavigationConstants" %><%@
+page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
@@ -41,7 +46,8 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
+page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
 <%@ page import="java.util.Objects" %>
 

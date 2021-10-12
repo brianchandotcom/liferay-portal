@@ -17,26 +17,24 @@ import itemFinder from 'commerce-frontend-js/components/item_finder/entry';
 import {UPDATE_DATASET_DISPLAY} from 'commerce-frontend-js/utilities/eventsDefinitions';
 
 export default function ({
-	commerceOrderRuleEntryId,
 	datasetId,
-	orderRuleEntryExternalReferenceCode,
+	orderRuleExternalReferenceCode,
+	orderRuleId,
 	rootPortletId,
 	spritemap,
 }) {
-	const CommerceOrderRuleEntryChannelsResource = ServiceProvider.AdminOrderAPI(
-		'v1'
-	);
+	const OrderRuleChannelsResource = ServiceProvider.AdminOrderAPI('v1');
 
 	function selectItem(channel) {
 		const channelData = {
 			channelExternalReferenceCode: channel.externalReferenceCode,
 			channelId: channel.id,
-			orderRuleEntryExternalReferenceCode,
-			orderRuleEntryId: commerceOrderRuleEntryId,
+			orderRuleExternalReferenceCode,
+			orderRuleId,
 		};
 
-		return CommerceOrderRuleEntryChannelsResource.addOrderRuleEntryChannel(
-			commerceOrderRuleEntryId,
+		return OrderRuleChannelsResource.addOrderRuleChannel(
+			orderRuleId,
 			channelData
 		).then(() => {
 			Liferay.fire(UPDATE_DATASET_DISPLAY, {

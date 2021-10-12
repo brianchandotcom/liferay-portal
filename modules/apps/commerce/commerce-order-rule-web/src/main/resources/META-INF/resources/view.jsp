@@ -17,23 +17,23 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceOrderRuleEntryDisplayContext commerceOrderRuleEntryDisplayContext = (CommerceOrderRuleEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+COREntryDisplayContext corEntryDisplayContext = (COREntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-PortletURL portletURL = commerceOrderRuleEntryDisplayContext.getPortletURL();
+PortletURL portletURL = corEntryDisplayContext.getPortletURL();
 %>
 
 <div class="pt-4">
 	<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-		<aui:input name="deleteCommerceOrderRuleEntries" type="hidden" />
+		<aui:input name="deleteCOREntries" type="hidden" />
 
 		<clay:headless-data-set-display
 			apiURL="/o/headless-commerce-admin-order/v1.0/order-rules"
-			clayDataSetActionDropdownItems="<%= commerceOrderRuleEntryDisplayContext.getCommerceOrderRuleEntryClayDataSetActionDropdownItems() %>"
-			creationMenu="<%= commerceOrderRuleEntryDisplayContext.getCreationMenu() %>"
+			clayDataSetActionDropdownItems="<%= corEntryDisplayContext.getCOREntryClayDataSetActionDropdownItems() %>"
+			creationMenu="<%= corEntryDisplayContext.getCreationMenu() %>"
 			formId="fm"
-			id="<%= CommerceOrderRuleEntryDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRIES %>"
+			id="<%= COREntryDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRIES %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

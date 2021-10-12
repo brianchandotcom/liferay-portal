@@ -18,6 +18,6 @@
 
 <liferay-ui:error-header />
 
-<liferay-ui:error exception="<%= NoSuchOrderRuleEntryException.class %>" message="the-rule-could-not-be-found" />
+<liferay-ui:error exception="<%= NoSuchCOREntryException.class %>" message="the-rule-could-not-be-found" />
 
 <liferay-ui:error-principal />

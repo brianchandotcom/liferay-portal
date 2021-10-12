@@ -15,17 +15,17 @@
 import {liferayNavigate} from 'commerce-frontend-js/utilities/index';
 import {createPortletURL} from 'frontend-js-web';
 
-export default function ({currentURL, namespace}) {
+export default function ({currentURL, namespace, searchParam, selector}) {
 	const portletURL = createPortletURL(currentURL);
 
-	const chooseChannelQualifiers = document.querySelectorAll(
-		`[name='${namespace}chooseChannelQualifiers']`
+	const radioButtons = document.querySelectorAll(
+		`[name=${namespace}${selector}]`
 	);
 
 	const handleSelectChange = (event) => {
 		if (event.target.checked) {
 			portletURL.searchParams.append(
-				`${namespace}channelQualifiers`,
+				`${namespace}${searchParam}`,
 				event.target.value
 			);
 
@@ -33,17 +33,14 @@ export default function ({currentURL, namespace}) {
 		}
 	};
 
-	chooseChannelQualifiers.forEach((channelQualifier) => {
-		channelQualifier.addEventListener('change', handleSelectChange);
+	radioButtons.forEach((radioButton) => {
+		radioButton.addEventListener('change', handleSelectChange);
 	});
 
 	return {
 		dispose() {
-			chooseChannelQualifiers.forEach((channelQualifier) => {
-				channelQualifier.removeEventListener(
-					'change',
-					handleSelectChange
-				);
+			radioButtons.forEach((radioButton) => {
+				radioButton.removeEventListener('change', handleSelectChange);
 			});
 		},
 	};

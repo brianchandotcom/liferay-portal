@@ -22,9 +22,17 @@ definition {
 			var permanent = "false";
 		}
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/redirect.redirectentry/add-redirect-entry \
-			-u test@liferay.com:test \
+			-u ${userEmailAddress}:${userPassword} \
 			-d groupId=${groupId} \
 			-d destinationURL=${destinationURL} \
 			-d expirationDate=${expirationDate} \

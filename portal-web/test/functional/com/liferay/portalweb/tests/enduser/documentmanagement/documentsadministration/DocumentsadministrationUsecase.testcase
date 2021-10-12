@@ -145,10 +145,8 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test AllowMultiplePortletConfigurationsPerSite {
-		JSONGroup.addGroup(groupName = "Site Name");
-
+	@refactordone
+	test ConfigurationsAreIndependentAcrossPages {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Site Page 1");

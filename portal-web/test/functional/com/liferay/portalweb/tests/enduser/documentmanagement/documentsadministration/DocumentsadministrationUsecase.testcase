@@ -146,9 +146,9 @@ definition {
 
 	@description = "This is a use case for LPS-50760."
 	@priority = "4"
-	@refactorneeded
-	test AssertFileSizeValidation {
-		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#AssertFileSizeValidation";
+	@refactordone
+	test StagingFileSizeIsNotAffectedByDLRestrictions {
+		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#StagingFileSizeIsNotAffectedByDLRestrictions";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -159,55 +159,13 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(
-			dmDocumentSize = "4.3 MB",
-			dmDocumentTitle = "DM Document Title");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
 		LAR.exportPortlet(larFileName = "DM.portlet.lar");
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "Service",
-			configurationScope = "System Scope");
-
-		Type(
-			key_fieldLabel = "Maximum File Size",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "300000");
-
-		ScrollWebElementIntoView(locator1 = "Button#SAVE");
-
-		AssertClick(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
+		DMDocument.updateMaximumFileSize(fieldValue = "300000");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "${dmDocumentTypeName}");
-
-		AssertTextEquals(
-			locator1 = "Message#INFO",
-			value1 = "Upload documents no larger than 293 KB.");
-
-		DMDocument.editCmd(
-			dmDocumentFileEdit = "Document_1.mp4",
-			dmDocumentTitle = "Document_1.mp4");
-
-		Button.clickPublish();
-
-		AssertTextEquals(
-			locator1 = "Message#WARNING_FEEDBACK",
-			value1 = "Please enter a file with a valid file size no larger than 293 KB.");
-
-		Button.clickCancel();
 
 		LAR._gotoExportImport();
 
@@ -216,8 +174,6 @@ definition {
 		LAR._export(
 			exportPermissions = "${exportPermissions}",
 			larFileName = "DM.portlet.lar");
-
-		SelectFrame(value1 = "relative=top");
 	}
 
 	@description = "This test checks if the file extension upload restrictions in System Settings works as expected."

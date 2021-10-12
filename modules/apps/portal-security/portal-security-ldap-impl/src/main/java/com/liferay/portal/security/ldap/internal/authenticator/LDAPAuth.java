@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.security.auth.PasswordModificationThreadLocal;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -253,7 +254,8 @@ public class LDAPAuth implements Authenticator {
 					ldapAuthConfiguration.passwordEncryptionAlgorithm();
 
 				if (Validator.isNotNull(passwordEncryptionAlgorithm) &&
-					!passwordEncryptionAlgorithm.equals(_NONE)) {
+					!passwordEncryptionAlgorithm.equals(
+						PasswordEncryptorUtil.TYPE_NONE)) {
 
 					ldapPassword = removeEncryptionAlgorithm(ldapPassword);
 
@@ -812,8 +814,6 @@ public class LDAPAuth implements Authenticator {
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
-
-	private static final String _NONE = "NONE";
 
 	private static final Log _log = LogFactoryUtil.getLog(LDAPAuth.class);
 

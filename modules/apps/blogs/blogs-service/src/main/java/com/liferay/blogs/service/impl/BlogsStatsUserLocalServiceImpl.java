@@ -83,11 +83,6 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public int getOrganizationStatsUsersCount(long organizationId) {
-		return blogsStatsUserFinder.countByOrganizationId(organizationId);
-	}
-
-	@Override
 	public BlogsStatsUser getStatsUser(long groupId, long userId)
 		throws PortalException {
 

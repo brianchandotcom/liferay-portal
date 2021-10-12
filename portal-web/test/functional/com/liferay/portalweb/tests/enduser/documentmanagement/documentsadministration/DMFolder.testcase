@@ -144,8 +144,6 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMFolder.viewEntryPresent(dmFolderName = "DM SubFolder1 Name");

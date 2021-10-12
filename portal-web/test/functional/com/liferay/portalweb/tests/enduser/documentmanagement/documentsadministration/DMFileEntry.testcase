@@ -1305,6 +1305,8 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTitleEdit = "DM Document Title Version 2");
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title Version 2",

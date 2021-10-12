@@ -110,9 +110,6 @@ public class SearchResponseResourceImplTest {
 			searchResponseResourceImpl.toSearchResponse(
 				searchResponseBuilder.build());
 
-		Assert.assertEquals(requestString, searchResponse.getRequestString());
-		Assert.assertEquals(responseString, searchResponse.getResponseString());
-
 		Document document = searchResponse.getDocuments()[0];
 
 		Map<String, DocumentField> documentFields =
@@ -122,6 +119,9 @@ public class SearchResponseResourceImplTest {
 			"{field1st={\"values\": [\"Lone Value\"]}, field2nd={\"values\": " +
 				"[\"4\", \"8\", \"15\", \"16\", \"23\", \"42\"]}}",
 			documentFields.toString());
+
+		Assert.assertEquals(requestString, searchResponse.getRequestString());
+		Assert.assertEquals(responseString, searchResponse.getResponseString());
 	}
 
 	private final DocumentBuilderFactory _documentBuilderFactory =

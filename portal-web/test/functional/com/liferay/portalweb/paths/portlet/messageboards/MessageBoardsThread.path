@@ -68,12 +68,12 @@
 </tr>
 <tr>
 	<td>THREAD_USERNAME</td>
-	<td>//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//h5[contains(.,'${key_userName}')]</td>
+	<td>//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//span[contains(.,'${key_userName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_USERNAME_2</td>
-	<td>xpath=(//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//h5[contains(.,'${key_userName}')])[2]</td>
+	<td>xpath=(//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//span[contains(.,'${key_userName}')])[2]</td>
 	<td></td>
 </tr>
 <tr>

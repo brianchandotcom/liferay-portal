@@ -36,22 +36,19 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		super(renderRequest, renderResponse);
-
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
 	}
 
 	public PortletURL getPortletURL() {
 		return PortletURLBuilder.createRenderURL(
-			_renderResponse
+			renderResponse
 		).setMVCRenderCommandName(
 			"/batch_planner/view_batch_planner_plans"
 		).setNavigation(
-			ParamUtil.getString(_renderRequest, "navigation", "all")
+			ParamUtil.getString(renderRequest, "navigation", "all")
 		).setTabs1(
 			"batch-planner-plans"
 		).setParameter(
-			"delta", () -> ParamUtil.getString(_renderRequest, "delta")
+			"delta", () -> ParamUtil.getString(renderRequest, "delta")
 		).buildPortletURL();
 	}
 
@@ -61,27 +58,26 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		}
 
 		_searchContainer = new SearchContainer<>(
-			_renderRequest, getPortletURL(), null, "no-items-were-found");
+			renderRequest, getPortletURL(), null, "no-items-were-found");
 
 		String orderByCol = ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
+			renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
 			"modifiedDate");
 
 		_searchContainer.setOrderByCol(orderByCol);
 
 		String orderByType = ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM,
-			"desc");
+			renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "desc");
 
 		_searchContainer.setOrderByType(orderByType);
 
 		_searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
+			new EmptyOnClickRowChecker(renderResponse));
 
-		long companyId = PortalUtil.getCompanyId(_renderRequest);
+		long companyId = PortalUtil.getCompanyId(renderRequest);
 
 		String navigation = ParamUtil.getString(
-			_renderRequest, "navigation", "all");
+			renderRequest, "navigation", "all");
 
 		if (navigation.equals("all")) {
 			_searchContainer.setResults(
@@ -113,8 +109,6 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		return _searchContainer;
 	}
 
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
 	private SearchContainer<BatchPlannerPlan> _searchContainer;
 
 }

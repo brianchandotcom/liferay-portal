@@ -107,6 +107,33 @@ definition {
 		Portlet.deletePG(portletName = "Documents and Media");
 	}
 
+	@priority = "4"
+	@refactordone
+	test ConfigurationsAreIndependentAcrossPages {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page 2");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page 2",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page 2",
+			siteName = "Guest");
+
+		DMPortlet.configureDisplaySettingsPG(
+			enableDisplaySettingsRelatedAssets = "false",
+			enableDisplaySettingsShowSearch = "false",
+			entriesToDisplayCount = "60");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMPortlet.viewDefaultConfigurationDisplaySettingsPG();
+	}
+
 	@description = "This test covers LPS-91595. It ensures that the document selection persists when navigating through the pagination in the DM widget."
 	@priority = "4"
 	@refactordone

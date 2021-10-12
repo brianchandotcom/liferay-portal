@@ -144,45 +144,6 @@ definition {
 		DMDocument.viewCategories(categoryNameList = "category");
 	}
 
-	@priority = "4"
-	@refactordone
-	test ConfigurationsAreIndependentAcrossPages {
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page 1");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page 2");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Site Name",
-			layoutName = "Site Page 1",
-			widgetName = "Documents and Media");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Site Name",
-			layoutName = "Site Page 2",
-			widgetName = "Documents and Media");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page 1",
-			siteName = "Site Name");
-
-		DMPortlet.configureDisplaySettingsPG(
-			enableDisplaySettingsRelatedAssets = "false",
-			enableDisplaySettingsShowSearch = "false",
-			entriesToDisplayCount = "60");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page 2",
-			siteName = "Site Name");
-
-		DMPortlet.viewDefaultConfigurationDisplaySettingsPG();
-	}
-
 	@description = "This is a use case for LPS-50760."
 	@priority = "4"
 	@refactorneeded

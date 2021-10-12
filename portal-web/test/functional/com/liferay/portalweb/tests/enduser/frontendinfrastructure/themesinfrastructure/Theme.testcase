@@ -16,15 +16,11 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			Page.tearDownCP();
 
-		Page.changeSinglePageTheme(
-			pageName = "Home",
-			tabName = "Look and Feel",
-			themeName = "Classic");
-
-		Navigator.gotoBack();
-
-		Button.clickPublish();
+			FileInstall.deleteWarOffline(liferayDependencyWars = "test-theme.war");
+		}
 	}
 
 	@description = "Verify page theme can be applied to page"

@@ -31,6 +31,117 @@ definition {
 	}
 
 	@priority = "5"
+	test CanBeInvitedToCollaborateOnMultiplePublications {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Guest",
+			roleTitle = "Site Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Publications User",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONPublications.enablePublications();
+
+		JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Publications.inviteUsers(
+			publicationName = "Publication Name 1",
+			userInvite = "userea@liferay.com");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content 1",
+			groupName = "Guest",
+			title = "WC WebContent Title 1");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title 1",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		Publications.inviteUsers(
+			publicationName = "Publication Name 2",
+			publicationRole = "Editor",
+			userInvite = "userea@liferay.com");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content 2",
+			groupName = "Guest",
+			title = "WC WebContent Title 2");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title 2",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_2.txt");
+
+		SignOut.signOut();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Notifications.gotoNotifications();
+
+		AssertElementPresent(
+			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+			value1 = "Test Test has invited you to work on Publication Name 1 as a Viewer.");
+
+		AssertElementPresent(
+			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+			value1 = "Test Test has invited you to work on Publication Name 2 as a Editor.");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		AssertElementPresent(
+			key_publicationName = "Publication Name 1",
+			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
+
+		Publications.assertViewerPermissions(publicationName = "Publication Name 1");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		AssertElementPresent(
+			key_publicationName = "Publication Name 2",
+			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
+
+		Publications.assertEditorPermissions(publicationName = "Publication Name 2");
+	}
+
+	@priority = "5"
 	test InviteUserAsEditor {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

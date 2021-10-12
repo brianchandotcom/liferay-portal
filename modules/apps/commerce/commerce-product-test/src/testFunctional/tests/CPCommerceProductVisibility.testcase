@@ -185,6 +185,10 @@ definition {
 
 		Alert.viewSuccessMessage();
 
+		WaitForElementPresent(
+			key_productName = "Test Channel",
+			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+
 		Button.click(button = "Delete");
 
 		Alert.viewSuccessMessage();

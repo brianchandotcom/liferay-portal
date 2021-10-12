@@ -58,11 +58,6 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public int getCompanyStatsUsersCount(long companyId) {
-		return blogsStatsUserPersistence.countByC_NotE(companyId, 0);
-	}
-
-	@Override
 	public List<BlogsStatsUser> getGroupsStatsUsers(
 		long companyId, long groupId, int start, int end) {
 

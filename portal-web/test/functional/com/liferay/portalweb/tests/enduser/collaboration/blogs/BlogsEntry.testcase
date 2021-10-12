@@ -384,8 +384,6 @@ definition {
 
 		PortletEntry.publish();
 
-		Refresh();
-
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsEntry.addWithTrackbackURLPG(

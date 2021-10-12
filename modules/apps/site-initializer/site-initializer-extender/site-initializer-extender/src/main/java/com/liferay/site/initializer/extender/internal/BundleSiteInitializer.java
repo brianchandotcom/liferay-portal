@@ -99,6 +99,7 @@ import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -1262,9 +1263,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			String json = _read(resourcePath);
 
-			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(json);
+			ObjectDefinition objectDefinition1 = ObjectDefinition.toDTO(json);
 
-			if (objectDefinition == null) {
+			if (objectDefinition1 == null) {
 				_log.error(
 					"Unable to transform object definition from JSON: " + json);
 
@@ -1276,24 +1277,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 					null, null,
 					objectDefinitionResource.toFilter(
 						StringBundler.concat(
-							"name eq '", objectDefinition.getName(), "'")),
+							"name eq '", objectDefinition1.getName(), "'")),
 					null, null);
 
 			ObjectDefinition existingObjectDefinition =
 				objectDefinitionsPage.fetchFirstItem();
 
 			if (existingObjectDefinition == null) {
-				objectDefinition =
+				objectDefinition1 =
 					objectDefinitionResource.postObjectDefinition(
-						objectDefinition);
+						objectDefinition1);
 
 				objectDefinitionResource.postObjectDefinitionPublish(
-					objectDefinition.getId());
+					objectDefinition1.getId());
 			}
 			else {
-				objectDefinition =
+				objectDefinition1 =
 					objectDefinitionResource.patchObjectDefinition(
-						existingObjectDefinition.getId(), objectDefinition);
+						existingObjectDefinition.getId(), objectDefinition1);
 			}
 
 			String objectEntriesJSON = _read(
@@ -1307,16 +1308,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 				objectEntriesJSON);
 
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject jsonObject = jsonArray.getJSONObject(i);
+			ObjectDefinition objectDefinition2 = objectDefinition1;
 
-				_objectEntryLocalService.addObjectEntry(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), objectDefinition.getId(),
-					ObjectMapperUtil.readValue(
-						Serializable.class, jsonObject.toString()),
-					serviceContext);
-			}
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					for (int i = 0; i < jsonArray.length(); i++) {
+						JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+						_objectEntryLocalService.addObjectEntry(
+							serviceContext.getUserId(),
+							serviceContext.getScopeGroupId(),
+							objectDefinition2.getId(),
+							ObjectMapperUtil.readValue(
+								Serializable.class, jsonObject.toString()),
+							serviceContext);
+					}
+
+					return null;
+				});
 		}
 	}
 

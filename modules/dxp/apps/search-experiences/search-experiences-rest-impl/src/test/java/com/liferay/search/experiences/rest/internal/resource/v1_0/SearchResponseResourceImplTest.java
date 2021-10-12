@@ -115,12 +115,13 @@ public class SearchResponseResourceImplTest {
 
 		Document document = searchResponse.getDocuments()[0];
 
-		Map<String, DocumentField> map = document.getDocumentFields();
+		Map<String, DocumentField> documentFields =
+			document.getDocumentFields();
 
 		Assert.assertEquals(
 			"{field1st={\"values\": [\"Lone Value\"]}, field2nd={\"values\": " +
 				"[\"4\", \"8\", \"15\", \"16\", \"23\", \"42\"]}}",
-			map.toString());
+			documentFields.toString());
 	}
 
 	private final DocumentBuilderFactory _documentBuilderFactory =

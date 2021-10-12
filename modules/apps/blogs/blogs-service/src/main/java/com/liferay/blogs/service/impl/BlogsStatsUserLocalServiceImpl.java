@@ -75,14 +75,6 @@ public class BlogsStatsUserLocalServiceImpl
 
 	@Override
 	public List<BlogsStatsUser> getOrganizationStatsUsers(
-		long organizationId, int start, int end) {
-
-		return blogsStatsUserFinder.findByOrganizationId(
-			organizationId, start, end, new StatsUserLastPostDateComparator());
-	}
-
-	@Override
-	public List<BlogsStatsUser> getOrganizationStatsUsers(
 		long organizationId, int start, int end,
 		OrderByComparator<BlogsStatsUser> orderByComparator) {
 

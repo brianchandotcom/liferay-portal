@@ -138,6 +138,70 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
+	@priority = "5"
+	@refactordone
+	test CanAutoCompleteCategory {
+		property test.name.skip.portal.instance = "DMFileEntry#CanAutoCompleteCategory";
+
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Topic");
+
+		JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "category",
+			vocabularyName = "Topic");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		var key_dmDocumentTitle = "DM Document Title";
+
+		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+		Click(locator1 = "Icon#EDIT_CATEGORIES");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Edit Categories");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Modal#BODY",
+			value1 = "You're editing the categories for the selected item.");
+
+		Type.sendKeys(
+			locator1 = "AssetCategorization#TAGS_FIELD",
+			value1 = "cat");
+
+		AssertClick(
+			locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_CONTAINER",
+			value1 = "category");
+
+		Button.clickSave();
+
+		SelectFrame(value1 = "relative=top");
+
+		Alert.viewSuccessMessageText(successMessage = "Changes Saved");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewCategories(categoryNameList = "category");
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanCancelCheckout {

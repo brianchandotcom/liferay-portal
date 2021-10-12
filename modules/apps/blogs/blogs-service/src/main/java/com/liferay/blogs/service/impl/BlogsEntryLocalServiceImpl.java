@@ -660,11 +660,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			entry.getCompanyId(), BlogsEntry.class.getName(),
 			entry.getEntryId());
 
-		// Statistics
-
-		_blogsStatsUserLocalService.updateStatsUser(
-			entry.getGroupId(), entry.getUserId(), entry.getDisplayDate());
-
 		// Asset
 
 		_assetEntryLocalService.deleteEntry(
@@ -1450,9 +1445,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry = blogsEntryPersistence.update(entry);
 
 		// Statistics
-
-		_blogsStatsUserLocalService.updateStatsUser(
-			entry.getGroupId(), entry.getUserId(), entry.getDisplayDate());
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			BlogsEntry.class.getName(), entryId);

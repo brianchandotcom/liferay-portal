@@ -14,23 +14,15 @@
 
 package com.liferay.blogs.service.impl;
 
-import com.liferay.blogs.exception.NoSuchStatsUserException;
-import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsStatsUser;
 import com.liferay.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl;
-import com.liferay.blogs.service.persistence.BlogsEntryPersistence;
-import com.liferay.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.blogs.util.comparator.StatsUserLastPostDateComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -107,61 +99,6 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public void updateStatsUser(long groupId, long userId, Date displayDate)
-		throws PortalException {
-
-		Date date = new Date();
-
-		int entryCount = _blogsEntryPersistence.countByG_U_LtD_S(
-			groupId, userId, date, WorkflowConstants.STATUS_APPROVED);
-
-		if (entryCount == 0) {
-			try {
-				blogsStatsUserPersistence.removeByG_U(groupId, userId);
-			}
-			catch (NoSuchStatsUserException noSuchStatsUserException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						noSuchStatsUserException, noSuchStatsUserException);
-				}
-			}
-
-			return;
-		}
-
-		BlogsStatsUser statsUser = getStatsUser(groupId, userId);
-
-		statsUser.setEntryCount(entryCount);
-
-		BlogsEntry blogsEntry = _blogsEntryPersistence.findByG_U_LtD_S_First(
-			groupId, userId, date, WorkflowConstants.STATUS_APPROVED,
-			new EntryDisplayDateComparator());
-
-		Date lastDisplayDate = blogsEntry.getDisplayDate();
-
-		Date lastPostDate = statsUser.getLastPostDate();
-
-		if ((displayDate != null) && displayDate.before(date)) {
-			if (lastPostDate == null) {
-				statsUser.setLastPostDate(displayDate);
-			}
-			else if (displayDate.after(lastPostDate)) {
-				statsUser.setLastPostDate(displayDate);
-			}
-			else if (lastDisplayDate.before(lastPostDate)) {
-				statsUser.setLastPostDate(lastDisplayDate);
-			}
-		}
-		else if ((lastPostDate == null) ||
-				 lastPostDate.before(lastDisplayDate)) {
-
-			statsUser.setLastPostDate(lastDisplayDate);
-		}
-
-		blogsStatsUserPersistence.update(statsUser);
-	}
-
-	@Override
 	public BlogsStatsUser updateStatsUser(
 			long groupId, long userId, int ratingsTotalEntries,
 			double ratingsTotalScore, double ratingsAverageScore)
@@ -175,12 +112,6 @@ public class BlogsStatsUserLocalServiceImpl
 
 		return blogsStatsUserPersistence.update(blogsStatsUser);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsStatsUserLocalServiceImpl.class);
-
-	@Reference
-	private BlogsEntryPersistence _blogsEntryPersistence;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

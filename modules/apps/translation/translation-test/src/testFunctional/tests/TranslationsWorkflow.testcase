@@ -166,6 +166,8 @@ definition {
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
 
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-es_ES.xlf",
 			webContentTitle = "WebContentTitle",
@@ -423,6 +425,8 @@ definition {
 			webContentContent = "WebContent",
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-fr_FR.xlf",

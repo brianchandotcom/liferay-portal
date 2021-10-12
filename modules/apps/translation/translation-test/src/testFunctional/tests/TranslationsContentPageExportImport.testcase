@@ -122,6 +122,8 @@ definition {
 			translationFileName = "TranslationContentPage-en_US-ja_JP",
 			translationZipFileName = "TranslationContentPage-en_US.zip");
 
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
 		Translations.importTranslation(
 			contentPageTranslation = "true",
 			fileName = "TranslationContentPage-en_US-ja_JP.xlf",
@@ -334,6 +336,8 @@ definition {
 			translationFileName = "TranslationContentPage-en_US-es_ES",
 			translationZipFileName = "TranslationContentPage-en_US.zip");
 
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
 		Translations.importTranslation(
 			contentPageTranslation = "true",
 			fileName = "TranslationContentPage-en_US-es_ES.xlf",
@@ -420,6 +424,8 @@ definition {
 			pageNameTranslation = "TranslatedContentPage",
 			translationFileName = "TranslationContentPage-en_US-es_ES",
 			translationZipFileName = "TranslationContentPage-en_US.zip");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.importTranslation(
 			contentPageTranslation = "true",

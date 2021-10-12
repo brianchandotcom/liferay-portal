@@ -1276,6 +1276,8 @@ definition {
 			webContentDescription = "",
 			webContentTitle = "WebContentTitle");
 
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-ja_JP.xlf",
 			webContentTitle = "WebContentTitle");

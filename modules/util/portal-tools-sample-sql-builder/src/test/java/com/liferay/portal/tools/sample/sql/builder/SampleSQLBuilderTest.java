@@ -126,10 +126,8 @@ public class SampleSQLBuilderTest {
 
 	private void _initProperties(Properties properties, String outputDir) {
 		properties.put(
-			BenchmarksPropsKeys.CP_OPTION_FACETS_PORTLET_ENABLED, "true");
-		properties.put(
-			BenchmarksPropsKeys.CP_SPECIFICATION_OPTION_FACETS_PORTLET_ENABLED,
-			"true");
+			BenchmarksPropsKeys.COMMERCE_LAYOUT_EXCLUDED_PORTLETS,
+			StringPool.BLANK);
 		properties.put(BenchmarksPropsKeys.DB_TYPE, "hypersonic");
 		properties.put(BenchmarksPropsKeys.MAX_ASSET_CATEGORY_COUNT, "1");
 		properties.put(

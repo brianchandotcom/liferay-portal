@@ -39,16 +39,10 @@ public class BenchmarksPropsValues {
 	public static final String ACTUAL_PROPERTIES_CONTENT =
 		PropertiesHolder._ACTUAL_PROPERTIES_CONTENT;
 
-	public static final boolean CP_OPTION_FACETS_PORTLET_ENABLED =
-		GetterUtil.getBoolean(
+	public static final String[] COMMERCE_LAYOUT_EXCLUDED_PORTLETS =
+		StringUtil.split(
 			PropertiesHolder._get(
-				BenchmarksPropsKeys.CP_OPTION_FACETS_PORTLET_ENABLED));
-
-	public static final boolean CP_SPECIFICATION_OPTION_FACETS_PORTLET_ENABLED =
-		GetterUtil.getBoolean(
-			PropertiesHolder._get(
-				BenchmarksPropsKeys.
-					CP_SPECIFICATION_OPTION_FACETS_PORTLET_ENABLED));
+				BenchmarksPropsKeys.COMMERCE_LAYOUT_EXCLUDED_PORTLETS));
 
 	public static final DBType DB_TYPE = DBType.valueOf(
 		StringUtil.toUpperCase(

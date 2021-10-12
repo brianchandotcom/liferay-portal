@@ -32,6 +32,8 @@ definition {
 	@priority = "5"
 	@uitest
 	test AddInformationTemplate {
+		property portal.acceptance = "true";
+
 		task ("Navigate to the Information Templates admin") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
@@ -318,6 +320,8 @@ definition {
 	@priority = "5"
 	@uitest
 	test EditInformationTemplate {
+		property portal.acceptance = "true";
+
 		task ("Add an information template for Category") {
 			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
 
@@ -390,6 +394,8 @@ definition {
 	@description = "This is a use case for LPS-137569. The page creator could use information template in Content Display."
 	@priority = "5"
 	test MapToContentDisplay {
+		property portal.acceptance = "true";
+
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -583,6 +589,8 @@ definition {
 	@description = "This is a use case for LPS-137569. The page creator could use information template in Collection Display."
 	@priority = "5"
 	test MapToEditableFieldInCollectionDisplay {
+		property portal.acceptance = "true";
+
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",

@@ -223,7 +223,7 @@ definition {
 	@description = "This test ensures that a checked out document cannot be edited by another user."
 	@priority = "5"
 	@refactorneeded
-	test CheckOutDocument {
+	test CannotEditCheckedOutDocument {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(

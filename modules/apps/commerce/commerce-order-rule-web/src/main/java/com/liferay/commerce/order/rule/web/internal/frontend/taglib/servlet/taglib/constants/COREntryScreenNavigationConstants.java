@@ -17,14 +17,13 @@ package com.liferay.commerce.order.rule.web.internal.frontend.taglib.servlet.tag
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceOrderRuleEntryScreenNavigationConstants {
+public class COREntryScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_DETAILS = "details";
 
 	public static final String CATEGORY_KEY_QUALIFIERS = "qualifiers";
 
-	public static final String
-		SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_RULE_ENTRY_GENERAL =
-			"commerce.order.rule.entry.general";
+	public static final String SCREEN_NAVIGATION_KEY_COR_ENTRY_GENERAL =
+		"commerce.order.rule.entry.general";
 
 }

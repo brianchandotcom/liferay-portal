@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.rule.web.internal.portlet;
 
-import com.liferay.commerce.order.rule.constants.CommerceOrderRuleEntryPortletKeys;
+import com.liferay.commerce.order.rule.constants.COREntryPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 import com.liferay.portal.kernel.portlet.ManagePortletProvider;
@@ -27,19 +27,19 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "model.class.name=com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry",
+	property = "model.class.name=com.liferay.commerce.order.rule.model.COREntry",
 	service = {
 		EditPortletProvider.class, ManagePortletProvider.class,
 		ViewPortletProvider.class
 	}
 )
-public class CommerceOrderRuleEntryPortletProvider
+public class COREntryPortletProvider
 	extends BasePortletProvider
 	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 
 	@Override
 	public String getPortletName() {
-		return CommerceOrderRuleEntryPortletKeys.COMMERCE_ORDER_RULE_ENTRY;
+		return COREntryPortletKeys.COR_ENTRY;
 	}
 
 }

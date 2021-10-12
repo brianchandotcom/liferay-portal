@@ -17,18 +17,32 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceOrderRuleEntryDisplayContext commerceOrderRuleEntryDisplayContext = (CommerceOrderRuleEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+COREntryDisplayContext corEntryDisplayContext = (COREntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<portlet:actionURL name="/commerce_order_rule_entry/edit_commerce_order_rule_entry" var="editCommerceOrderRuleEntryActionURL" />
+<portlet:actionURL name="/cor_entry/edit_cor_entry" var="editCOREntryActionURL" />
 
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.get(request, "add-order-rule") %>'
 >
 	<aui:form method="post" name="fm">
-		<aui:input bean="<%= commerceOrderRuleEntryDisplayContext.getCommerceOrderRuleEntry() %>" label="name" model="<%= CommerceOrderRuleEntry.class %>" name="name" required="<%= true %>" />
+		<aui:input bean="<%= corEntryDisplayContext.getCOREntry() %>" label="name" model="<%= COREntry.class %>" name="name" required="<%= true %>" />
 
 		<aui:input name="description" type="textarea" />
+
+		<aui:select label="type" name="type" required="<%= true %>">
+
+			<%
+			for (COREntryType corEntryType : corEntryDisplayContext.getCOREntryTypes()) {
+			%>
+
+				<aui:option label="<%= corEntryType.getLabel(locale) %>" value="<%= corEntryType.getKey() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
 	</aui:form>
 
 	<liferay-frontend:component
@@ -36,9 +50,9 @@ CommerceOrderRuleEntryDisplayContext commerceOrderRuleEntryDisplayContext = (Com
 			HashMapBuilder.<String, Object>put(
 				"defaultLanguageId", themeDisplay.getLanguageId()
 			).put(
-				"editCommerceOrderRuleEntryPortletURL", String.valueOf(commerceOrderRuleEntryDisplayContext.getEditCommerceOrderRuleEntryRenderURL())
+				"editCOREntryPortletURL", String.valueOf(corEntryDisplayContext.getEditCOREntryRenderURL())
 			).build()
 		%>'
-		module="js/addCommerceOrderRuleEntry"
+		module="js/addCOREntry"
 	/>
 </commerce-ui:modal-content>

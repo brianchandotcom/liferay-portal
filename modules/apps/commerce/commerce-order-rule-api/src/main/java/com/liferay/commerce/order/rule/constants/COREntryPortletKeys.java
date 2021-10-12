@@ -17,9 +17,9 @@ package com.liferay.commerce.order.rule.constants;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceOrderRuleEntryPortletKeys {
+public class COREntryPortletKeys {
 
-	public static final String COMMERCE_ORDER_RULE_ENTRY =
-		"com_liferay_commerce_order_rule_web_internal_portlet_CommerceOrderRulePortlet";
+	public static final String COR_ENTRY =
+		"com_liferay_commerce_order_rule_web_internal_portlet_COREntryPortlet";
 
 }

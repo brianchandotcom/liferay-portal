@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.rule.web.internal.portlet.action;
 
-import com.liferay.commerce.order.rule.constants.CommerceOrderRuleEntryPortletKeys;
+import com.liferay.commerce.order.rule.constants.COREntryPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.PortletException;
@@ -29,12 +29,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceOrderRuleEntryPortletKeys.COMMERCE_ORDER_RULE_ENTRY,
-		"mvc.command.name=/commerce_order_rule_entry/add_commerce_order_rule_entry"
+		"javax.portlet.name=" + COREntryPortletKeys.COR_ENTRY,
+		"mvc.command.name=/cor_entry/edit_cor_entry_external_reference_code"
 	},
 	service = MVCRenderCommand.class
 )
-public class AddCommerceOrderRuleEntryMVCRenderCommand
+public class EditCOREntryExternalReferenceCodeMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -42,7 +42,7 @@ public class AddCommerceOrderRuleEntryMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/commerce_order_rule_entry/add_commerce_order_rule_entry.jsp";
+		return "/cor_entry/edit_cor_entry_external_reference_code.jsp";
 	}
 
 }

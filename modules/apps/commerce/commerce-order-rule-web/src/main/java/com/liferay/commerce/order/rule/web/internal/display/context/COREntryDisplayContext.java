@@ -14,12 +14,19 @@
 
 package com.liferay.commerce.order.rule.web.internal.display.context;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
-import com.liferay.commerce.order.rule.constants.CommerceOrderRuleEntryActionKeys;
-import com.liferay.commerce.order.rule.constants.CommerceOrderRuleEntryPortletKeys;
-import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
-import com.liferay.commerce.order.rule.service.CommerceOrderRuleEntryService;
-import com.liferay.commerce.order.rule.web.internal.display.context.util.CommerceOrderRuleEntryRequestHelper;
+import com.liferay.commerce.order.rule.constants.COREntryActionKeys;
+import com.liferay.commerce.order.rule.constants.COREntryConstants;
+import com.liferay.commerce.order.rule.constants.COREntryPortletKeys;
+import com.liferay.commerce.order.rule.entry.type.COREntryType;
+import com.liferay.commerce.order.rule.entry.type.COREntryTypeJSPContributor;
+import com.liferay.commerce.order.rule.entry.type.COREntryTypeJSPContributorRegistry;
+import com.liferay.commerce.order.rule.entry.type.COREntryTypeRegistry;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.service.COREntryService;
+import com.liferay.commerce.order.rule.web.internal.display.context.util.COREntryRequestHelper;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -34,10 +41,15 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,67 +63,65 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceOrderRuleEntryDisplayContext {
+public class COREntryDisplayContext {
 
-	public CommerceOrderRuleEntryDisplayContext(
-		HttpServletRequest httpServletRequest,
-		ModelResourcePermission<CommerceOrderRuleEntry>
-			commerceOrderRuleEntryModelResourcePermission,
-		CommerceOrderRuleEntryService commerceOrderRuleEntryService,
-		Portal portal) {
+	public COREntryDisplayContext(
+		CommerceCurrencyService commerceCurrencyService,
+		ModelResourcePermission<COREntry> corEntryModelResourcePermission,
+		COREntryService corEntryService,
+		COREntryTypeJSPContributorRegistry corEntryTypeJSPContributorRegistry,
+		COREntryTypeRegistry corEntryTypeRegistry,
+		HttpServletRequest httpServletRequest, Portal portal) {
 
+		_commerceCurrencyService = commerceCurrencyService;
+		_corEntryModelResourcePermission = corEntryModelResourcePermission;
+		_corEntryService = corEntryService;
+		_corEntryTypeJSPContributorRegistry =
+			corEntryTypeJSPContributorRegistry;
+		_corEntryTypeRegistry = corEntryTypeRegistry;
 		this.httpServletRequest = httpServletRequest;
-		_commerceOrderRuleEntryModelResourcePermission =
-			commerceOrderRuleEntryModelResourcePermission;
-		_commerceOrderRuleEntryService = commerceOrderRuleEntryService;
-		_portal = portal;
+		this.portal = portal;
 
-		commerceOrderRuleEntryRequestHelper =
-			new CommerceOrderRuleEntryRequestHelper(httpServletRequest);
+		corEntryRequestHelper = new COREntryRequestHelper(httpServletRequest);
 	}
 
-	public String getAddCommerceOrderRuleEntryRenderURL() throws Exception {
+	public String getAddCOREntryRenderURL() throws Exception {
 		return PortletURLBuilder.createRenderURL(
-			commerceOrderRuleEntryRequestHelper.getLiferayPortletResponse()
+			corEntryRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
-			"/commerce_order_rule_entry/add_commerce_order_rule_entry"
+			"/cor_entry/add_cor_entry"
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
 	}
 
-	public CommerceOrderRuleEntry getCommerceOrderRuleEntry()
-		throws PortalException {
+	public COREntry getCOREntry() throws PortalException {
+		long corEntryId = ParamUtil.getLong(
+			corEntryRequestHelper.getRequest(), "corEntryId");
 
-		long commerceOrderRuleEntryId = ParamUtil.getLong(
-			commerceOrderRuleEntryRequestHelper.getRequest(),
-			"commerceOrderRuleEntryId");
-
-		if (commerceOrderRuleEntryId == 0) {
+		if (corEntryId == 0) {
 			return null;
 		}
 
-		return _commerceOrderRuleEntryService.fetchCommerceOrderRuleEntry(
-			commerceOrderRuleEntryId);
+		return _corEntryService.fetchCOREntry(corEntryId);
 	}
 
 	public List<ClayDataSetActionDropdownItem>
-			getCommerceOrderRuleEntryClayDataSetActionDropdownItems()
+			getCOREntryClayDataSetActionDropdownItems()
 		throws PortalException {
 
 		return ListUtil.fromArray(
 			new ClayDataSetActionDropdownItem(
 				PortletURLBuilder.create(
 					PortletProviderUtil.getPortletURL(
-						httpServletRequest,
-						CommerceOrderRuleEntry.class.getName(),
+						httpServletRequest, COREntry.class.getName(),
 						PortletProvider.Action.MANAGE)
 				).setMVCRenderCommandName(
-					"/commerce_order_rule_entry/edit_commerce_order_rule_entry"
+					"/cor_entry/edit_cor_entry"
 				).setRedirect(
-					commerceOrderRuleEntryRequestHelper.getCurrentURL()
+					corEntryRequestHelper.getCurrentURL()
 				).setParameter(
-					"commerceOrderRuleEntryId", "{id}"
+					"corEntryId", "{id}"
 				).buildString(),
 				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
 				"get", null, null),
@@ -125,15 +135,25 @@ public class CommerceOrderRuleEntryDisplayContext {
 				"permissions", "modal-permissions"));
 	}
 
-	public long getCommerceOrderRuleEntryId() throws PortalException {
-		CommerceOrderRuleEntry commerceOrderRuleEntry =
-			getCommerceOrderRuleEntry();
+	public long getCOREntryId() throws PortalException {
+		COREntry corEntry = getCOREntry();
 
-		if (commerceOrderRuleEntry == null) {
+		if (corEntry == null) {
 			return 0;
 		}
 
-		return commerceOrderRuleEntry.getCommerceOrderRuleEntryId();
+		return corEntry.getCOREntryId();
+	}
+
+	public COREntryTypeJSPContributor getCOREntryTypeJSPContributor(
+		String key) {
+
+		return _corEntryTypeJSPContributorRegistry.
+			getCOREntryTypeJSPContributor(key);
+	}
+
+	public List<COREntryType> getCOREntryTypes() {
+		return _corEntryTypeRegistry.getCOREntryTypes();
 	}
 
 	public CreationMenu getCreationMenu() throws Exception {
@@ -142,11 +162,10 @@ public class CommerceOrderRuleEntryDisplayContext {
 		if (hasAddPermission()) {
 			creationMenu.addDropdownItem(
 				dropdownItem -> {
-					dropdownItem.setHref(
-						getAddCommerceOrderRuleEntryRenderURL());
+					dropdownItem.setHref(getAddCOREntryRenderURL());
 					dropdownItem.setLabel(
 						LanguageUtil.get(
-							commerceOrderRuleEntryRequestHelper.getRequest(),
+							corEntryRequestHelper.getRequest(),
 							"add-order-rule"));
 					dropdownItem.setTarget("modal");
 				});
@@ -155,39 +174,45 @@ public class CommerceOrderRuleEntryDisplayContext {
 		return creationMenu;
 	}
 
-	public String getEditCommerceOrderRuleEntryActionURL() throws Exception {
-		CommerceOrderRuleEntry commerceOrderRuleEntry =
-			getCommerceOrderRuleEntry();
+	public String getDefaultCommerceCurrencyCode() throws PortalException {
+		CommerceCurrency commerceCurrency = _getCommerceCurrency();
 
-		if (commerceOrderRuleEntry == null) {
+		if (commerceCurrency == null) {
+			return StringPool.BLANK;
+		}
+
+		return commerceCurrency.getCode();
+	}
+
+	public String getEditCOREntryActionURL() throws Exception {
+		COREntry corEntry = getCOREntry();
+
+		if (corEntry == null) {
 			return StringPool.BLANK;
 		}
 
 		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				commerceOrderRuleEntryRequestHelper.getRequest(),
-				CommerceOrderRuleEntryPortletKeys.COMMERCE_ORDER_RULE_ENTRY,
-				PortletRequest.ACTION_PHASE)
+			portal.getControlPanelPortletURL(
+				corEntryRequestHelper.getRequest(),
+				COREntryPortletKeys.COR_ENTRY, PortletRequest.ACTION_PHASE)
 		).setActionName(
-			"/commerce_order_rule_entry/edit_commerce_order_rule_entry"
+			"/cor_entry/edit_cor_entry"
 		).setCMD(
 			Constants.UPDATE
 		).setParameter(
-			"commerceOrderRuleEntryId",
-			commerceOrderRuleEntry.getCommerceOrderRuleEntryId()
+			"corEntryId", corEntry.getCOREntryId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
 	}
 
-	public PortletURL getEditCommerceOrderRuleEntryRenderURL() {
+	public PortletURL getEditCOREntryRenderURL() {
 		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				commerceOrderRuleEntryRequestHelper.getRequest(),
-				CommerceOrderRuleEntryPortletKeys.COMMERCE_ORDER_RULE_ENTRY,
-				PortletRequest.RENDER_PHASE)
+			portal.getControlPanelPortletURL(
+				corEntryRequestHelper.getRequest(),
+				COREntryPortletKeys.COR_ENTRY, PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
-			"/commerce_order_rule_entry/edit_commerce_order_rule_entry"
+			"/cor_entry/edit_cor_entry"
 		).buildPortletURL();
 	}
 
@@ -195,18 +220,14 @@ public class CommerceOrderRuleEntryDisplayContext {
 		List<HeaderActionModel> headerActionModels = new ArrayList<>();
 
 		LiferayPortletResponse liferayPortletResponse =
-			commerceOrderRuleEntryRequestHelper.getLiferayPortletResponse();
+			corEntryRequestHelper.getLiferayPortletResponse();
 
 		String saveButtonLabel = "save";
 
-		CommerceOrderRuleEntry commerceOrderRuleEntry =
-			getCommerceOrderRuleEntry();
+		COREntry corEntry = getCOREntry();
 
-		if ((commerceOrderRuleEntry == null) ||
-			commerceOrderRuleEntry.isDraft() ||
-			commerceOrderRuleEntry.isApproved() ||
-			commerceOrderRuleEntry.isExpired() ||
-			commerceOrderRuleEntry.isScheduled()) {
+		if ((corEntry == null) || corEntry.isDraft() || corEntry.isApproved() ||
+			corEntry.isExpired() || corEntry.isScheduled()) {
 
 			saveButtonLabel = "save-as-draft";
 		}
@@ -216,7 +237,7 @@ public class CommerceOrderRuleEntryDisplayContext {
 			PortletURLBuilder.createActionURL(
 				liferayPortletResponse
 			).setActionName(
-				"/commerce_order_rule_entry/edit_commerce_order_rule_entry"
+				"/cor_entry/edit_cor_entry"
 			).buildString(),
 			null, saveButtonLabel);
 
@@ -225,18 +246,16 @@ public class CommerceOrderRuleEntryDisplayContext {
 		String publishButtonLabel = "publish";
 
 		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
-				commerceOrderRuleEntryRequestHelper.getCompanyId(),
-				commerceOrderRuleEntryRequestHelper.getScopeGroupId(),
-				CommerceOrderRuleEntry.class.getName())) {
+				corEntryRequestHelper.getCompanyId(),
+				corEntryRequestHelper.getScopeGroupId(),
+				COREntry.class.getName())) {
 
 			publishButtonLabel = "submit-for-publication";
 		}
 
 		String additionalClasses = "btn-primary";
 
-		if ((commerceOrderRuleEntry != null) &&
-			commerceOrderRuleEntry.isPending()) {
-
+		if ((corEntry != null) && corEntry.isPending()) {
 			additionalClasses = additionalClasses + " disabled";
 		}
 
@@ -245,7 +264,7 @@ public class CommerceOrderRuleEntryDisplayContext {
 			PortletURLBuilder.createActionURL(
 				liferayPortletResponse
 			).setActionName(
-				"/commerce_order_rule_entry/edit_commerce_order_rule_entry"
+				"/cor_entry/edit_cor_entry"
 			).buildString(),
 			liferayPortletResponse.getNamespace() + "publishButton",
 			publishButtonLabel);
@@ -255,9 +274,37 @@ public class CommerceOrderRuleEntryDisplayContext {
 		return headerActionModels;
 	}
 
+	public String getMinimumAmount() throws Exception {
+		COREntry corEntry = getCOREntry();
+
+		if (corEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				corEntry.getTypeSettings()
+			).build();
+
+		BigDecimal minimumAmount = BigDecimal.valueOf(
+			GetterUtil.getDouble(
+				typeSettingsUnicodeProperties.getProperty(
+					COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_AMOUNT)));
+
+		CommerceCurrency commerceCurrency = _getCommerceCurrency();
+
+		if (commerceCurrency == null) {
+			return minimumAmount.toPlainString();
+		}
+
+		minimumAmount = commerceCurrency.round(minimumAmount);
+
+		return minimumAmount.toPlainString();
+	}
+
 	public PortletURL getPortletURL() {
 		LiferayPortletResponse liferayPortletResponse =
-			commerceOrderRuleEntryRequestHelper.getLiferayPortletResponse();
+			corEntryRequestHelper.getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
@@ -267,13 +314,10 @@ public class CommerceOrderRuleEntryDisplayContext {
 			portletURL.setParameter("redirect", redirect);
 		}
 
-		long commerceOrderRuleEntryId = ParamUtil.getLong(
-			httpServletRequest, "commerceOrderRuleEntryId");
+		long corEntryId = ParamUtil.getLong(httpServletRequest, "corEntryId");
 
-		if (commerceOrderRuleEntryId > 0) {
-			portletURL.setParameter(
-				"commerceOrderRuleEntryId",
-				String.valueOf(commerceOrderRuleEntryId));
+		if (corEntryId > 0) {
+			portletURL.setParameter("corEntryId", String.valueOf(corEntryId));
 		}
 
 		return portletURL;
@@ -281,27 +325,31 @@ public class CommerceOrderRuleEntryDisplayContext {
 
 	public boolean hasAddPermission() throws PortalException {
 		PortletResourcePermission portletResourcePermission =
-			_commerceOrderRuleEntryModelResourcePermission.
-				getPortletResourcePermission();
+			_corEntryModelResourcePermission.getPortletResourcePermission();
 
 		return portletResourcePermission.contains(
-			commerceOrderRuleEntryRequestHelper.getPermissionChecker(), null,
-			CommerceOrderRuleEntryActionKeys.ADD_COMMERCE_ORDER_RULE);
+			corEntryRequestHelper.getPermissionChecker(), null,
+			COREntryActionKeys.ADD_COR_ENTRY);
 	}
 
 	public boolean hasPermission(String actionId) throws PortalException {
-		return _commerceOrderRuleEntryModelResourcePermission.contains(
-			commerceOrderRuleEntryRequestHelper.getPermissionChecker(),
-			getCommerceOrderRuleEntryId(), actionId);
+		return _corEntryModelResourcePermission.contains(
+			corEntryRequestHelper.getPermissionChecker(), getCOREntryId(),
+			actionId);
 	}
 
-	protected final CommerceOrderRuleEntryRequestHelper
-		commerceOrderRuleEntryRequestHelper;
+	protected final COREntryRequestHelper corEntryRequestHelper;
 	protected final HttpServletRequest httpServletRequest;
+	protected final Portal portal;
+
+	private CommerceCurrency _getCommerceCurrency() throws PortalException {
+		return _commerceCurrencyService.fetchPrimaryCommerceCurrency(
+			corEntryRequestHelper.getCompanyId());
+	}
 
 	private String _getManagePermissionsURL() throws PortalException {
 		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
+			portal.getControlPanelPortletURL(
 				httpServletRequest,
 				"com_liferay_portlet_configuration_web_portlet_" +
 					"PortletConfigurationPortlet",
@@ -309,9 +357,9 @@ public class CommerceOrderRuleEntryDisplayContext {
 		).setMVCPath(
 			"/edit_permissions.jsp"
 		).setRedirect(
-			commerceOrderRuleEntryRequestHelper.getCurrentURL()
+			corEntryRequestHelper.getCurrentURL()
 		).setParameter(
-			"modelResource", CommerceOrderRuleEntry.class.getName()
+			"modelResource", COREntry.class.getName()
 		).setParameter(
 			"modelResourceDescription", "{name}"
 		).setParameter(
@@ -321,9 +369,12 @@ public class CommerceOrderRuleEntryDisplayContext {
 		).buildString();
 	}
 
-	private final ModelResourcePermission<CommerceOrderRuleEntry>
-		_commerceOrderRuleEntryModelResourcePermission;
-	private final CommerceOrderRuleEntryService _commerceOrderRuleEntryService;
-	private final Portal _portal;
+	private final CommerceCurrencyService _commerceCurrencyService;
+	private final ModelResourcePermission<COREntry>
+		_corEntryModelResourcePermission;
+	private final COREntryService _corEntryService;
+	private final COREntryTypeJSPContributorRegistry
+		_corEntryTypeJSPContributorRegistry;
+	private final COREntryTypeRegistry _corEntryTypeRegistry;
 
 }

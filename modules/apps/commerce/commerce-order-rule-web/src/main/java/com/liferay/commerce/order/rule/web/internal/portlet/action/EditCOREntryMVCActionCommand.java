@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.order.rule.web.internal.portlet.action;
 
-import com.liferay.commerce.order.rule.constants.CommerceOrderRuleEntryPortletKeys;
-import com.liferay.commerce.order.rule.exception.NoSuchOrderRuleEntryException;
-import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
-import com.liferay.commerce.order.rule.service.CommerceOrderRuleEntryService;
+import com.liferay.commerce.order.rule.constants.COREntryPortletKeys;
+import com.liferay.commerce.order.rule.exception.NoSuchCOREntryException;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.service.COREntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Calendar;
 
@@ -40,13 +42,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceOrderRuleEntryPortletKeys.COMMERCE_ORDER_RULE_ENTRY,
-		"mvc.command.name=/commerce_order_rule_entry/edit_commerce_order_rule_entry"
+		"javax.portlet.name=" + COREntryPortletKeys.COR_ENTRY,
+		"mvc.command.name=/cor_entry/edit_cor_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class EditCommerceOrderRuleEntryMVCActionCommand
-	extends BaseMVCActionCommand {
+public class EditCOREntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -57,19 +58,12 @@ public class EditCommerceOrderRuleEntryMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				String externalReferenceCode = ParamUtil.getString(
-					actionRequest, "externalReferenceCode");
-				long commerceOrderRuleEntryId = ParamUtil.getLong(
-					actionRequest, "commerceOrderRuleEntryId");
+				long corEntryId = ParamUtil.getLong(
+					actionRequest, "corEntryId");
 
-				String name = ParamUtil.getString(actionRequest, "name");
+				boolean active = ParamUtil.getBoolean(actionRequest, "active");
 				String description = ParamUtil.getString(
 					actionRequest, "description");
-				int priority = ParamUtil.getInteger(
-					actionRequest, "priority");
-				String type = ParamUtil.getString(
-					actionRequest, "type");
-				boolean active = ParamUtil.getBoolean(actionRequest, "active");
 				int displayDateMonth = ParamUtil.getInteger(
 					actionRequest, "displayDateMonth");
 				int displayDateDay = ParamUtil.getInteger(
@@ -108,32 +102,39 @@ public class EditCommerceOrderRuleEntryMVCActionCommand
 					actionRequest, "expirationDateMinute");
 				boolean neverExpire = ParamUtil.getBoolean(
 					actionRequest, "neverExpire");
+				String name = ParamUtil.getString(actionRequest, "name");
+				int priority = ParamUtil.getInteger(actionRequest, "priority");
 
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(
-						CommerceOrderRuleEntry.class.getName(), actionRequest);
+						COREntry.class.getName(), actionRequest);
 
-				if (commerceOrderRuleEntryId <= 0) {
-					_commerceOrderRuleEntryService.addCommerceOrderRuleEntry(
-						externalReferenceCode, active, description, name, priority, type, null,
-						displayDateMonth, displayDateDay, displayDateYear,
-						displayDateHour, displayDateMinute, expirationDateMonth,
-						expirationDateDay, expirationDateYear,
-						expirationDateHour, expirationDateMinute, neverExpire,
-						serviceContext);
-				}
-				else {
-					_commerceOrderRuleEntryService.updateCommerceOrderRuleEntry(
-						commerceOrderRuleEntryId,  active, description, name, priority, null,displayDateMonth, displayDateDay,
+				if (corEntryId <= 0) {
+					_corEntryService.addCOREntry(
+						ParamUtil.getString(
+							actionRequest, "externalReferenceCode"),
+						active, description, displayDateMonth, displayDateDay,
 						displayDateYear, displayDateHour, displayDateMinute,
 						expirationDateMonth, expirationDateDay,
 						expirationDateYear, expirationDateHour,
-						expirationDateMinute, neverExpire, serviceContext);
+						expirationDateMinute, neverExpire, name, priority,
+						ParamUtil.getString(actionRequest, "type"),
+						_getTypeSettings(actionRequest), serviceContext);
+				}
+				else {
+					_corEntryService.updateCOREntry(
+						corEntryId, active, description, displayDateMonth,
+						displayDateDay, displayDateYear, displayDateHour,
+						displayDateMinute, expirationDateMonth,
+						expirationDateDay, expirationDateYear,
+						expirationDateHour, expirationDateMinute, neverExpire,
+						name, priority, _getTypeSettings(actionRequest),
+						serviceContext);
 				}
 			}
 		}
 		catch (Throwable throwable) {
-			if (throwable instanceof NoSuchOrderRuleEntryException) {
+			if (throwable instanceof NoSuchCOREntryException) {
 				SessionErrors.add(
 					actionRequest, throwable.getClass(), throwable);
 
@@ -150,7 +151,15 @@ public class EditCommerceOrderRuleEntryMVCActionCommand
 		}
 	}
 
+	private String _getTypeSettings(ActionRequest actionRequest) {
+		UnicodeProperties typeSettingsUnicodeProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "type--settings--");
+
+		return typeSettingsUnicodeProperties.toString();
+	}
+
 	@Reference
-	private CommerceOrderRuleEntryService _commerceOrderRuleEntryService;
+	private COREntryService _corEntryService;
 
 }

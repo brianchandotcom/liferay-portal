@@ -14,10 +14,13 @@
 
 package com.liferay.commerce.order.rule.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
-import com.liferay.commerce.order.rule.service.CommerceOrderRuleEntryService;
-import com.liferay.commerce.order.rule.web.internal.display.context.CommerceOrderRuleEntryDisplayContext;
-import com.liferay.commerce.order.rule.web.internal.frontend.taglib.servlet.taglib.constants.CommerceOrderRuleEntryScreenNavigationConstants;
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.order.rule.entry.type.COREntryTypeJSPContributorRegistry;
+import com.liferay.commerce.order.rule.entry.type.COREntryTypeRegistry;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.service.COREntryService;
+import com.liferay.commerce.order.rule.web.internal.display.context.COREntryDisplayContext;
+import com.liferay.commerce.order.rule.web.internal.frontend.taglib.servlet.taglib.constants.COREntryScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -54,20 +57,17 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class CommerceOrderRuleEntryDetailsScreenNavigationCategory
-	implements ScreenNavigationCategory,
-			   ScreenNavigationEntry<CommerceOrderRuleEntry> {
+public class COREntryDetailsScreenNavigationCategory
+	implements ScreenNavigationCategory, ScreenNavigationEntry<COREntry> {
 
 	@Override
 	public String getCategoryKey() {
-		return CommerceOrderRuleEntryScreenNavigationConstants.
-			CATEGORY_KEY_DETAILS;
+		return COREntryScreenNavigationConstants.CATEGORY_KEY_DETAILS;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return CommerceOrderRuleEntryScreenNavigationConstants.
-			CATEGORY_KEY_DETAILS;
+		return COREntryScreenNavigationConstants.CATEGORY_KEY_DETAILS;
 	}
 
 	@Override
@@ -77,32 +77,27 @@ public class CommerceOrderRuleEntryDetailsScreenNavigationCategory
 
 		return LanguageUtil.get(
 			resourceBundle,
-			CommerceOrderRuleEntryScreenNavigationConstants.
-				CATEGORY_KEY_DETAILS);
+			COREntryScreenNavigationConstants.CATEGORY_KEY_DETAILS);
 	}
 
 	@Override
 	public String getScreenNavigationKey() {
-		return CommerceOrderRuleEntryScreenNavigationConstants.
-			SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_RULE_ENTRY_GENERAL;
+		return COREntryScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_COR_ENTRY_GENERAL;
 	}
 
 	@Override
-	public boolean isVisible(
-		User user, CommerceOrderRuleEntry commerceOrderRuleEntry) {
-
-		if (commerceOrderRuleEntry == null) {
+	public boolean isVisible(User user, COREntry corEntry) {
+		if (corEntry == null) {
 			return false;
 		}
 
 		boolean hasPermission = false;
 
 		try {
-			hasPermission =
-				_commerceOrderRuleEntryModelResourcePermission.contains(
-					PermissionThreadLocal.getPermissionChecker(),
-					commerceOrderRuleEntry.getCommerceOrderRuleEntryId(),
-					ActionKeys.UPDATE);
+			hasPermission = _corEntryModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				corEntry.getCOREntryId(), ActionKeys.UPDATE);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -119,33 +114,39 @@ public class CommerceOrderRuleEntryDetailsScreenNavigationCategory
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		CommerceOrderRuleEntryDisplayContext
-			commerceOrderRuleEntryDisplayContext =
-				new CommerceOrderRuleEntryDisplayContext(
-					httpServletRequest,
-					_commerceOrderRuleEntryModelResourcePermission,
-					_commerceOrderRuleEntryService, _portal);
+		COREntryDisplayContext corEntryDisplayContext =
+			new COREntryDisplayContext(
+				_commerceCurrencyService, _corEntryModelResourcePermission,
+				_corEntryService, _corEntryTypeJSPContributorRegistry,
+				_corEntryTypeRegistry, httpServletRequest, _portal);
 
 		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			commerceOrderRuleEntryDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT, corEntryDisplayContext);
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse,
-			"/commerce_order_rule_entry/details.jsp");
+			httpServletRequest, httpServletResponse, "/cor_entry/details.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceOrderRuleEntryDetailsScreenNavigationCategory.class);
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry)"
-	)
-	private ModelResourcePermission<CommerceOrderRuleEntry>
-		_commerceOrderRuleEntryModelResourcePermission;
+		COREntryDetailsScreenNavigationCategory.class);
 
 	@Reference
-	private CommerceOrderRuleEntryService _commerceOrderRuleEntryService;
+	private CommerceCurrencyService _commerceCurrencyService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.order.rule.model.COREntry)"
+	)
+	private ModelResourcePermission<COREntry> _corEntryModelResourcePermission;
+
+	@Reference
+	private COREntryService _corEntryService;
+
+	@Reference
+	private COREntryTypeJSPContributorRegistry
+		_corEntryTypeJSPContributorRegistry;
+
+	@Reference
+	private COREntryTypeRegistry _corEntryTypeRegistry;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

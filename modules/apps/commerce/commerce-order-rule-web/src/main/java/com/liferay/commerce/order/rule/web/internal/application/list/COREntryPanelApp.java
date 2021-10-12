@@ -17,16 +17,26 @@ package com.liferay.commerce.order.rule.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.commerce.application.list.constants.CommercePanelCategoryKeys;
-import com.liferay.commerce.order.rule.constants.CommerceOrderRuleEntryPortletKeys;
+import com.liferay.commerce.order.rule.configuration.COREntryConfiguration;
+import com.liferay.commerce.order.rule.constants.COREntryPortletKeys;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
  */
 @Component(
+	configurationPid = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration",
 	enabled = false, immediate = true,
 	property = {
 		"panel.app.order:Integer=150",
@@ -34,20 +44,36 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class CommerceOrderRuleEntryPanelApp extends BasePanelApp {
+public class COREntryPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return CommerceOrderRuleEntryPortletKeys.COMMERCE_ORDER_RULE_ENTRY;
+		return COREntryPortletKeys.COR_ENTRY;
+	}
+
+	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		return _corEntryConfiguration.enabled();
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CommerceOrderRuleEntryPortletKeys.COMMERCE_ORDER_RULE_ENTRY + ")",
+		target = "(javax.portlet.name=" + COREntryPortletKeys.COR_ENTRY + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_corEntryConfiguration = ConfigurableUtil.createConfigurable(
+			COREntryConfiguration.class, properties);
+	}
+
+	private volatile COREntryConfiguration _corEntryConfiguration;
 
 }

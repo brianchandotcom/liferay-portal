@@ -17,11 +17,10 @@ import {CLOSE_MODAL} from 'commerce-frontend-js/utilities/eventsDefinitions';
 import {createPortletURL} from 'frontend-js-web';
 
 export default function ({
-	defaultLanguageId,
-	editCommerceOrderRuleEntryPortletURL,
+	editCOREntryPortletURL,
 	namespace,
 }) {
-	const CommerceOrderRuleEntryResource = ServiceProvider.AdminOrderAPI('v1');
+	const OrderRuleResource = ServiceProvider.AdminOrderAPI('v1');
 
 	const form = document.getElementById(`${namespace}fm`);
 
@@ -31,21 +30,23 @@ export default function ({
 		const description = form.querySelector(`#${namespace}description`)
 			.value;
 		const name = form.querySelector(`#${namespace}name`).value;
+		const type = form.querySelector(`#${namespace}type`).value;
 
 		const orderRuleEntryData = {
-			description: {[defaultLanguageId]: description},
-			name: {[defaultLanguageId]: name},
+			description,
+			name,
+			type,
 		};
 
-		return CommerceOrderRuleEntryResource.addOrderRuleEntry(
+		return OrderRuleResource.addOrderRule(
 			orderRuleEntryData
 		).then((payload) => {
 			const redirectURL = createPortletURL(
-				editCommerceOrderRuleEntryPortletURL
+				editCOREntryPortletURL
 			);
 
 			redirectURL.searchParams.append(
-				`${namespace}commerceOrderRuleEntryId`,
+				`${namespace}corEntryId`,
 				payload.id
 			);
 			redirectURL.searchParams.append('p_auth', Liferay.authToken);

@@ -28,11 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceOrderRuleEntryRequestHelper extends BaseRequestHelper {
+public class COREntryRequestHelper extends BaseRequestHelper {
 
-	public CommerceOrderRuleEntryRequestHelper(
-		HttpServletRequest httpServletRequest) {
-
+	public COREntryRequestHelper(HttpServletRequest httpServletRequest) {
 		super(httpServletRequest);
 
 		Object portletRequest = httpServletRequest.getAttribute(
@@ -50,7 +48,7 @@ public class CommerceOrderRuleEntryRequestHelper extends BaseRequestHelper {
 		}
 	}
 
-	public CommerceOrderRuleEntryRequestHelper(RenderRequest renderRequest) {
+	public COREntryRequestHelper(RenderRequest renderRequest) {
 		super(PortalUtil.getHttpServletRequest(renderRequest));
 	}
 

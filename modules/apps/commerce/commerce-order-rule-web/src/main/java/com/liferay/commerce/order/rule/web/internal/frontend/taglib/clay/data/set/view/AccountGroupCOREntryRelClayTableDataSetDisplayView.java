@@ -14,13 +14,12 @@
 
 package com.liferay.commerce.order.rule.web.internal.frontend.taglib.clay.data.set.view;
 
-import com.liferay.commerce.order.rule.web.internal.frontend.constants.CommerceOrderRuleEntryDataSetConstants;
+import com.liferay.commerce.order.rule.web.internal.frontend.constants.COREntryDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,10 +29,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceOrderRuleEntryDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRIES,
+	property = "clay.data.set.display.name=" + COREntryDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_ACCOUNT_GROUPS,
 	service = ClayDataSetDisplayView.class
 )
-public class CommerceOrderRuleEntryClayTableDataSetDisplayView
+public class AccountGroupCOREntryRelClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -41,35 +40,8 @@ public class CommerceOrderRuleEntryClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
-
-		nameClayTableSchemaField.setContentRenderer("actionLink");
-
-		ClayTableSchemaField activeClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("active", "active");
-
-		activeClayTableSchemaField.setContentRenderer("boolean");
-
-		ClayTableSchemaField startDateClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField(
-				"displayDate", "start-date");
-
-		startDateClayTableSchemaField.setContentRenderer("date");
-		startDateClayTableSchemaField.setSortable(true);
-
-		ClayTableSchemaField endDateClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField(
-				"expirationDate", "end-date");
-
-		endDateClayTableSchemaField.setContentRenderer("date");
-		endDateClayTableSchemaField.setSortable(true);
-
-		ClayTableSchemaField statusClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField(
-				"workflowStatusInfo", "status");
-
-		statusClayTableSchemaField.setContentRenderer("status");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"accountGroup.name", "name");
 
 		return clayTableSchemaBuilder.build();
 	}

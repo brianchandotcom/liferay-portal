@@ -20,11 +20,11 @@
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
-				"commerceOrderRuleEntryId", commerceOrderRuleEntryId
+				"datasetId", COREntryDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_COMMERCE_CHANNELS
 			).put(
-				"datasetId", CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_TYPE_QUALIFIER_CHANNELS
+				"orderRuleExternalReferenceCode", HtmlUtil.escapeJS(corEntry.getExternalReferenceCode())
 			).put(
-				"orderRuleEntryExternalReferenceCode", HtmlUtil.escapeJS(commerceOrderRuleEntry.getExternalReferenceCode())
+				"orderRuleId", corEntryId
 			).put(
 				"rootPortletId", portletDisplay.getRootPortletId()
 			).put(
@@ -39,10 +39,10 @@
 		title='<%= LanguageUtil.get(request, "channels") %>'
 	>
 		<clay:headless-data-set-display
-			apiURL="<%= commerceOrderRuleEntryQualifiersDisplayContext.getCommerceOrderRuleEntryChannelsApiURL() %>"
-			clayDataSetActionDropdownItems="<%= commerceOrderRuleEntryQualifiersDisplayContext.getCommerceOrderRuleEntryChannelClayDataSetActionDropdownItems() %>"
+			apiURL="<%= corEntryQualifiersDisplayContext.getCOREntryChannelsApiURL() %>"
+			clayDataSetActionDropdownItems="<%= corEntryQualifiersDisplayContext.getCommerceChannelCOREntryClayDataSetActionDropdownItems() %>"
 			formId="fm"
-			id="<%= CommerceOrderRuleEntryDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_CHANNELS %>"
+			id="<%= COREntryDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_COMMERCE_CHANNELS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

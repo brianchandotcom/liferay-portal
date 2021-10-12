@@ -17,13 +17,25 @@ package com.liferay.commerce.order.rule.web.internal.frontend.constants;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceOrderRuleEntryDataSetConstants {
+public class COREntryDataSetConstants {
 
 	public static final String COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRIES =
-		"commerceOrderRuleEntries";
+		"corEntries";
 
 	public static final String
-		COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_CHANNELS =
-			"commerceOrderRuleEntryQualifierChannels";
+		COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_ACCOUNT_ENTRIES =
+			"corEntryQualifierAccountEntries";
+
+	public static final String
+		COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_ACCOUNT_GROUPS =
+			"corEntryQualifierAccountGroups";
+
+	public static final String
+		COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_COMMERCE_CHANNELS =
+			"corEntryQualifierCommerceChannels";
+
+	public static final String
+		COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES =
+			"corEntryQualifierCommerceOrderTypes";
 
 }

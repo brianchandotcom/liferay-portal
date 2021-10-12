@@ -14,10 +14,13 @@
 
 package com.liferay.commerce.order.rule.web.internal.portlet;
 
-import com.liferay.commerce.order.rule.constants.CommerceOrderRuleEntryPortletKeys;
-import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
-import com.liferay.commerce.order.rule.service.CommerceOrderRuleEntryService;
-import com.liferay.commerce.order.rule.web.internal.display.context.CommerceOrderRuleEntryDisplayContext;
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.order.rule.constants.COREntryPortletKeys;
+import com.liferay.commerce.order.rule.entry.type.COREntryTypeJSPContributorRegistry;
+import com.liferay.commerce.order.rule.entry.type.COREntryTypeRegistry;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.service.COREntryService;
+import com.liferay.commerce.order.rule.web.internal.display.context.COREntryDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
@@ -48,44 +51,52 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.scopeable=true",
-		"javax.portlet.display-name=Order Types",
+		"javax.portlet.display-name=Order Rules",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + CommerceOrderRuleEntryPortletKeys.COMMERCE_ORDER_RULE_ENTRY,
+		"javax.portlet.name=" + COREntryPortletKeys.COR_ENTRY,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},
-	service = {CommerceOrderRuleEntryPortlet.class, Portlet.class}
+	service = {COREntryPortlet.class, Portlet.class}
 )
-public class CommerceOrderRuleEntryPortlet extends MVCPortlet {
+public class COREntryPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		CommerceOrderRuleEntryDisplayContext
-			commerceOrderRuleEntryDisplayContext =
-				new CommerceOrderRuleEntryDisplayContext(
-					_portal.getHttpServletRequest(renderRequest),
-					_commerceOrderRuleEntryModelResourcePermission,
-					_commerceOrderRuleEntryService, _portal);
+		COREntryDisplayContext corEntryDisplayContext =
+			new COREntryDisplayContext(
+				_commerceCurrencyService, _corEntryModelResourcePermission,
+				_corEntryService, _corEntryTypeJSPContributorRegistry,
+				_corEntryTypeRegistry,
+				_portal.getHttpServletRequest(renderRequest), _portal);
 
 		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			commerceOrderRuleEntryDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT, corEntryDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}
 
+	@Reference
+	private CommerceCurrencyService _commerceCurrencyService;
+
 	@Reference(
-		target = "(model.class.name=com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry)"
+		target = "(model.class.name=com.liferay.commerce.order.rule.model.COREntry)"
 	)
-	private ModelResourcePermission<CommerceOrderRuleEntry>
-		_commerceOrderRuleEntryModelResourcePermission;
+	private ModelResourcePermission<COREntry> _corEntryModelResourcePermission;
 
 	@Reference
-	private CommerceOrderRuleEntryService _commerceOrderRuleEntryService;
+	private COREntryService _corEntryService;
+
+	@Reference
+	private COREntryTypeJSPContributorRegistry
+		_corEntryTypeJSPContributorRegistry;
+
+	@Reference
+	private COREntryTypeRegistry _corEntryTypeRegistry;
 
 	@Reference
 	private Portal _portal;

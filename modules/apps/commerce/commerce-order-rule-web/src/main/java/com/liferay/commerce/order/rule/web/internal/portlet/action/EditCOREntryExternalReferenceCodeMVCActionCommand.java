@@ -14,16 +14,16 @@
 
 package com.liferay.commerce.order.rule.web.internal.portlet.action;
 
-import com.liferay.commerce.order.rule.constants.CommerceOrderRuleEntryPortletKeys;
-import com.liferay.commerce.order.rule.service.CommerceOrderRuleEntryRelService;
-import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.order.rule.constants.COREntryPortletKeys;
+import com.liferay.commerce.order.rule.exception.NoSuchCOREntryException;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.service.COREntryService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -37,12 +37,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceOrderRuleEntryPortletKeys.COMMERCE_ORDER_RULE_ENTRY,
-		"mvc.command.name=/commerce_order_rule_entry/edit_commerce_order_rule_entry_qualifiers"
+		"javax.portlet.name=" + COREntryPortletKeys.COR_ENTRY,
+		"mvc.command.name=/cor_entry/edit_cor_entry_external_reference_code"
 	},
 	service = MVCActionCommand.class
 )
-public class EditCommerceOrderRuleEntryQualifiersMVCActionCommand
+public class EditCOREntryExternalReferenceCodeMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -50,32 +50,38 @@ public class EditCommerceOrderRuleEntryQualifiersMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
 		try {
-			/*if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				String channelQualifiers = ParamUtil.getString(
-					actionRequest, "channelQualifiers");
+			long corEntryId = ParamUtil.getLong(actionRequest, "corEntryId");
 
-				if (Objects.equals(channelQualifiers, "all")) {
-					long commerceOrderRuleEntryId = ParamUtil.getLong(
-						actionRequest, "commerceOrderRuleEntryId");
+			COREntry corEntry = _corEntryService.getCOREntry(corEntryId);
 
-					_commerceOrderRuleEntryRelService.
-						deleteCommerceOrderRuleEntryRels(
-							CommerceChannel.class.getName(),
-							commerceOrderRuleEntryId);
-				}
-			}*/
+			String externalReferenceCode = ParamUtil.getString(
+				actionRequest, "externalReferenceCode");
+
+			_corEntryService.updateCOREntryExternalReferenceCode(
+				externalReferenceCode, corEntry.getCOREntryId());
 		}
 		catch (Exception exception) {
-			SessionErrors.add(actionRequest, exception.getClass());
+			if (exception instanceof NoSuchCOREntryException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
-			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else {
+				_log.error(exception, exception);
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditCOREntryExternalReferenceCodeMVCActionCommand.class);
+
 	@Reference
-	private CommerceOrderRuleEntryRelService _commerceOrderRuleEntryRelService;
+	private COREntryService _corEntryService;
 
 }

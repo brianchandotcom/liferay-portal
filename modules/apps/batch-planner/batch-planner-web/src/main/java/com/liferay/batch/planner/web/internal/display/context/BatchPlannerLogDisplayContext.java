@@ -50,6 +50,8 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 	public PortletURL getPortletURL() {
 		return PortletURLBuilder.createRenderURL(
 			renderResponse
+		).setNavigation(
+			ParamUtil.getString(renderRequest, "navigation", "all")
 		).setTabs1(
 			"batch-planner-logs"
 		).setParameter(

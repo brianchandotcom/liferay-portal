@@ -1261,40 +1261,4 @@ definition {
 			dmDocumentTitle = "DM Document 2 Title");
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test SingleDocumentSelectionDoesNotCheckAllEntries {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.jpg",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2.jpg",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
-
-		AssertElementPresent(locator1 = "Checkbox#SELECT_ALL_CHECKBOX_TICK");
-
-		DMDocument.uncheckDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
-
-		AssertElementNotPresent(locator1 = "Checkbox#SELECT_ALL_CHECKBOX_TICK");
-
-		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
-
-		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "DM Document2 Title");
-
-		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
-	}
-
 }

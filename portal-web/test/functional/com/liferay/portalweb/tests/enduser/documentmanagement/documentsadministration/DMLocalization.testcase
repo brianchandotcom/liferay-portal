@@ -225,7 +225,7 @@ definition {
 		DMDocument.addCP(
 			dmDocumentDescription = "DM文書記述",
 			dmDocumentFile = "これは写真です.jpg",
-			dmDocumentFilePath = "enduser/sdocumentmanagement/documentsadministration",
+			dmDocumentFilePath = "enduser/documentmanagement/documentsadministration",
 			useCurrentTitle = "true");
 
 		DMNavigator.openToEditEntryInSite(

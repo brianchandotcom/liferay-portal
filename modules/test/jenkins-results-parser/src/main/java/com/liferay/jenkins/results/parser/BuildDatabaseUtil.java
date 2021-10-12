@@ -199,14 +199,14 @@ public class BuildDatabaseUtil {
 	}
 
 	private static File _getBuildDir(Build build) {
+		if (build != null) {
+			return new File(build.getBuildDirPath());
+		}
+
 		String buildDir = System.getenv("BUILD_DIR");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(buildDir)) {
 			return new File(buildDir);
-		}
-
-		if (build != null) {
-			return new File(build.getBuildDirPath());
 		}
 
 		return new File(JenkinsResultsParserUtil.getBuildDirPath());

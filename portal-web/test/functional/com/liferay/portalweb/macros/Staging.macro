@@ -56,7 +56,7 @@ definition {
 		if (isSet(recycleBinNotification)) {
 			AssertTextPresent(
 				locator1 = "Message#ERROR_3_ALT",
-				value1 = "The recycle bin of this site will be automatically emptied before turning on local staging. Make sure to manually restore anything you don't want to delete permanently before you continue.");
+				value1 = "The recycle bin of this site will be automatically emptied before turning on local staging. Make sure to manually restore anything you do not want to delete permanently before you continue.");
 		}
 
 		if (isSet(remoteStaging)) {

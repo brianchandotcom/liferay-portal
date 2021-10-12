@@ -45,7 +45,7 @@ definition {
 				title = "Dynamic Collection");
 		}
 
-		task ("Add the First collection page based on manual collection") {
+		task ("Add the first collection page based on manual collection") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
@@ -63,7 +63,7 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Add the Second collection page based on dynamic collection") {
+		task ("Add the second collection page based on dynamic collection") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
@@ -81,7 +81,7 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Add the Third collection page based on collection providers") {
+		task ("Add the third collection page based on collection provider") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
@@ -105,10 +105,10 @@ definition {
 				siteName = "Test Site Name");
 		}
 
-		task ("View the workflow message is not shown in staging") {
-			for (var pageNumber : list "First,Second") {
+		task ("View the workflow message is not shown in staging site") {
+			for (var text : list "First,Second") {
 				ContentPagesNavigator.openViewContentPage(
-					pageName = "${pageNumber} Collection Page Name",
+					pageName = "${text} Collection Page Name",
 					siteName = "Test Site Name Staging");
 
 				AssertElementNotPresent(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION");
@@ -137,7 +137,7 @@ definition {
 				value1 = "HTML Example");
 		}
 
-		task ("Assert View action of the third collection page is disabled in live") {
+		task ("Assert View action of the third collection page is disabled in live site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			Click.waitForMenuToggleJSClick(

@@ -5599,11 +5599,10 @@ public class DataFactory {
 			if (portletNames.containsKey(key)) {
 				portletNames.put(
 					key,
-					portletNames.get(key) + StringPool.COMMA +
-						jsonObject.getString("portletName"));
+					portletNames.get(key) + StringPool.COMMA + portletName);
 			}
 			else {
-				portletNames.put(key, jsonObject.getString("portletName"));
+				portletNames.put(key, portletName);
 			}
 		}
 

@@ -54,12 +54,7 @@ definition {
 				tabName = "Collections");
 		}
 
-		task ("Add a Button fragment to First collection page and publish") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button",
-				targetFragmentName = "Container");
-
+		task ("Publish the first collection page") {
 			PageEditor.clickPublish();
 		}
 
@@ -72,10 +67,11 @@ definition {
 				tabName = "Collections");
 		}
 
-		task ("Add a HTML fragment to Second collection page and publish") {
+		task ("Add a Button fragment above the Container then publish") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
-				fragmentName = "HTML",
+				dropTarget = "Header",
+				fragmentName = "Button",
 				targetFragmentName = "Container");
 
 			PageEditor.clickPublish();
@@ -90,10 +86,11 @@ definition {
 				tabName = "Collection Providers");
 		}
 
-		task ("Add a Heading fragment to Third collection page and let it as Draft") {
+		task ("Add a HTML fragment above the Container without publish") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
-				fragmentName = "Heading",
+				dropTarget = "Header",
+				fragmentName = "HTML",
 				targetFragmentName = "Container");
 		}
 
@@ -115,26 +112,31 @@ definition {
 			}
 		}
 
-		task ("View the Button fragment is shown in live site") {
+		task ("View the Heading fragment is shown in live site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "First Collection Page Name",
 				siteName = "Test Site Name");
 
 			AssertTextEquals(
-				key_fragmentName = "button",
+				key_fragmentName = "heading",
 				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Go somewhere");
+				value1 = "Manual Collection");
 		}
 
-		task ("View the HTML fragment is shown in live site") {
+		task ("View the Button and Heading fragments are shown in live site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Second Collection Page Name",
 				siteName = "Test Site Name");
 
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "html",
+			AssertTextEquals(
+				key_fragmentName = "button",
 				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "HTML Example");
+				value1 = "Go Somewhere");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Dynamic Collection");
 		}
 
 		task ("Assert View action of the third collection page is disabled in live site") {

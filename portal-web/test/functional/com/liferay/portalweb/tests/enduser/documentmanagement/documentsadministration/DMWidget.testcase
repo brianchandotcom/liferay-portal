@@ -156,4 +156,21 @@ definition {
 			value1 = "2 of 10 Selected");
 	}
 
+	@description = "This test ensures that the DM widgets follow W3C accessibility standards."
+	@ignore = "true"
+	@priority = "4"
+	test WidgetsFollowAccessibilityStandards {
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Media Gallery");
+
+		Navigator.openSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Guest");
+
+		AssertAccessible();
+	}
+
 }

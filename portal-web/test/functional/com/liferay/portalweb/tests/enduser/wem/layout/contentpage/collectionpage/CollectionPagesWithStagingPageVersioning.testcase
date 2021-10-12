@@ -59,8 +59,6 @@ definition {
 		}
 
 		task ("Add the second collection page based on dynamic collection") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",
 				pageName = "Second Collection Page Name",
@@ -78,8 +76,6 @@ definition {
 		}
 
 		task ("Add the third collection page based on collection provider") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Most Viewed Assets",
 				pageName = "Third Collection Page Name",

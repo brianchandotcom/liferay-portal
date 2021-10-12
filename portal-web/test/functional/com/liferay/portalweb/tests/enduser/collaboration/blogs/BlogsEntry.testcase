@@ -364,10 +364,6 @@ definition {
 	test CanAddWithTrackbackURL {
 		property custom.properties = "blogs.trackback.enabled=true";
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry1 Title");
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -377,6 +373,16 @@ definition {
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title");
+
+		PortletEntry.publish();
 
 		Refresh();
 

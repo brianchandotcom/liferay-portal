@@ -40,6 +40,7 @@ import {
 	subscribeSectionQuery,
 	unsubscribeSectionQuery,
 } from '../../utils/client.es';
+import lang from '../../utils/lang.es';
 import {
 	deleteCacheKey,
 	getBasePath,
@@ -306,7 +307,7 @@ export default withRouter(
 				return;
 			}
 
-			if (section.id == null && !currentTag) {
+			if (!section || (section.id == null && !currentTag)) {
 				return;
 			}
 
@@ -422,9 +423,16 @@ export default withRouter(
 				getSectionBySectionTitle({
 					variables,
 				}).then(({data}) => {
-					setSection(data.messageBoardSections.items[0]);
-					setSectionQuery(getSectionBySectionTitleQuery);
-					setSectionQueryVariables(variables);
+					if (data.messageBoardSections.items[0]) {
+						setSection(data.messageBoardSections.items[0]);
+						setSectionQuery(getSectionBySectionTitleQuery);
+						setSectionQueryVariables(variables);
+					}
+					else {
+						setSection(null);
+						setError({message: 'Loading Topics', title: 'Error'});
+						setLoading(false);
+					}
 				});
 			}
 			else if (sectionTitle === '0') {
@@ -498,82 +506,112 @@ export default withRouter(
 						/>
 					)}
 
-					<div className="c-mx-auto c-px-0 col-xl-10">
-						<PaginatedList
-							activeDelta={pageSize}
-							activePage={page}
-							changeDelta={(pageSize) =>
-								changePage(search, page, pageSize)
-							}
-							changePage={(page) =>
-								changePage(search, page, pageSize)
-							}
-							data={questions}
-							emptyState={
-								sectionTitle &&
-								!search &&
-								!isVotedFilter(filter) ? (
-									<ClayEmptyState
-										description={Liferay.Language.get(
-											'there-are-no-questions-inside-this-topic-be-the-first-to-ask-something'
-										)}
-										imgSrc={
-											context.includeContextPath +
-											'/assets/empty_questions_list.png'
-										}
-										title={Liferay.Language.get(
-											'this-topic-is-empty'
-										)}
-									>
-										{((context.redirectToLogin &&
-											!themeDisplay.isSignedIn()) ||
-											context.canCreateThread) && (
-											<ClayButton
-												displayType="primary"
-												onClick={navigateToNewQuestion}
-											>
-												{Liferay.Language.get(
-													'ask-question'
-												)}
-											</ClayButton>
-										)}
-									</ClayEmptyState>
-								) : (
-									<ClayEmptyState
-										title={Liferay.Language.get(
-											'there-are-no-results'
-										)}
-									/>
-								)
-							}
-							loading={loading}
-							totalCount={totalCount}
-						>
-							{(question) => (
-								<QuestionRow
-									currentSection={sectionTitle}
-									key={question.id}
-									question={question}
-									showSectionLabel={
-										!!section.numberOfMessageBoardSections
-									}
-								/>
+					{!section && (
+						<ClayEmptyState
+							className="c-mx-auto c-px-0 col-xl-10"
+							description={lang.sub(
+								Liferay.Language.get(
+									'the-link-you-followed-may-be-broken-or-the-topic-no-longer-exists'
+								),
+								[sectionTitle]
 							)}
-						</PaginatedList>
-						<ClayButton
-							className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
-							displayType="primary"
-							onClick={navigateToNewQuestion}
+							imgSrc={
+								context.includeContextPath +
+								'/assets/empty_questions_list.png'
+							}
+							title={Liferay.Language.get(
+								'the-topic-is-not-found'
+							)}
 						>
-							<ClayIcon symbol="pencil" />
+							<ClayButton
+								displayType="primary"
+								onClick={() => historyPushParser('/questions')}
+							>
+								{Liferay.Language.get('home')}
+							</ClayButton>
+						</ClayEmptyState>
+					)}
 
-							<span className="sr-only">
-								{Liferay.Language.get('ask-question')}
-							</span>
-						</ClayButton>
+					{section && (
+						<div className="c-mx-auto c-px-0 col-xl-10">
+							<PaginatedList
+								activeDelta={pageSize}
+								activePage={page}
+								changeDelta={(pageSize) =>
+									changePage(search, page, pageSize)
+								}
+								changePage={(page) =>
+									changePage(search, page, pageSize)
+								}
+								data={questions}
+								emptyState={
+									sectionTitle &&
+									!search &&
+									!isVotedFilter(filter) ? (
+										<ClayEmptyState
+											description={Liferay.Language.get(
+												'there-are-no-questions-inside-this-topic-be-the-first-to-ask-something'
+											)}
+											imgSrc={
+												context.includeContextPath +
+												'/assets/empty_questions_list.png'
+											}
+											title={Liferay.Language.get(
+												'this-topic-is-empty'
+											)}
+										>
+											{((context.redirectToLogin &&
+												!themeDisplay.isSignedIn()) ||
+												context.canCreateThread) && (
+												<ClayButton
+													displayType="primary"
+													onClick={
+														navigateToNewQuestion
+													}
+												>
+													{Liferay.Language.get(
+														'ask-question'
+													)}
+												</ClayButton>
+											)}
+										</ClayEmptyState>
+									) : (
+										<ClayEmptyState
+											title={Liferay.Language.get(
+												'there-are-no-results'
+											)}
+										/>
+									)
+								}
+								loading={loading}
+								totalCount={totalCount}
+							>
+								{(question) => (
+									<QuestionRow
+										currentSection={sectionTitle}
+										key={question.id}
+										question={question}
+										showSectionLabel={
+											!!section.numberOfMessageBoardSections
+										}
+									/>
+								)}
+							</PaginatedList>
+							<ClayButton
+								className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
+								displayType="primary"
+								onClick={navigateToNewQuestion}
+							>
+								<ClayIcon symbol="pencil" />
 
-						<Alert info={error} />
-					</div>
+								<span className="sr-only">
+									{Liferay.Language.get('ask-question')}
+								</span>
+							</ClayButton>
+
+							<Alert info={error} />
+						</div>
+					)}
 				</div>
 			</section>
 		);

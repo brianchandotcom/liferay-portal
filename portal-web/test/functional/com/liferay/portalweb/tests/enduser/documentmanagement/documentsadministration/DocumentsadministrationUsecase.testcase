@@ -191,31 +191,6 @@ definition {
 		}
 	}
 
-	@priority = "4"
-	@refactordone
-	test CanAddCommentToDocument {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
-			mimeType = "text/plain",
-			sourceFileName = "Document_1.txt");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocumentComment.addPG(
-			commentBody = "This is a comment",
-			dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocumentComment.viewPG(
-			commentBody = "This is a comment",
-			dmDocumentTitle = "DM Document Title");
-	}
-
 	@priority = "3"
 	@refactorneeded
 	test ConfigureFFmpegVideoPreviewSizePG {

@@ -121,21 +121,27 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 						_modelResourcePermission, _percentageFormatter,
 						_portletResourcePermission);
 
-			List<String> errorMessages = new ArrayList<>();
+			CommerceOrder commerceOrder = getCommerceOrder(renderRequest);
 
-			List<CommerceOrderValidatorResult> commerceOrderValidatorResults =
-				_commerceOrderValidatorRegistry.validate(
-					renderRequest.getLocale(), getCommerceOrder(renderRequest));
+			if (commerceOrder != null) {
+				List<String> errorMessages = new ArrayList<>();
 
-			for (CommerceOrderValidatorResult commerceOrderValidatorResult :
-					commerceOrderValidatorResults) {
+				List<CommerceOrderValidatorResult>
+					commerceOrderValidatorResults =
+						_commerceOrderValidatorRegistry.validate(
+							renderRequest.getLocale(), commerceOrder);
 
-				errorMessages.add(
-					commerceOrderValidatorResult.getLocalizedMessage());
+				for (CommerceOrderValidatorResult commerceOrderValidatorResult :
+						commerceOrderValidatorResults) {
+
+					errorMessages.add(
+						commerceOrderValidatorResult.getLocalizedMessage());
+				}
+
+				renderRequest.setAttribute(
+					CommerceWebKeys.COMMERCE_ORDER_ERROR_MESSAGES,
+					errorMessages);
 			}
-
-			renderRequest.setAttribute(
-				CommerceWebKeys.COMMERCE_ORDER_ERROR_MESSAGES, errorMessages);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,

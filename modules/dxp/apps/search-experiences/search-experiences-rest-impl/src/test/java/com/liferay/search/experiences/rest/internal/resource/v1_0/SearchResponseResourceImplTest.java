@@ -64,14 +64,6 @@ public class SearchResponseResourceImplTest {
 		SearchHitBuilder searchHitBuilder =
 			_searchHitBuilderFactory.getSearchHitBuilder();
 
-		com.liferay.portal.search.document.Document portalSearchDocument =
-			_documentBuilderFactory.builder(
-			).setString(
-				"field1st", "Lone Value"
-			).setIntegers(
-				"field2nd", 4, 8, 15, 16, 23, 42
-			).build();
-
 		float score = 1.3862942F;
 
 		String requestString = JSONUtil.put(
@@ -89,7 +81,12 @@ public class SearchResponseResourceImplTest {
 		searchResponseBuilder.searchHits(
 			searchHitsBuilder.addSearchHit(
 				searchHitBuilder.document(
-					portalSearchDocument
+					_documentBuilderFactory.builder(
+					).setString(
+						"field1st", "Lone Value"
+					).setIntegers(
+						"field2nd", 4, 8, 15, 16, 23, 42
+					).build()
 				).score(
 					score
 				).build()

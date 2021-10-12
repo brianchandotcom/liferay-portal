@@ -17,15 +17,10 @@ import classNames from 'classnames';
 import {debounce} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {
-	PINS_RADIUS_MAX,
-	PINS_RADIUS_MIN,
-	PINS_RADIUS_OPTIONS,
-	PINS_RADIUS_STEP,
-} from '../utilities/constants';
+import {PINS_RADIUS} from '../utilities/constants';
 
 function getLabel(pinsRadius) {
-	return Object.values(PINS_RADIUS_OPTIONS).reduce(
+	return Object.values(PINS_RADIUS.OPTIONS).reduce(
 		(label, definition) =>
 			definition.value === pinsRadius ? definition.label : label,
 		Liferay.Language.get('custom')
@@ -44,9 +39,9 @@ function DiagramHeader({pinsRadius, updatePinsRadius}) {
 	const [active, setActive] = useState(false);
 	const [buttonLabel, updateButtonLabel] = useState(getLabel(pinsRadius));
 
-	const smallActive = pinsRadius === PINS_RADIUS_OPTIONS.small.value;
-	const mediumActive = pinsRadius === PINS_RADIUS_OPTIONS.medium.value;
-	const largeActive = pinsRadius === PINS_RADIUS_OPTIONS.large.value;
+	const smallActive = pinsRadius === PINS_RADIUS.OPTIONS.small.value;
+	const mediumActive = pinsRadius === PINS_RADIUS.OPTIONS.medium.value;
+	const largeActive = pinsRadius === PINS_RADIUS.OPTIONS.large.value;
 
 	useEffect(() => {
 		debouncedUpdateLabel(pinsRadius, updateButtonLabel);
@@ -78,33 +73,33 @@ function DiagramHeader({pinsRadius, updatePinsRadius}) {
 									active={smallActive}
 									onClick={() =>
 										updatePinsRadius(
-											PINS_RADIUS_OPTIONS.small.value
+											PINS_RADIUS.OPTIONS.small.value
 										)
 									}
 								>
-									{PINS_RADIUS_OPTIONS.small.label}
+									{PINS_RADIUS.OPTIONS.small.label}
 								</ClayDropDown.Item>
 
 								<ClayDropDown.Item
 									active={mediumActive}
 									onClick={() =>
 										updatePinsRadius(
-											PINS_RADIUS_OPTIONS.medium.value
+											PINS_RADIUS.OPTIONS.medium.value
 										)
 									}
 								>
-									{PINS_RADIUS_OPTIONS.medium.label}
+									{PINS_RADIUS.OPTIONS.medium.label}
 								</ClayDropDown.Item>
 
 								<ClayDropDown.Item
 									active={largeActive}
 									onClick={() =>
 										updatePinsRadius(
-											PINS_RADIUS_OPTIONS.large.value
+											PINS_RADIUS.OPTIONS.large.value
 										)
 									}
 								>
-									{PINS_RADIUS_OPTIONS.large.label}
+									{PINS_RADIUS.OPTIONS.large.label}
 								</ClayDropDown.Item>
 
 								<ClayDropDown.Item>
@@ -126,11 +121,11 @@ function DiagramHeader({pinsRadius, updatePinsRadius}) {
 										>
 											<ClaySlider
 												id="custom-radius-slider"
-												max={PINS_RADIUS_MAX}
-												min={PINS_RADIUS_MIN}
+												max={PINS_RADIUS.MAX}
+												min={PINS_RADIUS.MIN}
 												onValueChange={updatePinsRadius}
 												showTooltip={false}
-												step={PINS_RADIUS_STEP}
+												step={PINS_RADIUS.STEP}
 												value={pinsRadius}
 											/>
 										</div>

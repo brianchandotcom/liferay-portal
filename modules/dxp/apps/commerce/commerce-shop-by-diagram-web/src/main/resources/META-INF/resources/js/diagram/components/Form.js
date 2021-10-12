@@ -14,14 +14,6 @@ import Autocomplete from 'commerce-frontend-js/components/autocomplete/Autocompl
 import React from 'react';
 
 export function LinkedToCatalogProductFormGroup({updateValue, value}) {
-
-	/**
-	 * Product model doesn't match with MappedProduct.
-	 * When the product details come from pins APIs,
-	 * we need to align both the models in order
-	 * to provide consistent data to the Autocomplete
-	 */
-
 	const initialValue = value ? {...value} : null;
 
 	if (initialValue && initialValue.skuId) {
@@ -58,14 +50,6 @@ export function LinkedToCatalogProductFormGroup({updateValue, value}) {
 }
 
 export function LinkedToDiagramFormGroup({updateValue, value}) {
-
-	/**
-	 * Product model doesn't match with MappedProduct.
-	 * When the product details come from pins APIs,
-	 * we need to align both the models in order
-	 * to provide consistent data to the Autocomplete
-	 */
-
 	const initialValue = value ? {...value} : null;
 
 	if (initialValue && !initialValue.name) {

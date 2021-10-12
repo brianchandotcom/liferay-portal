@@ -49,25 +49,28 @@ export const HEADERS = new Headers({
 	'Content-Type': 'application/json',
 });
 
-export const PINS_RADIUS_OPTIONS = {
-	large: {
-		label: Liferay.Language.get('large'),
-		value: 2,
+export const PINS_RADIUS = {
+	DEFAULT: 1,
+	MAX: 3,
+	MIN: 0.5,
+	OPTIONS: {
+		large: {
+			label: Liferay.Language.get('large'),
+			value: 2,
+		},
+		medium: {
+			label: Liferay.Language.get('medium'),
+			value: 1,
+		},
+		small: {
+			label: Liferay.Language.get('small'),
+			value: 0.5,
+		},
 	},
-	medium: {
-		label: Liferay.Language.get('medium'),
-		value: 1,
-	},
-	small: {
-		label: Liferay.Language.get('small'),
-		value: 0.5,
-	},
+	STEP: 0.25,
 };
-export const PINS_RADIUS_MIN = 0.5;
-export const PINS_RADIUS_MAX = 3;
-export const PINS_RADIUS_STEP = 0.25;
+
 export const PINS_CIRCLE_RADIUS = 15;
-export const DEFAULT_PINS_RADIUS = PINS_RADIUS_OPTIONS.medium.value;
 
 export const DEFAULT_LINK_OPTION = 'sku';
 

@@ -19,7 +19,7 @@ import DiagramHandler from './DiagramHandler';
 import DiagramFooter from './components/DiagramFooter';
 import DiagramHeader from './components/DiagramHeader';
 import Tooltip from './components/Tooltip';
-import {DEFAULT_PINS_RADIUS} from './utilities/constants';
+import {PINS_RADIUS} from './utilities/constants';
 import {loadPins, updateGlobalPinsRadius} from './utilities/data';
 
 import '../../css/diagram.scss';
@@ -34,16 +34,16 @@ function Diagram({
 	pinsRadius: initialPinsRadius,
 	productId,
 }) {
-	const svgRef = useRef(null);
-	const zoomHandlerRef = useRef(null);
-	const wrapperRef = useRef(null);
 	const chartInstance = useRef(null);
+	const pinsRadiusInitialized = useRef(false);
+	const svgRef = useRef(null);
+	const wrapperRef = useRef(null);
+	const zoomHandlerRef = useRef(null);
+	const [currentZoom, updateCurrentZoom] = useState(1);
+	const [expanded, updateExpanded] = useState(false);
 	const [pins, updatePins] = useState(null);
 	const [pinsRadius, updatePinsRadius] = useState(initialPinsRadius);
 	const [tooltipData, setTooltipData] = useState(false);
-	const [currentZoom, updateCurrentZoom] = useState(1);
-	const [expanded, updateExpanded] = useState(false);
-	const pinsRadiusInitialized = useRef(false);
 
 	useEffect(() => {
 		if (pinsRadiusInitialized.current) {
@@ -124,7 +124,7 @@ function Diagram({
 }
 
 Diagram.defaultProps = {
-	pinsRadius: DEFAULT_PINS_RADIUS,
+	pinsRadius: PINS_RADIUS.DEFAULT,
 };
 
 Diagram.propTypes = {

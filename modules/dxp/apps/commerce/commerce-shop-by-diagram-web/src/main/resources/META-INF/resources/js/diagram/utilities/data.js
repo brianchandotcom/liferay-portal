@@ -86,11 +86,13 @@ export const updateGlobalPinsRadius = (diagramId, radius, namespace) => {
 		body: JSON.stringify({radius}),
 		headers: HEADERS,
 		method: 'PATCH',
-	}).then(() => {
-		const radiusInput = document.getElementById(`${namespace}radius`);
+	}).then((response) => {
+		if (response.ok) {
+			const radiusInput = document.getElementById(`${namespace}radius`);
 
-		if (radiusInput) {
-			radiusInput.value = radius;
+			if (radiusInput) {
+				radiusInput.value = radius;
+			}
 		}
 	});
 };

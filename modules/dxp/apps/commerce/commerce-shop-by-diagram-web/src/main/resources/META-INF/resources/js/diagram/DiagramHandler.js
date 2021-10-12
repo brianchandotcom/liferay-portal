@@ -18,8 +18,8 @@ import {
 import {openToast} from 'frontend-js-web';
 
 import {
-	DEFAULT_PINS_RADIUS,
 	PINS_CIRCLE_RADIUS,
+	PINS_RADIUS,
 	ZOOM_VALUES,
 } from './utilities/constants';
 import {savePin} from './utilities/data';
@@ -38,14 +38,15 @@ class DiagramHandler {
 		setTooltipData
 	) {
 		this._currentScale = 1;
-		this._diagramWrapper = diagramWrapper;
 		this._d3diagramWrapper = d3select(diagramWrapper);
 		this._d3zoomWrapper = d3select(zoomWrapper);
+		this._diagramWrapper = diagramWrapper;
 		this._imageURL = imageURL;
 		this._pinBackground = null;
 		this._setTooltipData = setTooltipData;
 		this._updateZoomState = updateZoomState;
 		this._zoomWrapper = zoomWrapper;
+
 		this._handleClickOutside = this._handleClickOutside.bind(this);
 		this._handleDragEnded = this._handleDragEnded.bind(this);
 		this._handleDragStarted = this._handleDragStarted.bind(this);
@@ -55,7 +56,7 @@ class DiagramHandler {
 		this._handleImageClick = this._handleImageClick.bind(this);
 		this._handleUpdate = this._handleUpdate.bind(this);
 		this._handleZoom = this._handleZoom.bind(this);
-		this._pinsRadius = DEFAULT_PINS_RADIUS;
+		this._pinsRadius = PINS_RADIUS.DEFAULT;
 
 		this._addListeners();
 		this._printImage();

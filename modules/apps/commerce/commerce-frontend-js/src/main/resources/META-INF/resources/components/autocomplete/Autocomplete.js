@@ -61,18 +61,6 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 		[props.fetchDataDebounce]
 	);
 
-	const currentValue = useMemo(() => {
-		return selectedItem
-			? getValueFromItem(selectedItem, props.itemsKey)
-			: null;
-	}, [selectedItem, props.itemsKey]);
-
-	const currentLabel = useMemo(() => {
-		return selectedItem
-			? getValueFromItem(selectedItem, props.itemsLabel)
-			: null;
-	}, [selectedItem, props.itemsLabel]);
-
 	useEffect(() => {
 		if (items && items.length === 1 && props.autofill) {
 			const firstItem = items[0];
@@ -101,6 +89,10 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 			return;
 		}
 
+		const currentValue = selectedItem
+			? getValueFromItem(selectedItem, props.itemsKey)
+			: null;
+
 		if (props.id) {
 			Liferay.fire(AUTOCOMPLETE_VALUE_UPDATED, {
 				currentValue,
@@ -122,7 +114,7 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 		props.id,
 		onValueUpdated,
 		onChange,
-		currentValue,
+		props.itemsKey,
 	]);
 
 	useEffect(() => {
@@ -287,7 +279,11 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 						id={props.inputId || props.inputName}
 						name={props.inputName}
 						type="hidden"
-						value={currentValue || ''}
+						value={
+							selectedItem
+								? getValueFromItem(selectedItem, props.itemsKey)
+								: ''
+						}
 					/>
 					<ClayAutocomplete.Input
 						disabled={props.readOnly}
@@ -308,7 +304,14 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 						placeholder={props.inputPlaceholder}
 						ref={inputNode}
 						required={props.required || false}
-						value={currentLabel || query}
+						value={
+							selectedItem
+								? getValueFromItem(
+										selectedItem,
+										props.itemsLabel
+								  )
+								: query
+						}
 					/>
 					{!CustomView && !props.disabled && (
 						<ClayAutocomplete.DropDown

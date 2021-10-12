@@ -107,13 +107,6 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public void updateStatsUser(long groupId, long userId)
-		throws PortalException {
-
-		updateStatsUser(groupId, userId, null);
-	}
-
-	@Override
 	public void updateStatsUser(long groupId, long userId, Date displayDate)
 		throws PortalException {
 

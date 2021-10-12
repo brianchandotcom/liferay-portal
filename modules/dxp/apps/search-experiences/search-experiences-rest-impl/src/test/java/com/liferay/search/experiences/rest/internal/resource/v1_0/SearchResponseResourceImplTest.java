@@ -58,25 +58,24 @@ public class SearchResponseResourceImplTest {
 		SearchResponseBuilder searchResponseBuilder =
 			_searchResponseBuilderFactory.builder(searchContext);
 
-		SearchHitsBuilder searchHitsBuilder =
-			_searchHitsBuilderFactory.getSearchHitsBuilder();
-
-		SearchHitBuilder searchHitBuilder =
-			_searchHitBuilderFactory.getSearchHitBuilder();
-
-		float score = 1.3862942F;
-
 		String requestString = JSONUtil.put(
 			"query", JSONUtil.put("term", JSONUtil.put("title", "Liferay"))
 		).put(
 			"took", 5
 		).toString();
 
+		float score = 1.3862942F;
+
 		String responseString = JSONUtil.put(
 			"hits", JSONUtil.put("max_score", score)
 		).put(
 			"took", 5
 		).toString();
+
+		SearchHitBuilder searchHitBuilder =
+			_searchHitBuilderFactory.getSearchHitBuilder();
+		SearchHitsBuilder searchHitsBuilder =
+			_searchHitsBuilderFactory.getSearchHitsBuilder();
 
 		searchResponseBuilder.searchHits(
 			searchHitsBuilder.addSearchHit(

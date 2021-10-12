@@ -2015,4 +2015,36 @@ definition {
 			dmDocumentVersionNumber = "2.0");
 	}
 
+	@description = "This is a use case for LPS-50760."
+	@priority = "4"
+	@refactordone
+	test StagingFileSizeIsNotAffectedByDLRestrictions {
+		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#StagingFileSizeIsNotAffectedByDLRestrictions";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "audio/x-mpeg",
+			sourceFileName = "Document_1.mp3");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LAR.exportPortlet(larFileName = "DM.portlet.lar");
+
+		DMDocument.updateMaximumFileSize(fieldValue = "300000");
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LAR._gotoExportImport();
+
+		AssertElementPresent(locator1 = "IFrame#MODAL_BODY");
+
+		LAR._export(
+			exportPermissions = "${exportPermissions}",
+			larFileName = "DM.portlet.lar");
+	}
+
 }

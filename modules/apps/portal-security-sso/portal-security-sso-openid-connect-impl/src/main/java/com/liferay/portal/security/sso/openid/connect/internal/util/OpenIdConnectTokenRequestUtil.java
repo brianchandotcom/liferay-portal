@@ -19,6 +19,7 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 
 import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.proc.BadJOSEException;
 import com.nimbusds.jose.util.DefaultResourceRetriever;
 import com.nimbusds.oauth2.sdk.AuthorizationCodeGrant;
@@ -133,7 +134,8 @@ public class OpenIdConnectTokenRequestUtil {
 			OIDCTokens oidcTokens = oidcTokenResponse.getOIDCTokens();
 
 			_validate(
-				clientID, nonce, openIdConnectProvider.getOIDCClientMetadata(),
+				clientID, secret, nonce,
+				openIdConnectProvider.getOIDCClientMetadata(),
 				oidcProviderMetadata, oidcTokens,
 				openIdConnectProvider.getTokenConnectionTimeout());
 
@@ -156,21 +158,40 @@ public class OpenIdConnectTokenRequestUtil {
 	}
 
 	private static IDTokenClaimsSet _validate(
-			ClientID clientID, Nonce nonce,
+			ClientID clientID, Secret clientSecret, Nonce nonce,
 			OIDCClientMetadata oidcClientMetadata,
 			OIDCProviderMetadata oidcProviderMetadata, OIDCTokens oidcTokens,
 			int tokenConnectionTimeout)
 		throws OpenIdConnectServiceException.TokenException {
 
-		try {
+		IDTokenValidator idTokenValidator = null;
+
+		if (JWSAlgorithm.Family.HMAC_SHA.contains(
+				oidcClientMetadata.getIDTokenJWSAlg())) {
+
+			idTokenValidator = new IDTokenValidator(
+				oidcProviderMetadata.getIssuer(), clientID,
+				oidcClientMetadata.getIDTokenJWSAlg(), clientSecret);
+		}
+		else {
 			URI uri = oidcProviderMetadata.getJWKSetURI();
 
-			IDTokenValidator idTokenValidator = new IDTokenValidator(
-				oidcProviderMetadata.getIssuer(), clientID,
-				oidcClientMetadata.getIDTokenJWSAlg(), uri.toURL(),
-				new DefaultResourceRetriever(
-					tokenConnectionTimeout, tokenConnectionTimeout));
+			try {
+				idTokenValidator = new IDTokenValidator(
+					oidcProviderMetadata.getIssuer(), clientID,
+					oidcClientMetadata.getIDTokenJWSAlg(), uri.toURL(),
+					new DefaultResourceRetriever(
+						tokenConnectionTimeout, tokenConnectionTimeout));
+			}
+			catch (MalformedURLException malformedURLException) {
+				throw new OpenIdConnectServiceException.TokenException(
+					"Invalid JSON web key URL: " +
+						malformedURLException.getMessage(),
+					malformedURLException);
+			}
+		}
 
+		try {
 			return idTokenValidator.validate(oidcTokens.getIDToken(), nonce);
 		}
 		catch (BadJOSEException | JOSEException exception) {
@@ -179,12 +200,6 @@ public class OpenIdConnectTokenRequestUtil {
 					"Unable to validate tokens for client \"", clientID, "\": ",
 					exception.getMessage()),
 				exception);
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new OpenIdConnectServiceException.TokenException(
-				"Invalid JSON web key URL: " +
-					malformedURLException.getMessage(),
-				malformedURLException);
 		}
 	}
 

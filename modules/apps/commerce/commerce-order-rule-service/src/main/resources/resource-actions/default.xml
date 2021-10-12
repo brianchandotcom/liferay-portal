@@ -11,14 +11,14 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
-				<action-key>ADD_COMMERCE_ORDER_RULE</action-key>
-				<action-key>VIEW_COMMERCE_ORDER_RULES</action-key>
+				<action-key>ADD_COR_ENTRY</action-key>
+				<action-key>VIEW_COR_ENTRIES</action-key>
 			</supports>
 			<site-member-defaults/>
 			<guest-defaults/>
 			<guest-unsupported>
-				<action-key>ADD_COMMERCE_ORDER_RULE</action-key>
-				<action-key>VIEW_COMMERCE_ORDER_RULES</action-key>
+				<action-key>ADD_COR_ENTRY</action-key>
+				<action-key>VIEW_COR_ENTRIES</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

@@ -1302,7 +1302,8 @@ definition {
 
 		DMDocument.editPG(
 			dmDocumentFileEdit = "Document_2.doc",
-			dmDocumentTitle = "DM Document Title Version 2");
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Version 2");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",

@@ -20,9 +20,7 @@
 			<div id="item-finder-root-order-types"></div>
 
 			<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-				var OrderRuleOrderTypesResource = ServiceProvider.default.AdminOrderAPI(
-					'v1'
-				);
+				var OrderRuleOrderTypesResource = ServiceProvider.default.AdminOrderAPI('v1');
 
 				var id = <%= corEntryId %>;
 				var corEntryExternalReferenceCode =
@@ -36,10 +34,7 @@
 						orderRuleId: id,
 					};
 
-					return OrderRuleOrderTypesResource.addOrderRuleOrderType(
-						id,
-						orderTypeData
-					)
+					return OrderRuleOrderTypesResource.addOrderRuleOrderType(id, orderTypeData)
 						.then(() => {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:

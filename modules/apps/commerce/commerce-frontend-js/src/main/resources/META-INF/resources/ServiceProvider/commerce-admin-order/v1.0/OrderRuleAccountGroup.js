@@ -20,7 +20,11 @@ const ORDER_RULE_ACCOUNT_GROUPS_PATH = '/order-rule-account-groups';
 
 const VERSION = 'v1.0';
 
-function resolvePath(basePath = '', orderRuleId = '', orderRuleAccountGroupId = '') {
+function resolvePath(
+	basePath = '',
+	orderRuleId = '',
+	orderRuleAccountGroupId = ''
+) {
 	return `${basePath}${VERSION}${ORDER_RULE_PATH}/${orderRuleId}${ORDER_RULE_ACCOUNT_GROUPS_PATH}/${orderRuleAccountGroupId}`;
 }
 

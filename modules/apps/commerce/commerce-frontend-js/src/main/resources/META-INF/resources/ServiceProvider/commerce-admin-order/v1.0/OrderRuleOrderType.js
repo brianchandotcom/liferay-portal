@@ -20,7 +20,11 @@ const ORDER_RULE_ORDER_TYPES_PATH = '/order-rule-order-types';
 
 const VERSION = 'v1.0';
 
-function resolvePath(basePath = '', orderRuleId = '', orderRuleOrderTypeId = '') {
+function resolvePath(
+	basePath = '',
+	orderRuleId = '',
+	orderRuleOrderTypeId = ''
+) {
 	return `${basePath}${VERSION}${ORDER_RULE_PATH}/${orderRuleId}${ORDER_RULE_ORDER_TYPES_PATH}/${orderRuleOrderTypeId}`;
 }
 

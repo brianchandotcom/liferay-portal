@@ -18,9 +18,7 @@
 	<div id="item-finder-root"></div>
 
 	<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-		var OrderRuleAccountsResource = ServiceProvider.default.AdminOrderAPI(
-			'v1'
-		);
+		var OrderRuleAccountsResource = ServiceProvider.default.AdminOrderAPI('v1');
 
 		var corEntryExternalReferenceCode =
 			'<%= HtmlUtil.escapeJS(corEntry.getExternalReferenceCode()) %>';

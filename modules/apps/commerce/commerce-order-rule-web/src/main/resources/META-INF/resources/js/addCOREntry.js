@@ -16,10 +16,7 @@ import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
 import {CLOSE_MODAL} from 'commerce-frontend-js/utilities/eventsDefinitions';
 import {createPortletURL} from 'frontend-js-web';
 
-export default function ({
-	editCOREntryPortletURL,
-	namespace,
-}) {
+export default function ({editCOREntryPortletURL, namespace}) {
 	const OrderRuleResource = ServiceProvider.AdminOrderAPI('v1');
 
 	const form = document.getElementById(`${namespace}fm`);
@@ -38,28 +35,26 @@ export default function ({
 			type,
 		};
 
-		return OrderRuleResource.addOrderRule(
-			orderRuleEntryData
-		).then((payload) => {
-			const redirectURL = createPortletURL(
-				editCOREntryPortletURL
-			);
+		return OrderRuleResource.addOrderRule(orderRuleEntryData).then(
+			(payload) => {
+				const redirectURL = createPortletURL(editCOREntryPortletURL);
 
-			redirectURL.searchParams.append(
-				`${namespace}corEntryId`,
-				payload.id
-			);
-			redirectURL.searchParams.append('p_auth', Liferay.authToken);
+				redirectURL.searchParams.append(
+					`${namespace}corEntryId`,
+					payload.id
+				);
+				redirectURL.searchParams.append('p_auth', Liferay.authToken);
 
-			window.parent.Liferay.fire(CLOSE_MODAL, {
-				redirectURL: redirectURL.toString(),
-				successNotification: {
-					message: Liferay.Language.get(
-						'your-request-completed-successfully'
-					),
-					showSuccessNotification: true,
-				},
-			});
-		});
+				window.parent.Liferay.fire(CLOSE_MODAL, {
+					redirectURL: redirectURL.toString(),
+					successNotification: {
+						message: Liferay.Language.get(
+							'your-request-completed-successfully'
+						),
+						showSuccessNotification: true,
+					},
+				});
+			}
+		);
 	});
 }

@@ -691,7 +691,7 @@ definition {
 
 		DMDocument.downloadPG(dmDocumentTitle = "/D/M/@!# Title");
 
-		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "/D/M/Document Title");
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_1.doc");
 	}
 
 	@description = "This test edits the title and description of a document. It asserts minor version increment because only its metadata was updated."

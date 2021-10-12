@@ -376,24 +376,6 @@ definition {
 				accountName = "${accountNames}",
 				assigneeName = "userfn userln");
 		}
-	}
-
-	@description = "This test asserts that an Account Admin cannot view accounts not assigned to him."
-	@priority = "5"
-	test CannotViewOtherAccounts {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account Name 2",
-			accountEntryType = "Business");
-
-		Navigator.gotoPage(pageName = "2B Account Page");
-
-		LexiconEntry.viewEntryName(rowEntry = "Account Name");
-
-		LexiconEntry.viewEntryName(rowEntry = "Account Name 2");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -437,6 +419,30 @@ definition {
 				}
 			}
 		}
+	}
+
+	@description = "This test asserts that an Account Admin cannot view accounts not assigned to him."
+	@priority = "5"
+	test CannotViewOtherAccounts {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account Name 2",
+			accountEntryType = "Business");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		LexiconEntry.viewEntryName(rowEntry = "Account Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Account Name 2");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
 
 		LexiconEntry.viewEntryName(rowEntry = "Account Name");
 

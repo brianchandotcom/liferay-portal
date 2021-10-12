@@ -62,11 +62,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Summer");
-
-		Staging.changeSitePageVariationPG(
-			sitePagesVariationMenulistName = "Main Variation",
-			sitePagesVariationName = "Summer");
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page Name",

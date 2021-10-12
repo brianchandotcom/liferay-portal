@@ -18,9 +18,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -87,10 +85,6 @@ public class SetupWizardAction implements Action {
 						httpServletRequest, "defaultDatabase")) {
 
 					PropsValues.SETUP_WIZARD_ENABLED = false;
-				}
-				else {
-					CompanyLocalServiceUtil.forEachCompanyId(
-						SearchEngineHelperUtil::removeCompany);
 				}
 			}
 

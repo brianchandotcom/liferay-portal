@@ -20,13 +20,18 @@ import com.liferay.portal.jericho.CachedLoggerProvider;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -37,6 +42,8 @@ import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.InputStream;
+
+import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 
@@ -156,6 +163,28 @@ public class StartupAction extends SimpleAction {
 			DBUpgrader.verify();
 
 			DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
+
+			DependencyManagerSyncUtil.registerSyncCallable(
+				() -> {
+					StartupHelperUtil.setDbNew(false);
+
+					Set<Indexer<?>> indexers =
+						IndexerRegistryUtil.getIndexers();
+
+					CompanyLocalServiceUtil.forEachCompanyId(
+						companyId -> {
+							SearchEngineHelperUtil.removeCompany(companyId);
+
+							SearchEngineHelperUtil.initialize(companyId);
+
+							for (Indexer<?> indexer : indexers) {
+								indexer.reindex(
+									new String[] {String.valueOf(companyId)});
+							}
+						});
+
+					return null;
+				});
 		}
 
 		if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP) {

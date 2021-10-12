@@ -47,6 +47,10 @@ public class IndexStatusManagerImpl implements IndexStatusManager {
 
 	@Override
 	public boolean isIndexReadOnly() {
+		if (StartupHelperUtil.isDBNew()) {
+			return true;
+		}
+
 		if (_suppressIndexReadOnly) {
 			return false;
 		}

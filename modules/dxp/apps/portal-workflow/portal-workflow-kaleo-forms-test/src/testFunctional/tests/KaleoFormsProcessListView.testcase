@@ -158,12 +158,79 @@ definition {
 	}
 
 	@description = "Verify that the page displays the pagination button."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DisplaysThePaginationButton {
+		for (var newProcess : list "1,2,3,4") {
+			KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70664 DisplaysThePaginationButton pending implementation
+			KaleoFormsAdmin.addProcessDetails(
+				kfProcessDescription = "Kaleo Forms Process Description ${newProcess}",
+				kfProcessName = "Kaleo Forms Process ${newProcess}");
 
+			KaleoFormsAdmin.next();
+
+			KaleoFormsAdmin.chooseFieldSet(
+				kfFieldSetName = "Contacts",
+		 		kfProcessName = "Kaleo Forms Process ${newProcess}");
+
+			KaleoFormsAdmin.next();
+
+			KaleoFormsAdmin.chooseWorkflow(
+				kfProcessName = "Kaleo Forms Process ${newProcess}",
+				workflowDefinitionTitle = "Single Approver");
+
+			KaleoFormsAdmin.next();
+
+			KaleoFormsAdmin.assignForm(
+				kfProcessName = "Kaleo Forms Process ${newProcess}",
+				workflowTask = "create");
+
+			KaleoFormsAdmin.addForm(kfFormName = "Created Task Form ${newProcess}");
+
+			KaleoFormsAdmin.saveForm();
+
+			KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form ${newProcess}");
+
+			KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process ${newProcess}");
+		}
+
+		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description 5",
+			kfProcessName = "Kaleo Forms Process 5");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "Contacts",
+		 	kfProcessName = "Kaleo Forms Process 5");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "Kaleo Forms Process 5",
+			workflowDefinitionTitle = "Single Approver");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.assignForm(
+			kfProcessName = "Kaleo Forms Process 5",
+			workflowTask = "create");
+
+		KaleoFormsAdmin.addForm(kfFormName = "Created Task Form 5");
+
+		KaleoFormsAdmin.saveForm();
+
+		KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form 5");
+
+		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process 5");
+
+		AssertElementPresent(locator1 = "Pagination#PAGINATION_BAR");
+
+	
 	}
 
 	@description = "Verify that when there are no results for the search, it displays the message -No process were found-."

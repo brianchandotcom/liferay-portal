@@ -207,11 +207,17 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8135 | Test Summary: Edit a static segment and check the edits are saved"
 	@priority = "5"
 	test CanEditStaticSegmentCheckEditSaved {
+		var usernameList = "ac,liferay";
+
+		var emailList = "ac@liferay.com,liferay@liferay.com";
+
+		var nameList = "ac ac,liferay liferay";
+
 		ACUtils.createBlogsAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		for (var name : list "ac,liferay") {
+		for (var name : list "${usernameList}") {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
 				userFirstName = "${name}",
@@ -221,19 +227,12 @@ definition {
 
 		ACDXPSettings.syncNewContactData();
 
-		for (var name : list "ac,liferay") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "${name}@liferay.com",
-				userLoginFullName = "${name} ${name}");
-
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
-
-			Pause(locator1 = "5000");
-		}
+		ACUtils.navigateToSitePageWithUser(
+			emailList = "${emailList}",
+			actionType = "View Blog",
+			documentTitleList = "Blogs AC Title",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -257,9 +256,7 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertElementPresent(
-			key_userName = "ac ac",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");
+		ACUtils.viewNameList(nameList = "ac ac");
 
 		ACNavigation.goToSegments();
 
@@ -275,11 +272,7 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		for (var name : list "ac,liferay") {
-			AssertElementPresent(
-				key_userName = "${name} ${name}",
-				locator1 = "ACSegments#SEGMENT_MEMBERS");
-		}
+		ACUtils.viewNameList(nameList = "${nameList}");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8136 | Test Summary: Rename Individuals Segment"

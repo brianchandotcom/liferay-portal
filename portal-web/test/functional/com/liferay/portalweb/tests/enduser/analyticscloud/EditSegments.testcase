@@ -919,9 +919,13 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8596 | Test Summary: Undo one static member from being added"
 	@priority = "3"
 	test UndoOneStaticMemberFromBeingAdded {
-		task ("Create user and sincronize it") {
-			var users = "ac,ac2,ac3";
+		var users = "ac,ac2,ac3";
 
+		var emailList = "ac@liferay.com,ac2@liferay.com,ac3@liferay.com";
+
+		var nameList = "ac ac,ac2 ac2,ac3 ac3";
+
+		task ("Create user and sincronize it") {
 			for (var user : list "${users}") {
 				JSONUser.addUser(
 					userEmailAddress = "${user}@liferay.com",
@@ -934,16 +938,10 @@ definition {
 		}
 
 		task ("Login new user and view page") {
-			for (var user : list "${users}") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${user}@liferay.com",
-					userLoginFullName = "${user} ${user}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 			}
 		}
 
@@ -972,9 +970,7 @@ definition {
 		}
 
 		task ("Assert three members") {
-			for (var user : list "${users}") {
-				ACSegments.assertMember(memberName = "${user} ${user}");
-			}
+			ACUtils.viewNameList(nameList = "${nameList}");
 		}
 
 		task ("Click check and select ac ac") {
@@ -1008,7 +1004,7 @@ definition {
 		}
 
 		task ("Assert element present in ac ac") {
-			ACSegments.assertMember(memberName = "ac3 ac3");
+			ACUtils.viewNameList(nameList = "ac3 ac3");
 		}
 
 		task ("Assert elemennt not present in ac ac") {

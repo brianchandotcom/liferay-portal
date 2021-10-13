@@ -6,7 +6,7 @@ definition {
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Kaleo Forms Admin";
 
-	var kfFieldSetName = "New Kaleo Field Set";
+	var kfFieldSetName = "Contacts";	
 	var workflowAssetType = "Process";
 
 	setUp {
@@ -106,14 +106,17 @@ definition {
 
 		// TODO LRQA-70700 FieldsAppearsOnTheDetailsPage pending implementation
 
+
+
+
 	}
 
 	@description = "Verify that the details page shows the version."
 	@ignore = "Test Stub"
 	@priority = "3"
-	test VersionOnDatailsPage {
+	test VersionOnDetailsPage {
 
-		// TODO LRQA-70701 VersionOnDatailsPage pending implementation
+		// TODO LRQA-70701 VersionOnDetailsPage pending implementation
 
 	}
 

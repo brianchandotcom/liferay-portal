@@ -104,9 +104,9 @@ definition {
 	@description = "Verify that the user can not delete a field set that is required by one or more templates."
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanNoteDeleteFieldSets {
+	test CanNotDeleteFieldSets {
 
-		// TODO LRQA-70709 CanNoteDeleteFieldSets pending implementation
+		// TODO LRQA-70709 CanNotDeleteFieldSets pending implementation
 
 	}
 

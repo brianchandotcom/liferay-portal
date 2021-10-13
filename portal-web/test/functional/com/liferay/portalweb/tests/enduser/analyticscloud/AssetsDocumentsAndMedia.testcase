@@ -235,24 +235,17 @@ definition {
 					userLastName = "${name}",
 					userScreenName = "${name}");
 			}
+
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Logout and login the AC") {
-			for (var name : list "${userNames}") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${name}@liferay.com",
-					userLoginFullName = "${name} ${name}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				if ("${name}" != "ac") {
-					DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
-				}
-				Pause(locator1 = "5000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				documentTitleList = "DM AC Title",
+				actionType = "Download DM",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Create segment") {
@@ -276,13 +269,11 @@ definition {
 		}
 
 		task ("Login and download the document") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				documentTitleList = "DM AC Title",
+				actionType = "Download DM",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
-
-			Pause(locator1 = "10000");
 		}
 
 		task ("Close sessions") {

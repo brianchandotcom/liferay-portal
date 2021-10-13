@@ -54,13 +54,12 @@ definition {
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
-		Navigator.gotoSitePage(
+		ACUtils.navigateToSitePage(
+			actionType = "Comment Blog",
+			documentTitleList = "Blogs AC Title",
+			commentText = "Blogs Entry Comment",
 			pageName = "AC Page",
 			siteName = "Site Name");
-
-		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
-
-		Comments.addPG(entryComment = "Blogs Entry Comment");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -89,13 +88,14 @@ definition {
 
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
-		Navigator.gotoSitePage(
+		ACUtils.navigateToSitePage(
+			actionType = "Comment Blog",
+			documentTitleList = "Blogs AC Title",
+			commentText = "Blogs Entry Comment 1",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
-		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
-
-		for (var n : list "1,2,3") {
+		for (var n : list "2,3") {
 			Comments.addPG(entryComment = "Blogs Entry Comment ${n}");
 		}
 

@@ -632,11 +632,15 @@ definition {
 	@description = "Form known individuals shows which individuals interact with the form"
 	@priority = "5"
 	test KnownIndividualsShowsWhichIndividualsInteractWithForm {
-		Navigator.openURL();
+		var nameList = "ac ac,liferay liferay,dxp dxp";
+
+		var usernameList = "ac,liferay,dxp";
+
+		var emailList = "ac@liferay.com,liferay@liferay.com,dxp@liferay.com";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		for (var name : list "ac,liferay,dxp") {
+		for (var name : list "${usernameList}") {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
 				userFirstName = "${name}",
@@ -646,29 +650,12 @@ definition {
 
 		ACDXPSettings.syncNewContactData();
 
-		for (var name : list "ac,liferay,dxp") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "${name}@liferay.com",
-				userLoginFullName = "${name} ${name}");
-
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			FormPortlet.waitFormRenderer(text = "Submit");
-
-			FormFields.viewTextLabel(
-				fieldLabel = "Text",
-				fieldName = "Text");
-
-			FormFields.editText(
-				fieldName = "Text",
-				fieldValue = "Test Assets");
-
-			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
-
-			Pause(locator1 = "10000");
-		}
+		ACUtils.navigateToSitePageWithUser(
+			emailList = "${emailList}",
+			actionType = "Submit Form",
+			submitText = "Test Assets",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -692,11 +679,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		for (var name : list "ac,liferay,dxp") {
-			AssertElementPresent(
-				key_userName = "${name} ${name}",
-				locator1 = "ACSegments#SEGMENT_MEMBERS");
-		}
+		ACUtils.viewNameList(nameList = "${nameList}");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8120 | Test Summary: Assert forms list shows all of the forms in a list"

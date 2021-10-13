@@ -37,6 +37,8 @@ import com.liferay.portal.search.engine.adapter.cluster.HealthClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterResponse;
 import com.liferay.portal.search.engine.adapter.index.CloseIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.CloseIndexResponse;
+import com.liferay.portal.search.engine.adapter.index.GetIndexIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.GetIndexIndexResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRepositoryRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotResponse;
@@ -49,8 +51,10 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRepositoryDetai
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotState;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.Strings;
@@ -102,6 +106,37 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		}
 
 		return backupName;
+	}
+
+	@Override
+	public Set<Integer> getCompaniesWithIndexes() {
+		String dummyIndexName = _indexNameBuilder.getIndexName(0);
+
+		String indexNamePrefix = dummyIndexName.substring(
+			0, dummyIndexName.length() - 1);
+
+		GetIndexIndexRequest getIndexIndexRequest = new GetIndexIndexRequest(
+			indexNamePrefix + StringPool.STAR);
+
+		GetIndexIndexResponse getIndexIndexResponse =
+			_searchEngineAdapter.execute(getIndexIndexRequest);
+
+		String[] indexNames = getIndexIndexResponse.getIndexNames();
+
+		Set<Integer> companyIds = new HashSet<>();
+
+		for (String indexName : indexNames) {
+			try {
+				companyIds.add(
+					Integer.valueOf(
+						StringUtil.removeSubstring(
+							indexName, indexNamePrefix)));
+			}
+			catch (Exception exception) {
+			}
+		}
+
+		return companyIds;
 	}
 
 	@Override

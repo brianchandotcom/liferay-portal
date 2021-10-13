@@ -70,11 +70,15 @@ definition {
 	@description = "Search for specific segment"
 	@priority = "5"
 	test CanSearchForSegment {
+		var usernameList = "ac,userea";
+
+		var emailList = "ac@liferay.com,userea@liferay.com";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-		for (var name : list "ac,userea") {
+		for (var name : list "${usernameList}") {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
 				userFirstName = "${name}",
@@ -84,17 +88,10 @@ definition {
 
 		ACDXPSettings.syncNewContactData();
 
-		for (var name : list "ac,userea") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "${name}@liferay.com",
-				userLoginFullName = "${name} ${name}");
-
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			Pause(locator1 = "5000");
-		}
+		ACUtils.navigateToSitePageWithUser(
+			emailList = "${emailList}",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		ACUtils.launchAC();
 

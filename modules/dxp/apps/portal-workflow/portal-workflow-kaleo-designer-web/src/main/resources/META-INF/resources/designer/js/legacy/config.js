@@ -13,7 +13,7 @@
 	AUI().applyConfig({
 		groups: {
 			'kaleo-designer': {
-				base: MODULE_PATH + '/designer/js/',
+				base: MODULE_PATH + '/designer/js/legacy/',
 				combine: Liferay.AUI.getCombine(),
 				filter: Liferay.AUI.getFilterConfig(),
 				modules: {
@@ -108,7 +108,7 @@
 						],
 					},
 				},
-				root: MODULE_PATH + '/designer/js/',
+				root: MODULE_PATH + '/designer/js/legacy/',
 			},
 		},
 	});

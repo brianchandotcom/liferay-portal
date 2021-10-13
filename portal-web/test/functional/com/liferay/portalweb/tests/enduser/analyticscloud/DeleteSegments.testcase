@@ -175,11 +175,8 @@ definition {
 		}
 
 		task ("Sign in with the new user to visit the site pages") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "ac@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -206,8 +203,6 @@ definition {
 
 		task ("Delete the segment via Segment List") {
 			ACNavigation.goToSegments();
-
-			Pause(locator1 = "3000");
 
 			ACSegments.deleteSegmentViaSegmentListInlineButton(segmentName = "New Segment Test");
 		}

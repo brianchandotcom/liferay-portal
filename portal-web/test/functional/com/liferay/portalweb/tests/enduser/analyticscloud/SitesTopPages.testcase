@@ -379,20 +379,16 @@ definition {
 
 		task ("Interation with pages") {
 			for (var n : list "${pages}") {
-				Navigator.gotoSitePage(
-					pageName = "${n}",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-
 				User.logoutAndLoginPG(
 					userLoginEmailAddress = "test@liferay.com",
 					userLoginFullName = "test test");
+
+				ACUtils.navigateToSitePage(
+					pageName = "${n}",
+					siteName = "Site Name");
 			}
 
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("AC launch") {

@@ -971,6 +971,17 @@ definition {
 		Click(locator1 = "ContentDashboard#PANEL_INFO_VIEW");
 	}
 
+	macro clickChangeDefaultLanguage {
+		var menuItem = "${menuItem}";
+
+		Click(locator1 = "Button#CHANGE");
+
+		AssertClick(
+			key_dropdownItem = "${menuItem}",
+			locator1 = "ACUtils#DROPDOWN_ITEM",
+			value1 = "${menuItem}");
+	}
+
 	macro clickMarginOfContentContainer {
 		var elementHeight = selenium.getElementHeight("WCEditWebContent#CONTENT_CONTAINER");
 		var offSetY = MathUtil.product("50","${elementHeight}");

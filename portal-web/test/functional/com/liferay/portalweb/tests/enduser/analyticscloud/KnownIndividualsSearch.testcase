@@ -543,6 +543,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9026 | Test Summary: Search for an Individual in the individual List"
 	@priority = "4"
 	test SearchIndividualList {
+		var emailList = "randy.smith@liferay.com,maria.rau@liferay.com";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -568,25 +570,10 @@ definition {
 		}
 
 		task ("Sign in with the new user to visit the site pages") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "randy.smith@liferay.com",
-				userLoginFullName = "Randy Smith");
-
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			Pause(locator1 = "5000");
-
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "maria.rau@liferay.com",
-				userLoginFullName = "Maria Rau");
-
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("Switch to new property in AC") {

@@ -144,6 +144,12 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 			actionableDynamicQuery.performActions();
 		}
 
+		ActionableDynamicQuery templateEntryExportActionableDynamicQuery =
+			_templateEntryStagedModelRepository.getExportActionableDynamicQuery(
+				portletDataContext);
+
+		templateEntryExportActionableDynamicQuery.performActions();
+
 		return getExportDataRootElementString(rootElement);
 	}
 
@@ -168,6 +174,17 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, ddmTemplateElement);
 			}
+		}
+
+		Element templateEntriesElement =
+			portletDataContext.getImportDataGroupElement(TemplateEntry.class);
+
+		List<Element> templateEntriesElements =
+			templateEntriesElement.elements();
+
+		for (Element templateEntryElement : templateEntriesElements) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, templateEntryElement);
 		}
 
 		return null;

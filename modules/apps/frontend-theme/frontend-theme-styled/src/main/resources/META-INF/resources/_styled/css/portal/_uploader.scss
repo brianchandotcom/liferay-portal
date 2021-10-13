@@ -151,16 +151,30 @@
 		display: none;
 	}
 
-	.multiple-files .upload-error {
-		background: #fdd url(../images/messages/error.png) no-repeat 5px 5px;
-		border-color: #900;
-		color: #900;
-		font-weight: normal;
-		margin-bottom: 16px;
-		padding: 8px 8px 8px 24px;
+	.multiple-files {
+		.upload-error {
+			background: #fdd url(../images/messages/error.png) no-repeat 5px 5px;
+			border-color: #900;
+			color: #900;
+			font-weight: normal;
+			margin-bottom: 16px;
+			padding: 8px 8px 8px 24px;
 
-		.error-message {
-			display: block;
+			.error-message {
+				display: block;
+			}
+		}
+
+		.upload-complete.file-saved,
+		.upload-complete.upload-error {
+			.form-check-middle-left {
+				.card-body {
+					padding-left: 1rem;
+				}
+				.custom-control-label {
+					display: none;
+				}
+			}
 		}
 	}
 

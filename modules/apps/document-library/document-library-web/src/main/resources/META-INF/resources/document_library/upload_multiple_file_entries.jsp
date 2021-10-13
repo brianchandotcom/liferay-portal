@@ -171,7 +171,7 @@ if (portletTitleBasedNavigation) {
 													'input[data-fileName="' + item.originalFileName + '"]'
 												);
 
-												var li = checkBox.ancestor();
+												var li = checkBox.ancestor('li');
 
 												checkBox.remove(true);
 
@@ -195,28 +195,28 @@ if (portletTitleBasedNavigation) {
 
 													if (originalFileName === item.fileName) {
 														childHTML =
-															'<span class="card-bottom success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %></span>';
+															'<div class="card-footer small text-success"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %></div>';
 													}
 													else {
 														childHTML =
-															'<span class="card-bottom success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %> (' +
+															'<div class="card-footer small text-success"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %> (' +
 															item.fileName +
-															')</span>';
+															')</div>';
 													}
 												}
 												else {
 													cssClass = 'upload-error';
 
 													childHTML =
-														'<span class="card-bottom error-message">' +
+														'<div class="card-footer small text-danger">' +
 														item.errorMessage +
-														'</span>';
+														'</div>';
 
 													itemFailed = true;
 												}
 
 												li.addClass(cssClass);
-												li.append(childHTML);
+												li.one('.card').append(childHTML);
 											}
 
 											<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/document_library/upload_multiple_file_entries" var="uploadMultipleFileEntries">

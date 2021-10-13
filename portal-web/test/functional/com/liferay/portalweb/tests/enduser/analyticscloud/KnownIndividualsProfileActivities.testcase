@@ -108,11 +108,9 @@ definition {
                 userLoginEmailAddress = "ac@liferay.com",
                 userLoginFullName = "ac ac");
 
-            Navigator.gotoSitePage(
-                pageName = "AC Page",
-                siteName = "Site Name");
-
-            Pause(locator1 = "5000");
+            ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
         }
 
         task ("Close sessions") {

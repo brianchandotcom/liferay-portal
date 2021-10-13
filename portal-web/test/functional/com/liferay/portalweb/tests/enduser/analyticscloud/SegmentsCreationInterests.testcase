@@ -81,7 +81,7 @@ definition {
 			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 		}
 
-		task ("Pause for 30 seconds") {
+		task ("Close Sessions") {
 			ACUtils.closeAllSessionsAndWait();
 		}
 

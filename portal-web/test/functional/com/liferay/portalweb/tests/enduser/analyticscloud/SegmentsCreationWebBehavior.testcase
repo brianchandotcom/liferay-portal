@@ -1181,13 +1181,9 @@ definition {
 			userLoginEmailAddress = "${username}@liferay.com",
 			userLoginFullName = "${username} ${username}");
 
-		for (var n : list "1,2,3") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			Pause(locator1 = "5000");
-		}
+		ACUtils.navigateToSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -1217,11 +1213,9 @@ definition {
 		ACUtils.launchDXP(userEmailAddress = "${username}@liferay.com");
 
 		for (var n : list "1,2,3") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();

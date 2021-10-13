@@ -433,7 +433,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static void delete(
-			final File baseDir, final List<PathMatcher> includePathMatchers,
+			File baseDir, final List<PathMatcher> includePathMatchers,
 			final List<PathMatcher> excludePathMatchers)
 		throws IOException {
 
@@ -456,7 +456,7 @@ public class JenkinsResultsParserUtil {
 						File[] files = dir.listFiles();
 
 						if ((files == null) || (files.length == 0)) {
-							JenkinsResultsParserUtil.delete(dir);
+							delete(dir);
 						}
 					}
 
@@ -468,7 +468,7 @@ public class JenkinsResultsParserUtil {
 						Path filePath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					if (JenkinsResultsParserUtil.isFileExcluded(
+					if (isFileExcluded(
 							excludePathMatchers, filePath.toFile())) {
 
 						return FileVisitResult.SKIP_SUBTREE;

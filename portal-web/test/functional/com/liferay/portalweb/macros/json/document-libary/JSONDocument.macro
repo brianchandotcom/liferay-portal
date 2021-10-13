@@ -219,6 +219,12 @@ definition {
 			var folderId = "0";
 		}
 
+		else {
+			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
+				name = "${folderName}",
+				groupName = "${groupName}");
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/dlfileentry/delete-file-entry \
 			-u test@liferay.com:test \

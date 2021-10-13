@@ -31,9 +31,7 @@ import java.util.Collections;
 import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 /**
@@ -48,82 +46,121 @@ public class SearchResponseResourceTest
 	@Test
 	public void testGetSearch() throws Exception {
 		searchResponseResource.getSearch(null, null, Pagination.of(1, 1));
+
+		_testGetSearchWithBlueprint();
+		_testGetSearchWithJSONIssue();
+		_testGetSearchWithMultipleQueryIssues();
+		_testGetSearchWithMultipleSchemaIssuesOnlyFirstIsReported();
+		_testGetSearchWithSearchEngineIssue();
+		_testGetSearchWithSearchEngineIssueInSearchResponseString();
 	}
 
-	@Test
-	public void testGetSearchWithBlueprint() throws Exception {
+	private String _read(String name) throws Exception {
+		Class<?> clazz = getClass();
+
+		return StringUtil.read(
+			clazz.getResourceAsStream(
+				StringBundler.concat(
+					clazz.getSimpleName(), StringPool.PERIOD, name, ".json")));
+	}
+
+	private void _testGetSearchWithBlueprint() throws Exception {
 		searchResponseResource.getSearch(
 			null, _read("testGetSearchWithBlueprint"), null);
 	}
 
-	@Test
-	public void testGetSearchWithJSONIssue() throws Exception {
-		expectedException.expect(Problem.ProblemException.class);
-		expectedException.expectMessage("Input is invalid JSON");
-
-		searchResponseResource.getSearch(null, "{ broken JSON syntax }", null);
-	}
-
-	@Test
-	public void testGetSearchWithMultipleQueryIssues() throws Exception {
-		expectedException.expect(Problem.ProblemException.class);
-
-		expectedException.expectMessage(
-			CoreMatchers.allOf(
-				CoreMatchers.containsString("Invalid query entry at: 0"),
-				CoreMatchers.containsString("value parameter is required"),
-				CoreMatchers.containsString("Invalid query entry at: 1"),
-				CoreMatchers.containsString(
-					"Unresolved template variables: [ipstack.latitude, " +
-						"ipstack.longitude]")));
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME_EXCEPTION_MAPPER, LoggerTestUtil.ERROR)) {
-
+	private void _testGetSearchWithJSONIssue() throws Exception {
+		try {
 			searchResponseResource.getSearch(
-				null, _read("testGetSearchWithMultipleQueryIssues"), null);
+				null, "{ broken JSON syntax }", null);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Assert.assertThat(
+				problemException.getMessage(),
+				CoreMatchers.containsString("Input is invalid JSON"));
 		}
 	}
 
-	@Test
-	public void testGetSearchWithMultipleSchemaIssuesOnlyFirstIsReported()
-		throws Exception {
-
-		expectedException.expect(Problem.ProblemException.class);
-		expectedException.expectMessage(
-			"Property \"configuration\" is not defined in SXPBlueprint." +
-				"Property \"general\" is not defined in Configuration." +
-					"Property \"incorrectFirst\" is not defined in General");
-
-		searchResponseResource.getSearch(
-			null,
-			_read("testGetSearchWithMultipleSchemaIssuesOnlyFirstIsReported"),
-			null);
-	}
-
-	@Test
-	public void testGetSearchWithSearchEngineIssue() throws Exception {
-		expectedException.expect(Problem.ProblemException.class);
-		expectedException.expectMessage(_SEARCH_ENGINE_ISSUE);
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_CONFIGURATION_PID_ELASTICSEARCH,
-					new HashMapDictionary<>(
-						Collections.singletonMap(
-							"logExceptionsOnly", false)))) {
-
+	private void _testGetSearchWithMultipleQueryIssues() throws Exception {
+		try {
 			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME_EXCEPTION_MAPPER, LoggerTestUtil.ERROR)) {
 
 				searchResponseResource.getSearch(
-					null, _read("testGetSearchWithSearchEngineIssue"), null);
+					null, _read("testGetSearchWithMultipleQueryIssues"), null);
+
+				Assert.fail();
 			}
+		}
+		catch (Problem.ProblemException problemException) {
+			Assert.assertThat(
+				problemException.getMessage(),
+				CoreMatchers.allOf(
+					CoreMatchers.containsString("Invalid query entry at: 0"),
+					CoreMatchers.containsString("value parameter is required"),
+					CoreMatchers.containsString("Invalid query entry at: 1"),
+					CoreMatchers.containsString(
+						"Unresolved template variables: [ipstack.latitude, " +
+							"ipstack.longitude]")));
 		}
 	}
 
-	@Test
-	public void testGetSearchWithSearchEngineIssueInSearchResponseString()
+	private void _testGetSearchWithMultipleSchemaIssuesOnlyFirstIsReported()
+		throws Exception {
+
+		try {
+			searchResponseResource.getSearch(
+				null,
+				_read(
+					"testGetSearchWithMultipleSchemaIssuesOnlyFirstIsReported"),
+				null);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Assert.assertThat(
+				problemException.getMessage(),
+				CoreMatchers.containsString(
+					StringBundler.concat(
+						"Property \"configuration\" is not defined in ",
+						"SXPBlueprint.Property \"general\" is not defined in ",
+						"Configuration.Property \"incorrectFirst\" is not ",
+						"defined in General")));
+		}
+	}
+
+	private void _testGetSearchWithSearchEngineIssue() throws Exception {
+		try {
+			try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+					new ConfigurationTemporarySwapper(
+						_CONFIGURATION_PID_ELASTICSEARCH,
+						new HashMapDictionary<>(
+							Collections.singletonMap(
+								"logExceptionsOnly", false)))) {
+
+				try (LogCapture logCapture =
+						LoggerTestUtil.configureLog4JLogger(
+							_CLASS_NAME_EXCEPTION_MAPPER,
+							LoggerTestUtil.ERROR)) {
+
+					searchResponseResource.getSearch(
+						null, _read("testGetSearchWithSearchEngineIssue"),
+						null);
+				}
+			}
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Assert.assertThat(
+				problemException.getMessage(),
+				CoreMatchers.containsString(_SEARCH_ENGINE_ISSUE));
+		}
+	}
+
+	private void _testGetSearchWithSearchEngineIssueInSearchResponseString()
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -148,18 +185,6 @@ public class SearchResponseResourceTest
 					CoreMatchers.containsString(_SEARCH_ENGINE_ISSUE));
 			}
 		}
-	}
-
-	@Rule
-	public ExpectedException expectedException = ExpectedException.none();
-
-	private String _read(String name) throws Exception {
-		Class<?> clazz = getClass();
-
-		return StringUtil.read(
-			clazz.getResourceAsStream(
-				StringBundler.concat(
-					clazz.getSimpleName(), StringPool.PERIOD, name, ".json")));
 	}
 
 	private static final String _CLASS_NAME_ELASTICSEARCH_INDEX_SEARCHER =

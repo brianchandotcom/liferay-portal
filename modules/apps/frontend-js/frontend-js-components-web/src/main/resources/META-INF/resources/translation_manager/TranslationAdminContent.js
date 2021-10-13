@@ -12,13 +12,11 @@
  * details.
  */
 
-import ClayAlert from '@clayui/alert';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import ClayLink from '@clayui/link';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayModal from '@clayui/modal';
 import ClayTable from '@clayui/table';
@@ -39,11 +37,8 @@ const TranslationAdminContent = ({
 	activeLanguageIds: initialActiveLanguageIds = emptyArray,
 	availableLocales: initialAvailableLocales = emptyArray,
 	defaultLanguageId,
-	lastDeletedLocaleId,
 	onAddLocale = noop,
-	onClearRestoreLocale = noop,
 	onRemoveLocale = noop,
-	onRestoreLocale = noop,
 	translations = {},
 }) => {
 	const [creationMenuActive, setCreationMenuActive] = useState(false);
@@ -144,25 +139,6 @@ const TranslationAdminContent = ({
 						</ClayDropDown>
 					</ClayManagementToolbar.ItemList>
 				</ClayManagementToolbar>
-
-				{lastDeletedLocaleId && (
-					<ClayAlert
-						displayType="success"
-						onClose={onClearRestoreLocale}
-						title={Liferay.Language.get('success')}
-					>
-						{Liferay.Util.sub(
-							Liferay.Language.get('translation-was-deleted'),
-							availableLocales.find(
-								(availableLocale) =>
-									availableLocale.id === lastDeletedLocaleId
-							).label
-						)}
-						<ClayLink onClick={onRestoreLocale}>
-							{Liferay.Language.get('undo')}
-						</ClayLink>
-					</ClayAlert>
-				)}
 
 				<ClayTable>
 					<ClayTable.Head>

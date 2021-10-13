@@ -38,7 +38,6 @@ const TranslationAdminModal = ({
 	const [activeLanguageIds, setActiveLanguageIds] = useState(
 		initialActiveLanguageIds
 	);
-	const [lastDeletedLanguageId, setLastDeletedLanguageId] = useState(null);
 	const [visible, setVisible] = useState(initialVisible);
 
 	const {observer} = useModal({
@@ -50,23 +49,12 @@ const TranslationAdminModal = ({
 
 	const handleAddLocale = (localeId) => {
 		setActiveLanguageIds([...activeLanguageIds, localeId]);
-		setLastDeletedLanguageId(null);
-	};
-
-	const handleClearRestoreLocale = () => {
-		setLastDeletedLanguageId(null);
 	};
 
 	const handleRemoveLocale = (localeId) => {
 		const newActiveLanguageIds = [...activeLanguageIds];
 		newActiveLanguageIds.splice(activeLanguageIds.indexOf(localeId), 1);
 		setActiveLanguageIds(newActiveLanguageIds);
-		setLastDeletedLanguageId(localeId);
-	};
-
-	const handleRestoreLocale = () => {
-		handleAddLocale(lastDeletedLanguageId);
-		setLastDeletedLanguageId(null);
 	};
 
 	useEffect(() => {
@@ -86,11 +74,8 @@ const TranslationAdminModal = ({
 						ariaLabels={ariaLabels}
 						availableLocales={availableLocales}
 						defaultLanguageId={defaultLanguageId}
-						lastDeletedLanguageId={lastDeletedLanguageId}
 						onAddLocale={handleAddLocale}
-						onClearRestoreLocale={handleClearRestoreLocale}
 						onRemoveLocale={handleRemoveLocale}
-						onRestoreLocale={handleRestoreLocale}
 						translations={translations}
 					/>
 				</ClayModal>

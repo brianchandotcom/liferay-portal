@@ -366,10 +366,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8624 | Test Summary: Order the Segment Profile Distribution"
 	@priority = "3"
 	test OrderSegmentProfileDistribution {
-		property portal.upstream = "quarantine";
+		var userList = "ac,liferay";
 
-		// AC Bug ticket: LRAC-9250
-		// Depends on the bug fix
+		var emailList = "ac@liferay.com,liferay@liferay.com";
+
+		var nameList = "ac ac,liferay liferay";
 
 		task ("Connect Analytics Cloud to DXP") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
@@ -380,7 +381,7 @@ definition {
 		}
 
 		task ("Add two new users") {
-			for (var name : list "ac,liferay") {
+			for (var name : list "${userList}") {
 				JSONUser.addUser(
 					jobTitle = "QA",
 					userEmailAddress = "${name}@liferay.com",
@@ -393,17 +394,10 @@ definition {
 		}
 
 		task ("Login with the users and open the site") {
-			for (var name : list "ac,liferay") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${name}@liferay.com",
-					userLoginFullName = "${name} ${name}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Launch AC and Switch to new property") {
@@ -425,9 +419,7 @@ definition {
 		}
 
 		task ("Add new user as member") {
-			for (var name : list "ac,liferay" ) {
-				ACSegments.addStaticMember(tableMember = "${name} ${name}");
-			}
+			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
 
 			ACSegments.saveSegment();
 		}
@@ -458,8 +450,9 @@ definition {
 				locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
 		}
 
-		// Sorting the names in ascending order to work correctly depends on the bug fix
-
+		task ("Sort the Names in ascending order") {
+			ACInterests.viewIndividualInterestSpecificOrder(interestTopic = "liferay liferay,ac ac");
+		}
 	}
 
 }

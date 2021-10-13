@@ -208,8 +208,6 @@ definition {
 		AssertElementNotPresent(
 			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
 			value1 = "userfn userln");
-			
-
 	}
 
 	@description = "This is a test for LRQA-69709. Verify that the user can see the actual state of the user in the workflow process before assigning to itself. "

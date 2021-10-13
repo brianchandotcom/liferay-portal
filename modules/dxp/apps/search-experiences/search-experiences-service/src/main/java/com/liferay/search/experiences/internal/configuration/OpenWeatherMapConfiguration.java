@@ -44,10 +44,14 @@ public interface OpenWeatherMapConfiguration {
 	)
 	public String apiURL();
 
-	@Meta.AD(
-		deflt = "604800", description = "cache-timeout-help",
-		name = "cache-timeout", required = false
-	)
+	@Meta.AD(deflt = "604800", name = "cache-timeout", required = false)
 	public int cacheTimeout();
+
+	@Meta.AD(
+		deflt = "metric", name = "units",
+		optionLabels = {"imperial", "metric", "standard"},
+		optionValues = {"imperial", "metric", "standard"}, required = false
+	)
+	public String units();
 
 }

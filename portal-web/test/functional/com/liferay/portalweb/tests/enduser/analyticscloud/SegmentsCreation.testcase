@@ -955,6 +955,8 @@ definition {
 	test CanCreateSegmentWithNumberProperty {
 		var usernameList = "user1,user2,user3";
 
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
+
 		var membershipList = "user1 user1,user3 user3";
 
 		task ("Add three more new users") {
@@ -981,19 +983,10 @@ definition {
 		}
 
 		task ("View the page as different users") {
-			for (var username : list "${usernameList}") {
-				var fullName = "${username} ${username}";
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "3000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions and wait for 30 seconds") {

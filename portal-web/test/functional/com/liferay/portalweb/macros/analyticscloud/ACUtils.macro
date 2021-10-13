@@ -501,6 +501,65 @@ definition {
 		}
 	}
 
+	macro navigateToSitePage {
+		for (var documentTitle : list "${documentTitleList}") {
+			Navigator.gotoSitePage(
+				pageName = "${pageName}",
+				siteName = "${siteName}");
+
+			if ("${actionType}" == "View Blog") {
+				BlogsNavigator.gotoPG(entryTitle = "${documentTitle}");
+			}
+
+			if ("${actionType}" == "Comment Blog") {
+				BlogsNavigator.gotoPG(entryTitle = "${documentTitle}");
+
+				Comments.addPG(entryComment = "${commentText}");
+			}
+
+			if ("${actionType}" == "View DM") {
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "${documentTitle}");
+			}
+
+			if ("${actionType}" == "Download DM") {
+				DMDocument.downloadPG(dmDocumentTitle = "${documentTitle}");
+			}
+
+			if ("${actionType}" == "View Form") {
+				FormPortlet.waitFormRenderer(text = "Submit");
+			}
+
+			if ("${actionType}" == "Submit Form") {
+				FormPortlet.waitFormRenderer(text = "Submit");
+
+				FormFields.viewTextLabel(
+					fieldLabel = "Text",
+					fieldName = "Text");
+
+				FormFields.editText(
+					fieldName = "Text",
+					fieldValue = "${submitText}");
+
+				FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+			}
+		}
+	}
+
+	macro navigateToSitePageWithUser {
+		for (var email : list "${emailList}") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "${email}");
+
+			ACUtils.navigateToSitePage(
+				actionType = "${actionType}",
+				documentTitleList = "${documentTitleList}",
+				pageName = "${pageName}",
+				siteName = "${siteName}",
+				submitText = "${submitText}");
+
+			Pause(locator1 = "5000");
+		}
+	}
+
 	macro orderArrow {
 		var type = "${type}";
 
@@ -657,18 +716,4 @@ definition {
 		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
 	}
 
-	macro navigateToSitePageWithUser {
-		for (var email : list "${emailList}") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "${email}");
-
-			ACUtils.navigateToSitePage(
-				pageName = "${pageName}",
-				siteName = "${siteName}",
-				actionType = "${actionType}",
-				documentTitleList = "${documentTitleList}",
-				submitText = "${submitText}");
-
-			Pause(locator1 = "5000");
-		}
-	}
 }

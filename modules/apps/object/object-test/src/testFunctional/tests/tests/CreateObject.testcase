@@ -806,11 +806,41 @@ definition {
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for an Object Plural Label"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSetDifferentLanguageForObjectPluralLabel {
 
-		// TODO LPS-138861 CanSetDifferentLanguageForObjectPluralLabel pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.changePluralLabelLanguage(newLanguage = "pt-BR");
+
+		CreateObject.editLabel(labelName = "Objeto Costumizado");
+
+		CreateObject.editPluralLabel(pluralLabelName = "Objetos Costumizados");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		MyAccount.configureDisplaySettingsLanguage(languageName = "português (Brasil)");
+
+		Navigator.openURL();
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		ApplicationsMenu.gotoPanel(panel = "Painel de Controle");
+
+		AssertElementPresent(
+			key_category = "Objeto",
+			key_portlet = "Objetos Costumizados",
+			locator1 = "ApplicationsMenu#PORTLET");
 
 	}
 

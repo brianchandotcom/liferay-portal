@@ -46,6 +46,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>DROPDOWN_LANGUAGEM_PLURAL_LABEL</td>
+		<td>//button[@id = '_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet__com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_pluralLabelMenu']//span[contains(text(),'en-US')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ENTRY_BOOLEAN_CHECKBOX</td>
 		<td>//input[contains(@class,'custom-control-input')]</td>
 		<td></td>

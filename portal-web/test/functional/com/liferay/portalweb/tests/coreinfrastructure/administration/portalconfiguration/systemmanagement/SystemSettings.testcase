@@ -192,4 +192,60 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-79394. This test check that system settings scope is corrected."
+	@priority = "5"
+	test CheckSystemSettingsScopeIsCorrected {
+		property test.name.skip.portal.instance = "SystemSettings#CheckSystemSettingsScopeIsCorrected";
+
+		task ("Naviagte to system settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+		}
+
+		task ("Enable OpenSSO configuration") {
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "SSO",
+				configurationName = "OpenSSO",
+				configurationScope = "System Scope");
+
+			FormFields.enableCheckbox(fieldName = "Enabled");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Naviagte to instance settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+		}
+
+		task ("Disable OpenSSO configuration") {
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "SSO",
+				configurationName = "OpenSSO",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.disableCheckbox(fieldName = "enabled");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Check system settings scope is corrected") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "SSO",
+				configurationName = "OpenSSO",
+				configurationScope = "System Scope");
+
+			FormFields.viewCheckboxChecked(fieldName = "Enabled");
+		}
+	}
+
 }

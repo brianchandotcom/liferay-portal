@@ -254,7 +254,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8417 | Test Summary: Forms list is searchable"
 	@priority = "5"
 	test CanFormsListSearchable {
-		var formName = "Created Form Name,Created Form Name 1";
+		var formNameList = "Created Form Name,Created Form Name 1";
 
 		ACUtils.addSiteAndPage(layoutName = "AC Page 1");
 
@@ -267,11 +267,10 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		for (var pageName : list "AC Page,AC Page 1") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Form",
 				pageName = "${pageName}",
 				siteName = "Site Name");
-
-			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();
@@ -288,11 +287,11 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		for (var formName : list "${formName}") {
+		for (var formName : list "${formNameList}") {
 			ACUtils.searchBar(searchItem = "${formName}");
-		}
 
-		ACUtils.viewNameList(nameList = "${formName}");
+			ACUtils.viewNameList(nameList = "${formName}");
+		}
 
 		ACUtils.searchBar(searchItem = "Should not be here");
 

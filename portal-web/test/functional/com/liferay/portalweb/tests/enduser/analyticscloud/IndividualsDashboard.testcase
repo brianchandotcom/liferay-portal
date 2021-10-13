@@ -236,17 +236,10 @@ definition {
 
 		ACUtils.launchDXP();
 
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		Navigator.gotoSitePage(
+		ACUtils.navigateToSitePageWithUser(
+			emailList = "userea@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
-
-		Pause(locator1 = "5000");
 
 		ACUtils.launchAC();
 

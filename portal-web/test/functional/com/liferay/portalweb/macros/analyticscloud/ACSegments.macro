@@ -566,6 +566,12 @@ definition {
 
 		ACSegments.searchSegment(findSegment = "${documentTitle}");
 
+		while (IsElementNotPresent(locator1 = "ACSegments#TABLE_CHECKBOX") && (maxIterations = "50")) {
+			ACUtils.clearSearchBar();
+
+			ACSegments.searchSegment(findSegment = "${documentTitle}");
+		}
+
 		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
 
 		Click(locator1 = "ACSegments#ADD_BUTTON");

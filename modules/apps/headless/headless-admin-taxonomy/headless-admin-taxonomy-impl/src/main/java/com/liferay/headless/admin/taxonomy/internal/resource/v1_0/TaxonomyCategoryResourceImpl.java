@@ -100,8 +100,11 @@ public class TaxonomyCategoryResourceImpl
 	public void deleteTaxonomyCategory(String taxonomyCategoryId)
 		throws Exception {
 
-		_assetCategoryService.deleteCategory(
-			_getAssetCategoryId(taxonomyCategoryId));
+		AssetCategory assetCategory =
+			_assetCategoryLocalService.getAssetCategory(
+				GetterUtil.getLong(taxonomyCategoryId));
+
+		_assetCategoryService.deleteCategory(assetCategory.getCategoryId());
 	}
 
 	@Override
@@ -304,8 +307,6 @@ public class TaxonomyCategoryResourceImpl
 				contextAcceptLanguage.getPreferredLocale(),
 				taxonomyCategory.getDescription(),
 				taxonomyCategory.getDescription_i18n()));
-		assetCategory.setExternalReferenceCode(
-			taxonomyCategory.getExternalReferenceCode());
 		assetCategory.setTitleMap(
 			LocalizedMapUtil.patch(
 				assetCategory.getTitleMap(),
@@ -340,6 +341,7 @@ public class TaxonomyCategoryResourceImpl
 			parentTaxonomyCategoryId);
 
 		return _addTaxonomyCategory(
+			taxonomyCategory.getExternalReferenceCode(),
 			assetCategory.getGroupId(), assetCategory.getDefaultLanguageId(),
 			taxonomyCategory, assetCategory.getCategoryId(),
 			assetCategory.getVocabularyId());
@@ -354,6 +356,7 @@ public class TaxonomyCategoryResourceImpl
 			taxonomyVocabularyId);
 
 		return _addTaxonomyCategory(
+			taxonomyCategory.getExternalReferenceCode(),
 			assetVocabulary.getGroupId(),
 			assetVocabulary.getDefaultLanguageId(), taxonomyCategory, 0,
 			assetVocabulary.getVocabularyId());
@@ -380,8 +383,9 @@ public class TaxonomyCategoryResourceImpl
 			taxonomyVocabularyId);
 
 		AssetCategory assetCategory =
-			_assetCategoryLocalService.getAssetCategoryByExternalReferenceCode(
-				assetVocabulary.getGroupId(), externalReferenceCode);
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					assetVocabulary.getGroupId(), externalReferenceCode);
 
 		if (assetCategory != null) {
 			return _toTaxonomyCategory(
@@ -389,7 +393,7 @@ public class TaxonomyCategoryResourceImpl
 		}
 
 		return _addTaxonomyCategory(
-			assetVocabulary.getGroupId(),
+			externalReferenceCode, assetVocabulary.getGroupId(),
 			assetVocabulary.getDefaultLanguageId(), taxonomyCategory, 0,
 			assetVocabulary.getVocabularyId());
 	}
@@ -412,8 +416,9 @@ public class TaxonomyCategoryResourceImpl
 	}
 
 	private TaxonomyCategory _addTaxonomyCategory(
-			long groupId, String languageId, TaxonomyCategory taxonomyCategory,
-			long taxonomyCategoryId, long taxonomyVocabularyId)
+			String externalReferenceCode, long groupId, String languageId,
+			TaxonomyCategory taxonomyCategory, long taxonomyCategoryId,
+			long taxonomyVocabularyId)
 		throws Exception {
 
 		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
@@ -428,52 +433,22 @@ public class TaxonomyCategoryResourceImpl
 			true, LocaleUtil.fromLanguageId(languageId), "Taxonomy category",
 			titleMap, new HashSet<>(descriptionMap.keySet()));
 
-		AssetCategory assetCategory = _assetCategoryService.addCategory(
-			groupId, taxonomyCategoryId, titleMap, descriptionMap,
-			taxonomyVocabularyId,
-			_toStringArray(taxonomyCategory.getTaxonomyCategoryProperties()),
-			ServiceContextRequestUtil.createServiceContext(
-				groupId, contextHttpServletRequest,
-				taxonomyCategory.getViewableByAsString()));
-
-		if (taxonomyCategory.getExternalReferenceCode() != null) {
-			assetCategory.setExternalReferenceCode(
-				taxonomyCategory.getExternalReferenceCode());
-
-			assetCategory = _assetCategoryLocalService.updateAssetCategory(
-				assetCategory);
-		}
-
-		return _toTaxonomyCategory(assetCategory);
+		return _toTaxonomyCategory(
+			_assetCategoryService.addCategory(
+				externalReferenceCode, groupId, taxonomyCategoryId, titleMap,
+				descriptionMap, taxonomyVocabularyId,
+				_toStringArray(
+					taxonomyCategory.getTaxonomyCategoryProperties()),
+				ServiceContextRequestUtil.createServiceContext(
+					groupId, contextHttpServletRequest,
+					taxonomyCategory.getViewableByAsString())));
 	}
 
 	private AssetCategory _getAssetCategory(String taxonomyCategoryId)
 		throws Exception {
 
-		AssetCategory assetCategory =
-			_assetCategoryLocalService.
-				fetchAssetCategoryByExternalReferenceCode(
-					contextCompany.getCompanyId(), taxonomyCategoryId);
-
-		if (assetCategory == null) {
-			assetCategory = _assetCategoryService.getCategory(
-				GetterUtil.getLong(taxonomyCategoryId));
-		}
-
-		return assetCategory;
-	}
-
-	private long _getAssetCategoryId(String taxonomyCategoryId) {
-		AssetCategory assetCategory =
-			_assetCategoryLocalService.
-				fetchAssetCategoryByExternalReferenceCode(
-					contextCompany.getCompanyId(), taxonomyCategoryId);
-
-		if (assetCategory == null) {
-			return GetterUtil.getLong(taxonomyCategoryId);
-		}
-
-		return assetCategory.getCategoryId();
+		return _assetCategoryService.getCategory(
+			GetterUtil.getLong(taxonomyCategoryId));
 	}
 
 	private Page<TaxonomyCategory> _getCategoriesPage(
@@ -661,8 +636,6 @@ public class TaxonomyCategoryResourceImpl
 			"Taxonomy category", titleMap,
 			new HashSet<>(descriptionMap.keySet()));
 
-		assetCategory.setExternalReferenceCode(
-			taxonomyCategory.getExternalReferenceCode());
 		assetCategory.setTitleMap(titleMap);
 		assetCategory.setDescriptionMap(descriptionMap);
 

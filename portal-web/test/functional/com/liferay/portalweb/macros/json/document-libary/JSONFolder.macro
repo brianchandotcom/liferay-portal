@@ -1,0 +1,16 @@
+definition {
+	@summary = "This calls the JSON WS API to delete a folder"
+	macro deleteFolder {
+		Variables.assertDefined(parameterList = "${folderName},${groupName}");
+
+		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
+			name = "${folderName}",
+			groupName = "${groupName}");
+
+		var curl ='''
+			${portalURL}/api/jsonws/dlfolder/delete-folder \
+  			-u test@liferay.com:test \
+  			-d folderId=${folderId}
+  		''';
+	}
+}

@@ -54,7 +54,7 @@ public class TemplateEntryStagedModelRepository
 
 		Map<Long, Long> ddmTemplateIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMTemplate.class + ".templateId");
+				DDMTemplate.class);
 
 		long ddmTemplateId = MapUtil.getLong(
 			ddmTemplateIds, templateEntry.getDDMTemplateId(),

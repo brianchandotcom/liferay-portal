@@ -803,15 +803,13 @@ definition {
 
 			// This test needs a data from a past time frame to generate a % diference
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
 
 		task ("Close all sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Go to AC and assert value and percentage of Site Visitors") {

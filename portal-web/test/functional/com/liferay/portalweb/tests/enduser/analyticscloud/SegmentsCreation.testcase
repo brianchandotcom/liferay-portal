@@ -1284,18 +1284,22 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8472 | Test Summary: Paginate static segment 'Add Members' creation model"
 	@priority = "3"
 	test CanPaginateStaticSegmentAddMembers {
+		var usernameList = "user1,user2,user3,user4,user5";
+
+		var emailList = "userea@liferay.com,user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
+
 		task ("Add 5 more new users") {
-			for (var n : list "1,2,3,4,5") {
+			for (var name : list "${usernameList}") {
 				JSONUser.addUser(
-					userEmailAddress = "user${n}@liferay.com",
-					userFirstName = "user${n}",
-					userLastName = "user${n}",
-					userScreenName = "user${n}");
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
 
 				JSONUser.setFirstPassword(
 					agreeToTermsAndAnswerReminderQuery = "true",
 					requireReset = "false",
-					userEmailAddress = "user${n}@liferay.com");
+					userEmailAddress = "${name}@liferay.com");
 			}
 		}
 
@@ -1308,25 +1312,10 @@ definition {
 		}
 
 		task ("View the page as different users") {
-			for (var username : list "userea,user1,user2,user3,user4,user5") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
-
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "3000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Switch to new property in AC") {
@@ -1349,9 +1338,7 @@ definition {
 
 		task ("View all users are shown in current page") {
 			for (var username : list "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5,userfn userln") {
-				AssertVisible(
-					key_TableMember = "${username}",
-					locator1 = "ACSegments#TABLE_CHECKBOX");
+				ACUtils.viewNameList(nameList = "${username}");
 			}
 		}
 
@@ -1361,9 +1348,7 @@ definition {
 
 		task ("View only 5 users are shown in current page") {
 			for (var username : list "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5") {
-				AssertVisible(
-					key_TableMember = "${username}",
-					locator1 = "ACSegments#TABLE_CHECKBOX");
+				ACUtils.viewNameList(nameList = "${username}");
 			}
 
 			AssertElementNotPresent(
@@ -1376,9 +1361,7 @@ definition {
 		}
 
 		task ("View the userfn userln is shown in modal") {
-			AssertVisible(
-				key_TableMember = "userfn userln",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
+			ACUtils.viewNameList(nameList = "userfn userln");
 		}
 	}
 

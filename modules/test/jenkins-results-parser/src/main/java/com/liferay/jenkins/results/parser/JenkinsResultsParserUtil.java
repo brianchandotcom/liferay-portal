@@ -288,6 +288,65 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static void copy(
+			final File sourceBaseDir, final File targetBaseDir,
+			final List<PathMatcher> includePathMatchers,
+			final List<PathMatcher> excludePathMatchers)
+		throws IOException {
+
+		if ((sourceBaseDir == null) || !sourceBaseDir.exists() ||
+			(targetBaseDir == null)) {
+
+			return;
+		}
+
+		if (!targetBaseDir.exists()) {
+			targetBaseDir.mkdirs();
+		}
+
+		Files.walkFileTree(
+			sourceBaseDir.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (isFileExcluded(
+							excludePathMatchers, filePath.toFile())) {
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (!isFileIncluded(
+							excludePathMatchers, includePathMatchers,
+							filePath.toFile())) {
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					File file = filePath.toFile();
+
+					String relativePath = getPathRelativeTo(
+						file, sourceBaseDir);
+
+					copy(file, new File(targetBaseDir, relativePath));
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
 	public static JSONArray createJSONArray(String jsonString) {
 		jsonString = jsonString.trim();
 
@@ -371,6 +430,71 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return successful;
+	}
+
+	public static void delete(
+			final File baseDir, final List<PathMatcher> includePathMatchers,
+			final List<PathMatcher> excludePathMatchers)
+		throws IOException {
+
+		if ((baseDir == null) || !baseDir.exists()) {
+			return;
+		}
+
+		Files.walkFileTree(
+			baseDir.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult postVisitDirectory(
+						Path dirPath, IOException ioException)
+					throws IOException {
+
+					if (Files.isDirectory(dirPath)) {
+						File dir = dirPath.toFile();
+
+						File[] files = dir.listFiles();
+
+						if ((files == null) || (files.length == 0)) {
+							JenkinsResultsParserUtil.delete(dir);
+						}
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (JenkinsResultsParserUtil.isFileExcluded(
+							excludePathMatchers, filePath.toFile())) {
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (!isFileIncluded(
+							excludePathMatchers, includePathMatchers,
+							filePath.toFile())) {
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					delete(filePath.toFile());
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	public static String encode(String url)

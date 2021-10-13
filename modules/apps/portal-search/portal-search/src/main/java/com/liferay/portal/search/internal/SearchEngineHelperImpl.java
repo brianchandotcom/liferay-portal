@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineConfigurator;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.queue.QueuingSearchEngine;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.search.configuration.SearchEngineHelperConfiguration;
 
@@ -81,6 +82,17 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 		if (queuingSearchEngine != null) {
 			queuingSearchEngine.flush();
 		}
+	}
+
+	@Override
+	public int[] getCompaniesWithIndexes() {
+		Set<Integer> companyIds = new HashSet<>();
+
+		for (SearchEngine searchEngine : _searchEngines.values()) {
+			companyIds.addAll(searchEngine.getCompaniesWithIndexes());
+		}
+
+		return ArrayUtil.toArray(companyIds.toArray(new Integer[0]));
 	}
 
 	@Override

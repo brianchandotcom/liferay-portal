@@ -58,10 +58,6 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Wait for sending request") {
-			Pause(locator1 = "5000");
-		}
-
 		task ("Get the ip country") {
 			var country = ACUtils.getIPCountry();
 		}

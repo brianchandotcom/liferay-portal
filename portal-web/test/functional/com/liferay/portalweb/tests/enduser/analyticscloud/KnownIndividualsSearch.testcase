@@ -832,35 +832,30 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9030 | Test Summary: Sorting a List Returns a User to the First Page"
 	@priority = "3"
 	test SortingReturnsUserToFirstPage {
+		var usernameList = "user1,user2,user3,user4,user5,user6,user7";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Add 7 new users and sync the Contact Data") {
-			for (var n : list "1,2,3,4,5,6,7") {
+			for (var name : list "${usernameList}") {
 				JSONUser.addUser(
-					userEmailAddress = "user${n}@liferay.com",
-					userFirstName = "user${n}",
-					userLastName = "user${n}",
-					userScreenName = "user${n}");
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
 
 				ACDXPSettings.syncNewContactData();
 			}
 		}
 
 		task ("View the page as different users") {
-			for (var username : list "user1,user2,user3,user4,user5,user6,user7") {
-				var fullName = "${username} ${username}";
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
+			for (var name : list "${usernameList}") {
+				ACUtils.navigateToSitePageWithUser(
+					emailList = "${name}@liferay.com",
 					pageName = "AC Page",
 					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
 			}
 		}
 

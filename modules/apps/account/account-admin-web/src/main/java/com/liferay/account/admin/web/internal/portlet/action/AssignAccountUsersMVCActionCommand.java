@@ -18,7 +18,14 @@ import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -52,9 +59,39 @@ public class AssignAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRels(
 			accountEntryId, accountUserIds);
+
+		String portletId = _portal.getPortletId(actionRequest);
+
+		if (!portletId.equals(AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT)) {
+			return;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		boolean enableAutomaticSiteMembership = PrefsParamUtil.getBoolean(
+			_portletPreferencesLocalService.getPreferences(
+				themeDisplay.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
+				portletId),
+			actionRequest, "enableAutomaticSiteMembership");
+
+		if (enableAutomaticSiteMembership) {
+			_userLocalService.addGroupUsers(
+				themeDisplay.getSiteGroupId(), accountUserIds);
+		}
 	}
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -25,11 +25,16 @@ import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -103,6 +108,27 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 						firstName, middleName, lastName, prefixId, suffixId);
 			}
 
+			String portletId = _portal.getPortletId(actionRequest);
+
+			if (portletId.equals(
+					AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT)) {
+
+				boolean enableAutomaticSiteMembership =
+					PrefsParamUtil.getBoolean(
+						_portletPreferencesLocalService.getPreferences(
+							themeDisplay.getCompanyId(),
+							PortletKeys.PREFS_OWNER_ID_DEFAULT,
+							PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+							themeDisplay.getPlid(), portletId),
+						actionRequest, "enableAutomaticSiteMembership");
+
+				if (enableAutomaticSiteMembership) {
+					_userLocalService.addGroupUser(
+						themeDisplay.getSiteGroupId(),
+						accountEntryUserRel.getAccountUserId());
+				}
+			}
+
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isNotNull(redirect)) {
@@ -137,5 +163,14 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

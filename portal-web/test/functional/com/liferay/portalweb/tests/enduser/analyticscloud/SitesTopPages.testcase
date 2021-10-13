@@ -30,6 +30,8 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 
+		JSONUser.tearDownNonAdminUsers();
+
 		ACUtils.tearDownAC();
 	}
 
@@ -42,6 +44,7 @@ definition {
 		// AC Refactor ticket: LRAC-9010
 
 		var pageCreation = "AC Page 1,AC Page 2";
+
 		var pageInteraction = "AC Page,AC Page 1,AC Page 1,AC Page 2,AC Page 2,AC Page 2";
 
 		task ("Add Site and Page") {
@@ -57,19 +60,15 @@ definition {
 		}
 
 		task ("Interation with Pages") {
-			for (var n : list "${pageInteraction}") {
-				Navigator.gotoSitePage(
-					pageName = "${n}",
+			for (var pageName : list "${pageInteraction}") {
+				ACUtils.navigateToSitePage(
+					pageName = "${pageName}",
 					siteName = "Site Name");
-
-				Pause(locator1 = "3000");
 			}
 		}
 
 		task ("AC launch") {
 			ACUtils.closeAllSessionsAndWait();
-
-			Pause(locator1 = "30000");
 
 			ACUtils.launchAC();
 

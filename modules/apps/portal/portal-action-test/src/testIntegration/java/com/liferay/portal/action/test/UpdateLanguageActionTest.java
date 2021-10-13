@@ -21,12 +21,14 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.action.UpdateLanguageAction;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -218,6 +220,42 @@ public class UpdateLanguageActionTest {
 
 		updateLanguageAction.getRedirect(
 			mockHttpServletRequest, new ThemeDisplay(), _targetLocale);
+	}
+
+	@Test(expected = NoSuchLayoutException.class)
+	public void testGetRedirectWithNoSuchLayoutRedirectParameter()
+		throws Exception {
+
+		UpdateLanguageAction updateLanguageAction = new UpdateLanguageAction();
+
+		String testUrlSeparator = null;
+
+		for (String urlSeparator :
+				FriendlyURLResolverRegistryUtil.getURLSeparators()) {
+
+			if (!Portal.FRIENDLY_URL_SEPARATOR.equals(urlSeparator) &&
+				!VirtualLayoutConstants.CANONICAL_URL_SEPARATOR.equals(
+					urlSeparator)) {
+
+				testUrlSeparator = urlSeparator;
+
+				break;
+			}
+		}
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter("p_l_id", "0");
+		mockHttpServletRequest.setParameter(
+			"redirect", testUrlSeparator + "no-such-page");
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setLayout(_layout);
+
+		updateLanguageAction.getRedirect(
+			mockHttpServletRequest, themeDisplay, _targetLocale);
 	}
 
 	private void _assertRedirect(

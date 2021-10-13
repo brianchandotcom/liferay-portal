@@ -35,10 +35,9 @@ definition {
 		task ("Add Category log levels") {
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Server Administration");
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_server_admin_web_portlet_ServerAdminPortlet");
 
 			ServerAdministration.addCategoryLogLevels(
 				categoryName = "com.liferay.saml.opensaml.integration",
@@ -54,10 +53,7 @@ definition {
 		task ("Add CP") {
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage/-/sites/");
 
 			Site.addBlankCP(siteName = "Site Name");
 		}
@@ -65,10 +61,7 @@ definition {
 		task ("Add user group CP") {
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "User Groups");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet");
 
 			UserGroup.addCP(userGroupName = "UG UserGroup Name");
 		}
@@ -104,10 +97,7 @@ definition {
 		task ("Assign member CP") {
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "User Groups");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet");
 
 			UserGroup.assignMemberCP(
 				userGroupName = "UG UserGroup Name",
@@ -117,6 +107,7 @@ definition {
 		task ("View user information roles CP") {
 			Navigator.openURL();
 
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
@@ -272,12 +263,11 @@ definition {
 		// Assert the user information for verification
 
 		task ("View request results") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-				value1 = "test@liferay.com",
-				value2 = '''"firstName":"Test"''',
-				value3 = '''"lastName":"Test"''',
-				value4 = '''"screenName":"test"''');
+			SAML.viewTesterRequestResults(
+				entry1 = "test@liferay.com",
+				entry2 = '''"firstName":"Test"''',
+				entry3 = '''"lastName":"Test"''',
+				entry4 = '''"screenName":"test"''');
 		}
 	}
 
@@ -394,12 +384,11 @@ definition {
 		// Assert the user information for verification
 
 		task ("View request results") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-				value1 = "test@liferay.com",
-				value2 = '''"firstName":"Test"''',
-				value3 = '''"lastName":"Test"''',
-				value4 = '''"screenName":"test"''');
+			SAML.viewTesterRequestResults(
+				entry1 = "test@liferay.com",
+				entry2 = '''"firstName":"Test"''',
+				entry3 = '''"lastName":"Test"''',
+				entry4 = '''"screenName":"test"''');
 		}
 	}
 
@@ -411,10 +400,9 @@ definition {
 		property test.name.skip.portal.instance = "SAML#AssertEmptyMappingCannotBeUsedForUserMatching";
 
 		task ("Configure samlsp as SP") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAMLRole.configure(
 				samlEntityID = "samlsp",
@@ -424,31 +412,11 @@ definition {
 		task ("Add samlidp as identity provider") {
 			SAMLNavigation.gotoIdentityProviderConnections();
 
-			AssertClick(
-				locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
-				value1 = "Add Identity Provider");
-
-			Type(
-				locator1 = "TextInput#SAML_NAME_FIELD",
-				value1 = "samlidp");
-
-			Type(
-				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENTITY_ID_FIELD",
-				value1 = "samlidp");
-
-			Click(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_ATTRIBUTE");
-
-			Click(
-				key_index = "0",
-				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USE_TO_MATCH_USERS_RADIO");
-
-			Button.clickSave();
+			SAMLPortlet.addIdentityProviderConnectionWithBasicSetup(idpEntityID = "samlidp");
 		}
 
 		task ("Assert No mapping selected") {
-			AssertConsoleTextPresent(value1 = "No attribute mapping selected for user matching");
-
-			AssertElementPresent(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ERROR_NO_MAPPING_SELECTED");
+			SAML.viewNoAttributeMappingSelectedForUserMatching();
 		}
 	}
 
@@ -468,10 +436,9 @@ definition {
 		}
 
 		task ("Configure samlsp as service provider") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAMLRole.configure(
 				samlEntityID = "samlsp",
@@ -489,9 +456,7 @@ definition {
 		}
 
 		task ("Assert no mapping selected for user matching") {
-			AssertConsoleTextPresent(value1 = "No attribute mapping selected for user matching");
-
-			AssertElementPresent(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ERROR_NO_MAPPING_SELECTED");
+			SAML.viewNoAttributeMappingSelectedForUserMatching();
 		}
 	}
 
@@ -501,15 +466,9 @@ definition {
 		property test.name.skip.portal.instance = "SAML#AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole";
 
 		task ("Disable IdP role to be configured") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			var baseURL = PropsUtil.get("portal.url");
 
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "SSO",
-				configurationName = "SAML Configuration",
-				configurationScope = "System Scope");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.saml.runtime.configuration.SamlConfiguration");
 
 			FormFields.disableCheckbox(fieldName = "Enable Identity Provider Role To Be Configured");
 
@@ -517,10 +476,7 @@ definition {
 		}
 
 		task ("Add CP able.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",
@@ -536,16 +492,11 @@ definition {
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			var baseURL1 = PropsUtil.get("portal.url");
 
-			MouseOver(locator1 = "Icon#TOOLTIP");
+			Navigator.openSpecificURL(url = "${baseURL1}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#TOOLTIP",
-				value1 = "The identity provider role has been disabled. It can be re-enabled in System Settings.");
+			SAML.viewIdPIconTooltip();
 		}
 	}
 
@@ -566,10 +517,9 @@ definition {
 		}
 
 		task ("Add CP able.com and baker.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",
@@ -684,11 +634,7 @@ definition {
 		}
 
 		task ("Assert response has 2 document.write commands") {
-			var count = Page.getTextCountFromHtmlSource(text = "document.write");
-
-			if ("${count}" != "2") {
-				fail("That response should contain two document.write commands");
-			}
+			SAML.assertTextCountFromHtml(value = "2");
 		}
 	}
 
@@ -708,10 +654,9 @@ definition {
 		}
 
 		task ("Configure samlsp as SP") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/group/guest/~/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAMLRole.configure(
 				samlEntityID = "samlsp",
@@ -729,9 +674,7 @@ definition {
 		}
 
 		task ("Assert no mapping selected") {
-			AssertConsoleTextPresent(value1 = "No attribute mapping selected for user matching");
-
-			AssertElementPresent(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ERROR_NO_MAPPING_SELECTED");
+			SAML.viewNoAttributeMappingSelectedForUserMatching();
 		}
 	}
 
@@ -819,12 +762,9 @@ definition {
 
 			AssertHTMLSourceTextPresent(value1 = "ds:Signature");
 
-			Navigator.openURL();
+			var baseURL = PropsUtil.get("portal.url");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 		}
 
 		task ("Disable IdP") {
@@ -879,15 +819,7 @@ definition {
 		}
 
 		task ("Assert console message: validation of protocol message signature failed") {
-			AssertClick(
-				locator1 = "UserBar#USER_SIGN_IN",
-				value1 = "Sign In");
-
-			AssertTextEquals(
-				locator1 = "Portlet#PORTLET_CONTENT",
-				value1 = "Unable to process SAML request.");
-
-			AssertConsoleTextPresent(value1 = "Validation of protocol message signature failed");
+			SAML.assertSAMLRequestNotValid();
 		}
 	}
 
@@ -929,11 +861,7 @@ definition {
 		task ("Wait for idle time and Assert expired session error message") {
 			Navigator.openURL();
 
-			Pause(locator1 = "120000");
-
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-				value1 = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+			SAML.viewSessionExpired(timer = "120000");
 		}
 
 		task ("Refresh and view logged in PG") {
@@ -943,10 +871,7 @@ definition {
 		}
 
 		task ("Configure IdP idle timout as 60") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAMLNavigation.gotoIdentityProvider();
 
@@ -985,11 +910,7 @@ definition {
 		task ("Wait for idle time and assert expired session error message") {
 			Navigator.openURL();
 
-			Pause(locator1 = "120000");
-
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-				value1 = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+			SAML.viewSessionExpired(timer = "120000");
 		}
 
 		task ("Assert user logged out") {
@@ -1033,19 +954,13 @@ definition {
 		}
 
 		task ("Wait for idle and assert expired session error message") {
-			Pause(locator1 = "120000");
-
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-				value1 = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+			SAML.viewSessionExpired(timer = "120000");
 		}
 
-		task ("Refresh and sign in") {
+		task ("Refresh and click sign in") {
 			Refresh();
 
-			AssertClick(
-				locator1 = "UserBar#USER_SIGN_IN",
-				value1 = "Sign In");
+			SAML.clickAtSignIn();
 
 			User.viewLoggedInPG();
 		}
@@ -1089,11 +1004,7 @@ definition {
 		}
 
 		task ("Wait for idle time and assert session expired error message") {
-			Pause(locator1 = "120000");
-
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-				value1 = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+			SAML.viewSessionExpired(timer = "120000");
 		}
 
 		task ("Refresh and assert logged in") {
@@ -1103,11 +1014,7 @@ definition {
 		}
 
 		task ("Wait for idle and assert session expired error message") {
-			Pause(locator1 = "120000");
-
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-				value1 = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+			SAML.viewSessionExpired(timer = "120000");
 		}
 
 		task ("Refresh and assert logged out") {
@@ -1215,12 +1122,10 @@ definition {
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@liferay.com");
 
-			AssertTextEquals(
-				locator1 = "Portlet#PORTLET_CONTENT",
-				value1 = "Unable to process SAML request.");
+			SAML.viewUnableToProcessSAMLRequest();
 		}
 
-		task ("View text(Data encryption key was null in port) present on 8080") {
+		task ("View text(Data encryption key was null in port) present on node port 8080") {
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Data encryption key was null",
 				nodePort = "8080");
@@ -1237,10 +1142,9 @@ definition {
 		}
 
 		task ("Disable auth and request signature required on IdP") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAMLNavigation.gotoIdentityProvider();
 
@@ -1282,10 +1186,9 @@ definition {
 		}
 
 		task ("Configure IdP") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAMLNavigation.gotoIdentityProvider();
 
@@ -1320,10 +1223,9 @@ definition {
 		}
 
 		task ("Disable auth and request signature required on IdP") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAMLNavigation.gotoIdentityProvider();
 
@@ -1333,10 +1235,9 @@ definition {
 		task ("Disable sign auth and requests on SP") {
 			Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAMLNavigation.gotoServiceProvider();
 
@@ -1371,15 +1272,9 @@ definition {
 		}
 
 		task ("Exit Runtime Metadata Refresh Interval value to 9999") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			var baseURL = PropsUtil.get("portal.url");
 
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "SSO",
-				configurationName = "SAML Configuration",
-				configurationScope = "System Scope");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.saml.runtime.configuration.SamlConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 
 			SystemSettings.editTextSetting(
 				settingName = "Runtime Metadata Refresh Interval",
@@ -1391,10 +1286,7 @@ definition {
 		task ("Configure IdP") {
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAMLNavigation.gotoIdentityProvider();
 
@@ -1458,10 +1350,9 @@ definition {
 		}
 
 		task ("Add IdP connection") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAMLNavigation.gotoIdentityProviderConnections();
 
@@ -1480,47 +1371,31 @@ definition {
 		}
 
 		task ("Assert error message (Basic User Fields: Each user field can only be mapped to one SAML attribute.)") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "Basic User Fields: Each user field can only be mapped to one SAML attribute.");
+			SAML.viewEachUserFieldCanOnlyBeMappedToOneSAMLAttributeErrorMessage();
 		}
 
-		task ("Delete new IdP connection") {
-			Click(
-				key_rowIndexNumber = "4",
-				locator1 = "Button#DELETE_ROW_N");
-
-			PortletEntry.save();
+		task ("Delete Entry 4") {
+			SAML.removeEntryFromTable(rowNumber = "4");
 		}
 
 		task ("Assert error message (Basic User Fields: Each user field can only be mapped to one SAML attribute.)") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "Basic User Fields: Each user field can only be mapped to one SAML attribute.");
+			SAML.viewEachUserFieldCanOnlyBeMappedToOneSAMLAttributeErrorMessage();
 
 			PortletEntry.save();
 		}
 
 		task ("Delete entry 2") {
-			Click(
-				key_rowIndexNumber = "2",
-				locator1 = "Button#DELETE_ROW_N");
-
-			PortletEntry.save();
+			SAML.removeEntryFromTable(rowNumber = "2");
 		}
 
 		task ("Assert error message (Basic User Fields: Each user field can only be mapped to one SAML attribute.)") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "Basic User Fields: Each user field can only be mapped to one SAML attribute.");
+			SAML.viewEachUserFieldCanOnlyBeMappedToOneSAMLAttributeErrorMessage();
 
 			PortletEntry.save();
 		}
 
 		task ("Delete last entry") {
-			Click(locator1 = "Button#DELETE_ROW_LAST");
-
-			PortletEntry.save();
+			SAML.removeEntryFromTable();
 		}
 	}
 
@@ -1571,10 +1446,9 @@ definition {
 		}
 
 		task ("Add IdP connection") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAMLNavigation.gotoIdentityProviderConnections();
 
@@ -1594,9 +1468,7 @@ definition {
 		}
 
 		task ("Assert error message (Basic User Fields: All attribute mappings must specify a SAML attribute)") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "Basic User Fields: All attribute mappings must specify a SAML attribute.");
+			SAML.viewAllAttributeMappingsMustSpecifyASAMLAttributeErrorMessage();
 		}
 	}
 
@@ -1619,10 +1491,9 @@ definition {
 		task ("Add ApacheDS server as LDAP server and test connection") {
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
 
 			PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
 
@@ -1634,12 +1505,9 @@ definition {
 		task ("Open able.com:9080 and add LDAP server") {
 			Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
-			Navigator.gotoLoginPage();
+			var baseURL = PropsUtil.get("portal.url");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
 
 			PortalSettings.addLDAPServer(
 				baseURL = "http://www.able.com:9080",
@@ -1673,23 +1541,15 @@ definition {
 		}
 
 		task ("Login and reindex search indexes") {
-			User.firstLoginUI(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+			var baseURL = PropsUtil.get("portal.url");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Search");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_search_admin_web_portlet_SearchAdminPortlet");
 
 			SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 		}
 
 		task ("View CP ldapuseremail@liferay.com information") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
 
 			User.viewCP(
 				userEmailAddress = "ldapuseremail@liferay.com",
@@ -1710,14 +1570,13 @@ definition {
 		task ("Open able.com:9080 Enable LDAP import in SP configuration") {
 			Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
-			if (IsElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
-				Navigator.gotoLoginPage();
-			}
+			SAML.loginIfProductMenuNotOpened();
+		}
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+		task ("Login and reindex search indexes") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAMLNavigation.gotoServiceProvider();
 
@@ -1741,10 +1600,9 @@ definition {
 		}
 
 		task ("View CP") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
 
 			User.viewCP(
 				userEmailAddress = "ldapuseremail@liferay.com",
@@ -2300,10 +2158,9 @@ definition {
 
 			User.firstLoginUI();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
 
 			User.singleDeactivateCP(userFirstName = "first");
 
@@ -2322,9 +2179,7 @@ definition {
 				specificURL = "http://www.able.com:8080/",
 				userEmailAddress = "user1@liferay.com");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "Authentication failed. Please try again.");
+			SAML.viewAuthenticationFailedErrorMessage();
 		}
 	}
 
@@ -2342,20 +2197,11 @@ definition {
 		}
 
 		task ("configure samlidp as IdP") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			var baseURL = PropsUtil.get("portal.url");
 
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "SSO",
-				configurationName = "SAML Configuration",
-				configurationScope = "System Scope");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.saml.runtime.configuration.SamlConfiguration");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 		}
@@ -2399,14 +2245,11 @@ definition {
 		task ("Convert encryption certificate") {
 			Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			var baseURL = PropsUtil.get("portal.url");
 
-			Click(
-				key_certificateUsage = "ENCRYPTION",
-				locator1 = "CPSAMLAdmin#DOWNLOAD_CERTIFICATE");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+
+			SAML.downloadCertificate(certificate = "ENCRYPTION");
 
 			SAMLRole.convertEncryptionCertificate();
 		}
@@ -2457,14 +2300,11 @@ definition {
 		task ("Convert signing certificate") {
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			var baseURL = PropsUtil.get("portal.url");
 
-			Click(
-				key_certificateUsage = "SIGNING",
-				locator1 = "CPSAMLAdmin#DOWNLOAD_CERTIFICATE");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+
+			SAML.downloadCertificate(certificate = "SIGNING");
 
 			SAMLRole.convertSingingCertificate();
 		}
@@ -2482,12 +2322,7 @@ definition {
 
 			Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
-			if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-				User.firstLoginUI(
-					password = "test",
-					specificURL = "http://www.able.com:9080",
-					userEmailAddress = "test@liferay.com");
-			}
+			SAML.loginIfUSerAvatarNotPresent();
 		}
 	}
 
@@ -3328,7 +3163,7 @@ definition {
 
 			Navigator.gotoLoginPage();
 
-			AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
+			SAML.assertSignInNotPresent();
 		}
 
 		task ("Initiate Single Logout for IdP") {
@@ -3543,7 +3378,7 @@ definition {
 
 			Navigator.gotoLoginPage();
 
-			AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
+			SAML.viewEmailInputPresent();
 		}
 	}
 
@@ -3830,9 +3665,7 @@ definition {
 		task ("Assert You must configure at least one identity provider connection for SAML to function. message at SAML admin") {
 			SAMLNavigation.gotoGeneral();
 
-			AssertTextEquals(
-				locator1 = "CPSAMLAdmin#INFO_MESSAGE",
-				value1 = "You must configure at least one identity provider connection for SAML to function.");
+			SAML.assertSAMLAdminInfoMessage();
 		}
 
 		task ("Logout and login at baker.com:9080") {
@@ -3864,9 +3697,7 @@ definition {
 
 			Navigator.gotoLoginPage();
 
-			AssertTextEquals(
-				locator1 = "Portlet#PORTLET_CONTENT",
-				value1 = "No identity provider is available to sign you in.");
+			SAML.viewNoIdentityProviderAvailableMessage();
 		}
 	}
 
@@ -4615,7 +4446,7 @@ uuid''',
 			User.viewLoggedInPG();
 		}
 
-		task ("Assert user not present") {
+		task ("Assert duplicate user not present") {
 
 			// Assert duplicate user doesn't exist
 
@@ -4624,7 +4455,8 @@ uuid''',
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
 
-			AssertElementNotPresent(locator1 = "xpath=(//tr[contains(.,'Test Test')][2]/td[2]/a)");
+			SAML.viewNoDuplicateUser(user = "Test Test");
+			AssertElementNotPresent(locator1 = "xpath=(//tr[contains(.,'${user}')][2]/td[2]/a)");
 		}
 	}
 

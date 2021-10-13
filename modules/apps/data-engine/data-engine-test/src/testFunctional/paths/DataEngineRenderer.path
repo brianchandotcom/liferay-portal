@@ -76,6 +76,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLBAR_BOLD_BUTTON</td>
+	<td>//a[contains(@class,'cke_button') and contains(@class,'bold')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_BOLD_BUTTON_ON</td>
+	<td>//a[contains(@class,'cke_button_on') and contains(@class,'bold')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMAGE_DESCRIPTION_INDEXED</td>
 	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div[contains(@class,'form-group')]//input[contains(@name,'description')])[${index}]</td>
 	<td></td>

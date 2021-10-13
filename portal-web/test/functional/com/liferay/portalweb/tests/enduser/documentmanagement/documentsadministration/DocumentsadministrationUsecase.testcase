@@ -361,25 +361,15 @@ definition {
 		DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This test covers LPS-91597. It ensures that a user can delete multiple documents simultaneously."
+	@description = "This test covers LPS-91597. It ensures that a user can delete multiple documents through the actions icon after selecting them one by one."
 	@priority = "4"
-	@refactorneeded
-	test SelectMultipleDocumentsAndDeleteViaActionsButton {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Documents and Media Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Documents and Media Page",
-			widgetName = "Documents and Media");
-
+	@refactordone
+	test CanDeleteMultipleDocumentsViaActionsButton {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		for (var entryCount : list "1,2,3") {
+		for (var entryCount : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "Document_${entryCount}.doc",
@@ -390,7 +380,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		for (var entryCount : list "1,2,3") {
+		for (var entryCount : list "1,2") {
 			var dmDocumentTitle = "Document_${entryCount}.doc";
 
 			LexiconCard.checkCardCheckbox(card = "${dmDocumentTitle}");

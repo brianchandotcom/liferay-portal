@@ -243,6 +243,10 @@ public abstract class BaseCartItemResourceImpl
 			existingCartItem.setProductId(cartItem.getProductId());
 		}
 
+		if (cartItem.getProductURLs() != null) {
+			existingCartItem.setProductURLs(cartItem.getProductURLs());
+		}
+
 		if (cartItem.getQuantity() != null) {
 			existingCartItem.setQuantity(cartItem.getQuantity());
 		}

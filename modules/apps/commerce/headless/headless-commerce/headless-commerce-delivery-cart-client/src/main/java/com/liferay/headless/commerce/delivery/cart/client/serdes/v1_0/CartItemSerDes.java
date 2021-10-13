@@ -190,6 +190,16 @@ public class CartItemSerDes {
 			sb.append(cartItem.getProductId());
 		}
 
+		if (cartItem.getProductURLs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productURLs\": ");
+
+			sb.append(_toJSON(cartItem.getProductURLs()));
+		}
+
 		if (cartItem.getQuantity() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -361,6 +371,13 @@ public class CartItemSerDes {
 			map.put("productId", String.valueOf(cartItem.getProductId()));
 		}
 
+		if (cartItem.getProductURLs() == null) {
+			map.put("productURLs", null);
+		}
+		else {
+			map.put("productURLs", String.valueOf(cartItem.getProductURLs()));
+		}
+
 		if (cartItem.getQuantity() == null) {
 			map.put("quantity", null);
 		}
@@ -494,6 +511,13 @@ public class CartItemSerDes {
 				if (jsonParserFieldValue != null) {
 					cartItem.setProductId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "productURLs")) {
+				if (jsonParserFieldValue != null) {
+					cartItem.setProductURLs(
+						(Map)CartItemSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "quantity")) {

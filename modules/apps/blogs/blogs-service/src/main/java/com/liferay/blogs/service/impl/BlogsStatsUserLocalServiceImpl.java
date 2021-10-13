@@ -40,11 +40,6 @@ public class BlogsStatsUserLocalServiceImpl
 	extends BlogsStatsUserLocalServiceBaseImpl {
 
 	@Override
-	public void deleteStatsUser(BlogsStatsUser statsUsers) {
-		blogsStatsUserPersistence.remove(statsUsers);
-	}
-
-	@Override
 	public List<BlogsStatsUser> getGroupsStatsUsers(
 		long companyId, long groupId, int start, int end) {
 

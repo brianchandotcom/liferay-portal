@@ -262,7 +262,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxonomyCategory(taxonomyCategoryId: ___){actions, availableLanguages, creator, dateCreated, dateModified, description, description_i18n, externalReferenceCode, id, name, name_i18n, numberOfTaxonomyCategories, parentTaxonomyCategory, parentTaxonomyVocabulary, taxonomyCategoryProperties, taxonomyCategoryUsageCount, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxonomyCategory(taxonomyCategoryId: ___){actions, availableLanguages, creator, dateCreated, dateModified, description, description_i18n, externalReferenceCode, id, name, name_i18n, numberOfTaxonomyCategories, parentTaxonomyCategory, parentTaxonomyVocabulary, siteId, taxonomyCategoryProperties, taxonomyCategoryUsageCount, taxonomyVocabularyId, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves a taxonomy category.")
 	public TaxonomyCategory taxonomyCategory(
@@ -325,6 +325,30 @@ public class Query {
 						Pagination.of(page, pageSize),
 						_sortsBiFunction.apply(
 							taxonomyCategoryResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(externalReferenceCode: ___, taxonomyVocabularyId: ___){actions, availableLanguages, creator, dateCreated, dateModified, description, description_i18n, externalReferenceCode, id, name, name_i18n, numberOfTaxonomyCategories, parentTaxonomyCategory, parentTaxonomyVocabulary, siteId, taxonomyCategoryProperties, taxonomyCategoryUsageCount, taxonomyVocabularyId, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the site's taxonomy category by external reference code."
+	)
+	public TaxonomyCategory
+			taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+				@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.
+					getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+						taxonomyVocabularyId, externalReferenceCode));
 	}
 
 	/**
@@ -611,6 +635,61 @@ public class Query {
 		}
 
 		private TaxonomyCategory _taxonomyCategory;
+
+	}
+
+	@GraphQLTypeExtension(TaxonomyCategory.class)
+	public class GetTaxonomyVocabularyTypeExtension {
+
+		public GetTaxonomyVocabularyTypeExtension(
+			TaxonomyCategory taxonomyCategory) {
+
+			_taxonomyCategory = taxonomyCategory;
+		}
+
+		@GraphQLField(description = "Retrieves a taxonomy vocabulary.")
+		public TaxonomyVocabulary taxonomyVocabulary() throws Exception {
+			return _applyComponentServiceObjects(
+				_taxonomyVocabularyResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				taxonomyVocabularyResource ->
+					taxonomyVocabularyResource.getTaxonomyVocabulary(
+						_taxonomyCategory.getTaxonomyVocabularyId()));
+		}
+
+		private TaxonomyCategory _taxonomyCategory;
+
+	}
+
+	@GraphQLTypeExtension(TaxonomyVocabulary.class)
+	public class
+		GetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeTypeExtension {
+
+		public GetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeTypeExtension(
+			TaxonomyVocabulary taxonomyVocabulary) {
+
+			_taxonomyVocabulary = taxonomyVocabulary;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the site's taxonomy category by external reference code."
+		)
+		public TaxonomyCategory taxonomyCategoryByExternalReferenceCode(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_taxonomyCategoryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				taxonomyCategoryResource ->
+					taxonomyCategoryResource.
+						getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+							_taxonomyVocabulary.getId(),
+							externalReferenceCode));
+		}
+
+		private TaxonomyVocabulary _taxonomyVocabulary;
 
 	}
 

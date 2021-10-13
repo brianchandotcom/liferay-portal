@@ -276,7 +276,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
-	@Schema
+	@Schema(description = "The category's external reference code")
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -300,7 +300,7 @@ public class TaxonomyCategory implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The category's external reference code")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
@@ -492,6 +492,38 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
 
+	@Schema(
+		description = "The ID of the site to which this category is scoped."
+	)
+	public Long getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+	}
+
+	@JsonIgnore
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
+		try {
+			siteId = siteIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The ID of the site to which this category is scoped."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long siteId;
+
 	@Schema(description = "The category's properties.")
 	@Valid
 	public TaxonomyCategoryProperty[] getTaxonomyCategoryProperties() {
@@ -556,6 +588,38 @@ public class TaxonomyCategory implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer taxonomyCategoryUsageCount;
+
+	@Schema(
+		description = "The `TaxonomyVocabulary` id, only if the category does not have a parent category."
+	)
+	public Long getTaxonomyVocabularyId() {
+		return taxonomyVocabularyId;
+	}
+
+	public void setTaxonomyVocabularyId(Long taxonomyVocabularyId) {
+		this.taxonomyVocabularyId = taxonomyVocabularyId;
+	}
+
+	@JsonIgnore
+	public void setTaxonomyVocabularyId(
+		UnsafeSupplier<Long, Exception> taxonomyVocabularyIdUnsafeSupplier) {
+
+		try {
+			taxonomyVocabularyId = taxonomyVocabularyIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The `TaxonomyVocabulary` id, only if the category does not have a parent category."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long taxonomyVocabularyId;
 
 	@Schema(
 		description = "A write-only property that specifies the category's default permissions."
@@ -807,6 +871,16 @@ public class TaxonomyCategory implements Serializable {
 			sb.append(String.valueOf(parentTaxonomyVocabulary));
 		}
 
+		if (siteId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteId\": ");
+
+			sb.append(siteId);
+		}
+
 		if (taxonomyCategoryProperties != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -835,6 +909,16 @@ public class TaxonomyCategory implements Serializable {
 			sb.append("\"taxonomyCategoryUsageCount\": ");
 
 			sb.append(taxonomyCategoryUsageCount);
+		}
+
+		if (taxonomyVocabularyId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyVocabularyId\": ");
+
+			sb.append(taxonomyVocabularyId);
 		}
 
 		if (viewableBy != null) {

@@ -116,6 +116,21 @@ public interface TaxonomyCategoryResource {
 			Long taxonomyVocabularyId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+			Long taxonomyVocabularyId, String externalReferenceCode)
+		throws Exception;
+
+	public TaxonomyCategory
+			getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+				Long taxonomyVocabularyId, String externalReferenceCode)
+		throws Exception;
+
+	public TaxonomyCategory
+			putTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+				Long taxonomyVocabularyId, String externalReferenceCode,
+				TaxonomyCategory taxonomyCategory)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

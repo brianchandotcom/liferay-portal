@@ -340,6 +340,27 @@ public class TaxonomyCategory implements Cloneable, Serializable {
 
 	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
 
+	public Long getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+	}
+
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
+		try {
+			siteId = siteIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long siteId;
+
 	public TaxonomyCategoryProperty[] getTaxonomyCategoryProperties() {
 		return taxonomyCategoryProperties;
 	}
@@ -389,6 +410,27 @@ public class TaxonomyCategory implements Cloneable, Serializable {
 	}
 
 	protected Integer taxonomyCategoryUsageCount;
+
+	public Long getTaxonomyVocabularyId() {
+		return taxonomyVocabularyId;
+	}
+
+	public void setTaxonomyVocabularyId(Long taxonomyVocabularyId) {
+		this.taxonomyVocabularyId = taxonomyVocabularyId;
+	}
+
+	public void setTaxonomyVocabularyId(
+		UnsafeSupplier<Long, Exception> taxonomyVocabularyIdUnsafeSupplier) {
+
+		try {
+			taxonomyVocabularyId = taxonomyVocabularyIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long taxonomyVocabularyId;
 
 	public ViewableBy getViewableBy() {
 		return viewableBy;

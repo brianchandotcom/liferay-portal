@@ -396,6 +396,49 @@ public class Mutation {
 						taxonomyVocabularyId, callbackURL, object));
 	}
 
+	@GraphQLField(
+		description = "Deletes the site's taxonomy category by external reference code."
+	)
+	public boolean
+			deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+				@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.
+					deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+						taxonomyVocabularyId, externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates the site's taxonomy category with the given external reference code, or creates it if it not exists."
+	)
+	public TaxonomyCategory
+			updateTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+				@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("taxonomyCategory") TaxonomyCategory
+					taxonomyCategory)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.
+					putTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+						taxonomyVocabularyId, externalReferenceCode,
+						taxonomyCategory));
+	}
+
 	@GraphQLField
 	public TaxonomyVocabulary createAssetLibraryTaxonomyVocabulary(
 			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,

@@ -23,6 +23,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.price.CommerceOrderItemPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -41,7 +42,11 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import java.math.BigDecimal;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -98,6 +103,30 @@ public class CartItemDTOConverter
 				subscription = commerceOrderItem.isSubscription();
 				thumbnail = _cpInstanceHelper.getCPInstanceThumbnailSrc(
 					commerceOrderItem.getCPInstanceId());
+
+				setProductURLs(
+					() -> {
+						CPDefinition cpDefinition =
+							commerceOrderItem.getCPDefinition();
+
+						Map<Locale, String> urlTitleMap =
+							cpDefinition.getUrlTitleMap();
+
+						Set<Map.Entry<Locale, String>> entries =
+							urlTitleMap.entrySet();
+
+						Stream<Map.Entry<Locale, String>> stream =
+							entries.stream();
+
+						return stream.collect(
+							Collectors.toMap(
+								entry -> {
+									Locale locale = entry.getKey();
+
+									return locale.toString();
+								},
+								Map.Entry::getValue));
+					});
 			}
 		};
 	}

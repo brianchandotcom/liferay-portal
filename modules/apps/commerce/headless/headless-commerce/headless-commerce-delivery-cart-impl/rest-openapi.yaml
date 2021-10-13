@@ -270,6 +270,15 @@ components:
                 productId:
                     format: int64
                     type: integer
+                productURLs:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: product-url-us
+                        hr_HR: product-url-hr
+                        hu_HU: product-url-hu
+                    readOnly: true
+                    type: object
                 quantity:
                     format: int32
                     type: integer
@@ -493,7 +502,7 @@ components:
 info:
     description:
         "Headless Delivery Commerce Cart API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.delivery.cart.client', and version '4.0.7'."
+        artifact ID 'com.liferay.headless.commerce.delivery.cart.client', and version '4.0.8'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

@@ -838,6 +838,26 @@ definition {
 					depotName = "${depotName}",
 					folderName = "${folderName}");
 			}
+
+			if (isSet(otherSiteName)) {
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				AssertClick(
+					key_breadcrumbName = "Sites and Libraries",
+					locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+					value1 = "Sites and Libraries");
+
+				Click(
+					key_card = "${otherSiteName}",
+					locator1 = "Card#CARD_TITLE_LINK");
+
+				AssertClick.assertPartialTextClickAt(
+					key_listEntry = "${webContentWebContent}",
+					locator1 = "LexiconList#LIST_ENTRY",
+					value1 = "${webContentWebContent}");
+
+				SelectFrame(value1 = "relative=top");
+			}
 			else {
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

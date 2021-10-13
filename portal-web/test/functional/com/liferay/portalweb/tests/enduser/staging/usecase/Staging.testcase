@@ -419,32 +419,53 @@ definition {
 
 	@priority = "4"
 	test EnableStagingWithWebContentReferencedFromDeletedSite {
-		property portal.upstream = "quarantine";
-
 		JSONWebcontent.addWebContent(
-			content = "WC Content",
+			content = "WC Content 1",
 			groupName = "Site Name",
-			title = "WC Title");
+			title = "WC Title 1");
 
-		JSONGroup.addGroup(groupName = "Site B Name");
+		JSONGroup.addGroup(groupName = "Site B");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site B Name",
-			layoutName = "Site B Test Page");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-b");
 
-		Navigator.gotoSitePage(
-			pageName = "Site B Test Page",
-			siteName = "Site B Name");
+		NavItem.gotoStructures();
 
-		Portlet.addPG(portletName = "Web Content Display");
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description",
+			structureName = "Structure Name");
 
-		WebContentDisplayPortlet.selectOtherSiteWebContent(
+		DataEngine.addField(
+			fieldFieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		WebContentStructures.saveCP(structureName = "Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-b");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Structure Name",
+			templateDescription = "Template Description",
+			templateFieldNames = "Web Content",
+			templateName = "Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-b");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
+
+		WebContent.addWithStructureCP(
 			otherSiteName = "Site Name",
-			webContentTitle = "WC Title");
+			structureName = "Structure Name",
+			templateName = "Template Name",
+			webContentTitle = "WC Title 2",
+			webContentWebContent = "WC Title 1");
+
+		PortletEntry.publish();
 
 		JSONGroup.deleteGroupByName(groupName = "Site Name");
 
-		JSONStaging.enableLocalStaging(groupName = "Site B Name");
+		JSONStaging.enableLocalStaging(groupName = "Site B");
 	}
 
 	@priority = "5"

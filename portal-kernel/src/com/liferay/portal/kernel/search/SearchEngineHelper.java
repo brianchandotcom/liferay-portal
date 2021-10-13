@@ -58,6 +58,8 @@ public interface SearchEngineHelper {
 
 	public void removeCompany(long companyId);
 
+	public void removeCompany(long companyId, boolean checkInitialized);
+
 	public SearchEngine removeSearchEngine(String searchEngineId);
 
 	public void setDefaultSearchEngineId(String defaultSearchEngineId);

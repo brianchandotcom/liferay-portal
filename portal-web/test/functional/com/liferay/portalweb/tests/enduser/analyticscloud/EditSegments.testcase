@@ -836,6 +836,10 @@ definition {
 	test UndoDeletingASegmentMemberInTheEditModal {
 		var users = "ac,liferay";
 
+		var emailList = "ac@liferay.com,liferay@liferay.com";
+
+		var nameList = "ac ac,liferay liferay";
+
 		task ("Create two new users") {
 			for (var name : list "${users}") {
 				JSONUser.addUser(
@@ -851,17 +855,10 @@ definition {
 		}
 
 		task ("Login with the users and see page") {
-			for (var name : list "${users}") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${name}@liferay.com",
-					userLoginFullName = "${name} ${name}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close all sessions, launch AC, change the property and go to segments") {
@@ -891,11 +888,7 @@ definition {
 
 			ACSegments.editSegment(searchTerm = "Static Segment Test");
 
-			for (var name : list "${users}") {
-				AssertElementPresent(
-					key_TableMember = "${name} ${name}",
-					locator1 = "ACSegments#TABLE_CHECKBOX");
-			}
+			ACUtils.viewNameList(nameList = "${nameList}");
 		}
 
 		task ("Search the member, remove, undo and save") {
@@ -919,9 +912,7 @@ definition {
 
 			ACSegments.searchMember(findMember = "ac ac");
 
-			AssertElementPresent(
-				key_TableMember = "ac ac",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
+			ACUtils.viewNameList(nameList = "ac ac");
 		}
 	}
 

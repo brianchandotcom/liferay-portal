@@ -352,6 +352,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8396 | Test Summary: Documents list is searchable"
 	@priority = "4"
 	test CanDocumentsAndMediaListSearchable {
+		var documentNameList = "DM AC Title,New Document";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Add another document") {
@@ -361,15 +363,11 @@ definition {
 		}
 
 		task ("Visit the two documents") {
-			for (var documentName : list "DM AC Title,New Document") {
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				DMNavigator.gotoDocumentPG(dmDocumentTitle = "${documentName}");
-
-				Pause(locator1 = "5000");
-			}
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "${documentNameList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {
@@ -391,13 +389,11 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			ACUtils.searchBar(searchItem = "DM AC Title");
+			for (var documentName : list "${documentNameList}") {
+				ACUtils.searchBar(searchItem = "${documentName}");
 
-			ACUtils.viewNameList(nameList = "DM AC Title");
-
-			ACUtils.searchBar(searchItem = "New Document");
-
-			ACUtils.viewNameList(nameList = "New Document");
+				ACUtils.viewNameList(nameList = "${documentName}");
+			}
 
 			ACUtils.searchBar(searchItem = "Should not be here");
 

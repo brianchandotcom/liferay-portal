@@ -250,6 +250,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					languageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					persisted="<%= article != null %>"
+					submittable="<%= false %>"
 				/>
 
 				<liferay-frontend:component

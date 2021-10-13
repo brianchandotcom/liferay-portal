@@ -244,11 +244,86 @@ definition {
 	}
 
 	@description = "LPS-101075 - Verify that the All Versions filter considers only the steps touched by the task"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test FilterConsidersStepsTouchedByTaks {
+		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#FilterConsidersStepsTouchedByTaks";
 
-		// TODO LRQA-68925 FilterConsidersStepsTouchedByTaks pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetricsPerformanceByStep.goToPerformanceTab();
+
+		WorkflowMetricsPerformanceByStep.viewPerformanceByStepValues(
+			avgCompletionTimeValue = "1min",
+			isNotPresent = "",
+			slaBreachedValue = "0 (0%)",
+			stepName = "Review");
+
+		WorkflowMetricsPerformanceByStep.viewPerformanceByStepValues(
+			avgCompletionTimeValue = "0min",
+			isNotPresent = "",
+			slaBreachedValue = "0 (0%)",
+			stepName = "Update");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "review");
+
+		KaleoDesigner.editNodeName(nodeName = "review2");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "update");
+
+		KaleoDesigner.editNodeName(nodeName = "update2");
+
+		Button.clickUpdate();
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetricsPerformanceByStep.goToPerformanceTab();
+
+		AssertElementNotPresent(
+			key_stepName = "Update",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
 
 	}
 

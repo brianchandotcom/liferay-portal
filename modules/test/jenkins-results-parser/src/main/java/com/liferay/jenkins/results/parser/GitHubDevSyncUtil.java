@@ -68,45 +68,6 @@ public class GitHubDevSyncUtil {
 		}
 	}
 
-	public static LocalGitBranch createCacheLocalGitBranch(
-		LocalGitRepository localGitRepository, LocalGitBranch localGitBranch,
-		boolean synchronize) {
-
-		return _createCacheLocalGitBranch(
-			localGitRepository, "liferay", localGitBranch.getName(), "liferay",
-			localGitBranch.getSHA(), localGitBranch.getSHA(), synchronize);
-	}
-
-	public static LocalGitBranch createCacheLocalGitBranch(
-		LocalGitRepository localGitRepository, PullRequest pullRequest,
-		boolean synchronize) {
-
-		return _createCacheLocalGitBranch(
-			localGitRepository, pullRequest.getReceiverUsername(),
-			pullRequest.getSenderBranchName(), pullRequest.getSenderUsername(),
-			pullRequest.getSenderSHA(), pullRequest.getUpstreamBranchSHA(),
-			synchronize);
-	}
-
-	public static LocalGitBranch createCacheLocalGitBranch(
-		LocalGitRepository localGitRepository, RemoteGitRef remoteGitRef,
-		boolean synchronize) {
-
-		return _createCacheLocalGitBranch(
-			localGitRepository, remoteGitRef.getUsername(),
-			remoteGitRef.getName(), remoteGitRef.getUsername(),
-			remoteGitRef.getSHA(), remoteGitRef.getSHA(), synchronize);
-	}
-
-	public static LocalGitBranch createCacheLocalGitBranch(
-		LocalGitRepository localGitRepository, String name, String sha,
-		boolean synchronize) {
-
-		return _createCacheLocalGitBranch(
-			localGitRepository, "liferay", name, "liferay", sha, sha,
-			synchronize);
-	}
-
 	public static RemoteGitBranch fetchCacheBranchFromGitHubDev(
 		GitWorkingDirectory gitWorkingDirectory, String cacheBranchName) {
 
@@ -1455,53 +1416,6 @@ public class GitHubDevSyncUtil {
 	}
 
 	protected static List<String> gitHubDevNodeHostnames;
-
-	private static LocalGitBranch _createCacheLocalGitBranch(
-		LocalGitRepository localGitRepository, String receiverUsername,
-		String senderBranchName, String senderUsername, String senderBranchSHA,
-		String upstreamBranchSHA, boolean synchronize) {
-
-		GitWorkingDirectory gitWorkingDirectory =
-			localGitRepository.getGitWorkingDirectory();
-
-		if (!JenkinsResultsParserUtil.isCINode()) {
-			return gitWorkingDirectory.getRebasedLocalGitBranch(
-				JenkinsResultsParserUtil.combine(
-					gitWorkingDirectory.getUpstreamBranchName(), "-temp-",
-					String.valueOf(
-						JenkinsResultsParserUtil.getCurrentTimeMillis())),
-				senderBranchName,
-				JenkinsResultsParserUtil.combine(
-					"git@github.com:", senderUsername, "/",
-					localGitRepository.getName()),
-				senderBranchSHA, gitWorkingDirectory.getUpstreamBranchName(),
-				upstreamBranchSHA);
-		}
-
-		if (synchronize) {
-			synchronizeToGitHubDev(
-				gitWorkingDirectory, receiverUsername, 0, senderBranchName,
-				senderUsername, senderBranchSHA, upstreamBranchSHA);
-		}
-
-		String cacheBranchName = getCacheBranchName(
-			receiverUsername, senderUsername, senderBranchSHA,
-			upstreamBranchSHA);
-
-		LocalGitBranch cacheLocalGitBranch = GitBranchFactory.newLocalGitBranch(
-			localGitRepository,
-			JenkinsResultsParserUtil.combine(
-				gitWorkingDirectory.getUpstreamBranchName(), "-temp-",
-				String.valueOf(
-					JenkinsResultsParserUtil.getCurrentTimeMillis())),
-			upstreamBranchSHA);
-
-		RemoteGitBranch cacheRemoteGitBranch = fetchCacheBranchFromGitHubDev(
-			gitWorkingDirectory, cacheBranchName);
-
-		return gitWorkingDirectory.fetch(
-			cacheLocalGitBranch, cacheRemoteGitBranch);
-	}
 
 	private static RemoteGitBranch _fetchCacheBranchFromGitHubDev(
 		GitWorkingDirectory gitWorkingDirectory, String cacheBranchName,

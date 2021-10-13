@@ -95,7 +95,7 @@ definition {
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
 			workflowFilterOption = "PENDING",
 			workflowMetricsTab = "DASHBOARD",
-			workflowProcess = "Single Approver 2");
+			workflowProcess = "Copy of Single Approver");
 
 		AssertElementPresent(
 			key_workflowItemSubject = "Web Content Article: Basic Article 2",

@@ -717,6 +717,8 @@ definition {
 	test CanCreateNestedCriteria {
 		var usernameList = "userea,user1,test";
 
+		var emailList = "userea@liferay.com,user1@liferay.com,test@liferay.com";
+
 		var fullNameList = "userfn userln,Test Test,user1 user1";
 
 		task ("Add one more user with a given birth date") {
@@ -744,29 +746,10 @@ definition {
 		}
 
 		task ("View the page as different users") {
-			for (var username : list "${usernameList}") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
-
-				else if ("${username}" == "test") {
-					var fullName = "Test Test";
-				}
-
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "3000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions and wait for 30 seconds") {

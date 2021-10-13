@@ -201,6 +201,51 @@ definition {
 			value1 = "No addresses were found.");
 	}
 
+	@description = "This test asserts that an Account Manager can view all accounts that are added by other users in the Accounts Admin portlet, not just the ones he created"
+	@priority = "5"
+	test AllAccountsEntriesDisplay {
+		task ("Add several accounts") {
+			for (var accountNum : list "1,2,3") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Account Name ${accountNum}",
+					accountEntryType = "Business");
+			}
+		}
+
+		task ("Add a user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign Administrator role to user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Sign in as the Administrator") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert all added account entries display") {
+			Accounts.openAccountsAdmin();
+
+			for (var accountNum : list "1,2,3") {
+				LexiconEntry.viewEntryName(rowEntry = "Account Name ${accountNum}");
+			}
+		}
+	}
+
 	@description = "This test adds a new user via the Users tab of an Account"
 	@priority = "4"
 	test CanAddAccountUserViaAssignUser {

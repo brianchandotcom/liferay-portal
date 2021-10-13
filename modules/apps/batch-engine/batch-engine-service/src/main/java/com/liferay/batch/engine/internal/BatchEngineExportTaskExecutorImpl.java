@@ -144,39 +144,38 @@ public class BatchEngineExportTaskExecutorImpl
 						batchEngineExportTask.getClassName()),
 					zipOutputStream)) {
 
-			Page<?> page = null;
-			int pageIndex = 1;
+			Page<?> page = batchEngineTaskItemDelegateExecutor.getItems(
+				1, _batchSize);
 
-			do {
-				if (Thread.interrupted()) {
-					throw new InterruptedException();
-				}
+			batchEngineExportTask.setTotalItemsCount(
+				Math.toIntExact(page.getTotalCount()));
 
-				page = batchEngineTaskItemDelegateExecutor.getItems(
-					pageIndex++, _batchSize);
+			Collection<?> items = page.getItems();
 
-				if (pageIndex == 2) {
-					batchEngineExportTask.setTotalItemsCount(
-						Math.toIntExact(page.getTotalCount()));
-				}
-
-				Collection<?> items = page.getItems();
-
-				if (items.isEmpty()) {
-					break;
-				}
-
+			while (!items.isEmpty()) {
 				batchEngineExportTaskItemWriter.write(items);
 
 				batchEngineExportTask.setProcessedItemsCount(
 					batchEngineExportTask.getProcessedItemsCount() +
 						items.size());
 
-				_batchEngineExportTaskLocalService.updateBatchEngineExportTask(
-					batchEngineExportTask);
+				batchEngineExportTask =
+					_batchEngineExportTaskLocalService.
+						updateBatchEngineExportTask(batchEngineExportTask);
+
+				if (Thread.interrupted()) {
+					throw new InterruptedException();
+				}
+
+				if (!page.hasNext()) {
+					break;
+				}
+
+				page = batchEngineTaskItemDelegateExecutor.getItems(
+					(int)page.getPage() + 1, _batchSize);
+
+				items = page.getItems();
 			}
-			while ((page.getPage() * page.getPageSize()) <
-						page.getTotalCount());
 		}
 
 		byte[] content = unsyncByteArrayOutputStream.toByteArray();

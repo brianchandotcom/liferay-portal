@@ -863,16 +863,7 @@ definition {
 	@description = "Add segment using a web behavior 'since' some time"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingSince {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: Issues with segment members may happen on this test case
-		// AC Refactor ticket: LRAC-9401
-		// AC Fix ticket: LRAC-9285
-		// AC Bug ticket : LRAC-9412
-
 		ACUtils.createBlogsAndAddToPage();
-
-		Navigator.openURL();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -888,11 +879,11 @@ definition {
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
-		Navigator.gotoSitePage(
+		ACUtils.navigateToSitePage(
+			documentTitleList = "Blogs AC Title",
+			actionType = "View Blog",
 			pageName = "AC Page",
 			siteName = "Site Name");
-
-		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -919,21 +910,15 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertTextEquals(
-			locator1 = "ACSegments#NO_MEMBER_TITLE",
-			value1 = "There are no items found.");
+		ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
 
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
-		for (var n : list "1,2,3") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
-
-			Pause(locator1 = "5000");
-		}
+		ACUtils.navigateToSitePage(
+			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title",
+			actionType = "View Blog",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -950,8 +935,6 @@ definition {
 			timePeriod = "Yesterday");
 
 		ACNavigation.switchTab(tabName = "Membership");
-
-		// Couldn't assert the user due to missing data.
 
 		ACUtils.viewNameList(nameList = "ac ac");
 	}

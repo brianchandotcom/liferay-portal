@@ -239,11 +239,9 @@ definition {
 
 		task ("View the site page") {
 			for (var n : list "1,2,3,4") {
-				Navigator.gotoSitePage(
+				ACUtils.navigateToSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
 			}
 		}
 

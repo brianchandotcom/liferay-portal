@@ -24,11 +24,14 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is possible to cancel the creation of a Picklist"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCancelCreatePicklist {
 
-		// TODO LPS-139753 CanCancelCreatePicklist pending implementation
+		Picklist.gotoPicklists();
+
+		Picklist.cancelPicklist(picklistName = "Picklist Test");
+
+		Picklist.assertPicklistNotPresent(picklistName = "Picklist Test");
 
 	}
 

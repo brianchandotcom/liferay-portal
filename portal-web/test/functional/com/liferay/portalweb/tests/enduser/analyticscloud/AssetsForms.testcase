@@ -159,44 +159,43 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8424 | Test Summary: Forms audience card shows expected amount of segmented and unsegmented individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInForms {
-		task ("Create users and Sync") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		var usernameList = "ac,ac2";
 
-			for (var n : list "ac,ac2") {
+		var emailList = "ac@liferay.com,ac2@liferay.com";
+
+		task ("Create users and connect to AC") {
+			for (var name : list "${usernameList}") {
 				JSONUser.addUser(
-					userEmailAddress = "${n}@liferay.com",
-					userFirstName = "${n}",
-					userLastName = "${n}",
-					userScreenName = "${n}");
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
 			}
 
-			ACDXPSettings.syncNewContactData();
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
-		task ("Go to form and submit to get data for unsegmented individuals") {
-			for (var n : list "ac,ac2,unknown") {
-				if ("${n}" != "unknown") {
-					User.logoutAndLoginPG(
-						userLoginEmailAddress = "${n}@liferay.com",
-						userLoginFullName = "${n} ${n}");
-				}
+		task ("Go to form and submit") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				actionType = "Submit Form",
+				submitText = "Test Assets",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
 
-				if ("${n}" == "unknown") {
-					User.logoutPG();
-				}
+		task ("Download the document with anonymous user") {
+			User.logoutPG();
 
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
+			ACUtils.navigateToSitePage(
+				actionType = "Submit Form",
+				submitText = "Test Assets",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
 
-				FormFields.editText(
-					fieldName = "Text",
-					fieldValue = "Test Assets");
-
-				FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
-
-				Pause(locator1 = "10000");
-			}
+		task ("Close all sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Go to AC and create segment for the user") {
@@ -220,17 +219,11 @@ definition {
 
 			ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "Submit Form",
+				submitText = "Test Assets",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			FormFields.editText(
-				fieldName = "Text",
-				fieldValue = "Test Assets");
-
-			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
-
-			Pause(locator1 = "10000");
 		}
 
 		task ("Close all sessions and go to AC") {

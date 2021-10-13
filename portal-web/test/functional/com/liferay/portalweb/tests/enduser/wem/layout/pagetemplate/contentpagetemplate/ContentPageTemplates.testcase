@@ -79,7 +79,7 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				contributed = "false",
 				fragmentClass = "image",
-				imageFileName = "Document_1.jpg");
+				imageFileName = "Document_1.png");
 		}
 	}
 

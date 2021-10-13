@@ -6,7 +6,7 @@ definition {
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Kaleo Forms Admin";
 
-	var kfFieldSetName = "Contacts";	
+	var kfFieldSetName = "Contacts";
 	var workflowAssetType = "Process";
 
 	setUp {
@@ -105,9 +105,6 @@ definition {
 	test FieldsAppearsOnTheDetailsPage {
 
 		// TODO LRQA-70700 FieldsAppearsOnTheDetailsPage pending implementation
-
-
-
 
 	}
 

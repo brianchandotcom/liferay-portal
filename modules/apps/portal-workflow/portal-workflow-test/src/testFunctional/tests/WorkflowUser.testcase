@@ -135,7 +135,7 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
-		
+
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "userfn userln",
 			workflowAssetType = "User",
@@ -151,8 +151,6 @@ definition {
 		Workflow._viewActivities(
 			workflowActivityComment = "Test Test completed the task Review.",
 			workflowAssetTitle = "userfn userln");
-			
-
 	}
 
 	@description = "This is a test for LRQA-69711. Verify that the user can see the actual state of the user in the workflow process after reject. "

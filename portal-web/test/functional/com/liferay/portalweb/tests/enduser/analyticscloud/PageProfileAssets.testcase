@@ -26,6 +26,11 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		JSONUser.tearDownNonAdminUsers();
 
 		ACUtils.tearDownAC();
 	}
@@ -63,15 +68,13 @@ definition {
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
 
 		task ("Launch AC and Switch Property") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 

@@ -273,10 +273,6 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-		Navigator.openURL();
-
-		Pause(locator1 = "5000");
-
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");

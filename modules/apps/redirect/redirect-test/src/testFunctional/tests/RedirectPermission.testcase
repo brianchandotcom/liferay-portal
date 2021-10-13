@@ -22,128 +22,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a regular role with the create redirections permission set can create a new redirection entry."
-	@priority = "5"
-	@refactorneeded
-	test AddRedirectRegRole {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Source Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Destination Page");
-
-		Permissions.setUpRegRoleLoginUserCP(
-			roleTitle = "Redirect Regrole Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_redirect_web_internal_portlet_RedirectPortlet",
-			roleTitle = "Redirect Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Redirect Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.redirect.model.RedirectEntry",
-			roleTitle = "Redirect Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_ENTRY",
-			resourceName = "com.liferay.redirect",
-			roleTitle = "Redirect Regrole Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Redirection");
-
-		Redirect.addEntry(
-			destinationURL = "${portalURL}/web/guest/test-destination-page",
-			siteName = "guest",
-			sourceURL = "test-source-page");
-
-		Redirect.viewEntry(
-			destinationURL = "${portalURL}/web/guest/test-destination-page",
-			redirectType = "Temporary",
-			sourceURL = "${portalURL}/web/guest/test-source-page");
-	}
-
-	@description = "This ensures that a site role with the create redirections permission set can create a new redirection entry."
-	@priority = "5"
-	@refactorneeded
-	test AddRedirectSiteRole {
-		var portalURL = PropsUtil.get("portal.url");
-
-		Permissions.setUpSiteRoleCP(
-			pageName = "Test Source Page",
-			roleTitle = "Redirect Siterole Name",
-			roleType = "Site",
-			siteName = "Test Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test",
-			userScreenName = "usersn");
-
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONFIGURATION_REDIRECTION_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
-			permissionDefinitionValue = "Access in Site and Asset Library Administration",
-			roleTitle = "Redirect Siterole Name",
-			roleType = "Site");
-
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONFIGURATION_REDIRECTION_RESOURCE_PERMISSIONS_REDIRECT_ENTRY_VIEW_CHECKBOX",
-			permissionDefinitionValue = "View",
-			roleTitle = "Redirect Siterole Name",
-			roleType = "Site");
-
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONFIGURATION_REDIRECTION_RESOURCE_PERMISSIONS_REDIRECT_ADD_ENTRY_CHECKBOX",
-			permissionDefinitionValue = "Add Entry",
-			roleTitle = "Redirect Siterole Name",
-			roleType = "Site");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			siteName = "test-site-name",
-			sourceURL = "test-source-page");
-
-		Redirect.viewEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			redirectType = "Temporary",
-			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
-	}
-
 	@description = "This ensures that an organization role with the create redirections permission set can create a new redirection entry."
 	@priority = "5"
 	@refactordone
@@ -209,10 +87,126 @@ definition {
 			sourceURL = "${portalURL}/web/organization-name/test-source-page");
 	}
 
+	@description = "This ensures that a regular role with the create redirections permission set can create a new redirection entry."
+	@priority = "5"
+	@refactordone
+	test CanAddRedirectRegRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Source Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Destination Page");
+
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Redirect Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_redirect_web_internal_portlet_RedirectPortlet",
+			roleTitle = "Redirect Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Redirect Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.redirect.model.RedirectEntry",
+			roleTitle = "Redirect Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ENTRY",
+			resourceName = "com.liferay.redirect",
+			roleTitle = "Redirect Regrole Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		JSONRedirect.addRedirect(
+			destinationURL = "${portalURL}/web/guest/test-destination-page",
+			groupName = "Guest",
+			sourceURL = "test-source-page",
+			userEmailAddress = "userea@liferay.com");
+
+		Redirect.openRedirectAdmin(siteURLKey = "guest");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/guest/test-destination-page",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/guest/test-source-page");
+	}
+
+	@description = "This ensures that a site role with the create redirections permission set can create a new redirection entry."
+	@priority = "5"
+	@refactordone
+	test CanAddRedirectSiteRole {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Permissions.setUpSiteRoleCP(
+			pageName = "Test Source Page",
+			roleTitle = "Redirect Siterole Name",
+			roleType = "Site",
+			siteName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_redirect_web_internal_portlet_RedirectPortlet",
+			roleTitle = "Redirect Siterole Name",
+			roleType = "site");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.redirect.model.RedirectEntry",
+			roleTitle = "Redirect Siterole Name",
+			roleType = "site");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ENTRY",
+			resourceName = "com.liferay.redirect",
+			roleTitle = "Redirect Siterole Name",
+			roleType = "site");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		JSONRedirect.addRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			groupName = "Test Site Name",
+			sourceURL = "test-source-page",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "password");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
+	}
+
 	@description = "This ensures that an organization role with the delete redirections permission set can delete a redirection entry."
 	@priority = "5"
-	@refactorneeded
-	test DeleteRedirectOrgRole {
+	@refactordone
+	test CanDeleteRedirectOrgRole {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Permissions.setUpOrgRoleCP(
@@ -231,29 +225,23 @@ definition {
 			groupName = "Organization Name",
 			layoutName = "Test Destination Page");
 
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONFIGURATION_REDIRECTION_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
-			permissionDefinitionValue = "Access in Site and Asset Library Administration",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_redirect_web_internal_portlet_RedirectPortlet",
 			roleTitle = "Redirect Orgrole Name",
-			roleType = "Organization");
+			roleType = "organization");
 
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONFIGURATION_REDIRECTION_RESOURCE_PERMISSIONS_REDIRECT_ENTRY_VIEW_CHECKBOX",
-			permissionDefinitionValue = "View",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.redirect.model.RedirectEntry",
 			roleTitle = "Redirect Orgrole Name",
-			roleType = "Organization");
+			roleType = "organization");
 
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONFIGURATION_REDIRECTION_RESOURCE_PERMISSIONS_REDIRECT_ENTRY_DELETE_CHECKBOX",
-			permissionDefinitionValue = "Delete",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.redirect.model.RedirectEntry",
 			roleTitle = "Redirect Orgrole Name",
-			roleType = "Organization");
+			roleType = "organization");
 
 		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/organization-name/test-destination-page",
@@ -272,17 +260,21 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Icon#PLUS");
 
-		Redirect.openRedirectAdmin(siteURLKey = "organization-name");
+		JSONRedirect.deleteEntry(
+			destinationURL = "${portalURL}/web/organization-name/test-destination-page",
+			groupName = "Organization Name",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "password");
 
-		Redirect.deleteEntry(sourceURL = "${portalURL}/web/organization-name/test-source-page");
+		Redirect.openRedirectAdmin(siteURLKey = "organization-name");
 
 		Redirect.viewDefault();
 	}
 
 	@description = "This ensures that a regular role with the delete redirections permission set can delete a redirection entry."
 	@priority = "5"
-	@refactorneeded
-	test DeleteRedirectRegRole {
+	@refactordone
+	test CanDeleteRedirectRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -331,10 +323,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Redirection");
+		Redirect.openRedirectAdmin(siteURLKey = "guest");
 
 		LexiconEntry.viewNoEntryMenuItem(
 			menuItem = "Edit",
@@ -342,17 +331,20 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Icon#PLUS");
 
-		Redirect.openRedirectAdmin(siteURLKey = "guest");
+		JSONRedirect.deleteEntry(
+			destinationURL = "${portalURL}/web/guest/test-destination-page",
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
 
-		Redirect.deleteEntry(sourceURL = "${portalURL}/web/guest/test-source-page");
+		Redirect.openRedirectAdmin(siteURLKey = "guest");
 
 		Redirect.viewDefault();
 	}
 
 	@description = "This ensures that a site role with the delete redirections permission set can delete a redirection entry."
 	@priority = "5"
-	@refactorneeded
-	test DeleteRedirectSiteRole {
+	@refactordone
+	test CanDeleteRedirectSiteRole {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Permissions.setUpSiteRoleCP(
@@ -412,17 +404,21 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Icon#PLUS");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+		JSONRedirect.deleteEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			groupName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "password");
 
-		Redirect.deleteEntry(sourceURL = "${portalURL}/web/test-site-name/test-source-page");
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
 		Redirect.viewDefault();
 	}
 
 	@description = "This ensures that an organization role with the update redirections permission set can edit a redirection entry."
 	@priority = "5"
-	@refactorneeded
-	test UpdateRedirectOrgRole {
+	@refactordone
+	test CanUpdateRedirectOrgRole {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Permissions.setUpOrgRoleCP(
@@ -482,11 +478,15 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Icon#PLUS");
 
-		Redirect.openRedirectAdmin(siteURLKey = "organization-name");
+		JSONRedirect.updateEntry(
+			destinationURL = "${portalURL}/web/organization-name/test-destination-page",
+			groupName = "Organization Name",
+			permanent = "true",
+			sourceURL = "test-source-page",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "password");
 
-		Redirect.editEntry(
-			redirectTypeEdit = "Permanent (301)",
-			sourceURL = "test-source-page");
+		Redirect.openRedirectAdmin(siteURLKey = "organization-name");
 
 		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/organization-name/test-destination-page",
@@ -496,8 +496,8 @@ definition {
 
 	@description = "This ensures that a regular role with the update redirections permission set can edit a redirection entry."
 	@priority = "5"
-	@refactorneeded
-	test UpdateRedirectRegRole {
+	@refactordone
+	test CanUpdateRedirectRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -546,10 +546,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Redirection");
+		Redirect.openRedirectAdmin(siteURLKey = "guest");
 
 		LexiconEntry.viewNoEntryMenuItem(
 			menuItem = "Delete",
@@ -559,9 +556,12 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "guest");
 
-		Redirect.editEntry(
-			redirectTypeEdit = "Permanent (301)",
-			sourceURL = "test-source-page");
+		JSONRedirect.updateEntry(
+			destinationURL = "${portalURL}/web/guest/test-destination-page",
+			groupName = "Organization Name",
+			permanent = "true",
+			sourceURL = "test-source-page",
+			userEmailAddress = "userea@liferay.com");
 
 		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/guest/test-destination-page",
@@ -571,8 +571,8 @@ definition {
 
 	@description = "This ensures that a site role with the update redirections permission set can edit a redirection entry."
 	@priority = "5"
-	@refactorneeded
-	test UpdateRedirectSiteRole {
+	@refactordone
+	test CanUpdateRedirectSiteRole {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Permissions.setUpSiteRoleCP(
@@ -632,11 +632,15 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Icon#PLUS");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+		JSONRedirect.updateEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			groupName = "Test Site Name",
+			permanent = "true",
+			sourceURL = "test-source-page",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "password");
 
-		Redirect.editEntry(
-			redirectTypeEdit = "Permanent (301)",
-			sourceURL = "test-source-page");
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
 		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
@@ -646,8 +650,8 @@ definition {
 
 	@description = "This ensures that an organization role with the view redirections permission set can view redirection entries."
 	@priority = "5"
-	@refactorneeded
-	test ViewRedirectPortletOrgRole {
+	@refactordone
+	test CanViewRedirectPortletOrgRole {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Permissions.setUpOrgRoleCP(
@@ -692,8 +696,6 @@ definition {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
-
-		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		Redirect.openRedirectAdmin(siteURLKey = "organization-name");
 
@@ -711,8 +713,8 @@ definition {
 
 	@description = "This ensures that a regular role with the view redirections permission set can view redirection entries."
 	@priority = "5"
-	@refactorneeded
-	test ViewRedirectPortletRegRole {
+	@refactordone
+	test CanViewRedirectPortletRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -737,28 +739,21 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONFIGURATION_REDIRECTION_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
-			permissionDefinitionValue = "Access in Site and Asset Library Administration",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_redirect_web_internal_portlet_RedirectPortlet",
 			roleTitle = "Redirect Regrole Name");
 
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONFIGURATION_REDIRECTION_RESOURCE_PERMISSIONS_REDIRECT_ENTRY_VIEW_CHECKBOX",
-			permissionDefinitionValue = "View",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.redirect.model.RedirectEntry",
 			roleTitle = "Redirect Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Redirection");
+		Redirect.openRedirectAdmin(siteURLKey = "guest");
 
 		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/guest/test-destination-page",
@@ -774,8 +769,8 @@ definition {
 
 	@description = "This ensures that a site role with the view redirections permission set can view redirection entries."
 	@priority = "5"
-	@refactorneeded
-	test ViewRedirectPortletSiteRole {
+	@refactordone
+	test CanViewRedirectPortletSiteRole {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Permissions.setUpSiteRoleCP(
@@ -820,8 +815,6 @@ definition {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
-
-		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 

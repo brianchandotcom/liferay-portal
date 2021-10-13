@@ -1,5 +1,28 @@
 # Poshi Runner Change Log
 
+## 1.0.316
+
+### Other
+
+* [LPS-105380](https://issues.liferay.com/browse/LPS-105380) - SourceFormatter Improvements
+
+### PQL
+
+* [POSHI-191](https://issues.liferay.com/browse/POSHI-191) - The @ignore attribute will only ignore a test if it is set to 'true'
+
+### Utils
+
+* [POSHI-180](https://issues.liferay.com/browse/POSHI-180) - As a test engineer, I would like to get a value in list from a specified index
+* [POSHI-196](https://issues.liferay.com/browse/POSHI-196) - BrowserMob proxy not working when running more than one test
+
+### Validation
+
+* [POSHI-195](https://issues.liferay.com/browse/POSHI-195) - Add validation for Url -> URL
+
+### WebDriver
+
+* [POSHI-190](https://issues.liferay.com/browse/POSHI-190) - Add support to interact with shadow-root elements
+
 ## 1.0.313
 
 ### PQL

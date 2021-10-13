@@ -328,25 +328,18 @@ definition {
 		// AC Refactor: data doesn't appear on time
 		// AC Refactor ticket: LRAC-8951
 
+		var interactions = "1,2,3,4,5,6";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
 		task ("Repeatly view the site page as new user 6 times") {
-			var n = "0";
-
-			while ("${n}" != "6") {
-				var n = ${n} + 1;
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "userea@liferay.com",
-					userLoginFullName = "userfn userln");
-
-				Navigator.gotoSitePage(
+			for (var current : list "${interactions}") {
+				ACUtils.navigateToSitePageWithUser(
+					emailList = "userea@liferay.com",
 					pageName = "AC Page",
 					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
 
 				UserBar.signOut();
 

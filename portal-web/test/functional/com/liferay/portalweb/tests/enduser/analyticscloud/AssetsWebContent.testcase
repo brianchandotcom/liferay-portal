@@ -536,7 +536,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8443 | Test Summary: Assert Custom Range time filter in assets"
-	@ignore = "true"
 	@priority = "5"
 	test CanUseCustomRangeTimeFilterInWebContentOverview {
 		property portal.upstream = "quarantine";
@@ -551,9 +550,7 @@ definition {
 		// Use a macro that create the page in the custom range time.
 
 		task ("Navigate to AC property") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 

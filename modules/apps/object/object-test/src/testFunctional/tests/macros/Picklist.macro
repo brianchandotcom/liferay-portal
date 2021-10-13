@@ -80,7 +80,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST");
 	}
 
-    macro cancelPicklist {
+	macro cancelPicklist {
 		Click.javaScriptClick(locator1 = "Picklist#ADD_PICKLIST_BUTTON");
 
 		Type(
@@ -88,7 +88,6 @@ definition {
 			value1 = "${picklistName}");
 
 		Picklist.cancelPicklistButton();
-        
 	}
 
 	macro cancelPicklistButton {

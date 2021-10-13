@@ -22,7 +22,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import DownloadSpreadsheetButton from '../../../src/main/resources/META-INF/resources/js/components/DownloadSpreadsheetButton';
+import DownloadSpreadsheetButton from '../../../src/main/resources/META-INF/resources/js/components/DownloadSpreadsheetButton/DownloadSpreadsheetButton';
 import * as utils from '../../../src/main/resources/META-INF/resources/js/utils/downloadSpreadsheetUtils';
 
 const getComponent = (fileURL = 'demo-file-url') => {

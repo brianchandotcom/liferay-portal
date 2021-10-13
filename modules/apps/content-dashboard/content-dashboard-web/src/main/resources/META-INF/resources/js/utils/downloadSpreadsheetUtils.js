@@ -38,4 +38,6 @@ export const downloadFileFromBlob = (blob) => {
 	fileLink.download = filename;
 
 	fileLink.click();
+
+	URL.revokeObjectURL(file);
 };

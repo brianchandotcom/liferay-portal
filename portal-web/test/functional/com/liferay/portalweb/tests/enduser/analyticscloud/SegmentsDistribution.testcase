@@ -280,7 +280,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8625 | Test Summary: Search the Segment Profile Distribution"
 	@priority = "3"
 	test CanSearchTheSegmentProfileDistribution {
-		var userList = "DXP,LiferayAC";
+		var userList = "ac,liferay";
+
+		var emailList = "ac@liferay.com,liferay@liferay.com";
+
+		var nameList = "ac ac,liferay liferay";
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
@@ -300,17 +304,10 @@ definition {
 		ACDXPSettings.syncNewContactData();
 
 		task ("View AC Page as new user") {
-			for (var userLogin : list "${userList}") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${userLogin}@liferay.com",
-					userLoginFullName = "${userLogin} ${userLogin}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Switch to new property in AC") {
@@ -330,9 +327,7 @@ definition {
 		}
 
 		task ("Add new user as member") {
-			for (var userAdd : list "${userList}") {
-				ACSegments.addStaticMember(tableMember = "${userAdd} ${userAdd}");
-			}
+			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
 
 			ACSegments.saveSegment();
 		}

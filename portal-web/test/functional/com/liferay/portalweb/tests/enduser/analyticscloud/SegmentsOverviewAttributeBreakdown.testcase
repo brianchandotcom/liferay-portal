@@ -299,6 +299,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8507 | Test Summary: Segment Overview distribution filtered by text"
 	@priority = "3"
 	test SegmentOverviewDistributionFilteredByText {
+		var users = "ac,liferay";
+
+		var emailList = "ac@liferay.com,liferay@liferay.com";
+
+		var nameList = "ac ac,liferay liferay";
+
 		task ("Connect Analytics Cloud to DXP") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}
@@ -308,7 +314,7 @@ definition {
 		}
 
 		task ("Add two new users") {
-			for (var name : list "ac,liferay") {
+			for (var name : list "${users}") {
 				JSONUser.addUser(
 					jobTitle = "QA",
 					userEmailAddress = "${name}@liferay.com",
@@ -320,18 +326,11 @@ definition {
 			ACDXPSettings.syncNewContactData();
 		}
 
-		task ("Login with the users and open the site") {
-			for (var name : list "ac,liferay") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${name}@liferay.com",
-					userLoginFullName = "${name} ${name}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-			}
+		task ("View AC Page as new user") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Switch to new property in AC") {
@@ -351,9 +350,7 @@ definition {
 		}
 
 		task ("Add new user as member") {
-			for (var name : list "ac,liferay" ) {
-				ACSegments.addStaticMember(tableMember = "${name} ${name}");
-			}
+			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
 
 			ACSegments.saveSegment();
 		}

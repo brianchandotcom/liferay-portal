@@ -3177,8 +3177,8 @@ definition {
 				key_nodeName = "Container",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
 
-			if (!(isSet(dragAndDropToUp))) {
-				DragAndDrop.javaScriptDragAndDropToBottom(
+			if ("${dropTarget}" == "Up") {
+				DragAndDrop.javaScriptDragAndDropToUp(
 					key_elementName = "${elementName}",
 					key_targetElementName = "${targetElementName}",
 					locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
@@ -3186,7 +3186,7 @@ definition {
 			}
 
 			else {
-				DragAndDrop.javaScriptDragAndDropToUp(
+				DragAndDrop.javaScriptDragAndDropToBottom(
 					key_elementName = "${elementName}",
 					key_targetElementName = "${targetElementName}",
 					locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",

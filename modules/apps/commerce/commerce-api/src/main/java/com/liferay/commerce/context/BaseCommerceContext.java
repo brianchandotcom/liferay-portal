@@ -26,6 +26,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.AccountEntryAllowedTypesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -72,6 +73,18 @@ public class BaseCommerceContext implements CommerceContext {
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
 		}
+	}
+
+	@Override
+	public String[] getAccountEntryAllowedTypes() throws PortalException {
+		if (_accountEntryAllowedTypes != null) {
+			return _accountEntryAllowedTypes;
+		}
+
+		_accountEntryAllowedTypes =
+			AccountEntryAllowedTypesUtil.getAllowedTypes(getCommerceSiteType());
+
+		return _accountEntryAllowedTypes;
 	}
 
 	@Override
@@ -163,6 +176,7 @@ public class BaseCommerceContext implements CommerceContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCommerceContext.class);
 
+	private String[] _accountEntryAllowedTypes;
 	private CommerceAccount _commerceAccount;
 	private long[] _commerceAccountGroupIds;
 	private CommerceAccountGroupServiceConfiguration

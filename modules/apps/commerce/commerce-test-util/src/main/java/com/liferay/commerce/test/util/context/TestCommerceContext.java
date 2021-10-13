@@ -43,6 +43,11 @@ public class TestCommerceContext implements CommerceContext {
 	}
 
 	@Override
+	public String[] getAccountEntryAllowedTypes() throws PortalException {
+		return new String[0];
+	}
+
+	@Override
 	public CommerceAccount getCommerceAccount() {
 		return _commerceAccount;
 	}

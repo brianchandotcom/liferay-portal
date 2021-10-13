@@ -1368,11 +1368,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8475 | Test Summary: Dynamic segment members preview in real time"
 	@priority = "3"
 	test CanPreviewDynamicSegmentMembers {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: A button to reload appears when users are searched because of a bug.
-		// AC Bug ticket: LRAC-9412
-		// AC Refactor ticket: LRAC-9429
+		var emailList = "userea@liferay.com,user1@liferay.com";
 
 		var usernameList = "userfn userln,user1 user1";
 
@@ -1399,25 +1395,10 @@ definition {
 		}
 
 		task ("View the page as different users") {
-			for (var username : list "userea,user1") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
-
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Switch to new property in AC") {

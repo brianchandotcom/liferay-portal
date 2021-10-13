@@ -48,11 +48,16 @@ definition {
 	}
 
 	@description = "LPS-101075 - Verify that the filter is available on the card in the Performance tab"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanFilterTopStepsByWorkflowVersion {
 
-		// TODO LRQA-68922 CanFilterTopStepsByWorkflowVersion pending implementation
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetricsPerformanceByStep.goToPerformanceTab();
+
+		AssertElementPresent(
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_RANGE_DROPDOWN",
+			value1 = "All Versions");
 
 	}
 
@@ -104,11 +109,36 @@ definition {
 	}
 
 	@description = "LPS-101075 - Verify that when a specific version is chosen, the card only considers closed instances that are in the version chosen"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CardConsidersClosedInstancesInChosenVersion {
 
-		// TODO LRQA-68929 CardConsidersClosedInstancesInChosenVersion pending implementation
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetricsPerformanceByStep.goToPerformanceTab();
+
+		WorkflowMetricsPerformanceByStep.viewPerformanceByStepValues(
+			avgCompletionTimeValue = "0min",
+			isNotPresent = "",
+			slaBreachedValue = "0 (0%)",
+			stepName = "Review");
+
+		WorkflowMetricsPerformanceByStep.viewPerformanceByStepValues(
+			avgCompletionTimeValue = "0min",
+			isNotPresent = "",
+			slaBreachedValue = "0 (0%)",
+			stepName = "Update");
+
+		Click(
+			key_dateRange = "All Version",
+			key_title = "Performance by Step",
+			locator1 = "WorkflowMetrics#METRICS_DATE_RANGE_DROPDOWN_BY_TITLE");
+
+		Click(
+			key_dateRange = "1.0",
+			locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION",
+			value1 = "1.0");
+
+		AssertElementPresent(locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_NO_RESULTS");
 
 	}
 

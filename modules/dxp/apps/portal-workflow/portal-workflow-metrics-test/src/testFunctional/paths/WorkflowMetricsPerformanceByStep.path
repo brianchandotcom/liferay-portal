@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_PERFORMANCE_BY_STEP_NO_RESULTS</td>
+	<td>//span[contains(text(), 'Performance by Step')]/../../../following-sibling::div//p[contains(text(),'There is no data at the moment.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROCESS_VERSION_DROPDOWN</td>
 	<td>//button[contains(@class, 'filter-dropdown-button') and contains(text(), 'Process Version')]</td>
 	<td></td>

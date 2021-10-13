@@ -17,6 +17,10 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
 	}
 
+	macro goToPerformanceTab {
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+	}
+
 	macro searchForStep {
 		var key_stepName = "${stepName}";
 

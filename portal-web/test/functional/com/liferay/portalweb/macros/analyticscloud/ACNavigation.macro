@@ -69,6 +69,10 @@ definition {
 	macro openItem {
 		var key_itemName = "${itemName}";
 
+		while (IsElementNotPresent(locator1 = "ACNavigation#OPEN_ITEM") && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+		}
+
 		Click(locator1 = "ACNavigation#OPEN_ITEM");
 	}
 

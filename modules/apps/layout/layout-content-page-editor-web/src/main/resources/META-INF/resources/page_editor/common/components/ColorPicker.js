@@ -191,12 +191,13 @@ const Splotch = React.forwardRef(
 		return (
 			<button
 				className={classNames(
-					'btn clay-color-btn clay-color-btn-bordered rounded',
+					'btn clay-color-btn clay-color-btn-bordered lfr-portal-tooltip rounded',
 					{
 						active,
 						[className]: !!className,
 					}
 				)}
+				data-tooltip-delay="0"
 				onClick={onClick}
 				ref={ref}
 				style={{

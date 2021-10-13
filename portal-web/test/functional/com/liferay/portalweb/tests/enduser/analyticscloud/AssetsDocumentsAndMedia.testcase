@@ -581,18 +581,16 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8414 | Test Summary: Documents downloads by technology card shows downloads by the expected device"
 	@priority = "5"
 	test DocumentsTechnologyCardShowsViewsByExpectedDevice {
+		var documentNameList = "DM AC Title,DM AC Title";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Download the document") {
-			for (var n : list "1,2") {
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
-
-				Pause(locator1 = "3000");
-			}
+			ACUtils.navigateToSitePage(
+				actionType = "Download DM",
+				documentTitleList = "${documentNameList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {

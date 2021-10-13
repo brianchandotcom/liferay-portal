@@ -23,14 +23,12 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Page.tearDownCP();
-
 			JSONGroup.deleteGroupByName(groupName = "WYSIWYG Site Name");
 		}
 	}
 
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanAddBlogsEntryWithImageViaBlogsImages {
 		JSONLayout.addPublicLayout(
 			groupName = "WYSIWYG Site Name",
@@ -83,7 +81,7 @@ definition {
 
 	@description = "Verify existing text can be formatted as a hyperlink"
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanAddHyperlinkToExistingText {
 		property portal.acceptance = "true";
 
@@ -111,17 +109,16 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanAddWebContentArticleWithImageViaURL {
-		Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "WYSIWYG Site Name",
+			title = "Web Content Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
 
-		WebContentNavigator.gotoAddCP();
-
-		PortletEntry.inputTitle(title = "Web Content Title");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
@@ -140,52 +137,59 @@ definition {
 
 	@description = "Verify content can display content from left to right"
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanDisplayContentLeftToRight {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "WYSIWYG Site Name",
+			layoutName = "${pageName}");
 
-		SitePages.addPublicPage(pageName = "${pageName}");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "WYSIWYG Site Name",
+			layoutName = "${pageName}",
+			widgetName = "Wiki");
 
-		Navigator.gotoPage(pageName = "${pageName}");
-
-		Portlet.addPG(portletName = "Wiki");
-
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoSitePage(
+			pageName = "${pageName}",
+			siteName = "WYSIWYG Site Name");
 
 		WikiPage.addLocalizedFrontPagePG(
 			emptyPageMessage = "This page is empty. Edit it to add some text.",
 			successMessage = "Your request completed successfully.",
 			wikiPageContent = "Wiki Left to Right Content");
 
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoSitePage(
+			pageName = "${pageName}",
+			siteName = "WYSIWYG Site Name");
 
 		WikiPage.viewLocalizedFrontPagePG(wikiPageContent = "Wiki Left to Right Content");
 	}
 
 	@description = "Verify content localized with a right to left language is displayed from right to left"
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanDisplayContentRightToLeft {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WYSIWIGUsecase#ViewWikiFrontPageRightToLeft";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "WYSIWYG Site Name",
+			layoutName = "${pageName}");
 
-		SitePages.addPublicPage(pageName = "${pageName}");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "WYSIWYG Site Name",
+			layoutName = "${pageName}",
+			widgetName = "Language Selector");
 
-		Navigator.gotoPage(pageName = "${pageName}");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "WYSIWYG Site Name",
+			layoutName = "${pageName}",
+			widgetName = "Wiki");
 
-		Portlet.addPG(portletName = "Language Selector");
-
-		Navigator.gotoPage(pageName = "${pageName}");
-
-		Portlet.addPG(portletName = "Wiki");
+		Navigator.gotoSitePage(
+			pageName = "${pageName}",
+			siteName = "WYSIWYG Site Name");
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "ar_SA",
@@ -197,7 +201,9 @@ definition {
 			successMessage = "نجاح:تم تنفيذ طلبك بنجاح",
 			wikiPageContent = "Wiki Right to Left يحتوى");
 
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoSitePage(
+			pageName = "${pageName}",
+			siteName = "WYSIWYG Site Name");
 
 		WikiPage.viewLocalizedFrontPagePG(
 			rightToLeft = "true",
@@ -210,7 +216,7 @@ definition {
 
 	@description = "Verify editor can display html formatted contents from copy paste"
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanDisplayFormattedHTMLFromCopyPaste {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -314,7 +320,7 @@ definition {
 
 	@description = "Verify source content can be previewed"
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanEditTextInPreviewSourceContent {
 		property portal.acceptance = "true";
 
@@ -362,7 +368,7 @@ definition {
 
 	@description = "Verify source content can be previewed"
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanPreviewSourceContent {
 		property portal.acceptance = "true";
 
@@ -414,7 +420,7 @@ definition {
 
 	@description = "Verify styled content can be added from source view"
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanViewSourceCodeFormattedInTextView {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";

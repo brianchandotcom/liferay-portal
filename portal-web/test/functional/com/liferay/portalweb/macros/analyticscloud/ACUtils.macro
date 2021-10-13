@@ -657,4 +657,18 @@ definition {
 		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
 	}
 
+	macro navigateToSitePageWithUser {
+		for (var email : list "${emailList}") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "${email}");
+
+			ACUtils.navigateToSitePage(
+				pageName = "${pageName}",
+				siteName = "${siteName}",
+				actionType = "${actionType}",
+				documentTitleList = "${documentTitleList}",
+				submitText = "${submitText}");
+
+			Pause(locator1 = "5000");
+		}
+	}
 }

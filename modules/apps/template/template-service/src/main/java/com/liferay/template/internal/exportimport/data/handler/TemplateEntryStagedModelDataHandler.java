@@ -110,7 +110,7 @@ public class TemplateEntryStagedModelDataHandler
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, templateEntry, ddmTemplate,
-			PortletDataContext.REFERENCE_TYPE_PARENT);
+			PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 	}
 
 	@Override

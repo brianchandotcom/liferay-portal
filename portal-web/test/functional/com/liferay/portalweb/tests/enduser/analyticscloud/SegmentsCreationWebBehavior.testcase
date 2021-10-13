@@ -1234,16 +1234,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9226 | Test Summary: Create a Web Behavior Segment of Viewing a Web Content"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentViewingWC {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: Issues with segment members may happen on this test case
-		// AC Refactor ticket: LRAC-9403
-		// AC Fix ticket: LRAC-9285
-		// AC Bug ticket : LRAC-9412
-
 		ACUtils.createWCAndAddToPage();
-
-		Navigator.openURL();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -1259,7 +1250,7 @@ definition {
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
-		Navigator.gotoSitePage(
+		ACUtils.navigateToSitePage(
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -1286,14 +1277,12 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertTextEquals(
-			locator1 = "ACSegments#NO_MEMBER_TITLE",
-			value1 = "There are no items found.");
+		ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
 
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
 		for (var n : list "1,2,3") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -1307,8 +1296,6 @@ definition {
 		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
 		ACNavigation.switchTab(tabName = "Membership");
-
-		// Couldn't assert the user due to missing data.
 
 		ACUtils.viewNameList(nameList = "ac ac");
 	}

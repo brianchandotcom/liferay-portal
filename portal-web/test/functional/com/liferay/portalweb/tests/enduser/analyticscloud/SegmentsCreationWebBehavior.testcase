@@ -360,23 +360,11 @@ definition {
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
-		Navigator.gotoSitePage(
+		ACUtils.navigateToSitePage(
+			actionType = "Submit Form",
+			submitText = "Test Segments",
 			pageName = "AC Page",
 			siteName = "Site Name");
-
-		FormPortlet.waitFormRenderer(text = "Submit");
-
-		FormFields.viewTextLabel(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		FormFields.editText(
-			fieldName = "Text",
-			fieldValue = "Test Segments");
-
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
-
-		Pause(locator1 = "10000");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -396,35 +384,22 @@ definition {
 			documentTitle = "Created Form Name",
 			indexField = "1");
 
-		ACSegments.setOccurence(occurenceNumber = "2");
+		ACSegments.setOccurence(occurenceNumber = "4");
 
 		ACSegments.saveSegment();
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertTextEquals(
-			locator1 = "ACSegments#NO_MEMBER_TITLE",
-			value1 = "There are no items found.");
+		ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
 
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
-		Navigator.gotoSitePage(
+		ACUtils.navigateToSitePage(
+			documentTitleList = "1,2,3",
+			actionType = "Submit Form",
+			submitText = "Test Segments",
 			pageName = "AC Page",
 			siteName = "Site Name");
-
-		FormPortlet.waitFormRenderer(text = "Submit");
-
-		FormFields.viewTextLabel(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		FormFields.editText(
-			fieldName = "Text",
-			fieldValue = "Test Segments");
-
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
-
-		Pause(locator1 = "10000");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -436,9 +411,7 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertElementPresent(
-			key_userName = "ac ac",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");
+		ACUtils.viewNameList(nameList = "ac ac");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9216 | Test Summary: Add segment using a web behavior 'after' some time"

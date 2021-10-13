@@ -758,7 +758,7 @@ definition {
 		task ("Add fragment and check it's shown") {
 			PageEditor.addElementToContainer(
 				collectionName = "Basic Components",
-				dragAndDropToUp = "true",
+				dropTarget = "Up",
 				fragmentName = "Paragraph",
 				navTab = "Fragments",
 				targetElementName = "Blogs");

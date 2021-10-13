@@ -96,7 +96,7 @@ definition {
 				folderName = "Bookmarks Folder Name",
 				groupName = "Guest");
 
-			JSONDocument.addFolder(
+			JSONFolder.addFolder(
 				dmFolderDescription = "DM Folder Description",
 				dmFolderName = "DM Folder Name",
 				groupName = "Guest");

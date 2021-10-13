@@ -1917,7 +1917,7 @@ definition {
 	@priority = "4"
 	test SearchWithFolderFacet {
 		for (var count : list "1,2") {
-			JSONDocument.addFolder(
+			JSONFolder.addFolder(
 				dmFolderDescription = "DM Folder Description ${count}",
 				dmFolderName = "DM Folder Name ${count}",
 				groupName = "Guest");

@@ -941,7 +941,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 1");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name ",
 			groupName = "Guest");
@@ -950,7 +950,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 2");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");

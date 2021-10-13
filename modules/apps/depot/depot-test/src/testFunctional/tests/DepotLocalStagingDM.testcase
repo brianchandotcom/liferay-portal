@@ -1643,7 +1643,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanNotSearchForPendingDocument {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Depot Name-staging");
@@ -1775,7 +1775,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanNotViewPendingImage {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Depot Name-staging");
@@ -1896,7 +1896,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanPublishDocumentFolder {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Depot Name-staging");
@@ -2281,7 +2281,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanViewApprovedDocument {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Depot Name-staging");

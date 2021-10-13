@@ -46,7 +46,7 @@ definition {
 	test ApproveImage {
 		property portal.acceptance = "true";
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Depot Name");
@@ -482,7 +482,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test RejectAndResubmitImage {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Depot Name");
@@ -886,7 +886,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test RestoreDMFolderWorkflowToDefault {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Depot Name");
@@ -993,7 +993,7 @@ definition {
 			key_rowEntry = "Blogs Entry",
 			locator1 = "Button#EDIT_ROW");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Depot Name");

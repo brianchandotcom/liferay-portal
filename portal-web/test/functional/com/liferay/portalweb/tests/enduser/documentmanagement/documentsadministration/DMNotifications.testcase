@@ -261,7 +261,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewWebsiteNotificationForNewDocumentInFolder {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
@@ -309,7 +309,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewWebsiteNotificationForUpdatedDocumentInFolder {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
@@ -371,7 +371,7 @@ definition {
 			contentType = "Documents and Media",
 			notificationType = "Website");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
@@ -419,7 +419,7 @@ definition {
 			contentType = "Documents and Media",
 			notificationType = "Website");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");

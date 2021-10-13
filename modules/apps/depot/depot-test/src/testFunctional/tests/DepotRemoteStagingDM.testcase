@@ -2145,7 +2145,7 @@ definition {
 	test CanNotSearchForPendingDocument {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanNotSearchForPendingDocument";
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Depot Name");
@@ -2265,7 +2265,7 @@ definition {
 	test CanNotViewPendingImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanNotViewPendingImage";
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Depot Name");
@@ -2378,7 +2378,7 @@ definition {
 	test CanPublishDocumentFolder {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishDocumentFolder";
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Depot Name");
@@ -2807,7 +2807,7 @@ definition {
 	test CanViewApprovedDocument {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanViewApprovedDocument";
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Depot Name");

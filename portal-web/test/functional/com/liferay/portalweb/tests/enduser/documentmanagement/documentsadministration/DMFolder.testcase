@@ -39,7 +39,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddDocumentInFolder {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
@@ -62,7 +62,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddImageInFolder {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
@@ -89,12 +89,12 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddImageInSubFolder {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM SubFolder Description",
 			dmFolderName = "DM SubFolder Name",
 			groupName = "Guest",
@@ -123,18 +123,18 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddMultipleSubFolders {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM SubFolder1 Description",
 			dmFolderName = "DM SubFolder1 Name",
 			groupName = "Guest",
 			parentFolderName = "DM Folder Name");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM SubFolder2 Description",
 			dmFolderName = "DM SubFolder2 Name",
 			groupName = "Guest",
@@ -182,7 +182,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDeleteFolderWithDocument {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
@@ -209,12 +209,12 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CanDeleteSubFolder {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM SubFolder Description",
 			dmFolderName = "DM SubFolder Name",
 			groupName = "Guest",
@@ -238,7 +238,7 @@ definition {
 	test CanEditFolder {
 		property portal.acceptance = "true";
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
@@ -257,12 +257,12 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanEditSubFolder {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM SubFolder Description",
 			dmFolderName = "DM SubFolder Name",
 			groupName = "Guest",
@@ -295,7 +295,7 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
@@ -328,7 +328,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
@@ -351,12 +351,12 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanMoveFolderToFolder {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder1 Description",
 			dmFolderName = "DM Folder1 Name",
 			groupName = "Guest");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder2 Description",
 			dmFolderName = "DM Folder2 Name",
 			groupName = "Guest");
@@ -373,12 +373,12 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanMoveFolderToParentWithSameName {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest",
@@ -400,7 +400,7 @@ definition {
 	test CanMoveFolderToRecycleBin {
 		property portal.acceptance = "true";
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");

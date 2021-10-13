@@ -64,7 +64,7 @@ definition {
 	test CanAccessAfterMovingTarget {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Site Name");

@@ -115,7 +115,7 @@ definition {
 	@description = "This is a test for LPS-136818. It checks that a folder with multiple files can be published using the SAP."
 	@priority = "4"
 	test CanPublishFolderWithMultipleFilesViaSAP {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Site Name-staging");
@@ -478,7 +478,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test PendingEntryWillNotBePublishedToLive {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder 1",
 			groupName = "Site Name-staging");
@@ -531,7 +531,7 @@ definition {
 			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Site Name-staging");
@@ -896,7 +896,7 @@ definition {
 	test PublishSubfolderWithDocumentsViaSAP {
 		property test.name.skip.portal.instance = "StagingDM#PublishSubfolderWithDocumentsViaSAP";
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder 1",
 			groupName = "Site Name-staging");
@@ -909,7 +909,7 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder 2",
 			groupName = "Site Name-staging",

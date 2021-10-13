@@ -40,7 +40,7 @@ definition {
 			layoutName = "Test Page",
 			widgetName = "Web Content Display");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Site Name");
@@ -88,7 +88,7 @@ definition {
 	@description = "This is a test for LPS-136853. It checks that a file can be resubmitted after it has been rejected."
 	@priority = "4"
 	test CanResubmitRejectedDocument {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");

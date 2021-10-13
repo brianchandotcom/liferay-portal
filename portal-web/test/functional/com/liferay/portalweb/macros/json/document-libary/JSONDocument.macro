@@ -205,43 +205,6 @@ definition {
 		return "${fileEntryId}";
 	}
 
-	@summary = "This calls the JSON WS API to add a DL Folder"
-	macro addFolder {
-		var portalURL = JSONCompany.getPortalURL();
-
-		if (!(isSet(site))) {
-			var site = "true";
-		}
-
-		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
-
-		if (isSet(parentFolderName)) {
-			var parentFolderId = JSONDocumentAPI._getFolderIdByFolderName(
-				name = "${parentFolderName}",
-				groupName = "${groupName}");
-		}
-		else {
-			var parentFolderId = "0";
-		}
-
-		var curl = '''
-			${portalURL}/api/jsonws/dlapp/add-folder \
-			-u test@liferay.com:test \
-			-d repositoryId=${repositoryId} \
-			-d parentFolderId=${parentFolderId} \
-			-d name=${dmFolderName} \
-		 	-d description=${dmFolderDescription} \
-		''';
-
-		echo("## Adding a 'Folder' with the following info using JSONWS:");
-
-		echo("## * Name: ${dmFolderName}");
-
-		echo("## * Description: ${dmFolderDescription}");
-
-		var messageId = JSONCurlUtil.post("${curl}");
-	}
-
 	@summary = "This calls the JSON WS API to delete a Document entry"
 	macro deleteFile {
 		var portalURL = JSONCompany.getPortalURL();

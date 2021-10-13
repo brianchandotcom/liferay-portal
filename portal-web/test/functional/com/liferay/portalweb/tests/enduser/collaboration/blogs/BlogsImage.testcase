@@ -441,12 +441,12 @@ definition {
 	@refactordone
 	test CanViewCoverImageUploadedFromDM {
 		for (var n : list "1,2") {
-			JSONDocument.addFolder(
+			JSONFolder.addFolder(
 				dmFolderDescription = "DM Folder ${n} Description",
 				dmFolderName = "DM Folder ${n} Name",
 				groupName = "Guest");
 
-			JSONDocument.addFolder(
+			JSONFolder.addFolder(
 				dmFolderDescription = "DM SubFolder ${n} Description",
 				dmFolderName = "DM SubFolder ${n} Name",
 				groupName = "Guest",

@@ -648,7 +648,7 @@ definition {
 		property portal.upstream = "true";
 
 		task ("Add a DM folder and 3 documents to the folder") {
-			JSONDocument.addFolder(
+			JSONFolder.addFolder(
 				dmFolderName = "DM Folder Name",
 				groupName = "Site Name");
 
@@ -818,13 +818,13 @@ definition {
 	@priority = "4"
 	test ViewRestoredDocumentInSubFolderAfterRestoreParentFolder {
 		task ("Add a dm folder") {
-			JSONDocument.addFolder(
+			JSONFolder.addFolder(
 				dmFolderName = "DM Folder Name",
 				groupName = "Site Name");
 		}
 
 		task ("Add a dm subfolder") {
-			JSONDocument.addFolder(
+			JSONFolder.addFolder(
 				dmFolderName = "DM Subfolder Name",
 				groupName = "Site Name",
 				parentFolderName = "DM Folder Name");

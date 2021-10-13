@@ -580,12 +580,12 @@ definition {
 	test CanDownloadDocumentMovedBetweenFolders {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder 1 Description",
 			dmFolderName = "DM Folder 1 Name",
 			groupName = "Guest");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder 2 Description",
 			dmFolderName = "DM Folder 2 Name",
 			groupName = "Guest");
@@ -899,12 +899,12 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanMoveFromOneFolderToAnother {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder1 Description",
 			dmFolderName = "DM Folder1 Name",
 			groupName = "Guest");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder2 Description",
 			dmFolderName = "DM Folder2 Name",
 			groupName = "Guest");
@@ -949,7 +949,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
@@ -1065,12 +1065,12 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CannotMoveToFolderWithDuplicateTitle {
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder1 Description",
 			dmFolderName = "DM Folder1 Name",
 			groupName = "Guest");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder2 Description",
 			dmFolderName = "DM Folder2 Name",
 			groupName = "Guest");

@@ -83,14 +83,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
-import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -106,7 +102,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -116,7 +111,6 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
-import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
@@ -126,13 +120,9 @@ import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.util.PortalInstances;
 
 import java.io.File;
-import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -148,14 +138,10 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -167,15 +153,7 @@ import org.springframework.mock.web.MockServletContext;
  * @author Inácio Nery
  */
 @RunWith(Arquillian.class)
-public class WorkflowTaskManagerImplTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE,
-			SynchronousMailTestRule.INSTANCE);
+public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -1002,48 +980,6 @@ public class WorkflowTaskManagerImplTest {
 	}
 
 	@Test
-	public void testSearchWorkflowInstancesWhenThereIsAnUnregisteredHandler()
-		throws Exception {
-
-		ServiceRegistration<WorkflowHandler<?>>
-			workflowHandlerServiceRegistration = _registryWorkflowHandler();
-
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
-			WorkflowTaskManagerImplTest.class.getName(), 1, null,
-			new ServiceContext());
-
-		WorkflowModelSearchResult<WorkflowInstance> workflowModelSearchResult =
-			_workflowInstanceManager.searchWorkflowInstances(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, null, true, 0, 20,
-				WorkflowComparatorFactoryUtil.getInstanceCompletedComparator(
-					false));
-
-		List<WorkflowInstance> workflowInstances =
-			workflowModelSearchResult.getWorkflowModels();
-
-		Assert.assertEquals(
-			workflowInstances.toString(), 1, workflowInstances.size());
-
-		workflowHandlerServiceRegistration.unregister();
-
-		workflowModelSearchResult =
-			_workflowInstanceManager.searchWorkflowInstances(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, null, true, 0, 20,
-				WorkflowComparatorFactoryUtil.getInstanceCompletedComparator(
-					false));
-
-		workflowInstances = workflowModelSearchResult.getWorkflowModels();
-
-		Assert.assertEquals(
-			workflowInstances.toString(), 0, workflowInstances.size());
-	}
-
-	@Test
 	public void testSearchWorkflowTaskByAssetTitle1() throws Exception {
 		_activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
 
@@ -1224,8 +1160,8 @@ public class WorkflowTaskManagerImplTest {
 			_workflowTaskManager.searchWorkflowTasks(
 				_adminUser.getCompanyId(), _adminUser.getUserId(), null, null,
 				null, null, User.class.getName(),
-				new Long[] {_adminUser.getUserId()}, null, null, true, false, false,
-				null, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new Long[] {_adminUser.getUserId()}, null, null, true, false,
+				false, null, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(
 					true));
 
@@ -1235,8 +1171,8 @@ public class WorkflowTaskManagerImplTest {
 		workflowModelSearchResult = _workflowTaskManager.searchWorkflowTasks(
 			_adminUser.getCompanyId(), _adminUser.getUserId(), null, null, null,
 			null, User.class.getName(), new Long[] {_adminUser.getUserId()},
-			null, null, true, false, false, null, null, false, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS,
+			null, null, true, false, false, null, null, false,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(false));
 
 		Collections.reverse(workflowTasks);
@@ -1251,13 +1187,14 @@ public class WorkflowTaskManagerImplTest {
 	public void testSearchWorkflowTasksWhenThereIsAnUnregisteredHandler()
 		throws Exception {
 
+		Class<?> clazz = getClass();
+
 		ServiceRegistration<WorkflowHandler<?>>
-			workflowHandlerServiceRegistration = _registryWorkflowHandler();
+			workflowHandlerServiceRegistration = registryWorkflowHandler();
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
-			WorkflowTaskManagerImplTest.class.getName(), 1, null,
-			new ServiceContext());
+			clazz.getName(), 1, null, new ServiceContext());
 
 		WorkflowModelSearchResult<WorkflowTask> workflowModelSearchResult =
 			_workflowTaskManager.searchWorkflowTasks(
@@ -1332,7 +1269,7 @@ public class WorkflowTaskManagerImplTest {
 			String workflowDefinitionName, int workflowDefinitionVersion)
 		throws Exception {
 
-		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 			_adminUser.getUserId(), _company.getCompanyId(), groupId, className,
 			classPK, typePK, workflowDefinitionName, workflowDefinitionVersion);
 	}
@@ -1703,7 +1640,7 @@ public class WorkflowTaskManagerImplTest {
 			long groupId, String className, long classPK, long typePK)
 		throws Exception {
 
-		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 			_adminUser.getUserId(), _company.getCompanyId(), groupId, className,
 			classPK, typePK, null);
 	}
@@ -1719,7 +1656,7 @@ public class WorkflowTaskManagerImplTest {
 			String className, long classPK)
 		throws Exception {
 
-		return _workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
+		return workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
 			_adminUser.getCompanyId(), _adminUser.getGroupId(), className,
 			classPK);
 	}
@@ -1745,7 +1682,7 @@ public class WorkflowTaskManagerImplTest {
 		throws Exception {
 
 		List<WorkflowInstance> workflowInstances =
-			_workflowInstanceManager.getWorkflowInstances(
+			workflowInstanceManager.getWorkflowInstances(
 				_adminUser.getCompanyId(), _adminUser.getUserId(), className,
 				classPK, completed, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
@@ -1836,58 +1773,6 @@ public class WorkflowTaskManagerImplTest {
 
 		return StringUtil.read(
 			clazz.getClassLoader(), _getBasePath() + fileName);
-	}
-
-	private ServiceRegistration<WorkflowHandler<?>> _registryWorkflowHandler() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		return bundleContext.registerService(
-			(Class<WorkflowHandler<?>>)(Class<?>)WorkflowHandler.class,
-			(WorkflowHandler)ProxyUtil.newProxyInstance(
-				WorkflowHandler.class.getClassLoader(),
-				new Class<?>[] {WorkflowHandler.class},
-				(proxy, method, args) -> {
-					if (Objects.equals(method.getName(), "getClassName")) {
-						return WorkflowTaskManagerImplTest.class.getName();
-					}
-
-					if (Objects.equals(method.getName(), "getType")) {
-						return StringPool.BLANK;
-					}
-
-					if (Objects.equals(method.getName(), "isScopeable")) {
-						return false;
-					}
-
-					if (Objects.equals(
-							method.getName(), "getWorkflowDefinitionLink")) {
-
-						return _workflowDefinitionLinkLocalService.
-							updateWorkflowDefinitionLink(
-								TestPropsValues.getUserId(),
-								TestPropsValues.getCompanyId(), 0,
-								WorkflowTaskManagerImplTest.class.getName(), 0,
-								0, "Single Approver", 1);
-					}
-
-					if (Objects.equals(
-							method.getName(), "startWorkflowInstance")) {
-
-						WorkflowInstanceLinkLocalServiceUtil.
-							startWorkflowInstance(
-								TestPropsValues.getCompanyId(), 0,
-								TestPropsValues.getUserId(),
-								WorkflowTaskManagerImplTest.class.getName(), 1,
-								(Map<String, Serializable>)args[5]);
-					}
-
-					return null;
-				}),
-			HashMapDictionaryBuilder.put(
-				"model.class.name=", WorkflowTaskManagerImplTest.class.getName()
-			).build());
 	}
 
 	private List<WorkflowTask> _searchByAssetTypesAndAssetPrimaryKeys(
@@ -2110,17 +1995,7 @@ public class WorkflowTaskManagerImplTest {
 		_userNotificationEventLocalService;
 
 	@Inject
-	private WorkflowDefinitionLinkLocalService
-		_workflowDefinitionLinkLocalService;
-
-	@Inject
 	private WorkflowDefinitionManager _workflowDefinitionManager;
-
-	@Inject
-	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
-
-	@Inject
-	private WorkflowInstanceManager _workflowInstanceManager;
 
 	@Inject
 	private WorkflowTaskManager _workflowTaskManager;

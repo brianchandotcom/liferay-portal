@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
@@ -85,7 +86,11 @@ public class TemplateEntryStagedModelDataHandler
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchDDMTemplate(
 			templateEntry.getDDMTemplateId());
 
-		return ddmTemplate.getNameCurrentValue();
+		if (ddmTemplate != null) {
+			return ddmTemplate.getNameCurrentValue();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override

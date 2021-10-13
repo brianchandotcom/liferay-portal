@@ -1718,6 +1718,69 @@ definition {
 			uploadFrom = "dependencies");
 	}
 
+	@description = "This is a use case for LPS-84290 - Verified that can export Home Folder Permissions"
+	@priority = "3"
+	test ImportSiteHomeFolderPermissions {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		Navigator.openURL();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		Portlet.gotoPortletOptions(portletOption = "Home Folder Permissions");
+
+		SelectFrameTop();
+
+		IFrame.selectModalFrame();
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_ADD_SHORTCUT_CHECKBOX",
+			roleTitle = "Site Member");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_ADD_DOCUMENT_CHECKBOX",
+			roleTitle = "Site Member");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_SUBSCRIBE_CHECKBOX",
+			roleTitle = "Site Member");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Site Member");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_ADD_FOLDER",
+			roleTitle = "Site Member");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		Refresh();
+
+		LAR.exportPortlet(
+			exportPermissions = "true",
+			larFileName = "DM.portlet.lar");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LAR.importPortlet(
+			importPermissions = "true",
+			larFileName = "DM.portlet.lar");
+
+		Portlet.gotoPortletOptions(portletOption = "Home Folder Permissions");
+
+		SelectFrameTop();
+
+		IFrame.selectModalFrame();
+
+		for (var permissionDefinitionKey : list "CONFIGURATION_PERMISSIONS_ADD_SHORTCUT_CHECKBOX,CONFIGURATION_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,CONFIGURATION_PERMISSIONS_SUBSCRIBE_CHECKBOX,CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX,CONFIGURATION_PERMISSIONS_ADD_FOLDER") {
+			Role.viewPermissionPG(
+				permissionDefinitionKey = "${permissionDefinitionKey}",
+				permissionFlagged = "false",
+				roleTitle = "Site Member");
+		}
+	}
+
 	@description = "This is a use case for LPS-97544 and LPS-90886."
 	@priority = "3"
 	test ImportStagedSiteWithCircularReference {

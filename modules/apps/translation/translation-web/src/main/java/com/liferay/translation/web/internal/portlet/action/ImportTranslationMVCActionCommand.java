@@ -126,9 +126,9 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			String fileName = uploadPortletRequest.getFileName("file");
 
 			_processUploadedFile(
-				classPK, groupId, className, actionRequest, failureMessages,
-				fileName, themeDisplay.getLocale(), successMessages,
-				uploadPortletRequest);
+				actionRequest, uploadPortletRequest, groupId, className,
+				classPK, fileName, successMessages, failureMessages,
+				themeDisplay.getLocale());
 
 			String portletResource = ParamUtil.getString(
 				actionRequest, "portletResource");
@@ -283,10 +283,11 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _processUploadedFile(
-			long classPK, long groupId, String className,
-			ActionRequest actionRequest, Map<String, String> failureMessages,
-			String fileName, Locale locale, List<String> successMessages,
-			UploadPortletRequest uploadPortletRequest)
+			ActionRequest actionRequest,
+			UploadPortletRequest uploadPortletRequest, long groupId,
+			String className, long classPK, String fileName,
+			List<String> successMessages, Map<String, String> failureMessages,
+			Locale locale)
 		throws IOException, PortalException {
 
 		if (Objects.equals(

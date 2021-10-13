@@ -210,6 +210,8 @@ definition {
 	@description = "Verify that the user is able to order by Workflow"
 	@priority = "3"
 	test CanOrderByWorkflow {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

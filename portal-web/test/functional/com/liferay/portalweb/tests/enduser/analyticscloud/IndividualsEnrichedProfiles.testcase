@@ -56,13 +56,13 @@ definition {
 		}
 
 		task ("View the site page as guest") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
 
-		task ("Wait for sending request") {
-			Pause(locator1 = "5000");
+		task ("Close Sessions") {
+			ACUtils.closeAllSessions();
 		}
 
 		task ("Switch to new property in AC") {
@@ -104,8 +104,8 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		task ("Wait for sending request") {
-			Pause(locator1 = "5000");
+		task ("Close Sessions") {
+			ACUtils.closeAllSessions();
 		}
 
 		task ("Switch to new property in AC") {

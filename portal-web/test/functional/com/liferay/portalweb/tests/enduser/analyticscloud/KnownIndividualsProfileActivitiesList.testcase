@@ -36,11 +36,15 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8151 | Test Summary: Individual activities list shows accurate activities from today when switched to 24 hour view"
 	@priority = "5"
 	test IndividualActivitiesListShowsAccurateActivitiesWhenSwitchedTo24HourView {
+		var usernameList = "ac,liferay";
+
+		var emailList = "ac@liferay.com,liferay@liferay.com";
+
 		ACUtils.createDMAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		for (var name : list "ac,liferay") {
+		for (var name : list "${usernameList}") {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
 				userFirstName = "${name}",
@@ -50,21 +54,12 @@ definition {
 
 		ACDXPSettings.syncNewContactData();
 
-		for (var name : list "ac,liferay") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "${name}@liferay.com",
-				userLoginFullName = "${name} ${name}");
-
-			for (var n : list "1,2,3,4") {
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
-			}
-
-			Pause(locator1 = "5000");
-		}
+		ACUtils.navigateToSitePageWithUser(
+			emailList = "${emailList}",
+			actionType = "View DM",
+			documentTitleList = "DM AC Title,DM AC Title,DM AC Title,DM AC Title",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -72,7 +67,7 @@ definition {
 
 		ACProperties.switchProperty(propertyName = "${propertyName}");
 
-		for (var name : list "ac,liferay") {
+		for (var name : list "${usernameList}") {
 			ACNavigation.goToIndividuals();
 
 			ACIndividualsDashboard.goToKnownIndividualsTab();

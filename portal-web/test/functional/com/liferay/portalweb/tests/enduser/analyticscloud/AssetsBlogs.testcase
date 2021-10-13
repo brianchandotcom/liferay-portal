@@ -607,9 +607,15 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8114 | Test Summary: Blogs known individuals list shows individuals who have viewed the blog"
 	@priority = "5"
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedBlog {
+		var usernameList = "ac,dxp,liferay";
+
+		var emailList = "ac@liferay.com,dxp@liferay.com,liferay@liferay.com";
+
+		var nameList = "ac ac,liferay liferay,dxp dxp";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		for (var name : list "ac,liferay,dxp") {
+		for (var name : list "${usernameList}") {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
 				userFirstName = "${name}",
@@ -619,19 +625,12 @@ definition {
 
 		ACDXPSettings.syncNewContactData();
 
-		for (var name : list "ac,liferay,dxp") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "${name}@liferay.com",
-				userLoginFullName = "${name} ${name}");
-
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
-
-			Pause(locator1 = "5000");
-		}
+		ACUtils.navigateToSitePageWithUser(
+			emailList = "${emailList}",
+			actionType = "View Blog",
+			documentTitleList = "Blogs AC Title",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "userac@liferay.com",
@@ -639,17 +638,12 @@ definition {
 			userLastName = "userac",
 			userScreenName = "userac");
 
-		User.logoutAndLoginPG(
-			userEmailAddress = "userac@liferay.com",
-			userFirstName = "userac",
-			userLastName = "userac",
-			userScreenName = "userac");
-
-		Navigator.gotoSitePage(
+		ACUtils.navigateToSitePageWithUser(
+			emailList = "userac@liferay.com",
+			actionType = "View Blog",
+			documentTitle = "Blogs AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
-
-		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -675,15 +669,11 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		for (var name : list "ac,liferay,dxp") {
-			AssertElementPresent(
-				key_userName = "${name} ${name}",
-				locator1 = "ACSegments#SEGMENT_MEMBERS");
-		}
+		ACUtils.viewNameList(nameList = "${nameList}");
 
 		AssertElementNotPresent(
 			key_userName = "userac userac",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");
+			locator1 = "ACUtils#NAME_LIST");
 	}
 
 	@description = "View all blogs in the property in assets"

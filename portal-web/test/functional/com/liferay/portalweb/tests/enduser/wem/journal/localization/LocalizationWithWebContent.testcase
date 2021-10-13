@@ -216,6 +216,67 @@ definition {
 			portletName = "Web Content");
 	}
 
+	@description = "This is a use case for LPS-83319. This test is Set And View Web Content with two translations"
+	@priority = "5"
+	test ViewChangeWebContentLanguage {
+		task ("Check Changeable Default Language setting") {
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Web Content",
+				configurationName = "Administration",
+				configurationScope = "System Scope");
+
+			FormFields.enableCheckbox(fieldName = "Changeable Default Language");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Go To Test Site And Create a Web Content") {
+			ApplicationsMenu.gotoSite(key_site = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
+
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Set Web Content with two translations") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+			PortletEntry.changeLocale(locale = "es-ES");
+
+			WebContent.addCP(
+				webContentContent = "WC Contenido de la web Contenido",
+				webContentTitle = "WC Contenido de la web Titulo");
+
+			PortletEntry.publish();
+		}
+
+		task ("View Web Content with two translations") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+			WebContent.clickChangeDefaultLanguage(menuItem = "es_ES");
+
+			WebContent.viewCP(
+				webContentContent = "WC Contenido de la web Contenido",
+				webContentTitle = "WC Contenido de la web Titulo");
+		}
+	}
+
 	@description = "This is a use case for LPS-110938. The localized Friendly URL of WC is shown in WCD when select template with Friendly URL field and it is displayed in DPT."
 	@priority = "3"
 	test ViewLocalizedFriendlyURLInWCD {

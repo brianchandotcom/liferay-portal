@@ -167,8 +167,12 @@ definition {
 
 		var num = "1,2";
 
+		var usernameList = "ac,liferay";
+
+		var emailList = "ac@liferay.com,liferay@liferay.com";
+
 		task ("Add two new users") {
-			for (var name : list "ac,liferay") {
+			for (var name : list "${usernameList}") {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
 					userFirstName = "${name}",
@@ -177,22 +181,20 @@ definition {
 			}
 		}
 
-		task ("Connect Analytics Cloud to DXP") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
 		task ("Blogs creation") {
 			for (var n : list "${num}") {
 				ACUtils.createBlogsAndAddToPage(entryTitle = "Test Blog ${n}");
 			}
 		}
 
+		task ("Connect Analytics Cloud to DXP") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
 		task ("Access the page as a Test user") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("Interation with ac user") {
@@ -201,13 +203,11 @@ definition {
 				userLoginFullName = "ac ac");
 
 			for (var n : list "${num}") {
-				Navigator.gotoSitePage(
+				ACUtils.navigateToSitePage(
+					actionType = "View Blog",
+					documentTitleList = "Test Blog ${n}",
 					pageName = "AC Page",
 					siteName = "Site Name");
-
-				BlogsNavigator.gotoPG(entryTitle = "Test Blog ${n}");
-
-				Pause(locator1 = "3000");
 			}
 		}
 
@@ -216,17 +216,15 @@ definition {
 				userLoginEmailAddress = "liferay@liferay.com",
 				userLoginFullName = "liferay liferay");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Test Blog 2",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Test Blog 2");
 		}
 
 		task ("AC launch") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 

@@ -196,6 +196,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8991 | Test Summary: Order an Individual's Associated Segments List"
 	@priority = "3"
 	test OrderIndividualsAssociatedSegments {
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -213,19 +215,10 @@ definition {
 		}
 
 		task ("View the page as different users") {
-			for (var username : list "user1,user2,user3") {
-				var fullName = "${username} ${username}";
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 
 			ACUtils.closeAllSessionsAndWait();
 		}
@@ -277,17 +270,17 @@ definition {
 		}
 
 		task ("Assert 3 segments in order filter by Name display") {
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_1",
-				value1 = "Static Segment Test1");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test1",
+				index = "1");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_2",
-				value1 = "Static Segment Test2");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test2",
+				index = "2");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_3",
-				value1 = "Static Segment Test3");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test3",
+				index = "3");
 		}
 
 		task ("Check descending arrow descending of table title of Name") {
@@ -295,17 +288,17 @@ definition {
 		}
 
 		task ("Assert 3 segments in order filter by Name display") {
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_1",
-				value1 = "Static Segment Test3");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test3",
+				index = "1");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_2",
-				value1 = "Static Segment Test2");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test2",
+				index = "2");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_3",
-				value1 = "Static Segment Test1");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test1",
+				index = "3");
 		}
 
 		task ("Go to Segments and filter by "Membership"") {
@@ -315,17 +308,17 @@ definition {
 		}
 
 		task ("Assert 3 segments in order filter by membership display") {
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_1",
-				value1 = "Static Segment Test1");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test1",
+				index = "1");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_2",
-				value1 = "Static Segment Test2");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test2",
+				index = "2");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_3",
-				value1 = "Static Segment Test3");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test3",
+				index = "3");
 		}
 
 		task ("Check descending arrow descending of table title of Membership") {
@@ -333,17 +326,17 @@ definition {
 		}
 
 		task ("Assert 3 segments in order filter by membership display") {
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_1",
-				value1 = "Static Segment Test3");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test3",
+				index = "1");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_2",
-				value1 = "Static Segment Test2");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test2",
+				index = "2");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_3",
-				value1 = "Static Segment Test1");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test1",
+				index = "3");
 		}
 	}
 

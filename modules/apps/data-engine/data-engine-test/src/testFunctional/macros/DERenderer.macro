@@ -1,5 +1,13 @@
 definition {
 
+	macro addSourceContentonRichText {
+		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+			value1 = "${content}");
+	}
+
 	macro assertDataInColorField {
 		if (!(isSet(index))) {
 			var index = "1";
@@ -229,6 +237,14 @@ definition {
 			key_buttonName = "Clear",
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "DataEngineRenderer#FIELD_BUTTON_INDEXED");
+	}
+
+	macro clickOnPreviewSourceContent {
+		Click(locator1 = "CKEditor#TOOLBAR_PREVIEW_BUTTON");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CKEditor#SOURCE_CODE_DIALOG",
+			value1 = "${content}");
 	}
 
 	macro inputDataInColorField {

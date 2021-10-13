@@ -435,24 +435,17 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8948 | Test Summary: Segments the individual Belongs To appear in the list"
 	@priority = "5"
 	test SegmentsIndividualBelongsToAppearInList {
+		var emailList = "user1@liferay.com,user2@liferay.com";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
 		task ("View the page as different users") {
-			for (var username : list "user1,user2") {
-				var fullName = "${username} ${username}";
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 
 			ACUtils.closeAllSessionsAndWait();
 		}
@@ -511,6 +504,7 @@ definition {
 
 		task ("Assert segments the individual Belongs To appear in the list") {
 			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Static Segment Test1");
+
 			ACIndividualsDashboard.assertNoIndividualAttribute(key_individualAttribute = "Static Segment Test2");
 		}
 	}

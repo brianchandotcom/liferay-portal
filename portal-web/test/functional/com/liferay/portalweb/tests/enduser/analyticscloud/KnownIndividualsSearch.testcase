@@ -371,36 +371,33 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9032 | Test Summary: Search and Clear Field"
 	@priority = "1"
 	test SearchAndClearField {
+		var usernameList = "user1,user2";
+
+		var emailList = "user1@liferay.com,user2@liferay.com";
+
+		var nameList = "user1 user1,user2 user2";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Add 2 new users and sync the Contact Data") {
-			for (var n : list "1,2") {
+			for (var name : list "${usernameList}") {
 				JSONUser.addUser(
-					userEmailAddress = "user${n}@liferay.com",
-					userFirstName = "user${n}",
-					userLastName = "user${n}",
-					userScreenName = "user${n}");
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
 			}
 
 			ACDXPSettings.syncNewContactData();
 		}
 
-		task ("View the page as different users") {
-			for (var username : list "user1,user2") {
-				var fullName = "${username} ${username}";
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-			}
+		task ("Sign in with the new user to visit the site pages") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Switch to new property in AC") {
@@ -421,13 +418,14 @@ definition {
 			ACUtils.searchBar(searchItem = "user2");
 
 			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "user2 user2");
+
 			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "user1 user1");
 		}
 
 		task ("Clear the search result") {
 			ACUtils.clearSearchBar();
 
-			for (var individualAttribute : list "user1 user1,user2 user2") {
+			for (var individualAttribute : list "${nameList}") {
 				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "${individualAttribute}");
 			}
 		}

@@ -112,6 +112,55 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 	}
 
 	@Test
+	public void testDeserializationWithInvalidInstanceId() throws Exception {
+		String serializedDDMFormValues = read(
+			"ddm-form-values-json-deserializer-invalid-instance-id.json");
+
+		DDMFormValues ddmFormValues = deserialize(
+			serializedDDMFormValues, DDMFormTestUtil.createDDMForm());
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap();
+
+		Assert.assertEquals(
+			ddmFormFieldValuesMap.toString(), 4, ddmFormFieldValuesMap.size());
+
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			"Text1");
+
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		Assert.assertNotEquals(
+			ddmFormFieldValues.toString(),
+			"<script>alert(document.location)</script>",
+			ddmFormFieldValue.getInstanceId());
+
+		ddmFormFieldValues = ddmFormFieldValuesMap.get("Text2");
+
+		ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		Assert.assertNotEquals(
+			ddmFormFieldValues.toString(), "^%&214214JDJ",
+			ddmFormFieldValue.getInstanceId());
+
+		ddmFormFieldValues = ddmFormFieldValuesMap.get("Select1");
+
+		ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), "yhar",
+			ddmFormFieldValue.getInstanceId());
+
+		ddmFormFieldValues = ddmFormFieldValuesMap.get("Select2");
+
+		ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), "yhKiArYe",
+			ddmFormFieldValue.getInstanceId());
+	}
+
+	@Test
 	public void testDeserializationWithParentRepeatableField()
 		throws Exception {
 

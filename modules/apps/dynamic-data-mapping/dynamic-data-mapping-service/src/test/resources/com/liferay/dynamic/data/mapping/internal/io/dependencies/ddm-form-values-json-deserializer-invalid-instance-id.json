@@ -1,0 +1,32 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fieldValues": [
+		{
+			"instanceId": "<script>alert(document.location)</script>",
+			"name": "Text1",
+			"value": ""
+		},
+		{
+			"instanceId": "^%&214214JDJ",
+			"name": "Text2",
+			"value": ""
+		},
+		{
+			"instanceId": "yhar",
+			"name": "Select1",
+			"value": {
+				"en_US": "[]"
+			}
+		},
+		{
+			"instanceId": "yhKiArYe",
+			"name": "Select2",
+			"value": {
+				"en_US": "[]"
+			}
+		}
+	]
+}

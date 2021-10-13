@@ -17,11 +17,10 @@ package com.liferay.content.dashboard.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -105,9 +104,21 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		return Stream.of(
 			_assetVocabularyNames
 		).map(
-			assetVocabularyName ->
-				_assetVocabularyLocalService.fetchGroupVocabulary(
-					_themeDisplay.getCompanyGroupId(), assetVocabularyName)
+			assetVocabularyName -> {
+				long[] groupIds = _getGroupIds(_themeDisplay.getCompanyId());
+
+				for (long groupId : groupIds) {
+					AssetVocabulary assetVocabulary =
+						_assetVocabularyLocalService.fetchGroupVocabulary(
+							groupId, assetVocabularyName);
+
+					if (assetVocabulary != null) {
+						return assetVocabulary;
+					}
+				}
+
+				return null;
+			}
 		).filter(
 			Objects::nonNull
 		).map(

@@ -536,44 +536,6 @@ definition {
 		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
 		// AC Refactor ticket: LRAC-9157
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Blogs Second Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Second Page",
-			siteName = "Site Name");
-
-		ACUtils.createBlogsAndAddToPage(
-			entryTitle = "Blogs AC Second Title",
-			layoutName = "Blogs Second Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Documents Second Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents Second Page",
-			siteName = "Site Name");
-
-		ACUtils.createDMAndAddToPage(
-			dmDocumentFile = "Document_2.jpg",
-			dmDocumentTitle = "DM AC Second Title",
-			layoutName = "Documents Second Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Web Content Second Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Second Page",
-			siteName = "Site Name");
-
-		ACUtils.createWCAndAddToPage(
-			layoutName = "Web Content Second Page",
-			webContentContent = "This is the second web content test for AC",
-			webContentTitle = "Web Content AC Second Title");
-
 		task ("Add 11 more new users") {
 			for (var n : list "a,b,c,d,e,f,g,h,i,j,k") {
 				JSONUser.addUser(
@@ -598,155 +560,34 @@ definition {
 		}
 
 		task ("View the blogs page as different users") {
-			for (var username : list "userea,usera") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "userea@liferay.com,usera@liferay.com,userf@liferay.com,userg@liferay.com",
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				pageName = "Blogs Page",
+				siteName = "Site Name");
 
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "Blogs Page",
-					siteName = "Site Name");
-
-				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
-
-				Pause(locator1 = "5000");
-
-				ACUtils.closeAllSessions();
-			}
+			ACUtils.closeAllSessions();
 		}
 
 		task ("View the documents page as different users") {
-			for (var username : list "userb,userc") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "userb@liferay.com,userc@liferay.com,userh@liferay.com,useri@liferay.com",
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
+				pageName = "Documents Page",
+				siteName = "Site Name");
 
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "Documents Page",
-					siteName = "Site Name");
-
-				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
-
-				Pause(locator1 = "5000");
-
-				ACUtils.closeAllSessions();
-			}
+			ACUtils.closeAllSessions();
 		}
 
 		task ("View the web content page as different users") {
-			for (var username : list "userd,usere") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "userd@liferay.com,usere@liferay.com,userj@liferay.com,userk@liferay.com",
+				pageName = "Web Content Page",
+				siteName = "Site Name");
 
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "Web Content Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-
-				ACUtils.closeAllSessions();
-			}
-		}
-
-		task ("View the second blogs page as different users") {
-			for (var username : list "userf,userg") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
-
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "Blogs Second Page",
-					siteName = "Site Name");
-
-				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Second Title");
-
-				Pause(locator1 = "5000");
-
-				ACUtils.closeAllSessions();
-			}
-		}
-
-		task ("View the second documents page as different users") {
-			for (var username : list "userh,useri") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
-
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "Documents Second Page",
-					siteName = "Site Name");
-
-				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Second Title");
-
-				Pause(locator1 = "5000");
-
-				ACUtils.closeAllSessions();
-			}
-		}
-
-		task ("View the second web content page as different users") {
-			for (var username : list "userj,userk") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
-
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "Web Content Second Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-
-				ACUtils.closeAllSessions();
-			}
+			ACUtils.closeAllSessions();
 		}
 
 		User.logoutPG();
@@ -924,10 +765,6 @@ definition {
 		}
 
 		task ("View pages in order") {
-			ACInterests.viewInterestPageViaPosition(
-				pageName = "Blogs AC Second Title - Site Name - Liferay DXP",
-				positionValue = "1");
-
 			ACInterests.viewInterestPageViaPosition(
 				pageName = "Blogs AC Title - Site Name - Liferay DXP",
 				positionValue = "2");

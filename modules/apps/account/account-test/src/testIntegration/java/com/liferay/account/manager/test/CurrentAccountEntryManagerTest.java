@@ -15,16 +15,25 @@
 package com.liferay.account.manager.test;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.manager.CurrentAccountEntryManager;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
+import com.liferay.account.settings.AccountEntryGroupSettings;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -38,6 +47,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Pei-Jung Lan
+ * @author Drew Brokke
  */
 @RunWith(Arquillian.class)
 public class CurrentAccountEntryManagerTest {
@@ -81,6 +91,39 @@ public class CurrentAccountEntryManagerTest {
 	}
 
 	@Test
+	public void testGetCurrentAccountEntryForGroupWithRestrictedTypes()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		_setAllowedTypes(
+			group.getGroupId(),
+			new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS});
+
+		AccountEntry personAccountEntry =
+			AccountEntryTestUtil.addPersonAccountEntry(
+				_accountEntryLocalService);
+
+		Assert.assertNull(
+			_currentAccountEntryManager.getCurrentAccountEntry(
+				group.getGroupId(), TestPropsValues.getUserId()));
+
+		group = GroupTestUtil.addGroup();
+
+		_currentAccountEntryManager.setCurrentAccountEntry(
+			personAccountEntry.getAccountEntryId(), group.getGroupId(),
+			TestPropsValues.getUserId());
+
+		_setAllowedTypes(
+			group.getGroupId(),
+			new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS});
+
+		Assert.assertNull(
+			_currentAccountEntryManager.getCurrentAccountEntry(
+				group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	@Test
 	public void testGetCurrentAccountEntryForGuestUser() throws Exception {
 		Assert.assertEquals(
 			_accountEntryLocalService.getGuestAccountEntry(
@@ -114,6 +157,64 @@ public class CurrentAccountEntryManagerTest {
 			_currentAccountEntryManager.getCurrentAccountEntry(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 	}
+
+	@Test
+	public void testSetCurrentAccountEntryForGroupWithRestrictedTypes()
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_LOG_NAME, LoggerTestUtil.WARN)) {
+
+			Group group = GroupTestUtil.addGroup();
+
+			_setAllowedTypes(
+				group.getGroupId(),
+				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS});
+
+			AccountEntry personAccountEntry =
+				AccountEntryTestUtil.addPersonAccountEntry(
+					_accountEntryLocalService);
+
+			_currentAccountEntryManager.setCurrentAccountEntry(
+				personAccountEntry.getAccountEntryId(), group.getGroupId(),
+				TestPropsValues.getUserId());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(LoggerTestUtil.WARN, logEntry.getPriority());
+
+			Throwable throwable = logEntry.getThrowable();
+
+			Assert.assertEquals(
+				AccountEntryTypeException.class, throwable.getClass());
+
+			Assert.assertEquals(
+				"Cannot set a current account entry of a disallowed type: " +
+					"person",
+				throwable.getMessage());
+		}
+	}
+
+	private void _setAllowedTypes(long groupId, String[] allowedTypes)
+		throws Exception {
+
+		_accountEntryGroupSettings.setAllowedTypes(groupId, allowedTypes);
+
+		// Force async operations to complete before returning
+
+		ConfigurationTestUtil.saveConfiguration(
+			RandomTestUtil.randomString(), null);
+	}
+
+	private static final String _LOG_NAME =
+		"com.liferay.account.internal.manager.CurrentAccountEntryManagerImpl";
+
+	@Inject
+	private AccountEntryGroupSettings _accountEntryGroupSettings;
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;

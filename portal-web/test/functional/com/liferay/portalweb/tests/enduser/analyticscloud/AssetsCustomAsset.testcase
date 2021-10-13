@@ -384,11 +384,9 @@ definition {
 
 		for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
 			for (var n : list "1,2,3") {
-				Navigator.gotoSitePage(
-					pageName = "${pageName}",
+				ACUtils.navigateToSitePage(
+					pageName = "AC Page",
 					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
 			}
 		}
 

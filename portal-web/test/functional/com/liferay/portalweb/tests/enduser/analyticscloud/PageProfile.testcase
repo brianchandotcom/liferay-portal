@@ -57,17 +57,15 @@ definition {
 		}
 
 		task ("View the blog") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Navigate to AC workspace") {

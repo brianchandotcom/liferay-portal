@@ -400,9 +400,13 @@ definition {
 		// AC Refactor: timing issue for membership card
 		// AC Refactor ticket: LRAC-8887
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
 		var userList = "user1,user2";
+
+		var emailList = "user1@liferay.com,user2@liferay.com";
+
+		var nameList = "user1 user1,user2 user2";
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Add new users in DXP") {
 			for (var n : list "${userList}") {
@@ -424,19 +428,10 @@ definition {
 		}
 
 		task ("View the page as different users") {
-			for (var username : list "${userList}") {
-				var fullName = "${username} ${username}";
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "3000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {
@@ -454,7 +449,7 @@ definition {
 
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
 
-			ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2");
+			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
 
 			ACSegments.saveSegment();
 		}

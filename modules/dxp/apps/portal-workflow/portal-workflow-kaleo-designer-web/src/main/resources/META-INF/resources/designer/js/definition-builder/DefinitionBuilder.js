@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -8,14 +7,10 @@
  * contacting Liferay, Inc. See the License for the specific language governing
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
- *
- *
- *
  */
---%>
 
-<%@ include file="/designer/init.jsp" %>
+import React from 'react';
 
-<react:component
-	module="designer/js/definition-builder/DefinitionBuilder"
-/>
+export default function () {
+	return <>Definition Builder Component</>;
+}

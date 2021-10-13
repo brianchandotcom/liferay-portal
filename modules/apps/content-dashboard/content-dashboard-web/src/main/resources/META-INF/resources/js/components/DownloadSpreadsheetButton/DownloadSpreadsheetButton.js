@@ -19,12 +19,13 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {
 	downloadFileFromBlob,
 	fetchFile,
-} from '../utils/downloadSpreadsheetUtils';
+} from '../../utils/downloadSpreadsheetUtils';
+import DownloadSpreadsheetModal from './DownloadSpreadsheetModal';
 
 const initialToastState = {
 	content: null,
@@ -40,10 +41,24 @@ const initialFeedbackState = {
 
 let fetchController = null;
 
+const DEFAULT_TIMEOUT_DELAY = 500;
+const FEEDBACK_TIMEOUT_DELAY = 2000;
+
 const DownloadSpreadsheetButton = ({fileURL, total}) => {
 	const [loading, setLoading] = useState(false);
 	const [toastMessage, setToastMessage] = useState(initialToastState);
 	const [feedbackStatus, setFeedbackStatus] = useState(initialFeedbackState);
+	const [showPendingRequestModal, setShowPendingRequestModal] = useState(
+		false
+	);
+	const [tentativeNavigationPath, setTentativeNavigationPath] = useState('');
+	const [cancelAndLeaveButtonText, setCancelAndLeaveButtonText] = useState(
+		Liferay.Language.get('cancel-and-leave')
+	);
+	const [
+		disableCancelAndLeaveButton,
+		setDisableCancelAndLeaveButton,
+	] = useState(false);
 
 	let defaultDelayTimeout = null;
 	let feedbackDelayTimeout = null;
@@ -101,11 +116,11 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 				...current,
 				show: true,
 			}));
-		}, 500);
+		}, DEFAULT_TIMEOUT_DELAY);
 
 		feedbackDelayTimeout = setTimeout(() => {
 			setFeedbackStatus(initialFeedbackState);
-		}, 2500);
+		}, FEEDBACK_TIMEOUT_DELAY);
 	};
 
 	const buttonTextKey = loading
@@ -158,13 +173,63 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 		setToastMessage(initialToastState);
 	};
 
+	const secondaryClickModalHandler = useCallback(
+		(onClose) => {
+			setCancelAndLeaveButtonText(Liferay.Language.get('cancelling'));
+			setDisableCancelAndLeaveButton(true);
+			handleCancelRequest();
+
+			setTimeout(() => {
+				onClose();
+				Liferay.Util.navigate(tentativeNavigationPath);
+			}, DEFAULT_TIMEOUT_DELAY + FEEDBACK_TIMEOUT_DELAY);
+		},
+		[tentativeNavigationPath]
+	);
+
+	const preventHardReloadWhileGenerating = useCallback(
+		(event) => {
+			if (!loading) {
+				return;
+			}
+			event.preventDefault();
+			event.returnValue = '';
+		},
+		[loading]
+	);
+
 	useEffect(() => {
+		const navigationEventHandler = Liferay.on('beforeNavigate', (event) => {
+			if (!loading) {
+				return;
+			}
+
+			Liferay.fire('closeApplicationsMenu');
+			setShowPendingRequestModal(true);
+			setTentativeNavigationPath(event.path);
+			event.originalEvent.preventDefault();
+		});
+
+		window.addEventListener(
+			'beforeunload',
+			preventHardReloadWhileGenerating
+		);
+
 		return () => {
 			clearTimeout(defaultDelayTimeout);
 			clearTimeout(feedbackDelayTimeout);
+			navigationEventHandler.detach();
+			window.removeEventListener(
+				'beforeunload',
+				preventHardReloadWhileGenerating
+			);
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [
+		defaultDelayTimeout,
+		feedbackDelayTimeout,
+		loading,
+		preventHardReloadWhileGenerating,
+	]);
 
 	return (
 		<>
@@ -228,6 +293,14 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 					</ClayAlert>
 				</ClayAlert.ToastContainer>
 			)}
+
+			<DownloadSpreadsheetModal
+				disableSecondaryButton={disableCancelAndLeaveButton}
+				secondaryButtonClickCallback={secondaryClickModalHandler}
+				secondaryButtonText={cancelAndLeaveButtonText}
+				setVisibilityCallback={setShowPendingRequestModal}
+				show={showPendingRequestModal}
+			/>
 		</>
 	);
 };

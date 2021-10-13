@@ -97,6 +97,14 @@ definition {
 		DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
 	}
 
+	@priority = "4"
+	@refactordone
+	test CanRemoveCurrentDisplayStyleViews {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMPortlet.configureDisplaySettingsPG(currentDisplayStyleViews = "");
+	}
+
 	@priority = "5"
 	@refactordone
 	test CanRemovePortlet {

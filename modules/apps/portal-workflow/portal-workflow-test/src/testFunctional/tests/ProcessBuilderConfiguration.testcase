@@ -178,6 +178,8 @@ definition {
 	@description = "Verify that the user is able to order by Resource"
 	@priority = "3"
 	test CanOrderByResource {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

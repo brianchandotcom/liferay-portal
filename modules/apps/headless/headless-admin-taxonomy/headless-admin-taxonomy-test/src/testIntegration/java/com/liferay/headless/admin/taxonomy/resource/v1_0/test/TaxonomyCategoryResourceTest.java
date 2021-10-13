@@ -53,7 +53,25 @@ public class TaxonomyCategoryResourceTest
 	}
 
 	@Override
+	protected TaxonomyCategory randomTaxonomyCategory() throws Exception {
+		TaxonomyCategory taxonomyCategory = super.randomTaxonomyCategory();
+
+		taxonomyCategory.setTaxonomyVocabularyId(
+			_assetVocabulary.getVocabularyId());
+
+		return taxonomyCategory;
+	}
+
+	@Override
 	protected TaxonomyCategory testDeleteTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return testGetTaxonomyCategory_addTaxonomyCategory();
+	}
+
+	@Override
+	protected TaxonomyCategory
+			testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory()
 		throws Exception {
 
 		return testGetTaxonomyCategory_addTaxonomyCategory();
@@ -108,6 +126,14 @@ public class TaxonomyCategoryResourceTest
 	}
 
 	@Override
+	protected TaxonomyCategory
+			testGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory()
+		throws Exception {
+
+		return testGetTaxonomyCategory_addTaxonomyCategory();
+	}
+
+	@Override
 	protected TaxonomyCategory testGraphQLTaxonomyCategory_addTaxonomyCategory()
 		throws Exception {
 
@@ -152,6 +178,14 @@ public class TaxonomyCategoryResourceTest
 	@Override
 	protected TaxonomyCategory
 			testPutTaxonomyCategoryPermission_addTaxonomyCategory()
+		throws Exception {
+
+		return testGetTaxonomyCategory_addTaxonomyCategory();
+	}
+
+	@Override
+	protected TaxonomyCategory
+			testPutTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory()
 		throws Exception {
 
 		return testGetTaxonomyCategory_addTaxonomyCategory();

@@ -627,7 +627,13 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8118 | Test Summary: Document known individuals list shows the individuals who have viewed the documents"
 	@priority = "5"
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedDocuments {
-		for (var name : list "ac,liferay") {
+		var usernameList = "ac,liferay";
+
+		var emailList = "ac@liferay.com,liferay@liferay.com";
+
+		var nameList = "ac ac,liferay liferay";
+
+		for (var name : list "${usernameList}") {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
 				userFirstName = "${name}",
@@ -637,19 +643,12 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		for (var name : list "ac,liferay") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "${name}@liferay.com",
-				userLoginFullName = "${name} ${name}");
-
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
-
-			Pause(locator1 = "10000");
-		}
+		ACUtils.navigateToSitePageWithUser(
+			emailList = "${emailList}",
+			actionType = "View DM",
+			documentTitleList = "DM AC Title",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "userac@liferay.com",
@@ -657,17 +656,12 @@ definition {
 			userLastName = "userac",
 			userScreenName = "userac");
 
-		User.logoutAndLoginPG(
-			userEmailAddress = "userac@liferay.com",
-			userFirstName = "userac",
-			userLastName = "userac",
-			userScreenName = "userac");
-
-		Navigator.gotoSitePage(
+		ACUtils.navigateToSitePageWithUser(
+			emailList = "userac@liferay.com",
+			actionType = "View DM",
+			documentTitleList = "DM AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
-
-		DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -683,7 +677,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACNavigation.openItem(itemName = "Document_1.jpg");
+		ACNavigation.openItem(itemName = "DM AC Title");
 
 		ACIndividualsDashboard.goToKnownIndividualsTab();
 
@@ -693,11 +687,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		for (var name : list "ac,liferay") {
-			AssertElementPresent(
-				key_userName = "${name} ${name}",
-				locator1 = "ACSegments#SEGMENT_MEMBERS");
-		}
+		ACUtils.viewNameList(nameList = "${nameList}");
 
 		AssertElementNotPresent(
 			key_userName = "userac userac",

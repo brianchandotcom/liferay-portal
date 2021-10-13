@@ -53,16 +53,32 @@ public class ParallelExecutor<T> {
 	}
 
 	public List<T> execute() {
+		start();
+
+		return waitFor();
+	}
+
+	public synchronized void start() {
+		if (_futures != null) {
+			return;
+		}
+
+		_futures = new ArrayList<>(_callables.size());
+
+		for (Callable<T> callable : _callables) {
+			_futures.add(_executorService.submit(callable));
+		}
+	}
+
+	public List<T> waitFor() {
+		if (_futures == null) {
+			start();
+		}
+
 		try {
-			ArrayList<Future<T>> futures = new ArrayList<>(_callables.size());
-
-			for (Callable<T> callable : _callables) {
-				futures.add(_executorService.submit(callable));
-			}
-
 			List<T> results = new ArrayList<>(_callables.size());
 
-			for (Future<T> future : futures) {
+			for (Future<T> future : _futures) {
 				try {
 					T result = future.get();
 
@@ -96,5 +112,6 @@ public class ParallelExecutor<T> {
 	private final boolean _disposeExecutor;
 	private boolean _excludeNulls;
 	private ExecutorService _executorService;
+	private ArrayList<Future<T>> _futures;
 
 }

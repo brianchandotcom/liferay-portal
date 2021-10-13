@@ -307,13 +307,45 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136799. It checks that a deleted image from the Blogs repository can be published and does not appear in live."
-	@ignore = "true"
 	@priority = "4"
 	test CanPublishDeletedImageFromRepository {
-		property portal.acceptance = "false";
+		JSONBlog.uploadBlogImage(
+			groupName = "Site Name (Staging)",
+			site = "false",
+			sourceFileName = "Document_1.jpg");
 
-		// TODO LPS-136799 CanPublishDeletedImageFromRepository pending implementation
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
 
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		Navigator.gotoNavTab(navTab = "Images");
+
+		LexiconEntry.viewEntryName(rowEntry = "Document_1.jpg");
+
+		JSONBlog.removeBlogImage(
+			groupName = "Site Name (Staging)",
+			imageTitle = "Document_1.jpg",
+			site = "false");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		Navigator.gotoNavTab(navTab = "Images");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Document_1.jpg");
 	}
 
 	@description = "This is a test for LPS-136795. It checks that an embedded image using a link for Blogs can be published."
@@ -440,13 +472,62 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136801. It checks that Blogs permissions can be published."
-	@ignore = "true"
 	@priority = "4"
 	test CanPublishPermissions {
-		property portal.acceptance = "false";
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name (Staging)",
+			guestPermissions = "false",
+			site = "false");
 
-		// TODO LPS-136801 CanPublishPermissions pending implementation
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
 
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		BlogsEntry.viewNoEntryAsGuestPG(entryTitle = "Blogs Entry Title");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This ensures that users can publish a scheduled blog entry to the live site."
@@ -696,13 +777,53 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136804. It checks that a small image can be update and published through the normal publication flow."
-	@ignore = "true"
 	@priority = "4"
 	test CanPublishUpdatedSmallImage {
-		property portal.acceptance = "false";
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
-		// TODO LPS-136804 CanPublishUpdatedSmallImage pending implementation
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
+		BlogsEntry.addSmallImage(
+			navTab = "Blog Images",
+			uploadFileName = "Document_1.jpg");
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name-staging");
+
+		BlogsEntry.addSmallImage(
+			browseImage = "true",
+			uploadFileName = "Document_2.jpg");
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_2.jpg");
 	}
 
 	@description = "This is a test for LPS-136791. It checks that the cover image can be updated and republished using the SAP."
@@ -757,33 +878,146 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136800. It checks that an updated inline image can be published and does not appear in live."
-	@ignore = "true"
 	@priority = "4"
 	test CanRepublishInlineImageViaSAP {
-		property portal.acceptance = "false";
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
-		// TODO LPS-136800 CanRepublishInlineImageViaSAP pending implementation
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
+		BlogsEntry.addContentWithInlineImage(
+			entryContent = "Blogs Entry Content",
+			uploadFileName = "Document_1.jpg");
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Blogs.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish to live?",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name-staging");
+
+		BlogsEntry.addContentWithInlineImage(
+			entryContent = "New Blogs Entry Content",
+			uploadFileName = "Document_2.jpg");
+
+		PortletEntry.publish();
+
+		Blogs.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish to live?",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.viewNoInlineImage(uploadFileName = "Document_1");
+
+		BlogsEntry.viewInlineImage(uploadFileName = "Document_2");
 	}
 
 	@description = "This is a test for LPS-136803. It checks that the small image can be updated and republished using the SAP."
-	@ignore = "true"
 	@priority = "4"
 	test CanRepublishSmallImageViaSAP {
-		property portal.acceptance = "false";
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
-		// TODO LPS-136803 CanRepublishSmallImageViaSAP pending implementation
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
+		BlogsEntry.addSmallImage(
+			navTab = "Blog Images",
+			uploadFileName = "Document_1.jpg");
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Blogs.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish to live?",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name-staging");
+
+		BlogsEntry.addSmallImage(
+			browseImage = "true",
+			uploadFileName = "Document_2.jpg");
+
+		PortletEntry.publish();
+
+		Blogs.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish to live?",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_2.jpg");
 	}
 
 	@description = "This is a test for LPS-136805. It checks that the Blogs video can be updated and republished using the SAP."
-	@ignore = "true"
 	@priority = "4"
 	test CanRepublishVideoViaSAP {
-		property portal.acceptance = "false";
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
 
-		// TODO LPS-136805 CanRepublishVideoViaSAP pending implementation
+		Blogs.addEntry(
+			embedVideo = "https://vimeo.com/483035084",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			navTab = "URL");
 
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Blogs.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish to live?",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name-staging");
+
+		BlogsEntry.addEntryContent(
+			embedVideo = "https://www.twitch.tv/videos/806178790",
+			entryContent = "New Blogs Entry Content",
+			entryTitle = "New Blogs Entry Title",
+			navTab = "URL");
+
+		PortletEntry.publish();
+
+		Blogs.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish to live?",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.viewEntryPG(
+			embedVideo = "twitch",
+			entryContent = "New Blogs Entry Content",
+			entryTitle = "New Blogs Entry Title");
 	}
 
 }

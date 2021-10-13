@@ -661,7 +661,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.viewSwitchChecked(fieldName = "repeatable");
+		FormFields.viewSwitchChecked(fieldName = "Repeatable");
 
 		Form.closeSidebar();
 
@@ -793,7 +793,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.viewSwitchChecked(fieldName = "repeatable");
+		FormFields.viewSwitchChecked(fieldName = "Repeatable");
 
 		Form.closeSidebar();
 

@@ -449,12 +449,11 @@ definition {
 
 		task ("Interation with pages") {
 			for (var x : list "${n}") {
-				Navigator.gotoSitePage(
+				ACUtils.navigateToSitePage(
+					actionType = "View Blog",
+					documentTitleList = "Test Blog ${x}",
 					pageName = "AC Page",
 					siteName = "Site Name");
-
-				BlogsNavigator.gotoPG(entryTitle = "Test Blog ${x}");
-				Pause(locator1 = "5000");
 			}
 
 			User.logoutAndLoginPG(
@@ -462,12 +461,11 @@ definition {
 				userLoginFullName = "test1 test1");
 
 			for (var x : list "${u}") {
-				Navigator.gotoSitePage(
+				ACUtils.navigateToSitePage(
+					actionType = "View Blog",
+					documentTitleList = "Test Blog ${x}",
 					pageName = "AC Page",
 					siteName = "Site Name");
-
-				BlogsNavigator.gotoPG(entryTitle = "Test Blog ${x}");
-				Pause(locator1 = "5000");
 			}
 		}
 		task ("Close all sessions") {

@@ -197,6 +197,14 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void setGitHubURL(String gitHubURL) {
+		if (gitHubURL == null) {
+			throw new RuntimeException("GitHub URL is null");
+		}
+
+		if (gitHubURL.equals(getGitHubURL())) {
+			return;
+		}
+
 		_localGitBranch = null;
 
 		_setGitHubURL(gitHubURL);
@@ -340,23 +348,7 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void synchronizeToGitHubDev() {
-		String baseBranchSHA = _getBaseBranchHeadSHA();
-		String senderBranchSHA = _getSenderBranchHeadSHA();
-
-		if (_isPullRequest()) {
-			baseBranchSHA = getBaseBranchSHA();
-			senderBranchSHA = getSenderBranchSHA();
-		}
-
-		try {
-			GitHubDevSyncUtil.synchronizeToGitHubDev(
-				getGitWorkingDirectory(), _getBaseBranchUsername(),
-				getSenderBranchName(), getSenderBranchUsername(),
-				senderBranchSHA, baseBranchSHA);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		GitHubDevSyncUtil.synchronizeToGitHubDev(getLocalGitBranch(), this);
 	}
 
 	@Override
@@ -434,7 +426,7 @@ public abstract class BaseWorkspaceGitRepository
 		validateKeys(_REQUIRED_KEYS);
 	}
 
-	protected LocalGitBranch getLocalGitBranch() {
+	protected synchronized LocalGitBranch getLocalGitBranch() {
 		if (_localGitBranch != null) {
 			return _localGitBranch;
 		}

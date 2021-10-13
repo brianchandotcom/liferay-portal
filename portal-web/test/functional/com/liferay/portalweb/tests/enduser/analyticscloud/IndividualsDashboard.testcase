@@ -445,20 +445,15 @@ definition {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("View the site page") {
-			Navigator.gotoSitePage(
+		task ("View the site page with new user") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "userea@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
 
-		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
+		task ("Close Sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {

@@ -608,6 +608,8 @@ definition {
 	test SortSegmentAddMembersModal {
 		var users = "ac,liferay,dxp";
 
+		var emailList = "ac@liferay.com,liferay@liferay.com,dxp@liferay.com";
+
 		task ("Add a new user in DXP") {
 			for (var name : list "${users}") {
 				JSONUser.addUser(
@@ -623,17 +625,10 @@ definition {
 		}
 
 		task ("Sign in with the new user to visit the site pages") {
-			for (var name : list "${users}") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${name}@liferay.com",
-					userLoginFullName = "${name} ${name}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "3000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Switch to new property in AC") {
@@ -665,27 +660,23 @@ definition {
 		}
 
 		task ("Assert the first user in the list, click the sort button and assert that the user has changed") {
-			AssertElementPresent(
-				index = "1",
-				key_userName = "dxp dxp",
-				locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
+			ACUtils.viewNameListInOrder(
+				name = "dxp dxp",
+				index = "1");
 
-			AssertElementPresent(
-				index = "2",
-				key_userName = "liferay liferay",
-				locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
+			ACUtils.viewNameListInOrder(
+				name = "liferay liferay",
+				index = "2");
 
 			ACSegments.sortSegmentButton();
 
-			AssertElementPresent(
-				index = "1",
-				key_userName = "liferay liferay",
-				locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
+			ACUtils.viewNameListInOrder(
+				name = "liferay liferay",
+				index = "1");
 
-			AssertElementPresent(
-				index = "2",
-				key_userName = "dxp dxp",
-				locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
+			ACUtils.viewNameListInOrder(
+				name = "dxp dxp",
+				index = "2");
 		}
 	}
 

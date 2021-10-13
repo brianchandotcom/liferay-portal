@@ -192,7 +192,7 @@ export default function LayoutCustomizationSettings() {
 	};
 
 	const disposeOverlay = () => {
-		overlayList.forEach(({overlay, overlayElement}) => {
+		overlayList?.forEach(({overlay, overlayElement}) => {
 			overlay.dispose();
 			overlayElement.parentElement.removeChild(overlayElement);
 		});

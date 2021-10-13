@@ -1531,7 +1531,7 @@ public class ObjectEntryLocalServiceImpl
 		if (value.length() > 1000) {
 			throw new ObjectEntryValuesException(
 				"Object field \"" + entry.getKey() +
-					"\" value exceeds 75 characters.");
+					"\" value exceeds 1000 characters.");
 		}
 	}
 

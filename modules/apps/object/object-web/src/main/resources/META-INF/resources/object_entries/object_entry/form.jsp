@@ -84,7 +84,7 @@ portletDisplay.setURLBack(backURL);
 
 						Liferay.Util.openToast({
 							message:
-								'<liferay-ui:message key="the-maximum-length-is-75-characters-for-text-fields" />',
+								'<liferay-ui:message key="the-maximum-length-is-1000-characters-for-text-fields" />',
 							type: 'warning',
 						});
 

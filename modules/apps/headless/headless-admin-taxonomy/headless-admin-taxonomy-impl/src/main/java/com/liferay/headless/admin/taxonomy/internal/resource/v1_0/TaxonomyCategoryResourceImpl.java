@@ -55,6 +55,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -101,6 +102,21 @@ public class TaxonomyCategoryResourceImpl
 
 		_assetCategoryService.deleteCategory(
 			_getAssetCategoryId(taxonomyCategoryId));
+	}
+
+	@Override
+	public void deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+			Long taxonomyVocabularyId, String externalReferenceCode)
+		throws Exception {
+
+		AssetVocabulary vocabulary = _assetVocabularyService.getVocabulary(
+			taxonomyVocabularyId);
+
+		AssetCategory assetCategory =
+			_assetCategoryLocalService.getAssetCategoryByExternalReferenceCode(
+				vocabulary.getGroupId(), externalReferenceCode);
+
+		_assetCategoryService.deleteCategory(assetCategory.getCategoryId());
 	}
 
 	@Override
@@ -239,6 +255,29 @@ public class TaxonomyCategoryResourceImpl
 	}
 
 	@Override
+	public TaxonomyCategory
+			getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+				Long taxonomyVocabularyId, String externalReferenceCode)
+		throws Exception {
+
+		AssetVocabulary vocabulary = _assetVocabularyService.getVocabulary(
+			taxonomyVocabularyId);
+
+		AssetCategory assetCategory =
+			_assetCategoryLocalService.getAssetCategoryByExternalReferenceCode(
+				vocabulary.getGroupId(), externalReferenceCode);
+
+		PermissionUtil.checkPermission(
+			ActionKeys.VIEW, groupLocalService,
+			getPermissionCheckerResourceName(assetCategory.getCategoryId()),
+			getPermissionCheckerResourceId(assetCategory.getCategoryId()),
+			getPermissionCheckerGroupId(
+				String.valueOf(assetCategory.getCategoryId())));
+
+		return _toTaxonomyCategory(assetCategory);
+	}
+
+	@Override
 	public TaxonomyCategory patchTaxonomyCategory(
 			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
@@ -325,43 +364,34 @@ public class TaxonomyCategoryResourceImpl
 			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		AssetCategory assetCategory = _getAssetCategory(taxonomyCategoryId);
-
-		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
-			contextAcceptLanguage.getPreferredLocale(),
-			taxonomyCategory.getName(), taxonomyCategory.getName_i18n(),
-			assetCategory.getTitleMap());
-		Map<Locale, String> descriptionMap = LocalizedMapUtil.getLocalizedMap(
-			contextAcceptLanguage.getPreferredLocale(),
-			taxonomyCategory.getDescription(),
-			taxonomyCategory.getDescription_i18n(),
-			assetCategory.getDescriptionMap());
-
-		LocalizedMapUtil.validateI18n(
-			false,
-			LocaleUtil.fromLanguageId(assetCategory.getDefaultLanguageId()),
-			"Taxonomy category", titleMap,
-			new HashSet<>(descriptionMap.keySet()));
-
-		assetCategory.setExternalReferenceCode(
-			taxonomyCategory.getExternalReferenceCode());
-		assetCategory.setTitleMap(titleMap);
-		assetCategory.setDescriptionMap(descriptionMap);
-
-		AssetCategoryPermission.check(
-			PermissionThreadLocal.getPermissionChecker(),
-			assetCategory.getCategoryId(), ActionKeys.UPDATE);
-
 		return _toTaxonomyCategory(
-			_assetCategoryLocalService.updateCategory(
-				contextUser.getUserId(), assetCategory.getCategoryId(),
-				assetCategory.getParentCategoryId(), titleMap, descriptionMap,
-				assetCategory.getVocabularyId(),
-				_toStringArray(
-					taxonomyCategory.getTaxonomyCategoryProperties()),
-				ServiceContextRequestUtil.createServiceContext(
-					assetCategory.getGroupId(), contextHttpServletRequest,
-					taxonomyCategory.getViewableByAsString())));
+			_updateCategory(
+				_getAssetCategory(taxonomyCategoryId), taxonomyCategory));
+	}
+
+	@Override
+	public TaxonomyCategory
+			putTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+				Long taxonomyVocabularyId, String externalReferenceCode,
+				TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
+			taxonomyVocabularyId);
+
+		AssetCategory assetCategory =
+			_assetCategoryLocalService.getAssetCategoryByExternalReferenceCode(
+				assetVocabulary.getGroupId(), externalReferenceCode);
+
+		if (assetCategory != null) {
+			return _toTaxonomyCategory(
+				_updateCategory(assetCategory, taxonomyCategory));
+		}
+
+		return _addTaxonomyCategory(
+			assetVocabulary.getGroupId(),
+			assetVocabulary.getDefaultLanguageId(), taxonomyCategory, 0,
+			assetVocabulary.getVocabularyId());
 	}
 
 	@Override
@@ -609,6 +639,40 @@ public class TaxonomyCategoryResourceImpl
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			assetCategory);
+	}
+
+	private AssetCategory _updateCategory(
+			AssetCategory assetCategory, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(),
+			taxonomyCategory.getName(), taxonomyCategory.getName_i18n(),
+			assetCategory.getTitleMap());
+		Map<Locale, String> descriptionMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(),
+			taxonomyCategory.getDescription(),
+			taxonomyCategory.getDescription_i18n(),
+			assetCategory.getDescriptionMap());
+
+		LocalizedMapUtil.validateI18n(
+			false,
+			LocaleUtil.fromLanguageId(assetCategory.getDefaultLanguageId()),
+			"Taxonomy category", titleMap,
+			new HashSet<>(descriptionMap.keySet()));
+
+		assetCategory.setExternalReferenceCode(
+			taxonomyCategory.getExternalReferenceCode());
+		assetCategory.setTitleMap(titleMap);
+		assetCategory.setDescriptionMap(descriptionMap);
+
+		return _assetCategoryService.updateCategory(
+			assetCategory.getCategoryId(), assetCategory.getParentCategoryId(),
+			titleMap, descriptionMap, assetCategory.getVocabularyId(),
+			_toStringArray(taxonomyCategory.getTaxonomyCategoryProperties()),
+			ServiceContextRequestUtil.createServiceContext(
+				assetCategory.getGroupId(), contextHttpServletRequest,
+				taxonomyCategory.getViewableByAsString()));
 	}
 
 	private static final EntityModel _entityModel = new CategoryEntityModel();

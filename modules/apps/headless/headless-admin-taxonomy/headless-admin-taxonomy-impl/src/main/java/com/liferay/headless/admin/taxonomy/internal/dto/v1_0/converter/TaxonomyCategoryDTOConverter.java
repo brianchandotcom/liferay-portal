@@ -137,6 +137,7 @@ public class TaxonomyCategoryDTOConverter
 							});
 					}
 				};
+				siteId = assetCategory.getGroupId();
 				taxonomyCategoryProperties = TransformUtil.transformToArray(
 					_assetCategoryPropertyLocalService.getCategoryProperties(
 						assetCategory.getCategoryId()),
@@ -156,7 +157,7 @@ public class TaxonomyCategoryDTOConverter
 							WorkflowConstants.STATUS_SCHEDULED
 						},
 						false);
-
+				taxonomyVocabularyId = assetCategory.getVocabularyId();
 				setParentTaxonomyCategory(
 					() -> {
 						if (assetCategory.getParentCategory() == null) {

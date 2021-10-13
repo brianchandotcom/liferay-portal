@@ -120,9 +120,11 @@ definition {
 	}
 
 	macro viewMetricValue {
+		var key_cardTitle = "${cardTitle}";
+
+		var key_metricName = "${metricName}";
+
 		AssertTextEquals(
-			key_cardTitle = "${cardTitle}",
-			key_metricName = "${metricName}",
 			locator1 = "ACCards#METRIC_VALUE",
 			value1 = "${metricValue}");
 	}

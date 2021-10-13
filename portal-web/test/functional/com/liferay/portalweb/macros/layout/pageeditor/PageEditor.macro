@@ -351,7 +351,6 @@ definition {
 				PageEditor.addFragment(
 					collectionName = "${collectionName}",
 					fragmentName = "${fragmentName}",
-					navTab = "Fragments",
 					targetFragmentName = "Container");
 
 				PageEditor.moveElementInsideAnExistingContainer(

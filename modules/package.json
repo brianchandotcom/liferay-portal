@@ -21,7 +21,7 @@
 	"workspaces": {
 		"packages": [
 			"apps/*/*",
-			"apps/*/*/*",
+			"apps/*/*/!remote-app/*",
 			"dxp/apps/*/*",
 			"dxp/apps/*/*/*",
 			"dxp/apps/osb/*/*/*"

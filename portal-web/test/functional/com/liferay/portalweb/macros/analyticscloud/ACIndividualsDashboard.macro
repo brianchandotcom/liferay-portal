@@ -101,6 +101,11 @@ definition {
 
 	macro goToKnownIndividualDetails {
 		var key_individualName = "${individualName}";
+
+		while (IsElementNotPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUALS_LIST_ITEMS") && (maxIterations = "50")) {
+			Refresh();
+		}
+
 		Click(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUALS_LIST_ITEMS");
 	}
 

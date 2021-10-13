@@ -193,8 +193,8 @@ definition {
 
 	@description = "This test covers LPS-128473. This test ensures that users can filter documents by Recent."
 	@priority = "3"
-	@refactorneeded
-	test FilterByRecent {
+	@refactordone
+	test CanFilterByRecent {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document Title 2",
 			groupName = "Guest",
@@ -207,18 +207,6 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_3.doc");
 
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "DM Document Title 1",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.editCP(
-			dmDocumentTitle = "DM Document Title 3",
-			dmDocumentTitleEdit = "DM Document Title 3 Edit");
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
@@ -227,16 +215,15 @@ definition {
 			filterBy = "Recent",
 			orderBy = "Modified Date");
 
-		var index = "1";
+		AssertTextEquals.assertPartialText(
+			index = "1",
+			locator1 = "LexiconTable#TABLE_ROW",
+			value1 = "DM Document Title 3");
 
-		for (var dmDocumentTitle : list "DM Document Title 3 Edit,DM Document Title 1,DM Document Title 2") {
-			AssertTextEquals.assertPartialText(
-				index = "${index}",
-				locator1 = "LexiconTable#TABLE_ROW",
-				value1 = "${dmDocumentTitle}");
-
-			var index = ${index} + 1;
-		}
+		AssertTextEquals.assertPartialText(
+			index = "2",
+			locator1 = "LexiconTable#TABLE_ROW",
+			value1 = "DM Document Title 2");
 	}
 
 	@description = "This test covers LPS-112571. It ensures that a gif file can be added to editor normally after disabling the gif mime type from the adaptive media of the system settings."

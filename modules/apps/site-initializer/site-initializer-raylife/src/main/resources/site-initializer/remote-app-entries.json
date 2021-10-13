@@ -2,9 +2,9 @@
 	{
 		"cssURLs": "",
 		"elementURLs": [
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/d2c/js/2.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/d2c/js/main.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/d2c/js/runtime-main.js$]"
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/js/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/js/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/js/runtime-main.js$]"
 		],
 		"htmlElementName": "liferay-raylife-d2c",
 		"name_i18n": {
@@ -21,9 +21,9 @@
 	{
 		"cssURLs": "",
 		"elementURLs": [
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/d2c/js/2.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/d2c/js/main.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/d2c/js/runtime-main.js$]"
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/js/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/js/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/js/runtime-main.js$]"
 		],
 		"htmlElementName": "liferay-raylife-d2c",
 		"name_i18n": {
@@ -39,9 +39,9 @@
 	{
 		"cssURLs": "",
 		"elementURLs": [
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/d2c/js/2.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/d2c/js/main.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/d2c/js/runtime-main.js$]"
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/js/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/js/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/js/runtime-main.js$]"
 		],
 		"htmlElementName": "liferay-raylife-d2c",
 		"name_i18n": {

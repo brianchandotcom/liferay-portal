@@ -215,6 +215,14 @@ definition {
 			locator1 = "ObjectAdmin#SELECT_LANGUAGE");
 	}
 
+	macro changePluralLabelLanguage {
+		Click(locator1 = "ObjectAdmin#DROPDOWN_LANGUAGEM_PLURAL_LABEL");
+
+		Click(
+			key_newLanguage = "${newLanguage}",
+			locator1 = "ObjectAdmin#SELECT_LANGUAGE");
+	}
+
 	macro clickFieldsSearchableSectionRadioOption {
 		Click.javaScriptClick(
 			key_radioOption = "${radioOption}",

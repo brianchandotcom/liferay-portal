@@ -867,12 +867,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-7962 | Test Summary: Create a segment that contains anonymous individuals"
 	@priority = "5"
 	test CanCreateSegmentWithAnonymousIndividuals {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: data doesn't appear on time
-		// AC Refactor ticket: LRAC-9363
-
 		var usernameList = "ac,liferay,dxp";
+
+		var emailList = "ac@liferay.com,liferay@liferay.com,dxp@liferay.com";
+
+		var nameList = "ac ac,liferay liferay,dxp dxp";
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
@@ -894,17 +893,10 @@ definition {
 		}
 
 		task ("Login with users and view the site page") {
-			for (var username : list "${usernameList}") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${username} ${username}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Switch to new property in AC") {
@@ -947,18 +939,14 @@ definition {
 			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 		}
 
-		task ("View segment membership numbers") {
-
-			// AC Refactor: data doesn't appear on time
-
-			ACSegments.viewSegmentMembershipLegendNumbers(
-				anonymousNumber = "3",
-				knownNumber = "0",
-				totalNumber = "3");
-		}
-
 		task ("View include anonymous label") {
 			ACSegments.viewIncludeAnonymousLabel();
+		}
+
+		task ("Switch tab to membership and check the membership list") {
+			ACNavigation.switchTab(tabName = "Membership");
+
+			ACUtils.viewNameList(nameList = "${nameList}");
 		}
 	}
 

@@ -1528,7 +1528,7 @@ public class ObjectEntryLocalServiceImpl
 
 		String value = (String)entry.getValue();
 
-		if (value.length() > 75) {
+		if (value.length() > 1000) {
 			throw new ObjectEntryValuesException(
 				"Object field \"" + entry.getKey() +
 					"\" value exceeds 75 characters.");

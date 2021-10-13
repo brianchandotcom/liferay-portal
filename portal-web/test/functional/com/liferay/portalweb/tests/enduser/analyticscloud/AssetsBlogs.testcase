@@ -207,9 +207,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8375 | Test Summary: Blogs audience card shows expected amount of segmented and unsegmented individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInBlogs {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		var usernameList = "ac,liferay";
 
-		for (var name : list "ac,liferay") {
+		var emailList = "ac@liferay.com,liferay@liferay.com";
+
+		for (var name : list "${usernameList}") {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
 				userFirstName = "${name}",
@@ -217,31 +219,22 @@ definition {
 				userScreenName = "${name}");
 		}
 
-		ACDXPSettings.syncNewContactData();
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		for (var name : list "ac,liferay") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "${name}@liferay.com",
-				userLoginFullName = "${name} ${name}");
-
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
-
-			Pause(locator1 = "5000");
-		}
-
-		User.logoutPG();
-
-		Navigator.gotoSitePage(
+		ACUtils.navigateToSitePageWithUser(
+			emailList = "${emailList}",
+			actionType = "View Blog",
+			documentTitleList = "Blogs AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
-		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+		User.logoutPG();
 
-		Pause(locator1 = "5000");
+		ACUtils.navigateToSitePage(
+			actionType = "View Blog",
+			documentTitleList = "Blogs AC Title",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -261,11 +254,11 @@ definition {
 
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
-		Navigator.gotoSitePage(
+		ACUtils.navigateToSitePage(
+			actionType = "View Blog",
+			documentTitleList = "Blogs AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
-
-		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 
 		ACUtils.closeAllSessionsAndWait();
 

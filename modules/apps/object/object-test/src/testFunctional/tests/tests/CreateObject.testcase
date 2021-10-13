@@ -808,8 +808,6 @@ definition {
 	@description = "LPS-135389 - Verify it is possible to set a different language value for an Object Plural Label"
 	@priority = "4"
 	test CanSetDifferentLanguageForObjectPluralLabel {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -841,7 +839,6 @@ definition {
 			key_category = "Objeto",
 			key_portlet = "Objetos Costumizados",
 			locator1 = "ApplicationsMenu#PORTLET");
-
 	}
 
 	@description = "LPS-135549 - Verify it is possible to set a field as Mandatory"

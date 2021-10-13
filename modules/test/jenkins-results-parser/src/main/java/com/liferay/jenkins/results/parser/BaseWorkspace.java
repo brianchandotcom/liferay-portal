@@ -132,7 +132,11 @@ public abstract class BaseWorkspace implements Workspace {
 	}
 
 	@Override
-	public void synchronizeToGitHubDev() {
+	public synchronized void startSynchronizeToGitHubDev() {
+		if (_parallelExecutor != null) {
+			return;
+		}
+
 		List<Callable<Object>> callables = new ArrayList<>();
 
 		for (final WorkspaceGitRepository workspaceGitRepository :
@@ -152,10 +156,17 @@ public abstract class BaseWorkspace implements Workspace {
 			callables.add(callable);
 		}
 
-		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
+		_parallelExecutor = new ParallelExecutor<>(
 			callables, threadPoolExecutor);
 
-		parallelExecutor.execute();
+		_parallelExecutor.start();
+	}
+
+	@Override
+	public synchronized void synchronizeToGitHubDev() {
+		startSynchronizeToGitHubDev();
+
+		waitForSynchronizeToGitHubDev();
 	}
 
 	@Override
@@ -188,6 +199,15 @@ public abstract class BaseWorkspace implements Workspace {
 			callables, threadPoolExecutor);
 
 		parallelExecutor.execute();
+	}
+
+	@Override
+	public void waitForSynchronizeToGitHubDev() {
+		if (_parallelExecutor == null) {
+			throw new RuntimeException("Synchronizing had not started");
+		}
+
+		_parallelExecutor.waitFor();
 	}
 
 	protected BaseWorkspace(JSONObject jsonObject) {
@@ -254,6 +274,7 @@ public abstract class BaseWorkspace implements Workspace {
 		"primary_upstream_branch_name", "workspace_repository_dir_names"
 	};
 
+	private ParallelExecutor<Object> _parallelExecutor;
 	private final WorkspaceGitRepository _primaryWorkspaceGitRepository;
 	private Map<String, WorkspaceGitRepository> _workspaceGitRepositories;
 

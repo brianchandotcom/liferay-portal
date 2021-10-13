@@ -62,4 +62,13 @@ definition {
 
 	}
 
+	@description = "Verify that the Translation status still Pending when the Translation is rejected"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TranslationStatusIsPendingOnReject {
+
+		// TODO LRQA-70805 TranslationStatusIsPendingOnReject pending implementation
+
+	}
+
 }

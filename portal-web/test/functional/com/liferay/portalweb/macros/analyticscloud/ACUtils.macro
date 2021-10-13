@@ -598,6 +598,21 @@ definition {
 		}
 	}
 
+	macro viewNameListInOrder {
+		var key_userName = "${name}";
+
+		var index = "${index}";
+
+		while (IsElementNotPresent(locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE") && (maxIterations = "50")) {
+			Refresh();
+		}
+
+		AssertTextEquals(
+			locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE",
+			value1 = "${name}");
+		}
+	}
+
 	macro viewNoResultsMessage {
 		var key_noResultMessage = "${noResultMessage}";
 

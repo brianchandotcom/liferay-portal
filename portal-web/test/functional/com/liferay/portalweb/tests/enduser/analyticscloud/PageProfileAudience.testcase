@@ -24,6 +24,11 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		JSONUser.tearDownNonAdminUsers();
 
 		ACUtils.tearDownAC();
 	}
@@ -36,6 +41,10 @@ definition {
 		// AC Refactor: Timing issues may happen on this test case
 		// AC Refactor ticket: LRAC-9409
 
+		var usernameList = "ac,liferay";
+
+		var emailList = "ac@liferay.com,liferay@liferay.com";
+
 		task ("Add page and Blog for interaction with the AC") {
 			ACUtils.addSiteAndPage();
 
@@ -45,7 +54,7 @@ definition {
 		task ("Add users and interact with the page to get data from known and unsegmented users") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-			for (var name : list "ac,liferay") {
+			for (var name : list "${usernameList}") {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
 					userFirstName = "${name}",
@@ -55,27 +64,22 @@ definition {
 
 			ACDXPSettings.syncNewContactData();
 
-			for (var name : list "ac,liferay") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${name}@liferay.com",
-					userLoginFullName = "${name} ${name}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Logout and interact whith the page to get data from anonymous user") {
 			User.logoutPG();
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+		}
 
-			Pause(locator1 = "5000");
+		task ("Close all sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Go to AC and create segment for the user") {
@@ -95,29 +99,24 @@ definition {
 		}
 
 		task ("Go to DXP and interact with the page to get data from segmented users") {
-			ACUtils.launchDXP();
+			ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
-			for (var name : list "ac,liferay") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${name}@liferay.com",
-					userLoginFullName = "${name} ${name}");
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "liferay@liferay.com",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Logout and interact with the page to get data from anonymous unsegmented user") {
 			User.logoutPG();
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("Close all sessions") {

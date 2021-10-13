@@ -117,7 +117,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Modal#BODY",
-			value1 = "You're editing the categories for the selected item.");
+			value1 = "You are editing the categories for the selected item.");
 
 		Type.sendKeys(
 			locator1 = "AssetCategorization#TAGS_FIELD",

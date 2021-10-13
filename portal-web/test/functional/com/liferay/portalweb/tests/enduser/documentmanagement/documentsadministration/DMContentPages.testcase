@@ -87,7 +87,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Modal#BODY",
-			value1 = "You're editing the tags for the selected item.");
+			value1 = "You are editing the tags for the selected item.");
 
 		Click(locator1 = "Modal#BODY");
 

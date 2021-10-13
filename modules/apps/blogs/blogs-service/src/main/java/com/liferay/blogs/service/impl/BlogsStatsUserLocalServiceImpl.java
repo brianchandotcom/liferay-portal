@@ -45,11 +45,6 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public BlogsStatsUser fetchStatsUser(long groupId, long userId) {
-		return blogsStatsUserPersistence.fetchByG_U(groupId, userId);
-	}
-
-	@Override
 	public List<BlogsStatsUser> getGroupsStatsUsers(
 		long companyId, long groupId, int start, int end) {
 

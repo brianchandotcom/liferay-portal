@@ -14,6 +14,15 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+import java.io.IOException;
+
+import java.nio.file.PathMatcher;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.json.JSONObject;
 
 /**
@@ -51,6 +60,11 @@ public class PortalWorkspace extends BaseWorkspace {
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			_getPortalWorkspaceGitRepository();
 
+		if (portalWorkspaceGitRepository == null) {
+			throw new RuntimeException(
+				"The portal workspace git repository is not set");
+		}
+
 		portalWorkspaceGitRepository.setUp();
 
 		String portalBuildProfile = getPortalBuildProfile();
@@ -70,6 +84,8 @@ public class PortalWorkspace extends BaseWorkspace {
 		_configureReleaseToolWorkspaceGitRepository();
 
 		super.setUp();
+
+		_setUpOSBAsahWorkspaceGitRepository();
 	}
 
 	protected PortalWorkspace(JSONObject jsonObject) {
@@ -241,6 +257,95 @@ public class PortalWorkspace extends BaseWorkspace {
 		}
 
 		return (ReleaseToolWorkspaceGitRepository)workspaceGitRepository;
+	}
+
+	private void _setUpOSBAsahWorkspaceGitRepository() {
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_getPortalWorkspaceGitRepository();
+
+		File modulesDir = new File(
+			portalWorkspaceGitRepository.getDirectory(),
+			"modules/dxp/apps/osb/osb-asah");
+
+		if (!modulesDir.exists()) {
+			return;
+		}
+
+		File ciMergeFile = new File(modulesDir, "ci-merge");
+
+		if (!ciMergeFile.exists()) {
+			return;
+		}
+
+		WorkspaceGitRepository workspaceGitRepository =
+			getWorkspaceGitRepository("com-liferay-osb-asah-private");
+
+		if (workspaceGitRepository == null) {
+			return;
+		}
+
+		List<PathMatcher> deleteExcludePathMatchers =
+			JenkinsResultsParserUtil.toPathMatchers(
+				JenkinsResultsParserUtil.combine(
+					JenkinsResultsParserUtil.getCanonicalPath(modulesDir),
+					File.separator),
+				".gradle/", ".gitrepo", "ci-merge", "gradle/");
+
+		try {
+			JenkinsResultsParserUtil.delete(
+				modulesDir, null, deleteExcludePathMatchers);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		List<PathMatcher> copyExcludePathMatchers =
+			JenkinsResultsParserUtil.toPathMatchers(
+				JenkinsResultsParserUtil.combine(
+					JenkinsResultsParserUtil.getCanonicalPath(
+						workspaceGitRepository.getDirectory()),
+					File.separator),
+				".git/", ".gradle/", "gradle/", "settings.gradle");
+
+		try {
+			JenkinsResultsParserUtil.copy(
+				workspaceGitRepository.getDirectory(), modulesDir, null,
+				copyExcludePathMatchers);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		try {
+			Map<String, String> parameters = new HashMap<>();
+
+			parameters.put("module.dir", "dxp/apps/osb/osb-asah");
+			parameters.put(
+				"portal.dir",
+				JenkinsResultsParserUtil.getCanonicalPath(
+					portalWorkspaceGitRepository.getDirectory()));
+
+			AntUtil.callTarget(
+				portalWorkspaceGitRepository.getDirectory(), "build-test.xml",
+				"clean-version-override", parameters);
+		}
+		catch (AntException antException) {
+			throw new RuntimeException(antException);
+		}
+
+		List<File> versionOverrideFiles = JenkinsResultsParserUtil.findFiles(
+			modulesDir,
+			JenkinsResultsParserUtil.combine(
+				".version-override-", modulesDir.getName(), ".properties"));
+
+		for (File versionOverrideFile : versionOverrideFiles) {
+			JenkinsResultsParserUtil.delete(versionOverrideFile);
+		}
+
+		GitWorkingDirectory gitWorkingDirectory =
+			portalWorkspaceGitRepository.getGitWorkingDirectory();
+
+		System.out.println(gitWorkingDirectory.status());
 	}
 
 	private boolean _updateWorkspaceGitRepository(

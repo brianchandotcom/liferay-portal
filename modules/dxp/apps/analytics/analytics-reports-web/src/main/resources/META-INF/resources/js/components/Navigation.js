@@ -31,9 +31,8 @@ export default function Navigation({
 	timeSpanOptions,
 	viewURLs,
 }) {
-	const {endpoints, namespace, page, publishedToday, warning} = useContext(
-		StoreStateContext
-	);
+	const {endpoints, namespace, page, publishedToday, warning} =
+		useContext(StoreStateContext);
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
@@ -92,7 +91,7 @@ export default function Navigation({
 	const handleTrafficSources = useCallback(() => {
 		return APIService.getTrafficSources(
 			endpoints.analyticsReportsTrafficSourcesURL,
-			{namespace, plid: page.plid}
+			{namespace, plid: page.plid, timeSpanKey}
 		).then(({trafficSources}) => trafficSources);
 	}, [endpoints.analyticsReportsTrafficSourcesURL, namespace, page.plid]);
 

@@ -409,15 +409,11 @@ definition {
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
-		for (var n : list "1,2,3") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
-
-			Pause(locator1 = "3000");
-		}
+		ACUtils.navigateToSitePage(
+			documentTitleList = "DM AC Title,DM AC Title,DM AC Title",
+			actionType = "Download DM",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -433,7 +429,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACNavigation.openItem(itemName = "Document_1.jpg");
+		ACNavigation.openItem(itemName = "DM AC Title");
 
 		ACIndividualsDashboard.goToOverviewTab();
 

@@ -30,6 +30,8 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 
+		JSONUser.tearDownNonAdminUsers();
+
 		ACUtils.tearDownAC();
 	}
 
@@ -70,11 +72,9 @@ definition {
 				userLoginFullName = "ac ac");
 
 			for (var pageName : list "${pageNameList}") {
-				Navigator.gotoSitePage(
+				ACUtils.navigateToSitePage(
 					pageName = "${pageName}",
 					siteName = "Site Name");
-
-				Pause(locator1 = "3000");
 			}
 		}
 

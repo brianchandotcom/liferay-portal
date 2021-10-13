@@ -100,11 +100,25 @@ definition {
 	}
 
 	@description = "LPS-130215 - Verify that the filter allows to see all version together"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanSeeAllVersionsTogetherOnPage {
 
-		// TODO LRQA-68932 CanSeeAllVersionsTogetherOnPage pending implementation
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetricsPerformanceByStep.goToPerformanceTab();
+
+		Click(
+			key_stepsNumber = "2",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
+
+		Click(
+			key_dateRange = "Process Version",
+			key_title = "",
+			locator1 = "WorkflowMetrics#METRICS_DATE_RANGE_DROPDOWN_BY_TITLE");
+
+		AssertElementPresent(
+			key_dateRange = "All Versions",
+			locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");		
 
 	}
 

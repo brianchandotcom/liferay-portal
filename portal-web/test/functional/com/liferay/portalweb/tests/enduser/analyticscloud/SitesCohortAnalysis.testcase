@@ -105,15 +105,13 @@ definition {
 		}
 
 		task ("Sign in as the created user") {
-			ACUtils.launchDXP(userEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
 		}
 
 		task ("View the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			Pause(locator1 = "7000");
 		}
 
 		task ("Close sessions") {

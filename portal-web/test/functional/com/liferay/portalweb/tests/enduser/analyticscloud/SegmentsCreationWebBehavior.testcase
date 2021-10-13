@@ -1031,15 +1031,11 @@ definition {
 			userLoginEmailAddress = "${username}@liferay.com",
 			userLoginFullName = "${username} ${username}");
 
-		for (var n : list "1,2,3") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
-
-			Pause(locator1 = "5000");
-		}
+		ACUtils.navigateToSitePage(
+			documentTitleList = "DM AC Title",
+			actionType = "View DM",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -1059,7 +1055,7 @@ definition {
 			documentTitle = "DM AC Title",
 			indexField = "1");
 
-		ACSegments.setOccurence(occurenceNumber = "6");
+		ACSegments.setOccurence(occurenceNumber = "4");
 
 		ACSegments.saveSegment();
 
@@ -1069,19 +1065,11 @@ definition {
 
 		ACUtils.launchDXP(userEmailAddress = "${username}@liferay.com");
 
-		Navigator.gotoSitePage(
+		ACUtils.navigateToSitePage(
+			documentTitleList = "DM AC Title,DM AC Title,DM AC Title",
+			actionType = "View DM",
 			pageName = "AC Page",
 			siteName = "Site Name");
-
-		for (var n : list "1,2,3,4") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
-
-			Pause(locator1 = "5000");
-		}
 
 		ACUtils.closeAllSessionsAndWait();
 

@@ -16,8 +16,8 @@ module.exports = {
 							rootPathPrefix: '~/shared',
 						},
 						{
-							rootPathSuffix: './src/apps',
-							rootPathPrefix: '~/apps',
+							rootPathSuffix: './src/routes',
+							rootPathPrefix: '~/routes',
 						},
 					],
 				},

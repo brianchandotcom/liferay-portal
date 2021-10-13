@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import GetAQuote from '~/apps/get-a-quote/pages/GetAQuote';
-import QuoteComparison from '~/apps/quote-comparison/pages/QuoteComparison';
-import SelectedQuote from '~/apps/selected-quote/pages/SelectedQuote';
-import {WebComponent} from '~/shared/WebComponent';
-import ClayIconProvider from '~/shared/context/ClayIconProvider';
-import {GoogleMapsService} from '~/shared/services/google-maps';
-import SharedStyle from '~/shared/styles/index.scss';
+import {WebComponent} from '~/common/WebComponent';
+import ClayIconProvider from '~/common/context/ClayIconProvider';
+import {GoogleMapsService} from '~/common/services/google-maps';
+import SharedStyle from '~/common/styles/index.scss';
+import GetAQuote from '~/routes/get-a-quote/pages/GetAQuote';
+import QuoteComparison from '~/routes/quote-comparison/pages/QuoteComparison';
+import SelectedQuote from '~/routes/selected-quote/pages/SelectedQuote';
 
 const DirectToCustomer = ({application}) => {
 	const SearchParams = new URLSearchParams(window.location.search);

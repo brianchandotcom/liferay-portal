@@ -3,19 +3,11 @@
 		"baseUrl": ".",
 		"module": "commonjs",
 		"paths": {
-			"~/*": [
-				"src/*"
-			],
-			"~/apps/*": [
-				"src/apps/*"
-			],
-			"~/shared/*": [
-				"src/shared/*"
-			]
+			"~/*": ["src/*"],
+			"~/routes/*": ["src/apps/*"],
+			"~/common/*": ["src/common/*"]
 		},
 		"target": "ES6"
 	},
-	"exclude": [
-		"node_modules"
-	]
+	"exclude": ["node_modules"]
 }

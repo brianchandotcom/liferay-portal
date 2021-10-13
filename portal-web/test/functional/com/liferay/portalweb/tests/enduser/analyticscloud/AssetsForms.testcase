@@ -92,42 +92,39 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8423 | Test Summary: Forms audience card shows expected amount of known and anonymous individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInForms {
+		var usernameList = "ac,ac2";
+
+		var emailList = "ac@liferay.com,ac2@liferay.com";
+
 		task ("Create users and connect to AC") {
-			for (var n : list "ac,ac2") {
+			for (var name : list "${usernameList}") {
 				JSONUser.addUser(
-					userEmailAddress = "${n}@liferay.com",
-					userFirstName = "${n}",
-					userLastName = "${n}",
-					userScreenName = "${n}");
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
 			}
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Go to form and submit") {
-			for (var n : list "ac,ac2,unknown") {
-				if ("${n}" != "unknown") {
-					User.logoutAndLoginPG(
-						userLoginEmailAddress = "${n}@liferay.com",
-						userLoginFullName = "${n} ${n}");
-				}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				actionType = "Submit Form",
+				submitText = "Test Assets",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
 
-				if ("${n}" == "unknown") {
-					User.logoutPG();
-				}
+		task ("Download the document with anonymous user") {
+			User.logoutPG();
 
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				FormFields.editText(
-					fieldName = "Text",
-					fieldValue = "Test Assets");
-
-				FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
-
-				Pause(locator1 = "10000");
-			}
+			ACUtils.navigateToSitePage(
+				actionType = "Submit Form",
+				submitText = "Test Assets",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close all sessions and go to AC") {

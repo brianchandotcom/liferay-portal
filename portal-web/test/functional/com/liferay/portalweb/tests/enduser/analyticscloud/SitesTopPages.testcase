@@ -312,21 +312,14 @@ definition {
 
 		task ("Interation with pages") {
 			for (var n : list "2,3,4,5") {
-				Refresh();
-
-				Navigator.gotoSitePage(
+				ACUtils.navigateToSitePage(
+					actionType = "View Blog",
+					documentTitleList = "Test Blog ${n}",
 					pageName = "AC Page",
 					siteName = "Site Name");
-
-				BlogsNavigator.gotoPG(entryTitle = "Test Blog ${n}");
-
-				Refresh();
-
-				Pause(locator1 = "3000");
 			}
-			ACUtils.closeAllSessions();
 
-			Pause(locator1 = "60000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 		task ("AC launch") {
 			ACUtils.launchAC();

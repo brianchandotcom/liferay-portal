@@ -16,10 +16,14 @@ package com.liferay.account.internal.manager;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountWebKeys;
+import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.manager.CurrentAccountEntryManager;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.settings.AccountEntryGroupSettings;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
@@ -27,6 +31,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -42,6 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
+ * @author Drew Brokke
  */
 @Component(immediate = true, service = CurrentAccountEntryManager.class)
 public class CurrentAccountEntryManagerImpl
@@ -52,21 +58,23 @@ public class CurrentAccountEntryManagerImpl
 
 		AccountEntry accountEntry = _getAccountEntryFromHttpSession(groupId);
 
-		if (_isValid(accountEntry)) {
+		String[] allowedTypes = _getAllowedTypes(groupId);
+
+		if (_isValid(accountEntry, allowedTypes)) {
 			return accountEntry;
 		}
 
 		accountEntry = _getAccountEntryFromPortalPreferences(groupId, userId);
 
-		if (_isValid(accountEntry)) {
+		if (_isValid(accountEntry, allowedTypes)) {
 			_saveInHttpSession(accountEntry.getAccountEntryId(), groupId);
 
 			return accountEntry;
 		}
 
-		accountEntry = _getDefaultAccountEntry(userId);
+		accountEntry = _getDefaultAccountEntry(allowedTypes, userId);
 
-		if (_isValid(accountEntry)) {
+		if (_isValid(accountEntry, allowedTypes)) {
 			setCurrentAccountEntry(
 				accountEntry.getAccountEntryId(), groupId, userId);
 
@@ -82,9 +90,28 @@ public class CurrentAccountEntryManagerImpl
 	public void setCurrentAccountEntry(
 		long accountEntryId, long groupId, long userId) {
 
-		_saveInHttpSession(accountEntryId, groupId);
+		try {
+			AccountEntry accountEntry =
+				_accountEntryLocalService.fetchAccountEntry(accountEntryId);
 
-		_saveInPortalPreferences(accountEntryId, groupId, userId);
+			if ((accountEntry != null) &&
+				!ArrayUtil.contains(
+					_getAllowedTypes(groupId), accountEntry.getType())) {
+
+				throw new AccountEntryTypeException(
+					"Cannot set a current account entry of a disallowed " +
+						"type: " + accountEntry.getType());
+			}
+
+			_saveInHttpSession(accountEntryId, groupId);
+
+			_saveInPortalPreferences(accountEntryId, groupId, userId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
 	}
 
 	private AccountEntry _getAccountEntryFromHttpSession(long groupId) {
@@ -117,7 +144,12 @@ public class CurrentAccountEntryManagerImpl
 		return null;
 	}
 
-	private AccountEntry _getDefaultAccountEntry(long userId)
+	private String[] _getAllowedTypes(long groupId) {
+		return _accountEntryGroupSettings.getAllowedTypes(groupId);
+	}
+
+	private AccountEntry _getDefaultAccountEntry(
+			String[] allowedTypes, long userId)
 		throws PortalException {
 
 		User user = _userLocalService.fetchUser(userId);
@@ -131,11 +163,7 @@ public class CurrentAccountEntryManagerImpl
 			_accountEntryLocalService.getUserAccountEntries(
 				user.getUserId(),
 				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
-				new String[] {
-					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
-				},
-				0, 1);
+				allowedTypes, 0, 1);
 
 		if (accountEntries.size() == 1) {
 			return accountEntries.get(0);
@@ -152,10 +180,13 @@ public class CurrentAccountEntryManagerImpl
 		return _portletPreferencesFactory.getPortalPreferences(userId, true);
 	}
 
-	private boolean _isValid(AccountEntry accountEntry) {
+	private boolean _isValid(AccountEntry accountEntry, String[] allowedTypes) {
 		if ((accountEntry != null) &&
 			Objects.equals(
-				WorkflowConstants.STATUS_APPROVED, accountEntry.getStatus())) {
+				WorkflowConstants.STATUS_APPROVED, accountEntry.getStatus()) &&
+			((accountEntry.getAccountEntryId() ==
+				AccountConstants.ACCOUNT_ENTRY_ID_GUEST) ||
+			 ArrayUtil.contains(allowedTypes, accountEntry.getType()))) {
 
 			return true;
 		}
@@ -195,6 +226,12 @@ public class CurrentAccountEntryManagerImpl
 		_portalPreferencesLocalService.updatePreferences(
 			userId, PortletKeys.PREFS_OWNER_TYPE_USER, portalPreferences);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CurrentAccountEntryManagerImpl.class);
+
+	@Reference
+	private AccountEntryGroupSettings _accountEntryGroupSettings;
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;

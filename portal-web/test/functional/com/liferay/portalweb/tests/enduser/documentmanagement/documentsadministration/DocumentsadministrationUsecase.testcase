@@ -190,36 +190,22 @@ definition {
 		DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This test checks if the file extension upload restrictions in System Settings works as expected."
+	@description = "This test checks if file uploads can be restricted to .doc format."
 	@priority = "5"
-	@refactorneeded
-	test CheckValidationForFileEntries {
-		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#CheckValidationForFileEntries";
+	@refactordone
+	test CanRestrictFileExtensionToDoc {
+		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#CanRestrictFileExtensionToDoc";
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "Service",
-			configurationScope = "System Scope");
-
-		ScrollWebElementIntoView(
-			key_text = "fileExtensions",
-			locator1 = "TextArea#ANY");
-
-		Type(
-			key_text = "fileExtensions",
-			locator1 = "TextArea#ANY",
-			value1 = ".doc");
+		DMDocument.updateFileExtensions(fieldValue = ".doc");
 
 		SystemSettings.saveConfiguration();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -227,7 +213,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		for (var dmDocumentTitle : list "Document_1.docx,Document_1.jpeg,Document_1.jpg,Document_1.mp4,Document_1.pdf,Document_1.png,Document_1.ppt,Document_1.pptx,Document_1.txt,Document_1.xls,Document_1.xlsx") {
+		for (var dmDocumentTitle : list "Document_1.docx,Document_1.jpeg") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 			DMDocument.addCP(

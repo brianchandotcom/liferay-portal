@@ -23,6 +23,8 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -177,6 +179,25 @@ public class XLIFFInfoFormTranslationImporter
 		).infoItemReference(
 			infoItemReference
 		).build();
+	}
+
+	private long _getSegmentsExperienceClassPK(
+		InfoItemReference infoItemReference) {
+
+		if (!Objects.equals(
+				infoItemReference.getClassName(), Layout.class.getName())) {
+
+			return infoItemReference.getClassPK();
+		}
+
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			infoItemReference.getClassPK());
+
+		if ((draftLayout == null) || !draftLayout.isDraftLayout()) {
+			return infoItemReference.getClassPK();
+		}
+
+		return draftLayout.getClassPK();
 	}
 
 	private Locale _getSourceLocale(StartSubDocument startSubDocument) {
@@ -526,7 +547,7 @@ public class XLIFFInfoFormTranslationImporter
 				infoItemReference.getClassName()) ||
 			!Objects.equals(
 				segmentsExperience.getClassPK(),
-				infoItemReference.getClassPK())) {
+				_getSegmentsExperienceClassPK(infoItemReference))) {
 
 			throw new XLIFFFileException.MustHaveValidId("File ID is invalid");
 		}
@@ -584,6 +605,9 @@ public class XLIFFInfoFormTranslationImporter
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private SAXReader _saxReader;

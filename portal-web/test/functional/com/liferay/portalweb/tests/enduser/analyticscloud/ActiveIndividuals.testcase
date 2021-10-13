@@ -142,7 +142,7 @@ definition {
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
 
-			for (var n : list "1,2,3,4") {
+			for (var n : list "1,2,3") {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");

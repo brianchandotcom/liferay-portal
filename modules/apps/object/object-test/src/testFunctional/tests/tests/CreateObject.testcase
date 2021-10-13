@@ -819,9 +819,9 @@ definition {
 
 		ObjectAdmin.changePluralLabelLanguage(newLanguage = "pt-BR");
 
-		CreateObject.editLabel(labelName = "Objeto Costumizado");
+		CreateObject.editLabel(labelName = "Objeto Customizado");
 
-		CreateObject.editPluralLabel(pluralLabelName = "Objetos Costumizados");
+		CreateObject.editPluralLabel(pluralLabelName = "Objetos Customizados");
 
 		CreateObject.saveObject();
 
@@ -837,7 +837,7 @@ definition {
 
 		AssertElementPresent(
 			key_category = "Objeto",
-			key_portlet = "Objetos Costumizados",
+			key_portlet = "Objetos Customizados",
 			locator1 = "ApplicationsMenu#PORTLET");
 	}
 

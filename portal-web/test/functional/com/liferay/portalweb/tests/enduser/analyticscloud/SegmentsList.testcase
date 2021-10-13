@@ -325,13 +325,11 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "${fullName}");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "5000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -354,44 +352,44 @@ definition {
 			}
 		}
 
-		task ("Go to Segments and filter by "Name"") {
+		task ("Go to Segments and filter by 'Name'") {
 			ACNavigation.goToSegments();
 
 			ACSegments.filterAndOrderForSegLists(filterName = "Name");
 		}
 
 		task ("Assert 3 segments filter by name display") {
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_1",
-				value1 = "Static Segment Test1");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test1",
+				index = "1");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_2",
-				value1 = "Static Segment Test2");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test2",
+				index = "2");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_3",
-				value1 = "Static Segment Test3");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test3",
+				index = "3");
 		}
 
-		task ("Go to Segments and filter by descending order of "Name"") {
+		task ("Go to Segments and filter by descending order of 'Name'") {
 			ACNavigation.goToSegments();
 
 			ACUtils.orderArrow(type = "descending");
 		}
 
 		task ("Assert 3 segments in order filter by membership display") {
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_1",
-				value1 = "Static Segment Test3");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test3",
+				index = "1");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_2",
-				value1 = "Static Segment Test2");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test2",
+				index = "2");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_3",
-				value1 = "Static Segment Test1");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test1",
+				index = "3");
 		}
 	}
 

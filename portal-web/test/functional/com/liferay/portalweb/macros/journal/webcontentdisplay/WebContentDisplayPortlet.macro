@@ -333,54 +333,6 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro selectOtherSiteWebContent {
-		Portlet.gotoPortletOptions(
-			portletName = "Web Content Display",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertClick(
-			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
-			value1 = "Select");
-
-		Pause(locator1 = "5000");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		AssertClick(
-			key_breadcrumbName = "Sites and Libraries",
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
-			value1 = "Sites and Libraries");
-
-		Click(
-			key_card = "${otherSiteName}",
-			locator1 = "Card#CARD_TITLE_LINK");
-
-		var key_listEntry = "${webContentTitle}";
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		AssertClick(
-			locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
-			value1 = "${webContentTitle}");
-
-		SelectFrame(value1 = "relative=top");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertTextEquals(
-			key_card = "${webContentTitle} (${otherSiteName})",
-			locator1 = "Card#CARD_TITLE",
-			value1 = "${webContentTitle} (${otherSiteName})");
-
-		PortletEntry.save();
-
-		SelectFrame(value1 = "relative=top");
-
-		Click(locator1 = "Modal#CLOSE_BUTTON");
-	}
-
 	macro selectWebContent {
 		Portlet.gotoPortletOptions(
 			portletName = "Web Content Display",

@@ -16,16 +16,24 @@ package com.liferay.headless.commerce.admin.order.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.model.COREntryRel;
+import com.liferay.commerce.order.rule.service.COREntryLocalService;
+import com.liferay.commerce.order.rule.service.COREntryRelLocalService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderType;
+import com.liferay.headless.commerce.admin.order.client.serdes.v1_0.OrderTypeSerDes;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
@@ -33,6 +41,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -76,6 +85,45 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 
 			iterator.remove();
 		}
+	}
+
+	@Override
+	@Test
+	public void testGetOrderRuleOrderTypeOrderType() throws Exception {
+		OrderType postOrderType = _addOrderType(randomOrderType());
+
+		COREntryRel corEntryRel = _getCOREntryRel(postOrderType);
+
+		OrderType getOrderType =
+			orderTypeResource.getOrderRuleOrderTypeOrderType(
+				corEntryRel.getCOREntryRelId());
+
+		assertEquals(postOrderType, getOrderType);
+		assertValid(getOrderType);
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetOrderRuleOrderTypeOrderType() throws Exception {
+		OrderType orderType = testGraphQLOrderType_addOrderType();
+
+		COREntryRel corEntryRel = _getCOREntryRel(orderType);
+
+		Assert.assertTrue(
+			equals(
+				orderType,
+				OrderTypeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderRuleOrderTypeOrderType",
+								HashMapBuilder.<String, Object>put(
+									"orderRuleOrderTypeId",
+									corEntryRel.getCOREntryRelId()
+								).build(),
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/orderRuleOrderTypeOrderType"))));
 	}
 
 	@Override
@@ -194,6 +242,28 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 		return _toOrderType(commerceOrderType);
 	}
 
+	private COREntryRel _getCOREntryRel(OrderType orderType) throws Exception {
+		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
+			RandomTestUtil.nextDate(), _user.getTimeZone());
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
+			RandomTestUtil.nextDate(), _user.getTimeZone());
+
+		COREntry corEntry = _corEntryLocalService.addCOREntry(
+			RandomTestUtil.randomString(), _user.getUserId(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
+			displayDateConfig.getMonth(), displayDateConfig.getDay(),
+			displayDateConfig.getYear(), displayDateConfig.getHour(),
+			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
+			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
+			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
+			true, RandomTestUtil.randomString(), 0,
+			RandomTestUtil.randomString(), StringPool.BLANK, _serviceContext);
+
+		return _corEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceOrderType.class.getName(),
+			orderType.getId(), corEntry.getCOREntryId());
+	}
+
 	private OrderType _toOrderType(CommerceOrderType commerceOrderType) {
 		return new OrderType() {
 			{
@@ -217,6 +287,13 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 
 	private final List<CommerceOrderType> _commerceOrderTypes =
 		new ArrayList<>();
+
+	@Inject
+	private COREntryLocalService _corEntryLocalService;
+
+	@Inject
+	private COREntryRelLocalService _corEntryRelLocalService;
+
 	private ServiceContext _serviceContext;
 	private User _user;
 

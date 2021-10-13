@@ -171,7 +171,7 @@ definition {
 
 			KaleoFormsAdmin.chooseFieldSet(
 				kfFieldSetName = "Contacts",
-		 		kfProcessName = "Kaleo Forms Process ${newProcess}");
+				kfProcessName = "Kaleo Forms Process ${newProcess}");
 
 			KaleoFormsAdmin.next();
 
@@ -206,7 +206,7 @@ definition {
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "Contacts",
-		 	kfProcessName = "Kaleo Forms Process 5");
+			kfProcessName = "Kaleo Forms Process 5");
 
 		KaleoFormsAdmin.next();
 
@@ -229,8 +229,6 @@ definition {
 		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process 5");
 
 		AssertElementPresent(locator1 = "Pagination#PAGINATION_BAR");
-
-	
 	}
 
 	@description = "Verify that when there are no results for the search, it displays the message -No process were found-."

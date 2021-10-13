@@ -251,10 +251,6 @@ definition {
 
 		ACDXPSettings.syncNewContactData();
 
-		Navigator.openURL();
-
-		Pause(locator1 = "5000");
-
 		ACUtils.launchAC();
 
 		ACProperties.switchProperty(propertyName = "${propertyName}");

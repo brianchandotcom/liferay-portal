@@ -346,6 +346,7 @@ definition {
 				Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
 			}
 		}
+
 		else {
 			if ("${navTab}" == "Fragments") {
 				PageEditor.addFragment(
@@ -358,6 +359,7 @@ definition {
 					elementName = "${fragmentName}",
 					targetElementName = "${targetElementName}");
 			}
+
 			else {
 				PageEditor.addWidget(
 					portletName = "${portletName}",
@@ -3167,6 +3169,7 @@ definition {
 				locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
 				locator2 = "Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
 		}
+
 		else {
 			WaitForElementPresent(
 				key_nodeName = "Container",
@@ -3183,6 +3186,7 @@ definition {
 					locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
 					locator2 = "Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
 			}
+
 			else {
 				DragAndDrop.javaScriptDragAndDropToUp(
 					key_elementName = "${elementName}",

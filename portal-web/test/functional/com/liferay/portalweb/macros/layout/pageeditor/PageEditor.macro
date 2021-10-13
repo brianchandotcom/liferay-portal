@@ -354,8 +354,8 @@ definition {
 					fragmentName = "${fragmentName}",
 					targetFragmentName = "Container");
 
-				PageEditor.moveElementInsideAnExistingContainer(
-					dragAndDropToUp = "${dragAndDropToUp}",
+				PageEditor.moveElementToContainerViaPageStructure(
+					dropTarget = "${dropTarget}",
 					elementName = "${fragmentName}",
 					targetElementName = "${targetElementName}");
 			}
@@ -365,8 +365,8 @@ definition {
 					portletName = "${portletName}",
 					targetFragmentName = "Container");
 
-				PageEditor.moveElementInsideAnExistingContainer(
-					dragAndDropToUp = "${dragAndDropToUp}",
+				PageEditor.moveElementToContainerViaPageStructure(
+					dropTarget = "${dropTarget}",
 					elementName = "${portletName}",
 					targetElementName = "${targetElementName}");
 			}
@@ -3153,7 +3153,7 @@ definition {
 		AssertElementPresent(locator1 = "Fragment#ACTIVE_NAV_ITEM_TAB");
 	}
 
-	macro moveElementInsideAnExistingContainer {
+	macro moveElementToContainerViaPageStructure {
 		Variables.assertDefined(parameterList = "${elementName}");
 
 		PageEditor.gotoTab(tabName = "Browser");

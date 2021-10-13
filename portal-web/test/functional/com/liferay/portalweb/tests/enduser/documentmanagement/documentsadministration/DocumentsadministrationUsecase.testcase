@@ -191,41 +191,6 @@ definition {
 		}
 	}
 
-	@description = "This test covers LPS-128473. This test ensures that users can filter documents by Recent."
-	@priority = "3"
-	@refactordone
-	test CanFilterByRecent {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "DM Document Title 2",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_2.doc");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "DM Document Title 3",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_3.doc");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-		ManagementBar.setFilterAndOrder(
-			filterBy = "Recent",
-			orderBy = "Modified Date");
-
-		AssertTextEquals.assertPartialText(
-			index = "1",
-			locator1 = "LexiconTable#TABLE_ROW",
-			value1 = "DM Document Title 3");
-
-		AssertTextEquals.assertPartialText(
-			index = "2",
-			locator1 = "LexiconTable#TABLE_ROW",
-			value1 = "DM Document Title 2");
-	}
-
 	@description = "This test covers LPS-112571. It ensures that a gif file can be added to editor normally after disabling the gif mime type from the adaptive media of the system settings."
 	@priority = "3"
 	@refactorneeded
@@ -359,38 +324,6 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");
-	}
-
-	@description = "This test covers LPS-91597. It ensures that a user can delete multiple documents through the actions icon after selecting them one by one."
-	@priority = "4"
-	@refactordone
-	test CanDeleteMultipleDocumentsViaActionsButton {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
-		for (var entryCount : list "1,2") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_${entryCount}.doc",
-				groupName = "Guest",
-				mimeType = "application/msword",
-				sourceFileName = "Document_${entryCount}.doc");
-		}
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		for (var entryCount : list "1,2") {
-			var dmDocumentTitle = "Document_${entryCount}.doc";
-
-			LexiconCard.checkCardCheckbox(card = "${dmDocumentTitle}");
-		}
-
-		Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
-
-		VerifyElementPresent(locator1 = "Message#SUCCESS");
-
-		DMDocument.viewDefault();
 	}
 
 	@description = "This is a use case for LPS-50760."

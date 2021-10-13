@@ -227,6 +227,40 @@ definition {
 		DMDocument.viewCategories(categoryNameList = "category");
 	}
 
+	@description = "This test ensures that the filename character restriction can be configured through the blacklist."
+	@priority = "4"
+	@refactordone
+	test CanBlacklistCharacters {
+		property custom.properties = "dl.char.blacklist=\\\\,//,:,*,?,<,#,|,../,/..";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFileName = '''#.jpg''',
+			dmDocumentTitle = "DM Document Title",
+			validateFileNameRestriction = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFileName = '''>.jpg''',
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ">.jpg");
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanCancelCheckout {
@@ -574,6 +608,38 @@ definition {
 		DMDocument.viewDefault();
 	}
 
+	@description = "This test covers LPS-91597. It ensures that a user can delete multiple documents through the actions icon after selecting them one by one."
+	@priority = "4"
+	@refactordone
+	test CanDeleteMultipleDocumentsViaActionsButton {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		for (var entryCount : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}.doc",
+				groupName = "Guest",
+				mimeType = "application/msword",
+				sourceFileName = "Document_${entryCount}.doc");
+		}
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		for (var entryCount : list "1,2") {
+			var dmDocumentTitle = "Document_${entryCount}.doc";
+
+			LexiconCard.checkCardCheckbox(card = "${dmDocumentTitle}");
+		}
+
+		Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
+
+		DMDocument.viewDefault();
+	}
+
 	@description = "This case covers LPS-110213. It ensures that a document file can be downloaded after moving it between folders."
 	@priority = "5"
 	@refactordone
@@ -821,6 +887,41 @@ definition {
 			dmDocumentFileName = "Document_1_Edit.txt",
 			dmDocumentTitleEdit = "DM Document Title Edit",
 			dmDocumentVersionNumber = "1.1");
+	}
+
+	@description = "This test covers LPS-128473. This test ensures that users can filter documents by Recent."
+	@priority = "3"
+	@refactordone
+	test CanFilterByRecent {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title 2",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_2.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title 3",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_3.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		ManagementBar.setFilterAndOrder(
+			filterBy = "Recent",
+			orderBy = "Modified Date");
+
+		AssertTextEquals.assertPartialText(
+			index = "1",
+			locator1 = "LexiconTable#TABLE_ROW",
+			value1 = "DM Document Title 3");
+
+		AssertTextEquals.assertPartialText(
+			index = "2",
+			locator1 = "LexiconTable#TABLE_ROW",
+			value1 = "DM Document Title 2");
 	}
 
 	@description = "This is a test for LPS-136825. It checks that a file entry can be imported with tags."
@@ -1425,6 +1526,52 @@ definition {
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Approved",
 			dmDocumentTitle = "Document_5.txt");
+	}
+
+	@description = "This case covers LPS-97708. It ensures that a document can be restored from the Recycle Bin even if its original folder no longer exists."
+	@priority = "3"
+	@refactordone
+	test CanRestoreDocumentWithoutOriginalFolder {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONDocument.deleteFile(
+			dmDocumentTitle = "DM Document Title",
+			folderId = "true",
+			folderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONFolder.deleteFolder(
+			folderName = "DM Folder Name",
+			groupName = "Guest");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.deleteCP(
+			assetName = "DM Folder Name",
+			assetType = "Documents Folder",
+			multipleAssets = "true");
+
+		RecycleBin.restoreContentWithoutOriginalFolder(
+			assetName = "DM Document Title",
+			assetRestoreLocation = "Home",
+			assetType = "Document");
+
+		AssertTextNotPresent(value1 = "NoSuchFolderException");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");
 	}
 
 	@priority = "4"

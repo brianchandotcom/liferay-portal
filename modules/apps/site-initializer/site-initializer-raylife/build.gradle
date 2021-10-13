@@ -12,12 +12,12 @@ import org.gradle.util.GUtil
 apply plugin: "com.liferay.node"
 
 configurations {
-	remoteApps
+	extraRemoteApp
 }
 
-task buildRemoteApps
+task buildExtraRemoteApp
 task forceDeploy
-task zipRemoteApps(type: Zip)
+task zipExtraRemoteApp(type: Zip)
 
 DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd.HHmm")
 
@@ -26,11 +26,11 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
 String dateString = dateFormat.format(new Date())
 
 artifacts {
-	remoteApps zipRemoteApps
+	extraRemoteApp zipExtraRemoteApp
 }
 
 dependencies {
-	remoteApps ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.remote.apps", version: "20211011.1724"
+	extraRemoteApp ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.remote.apps", version: "20211011.1724"
 }
 
 forceDeploy {
@@ -44,10 +44,10 @@ node {
 }
 
 processResources {
-	ResolvedConfiguration remoteAppsResolvedConfiguration = configurations.remoteApps.getResolvedConfiguration()
+	ResolvedConfiguration extraRemoteAppResolvedConfiguration = configurations.extraRemoteApp.getResolvedConfiguration()
 
-	if (gradle.startParameter.taskNames.contains("forceDeploy") || remoteAppsResolvedConfiguration.hasError()) {
-		dependsOn buildRemoteApps
+	if (gradle.startParameter.taskNames.contains("forceDeploy") || extraRemoteAppResolvedConfiguration.hasError()) {
+		dependsOn buildExtraRemoteApp
 
 		into("site-initializer/documents/remote-apps") {
 			from new File(buildDir, "remote-apps")
@@ -55,18 +55,18 @@ processResources {
 	}
 	else {
 		into("site-initializer/documents/remote-apps") {
-			from zipTree(configurations.remoteApps.singleFile)
+			from zipTree(configurations.extraRemoteApp.singleFile)
 		}
 	}
 }
 
-uploadRemoteApps {
+uploadExtraRemoteApp {
 	doLast {
 		File buildGradleFile = file("build.gradle")
 
 		String content = buildGradleFile.getText("UTF-8")
 
-		content = content.replaceFirst(~/remoteApps ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.remote.apps", version: "(\w+\.\w+)"/) {
+		content = content.replaceFirst(~/extraRemoteApp ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.remote.apps", version: "(\w+\.\w+)"/) {
 			String all, String versionString ->
 
 			all.replace versionString, dateString
@@ -86,20 +86,20 @@ uploadRemoteApps {
 	}
 }
 
-zipRemoteApps {
-	dependsOn buildRemoteApps
+zipExtraRemoteApp {
+	dependsOn buildExtraRemoteApp
 
 	archiveName "remote-apps.zip"
 	destinationDir new File(buildDir, "dist")
 	from new File(buildDir, "remote-apps")
 }
 
-_createRemoteAppsTasks()
+_createExtraRemoteAppTasks()
 
-private void _createRemoteAppsTasks() {
-	File remoteAppsDir = new File(projectDir, "remote-apps")
+private void _createExtraRemoteAppTasks() {
+	File extraRemoteAppDir = new File(projectDir, "remote-apps")
 
-	remoteAppsDir.eachDir {
+	extraRemoteAppDir.eachDir {
 		File dir ->
 
 		String suffix = dir.name.replaceAll(/[\.-](\w)/) {
@@ -152,6 +152,6 @@ private void _createRemoteAppsTasks() {
 			}
 		}
 
-		buildRemoteApps.finalizedBy yarnBuildTask
+		buildExtraRemoteApp.finalizedBy yarnBuildTask
 	}
 }

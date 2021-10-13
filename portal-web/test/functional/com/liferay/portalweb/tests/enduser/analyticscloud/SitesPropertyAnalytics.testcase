@@ -120,101 +120,98 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8329 | Test Summary: Assert Chart ticks for Site Metrics standardized"
 	@priority = "3"
 	test AssertChartTicksSiteMetricsStandardized {
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
+        task ("Get site assigned property name") {
+            var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+        }
 
-		task ("Switch to new property in AC") {
-			ACUtils.launchAC();
+        task ("Switch to new property in AC") {
+            ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-		}
+            ACProperties.switchProperty(propertyName = "${propertyName}");
+        }
 
-		task ("Navigate to the Overview tab on Sites dashboard") {
-			ACNavigation.goToSites();
+        task ("Navigate to the Overview tab on Sites dashboard") {
+            ACNavigation.goToSites();
 
-			ACNavigation.switchTab(tabName = "Overview");
-		}
+            ACNavigation.switchTab(tabName = "Overview");
+        }
 
-		task ("View the time period is Last 30 days in site metrics chart") {
-			ACTimeFilter.assertCurrentTimeFilterRange(
-				cardName = "${propertyName} Activities",
-				timeFilterRange = "Last 30 days");
-		}
+        task ("View the time period is Last 30 days in site metrics chart") {
+            ACTimeFilter.assertCurrentTimeFilterRange(
+                cardName = "${propertyName} Activities",
+                timeFilterRange = "Last 30 days");
+        }
 
-		task ("View the interval is D in site metrics chart") {
-			ACCards.viewSelectedInterval(
-				cardName = "${propertyName} Activities",
-				interval = "D");
-		}
+        task ("View the interval is D in site metrics chart") {
+            ACCards.viewSelectedInterval(
+                cardName = "${propertyName} Activities",
+                interval = "D");
+        }
 
-		task ("View the format of recharts xAxis ticks is MMM d") {
-			var date = ACCards.getAxisTick(
-				axis = "xAxis",
-				cardName = "${propertyName} Activities");
+        task ("View the format of recharts xAxis ticks is MMM d") {
+            var date = ACCards.getAxisTick(
+                axis = "xAxis",
+                cardName = "${propertyName} Activities");
 
-			ACUtils.assertDatePattern(
-				date = "${date}",
-				format = "MMM d");
-		}
+            ACUtils.assertDatePattern(
+                date = "${date}",
+                format = "MMM d");
+        }
 
-		task ("Select the W in interval selector") {
-			ACCards.selectInterval(
-				cardName = "${propertyName} Activities",
-				interval = "W");
-		}
+        task ("Select the W in interval selector") {
+            ACCards.selectInterval(
+                cardName = "${propertyName} Activities",
+                interval = "W");
+        }
 
-		task ("View the format of recharts xAxis ticks is MMM d - MMM d") {
-			var date = ACCards.getAxisTick(
-				axis = "xAxis",
-				cardName = "${propertyName} Activities");
+        task ("View the format of recharts xAxis ticks is MMM d - MMM d or MMM d - d") {
+            var date = ACCards.getAxisTick(
+                axis = "xAxis",
+                cardName = "${propertyName} Activities");
 
-			ACUtils.assertDatePattern(
-				date = "${date}",
-				format = "MMM d - MMM d");
-		}
+            var dateLength = StringUtil.length("${date}");
 
-		task ("View the format of recharts xAxis ticks is MMM d - d") {
-			var date = ACCards.getAxisTick(
-				index = "2",
-				axis = "xAxis",
-				cardName = "${propertyName} Activities");
+            if ("${dateLength}" == "10") {
+                ACUtils.assertDatePattern(
+                date = "${date}",
+                format = "MMM d - d");
+            } else {
+                ACUtils.assertDatePattern(
+                date = "${date}",
+                format = "MMM d - MMM d");
+            }
+        }
 
-			ACUtils.assertDatePattern(
-				date = "${date}",
-				format = "MMM d - d");
-		}
+        task ("Select the M in interval selector") {
+            ACCards.selectInterval(
+                cardName = "${propertyName} Activities",
+                interval = "M");
+        }
 
-		task ("Select the M in interval selector") {
-			ACCards.selectInterval(
-				cardName = "${propertyName} Activities",
-				interval = "M");
-		}
+        task ("View the format of recharts xAxis ticks is MMM") {
+            var date = ACCards.getAxisTick(
+                axis = "xAxis",
+                cardName = "${propertyName} Activities");
 
-		task ("View the format of recharts xAxis ticks is MMM") {
-			var date = ACCards.getAxisTick(
-				axis = "xAxis",
-				cardName = "${propertyName} Activities");
+            ACUtils.assertDatePattern(
+                date = "${date}",
+                format = "MMM");
+        }
 
-			ACUtils.assertDatePattern(
-				date = "${date}",
-				format = "MMM");
-		}
+        task ("Select the Last 24 hours time period in site metrics chart") {
+            ACTimeFilter.clickTimeFilterButton(cardName = "${propertyName} Activities");
 
-		task ("Select the Last 24 hours time period in site metrics chart") {
-			ACTimeFilter.clickTimeFilterButton(cardName = "${propertyName} Activities");
+            ACTimeFilter.setLast24Hours();
+        }
 
-			ACTimeFilter.setLast24Hours();
-		}
-
-		task ("View the interval option buttons are disabled") {
-			for (var interval : list "D,W,M") {
-				AssertVisible(
-					key_text = "${interval}",
-					locator1 = "Button#ANY_DISABLED");
-			}
-		}
-	}
+        task ("View the interval option buttons are disabled") {
+            for (var interval : list "D,W,M") {
+                AssertVisible(
+                    key_text = "${interval}",
+                    locator1 = "Button#ANY_DISABLED");
+            }
+        }
+    }
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8331 | Test Summary: Assert Site Metrics select Sessions/Visitor card tab"
 	@priority = "3"

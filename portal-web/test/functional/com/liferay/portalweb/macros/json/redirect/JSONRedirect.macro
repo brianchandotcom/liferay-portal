@@ -57,9 +57,17 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/redirect.redirectentry/delete-redirect-entry \
-				-u test@liferay.com:test \
+				-u ${userEmailAddress}:${userPassword} \
 				-d redirectEntryId=${redirectEntryId} \
 		''';
 
@@ -102,13 +110,25 @@ definition {
 
 		var destinationURL = StringUtil.replace("${destinationURL}", ":", "%3A");
 
+		if (!(isSet(expirationDate))) {
+			var expirationDate = "2100-01-01";
+		}
+
 		if (!(isSet(permanent))) {
 			var permanent = "false";
 		}
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/redirect.redirectentry/update-redirect-entry \
-				-u test@liferay.com:test \
+				-u ${userEmailAddress}:${userPassword} \
 				-d redirectEntryId=${redirectEntryId} \
 				-d destinationURL=${destinationURL} \
 				-d expirationDate=${expirationDate} \

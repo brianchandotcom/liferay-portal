@@ -58,6 +58,9 @@ public interface COREntryRelService extends BaseService {
 
 	public void deleteCOREntryRel(long corEntryRelId) throws PortalException;
 
+	public void deleteCOREntryRels(String className, long corEntryId)
+		throws PortalException;
+
 	public void deleteCOREntryRelsByCOREntryId(long corEntryId)
 		throws PortalException;
 

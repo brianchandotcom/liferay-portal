@@ -23,6 +23,8 @@
 		'<%= accountSelectorId %>',
 		'<%= accountSelectorId %>',
 		{
+			accountEntryAllowedTypes:
+				'<%= jsonSerializer.serializeDeep(accountEntryAllowedTypes) %>',
 			commerceChannelId: '<%= commerceChannelId %>',
 			createNewOrderURL: '<%= createNewOrderURL %>',
 			currentCommerceAccount: <%= Validator.isNotNull(currentCommerceAccount) ? jsonSerializer.serializeDeep(currentCommerceAccount) : null %>,

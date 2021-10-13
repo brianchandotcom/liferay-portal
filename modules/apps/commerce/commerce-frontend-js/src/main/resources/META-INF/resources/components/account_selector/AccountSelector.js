@@ -29,6 +29,7 @@ import AccountsListView from './views/AccountsListView';
 import OrdersListView from './views/OrdersListView';
 
 function AccountSelector({
+	accountEntryAllowedTypes,
 	alignmentPosition,
 	commerceChannelId,
 	createNewOrderURL,
@@ -102,6 +103,11 @@ function AccountSelector({
 			>
 				{currentView === VIEWS.ACCOUNTS_LIST && (
 					<AccountsListView
+						accountEntryAllowedTypes={
+							accountEntryAllowedTypes
+								? JSON.parse(accountEntryAllowedTypes)
+								: ''
+						}
 						changeAccount={changeAccount}
 						currentAccount={currentAccount}
 						disabled={!active}
@@ -126,6 +132,7 @@ function AccountSelector({
 }
 
 AccountSelector.propTypes = {
+	accountEntryAllowedTypes: PropTypes.string.isRequired,
 	alignmentPosition: PropTypes.number,
 	commerceChannelId: PropTypes.number.isRequired,
 	createNewOrderURL: PropTypes.string.isRequired,

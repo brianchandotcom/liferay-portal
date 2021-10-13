@@ -27,12 +27,26 @@ const {baseURL: ACCOUNTS_RESOURCE_ENDPOINT} = ServiceProvider.AdminAccountAPI(
 );
 
 function AccountsListView({
+	accountEntryAllowedTypes,
 	changeAccount,
 	currentAccount,
 	disabled,
 	setCurrentView,
 }) {
 	const accountsListRef = useRef();
+
+	const apiUrl = new URL(
+		ACCOUNTS_RESOURCE_ENDPOINT,
+		themeDisplay.getPortalURL()
+	);
+
+	const filterString = accountEntryAllowedTypes
+		.map((accountEntryAllowedType) => `'${accountEntryAllowedType}'`)
+		.join(', ');
+
+	if (filterString) {
+		apiUrl.searchParams.append('filter', `type in (` + filterString + ')');
+	}
 
 	return (
 		<ClayDropDown.ItemList className="accounts-list-container">
@@ -56,7 +70,7 @@ function AccountsListView({
 
 			<ClayDropDown.Section>
 				<ListView
-					apiUrl={ACCOUNTS_RESOURCE_ENDPOINT}
+					apiUrl={apiUrl.toString()}
 					contentWrapperRef={accountsListRef}
 					customView={({items, loading}) => {
 						if (!items || !items.length) {

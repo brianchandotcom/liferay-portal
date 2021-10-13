@@ -103,6 +103,10 @@ public class AccountSelectorTag extends IncludeTag {
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
 			httpServletRequest.setAttribute(
+				"liferay-commerce:account-selector:accountEntryAllowedTypes",
+				commerceContext.getAccountEntryAllowedTypes());
+
+			httpServletRequest.setAttribute(
 				"liferay-commerce:account-selector:commerceChannelId",
 				commerceContext.getCommerceChannelId());
 

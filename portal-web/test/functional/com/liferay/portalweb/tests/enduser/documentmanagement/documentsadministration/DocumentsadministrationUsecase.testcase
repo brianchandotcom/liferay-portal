@@ -317,7 +317,7 @@ definition {
 
 	@description = "This case covers LPS-97708. It ensures that a document can be restored from the Recycle Bin even if its original folder no longer exists."
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test CanRestoreDocumentWithoutOriginalFolder {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -332,19 +332,15 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		JSONDocument.deleteFile(
+			dmDocumentTitle = "DM Document Title",
+			folderId = "true",
+			folderName = "DM Folder Name",
+			groupName = "Guest");
 
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.moveToRecycleBinCP(
-			assetType = "Document",
-			dmDocumentTitle = "DM Document Title");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.moveToRecycleBinCP(
-			assetType = "Documents Folder",
-			dmFolderName = "DM Folder Name");
+		JSONFolder.deleteFolder(
+			folderName = "DM Folder Name",
+			groupName = "Guest");
 
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 

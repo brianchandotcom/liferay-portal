@@ -148,7 +148,7 @@ public class IpstackSXPParameterContributor implements SXPParameterContributor {
 			new SXPParameterContributorDefinition(
 				StringSXPParameter.class, "region-name", "ipstack.region_name"),
 			new SXPParameterContributorDefinition(
-				StringSXPParameter.class, "zip-code", "ipstack.zip"));
+				StringSXPParameter.class, "zip", "ipstack.zip"));
 	}
 
 	private IpstackConfiguration _getIpstackConfiguration(long companyId) {

@@ -32,6 +32,8 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 
+		JSONUser.tearDownNonAdminUsers();
+
 		ACUtils.tearDownAC();
 	}
 
@@ -44,23 +46,11 @@ definition {
 		// AC Refactor ticket: LRAC-9467
 
 		task ("Submit the form") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "Submit Form",
+				submitText = "Test Assets",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			FormPortlet.waitFormRenderer(text = "Submit");
-
-			FormFields.viewTextLabel(
-				fieldLabel = "Text",
-				fieldName = "Text");
-
-			FormFields.editText(
-				fieldName = "Text",
-				fieldValue = "Test Assets");
-
-			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("Close sessions") {

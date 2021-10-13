@@ -495,11 +495,8 @@ definition {
 		task ("Connect to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(userGroup = "User Group Name");
 		}
+
 		task ("Login as another user and visit DXP") {
-			Navigator.openURL();
-
-			Pause(locator1 = "5000");
-
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");

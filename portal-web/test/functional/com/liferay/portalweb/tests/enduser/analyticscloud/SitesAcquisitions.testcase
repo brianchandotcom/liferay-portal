@@ -41,6 +41,8 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 
+		JSONUser.tearDownNonAdminUsers();
+
 		ACUtils.tearDownAC();
 	}
 
@@ -66,10 +68,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/ac-page");
 		}
 
-		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
-		}
-
 		task ("Close session") {
 			ACUtils.closeAllSessionsAndWait();
 		}
@@ -82,10 +80,6 @@ definition {
 
 		task ("Navigate to the site page via social channel") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/ac-page?utm_medium=social");
-		}
-
-		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
 		}
 
 		task ("Close session") {
@@ -102,10 +96,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/ac-page?utm_medium=paidsearch");
 		}
 
-		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
-		}
-
 		task ("Close session") {
 			ACUtils.closeAllSessionsAndWait();
 		}
@@ -118,10 +108,6 @@ definition {
 
 		task ("Navigate to the site page via organic channel") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/ac-page?utm_medium=organic");
-		}
-
-		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
 		}
 
 		task ("Close session") {

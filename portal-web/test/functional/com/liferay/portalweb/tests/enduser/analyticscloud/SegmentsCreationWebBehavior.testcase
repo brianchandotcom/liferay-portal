@@ -1107,13 +1107,10 @@ definition {
 			userLoginEmailAddress = "${username}@liferay.com",
 			userLoginFullName = "${username} ${username}");
 
-		for (var n : list "1,2") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			Pause(locator1 = "5000");
-		}
+		ACUtils.navigateToSitePage(
+			actionType = "View Form",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -1133,24 +1130,21 @@ definition {
 			documentTitle = "Created Form Name",
 			indexField = "1");
 
-		ACSegments.setOccurence(occurenceNumber = "5");
+		ACSegments.setOccurence(occurenceNumber = "4");
 
 		ACSegments.saveSegment();
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertTextEquals(
-			locator1 = "ACSegments#NO_MEMBER_TITLE",
-			value1 = "There are no items found.");
+		ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
 
 		ACUtils.launchDXP(userEmailAddress = "${username}@liferay.com");
 
-		for (var n : list "1,2,3,4") {
-			Navigator.gotoSitePage(
+		for (var n : list "1,2,3") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Form",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();

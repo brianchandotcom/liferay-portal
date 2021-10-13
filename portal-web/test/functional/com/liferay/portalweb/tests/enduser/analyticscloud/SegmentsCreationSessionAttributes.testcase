@@ -34,6 +34,11 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		JSONUser.tearDownNonAdminUsers();
 
 		ACUtils.tearDownAC();
 	}
@@ -136,21 +141,20 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9208 | Test Summary: Add segment using a session property 'Referrer URL'"
 	@priority = "4"
 	test CanCreateSessionAttributeUsingReferrerURL {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: timing issue for Referrer URL with page sync
-		// AC Refactor ticket: LRAC-9272
+		var usernameList = "ac,liferay";
 
 		task ("Connect the DXP to Analytics Cloud") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Add a new user in DXP") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
+			for (var name : list "${usernameList}") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+			}
 		}
 
 		task ("Sync new user") {
@@ -158,37 +162,23 @@ definition {
 		}
 
 		task ("Add pages") {
-			for (var n : list "1,2") {
-				ACUtils.addSiteAndPage(layoutName = "AC Page ${n}");
-			}
-		}
-
-		task ("Go to AC Page and get URL") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page 1",
-				siteName = "Site Name");
-
-			var myURL = Navigator.getCurrentURL();
-
-			Pause(locator1 = "3000");
-
-			Navigator.gotoSitePage(
-				pageName = "AC Page 2",
-				siteName = "Site Name");
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "AC Page 2");
 		}
 
 		task ("Sign in with the new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "liferay@liferay.com",
+				pageName = "AC Page",
+				siteName = "Site Name");
 
-			for (var n : list "1,2") {
-				Navigator.gotoSitePage(
-					pageName = "AC Page ${n}",
-					siteName = "Site Name");
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "ac@liferay.com",
+				pageName = "AC Page 2",
+				siteName = "Site Name");
 
-				Pause(locator1 = "3000");
-			}
+			var myURL = Navigator.getCurrentURL();
 		}
 
 		task ("Switch to new property in AC") {
@@ -233,17 +223,18 @@ definition {
 				preposition = "ever");
 		}
 
-		task ("Refresh the page to receive data") {
-			Refresh();
+		task ("Navigate to Segments") {
+			ACNavigation.goToSegments();
+		}
+
+		task ("Access the new segment") {
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 		}
 
 		task ("Assert that new user is on segment") {
+			ACNavigation.switchTab(tabName = "Membership");
 
-			// Takes too much time to sync and get data from the page on AC
-
-			ACNavigation.openItem(itemName = "Membership");
-
-			ACSegments.assertMember(memberName = "ac ac");
+			ACUtils.viewNameList(nameList = "ac ac");
 		}
 	}
 

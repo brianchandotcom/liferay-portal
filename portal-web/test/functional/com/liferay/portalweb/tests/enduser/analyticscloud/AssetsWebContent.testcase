@@ -203,10 +203,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8449 | Test Summary: Web content audience card shows expected amount of segmented and unsegmented individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInWC {
-		task ("Create users and sync") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		var usernameList = "ac,liferay";
 
-			for (var name : list "ac,liferay") {
+		var emailList = "ac@liferay.com,liferay@liferay.com";
+
+		task ("Create users and sync") {
+			for (var name : list "${usernameList}") {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
 					userFirstName = "${name}",
@@ -214,21 +216,26 @@ definition {
 					userScreenName = "${name}");
 			}
 
-			ACDXPSettings.syncNewContactData();
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Go to page and get data for unsegmented individuals") {
-			for (var name : list "ac,liferay") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${name}@liferay.com",
-					userLoginFullName = "${name} ${name}");
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
 
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
+		task ("View page with anonymous user") {
+			User.logoutPG();
 
-				Pause(locator1 = "5000");
-			}
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close all sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Go to AC and create segment for the user") {
@@ -250,7 +257,7 @@ definition {
 		task ("Go to page and get data for segmented individuals") {
 			ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

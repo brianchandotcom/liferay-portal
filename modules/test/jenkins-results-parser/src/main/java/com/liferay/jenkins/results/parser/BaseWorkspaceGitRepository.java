@@ -201,7 +201,7 @@ public abstract class BaseWorkspaceGitRepository
 			throw new RuntimeException("GitHub URL is null");
 		}
 
-		if (gitHubURL.equals(getGitHubURL())) {
+		if (gitHubURL.equals(optString("git_hub_url"))) {
 			return;
 		}
 

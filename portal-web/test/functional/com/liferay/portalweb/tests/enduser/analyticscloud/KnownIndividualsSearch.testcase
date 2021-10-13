@@ -308,6 +308,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9033 | Test Summary: Case Insensitive Search"
 	@priority = "5"
 	test CanCaseInsensitiveSearch {
+		var emailList = "randy.smith@liferay.com,maria.rau@liferay.com";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -318,6 +320,7 @@ definition {
 				userFirstName = "Randy",
 				userLastName = "Smith",
 				userScreenName = "Randysn");
+
 			JSONUser.addUser(
 				userEmailAddress = "maria.rau@liferay.com",
 				userFirstName = "Maria",
@@ -328,25 +331,10 @@ definition {
 		}
 
 		task ("Sign in with the new user to visit the site pages") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "randy.smith@liferay.com",
-				userLoginFullName = "Randy Smith");
-
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			Pause(locator1 = "5000");
-
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "maria.rau@liferay.com",
-				userLoginFullName = "Maria Rau");
-
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("Switch to new property in AC") {
@@ -367,6 +355,7 @@ definition {
 			ACUtils.searchBar(searchItem = "SMITH");
 
 			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Randy Smith");
+
 			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Maria Rau");
 		}
 
@@ -374,6 +363,7 @@ definition {
 			ACUtils.searchBar(searchItem = "maria");
 
 			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Maria Rau");
+
 			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Randy Smith");
 		}
 	}

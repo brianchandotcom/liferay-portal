@@ -37,6 +37,10 @@ definition {
 		for (var percentage : list "${percentageList}") {
 			var key_percentage = "${percentage}";
 
+			while (IsElementNotPresent(locator1 = "ACUtils#METRIC_VALUE_PERCENTAGE") && (maxIterations = "50")) {
+				TestUtils.hardRefresh();
+			}
+
 			AssertElementPresent(locator1 = "ACUtils#METRIC_VALUE_PERCENTAGE");
 		}
 	}

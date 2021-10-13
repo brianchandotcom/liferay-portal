@@ -144,7 +144,6 @@ definition {
 			Click(locator1 = "ACDataControlAndPrivacy#SUPPRESSED_USERS");
 
 			while (IsElementNotPresent(itemName = "test@liferay.com", locator1 = "ACSettings#ITEM_ON_LIST") && (maxIterations = "50")) {
-				Pause(locator1 = "5000");
 				Refresh();
 			}
 		}
@@ -196,7 +195,6 @@ definition {
 			Click(locator1 = "ACDataControlAndPrivacy#SUPPRESSED_USERS");
 
 			while (IsElementNotPresent(itemName = "test@liferay.com", locator1 = "ACSettings#ITEM_ON_LIST") && (maxIterations = "50")) {
-				Pause(locator1 = "5000");
 				Refresh();
 			}
 

@@ -141,14 +141,17 @@ public class AccountGroupLocalServiceTest {
 
 	@Test
 	public void testSearchAccountGroups() throws Exception {
-		List<AccountGroup> expectedAccountGroups = Arrays.asList(
-			_addAccountGroup(), _addAccountGroup());
+		_addAccountGroup();
+		_addAccountGroup();
 
 		OrderByComparator<AccountGroup> orderByComparator =
 			OrderByComparatorFactoryUtil.create(
 				"AccountGroup", "createDate", true);
 
-		expectedAccountGroups.sort(orderByComparator);
+		List<AccountGroup> expectedAccountGroups =
+			_accountGroupLocalService.getAccountGroups(
+				TestPropsValues.getCompanyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, orderByComparator);
 
 		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
 			_accountGroupLocalService.searchAccountGroups(

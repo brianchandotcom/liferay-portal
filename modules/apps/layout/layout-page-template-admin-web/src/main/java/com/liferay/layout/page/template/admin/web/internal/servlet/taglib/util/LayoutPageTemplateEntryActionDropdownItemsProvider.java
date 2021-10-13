@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
@@ -26,6 +27,7 @@ import com.liferay.layout.page.template.admin.web.internal.configuration.LayoutP
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateCollectionItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -45,6 +47,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -107,6 +110,9 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
+						() -> hasUpdatePermission,
+						_getMoveLayoutPageTemplateEntryPreviewActionUnsafeConsumer()
+					).add(
 						() -> hasUpdatePermission,
 						_getUpdateLayoutPageTemplateEntryPreviewActionUnsafeConsumer()
 					).add(
@@ -394,6 +400,48 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			itemSelectorCriterion);
 
 		return itemSelectorURL.toString();
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getMoveLayoutPageTemplateEntryPreviewActionUnsafeConsumer() {
+
+		RenderResponse renderResponse =
+			(RenderResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		LayoutPageTemplateCollectionItemSelectorCriterion
+			layoutPageTemplateCollectionItemSelectorCriterion =
+				new LayoutPageTemplateCollectionItemSelectorCriterion();
+
+		layoutPageTemplateCollectionItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+			renderResponse.getNamespace() + "selectItem",
+			layoutPageTemplateCollectionItemSelectorCriterion);
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "moveLayoutPageTemplateEntry");
+
+			dropdownItem.putData("itemSelectorURL", itemSelectorURL.toString());
+			dropdownItem.putData(
+				"moveLayoutPageTemplateEntryURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/layout_page_template_admin" +
+						"/move_layout_page_template_entry"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"layoutPageTemplateEntryId",
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+				).buildString());
+
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "move-to"));
+		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

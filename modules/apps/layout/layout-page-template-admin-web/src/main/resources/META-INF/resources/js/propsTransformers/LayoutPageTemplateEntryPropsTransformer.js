@@ -47,6 +47,34 @@ const ACTIONS = {
 		}
 	},
 
+	moveLayoutPageTemplateEntry(
+		{itemSelectorURL, moveLayoutPageTemplateEntryURL},
+		namespace
+	) {
+		Liferay.Util.openSelectionModal({
+			onSelect: (selectedItem) => {
+				if (!selectedItem) {
+					return;
+				}
+
+				var value = JSON.parse(selectedItem.value);
+
+				var portletURL = new Liferay.Util.PortletURL.createPortletURL(
+					moveLayoutPageTemplateEntryURL,
+					{
+						targetLayoutPageTemplateCollectionId:
+							value.layoutPageTemplateCollectionId,
+					}
+				);
+
+				send(portletURL.toString());
+			},
+			selectEventName: `${namespace}selectItem`,
+			title: Liferay.Language.get('select-destination'),
+			url: itemSelectorURL,
+		});
+	},
+
 	permissionsLayoutPageTemplateEntry({
 		permissionsLayoutPageTemplateEntryURL,
 	}) {

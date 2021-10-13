@@ -300,25 +300,10 @@ definition {
 		}
 
 		task ("View the page as different users") {
-			for (var username : list "userea,user1") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
-
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "3000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "userea@liferay.com,user1@liferay.com",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions and wait for 30 seconds") {

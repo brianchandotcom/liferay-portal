@@ -424,13 +424,11 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "${fullName}");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -461,7 +459,7 @@ definition {
 			}
 		}
 
-		task ("Assert default pagination display "20 Items" message and page number") {
+		task ("Assert default pagination display '20 Items' message and page number") {
 			AssertTextEquals.assertText(
 				locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT",
 				value1 = "20 Items");

@@ -65,14 +65,12 @@ definition {
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
 
-			for (var n : list "1,2,3,4") {
+			for (var n : list "1,2,3") {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
 
 				DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
-
-				Pause(locator1 = "5000");
 			}
 		}
 
@@ -113,11 +111,10 @@ definition {
 
 		task ("Assert chart popover date formatted") {
 			var formattedDate = ACIndividualsDashboard.getChartPopoverDate();
-			var formattedDate = StringUtil.extractFirst("${formattedDate}",",");
 
 			ACUtils.assertDatePattern(
 				date = "${formattedDate}",
-				format = "MMM d");
+				format = "yyyy MMM dd");
 		}
 	}
 

@@ -41,6 +41,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROCESS_VERSION_TITLE</td>
+	<td>//button[contains(@class, 'dropdown-toggle filter-dropdown-button') and contains(text(), '${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROCESS_VERSION_DROPDOWN_OPTION</td>
+	<td>//div[contains(@class, 'dropdown-menu show')]//span[contains(@class, 'dropdown-item')]//div[contains(text(),'${key_option}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS_TRANSLATION</td>
 	<td>//a//span[contains(text(), '${key_viewStepsNumber}')]</td>
 	<td></td>

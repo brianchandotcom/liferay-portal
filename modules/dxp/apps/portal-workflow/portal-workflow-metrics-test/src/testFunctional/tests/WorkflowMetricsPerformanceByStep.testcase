@@ -50,15 +50,13 @@ definition {
 	@description = "LPS-101075 - Verify that the filter is available on the card in the Performance tab"
 	@priority = "5"
 	test CanFilterTopStepsByWorkflowVersion {
-
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		WorkflowMetricsPerformanceByStep.goToPerformanceTab();
 
 		AssertElementPresent(
-			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_RANGE_DROPDOWN",
-			value1 = "All Versions");
-
+			key_title = "All Versions",
+			locator1 = "WorkflowMetricsPerformanceByStep#PROCESS_VERSION_TITLE");
 	}
 
 	@description = "LPS-100674 - Verify that the user can not insert a future date"
@@ -201,13 +199,11 @@ definition {
 			isNotPresent = "",
 			slaBreachedValue = "0 (0%)",
 			stepName = "update2");
-
 	}
 
 	@description = "LPS-130215 - Verify that the filter allows to see all version together"
 	@priority = "5"
 	test CanSeeAllVersionsTogetherOnPage {
-
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		WorkflowMetricsPerformanceByStep.goToPerformanceTab();
@@ -217,20 +213,17 @@ definition {
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
 
 		Click(
-			key_dateRange = "Process Version",
-			key_title = "",
-			locator1 = "WorkflowMetrics#METRICS_DATE_RANGE_DROPDOWN_BY_TITLE");
+			key_title = "Process Version",
+			locator1 = "WorkflowMetricsPerformanceByStep#PROCESS_VERSION_TITLE");
 
 		AssertElementPresent(
-			key_dateRange = "All Versions",
-			locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");		
-
+			key_option = "All Versions",
+			locator1 = "WorkflowMetricsPerformanceByStep#PROCESS_VERSION_DROPDOWN_OPTION");
 	}
 
 	@description = "LPS-101075 - Verify that when a specific version is chosen, the card only considers closed instances that are in the version chosen"
 	@priority = "4"
 	test CardConsidersClosedInstancesInChosenVersion {
-
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		WorkflowMetricsPerformanceByStep.goToPerformanceTab();
@@ -248,17 +241,14 @@ definition {
 			stepName = "Update");
 
 		Click(
-			key_dateRange = "All Version",
-			key_title = "Performance by Step",
-			locator1 = "WorkflowMetrics#METRICS_DATE_RANGE_DROPDOWN_BY_TITLE");
+			key_title = "All Versions",
+			locator1 = "WorkflowMetricsPerformanceByStep#PROCESS_VERSION_TITLE");
 
 		Click(
-			key_dateRange = "1.0",
-			locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION",
-			value1 = "1.0");
+			key_option = "1.0",
+			locator1 = "WorkflowMetricsPerformanceByStep#PROCESS_VERSION_DROPDOWN_OPTION");
 
 		AssertElementPresent(locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_NO_RESULTS");
-
 	}
 
 	@description = "LPS-100674 - Verify that the card Performance by Step has no more than 10 entries displayed"
@@ -333,12 +323,15 @@ definition {
 	}
 
 	@description = "LPS-101075 - Verify that the default value for the filter is All Versions"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DefalutFilterValueIsAllVersions {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-68923 DefalutFilterValueIsAllVersions pending implementation
+		WorkflowMetricsPerformanceByStep.goToPerformanceTab();
 
+		AssertElementPresent(
+			key_title = "All Versions",
+			locator1 = "WorkflowMetricsPerformanceByStep#PROCESS_VERSION_TITLE");
 	}
 
 	@description = "LPS-100674 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"
@@ -443,7 +436,6 @@ definition {
 		AssertElementNotPresent(
 			key_stepName = "Update",
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
-
 	}
 
 	@description = "LPS-130215 - Verify that, selecting all versions, the filter considers only the steps touched by the task"
@@ -653,7 +645,6 @@ definition {
 	}
 
 	@description = "LPS-130215 - Verify that when a specific version is chosen, the page only considers closed instances that are in the version chosen"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PageConsidersClosedInstancesInChosenVersion {
 		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#PageConsidersClosedInstancesInChosenVersion";

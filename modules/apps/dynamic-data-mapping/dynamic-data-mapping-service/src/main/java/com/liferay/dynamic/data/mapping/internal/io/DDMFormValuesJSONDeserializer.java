@@ -136,7 +136,13 @@ public class DDMFormValuesJSONDeserializer
 
 		ddmFormFieldValue.setFieldReference(
 			jsonObject.getString("fieldReference"));
-		ddmFormFieldValue.setInstanceId(jsonObject.getString("instanceId"));
+
+		String instanceId = jsonObject.getString("instanceId");
+
+		if (instanceId.matches("[a-zA-Z0-9]*")) {
+			ddmFormFieldValue.setInstanceId(instanceId);
+		}
+
 		ddmFormFieldValue.setName(jsonObject.getString("name"));
 
 		setDDMFormFieldValueValue(

@@ -644,16 +644,7 @@ definition {
 	@description = "Add segment using a web behavior 'ever' done"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingEver {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: Issues with segment members may happen on this test case
-		// AC Refactor ticket: LRAC-9402
-		// AC Fix ticket: LRAC-9285
-		// AC Bug ticket : LRAC-9412
-
-		ACUtils.createFormAndAddToPage();
-
-		Navigator.openURL();
+		ACUtils.createWCAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -669,7 +660,7 @@ definition {
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
-		Navigator.gotoSitePage(
+		ACUtils.navigateToSitePage(
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -685,31 +676,26 @@ definition {
 
 		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
 
-		ACSegments.addSegmentField(segmentField = "Viewed Form");
+		ACSegments.addSegmentField(segmentField = "Viewed Web Content");
 
 		ACSegments.editWebBehaviorCriterion(
 			indexField = "1",
 			occurenceNumber = "4",
-			searchTerm = "Created Form Name",
+			searchTerm = "Web Content AC Title",
 			timeOption = "ever");
 
 		ACSegments.saveSegment();
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertTextEquals(
-			locator1 = "ACSegments#NO_MEMBER_TITLE",
-			value1 = "There are no items found.");
+		ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
 
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
-		for (var n : list "1,2,3") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			Pause(locator1 = "5000");
-		}
+		ACUtils.navigateToSitePage(
+			documentTitleList = "1,2,3",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -720,8 +706,6 @@ definition {
 		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
 		ACNavigation.switchTab(tabName = "Membership");
-
-		// Couldn't assert the user due to missing data.
 
 		ACUtils.viewNameList(nameList = "ac ac");
 	}

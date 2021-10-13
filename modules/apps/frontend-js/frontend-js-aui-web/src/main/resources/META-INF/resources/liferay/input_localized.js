@@ -424,7 +424,7 @@ AUI.add(
 						activeLanguageIds: instance.get('activeLanguageIds'),
 						availableLocales,
 						defaultLanguageId: instance.get('defaultLanguageId'),
-						onClose(newActiveLanguageIds) {
+						onSave(newActiveLanguageIds) {
 							instance._State.writeAtom(
 								instance._activeLanguageIdsAtom,
 								newActiveLanguageIds

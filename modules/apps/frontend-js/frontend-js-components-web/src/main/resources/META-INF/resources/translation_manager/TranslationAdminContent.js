@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -38,7 +38,9 @@ const TranslationAdminContent = ({
 	availableLocales: initialAvailableLocales = emptyArray,
 	defaultLanguageId,
 	onAddLocale = noop,
+	onCancel = noop,
 	onRemoveLocale = noop,
+	onSave = noop,
 	translations = {},
 }) => {
 	const [creationMenuActive, setCreationMenuActive] = useState(false);
@@ -220,6 +222,18 @@ const TranslationAdminContent = ({
 					</ClayTable.Body>
 				</ClayTable>
 			</ClayModal.Body>
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton displayType="secondary" onClick={onCancel}>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+						<ClayButton displayType="primary" onClick={onSave}>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
 		</>
 	);
 };

@@ -31,7 +31,7 @@ const TranslationAdminModal = ({
 	},
 	availableLocales = emptyArray,
 	defaultLanguageId,
-	onClose = noop,
+	onSave = noop,
 	translations,
 	visible: initialVisible,
 }) => {
@@ -40,11 +40,12 @@ const TranslationAdminModal = ({
 	);
 	const [visible, setVisible] = useState(initialVisible);
 
+	const onCancel = () => {
+		setVisible(false);
+	};
+
 	const {observer} = useModal({
-		onClose: () => {
-			setVisible(false);
-			onClose([...activeLanguageIds]);
-		},
+		onClose: onCancel,
 	});
 
 	const handleAddLocale = (localeId) => {
@@ -55,6 +56,11 @@ const TranslationAdminModal = ({
 		const newActiveLanguageIds = [...activeLanguageIds];
 		newActiveLanguageIds.splice(activeLanguageIds.indexOf(localeId), 1);
 		setActiveLanguageIds(newActiveLanguageIds);
+	};
+
+	const onSaveClicked = () => {
+		setVisible(false);
+		onSave([...activeLanguageIds]);
 	};
 
 	useEffect(() => {
@@ -75,7 +81,9 @@ const TranslationAdminModal = ({
 						availableLocales={availableLocales}
 						defaultLanguageId={defaultLanguageId}
 						onAddLocale={handleAddLocale}
+						onCancel={onCancel}
 						onRemoveLocale={handleRemoveLocale}
+						onSave={onSaveClicked}
 						translations={translations}
 					/>
 				</ClayModal>

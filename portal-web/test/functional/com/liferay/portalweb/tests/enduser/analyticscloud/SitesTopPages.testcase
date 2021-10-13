@@ -99,14 +99,14 @@ definition {
 		// AC Refactor: the issue is due to data not appearing on time
 		// AC Refactor ticket: LRAC-8964
 
-		task ("Connect Analytics Cloud to DXP") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
 		task ("Blogs creation") {
 			for (var n : list "1,2") {
 				ACUtils.createBlogsAndAddToPage(entryTitle = "Test Blog ${n}");
 			}
+		}
+
+		task ("Connect Analytics Cloud to DXP") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Interation with Test Blogs") {
@@ -115,13 +115,11 @@ definition {
 					userLoginEmailAddress = "test@liferay.com",
 					userLoginFullName = "test test");
 
-				Navigator.gotoSitePage(
+				ACUtils.navigateToSitePage(
+					actionType = "View Blog",
+					documentTitleList = "Test Blog ${n}",
 					pageName = "AC Page",
 					siteName = "Site Name");
-
-				BlogsNavigator.gotoPG(entryTitle = "Test Blog ${n}");
-
-				Pause(locator1 = "3000");
 			}
 		}
 
@@ -130,17 +128,13 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "test test");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			Pause(locator1 = "3000");
 		}
 
 		task ("AC launch") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 

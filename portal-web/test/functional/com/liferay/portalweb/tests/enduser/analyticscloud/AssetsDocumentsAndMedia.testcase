@@ -735,17 +735,15 @@ definition {
 	@description = "Documents visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfPreviewsInDM {
+		var documentNameList = "DM AC Title,DM AC Title,DM AC Title,DM AC Title";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		for (var n : list "1,2,3,4") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
-		}
-
-		Pause(locator1 = "5000");
+		ACUtils.navigateToSitePage(
+			actionType = "View DM",
+			documentTitleList = "${documentNameList}",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		ACUtils.closeAllSessionsAndWait();
 

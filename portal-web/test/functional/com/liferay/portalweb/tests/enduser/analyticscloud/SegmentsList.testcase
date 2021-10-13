@@ -191,23 +191,25 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8578 | Test Summary: Order the Segment List By Membership"
 	@priority = "4"
 	test OrderSegmentListByMembership {
+		var usernameList = "user1,user2,user3";
+
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-		task ("Add 5 more new users") {
-			for (var n : list "1,2,3") {
-				JSONUser.addUser(
-					userEmailAddress = "user${n}@liferay.com",
-					userFirstName = "user${n}",
-					userLastName = "user${n}",
-					userScreenName = "user${n}");
+		for (var name : list "${usernameList}") {
+			JSONUser.addUser(
+				userEmailAddress = "${name}@liferay.com",
+				userFirstName = "${name}",
+				userLastName = "${name}",
+				userScreenName = "${name}");
 
-				JSONUser.setFirstPassword(
+			JSONUser.setFirstPassword(
 					agreeToTermsAndAnswerReminderQuery = "true",
 					requireReset = "false",
-					userEmailAddress = "user${n}@liferay.com");
-			}
+					userEmailAddress = "${name}@liferay.com");
 		}
 
 		task ("Sync the Contact Data") {
@@ -215,19 +217,10 @@ definition {
 		}
 
 		task ("View the page as different users") {
-			for (var username : list "user1,user2,user3") {
-				var fullName = "${username} ${username}";
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 
 			ACUtils.closeAllSessionsAndWait();
 		}
@@ -262,24 +255,24 @@ definition {
 			}
 		}
 
-		task ("Go to Segments and filter by "Membership"") {
+		task ("Go to Segments and filter by 'Membership'") {
 			ACNavigation.goToSegments();
 
 			ACSegments.filterAndOrderForSegLists(filterName = "Membership");
 		}
 
 		task ("Assert 3 segments in order filter by membership display") {
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_1",
-				value1 = "Static Segment Test1");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test1",
+				index = "1");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_2",
-				value1 = "Static Segment Test2");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test2",
+				index = "2");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_3",
-				value1 = "Static Segment Test3");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test3",
+				index = "3");
 		}
 
 		task ("Check descending arrow descending of table title of Membership") {
@@ -287,17 +280,17 @@ definition {
 		}
 
 		task ("Assert 3 segments in order filter by membership display") {
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_1",
-				value1 = "Static Segment Test3");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test3",
+				index = "1");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_2",
-				value1 = "Static Segment Test2");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test2",
+				index = "2");
 
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_POSITION_3",
-				value1 = "Static Segment Test1");
+			ACUtils.viewNameListInOrder(
+				name = "Static Segment Test1",
+				index = "3");
 		}
 	}
 

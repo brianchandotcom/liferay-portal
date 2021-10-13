@@ -90,10 +90,11 @@ public class OpenWeatherMapSXPParameterContributor
 				jsonObject.getDouble("temp")));
 		sxpParameters.add(
 			new IntegerSXPParameter(
-				"openweathermap.weather_id", true, jsonObject.getInt("id")));
+				"openweathermap.weather_condition_id", true,
+				jsonObject.getInt("id")));
 		sxpParameters.add(
 			new StringSXPParameter(
-				"openweathermap.weather_name", true,
+				"openweathermap.weather_condition_name", true,
 				jsonObject.getString("main")));
 	}
 
@@ -118,10 +119,10 @@ public class OpenWeatherMapSXPParameterContributor
 				DoubleSXPParameter.class, "temperature",
 				"openweathermap.temperature"),
 			new SXPParameterContributorDefinition(
-				IntegerSXPParameter.class, "weather-id",
+				IntegerSXPParameter.class, "weather-condition-id",
 				"openweathermap.weather_id"),
 			new SXPParameterContributorDefinition(
-				StringSXPParameter.class, "weather-name}",
+				StringSXPParameter.class, "weather-condition-name}",
 				"openweathermap.weather_name"));
 	}
 

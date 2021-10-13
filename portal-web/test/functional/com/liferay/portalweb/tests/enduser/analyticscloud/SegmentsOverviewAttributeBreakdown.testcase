@@ -206,6 +206,10 @@ definition {
 
 		var users = "user1,user2";
 
+		var emailList = "user1@liferay.com,user2@liferay.com";
+
+		var nameList = "user1 user1,user2 user2";
+
 		task ("Add a new site with a public widget page") {
 			ACUtils.addSiteAndPage();
 		}
@@ -225,17 +229,10 @@ definition {
 		}
 
 		task ("View AC Page as new user") {
-			for (var user : list "${users}") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${user}@liferay.com",
-					userLoginFullName = "${user} ${user}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Switch to new property in AC") {
@@ -269,9 +266,7 @@ definition {
 		}
 
 		task ("Add new user as member") {
-			for (var user : list "${users}") {
-				ACSegments.addStaticMember(tableMember = "${user} ${user}");
-			}
+			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
 
 			ACSegments.saveSegment();
 		}

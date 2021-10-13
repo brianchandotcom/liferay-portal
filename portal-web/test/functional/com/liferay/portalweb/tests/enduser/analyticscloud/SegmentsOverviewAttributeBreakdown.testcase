@@ -121,6 +121,10 @@ definition {
 	test SegmentOverviewDistributionFilteredByDate {
 		var users = "ac1,ac2";
 
+		var emailList = "ac1@liferay.com,ac2@liferay.com";
+
+		var nameList = "ac1 ac1,ac2 ac2";
+
 		task ("Create two new users") {
 			JSONUser.addUser(
 				birthdayDay = "15",
@@ -142,18 +146,11 @@ definition {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
-		task ("Login with the two new users and see page") {
-			for (var name : list "${users}") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${name}@liferay.com",
-					userLoginFullName = "${name} ${name}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-			}
+		task ("View AC Page as new user") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close all sessions, lauch AC, change the property and go to segments") {
@@ -169,9 +166,7 @@ definition {
 
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
 
-			for (var name : list "${users}") {
-				ACSegments.addStaticMember(tableMember = "${name} ${name}");
-			}
+			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
 
 			ACSegments.saveSegment();
 		}

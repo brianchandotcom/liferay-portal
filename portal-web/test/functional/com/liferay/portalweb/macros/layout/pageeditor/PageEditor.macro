@@ -3171,10 +3171,6 @@ definition {
 		}
 
 		else {
-			WaitForElementPresent(
-				key_nodeName = "Container",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
-
 			Click(
 				key_nodeName = "Container",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");

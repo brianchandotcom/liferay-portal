@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -82,10 +83,12 @@ public class ObjectLayoutLocalServiceImpl
 				"Object layouts require a custom object definition");
 		}
 
-		_validateRequiredFields(
-			objectDefinitionId, objectLayoutTabs, defaultObjectLayout);
-		_validateSingleDefaultObjectLayout(
-			0, objectDefinitionId, defaultObjectLayout);
+		if (defaultObjectLayout) {
+			_validateDefaultObjectLayoutFields(objectLayoutTabs);
+			_validateRequiredFields(objectDefinitionId, objectLayoutTabs);
+			_validateSingleDefaultObjectLayout(
+				0, objectDefinitionId, defaultObjectLayout);
+		}
 
 		ObjectLayout objectLayout = objectLayoutPersistence.create(
 			counterLocalService.increment());
@@ -183,12 +186,14 @@ public class ObjectLayoutLocalServiceImpl
 		ObjectLayout objectLayout = objectLayoutPersistence.findByPrimaryKey(
 			objectLayoutId);
 
-		_validateRequiredFields(
-			objectLayout.getObjectDefinitionId(), objectLayoutTabs,
-			defaultObjectLayout);
-		_validateSingleDefaultObjectLayout(
-			objectLayoutId, objectLayout.getObjectDefinitionId(),
-			defaultObjectLayout);
+		if (defaultObjectLayout) {
+			_validateDefaultObjectLayoutFields(objectLayoutTabs);
+			_validateRequiredFields(
+				objectLayout.getObjectDefinitionId(), objectLayoutTabs);
+			_validateSingleDefaultObjectLayout(
+				objectLayoutId, objectLayout.getObjectDefinitionId(),
+				defaultObjectLayout);
+		}
 
 		_deleteObjectLayoutTabs(objectLayoutId);
 
@@ -469,14 +474,52 @@ public class ObjectLayoutLocalServiceImpl
 		return objectLayoutTabs;
 	}
 
-	private void _validateRequiredFields(
-			long objectDefinitionId, List<ObjectLayoutTab> objectLayoutTabs,
-			boolean defaultObjectLayout)
+	private void _validateDefaultObjectLayoutFields(
+			List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
-		if (!defaultObjectLayout) {
-			return;
+		Stream<ObjectLayoutTab> objectLayoutTabsStream =
+			objectLayoutTabs.stream();
+
+		Optional<ObjectLayoutColumn> objectLayoutTabsOptional =
+			objectLayoutTabsStream.flatMap(
+				objectLayoutTab -> {
+					if (objectLayoutTab.getObjectLayoutBoxes() == null) {
+						return Stream.empty();
+					}
+
+					return objectLayoutTab.getObjectLayoutBoxes(
+					).stream();
+				}
+			).flatMap(
+				objectLayoutBox -> {
+					if (objectLayoutBox.getObjectLayoutRows() == null) {
+						return Stream.empty();
+					}
+
+					return objectLayoutBox.getObjectLayoutRows(
+					).stream();
+				}
+			).flatMap(
+				objectLayoutRow -> {
+					if (objectLayoutRow.getObjectLayoutColumns() == null) {
+						return Stream.empty();
+					}
+
+					return objectLayoutRow.getObjectLayoutColumns(
+					).stream();
+				}
+			).findAny();
+
+		if (!objectLayoutTabsOptional.isPresent()) {
+			throw new DefaultObjectLayoutException(
+				"The default object layout must have at least one field");
 		}
+	}
+
+	private void _validateRequiredFields(
+			long objectDefinitionId, List<ObjectLayoutTab> objectLayoutTabs)
+		throws PortalException {
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(objectDefinitionId);
@@ -520,12 +563,6 @@ public class ObjectLayoutLocalServiceImpl
 			long objectLayoutId, long objectDefinitionId,
 			boolean defaultObjectLayout)
 		throws PortalException {
-
-		// TODO Add test
-
-		if (!defaultObjectLayout) {
-			return;
-		}
 
 		ObjectLayout objectLayout =
 			objectLayoutPersistence.fetchByODI_DOL_First(

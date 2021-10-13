@@ -139,7 +139,7 @@ public class ObjectLayoutServiceTest {
 
 	private ObjectLayout _addObjectLayout(User user) throws Exception {
 		return _objectLayoutLocalService.addObjectLayout(
-			user.getUserId(), _objectDefinition.getObjectDefinitionId(), true,
+			user.getUserId(), _objectDefinition.getObjectDefinitionId(), false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			Collections.emptyList());
 	}
@@ -158,7 +158,7 @@ public class ObjectLayoutServiceTest {
 			_setUser(user);
 
 			objectLayout = _objectLayoutService.addObjectLayout(
-				_objectDefinition.getObjectDefinitionId(), true,
+				_objectDefinition.getObjectDefinitionId(), false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Collections.emptyList());
 		}
@@ -196,7 +196,7 @@ public class ObjectLayoutServiceTest {
 			objectLayout = _addObjectLayout(user);
 
 			objectLayout = _objectLayoutService.updateObjectLayout(
-				objectLayout.getObjectLayoutId(), true,
+				objectLayout.getObjectLayoutId(), false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Collections.emptyList());
 		}

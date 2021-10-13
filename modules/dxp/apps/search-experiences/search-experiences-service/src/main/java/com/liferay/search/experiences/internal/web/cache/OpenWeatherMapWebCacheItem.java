@@ -31,23 +31,23 @@ import com.liferay.search.experiences.internal.configuration.OpenWeatherMapConfi
 public class OpenWeatherMapWebCacheItem implements WebCacheItem {
 
 	public static JSONObject get(
-		String latitude, String longtitude,
+		String latitude, String longitude,
 		OpenWeatherMapConfiguration openWeatherMapConfiguration) {
 
 		return (JSONObject)WebCachePoolUtil.get(
 			StringBundler.concat(
 				OpenWeatherMapWebCacheItem.class.getName(), StringPool.POUND,
-				latitude, StringPool.POUND, longtitude),
+				latitude, StringPool.POUND, longitude),
 			new OpenWeatherMapWebCacheItem(
-				latitude, longtitude, openWeatherMapConfiguration));
+				latitude, longitude, openWeatherMapConfiguration));
 	}
 
 	public OpenWeatherMapWebCacheItem(
-		String latitude, String longtitude,
+		String latitude, String longitude,
 		OpenWeatherMapConfiguration openWeatherMapConfiguration) {
 
 		_latitude = latitude;
-		_longtitude = longtitude;
+		_longitude = longitude;
 		_openWeatherMapConfiguration = openWeatherMapConfiguration;
 	}
 
@@ -61,7 +61,8 @@ public class OpenWeatherMapWebCacheItem implements WebCacheItem {
 			String url = StringBundler.concat(
 				_openWeatherMapConfiguration.apiURL(), "?APPID=",
 				_openWeatherMapConfiguration.apiKey(), "&format=json&lat=",
-				_latitude, "&lon=", _longtitude, "&units=metric");
+				_latitude, "&lon=", _longitude, "&units=",
+				_openWeatherMapConfiguration.units());
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Reading " + url);
@@ -91,7 +92,7 @@ public class OpenWeatherMapWebCacheItem implements WebCacheItem {
 		OpenWeatherMapWebCacheItem.class);
 
 	private final String _latitude;
-	private final String _longtitude;
+	private final String _longitude;
 	private final OpenWeatherMapConfiguration _openWeatherMapConfiguration;
 
 }

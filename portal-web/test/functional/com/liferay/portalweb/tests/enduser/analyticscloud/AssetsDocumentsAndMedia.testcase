@@ -40,6 +40,8 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 
+		JSONUser.tearDownNonAdminUsers();
+
 		ACUtils.tearDownAC();
 	}
 
@@ -54,13 +56,11 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Visit the document") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("Close sessions") {

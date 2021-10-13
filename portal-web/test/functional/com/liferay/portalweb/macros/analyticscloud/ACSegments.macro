@@ -221,7 +221,7 @@ definition {
 			index = "${index}",
 			locator1 = "ACSegments#CRITERIA_ELLIPSIS");
 
-		MenuItem.click(menuItem = "Delete");
+		MenuItem.clickNoError(menuItem = "Delete");
 	}
 
 	macro deleteSegmentViaSegmentListInlineButton {

@@ -227,6 +227,8 @@ definition {
 
 		var userNames = "ac,ac2,ac3";
 
+		var emailList = "ac@liferay.com,ac2@liferay.com,ac3@liferay.com";
+
 		task ("Create new users and connect the DXP to AC") {
 			for (var name : list "${userNames}") {
 				JSONUser.addUser(

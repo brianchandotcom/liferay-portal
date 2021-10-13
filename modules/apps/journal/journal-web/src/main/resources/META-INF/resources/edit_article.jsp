@@ -66,7 +66,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					<aui:input autoFocus="<%= (article == null) || article.isNew() %>" cssClass="form-control-inline" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" label="" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' required="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>" selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" type="text" wrapperCssClass="article-content-title mb-0" />
 				</li>
 				<li class="tbar-item">
-					<div class="journal-article-button-row tbar-section text-right">
+					<fieldset class="journal-article-button-row tbar-section text-right">
 						<aui:button cssClass="btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= journalEditArticleDisplayContext.getRedirect() %>" type="cancel" />
 
 						<c:if test="<%= journalEditArticleDisplayContext.getClassNameId() > JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>">
@@ -96,7 +96,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 							small="<%= true %>"
 							type="button"
 						/>
-					</div>
+					</fieldset>
 				</li>
 			</ul>
 		</clay:container-fluid>

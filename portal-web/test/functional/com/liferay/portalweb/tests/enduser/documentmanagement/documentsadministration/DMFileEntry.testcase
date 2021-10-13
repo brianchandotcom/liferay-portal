@@ -1574,6 +1574,39 @@ definition {
 		DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This test checks if file uploads can be restricted to .doc format."
+	@priority = "5"
+	@refactordone
+	test CanRestrictFileExtensionToDoc {
+		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#CanRestrictFileExtensionToDoc";
+
+		DMDocument.updateFileExtensions(fieldValue = ".doc");
+
+		SystemSettings.saveConfiguration();
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+
+		for (var dmDocumentTitle : list "Document_1.docx,Document_1.jpeg") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.addCP(
+				dmDocumentFile = "${dmDocumentTitle}",
+				dmDocumentTitle = "${dmDocumentTitle}",
+				validationError = "Document names must end with one of the following extensions: .doc");
+		}
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanRevertToOriginal {

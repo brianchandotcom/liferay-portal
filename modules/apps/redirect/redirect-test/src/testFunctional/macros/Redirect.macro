@@ -302,6 +302,8 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet");
 	}
 
+	// You can use this navigation when you need to access the configuration quickly without checking the UI.
+
 	macro openToAddEntry {
 		var baseURL = "${baseURL}";
 

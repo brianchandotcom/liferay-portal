@@ -30,6 +30,8 @@ public interface SearchEngineHelper {
 
 	public void flushQueuedSearchEngine(String searchEngineId);
 
+	public int[] getCompaniesWithIndexes();
+
 	public Collection<Long> getCompanyIds();
 
 	public String getDefaultSearchEngineId();

@@ -33,6 +33,10 @@ public class SearchEngineHelperUtil {
 		_searchEngineHelper.flushQueuedSearchEngine(searchEngineId);
 	}
 
+	public static int[] getCompaniesWithIndexes() {
+		return _searchEngineHelper.getCompaniesWithIndexes();
+	}
+
 	public static String getDefaultSearchEngineId() {
 		return _searchEngineHelper.getDefaultSearchEngineId();
 	}

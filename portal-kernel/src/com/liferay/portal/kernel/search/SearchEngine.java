@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import java.util.Set;
+
 /**
  * @author Bruno Farache
  * @author Michael C. Han
@@ -22,6 +24,8 @@ public interface SearchEngine {
 
 	public String backup(long companyId, String backupName)
 		throws SearchException;
+
+	public Set<Integer> getCompaniesWithIndexes();
 
 	public IndexSearcher getIndexSearcher();
 

@@ -17,6 +17,9 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.search.dummy.DummyIndexSearcher;
 import com.liferay.portal.kernel.search.dummy.DummyIndexWriter;
 
+import java.util.Collections;
+import java.util.Set;
+
 /**
  * @author Bruno Farache
  * @author Carlos Sierra Andrés
@@ -32,6 +35,11 @@ public class BaseSearchEngine implements SearchEngine {
 		throws SearchException {
 
 		return null;
+	}
+
+	@Override
+	public Set<Integer> getCompaniesWithIndexes() {
+		return Collections.emptySet();
 	}
 
 	@Override

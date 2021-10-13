@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import java.util.Set;
+
 /**
  * @author Michael C. Han
  */
@@ -33,6 +35,11 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 		throws SearchException {
 
 		return _searchEngine.backup(companyId, backupName);
+	}
+
+	@Override
+	public Set<Integer> getCompaniesWithIndexes() {
+		return _searchEngine.getCompaniesWithIndexes();
 	}
 
 	@Override

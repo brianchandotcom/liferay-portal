@@ -164,10 +164,9 @@ public class GitHubDevSyncUtil {
 	}
 
 	public static String synchronizeToGitHubDev(
-			GitWorkingDirectory gitWorkingDirectory, String receiverUsername,
-			String senderBranchName, String senderUsername,
-			String senderBranchSHA, String upstreamBranchSHA)
-		throws IOException {
+		GitWorkingDirectory gitWorkingDirectory, String receiverUsername,
+		String senderBranchName, String senderUsername, String senderBranchSHA,
+		String upstreamBranchSHA) {
 
 		return synchronizeToGitHubDev(
 			gitWorkingDirectory, receiverUsername, 0, senderBranchName,
@@ -175,9 +174,8 @@ public class GitHubDevSyncUtil {
 	}
 
 	public static boolean synchronizeUpstreamBranchToGitHubDev(
-			GitWorkingDirectory gitWorkingDirectory,
-			LocalGitBranch localGitBranch)
-		throws IOException {
+		GitWorkingDirectory gitWorkingDirectory,
+		LocalGitBranch localGitBranch) {
 
 		return synchronizeUpstreamBranchToGitHubDev(
 			gitWorkingDirectory, localGitBranch, 0);
@@ -185,22 +183,21 @@ public class GitHubDevSyncUtil {
 
 	protected static void cacheBranch(
 		GitWorkingDirectory gitWorkingDirectory, LocalGitBranch localGitBranch,
-		GitRemote gitRemote, long timestamp) {
+		String cacheBranchName, GitRemote gitRemote, long timestamp) {
 
 		RemoteGitBranch lockRemoteGitBranch = null;
 
 		try {
 			lockRemoteGitBranch = gitWorkingDirectory.pushToRemoteGitRepository(
-				true, localGitBranch, localGitBranch.getName() + "-LOCK",
-				gitRemote);
+				true, localGitBranch, cacheBranchName + "-LOCK", gitRemote);
 
 			gitWorkingDirectory.pushToRemoteGitRepository(
-				true, localGitBranch, localGitBranch.getName(), gitRemote);
+				true, localGitBranch, cacheBranchName, gitRemote);
 
 			gitWorkingDirectory.pushToRemoteGitRepository(
 				true, localGitBranch,
 				JenkinsResultsParserUtil.combine(
-					localGitBranch.getName(), "-", String.valueOf(timestamp)),
+					cacheBranchName, "-", String.valueOf(timestamp)),
 				gitRemote);
 		}
 		finally {
@@ -212,17 +209,8 @@ public class GitHubDevSyncUtil {
 
 	protected static void cacheBranches(
 		final GitWorkingDirectory gitWorkingDirectory,
-		final LocalGitBranch localGitBranch,
+		final LocalGitBranch localGitBranch, final String cacheBranchName,
 		List<GitRemote> gitHubDevGitRemotes, final String upstreamUsername) {
-
-		String currentBranchName = gitWorkingDirectory.getCurrentBranchName();
-		String localGitBranchName = localGitBranch.getName();
-
-		if ((currentBranchName == null) ||
-			!currentBranchName.equals(localGitBranchName)) {
-
-			gitWorkingDirectory.checkoutLocalGitBranch(localGitBranch, "-f");
-		}
 
 		final long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
@@ -239,8 +227,8 @@ public class GitHubDevSyncUtil {
 				@Override
 				public Object safeCall() {
 					cacheBranch(
-						gitWorkingDirectory, localGitBranch, gitHubDevGitRemote,
-						start);
+						gitWorkingDirectory, localGitBranch, cacheBranchName,
+						gitHubDevGitRemote, start);
 
 					if (upstreamUsername.equals("liferay")) {
 						LocalGitBranch upstreamLocalGitBranch =
@@ -425,7 +413,6 @@ public class GitHubDevSyncUtil {
 	}
 
 	protected static void deleteExpiredRemoteGitBranches(
-		GitWorkingDirectory gitWorkingDirectory,
 		List<GitRemote> gitHubDevGitRemotes) {
 
 		final long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
@@ -1050,8 +1037,7 @@ public class GitHubDevSyncUtil {
 
 					deleteOrphanedCacheBranches(gitHubDevGitRemotes);
 
-					deleteExpiredRemoteGitBranches(
-						gitWorkingDirectory, gitHubDevGitRemotes);
+					deleteExpiredRemoteGitBranches(gitHubDevGitRemotes);
 				}
 
 				RemoteGitBranch cacheRemoteGitBranch = null;
@@ -1104,7 +1090,8 @@ public class GitHubDevSyncUtil {
 
 				cacheBranches(
 					gitWorkingDirectory, cacheLocalGitBranch,
-					gitHubDevGitRemotes, "liferay");
+					cacheLocalGitBranch.getName(), gitHubDevGitRemotes,
+					"liferay");
 
 				return cacheBranchName;
 			}
@@ -1168,8 +1155,10 @@ public class GitHubDevSyncUtil {
 				JenkinsResultsParserUtil.getCurrentTimeMillis() - start);
 
 			System.out.println(
-				"Synchronization with local Git completed in " +
-					durationString + ".");
+				JenkinsResultsParserUtil.combine(
+					"Synchronization with local Git completed in ",
+					durationString, ". Current repository directory is",
+					gitRepositoryDirectory.getPath()));
 		}
 	}
 

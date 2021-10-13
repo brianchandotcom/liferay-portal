@@ -95,14 +95,12 @@ definition {
 
 		Picklist.gotoPicklistView(picklistName = "Picklist Test");
 
-		Picklist.addPicklistItemViaUI(
-			picklistItemKey = "PicklistItemKeyTest",
-			picklistItemName = "Picklist Item Name Test");
+		Picklist.addPicklistItemViaUI(picklistItemName = "Picklist Item Name Test");
 
-		Picklist.picklistSaveButton();
+		Picklist.clickSaveButton();
 
 		Picklist.assertPicklistItem(
-			picklistItemKey = "PicklistItemKeyTest",
+			picklistItemKey = "picklistItemNameTest",
 			picklistItemName = "Picklist Item Name Test");
 	}
 

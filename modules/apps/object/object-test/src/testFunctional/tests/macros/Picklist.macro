@@ -18,9 +18,11 @@ definition {
 			locator1 = "Picklist#ADD_PICKLIST_ITEM_NAME",
 			value1 = "${picklistItemName}");
 
-		Type(
-			locator1 = "Picklist#ADD_PICKLIST_ITEM_KEY",
-			value1 = "${picklistItemKey}");
+		if (isSet(picklistItemKey)) {
+			Type(
+				locator1 = "Picklist#ADD_PICKLIST_ITEM_KEY",
+				value1 = "${picklistItemKey}");
+		}
 	}
 
 	macro addPicklistViaAPI {
@@ -88,6 +90,10 @@ definition {
 		Click.javaScriptClick(locator1 = "Picklist#CANCEL_UPDATE_PICKLIST");
 	}
 
+	macro clickSaveButton {
+		Click.javaScriptClick(locator1 = "Picklist#SAVE_BUTTON");
+	}
+
 	macro deleteAllPicklistsViaAPI {
 		JSONObject.deleteAllPicklists(
 			userEmailAddress = "${userEmailAddress}",
@@ -121,10 +127,6 @@ definition {
 		Click.javaScriptClick(
 			key_picklistOption = "${picklistOption}",
 			locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
-	}
-
-	macro picklistSaveButton {
-		Button.clickSave();
 	}
 
 	macro updatePicklistName {

@@ -38,8 +38,6 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Design",
 				portlet = "Templates");
-
-			Navigator.gotoNavTab(navTab = "Information Templates");
 		}
 
 		task ("Add an information template for Web Content Article and Basic Web Content") {

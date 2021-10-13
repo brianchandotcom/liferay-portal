@@ -59,6 +59,7 @@ describe('AccountSelector', () => {
 		beforeEach(() => {
 			renderedComponent = render(
 				<AccountSelector
+					accountEntryAllowedTypes='["business", "person"]'
 					commerceChannelId={24324}
 					createNewOrderURL="/order-link"
 					selectOrderURL="/test-url/{id}"
@@ -151,6 +152,7 @@ describe('AccountSelector', () => {
 		beforeEach(() => {
 			renderedComponent = render(
 				<AccountSelector
+					accountEntryAllowedTypes='["business", "person"]'
 					commerceChannelId={24324}
 					createNewOrderURL="/order-link"
 					currentCommerceAccount={{
@@ -220,6 +222,7 @@ describe('AccountSelector', () => {
 		beforeEach(() => {
 			renderedComponent = render(
 				<AccountSelector
+					accountEntryAllowedTypes='["business", "person"]'
 					commerceChannelId={24324}
 					createNewOrderURL="/order-link"
 					currentCommerceAccount={{

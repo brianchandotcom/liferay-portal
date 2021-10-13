@@ -382,27 +382,15 @@ definition {
 
 			// This test needs to add data from a past date to work propperly
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "Submit Form",
+				submitText = "Test Assets",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			FormPortlet.waitFormRenderer(text = "Submit");
-
-			FormFields.viewTextLabel(
-				fieldLabel = "Text",
-				fieldName = "Text");
-
-			FormFields.editText(
-				fieldName = "Text",
-				fieldValue = "Test Assets");
-
-			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Enter in forms asset page") {

@@ -1341,155 +1341,65 @@ definition {
 		}
 
 		task ("View the blogs page as different users") {
-			for (var username : list "userea,user1") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "userea@liferay.com,user1@liferay.com",
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				pageName = "Blogs Page",
+				siteName = "Site Name");
 
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "Blogs Page",
-					siteName = "Site Name");
-
-				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
-
-				Pause(locator1 = "5000");
-
-				ACUtils.closeAllSessions();
-			}
+			ACUtils.closeAllSessions();
 		}
 
 		task ("View the documents page as different users") {
-			for (var username : list "user2,user3") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "user2@liferay.com,user3@liferay.com",
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
+				pageName = "Documents Page",
+				siteName = "Site Name");
 
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "Documents Page",
-					siteName = "Site Name");
-
-				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
-
-				Pause(locator1 = "5000");
-
-				ACUtils.closeAllSessions();
-			}
+			ACUtils.closeAllSessions();
 		}
 
 		task ("View the web content page as different users") {
-			for (var username : list "user4,user5") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "user4@liferay.com,user5@liferay.com",
+				pageName = "Web Content Page",
+				siteName = "Site Name");
 
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "Web Content Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-
-				ACUtils.closeAllSessions();
-			}
+			ACUtils.closeAllSessions();
 		}
 
 		task ("View the second blogs page as different users") {
-			for (var username : list "user6,user7") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "user6@liferay.com,user7@liferay.com",
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Second Title",
+				pageName = "Blogs Second Page",
+				siteName = "Site Name");
 
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "Blogs Second Page",
-					siteName = "Site Name");
-
-				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Second Title");
-
-				Pause(locator1 = "5000");
-
-				ACUtils.closeAllSessions();
-			}
+			ACUtils.closeAllSessions();
 		}
 
 		task ("View the second documents page as different users") {
-			for (var username : list "user8,user9") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "user8@liferay.com,user9@liferay.com",
+				actionType = "View DM",
+				documentTitleList = "DM AC Second Title",
+				pageName = "Documents Second Page",
+				siteName = "Site Name");
 
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "Documents Second Page",
-					siteName = "Site Name");
-
-				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Second Title");
-
-				Pause(locator1 = "5000");
-
-				ACUtils.closeAllSessions();
-			}
+			ACUtils.closeAllSessions();
 		}
 
 		task ("View the second web content page as different users") {
-			for (var username : list "usera,userb") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "usera@liferay.com,userb@liferay.com",
+				pageName = "Web Content Second Page",
+				siteName = "Site Name");
 
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "Web Content Second Page",
-					siteName = "Site Name");
-
-				Pause(locator1 = "5000");
-
-				ACUtils.closeAllSessions();
-			}
+			ACUtils.closeAllSessions();
 		}
 
 		User.logoutPG();

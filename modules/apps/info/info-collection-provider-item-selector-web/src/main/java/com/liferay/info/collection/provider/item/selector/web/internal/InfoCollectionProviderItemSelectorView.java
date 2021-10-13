@@ -119,13 +119,13 @@ public class InfoCollectionProviderItemSelectorView
 	}
 
 	private List<InfoCollectionProvider<?>> _getInfoCollectionProviders(
-		String itemClassName) {
+		String itemType) {
 
 		return ListUtil.filter(
 			_infoItemServiceTracker.getAllInfoItemServices(
 				(Class<InfoCollectionProvider<?>>)
 					(Class<?>)InfoCollectionProvider.class,
-				itemClassName),
+				itemType),
 			InfoCollectionProvider::isAvailable);
 	}
 

@@ -3160,10 +3160,6 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Page Elements");
 
-		WaitForElementPresent(
-			key_elementName = "${elementName}",
-			locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT");
-
 		if (!(isSet(targetElementName))) {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_elementName = "${elementName}",

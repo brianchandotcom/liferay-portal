@@ -28,12 +28,9 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -55,21 +52,13 @@ public abstract class BaseLogResourceImpl implements LogResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans/{planId}/logs'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans/{planId}/log'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "planId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
 			)
 		}
 	)
@@ -77,18 +66,17 @@ public abstract class BaseLogResourceImpl implements LogResource {
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Log")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/plans/{planId}/logs")
+	@javax.ws.rs.Path("/plans/{planId}/log")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<Log> getPlanLogsPage(
+	public Log getPlanLog(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("planId")
-			Long planId,
-			@javax.ws.rs.core.Context Pagination pagination)
+			Long planId)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		return new Log();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

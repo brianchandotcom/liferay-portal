@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
 import java.util.List;
@@ -56,8 +54,7 @@ public interface LogResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<Log> getPlanLogsPage(Long planId, Pagination pagination)
-		throws Exception;
+	public Log getPlanLog(Long planId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

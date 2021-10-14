@@ -16,8 +16,6 @@ package com.liferay.batch.planner.rest.client.resource.v1_0;
 
 import com.liferay.batch.planner.rest.client.dto.v1_0.Log;
 import com.liferay.batch.planner.rest.client.http.HttpInvoker;
-import com.liferay.batch.planner.rest.client.pagination.Page;
-import com.liferay.batch.planner.rest.client.pagination.Pagination;
 import com.liferay.batch.planner.rest.client.problem.Problem;
 import com.liferay.batch.planner.rest.client.serdes.v1_0.LogSerDes;
 
@@ -40,11 +38,9 @@ public interface LogResource {
 		return new Builder();
 	}
 
-	public Page<Log> getPlanLogsPage(Long planId, Pagination pagination)
-		throws Exception;
+	public Log getPlanLog(Long planId) throws Exception;
 
-	public HttpInvoker.HttpResponse getPlanLogsPageHttpResponse(
-			Long planId, Pagination pagination)
+	public HttpInvoker.HttpResponse getPlanLogHttpResponse(Long planId)
 		throws Exception;
 
 	public static class Builder {
@@ -118,11 +114,9 @@ public interface LogResource {
 
 	public static class LogResourceImpl implements LogResource {
 
-		public Page<Log> getPlanLogsPage(Long planId, Pagination pagination)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse = getPlanLogsPageHttpResponse(
-				planId, pagination);
+		public Log getPlanLog(Long planId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getPlanLogHttpResponse(
+				planId);
 
 			String content = httpResponse.getContent();
 
@@ -150,7 +144,7 @@ public interface LogResource {
 			}
 
 			try {
-				return Page.of(content, LogSerDes::toDTO);
+				return LogSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -161,8 +155,7 @@ public interface LogResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getPlanLogsPageHttpResponse(
-				Long planId, Pagination pagination)
+		public HttpInvoker.HttpResponse getPlanLogHttpResponse(Long planId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -186,17 +179,10 @@ public interface LogResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
-			}
-
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/batch-planner/v1.0/plans/{planId}/logs");
+						"/o/batch-planner/v1.0/plans/{planId}/log");
 
 			httpInvoker.path("planId", planId);
 

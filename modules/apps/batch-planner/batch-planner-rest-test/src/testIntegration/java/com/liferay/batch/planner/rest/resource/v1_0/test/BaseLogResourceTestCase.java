@@ -25,7 +25,6 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.batch.planner.rest.client.dto.v1_0.Log;
 import com.liferay.batch.planner.rest.client.http.HttpInvoker;
 import com.liferay.batch.planner.rest.client.pagination.Page;
-import com.liferay.batch.planner.rest.client.pagination.Pagination;
 import com.liferay.batch.planner.rest.client.resource.v1_0.LogResource;
 import com.liferay.batch.planner.rest.client.serdes.v1_0.LogSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -195,89 +194,18 @@ public abstract class BaseLogResourceTestCase {
 	}
 
 	@Test
-	public void testGetPlanLogsPage() throws Exception {
-		Long planId = testGetPlanLogsPage_getPlanId();
-		Long irrelevantPlanId = testGetPlanLogsPage_getIrrelevantPlanId();
+	public void testGetPlanLog() throws Exception {
+		Log postLog = testGetPlanLog_addLog();
 
-		Page<Log> page = logResource.getPlanLogsPage(
-			planId, Pagination.of(1, 10));
+		Log getLog = logResource.getPlanLog(postLog.getPlanId());
 
-		Assert.assertEquals(0, page.getTotalCount());
-
-		if (irrelevantPlanId != null) {
-			Log irrelevantLog = testGetPlanLogsPage_addLog(
-				irrelevantPlanId, randomIrrelevantLog());
-
-			page = logResource.getPlanLogsPage(
-				irrelevantPlanId, Pagination.of(1, 2));
-
-			Assert.assertEquals(1, page.getTotalCount());
-
-			assertEquals(
-				Arrays.asList(irrelevantLog), (List<Log>)page.getItems());
-			assertValid(page);
-		}
-
-		Log log1 = testGetPlanLogsPage_addLog(planId, randomLog());
-
-		Log log2 = testGetPlanLogsPage_addLog(planId, randomLog());
-
-		page = logResource.getPlanLogsPage(planId, Pagination.of(1, 10));
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(log1, log2), (List<Log>)page.getItems());
-		assertValid(page);
+		assertEquals(postLog, getLog);
+		assertValid(getLog);
 	}
 
-	@Test
-	public void testGetPlanLogsPageWithPagination() throws Exception {
-		Long planId = testGetPlanLogsPage_getPlanId();
-
-		Log log1 = testGetPlanLogsPage_addLog(planId, randomLog());
-
-		Log log2 = testGetPlanLogsPage_addLog(planId, randomLog());
-
-		Log log3 = testGetPlanLogsPage_addLog(planId, randomLog());
-
-		Page<Log> page1 = logResource.getPlanLogsPage(
-			planId, Pagination.of(1, 2));
-
-		List<Log> logs1 = (List<Log>)page1.getItems();
-
-		Assert.assertEquals(logs1.toString(), 2, logs1.size());
-
-		Page<Log> page2 = logResource.getPlanLogsPage(
-			planId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<Log> logs2 = (List<Log>)page2.getItems();
-
-		Assert.assertEquals(logs2.toString(), 1, logs2.size());
-
-		Page<Log> page3 = logResource.getPlanLogsPage(
-			planId, Pagination.of(1, 3));
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(log1, log2, log3), (List<Log>)page3.getItems());
-	}
-
-	protected Log testGetPlanLogsPage_addLog(Long planId, Log log)
-		throws Exception {
-
+	protected Log testGetPlanLog_addLog() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	protected Long testGetPlanLogsPage_getPlanId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetPlanLogsPage_getIrrelevantPlanId() throws Exception {
-		return null;
 	}
 
 	protected Log testGraphQLLog_addLog() throws Exception {

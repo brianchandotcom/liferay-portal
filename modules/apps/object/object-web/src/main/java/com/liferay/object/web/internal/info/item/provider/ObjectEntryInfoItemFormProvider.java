@@ -28,12 +28,15 @@ import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.Objects;
@@ -50,6 +53,7 @@ public class ObjectEntryInfoItemFormProvider
 		InfoItemFieldReaderFieldSetProvider infoItemFieldReaderFieldSetProvider,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
+		ObjectRelationshipLocalService objectRelationshipLocalService,
 		TemplateInfoItemFieldSetProvider templateInfoItemFieldSetProvider) {
 
 		_objectDefinition = objectDefinition;
@@ -57,6 +61,7 @@ public class ObjectEntryInfoItemFormProvider
 			infoItemFieldReaderFieldSetProvider;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
+		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_templateInfoItemFieldSetProvider = templateInfoItemFieldSetProvider;
 	}
 
@@ -201,6 +206,31 @@ public class ObjectEntryInfoItemFormProvider
 						_objectFieldLocalService.getObjectFields(
 							objectDefinitionId)) {
 
+					if (Validator.isNotNull(
+							objectField.getRelationshipType())) {
+
+						try {
+							ObjectRelationship objectRelationship =
+								_objectRelationshipLocalService.
+									fetchObjectRelationshipByObjectFieldId2(
+										objectField.getObjectFieldId());
+
+							ObjectDefinition relatedObjectDefinition =
+								_objectDefinitionLocalService.
+									getObjectDefinition(
+										objectRelationship.
+											getObjectDefinitionId1());
+
+							if (!relatedObjectDefinition.isActive()) {
+								continue;
+							}
+						}
+						catch (PortalException portalException) {
+							throw new RuntimeException(
+								"Unexpected exception", portalException);
+						}
+					}
+
 					unsafeConsumer.accept(
 						InfoField.builder(
 						).infoFieldType(
@@ -233,6 +263,8 @@ public class ObjectEntryInfoItemFormProvider
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectRelationshipLocalService
+		_objectRelationshipLocalService;
 	private final TemplateInfoItemFieldSetProvider
 		_templateInfoItemFieldSetProvider;
 

@@ -149,6 +149,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntryInfoItemFormProvider(
 					objectDefinition, _infoItemFieldReaderFieldSetProvider,
 					_objectDefinitionLocalService, _objectFieldLocalService,
+					_objectRelationshipLocalService,
 					_templateInfoItemFieldSetProvider),
 				HashMapDictionaryBuilder.<String, Object>put(
 					Constants.SERVICE_RANKING, 10

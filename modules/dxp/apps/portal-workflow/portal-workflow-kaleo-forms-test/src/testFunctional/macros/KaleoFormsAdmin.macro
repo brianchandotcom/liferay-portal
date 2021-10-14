@@ -1051,5 +1051,21 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "Unable to delete the workflow definition that is in use.");
 	}
+	
+	macro viewPermissionsAndAssertModal {
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Permissions");
+		
+		AssertElementPresent(
+			key_title = "Permissions",
+			locator1 = "Header#H3_TITLE");
+
+		AssertElementPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PERMISSIONS");
+
+		IFrame.selectPermissionsFrame();
+
+		PortletEntry.save();
+
+		Alert.viewSuccessMessage();
+	}
 
 }

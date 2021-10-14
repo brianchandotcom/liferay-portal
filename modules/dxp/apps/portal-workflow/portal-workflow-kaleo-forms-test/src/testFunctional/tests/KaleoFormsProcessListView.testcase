@@ -402,11 +402,42 @@ definition {
 	}
 
 	@description = "Verify that the user can select permissions option."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectPermissionsOption {
+		KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70672 CanSelectPermissionsOption pending implementation
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "Contacts",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Single Approver");
+			
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.assignForm(
+			kfProcessName = "Kaleo Forms Process",
+			workflowTask = "create");
+
+		KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveForm();
+
+		KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.viewPermissionsAndAssertModal();
+
 
 	}
 

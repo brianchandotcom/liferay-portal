@@ -129,6 +129,9 @@ public interface COREntryRelLocalService
 
 	public void deleteCOREntryRels(long corEntryId) throws PortalException;
 
+	public void deleteCOREntryRels(String className, long corEntryId)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

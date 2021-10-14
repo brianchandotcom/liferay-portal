@@ -10,6 +10,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useStateSafe} from '@liferay/frontend-js-react-web';
 import className from 'classnames';
 import PropTypes from 'prop-types';
@@ -55,9 +56,14 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
-	const {timeSpanKey, timeSpanOffset} = useContext(ChartStateContext);
+	const {loading, timeSpanKey, timeSpanOffset} =
+		useContext(ChartStateContext);
 
 	const [trafficSources, setTrafficSources] = useStateSafe([]);
+
+	const pieChartWrapperClasses = className('pie-chart-wrapper', {
+		'pie-chart-wrapper--loading': loading,
+	});
 
 	useEffect(() => {
 		if (validAnalyticsConnection) {
@@ -122,7 +128,13 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 					)}
 				</div>
 			)}
-			<div className="pie-chart-wrapper">
+			<div className={pieChartWrapperClasses}>
+				{loading && (
+					<ClayLoadingIndicator
+						className="chart-loading-indicator"
+						small
+					/>
+				)}
 				<div className="pie-chart-wrapper--legend">
 					<table>
 						<tbody>

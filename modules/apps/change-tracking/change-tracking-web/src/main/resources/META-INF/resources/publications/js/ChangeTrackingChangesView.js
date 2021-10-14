@@ -155,10 +155,10 @@ export default ({
 
 			let hideable = true;
 
-			for (let i = 0; i < rootClass.children.length; i++) {
+			for (let j = 0; j < rootClass.children.length; j++) {
 				const model =
 					modelsRef.current[
-						rootClass.children[i].modelKey.toString()
+						rootClass.children[j].modelKey.toString()
 					];
 
 				if (model && !model.hideable) {

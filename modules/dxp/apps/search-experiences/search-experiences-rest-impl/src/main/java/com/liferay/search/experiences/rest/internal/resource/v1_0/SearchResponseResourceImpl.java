@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 
 	@Override
-	public SearchResponse getSearch(
+	public SearchResponse search(
 			String queryString, String sxpBlueprintJSON, Pagination pagination)
 		throws Exception {
 

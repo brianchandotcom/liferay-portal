@@ -76,6 +76,8 @@ definition {
 		Click(locator1 = "Button#EXPORT_MODAL");
 
 		DownloadTempFile();
+
+		Button.clickCancel();
 	}
 
 	macro gotoExportTranslation {

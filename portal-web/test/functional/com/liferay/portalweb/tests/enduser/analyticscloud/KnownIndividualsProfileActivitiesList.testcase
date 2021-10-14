@@ -55,9 +55,9 @@ definition {
 		ACDXPSettings.syncNewContactData();
 
 		ACUtils.navigateToSitePageWithUser(
-			emailList = "${emailList}",
 			actionType = "View DM",
 			documentTitleList = "DM AC Title,DM AC Title,DM AC Title,DM AC Title",
+			emailList = "${emailList}",
 			pageName = "AC Page",
 			siteName = "Site Name");
 

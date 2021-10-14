@@ -165,9 +165,9 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.navigateToSitePageWithUser(
-			emailList = "${emailList}",
 			actionType = "View Blog",
 			documentTitleList = "Blogs AC Title",
+			emailList = "${emailList}",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -222,9 +222,9 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.navigateToSitePageWithUser(
-			emailList = "${emailList}",
 			actionType = "View Blog",
 			documentTitleList = "Blogs AC Title",
+			emailList = "${emailList}",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -626,9 +626,9 @@ definition {
 		ACDXPSettings.syncNewContactData();
 
 		ACUtils.navigateToSitePageWithUser(
-			emailList = "${emailList}",
 			actionType = "View Blog",
 			documentTitleList = "Blogs AC Title",
+			emailList = "${emailList}",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -639,9 +639,9 @@ definition {
 			userScreenName = "userac");
 
 		ACUtils.navigateToSitePageWithUser(
-			emailList = "userac@liferay.com",
 			actionType = "View Blog",
 			documentTitle = "Blogs AC Title",
+			emailList = "userac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
 

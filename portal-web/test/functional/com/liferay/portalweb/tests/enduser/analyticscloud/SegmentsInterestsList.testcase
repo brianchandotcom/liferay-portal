@@ -129,9 +129,9 @@ definition {
 
 		task ("View the blogs page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "userea@liferay.com,user1@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
 
@@ -140,9 +140,9 @@ definition {
 
 		task ("View the documents page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "user2@liferay.com,user3@liferay.com",
 				actionType = "View DM",
 				documentTitleList = "DM AC Title",
+				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
 
@@ -268,9 +268,9 @@ definition {
 
 		task ("View the blogs page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "userea@liferay.com,user1@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
 
@@ -279,9 +279,9 @@ definition {
 
 		task ("View the documents page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "user2@liferay.com,user3@liferay.com",
 				actionType = "View DM",
 				documentTitleList = "DM AC Title",
+				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
 
@@ -398,9 +398,9 @@ definition {
 
 		task ("View the blogs page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "userea@liferay.com,user1@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
 
@@ -409,9 +409,9 @@ definition {
 
 		task ("View the documents page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "user2@liferay.com,user3@liferay.com",
 				actionType = "View DM",
 				documentTitleList = "DM AC Title",
+				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
 
@@ -561,9 +561,9 @@ definition {
 
 		task ("View the blogs page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "userea@liferay.com,usera@liferay.com,userf@liferay.com,userg@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "userea@liferay.com,usera@liferay.com,userf@liferay.com,userg@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
 
@@ -572,9 +572,9 @@ definition {
 
 		task ("View the documents page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "userb@liferay.com,userc@liferay.com,userh@liferay.com,useri@liferay.com",
 				actionType = "View DM",
 				documentTitleList = "DM AC Title",
+				emailList = "userb@liferay.com,userc@liferay.com,userh@liferay.com,useri@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
 
@@ -854,9 +854,9 @@ definition {
 
 		task ("View the blogs page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "userea@liferay.com,user1@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
 
@@ -865,9 +865,9 @@ definition {
 
 		task ("View the documents page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "user2@liferay.com,user3@liferay.com",
 				actionType = "View DM",
 				documentTitleList = "DM AC Title",
+				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
 
@@ -1081,9 +1081,9 @@ definition {
 
 		task ("View the blogs page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "userea@liferay.com,user1@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
 
@@ -1092,9 +1092,9 @@ definition {
 
 		task ("View the documents page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "user2@liferay.com,user3@liferay.com",
 				actionType = "View DM",
 				documentTitleList = "DM AC Title",
+				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
 
@@ -1342,9 +1342,9 @@ definition {
 
 		task ("View the blogs page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "userea@liferay.com,user1@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
 
@@ -1353,9 +1353,9 @@ definition {
 
 		task ("View the documents page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "user2@liferay.com,user3@liferay.com",
 				actionType = "View DM",
 				documentTitleList = "DM AC Title",
+				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
 
@@ -1373,9 +1373,9 @@ definition {
 
 		task ("View the second blogs page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "user6@liferay.com,user7@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Second Title",
+				emailList = "user6@liferay.com,user7@liferay.com",
 				pageName = "Blogs Second Page",
 				siteName = "Site Name");
 
@@ -1384,9 +1384,9 @@ definition {
 
 		task ("View the second documents page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "user8@liferay.com,user9@liferay.com",
 				actionType = "View DM",
 				documentTitleList = "DM AC Second Title",
+				emailList = "user8@liferay.com,user9@liferay.com",
 				pageName = "Documents Second Page",
 				siteName = "Site Name");
 
@@ -1644,9 +1644,9 @@ definition {
 
 		task ("View the blogs page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "userea@liferay.com,user1@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
 
@@ -1655,9 +1655,9 @@ definition {
 
 		task ("View the documents page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "user2@liferay.com,user3@liferay.com",
 				actionType = "View DM",
 				documentTitleList = "DM AC Title",
+				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
 
@@ -1809,9 +1809,9 @@ definition {
 
 		task ("View the blogs page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "userea@liferay.com,user1@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
 
@@ -1820,9 +1820,9 @@ definition {
 
 		task ("View the documents page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "user2@liferay.com,user3@liferay.com",
 				actionType = "View DM",
 				documentTitleList = "DM AC Title",
+				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
 
@@ -1970,9 +1970,9 @@ definition {
 
 		task ("View the documents page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
 				actionType = "View DM",
 				documentTitleList = "DM AC Title",
+				emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
 
@@ -2080,9 +2080,9 @@ definition {
 
 		task ("View the blogs page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "userea@liferay.com,user1@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
 
@@ -2091,9 +2091,9 @@ definition {
 
 		task ("View the documents page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "user2@liferay.com,user3@liferay.com",
 				actionType = "View DM",
 				documentTitleList = "DM AC Title",
+				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
 
@@ -2241,9 +2241,9 @@ definition {
 
 		task ("View the blogs page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "userea@liferay.com,user1@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
 
@@ -2252,9 +2252,9 @@ definition {
 
 		task ("View the documents page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "user2@liferay.com,user3@liferay.com",
 				actionType = "View DM",
 				documentTitleList = "DM AC Title",
+				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
 

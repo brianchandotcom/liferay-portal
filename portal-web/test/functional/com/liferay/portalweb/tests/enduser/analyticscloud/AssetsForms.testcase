@@ -48,9 +48,9 @@ definition {
 		task ("Submit the form") {
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
-				submitText = "Test Assets",
 				pageName = "AC Page",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				submitText = "Test Assets");
 		}
 
 		task ("Close sessions") {
@@ -110,11 +110,11 @@ definition {
 
 		task ("Go to form and submit") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "${emailList}",
 				actionType = "Submit Form",
-				submitText = "Test Assets",
+				emailList = "${emailList}",
 				pageName = "AC Page",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				submitText = "Test Assets");
 		}
 
 		task ("Download the document with anonymous user") {
@@ -122,9 +122,9 @@ definition {
 
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
-				submitText = "Test Assets",
 				pageName = "AC Page",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				submitText = "Test Assets");
 		}
 
 		task ("Close all sessions and go to AC") {
@@ -177,11 +177,11 @@ definition {
 
 		task ("Go to form and submit") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "${emailList}",
 				actionType = "Submit Form",
-				submitText = "Test Assets",
+				emailList = "${emailList}",
 				pageName = "AC Page",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				submitText = "Test Assets");
 		}
 
 		task ("Download the document with anonymous user") {
@@ -189,9 +189,9 @@ definition {
 
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
-				submitText = "Test Assets",
 				pageName = "AC Page",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				submitText = "Test Assets");
 		}
 
 		task ("Close all sessions") {
@@ -221,9 +221,9 @@ definition {
 
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
-				submitText = "Test Assets",
 				pageName = "AC Page",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				submitText = "Test Assets");
 		}
 
 		task ("Close all sessions and go to AC") {
@@ -320,9 +320,9 @@ definition {
 		for (var n : list "1,2,3") {
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
-				submitText = "Test Segments",
 				pageName = "AC Page",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				submitText = "Test Segments");
 		}
 
 		ACUtils.closeAllSessionsAndWait();
@@ -372,9 +372,9 @@ definition {
 
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
-				submitText = "Test Assets",
 				pageName = "AC Page",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				submitText = "Test Assets");
 		}
 
 		task ("Close sessions") {
@@ -443,9 +443,9 @@ definition {
 
 		ACUtils.navigateToSitePage(
 			actionType = "Submit Form",
-			submitText = "Test Assets",
 			pageName = "AC Page",
-			siteName = "Site Name");
+			siteName = "Site Name",
+			submitText = "Test Assets");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -494,9 +494,9 @@ definition {
 
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
-				submitText = "Test Assets",
 				pageName = "AC Page",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				submitText = "Test Assets");
 		}
 
 		task ("Close all sessions") {
@@ -535,9 +535,9 @@ definition {
 		task ("Form submit") {
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
-				submitText = "Test Assets",
 				pageName = "AC Page",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				submitText = "Test Assets");
 		}
 
 		task ("Close sessions") {
@@ -581,9 +581,9 @@ definition {
 		task ("Submit the form") {
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
-				submitText = "Test Assets",
 				pageName = "AC Page",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				submitText = "Test Assets");
 		}
 
 		task ("Close sessions") {
@@ -639,11 +639,11 @@ definition {
 		ACDXPSettings.syncNewContactData();
 
 		ACUtils.navigateToSitePageWithUser(
-			emailList = "${emailList}",
 			actionType = "Submit Form",
-			submitText = "Test Assets",
+			emailList = "${emailList}",
 			pageName = "AC Page",
-			siteName = "Site Name");
+			siteName = "Site Name",
+			submitText = "Test Assets");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -692,9 +692,9 @@ definition {
 		for (var pageName : list "AC Page,AC Page 1,AC Page 2,AC Page 3") {
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
-				submitText = "Test Assets",
 				pageName = "${pageName}",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				submitText = "Test Assets");
 		}
 
 		ACUtils.closeAllSessionsAndWait();
@@ -720,8 +720,8 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "1,2,3,4",
 			actionType = "View Form",
+			documentTitleList = "1,2,3,4",
 			pageName = "AC Page",
 			siteName = "Site Name");
 

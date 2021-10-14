@@ -116,9 +116,9 @@ definition {
 		ACDXPSettings.syncNewContactData();
 
 		ACUtils.navigateToSitePageWithUser(
-			emailList = "ac@liferay.com",
 			actionType = "View Blog",
 			documentTitleList = "Blogs AC Title",
+			emailList = "ac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -228,9 +228,9 @@ definition {
 		ACDXPSettings.syncNewContactData();
 
 		ACUtils.navigateToSitePageWithUser(
-			emailList = "${emailList}",
 			actionType = "View Blog",
 			documentTitleList = "Blogs AC Title",
+			emailList = "${emailList}",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -661,22 +661,22 @@ definition {
 
 		task ("Assert the first user in the list, click the sort button and assert that the user has changed") {
 			ACUtils.viewNameListInOrder(
-				name = "dxp dxp",
-				index = "1");
+				index = "1",
+				name = "dxp dxp");
 
 			ACUtils.viewNameListInOrder(
-				name = "liferay liferay",
-				index = "2");
+				index = "2",
+				name = "liferay liferay");
 
 			ACSegments.sortSegmentButton();
 
 			ACUtils.viewNameListInOrder(
-				name = "liferay liferay",
-				index = "1");
+				index = "1",
+				name = "liferay liferay");
 
 			ACUtils.viewNameListInOrder(
-				name = "dxp dxp",
-				index = "2");
+				index = "2",
+				name = "dxp dxp");
 		}
 	}
 
@@ -942,7 +942,6 @@ definition {
 				emailList = "${emailList}",
 				pageName = "AC Page",
 				siteName = "Site Name");
-			}
 		}
 
 		task ("Close session, go to AC and segments") {

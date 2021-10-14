@@ -56,8 +56,8 @@ definition {
 
 		ACUtils.navigateToSitePage(
 			actionType = "Comment Blog",
-			documentTitleList = "Blogs AC Title",
 			commentText = "Blogs Entry Comment",
+			documentTitleList = "Blogs AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -90,8 +90,8 @@ definition {
 
 		ACUtils.navigateToSitePage(
 			actionType = "Comment Blog",
-			documentTitleList = "Blogs AC Title",
 			commentText = "Blogs Entry Comment 1",
+			documentTitleList = "Blogs AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -217,8 +217,8 @@ definition {
 			userLoginFullName = "ac ac");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "DM AC Title",
 			actionType = "Download DM",
+			documentTitleList = "DM AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -251,8 +251,8 @@ definition {
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "DM AC Title,DM AC Title,DM AC Title",
 			actionType = "Download DM",
+			documentTitleList = "DM AC Title,DM AC Title,DM AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -362,9 +362,9 @@ definition {
 
 		ACUtils.navigateToSitePage(
 			actionType = "Submit Form",
-			submitText = "Test Segments",
 			pageName = "AC Page",
-			siteName = "Site Name");
+			siteName = "Site Name",
+			submitText = "Test Segments");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -395,11 +395,11 @@ definition {
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "1,2,3",
 			actionType = "Submit Form",
-			submitText = "Test Segments",
+			documentTitleList = "1,2,3",
 			pageName = "AC Page",
-			siteName = "Site Name");
+			siteName = "Site Name",
+			submitText = "Test Segments");
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -730,8 +730,8 @@ definition {
 			userLoginFullName = "ac ac");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "Blogs AC Title",
 			actionType = "View Blog",
+			documentTitleList = "Blogs AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -768,8 +768,8 @@ definition {
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title",
 			actionType = "View Blog",
+			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -880,8 +880,8 @@ definition {
 			userLoginFullName = "ac ac");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "Blogs AC Title",
 			actionType = "View Blog",
+			documentTitleList = "Blogs AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -915,8 +915,8 @@ definition {
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title",
 			actionType = "View Blog",
+			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -959,8 +959,8 @@ definition {
 			userLoginFullName = "ac ac");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "Blogs AC Title",
 			actionType = "View Blog",
+			documentTitleList = "Blogs AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -992,8 +992,8 @@ definition {
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title",
 			actionType = "View Blog",
+			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -1032,8 +1032,8 @@ definition {
 			userLoginFullName = "${username} ${username}");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "DM AC Title",
 			actionType = "View DM",
+			documentTitleList = "DM AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -1066,8 +1066,8 @@ definition {
 		ACUtils.launchDXP(userEmailAddress = "${username}@liferay.com");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "DM AC Title,DM AC Title,DM AC Title",
 			actionType = "View DM",
+			documentTitleList = "DM AC Title,DM AC Title,DM AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 

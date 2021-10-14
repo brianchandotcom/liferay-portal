@@ -234,7 +234,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			// The pause is necessary for the loop to capture the element.
+			// The pause is necessary because the bar takes a while to load into the chart. For more information about pause see LRAC-9517
 
 			Pause(locator1 = "2000");
 		}

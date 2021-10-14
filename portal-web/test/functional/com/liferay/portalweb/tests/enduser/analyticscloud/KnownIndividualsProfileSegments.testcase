@@ -271,16 +271,16 @@ definition {
 
 		task ("Assert 3 segments in order filter by Name display") {
 			ACUtils.viewNameListInOrder(
-				name = "Static Segment Test1",
-				index = "1");
+				index = "1",
+				name = "Static Segment Test1");
 
 			ACUtils.viewNameListInOrder(
-				name = "Static Segment Test2",
-				index = "2");
+				index = "2",
+				name = "Static Segment Test2");
 
 			ACUtils.viewNameListInOrder(
-				name = "Static Segment Test3",
-				index = "3");
+				index = "3",
+				name = "Static Segment Test3");
 		}
 
 		task ("Check descending arrow descending of table title of Name") {
@@ -289,16 +289,16 @@ definition {
 
 		task ("Assert 3 segments in order filter by Name display") {
 			ACUtils.viewNameListInOrder(
-				name = "Static Segment Test3",
-				index = "1");
+				index = "1",
+				name = "Static Segment Test3");
 
 			ACUtils.viewNameListInOrder(
-				name = "Static Segment Test2",
-				index = "2");
+				index = "2",
+				name = "Static Segment Test2");
 
 			ACUtils.viewNameListInOrder(
-				name = "Static Segment Test1",
-				index = "3");
+				index = "3",
+				name = "Static Segment Test1");
 		}
 
 		task ("Go to Segments and filter by "Membership"") {
@@ -309,16 +309,16 @@ definition {
 
 		task ("Assert 3 segments in order filter by membership display") {
 			ACUtils.viewNameListInOrder(
-				name = "Static Segment Test1",
-				index = "1");
+				index = "1",
+				name = "Static Segment Test1");
 
 			ACUtils.viewNameListInOrder(
-				name = "Static Segment Test2",
-				index = "2");
+				index = "2",
+				name = "Static Segment Test2");
 
 			ACUtils.viewNameListInOrder(
-				name = "Static Segment Test3",
-				index = "3");
+				index = "3",
+				name = "Static Segment Test3");
 		}
 
 		task ("Check descending arrow descending of table title of Membership") {
@@ -327,16 +327,16 @@ definition {
 
 		task ("Assert 3 segments in order filter by membership display") {
 			ACUtils.viewNameListInOrder(
-				name = "Static Segment Test3",
-				index = "1");
+				index = "1",
+				name = "Static Segment Test3");
 
 			ACUtils.viewNameListInOrder(
-				name = "Static Segment Test2",
-				index = "2");
+				index = "2",
+				name = "Static Segment Test2");
 
 			ACUtils.viewNameListInOrder(
-				name = "Static Segment Test1",
-				index = "3");
+				index = "3",
+				name = "Static Segment Test1");
 		}
 	}
 

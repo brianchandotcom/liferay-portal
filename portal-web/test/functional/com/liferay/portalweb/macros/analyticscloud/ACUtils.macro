@@ -283,6 +283,8 @@ definition {
 	macro closeAllSessionsAndWait {
 		ACUtils.closeAllSessions();
 
+		// It needs a 30 second pause which is the time required for the command to be executed. For more information about pause see LRAC-9518
+
 		Pause(locator1 = "30000");
 	}
 
@@ -560,6 +562,11 @@ definition {
 				siteName = "${siteName}",
 				submitText = "${submitText}");
 
+<<<<<<< HEAD
+=======
+			// Pause is necessary because poshi login in from one user to another very quickly. For more information about pause see LRAC-9514
+
+>>>>>>> 2147353 (LRAC-9491 SF 2)
 			Pause(locator1 = "5000");
 		}
 	}
@@ -671,7 +678,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE",
 			value1 = "${name}");
-		}
 	}
 
 	macro viewNoResultsMessage {

@@ -13,6 +13,7 @@
  */
 
 import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
+import isNullOrUndefined from '../utils/isNullOrUndefined';
 
 const ORDERED_VIEWPORT_SIZES = [
 	VIEWPORT_SIZES.desktop,
@@ -57,7 +58,7 @@ function mergeDeep(...objects) {
 			) {
 				target[key] = mergeDeep(target[key], object[key]);
 			}
-			else if (object[key]) {
+			else if (!isNullOrUndefined(object[key]) && object[key] !== '') {
 				target[key] = object[key];
 			}
 		});

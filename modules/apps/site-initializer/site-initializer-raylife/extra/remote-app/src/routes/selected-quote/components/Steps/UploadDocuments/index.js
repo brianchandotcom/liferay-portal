@@ -1,25 +1,12 @@
-import UploadFiles from './UploadFiles';
+import {useState} from 'react';
 
-const sections = [
-	{
-		required: true,
-		subtitle: 'Upload a copy of your business license',
-		title: 'Business License',
-		type: 'document',
-	},
-	{
-		required: false,
-		subtitle: 'Upload a copy of your additional documents.',
-		title: 'Additional Documents',
-		type: 'document',
-	},
-	{
-		required: true,
-		subtitle: 'Upload 4 photos of your building interior',
-		title: 'Building Interior Photos',
-		type: 'image',
-	},
-];
+import {
+	createDocumentInFolder,
+	createFolderIfNotExist,
+	createRootFolders,
+} from '../../../services/DocumentsAndMedia';
+
+import UploadFiles from './UploadFiles';
 
 const dropAreaProps = {
 	heightContainer: '120px',
@@ -28,7 +15,85 @@ const dropAreaProps = {
 };
 
 const UploadDocuments = () => {
-	const onClickConfirmUpload = () => {};
+	const [sections, setSections] = useState([
+		{
+			files: [],
+			required: true,
+			subtitle: 'Upload a copy of your business license',
+			title: 'Business License',
+			type: 'document',
+		},
+		{
+			files: [],
+			required: false,
+			subtitle: 'Upload a copy of your additional documents.',
+			title: 'Additional Documents',
+			type: 'document',
+		},
+		{
+			files: [],
+			required: true,
+			subtitle: 'Upload 4 photos of your building interior',
+			title: 'Building Interior Photos',
+			type: 'image',
+		},
+	]);
+
+	const onSetFiles = (_section, files) => {
+		setSections((sections) =>
+			sections.map((section) => {
+				if (section.title === _section.title) {
+					return {
+						...section,
+						files,
+					};
+				}
+
+				return section;
+			})
+		);
+	};
+
+	const onProgressChange = (id, progress) => {
+		setSections((sections) =>
+			sections.map((section) => ({
+				...section,
+				files: section.files.map((fileEntry) => {
+					if (fileEntry.id === id) {
+						fileEntry.progress = progress;
+
+						return fileEntry;
+					}
+
+					return fileEntry;
+				}),
+			}))
+		);
+	};
+
+	const onClickConfirmUpload = async () => {
+		const quoteFolder = await createRootFolders();
+
+		for (const section of sections) {
+			const sectionFolder = await createFolderIfNotExist(
+				quoteFolder.id,
+				section.title,
+				true
+			);
+
+			for (const fileEntry of section.files) {
+				try {
+					await createDocumentInFolder(
+						sectionFolder.id,
+						fileEntry,
+						(progress) => onProgressChange(fileEntry.id, progress)
+					);
+				} catch (error) {
+					console.error(error);
+				}
+			}
+		}
+	};
 
 	return (
 		<div className="upload-container">
@@ -53,6 +118,8 @@ const UploadDocuments = () => {
 								...dropAreaProps,
 								type: section.type,
 							}}
+							files={section.files}
+							setFiles={(files) => onSetFiles(section, files)}
 							title={section.title}
 						/>
 					</div>

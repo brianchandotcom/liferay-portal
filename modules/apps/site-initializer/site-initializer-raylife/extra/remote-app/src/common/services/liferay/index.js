@@ -1,10 +1,15 @@
 import '~/types';
 
 import {LiferayAdapt} from './adapter';
-import LiferayFetchAPI, {getLiferayAuthenticationToken} from './api';
+import LiferayFetchAPI, {
+	REACT_APP_LIFERAY_API,
+	getLiferayAuthenticationToken,
+} from './api';
 import {STORAGE_KEYS, Storage} from './storage';
+import {getLiferayGroupId, getScopeGroupId} from './themeDisplay';
 
 const RaylifeApplicationAPI = 'o/c/raylifeapplications';
+const DeliveryAPI = 'o/headless-delivery';
 const quoteComparisonAPI = 'o/c/quotecomparisons';
 
 /**
@@ -57,38 +62,6 @@ const getProductQuotes = async () => {
 	return productQuotes;
 };
 
-/**
- * @returns {string} Liferay Group Id
- */
-const getLiferayGroupId = () => {
-	try {
-		// eslint-disable-next-line no-undef
-		const groupId = Liferay.ThemeDisplay.getSiteGroupId();
-
-		return groupId;
-	} catch (error) {
-		console.warn('Not able to find Liferay Group Id\n', error);
-
-		return '';
-	}
-};
-
-/**
- * @returns {string} Liferay Scope Group Id
- */
-const getScopeGroupId = () => {
-	try {
-		// eslint-disable-next-line no-undef
-		const scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
-
-		return scopeGroupId;
-	} catch (error) {
-		console.warn('Not able to find Liferay Scope Group Id\n', error);
-
-		return '';
-	}
-};
-
 const getQuoteComparison = async () => {
 	const response = await LiferayFetchAPI.get(
 		`${quoteComparisonAPI}/scopes/${getScopeGroupId()}`
@@ -128,6 +101,17 @@ const _getProductsByCategoryId = async () => {
 	return data;
 };
 
+const uploadToDocumentsAndMedia = (folderId) => {
+	LiferayFetchAPI.post(
+		`${DeliveryAPI}/v1.0/document-folders/${folderId}/documents`,
+		{
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+		}
+	);
+};
+
 /**
  * @param {string} id - Parent category Id of asset categories
  * @returns {Promise<AssetCategoryResponse[]>}  Array of matched categories
@@ -162,6 +146,7 @@ const _patchBasicsFormApplication = (body, id) => {
 };
 
 export const LiferayService = {
+	REACT_APP_LIFERAY_API,
 	createOrUpdateRaylifeApplication,
 	fetch: LiferayFetchAPI,
 	getBusinessTypes,
@@ -171,4 +156,5 @@ export const LiferayService = {
 	getProductQuotes,
 	getQuoteComparison,
 	getQuoteComparisonById,
+	uploadToDocumentsAndMedia,
 };

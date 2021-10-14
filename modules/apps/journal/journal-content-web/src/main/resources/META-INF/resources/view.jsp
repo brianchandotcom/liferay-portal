@@ -58,6 +58,9 @@ if (journalContentDisplayContext.isShowArticle()) {
 						<c:when test="<%= (selectedArticle != null) && selectedArticle.isInTrash() %>">
 							<liferay-ui:message arguments="<%= HtmlUtil.escape(selectedArticle.getTitle(locale)) %>" key="the-web-content-article-x-was-moved-to-the-recycle-bin" />
 						</c:when>
+						<c:when test="<%= (selectedArticle != null) && (selectedArticle.getDDMStructure() == null) %>">
+							<liferay-ui:message arguments="<%= HtmlUtil.escape(selectedArticle.getTitle(locale)) %>" key="is-temporarily-unavailable" />
+						</c:when>
 						<c:otherwise>
 							<liferay-ui:message key="the-selected-web-content-no-longer-exists" />
 						</c:otherwise>
@@ -113,6 +116,11 @@ if (journalContentDisplayContext.isShowArticle()) {
 					<c:when test="<%= journalContentDisplayContext.isExpired() %>">
 						<div class="alert alert-warning">
 							<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-expired" />
+						</div>
+					</c:when>
+					<c:when test="<%= article.getDDMStructure() == null %>">
+						<div class="alert alert-warning">
+							<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="is-temporarily-unavailable" />
 						</div>
 					</c:when>
 					<c:when test="<%= !journalContentDisplayContext.isPreview() && !article.isApproved() %>">

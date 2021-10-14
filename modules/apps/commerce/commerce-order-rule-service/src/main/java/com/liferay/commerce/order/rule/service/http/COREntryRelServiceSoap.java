@@ -95,6 +95,19 @@ public class COREntryRelServiceSoap {
 		}
 	}
 
+	public static void deleteCOREntryRels(String className, long corEntryId)
+		throws RemoteException {
+
+		try {
+			COREntryRelServiceUtil.deleteCOREntryRels(className, corEntryId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void deleteCOREntryRelsByCOREntryId(long corEntryId)
 		throws RemoteException {
 

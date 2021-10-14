@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.lar.test;
+package com.liferay.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;

@@ -21,7 +21,7 @@
 	},
 	"boxShadow": {
 		"cssVariableMapping": "box-shadow",
-		"value": "0 .5rem 1rem rgba(0,0,0,0.15)"
+		"value": "0 .5rem 1rem rgba(0,0,0,0.1)"
 	},
 	"boxShadowLg": {
 		"cssVariableMapping": "box-shadow-lg",
@@ -29,7 +29,7 @@
 	},
 	"boxShadowSm": {
 		"cssVariableMapping": "box-shadow-sm",
-		"value": "0 .125rem .25rem rgba(0,0,0,0.15)"
+		"value": "0 .125rem .25rem rgba(0,0,0,0.1)"
 	},
 	"brandColor1": {
 		"cssVariableMapping": "brand-color-1",
@@ -269,7 +269,7 @@
 	},
 	"spacer2": {
 		"cssVariableMapping": "spacer-2",
-		"value": "1rem"
+		"value": "0.75rem"
 	},
 	"spacer3": {
 		"cssVariableMapping": "spacer-3",
@@ -293,7 +293,7 @@
 	},
 	"spacer8": {
 		"cssVariableMapping": "spacer-8",
-		"value": "7.5rem"
+		"value": "7rem"
 	},
 	"spacer9": {
 		"cssVariableMapping": "spacer-9",

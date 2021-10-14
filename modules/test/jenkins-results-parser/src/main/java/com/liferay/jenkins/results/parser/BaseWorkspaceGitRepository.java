@@ -489,7 +489,7 @@ public abstract class BaseWorkspaceGitRepository
 				buildProperties, propertyType,
 				propertyOptions.toArray(new String[0]));
 
-			if (JenkinsResultsParserUtil.isNullOrEmpty(propertyValue)) {
+			if (propertyValue == null) {
 				continue;
 			}
 

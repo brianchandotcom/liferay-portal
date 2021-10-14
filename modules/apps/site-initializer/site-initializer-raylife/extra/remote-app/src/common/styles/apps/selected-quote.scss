@@ -362,8 +362,8 @@
 	}
 
 	#ca-content-input {
-		position: relative;
 		margin-top: 1.75rem;
+		position: relative;
 
 		#ca-input-email {
 			background-color: #fff;
@@ -378,14 +378,14 @@
 		}
 
 		.ca-label {
-			font-size: 16px;
 			color: transparent;
+			font-size: 16px;
+			font-weight: 700;
+			left: 12px;
 			margin: 1rem 0rem;
 			padding: 0rem 0.3rem;
-			position: absolute;
-			font-weight: 700;
 			pointer-events: none;
-			left: 12px;
+			position: absolute;
 			top: -5px;
 			transition: 0.2s;
 		}
@@ -425,8 +425,8 @@
 	}
 
 	.ca-icon-rule {
-		border-radius: 1rem;
 		border: solid 1.2px;
+		border-radius: 1rem;
 		fill: #fff;
 		margin-right: 0.3rem;
 		padding: 1px;

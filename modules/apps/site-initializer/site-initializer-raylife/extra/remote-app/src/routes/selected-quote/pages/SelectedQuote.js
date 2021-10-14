@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {CreateAnAccount} from '../components/Steps/CreateAnAccount';
 import Panel from '../components/Steps/Panel';
 import UploadDocuments from '../components/Steps/UploadDocuments';
 import QuoteInfo from '../components/quote-info';
@@ -10,7 +11,9 @@ const SelectedQuote = () => {
 			<QuoteInfo />
 
 			<div className="selected-quote-right-page">
-				<Panel title="1. Create an Account">Create an Account...</Panel>
+				<Panel title="1. Create an Account">
+					<CreateAnAccount />
+				</Panel>
 
 				<Panel title="2. Upload Documents">
 					<UploadDocuments />

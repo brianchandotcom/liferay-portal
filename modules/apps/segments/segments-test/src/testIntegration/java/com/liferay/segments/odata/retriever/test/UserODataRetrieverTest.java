@@ -20,6 +20,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
@@ -61,10 +62,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -74,6 +77,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class UserODataRetrieverTest {
+
+	public static final int MORE_THAN_10K = 10002;
 
 	@ClassRule
 	@Rule
@@ -1107,11 +1112,39 @@ public class UserODataRetrieverTest {
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
+	@Ignore
+	@Test
+	public void testRetrieveMoreThan10KUsers() throws Exception {
+		_createmoreThan10kUsers();
+
+		String filterString = String.format("(firstName eq '%s')", "firstName");
+
+		List<User> results = _oDataRetriever.getResults(
+			_group1.getCompanyId(), filterString, LocaleUtil.getDefault(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertTrue(MORE_THAN_10K == results.size());
+	}
+
 	private Team _addTeam() throws Exception {
 		return _teamLocalService.addTeam(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private void _createmoreThan10kUsers() throws Exception {
+		_group1 = GroupTestUtil.addGroup();
+
+		long groupId = _group1.getGroupId();
+
+		Locale localeDefault = LocaleUtil.getDefault();
+
+		for (int i = 0; i < MORE_THAN_10K; i++) {
+			UserTestUtil.addUser(
+				RandomTestUtil.randomString(), localeDefault, "firstName",
+				RandomTestUtil.randomString(), new long[] {groupId});
+		}
 	}
 
 	private String _toISOFormat(Instant instant) {

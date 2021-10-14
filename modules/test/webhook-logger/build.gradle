@@ -1,0 +1,14 @@
+apply plugin: "com.liferay.spring.boot.defaults"
+apply plugin: "io.spring.dependency-management"
+
+bootJar {
+	classifier = "application"
+}
+
+dependencies {
+	compile group: "org.springframework.boot", name: "spring-boot-starter-web"
+}
+
+jar {
+	enabled = true
+}

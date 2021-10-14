@@ -18,6 +18,7 @@ import {Cell, Pie, PieChart, Tooltip} from 'recharts';
 
 import ConnectionContext from '../context/ConnectionContext';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
+import {ChartStateContext} from '../context/ChartStateContext';
 import {numberFormat} from '../utils/numberFormat';
 import EmptyPieChart from './EmptyPieChart';
 import Hint from './Hint';
@@ -54,6 +55,8 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
+	const {timeSpanKey, timeSpanOffset} = useContext(ChartStateContext);
+
 	const [trafficSources, setTrafficSources] = useStateSafe([]);
 
 	useEffect(() => {
@@ -65,7 +68,14 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 					dispatch({type: 'ADD_WARNING'});
 				});
 		}
-	}, [dispatch, dataProvider, setTrafficSources, validAnalyticsConnection]);
+	}, [
+		dispatch,
+		dataProvider,
+		setTrafficSources,
+		timeSpanKey,
+		timeSpanOffset,
+		validAnalyticsConnection,
+	]);
 
 	const fullPieChart = useMemo(
 		() =>
@@ -137,9 +147,10 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 											<span
 												className="pie-chart-wrapper--legend--dot"
 												style={{
-													backgroundColor: getColorByName(
-														entry.name
-													),
+													backgroundColor:
+														getColorByName(
+															entry.name
+														),
 												}}
 											></span>
 										</td>

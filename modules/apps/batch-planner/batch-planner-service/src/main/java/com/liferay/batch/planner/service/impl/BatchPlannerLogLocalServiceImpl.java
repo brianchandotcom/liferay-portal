@@ -114,22 +114,25 @@ public class BatchPlannerLogLocalServiceImpl
 	}
 
 	@Override
-	public List<BatchPlannerLog> getBatchPlannerLogs(long batchPlannerPlanId) {
-		return batchPlannerLogPersistence.findByBatchPlannerPlanId(
+	public BatchPlannerLog fetchBatchPlannerPlanBatchPlannerLog(
+		long batchPlannerPlanId) {
+
+		return batchPlannerLogPersistence.fetchByBatchPlannerPlanId(
 			batchPlannerPlanId);
-	}
-
-	@Override
-	public List<BatchPlannerLog> getBatchPlannerLogs(
-		long batchPlannerPlanId, int start, int end) {
-
-		return batchPlannerLogPersistence.findByBatchPlannerPlanId(
-			batchPlannerPlanId, start, end);
 	}
 
 	@Override
 	public int getBatchPlannerLogsCount(long batchPlannerPlanId) {
 		return batchPlannerLogPersistence.countByBatchPlannerPlanId(
+			batchPlannerPlanId);
+	}
+
+	@Override
+	public BatchPlannerLog getBatchPlannerPlanBatchPlannerLog(
+			long batchPlannerPlanId)
+		throws PortalException {
+
+		return batchPlannerLogPersistence.findByBatchPlannerPlanId(
 			batchPlannerPlanId);
 	}
 

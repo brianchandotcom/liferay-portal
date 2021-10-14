@@ -14,8 +14,26 @@
 
 package com.liferay.batch.planner.model.impl;
 
+import com.liferay.batch.planner.model.BatchPlannerLog;
+import com.liferay.batch.planner.service.BatchPlannerLogLocalServiceUtil;
+
 /**
  * @author Igor Beslic
  */
 public class BatchPlannerPlanImpl extends BatchPlannerPlanBaseImpl {
+
+	public BatchPlannerLog fetchBatchPlannerLog() {
+		if (_batchPlannerLog != null) {
+			return _batchPlannerLog;
+		}
+
+		_batchPlannerLog =
+			BatchPlannerLogLocalServiceUtil.
+				fetchBatchPlannerPlanBatchPlannerLog(getBatchPlannerPlanId());
+
+		return _batchPlannerLog;
+	}
+
+	private transient BatchPlannerLog _batchPlannerLog;
+
 }

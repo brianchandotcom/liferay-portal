@@ -30,6 +30,26 @@ import org.json.JSONObject;
  */
 public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
+	public String getLiferayFacesAlloyURL() {
+		return _getLiferayFacesURL(
+			"liferay-faces-alloy", "liferay.faces.alloy.branch");
+	}
+
+	public String getLiferayFacesBridgeImplURL() {
+		return _getLiferayFacesURL(
+			"liferay-faces-bridge-impl", "liferay.faces.bridge.impl.branch");
+	}
+
+	public String getLiferayFacesPortalURL() {
+		return _getLiferayFacesURL(
+			"liferay-faces-portal", "liferay.faces.portal.branch");
+	}
+
+	public String getLiferayFacesShowcaseURL() {
+		return _getLiferayFacesURL(
+			"liferay-faces-showcase", "liferay.faces.showcase.branch");
+	}
+
 	public String getPluginsRepositoryDirName() {
 		try {
 			String lpPluginsDirString = JenkinsResultsParserUtil.getProperty(
@@ -123,6 +143,28 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 		propertyOptions.add(getUpstreamBranchName());
 
 		return propertyOptions;
+	}
+
+	private String _getLiferayFacesURL(
+		String repositoryName, String propertyName) {
+
+		try {
+			String branchName = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(),
+				"portal.test.properties", propertyName,
+				getUpstreamBranchName());
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(branchName)) {
+				branchName = "master";
+			}
+
+			return JenkinsResultsParserUtil.combine(
+				"https://github.com/liferay/", repositoryName, "/tree/",
+				branchName);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private Properties _getPortalTestProperties() {

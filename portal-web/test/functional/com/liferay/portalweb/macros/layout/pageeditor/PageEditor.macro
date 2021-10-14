@@ -3169,41 +3169,30 @@ definition {
 			var index = "1";
 		}
 
-		if (!(isSet(targetElementName))) {
-			DragAndDrop.javaScriptDragAndDropToObject(
+		Click(
+			key_nodeName = "Container",
+			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
+
+		if (isSet(composition)) {
+			var elementName = "${layoutElementName}";
+		}
+
+		if ("${dropTarget}" == "Up") {
+			DragAndDrop.javaScriptDragAndDropToUp(
 				index = "${index}",
 				key_elementName = "${elementName}",
-				key_targetElementName = "Container",
+				key_targetElementName = "${targetElementName}",
 				locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
 				locator2 = "Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
 		}
 
 		else {
-			Click(
-				key_nodeName = "Container",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
-
-			if (isSet(composition)) {
-				var elementName = "${layoutElementName}";
-			}
-
-			if ("${dropTarget}" == "Up") {
-				DragAndDrop.javaScriptDragAndDropToUp(
-					index = "${index}",
-					key_elementName = "${elementName}",
-					key_targetElementName = "${targetElementName}",
-					locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
-					locator2 = "Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
-			}
-
-			else {
-				DragAndDrop.javaScriptDragAndDropToBottom(
-					index = "${index}",
-					key_elementName = "${elementName}",
-					key_targetElementName = "${targetElementName}",
-					locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
-					locator2 = "Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
-			}
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				index = "${index}",
+				key_elementName = "${elementName}",
+				key_targetElementName = "${targetElementName}",
+				locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
+				locator2 = "Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
 		}
 
 		PageEditor.waitForAutoSave();

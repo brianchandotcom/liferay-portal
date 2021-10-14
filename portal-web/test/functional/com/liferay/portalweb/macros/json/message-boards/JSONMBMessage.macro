@@ -377,6 +377,25 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to split a thread"
+	macro splitThread {
+		var messageId = JSONMBMessage.getMessageIdByName(
+			categoryName = "${categoryName}",
+			groupName = "${groupName}",
+			threadSubject = "${threadSubject}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/mb.mbthread/split-thread \
+				-u test@liferay.com:test \
+				-d messageId=${messageId} \
+				-d subject=${threadSplitSubject}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to subscribe to a message"
 	macro subscribeToMessage {
 		Variables.assertDefined(parameterList = "${threadSubject},${groupName}");

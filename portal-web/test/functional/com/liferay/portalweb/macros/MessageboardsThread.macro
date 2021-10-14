@@ -879,9 +879,11 @@ definition {
 		else {
 			var key_threadSubject = "${threadSubject}";
 
-			AssertClick.assertPartialTextClickAt(
-				locator1 = "MessageBoards#THREAD_LIST_THREAD",
-				value1 = "${threadSubject}");
+			if (!(isSet(skipNavigation))) {
+				AssertClick.assertPartialTextClickAt(
+					locator1 = "MessageBoards#THREAD_LIST_THREAD",
+					value1 = "${threadSubject}");
+			}
 		}
 
 		if (isSet(threadReplySpecific)) {
@@ -995,11 +997,11 @@ definition {
 	}
 
 	macro saveNewThreadAsDraft {
-		AssertClick(
-			locator1 = "Button#NEW_THREAD",
-			value1 = "New Thread");
-
-		Pause(locator1 = "3000");
+		if (!(isSet(skipNavigation))) {
+			AssertClick(
+				locator1 = "Button#NEW_THREAD",
+				value1 = "New Thread");
+		}
 
 		Type(
 			locator1 = "TextInput#SUBJECT",
@@ -1282,6 +1284,31 @@ definition {
 		AssertElementNotPresent(locator1 = "MessageBoards#THREAD_LIST_LAST_POST");
 	}
 
+	macro viewDraftThread {
+		var key_threadStatus = "Draft";
+		var key_threadSubject = "${threadSubject}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "MessageBoards#THREAD_LIST_THREAD",
+			value1 = "${threadSubject}");
+
+		AssertTextEquals(
+			locator1 = "MessageBoards#THREAD_LIST_WORKFLOW_STATUS",
+			value1 = "Draft");
+
+		AssertClick(
+			locator1 = "MessageBoards#NAVIGATION_MY_POSTS",
+			value1 = "My Posts");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "MessageBoards#THREAD_LIST_THREAD",
+			value1 = "${threadSubject}");
+
+		AssertTextEquals(
+			locator1 = "MessageBoards#THREAD_LIST_WORKFLOW_STATUS",
+			value1 = "Draft");
+	}
+
 	macro viewLockedPG {
 		var key_threadStatus = "Locked";
 		var key_threadSubject = "${threadSubject}";
@@ -1314,16 +1341,12 @@ definition {
 			value1 = "Unlock");
 	}
 
-	macro viewMarkAsQuestionCheckedCP {
+	macro viewMarkAsQuestionChecked {
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
+
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Thread");
-
-		AssertVisible(locator1 = "Button#PUBLISH");
-
-		Type(
-			locator1 = "TextInput#SUBJECT",
-			value1 = "${threadSubject}");
 
 		Panel.expandPanel(panel = "More Settings");
 
@@ -1334,16 +1357,12 @@ definition {
 			value1 = "Cancel");
 	}
 
-	macro viewMarkAsQuestionNotCheckedCP {
+	macro viewMarkAsQuestionNotChecked {
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
+
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Thread");
-
-		AssertVisible(locator1 = "Button#PUBLISH");
-
-		Type(
-			locator1 = "TextInput#SUBJECT",
-			value1 = "${threadSubject}");
 
 		Panel.expandPanel(panel = "More Settings");
 
@@ -1849,6 +1868,15 @@ definition {
 		AssertElementPresent(locator1 = "MessageBoardsStatistics#TOP_POSTERS_AUTHOR_JOIN_DATE");
 
 		AssertElementPresent(locator1 = "MessageBoardsStatistics#TOP_POSTERS_AUTHOR_LAST_POST_DATE");
+	}
+
+	macro viewThreadAttachment {
+		for (var mbThreadAttachment : list "${mbAttachmentFileList}") {
+			AssertTextEquals.assertPartialText(
+				key_mbThreadAttachment = "${mbThreadAttachment}",
+				locator1 = "MessageBoardsThread#MESSAGE_ATTACHMENT_IMAGE",
+				value1 = "${mbThreadAttachment}");
+		}
 	}
 
 	macro viewWithWorkflowPG {

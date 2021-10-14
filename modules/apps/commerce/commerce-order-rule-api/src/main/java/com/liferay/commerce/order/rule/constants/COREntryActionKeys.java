@@ -19,10 +19,8 @@ package com.liferay.commerce.order.rule.constants;
  */
 public class COREntryActionKeys {
 
-	public static final String ADD_COMMERCE_ORDER_RULE =
-		"ADD_COMMERCE_ORDER_RULE";
+	public static final String ADD_COR_ENTRY = "ADD_COR_ENTRY";
 
-	public static final String VIEW_COMMERCE_ORDER_RULES =
-		"VIEW_COMMERCE_ORDER_RULES";
+	public static final String VIEW_COR_ENTRIES = "VIEW_COR_ENTRIES";
 
 }

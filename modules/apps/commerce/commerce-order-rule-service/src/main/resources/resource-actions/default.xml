@@ -4,25 +4,29 @@
 <resource-action-mapping>
 	<model-resource>
 		<model-name>com.liferay.commerce.order.rule</model-name>
-		<portlet-ref/>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_order_rule_web_internal_portlet_COREntryPortlet</portlet-name>
+		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
 		<permissions>
 			<supports>
-				<action-key>ADD_COMMERCE_ORDER_RULE</action-key>
-				<action-key>VIEW_COMMERCE_ORDER_RULES</action-key>
+				<action-key>ADD_COR_ENTRY</action-key>
+				<action-key>VIEW_COR_ENTRIES</action-key>
 			</supports>
 			<site-member-defaults/>
 			<guest-defaults/>
 			<guest-unsupported>
-				<action-key>ADD_COMMERCE_ORDER_RULE</action-key>
-				<action-key>VIEW_COMMERCE_ORDER_RULES</action-key>
+				<action-key>ADD_COR_ENTRY</action-key>
+				<action-key>VIEW_COR_ENTRIES</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
 	<model-resource>
 		<model-name>com.liferay.commerce.order.rule.model.COREntry</model-name>
-		<portlet-ref/>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_order_rule_web_internal_portlet_COREntryPortlet</portlet-name>
+		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
 			<supports>

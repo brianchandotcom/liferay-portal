@@ -122,6 +122,18 @@ public class COREntryRelLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCOREntryRels(String className, long corEntryId)
+		throws PortalException {
+
+		List<COREntryRel> corEntryRels = corEntryRelPersistence.findByC_C(
+			classNameLocalService.getClassNameId(className), corEntryId);
+
+		for (COREntryRel corEntryRel : corEntryRels) {
+			corEntryRelLocalService.deleteCOREntryRel(corEntryRel);
+		}
+	}
+
+	@Override
 	public COREntryRel fetchCOREntryRel(
 		String className, long classPK, long corEntryId) {
 

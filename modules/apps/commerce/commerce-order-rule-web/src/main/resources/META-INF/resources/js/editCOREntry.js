@@ -18,8 +18,9 @@ export default function ({namespace, workflowAction}) {
 		.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			document.getElementById(`${namespace}workflowAction`).value =
-				workflowAction;
+			document.getElementById(
+				`${namespace}workflowAction`
+			).value = workflowAction;
 
 			submitForm(document.getElementById(`${namespace}fm`));
 		});

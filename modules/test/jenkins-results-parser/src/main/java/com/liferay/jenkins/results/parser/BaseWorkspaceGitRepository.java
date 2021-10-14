@@ -535,7 +535,12 @@ public abstract class BaseWorkspaceGitRepository
 
 			String remoteGitBranchSHA = remoteGitBranch.getSHA();
 
-			gitWorkingDirectory.fetch(remoteGitBranch);
+			try {
+				gitWorkingDirectory.fetch(remoteGitBranch);
+			}
+			catch (Exception exception) {
+				continue;
+			}
 
 			if (!gitWorkingDirectory.localSHAExists(remoteGitBranchSHA)) {
 				continue;
@@ -595,7 +600,12 @@ public abstract class BaseWorkspaceGitRepository
 				continue;
 			}
 
-			gitWorkingDirectory.fetch(remoteGitBranch);
+			try {
+				gitWorkingDirectory.fetch(remoteGitBranch);
+			}
+			catch (Exception exception) {
+				continue;
+			}
 
 			if (!gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
 				continue;

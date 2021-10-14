@@ -89,7 +89,7 @@ String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.A
 		).put(
 			"ddmStructure", ddmStructure
 		).put(
-			"ddmStructureId", String.valueOf(ddmStructure.getStructureId())
+			"ddmStructureId", (ddmStructure != null) ? String.valueOf(ddmStructure.getStructureId()) : StringPool.BLANK
 		).put(
 			"eventName", PortalUtil.getPortletNamespace(portletId) + "selectDDMTemplate"
 		).put(

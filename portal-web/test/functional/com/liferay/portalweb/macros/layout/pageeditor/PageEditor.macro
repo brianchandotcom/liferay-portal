@@ -1650,6 +1650,7 @@ definition {
 				Button.clickApply();
 			}
 		}
+
 		else {
 			if (IsTextEqual(key_fieldLabel = "Collection", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 				Click(
@@ -1657,6 +1658,7 @@ definition {
 					key_text = "plus",
 					locator1 = "Icon#ANY_ITEM_SELECTOR");
 			}
+
 			else {
 				Click(
 					key_fieldLabel = "Collection",
@@ -1676,6 +1678,7 @@ definition {
 					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
 					value1 = "${assetListName}");
 			}
+
 			else if (isSet(infoListProviderName)) {
 				NavItem.click(navItem = "Collection Providers");
 
@@ -1686,6 +1689,7 @@ definition {
 					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
 					value1 = "${infoListProviderName}");
 			}
+
 			else if (isSet(infoItemRelatedListProviderName)) {
 				NavItem.click(navItem = "Related Items Collection Providers");
 
@@ -2405,6 +2409,7 @@ definition {
 								locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
 								value1 = "${fieldName}");
 						}
+
 						else {
 							Select(
 								locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
@@ -2632,6 +2637,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${field}");
 			}
+
 			else {
 				Type(
 					key_text = "URL",
@@ -2652,6 +2658,7 @@ definition {
 
 				PageEditor.waitForAutoSave();
 			}
+
 			else if ("${target}" == "Self") {
 				Uncheck.uncheckToggleSwitch(
 					checkboxName = "Open in a new tab.",
@@ -2709,6 +2716,7 @@ definition {
 				PageEditor.waitForAutoSave();
 			}
 		}
+
 		else if ("${panel}" == "Styles") {
 			Navigator.gotoNavTab(navTab = "Styles");
 

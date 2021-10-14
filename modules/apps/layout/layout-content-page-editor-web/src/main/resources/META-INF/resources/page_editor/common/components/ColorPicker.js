@@ -13,6 +13,7 @@
  */
 
 import DropDown from '@clayui/drop-down';
+import ClayEmptyState from '@clayui/empty-state';
 import {ClayInput} from '@clayui/form';
 import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
@@ -135,20 +136,16 @@ const ColorPicker = ({
 											splotchRef={splotchRef}
 										/>
 									) : (
-										<div className="mb-4 page-editor__ColorPicker__empty-result taglib-empty-result-message text-center">
-											<div className="mb-3 mt-4 taglib-empty-state" />
-											<div className="taglib-empty-result-message-title">
-												{Liferay.Language.get(
-													'no-results-found'
-												)}
-											</div>
-
-											<p className="taglib-empty-result-message-description">
-												{Liferay.Language.get(
-													'try-again-with-a-different-search'
-												)}
-											</p>
-										</div>
+										<ClayEmptyState
+											className="mt-4 page-editor__ColorPicker__empty-result"
+											description={Liferay.Language.get(
+												'try-again-with-a-different-search'
+											)}
+											imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+											title={Liferay.Language.get(
+												'no-results-found'
+											)}
+										/>
 									)}
 								</>
 							) : null

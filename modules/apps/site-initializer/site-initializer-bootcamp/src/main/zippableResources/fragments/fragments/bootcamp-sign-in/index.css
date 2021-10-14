@@ -6,8 +6,8 @@
 	height: 100%;
 	justify-content: space-between;
 	max-width: 100%;
-	padding: var(--spacer-6) var(--spacer-9) var(--spacer-6) var(--spacer-10);
-	width: 45%;
+	padding: var(--spacer-6) var(--spacer-7) var(--spacer-4);
+	width: 40%;
 }
 
 .sign-in {
@@ -16,6 +16,12 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	height: 100%;
+}
+
+.sign-in-form .sign-in-text {
+	font-size: var(--h2-font-size);
+	line-height: 1.25;
+	margin-bottom: var(--spacer-5);
 }
 
 .sign-in-form .form-check {
@@ -40,10 +46,47 @@
 	font-weight: var(--font-weight-bold);
 }
 
+.sign-in-form .form-check,
+.sign-in-form button {
+	margin-bottom: var(--spacer-5);
+}
+
 .sign-in-logo {
-	height: auto;
+	width: 140px;
 }
 
 .membership {
 	font-family: var(--font-family-sans-serif);
+}
+
+@media (max-width: 1340px) {
+	.form-box {
+		width: 60%;
+	}
+}
+
+@media (max-width: 992px) {
+	.sign-in {
+		background-image: none;
+	}
+	.form-box {
+		padding: var(--spacer-5) var(--spacer-5) var(--spacer-3);
+		width: 100%;
+	}
+}
+
+@media (max-width: 576px) {
+	.form-box {
+		padding: var(--spacer-3);
+	}
+
+	.sign-in-form .sign-in-text {
+		font-size: 36px;
+		margin-bottom: var(--spacer-4);
+	}
+	
+	.sign-in .form-check,
+	.sign-in-form button {
+		margin-bottom: var(--spacer-4);
+	}
 }

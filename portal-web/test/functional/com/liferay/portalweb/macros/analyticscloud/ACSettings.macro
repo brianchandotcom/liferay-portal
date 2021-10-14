@@ -20,9 +20,9 @@ definition {
 
 		WaitForVisible(locator1 = "ACSettings#FILE_UPLOAD_SUCCESS_ICON");
 
-		WaitForElementNotPresent(
+		WaitForElementPresent(
 			key_text = "Next",
-			locator1 = "Button#ANY_DISABLED");
+			locator1 = "Button#ANY_ENABLED");
 
 		Button.clickNext();
 

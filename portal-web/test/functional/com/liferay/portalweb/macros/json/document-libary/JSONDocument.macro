@@ -138,6 +138,10 @@ definition {
 			var expirationDate = "2099-01-25 01:00";
 		}
 
+		if (!(isSet(guestPermissions))) {
+			var guestPermissions = "true";
+		}
+
 		if (isSet(reviewDate)) {
 			var displayDateMinute = DateUtil.getFormattedCurrentDate("mm");
 			var displayDateHour = DateUtil.getFormattedCurrentDate("HH");
@@ -155,6 +159,7 @@ definition {
 		}
 
 		var serviceContext = JSONDocumentSetter.setServiceContext(
+			addGuestPermissions = "${guestPermissions}",
 			assetCategoryIds = "${assetCategoryIds}",
 			assetTagNames = "${assetTagNames}",
 			serviceContext = "${serviceContext}",

@@ -18,8 +18,6 @@ import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.rest.dto.v1_0.Log;
 import com.liferay.batch.planner.rest.resource.v1_0.LogResource;
 import com.liferay.batch.planner.service.BatchPlannerLogService;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,16 +32,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class LogResourceImpl extends BaseLogResourceImpl {
 
-	public Page<Log> getPlanLogsPage(Long id, Pagination pagination)
-		throws Exception {
-
-		return Page.of(
-			transform(
-				_batchPlannerLogService.getBatchPlannerLogs(
-					id, pagination.getStartPosition(),
-					pagination.getEndPosition()),
-				this::_toLog),
-			pagination, _batchPlannerLogService.getBatchPlannerLogsCount(id));
+	@Override
+	public Log getPlanLog(Long id) throws Exception {
+		return _toLog(
+			_batchPlannerLogService.getBatchPlannerPlanBatchPlannerLog(id));
 	}
 
 	private Log _toLog(BatchPlannerLog batchPlannerLog) {

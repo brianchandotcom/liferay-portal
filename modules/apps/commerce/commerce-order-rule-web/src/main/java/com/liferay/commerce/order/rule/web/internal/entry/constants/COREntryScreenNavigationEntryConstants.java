@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.rule.web.internal.frontend.taglib.servlet.taglib.constants;
+package com.liferay.commerce.order.rule.web.internal.entry.constants;
 
 /**
  * @author Alessio Antonio Rendina

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.rule.web.internal.frontend.taglib.clay.data.set.view;
 
-import com.liferay.commerce.order.rule.web.internal.frontend.constants.COREntryDataSetDisplayNames;
+import com.liferay.commerce.order.rule.web.internal.entry.constants.COREntryDataSetDisplayNames;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;

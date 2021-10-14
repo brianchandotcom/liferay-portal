@@ -20,7 +20,7 @@ import com.liferay.commerce.order.rule.entry.type.COREntryTypeRegistry;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.service.COREntryService;
 import com.liferay.commerce.order.rule.web.internal.display.context.COREntryDisplayContext;
-import com.liferay.commerce.order.rule.web.internal.frontend.taglib.servlet.taglib.constants.COREntryScreenNavigationEntryConstants;
+import com.liferay.commerce.order.rule.web.internal.entry.constants.COREntryScreenNavigationEntryConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;

@@ -42,91 +42,6 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test AddMBThreadWithMultipleAttachments {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		AssertClick(
-			locator1 = "Button#NEW_THREAD",
-			value1 = "New Thread");
-
-		Type(
-			locator1 = "TextInput#SUBJECT",
-			value1 = "MB Thread Message Subject");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
-
-		Type(
-			locator1 = "CKEditor#BODY",
-			value1 = "MB Thread Message Body");
-
-		SelectFrame(value1 = "relative=top");
-
-		Panel.expandPanel(panel = "Attachments");
-
-		for (var mbThreadAttachment : list "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4") {
-			AssertElementPresent(locator1 = "Button#SELECT_FILES");
-
-			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-				locator1 = "TextInput#FILE",
-				value1 = "${mbThreadAttachment}");
-
-			Pause(locator1 = "5000");
-
-			AssertTextEquals(
-				key_attachmentName = "${mbThreadAttachment}",
-				locator1 = "MessageBoardsEditMessage#ATTACHMENTS_SELECTED_FILE",
-				value1 = "${mbThreadAttachment}");
-
-			if (IsElementPresent(locator1 = "Header#H4_TITLE", key_title = "Uploading")) {
-				Click(
-					key_fileName = "${mbThreadAttachment}",
-					locator1 = "Icon#DELETE_ATTACHMENT");
-
-				UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-					locator1 = "TextInput#FILE",
-					value1 = "${mbThreadAttachment}");
-
-				if (IsNotChecked(locator1 = "Checkbox#SELECT_ALL")) {
-					Click(locator1 = "Checkbox#SELECT_ALL");
-				}
-			}
-
-			AssertChecked.assertCheckedNotVisible(
-				checkboxName = "${mbThreadAttachment}",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		PortletEntry.publish();
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			replyCount = "0",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		for (var mbThreadAttachment : list "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4") {
-			AssertTextEquals.assertPartialText(
-				key_mbThreadAttachment = "${mbThreadAttachment}",
-				locator1 = "MessageBoardsThread#MESSAGE_ATTACHMENT_IMAGE",
-				value1 = "${mbThreadAttachment}");
-		}
-
-		MessageboardsThread.editPG(
-			threadSubject = "MB Thread Message Subject",
-			threadSubjectEdit = "MB Thread Message Subject Edit");
-
-		for (var mbThreadAttachment : list "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4") {
-			AssertTextEquals.assertPartialText(
-				key_mbThreadAttachment = "${mbThreadAttachment}",
-				locator1 = "MessageBoardsThread#MESSAGE_ATTACHMENT_IMAGE",
-				value1 = "${mbThreadAttachment}");
-		}
-	}
-
-	@priority = "4"
 	@refactordone
 	@uitest
 	test CanAddCategoryWithDescription {
@@ -154,6 +69,20 @@ definition {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.viewPG(categoryName = "MB Catègory Name");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanAddMBThreadWithMultipleAttachments {
+		MessageboardsThread.addPG(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			mbAttachmentFileList = "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4",
+			siteURLKey = "guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.viewThreadAttachment(mbAttachmentFileList = "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4");
 	}
 
 	@priority = "5"
@@ -204,35 +133,34 @@ definition {
 	}
 
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test CanConfigureWidgetToAddThreadAsQuestionByDefault {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.viewMarkAsQuestionNotCheckedCP(threadSubject = "Thread Subject");
+		MessageboardsThread.viewMarkAsQuestionNotChecked(siteURLKey = "guest");
 
 		MessageboardsPortlet.configureGeneralCP(
 			siteURLKey = "guest",
 			threadAsQuestionByDefaultEnabled = "true");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.viewMarkAsQuestionCheckedCP(threadSubject = "Thread Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		MessageboardsThread.viewMarkAsQuestionChecked(siteURLKey = "guest");
 
 		MessageboardsThread.addPG(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
 			threadBody = "Thread Body",
 			threadSubject = "Thread Subject");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "Thread Subject");
 
 		MessageboardsThread.replyPG(
 			markAsAnswer = "true",
-			markAsQuestion = "true",
+			skipNavigation = "true",
 			threadReplyBody = "Thread Reply Body",
 			threadSubject = "Thread Subject");
-
-		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -388,6 +316,24 @@ definition {
 			userName = "Anonymous");
 	}
 
+	@priority = "5"
+	@refactordone
+	test CanSaveThreadAsDraft {
+		MessageboardsThread.openToAddThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest");
+
+		MessageboardsThread.saveNewThreadAsDraft(
+			skipNavigation = "true",
+			threadBody = "Message Boards Thread Body",
+			threadSubject = "Message Boards Thread Draft");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewDraftThread(threadSubject = "Message Boards Thread Draft");
+	}
+
 	@priority = "3"
 	@refactordone
 	test CanSearchForAttachment {
@@ -453,25 +399,22 @@ definition {
 	}
 
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test CanSplitThread {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.replyPG(
-			threadBody = "MB Thread Message Body",
-			threadReplyBody = "MB Thread Reply Body",
+		JSONMBMessage.addMessageReply(
+			groupName = "Guest",
+			replyBody = "MB Thread Reply Body",
 			threadSubject = "MB Thread Message Subject");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			replyCount = "1",
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.splitThreadPG(
@@ -640,41 +583,6 @@ definition {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.viewDefault();
-	}
-
-	@priority = "5"
-	@refactorneeded
-	test SaveThreadAsDraft {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.saveNewThreadAsDraft(
-			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread Draft");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		var key_threadStatus = "Draft";
-		var key_threadSubject = "Message Boards Thread Draft";
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#THREAD_LIST_THREAD",
-			value1 = "Message Boards Thread Draft");
-
-		AssertTextEquals(
-			locator1 = "MessageBoards#THREAD_LIST_WORKFLOW_STATUS",
-			value1 = "Draft");
-
-		AssertClick(
-			locator1 = "MessageBoards#NAVIGATION_MY_POSTS",
-			value1 = "My Posts");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#THREAD_LIST_THREAD",
-			value1 = "Message Boards Thread Draft");
-
-		AssertTextEquals(
-			locator1 = "MessageBoards#THREAD_LIST_WORKFLOW_STATUS",
-			value1 = "Draft");
 	}
 
 	@priority = "4"

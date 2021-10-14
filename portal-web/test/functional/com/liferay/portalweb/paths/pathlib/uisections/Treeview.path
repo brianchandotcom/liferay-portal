@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>NODE_DRAGGABLE_ELEMENT</td>
-	<td>//div[contains(@class,'list-item__node')][contains(.,'${key_elementName}')]//div[@role='button'][@draggable='true']</td>
+	<td>xpath=(//div[contains(@class,'list-item__node')][contains(.,'${key_elementName}')])[${index}]//div[@role='button'][@draggable='true']</td>
 	<td></td>
 </tr>
 <tr>

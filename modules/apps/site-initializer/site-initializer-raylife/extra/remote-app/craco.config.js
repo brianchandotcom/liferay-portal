@@ -8,16 +8,16 @@ module.exports = {
 				{
 					paths: [
 						{
-							rootPathSuffix: './src',
 							rootPathPrefix: '~/',
+							rootPathSuffix: './src',
 						},
 						{
-							rootPathSuffix: './src/shared',
-							rootPathPrefix: '~/shared',
+							rootPathPrefix: '~/common',
+							rootPathSuffix: './src/common',
 						},
 						{
-							rootPathSuffix: './src/routes',
 							rootPathPrefix: '~/routes',
+							rootPathSuffix: './src/routes',
 						},
 					],
 				},
@@ -25,15 +25,15 @@ module.exports = {
 		],
 	},
 	webpack: {
-		configure: (webpackConfig, {env, paths}) => {
+		configure: (webpackConfig) => {
 			/**
 			 * This change is necessary to import SCSS as string
 			 * to inject into style tag
 			 */
 
 			webpackConfig.module.rules[1].oneOf.unshift({
-				test: sassRegex,
 				exclude: /node_modules/,
+				test: sassRegex,
 				use: [
 					'sass-to-string',
 					{

@@ -66,26 +66,8 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					<aui:input autoFocus="<%= (article == null) || article.isNew() %>" cssClass="form-control-inline" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" label="" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' required="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>" selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" type="text" wrapperCssClass="article-content-title mb-0" />
 				</li>
 				<li class="tbar-item">
-					<fieldset class="journal-article-button-row tbar-section text-right">
-						<aui:button cssClass="btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= journalEditArticleDisplayContext.getRedirect() %>" type="cancel" />
-
-						<c:if test="<%= journalEditArticleDisplayContext.getClassNameId() > JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>">
-							<portlet:actionURL name="/journal/reset_values_ddm_structure" var="resetValuesDDMStructureURL">
-								<portlet:param name="mvcPath" value="/edit_data_definition.jsp" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="groupId" value="<%= String.valueOf(journalEditArticleDisplayContext.getGroupId()) %>" />
-								<portlet:param name="articleId" value="<%= journalEditArticleDisplayContext.getArticleId() %>" />
-								<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
-							</portlet:actionURL>
-
-							<aui:button cssClass="btn-secondary btn-sm mr-3" data-url="<%= resetValuesDDMStructureURL %>" name="resetValuesButton" value="reset-values" />
-						</c:if>
-
+					<div class="journal-article-button-row tbar-section text-right">
 						<c:if test="<%= journalEditArticleDisplayContext.hasSavePermission() %>">
-							<c:if test="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>">
-								<aui:button cssClass="btn-sm mr-3" data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "/journal/add_article" : "/journal/update_article" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= journalEditArticleDisplayContext.getSaveButtonLabel() %>" />
-							</c:if>
-
 							<aui:button cssClass="btn-sm mr-3" data-actionname="<%= Constants.PUBLISH %>" disabled="<%= journalEditArticleDisplayContext.isPending() %>" name="publishButton" type="submit" value="<%= journalEditArticleDisplayContext.getPublishButtonLabel() %>" />
 						</c:if>
 
@@ -96,7 +78,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 							small="<%= true %>"
 							type="button"
 						/>
-					</fieldset>
+					</div>
 				</li>
 			</ul>
 		</clay:container-fluid>

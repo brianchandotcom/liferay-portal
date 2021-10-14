@@ -12,7 +12,7 @@
  * details.
  */
 
-import {delegate, fetch, navigate, openToast} from 'frontend-js-web';
+import {debounce, fetch, navigate, openToast} from 'frontend-js-web';
 
 import {LocaleChangedHandler} from './LocaleChangedHandler.es';
 
@@ -29,16 +29,13 @@ export default function _JournalPortlet({
 	const actionInput = document.getElementById(
 		`${namespace}javax-portlet-action`
 	);
-	const buttonRow = document.querySelector('.journal-article-button-row');
 	const contextualSidebarButton = document.getElementById(
 		`${namespace}contextualSidebarButton`
 	);
 	const contextualSidebarContainer = document.getElementById(
 		`${namespace}contextualSidebarContainer`
 	);
-	const resetValuesButton = document.getElementById(
-		`${namespace}resetValuesButton`
-	);
+	const publishButton = document.getElementById(`${namespace}publishButton`);
 
 	const availableLocales = [...initialAvailableLocales];
 
@@ -53,7 +50,7 @@ export default function _JournalPortlet({
 	};
 
 	const handleDDMFormError = (error) => {
-		buttonRow.disabled = false;
+		publishButton.disabled = false;
 		console.error(error);
 	};
 
@@ -127,10 +124,10 @@ export default function _JournalPortlet({
 				}
 			);
 
-			submitAsyncForm(document.getElementById(formId));
+			submitAsyncForm(form);
 		}
 		else {
-			buttonRow.disabled = false;
+			publishButton.disabled = false;
 
 			showAlert(
 				Liferay.Util.sub(
@@ -143,32 +140,17 @@ export default function _JournalPortlet({
 		}
 	};
 
-	const handleResetValuesButtonClick = () => {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-reset-the-default-values'
-				)
-			)
-		) {
-			buttonRow.disabled = true;
-			document.hrefFm.action = resetValuesButton.dataset.url;
-			submitAsyncForm(document.hrefFm);
-		}
-	};
-
-	const handleRowButtonClick = (event) => {
+	const handlePublishButtonClick = () => {
 		document
 			.querySelectorAll('.journal-alert-container')
 			.forEach((alertElement) => {
 				alertElement.parentElement.removeChild(alertElement);
 			});
 
-		actionInput.value =
-			event.delegateTarget.dataset.actionname || actionInput.value;
+		actionInput.value = publishButton.dataset.actionname;
 
 		requestAnimationFrame(() => {
-			buttonRow.disabled = true;
+			publishButton.disabled = true;
 		});
 	};
 
@@ -205,7 +187,7 @@ export default function _JournalPortlet({
 			})
 			.catch((error) => {
 				console.error(error);
-				buttonRow.disabled = false;
+				publishButton.disabled = false;
 			});
 	};
 
@@ -215,11 +197,7 @@ export default function _JournalPortlet({
 			'click',
 			handleContextualSidebarButtonClick
 		),
-		attachListener(
-			resetValuesButton,
-			'click',
-			handleResetValuesButtonClick
-		),
+		attachListener(publishButton, 'click', handlePublishButtonClick),
 
 		new LocaleChangedHandler({
 			contentTitle,
@@ -257,16 +235,6 @@ export default function _JournalPortlet({
 			eventHandlers.forEach((eventHandler) => {
 				eventHandler.detach();
 			});
-		},
-	};
-}
-
-function attachDelegateListener(element, eventType, selector, callback) {
-	const eventHandler = delegate(element, eventType, selector, callback);
-
-	return {
-		detach() {
-			eventHandler.dispose();
 		},
 	};
 }

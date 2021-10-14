@@ -139,7 +139,7 @@ definition {
 
 	@description = "This is a use case for LPS-127658 - Verified that the last portlet configuration can be restorable after deleting portlet"
 	@priority = "3"
-	test CanBeRestorableLastConfigurationWhenDeletingPortlet {
+	test LastConfigurationCanBeRestorableAfterDeletingPortlet {
 		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
 		Staging.activateStagingCP(

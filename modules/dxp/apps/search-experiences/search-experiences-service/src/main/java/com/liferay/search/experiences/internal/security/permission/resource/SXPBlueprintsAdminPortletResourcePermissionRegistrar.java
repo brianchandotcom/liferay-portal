@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Petteri Karttunen
  */
 @Component(immediate = true, service = {})
-public class SXPBlueprintPortletResourcePermissionRegistrar {
+public class SXPBlueprintsAdminPortletResourcePermissionRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

@@ -18,9 +18,10 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -39,36 +40,42 @@ public class AssetVocabulariesProvider {
 	public List<AssetVocabulary> getAssetVocabularies(
 		String[] assetVocabularyNames, long companyId) {
 
-		Group group = _groupLocalService.fetchCompanyGroup(companyId);
+		List<Long> groupIds = _groupLocalService.getGroupIds(companyId, true);
 
-		if (group == null) {
+		if (ListUtil.isEmpty(groupIds)) {
 			return Collections.emptyList();
 		}
 
-		try {
-			return Stream.of(
-				assetVocabularyNames
-			).map(
-				assetVocabularyName ->
-					_assetVocabularyLocalService.fetchGroupVocabulary(
-						group.getGroupId(), assetVocabularyName)
-			).filter(
-				Objects::nonNull
-			).filter(
-				assetVocabulary -> assetVocabulary.getCategoriesCount() > 0
-			).collect(
-				Collectors.toList()
-			);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get content dashboard admin configuration",
-					exception);
+		List<AssetVocabulary> result = new ArrayList<>();
+
+		for (Long groupId : groupIds) {
+			try {
+				result.addAll(
+					Stream.of(
+						assetVocabularyNames
+					).map(
+						assetVocabularyName ->
+							_assetVocabularyLocalService.fetchGroupVocabulary(
+								groupId, assetVocabularyName)
+					).filter(
+						Objects::nonNull
+					).filter(
+						assetVocabulary ->
+							assetVocabulary.getCategoriesCount() > 0
+					).collect(
+						Collectors.toList()
+					));
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to get content dashboard admin configuration",
+						exception);
+				}
 			}
 		}
 
-		return Collections.emptyList();
+		return result;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

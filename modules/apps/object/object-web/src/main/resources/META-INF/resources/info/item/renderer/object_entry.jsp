@@ -19,7 +19,7 @@
 <%
 ObjectEntry objectEntry = (ObjectEntry)request.getAttribute(ObjectWebKeys.OBJECT_ENTRY);
 
-String friendlyURL = assetDisplayPageFriendlyURLProvider.getFriendlyURL(ObjectEntry.class.getName(), objectEntry.getObjectEntryId(), themeDisplay);
+String friendlyURL = assetDisplayPageFriendlyURLProvider.getFriendlyURL(objectEntry.getModelClassName(), objectEntry.getObjectEntryId(), themeDisplay);
 
 Map<String, Serializable> objectEntryValues = (Map<String, Serializable>)request.getAttribute(ObjectWebKeys.OBJECT_ENTRY_VALUES);
 

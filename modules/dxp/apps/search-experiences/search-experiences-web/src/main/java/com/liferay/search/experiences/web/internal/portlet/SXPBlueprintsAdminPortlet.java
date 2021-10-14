@@ -41,5 +41,5 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
-public class SXPBlueprintPortlet extends MVCPortlet {
+public class SXPBlueprintsAdminPortlet extends MVCPortlet {
 }

@@ -35,8 +35,9 @@ export default function ({editCOREntryPortletURL, namespace}) {
 			type,
 		};
 
-		return orderRuleResource.addOrderRule(orderRuleEntryData).then(
-			(payload) => {
+		return orderRuleResource
+			.addOrderRule(orderRuleEntryData)
+			.then((payload) => {
 				const redirectURL = createPortletURL(editCOREntryPortletURL);
 
 				redirectURL.searchParams.append(
@@ -54,7 +55,6 @@ export default function ({editCOREntryPortletURL, namespace}) {
 						showSuccessNotification: true,
 					},
 				});
-			}
-		);
+			});
 	});
 }

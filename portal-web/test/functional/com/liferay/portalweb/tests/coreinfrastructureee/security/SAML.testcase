@@ -16,7 +16,7 @@ definition {
 		User.firstLoginUI();
 	}
 
-	@description = "This is a use case for LPS-32577. Add user inherited roles as SAML attribute statements"
+	@description = "This is a use case for LPS-32577. Add user inherited roles as SAML attribute statements."
 	@priority = "5"
 	test AddUserInheritedRolesAsSAMLAttributeStatements {
 		property test.name.skip.portal.instance = "SAML#AddUserInheritedRolesAsSAMLAttributeStatements";
@@ -392,7 +392,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-123218 TC-6: Assertion for: empty attribute mapping cannot be used for user matching"
+	@description = "LPS-123218 TC-6: Assertion for: empty attribute mapping cannot be used for user matching."
 	@priority = "4"
 	test AssertEmptyMappingCannotBeUsedForUserMatching {
 		property app.server.bundles.size = "0";
@@ -460,7 +460,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105165. Assert instance admin cannot configure IdP when disable IdP role"
+	@description = "This is a use case for LPS-105165. Assert instance admin cannot configure IdP when disable IdP role."
 	@priority = "5"
 	test AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole {
 		property test.name.skip.portal.instance = "SAML#AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole";
@@ -500,7 +500,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-94699. assert keep alive to keep my SAML session alive"
+	@description = "This is a use case for LPS-94699. assert keep alive to keep my SAML session alive."
 	@priority = "4"
 	test AssertKeepAliveToKeepMySAMLSessionAlive {
 		property test.name.skip.portal.instance = "SAML#AssertKeepAliveToKeepMySAMLSessionAlive";
@@ -678,7 +678,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-39013. Assert SAML SP user information updates after changing on IdP"
+	@description = "This is a use case for LPS-39013. Assert SAML SP user information updates after changing on IdP."
 	@priority = "4"
 	test AssertSAMLSPUserInformationUpdatesAfterChangingOnIdP {
 		property test.name.skip.portal.instance = "SAML#AssertSAMLSPUserInformationUpdatesAfterChangingOnIdP";
@@ -748,7 +748,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-47412. Assert signed SAML metadata"
+	@description = "This is a use case for LRQA-47412. Assert signed SAML metadata."
 	@priority = "4"
 	test AssertSignedSAMLMetadata {
 		property test.name.skip.portal.instance = "SAML#AssertSignedSAMLMetadata";
@@ -780,7 +780,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-96104. Assert SSO fails when algorithms mismatch"
+	@description = "This is a use case for LPS-96104. Assert SSO fails when algorithms mismatch."
 	@priority = "4"
 	test AssertSSOFailsWhenAlgorithmsMismatch {
 		property blacklist.saml.algorithms = "true";
@@ -823,7 +823,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-35866. Assert SSO idle session takes predence over IdP session time out"
+	@description = "This is a use case for LRQA-35866. Assert SSO idle session takes predence over IdP session time out."
 	@priority = "4"
 	test AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout {
 		property custom.properties = "session.timeout=2";
@@ -920,7 +920,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-35784. Assert SSO session existis after SP session timeout"
+	@description = "This is a use case for LRQA-35784. Assert SSO session existis after SP session timeout."
 	@priority = "4"
 	test AssertSSOSessionExistsAfterSPSessionTimeout {
 		property custom.properties = "session.timeout=2";
@@ -966,7 +966,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-35833. Assert SSO expires after maximum session age"
+	@description = "This is a use case for LRQA-35833. Assert SSO expires after maximum session age."
 	@priority = "4"
 	test AssertSSOSessionExpiresAfterMaximumSessionAge {
 		property custom.properties = "session.timeout=2";
@@ -1024,7 +1024,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-88924 - Using virtual instances. Assert SSO with encryption and decryption"
+	@description = "This is a use case for LPS-88924 - Using virtual instances. Assert SSO with encryption and decryption."
 	@priority = "4"
 	test AssertSSOWithEncryptionAndDecryption {
 		property app.server.bundles.size = "0";
@@ -1132,7 +1132,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-128578 and LPS-69388. Assert SSO with sign auth and request"
+	@description = "This is a use case for LPS-128578 and LPS-69388. Assert SSO with sign auth and request."
 	@priority = "4"
 	test AssertSSOWithSignAuthnRequests {
 		property test.name.skip.portal.instance = "SAML#AssertSSOWithSignAuthnRequests";
@@ -1308,7 +1308,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105170 TC-5: Verification for portal User Attributes when they are duplicated in the mapping  when saving the SAML configuration - Using virtual instances"
+	@description = "This is a use case for LPS-105170 TC-5: Verification for portal User Attributes when they are duplicated in the mapping  when saving the SAML configuration - Using virtual instances."
 	@priority = "3"
 	test AssertVerificationForDuplicatedUserAttributeMappingSAML {
 		property app.server.bundles.size = "0";
@@ -1399,7 +1399,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105170 TC-4: Verification for portal User Attributes when they are without SAML attribute value in the mapping when saving the SAML configuration - Using virtual instances"
+	@description = "This is a use case for LPS-105170 TC-4: Verification for portal User Attributes when they are without SAML attribute value in the mapping when saving the SAML configuration - Using virtual instances."
 	@priority = "3"
 	test AssertVerificationForEmptyUserAttributeMappingSAML {
 		property app.server.bundles.size = "0";
@@ -1472,7 +1472,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129373. Configure SAML to import users from LDAP"
+	@description = "This is a use case for LPS-129373. Configure SAML to import users from LDAP."
 	@priority = "4"
 	test ConfigureSAMLToImportUsersFromLDAP {
 		property apacheds.enabled = "true";
@@ -1612,7 +1612,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105170 TC-2: User creation and sync after SAML setup, using email Address for IdP Identifier and screenName for Attribute matching - Using virtual instances"
+	@description = "This is a use case for LPS-105170 TC-2: User creation and sync after SAML setup, using email Address for IdP Identifier and screenName for Attribute matching - Using virtual instances."
 	@priority = "3"
 	test CreateAndSyncUserAfterSAMLSetupMatchingEmailAddressNameIDWithScreenNameAttribute {
 		property app.server.bundles.size = "0";
@@ -1714,7 +1714,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105170 TC-3: User creation and sync after SAML setup, using screenName for IdP Identifier and UUID for Attribute matching - Using virtual instances"
+	@description = "This is a use case for LPS-105170 TC-3: User creation and sync after SAML setup, using screenName for IdP Identifier and UUID for Attribute matching - Using virtual instances."
 	@priority = "3"
 	test CreateAndSyncUserAfterSAMLSetupMatchingScreenNameIdentifierWithUUIDAttribute {
 		property app.server.bundles.size = "0";
@@ -1815,7 +1815,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105170 TC-1: User creation and sync after SAML setup, using screenName field both for User Matching and IdP Identifier - Using virtual instances"
+	@description = "This is a use case for LPS-105170 TC-1: User creation and sync after SAML setup, using screenName field both for User Matching and IdP Identifier - Using virtual instances."
 	@priority = "5"
 	test CreateAndSyncUserAfterSAMLSetupwithMatchingScreenNameAttribute {
 		property app.server.bundles.size = "0";
@@ -1916,7 +1916,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105170 TC-7: User creation and sync after SAML setup with 2 IdP portal - Using virtual instances"
+	@description = "This is a use case for LPS-105170 TC-7: User creation and sync after SAML setup with 2 IdP portal - Using virtual instances."
 	@priority = "3"
 	test CreateAndSyncUserAfterSAMLSetupWithMultipleIdPs {
 		property app.server.bundles.size = "0";
@@ -2064,7 +2064,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105170 TC-8: Verifying that deleting a User will sync with the SP site - Using virtual instances"
+	@description = "This is a use case for LPS-105170 TC-8: Verifying that deleting a User will sync with the SP site - Using virtual instances."
 	@priority = "3"
 	test DeleteUserAfterSAMLSetupAndVerify {
 		property app.server.bundles.size = "0";
@@ -2183,7 +2183,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-110344. Hot deploy SAML app"
+	@description = "This is a use case for LPS-110344. Hot deploy SAML app."
 	@priority = "5"
 	test HotDeploySAMLApp {
 		property hot.deploy.osgi.app.includes = "saml";
@@ -2207,7 +2207,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-108077. Import encryption certificate from PKCS12 keystore file"
+	@description = "This is a use case for LPS-108077. Import encryption certificate from PKCS12 keystore file."
 	@priority = "5"
 	test ImportEncryptionCertificateFromPKCS12KeystoreFile {
 		property test.name.skip.portal.instance = "SAML#ImportEncryptionCertificateFromPKCS12KeystoreFile";
@@ -2269,7 +2269,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-108077. Import signing certificate from PKCS12 keystore file"
+	@description = "This is a use case for LPS-108077. Import signing certificate from PKCS12 keystore file."
 	@priority = "5"
 	test ImportSigningCertificateFromPKCS12KeystoreFile {
 		property test.name.skip.portal.instance = "SAML#ImportSigningCertificateFromPKCS12KeystoreFile";
@@ -2326,7 +2326,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-105169 TC-3: SP initiated login should not sync IdP&SP user attributes if not part of attribute mapping - Using virtual instances"
+	@description = "LPS-105169 TC-3: SP initiated login should not sync IdP&SP user attributes if not part of attribute mapping - Using virtual instances."
 	@priority = "4"
 	test SPInitiatedSSODoesNotSyncAttributesIfNotMapped {
 		property app.server.bundles.size = "0";
@@ -2439,7 +2439,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-105169 TC-4: SP initiated login should not sync IdP&SP user attributes if not sent by IdP - Using virtual instances"
+	@description = "LPS-105169 TC-4: SP initiated login should not sync IdP&SP user attributes if not sent by IdP - Using virtual instances."
 	@priority = "4"
 	test SPInitiatedSSODoesNotSyncAttributesIfNotSent {
 		property app.server.bundles.size = "0";
@@ -2552,7 +2552,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-105169 TC-1: SP initiated login should sync IdP&SP user attributes based on user attribute mapping - Using virtual instances"
+	@description = "LPS-105169 TC-1: SP initiated login should sync IdP&SP user attributes based on user attribute mapping - Using virtual instances."
 	@priority = "5"
 	test SPInitiatedSSOSyncsUserAttributesFromIdPToSPDefaultMapping {
 		property app.server.bundles.size = "0";
@@ -2664,7 +2664,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-105169 TC-2: SP initiated login should sync IdPs&SP user attributes based on custom user attribute mapping - Using virtual instances"
+	@description = "LPS-105169 TC-2: SP initiated login should sync IdPs&SP user attributes based on custom user attribute mapping - Using virtual instances."
 	@priority = "4"
 	test SPInitiatedSSOSyncsUserAttributesFromMultipleIdPToSPCustomMapping {
 		property app.server.bundles.size = "0";
@@ -2823,7 +2823,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-35866. SP initiated SSO with screen name identifier"
+	@description = "This is a use case for LRQA-35866. SP initiated SSO with screen name identifier."
 	@priority = "4"
 	test SPInitiatedSSOWithScreenNameIdentifier {
 		property test.name.skip.portal.instance = "SAML#SPInitiatedSSOWithScreenNameIdentifier";
@@ -2865,7 +2865,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-50747. Validate vulnerabilities XML attacks"
+	@description = "This is a use case for LPS-50747. Validate vulnerabilities XML attacks."
 	@priority = "5"
 	test ValidateVulnerabilitiesXMLAttacks {
 		property test.name.skip.portal.instance = "SAML#ValidateVulnerabilitiesXMLAttacks";
@@ -3032,7 +3032,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129934 - Using virtual instances. View IdP single logout with multiple SPs"
+	@description = "This is a use case for LPS-129934 - Using virtual instances. View IdP single logout with multiple SPs."
 	@priority = "4"
 	test ViewIdPSingleLogoutWithMultipleSPs {
 		property portal.upstream = "true";
@@ -3185,7 +3185,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-31886. View single logout and force auth with multiple SPs"
+	@description = "This is a use case for LRQA-31886. View single logout and force auth with multiple SPs."
 	@priority = "4"
 	test ViewSingleLogoutAndForceAuthWithMultipleSPs {
 		property test.name.skip.portal.instance = "SAML#ViewSingleLogoutAndForceAuthWithMultipleSPs";
@@ -3479,7 +3479,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-88089. View SP initiated SSO with multiple IdPs and assert render login portlet without IdPs matched"
+	@description = "This is a use case for LPS-88089. View SP initiated SSO with multiple IdPs and assert render login portlet without IdPs matched."
 	@priority = "4"
 	test ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched {
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched";
@@ -3701,7 +3701,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-123218 TC-5: SP initiated login, using email address for user matching - Using virtual instances"
+	@description = "LPS-123218 TC-5: SP initiated login, using email address for user matching - Using virtual instances."
 	@priority = "4"
 	test ViewSPInitiatedSSOWithSAMLAttributeEmailAddressUsedForUserMatching {
 		property app.server.bundles.size = "0";
@@ -3816,7 +3816,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-123218 TC-4: SP initiated login, using screenName for user matching - Using virtual instances"
+	@description = "LPS-123218 TC-4: SP initiated login, using screenName for user matching - Using virtual instances."
 	@priority = "4"
 	test ViewSPInitiatedSSOWithSAMLAttributeScreenNameUsedForUserMatching {
 		property app.server.bundles.size = "0";
@@ -3931,7 +3931,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-123218 TC-7: SP initiated login, using screenName for user matching, multiple IDPs - Using virtual instances"
+	@description = "LPS-123218 TC-7: SP initiated login, using screenName for user matching, multiple IDPs - Using virtual instances."
 	@priority = "4"
 	test ViewSPInitiatedSSOWithSAMLAttributeScreenNameUsedForUserMatchingMultipleIdP {
 		property app.server.bundles.size = "0";
@@ -4072,7 +4072,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-123218 TC-1: SP initiated login, using UUID for user matching - Using virtual instances"
+	@description = "LPS-123218 TC-1: SP initiated login, using UUID for user matching - Using virtual instances."
 	@priority = "5"
 	test ViewSPInitiatedSSOWithSAMLAttributeUUIDUsedForUserMatching {
 		property app.server.bundles.size = "0";
@@ -4188,7 +4188,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-123218 TC-8: SP initiated login, using UUID for user matching, multiple SPs - Using virtual instances"
+	@description = "LPS-123218 TC-8: SP initiated login, using UUID for user matching, multiple SPs - Using virtual instances."
 	@priority = "4"
 	test ViewSPInitiatedSSOWithSAMLAttributeUUIDUsedForUserMatchingMultipleSP {
 		property app.server.bundles.size = "0";
@@ -4379,7 +4379,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-125272 User profile matchup when NameID is transient, and screenName is in SAML Attributes list"
+	@description = "LPS-125272 User profile matchup when NameID is transient, and screenName is in SAML Attributes list."
 	@priority = "4"
 	test ViewSPInitiatedSSOWithTransientNameId {
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithTransientNameId";

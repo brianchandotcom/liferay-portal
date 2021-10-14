@@ -40,17 +40,19 @@ const TranslationAdminModal = ({
 	);
 	const [visible, setVisible] = useState(initialVisible);
 
-	const onCancel = () => {
+	const handleAddLocale = (localeId) => {
+		setActiveLanguageIds([...activeLanguageIds, localeId]);
+	};
+
+	const handleCancel = () => {
 		setVisible(false);
+		setActiveLanguageIds([...initialActiveLanguageIds]);
 		onClose([...initialActiveLanguageIds]);
 	};
 
-	const {observer} = useModal({
-		onClose: onCancel,
-	});
-
-	const handleAddLocale = (localeId) => {
-		setActiveLanguageIds([...activeLanguageIds, localeId]);
+	const handleDone = () => {
+		setVisible(false);
+		onClose([...activeLanguageIds]);
 	};
 
 	const handleRemoveLocale = (localeId) => {
@@ -59,10 +61,9 @@ const TranslationAdminModal = ({
 		setActiveLanguageIds(newActiveLanguageIds);
 	};
 
-	const onDoneClicked = () => {
-		setVisible(false);
-		onClose([...activeLanguageIds]);
-	};
+	const {observer} = useModal({
+		onClose: handleCancel,
+	});
 
 	useEffect(() => {
 		setActiveLanguageIds(initialActiveLanguageIds);
@@ -82,8 +83,8 @@ const TranslationAdminModal = ({
 						availableLocales={availableLocales}
 						defaultLanguageId={defaultLanguageId}
 						onAddLocale={handleAddLocale}
-						onCancel={onCancel}
-						onDone={onDoneClicked}
+						onCancel={handleCancel}
+						onDone={handleDone}
 						onRemoveLocale={handleRemoveLocale}
 						translations={translations}
 					/>

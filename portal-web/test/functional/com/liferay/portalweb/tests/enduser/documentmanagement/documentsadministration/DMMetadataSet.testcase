@@ -137,7 +137,7 @@ definition {
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
-		DataEngine.addFields(fieldNameList = "Text,Date,Image,Web Content");
+		DataEngine.addFields(fieldNameList = "Text,Date,Image");
 
 		DDLDataDefinition.save();
 
@@ -153,7 +153,7 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
-		for (var fieldFieldLabel : list "Numeric,Text,Date,Image,Web Content") {
+		for (var fieldFieldLabel : list "Numeric,Text,Date,Image") {
 			AssertElementPresent(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
@@ -165,19 +165,19 @@ definition {
 
 		DMDocumentType.deleteFields(
 			dmDocumentTypeName = "DM Metadata Set Name",
-			fieldFieldLabel = "Text,Date,Image");
+			fieldFieldLabel = "Text,Date");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
-		for (var fieldFieldLabel : list "Text,Date,Image") {
+		for (var fieldFieldLabel : list "Text,Date") {
 			AssertElementNotPresent(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
-		for (var fieldFieldLabel : list "Numeric,Web Content") {
+		for (var fieldFieldLabel : list "Numeric,Image") {
 			AssertElementPresent(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");

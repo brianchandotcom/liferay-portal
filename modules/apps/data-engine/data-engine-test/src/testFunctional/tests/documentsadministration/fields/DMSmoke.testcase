@@ -35,7 +35,7 @@ definition {
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
-		DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
+		DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Geolocation,Link to Page,Separator");
 
 		DDLDataDefinition.save();
 
@@ -49,7 +49,7 @@ definition {
 
 		DMDocumentType.gotoTab(tabName = "Builder");
 
-		DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
+		DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Geolocation,Link to Page,Separator");
 
 		DMDocumentType.gotoTab(tabName = "Additional Metadata Fields");
 
@@ -70,7 +70,7 @@ definition {
 
 		DMDocument.expandInfo();
 
-		DMDocument.viewFieldLabels(labels = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
+		DMDocument.viewFieldLabels(labels = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Geolocation,Link to Page,Separator");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 

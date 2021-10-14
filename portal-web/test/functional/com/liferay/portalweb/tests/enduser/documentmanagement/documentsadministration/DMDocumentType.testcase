@@ -484,14 +484,14 @@ definition {
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text,Date,Image,Upload,Web Content",
+			dmDocumentTypeFieldNames = "Text,Date,Image,Upload",
 			dmDocumentTypeName = "DM Document Type Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
-		for (var fieldFieldLabel : list "Text,Date,Image,Upload,Web Content") {
+		for (var fieldFieldLabel : list "Text,Date,Image,Upload") {
 			AssertElementPresent(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
@@ -503,20 +503,20 @@ definition {
 
 		DMDocumentType.deleteFields(
 			dmDocumentTypeName = "DM Document Type Name",
-			fieldFieldLabel = "Text,Date,Image,Upload");
+			fieldFieldLabel = "Text,Date,Image");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
-		for (var fieldFieldLabel : list "Text,Date,Image,Upload") {
+		for (var fieldFieldLabel : list "Text,Date,Image") {
 			AssertElementNotPresent(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
 		AssertElementPresent(
-			key_fieldFieldLabel = "Web Content",
+			key_fieldFieldLabel = "Upload",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 

@@ -17,25 +17,12 @@ package com.liferay.fragment.renderer.menu.display.internal;
 import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.ContextualMenu;
 import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.DisplayStyle;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.frontend.token.definition.FrontendToken;
-import com.liferay.frontend.token.definition.FrontendTokenDefinition;
-import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,16 +39,13 @@ public class MenuDisplayFragmentConfigurationParser {
 		DisplayStyle displayStyle = _getDisplayStyle(
 			configuration, editableValues);
 
-		Map<String, FrontendToken> frontendTokenMap = _getFrontendTokens(
-			groupId);
+		String hoveredItemColor = GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				configuration, editableValues, "hoveredItemColor"));
 
-		String hoveredItemColor = _getColorPickerValue(
-			configuration, editableValues, "hoveredItemColor",
-			frontendTokenMap);
-
-		String selectedItemColor = _getColorPickerValue(
-			configuration, editableValues, "selectedItemColor",
-			frontendTokenMap);
+		String selectedItemColor = GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				configuration, editableValues, "selectedItemColor"));
 
 		MenuDisplayFragmentConfiguration.Source source = _getSource(
 			configuration, editableValues);
@@ -82,38 +66,6 @@ public class MenuDisplayFragmentConfigurationParser {
 		}
 	}
 
-	private String _getColorPickerValue(
-		String configuration, String editableValues, String fieldName,
-		Map<String, FrontendToken> frontendTokenMap) {
-
-		String value = GetterUtil.getString(
-			_fragmentEntryConfigurationParser.getFieldValue(
-				configuration, editableValues, fieldName));
-
-		if (Validator.isNull(value)) {
-			return null;
-		}
-
-		FrontendToken frontendToken = frontendTokenMap.get(value);
-
-		if (frontendToken == null) {
-			return value;
-		}
-
-		ArrayList<FrontendTokenMapping> frontendTokenMappings = new ArrayList<>(
-			frontendToken.getFrontendTokenMappings(
-				FrontendTokenMapping.TYPE_CSS_VARIABLE));
-
-		if (frontendTokenMappings.isEmpty()) {
-			return value;
-		}
-
-		FrontendTokenMapping frontendTokenMapping = frontendTokenMappings.get(
-			0);
-
-		return "var(--" + frontendTokenMapping.getValue() + ")";
-	}
-
 	private DisplayStyle _getDisplayStyle(
 		String configuration, String editableValues) {
 
@@ -122,35 +74,6 @@ public class MenuDisplayFragmentConfigurationParser {
 				configuration, editableValues, "displayStyle"));
 
 		return DisplayStyle.parse(displayStyle);
-	}
-
-	private Map<String, FrontendToken> _getFrontendTokens(long groupId) {
-		Map<String, FrontendToken> frontendTokens = new HashMap<>();
-
-		try {
-			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-				groupId, false);
-
-			FrontendTokenDefinition frontendTokenDefinition =
-				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-					layoutSet.getThemeId());
-
-			for (FrontendToken frontendToken :
-					frontendTokenDefinition.getFrontendTokens()) {
-
-				JSONObject frontendTokenJSONObject =
-					JSONFactoryUtil.createJSONObject(
-						frontendToken.getJSON(LocaleUtil.getDefault()));
-
-				frontendTokens.put(
-					frontendTokenJSONObject.getString("name"), frontendToken);
-			}
-		}
-		catch (Exception exception) {
-			_log.error("Unable to get frontend tokens", exception);
-		}
-
-		return frontendTokens;
 	}
 
 	private MenuDisplayFragmentConfiguration.Source _getSource(
@@ -185,14 +108,8 @@ public class MenuDisplayFragmentConfigurationParser {
 				configuration, editableValues, "sublevels"));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		MenuDisplayFragmentConfigurationParser.class);
-
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
-	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

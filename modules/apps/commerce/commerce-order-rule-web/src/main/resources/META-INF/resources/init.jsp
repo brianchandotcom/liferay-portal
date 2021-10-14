@@ -33,11 +33,13 @@ page import="com.liferay.commerce.order.rule.exception.COREntryExpirationDateExc
 page import="com.liferay.commerce.order.rule.exception.NoSuchCOREntryException" %><%@
 page import="com.liferay.commerce.order.rule.model.COREntry" %><%@
 page import="com.liferay.commerce.order.rule.web.internal.display.context.COREntryDisplayContext" %><%@
+page import="com.liferay.commerce.order.rule.web.internal.display.context.COREntryQualifiersDisplayContext" %><%@
 page import="com.liferay.commerce.order.rule.web.internal.entry.constants.COREntryDataSetDisplayNames" %><%@
 page import="com.liferay.commerce.order.rule.web.internal.entry.constants.COREntryScreenNavigationEntryConstants" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -46,6 +48,8 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
+
+<%@ page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

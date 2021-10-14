@@ -29,25 +29,3 @@ if (selLayout != null) {
 <aui:input cssClass="lfr-input-text-container" helpMessage="embedded-layout-url-help-message" id="urlEmbedded" label="url" name="TypeSettingsProperties--embeddedLayoutURL--" type="text" value="<%= url %>">
 	<aui:validator errorMessage="please-enter-a-valid-url" name="required" />
 </aui:input>
-
-<aui:script use="liferay-form">
-	var form = Liferay.Form.get('<portlet:namespace />addPageFm');
-
-	if (!form) {
-		form = Liferay.Form.get('<portlet:namespace />editLayoutFm');
-	}
-
-	if (form) {
-		var rules = form.formValidator.get('rules');
-
-		var fieldName =
-			'<portlet:namespace />TypeSettingsProperties--embeddedLayoutURL--';
-
-		if (!(fieldName in rules)) {
-			rules[fieldName] = {
-				custom: false,
-				required: true,
-			};
-		}
-	}
-</aui:script>

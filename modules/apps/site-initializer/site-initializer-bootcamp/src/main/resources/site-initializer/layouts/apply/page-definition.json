@@ -4,281 +4,255 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"backgroundColor": "",
 						"borderWidth": "0",
-						"marginBottom": "6",
+						"paddingBottom": "6",
+						"paddingLeft": "2",
+						"paddingRight": "2",
 						"paddingTop": "7"
 					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingBottom": "3",
+								"paddingTop": "0"
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"paddingBottom": "3",
+								"paddingTop": "0"
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"paddingBottom": "5",
+								"paddingLeft": "0",
+								"paddingRight": "0",
+								"paddingTop": "5"
+							},
+							"id": "tablet"
+						}
+					],
 					"layout": {
 						"borderWidth": 0,
-						"marginBottom": 6,
+						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
-						"paddingBottom": 0,
+						"paddingBottom": 6,
 						"paddingLeft": 0,
 						"paddingRight": 0,
 						"paddingTop": 8,
-						"widthType": "Fixed"
+						"widthType": "Fluid"
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {
-								"key": "bootcamp-heading"
-							},
-							"fragmentConfig": {
-								"displayLevel": "0",
-								"headingLevel": "h3"
-							},
-							"fragmentFields": [
-								{
-									"id": "element-text",
-									"value": {
-										"fragmentLink": {
-											"value_i18n": {
-											}
-										},
-										"text": {
-											"value_i18n": {
-												"en_US": "Apply to Bootcamp!"
-											}
-										}
-									}
-								}
-							],
 							"fragmentStyle": {
-								"fontFamily": "fontFamilySansSerif",
-								"fontWeight": "fontWeightBold",
-								"marginBottom": "7",
-								"textAlign": "left"
-							}
-						},
-						"type": "Fragment"
-					},
-					{
-						"definition": {
-							"gutters": true,
-							"modulesPerRow": 2,
-							"numberOfColumns": 2,
-							"reverseOrder": false,
-							"rowViewports": [
+								"backgroundColor": "",
+								"borderWidth": "0"
+							},
+							"fragmentViewports": [
 								{
-									"id": "landscapeMobile",
-									"rowViewportDefinition": {
-									}
-								},
-								{
-									"id": "portraitMobile",
-									"rowViewportDefinition": {
-									}
-								},
-								{
-									"id": "tablet",
-									"rowViewportDefinition": {
-									}
+									"fragmentViewportStyle": {
+										"marginBottom": "4",
+										"paddingTop": "5"
+									},
+									"id": "tablet"
 								}
 							],
-							"verticalAlignment": "top"
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
 						},
 						"pageElements": [
 							{
 								"definition": {
-									"columnViewports": [
+									"fragment": {
+										"key": "bootcamp-heading"
+									},
+									"fragmentConfig": {
+										"displayLevel": "0",
+										"headingLevel": "h3"
+									},
+									"fragmentFields": [
 										{
-											"columnViewportDefinition": {
-											},
-											"id": "landscapeMobile"
-										},
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Apply to Bootcamp!"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"fontFamily": "fontFamilySansSerif",
+										"fontWeight": "fontWeightBold",
+										"marginBottom": "7",
+										"textAlign": "left"
+									},
+									"fragmentViewports": [
 										{
-											"columnViewportDefinition": {
-											},
-											"id": "portraitMobile"
-										},
-										{
-											"columnViewportDefinition": {
+											"fragmentViewportStyle": {
+												"marginBottom": "5"
 											},
 											"id": "tablet"
 										}
-									],
-									"size": 8
+									]
 								},
-								"pageElements": [
-									{
-										"definition": {
-											"fragmentStyle": {
-												"backgroundColor": "gray200Color",
-												"borderWidth": "0",
-												"marginRight": "6",
-												"paddingBottom": "3",
-												"paddingLeft": "3",
-												"paddingRight": "3",
-												"paddingTop": "3"
-											},
-											"layout": {
-												"borderWidth": 0,
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 6,
-												"marginTop": 0,
-												"paddingBottom": 1,
-												"paddingLeft": 1,
-												"paddingRight": 1,
-												"paddingTop": 1,
-												"widthType": "Fluid"
-											}
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"widgetInstance": {
-														"widgetConfig": {
-															"formInstanceId": "49474",
-															"groupId": "48088"
-														},
-														"widgetName": "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet"
-													}
-												},
-												"type": "Widget"
-											}
-										],
-										"type": "Section"
-									}
-								],
-								"type": "Column"
+								"type": "Fragment"
 							},
 							{
 								"definition": {
-									"columnViewports": [
+									"gutters": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
 										{
-											"columnViewportDefinition": {
-											},
-											"id": "landscapeMobile"
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+											}
 										},
 										{
-											"columnViewportDefinition": {
-											},
-											"id": "portraitMobile"
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
 										},
 										{
-											"columnViewportDefinition": {
-											},
-											"id": "tablet"
+											"id": "tablet",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
 										}
 									],
-									"size": 4
+									"verticalAlignment": "top"
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"fragment": {
-												"key": "bootcamp-heading"
-											},
-											"fragmentConfig": {
-												"displayLevel": "0",
-												"headingLevel": "h5"
-											},
-											"fragmentFields": [
+											"columnViewports": [
 												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-															"value_i18n": {
-															}
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Application Details"
-															}
-														}
-													}
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "tablet"
 												}
 											],
-											"fragmentStyle": {
-												"fontFamily": "fontFamilySansSerif",
-												"fontWeight": "fontWeightBold",
-												"marginBottom": "4"
-											}
+											"size": 8
 										},
-										"type": "Fragment"
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"backgroundColor": "gray200Color",
+														"borderWidth": "0",
+														"marginRight": "6",
+														"paddingBottom": "3",
+														"paddingLeft": "3",
+														"paddingRight": "3",
+														"paddingTop": "3"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "4",
+																"marginRight": "0"
+															},
+															"id": "tablet"
+														}
+													],
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 6,
+														"marginTop": 0,
+														"paddingBottom": 1,
+														"paddingLeft": 1,
+														"paddingRight": 1,
+														"paddingTop": 1,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {
+																	"formInstanceId": "49474",
+																	"groupId": "48088"
+																},
+																"widgetName": "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet"
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
 									},
 									{
 										"definition": {
-											"fragmentStyle": {
-												"borderWidth": "0",
-												"marginBottom": "1"
-											},
-											"layout": {
-												"align": "Center",
-												"borderWidth": 0,
-												"contentDisplay": "FlexRow",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
-											}
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 4
 										},
 										"pageElements": [
 											{
 												"definition": {
 													"fragment": {
-														"key": "bootcamp-image"
+														"key": "bootcamp-heading"
 													},
 													"fragmentConfig": {
-														"imageSize": "w-100"
-													},
-													"fragmentFields": [
-														{
-															"id": "image-square",
-															"value": {
-																"fragmentImage": {
-																	"description": {
-																		"value_i18n": {
-																			"en_US": ""
-																		}
-																	},
-																	"fragmentImageClassPKReference": {
-																		"classPKReferences": {
-																			"en_US": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/smile_y.svg$]"
-																			}
-																		},
-																		"fragmentImageConfiguration": {
-																			"landscapeMobile": "auto",
-																			"portraitMobile": "auto",
-																			"tablet": "auto"
-																		}
-																	}
-																},
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "1",
-														"marginRight": "2",
-														"textColor": "",
-														"width": "26px"
-													}
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "bootcamp-text-block"
-													},
-													"fragmentConfig": {
+														"displayLevel": "0",
+														"headingLevel": "h5"
 													},
 													"fragmentFields": [
 														{
@@ -290,7 +264,7 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Don’t need technical background."
+																		"en_US": "Application Details"
 																	}
 																}
 															}
@@ -298,223 +272,327 @@
 													],
 													"fragmentStyle": {
 														"fontFamily": "fontFamilySansSerif",
-														"fontSize": "fontSizeSm"
+														"fontWeight": "fontWeightBold",
+														"marginBottom": "4"
 													}
 												},
 												"type": "Fragment"
-											}
-										],
-										"type": "Section"
-									},
-									{
-										"definition": {
-											"fragmentStyle": {
-												"borderWidth": "0",
-												"marginBottom": "1"
 											},
-											"layout": {
-												"align": "Center",
-												"borderWidth": 0,
-												"contentDisplay": "FlexRow",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
-											}
-										},
-										"pageElements": [
 											{
 												"definition": {
-													"fragment": {
-														"key": "bootcamp-image"
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"marginBottom": "1"
 													},
-													"fragmentConfig": {
-														"imageSize": "w-100"
-													},
-													"fragmentFields": [
-														{
-															"id": "image-square",
-															"value": {
-																"fragmentImage": {
-																	"description": {
-																		"value_i18n": {
-																			"en_US": ""
-																		}
-																	},
-																	"fragmentImageClassPKReference": {
-																		"classPKReferences": {
-																			"en_US": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/dollar_y.svg$]"
+													"layout": {
+														"align": "Center",
+														"borderWidth": 0,
+														"contentDisplay": "FlexRow",
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "bootcamp-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"description": {
+																				"value_i18n": {
+																					"en_US": ""
+																				}
+																			},
+																			"fragmentImageClassPKReference": {
+																				"classPKReferences": {
+																					"en_US": {
+																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/smile_y.svg$]"
+																					}
+																				},
+																				"fragmentImageConfiguration": {
+																					"landscapeMobile": "auto",
+																					"portraitMobile": "auto",
+																					"tablet": "auto"
+																				}
 																			}
 																		},
-																		"fragmentImageConfiguration": {
-																			"landscapeMobile": "auto",
-																			"portraitMobile": "auto",
-																			"tablet": "auto"
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
 																		}
 																	}
-																},
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
 																}
+															],
+															"fragmentStyle": {
+																"marginBottom": "1",
+																"marginRight": "2",
+																"textColor": "",
+																"width": "26px"
 															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "1",
-														"marginRight": "2",
-														"width": "26px"
-													}
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "bootcamp-text-block"
+														},
+														"type": "Fragment"
 													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Financing options available."
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"fontFamily": "fontFamilySansSerif",
-														"fontSize": "fontSizeSm"
-													}
-												},
-												"type": "Fragment"
-											}
-										],
-										"type": "Section"
-									},
-									{
-										"definition": {
-											"fragmentStyle": {
-												"borderWidth": "0",
-												"marginBottom": "1"
-											},
-											"layout": {
-												"align": "Center",
-												"borderWidth": 0,
-												"contentDisplay": "FlexRow",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
-											}
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "bootcamp-image"
-													},
-													"fragmentConfig": {
-														"imageSize": "w-100"
-													},
-													"fragmentFields": [
-														{
-															"id": "image-square",
-															"value": {
-																"fragmentImage": {
-																	"description": {
-																		"value_i18n": {
-																			"en_US": ""
-																		}
-																	},
-																	"fragmentImageClassPKReference": {
-																		"classPKReferences": {
-																			"en_US": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/calendar_y.svg$]"
+													{
+														"definition": {
+															"fragment": {
+																"key": "bootcamp-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
 																			}
 																		},
-																		"fragmentImageConfiguration": {
-																			"landscapeMobile": "auto",
-																			"portraitMobile": "auto",
-																			"tablet": "auto"
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Don’t need technical background."
+																			}
 																		}
 																	}
-																},
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
 																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"fontSize": "fontSizeSm"
 															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "1",
-														"marginRight": "2",
-														"width": "26px"
+														},
+														"type": "Fragment"
 													}
-												},
-												"type": "Fragment"
+												],
+												"type": "Section"
 											},
 											{
 												"definition": {
-													"fragment": {
-														"key": "bootcamp-text-block"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Courses available all year,"
-																	}
-																}
-															}
-														}
-													],
 													"fragmentStyle": {
-														"fontFamily": "fontFamilySansSerif",
-														"fontSize": "fontSizeSm"
+														"borderWidth": "0",
+														"marginBottom": "1"
+													},
+													"layout": {
+														"align": "Center",
+														"borderWidth": 0,
+														"contentDisplay": "FlexRow",
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
 													}
 												},
-												"type": "Fragment"
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "bootcamp-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"description": {
+																				"value_i18n": {
+																					"en_US": ""
+																				}
+																			},
+																			"fragmentImageClassPKReference": {
+																				"classPKReferences": {
+																					"en_US": {
+																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/dollar_y.svg$]"
+																					}
+																				},
+																				"fragmentImageConfiguration": {
+																					"landscapeMobile": "auto",
+																					"portraitMobile": "auto",
+																					"tablet": "auto"
+																				}
+																			}
+																		},
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginBottom": "1",
+																"marginRight": "2",
+																"width": "26px"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "bootcamp-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Financing options available."
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"fontSize": "fontSizeSm"
+															}
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"marginBottom": "1"
+													},
+													"layout": {
+														"align": "Center",
+														"borderWidth": 0,
+														"contentDisplay": "FlexRow",
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "bootcamp-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"description": {
+																				"value_i18n": {
+																					"en_US": ""
+																				}
+																			},
+																			"fragmentImageClassPKReference": {
+																				"classPKReferences": {
+																					"en_US": {
+																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/calendar_y.svg$]"
+																					}
+																				},
+																				"fragmentImageConfiguration": {
+																					"landscapeMobile": "auto",
+																					"portraitMobile": "auto",
+																					"tablet": "auto"
+																				}
+																			}
+																		},
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginBottom": "1",
+																"marginRight": "2",
+																"width": "26px"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "bootcamp-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Courses available all year,"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"fontSize": "fontSizeSm"
+															}
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
 											}
 										],
-										"type": "Section"
+										"type": "Column"
 									}
 								],
-								"type": "Column"
+								"type": "Row"
 							}
 						],
-						"type": "Row"
+						"type": "Section"
 					}
 				],
 				"type": "Section"

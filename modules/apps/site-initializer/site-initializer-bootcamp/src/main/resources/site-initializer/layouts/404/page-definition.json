@@ -9,6 +9,28 @@
 						"paddingTop": "10",
 						"textAlign": "center"
 					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"marginBottom": "5",
+								"paddingTop": "7"
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"marginBottom": "5"
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"marginBottom": "6",
+								"paddingTop": "8"
+							},
+							"id": "tablet"
+						}
+					],
 					"layout": {
 						"align": "Center",
 						"borderWidth": 0,
@@ -115,6 +137,9 @@
 							],
 							"fragmentStyle": {
 								"marginBottom": "4",
+								"maxWidth": "100%",
+								"paddingLeft": "2",
+								"paddingRight": "2",
 								"width": "600px"
 							}
 						},

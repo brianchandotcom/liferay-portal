@@ -52,6 +52,12 @@ public class COREntryRelServiceUtil {
 		getService().deleteCOREntryRel(corEntryRelId);
 	}
 
+	public static void deleteCOREntryRels(String className, long corEntryId)
+		throws PortalException {
+
+		getService().deleteCOREntryRels(className, corEntryId);
+	}
+
 	public static void deleteCOREntryRelsByCOREntryId(long corEntryId)
 		throws PortalException {
 

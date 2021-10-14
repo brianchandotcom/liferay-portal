@@ -259,6 +259,26 @@ public class COREntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.order.rule.model.COREntrySoap
+			updateCOREntryExternalReferenceCode(
+				String externalReferenceCode, long corEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.order.rule.model.COREntry returnValue =
+				COREntryServiceUtil.updateCOREntryExternalReferenceCode(
+					externalReferenceCode, corEntryId);
+
+			return com.liferay.commerce.order.rule.model.COREntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(COREntryServiceSoap.class);
 
 }

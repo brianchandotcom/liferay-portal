@@ -129,6 +129,42 @@ public class COREntryRelServiceHttp {
 		}
 	}
 
+	public static void deleteCOREntryRels(
+			HttpPrincipal httpPrincipal, String className, long corEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				COREntryRelServiceUtil.class, "deleteCOREntryRels",
+				_deleteCOREntryRelsParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, className, corEntryId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void deleteCOREntryRelsByCOREntryId(
 			HttpPrincipal httpPrincipal, long corEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -136,7 +172,7 @@ public class COREntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				COREntryRelServiceUtil.class, "deleteCOREntryRelsByCOREntryId",
-				_deleteCOREntryRelsByCOREntryIdParameterTypes2);
+				_deleteCOREntryRelsByCOREntryIdParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, corEntryId);
@@ -174,7 +210,7 @@ public class COREntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				COREntryRelServiceUtil.class, "fetchCOREntryRel",
-				_fetchCOREntryRelParameterTypes3);
+				_fetchCOREntryRelParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, className, classPK, corEntryId);
@@ -217,7 +253,7 @@ public class COREntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				COREntryRelServiceUtil.class, "getAccountEntryCOREntryRels",
-				_getAccountEntryCOREntryRelsParameterTypes4);
+				_getAccountEntryCOREntryRelsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, corEntryId, keywords, start, end);
@@ -259,7 +295,7 @@ public class COREntryRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				COREntryRelServiceUtil.class,
 				"getAccountEntryCOREntryRelsCount",
-				_getAccountEntryCOREntryRelsCountParameterTypes5);
+				_getAccountEntryCOREntryRelsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, corEntryId, keywords);
@@ -302,7 +338,7 @@ public class COREntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				COREntryRelServiceUtil.class, "getAccountGroupCOREntryRels",
-				_getAccountGroupCOREntryRelsParameterTypes6);
+				_getAccountGroupCOREntryRelsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, corEntryId, keywords, start, end);
@@ -344,7 +380,7 @@ public class COREntryRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				COREntryRelServiceUtil.class,
 				"getAccountGroupCOREntryRelsCount",
-				_getAccountGroupCOREntryRelsCountParameterTypes7);
+				_getAccountGroupCOREntryRelsCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, corEntryId, keywords);
@@ -387,7 +423,7 @@ public class COREntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				COREntryRelServiceUtil.class, "getCommerceChannelCOREntryRels",
-				_getCommerceChannelCOREntryRelsParameterTypes8);
+				_getCommerceChannelCOREntryRelsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, corEntryId, keywords, start, end);
@@ -429,7 +465,7 @@ public class COREntryRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				COREntryRelServiceUtil.class,
 				"getCommerceChannelCOREntryRelsCount",
-				_getCommerceChannelCOREntryRelsCountParameterTypes9);
+				_getCommerceChannelCOREntryRelsCountParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, corEntryId, keywords);
@@ -473,7 +509,7 @@ public class COREntryRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				COREntryRelServiceUtil.class,
 				"getCommerceOrderTypeCOREntryRels",
-				_getCommerceOrderTypeCOREntryRelsParameterTypes10);
+				_getCommerceOrderTypeCOREntryRelsParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, corEntryId, keywords, start, end);
@@ -515,7 +551,7 @@ public class COREntryRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				COREntryRelServiceUtil.class,
 				"getCommerceOrderTypeCOREntryRelsCount",
-				_getCommerceOrderTypeCOREntryRelsCountParameterTypes11);
+				_getCommerceOrderTypeCOREntryRelsCountParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, corEntryId, keywords);
@@ -555,7 +591,7 @@ public class COREntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				COREntryRelServiceUtil.class, "getCOREntryRel",
-				_getCOREntryRelParameterTypes12);
+				_getCOREntryRelParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, corEntryRelId);
@@ -596,7 +632,7 @@ public class COREntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				COREntryRelServiceUtil.class, "getCOREntryRels",
-				_getCOREntryRelsParameterTypes13);
+				_getCOREntryRelsParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, corEntryId);
@@ -642,7 +678,7 @@ public class COREntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				COREntryRelServiceUtil.class, "getCOREntryRels",
-				_getCOREntryRelsParameterTypes14);
+				_getCOREntryRelsParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, corEntryId, start, end, orderByComparator);
@@ -683,7 +719,7 @@ public class COREntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				COREntryRelServiceUtil.class, "getCOREntryRelsCount",
-				_getCOREntryRelsCountParameterTypes15);
+				_getCOREntryRelsCountParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, corEntryId);
@@ -723,54 +759,56 @@ public class COREntryRelServiceHttp {
 		new Class[] {String.class, long.class, long.class};
 	private static final Class<?>[] _deleteCOREntryRelParameterTypes1 =
 		new Class[] {long.class};
+	private static final Class<?>[] _deleteCOREntryRelsParameterTypes2 =
+		new Class[] {String.class, long.class};
 	private static final Class<?>[]
-		_deleteCOREntryRelsByCOREntryIdParameterTypes2 = new Class[] {
+		_deleteCOREntryRelsByCOREntryIdParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _fetchCOREntryRelParameterTypes3 =
+	private static final Class<?>[] _fetchCOREntryRelParameterTypes4 =
 		new Class[] {String.class, long.class, long.class};
 	private static final Class<?>[]
-		_getAccountEntryCOREntryRelsParameterTypes4 = new Class[] {
+		_getAccountEntryCOREntryRelsParameterTypes5 = new Class[] {
 			long.class, String.class, int.class, int.class
 		};
 	private static final Class<?>[]
-		_getAccountEntryCOREntryRelsCountParameterTypes5 = new Class[] {
+		_getAccountEntryCOREntryRelsCountParameterTypes6 = new Class[] {
 			long.class, String.class
 		};
 	private static final Class<?>[]
-		_getAccountGroupCOREntryRelsParameterTypes6 = new Class[] {
+		_getAccountGroupCOREntryRelsParameterTypes7 = new Class[] {
 			long.class, String.class, int.class, int.class
 		};
 	private static final Class<?>[]
-		_getAccountGroupCOREntryRelsCountParameterTypes7 = new Class[] {
+		_getAccountGroupCOREntryRelsCountParameterTypes8 = new Class[] {
 			long.class, String.class
 		};
 	private static final Class<?>[]
-		_getCommerceChannelCOREntryRelsParameterTypes8 = new Class[] {
+		_getCommerceChannelCOREntryRelsParameterTypes9 = new Class[] {
 			long.class, String.class, int.class, int.class
 		};
 	private static final Class<?>[]
-		_getCommerceChannelCOREntryRelsCountParameterTypes9 = new Class[] {
+		_getCommerceChannelCOREntryRelsCountParameterTypes10 = new Class[] {
 			long.class, String.class
 		};
 	private static final Class<?>[]
-		_getCommerceOrderTypeCOREntryRelsParameterTypes10 = new Class[] {
+		_getCommerceOrderTypeCOREntryRelsParameterTypes11 = new Class[] {
 			long.class, String.class, int.class, int.class
 		};
 	private static final Class<?>[]
-		_getCommerceOrderTypeCOREntryRelsCountParameterTypes11 = new Class[] {
+		_getCommerceOrderTypeCOREntryRelsCountParameterTypes12 = new Class[] {
 			long.class, String.class
 		};
-	private static final Class<?>[] _getCOREntryRelParameterTypes12 =
-		new Class[] {long.class};
-	private static final Class<?>[] _getCOREntryRelsParameterTypes13 =
+	private static final Class<?>[] _getCOREntryRelParameterTypes13 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getCOREntryRelsParameterTypes14 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getCOREntryRelsParameterTypes15 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCOREntryRelsCountParameterTypes15 =
+	private static final Class<?>[] _getCOREntryRelsCountParameterTypes16 =
 		new Class[] {long.class};
 
 }

@@ -128,6 +128,13 @@ public class COREntryRelLocalServiceWrapper
 		_corEntryRelLocalService.deleteCOREntryRels(corEntryId);
 	}
 
+	@Override
+	public void deleteCOREntryRels(String className, long corEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_corEntryRelLocalService.deleteCOREntryRels(className, corEntryId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

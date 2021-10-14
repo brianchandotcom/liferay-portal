@@ -107,4 +107,8 @@ public interface COREntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public COREntry updateCOREntryExternalReferenceCode(
+			String externalReferenceCode, long corEntryId)
+		throws PortalException;
+
 }

@@ -1,7 +1,7 @@
 .bootcamp-navbar {
-	--bootcamp-navbar-height-sm: 56px;
+	--bootcamp-navbar-height-sm: 72px;
 
-	--management-bar-height-sm: 56px;
+	--management-bar-height-sm: 72px;
 	--management-bar-height-xs: 48px;
 
 	font-family: var(--font-family-sans-serif);
@@ -26,6 +26,10 @@
 	color: inherit;
 }
 
+.bootcamp-navbar .navbar-toggler {
+	padding: 16px 0;
+}
+
 .bootcamp-navbar .portlet {
 	margin-left: auto;
 }
@@ -35,6 +39,11 @@
 	margin-bottom: 0;
 	margin-left: auto;
 	margin-right: var(--spacer-2);
+}
+
+.btn-menu,
+.btn-close {
+	width: 32px;
 }
 
 .bootcamp-navbar .portlet .nav-item,
@@ -68,13 +77,14 @@
 	top: 0;
 }
 
+
 @media (min-width: 992px) {
 	.bootcamp-navbar .nav-item.active a {
 		border-bottom-color: inherit;
 	}
 
 	.bootcamp-navbar-user {
-		padding: 24px 12px 24px 0;
+		padding: var(--spacer-3) var(--spacer-3) var(--spacer-3) 0;
 	}
 
 	.navbar-brand-bg-color-3 {
@@ -91,6 +101,7 @@
 }
 
 @media (max-width: 992px) {
+	
 	.bootcamp-navbar {
 		height: var(--bootcamp-navbar-height-sm);
 	}
@@ -107,10 +118,6 @@
 	.bootcamp-navbar .btn-menu,
 	.bootcamp-navbar.open .btn-close {
 		display: block;
-	}
-
-	.bootcamp-navbar .navbar-logo {
-		margin-left: 16px;
 	}
 
 	.bootcamp-navbar .portlet,
@@ -130,6 +137,7 @@
 	.bootcamp-navbar.open .dropdown-item {
 		color: initial;
 		font-size: initial;
+		font-weight: var(--font-weight-bold);
 		padding: var(--spacer-2) 0;
 	}
 
@@ -147,14 +155,12 @@
 		flex-wrap: nowrap;
 		height: calc(100vh - var(--bootcamp-navbar-height-sm));
 		overflow: auto;
+		padding: 16px 8px;
 		z-index: 990;
 	}
 }
 
 @media (max-width: 575px) {
-	.bootcamp-navbar .container-fluid {
-		padding: 0;
-	}
 
 	.has-control-menu .navbar-collapse.show {
 		height: calc(

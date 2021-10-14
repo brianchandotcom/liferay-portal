@@ -5,8 +5,19 @@
 				"definition": {
 					"fragmentStyle": {
 						"backgroundColor": "brandColor1",
-						"borderWidth": "0"
+						"borderWidth": "0",
+						"paddingLeft": "2",
+						"paddingRight": "2"
 					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingLeft": "0",
+								"paddingRight": "0"
+							},
+							"id": "tablet"
+						}
+					],
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 0,
@@ -98,34 +109,13 @@
 					"fragmentSettings": {
 						"unallowedFragments": [
 							{
-								"key": "BASIC_COMPONENT-button"
-							},
-							{
-								"key": "BASIC_COMPONENT-card"
-							},
-							{
-								"key": "BASIC_COMPONENT-dropdown"
-							},
-							{
-								"key": "BASIC_COMPONENT-external-video"
-							},
-							{
-								"key": "BASIC_COMPONENT-html"
-							},
-							{
-								"key": "BASIC_COMPONENT-heading"
-							},
-							{
-								"key": "BASIC_COMPONENT-image"
-							},
-							{
 								"key": "BASIC_COMPONENT-paragraph"
 							},
 							{
-								"key": "BASIC_COMPONENT-separator"
+								"key": "FOOTERS-footer-nav-dark"
 							},
 							{
-								"key": "BASIC_COMPONENT-slider"
+								"key": "NAVIGATION_BARS-header-light"
 							},
 							{
 								"key": "BASIC_COMPONENT-social"
@@ -134,13 +124,22 @@
 								"key": "BASIC_COMPONENT-spacer"
 							},
 							{
-								"key": "BASIC_COMPONENT-tabs"
+								"key": "BASIC_COMPONENT-card"
 							},
 							{
 								"key": "BASIC_COMPONENT-video"
 							},
 							{
-								"key": "COOKIE_BANNER-cookie-banner-simple"
+								"key": "BASIC_COMPONENT-heading"
+							},
+							{
+								"key": "BASIC_COMPONENT-slider"
+							},
+							{
+								"key": "BASIC_COMPONENT-separator"
+							},
+							{
+								"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
 							},
 							{
 								"key": "DIALECT-dialect-button"
@@ -149,43 +148,34 @@
 								"key": "DIALECT-dialect-nav"
 							},
 							{
-								"key": "FEATURED_CONTENT-banner-slider"
+								"key": "BASIC_COMPONENT-image"
 							},
 							{
-								"key": "FEATURED_CONTENT-banner"
-							},
-							{
-								"key": "FEATURED_CONTENT-banner-center"
-							},
-							{
-								"key": "FEATURED_CONTENT-banner-cover"
-							},
-							{
-								"key": "FEATURED_CONTENT-banner-cover-center"
-							},
-							{
-								"key": "FEATURED_CONTENT-features"
-							},
-							{
-								"key": "FEATURED_CONTENT-highlights"
-							},
-							{
-								"key": "FEATURED_CONTENT-center"
-							},
-							{
-								"key": "FOOTERS-footer-nav-dark"
-							},
-							{
-								"key": "FOOTERS-footer-nav-light"
+								"key": "BASIC_COMPONENT-tabs"
 							},
 							{
 								"key": "NAVIGATION_BARS-header-dark"
 							},
 							{
-								"key": "NAVIGATION_BARS-header-light"
+								"key": "BASIC_COMPONENT-button"
 							},
 							{
-								"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
+								"key": "BASIC_COMPONENT-dropdown"
+							},
+							{
+								"key": "COOKIE_BANNER-cookie-banner-simple"
+							},
+							{
+								"key": "FEATURED_CONTENT-banner-slider"
+							},
+							{
+								"key": "BASIC_COMPONENT-html"
+							},
+							{
+								"key": "FOOTERS-footer-nav-light"
+							},
+							{
+								"key": "BASIC_COMPONENT-external-video"
 							}
 						]
 					}
@@ -195,8 +185,19 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0"
+						"borderWidth": "0",
+						"paddingLeft": "2",
+						"paddingRight": "2"
 					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingLeft": "0",
+								"paddingRight": "0"
+							},
+							"id": "tablet"
+						}
+					],
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 0,

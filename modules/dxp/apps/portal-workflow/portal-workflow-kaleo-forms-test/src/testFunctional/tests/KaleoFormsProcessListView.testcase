@@ -421,7 +421,7 @@ definition {
 		KaleoFormsAdmin.chooseWorkflow(
 			kfProcessName = "Kaleo Forms Process",
 			workflowDefinitionTitle = "Single Approver");
-			
+
 		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.assignForm(
@@ -437,8 +437,6 @@ definition {
 		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.viewPermissionsAndAssertModal();
-
-
 	}
 
 	@description = "Verify that the user can select view option."

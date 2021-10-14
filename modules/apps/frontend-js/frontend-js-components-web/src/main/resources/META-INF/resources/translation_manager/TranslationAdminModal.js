@@ -42,6 +42,7 @@ const TranslationAdminModal = ({
 
 	const onCancel = () => {
 		setVisible(false);
+		onClose([...initialActiveLanguageIds]);
 	};
 
 	const {observer} = useModal({

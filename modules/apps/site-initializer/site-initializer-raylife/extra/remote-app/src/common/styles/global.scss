@@ -11,6 +11,11 @@
 	}
 }
 
+.flex-column {
+	display: flex;
+	flex-direction: column;
+}
+
 :root {
 	background-color: $background;
 	color: $neutral-default;

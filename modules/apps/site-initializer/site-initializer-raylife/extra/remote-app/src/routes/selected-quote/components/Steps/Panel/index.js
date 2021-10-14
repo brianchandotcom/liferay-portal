@@ -2,8 +2,8 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useState} from 'react';
 
-const Panel = ({children, title = ''}) => {
-	const [showContentPanel, setShowContentPanel] = useState(false);
+const Panel = ({children, defaultExpanded = false, title = ''}) => {
+	const [showContentPanel, setShowContentPanel] = useState(defaultExpanded);
 
 	return (
 		<div className="panel-container">

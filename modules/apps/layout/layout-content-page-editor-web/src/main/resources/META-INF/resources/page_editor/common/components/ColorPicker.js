@@ -53,8 +53,10 @@ const ColorPicker = ({
 						(acc, [tokenSet, tokenColors]) => {
 							const newColors = isFoundValue(tokenSet)
 								? tokenColors
-								: tokenColors.filter((color) =>
-										isFoundValue(color.label || color.value)
+								: tokenColors.filter(
+										(color) =>
+											isFoundValue(color.label) ||
+											isFoundValue(color.value)
 								  );
 
 							return {

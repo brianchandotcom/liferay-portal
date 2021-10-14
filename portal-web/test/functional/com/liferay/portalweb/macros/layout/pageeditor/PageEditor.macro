@@ -1351,6 +1351,18 @@ definition {
 			Pause(locator1 = "3000");
 		}
 
+		if ("${hideFragment}" == "true") {
+			Check.checkNotVisible(
+				checkboxName = "Hide Fragment",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if ("${hideFragment}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				checkboxName = "Hide Fragment",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
 		if (isSet(height)) {
 			Select(
 				key_fieldLabel = "Height",

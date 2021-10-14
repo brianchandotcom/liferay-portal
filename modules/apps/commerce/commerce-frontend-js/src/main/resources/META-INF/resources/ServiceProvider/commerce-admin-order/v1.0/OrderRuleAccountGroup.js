@@ -12,11 +12,23 @@
  * details.
  */
 
-export {default as orderAPI} from './Order';
-export {default as orderRuleAccountAPI} from './OrderRuleAccount';
-export {default as orderRuleAccountGroupAPI} from './OrderRuleAccountGroup';
-export {default as orderRuleAPI} from './OrderRule';
-export {default as orderRuleChannelAPI} from './OrderRuleChannel';
-export {default as orderRuleOrderTypeAPI} from './OrderRuleOrderType';
-export {default as orderTypeAPI} from './OrderType';
-export {default as orderTypeChannelAPI} from './OrderTypeChannel';
+import AJAX from '../../../utilities/AJAX/index';
+
+const ORDER_RULE_PATH = '/order-rules';
+
+const ORDER_RULE_ACCOUNT_GROUPS_PATH = '/order-rule-account-groups';
+
+const VERSION = 'v1.0';
+
+function resolvePath(
+	basePath = '',
+	orderRuleId = '',
+	orderRuleAccountGroupId = ''
+) {
+	return `${basePath}${VERSION}${ORDER_RULE_PATH}/${orderRuleId}${ORDER_RULE_ACCOUNT_GROUPS_PATH}/${orderRuleAccountGroupId}`;
+}
+
+export default (basePath) => ({
+	addOrderRuleAccountGroup: (orderRuleId, json) =>
+		AJAX.POST(resolvePath(basePath, orderRuleId), json),
+});

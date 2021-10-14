@@ -39,8 +39,8 @@ const TranslationAdminContent = ({
 	defaultLanguageId,
 	onAddLocale = noop,
 	onCancel = noop,
-	onRemoveLocale = noop,
 	onDone = noop,
+	onRemoveLocale = noop,
 	translations = {},
 }) => {
 	const [creationMenuActive, setCreationMenuActive] = useState(false);

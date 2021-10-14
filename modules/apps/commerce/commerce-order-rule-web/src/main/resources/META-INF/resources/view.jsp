@@ -33,7 +33,7 @@ PortletURL portletURL = corEntryDisplayContext.getPortletURL();
 			clayDataSetActionDropdownItems="<%= corEntryDisplayContext.getCOREntryClayDataSetActionDropdownItems() %>"
 			creationMenu="<%= corEntryDisplayContext.getCreationMenu() %>"
 			formId="fm"
-			id="<%= COREntryDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRIES %>"
+			id="<%= COREntryDataSetDisplayNames.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRIES %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

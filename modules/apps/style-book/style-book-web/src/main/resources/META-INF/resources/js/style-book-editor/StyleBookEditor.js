@@ -87,6 +87,7 @@ export default function ({
 	redirectURL,
 	saveDraftURL,
 	styleBookEntryId,
+	templatesPreviewEnabled,
 	themeName,
 } = {}) {
 	initializeConfig({
@@ -98,6 +99,7 @@ export default function ({
 		redirectURL,
 		saveDraftURL,
 		styleBookEntryId,
+		templatesPreviewEnabled,
 		themeName,
 	});
 

@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
+import com.liferay.style.book.web.internal.configuration.FFStyleBookConfigurationUtil;
 
 import java.util.Map;
 
@@ -102,6 +103,9 @@ public class EditStyleBookEntryDisplayContext {
 			"saveDraftURL", _getActionURL("/style_book/edit_style_book_entry")
 		).put(
 			"styleBookEntryId", _getStyleBookEntryId()
+		).put(
+			"templatesPreviewEnabled",
+			FFStyleBookConfigurationUtil.templatesPreviewEnabled()
 		).put(
 			"themeName", _getThemeName()
 		).build();

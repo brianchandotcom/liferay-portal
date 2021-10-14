@@ -26,7 +26,6 @@ import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.Preference;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.Map;
 
@@ -47,16 +46,54 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 				"VARCHAR(255) null, primary key (portletPreferenceValueId, ",
 				"ctCollectionId))"));
 
-		try (PreparedStatement selectPreparedStatement =
-				connection.prepareStatement(
-					SQLTransformer.transform(
-						StringBundler.concat(
-							"select ctCollectionId, portletPreferencesId, ",
-							"companyId, preferences from PortletPreferences ",
-							"where CAST_CLOB_TEXT(preferences) != '",
-							PortletConstants.DEFAULT_PREFERENCES,
-							"' and preferences is not null")));
-			PreparedStatement insertPreparedStatement =
+		processConcurrently(
+			SQLTransformer.transform(
+				StringBundler.concat(
+					"select ctCollectionId, portletPreferencesId, companyId, ",
+					"preferences from PortletPreferences where ",
+					"CAST_CLOB_TEXT(preferences) != '",
+					PortletConstants.DEFAULT_PREFERENCES,
+					"' and preferences is not null")),
+			resultSet -> new Object[] {
+				resultSet.getLong("ctCollectionId"),
+				resultSet.getLong("portletPreferencesId"),
+				resultSet.getLong("companyId"),
+				resultSet.getString("preferences")
+			},
+			values -> {
+				long ctCollectionId = (Long)values[0];
+				long portletPreferencesId = (Long)values[1];
+				long companyId = (Long)values[2];
+				String preferences = (String)values[3];
+
+				_upgradePortletPreferences(
+					ctCollectionId, portletPreferencesId, companyId,
+					preferences);
+			},
+			null);
+
+		alter(
+			PortletPreferencesTable.class,
+			new AlterTableDropColumn("preferences"));
+	}
+
+	private void _upgradePortletPreferences(
+			long ctCollectionId, long portletPreferencesId, long companyId,
+			String preferences)
+		throws Exception {
+
+		if (preferences.isEmpty()) {
+			return;
+		}
+
+		Map<String, Preference> preferenceMap =
+			PortletPreferencesFactoryImpl.createPreferencesMap(preferences);
+
+		if (preferenceMap.isEmpty()) {
+			return;
+		}
+
+		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(
 						StringBundler.concat(
@@ -64,74 +101,43 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 							"ctCollectionId, portletPreferenceValueId, ",
 							"companyId, portletPreferencesId, index_, ",
 							"largeValue, name, readOnly, smallValue) values ",
-							"(0, ?, ?, ?, ?, ?, ?, ?, ?, ?)")));
-			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
+							"(0, ?, ?, ?, ?, ?, ?, ?, ?, ?)")))) {
 
-			while (resultSet.next()) {
-				String preferences = resultSet.getString("preferences");
+			for (Preference preference : preferenceMap.values()) {
+				String[] values = preference.getValues();
 
-				if (preferences.isEmpty()) {
-					continue;
-				}
+				for (int i = 0; i < values.length; i++) {
+					String value = values[i];
 
-				Map<String, Preference> preferenceMap =
-					PortletPreferencesFactoryImpl.createPreferencesMap(
-						preferences);
+					String largeValue = null;
+					String smallValue = null;
 
-				if (preferenceMap.isEmpty()) {
-					continue;
-				}
+					if (value.length() >
+							PortletPreferenceValueImpl.SMALL_VALUE_MAX_LENGTH) {
 
-				long ctCollectionId = resultSet.getLong("ctCollectionId");
-				long companyId = resultSet.getLong("companyId");
-				long portletPreferencesId = resultSet.getLong(
-					"portletPreferencesId");
-
-				for (Preference preference : preferenceMap.values()) {
-					String[] values = preference.getValues();
-
-					for (int i = 0; i < values.length; i++) {
-						String value = values[i];
-
-						String largeValue = null;
-						String smallValue = null;
-
-						if (value.length() >
-								PortletPreferenceValueImpl.
-									SMALL_VALUE_MAX_LENGTH) {
-
-							largeValue = value;
-						}
-						else {
-							smallValue = value;
-						}
-
-						insertPreparedStatement.setLong(1, ctCollectionId);
-						insertPreparedStatement.setLong(
-							2,
-							increment(PortletPreferenceValue.class.getName()));
-						insertPreparedStatement.setLong(3, companyId);
-						insertPreparedStatement.setLong(
-							4, portletPreferencesId);
-						insertPreparedStatement.setInt(5, i);
-						insertPreparedStatement.setString(6, largeValue);
-						insertPreparedStatement.setString(
-							7, preference.getName());
-						insertPreparedStatement.setBoolean(
-							8, preference.isReadOnly());
-						insertPreparedStatement.setString(9, smallValue);
-
-						insertPreparedStatement.addBatch();
+						largeValue = value;
 					}
+					else {
+						smallValue = value;
+					}
+
+					preparedStatement.setLong(1, ctCollectionId);
+					preparedStatement.setLong(
+						2, increment(PortletPreferenceValue.class.getName()));
+					preparedStatement.setLong(3, companyId);
+					preparedStatement.setLong(4, portletPreferencesId);
+					preparedStatement.setInt(5, i);
+					preparedStatement.setString(6, largeValue);
+					preparedStatement.setString(7, preference.getName());
+					preparedStatement.setBoolean(8, preference.isReadOnly());
+					preparedStatement.setString(9, smallValue);
+
+					preparedStatement.addBatch();
 				}
 			}
 
-			insertPreparedStatement.executeBatch();
+			preparedStatement.executeBatch();
 		}
-
-		alter(
-			PortletPreferencesTable.class,
-			new AlterTableDropColumn("preferences"));
 	}
 
 }

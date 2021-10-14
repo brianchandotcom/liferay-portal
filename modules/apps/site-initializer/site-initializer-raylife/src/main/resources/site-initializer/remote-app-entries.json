@@ -12,8 +12,8 @@
 		},
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
-			"APPLICATION": "get-a-quote",
-			"GOOGLE_PLACES_KEY": ""
+			"googleplaceskey": "",
+			"route": "get-a-quote"
 		},
 		"remoteAppEntryKey": "RAYLIFE-GET-A-QUOTE",
 		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:RAYLIFE-GET-A-QUOTE$]"
@@ -31,7 +31,7 @@
 		},
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
-			"APPLICATION": "quote-comparison"
+			"route": "quote-comparison"
 		},
 		"remoteAppEntryKey": "RAYLIFE-QUOTE-COMPARISON",
 		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:RAYLIFE-QUOTE-COMPARISON$]"
@@ -49,7 +49,8 @@
 		},
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
-			"APPLICATION": "selected-quote"
+			"applicationsfoldername": "Quote Applications",
+			"route": "selected-quote"
 		},
 		"remoteAppEntryKey": "RAYLIFE-SELECTED-QUOTE",
 		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:RAYLIFE-SELECTED-QUOTE$]"

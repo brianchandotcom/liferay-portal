@@ -1,4 +1,6 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
+
+import {ApplicationPropertiesContext} from '~/common/context/ApplicationPropertiesProvider';
 
 import {
 	createDocumentInFolder,
@@ -15,6 +17,8 @@ const dropAreaProps = {
 };
 
 const UploadDocuments = () => {
+	const properties = useContext(ApplicationPropertiesContext);
+
 	const [sections, setSections] = useState([
 		{
 			files: [],
@@ -72,7 +76,9 @@ const UploadDocuments = () => {
 	};
 
 	const onClickConfirmUpload = async () => {
-		const quoteFolder = await createRootFolders();
+		const quoteFolder = await createRootFolders(
+			properties.applicationsfoldername
+		);
 
 		for (const section of sections) {
 			const sectionFolder = await createFolderIfNotExist(

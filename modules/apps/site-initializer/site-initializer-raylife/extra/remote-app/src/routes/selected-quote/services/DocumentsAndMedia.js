@@ -80,13 +80,14 @@ export const createFolderIfNotExist = async (
 	return folder;
 };
 
-export const createRootFolders = async (
-	rootFolderName = 'Quote Applications'
-) => {
+export const createRootFolders = async (applicationsFolderName) => {
 	const applicationId = Storage.getItem(STORAGE_KEYS.APPLICATION_ID);
 	const siteId = getScopeGroupId();
 
-	const rootFolder = await createFolderIfNotExist(siteId, rootFolderName);
+	const rootFolder = await createFolderIfNotExist(
+		siteId,
+		applicationsFolderName
+	);
 	const quoteFolder = await createFolderIfNotExist(
 		rootFolder.id,
 		applicationId,

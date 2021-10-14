@@ -126,56 +126,28 @@
 					flex-direction: row;
 					flex-wrap: wrap;
 
-					.view-file-image {
+					.card {
+						align-items: center;
+						background: #f0f5ff;
+						border-radius: 16px;
 						display: flex;
-						flex-direction: row;
-						margin-right: -16px;
+						flex-direction: column;
+						flex-shrink: 0;
+						height: 176px;
+						justify-content: center;
+						margin-right: 20px;
+						width: 176px;
+					}
 
-						.close-icon {
-							align-items: center;
-							background: $background;
-							border-radius: 50%;
-							cursor: pointer;
-							display: flex;
-							fill: $neutral-default;
-							height: 36px;
-							justify-content: center;
-							position: relative;
-							right: 38px;
-							top: 2px;
-							width: 36px;
-							filter: drop-shadow(
-								0px 5px 15px rgba(77, 133, 255, 0.12)
-							);
-						}
-
-						.div-image {
-							display: flex;
-							flex-direction: column;
-							text-align: center;
-
-							span {
-								color: $neutral-dark;
-								font-size: 13px;
-								margin-top: 4px;
-								overflow: hidden;
-								text-overflow: ellipsis;
-								white-space: nowrap;
-								width: 176px;
-							}
-
-							img {
-								border-radius: 16px;
-								height: 176px;
-								object-fit: cover;
-								width: 176px;
-							}
-						}
+					.ellipsis {
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
 					}
 
 					.view-file-document {
 						display: flex;
-						flex-direction: row;
+						flex-direction: column;
 						margin-bottom: -36px;
 						margin-right: 16px;
 
@@ -206,9 +178,6 @@
 								color: $neutral-dark;
 								font-size: 13px;
 								margin-top: 4px;
-								overflow: hidden;
-								text-overflow: ellipsis;
-								white-space: nowrap;
 								width: 176px;
 							}
 
@@ -223,6 +192,19 @@
 								align-items: center;
 								display: flex;
 								justify-content: center;
+
+								.image {
+									display: flex;
+									flex-direction: column;
+									text-align: center;
+
+									img {
+										border-radius: 16px;
+										height: 176px;
+										object-fit: cover;
+										width: 176px;
+									}
+								}
 
 								.lexicon-icon-document-pdf {
 									fill: #af78ff;

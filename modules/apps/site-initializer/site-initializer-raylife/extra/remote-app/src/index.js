@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import {WebComponent} from '~/common/WebComponent';
+import ApplicationContextProvider from '~/common/context/ApplicationPropertiesProvider';
 import ClayIconProvider from '~/common/context/ClayIconProvider';
 import {GoogleMapsService} from '~/common/services/google-maps';
 import SharedStyle from '~/common/styles/index.scss';
@@ -9,20 +10,20 @@ import GetAQuote from '~/routes/get-a-quote/pages/GetAQuote';
 import QuoteComparison from '~/routes/quote-comparison/pages/QuoteComparison';
 import SelectedQuote from '~/routes/selected-quote/pages/SelectedQuote';
 
-const DirectToCustomer = ({application}) => {
+const DirectToCustomer = ({route}) => {
 	const SearchParams = new URLSearchParams(window.location.search);
 
-	const route = SearchParams.get('raylife_dev_application') || application;
+	const routeEntry = SearchParams.get('raylife_dev_application') || route;
 
-	if (route === 'quote-comparison') {
+	if (routeEntry === 'quote-comparison') {
 		return <QuoteComparison />;
 	}
 
-	if (route === 'get-a-quote') {
+	if (routeEntry === 'get-a-quote') {
 		return <GetAQuote />;
 	}
 
-	if (route === 'selected-quote') {
+	if (routeEntry === 'selected-quote') {
 		return <SelectedQuote />;
 	}
 };
@@ -31,17 +32,21 @@ class DirectToCustomerWebComponent extends WebComponent {
 	connectedCallback() {
 		super.connectedCallback(SharedStyle);
 
-		const GOOGLE_PLACES_KEY = this.getAttribute('GOOGLE_PLACES_KEY');
+		const properties = {
+			applicationsfoldername: this.getAttribute('applicationsfoldername'),
+			googleplaceskey: this.getAttribute('googleplaceskey'),
+			route: this.getAttribute('route'),
+		};
 
-		if (GOOGLE_PLACES_KEY) {
-			GoogleMapsService.setup(GOOGLE_PLACES_KEY);
+		if (properties.googleplaceskey) {
+			GoogleMapsService.setup(properties.googleplaceskey);
 		}
 
 		ReactDOM.render(
 			<ClayIconProvider>
-				<DirectToCustomer
-					application={super.getAttribute('application')}
-				/>
+				<ApplicationContextProvider properties={properties}>
+					<DirectToCustomer route={properties.route} />
+				</ApplicationContextProvider>
 			</ClayIconProvider>,
 			this.mountPoint
 		);

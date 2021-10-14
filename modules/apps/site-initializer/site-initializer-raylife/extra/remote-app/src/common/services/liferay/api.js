@@ -1,3 +1,5 @@
+import baseAxios from 'axios';
+
 const {REACT_APP_LIFERAY_API = window.location.origin} = process.env;
 
 /**
@@ -41,5 +43,14 @@ const LiferayFetchAPI = {
 	post: (url, options) => baseFetch(url, {...options, method: 'POST'}),
 	put: (url, options) => baseFetch(url, {...options, method: 'PUT'}),
 };
+
+const axios = baseAxios.create({
+	baseURL: REACT_APP_LIFERAY_API,
+	headers: {
+		'x-csrf-token': getLiferayAuthenticationToken(),
+	},
+});
+
+export {REACT_APP_LIFERAY_API, axios};
 
 export default LiferayFetchAPI;

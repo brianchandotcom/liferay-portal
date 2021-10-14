@@ -516,11 +516,18 @@ public abstract class BaseWorkspaceGitRepository
 			GitHubDevSyncUtil.getGitHubDevGitRemotes(gitWorkingDirectory);
 
 		for (int i = 0; i < 3; i++) {
-			GitRemote gitHubDevGitRemote = gitHubDevGitRemotes.get(i);
+			if (gitHubDevGitRemotes.isEmpty()) {
+				break;
+			}
+
+			GitRemote randomGitRemote =
+				JenkinsResultsParserUtil.getRandomListItem(gitHubDevGitRemotes);
+
+			gitHubDevGitRemotes.remove(randomGitRemote);
 
 			RemoteGitBranch remoteGitBranch =
 				gitWorkingDirectory.getRemoteGitBranch(
-					getGitHubDevBranchName(), gitHubDevGitRemote);
+					getGitHubDevBranchName(), randomGitRemote);
 
 			if (remoteGitBranch == null) {
 				continue;
@@ -571,11 +578,18 @@ public abstract class BaseWorkspaceGitRepository
 			GitHubDevSyncUtil.getGitHubDevGitRemotes(gitWorkingDirectory);
 
 		for (int i = 0; i < 3; i++) {
-			GitRemote gitHubDevGitRemote = gitHubDevGitRemotes.get(i);
+			if (gitHubDevGitRemotes.isEmpty()) {
+				break;
+			}
+
+			GitRemote randomGitRemote =
+				JenkinsResultsParserUtil.getRandomListItem(gitHubDevGitRemotes);
+
+			gitHubDevGitRemotes.remove(randomGitRemote);
 
 			RemoteGitBranch remoteGitBranch =
 				gitWorkingDirectory.getRemoteGitBranch(
-					getGitHubDevBranchName(), gitHubDevGitRemote);
+					getGitHubDevBranchName(), randomGitRemote);
 
 			if (remoteGitBranch == null) {
 				continue;

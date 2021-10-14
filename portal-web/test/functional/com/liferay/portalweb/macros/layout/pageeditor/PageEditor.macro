@@ -1920,15 +1920,7 @@ definition {
 		}
 
 		if (isSet(singleSelection)) {
-			while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Single Selection", locator1 = "Checkbox#ANY_CHECKBOX")) {
-				Click.clickAtNotVisible(
-					checkboxName = "Single Selection",
-					locator1 = "Checkbox#ANY_CHECKBOX");
-			}
-
-			Pause(locator1 = "3000");
-
-			AssertChecked.assertCheckedNotVisible(
+			Check.checkNotVisible(
 				checkboxName = "Single Selection",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
@@ -2142,15 +2134,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "General");
 
 			if (isSet(displayedBehavior)) {
-				while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "${displayedBehavior}", locator1 = "Checkbox#ANY_CHECKBOX")) {
-					Click.clickAtNotVisible(
-						checkboxName = "${displayedBehavior}",
-						locator1 = "Checkbox#ANY_CHECKBOX");
-				}
-
-				Pause(locator1 = "3000");
-
-				AssertChecked.assertCheckedNotVisible(
+				Check.checkNotVisible(
 					checkboxName = "${displayedBehavior}",
 					locator1 = "Checkbox#ANY_CHECKBOX");
 
@@ -2662,20 +2646,16 @@ definition {
 			}
 
 			if ("${target}" == "Blank") {
-				while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Open in a new tab.", locator1 = "Checkbox#ANY_CHECKBOX")) {
-					Click.clickAtNotVisible(
-						checkboxName = "Open in a new tab.",
-						locator1 = "Checkbox#ANY_CHECKBOX");
-				}
+				Check.checkNotVisible(
+					checkboxName = "Open in a new tab.",
+					locator1 = "Checkbox#ANY_CHECKBOX");
 
 				PageEditor.waitForAutoSave();
 			}
 			else if ("${target}" == "Self") {
-				while (IsChecked.isNotCheckedNotVisible(checkboxName = "Open in a new tab.", locator1 = "Checkbox#ANY_CHECKBOX")) {
-					Click.clickAtNotVisible(
-						checkboxName = "Open in a new tab.",
-						locator1 = "Checkbox#ANY_CHECKBOX");
-				}
+				Uncheck.uncheckToggleSwitch(
+					checkboxName = "Open in a new tab.",
+					locator1 = "Checkbox#ANY_CHECKBOX");
 
 				PageEditor.waitForAutoSave();
 			}
@@ -2714,21 +2694,17 @@ definition {
 			}
 
 			if ("${spaceBetweenColumns}" == "true") {
-				while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Show Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
-					Click.clickAtNotVisible(
-						checkboxName = "Show Gutter",
-						locator1 = "Checkbox#ANY_CHECKBOX");
-				}
+				Check.checkNotVisible(
+					checkboxName = "Show Gutter",
+					locator1 = "Checkbox#ANY_CHECKBOX");
 
 				PageEditor.waitForAutoSave();
 			}
 
 			if ("${spaceBetweenColumns}" == "false") {
-				while (IsChecked(checkboxName = "Show Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
-					Click.clickAtNotVisible(
-						checkboxName = "Show Gutter",
-						locator1 = "Checkbox#ANY_CHECKBOX");
-				}
+				Uncheck.uncheckToggleSwitch(
+					checkboxName = "Show Gutter",
+					locator1 = "Checkbox#ANY_CHECKBOX");
 
 				PageEditor.waitForAutoSave();
 			}
@@ -2755,21 +2731,17 @@ definition {
 			}
 
 			if ("${inverseOrder}" == "true") {
-				if (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Inverse order", locator1 = "Checkbox#ANY_CHECKBOX")) {
-					Click.clickAtNotVisible(
-						key_fieldLabel = "Inverse order",
-						locator1 = "Checkbox#CHECKBOX_LABEL");
-				}
+				Check.checkNotVisible(
+					checkboxName = "Inverse order",
+					locator1 = "Checkbox#ANY_CHECKBOX");
 
 				PageEditor.waitForAutoSave();
 			}
 
 			if ("${inverseOrder}" == "false") {
-				if (IsChecked(checkboxName = "Inverse order", locator1 = "Checkbox#ANY_CHECKBOX")) {
-					Click.clickAtNotVisible(
-						key_fieldLabel = "Inverse order",
-						locator1 = "Checkbox#CHECKBOX_LABEL");
-				}
+				Uncheck.uncheckToggleSwitch(
+					checkboxName = "Inverse order",
+					locator1 = "Checkbox#ANY_CHECKBOX");
 
 				PageEditor.waitForAutoSave();
 			}

@@ -55,7 +55,7 @@ public interface SearchResponseResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public SearchResponse getSearch(
+	public SearchResponse search(
 			String query, String sxpBlueprint, Pagination pagination)
 		throws Exception;
 

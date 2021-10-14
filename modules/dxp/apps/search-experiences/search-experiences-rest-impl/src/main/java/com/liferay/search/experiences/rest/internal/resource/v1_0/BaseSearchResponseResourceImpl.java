@@ -69,7 +69,7 @@ public abstract class BaseSearchResponseResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/search-experiences-rest/v1.0/search'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/search-experiences-rest/v1.0/search'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -96,11 +96,11 @@ public abstract class BaseSearchResponseResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "SearchResponse")
 		}
 	)
-	@javax.ws.rs.GET
 	@javax.ws.rs.Path("/search")
+	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public SearchResponse getSearch(
+	public SearchResponse search(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("query")
 			String query,

@@ -44,13 +44,13 @@ public class ServletDataImpl implements ServletData {
 			_sxpBlueprintResourceComponentServiceObjects);
 		Mutation.setSXPElementResourceComponentServiceObjects(
 			_sxpElementResourceComponentServiceObjects);
+		Mutation.setSearchResponseResourceComponentServiceObjects(
+			_searchResponseResourceComponentServiceObjects);
 
 		Query.setSXPBlueprintResourceComponentServiceObjects(
 			_sxpBlueprintResourceComponentServiceObjects);
 		Query.setSXPElementResourceComponentServiceObjects(
 			_sxpElementResourceComponentServiceObjects);
-		Query.setSearchResponseResourceComponentServiceObjects(
-			_searchResponseResourceComponentServiceObjects);
 	}
 
 	@Override

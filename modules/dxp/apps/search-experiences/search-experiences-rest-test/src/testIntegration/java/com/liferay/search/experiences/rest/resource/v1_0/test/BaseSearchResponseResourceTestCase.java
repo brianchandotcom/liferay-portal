@@ -192,18 +192,22 @@ public abstract class BaseSearchResponseResourceTestCase {
 	}
 
 	@Test
-	public void testGetSearch() throws Exception {
-		Assert.assertTrue(false);
+	public void testSearch() throws Exception {
+		SearchResponse randomSearchResponse = randomSearchResponse();
+
+		SearchResponse postSearchResponse = testSearch_addSearchResponse(
+			randomSearchResponse);
+
+		assertEquals(randomSearchResponse, postSearchResponse);
+		assertValid(postSearchResponse);
 	}
 
-	@Test
-	public void testGraphQLGetSearch() throws Exception {
-		Assert.assertTrue(true);
-	}
+	protected SearchResponse testSearch_addSearchResponse(
+			SearchResponse searchResponse)
+		throws Exception {
 
-	@Test
-	public void testGraphQLGetSearchNotFound() throws Exception {
-		Assert.assertTrue(true);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

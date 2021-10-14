@@ -22,10 +22,13 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
+import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
+import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
 
 import java.util.function.BiFunction;
 
@@ -60,6 +63,14 @@ public class Mutation {
 
 		_sxpElementResourceComponentServiceObjects =
 			sxpElementResourceComponentServiceObjects;
+	}
+
+	public static void setSearchResponseResourceComponentServiceObjects(
+		ComponentServiceObjects<SearchResponseResource>
+			searchResponseResourceComponentServiceObjects) {
+
+		_searchResponseResourceComponentServiceObjects =
+			searchResponseResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -197,6 +208,21 @@ public class Mutation {
 				sxpElementId, sxpElement));
 	}
 
+	@GraphQLField
+	public SearchResponse search(
+			@GraphQLName("query") String query,
+			@GraphQLName("sxpBlueprint") String sxpBlueprint,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_searchResponseResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			searchResponseResource -> searchResponseResource.search(
+				query, sxpBlueprint, Pagination.of(page, pageSize)));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -263,10 +289,28 @@ public class Mutation {
 		sxpElementResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			SearchResponseResource searchResponseResource)
+		throws Exception {
+
+		searchResponseResource.setContextAcceptLanguage(_acceptLanguage);
+		searchResponseResource.setContextCompany(_company);
+		searchResponseResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		searchResponseResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		searchResponseResource.setContextUriInfo(_uriInfo);
+		searchResponseResource.setContextUser(_user);
+		searchResponseResource.setGroupLocalService(_groupLocalService);
+		searchResponseResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<SXPBlueprintResource>
 		_sxpBlueprintResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SXPElementResource>
 		_sxpElementResourceComponentServiceObjects;
+	private static ComponentServiceObjects<SearchResponseResource>
+		_searchResponseResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

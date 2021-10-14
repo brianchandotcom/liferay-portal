@@ -39,11 +39,11 @@ public interface SearchResponseResource {
 		return new Builder();
 	}
 
-	public SearchResponse getSearch(
+	public SearchResponse search(
 			String query, String sxpBlueprint, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getSearchHttpResponse(
+	public HttpInvoker.HttpResponse searchHttpResponse(
 			String query, String sxpBlueprint, Pagination pagination)
 		throws Exception;
 
@@ -119,11 +119,11 @@ public interface SearchResponseResource {
 	public static class SearchResponseResourceImpl
 		implements SearchResponseResource {
 
-		public SearchResponse getSearch(
+		public SearchResponse search(
 				String query, String sxpBlueprint, Pagination pagination)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = getSearchHttpResponse(
+			HttpInvoker.HttpResponse httpResponse = searchHttpResponse(
 				query, sxpBlueprint, pagination);
 
 			String content = httpResponse.getContent();
@@ -163,11 +163,13 @@ public interface SearchResponseResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getSearchHttpResponse(
+		public HttpInvoker.HttpResponse searchHttpResponse(
 				String query, String sxpBlueprint, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(pagination.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -186,7 +188,7 @@ public interface SearchResponseResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (query != null) {
 				httpInvoker.parameter("query", String.valueOf(query));

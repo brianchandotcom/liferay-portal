@@ -44,15 +44,24 @@ public class SearchResponseResourceTest
 
 	@Override
 	@Test
-	public void testGetSearch() throws Exception {
-		searchResponseResource.getSearch(null, null, Pagination.of(1, 1));
+	public void testSearch() throws Exception {
+		super.testSearch();
 
-		_testGetSearchWithBlueprint();
-		_testGetSearchWithJSONIssue();
-		_testGetSearchWithMultipleQueryIssues();
-		_testGetSearchWithMultipleSchemaIssuesOnlyFirstIsReported();
-		_testGetSearchWithSearchEngineIssue();
-		_testGetSearchWithSearchEngineIssueInSearchResponseString();
+		_testSearch();
+		_testSearchWithBlueprint();
+		_testSearchWithJSONIssue();
+		_testSearchWithMultipleQueryIssues();
+		_testSearchWithMultipleSchemaIssuesOnlyFirstIsReported();
+		_testSearchWithSearchEngineIssue();
+		_testSearchWithSearchEngineIssueInSearchResponseString();
+	}
+
+	@Override
+	protected SearchResponse testSearch_addSearchResponse(
+			SearchResponse searchResponse)
+		throws Exception {
+
+		return searchResponse;
 	}
 
 	private String _read(String name) throws Exception {
@@ -64,15 +73,19 @@ public class SearchResponseResourceTest
 					clazz.getSimpleName(), StringPool.PERIOD, name, ".json")));
 	}
 
-	private void _testGetSearchWithBlueprint() throws Exception {
-		searchResponseResource.getSearch(
-			null, _read("testGetSearchWithBlueprint"), null);
+	private void _testSearch() throws Exception {
+		searchResponseResource.search(null, null, _PAGINATION);
 	}
 
-	private void _testGetSearchWithJSONIssue() throws Exception {
+	private void _testSearchWithBlueprint() throws Exception {
+		searchResponseResource.search(
+			null, _read("testSearchWithBlueprint"), _PAGINATION);
+	}
+
+	private void _testSearchWithJSONIssue() throws Exception {
 		try {
-			searchResponseResource.getSearch(
-				null, "{ broken JSON syntax }", null);
+			searchResponseResource.search(
+				null, "{ broken JSON syntax }", _PAGINATION);
 
 			Assert.fail();
 		}
@@ -83,13 +96,14 @@ public class SearchResponseResourceTest
 		}
 	}
 
-	private void _testGetSearchWithMultipleQueryIssues() throws Exception {
+	private void _testSearchWithMultipleQueryIssues() throws Exception {
 		try {
 			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME_EXCEPTION_MAPPER, LoggerTestUtil.ERROR)) {
 
-				searchResponseResource.getSearch(
-					null, _read("testGetSearchWithMultipleQueryIssues"), null);
+				searchResponseResource.search(
+					null, _read("testSearchWithMultipleQueryIssues"),
+					_PAGINATION);
 
 				Assert.fail();
 			}
@@ -107,15 +121,14 @@ public class SearchResponseResourceTest
 		}
 	}
 
-	private void _testGetSearchWithMultipleSchemaIssuesOnlyFirstIsReported()
+	private void _testSearchWithMultipleSchemaIssuesOnlyFirstIsReported()
 		throws Exception {
 
 		try {
-			searchResponseResource.getSearch(
+			searchResponseResource.search(
 				null,
-				_read(
-					"testGetSearchWithMultipleSchemaIssuesOnlyFirstIsReported"),
-				null);
+				_read("testSearchWithMultipleSchemaIssuesOnlyFirstIsReported"),
+				_PAGINATION);
 
 			Assert.fail();
 		}
@@ -131,7 +144,7 @@ public class SearchResponseResourceTest
 		}
 	}
 
-	private void _testGetSearchWithSearchEngineIssue() throws Exception {
+	private void _testSearchWithSearchEngineIssue() throws Exception {
 		try {
 			try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 					new ConfigurationTemporarySwapper(
@@ -145,9 +158,9 @@ public class SearchResponseResourceTest
 							_CLASS_NAME_EXCEPTION_MAPPER,
 							LoggerTestUtil.ERROR)) {
 
-					searchResponseResource.getSearch(
-						null, _read("testGetSearchWithSearchEngineIssue"),
-						null);
+					searchResponseResource.search(
+						null, _read("testSearchWithSearchEngineIssue"),
+						_PAGINATION);
 				}
 			}
 
@@ -160,7 +173,7 @@ public class SearchResponseResourceTest
 		}
 	}
 
-	private void _testGetSearchWithSearchEngineIssueInSearchResponseString()
+	private void _testSearchWithSearchEngineIssueInSearchResponseString()
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -173,10 +186,9 @@ public class SearchResponseResourceTest
 					_CLASS_NAME_ELASTICSEARCH_INDEX_SEARCHER,
 					LoggerTestUtil.ERROR)) {
 
-				SearchResponse searchResponse =
-					searchResponseResource.getSearch(
-						null, _read("testGetSearchWithSearchEngineIssue"),
-						null);
+				SearchResponse searchResponse = searchResponseResource.search(
+					null, _read("testSearchWithSearchEngineIssue"),
+					_PAGINATION);
 
 				Assert.assertNull(searchResponse.getResponse());
 
@@ -198,6 +210,8 @@ public class SearchResponseResourceTest
 	private static final String _CONFIGURATION_PID_ELASTICSEARCH =
 		"com.liferay.portal.search.elasticsearch7.configuration." +
 			"ElasticsearchConfiguration";
+
+	private static final Pagination _PAGINATION = Pagination.of(1, 1);
 
 	private static final String _SEARCH_ENGINE_ISSUE = StringBundler.concat(
 		"org.elasticsearch.ElasticsearchStatusException: ",

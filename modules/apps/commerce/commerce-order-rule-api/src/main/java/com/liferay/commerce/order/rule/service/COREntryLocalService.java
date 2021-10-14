@@ -388,6 +388,11 @@ public interface COREntryLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
+	public COREntry updateCOREntryExternalReferenceCode(
+			String externalReferenceCode, long corEntryId)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
 	public COREntry updateStatus(
 			long userId, long corEntryId, int status,
 			ServiceContext serviceContext)

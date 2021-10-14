@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Workflow Taglib
+Bundle-SymbolicName: com.liferay.portal.workflow.taglib
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/portal-workflow";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /portal-workflow-taglib

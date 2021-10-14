@@ -15,6 +15,7 @@
 package com.liferay.portal.search.elasticsearch7.internal;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -256,6 +257,12 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		setVendor(MapUtil.getString(properties, "search.engine.impl"));
+
+		if (StartupHelperUtil.isDBNew()) {
+			for (long companyId : getIndexedCompanyIds()) {
+				removeCompany(companyId);
+			}
+		}
 	}
 
 	protected void createBackupRepository() {

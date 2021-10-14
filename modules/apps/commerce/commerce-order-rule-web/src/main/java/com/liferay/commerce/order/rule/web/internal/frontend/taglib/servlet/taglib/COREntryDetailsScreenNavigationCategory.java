@@ -20,7 +20,7 @@ import com.liferay.commerce.order.rule.entry.type.COREntryTypeRegistry;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.service.COREntryService;
 import com.liferay.commerce.order.rule.web.internal.display.context.COREntryDisplayContext;
-import com.liferay.commerce.order.rule.web.internal.frontend.taglib.servlet.taglib.constants.COREntryScreenNavigationConstants;
+import com.liferay.commerce.order.rule.web.internal.frontend.taglib.servlet.taglib.constants.COREntryScreenNavigationEntryConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -62,12 +62,12 @@ public class COREntryDetailsScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return COREntryScreenNavigationConstants.CATEGORY_KEY_DETAILS;
+		return COREntryScreenNavigationEntryConstants.CATEGORY_KEY_DETAILS;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return COREntryScreenNavigationConstants.CATEGORY_KEY_DETAILS;
+		return COREntryScreenNavigationEntryConstants.CATEGORY_KEY_DETAILS;
 	}
 
 	@Override
@@ -77,12 +77,12 @@ public class COREntryDetailsScreenNavigationCategory
 
 		return LanguageUtil.get(
 			resourceBundle,
-			COREntryScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+			COREntryScreenNavigationEntryConstants.CATEGORY_KEY_DETAILS);
 	}
 
 	@Override
 	public String getScreenNavigationKey() {
-		return COREntryScreenNavigationConstants.
+		return COREntryScreenNavigationEntryConstants.
 			SCREEN_NAVIGATION_KEY_COR_ENTRY_GENERAL;
 	}
 

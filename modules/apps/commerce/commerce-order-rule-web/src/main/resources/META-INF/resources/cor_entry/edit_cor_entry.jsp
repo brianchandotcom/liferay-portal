@@ -48,7 +48,7 @@ else {
 
 <liferay-frontend:screen-navigation
 	containerWrapperCssClass="container"
-	key="<%= COREntryScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COR_ENTRY_GENERAL %>"
+	key="<%= COREntryScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_COR_ENTRY_GENERAL %>"
 	modelBean="<%= corEntry %>"
 	portletURL="<%= currentURLObj %>"
 />

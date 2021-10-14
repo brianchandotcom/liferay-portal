@@ -17,7 +17,7 @@ package com.liferay.commerce.order.rule.web.internal.frontend.taglib.servlet.tag
 /**
  * @author Alessio Antonio Rendina
  */
-public class COREntryScreenNavigationConstants {
+public class COREntryScreenNavigationEntryConstants {
 
 	public static final String CATEGORY_KEY_DETAILS = "details";
 

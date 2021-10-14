@@ -31,7 +31,7 @@ const TranslationAdminModal = ({
 	},
 	availableLocales = emptyArray,
 	defaultLanguageId,
-	onDone = noop,
+	onClose = noop,
 	translations,
 	visible: initialVisible,
 }) => {
@@ -60,7 +60,7 @@ const TranslationAdminModal = ({
 
 	const onDoneClicked = () => {
 		setVisible(false);
-		onDone([...activeLanguageIds]);
+		onClose([...activeLanguageIds]);
 	};
 
 	useEffect(() => {

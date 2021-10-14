@@ -27,7 +27,6 @@ import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.Preference;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.Map;
 
@@ -46,95 +45,99 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 				"VARCHAR(255) null, largeValue TEXT null, namespace ",
 				"VARCHAR(255) null, smallValue VARCHAR(255) null)"));
 
-		try (PreparedStatement selectPreparedStatement =
-				connection.prepareStatement(
-					SQLTransformer.transform(
-						StringBundler.concat(
-							"select portalPreferencesId, preferences from ",
-							"PortalPreferences where ",
-							"CAST_CLOB_TEXT(preferences) != '",
-							PortletConstants.DEFAULT_PREFERENCES,
-							"' and preferences is not null")));
-			PreparedStatement insertPreparedStatement =
+		processConcurrently(
+			SQLTransformer.transform(
+				StringBundler.concat(
+					"select portalPreferencesId, preferences from ",
+					"PortalPreferences where CAST_CLOB_TEXT(preferences) != '",
+					PortletConstants.DEFAULT_PREFERENCES,
+					"' and preferences is not null")),
+			resultSet -> new Object[] {
+				resultSet.getLong("portalPreferencesId"),
+				resultSet.getString("preferences")
+			},
+			values -> {
+				long portalPreferencesId = (Long)values[0];
+				String preferences = (String)values[1];
+
+				_upgradePortalPreferences(portalPreferencesId, preferences);
+			},
+			null);
+
+		alter(
+			PortalPreferencesTable.class,
+			new AlterTableDropColumn("preferences"));
+	}
+
+	private void _upgradePortalPreferences(
+			long portalPreferencesId, String preferences)
+		throws Exception {
+
+		if (preferences.isEmpty()) {
+			return;
+		}
+
+		Map<String, Preference> preferenceMap =
+			PortletPreferencesFactoryImpl.createPreferencesMap(preferences);
+
+		if (preferenceMap.isEmpty()) {
+			return;
+		}
+
+		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(
 						StringBundler.concat(
 							"insert into PortalPreferenceValue (mvccVersion, ",
 							"portalPreferenceValueId, portalPreferencesId, ",
 							"index_, key_, largeValue, namespace, smallValue) ",
-							"values (0, ?, ?, ?, ?, ?, ?, ?)")));
-			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
+							"values (0, ?, ?, ?, ?, ?, ?, ?)")))) {
 
-			while (resultSet.next()) {
-				String preferences = resultSet.getString("preferences");
+			for (Preference preference : preferenceMap.values()) {
+				String namespace = null;
 
-				if (preferences.isEmpty()) {
-					continue;
+				String key = preference.getName();
+
+				int index = key.indexOf(CharPool.POUND);
+
+				if (index > 0) {
+					namespace = key.substring(0, index);
+
+					key = key.substring(index + 1);
 				}
 
-				Map<String, Preference> preferenceMap =
-					PortletPreferencesFactoryImpl.createPreferencesMap(
-						preferences);
+				String[] values = preference.getValues();
 
-				if (preferenceMap.isEmpty()) {
-					continue;
-				}
+				for (int i = 0; i < values.length; i++) {
+					String value = values[i];
 
-				long portalPreferencesId = resultSet.getLong(
-					"portalPreferencesId");
+					String largeValue = null;
+					String smallValue = null;
 
-				for (Preference preference : preferenceMap.values()) {
-					String namespace = null;
+					if (value.length() >
+							PortalPreferenceValueImpl.SMALL_VALUE_MAX_LENGTH) {
 
-					String key = preference.getName();
-
-					int index = key.indexOf(CharPool.POUND);
-
-					if (index > 0) {
-						namespace = key.substring(0, index);
-
-						key = key.substring(index + 1);
+						largeValue = value;
+					}
+					else {
+						smallValue = value;
 					}
 
-					String[] values = preference.getValues();
+					preparedStatement.setLong(
+						1, increment(PortalPreferenceValue.class.getName()));
+					preparedStatement.setLong(2, portalPreferencesId);
+					preparedStatement.setInt(3, i);
+					preparedStatement.setString(4, key);
+					preparedStatement.setString(5, largeValue);
+					preparedStatement.setString(6, namespace);
+					preparedStatement.setString(7, smallValue);
 
-					for (int i = 0; i < values.length; i++) {
-						String value = values[i];
-
-						String largeValue = null;
-						String smallValue = null;
-
-						if (value.length() >
-								PortalPreferenceValueImpl.
-									SMALL_VALUE_MAX_LENGTH) {
-
-							largeValue = value;
-						}
-						else {
-							smallValue = value;
-						}
-
-						insertPreparedStatement.setLong(
-							1,
-							increment(PortalPreferenceValue.class.getName()));
-						insertPreparedStatement.setLong(2, portalPreferencesId);
-						insertPreparedStatement.setInt(3, i);
-						insertPreparedStatement.setString(4, key);
-						insertPreparedStatement.setString(5, largeValue);
-						insertPreparedStatement.setString(6, namespace);
-						insertPreparedStatement.setString(7, smallValue);
-
-						insertPreparedStatement.addBatch();
-					}
+					preparedStatement.addBatch();
 				}
 			}
 
-			insertPreparedStatement.executeBatch();
+			preparedStatement.executeBatch();
 		}
-
-		alter(
-			PortalPreferencesTable.class,
-			new AlterTableDropColumn("preferences"));
 	}
 
 }

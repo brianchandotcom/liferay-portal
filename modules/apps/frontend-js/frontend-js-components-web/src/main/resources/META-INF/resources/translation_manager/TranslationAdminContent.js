@@ -40,7 +40,7 @@ const TranslationAdminContent = ({
 	onAddLocale = noop,
 	onCancel = noop,
 	onRemoveLocale = noop,
-	onSave = noop,
+	onDone = noop,
 	translations = {},
 }) => {
 	const [creationMenuActive, setCreationMenuActive] = useState(false);
@@ -228,8 +228,8 @@ const TranslationAdminContent = ({
 						<ClayButton displayType="secondary" onClick={onCancel}>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
-						<ClayButton displayType="primary" onClick={onSave}>
-							{Liferay.Language.get('save')}
+						<ClayButton displayType="primary" onClick={onDone}>
+							{Liferay.Language.get('done')}
 						</ClayButton>
 					</ClayButton.Group>
 				}

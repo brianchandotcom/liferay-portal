@@ -106,7 +106,7 @@ const TranslationAdminSelector = ({
 				ariaLabels={ariaLabels}
 				availableLocales={availableLocales}
 				defaultLanguageId={defaultLanguageId}
-				onSave={handleCloseTranslationModal}
+				onDone={handleCloseTranslationModal}
 				translations={translations}
 				visible={translationModalVisible}
 			/>

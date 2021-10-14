@@ -115,7 +115,7 @@ const ColorPicker = ({
 					<DropDown.Menu
 						active={active}
 						alignElementRef={triggerElementRef}
-						className="clay-color-dropdown-menu"
+						className="clay-color-dropdown-menu px-0"
 						containerProps={{
 							className: 'cadmin',
 						}}
@@ -127,7 +127,7 @@ const ColorPicker = ({
 							active ? (
 								<>
 									<SearchForm
-										className="flex-grow-1"
+										className="flex-grow-1 px-3"
 										onChange={setSearchValue}
 									/>
 									{Object.keys(filteredColors).length ? (
@@ -214,9 +214,9 @@ const Splotch = React.forwardRef(
 const ColorPalette = ({colors, onSetActive, onValueChange, splotchRef}) =>
 	Object.keys(colors).map((category) => (
 		<div className="page-editor__ColorPicker__color-palette" key={category}>
-			<span className="mb-3 sheet-subtitle">{category}</span>
+			<span className="mb-3 px-3 sheet-subtitle">{category}</span>
 			{Object.keys(colors[category]).map((tokenSet) => (
-				<div key={tokenSet}>
+				<div className="px-3" key={tokenSet}>
 					<span className="text-secondary">{tokenSet}</span>
 					<div className="clay-color-swatch mb-0 mt-3">
 						{colors[category][tokenSet].map(

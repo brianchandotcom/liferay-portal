@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.web.internal.blueprint.portlet;
+package com.liferay.search.experiences.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.search.experiences.constants.SXPPortletKeys;

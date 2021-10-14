@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.web.internal.blueprint.constants;
+package com.liferay.search.experiences.web.internal.constants;
 
 /**
  * @author Petteri Karttunen

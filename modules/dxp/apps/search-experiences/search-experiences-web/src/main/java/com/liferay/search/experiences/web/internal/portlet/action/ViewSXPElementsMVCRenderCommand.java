@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.web.internal.blueprint.portlet.action;
+package com.liferay.search.experiences.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
@@ -30,12 +30,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINT,
-		"mvc.command.name=/",
-		"mvc.command.name=/sxp_blueprint/view_sxp_blueprints"
+		"mvc.command.name=/sxp_blueprint/view_sxp_elements"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewSXPBlueprintsMVCRenderCommand implements MVCRenderCommand {
+public class ViewSXPElementsMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

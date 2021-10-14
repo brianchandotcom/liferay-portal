@@ -200,9 +200,9 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Plan"
             tags: ["Plan"]
-    /plans/{planId}/logs:
+    /plans/{planId}/log:
         get:
-            operationId: getPlanLogsPage
+            operationId: getPlanLog
             parameters:
                 - in: path
                   name: planId
@@ -210,27 +210,13 @@ paths:
                   schema:
                       format: int64
                       type: integer
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/Log"
-                                type: array
+                                $ref: "#/components/schemas/Log"
                         application/xml:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/Log"
-                                type: array
+                                $ref: "#/components/schemas/Log"
             tags: ["Log"]

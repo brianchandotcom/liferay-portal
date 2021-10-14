@@ -1534,7 +1534,13 @@ public class ServicePreAction extends Action {
 		themeDisplay.setShowMyAccountIcon(signedIn);
 		themeDisplay.setShowPageSettingsIcon(hasUpdateLayoutPermission);
 		themeDisplay.setShowPortalIcon(true);
-		themeDisplay.setShowSignInIcon(!signedIn);
+		themeDisplay.setShowSignInIcon(
+			!signedIn &&
+			!PropsUtil.get(
+				PropsKeys.AUTH_LOGIN_PORTLET_NAME
+			).equals(
+				themeDisplay.getPpid()
+			));
 
 		boolean showSignOutIcon = signedIn;
 

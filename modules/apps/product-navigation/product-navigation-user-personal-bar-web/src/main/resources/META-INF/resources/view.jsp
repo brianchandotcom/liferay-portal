@@ -46,7 +46,7 @@
 			</c:if>
 		</span>
 	</c:when>
-	<c:otherwise>
+	<c:when test="<%= themeDisplay.isShowSignInIcon() %>">
 		<span class="sign-in text-default" role="presentation">
 			<aui:icon
 				cssClass="sign-in text-default"
@@ -164,5 +164,5 @@
 				});
 			}
 		</aui:script>
-	</c:otherwise>
+	</c:when>
 </c:choose>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.groups.admin.lar.test;
+package com.liferay.user.groups.admin.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.DataLevel;

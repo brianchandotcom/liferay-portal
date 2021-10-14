@@ -12,41 +12,36 @@
  * details.
  */
 
-package com.liferay.template.lar.test;
+package com.liferay.message.boards.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
-import com.liferay.petra.string.StringPool;
+import com.liferay.message.boards.model.MBBan;
+import com.liferay.message.boards.service.MBBanLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.template.model.TemplateEntry;
-import com.liferay.template.service.TemplateEntryLocalService;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * @author Eudaldo Alonso
+ * @author Daniel Kocsis
  */
 @RunWith(Arquillian.class)
-public class TemplateEntryStagedModelDataHandlerTest
+public class MBBanStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
@@ -60,41 +55,50 @@ public class TemplateEntryStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		DDMTemplate ddmTemplate = _ddmTemplateLocalService.addTemplate(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			_portal.getClassNameId(TemplateEntry.class), 0,
-			_portal.getClassNameId(TemplateEntry.class),
-			Collections.singletonMap(LocaleUtil.US, "name"),
-			Collections.emptyMap(), DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
-			StringPool.BLANK, TemplateConstants.LANG_TYPE_FTL,
-			"<#-- Empty script -->", new ServiceContext());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
-		return _templateEntryLocalService.addTemplateEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			ddmTemplate.getTemplateId(), StringPool.BLANK, StringPool.BLANK,
-			new ServiceContext());
+		User user = UserTestUtil.addUser(TestPropsValues.getGroupId());
+
+		return MBBanLocalServiceUtil.addBan(
+			TestPropsValues.getUserId(), user.getUserId(), serviceContext);
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws PortalException {
 
-		return _templateEntryLocalService.getTemplateEntryByUuidAndGroupId(
-			uuid, group.getGroupId());
+		List<MBBan> bans = MBBanLocalServiceUtil.getBans(
+			group.getGroupId(), 0, 1);
+
+		if (!bans.isEmpty()) {
+			return bans.get(0);
+		}
+
+		throw new PortalException(
+			"Unable to get MBBan with groupId: " + group.getGroupId());
 	}
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return TemplateEntry.class;
+		return MBBan.class;
 	}
 
-	@Inject
-	private DDMTemplateLocalService _ddmTemplateLocalService;
+	@Override
+	protected void validateImport(
+			StagedModel stagedModel, StagedModelAssets stagedModelAssets,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
 
-	@Inject
-	private Portal _portal;
+		super.validateImport(
+			stagedModel, stagedModelAssets, dependentStagedModelsMap, group);
 
-	@Inject
-	private TemplateEntryLocalService _templateEntryLocalService;
+		MBBan ban = (MBBan)stagedModel;
+		MBBan importedBan = (MBBan)getStagedModel(stagedModel.getUuid(), group);
+
+		Assert.assertEquals(ban.getBanUserUuid(), importedBan.getBanUserUuid());
+	}
 
 }

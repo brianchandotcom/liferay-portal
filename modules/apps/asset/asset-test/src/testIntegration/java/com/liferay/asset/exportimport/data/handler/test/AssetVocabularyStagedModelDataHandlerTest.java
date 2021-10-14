@@ -12,21 +12,18 @@
  * details.
  */
 
-package com.liferay.message.boards.lar.test;
+package com.liferay.asset.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
-import com.liferay.message.boards.model.MBBan;
-import com.liferay.message.boards.service.MBBanLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -38,10 +35,10 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * @author Daniel Kocsis
+ * @author Máté Thurzó
  */
 @RunWith(Arquillian.class)
-public class MBBanStagedModelDataHandlerTest
+public class AssetVocabularyStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
@@ -55,50 +52,45 @@ public class MBBanStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
-		User user = UserTestUtil.addUser(TestPropsValues.getGroupId());
-
-		return MBBanLocalServiceUtil.addBan(
-			TestPropsValues.getUserId(), user.getUserId(), serviceContext);
+		return AssetTestUtil.addVocabulary(group.getGroupId());
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws PortalException {
 
-		List<MBBan> bans = MBBanLocalServiceUtil.getBans(
-			group.getGroupId(), 0, 1);
-
-		if (!bans.isEmpty()) {
-			return bans.get(0);
-		}
-
-		throw new PortalException(
-			"Unable to get MBBan with groupId: " + group.getGroupId());
+		return AssetVocabularyLocalServiceUtil.
+			getAssetVocabularyByUuidAndGroupId(uuid, group.getGroupId());
 	}
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return MBBan.class;
+		return AssetVocabulary.class;
 	}
 
 	@Override
-	protected void validateImport(
-			StagedModel stagedModel, StagedModelAssets stagedModelAssets,
-			Map<String, List<StagedModel>> dependentStagedModelsMap,
-			Group group)
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
 		throws Exception {
 
-		super.validateImport(
-			stagedModel, stagedModelAssets, dependentStagedModelsMap, group);
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
 
-		MBBan ban = (MBBan)stagedModel;
-		MBBan importedBan = (MBBan)getStagedModel(stagedModel.getUuid(), group);
+		AssetVocabulary vocabulary = (AssetVocabulary)stagedModel;
+		AssetVocabulary importedVocabulary =
+			(AssetVocabulary)importedStagedModel;
 
-		Assert.assertEquals(ban.getBanUserUuid(), importedBan.getBanUserUuid());
+		Assert.assertEquals(
+			vocabulary.getExternalReferenceCode(),
+			importedVocabulary.getExternalReferenceCode());
+		Assert.assertEquals(vocabulary.getName(), importedVocabulary.getName());
+		Assert.assertEquals(
+			vocabulary.getTitle(LocaleUtil.getDefault()),
+			importedVocabulary.getTitle(LocaleUtil.getDefault()));
+		Assert.assertEquals(
+			vocabulary.getDescription(LocaleUtil.getDefault()),
+			importedVocabulary.getDescription(LocaleUtil.getDefault()));
+		Assert.assertEquals(
+			vocabulary.getSettings(), importedVocabulary.getSettings());
 	}
 
 }

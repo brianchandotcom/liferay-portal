@@ -34,6 +34,15 @@ html#{$cadmin-selector} {
 				}
 			}
 
+			&__old-toolbar {
+				align-items: center;
+				border-bottom: 1px solid $cadmin-gray-300;
+				display: flex;
+				flex-direction: row;
+				height: $toolbarDesktopHeight;
+				justify-content: space-between;
+			}
+
 			&__page-preview {
 				flex-grow: 1;
 				position: relative;
@@ -184,15 +193,6 @@ html#{$cadmin-selector} {
 			&__status-icon {
 				color: $cadmin-success;
 				font-size: 12px;
-			}
-
-			&__toolbar {
-				align-items: center;
-				border-bottom: 1px solid $cadmin-gray-300;
-				display: flex;
-				flex-direction: row;
-				height: $toolbarDesktopHeight;
-				justify-content: space-between;
 			}
 		}
 	}

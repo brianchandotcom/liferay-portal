@@ -27,7 +27,7 @@ const STATUS_TO_LABEL = {
 	[DRAFT_STATUS.saving]: `${Liferay.Language.get('saving')}...`,
 };
 
-export default function Toolbar() {
+export default function OldToolbar() {
 	const {draftStatus} = useContext(StyleBookContext);
 
 	const handleSubmit = (event) => {
@@ -43,7 +43,7 @@ export default function Toolbar() {
 	};
 
 	return (
-		<div className="p-3 style-book-editor__toolbar">
+		<div className="p-3 style-book-editor__old-toolbar">
 			<div>
 				{draftStatus === DRAFT_STATUS.draftSaved && (
 					<ClayIcon

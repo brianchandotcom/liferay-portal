@@ -18,8 +18,8 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import FrontendTokenSet from './FrontendTokenSet';
+import OldToolbar from './OldToolbar';
 import {StyleBookContext} from './StyleBookContext';
-import Toolbar from './Toolbar';
 import {config} from './config';
 
 export default function Sidebar() {
@@ -41,7 +41,7 @@ export default function Sidebar() {
 
 	return (
 		<div className="style-book-editor__sidebar" ref={sidebarRef}>
-			<Toolbar />
+			<OldToolbar />
 			<div className="style-book-editor__sidebar-content">
 				<ThemeInformation />
 

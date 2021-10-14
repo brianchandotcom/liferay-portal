@@ -467,7 +467,15 @@ export default ({
 
 	const params = new URLSearchParams(search);
 
-	if (isWithinApp(params)) {
+	const initialized = useRef(false);
+
+	if (
+		!initialized.current &&
+		isWithinApp(params) &&
+		(!window.history.state || !window.history.state.senna)
+	) {
+		initialized.current = true;
+
 		const state = {
 			path: pathname + search,
 			senna: true,

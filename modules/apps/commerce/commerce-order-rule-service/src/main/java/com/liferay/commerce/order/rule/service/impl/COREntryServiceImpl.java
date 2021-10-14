@@ -58,8 +58,7 @@ public class COREntryServiceImpl extends COREntryServiceBaseImpl {
 			_corEntryModelResourcePermission.getPortletResourcePermission();
 
 		portletResourcePermission.check(
-			getPermissionChecker(), null,
-			COREntryActionKeys.ADD_COMMERCE_ORDER_RULE);
+			getPermissionChecker(), null, COREntryActionKeys.ADD_COR_ENTRY);
 
 		return corEntryLocalService.addCOREntry(
 			externalReferenceCode, getUserId(), active, description,
@@ -115,8 +114,7 @@ public class COREntryServiceImpl extends COREntryServiceBaseImpl {
 			_corEntryModelResourcePermission.getPortletResourcePermission();
 
 		portletResourcePermission.check(
-			getPermissionChecker(), null,
-			COREntryActionKeys.VIEW_COMMERCE_ORDER_RULES);
+			getPermissionChecker(), null, COREntryActionKeys.VIEW_COR_ENTRIES);
 
 		return corEntryLocalService.getCOREntries(
 			companyId, active, start, end);
@@ -131,8 +129,7 @@ public class COREntryServiceImpl extends COREntryServiceBaseImpl {
 			_corEntryModelResourcePermission.getPortletResourcePermission();
 
 		portletResourcePermission.check(
-			getPermissionChecker(), null,
-			COREntryActionKeys.VIEW_COMMERCE_ORDER_RULES);
+			getPermissionChecker(), null, COREntryActionKeys.VIEW_COR_ENTRIES);
 
 		return corEntryLocalService.getCOREntries(
 			companyId, active, type, start, end);
@@ -147,8 +144,7 @@ public class COREntryServiceImpl extends COREntryServiceBaseImpl {
 			_corEntryModelResourcePermission.getPortletResourcePermission();
 
 		portletResourcePermission.check(
-			getPermissionChecker(), null,
-			COREntryActionKeys.VIEW_COMMERCE_ORDER_RULES);
+			getPermissionChecker(), null, COREntryActionKeys.VIEW_COR_ENTRIES);
 
 		return corEntryLocalService.getCOREntries(companyId, type, start, end);
 	}
@@ -181,6 +177,18 @@ public class COREntryServiceImpl extends COREntryServiceBaseImpl {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, name,
 			priority, typeSettings, serviceContext);
+	}
+
+	@Override
+	public COREntry updateCOREntryExternalReferenceCode(
+			String externalReferenceCode, long corEntryId)
+		throws PortalException {
+
+		_corEntryModelResourcePermission.check(
+			getPermissionChecker(), corEntryId, ActionKeys.UPDATE);
+
+		return corEntryLocalService.updateCOREntryExternalReferenceCode(
+			externalReferenceCode, corEntryId);
 	}
 
 	private static volatile ModelResourcePermission<COREntry>

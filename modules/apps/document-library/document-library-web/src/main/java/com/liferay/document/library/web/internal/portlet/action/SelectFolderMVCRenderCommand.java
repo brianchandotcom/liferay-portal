@@ -15,11 +15,23 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.exception.NoSuchFolderException;
+import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,16 +48,31 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class SelectFolderMVCRenderCommand extends BaseFolderMVCRenderCommand {
+public class SelectFolderMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	protected DLTrashHelper getDLTrashHelper() {
-		return _dlTrashHelper;
-	}
+	public String render(
+		RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
-	@Override
-	protected String getPath() {
-		return "/document_library/select_folder.jsp";
+		try {
+			Folder folder = ActionUtil.getFolder(renderRequest);
+
+			renderRequest.setAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
+
+			renderRequest.setAttribute(
+				DLWebKeys.DOCUMENT_LIBRARY_TRASH_HELPER, _dlTrashHelper);
+
+			return "/document_library/select_folder.jsp";
+		}
+		catch (NoSuchFolderException | PrincipalException exception) {
+			SessionErrors.add(renderRequest, exception.getClass());
+
+			return "/document_library/error.jsp";
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
+		}
 	}
 
 	@Reference

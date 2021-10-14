@@ -16,7 +16,6 @@ package com.liferay.search.experiences.internal.search;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
@@ -85,48 +84,27 @@ public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
 	private void _addVersionCount(Document document, Object object) {
 		Class<?> clazz = object.getClass();
 
-		Integer versionCount = null;
+		Double versionCount = null;
 
 		if (DLFileEntry.class.isAssignableFrom(clazz)) {
 			DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-			versionCount = _toInteger(dlFileEntry.getVersion());
+			versionCount = GetterUtil.getDouble(dlFileEntry.getVersion());
 		}
 		else if (JournalArticle.class.isAssignableFrom(clazz)) {
 			JournalArticle journalArticle = (JournalArticle)object;
 
-			versionCount = _toInteger(journalArticle.getVersion());
-		}
-		else if (KBArticle.class.isAssignableFrom(clazz)) {
-			KBArticle kbArticle = (KBArticle)object;
-
-			versionCount = kbArticle.getVersion();
+			versionCount = journalArticle.getVersion();
 		}
 		else if (WikiPage.class.isAssignableFrom(clazz)) {
 			WikiPage wikiPage = (WikiPage)object;
 
-			versionCount = _toInteger(wikiPage.getVersion());
+			versionCount = wikiPage.getVersion();
 		}
 
 		if (versionCount != null) {
 			document.addNumber("versionCount", versionCount);
 		}
-	}
-
-	private int _toInteger(double version) {
-		return _toInteger(String.valueOf(version));
-	}
-
-	private int _toInteger(String version) {
-
-		// TODO 2.5 and 5.2 return the same value
-
-		String[] versionParts = version.split("\\.");
-
-		int major = GetterUtil.getInteger(versionParts[0]);
-		int minor = GetterUtil.getInteger(versionParts[1]);
-
-		return major + minor;
 	}
 
 	@Reference

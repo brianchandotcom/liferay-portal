@@ -18,6 +18,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayInput, ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayManagementToolbar, {
 	ClayResultsBar,
 } from '@clayui/management-toolbar';
@@ -1661,7 +1662,7 @@ export default ({
 		);
 	};
 
-	const onSubmit = (keywords) => {
+	const handleFiltersUpdate = (keywords) => {
 		setResultsKeywords(keywords);
 
 		const pathParam = getPathParam(
@@ -1712,7 +1713,7 @@ export default ({
 						onSubmit={(event) => {
 							event.preventDefault();
 
-							onSubmit(searchTerms.trim());
+							handleFiltersUpdate(searchTerms.trim());
 						}}
 						showMobile={searchMobile}
 					>
@@ -1952,36 +1953,47 @@ export default ({
 	};
 
 	const renderResultsBar = () => {
-		if (renderState.viewType === VIEW_TYPE_CONTEXT) {
+		if (renderState.viewType === VIEW_TYPE_CONTEXT || !resultsKeywords) {
 			return '';
 		}
 
 		const items = [];
 
-		if (resultsKeywords) {
-			items.push(
-				<ClayResultsBar.Item>
-					<span className="component-text text-truncate-inline">
-						<span className="text-truncate">
-							{Liferay.Util.sub(
-								renderState.children &&
-									renderState.children.length === 1
-									? Liferay.Language.get('x-result-for')
-									: Liferay.Language.get('x-results-for'),
-								renderState.children
-									? renderState.children.length.toString()
-									: '0'
-							) + ' '}
-							<strong>{resultsKeywords}</strong>
-						</span>
+		items.push(
+			<ClayResultsBar.Item>
+				<span className="component-text text-truncate-inline">
+					<span className="text-truncate">
+						{Liferay.Util.sub(
+							renderState.children &&
+								renderState.children.length === 1
+								? Liferay.Language.get('x-result-for')
+								: Liferay.Language.get('x-results-for'),
+							renderState.children
+								? renderState.children.length.toString()
+								: '0'
+						)}
 					</span>
-				</ClayResultsBar.Item>
-			);
-		}
+				</span>
+			</ClayResultsBar.Item>
+		);
 
-		if (items.length === 0) {
-			return '';
-		}
+		items.push(
+			<ClayResultsBar.Item>
+				<ClayLabel
+					className="component-label tbar-label"
+					closeButtonProps={{
+						onClick: () => {
+							handleFiltersUpdate('');
+							setSearchTerms('');
+						},
+					}}
+					displayType="unstyled"
+					spritemap={spritemap}
+				>
+					{Liferay.Language.get('keywords') + ': ' + resultsKeywords}
+				</ClayLabel>
+			</ClayResultsBar.Item>
+		);
 
 		items.push(<ClayResultsBar.Item expand />);
 		items.push(
@@ -1990,7 +2002,7 @@ export default ({
 					className="component-link tbar-link"
 					displayType="unstyled"
 					onClick={() => {
-						onSubmit('');
+						handleFiltersUpdate('');
 						setSearchTerms('');
 					}}
 				>

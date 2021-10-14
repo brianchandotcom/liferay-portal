@@ -23,7 +23,4 @@ public class COREntryActionKeys {
 
 	public static final String VIEW_COR_ENTRIES = "VIEW_COR_ENTRIES";
 
-	public static final String ADD_COR_ENTRY =
-		"ADD_COR_ENTRY";
-
 }

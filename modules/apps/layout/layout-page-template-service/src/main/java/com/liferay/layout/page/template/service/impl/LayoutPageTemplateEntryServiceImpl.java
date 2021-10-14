@@ -16,7 +16,9 @@ package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -625,6 +627,38 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	@Override
+	public LayoutPageTemplateEntry moveLayoutPageTemplateEntry(
+			long layoutPageTemplateEntryId,
+			long targetLayoutPageTemplateCollectionId)
+		throws PortalException {
+
+		_layoutPageTemplateEntryModelResourcePermission.check(
+			getPermissionChecker(), layoutPageTemplateEntryId,
+			ActionKeys.UPDATE);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
+
+		if (layoutPageTemplateEntry.getLayoutPageTemplateCollectionId() ==
+				targetLayoutPageTemplateCollectionId) {
+
+			return layoutPageTemplateEntry;
+		}
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				getLayoutPageTemplateCollection(
+					targetLayoutPageTemplateCollectionId);
+
+		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
+
+		return layoutPageTemplateEntryLocalService.
+			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
+	}
+
+	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, boolean defaultTemplate)
 		throws PortalException {
@@ -711,6 +745,10 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateEntry)"

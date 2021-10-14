@@ -1139,48 +1139,6 @@ definition {
 		}
 	}
 
-	macro clickHideFragment {
-		var key_fragmentName = "${fragmentName}";
-
-		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
-
-		Click.waitForMenuToggleJSClick(locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Hide Fragment");
-
-		PageEditor.waitForAutoSave();
-	}
-
-	macro clickHideFragmentViaPageStructure {
-		if (!(isSet(index))) {
-			var index = "1";
-		}
-
-		PageEditor.gotoTab(tabName = "Browser");
-
-		Navigator.gotoNavTab(navTab = "Page Elements");
-
-		if (IsElementNotPresent(key_index = "${index}", key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE_INDEX")) {
-			Click(
-				key_index = "${index}",
-				key_nodeName = "${fragmentName}",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_INDEX");
-		}
-
-		Click.clickNoWaitForVisible(
-			key_index = "${index}",
-			key_nodeName = "${fragmentName}",
-			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
-
-		PageEditor.waitForAutoSave();
-	}
-
-	macro clickHideFragmentViaPageStyles {
-		PageEditor.gotoStyle(fragmentName = "${fragmentName}");
-
-		PageEditor.configureFragment(hideFragment = "true");
-	}
-
 	macro clickManagementBar {
 		var elementHeight = selenium.getElementHeight("PageEditor#FRAGMENT_SIDEBAR_BODY");
 		var offSetY = MathUtil.product("25","${elementHeight}");
@@ -1199,50 +1157,6 @@ definition {
 		Button.click(button = "Publish");
 
 		Alert.viewSuccessMessage();
-	}
-
-	macro clickRestoreDefaultHidePropertyForFragment {
-		if (!(isSet(index))) {
-			var index = "1";
-		}
-
-		PageEditor.gotoTab(tabName = "Browser");
-
-		Navigator.gotoNavTab(navTab = "Page Elements");
-
-		Click(
-			key_index = "${index}",
-			key_nodeName = "${fragmentName}",
-			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_INDEX");
-
-		Navigator.gotoNavTab(navTab = "Styles");
-
-		Click(locator1 = "Button#RESTORE_DEFAULT");
-
-		PageEditor.waitForAutoSave();
-	}
-
-	macro clickUnhideFragmentViaPageStructure {
-		if (!(isSet(index))) {
-			var index = "1";
-		}
-
-		PageEditor.gotoTab(tabName = "Browser");
-
-		Navigator.gotoNavTab(navTab = "Page Elements");
-
-		Click.clickNoWaitForVisible(
-			key_index = "${index}",
-			key_nodeName = "${fragmentName}",
-			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
-
-		PageEditor.waitForAutoSave();
-	}
-
-	macro clickUnhideFragmentViaPageStyles {
-		PageEditor.gotoStyle(fragmentName = "${fragmentName}");
-
-		PageEditor.configureFragment(hideFragment = "false");
 	}
 
 	macro closeSidebar {
@@ -3057,6 +2971,48 @@ definition {
 		AssertElementPresent(locator1 = "Fragment#ACTIVE_NAV_ITEM_TAB");
 	}
 
+	macro hideFragmentViaHeader {
+		var key_fragmentName = "${fragmentName}";
+
+		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+
+		Click.waitForMenuToggleJSClick(locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Hide Fragment");
+
+		PageEditor.waitForAutoSave();
+	}
+
+	macro hideFragmentViaPageStructure {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		PageEditor.gotoTab(tabName = "Browser");
+
+		Navigator.gotoNavTab(navTab = "Page Elements");
+
+		if (IsElementNotPresent(key_index = "${index}", key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE_INDEX")) {
+			Click(
+				key_index = "${index}",
+				key_nodeName = "${fragmentName}",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_INDEX");
+		}
+
+		Click.clickNoWaitForVisible(
+			key_index = "${index}",
+			key_nodeName = "${fragmentName}",
+			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
+
+		PageEditor.waitForAutoSave();
+	}
+
+	macro hideFragmentViaPageStyles {
+		PageEditor.gotoStyle(fragmentName = "${fragmentName}");
+
+		PageEditor.configureFragment(hideFragment = "true");
+	}
+
 	macro moveElementToContainerViaPageStructure {
 		Variables.assertDefined(parameterList = "${elementName}");
 
@@ -3244,6 +3200,27 @@ definition {
 		AssertTextNotPresent(value1 = "${fragmentComment}");
 	}
 
+	macro restoreDefaultHidePropertyForFragment {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		PageEditor.gotoTab(tabName = "Browser");
+
+		Navigator.gotoNavTab(navTab = "Page Elements");
+
+		Click(
+			key_index = "${index}",
+			key_nodeName = "${fragmentName}",
+			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_INDEX");
+
+		Navigator.gotoNavTab(navTab = "Styles");
+
+		Click(locator1 = "Button#RESTORE_DEFAULT");
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro searchFragmentViaSidebar {
 		WaitForPageLoad();
 
@@ -3327,6 +3304,39 @@ definition {
 				key_deviceType = "${viewport}",
 				locator1 = "PageEditor#VIEWPORT");
 		}
+	}
+
+	macro unhideFragmentViaPageStructure {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		PageEditor.gotoTab(tabName = "Browser");
+
+		Navigator.gotoNavTab(navTab = "Page Elements");
+
+		Click.clickNoWaitForVisible(
+			key_index = "${index}",
+			key_nodeName = "${fragmentName}",
+			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
+
+		PageEditor.waitForAutoSave();
+	}
+
+	macro unhideFragmentViaPageStyles {
+		PageEditor.gotoTab(tabName = "Browser");
+
+		Navigator.gotoNavTab(navTab = "Page Elements");
+
+		if (IsElementNotPresent(key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE")) {
+			Click(
+				key_nodeName = "${fragmentName}",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+		}
+
+		Navigator.gotoNavTab(navTab = "Styles");
+
+		PageEditor.configureFragment(hideFragment = "false");
 	}
 
 	macro viewCannotAddFragmentToOutsideOfDropZone {

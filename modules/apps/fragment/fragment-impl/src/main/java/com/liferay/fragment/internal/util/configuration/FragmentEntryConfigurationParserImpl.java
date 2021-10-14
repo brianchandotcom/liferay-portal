@@ -17,6 +17,10 @@ package com.liferay.fragment.internal.util.configuration;
 import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.frontend.token.definition.FrontendToken;
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
@@ -35,12 +39,16 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -299,6 +307,14 @@ public class FragmentEntryConfigurationParserImpl
 			return jsonObject;
 		}
 		else if (StringUtil.equalsIgnoreCase(
+					fragmentConfigurationField.getType(), "colorPicker")) {
+
+			String fieldValue = (String)_getFieldValue(
+				FragmentConfigurationFieldDataType.STRING, value);
+
+			return _getColorPickerCssVariable(fieldValue);
+		}
+		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "itemSelector")) {
 
 			return _getInfoDisplayObjectEntryJSONObject(value);
@@ -495,6 +511,58 @@ public class FragmentEntryConfigurationParserImpl
 			});
 
 		return jsonObject.toString();
+	}
+
+	private String _getColorPickerCssVariable(String fieldValue) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if ((serviceContext == null) || Validator.isNull(fieldValue)) {
+			return fieldValue;
+		}
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		FrontendTokenDefinition frontendTokenDefinition =
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+				themeDisplay.getThemeId());
+
+		if (frontendTokenDefinition == null) {
+			return fieldValue;
+		}
+
+		Collection<FrontendToken> frontendTokens =
+			frontendTokenDefinition.getFrontendTokens();
+
+		for (FrontendToken frontendToken : frontendTokens) {
+			try {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					frontendToken.getJSON(LocaleUtil.getMostRelevantLocale()));
+
+				if (!Objects.equals(jsonObject.getString("name"), fieldValue)) {
+					continue;
+				}
+
+				ArrayList<FrontendTokenMapping> frontendTokenMappings =
+					new ArrayList<>(
+						frontendToken.getFrontendTokenMappings(
+							FrontendTokenMapping.TYPE_CSS_VARIABLE));
+
+				if (frontendTokenMappings.isEmpty()) {
+					return fieldValue;
+				}
+
+				FrontendTokenMapping frontendTokenMapping =
+					frontendTokenMappings.get(0);
+
+				return "var(--" + frontendTokenMapping.getValue() + ")";
+			}
+			catch (JSONException jsonException) {
+				return fieldValue;
+			}
+		}
+
+		return fieldValue;
 	}
 
 	private JSONArray _getFieldSetsJSONArray(String configuration) {
@@ -790,6 +858,9 @@ public class FragmentEntryConfigurationParserImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryConfigurationParserImpl.class);
+
+	@Reference
+	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

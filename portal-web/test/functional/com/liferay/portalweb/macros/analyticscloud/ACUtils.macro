@@ -553,7 +553,7 @@ definition {
 		}
 	}
 
-	@summary = "This macro access a page/document with different users. Pause is necessary because poshi login in from one user to another very quickly. For more information about pause see LRAC-9514"
+	@summary = "This macro access a page/document with different users. Pause is necessary because poshi logs in from one user to another very quickly. For more information about pause see LRAC-9514"
 	macro navigateToSitePageWithUser {
 		for (var email : list "${emailList}") {
 			User.logoutAndLoginPG(userLoginEmailAddress = "${email}");
@@ -565,16 +565,8 @@ definition {
 				siteName = "${siteName}",
 				submitText = "${submitText}");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-			// Pause is necessary because poshi login in from one user to another very quickly. For more information about pause see LRAC-9514
+			// Pause is necessary because poshi logs in from one user to another very quickly. For more information about pause see LRAC-9514
 
->>>>>>> 2147353 (LRAC-9491 SF 2)
-=======
-			//Pause is necessary because poshi login in from one user to another very quickly. For more information about pause see LRAC-9514
-
->>>>>>> e3b8616 (LRAC-9491 Add summary in some macros)
 			Pause(locator1 = "5000");
 		}
 	}

@@ -419,12 +419,41 @@ definition {
 	}
 
 	@description = "Bug ID: LRAC-7996 | Automation ID: LRAC-8110 | Test Summary: Assert Sites Activity loads activity data properly when the time filter is set to 'Last 24 hours'"
-	@ignore = "true"
 	@priority = "5"
 	test CanLoadDataProperlyWhenTimeFilterIsLast24Hours {
-		ACTimeFilter.clickTimeFilterButton();
-		ACTimeFilter.setLast24Hours();
-		ACUtils.assertXAxisTimedGraph(parentName = "Beryl Commerce Activities");
+		task ("Connect Analytics Cloud to DXP") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("View the page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Launch AC and go to Sites overview") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Set time filter to 24h") {
+			ACNavigation.switchTab(tabName = "Overview");
+
+			ACTimeFilter.clickTimeFilterButton(cardName = "${propertyName} Activities");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Assert that the activity was loaded properly") {
+			ACUtils.assertXAxisTimedGraph(parentName = "${propertyName} Activities");
+
+			ACIndividualsDashboard.viewRechartsBarOnIndividualsActivitiesChart();
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8280 | Test Summary: Anon and known visitors legend shown"

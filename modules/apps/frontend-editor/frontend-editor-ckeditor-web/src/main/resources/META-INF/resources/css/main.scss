@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 .lfr-balloon-editor {
 	&.cke_balloon.cke_balloontoolbar {
 		background: white;
@@ -126,10 +128,11 @@
 .lfr-balloon-editor-insert-button {
 	align-items: center;
 	background: white;
-	border: 0.75px solid #0b5fff;
+	border: 0.75px solid $primary;
 	border-radius: 2px;
-	color: #0b5fff;
+	color: $primary;
 	height: 24px;
+	position: absolute;
 	width: 24px;
 }
 

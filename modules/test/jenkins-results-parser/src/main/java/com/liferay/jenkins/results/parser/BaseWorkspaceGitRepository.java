@@ -582,7 +582,7 @@ public abstract class BaseWorkspaceGitRepository
 		List<GitRemote> gitHubDevGitRemotes =
 			GitHubDevSyncUtil.getGitHubDevGitRemotes(gitWorkingDirectory);
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < _RETRIES_SIZE_MAX; i++) {
 			if (gitHubDevGitRemotes.isEmpty()) {
 				break;
 			}
@@ -592,11 +592,19 @@ public abstract class BaseWorkspaceGitRepository
 
 			gitHubDevGitRemotes.remove(randomGitRemote);
 
+			String gitHubDevBranchName = getGitHubDevBranchName();
+
 			RemoteGitBranch remoteGitBranch =
 				gitWorkingDirectory.getRemoteGitBranch(
-					getGitHubDevBranchName(), randomGitRemote);
+					gitHubDevBranchName, randomGitRemote);
 
 			if (remoteGitBranch == null) {
+				if (i == (_RETRIES_SIZE_MAX - 1)) {
+					throw new RuntimeException(
+						"Unable to find github-dev branch " +
+							gitHubDevBranchName);
+				}
+
 				continue;
 			}
 
@@ -604,10 +612,21 @@ public abstract class BaseWorkspaceGitRepository
 				gitWorkingDirectory.fetch(remoteGitBranch);
 			}
 			catch (Exception exception) {
+				if (i == (_RETRIES_SIZE_MAX - 1)) {
+					throw new RuntimeException(
+						"Unable to fetch github-dev branch " +
+							gitHubDevBranchName,
+						exception);
+				}
+
 				continue;
 			}
 
 			if (!gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
+				if (i == (_RETRIES_SIZE_MAX - 1)) {
+					throw new RuntimeException("Unable to fetch sender branch");
+				}
+
 				continue;
 			}
 
@@ -708,6 +727,8 @@ public abstract class BaseWorkspaceGitRepository
 		"git_hub_url", "sender_branch_head_sha", "sender_branch_name",
 		"sender_branch_sha", "sender_branch_username"
 	};
+
+	private static final int _RETRIES_SIZE_MAX = 3;
 
 	private String _branchName;
 	private List<LocalGitCommit> _historicalLocalGitCommits;

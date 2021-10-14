@@ -88,7 +88,7 @@ public class BaseCommerceContextHttp implements CommerceContext {
 	public CommerceAccount getCommerceAccount() throws PortalException {
 		CommerceChannel commerceChannel = _fetchCommerceChannel();
 
-		if ((_commerceAccount != null) || (commerceChannel == null)) {
+		if (commerceChannel == null) {
 			return _commerceAccount;
 		}
 

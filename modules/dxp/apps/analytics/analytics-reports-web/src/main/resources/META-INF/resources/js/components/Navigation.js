@@ -91,9 +91,15 @@ export default function Navigation({
 	const handleTrafficSources = useCallback(() => {
 		return APIService.getTrafficSources(
 			endpoints.analyticsReportsTrafficSourcesURL,
-			{namespace, plid: page.plid, timeSpanKey}
+			{namespace, plid: page.plid, timeSpanKey, timeSpanOffset}
 		).then(({trafficSources}) => trafficSources);
-	}, [endpoints.analyticsReportsTrafficSourcesURL, namespace, page.plid]);
+	}, [
+		endpoints.analyticsReportsTrafficSourcesURL,
+		namespace,
+		page.plid,
+		timeSpanKey,
+		timeSpanOffset,
+	]);
 
 	const handleTrafficSourceClick = (trafficSources, trafficSourceName) => {
 		setTrafficSources(trafficSources);

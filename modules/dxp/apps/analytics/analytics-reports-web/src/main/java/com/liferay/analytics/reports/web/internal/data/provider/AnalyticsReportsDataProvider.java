@@ -62,14 +62,21 @@ public class AnalyticsReportsDataProvider {
 	}
 
 	public Map<String, AcquisitionChannel> getAcquisitionChannels(
-			long companyId, String url)
+			long companyId, String url, TimeRange timeRange)
 		throws PortalException {
 
 		try {
 			String response = _asahFaroBackendClient.doGet(
 				companyId,
-				"api/1.0/pages/acquisition-channels?canonicalURL=" + url +
-					"&interval=D&rangeKey=30");
+				String.format(
+					"api/1.0/pages/acquisition-channels?canonicalURL=%s&endDate=%s&" +
+						"interval=D&startDate=%s",
+					HtmlUtil.escapeURL(url),
+					DateTimeFormatter.ISO_DATE.format(
+						timeRange.getEndLocalDate()),
+					DateTimeFormatter.ISO_DATE.format(
+						timeRange.getStartLocalDate()))
+			);
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
@@ -106,14 +113,21 @@ public class AnalyticsReportsDataProvider {
 		}
 	}
 
-	public List<ReferringURL> getDomainReferringURLs(long companyId, String url)
+	public List<ReferringURL> getDomainReferringURLs(long companyId, String url, TimeRange timeRange)
 		throws PortalException {
 
 		try {
 			String response = _asahFaroBackendClient.doGet(
 				companyId,
-				"api/1.0/pages/page-referrer-hosts?canonicalURL=" + url +
-					"&interval=D&rangeKey=30");
+				String.format(
+					"api/1.0/pages/page-referrer-hosts?canonicalURL=%s&endDate=%s&" +
+						"interval=D&startDate=%s",
+					HtmlUtil.escapeURL(url),
+					DateTimeFormatter.ISO_DATE.format(
+						timeRange.getEndLocalDate()),
+					DateTimeFormatter.ISO_DATE.format(
+						timeRange.getStartLocalDate()))		
+			);
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
@@ -178,7 +192,8 @@ public class AnalyticsReportsDataProvider {
 					DateTimeFormatter.ISO_DATE.format(
 						timeRange.getEndLocalDate()),
 					DateTimeFormatter.ISO_DATE.format(
-						timeRange.getStartLocalDate())));
+						timeRange.getStartLocalDate()))
+				);
 
 			return _objectMapper.readValue(response, HistoricalMetric.class);
 		}
@@ -188,14 +203,21 @@ public class AnalyticsReportsDataProvider {
 		}
 	}
 
-	public List<ReferringURL> getPageReferringURLs(long companyId, String url)
+	public List<ReferringURL> getPageReferringURLs(long companyId, String url, TimeRange timeRange)
 		throws PortalException {
 
 		try {
 			String response = _asahFaroBackendClient.doGet(
 				companyId,
-				"api/1.0/pages/page-referrers?canonicalURL=" + url +
-					"&interval=D&rangeKey=30");
+				String.format(
+					"api/1.0/pages/page-referrers?canonicalURL=%s&endDate=%s&" +
+						"interval=D&startDate=%s",
+					HtmlUtil.escapeURL(url),
+					DateTimeFormatter.ISO_DATE.format(
+						timeRange.getEndLocalDate()),
+					DateTimeFormatter.ISO_DATE.format(
+						timeRange.getStartLocalDate()))	
+				);
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
@@ -223,14 +245,22 @@ public class AnalyticsReportsDataProvider {
 	}
 
 	public List<ReferringSocialMedia> getReferringSocialMediaList(
-			long companyId, String url)
+			long companyId, String url, TimeRange timeRange)
 		throws PortalException {
 
 		try {
 			String response = _asahFaroBackendClient.doGet(
 				companyId,
-				"api/1.0/pages/social-page-referrers?canonicalURL=" + url +
-					"&interval=D&rangeKey=30");
+				String.format(
+					"api/1.0/pages/social-page-referrers?canonicalURL=%s&endDate=%s&" +
+						"interval=D&startDate=%s",
+					HtmlUtil.escapeURL(url),
+					DateTimeFormatter.ISO_DATE.format(
+						timeRange.getEndLocalDate()),
+					DateTimeFormatter.ISO_DATE.format(
+						timeRange.getStartLocalDate()))	
+				);
+					
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
@@ -293,7 +323,7 @@ public class AnalyticsReportsDataProvider {
 	}
 
 	public Map<String, TrafficChannel> getTrafficChannels(
-			long companyId, String url)
+			long companyId, String url, TimeRange timeRange)
 		throws PortalException {
 
 		try {
@@ -301,16 +331,16 @@ public class AnalyticsReportsDataProvider {
 				companyId, url);
 
 			List<ReferringURL> domainReferringURLs = getDomainReferringURLs(
-				companyId, url);
+				companyId, url, timeRange);
 
 			List<ReferringURL> pageReferringURLs = getPageReferringURLs(
-				companyId, url);
+				companyId, url, timeRange);
 
 			List<ReferringSocialMedia> referringSocialMediaList =
-				getReferringSocialMediaList(companyId, url);
+				getReferringSocialMediaList(companyId, url, timeRange);
 
 			Map<String, AcquisitionChannel> acquisitionChannels =
-				getAcquisitionChannels(companyId, url);
+				getAcquisitionChannels(companyId, url, timeRange);
 
 			Collection<AcquisitionChannel> values =
 				acquisitionChannels.values();

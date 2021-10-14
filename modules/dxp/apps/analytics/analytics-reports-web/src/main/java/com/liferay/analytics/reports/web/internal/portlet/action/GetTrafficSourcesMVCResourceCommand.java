@@ -21,6 +21,8 @@ import com.liferay.analytics.reports.web.internal.model.OrganicTrafficChannelImp
 import com.liferay.analytics.reports.web.internal.model.PaidTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.ReferralTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.SocialTrafficChannelImpl;
+import com.liferay.analytics.reports.web.internal.model.TimeRange;
+import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficChannel;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -86,10 +88,18 @@ public class GetTrafficSourcesMVCResourceCommand
 			String canonicalURL = ParamUtil.getString(
 				resourceRequest, "canonicalURL");
 
+			String timeSpanKey = ParamUtil.getString(
+				resourceRequest, "timeSpanKey", TimeSpan.defaultTimeSpanKey());
+
+			TimeSpan timeSpan = TimeSpan.of(timeSpanKey);
+
+			int timeSpanOffset = ParamUtil.getInteger(
+				resourceRequest, "timeSpanOffset");
+
 			JSONObject jsonObject = JSONUtil.put(
 				"trafficSources",
 				_getTrafficSourcesJSONArray(
-					analyticsReportsDataProvider, themeDisplay.getCompanyId(),
+					analyticsReportsDataProvider, themeDisplay.getCompanyId(), timeSpan.toTimeRange(timeSpanOffset),
 					canonicalURL, themeDisplay.getLocale(), resourceBundle));
 
 			JSONPortletResponseUtil.writeJSON(
@@ -109,7 +119,7 @@ public class GetTrafficSourcesMVCResourceCommand
 
 	private List<TrafficChannel> _getTrafficChannels(
 		AnalyticsReportsDataProvider analyticsReportsDataProvider,
-		String canonicalURL, long companyId) {
+		String canonicalURL, long companyId, TimeRange timeRange) {
 
 		Map<String, TrafficChannel> emptyMap = HashMapBuilder.put(
 			"direct", (TrafficChannel)new DirectTrafficChannelImpl(false)
@@ -132,7 +142,7 @@ public class GetTrafficSourcesMVCResourceCommand
 		try {
 			Map<String, TrafficChannel> trafficChannels =
 				analyticsReportsDataProvider.getTrafficChannels(
-					companyId, canonicalURL);
+					companyId, canonicalURL, timeRange);
 
 			emptyMap.forEach(
 				(name, trafficChannel) -> trafficChannels.merge(
@@ -155,11 +165,11 @@ public class GetTrafficSourcesMVCResourceCommand
 
 	private JSONArray _getTrafficSourcesJSONArray(
 		AnalyticsReportsDataProvider analyticsReportsDataProvider,
-		long companyId, String canonicalURL, Locale locale,
+		long companyId, TimeRange timeRange, String canonicalURL, Locale locale,
 		ResourceBundle resourceBundle) {
 
 		List<TrafficChannel> trafficChannels = _getTrafficChannels(
-			analyticsReportsDataProvider, canonicalURL, companyId);
+			analyticsReportsDataProvider, canonicalURL, companyId, timeRange);
 
 		Stream<TrafficChannel> stream = trafficChannels.stream();
 

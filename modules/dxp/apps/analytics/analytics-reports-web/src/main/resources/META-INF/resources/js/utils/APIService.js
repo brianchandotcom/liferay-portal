@@ -56,9 +56,9 @@ export default {
 
 	getTrafficSources(
 		analyticsReportsTrafficSourcesURL,
-		{namespace, plid, timeSpanKey}
+		{namespace, plid, timeSpanKey, timeSpanOffset}
 	) {
-		const body = {plid, timeSpanKey};
+		const body = {plid, timeSpanKey, timeSpanOffset};
 
 		return _fetchWithError(analyticsReportsTrafficSourcesURL, {
 			body: _getFormDataRequest(body, namespace),

@@ -242,8 +242,8 @@ info:
 openapi: "3.0.1"
 paths:
     "/search":
-        get:
-            operationId: getSearch
+        post:
+            operationId: search
             parameters:
                 - in: query
                   name: query

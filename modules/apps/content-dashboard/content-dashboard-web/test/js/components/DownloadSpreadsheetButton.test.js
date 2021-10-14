@@ -21,6 +21,7 @@ import {
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
+import {act} from 'react-dom/test-utils';
 
 import DownloadSpreadsheetButton from '../../../src/main/resources/META-INF/resources/js/components/DownloadSpreadsheetButton/DownloadSpreadsheetButton';
 import * as utils from '../../../src/main/resources/META-INF/resources/js/utils/downloadSpreadsheetUtils';
@@ -30,18 +31,35 @@ const getComponent = (fileURL = 'demo-file-url') => {
 };
 
 describe('DownloadSpreadsheetButton', () => {
+	beforeEach(() => {
+		jest.useFakeTimers();
+
+		global.Liferay.on = jest.fn().mockReturnValue({
+			detach: jest.fn(),
+		});
+
+		global.fetch = jest.fn().mockReturnValue({
+			blob: jest.fn(),
+		});
+
+		global.URL = {
+			createObjectURL: jest.fn(),
+			revokeObjectURL: jest.fn(),
+		};
+	});
+
 	afterEach(() => {
+		jest.runOnlyPendingTimers();
+		jest.useRealTimers();
+
+		jest.restoreAllMocks();
 		cleanup();
 	});
 
-	it('renders a DownloadSpreadsheetButton component...', () => {
-		const {getByText} = render(getComponent());
+	it('renders a DownloadSpreadsheetButton component with the proper initial UI state', () => {
+		const {container, getByText, getByTitle} = render(getComponent());
 
 		expect(getByText('export-xls')).toBeInTheDocument();
-	});
-
-	it('...with the proper initial UI state', () => {
-		const {container, getByTitle} = render(getComponent());
 
 		const {className: btnClassName} = getByTitle(
 			'download-your-data-in-a-xls-file'
@@ -63,6 +81,8 @@ describe('DownloadSpreadsheetButton', () => {
 		const {container, getByText} = render(getComponent());
 		const exportButton = getByText('export-xls');
 
+		expect(getByText('export-xls')).toBeInTheDocument();
+
 		fireEvent(
 			exportButton,
 			new MouseEvent('click', {
@@ -73,10 +93,15 @@ describe('DownloadSpreadsheetButton', () => {
 
 		await waitForElement(() => getByText('generating-xls'));
 		expect(getByText('generating-xls')).toBeInTheDocument();
-
 		expect(
 			container.getElementsByClassName('loading-animation').length
 		).toBe(1);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(getByText('export-xls')).toBeInTheDocument();
 	});
 
 	it('...with the proper restored UI state after cancel', async () => {
@@ -92,11 +117,13 @@ describe('DownloadSpreadsheetButton', () => {
 		);
 
 		const cancelButton = getByTitle('cancel-export');
-
 		expect(cancelButton).toBeInTheDocument();
 		expect(
 			container.getElementsByClassName('lexicon-icon-times-circle').length
 		).toBe(1);
+
+		await waitForElement(() => getByText('generating-xls'));
+		expect(getByText('generating-xls')).toBeInTheDocument();
 
 		fireEvent(
 			cancelButton,
@@ -105,6 +132,10 @@ describe('DownloadSpreadsheetButton', () => {
 				cancelable: true,
 			})
 		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
 
 		await waitForElement(() => getByText('export-xls'));
 		expect(getByText('export-xls')).toBeInTheDocument();
@@ -141,6 +172,10 @@ describe('DownloadSpreadsheetButton', () => {
 
 		await waitForElement(() => getByText('generating-xls'));
 		expect(getByText('generating-xls')).toBeInTheDocument();
+
+		act(() => {
+			jest.runAllTimers();
+		});
 
 		await expect(mockedFetch).toHaveBeenCalledWith({
 			controller,

@@ -18,6 +18,7 @@ import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 import com.liferay.batch.planner.exception.BatchPlannerPlanExternalTypeException;
 import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
 import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
+import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.base.BatchPlannerPlanLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
@@ -90,8 +91,14 @@ public class BatchPlannerPlanLocalServiceImpl
 		resourceLocalService.deleteResource(
 			batchPlannerPlan, ResourceConstants.SCOPE_COMPANY);
 
-		batchPlannerLogPersistence.removeByBatchPlannerPlanId(
-			batchPlannerPlanId);
+		BatchPlannerLog batchPlannerLog =
+			batchPlannerLogPersistence.fetchByBatchPlannerPlanId(
+				batchPlannerPlanId);
+
+		if (batchPlannerLog != null) {
+			batchPlannerLogPersistence.removeByBatchPlannerPlanId(
+				batchPlannerPlanId);
+		}
 
 		batchPlannerMappingPersistence.removeByBatchPlannerPlanId(
 			batchPlannerPlanId);

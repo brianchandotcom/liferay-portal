@@ -351,12 +351,16 @@ definition {
 			if ("${navTab}" == "Fragments") {
 				PageEditor.addFragment(
 					collectionName = "${collectionName}",
+					composition = "${composition}",
 					fragmentName = "${fragmentName}",
 					targetFragmentName = "Container");
 
 				PageEditor.moveElementToContainerViaPageStructure(
+					composition = "${composition}",
 					dropTarget = "${dropTarget}",
 					elementName = "${fragmentName}",
+					index = "${index}",
+					layoutElementName = "${layoutElementName}",
 					targetElementName = "${targetElementName}");
 			}
 
@@ -368,6 +372,7 @@ definition {
 				PageEditor.moveElementToContainerViaPageStructure(
 					dropTarget = "${dropTarget}",
 					elementName = "${portletName}",
+					index = "${index}",
 					targetElementName = "${targetElementName}");
 			}
 		}
@@ -3160,8 +3165,13 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Page Elements");
 
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
 		if (!(isSet(targetElementName))) {
 			DragAndDrop.javaScriptDragAndDropToObject(
+				index = "${index}",
 				key_elementName = "${elementName}",
 				key_targetElementName = "Container",
 				locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
@@ -3173,8 +3183,13 @@ definition {
 				key_nodeName = "Container",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
 
+			if (isSet(composition)) {
+				var elementName = "${layoutElementName}";
+			}
+
 			if ("${dropTarget}" == "Up") {
 				DragAndDrop.javaScriptDragAndDropToUp(
+					index = "${index}",
 					key_elementName = "${elementName}",
 					key_targetElementName = "${targetElementName}",
 					locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
@@ -3183,6 +3198,7 @@ definition {
 
 			else {
 				DragAndDrop.javaScriptDragAndDropToBottom(
+					index = "${index}",
 					key_elementName = "${elementName}",
 					key_targetElementName = "${targetElementName}",
 					locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",

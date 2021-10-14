@@ -1381,15 +1381,12 @@ definition {
 			PageEditor.gotoDuplicate(fragmentName = "Heading");
 		}
 
-		task ("Add a Heading below Grid inside Container") {
-			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
-
-			DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
-				key_collectionName = "Basic Components",
-				key_fragmentName = "Heading",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
-				value1 = "");
+		task ("Add a Heading to the bottom of Grid inside Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				navTab = "Fragments",
+				targetElementName = "Grid");
 
 			AssertElementPresent(
 				key_columnNumber = "1",

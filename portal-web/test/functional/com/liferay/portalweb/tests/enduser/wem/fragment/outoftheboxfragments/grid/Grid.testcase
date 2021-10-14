@@ -94,14 +94,13 @@ definition {
 				navTab = "Fragments");
 		}
 
-		task ("Assert add second Grid element to the same Section") {
-			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
-				key_collectionName = "Layout Elements",
-				key_fragmentName = "Grid",
-				key_targetFragmentName = "Grid",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#EMPTY_NESTED_FRAGMENT_DROP_TARGET",
-				value1 = "");
+		task ("Add the second Grid element to the bottom of the first Grid inside Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid",
+				index = "2",
+				navTab = "Fragments",
+				targetElementName = "Grid");
 
 			AssertElementPresent(
 				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Grid')]//li[contains(@class,'title')]",

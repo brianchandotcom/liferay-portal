@@ -115,32 +115,13 @@ definition {
 				navTab = "Fragments");
 		}
 
-		task ("Add a Tabs below the Container") {
-			PageEditor.addFragment(
+		task ("Add a Tabs to the top of Paragraph inside the Container") {
+			PageEditor.addElementToContainer(
 				collectionName = "Basic Components",
+				dropTarget = "Up",
 				fragmentName = "Tabs",
-				targetFragmentName = "Container");
-		}
-
-		task ("Move the Tabs to the top of Paragraph inside the Container via Browser Panel") {
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Pause(locator1 = "3000");
-
-			Click(
-				key_nodeName = "Container",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
-
-			DragAndDrop.javaScriptDragAndDropToUp(
-				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Tabs')]//div[@role='button'][@draggable='true']",
-				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Paragraph')]//div[@role='button'][@draggable='true']");
-
-			Pause(locator1 = "3000");
-
-			AssertElementPresent(
-				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'Tabs')]",
-				key_position = "1",
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+				navTab = "Fragments",
+				targetElementName = "Paragraph");
 		}
 
 		task ("Assert the Container styles") {
@@ -249,32 +230,13 @@ definition {
 				navTab = "Fragments");
 		}
 
-		task ("Add a Image below the Container") {
-			PageEditor.addFragment(
+		task ("Add an Image to the top of Button inside the Container") {
+			PageEditor.addElementToContainer(
 				collectionName = "Basic Components",
+				dropTarget = "Up",
 				fragmentName = "Image",
-				targetFragmentName = "Container");
-		}
-
-		task ("Move the Image to the top of Button inside the Container via Browser Panel") {
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Pause(locator1 = "3000");
-
-			Click(
-				key_nodeName = "Container",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
-
-			DragAndDrop.javaScriptDragAndDropToUp(
-				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Image')]//div[@role='button'][@draggable='true']",
-				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Button')]//div[@role='button'][@draggable='true']");
-
-			Pause(locator1 = "3000");
-
-			AssertElementPresent(
-				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'Image')]",
-				key_position = "1",
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+				navTab = "Fragments",
+				targetElementName = "Button");
 		}
 
 		task ("View the Container styles") {
@@ -329,28 +291,16 @@ definition {
 				navTab = "Fragments");
 		}
 
-		task ("Add a Banner Center below the Container") {
-			PageEditor.addFragment(
+		task ("Add a Banner Center to the top of Heading inside the Container") {
+			PageEditor.addElementToContainer(
 				collectionName = "Featured Content",
 				composition = "true",
+				dropTarget = "Up",
 				fragmentName = "Banner Center",
-				targetFragmentName = "Container");
-		}
-
-		task ("Move the Banner Center to the top of Heading inside the Container via Browser Panel") {
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Pause(locator1 = "3000");
-
-			Click(
-				key_nodeName = "Container",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
-
-			DragAndDrop.javaScriptDragAndDropToUp(
-				locator1 = "xpath=(//div[contains(@class,'list-item__node')][contains(.,'Container')]//div[@role='button'][@draggable='true'])[2]",
-				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']");
-
-			Pause(locator1 = "3000");
+				index = "2",
+				layoutElementName = "Container",
+				navTab = "Fragments",
+				targetElementName = "Heading");
 
 			AssertElementPresent(
 				key_elementHeader = "//*[contains(@data-lfr-editable-id,'element-text')][normalize-space()='Banner Title Example']",
@@ -410,32 +360,13 @@ definition {
 				navTab = "Fragments");
 		}
 
-		task ("Add a Card below the Container") {
-			PageEditor.addFragment(
+		task ("Add a Card to the top of Heading inside the Container") {
+			PageEditor.addElementToContainer(
 				collectionName = "Basic Components",
+				dropTarget = "Up",
 				fragmentName = "Card",
-				targetFragmentName = "Container");
-		}
-
-		task ("Move the Card to the top of Heading inside the Container via Browser Panel") {
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Pause(locator1 = "3000");
-
-			Click(
-				key_nodeName = "Container",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
-
-			DragAndDrop.javaScriptDragAndDropToUp(
-				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Card')]//div[@role='button'][@draggable='true']",
-				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']");
-
-			Pause(locator1 = "3000");
-
-			AssertElementPresent(
-				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'Card')]",
-				key_position = "1",
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+				navTab = "Fragments",
+				targetElementName = "Heading");
 		}
 
 		task ("View the Container styles") {

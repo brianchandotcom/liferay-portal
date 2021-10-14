@@ -36,12 +36,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_CURRENT_TO_AVAILABLE_BUTTON</td>
+	<td>TRANSFER_ITEM_LEFT_TO_RIGHT</td>
 	<td>//button[contains(@aria-label,'Transfer Item Left to Right')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_AVAILABLE_TO_CURRENT_BUTTON</td>
+	<td>TRANSFER_ITEM_RIGHT_TO_LEFT</td>
 	<td>//button[contains(@aria-label,'Transfer Item Right to Left')]</td>
 	<td></td>
 </tr>

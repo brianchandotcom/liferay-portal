@@ -507,13 +507,13 @@ definition {
 			locator1 = "SiteSettingsDisplaySettings#LANGUAGES_RADIO");
 
 		if (isSet(currentSiteLanguages)) {
-			while (IsElementPresent(index = "1", key_position = "right", locator1 = "SiteSettingsDisplaySettings#LANGUAGES_SELECT_OPTION")) {
+			while (IsElementPresent(index = "1", key_position = "left", locator1 = "SiteSettingsDisplaySettings#LANGUAGES_SELECT_OPTION")) {
 				Click(
 					index = "1",
-					key_position = "right",
+					key_position = "left",
 					locator1 = "SiteSettingsDisplaySettings#LANGUAGES_SELECT_OPTION");
 
-				Click(locator1 = "SiteSettingsDisplaySettings#MOVE_AVAILABLE_TO_CURRENT_BUTTON");
+				Click(locator1 = "SiteSettingsDisplaySettings#TRANSFER_ITEM_LEFT_TO_RIGHT");
 			}
 
 			var defaultSiteLanguage = "${defaultSiteLanguage}";
@@ -522,24 +522,24 @@ definition {
 				locator1 = "SiteSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT_FIELD",
 				value1 = "${defaultSiteLanguage}");
 
-			while (IsElementPresent(index = "2", key_position = "left", locator1 = "SiteSettingsDisplaySettings#LANGUAGES_SELECT_OPTION")) {
-				var currentSiteLanguage = selenium.getText("//div[contains(@class,'listbox-left')]//select/option");
+			while (IsElementPresent(index = "2", key_position = "right", locator1 = "SiteSettingsDisplaySettings#LANGUAGES_SELECT_OPTION")) {
+				var currentSiteLanguage = selenium.getText("//div[contains(@class,'listbox-right')]//select/option");
 
 				if ("${currentSiteLanguage}" == "${defaultSiteLanguage}") {
 					Click(
 						index = "2",
-						key_position = "left",
+						key_position = "right",
 						locator1 = "SiteSettingsDisplaySettings#LANGUAGES_SELECT_OPTION");
 
-					Click(locator1 = "SiteSettingsDisplaySettings#MOVE_CURRENT_TO_AVAILABLE_BUTTON");
+					Click(locator1 = "SiteSettingsDisplaySettings#TRANSFER_ITEM_RIGHT_TO_LEFT");
 				}
 				else {
 					Click(
 						index = "1",
-						key_position = "left",
+						key_position = "right",
 						locator1 = "SiteSettingsDisplaySettings#LANGUAGES_SELECT_OPTION");
 
-					Click(locator1 = "SiteSettingsDisplaySettings#MOVE_CURRENT_TO_AVAILABLE_BUTTON");
+					Click(locator1 = "SiteSettingsDisplaySettings#TRANSFER_ITEM_RIGHT_TO_LEFT");
 				}
 			}
 
@@ -547,13 +547,13 @@ definition {
 				if ("${currentSiteLanguage}" != "${defaultSiteLanguage}") {
 					DoubleClick(
 						key_optionValue = "${currentSiteLanguage}",
-						key_position = "right",
+						key_position = "left",
 						locator1 = "SiteSettingsDisplaySettings#LANGUAGES_SELECT_SPECIFIC_OPTION");
 
-					Click(locator1 = "SiteSettingsDisplaySettings#MOVE_AVAILABLE_TO_CURRENT_BUTTON");
+					Click(locator1 = "SiteSettingsDisplaySettings#TRANSFER_ITEM_LEFT_TO_RIGHT");
 
 					AssertTextEquals.assertPartialText(
-						key_position = "left",
+						key_position = "right",
 						locator1 = "SiteSettingsDisplaySettings#LANGUAGES_SELECT_FIELD",
 						value1 = "${currentSiteLanguage}");
 				}

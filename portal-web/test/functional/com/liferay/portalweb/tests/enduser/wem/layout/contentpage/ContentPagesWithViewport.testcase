@@ -202,7 +202,7 @@ definition {
 		}
 
 		task ("Hide Heading Example 3 for desktop view") {
-			PageEditor.clickHideFragmentViaPageStructure(
+			PageEditor.hideFragmentViaPageStructure(
 				fragmentName = "Heading",
 				index = "3");
 		}
@@ -210,15 +210,15 @@ definition {
 		task ("Change to landscape phone viewport, hide 1 and 2, unhide 3") {
 			PageEditor.switchViewport(deviceType = "Landscape Phone");
 
-			PageEditor.clickHideFragmentViaPageStructure(
+			PageEditor.hideFragmentViaPageStructure(
 				fragmentName = "Heading",
 				index = "1");
 
-			PageEditor.clickHideFragmentViaPageStructure(
+			PageEditor.hideFragmentViaPageStructure(
 				fragmentName = "Heading",
 				index = "2");
 
-			PageEditor.clickUnhideFragmentViaPageStructure(
+			PageEditor.unhideFragmentViaPageStructure(
 				fragmentName = "Heading",
 				index = "3");
 		}
@@ -226,17 +226,17 @@ definition {
 		task ("Change to Portrait phone viewport, hide 3, unhide 2") {
 			PageEditor.switchViewport(deviceType = "Portrait Phone");
 
-			PageEditor.clickHideFragmentViaPageStructure(
+			PageEditor.hideFragmentViaPageStructure(
 				fragmentName = "Heading",
 				index = "3");
 
-			PageEditor.clickUnhideFragmentViaPageStructure(
+			PageEditor.unhideFragmentViaPageStructure(
 				fragmentName = "Heading",
 				index = "2");
 		}
 
 		task ("Click restore default for Heading Example 1 and assert is NOT shown") {
-			PageEditor.clickRestoreDefaultHidePropertyForFragment(
+			PageEditor.restoreDefaultHidePropertyForFragment(
 				fragmentName = "Heading",
 				index = "1");
 
@@ -252,7 +252,7 @@ definition {
 		}
 
 		task ("Click restore default for Heading Example 2 and assert  is NOT shown") {
-			PageEditor.clickRestoreDefaultHidePropertyForFragment(
+			PageEditor.restoreDefaultHidePropertyForFragment(
 				fragmentName = "Heading",
 				index = "2");
 
@@ -264,7 +264,7 @@ definition {
 		}
 
 		task ("Click restore default for Heading Example 3 and assert  is shown") {
-			PageEditor.clickRestoreDefaultHidePropertyForFragment(
+			PageEditor.restoreDefaultHidePropertyForFragment(
 				fragmentName = "Heading",
 				index = "3");
 
@@ -314,7 +314,7 @@ definition {
 		}
 
 		task ("Hide Heading Example 5 for desktop view") {
-			PageEditor.clickHideFragmentViaPageStructure(
+			PageEditor.hideFragmentViaPageStructure(
 				fragmentName = "Heading",
 				index = "5");
 		}
@@ -322,7 +322,7 @@ definition {
 		task ("Hide Heading Example 4 for tablet viewport") {
 			PageEditor.switchViewport(deviceType = "Tablet");
 
-			PageEditor.clickHideFragmentViaPageStructure(
+			PageEditor.hideFragmentViaPageStructure(
 				fragmentName = "Heading",
 				index = "4");
 		}
@@ -330,7 +330,7 @@ definition {
 		task ("Hide Heading Example 3 for landscape phone viewport") {
 			PageEditor.switchViewport(deviceType = "Landscape Phone");
 
-			PageEditor.clickHideFragmentViaPageStructure(
+			PageEditor.hideFragmentViaPageStructure(
 				fragmentName = "Heading",
 				index = "3");
 		}
@@ -338,7 +338,7 @@ definition {
 		task ("Hide Heading Example 2 for portrait phone viewport") {
 			PageEditor.switchViewport(deviceType = "Portrait Phone");
 
-			PageEditor.clickHideFragmentViaPageStructure(
+			PageEditor.hideFragmentViaPageStructure(
 				fragmentName = "Heading",
 				index = "2");
 		}

@@ -1642,7 +1642,7 @@ definition {
 		}
 
 		task ("Hide Heading Example 1 and save master page") {
-			PageEditor.clickHideFragmentViaPageStructure(
+			PageEditor.hideFragmentViaPageStructure(
 				fragmentName = "Heading",
 				index = "1");
 

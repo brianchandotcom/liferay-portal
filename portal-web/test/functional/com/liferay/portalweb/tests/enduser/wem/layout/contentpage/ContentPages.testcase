@@ -545,13 +545,13 @@ definition {
 		}
 
 		task ("Hide Blogs from topper options") {
-			PageEditor.clickHideFragment(fragmentName = "Blogs");
+			PageEditor.hideFragmentViaHeader(fragmentName = "Blogs");
 		}
 		task ("Hide Button fragment from fragment options") {
-			PageEditor.clickHideFragmentViaPageStyles(fragmentName = "Button");
+			PageEditor.hideFragmentViaPageStyles(fragmentName = "Button");
 		}
 		task ("Hide Heading fragment from the sidebar fragment tree") {
-			PageEditor.clickHideFragmentViaPageStructure(fragmentName = "Heading");
+			PageEditor.hideFragmentViaPageStructure(fragmentName = "Heading");
 		}
 
 		task ("Open the Preview modal") {
@@ -620,13 +620,13 @@ definition {
 				siteName = "Test Site Name");
 		}
 		task ("Unhide Blogs from the sidebar fragment tree") {
-			PageEditor.clickUnhideFragmentViaPageStructure(fragmentName = "Blogs");
+			PageEditor.unhideFragmentViaPageStructure(fragmentName = "Blogs");
 		}
 		task ("Unhide Heading from fragment options") {
-			PageEditor.clickUnhideFragmentViaPageStyles(fragmentName = "Heading");
+			PageEditor.unhideFragmentViaPageStyles(fragmentName = "Heading");
 		}
 		task ("Unhide Button from sidebar fragment tree") {
-			PageEditor.clickUnhideFragmentViaPageStructure(fragmentName = "Button");
+			PageEditor.unhideFragmentViaPageStructure(fragmentName = "Button");
 		}
 
 		task ("Publish and enter view mode") {
@@ -700,12 +700,12 @@ definition {
 		}
 
 		task ("Hide Blogs and HTML") {
-			PageEditor.clickHideFragmentViaPageStructure(fragmentName = "Blogs");
-			PageEditor.clickHideFragmentViaPageStructure(fragmentName = "HTML");
+			PageEditor.hideFragmentViaPageStructure(fragmentName = "Blogs");
+			PageEditor.hideFragmentViaPageStructure(fragmentName = "HTML");
 		}
 
 		task ("Hide the container") {
-			PageEditor.clickHideFragment(fragmentName = "Container");
+			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
 		}
 
 		task ("Assert no fragment or widget is shown") {
@@ -717,9 +717,9 @@ definition {
 		}
 
 		task ("From the sidebar fragment tree, show HTML and Button") {
-			PageEditor.clickUnhideFragmentViaPageStructure(fragmentName = "HTML");
+			PageEditor.unhideFragmentViaPageStructure(fragmentName = "HTML");
 
-			PageEditor.clickHideFragmentViaPageStructure(fragmentName = "Button");
+			PageEditor.hideFragmentViaPageStructure(fragmentName = "Button");
 		}
 
 		task ("Assert no fragment or widget is shown") {
@@ -731,7 +731,7 @@ definition {
 		}
 
 		task ("Unhide the container") {
-			PageEditor.clickUnhideFragmentViaPageStructure(fragmentName = "Container");
+			PageEditor.unhideFragmentViaPageStructure(fragmentName = "Container");
 		}
 
 		task ("Assert only Heading and HTML fragments are shown") {
@@ -884,7 +884,7 @@ definition {
 		}
 
 		task ("Hide Heading Example 1") {
-			PageEditor.clickHideFragmentViaPageStructure(
+			PageEditor.hideFragmentViaPageStructure(
 				fragmentName = "Heading",
 				index = "1");
 		}
@@ -916,7 +916,7 @@ definition {
 		}
 
 		task ("Show Heading Example 1") {
-			PageEditor.clickUnhideFragmentViaPageStructure(
+			PageEditor.unhideFragmentViaPageStructure(
 				fragmentName = "Heading",
 				index = "1");
 		}

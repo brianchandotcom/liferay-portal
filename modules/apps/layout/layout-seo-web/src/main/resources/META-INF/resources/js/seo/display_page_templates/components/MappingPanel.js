@@ -12,9 +12,8 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {PropTypes} from 'prop-types';
 import React, {useRef, useState} from 'react';
@@ -75,8 +74,8 @@ function MappingPanel({
 
 	return (
 		<div className="dpt-mapping-panel-wrapper" ref={wrapperRef}>
-			<ClayButton
-				className={classNames('dpt-mapping-btn lfr-portal-tooltip', {
+			<ClayButtonWithIcon
+				className={classNames('dpt-mapping-btn', {
 					active: isActive,
 				})}
 				displayType="secondary"
@@ -84,10 +83,9 @@ function MappingPanel({
 				onClick={() => {
 					setIsPanelOpen((state) => !state);
 				}}
+				symbol="bolt"
 				title={Liferay.Language.get('map')}
-			>
-				<ClayIcon symbol="bolt" />
-			</ClayButton>
+			/>
 			{isPanelOpen && (
 				<div
 					className="dpt-mapping-panel popover popover-scrollable"

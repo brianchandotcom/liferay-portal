@@ -1704,7 +1704,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${layout}");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Layout",
@@ -1724,7 +1724,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${listStyle}");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			AssertSelectedLabel(
 				key_fieldLabel = "List Style",
@@ -1737,7 +1737,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${listItemStyle}");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 
 				AssertSelectedLabel(
 					key_fieldLabel = "List Item Style",
@@ -1752,7 +1752,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${pagination}");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Pagination",
@@ -1770,6 +1770,8 @@ definition {
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
+			PageEditor.waitForAutoSave();
+
 			AssertTextEquals(
 				key_fieldLabel = "Maximum Number of Items",
 				locator1 = "FormFields#NUMBER_FIELD",
@@ -1786,13 +1788,13 @@ definition {
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
+			PageEditor.waitForAutoSave();
+
 			AssertTextEquals(
 				key_text = "Maximum Number of Items per Page",
 				locator1 = "TextInput#ANY",
 				value1 = "${maxNumberOfItemsPerPage}");
 		}
-
-		PageEditor.waitForAutoSave();
 	}
 
 	macro editCollectionFilter {
@@ -1890,7 +1892,7 @@ definition {
 
 				Button.click(button = "Select This Level");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 
 				AssertTextEquals(
 					key_fieldLabel = "Source",
@@ -1900,7 +1902,7 @@ definition {
 			else {
 				Button.click(button = "Select This Level");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 
 				AssertTextEquals(
 					key_fieldLabel = "Source",
@@ -1929,6 +1931,8 @@ definition {
 			AssertChecked.assertCheckedNotVisible(
 				checkboxName = "Single Selection",
 				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		if (isSet(showLabel)) {
@@ -2149,6 +2153,8 @@ definition {
 				AssertChecked.assertCheckedNotVisible(
 					checkboxName = "${displayedBehavior}",
 					locator1 = "Checkbox#ANY_CHECKBOX");
+
+				PageEditor.waitForAutoSave();
 			}
 
 			if (isSet(panelType)) {
@@ -2157,7 +2163,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${panelType}");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 
 				AssertSelectedLabel(
 					key_fieldLabel = "Panel Type",
@@ -2165,8 +2171,6 @@ definition {
 					value1 = "${panelType}");
 			}
 		}
-
-		PageEditor.waitForAutoSave();
 	}
 
 	macro editExperience {
@@ -2396,7 +2400,7 @@ definition {
 					colorSwatchItem = "${backgroundColor}",
 					fieldLabel = "Background Color");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 
 			if (isSet(backgroundImage)) {
@@ -2423,8 +2427,9 @@ definition {
 								value1 = "Image");
 						}
 
-						SelectFrame(value1 = "relative=top");
+						PageEditor.waitForAutoSave();
 					}
+
 					else {
 						if (isSet(source)) {
 							Select(
@@ -2439,6 +2444,8 @@ definition {
 							key_fieldLabel = "Field",
 							locator1 = "Select#GENERIC_SELECT_FIELD",
 							value1 = "${fieldName}");
+
+						PageEditor.waitForAutoSave();
 					}
 				}
 
@@ -2486,7 +2493,7 @@ definition {
 					SelectFrame(value1 = "relative=top");
 				}
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 
 			if (isSet(borderColor)) {
@@ -2494,7 +2501,7 @@ definition {
 					colorSwatchItem = "${borderColor}",
 					fieldLabel = "Border Color");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 
 			if (isSet(borderRadius)) {
@@ -2503,7 +2510,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${borderRadius}");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 
 			if (isSet(borderWidth)) {
@@ -2512,16 +2519,16 @@ definition {
 					locator1 = "FormFields#NUMBER_FIELD",
 					value1 = "${borderWidth}");
 
-				AssertTextEquals(
-					key_fieldLabel = "Border Width",
-					locator1 = "FormFields#NUMBER_FIELD",
-					value1 = "${borderWidth}");
-
 				Click(
 					key_sidebarButton = "Browser",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
+
+				AssertTextEquals(
+					key_fieldLabel = "Border Width",
+					locator1 = "FormFields#NUMBER_FIELD",
+					value1 = "${borderWidth}");
 			}
 
 			if (isSet(boxShadow)) {
@@ -2530,7 +2537,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${boxShadow}");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 
 			if (isSet(containerWidth)) {
@@ -2539,7 +2546,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${containerWidth}");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 
 			if (isSet(contentDisplay)) {
@@ -2548,7 +2555,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${contentDisplay}");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 
 				if ("${contentDisplay}" != "Block") {
 					if (isSet(alignItems)) {
@@ -2557,7 +2564,7 @@ definition {
 							locator1 = "Select#GENERIC_SELECT_FIELD",
 							value1 = "${alignItems}");
 
-						Pause(locator1 = "3000");
+						PageEditor.waitForAutoSave();
 					}
 
 					if (isSet(justifyContent)) {
@@ -2566,7 +2573,7 @@ definition {
 							locator1 = "Select#GENERIC_SELECT_FIELD",
 							value1 = "${justifyContent}");
 
-						Pause(locator1 = "3000");
+						PageEditor.waitForAutoSave();
 					}
 				}
 			}
@@ -2581,6 +2588,8 @@ definition {
 				Click(
 					key_sidebarButton = "Browser",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+				PageEditor.waitForAutoSave();
 			}
 
 			PageEditor.configureFragment(
@@ -2599,16 +2608,16 @@ definition {
 					locator1 = "FormFields#NUMBER_FIELD",
 					value1 = "${opacity}");
 
-				AssertTextEquals(
-					key_fieldLabel = "Opacity",
-					locator1 = "FormFields#NUMBER_FIELD",
-					value1 = "${opacity}");
-
 				Click(
 					key_sidebarButton = "Browser",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
+
+				AssertTextEquals(
+					key_fieldLabel = "Opacity",
+					locator1 = "FormFields#NUMBER_FIELD",
+					value1 = "${opacity}");
 			}
 		}
 
@@ -2621,7 +2630,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${link}");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 
 				PageEditorMapping.mapEditableFieldToAsset(
 					entryTitle = "${entryTitle}",
@@ -2648,6 +2657,8 @@ definition {
 				Click(
 					key_sidebarButton = "Browser",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+				PageEditor.waitForAutoSave();
 			}
 
 			if ("${target}" == "Blank") {
@@ -2657,7 +2668,7 @@ definition {
 						locator1 = "Checkbox#ANY_CHECKBOX");
 				}
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 			else if ("${target}" == "Self") {
 				while (IsChecked.isNotCheckedNotVisible(checkboxName = "Open in a new tab.", locator1 = "Checkbox#ANY_CHECKBOX")) {
@@ -2666,11 +2677,9 @@ definition {
 						locator1 = "Checkbox#ANY_CHECKBOX");
 				}
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 		}
-
-		PageEditor.waitForAutoSave();
 	}
 
 	macro editLayoutGrid {
@@ -2701,7 +2710,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${columnCount}");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 
 			if ("${spaceBetweenColumns}" == "true") {
@@ -2710,6 +2719,8 @@ definition {
 						checkboxName = "Show Gutter",
 						locator1 = "Checkbox#ANY_CHECKBOX");
 				}
+
+				PageEditor.waitForAutoSave();
 			}
 
 			if ("${spaceBetweenColumns}" == "false") {
@@ -2718,6 +2729,8 @@ definition {
 						checkboxName = "Show Gutter",
 						locator1 = "Checkbox#ANY_CHECKBOX");
 				}
+
+				PageEditor.waitForAutoSave();
 			}
 		}
 		else if ("${panel}" == "Styles") {
@@ -2729,7 +2742,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${layout}");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 
 			if (isSet(verticalAlignment)) {
@@ -2738,7 +2751,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${verticalAlignment}");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 
 			if ("${inverseOrder}" == "true") {
@@ -2748,7 +2761,7 @@ definition {
 						locator1 = "Checkbox#CHECKBOX_LABEL");
 				}
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 
 			if ("${inverseOrder}" == "false") {
@@ -2758,11 +2771,9 @@ definition {
 						locator1 = "Checkbox#CHECKBOX_LABEL");
 				}
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 		}
-
-		PageEditor.waitForAutoSave();
 	}
 
 	macro editMenuDisplay {
@@ -2795,7 +2806,7 @@ definition {
 
 				Button.click(button = "Select This Level");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 
 				AssertTextEquals(
 					key_fieldLabel = "Source",
@@ -2809,7 +2820,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${displayStyle}");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 
 				AssertSelectedLabel(
 					key_fieldLabel = "Display Style",
@@ -2823,7 +2834,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${sublevels}");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 
 				AssertSelectedLabel(
 					key_fieldLabel = "Sublevels",
@@ -2839,7 +2850,7 @@ definition {
 					colorSwatchItem = "${hoveredItemColor}",
 					fieldLabel = "Hovered Item Color");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 
 			if (isSet(selectedItemColor)) {
@@ -2847,11 +2858,9 @@ definition {
 					colorSwatchItem = "${selectedItemColor}",
 					fieldLabel = "Selected Item Color");
 
-				Pause(locator1 = "3000");
+				PageEditor.waitForAutoSave();
 			}
 		}
-
-		PageEditor.waitForAutoSave();
 	}
 
 	macro expandFragmentCollection {

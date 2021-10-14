@@ -67,6 +67,16 @@ public class COREntryRelServiceImpl extends COREntryRelServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteCOREntryRels(String className, long corEntryId)
+		throws PortalException {
+
+		_corEntryModelResourcePermission.check(
+			getPermissionChecker(), corEntryId, ActionKeys.UPDATE);
+
+		corEntryRelLocalService.deleteCOREntryRels(className, corEntryId);
+	}
+
+	@Override
 	public void deleteCOREntryRelsByCOREntryId(long corEntryId)
 		throws PortalException {
 

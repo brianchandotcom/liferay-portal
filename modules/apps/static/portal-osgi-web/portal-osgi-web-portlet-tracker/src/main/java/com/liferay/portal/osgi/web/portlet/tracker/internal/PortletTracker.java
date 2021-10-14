@@ -20,7 +20,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.asm.ASMWrapperUtil;
-import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -307,20 +306,15 @@ public class PortletTracker
 				return null;
 			});
 
-		if (StartupHelperUtil.isDBNew()) {
-			futureTask.run();
-		}
-		else {
-			Thread serviceTrackerOpenerThread = new Thread(
-				futureTask,
-				PortletTracker.class.getName() + "-ServiceTrackerOpener");
+		Thread serviceTrackerOpenerThread = new Thread(
+			futureTask,
+			PortletTracker.class.getName() + "-ServiceTrackerOpener");
 
-			serviceTrackerOpenerThread.setDaemon(true);
+		serviceTrackerOpenerThread.setDaemon(true);
 
-			serviceTrackerOpenerThread.start();
+		serviceTrackerOpenerThread.start();
 
-			DependencyManagerSyncUtil.registerSyncFuture(futureTask);
-		}
+		DependencyManagerSyncUtil.registerSyncFuture(futureTask);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Activated");

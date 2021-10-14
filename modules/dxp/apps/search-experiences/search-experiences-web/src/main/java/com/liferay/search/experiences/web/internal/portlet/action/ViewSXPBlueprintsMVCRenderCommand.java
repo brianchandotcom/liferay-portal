@@ -29,9 +29,9 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINT,
+		"javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINTS_ADMIN,
 		"mvc.command.name=/",
-		"mvc.command.name=/sxp_blueprint/view_sxp_blueprints"
+		"mvc.command.name=/sxp_blueprints_admin/view_sxp_blueprints"
 	},
 	service = MVCRenderCommand.class
 )
@@ -42,7 +42,7 @@ public class ViewSXPBlueprintsMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/sxp_blueprint/view.jsp";
+		return "/sxp_blueprints_admin/view.jsp";
 	}
 
 }

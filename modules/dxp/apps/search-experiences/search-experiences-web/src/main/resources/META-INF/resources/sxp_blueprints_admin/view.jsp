@@ -28,13 +28,13 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "sxpBlueprints");
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("sxpBlueprints"));
-						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "sxpBlueprints", "mvcRenderCommandName", "/sxp_blueprint/sxp_blueprints");
+						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "sxpBlueprints", "mvcRenderCommandName", "/sxp_blueprints_admin/view_sxp_blueprints");
 						navigationItem.setLabel(LanguageUtil.get(request, "blueprints"));
 					});
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("sxpElements"));
-						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "sxpElements", "mvcRenderCommandName", "/sxp_blueprint/sxp_elements", "hidden", Boolean.FALSE);
+						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "sxpElements", "mvcRenderCommandName", "/sxp_blueprints_admin/view_sxp_elements", "hidden", Boolean.FALSE);
 						navigationItem.setLabel(LanguageUtil.get(request, "elements"));
 					});
 			}

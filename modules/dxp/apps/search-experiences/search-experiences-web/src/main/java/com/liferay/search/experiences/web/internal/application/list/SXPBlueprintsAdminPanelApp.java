@@ -40,11 +40,11 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class SXPBlueprintPanelApp extends BasePanelApp {
+public class SXPBlueprintsAdminPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return SXPPortletKeys.SXP_BLUEPRINT;
+		return SXPPortletKeys.SXP_BLUEPRINTS_ADMIN;
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class SXPBlueprintPanelApp extends BasePanelApp {
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINT + ")",
+		target = "(javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINTS_ADMIN + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

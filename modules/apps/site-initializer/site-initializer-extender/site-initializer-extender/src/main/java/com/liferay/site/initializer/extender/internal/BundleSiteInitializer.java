@@ -321,7 +321,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(() -> _addDDMStructures(serviceContext));
 			_invoke(() -> _addFragmentEntries(serviceContext));
-			_invoke(() -> _addLayoutPageTemplates(serviceContext));
 			_invoke(() -> _addObjectDefinitions(serviceContext));
 			_invoke(() -> _addSAPEntries(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));
@@ -343,6 +342,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(
 				() -> _addJournalArticles(
 					_ddmStructureLocalService, _ddmTemplateLocalService,
+					documentsStringUtilReplaceValues, serviceContext));
+
+			_invoke(
+				() -> _addLayoutPageTemplates(
 					documentsStringUtilReplaceValues, serviceContext));
 
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues =
@@ -1111,7 +1114,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addLayoutPageTemplates(ServiceContext serviceContext)
+	private void _addLayoutPageTemplates(
+			Map<String, String> documentsStringUtilReplaceValues,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Enumeration<URL> enumeration = _bundle.findEntries(
@@ -1123,6 +1128,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
+		Group scopeGroup = serviceContext.getScopeGroup();
+
+		documentsStringUtilReplaceValues.put(
+			"GROUP_FRIENDLY_URL", scopeGroup.getFriendlyURL());
+
+		documentsStringUtilReplaceValues.put(
+			"GROUP_ID", String.valueOf(serviceContext.getScopeGroupId()));
+
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
@@ -1131,18 +1144,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (StringUtil.endsWith(urlPath, ".json")) {
 				String json = StringUtil.read(url.openStream());
 
-				Group scopeGroup = serviceContext.getScopeGroup();
-
 				zipWriter.addEntry(
 					StringUtil.removeFirst(
 						urlPath, "/site-initializer/layout-page-templates/"),
 					StringUtil.replace(
-						json,
-						new String[] {"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]"},
-						new String[] {
-							scopeGroup.getFriendlyURL(),
-							String.valueOf(serviceContext.getScopeGroupId())
-						}));
+						json, "\"[$", "$]\"",
+						documentsStringUtilReplaceValues));
 			}
 			else {
 				zipWriter.addEntry(

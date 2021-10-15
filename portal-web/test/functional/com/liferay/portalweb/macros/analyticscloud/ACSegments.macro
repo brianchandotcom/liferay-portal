@@ -97,13 +97,13 @@ definition {
 		for (var tableMember : list "${tableMember}") {
 			var key_TableMember = "${tableMember}";
 
-			Type(
-				locator1 = "ACSegments#SEARCH_MEMBER",
-				value1 = "${tableMember}");
+			ACSegments.searchSegment(findSegment = "${tableMember}");
 
-			KeyPress(
-				locator1 = "Segmentation#SEARCH_FIELD",
-				value1 = "\ENTER");
+			while (IsElementNotPresent(locator1 = "ACSegments#TABLE_CHECKBOX") && (maxIterations = "50")) {
+				ACUtils.clearSearchBar();
+
+				ACSegments.searchSegment(findSegment = "${tableMember}");
+			}
 
 			Click(locator1 = "ACSegments#TABLE_CHECKBOX");
 		}

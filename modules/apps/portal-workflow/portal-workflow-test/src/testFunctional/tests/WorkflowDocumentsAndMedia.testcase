@@ -253,12 +253,54 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69297. Assert that the user can publish multiple files"
-	@ignore = "true"
 	@priority = "3"
 	test CanPublishMultipleFiles {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		// TODO LRQA-69297 CanPublishMultipleFiles pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media",
+			site = "${siteName}");
 
+		Workflow.configureWorkflowViaPortlet(workflowDefinition = "Single Approver");
+
+		WorkflowDocumentsAndMedia.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.pdf,Document_3.xls");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		for (var i : list "Document_2,Document_3") {
+			Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "${i}",
+				workflowAssetType = "Document",
+				workflowTask = "Review");
+		}
+
+		for (var i : list "Document_2,Document_3") {
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "${i}",
+				workflowAssetType = "Document",
+				workflowTask = "Review");
+		}
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		for (var i : list "Document_2,Document_3") {
+			DMDocument.viewStatus(
+				dmDocumentStatus = "Approved",
+				dmDocumentTitle = "${i}");
+		}
+
+		DMDocument.viewStatus(
+				dmDocumentStatus = "Pending",
+				dmDocumentTitle = "Document_1");
 	}
 
 	@description = "This is a test for LRQA-69303. Verify created file can be shared. "

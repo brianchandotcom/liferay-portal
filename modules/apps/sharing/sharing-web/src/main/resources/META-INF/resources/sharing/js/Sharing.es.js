@@ -244,6 +244,10 @@ const Sharing = ({
 	const handleChange = useCallback((value) => {
 		if (!emailValidationInProgress.current) {
 			setMultiSelectValue(value);
+
+			if (value.trim() === '') {
+				setEmailAddressErrorMessages([]);
+			}
 		}
 	}, []);
 

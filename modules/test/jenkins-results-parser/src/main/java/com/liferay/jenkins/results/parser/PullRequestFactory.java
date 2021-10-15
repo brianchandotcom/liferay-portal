@@ -45,13 +45,17 @@ public class PullRequestFactory {
 	}
 
 	public static PullRequest newPullRequest(String gitHubURL) {
+		return newPullRequest(gitHubURL, null);
+	}
+
+	public static PullRequest newPullRequest(String gitHubURL, Build build) {
 		PullRequest pullRequest = _pullRequests.get(gitHubURL);
 
 		if (pullRequest != null) {
 			return pullRequest;
 		}
 
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(build);
 
 		if (buildDatabase.hasPullRequest(gitHubURL)) {
 			pullRequest = buildDatabase.getPullRequest(gitHubURL);

@@ -843,7 +843,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 		String baseGitRepositorySHA = null;
 
-		if (this instanceof WorkspaceBuild) {
+		if ((this instanceof WorkspaceBuild) && !fromArchive) {
 			WorkspaceBuild workspaceBuild = (WorkspaceBuild)this;
 
 			Workspace workspace = workspaceBuild.getWorkspace();

@@ -289,7 +289,7 @@ public abstract class BaseBuild implements Build {
 				"JENKINS_GITHUB_UPSTREAM_BRANCH_SHA");
 		}
 
-		if (topLevelBuild instanceof WorkspaceBuild) {
+		if ((topLevelBuild instanceof WorkspaceBuild) && !fromArchive) {
 			WorkspaceBuild workspaceBuild = (WorkspaceBuild)topLevelBuild;
 
 			Workspace workspace = workspaceBuild.getWorkspace();

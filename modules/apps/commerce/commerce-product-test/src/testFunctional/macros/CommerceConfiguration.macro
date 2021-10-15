@@ -90,7 +90,7 @@ definition {
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Accounts");
 
 		IsElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
@@ -99,7 +99,7 @@ definition {
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Account Groups");
 
 		IsElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");

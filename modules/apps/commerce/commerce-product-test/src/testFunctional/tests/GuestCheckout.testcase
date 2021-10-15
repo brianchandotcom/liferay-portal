@@ -535,7 +535,7 @@ definition {
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Accounts");
 
 		CommerceNavigator.gotoEntry(entryName = "Guest Account 1");
@@ -623,7 +623,7 @@ definition {
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Accounts");
 
 		CommerceNavigator.gotoEntry(entryName = "Address Name");
@@ -776,7 +776,7 @@ definition {
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Accounts");
 
 		CommerceNavigator.gotoEntry(entryName = "Buyer User");
@@ -1300,7 +1300,7 @@ definition {
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Accounts");
 
 		CommerceNavigator.gotoEntry(entryName = "Guest Account");

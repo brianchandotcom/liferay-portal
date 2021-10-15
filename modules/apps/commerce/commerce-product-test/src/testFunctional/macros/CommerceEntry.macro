@@ -574,7 +574,7 @@ definition {
 	macro createNewAccountGroup {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Accounts");
 
 		Click(locator1 = "Button#PLUS");
@@ -586,7 +586,7 @@ definition {
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Account Groups");
 
 		Click(locator1 = "Button#PLUS");

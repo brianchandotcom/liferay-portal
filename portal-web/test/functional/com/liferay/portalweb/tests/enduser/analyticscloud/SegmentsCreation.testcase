@@ -946,7 +946,17 @@ definition {
 		task ("Switch tab to membership and check the membership list") {
 			ACNavigation.switchTab(tabName = "Membership");
 
-			ACUtils.viewNameList(nameList = "${nameList}");
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+		}
+
+		task ("Edit the segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
+		}
+
+		task ("View preview number") {
+			ACSegments.viewPreviewNumber(previewNumber = "3");
 		}
 	}
 

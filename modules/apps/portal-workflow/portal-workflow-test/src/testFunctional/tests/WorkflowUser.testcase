@@ -73,8 +73,6 @@ definition {
 		Workflow._viewActivities(
 			workflowActivityComment = "Test Test completed the task Review.",
 			workflowAssetTitle = "userfn userln");
-
-			
 	}
 
 	@description = "This is a test for LRQA-69708. Verify that the user can delete a new account when there is a Workflow assigned. "

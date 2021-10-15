@@ -54,8 +54,9 @@ export default ({
 	updateCTCommentURL,
 	userInfo,
 }) => {
-	const CHANGE_TYPE_ADDED = 'added';
-	const CHANGE_TYPE_DELETED = 'deleted';
+	const CHANGE_TYPE_ADDITION = 0;
+	const CHANGE_TYPE_DELETION = 1;
+	const CHANGE_TYPE_MODIFICATION = 2;
 	const COLUMN_CHANGE_TYPE = 'CHANGE_TYPE';
 	const COLUMN_MODIFIED_DATE = 'MODIFIED_DATE';
 	const COLUMN_SITE = 'SITE';
@@ -153,10 +154,10 @@ export default ({
 			if (model.ctEntryId) {
 				model.changeTypeLabel = Liferay.Language.get('modified');
 
-				if (model.changeType === CHANGE_TYPE_ADDED) {
+				if (model.changeType === CHANGE_TYPE_ADDITION) {
 					model.changeTypeLabel = Liferay.Language.get('added');
 				}
-				else if (model.changeType === CHANGE_TYPE_DELETED) {
+				else if (model.changeType === CHANGE_TYPE_DELETION) {
 					model.changeTypeLabel = Liferay.Language.get('deleted');
 				}
 
@@ -167,10 +168,10 @@ export default ({
 				if (model.siteName === GLOBAL_SITE_NAME) {
 					let key = Liferay.Language.get('x-modified-a-x-x-ago');
 
-					if (model.changeType === CHANGE_TYPE_ADDED) {
+					if (model.changeType === CHANGE_TYPE_ADDITION) {
 						key = Liferay.Language.get('x-added-a-x-x-ago');
 					}
-					else if (model.changeType === CHANGE_TYPE_DELETED) {
+					else if (model.changeType === CHANGE_TYPE_DELETION) {
 						key = Liferay.Language.get('x-deleted-a-x-x-ago');
 					}
 
@@ -184,10 +185,10 @@ export default ({
 				else {
 					let key = Liferay.Language.get('x-modified-a-x-in-x-x-ago');
 
-					if (model.changeType === CHANGE_TYPE_ADDED) {
+					if (model.changeType === CHANGE_TYPE_ADDITION) {
 						key = Liferay.Language.get('x-added-a-x-in-x-x-ago');
 					}
-					else if (model.changeType === CHANGE_TYPE_DELETED) {
+					else if (model.changeType === CHANGE_TYPE_DELETION) {
 						key = Liferay.Language.get('x-deleted-a-x-in-x-x-ago');
 					}
 

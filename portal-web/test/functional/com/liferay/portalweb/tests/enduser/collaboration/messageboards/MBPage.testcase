@@ -251,6 +251,50 @@ definition {
 			userName = "Test Test");
 	}
 
+	@priority = "4"
+	@refactordone
+	test CanNotViewSubscribeLinksWithEmailNotificationsDisabled {
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name",
+			userEmailAddress = "test@liferay.com");
+
+		MessageboardsThread.addPG(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.viewCategorySubscribeLink(categoryName = "MB Category Name");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewThreadSubscribeLink(threadSubject = "MB Thread Message Subject");
+
+		MessageboardsPortlet.configureMessageAddedEmail(
+			messageAddedEmailEnabled = "false",
+			siteURLKey = "guest");
+
+		MessageboardsPortlet.configureMessageUpdatedEmail(
+			messageUpdatedEmailEnabled = "false",
+			siteURLKey = "guest");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.viewCategorySubscribeLink(
+			categoryName = "MB Category Name",
+			disabledEmailConfiguration = "true");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewThreadSubscribeLink(
+			disabledEmailConfiguration = "true",
+			threadSubject = "MB Thread Message Subject");
+	}
+
 	@description = "This is a use case for LPS-67722."
 	@priority = "5"
 	@refactordone
@@ -437,6 +481,254 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
+	@priority = "4"
+	@refactordone
+	test CanViewMBThreadReplyViaMoreMessages {
+		property custom.properties = "discussion.comments.delta.value=5";
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "Message Boards Thread Body",
+			threadSubject = "Message Boards Thread Subject");
+
+		for (var replyCount : list "1,2,3,4,5,6,7") {
+			JSONMBMessage.addMessageReply(
+				groupName = "Guest",
+				replyBody = "Message Boards Thread Reply ${replyCount}",
+				threadSubject = "Message Boards Thread Subject");
+		}
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "7",
+			threadSubject = "Message Boards Thread Subject");
+
+		for (var replyCount : list "1,2,3,4") {
+			AssertTextEquals(
+				key_threadBody = "Message Boards Thread Reply ${replyCount}",
+				locator1 = "MessageBoardsThread#THREAD_BODY",
+				value1 = "Message Boards Thread Reply ${replyCount}");
+		}
+
+		AssertVisible(locator1 = "Button#MORE_MESSAGES");
+
+		for (var replyNotVisible : list "5,6,7") {
+			AssertElementNotPresent(
+				key_threadBody = "Message Boards Thread Reply ${replyNotVisible}",
+				locator1 = "MessageBoardsThread#THREAD_BODY");
+		}
+
+		AssertClick(
+			locator1 = "Button#MORE_MESSAGES",
+			value1 = "More Messages");
+
+		for (var replyCount : list "1,2,3,4,5,6,7") {
+			AssertTextEquals(
+				key_threadBody = "Message Boards Thread Reply ${replyCount}",
+				locator1 = "MessageBoardsThread#THREAD_BODY",
+				value1 = "Message Boards Thread Reply ${replyCount}");
+		}
+	}
+
+	@ignore = "true"
+	@priority = "4"
+	@refactordone
+	test CanViewMessageBoardsRSS {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body 1",
+			threadSubject = "MB Thread Message Subject 1");
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body 2",
+			threadSubject = "MB Thread Message Subject 2");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		RSS.viewFeed(
+			entryContent = "MB Thread Message Body 2",
+			entryTitle = "MB Thread Message Subject 2",
+			feedSubtitle = "MB Thread Message Subject 2",
+			feedTitle = "MB Thread Message Subject 2",
+			rssURL = "message_boards");
+
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject 1");
+
+		RSS.viewFeed(
+			entryContent = "MB Thread Message Body 1",
+			entryTitle = "MB Thread Message Subject 1",
+			feedSubtitle = "MB Thread Message Subject 1",
+			feedTitle = "MB Thread Message Subject 1",
+			rssURL = "message_boards");
+
+		Click(locator1 = "NavBar#HOME");
+
+		RSS.gotoFeed(rssURL = "message_boards");
+
+		RSS.viewFeedEntry(
+			entryContent = "MB Thread Message Body 1,MB Thread Message Body 2",
+			entryTitle = "MB Thread Message Subject 1,MB Thread Message Subject 2");
+	}
+
+	@description = "This test covers LPS-132060, LPS-77252 and LPS-86797. It ensures that Categories group and Threads group are listed independently with their own pager."
+	@priority = "4"
+	@refactordone
+	test CanViewPagersForCategoriesAndThreads {
+		for (var categoryName : list "MB Category1 Name,MB Category2 Name,MB Category3 Name,MB Category4 Name,MB Category5 Name,MB Category6 Name") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "${categoryName} Description",
+				categoryName = "${categoryName}",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		for (var threadSubjectName : list "MB Thread Message 1,MB Thread Message 2,MB Thread Message 3,MB Thread Message 4,MMB Thread Message 5,MB Thread Message 6") {
+			JSONMBMessage.addMessage(
+				groupName = "Guest",
+				threadBody = "${threadSubjectName} Body",
+				threadSubject = "${threadSubjectName} Subject");
+		}
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		AssertTextEquals(
+			key_categoryName = "MB Category6 Name",
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
+			value1 = "MB Category6 Name");
+
+		Click(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT_2");
+
+		MenuItem.click(menuItem = "4");
+
+		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+
+		Click(locator1 = "Pagination#NEXT_LINK_2");
+
+		AssertTextEquals(
+			key_categoryName = "MB Category6 Name",
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
+			value1 = "MB Category6 Name");
+
+		AssertTextEquals.assertPartialText(
+			key_threadSubject = "MB Thread Message 1 Subject",
+			locator1 = "MessageBoards#THREAD_LIST_THREAD",
+			value1 = "MB Thread Message 1 Subject");
+
+		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+
+		for (var categoryName : list "MB Sub Category1 Name,MB Sub Category2 Name,MB Sub Category3 Name,MB Sub Category4 Name,MB Sub Category5 Name,MB Sub Category6 Name") {
+			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+				categoryName = "MB Category1 Name",
+				groupName = "Guest");
+
+			JSONMBMessage.addCategory(
+				categoryDescription = "MB Subcategory Description",
+				categoryName = "${categoryName}",
+				groupName = "Guest",
+				parentCategoryId = "${parentCategoryId}",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		JSONMBMessage.addMessage(
+			categoryName = "MB Category1 Name",
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body in Sub Category",
+			threadSubject = "MB Thread Message Subject in Sub Category");
+
+		MessageboardsCategory.openToCategory(
+			categoryName = "MB Category1 Name",
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest");
+
+		AssertTextEquals(
+			key_titleName = "Categories",
+			locator1 = "MessageBoards#PAGER_TITLE",
+			value1 = "Categories");
+
+		AssertTextEquals(
+			key_titleName = "Threads",
+			locator1 = "MessageBoards#PAGER_TITLE",
+			value1 = "Threads");
+
+		AssertElementNotPresent(
+			key_threadSubject = "MB Thread Message",
+			locator1 = "MessageBoardsThread#THREAD_SUBJECT",
+			value1 = "MB Thread Message");
+
+		Pagination.changePagination(itemsPerPage = "8");
+
+		Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanViewSubcategorySubscriptionViaMySubscriptionsPage {
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name",
+			userEmailAddress = "test@liferay.com");
+
+		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+			categoryName = "MB Category Name",
+			groupName = "Guest");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Subcategory Description",
+			categoryName = "MB Subcategory Name",
+			groupName = "Guest",
+			parentCategoryId = "${parentCategoryId}",
+			userEmailAddress = "test@liferay.com");
+
+		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+			categoryName = "MB Subcategory Name",
+			groupName = "Guest");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Subcategory 2 Description",
+			categoryName = "MB Subcategory Name 2",
+			groupName = "Guest",
+			parentCategoryId = "${parentCategoryId}",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.viewPG(
+			categoryName = "MB Category Name",
+			subCategoryDescription = "MB Subcategory Description",
+			subCategoryName = "MB Subcategory Name",
+			threadCount = "0");
+
+		MessageboardsCategory.openToCategory(
+			categoryName = "MB Subcategory Name",
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest");
+
+		MessageboardsCategory.subscribePG(categoryName = "MB Subcategory Name 2");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.viewMySubscriptionsPG(
+			parentcategory1 = "MB Category Name",
+			parentcategory2 = "MB Subcategory Name",
+			subscribedThread = "MB Subcategory Name 2");
+	}
+
 	@priority = "5"
 	@refactordone
 	test CanViewThread {
@@ -569,392 +861,10 @@ definition {
 			userName = "Test Test");
 	}
 
-	@priority = "4"
-	@refactordone
-	test MBCategoryCannotBeAddedWithoutName {
-		MessageboardsCategory.addPG(
-			categoryDescription = "MB Category Description",
-			categoryDescriptionEnabled = "true",
-			categoryName = " ",
-			categoryWithoutName = "true",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.viewDefault();
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test ViewMBThreadReplyViaMoreMessages {
-		property custom.properties = "discussion.comments.delta.value=5";
-
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		for (var replyCount : list "1,2,3,4,5,6,7") {
-			MessageboardsThread.replyPG(
-				threadReplyBody = "Message Boards Thread Reply ${replyCount}",
-				threadSubject = "Message Boards Thread Subject");
-
-			Navigator.gotoPage(pageName = "Message Boards Page");
-		}
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			replyCount = "7",
-			threadSubject = "Message Boards Thread Subject");
-
-		for (var replyCount : list "1,2,3,4") {
-			var key_threadBody = "Message Boards Thread Reply ${replyCount}";
-
-			AssertTextEquals(
-				locator1 = "MessageBoardsThread#THREAD_BODY",
-				value1 = "Message Boards Thread Reply ${replyCount}");
-		}
-
-		AssertVisible(locator1 = "Button#MORE_MESSAGES");
-
-		for (var replyNotVisible : list "5,6,7") {
-			var key_threadBody = "Message Boards Thread Reply ${replyNotVisible}";
-
-			AssertElementNotPresent(locator1 = "MessageBoardsThread#THREAD_BODY");
-		}
-
-		AssertClick(
-			locator1 = "Button#MORE_MESSAGES",
-			value1 = "More Messages");
-
-		for (var replyCount : list "1,2,3,4,5,6,7") {
-			var key_threadBody = "Message Boards Thread Reply ${replyCount}";
-
-			AssertTextEquals(
-				locator1 = "MessageBoardsThread#THREAD_BODY",
-				value1 = "Message Boards Thread Reply ${replyCount}");
-		}
-	}
-
-	@ignore = "true"
-	@priority = "4"
-	@refactorneeded
-	test ViewMessageBoardsRSS {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Message Boards Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Message Boards Page",
-			widgetName = "Message Boards");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "MB Thread Message Body 1",
-			threadSubject = "MB Thread Message Subject 1");
-
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "MB Thread Message Body 2",
-			threadSubject = "MB Thread Message Subject 2");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		RSS.viewFeed(
-			entryContent = "MB Thread Message Body 2",
-			entryTitle = "MB Thread Message Subject 2",
-			feedSubtitle = "MB Thread Message Subject 2",
-			feedTitle = "MB Thread Message Subject 2",
-			rssURL = "message_boards");
-
-		Click(locator1 = "NavBar#HOME");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			replyCount = "0",
-			threadSubject = "MB Thread Message Subject 1");
-
-		RSS.viewFeed(
-			entryContent = "MB Thread Message Body 1",
-			entryTitle = "MB Thread Message Subject 1",
-			feedSubtitle = "MB Thread Message Subject 1",
-			feedTitle = "MB Thread Message Subject 1",
-			rssURL = "message_boards");
-
-		Click(locator1 = "NavBar#HOME");
-
-		RSS.gotoFeed(rssURL = "message_boards");
-
-		RSS.viewFeedEntry(
-			entryContent = "MB Thread Message Body 1,MB Thread Message Body 2",
-			entryTitle = "MB Thread Message Subject 1,MB Thread Message Subject 2");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test ViewNoSubscribeLinksNoWithEmailNotificationsDisabled {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.addPG(
-			categoryName = "MB Category Name",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		var key_categoryName = "MB Category Name";
-		var key_threadSubject = "MB Thread Message Subject";
-
-		Click(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
-
-		MenuItem.viewPresent(menuItem = "Subscribe");
-
-		AssertClick(
-			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "MB Category Name");
-
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
-
-		AssertTextEquals(
-			locator1 = "Link#SUBSCRIBE",
-			value1 = "Subscribe");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		Click(locator1 = "MessageBoards#VERTICAL_ELLIPSIS");
-
-		MenuItem.viewPresent(menuItem = "Unsubscribe");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		AssertClick(
-			locator1 = "MessageBoards#THREAD_LIST_THREAD",
-			value1 = "MB Thread Message Subject");
-
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.viewPresent(menuItem = "Unsubscribe");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsPortlet.configureMessageAddedEmailCP(messageAddedEmailEnabled = "false");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsPortlet.configureMessageUpdatedEmailCP(messageUpdatedEmailEnabled = "false");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		Click(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
-
-		MenuItem.viewNotPresent(menuItem = "Subscribe");
-
-		AssertClick(
-			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "MB Category Name");
-
-		AssertElementNotPresent(locator1 = "Link#SUBSCRIBE");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		Click(locator1 = "MessageBoards#VERTICAL_ELLIPSIS");
-
-		MenuItem.viewNotPresent(menuItem = "Unsubscribe");
-
-		AssertClick(
-			locator1 = "MessageBoards#THREAD_LIST_THREAD",
-			value1 = "MB Thread Message Subject");
-
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.viewNotPresent(menuItem = "Unsubscribe");
-	}
-
-	@description = "This test covers LPS-132060, LPS-77252 and LPS-86797. It ensures that Categories group and Threads group are listed independently with their own pager."
-	@priority = "4"
-	@refactorneeded
-	test ViewPagersForCategoriesAndThreads {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		for (var categoryName : list "MB Category1 Name,MB Category2 Name,MB Category3 Name,MB Category4 Name,MB Category5 Name,MB Category6 Name") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "${categoryName} Description",
-				categoryName = "${categoryName}",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		for (var threadSubjectName : list "MB Thread Message 1,MB Thread Message 2,MB Thread Message 3,MB Thread Message 4,MMB Thread Message 5,MB Thread Message 6") {
-			JSONMBMessage.addMessage(
-				groupName = "Guest",
-				threadBody = "${threadSubjectName} Body",
-				threadSubject = "${threadSubjectName} Subject");
-		}
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		AssertTextEquals(
-			key_titleName = "Categories",
-			locator1 = "MessageBoards#PAGER_TITLE",
-			value1 = "Categories");
-
-		AssertTextEquals(
-			key_titleName = "Threads",
-			locator1 = "MessageBoards#PAGER_TITLE",
-			value1 = "Threads");
-
-		Pagination.changePagination(itemsPerPage = "4");
-
-		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
-
-		Click(locator1 = "Pagination#NEXT_LINK");
-
-		AssertTextEquals(
-			key_categoryName = "MB Category6 Name",
-			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "MB Category6 Name");
-
-		Click(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT_2");
-
-		MenuItem.click(menuItem = "4");
-
-		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
-
-		Click(locator1 = "Pagination#NEXT_LINK_2");
-
-		AssertTextEquals(
-			key_categoryName = "MB Category6 Name",
-			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "MB Category6 Name");
-
-		AssertTextEquals.assertPartialText(
-			key_threadSubject = "MB Thread Message 1 Subject",
-			locator1 = "MessageBoards#THREAD_LIST_THREAD",
-			value1 = "MB Thread Message 1 Subject");
-
-		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
-
-		for (var categoryName : list "MB Sub Category1 Name,MB Sub Category2 Name,MB Sub Category3 Name,MB Sub Category4 Name,MB Sub Category5 Name,MB Sub Category6 Name") {
-			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-				categoryName = "MB Category1 Name",
-				groupName = "Guest");
-
-			JSONMBMessage.addCategory(
-				categoryDescription = "MB Subcategory Description",
-				categoryName = "${categoryName}",
-				groupName = "Guest",
-				parentCategoryId = "${parentCategoryId}",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsCategory.gotoCP(categoryName = "MB Category1 Name");
-
-		MessageboardsThread.addCP(
-			threadBody = "MB Thread Message Body in Sub Category",
-			threadSubject = "MB Thread Message Subject in Sub Category");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.gotoPG(categoryName = "MB Category1 Name");
-
-		AssertTextEquals(
-			key_titleName = "Categories",
-			locator1 = "MessageBoards#PAGER_TITLE",
-			value1 = "Categories");
-
-		AssertTextEquals(
-			key_titleName = "Threads",
-			locator1 = "MessageBoards#PAGER_TITLE",
-			value1 = "Threads");
-
-		AssertElementNotPresent(
-			key_threadSubject = "MB Thread Message",
-			locator1 = "MessageBoardsThread#THREAD_SUBJECT",
-			value1 = "MB Thread Message");
-
-		Pagination.changePagination(itemsPerPage = "8");
-
-		Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test ViewSubcategorySubscriptionViaMySubscriptionsPage {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
-
-		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
-
-		MessageboardsCategory.addPG(
-			categoryDescription = "MB Subcategory Description",
-			categoryName = "MB Subcategory Name");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.gotoPG(
-			categoryName = "MB Category Name",
-			subCategoryEnabled = "true",
-			subCategoryName = "MB Subcategory Name");
-
-		MessageboardsCategory.addPG(
-			categoryDescription = "MB Subcategory 2 Description",
-			categoryName = "MB Subcategory Name 2");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.viewPG(
-			categoryName = "MB Category Name",
-			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name",
-			threadCount = "0");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
-
-		MessageboardsCategory.viewPG(
-			categoryName = "MB Subcategory Name",
-			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name 2",
-			threadCount = "0");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
-
-		MessageboardsCategory.gotoPG(categoryName = "MB Subcategory Name");
-
-		MessageboardsCategory.subscribePG(categoryName = "MB Subcategory Name 2");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.viewMySubscriptionsPG(
-			parentcategory1 = "MB Category Name",
-			parentcategory2 = "MB Subcategory Name",
-			subscribedThread = "MB Subcategory Name 2");
-	}
-
 	@description = "This is a use case for LPS-77263."
 	@priority = "5"
-	@refactorneeded
-	test ViewVisualStateOfReadMBThread {
+	@refactordone
+	test CanViewVisualStateOfReadMBThread {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		for (var num : list "1,2") {
@@ -983,9 +893,11 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.gotoCP(threadSubject = "MB Thread Message Subject 1");
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject 1");
 
 		Click(
 			key_breadcrumbName = "Home",
@@ -996,6 +908,22 @@ definition {
 		MessageboardsThread.viewMBThreadVisualStatePG(
 			threadSubject = "MB Thread Message Subject 2",
 			unReadMBthread = "true");
+	}
+
+	@priority = "4"
+	@refactordone
+	test MBCategoryCannotBeAddedWithoutName {
+		MessageboardsCategory.addPG(
+			categoryDescription = "MB Category Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = " ",
+			categoryWithoutName = "true",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.viewDefault();
 	}
 
 	@description = "This test ensures that the MB widget follows W3C accessibility standards"

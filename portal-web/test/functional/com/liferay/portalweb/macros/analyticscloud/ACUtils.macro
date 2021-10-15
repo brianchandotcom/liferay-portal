@@ -671,7 +671,9 @@ definition {
 			var key_nameList = "${name}";
 
 			while (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST") && (maxIterations = "50")) {
-				Refresh();
+				ACSegments.searchSegment(findSegment = "${name}");
+
+				ACUtils.clearSearchBar();
 			}
 
 			AssertTextEquals(

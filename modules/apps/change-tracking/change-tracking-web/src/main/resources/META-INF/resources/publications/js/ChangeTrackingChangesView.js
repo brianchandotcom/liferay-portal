@@ -73,6 +73,64 @@ export default ({
 	const VIEW_TYPE_CHANGES = 'changes';
 	const VIEW_TYPE_CONTEXT = 'context';
 
+	const isWithinApp = useCallback(
+		(params) => {
+			const ctCollectionIdParam = params.get(PARAM_CT_COLLECTION_ID);
+			const mvcRenderCommandName = params.get(
+				PARAM_MVC_RENDER_COMMAND_NAME
+			);
+
+			if (
+				ctCollectionIdParam &&
+				ctCollectionIdParam === ctCollectionId.toString() &&
+				mvcRenderCommandName &&
+				mvcRenderCommandName === MVC_RENDER_COMMAND_NAME
+			) {
+				return true;
+			}
+
+			return false;
+		},
+		[
+			MVC_RENDER_COMMAND_NAME,
+			PARAM_CT_COLLECTION_ID,
+			PARAM_MVC_RENDER_COMMAND_NAME,
+			ctCollectionId,
+		]
+	);
+
+	const pathname = window.location.pathname;
+
+	const search = window.location.search;
+
+	const params = new URLSearchParams(search);
+
+	const initialized = useRef(false);
+
+	if (
+		!initialized.current &&
+		isWithinApp(params) &&
+		(!window.history.state || !window.history.state.senna)
+	) {
+		initialized.current = true;
+
+		const state = {
+			path: pathname + search,
+			senna: true,
+		};
+
+		window.history.replaceState(state, document.title);
+	}
+
+	params.delete(PARAM_KEYWORDS);
+	params.delete(PARAM_PATH);
+	params.delete(PARAM_SHOW_HIDEABLE);
+
+	const basePath = useRef(pathname + '?' + params.toString());
+
+	const commentsCache = useRef({});
+	const renderCache = useRef({});
+
 	const modelsRef = useRef(null);
 
 	if (modelsRef.current === null) {
@@ -172,45 +230,6 @@ export default ({
 		}
 	}
 
-	const getModels = useCallback((nodes) => {
-		if (!nodes) {
-			return [];
-		}
-
-		const models = [];
-
-		for (let i = 0; i < nodes.length; i++) {
-			const node = nodes[i];
-
-			let modelKey = node;
-			let nodeId = node;
-
-			if (typeof node === 'object') {
-				modelKey = node.modelKey;
-				nodeId = node.nodeId;
-			}
-
-			if (
-				!Object.prototype.hasOwnProperty.call(
-					modelsRef.current,
-					modelKey.toString()
-				)
-			) {
-				continue;
-			}
-
-			const json = JSON.parse(
-				JSON.stringify(modelsRef.current[modelKey.toString()])
-			);
-
-			json.nodeId = nodeId;
-
-			models.push(json);
-		}
-
-		return models;
-	}, []);
-
 	const getPathState = useCallback(
 		(param) => {
 			if (!param) {
@@ -292,12 +311,12 @@ export default ({
 
 						if (
 							model.modelClassNameId ===
-								sessionNode.modelClassNameId &&
+							sessionNode.modelClassNameId &&
 							model.modelClassPK === sessionNode.modelClassPK
 						) {
 							if (
 								pathState.filterClass !==
-									FILTER_CLASS_EVERYTHING &&
+								FILTER_CLASS_EVERYTHING &&
 								i === 0
 							) {
 								const stack = [
@@ -347,6 +366,45 @@ export default ({
 	const initialFilterClass = pathState.filterClass;
 	const initialNodeId = pathState.nodeId;
 	const initialViewType = pathState.viewType;
+
+	const getModels = useCallback((nodes) => {
+		if (!nodes) {
+			return [];
+		}
+
+		const models = [];
+
+		for (let i = 0; i < nodes.length; i++) {
+			const node = nodes[i];
+
+			let modelKey = node;
+			let nodeId = node;
+
+			if (typeof node === 'object') {
+				modelKey = node.modelKey;
+				nodeId = node.nodeId;
+			}
+
+			if (
+				!Object.prototype.hasOwnProperty.call(
+					modelsRef.current,
+					modelKey.toString()
+				)
+			) {
+				continue;
+			}
+
+			const json = JSON.parse(
+				JSON.stringify(modelsRef.current[modelKey.toString()])
+			);
+
+			json.nodeId = nodeId;
+
+			models.push(json);
+		}
+
+		return models;
+	}, []);
 
 	const getNode = useCallback(
 		(filterClass, nodeId, viewType) => {
@@ -436,63 +494,26 @@ export default ({
 		[FILTER_CLASS_EVERYTHING, changes, getModels]
 	);
 
-	const isWithinApp = useCallback(
-		(params) => {
-			const ctCollectionIdParam = params.get(PARAM_CT_COLLECTION_ID);
-			const mvcRenderCommandName = params.get(
-				PARAM_MVC_RENDER_COMMAND_NAME
-			);
-
-			if (
-				ctCollectionIdParam &&
-				ctCollectionIdParam === ctCollectionId.toString() &&
-				mvcRenderCommandName &&
-				mvcRenderCommandName === MVC_RENDER_COMMAND_NAME
-			) {
-				return true;
-			}
-
-			return false;
-		},
-		[
-			MVC_RENDER_COMMAND_NAME,
-			PARAM_CT_COLLECTION_ID,
-			PARAM_MVC_RENDER_COMMAND_NAME,
-			ctCollectionId,
-		]
+	const initialNode = getNode(
+		initialFilterClass,
+		initialNodeId,
+		initialViewType
 	);
 
-	const pathname = window.location.pathname;
+	const initialShowHideable =
+		initialNode.hideable ||
+		(initialFilterClass !== FILTER_CLASS_EVERYTHING &&
+			contextViewRef.current[initialFilterClass].hideable)
+			? true
+			: !!showHideableFromURL;
 
-	const search = window.location.search;
-
-	const params = new URLSearchParams(search);
-
-	const initialized = useRef(false);
-
-	if (
-		!initialized.current &&
-		isWithinApp(params) &&
-		(!window.history.state || !window.history.state.senna)
-	) {
-		initialized.current = true;
-
-		const state = {
-			path: pathname + search,
-			senna: true,
-		};
-
-		window.history.replaceState(state, document.title);
-	}
-
-	params.delete(PARAM_KEYWORDS);
-	params.delete(PARAM_PATH);
-	params.delete(PARAM_SHOW_HIDEABLE);
-
-	const basePath = useRef(pathname + '?' + params.toString());
-
-	const commentsCache = useRef({});
-	const renderCache = useRef({});
+	const [ascendingState, setAscendingState] = useState(true);
+	const [columnState, setColumnState] = useState(COLUMN_TITLE);
+	const [deltaState, setDeltaState] = useState(20);
+	const [resultsKeywords, setResultsKeywords] = useState(keywordsFromURL);
+	const [searchTerms, setSearchTerms] = useState(keywordsFromURL);
+	const [showComments, setShowComments] = useState(false);
+	const [searchMobile, setSearchMobile] = useState(false);
 
 	const filterNodes = (keywords, nodes, showHideable, viewType) => {
 		if (!nodes || (!keywords && showHideable)) {
@@ -522,29 +543,20 @@ export default ({
 		});
 	};
 
-	const setParameter = useCallback(
-		(url, name, value) => {
-			return url + '&' + namespace + name + '=' + value;
-		},
-		[namespace]
-	);
-
-	const getDiscardURL = useCallback(
-		(node) => {
-			const url = setParameter(
-				discardURL,
-				'modelClassNameId',
-				node.modelClassNameId.toString()
-			);
-
-			return setParameter(
-				url,
-				'modelClassPK',
-				node.modelClassPK.toString()
-			);
-		},
-		[discardURL, setParameter]
-	);
+	const [renderState, setRenderState] = useState({
+		children: filterNodes(
+			keywordsFromURL,
+			initialNode.children,
+			initialShowHideable,
+			initialViewType
+		),
+		filterClass: initialFilterClass,
+		id: initialNodeId,
+		node: initialNode,
+		page: 1,
+		showHideable: initialShowHideable,
+		viewType: initialViewType,
+	});
 
 	const getPath = useCallback(
 		(keywords, pathParam, showHideable) => {
@@ -615,41 +627,6 @@ export default ({
 
 		return path;
 	};
-
-	const initialNode = getNode(
-		initialFilterClass,
-		initialNodeId,
-		initialViewType
-	);
-
-	const initialShowHideable =
-		initialNode.hideable ||
-		(initialFilterClass !== FILTER_CLASS_EVERYTHING &&
-			contextViewRef.current[initialFilterClass].hideable)
-			? true
-			: !!showHideableFromURL;
-
-	const [ascendingState, setAscendingState] = useState(true);
-	const [columnState, setColumnState] = useState(COLUMN_TITLE);
-	const [deltaState, setDeltaState] = useState(20);
-	const [renderState, setRenderState] = useState({
-		children: filterNodes(
-			keywordsFromURL,
-			initialNode.children,
-			initialShowHideable,
-			initialViewType
-		),
-		filterClass: initialFilterClass,
-		id: initialNodeId,
-		node: initialNode,
-		page: 1,
-		showHideable: initialShowHideable,
-		viewType: initialViewType,
-	});
-	const [resultsKeywords, setResultsKeywords] = useState(keywordsFromURL);
-	const [searchTerms, setSearchTerms] = useState(keywordsFromURL);
-	const [showComments, setShowComments] = useState(false);
-	const [searchMobile, setSearchMobile] = useState(false);
 
 	const handleNavigationUpdate = useCallback(
 		(json) => {
@@ -838,126 +815,6 @@ export default ({
 			}
 		};
 	}, [handlePopState]);
-
-	const getBreadcrumbItems = (filterClass, node, nodeId, viewType) => {
-		if (viewType === VIEW_TYPE_CHANGES) {
-			if (nodeId === 0) {
-				return [
-					{
-						active: true,
-						label: Liferay.Language.get('home'),
-					},
-				];
-			}
-
-			return [
-				{
-					label: Liferay.Language.get('home'),
-					onClick: () =>
-						handleNavigationUpdate({
-							nodeId: 0,
-						}),
-				},
-				{
-					active: true,
-					label: node.title,
-					modelClassNameId: node.modelClassNameId,
-					modelClassPK: node.modelClassPK,
-				},
-			];
-		}
-
-		const breadcrumbItems = [];
-		const homeBreadcrumbItem = {label: Liferay.Language.get('home')};
-
-		if (filterClass === FILTER_CLASS_EVERYTHING && nodeId === 0) {
-			homeBreadcrumbItem.active = true;
-
-			breadcrumbItems.push(homeBreadcrumbItem);
-
-			return breadcrumbItems;
-		}
-
-		homeBreadcrumbItem.onClick = () =>
-			handleNavigationUpdate({
-				filterClass: FILTER_CLASS_EVERYTHING,
-				nodeId: 0,
-			});
-
-		breadcrumbItems.push(homeBreadcrumbItem);
-
-		let showParent = false;
-
-		if (filterClass === FILTER_CLASS_EVERYTHING) {
-			showParent = true;
-		}
-		else {
-			let label = filterClass;
-
-			if (label.includes('.')) {
-				label = label.substring(
-					label.lastIndexOf('.') + 1,
-					label.length
-				);
-			}
-
-			const rootDisplayClassBreadcrumb = {label};
-
-			if (nodeId === 0) {
-				rootDisplayClassBreadcrumb.active = true;
-
-				breadcrumbItems.push(rootDisplayClassBreadcrumb);
-
-				return breadcrumbItems;
-			}
-
-			rootDisplayClassBreadcrumb.onClick = () =>
-				handleNavigationUpdate({
-					filterClass: renderState.filterClass,
-					nodeId: 0,
-				});
-
-			breadcrumbItems.push(rootDisplayClassBreadcrumb);
-		}
-
-		if (!node.parents) {
-			return null;
-		}
-
-		for (let i = 0; i < node.parents.length; i++) {
-			const parent = node.parents[i];
-
-			if (parent.typeName === filterClass) {
-				showParent = true;
-			}
-
-			if (!showParent) {
-				continue;
-			}
-
-			breadcrumbItems.push({
-				hideable: parent.hideable,
-				label: parent.title,
-				modelClassNameId: parent.modelClassNameId,
-				modelClassPK: parent.modelClassPK,
-				nodeId: parent.nodeId,
-				onClick: () =>
-					handleNavigationUpdate({
-						filterClass: renderState.filterClass,
-						nodeId: parent.nodeId,
-					}),
-			});
-		}
-
-		breadcrumbItems.push({
-			active: true,
-			label: node.title,
-			modelClassNameId: node.modelClassNameId,
-			modelClassPK: node.modelClassPK,
-		});
-
-		return breadcrumbItems;
-	};
 
 	const filterDisplayNodes = (nodes) => {
 		if (getColumn() === COLUMN_CHANGE_TYPE) {
@@ -1194,6 +1051,126 @@ export default ({
 		return keyArray.join('');
 	};
 
+	const getBreadcrumbItems = (filterClass, node, nodeId, viewType) => {
+		if (viewType === VIEW_TYPE_CHANGES) {
+			if (nodeId === 0) {
+				return [
+					{
+						active: true,
+						label: Liferay.Language.get('home'),
+					},
+				];
+			}
+
+			return [
+				{
+					label: Liferay.Language.get('home'),
+					onClick: () =>
+						handleNavigationUpdate({
+							nodeId: 0,
+						}),
+				},
+				{
+					active: true,
+					label: node.title,
+					modelClassNameId: node.modelClassNameId,
+					modelClassPK: node.modelClassPK,
+				},
+			];
+		}
+
+		const breadcrumbItems = [];
+		const homeBreadcrumbItem = {label: Liferay.Language.get('home')};
+
+		if (filterClass === FILTER_CLASS_EVERYTHING && nodeId === 0) {
+			homeBreadcrumbItem.active = true;
+
+			breadcrumbItems.push(homeBreadcrumbItem);
+
+			return breadcrumbItems;
+		}
+
+		homeBreadcrumbItem.onClick = () =>
+			handleNavigationUpdate({
+				filterClass: FILTER_CLASS_EVERYTHING,
+				nodeId: 0,
+			});
+
+		breadcrumbItems.push(homeBreadcrumbItem);
+
+		let showParent = false;
+
+		if (filterClass === FILTER_CLASS_EVERYTHING) {
+			showParent = true;
+		}
+		else {
+			let label = filterClass;
+
+			if (label.includes('.')) {
+				label = label.substring(
+					label.lastIndexOf('.') + 1,
+					label.length
+				);
+			}
+
+			const rootDisplayClassBreadcrumb = {label};
+
+			if (nodeId === 0) {
+				rootDisplayClassBreadcrumb.active = true;
+
+				breadcrumbItems.push(rootDisplayClassBreadcrumb);
+
+				return breadcrumbItems;
+			}
+
+			rootDisplayClassBreadcrumb.onClick = () =>
+				handleNavigationUpdate({
+					filterClass: renderState.filterClass,
+					nodeId: 0,
+				});
+
+			breadcrumbItems.push(rootDisplayClassBreadcrumb);
+		}
+
+		if (!node.parents) {
+			return null;
+		}
+
+		for (let i = 0; i < node.parents.length; i++) {
+			const parent = node.parents[i];
+
+			if (parent.typeName === filterClass) {
+				showParent = true;
+			}
+
+			if (!showParent) {
+				continue;
+			}
+
+			breadcrumbItems.push({
+				hideable: parent.hideable,
+				label: parent.title,
+				modelClassNameId: parent.modelClassNameId,
+				modelClassPK: parent.modelClassPK,
+				nodeId: parent.nodeId,
+				onClick: () =>
+					handleNavigationUpdate({
+						filterClass: renderState.filterClass,
+						nodeId: parent.nodeId,
+					}),
+			});
+		}
+
+		breadcrumbItems.push({
+			active: true,
+			label: node.title,
+			modelClassNameId: node.modelClassNameId,
+			modelClassPK: node.modelClassPK,
+		});
+
+		return breadcrumbItems;
+	};
+
 	const getColumn = () => {
 		if (renderState.viewType === VIEW_TYPE_CONTEXT) {
 			return COLUMN_TITLE;
@@ -1201,6 +1178,54 @@ export default ({
 
 		return columnState;
 	};
+
+	const getColumnHeader = (column, title) => {
+		let orderListIcon = 'order-list-up';
+
+		if (ascendingState) {
+			orderListIcon = 'order-list-down';
+		}
+
+		return (
+			<ClayButton
+				className={columnState === column ? '' : 'text-secondary'}
+				displayType="unstyled"
+				onClick={() => {
+					if (columnState === column) {
+						setAscendingState(!ascendingState);
+
+						return;
+					}
+
+					setColumnState(column);
+				}}
+			>
+				{title}
+
+				<span
+					className={`inline-item inline-item-after ${
+						columnState === column ? '' : 'text-muted'
+					}`}
+				>
+					<ClayIcon
+						spritemap={spritemap}
+						symbol={
+							columnState === column
+								? orderListIcon
+								: 'order-arrow'
+						}
+					/>
+				</span>
+			</ClayButton>
+		);
+	};
+
+	const setParameter = useCallback(
+		(url, name, value) => {
+			return url + '&' + namespace + name + '=' + value;
+		},
+		[namespace]
+	);
 
 	const getDataURL = (node) => {
 		if (node.ctEntryId) {
@@ -1222,132 +1247,22 @@ export default ({
 		return setParameter(url, 'modelClassPK', node.modelClassPK.toString());
 	};
 
-	const getRootDisplayOptions = () => {
-		const rootDisplayOptions = [];
-
-		rootDisplayOptions.push(
-			<ClayRadio
-				label={Liferay.Language.get('everything')}
-				value={FILTER_CLASS_EVERYTHING}
-			/>
-		);
-
-		for (let i = 0; i < rootDisplayClasses.length; i++) {
-			const className = rootDisplayClasses[i];
-
-			if (
-				!renderState.showHideable &&
-				contextViewRef.current[className].hideable
-			) {
-				continue;
-			}
-
-			let label = className;
-
-			if (label.includes('.')) {
-				label = label.substring(
-					label.lastIndexOf('.') + 1,
-					label.length
-				);
-			}
-
-			rootDisplayOptions.push(
-				<ClayRadio label={label} value={className} />
+	const getDiscardURL = useCallback(
+		(node) => {
+			const url = setParameter(
+				discardURL,
+				'modelClassNameId',
+				node.modelClassNameId.toString()
 			);
-		}
 
-		return rootDisplayOptions;
-	};
-
-	const getTableHead = () => {
-		if (renderState.viewType === VIEW_TYPE_CONTEXT) {
-			return '';
-		}
-
-		let orderListIcon = 'order-list-up';
-
-		if (ascendingState) {
-			orderListIcon = 'order-list-down';
-		}
-
-		const getColumnHeader = (column, title) => {
-			return (
-				<ClayButton
-					className={columnState === column ? '' : 'text-secondary'}
-					displayType="unstyled"
-					onClick={() => {
-						if (columnState === column) {
-							setAscendingState(!ascendingState);
-
-							return;
-						}
-
-						setColumnState(column);
-					}}
-				>
-					{title}
-
-					<span
-						className={`inline-item inline-item-after ${
-							columnState === column ? '' : 'text-muted'
-						}`}
-					>
-						<ClayIcon
-							spritemap={spritemap}
-							symbol={
-								columnState === column
-									? orderListIcon
-									: 'order-arrow'
-							}
-						/>
-					</span>
-				</ClayButton>
+			return setParameter(
+				url,
+				'modelClassPK',
+				node.modelClassPK.toString()
 			);
-		};
-
-		return (
-			<ClayTable.Head>
-				<ClayTable.Row>
-					<ClayTable.Cell headingCell>
-						{getColumnHeader(
-							COLUMN_USER,
-							Liferay.Language.get('user')
-						)}
-					</ClayTable.Cell>
-					<ClayTable.Cell headingCell>
-						{getColumnHeader(
-							COLUMN_SITE,
-							Liferay.Language.get('site')
-						)}
-					</ClayTable.Cell>
-					<ClayTable.Cell className="table-cell-expand" headingCell>
-						{getColumnHeader(
-							COLUMN_TITLE,
-							Liferay.Language.get('title')
-						)}
-					</ClayTable.Cell>
-					<ClayTable.Cell
-						className="table-cell-expand-smallest"
-						headingCell
-					>
-						{getColumnHeader(
-							COLUMN_CHANGE_TYPE,
-							Liferay.Language.get('change-type')
-						)}
-					</ClayTable.Cell>
-					<ClayTable.Cell
-						className="table-cell-expand-smallest"
-						headingCell
-					>
-						{getColumnHeader(
-							COLUMN_MODIFIED_DATE,
-							Liferay.Language.get('last-modified')
-						)}
-					</ClayTable.Cell>
-				</ClayTable.Row>
-			</ClayTable.Head>
-		);
-	};
+		},
+		[discardURL, setParameter]
+	);
 
 	const getTableRows = (nodes) => {
 		const rows = [];
@@ -1460,64 +1375,41 @@ export default ({
 		return rows;
 	};
 
-	const getViewTypes = () => {
-		if (!contextViewRef.current) {
-			return '';
-		}
+	const handleFiltersUpdate = (keywords) => {
+		setResultsKeywords(keywords);
 
-		const items = [
-			{
-				active: renderState.viewType === VIEW_TYPE_CHANGES,
-				label: Liferay.Language.get('changes'),
-				onClick: () =>
-					handleNavigationUpdate({
-						filterClass: FILTER_CLASS_EVERYTHING,
-						nodeId: 0,
-						viewType: VIEW_TYPE_CHANGES,
-					}),
-				symbolLeft: 'list',
-			},
-			{
-				active: renderState.viewType === VIEW_TYPE_CONTEXT,
-				label: Liferay.Language.get('context'),
-				onClick: () =>
-					handleNavigationUpdate({
-						filterClass: FILTER_CLASS_EVERYTHING,
-						nodeId: 0,
-						viewType: VIEW_TYPE_CONTEXT,
-					}),
-				symbolLeft: 'pages-tree',
-			},
-		];
-
-		return (
-			<ClayManagementToolbar.Item
-				data-tooltip-align="top"
-				title={Liferay.Language.get('display-style')}
-			>
-				<ClayDropDownWithItems
-					alignmentPosition={Align.BottomLeft}
-					items={items}
-					spritemap={spritemap}
-					trigger={
-						<ClayButton
-							className="nav-link nav-link-monospaced"
-							disabled={changes.length === 0}
-							displayType="unstyled"
-						>
-							<ClayIcon
-								spritemap={spritemap}
-								symbol={
-									renderState.viewType === VIEW_TYPE_CHANGES
-										? 'list'
-										: 'pages-tree'
-								}
-							/>
-						</ClayButton>
-					}
-				/>
-			</ClayManagementToolbar.Item>
+		const pathParam = getPathParam(
+			renderState.filterClass,
+			renderState.node,
+			renderState.viewType
 		);
+
+		const path = getPath(keywords, pathParam, renderState.showHideable);
+
+		const state = {
+			path,
+			senna: true,
+		};
+
+		window.history.pushState(state, document.title, path);
+
+		setRenderState({
+			children: filterNodes(
+				keywords,
+				renderState.node.children,
+				renderState.showHideable,
+				renderState.viewType
+			),
+			filterClass: renderState.filterClass,
+			id: renderState.id,
+			node: renderState.node,
+			page: renderState.page,
+			showHideable: renderState.showHideable,
+			viewType: renderState.viewType,
+		});
+		setResultsKeywords(keywords);
+
+		window.scrollTo(0, 0);
 	};
 
 	const handleShowHideableToggle = (showHideable) => {
@@ -1613,90 +1505,22 @@ export default ({
 		});
 	};
 
-	const renderEntry = () => {
-		if (!renderState.node.modelClassNameId) {
+	const renderExpiredBanner = () => {
+		if (!expired) {
 			return '';
 		}
 
 		return (
-			<ChangeTrackingRenderView
-				ctEntry={!!renderState.node.ctEntryId}
-				dataURL={getDataURL(renderState.node)}
-				defaultLocale={defaultLocale}
-				description={
-					renderState.node.description
-						? renderState.node.description
-						: renderState.node.typeName
-				}
-				discardURL={getDiscardURL(renderState.node)}
-				getCache={() =>
-					renderCache.current[
-						renderState.node.modelClassNameId.toString() +
-							'-' +
-							renderState.node.modelClassPK.toString()
-					]
-				}
-				showDropdown={
-					activeCTCollection && renderState.node.modelClassNameId
-				}
+			<ClayAlert
+				displayType="warning"
 				spritemap={spritemap}
-				title={renderState.node.title}
-				updateCache={(data) => {
-					renderCache.current[
-						renderState.node.modelClassNameId.toString() +
-							'-' +
-							renderState.node.modelClassPK.toString()
-					] = data;
-
-					setRenderState({
-						children: renderState.children,
-						filterClass: renderState.filterClass,
-						id: renderState.id,
-						node: renderState.node,
-						page: renderState.page,
-						showHideable: renderState.showHideable,
-						viewType: renderState.viewType,
-					});
-				}}
-			/>
+				title={Liferay.Language.get('out-of-date')}
+			>
+				{Liferay.Language.get(
+					'this-publication-was-created-on-a-previous-liferay-version.-you-cannot-publish,-revert,-or-make-additional-changes'
+				)}
+			</ClayAlert>
 		);
-	};
-
-	const handleFiltersUpdate = (keywords) => {
-		setResultsKeywords(keywords);
-
-		const pathParam = getPathParam(
-			renderState.filterClass,
-			renderState.node,
-			renderState.viewType
-		);
-
-		const path = getPath(keywords, pathParam, renderState.showHideable);
-
-		const state = {
-			path,
-			senna: true,
-		};
-
-		window.history.pushState(state, document.title, path);
-
-		setRenderState({
-			children: filterNodes(
-				keywords,
-				renderState.node.children,
-				renderState.showHideable,
-				renderState.viewType
-			),
-			filterClass: renderState.filterClass,
-			id: renderState.id,
-			node: renderState.node,
-			page: renderState.page,
-			showHideable: renderState.showHideable,
-			viewType: renderState.viewType,
-		});
-		setResultsKeywords(keywords);
-
-		window.scrollTo(0, 0);
 	};
 
 	const renderManagementToolbar = () => {
@@ -1752,9 +1576,8 @@ export default ({
 						</ClayInput.Group>
 					</ClayManagementToolbar.Search>
 				)}
-
 				<ClayManagementToolbar.ItemList>
-					{renderState.viewType === VIEW_TYPE_CHANGES && (
+					{renderState.viewType === VIEW_TYPE_CHANGES ? (
 						<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
 							<ClayButton
 								className="nav-link nav-link-monospaced"
@@ -1768,9 +1591,7 @@ export default ({
 								/>
 							</ClayButton>
 						</ClayManagementToolbar.Item>
-					)}
-
-					{renderState.viewType === VIEW_TYPE_CONTEXT && (
+					) : (
 						<ClayManagementToolbar.Item>
 							<ClayDropDownWithItems
 								items={[
@@ -1852,7 +1673,6 @@ export default ({
 					{renderState.viewType === VIEW_TYPE_CONTEXT && (
 						<ClayManagementToolbar.Item className="nav-item-expand" />
 					)}
-
 					<ClayManagementToolbar.Item className="simple-toggle-switch-reverse">
 						<ClayToggle
 							disabled={changes.length === 0}
@@ -1863,9 +1683,62 @@ export default ({
 							toggled={renderState.showHideable}
 						/>
 					</ClayManagementToolbar.Item>
-
-					{getViewTypes()}
-
+					{contextViewRef.current && (
+						<ClayManagementToolbar.Item
+							data-tooltip-align="top"
+							title={Liferay.Language.get('display-style')}
+						>
+							<ClayDropDownWithItems
+								alignmentPosition={Align.BottomLeft}
+								items={[
+									{
+										active:
+											renderState.viewType ===
+											VIEW_TYPE_CHANGES,
+										label: Liferay.Language.get('changes'),
+										onClick: () =>
+											handleNavigationUpdate({
+												filterClass: FILTER_CLASS_EVERYTHING,
+												nodeId: 0,
+												viewType: VIEW_TYPE_CHANGES,
+											}),
+										symbolLeft: 'list',
+									},
+									{
+										active:
+											renderState.viewType ===
+											VIEW_TYPE_CONTEXT,
+										label: Liferay.Language.get('context'),
+										onClick: () =>
+											handleNavigationUpdate({
+												filterClass: FILTER_CLASS_EVERYTHING,
+												nodeId: 0,
+												viewType: VIEW_TYPE_CONTEXT,
+											}),
+										symbolLeft: 'pages-tree',
+									},
+								]}
+								spritemap={spritemap}
+								trigger={
+									<ClayButton
+										className="nav-link nav-link-monospaced"
+										disabled={changes.length === 0}
+										displayType="unstyled"
+									>
+										<ClayIcon
+											spritemap={spritemap}
+											symbol={
+												renderState.viewType ===
+												VIEW_TYPE_CHANGES
+													? 'list'
+													: 'pages-tree'
+											}
+										/>
+									</ClayButton>
+								}
+							/>
+						</ClayManagementToolbar.Item>
+					)}
 					<ClayManagementToolbar.Item
 						data-tooltip-align="top"
 						title={Liferay.Language.get('comments')}
@@ -1885,50 +1758,40 @@ export default ({
 		);
 	};
 
-	const renderPagination = () => {
-		if (renderState.children.length <= 5) {
-			return '';
-		}
-
-		return (
-			<ClayPaginationBarWithBasicItems
-				activeDelta={deltaState}
-				activePage={renderState.page}
-				deltas={[4, 8, 20, 40, 60].map((size) => ({
-					label: size,
-				}))}
-				ellipsisBuffer={3}
-				onDeltaChange={(delta) => {
-					setDeltaState(delta);
-					setRenderState({
-						children: renderState.children,
-						filterClass: renderState.filterClass,
-						id: renderState.id,
-						node: renderState.node,
-						page: 1,
-						showHideable: renderState.showHideable,
-						viewType: renderState.viewType,
-					});
-				}}
-				onPageChange={(page) =>
-					setRenderState({
-						children: renderState.children,
-						filterClass: renderState.filterClass,
-						id: renderState.id,
-						node: renderState.node,
-						page,
-						showHideable: renderState.showHideable,
-						viewType: renderState.viewType,
-					})
-				}
-				totalItems={renderState.children.length}
-			/>
-		);
-	};
-
 	const renderPanel = () => {
 		if (renderState.viewType === VIEW_TYPE_CHANGES) {
 			return '';
+		}
+
+		const items = [];
+
+		items.push(
+			<ClayRadio
+				label={Liferay.Language.get('everything')}
+				value={FILTER_CLASS_EVERYTHING}
+			/>
+		);
+
+		for (let i = 0; i < rootDisplayClasses.length; i++) {
+			const className = rootDisplayClasses[i];
+
+			if (
+				!renderState.showHideable &&
+				contextViewRef.current[className].hideable
+			) {
+				continue;
+			}
+
+			let label = className;
+
+			if (label.includes('.')) {
+				label = label.substring(
+					label.lastIndexOf('.') + 1,
+					label.length
+				);
+			}
+
+			items.push(<ClayRadio label={label} value={className} />);
 		}
 
 		return (
@@ -1944,7 +1807,7 @@ export default ({
 							}
 							selectedValue={renderState.filterClass}
 						>
-							{getRootDisplayOptions()}
+							{items}
 						</ClayRadioGroup>
 					</div>
 				</div>
@@ -2044,68 +1907,123 @@ export default ({
 					hover
 					noWrap
 				>
-					{getTableHead()}
+					{renderState.viewType === VIEW_TYPE_CHANGES && (
+						<ClayTable.Head>
+							<ClayTable.Row>
+								<ClayTable.Cell headingCell>
+									{getColumnHeader(
+										COLUMN_USER,
+										Liferay.Language.get('user')
+									)}
+								</ClayTable.Cell>
+								<ClayTable.Cell headingCell>
+									{getColumnHeader(
+										COLUMN_SITE,
+										Liferay.Language.get('site')
+									)}
+								</ClayTable.Cell>
+								<ClayTable.Cell
+									className="table-cell-expand"
+									headingCell
+								>
+									{getColumnHeader(
+										COLUMN_TITLE,
+										Liferay.Language.get('title')
+									)}
+								</ClayTable.Cell>
+								<ClayTable.Cell
+									className="table-cell-expand-smallest"
+									headingCell
+								>
+									{getColumnHeader(
+										COLUMN_CHANGE_TYPE,
+										Liferay.Language.get('change-type')
+									)}
+								</ClayTable.Cell>
+								<ClayTable.Cell
+									className="table-cell-expand-smallest"
+									headingCell
+								>
+									{getColumnHeader(
+										COLUMN_MODIFIED_DATE,
+										Liferay.Language.get('last-modified')
+									)}
+								</ClayTable.Cell>
+							</ClayTable.Row>
+						</ClayTable.Head>
+					)}
 
 					<ClayTable.Body>
 						{getTableRows(filterDisplayNodes(renderState.children))}
 					</ClayTable.Body>
 				</ClayTable>
-
-				{renderPagination()}
+				{renderState.children.length > 5 && (
+					<ClayPaginationBarWithBasicItems
+						activeDelta={deltaState}
+						activePage={renderState.page}
+						deltas={[4, 8, 20, 40, 60].map((size) => ({
+							label: size,
+						}))}
+						ellipsisBuffer={3}
+						onDeltaChange={(delta) => {
+							setDeltaState(delta);
+							setRenderState({
+								children: renderState.children,
+								filterClass: renderState.filterClass,
+								id: renderState.id,
+								node: renderState.node,
+								page: 1,
+								showHideable: renderState.showHideable,
+								viewType: renderState.viewType,
+							});
+						}}
+						onPageChange={(page) =>
+							setRenderState({
+								children: renderState.children,
+								filterClass: renderState.filterClass,
+								id: renderState.id,
+								node: renderState.node,
+								page,
+								showHideable: renderState.showHideable,
+								viewType: renderState.viewType,
+							})
+						}
+						totalItems={renderState.children.length}
+					/>
+				)}
 			</>
 		);
 	};
 
-	let content;
+	const renderMainContent = () => {
+		if (
+			renderState.viewType === VIEW_TYPE_CONTEXT &&
+			contextViewRef.current.errorMessage
+		) {
+			return (
+				<ClayAlert displayType="danger">
+					{contextViewRef.current.errorMessage}
+				</ClayAlert>
+			);
+		}
+		else if (changes.length === 0) {
+			return (
+				<div className="container-fluid container-fluid-max-xl">
+					{renderExpiredBanner()}
 
-	if (
-		renderState.viewType === VIEW_TYPE_CONTEXT &&
-		contextViewRef.current.errorMessage
-	) {
-		content = (
-			<ClayAlert displayType="danger">
-				{contextViewRef.current.errorMessage}
-			</ClayAlert>
-		);
-	}
-	else if (changes.length === 0) {
-		content = (
-			<div className="container-fluid container-fluid-max-xl">
-				{expired && (
-					<ClayAlert
-						displayType="warning"
-						spritemap={spritemap}
-						title={Liferay.Language.get('out-of-date')}
-					>
-						{Liferay.Language.get(
-							'this-publication-was-created-on-a-previous-liferay-version.-you-cannot-publish,-revert,-or-make-additional-changes'
-						)}
-					</ClayAlert>
-				)}
-
-				<div className="sheet taglib-empty-result-message">
-					<div className="taglib-empty-result-message-header" />
-					<div className="sheet-text text-center">
-						{Liferay.Language.get('no-changes-were-found')}
+					<div className="sheet taglib-empty-result-message">
+						<div className="taglib-empty-result-message-header" />
+						<div className="sheet-text text-center">
+							{Liferay.Language.get('no-changes-were-found')}
+						</div>
 					</div>
 				</div>
-			</div>
-		);
-	}
-	else {
-		content = (
+			);
+		}
+
+		return (
 			<div className="container-fluid container-fluid-max-xl">
-				{expired && (
-					<ClayAlert
-						displayType="warning"
-						spritemap={spritemap}
-						title={Liferay.Language.get('out-of-date')}
-					>
-						{Liferay.Language.get(
-							'this-publication-was-created-on-a-previous-liferay-version.-you-cannot-publish,-revert,-or-make-additional-changes'
-						)}
-					</ClayAlert>
-				)}
+				{renderExpiredBanner()}
 
 				<ClayBreadcrumb
 					ellipsisBuffer={1}
@@ -2128,13 +2046,55 @@ export default ({
 								: 'col-md-9'
 						}
 					>
-						{renderEntry()}
+						{renderState.node.modelClassNameId && (
+							<ChangeTrackingRenderView
+								ctEntry={!!renderState.node.ctEntryId}
+								dataURL={getDataURL(renderState.node)}
+								defaultLocale={defaultLocale}
+								description={
+									renderState.node.description
+										? renderState.node.description
+										: renderState.node.typeName
+								}
+								discardURL={getDiscardURL(renderState.node)}
+								getCache={() =>
+									renderCache.current[
+										renderState.node.modelClassNameId.toString() +
+											'-' +
+											renderState.node.modelClassPK.toString()
+									]
+								}
+								showDropdown={
+									activeCTCollection &&
+									renderState.node.modelClassNameId
+								}
+								spritemap={spritemap}
+								title={renderState.node.title}
+								updateCache={(data) => {
+									renderCache.current[
+										renderState.node.modelClassNameId.toString() +
+											'-' +
+											renderState.node.modelClassPK.toString()
+									] = data;
+
+									setRenderState({
+										children: renderState.children,
+										filterClass: renderState.filterClass,
+										id: renderState.id,
+										node: renderState.node,
+										page: renderState.page,
+										showHideable: renderState.showHideable,
+										viewType: renderState.viewType,
+									});
+								}}
+							/>
+						)}
 						{renderTable()}
 					</div>
 				</div>
 			</div>
 		);
-	}
+	};
 
 	return (
 		<>
@@ -2203,7 +2163,7 @@ export default ({
 							: {}
 					}
 				>
-					{content}
+					{renderMainContent()}
 				</div>
 			</div>
 		</>

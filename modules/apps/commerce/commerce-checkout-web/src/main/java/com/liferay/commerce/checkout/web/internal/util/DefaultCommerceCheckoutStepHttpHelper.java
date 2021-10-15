@@ -88,7 +88,8 @@ public class DefaultCommerceCheckoutStepHttpHelper
 		if (((commerceAccount != null) &&
 			 (commerceAccount.getDefaultBillingAddressId() ==
 				 commerceAccount.getDefaultShippingAddressId()) &&
-			 (billingAddress == null) && (shippingAddress == null)) ||
+			 (billingAddress == null) && (shippingAddress == null) &&
+			 !commerceOrder.isB2B()) ||
 			((billingAddress != null) && (shippingAddress != null) &&
 			 (billingAddress.getCommerceAddressId() ==
 				 shippingAddress.getCommerceAddressId()))) {

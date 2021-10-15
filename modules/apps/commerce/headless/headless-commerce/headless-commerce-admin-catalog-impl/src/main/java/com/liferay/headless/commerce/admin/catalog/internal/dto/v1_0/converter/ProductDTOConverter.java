@@ -43,10 +43,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -140,7 +137,7 @@ public class ProductDTOConverter
 					cpDefinition, dtoConverterContext.getLocale());
 				tags = _getTags(cpDefinition);
 				thumbnail = cpDefinition.getDefaultImageThumbnailSrc();
-				urls = _getUrlTitleMap(
+				urls = LanguageUtils.getLanguageIdMap(
 					_cpDefinitionService.getUrlTitleMap(
 						cpDefinition.getCPDefinitionId()));
 				workflowStatusInfo = _toStatus(
@@ -191,23 +188,6 @@ public class ProductDTOConverter
 		).toArray(
 			String[]::new
 		);
-	}
-
-	private Map<String, String> _getUrlTitleMap(
-		Map<Locale, String> urlTitleMap) {
-
-		Set<Map.Entry<Locale, String>> entries = urlTitleMap.entrySet();
-
-		Stream<Map.Entry<Locale, String>> stream = entries.stream();
-
-		return stream.collect(
-			Collectors.toMap(
-				entry -> {
-					Locale locale = entry.getKey();
-
-					return locale.toString();
-				},
-				Map.Entry::getValue));
 	}
 
 	private Category _toCategory(AssetCategory assetCategory) {

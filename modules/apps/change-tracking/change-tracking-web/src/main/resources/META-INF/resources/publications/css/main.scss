@@ -153,6 +153,16 @@
 	}
 }
 
+.publications-filter-dropdown-menu.drilldown.dropdown-menu {
+	.drilldown-inner {
+		min-height: 0;
+	}
+
+	.inline-scroller {
+		max-height: 200px;
+	}
+}
+
 .publications-invite-users-modal {
 	.form-group:last-child {
 		margin-bottom: 0;

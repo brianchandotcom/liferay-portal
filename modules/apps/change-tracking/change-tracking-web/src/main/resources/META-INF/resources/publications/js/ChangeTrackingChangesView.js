@@ -15,8 +15,9 @@
 import ClayAlert from '@clayui/alert';
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayDropDown, {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import {
+	ClayCheckbox,
 	ClayInput,
 	ClayRadio,
 	ClayRadioGroup,
@@ -30,13 +31,71 @@ import ClayManagementToolbar, {
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
+import classNames from 'classnames';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {CSSTransition} from 'react-transition-group';
 
 import ChangeTrackingComments from './ChangeTrackingComments';
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
 
+const DIRECTION_NEXT = 'next';
+const DIRECTION_PREV = 'prev';
+
+const DrilldownMenu = ({
+	active,
+	children,
+	direction,
+	header,
+	onBack,
+	spritemap,
+}) => {
+	const initialClasses = classNames('transitioning', {
+		'drilldown-prev-initial': direction === DIRECTION_PREV,
+	});
+
+	return (
+		<CSSTransition
+			className={classNames('drilldown-item', {
+				'drilldown-current': active,
+			})}
+			classNames={{
+				enter: initialClasses,
+				enterActive: `drilldown-transition drilldown-${direction}-active`,
+				exit: initialClasses,
+				exitActive: `drilldown-transition drilldown-${direction}-active`,
+			}}
+			in={active}
+			timeout={250}
+		>
+			<div className="drilldown-item-inner">
+				{header && (
+					<>
+						<div className="dropdown-header" onClick={onBack}>
+							<ClayButtonWithIcon
+								className="component-action dropdown-item-indicator-start"
+								onClick={onBack}
+								spritemap={spritemap}
+								symbol="angle-left"
+							/>
+
+							<span className="dropdown-item-indicator-text-start">
+								{header}
+							</span>
+						</div>
+
+						<div className="dropdown-divider" />
+					</>
+				)}
+
+				{children}
+			</div>
+		</CSSTransition>
+	);
+};
+
 export default ({
 	activeCTCollection,
+	changeTypesFromURL,
 	changes,
 	contextView,
 	ctCollectionId,
@@ -69,7 +128,10 @@ export default ({
 	const COLUMN_USER = 'USER';
 	const FILTER_CLASS_EVERYTHING = 'everything';
 	const GLOBAL_SITE_NAME = Liferay.Language.get('global');
+	const MENU_CHANGE_TYPES = 'MENU_CHANGE_TYPES';
+	const MENU_ROOT = 'MENU_ROOT';
 	const MVC_RENDER_COMMAND_NAME = '/change_tracking/view_changes';
+	const PARAM_CHANGE_TYPES = namespace + 'changeTypes';
 	const PARAM_CT_COLLECTION_ID = namespace + 'ctCollectionId';
 	const PARAM_KEYWORDS = namespace + 'keywords';
 	const PARAM_MVC_RENDER_COMMAND_NAME = namespace + 'mvcRenderCommandName';
@@ -128,6 +190,7 @@ export default ({
 		window.history.replaceState(state, document.title);
 	}
 
+	params.delete(PARAM_CHANGE_TYPES);
 	params.delete(PARAM_KEYWORDS);
 	params.delete(PARAM_PATH);
 	params.delete(PARAM_SHOW_HIDEABLE);
@@ -348,12 +411,12 @@ export default ({
 
 						if (
 							model.modelClassNameId ===
-							sessionNode.modelClassNameId &&
+								sessionNode.modelClassNameId &&
 							model.modelClassPK === sessionNode.modelClassPK
 						) {
 							if (
 								pathState.filterClass !==
-								FILTER_CLASS_EVERYTHING &&
+									FILTER_CLASS_EVERYTHING &&
 								i === 0
 							) {
 								const stack = [
@@ -542,41 +605,80 @@ export default ({
 	const [ascendingState, setAscendingState] = useState(true);
 	const [columnState, setColumnState] = useState(COLUMN_TITLE);
 	const [deltaState, setDeltaState] = useState(20);
+	const [drilldownDirection, setDrilldownDirection] = useState(
+		DIRECTION_NEXT
+	);
+	const [dropdownActive, setDropdownActive] = useState(false);
+	const [menu, setMenu] = useState(MENU_ROOT);
 	const [resultsKeywords, setResultsKeywords] = useState(keywordsFromURL);
 	const [searchTerms, setSearchTerms] = useState(keywordsFromURL);
 	const [showComments, setShowComments] = useState(false);
 	const [searchMobile, setSearchMobile] = useState(false);
 
-	const filterNodes = (keywords, nodes, showHideable, viewType) => {
-		if (!nodes || (!keywords && showHideable)) {
-			return nodes;
+	const getFilters = useCallback((changeTypes) => {
+		let changeTypeIds = [];
+
+		if (changeTypes) {
+			changeTypeIds = changeTypes.split(',').map((id) => Number(id));
 		}
 
-		const filteredNodes = nodes.slice(0);
+		return {
+			changeTypes: changeTypeIds,
+		};
+	}, []);
 
-		return filteredNodes.filter((node) => {
-			if (!showHideable && node.hideable) {
-				return false;
+	const initialFilters = getFilters(changeTypesFromURL);
+
+	const [filtersState, setFiltersState] = useState(initialFilters);
+
+	const filterNodes = useCallback(
+		(filters, keywords, nodes, showHideable, viewType) => {
+			if (!nodes) {
+				return nodes;
 			}
-			else if (viewType === VIEW_TYPE_CONTEXT || !keywords) {
+
+			let pattern = null;
+
+			if (keywords) {
+				pattern = keywords
+					.toLowerCase()
+					.replace(/[^0-9a-z]+/g, '|')
+					.replace(/^\||\|$/g, '');
+			}
+
+			return nodes.slice(0).filter((node) => {
+				if (!showHideable && node.hideable) {
+					return false;
+				}
+				else if (viewType === VIEW_TYPE_CONTEXT) {
+					return true;
+				}
+
+				const changeTypes = filters['changeTypes'];
+
+				if (
+					changeTypes.length > 0 &&
+					!changeTypes.includes(node.changeType)
+				) {
+					return false;
+				}
+
+				if (
+					pattern &&
+					(!node.title || !node.title.toLowerCase().match(pattern))
+				) {
+					return false;
+				}
+
 				return true;
-			}
-
-			const pattern = keywords
-				.toLowerCase()
-				.replace(/[^0-9a-z]+/g, '|')
-				.replace(/^\||\|$/g, '');
-
-			if (node.title && node.title.toLowerCase().match(pattern)) {
-				return true;
-			}
-
-			return false;
-		});
-	};
+			});
+		},
+		[VIEW_TYPE_CONTEXT]
+	);
 
 	const [renderState, setRenderState] = useState({
 		children: filterNodes(
+			initialFilters,
 			keywordsFromURL,
 			initialNode.children,
 			initialShowHideable,
@@ -591,8 +693,8 @@ export default ({
 	});
 
 	const getPath = useCallback(
-		(keywords, pathParam, showHideable) => {
-			const path =
+		(filters, keywords, pathParam, showHideable) => {
+			let path =
 				basePath.current +
 				'&' +
 				PARAM_PATH +
@@ -603,13 +705,24 @@ export default ({
 				'=' +
 				showHideable.toString();
 
+			const changeTypes = filters['changeTypes'];
+
+			if (changeTypes && changeTypes.length > 0) {
+				path =
+					path +
+					'&' +
+					PARAM_CHANGE_TYPES +
+					'=' +
+					changeTypes.join(',');
+			}
+
 			if (keywords) {
-				return path + '&' + PARAM_KEYWORDS + '=' + keywords;
+				path = path + '&' + PARAM_KEYWORDS + '=' + keywords.toString();
 			}
 
 			return path;
 		},
-		[PARAM_KEYWORDS, PARAM_PATH, PARAM_SHOW_HIDEABLE]
+		[PARAM_CHANGE_TYPES, PARAM_KEYWORDS, PARAM_PATH, PARAM_SHOW_HIDEABLE]
 	);
 
 	const getPathParam = (filterClass, node, viewType) => {
@@ -617,7 +730,7 @@ export default ({
 
 		const nodes = [];
 
-		if (viewType !== VIEW_TYPE_CHANGES && node.parents) {
+		if (viewType === VIEW_TYPE_CONTEXT && node.parents) {
 			for (let i = 0; i < node.parents.length; i++) {
 				const parent = node.parents[i];
 
@@ -696,11 +809,21 @@ export default ({
 				return;
 			}
 
+			let filters = filtersState;
+			let keywords = resultsKeywords;
+
+			if (viewType === VIEW_TYPE_CONTEXT) {
+				filters = {
+					changeTypes: [],
+				};
+				keywords = '';
+			}
+
 			const node = getNode(filterClass, nodeId, viewType);
 
 			const pathParam = getPathParam(filterClass, node, viewType);
 
-			const path = getPath(resultsKeywords, pathParam, showHideable);
+			const path = getPath(filters, keywords, pathParam, showHideable);
 
 			const state = {
 				path,
@@ -709,9 +832,16 @@ export default ({
 
 			window.history.pushState(state, document.title, path);
 
+			if (viewType === VIEW_TYPE_CONTEXT) {
+				setFiltersState(filters);
+				setResultsKeywords(keywords);
+				setSearchTerms(keywords);
+			}
+
 			setRenderState({
 				children: filterNodes(
-					resultsKeywords,
+					filters,
+					keywords,
 					node.children,
 					showHideable,
 					viewType
@@ -726,7 +856,15 @@ export default ({
 
 			window.scrollTo(0, 0);
 		},
-		[VIEW_TYPE_CONTEXT, getNode, getPath, renderState, resultsKeywords]
+		[
+			VIEW_TYPE_CONTEXT,
+			filtersState,
+			filterNodes,
+			getNode,
+			getPath,
+			renderState,
+			resultsKeywords,
+		]
 	);
 
 	const handlePopState = useCallback(
@@ -794,6 +932,8 @@ export default ({
 				keywords = '';
 			}
 
+			const filters = getFilters(params.get(PARAM_CHANGE_TYPES));
+
 			const showHideable =
 				node.hideable ||
 				(filterClass !== FILTER_CLASS_EVERYTHING &&
@@ -801,8 +941,10 @@ export default ({
 					? true
 					: !!renderState.showHideable;
 
+			setFiltersState(filters);
 			setRenderState({
 				children: filterNodes(
+					filters,
 					keywords,
 					node.children,
 					showHideable,
@@ -819,9 +961,12 @@ export default ({
 			setSearchTerms(keywords);
 		},
 		[
+			PARAM_CHANGE_TYPES,
 			PARAM_KEYWORDS,
 			PARAM_PATH,
 			VIEW_TYPE_CONTEXT,
+			filterNodes,
+			getFilters,
 			getNode,
 			getPathState,
 			isWithinApp,
@@ -1208,9 +1353,9 @@ export default ({
 				{title}
 
 				<span
-					className={`inline-item inline-item-after ${
-						columnState === column ? '' : 'text-muted'
-					}`}
+					className={classNames('inline-item inline-item-after', {
+						'text-muted': columnState !== column,
+					})}
 				>
 					<ClayIcon
 						spritemap={spritemap}
@@ -1222,6 +1367,111 @@ export default ({
 					/>
 				</span>
 			</ClayButton>
+		);
+	};
+
+	const toggleFilter = (name, id) => {
+		const filters = JSON.parse(JSON.stringify(filtersState));
+
+		const ids = filters[name];
+
+		if (ids.includes(id)) {
+			filters[name] = ids.filter((item) => id !== item);
+		}
+		else {
+			ids.push(id);
+		}
+
+		handleFiltersUpdate(filters, resultsKeywords);
+	};
+
+	const getFilterList = (items, name) => {
+		const checkedIds = filtersState[name];
+
+		return (
+			<ClayDropDown.Group>
+				{items
+					.sort((a, b) => {
+						if (a.label < b.label) {
+							return -1;
+						}
+
+						if (a.label > b.label) {
+							return 1;
+						}
+
+						return 0;
+					})
+					.map((item) => (
+						<ClayDropDown.Section key={item.id}>
+							<ClayCheckbox
+								checked={checkedIds.includes(item.id)}
+								label={item.label}
+								onChange={() => toggleFilter(name, item.id)}
+							/>
+						</ClayDropDown.Section>
+					))}
+			</ClayDropDown.Group>
+		);
+	};
+
+	const getChangeTypesFilterList = () => {
+		const items = [
+			{
+				id: CHANGE_TYPE_ADDITION,
+				label: Liferay.Language.get('added'),
+			},
+			{
+				id: CHANGE_TYPE_DELETION,
+				label: Liferay.Language.get('deleted'),
+			},
+			{
+				id: CHANGE_TYPE_MODIFICATION,
+				label: Liferay.Language.get('modified'),
+			},
+		];
+
+		return getFilterList(items, 'changeTypes');
+	};
+
+	const getDrilldownRootItem = (label, value) => {
+		return (
+			<ClayButton
+				className="dropdown-item"
+				displayType="unstyled"
+				onClick={() => {
+					setMenu(value);
+					setDrilldownDirection(DIRECTION_NEXT);
+				}}
+			>
+				<span className="dropdown-item-indicator-text-end">
+					{label}
+				</span>
+				<span className="dropdown-item-indicator-end">
+					<ClayIcon spritemap={spritemap} symbol="angle-right" />
+				</span>
+			</ClayButton>
+		);
+	};
+
+	const getDrilldownMenu = (getFilterList, header, value) => {
+		return (
+			<DrilldownMenu
+				active={menu === value}
+				direction={drilldownDirection}
+				header={header}
+				onBack={() => {
+					setMenu(MENU_ROOT);
+					setDrilldownDirection(DIRECTION_PREV);
+				}}
+				spritemap={spritemap}
+			>
+				<div className="inline-scroller">
+					<ClayDropDown.ItemList>
+						{getFilterList()}
+					</ClayDropDown.ItemList>
+				</div>
+			</DrilldownMenu>
 		);
 	};
 
@@ -1260,11 +1510,7 @@ export default ({
 				node.modelClassNameId
 			);
 
-			return setParameter(
-				url,
-				'modelClassPK',
-				node.modelClassPK
-			);
+			return setParameter(url, 'modelClassPK', node.modelClassPK);
 		},
 		[discardURL, setParameter]
 	);
@@ -1381,16 +1627,19 @@ export default ({
 		return rows;
 	};
 
-	const handleFiltersUpdate = (keywords) => {
-		setResultsKeywords(keywords);
-
+	const handleFiltersUpdate = (filters, keywords) => {
 		const pathParam = getPathParam(
 			renderState.filterClass,
 			renderState.node,
 			renderState.viewType
 		);
 
-		const path = getPath(keywords, pathParam, renderState.showHideable);
+		const path = getPath(
+			filters,
+			keywords,
+			pathParam,
+			renderState.showHideable
+		);
 
 		const state = {
 			path,
@@ -1399,8 +1648,11 @@ export default ({
 
 		window.history.pushState(state, document.title, path);
 
+		setFiltersState(filters);
+		setResultsKeywords(keywords);
 		setRenderState({
 			children: filterNodes(
+				filters,
 				keywords,
 				renderState.node.children,
 				renderState.showHideable,
@@ -1413,7 +1665,6 @@ export default ({
 			showHideable: renderState.showHideable,
 			viewType: renderState.viewType,
 		});
-		setResultsKeywords(keywords);
 
 		window.scrollTo(0, 0);
 	};
@@ -1479,7 +1730,12 @@ export default ({
 			isWithinApp(params) &&
 			(!oldPathParam || oldPathParam === pathParam)
 		) {
-			const path = getPath(resultsKeywords, pathParam, showHideable);
+			const path = getPath(
+				filtersState,
+				resultsKeywords,
+				pathParam,
+				showHideable
+			);
 
 			let newState = {
 				path,
@@ -1497,6 +1753,7 @@ export default ({
 
 		setRenderState({
 			children: filterNodes(
+				filtersState,
 				resultsKeywords,
 				renderState.node.children,
 				showHideable,
@@ -1529,6 +1786,83 @@ export default ({
 		);
 	};
 
+	const renderFilterDropdown = () => {
+		if (renderState.viewType === VIEW_TYPE_CONTEXT) {
+			return '';
+		}
+
+		return (
+			<ClayManagementToolbar.ItemList>
+				<ClayManagementToolbar.Item>
+					<ClayDropDown
+						active={dropdownActive}
+						menuElementAttrs={{
+							className:
+								'drilldown publications-filter-dropdown-menu',
+						}}
+						onActiveChange={(value) => {
+							if (!value) {
+								setMenu(MENU_ROOT);
+							}
+
+							setDropdownActive(value);
+						}}
+						spritemap={spritemap}
+						trigger={
+							<ClayButton
+								className="nav-link"
+								disabled={changes.length === 0}
+								displayType="unstyled"
+							>
+								<span className="navbar-breakpoint-down-d-none">
+									<span className="navbar-text-truncate">
+										{Liferay.Language.get('filter-by')}
+									</span>
+
+									<ClayIcon
+										className="inline-item inline-item-after"
+										spritemap={spritemap}
+										symbol="caret-bottom"
+									/>
+								</span>
+								<span className="navbar-breakpoint-d-none">
+									<ClayIcon
+										spritemap={spritemap}
+										symbol="filter"
+									/>
+								</span>
+							</ClayButton>
+						}
+					>
+						<form
+							onSubmit={(event) => {
+								event.preventDefault();
+							}}
+						>
+							<div className="drilldown-inner">
+								<DrilldownMenu
+									active={menu === MENU_ROOT}
+									direction={drilldownDirection}
+									spritemap={spritemap}
+								>
+									{getDrilldownRootItem(
+										Liferay.Language.get('change-types'),
+										MENU_CHANGE_TYPES
+									)}
+								</DrilldownMenu>
+								{getDrilldownMenu(
+									getChangeTypesFilterList,
+									Liferay.Language.get('change-types'),
+									MENU_CHANGE_TYPES
+								)}
+							</div>
+						</form>
+					</ClayDropDown>
+				</ClayManagementToolbar.Item>
+			</ClayManagementToolbar.ItemList>
+		);
+	};
+
 	const renderManagementToolbar = () => {
 		return (
 			<ClayManagementToolbar
@@ -1538,12 +1872,16 @@ export default ({
 						: ''
 				}
 			>
+				{renderFilterDropdown()}
 				{renderState.viewType === VIEW_TYPE_CHANGES && (
 					<ClayManagementToolbar.Search
 						onSubmit={(event) => {
 							event.preventDefault();
 
-							handleFiltersUpdate(searchTerms.trim());
+							handleFiltersUpdate(
+								filtersState,
+								searchTerms.trim()
+							);
 						}}
 						showMobile={searchMobile}
 					>
@@ -1750,9 +2088,12 @@ export default ({
 						title={Liferay.Language.get('comments')}
 					>
 						<ClayButton
-							className={`nav-link nav-link-monospaced${
-								showComments ? ' active' : ''
-							}`}
+							className={classNames(
+								'nav-link nav-link-monospaced',
+								{
+									active: showComments,
+								}
+							)}
 							displayType="unstyled"
 							onClick={() => setShowComments(!showComments)}
 						>
@@ -1822,9 +2163,49 @@ export default ({
 	};
 
 	const renderResultsBar = () => {
-		if (renderState.viewType === VIEW_TYPE_CONTEXT || !resultsKeywords) {
+		if (renderState.viewType === VIEW_TYPE_CONTEXT) {
 			return '';
 		}
+
+		const labels = [];
+
+		const changeTypes = filtersState['changeTypes'];
+
+		if (changeTypes && changeTypes.length > 0) {
+			for (let i = 0; i < changeTypes.length; i++) {
+				const changeType = changeTypes[i];
+
+				let label = Liferay.Language.get('modified');
+
+				if (changeType === CHANGE_TYPE_ADDITION) {
+					label = Liferay.Language.get('added');
+				}
+				else if (changeType === CHANGE_TYPE_DELETION) {
+					label = Liferay.Language.get('deleted');
+				}
+
+				labels.push({
+					label: Liferay.Language.get('change-type') + ': ' + label,
+					onClick: () => toggleFilter('changeTypes', changeType),
+				});
+			}
+		}
+
+		if (!resultsKeywords && labels.length === 0) {
+			return '';
+		}
+
+		labels.sort((a, b) => {
+			if (a.label < b.label) {
+				return -1;
+			}
+
+			if (a.label > b.label) {
+				return 1;
+			}
+
+			return 0;
+		});
 
 		const items = [];
 
@@ -1846,23 +2227,44 @@ export default ({
 			</ClayResultsBar.Item>
 		);
 
-		items.push(
-			<ClayResultsBar.Item>
-				<ClayLabel
-					className="component-label tbar-label"
-					closeButtonProps={{
-						onClick: () => {
-							handleFiltersUpdate('');
-							setSearchTerms('');
-						},
-					}}
-					displayType="unstyled"
-					spritemap={spritemap}
-				>
-					{Liferay.Language.get('keywords') + ': ' + resultsKeywords}
-				</ClayLabel>
-			</ClayResultsBar.Item>
-		);
+		if (resultsKeywords) {
+			items.push(
+				<ClayResultsBar.Item>
+					<ClayLabel
+						className="component-label tbar-label"
+						closeButtonProps={{
+							onClick: () => {
+								handleFiltersUpdate(filtersState, '');
+								setSearchTerms('');
+							},
+						}}
+						displayType="unstyled"
+						spritemap={spritemap}
+					>
+						{Liferay.Language.get('keywords') +
+							': ' +
+							resultsKeywords}
+					</ClayLabel>
+				</ClayResultsBar.Item>
+			);
+		}
+
+		for (let i = 0; i < labels.length; i++) {
+			items.push(
+				<ClayResultsBar.Item>
+					<ClayLabel
+						className="component-label tbar-label"
+						closeButtonProps={{
+							onClick: labels[i].onClick,
+						}}
+						displayType="unstyled"
+						spritemap={spritemap}
+					>
+						{labels[i].label}
+					</ClayLabel>
+				</ClayResultsBar.Item>
+			);
+		}
 
 		items.push(<ClayResultsBar.Item expand />);
 		items.push(
@@ -1871,7 +2273,7 @@ export default ({
 					className="component-link tbar-link"
 					displayType="unstyled"
 					onClick={() => {
-						handleFiltersUpdate('');
+						handleFiltersUpdate({changeTypes: []}, '');
 						setSearchTerms('');
 					}}
 				>
@@ -2107,9 +2509,10 @@ export default ({
 			{renderManagementToolbar()}
 			{renderResultsBar()}
 			<div
-				className={`sidenav-container sidenav-right ${
-					showComments ? 'open' : 'closed'
-				}`}
+				className={classNames('sidenav-container sidenav-right', {
+					closed: !showComments,
+					open: showComments,
+				})}
 			>
 				<div
 					className="info-panel sidenav-menu-slider"

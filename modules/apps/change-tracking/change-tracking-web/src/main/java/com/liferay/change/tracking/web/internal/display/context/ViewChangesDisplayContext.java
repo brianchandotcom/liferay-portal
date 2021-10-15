@@ -299,6 +299,9 @@ public class ViewChangesDisplayContext {
 				return changesJSONArray;
 			}
 		).put(
+			"changeTypesFromURL",
+			ParamUtil.getString(_renderRequest, "changeTypes")
+		).put(
 			"contextView",
 			_getContextViewJSONObject(
 				ctClosure, modelInfoMap, rootClassNameIds,

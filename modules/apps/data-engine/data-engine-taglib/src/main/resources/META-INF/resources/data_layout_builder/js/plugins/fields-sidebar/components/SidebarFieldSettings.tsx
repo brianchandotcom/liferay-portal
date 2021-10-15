@@ -16,18 +16,29 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {useConfig, useForm} from 'data-engine-js-components-web';
 import React from 'react';
 
+// @ts-ignore
+
 import Sidebar from '../../../components/sidebar/Sidebar.es';
+
+// @ts-ignore
+
 import {EVENT_TYPES} from '../../../eventTypes';
 
-import './FieldsSidebarSettingsHeader.scss';
+// @ts-ignore
 
-export default function FieldsSidebarSettingsHeader({field}) {
+import FieldsSidebarSettingsBody from './FieldsSidebarSettingsBody';
+
+import './SidebarFieldSettings.scss';
+
+const FieldsSidebarSettingsHeader: React.FC<IProps> = ({field}) => {
 	const dispatch = useForm();
 	const {fieldTypes} = useConfig();
-	const {label} = fieldTypes.find(({name}) => name === field.type);
+	const {label} = fieldTypes.find(
+		({name}) => name === field.type
+	) as FieldType;
 
 	return (
-		<div className="data-engine__field-sidebar-settings-title">
+		<div className="de__sidebar-field-settings-title">
 			<ClayButtonWithIcon
 				className="mr-3"
 				displayType="secondary"
@@ -38,4 +49,24 @@ export default function FieldsSidebarSettingsHeader({field}) {
 			<Sidebar.Title title={label} />
 		</div>
 	);
+};
+
+const SidebarFieldSettings: React.FC<IProps> = ({field}) => {
+	return (
+		<Sidebar className="display-settings">
+			<Sidebar.Header>
+				<FieldsSidebarSettingsHeader field={field} />
+			</Sidebar.Header>
+
+			<Sidebar.Body>
+				<FieldsSidebarSettingsBody field={field} />
+			</Sidebar.Body>
+		</Sidebar>
+	);
+};
+
+export default SidebarFieldSettings;
+
+interface IProps {
+	field: Field;
 }

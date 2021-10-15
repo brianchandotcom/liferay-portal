@@ -18,14 +18,13 @@ import React, {useState} from 'react';
 
 import Sidebar from '../../../components/sidebar/Sidebar.es';
 import FieldsSidebarBody from './FieldsSidebarBody';
-import FieldsSidebarSettingsBody from './FieldsSidebarSettingsBody';
-import FieldsSidebarSettingsHeader from './FieldsSidebarSettingsHeader';
+import SidebarFieldSettings from './SidebarFieldSettings';
 
 export const FieldsSidebar = ({title}) => {
 	const {focusedField} = useFormState();
 
 	return Object.keys(focusedField).length ? (
-		<FieldSettingsSidebar field={focusedField} />
+		<SidebarFieldSettings field={focusedField} />
 	) : (
 		<FieldListSidebar title={title} />
 	);
@@ -50,20 +49,6 @@ const FieldListSidebar = ({title}) => {
 					keywords={searchTerm}
 					setKeywords={setSearchTerm}
 				/>
-			</Sidebar.Body>
-		</Sidebar>
-	);
-};
-
-const FieldSettingsSidebar = ({field}) => {
-	return (
-		<Sidebar className="display-settings">
-			<Sidebar.Header>
-				<FieldsSidebarSettingsHeader field={field} />
-			</Sidebar.Header>
-
-			<Sidebar.Body>
-				<FieldsSidebarSettingsBody field={field} />
 			</Sidebar.Body>
 		</Sidebar>
 	);

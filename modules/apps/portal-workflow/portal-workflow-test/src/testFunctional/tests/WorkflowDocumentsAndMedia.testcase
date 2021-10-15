@@ -244,12 +244,49 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69296. Assert that a file can be published"
-	@ignore = "true"
 	@priority = "3"
 	test CanPublishFile {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		// TODO LRQA-69296 CanPublishFile pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media",
+			site = "${siteName}");
 
+		Workflow.configureWorkflowViaPortlet(workflowDefinition = "Single Approver");
+
+		DMDocument.addWithWorkflowCP(
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Document_1",
+			workflowAssetType = "Document",
+			workflowTask = "Review");
+		
+		Workflow.approveTaskByActions(
+				workflowAssetTitle = "Document_1",
+				workflowAssetType = "Document",
+				workflowTask = "Review");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMDocument.viewStatus(
+			dmDocumentStatus = "Approved",
+			dmDocumentTitle = "Document_1.jpg");
+
+
+			
 	}
 
 	@description = "This is a test for LRQA-69297. Assert that the user can publish multiple files"

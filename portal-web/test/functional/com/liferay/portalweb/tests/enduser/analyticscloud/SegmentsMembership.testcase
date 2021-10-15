@@ -632,26 +632,9 @@ definition {
 		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
 		// AC Refactor ticket: LRAC-9252
 
-		var usernameList = "user1,user2,user3,user4,user5";
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
 
-		task ("Add 5 more new users") {
-			for (var name : list "${usernameList}") {
-				JSONUser.addUser(
-					userEmailAddress = "${name}@liferay.com",
-					userFirstName = "${name}",
-					userLastName = "${name}",
-					userScreenName = "${name}");
-
-				JSONUser.setFirstPassword(
-					agreeToTermsAndAnswerReminderQuery = "true",
-					requireReset = "false",
-					userEmailAddress = "${name}@liferay.com");
-			}
-		}
-
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
-		}
+		var nameList = "user1 user1,user2 user2,user3 user3";
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
@@ -661,31 +644,13 @@ definition {
 			ACUtils.navigateToSitePageWithUser(
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
-				emailList = "userea@liferay.com,user1@liferay.com",
-				pageName = "Blogs Page",
+				emailList = "${emailList}",
+				pageName = "AC Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
-		task ("View the documents page as different users") {
-			ACUtils.navigateToSitePageWithUser(
-				actionType = "View DM",
-				documentTitleList = "DM AC Title",
-				emailList = "user2@liferay.com,user3@liferay.com",
-				pageName = "Documents Page",
-				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
-		}
-
-		task ("View the web content page as different users") {
-			ACUtils.navigateToSitePageWithUser(
-				emailList = "user4@liferay.com,user5@liferay.com",
-				pageName = "Web Content Page",
-				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -705,7 +670,7 @@ definition {
 		}
 
 		task ("Add multiple members") {
-			ACSegments.addStaticMultiMember(tableMember = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4,user5 user5");
+			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
 		}
 
 		task ("Create the segment") {
@@ -726,7 +691,7 @@ definition {
 		task ("View membership card when hovering") {
 			ACSegments.viewSegmentMembershipChartRowNumbers(
 				row = "Added",
-				value = "6");
+				value = "3");
 
 			ACSegments.viewSegmentMembershipChartRowNumbers(
 				row = "Removed",
@@ -734,7 +699,7 @@ definition {
 
 			ACSegments.viewSegmentMembershipChartRowNumbers(
 				row = "Net Change",
-				value = "6");
+				value = "3");
 		}
 	}
 

@@ -485,6 +485,13 @@ components:
             type: object
         MappedProduct:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 customFields:
                     items:
                         $ref: "#/components/schemas/CustomField"
@@ -1501,7 +1508,7 @@ info:
         name: Commerce Team
     description:
         "Liferay Commerce Admin Catalog API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.admin.catalog.client', and version '4.0.7'."
+        artifact ID 'com.liferay.headless.commerce.admin.catalog.client', and version '4.0.8'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -6755,6 +6762,16 @@ paths:
                   schema:
                       type: integer
                   style: form
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -10914,6 +10931,16 @@ paths:
                   schema:
                       type: integer
                   style: form
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
             responses:
                 200:
                     content:

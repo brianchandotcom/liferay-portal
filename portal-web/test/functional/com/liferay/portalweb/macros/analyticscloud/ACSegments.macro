@@ -668,14 +668,14 @@ definition {
 			value1 = "${labelName}");
 	}
 
+	macro viewIncludeAnonymousLabel {
+		AssertElementPresent(locator1 = "ACSegments#ANONYMOUS_LABEL");
+	}
+
 	macro viewPreviewNumber {
 		AssertTextPresent(
 			locator1 = "ACLoading#PREVIEW_NUMBER",
 			value1 = "${previewNumber}");
-	}
-
-	macro viewIncludeAnonymousLabel {
-		AssertElementPresent(locator1 = "ACSegments#ANONYMOUS_LABEL");
 	}
 
 	macro viewSegmentComposition {

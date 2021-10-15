@@ -792,16 +792,11 @@ definition {
 
 		ObjectAdmin.changeLabelLanguage(newLanguage = "pt-BR");
 
-		CreateObject.editLabel(labelName = "Campo Costumizado");
+		CreateObject.editLabel(labelName = "Campo Customizado");
 
 		Button.clickSave();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject",
-			value = "Test text");
 
 		MyAccount.configureDisplaySettingsLanguage(languageName = "português (Brasil)");
 
@@ -809,7 +804,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		ObjectPortlet.assertFieldLabelName(fieldLabelName = "Campo Costumizado");
+		ObjectPortlet.assertFieldLabelName(fieldLabelName = "Campo Customizado");
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for an Object Label"

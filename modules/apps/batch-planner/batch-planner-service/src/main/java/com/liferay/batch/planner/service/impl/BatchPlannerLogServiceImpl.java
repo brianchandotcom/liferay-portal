@@ -97,6 +97,18 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 
 	@Override
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+			long companyId, boolean export, int start, int end,
+			OrderByComparator<BatchPlannerLog> orderByComparator)
+		throws PortalException {
+
+		checkPermission(companyId, ActionKeys.VIEW);
+
+		return batchPlannerLogLocalService.getCompanyBatchPlannerLogs(
+			companyId, export, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
 			long companyId, int start, int end,
 			OrderByComparator<BatchPlannerLog> orderByComparator)
 		throws PortalException {
@@ -115,6 +127,16 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 
 		return batchPlannerLogLocalService.getCompanyBatchPlannerLogsCount(
 			companyId);
+	}
+
+	@Override
+	public int getCompanyBatchPlannerLogsCount(long companyId, boolean export)
+		throws PortalException {
+
+		checkPermission(companyId, ActionKeys.VIEW);
+
+		return batchPlannerLogLocalService.getCompanyBatchPlannerLogsCount(
+			companyId, export);
 	}
 
 	protected void checkPermission(long companyId, String actionKey)

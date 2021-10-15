@@ -16,12 +16,15 @@ package com.liferay.poshi.core.elements;
 
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.script.PoshiScriptParserException;
+import com.liferay.poshi.core.util.CharPool;
 import com.liferay.poshi.core.util.RegexUtil;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -306,6 +309,22 @@ public class ExecutePoshiElement extends PoshiElement {
 
 			multilineSnippet = true;
 		}
+
+		Collections.sort(
+			assignments,
+			new Comparator<String>() {
+
+				@Override
+				public int compare(String assignment1, String assignment2) {
+					String name1 = assignment1.substring(
+						0, assignment1.indexOf(CharPool.EQUAL));
+					String name2 = assignment2.substring(
+						0, assignment2.indexOf(CharPool.EQUAL));
+
+					return name1.compareTo(name2);
+				}
+
+			});
 
 		for (String assignment : assignments) {
 			if (multilineSnippet) {

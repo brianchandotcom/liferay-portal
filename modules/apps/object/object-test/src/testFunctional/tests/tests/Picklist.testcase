@@ -122,13 +122,30 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is possible to delete a Picklist item"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeletePicklistItem {
 		property portal.acceptance = "true";
 
-		// TODO LPS-139767 CanDeletePicklistItem pending implementation
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
+		Picklist.addPicklistItemViaAPI(
+			itemKey = "PicklistItemKeyTest",
+			itemName = "Picklist Item Name Test",
+			picklistName = "Picklist Test");
+
+		Picklist.gotoPicklists();
+
+		Picklist.optionsPicklist(
+			picklistName = "Picklist Test",
+			picklistOption = "View");
+
+		Picklist.optionsPicklistItem(
+			itemKey = "PicklistItemKeyTest",
+			picklistItemOption = "Delete");
+
+		Picklist.assertPicklistItemNotPresent(
+			picklistItemKey = "PicklistItemKeyTest",
+			picklistItemName = "Picklist Item Name Test");
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to add special characters for the Key field for a Picklist item"

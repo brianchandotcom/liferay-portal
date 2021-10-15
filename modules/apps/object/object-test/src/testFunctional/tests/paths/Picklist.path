@@ -95,6 +95,21 @@
 		<td>//div[(@class='sheet') and contains (.,'${key_title}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>PICKLIST_ITEM_KEBAB_MENU</td>
+		<td>//div[text()='${key_itemKey}']/following-sibling::div//button</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>IFRAME_PICKLIST_ITEM_MODAL</td>
+		<td>xpath=(//iframe[contains(@src,'ListTypeDefinitions')])[2]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>PICKLIST_ITEM_KEBAB_MENU_OPTION</td>
+		<td>//div[contains(.,'${key_itemKey}')]/..//button[contains(.,'${key_picklistItemOption}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

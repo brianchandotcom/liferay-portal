@@ -3078,6 +3078,8 @@ log.sanitizer.enabled=false</echo>
 								tofile="${liferay.home}/osgi/test/com.liferay.portal.test.jar"
 							/>
 
+							<ant dir="portal-test" inheritAll="false" target="install-portal-snapshot" />
+
 							<gradle-execute dir="modules/apps/static/required-dependencies/required-dependencies" task="deployReqTestLibs" />
 
 							<local name="artifact.version" />

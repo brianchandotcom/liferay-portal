@@ -51,7 +51,7 @@ public class RobotsAction implements Action {
 
 		try {
 			String host = GetterUtil.getString(
-				PortalUtil.getHost(httpServletRequest));
+				PortalUtil.getForwardedHost(httpServletRequest));
 
 			LayoutSet layoutSet = null;
 

@@ -664,30 +664,8 @@ definition {
 		AssertElementPresent(locator1 = "ACSegments#ANONYMOUS_LABEL");
 	}
 
-	macro viewKnownSegmentMemberNameLinksSpecificOrder {
-		var resultOrder = "0";
-
-		for (var username : list "${username}") {
-			var resultOrder = ${resultOrder} + 1;
-
-			AssertVisible(
-				key_userName = "${username}",
-				locator1 = "ACSegments#KNOWN_SEGMENT_MEMBERS_VIEW_SPECIFIC_ORDER",
-				resultOrder = "${resultOrder}");
-		}
-	}
-
-	macro viewKnownSegmentMembersSpecificOrder {
-		var resultOrder = "0";
-
-		for (var username : list "${username}") {
-			var resultOrder = ${resultOrder} + 1;
-
-			AssertVisible(
-				key_userName = "${username}",
-				locator1 = "ACSegments#KNOWN_SEGMENT_MEMBERS_VIEW_SPECIFIC_ORDER",
-				resultOrder = "${resultOrder}");
-		}
+	macro viewIncludeAnonymousLabel {
+		AssertElementPresent(locator1 = "ACSegments#ANONYMOUS_LABEL");
 	}
 
 	macro viewSegmentComposition {

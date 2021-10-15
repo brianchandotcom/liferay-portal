@@ -1,0 +1,229 @@
+{
+    "label": {
+      "en-US": "Koroneiki Account"
+    },
+    "name": "KoroneikiAccount",
+    "objectFields": [
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Account Key"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "accountKey",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Code"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "code",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Data Region"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "dataRegion",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Liferay Contact Email Address"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "liferayContactEmailAddress",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Liferay Contact Name"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "liferayContactName",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Liferay Contact Role"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "liferayContactRole",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Liferay Version"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "liferayVersion",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Max Requestors"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "maxRequestors",
+        "required": false,
+        "type": "Integer"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Region"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "region",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "SLA Current"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "slaCurrent",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "SLA Current End Date"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "slaCurrentEndDate",
+        "required": false,
+        "type": "Date"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "SLA Current Start Date"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "slaCurrentStartDate",
+        "required": false,
+        "type": "Date"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "SLA Expired"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "slaExpired",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "SLA Expired End Date"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "slaExpiredEndDate",
+        "required": false,
+        "type": "Date"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "SLA Expired Start Date"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "slaExpiredStartDate",
+        "required": false,
+        "type": "Date"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "SLA Future"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "slaFuture",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "SLA Future End Date"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "slaFutureEndDate",
+        "required": false,
+        "type": "Date"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "SLA Future Start Date"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "slaFutureStartDate",
+        "required": false,
+        "type": "Date"
+      }
+    ],
+    "pluralLabel": {
+		"en_US": "Koroneiki Accounts"
+	},
+    "scope": "company",
+    "system": false
+  }

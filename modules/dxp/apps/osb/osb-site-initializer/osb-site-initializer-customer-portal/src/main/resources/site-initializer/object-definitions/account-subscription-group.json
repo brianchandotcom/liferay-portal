@@ -1,0 +1,66 @@
+{
+    "label": {
+      "en-US": "Account Subscription Group"
+    },
+    "name": "AccountSubscriptionGroup",
+    "objectFields": [
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Account Key"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "accountKey",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Activation Status"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "activationStatus",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Has Activation"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "hasActivation",
+        "required": false,
+        "type": "Boolean"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Name"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "name",
+        "required": false,
+        "type": "String"
+      }
+    ],
+    "pluralLabel": {
+      "en_US": "Account Subscription Groups"
+    },
+    "scope": "company",
+    "status": {
+      "code": 0,
+      "label": "approved",
+      "label_i18n": "Approved"
+    },
+    "system": false
+  }

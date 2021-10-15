@@ -316,6 +316,12 @@ public class ExecutePoshiElement extends PoshiElement {
 
 				@Override
 				public int compare(String assignment1, String assignment2) {
+					if (!assignment1.matches("\\w+ = .+") &&
+						!assignment2.matches("\\w+ = .+")) {
+
+						return 0;
+					}
+
 					String name1 = assignment1.substring(
 						0, assignment1.indexOf(CharPool.EQUAL));
 					String name2 = assignment2.substring(

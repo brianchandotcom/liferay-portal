@@ -1027,30 +1027,6 @@ export default ({
 		return nodes;
 	};
 
-	const format = (key, args) => {
-		const SPLIT_REGEX = /({\d+})/g;
-
-		const keyArray = key
-			.split(SPLIT_REGEX)
-			.filter((val) => val.length !== 0);
-
-		for (let i = 0; i < args.length; i++) {
-			const arg = args[i];
-
-			const indexKey = `{${i}}`;
-
-			let argIndex = keyArray.indexOf(indexKey);
-
-			while (argIndex >= 0) {
-				keyArray.splice(argIndex, 1, arg);
-
-				argIndex = keyArray.indexOf(indexKey);
-			}
-		}
-
-		return keyArray.join('');
-	};
-
 	const getBreadcrumbItems = (filterClass, node, nodeId, viewType) => {
 		if (viewType === VIEW_TYPE_CHANGES) {
 			if (nodeId === 0) {
@@ -1351,9 +1327,10 @@ export default ({
 
 				cells.push(
 					<ClayTable.Cell className="table-cell-expand-smallest">
-						{format(Liferay.Language.get('x-ago'), [
-							node.timeDescription,
-						])}
+						{Liferay.Util.sub(
+							Liferay.Language.get('x-ago'),
+							node.timeDescription
+						)}
 					</ClayTable.Cell>
 				);
 			}

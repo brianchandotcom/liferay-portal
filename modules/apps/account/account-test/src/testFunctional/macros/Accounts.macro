@@ -1099,7 +1099,11 @@ definition {
 			configurationName = "Accounts",
 			configurationScope = "Site Scope");
 
+		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_REMOVE");
+
 		Click(locator1 = "FormFields#FIELD_ADD_REMOVE");
+
+		AssertElementNotPresent(locator1 = "FormFields#FIELD_ADD_REMOVE");
 
 		Click(
 			key_fieldName = "Allowed Account Types",

@@ -41,7 +41,7 @@ export default function Sidebar() {
 
 	return (
 		<div className="style-book-editor__sidebar" ref={sidebarRef}>
-			<OldToolbar />
+			{!config.templatesPreviewEnabled && <OldToolbar />}
 			<div className="style-book-editor__sidebar-content">
 				<ThemeInformation />
 

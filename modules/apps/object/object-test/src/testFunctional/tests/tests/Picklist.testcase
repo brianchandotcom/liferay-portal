@@ -225,7 +225,7 @@ definition {
 		Picklist.assertPicklistDetails(title = "Basic Info");
 	}
 
-    @description = "LPS-136595 - Verify it is possible to view a Picklist item"
+	@description = "LPS-136595 - Verify it is possible to view a Picklist item"
 	@priority = "4"
 	test CanViewPicklistItem {
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");

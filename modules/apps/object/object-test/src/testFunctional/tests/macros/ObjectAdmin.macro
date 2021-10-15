@@ -304,6 +304,10 @@ definition {
 		Click(locator1 = "ObjectAdmin#OBJECT_FIELDS_TAB");
 	}
 
+	macro gotoRelationshipsTab {
+		Click(locator1 = "ObjectAdmin#OBJECT_RELATIONSHIPS_TAB");
+	}
+
 	macro openObjectAdmin {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet");
 	}

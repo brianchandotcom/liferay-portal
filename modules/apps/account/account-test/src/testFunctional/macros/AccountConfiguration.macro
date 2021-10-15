@@ -27,10 +27,7 @@ definition {
 			roleTitle = "${orgRoleTitle}",
 			userScreenName = "${userScreenName}");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Accounts");
+		Accounts.openAccountsAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
 

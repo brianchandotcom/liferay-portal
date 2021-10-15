@@ -296,8 +296,16 @@ public abstract class PoshiElement
 
 		sb.append("\n");
 		sb.append(pad);
-		sb.append(getBlockName());
+
+		String blockName = getBlockName();
+
+		sb.append(blockName);
+
 		sb.append(" {");
+
+		if (blockName.equals("definition")) {
+			sb.append("\n");
+		}
 
 		PoshiNode<?, ?> previousPoshiNode = null;
 
@@ -327,6 +335,11 @@ public abstract class PoshiElement
 		}
 
 		sb.append("\n");
+
+		if (blockName.equals("definition")) {
+			sb.append("\n");
+		}
+
 		sb.append(pad);
 		sb.append("}");
 

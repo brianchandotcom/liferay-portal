@@ -641,11 +641,54 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69300. Verify the status as Draft after file checkout"
-	@ignore = "true"
 	@priority = "3"
 	test StatusBecomeDraftAfterCheckout {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var documentTitle = "Document_1";
 
-		// TODO LRQA-69300 StatusBecomeDraftAfterCheckout pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media",
+			site = "${siteName}");
+
+		Workflow.configureWorkflowViaPortlet(workflowDefinition = "Single Approver");
+
+		DMDocument.addWithWorkflowCP(
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "${documentTitle}");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "${documentTitle}",
+			workflowAssetType = "Document",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "${documentTitle}",
+			workflowAssetType = "Document",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Checkout",
+			rowEntry = "${documentTitle}");
+
+		DMDocument.viewStatus(
+			dmDocumentStatus = "Draft",
+			dmDocumentTitle = "${documentTitle}");
+
 
 	}
 

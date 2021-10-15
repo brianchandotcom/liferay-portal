@@ -24,7 +24,6 @@ definition {
 	@description = "This is a test for covering the following LPS-121306 and LPS-128094."
 	@priority = "5"
 	test CommerceRemainsActiveOnRestarts {
-		property commerce.enabled = "true";
 		property test.name.skip.portal.instance = "CommerceLicense#CommerceRemainsActiveOnRestarts";
 
 		CommerceLicense.viewCommerceAvailable();
@@ -42,7 +41,6 @@ definition {
 
 	@priority = "3"
 	test DeactivateCommerce {
-		property commerce.enabled = "true";
 		property test.name.skip.portal.instance = "CommerceLicense#DeactivateCommerce";
 
 		ApplicationsMenuHelper.openApplicationsMenu();
@@ -53,7 +51,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dupdate.properties.original=enterprise.product.commerce.enabled=true -Dupdate.properties=enterprise.product.commerce.enabled=false");
+			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=enterprise.product.commerce.enabled=false");
 
 		Portlet.startServer(commerceEnabled = "false");
 
@@ -64,7 +62,6 @@ definition {
 
 	@priority = "4"
 	test DeleteEnterpriseLicenseModule {
-		property commerce.enabled = "true";
 		property test.name.skip.portal.instance = "CommerceLicense#DeleteEnterpriseLicenseModule";
 
 		Portlet.shutdownServer();
@@ -99,7 +96,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=enterprise.product.commerce.enabled=true");
+			value1 = "portal-ext-properties-update -Dupdate.properties.original=enterprise.product.commerce.enabled=false -Dupdate.properties=enterprise.product.commerce.enabled=true");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
@@ -108,7 +105,6 @@ definition {
 
 	@priority = "4"
 	test TermsOfUseNotShownToNonAdminUser {
-		property commerce.enabled = "true";
 		property custom.properties = "enterprise.product.notification.enabled=true";
 
 		SelectFrame(value1 = "relative=top");
@@ -144,7 +140,6 @@ definition {
 
 	@priority = "4"
 	test TermsOfUseShownToAdminOnFirstLoginOnly {
-		property commerce.enabled = "true";
 		property custom.properties = "enterprise.product.notification.enabled=true";
 
 		SelectFrame(value1 = "relative=top");
@@ -170,7 +165,6 @@ definition {
 
 	@priority = "5"
 	test ViewCommerceEnabled {
-		property commerce.enabled = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "CommerceLicense#ViewCommerceEnabled";
 

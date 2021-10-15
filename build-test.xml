@@ -8755,22 +8755,11 @@ dl.store.impl=com.liferay.portal.store.s3.S3Store</echo>
 		</if>
 
 		<if>
-			<and>
-				<equals arg1="${build.profile}" arg2="dxp" />
-				<not>
-					<equals arg1="${commerce.enabled}" arg2="false" />
-				</not>
-				<or>
-					<equals arg1="${commerce.enabled}" arg2="true" />
-					<equals arg1="${env.CI_TEST_SUITE}" arg2="portal-fixpack-release" />
-					<equals arg1="${env.CI_TEST_SUITE}" arg2="portal-hotfix-release" />
-					<equals arg1="${env.CI_TEST_SUITE}" arg2="portal-release" />
-				</or>
-			</and>
+			<equals arg1="${commerce.enabled}" arg2="false" />
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
-enterprise.product.commerce.enabled=true</echo>
+enterprise.product.commerce.enabled=false</echo>
 			</then>
 		</if>
 

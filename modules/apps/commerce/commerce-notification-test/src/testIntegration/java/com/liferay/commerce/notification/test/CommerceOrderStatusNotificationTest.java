@@ -174,7 +174,7 @@ public class CommerceOrderStatusNotificationTest {
 			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
-		CommerceTestUtil.addCheckoutDetailsToUserOrder(
+		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			_commerceOrder, _user.getUserId(), false);
 
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(

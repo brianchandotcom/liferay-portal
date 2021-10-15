@@ -197,7 +197,7 @@ public class CommerceCheckoutTest {
 				commerceAccount.getCommerceAccountId(),
 				_commerceCurrency.getCommerceCurrencyId());
 
-		CommerceTestUtil.addCheckoutDetailsToUserOrder(
+		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, commerceOrder.getUserId(), false);
 
 		commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
@@ -266,7 +266,7 @@ public class CommerceCheckoutTest {
 					commerceAccount.getCommerceAccountId(),
 					_commerceCurrency.getCommerceCurrencyId());
 
-			CommerceTestUtil.addCheckoutDetailsToUserOrder(
+			CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 				commerceOrder, commerceOrder.getUserId(), false);
 
 			User user2 = UserTestUtil.addUser(_company);
@@ -338,7 +338,7 @@ public class CommerceCheckoutTest {
 					commerceAccount.getCommerceAccountId(),
 					_commerceCurrency.getCommerceCurrencyId());
 
-			CommerceTestUtil.addCheckoutDetailsToUserOrder(
+			CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 				commerceOrder, commerceOrder.getUserId(), false);
 
 			_commerceOrderEngine.checkoutCommerceOrder(
@@ -681,7 +681,7 @@ public class CommerceCheckoutTest {
 			_commerceAccount.getCommerceAccountId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
-		commerceOrder = CommerceTestUtil.addCheckoutDetailsToUserOrder(
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, _user.getUserId(), false);
 
 		List<CommerceOrderItem> commerceOrderItems =
@@ -751,7 +751,7 @@ public class CommerceCheckoutTest {
 			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
-		CommerceTestUtil.addCheckoutDetailsToUserOrder(
+		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, commerceOrder.getUserId(), false);
 
 		commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(

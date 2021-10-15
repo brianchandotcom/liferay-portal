@@ -123,7 +123,7 @@ public class CommercePaymentSubscriptionsTest {
 
 	@Test
 	public void testPaymentSubscription() throws Exception {
-		_commerceOrder = CommerceTestUtil.addCheckoutDetailsToUserOrder(
+		_commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			_commerceOrder, _user.getUserId(), true, false);
 
 		_commerceOrder.setPaymentStatus(

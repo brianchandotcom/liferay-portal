@@ -47,7 +47,7 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", portalURL = "${portalURL}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", parentGroupName = "${parentGroupName}", portalURL = "${portalURL}", site = "${site}");
 
 		return "${groupId}";
 	}

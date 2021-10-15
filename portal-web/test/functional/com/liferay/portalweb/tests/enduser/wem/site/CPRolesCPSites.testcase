@@ -104,21 +104,11 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		JSONRole.addRegularRole(roleTitle = "Roles Regrole Name");
 
-		Role.add(roleTitle = "Roles Regrole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL_CHECKBOX",
-			permissionDefinitionValue = "View Control Panel Menu",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
 			roleTitle = "Roles Regrole Name");
 
 		JSONUser.addUser(
@@ -127,81 +117,35 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
 		JSONRole.assignRoleToUser(
 			roleTitle = "Roles Regrole Name",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Parent Site Name");
 
-		Site.addBlankCP(siteName = "Parent Site Name");
+		JSONGroup.addChildSite(
+			groupName = "Child SiteName",
+			parentGroupName = "Parent Site Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.assignUserToGroup(
+			groupName = "Parent Site Name",
+			userEmailAddress = "userea@liferay.com");
 
-		Site.addBlankCP(
-			parentSiteName = "Parent Site Name",
-			siteName = "Child SiteName");
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "Parent Site Name",
+			roleTitle = "Site Administrator",
+			userEmailAddress = "userea@liferay.com");
 
-		SitePages.openPagesAdmin(siteURLKey = "Parent Site Name");
+		JSONGroup.assignUserToGroup(
+			groupName = "Child SiteName",
+			parentGroupName = "Parent Site Name",
+			userEmailAddress = "userea@liferay.com");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		SitePages.openPagesAdmin(siteURLKey = "Parent Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignSiteRoleCP(
-			resourceName = "userfn userln",
-			roleTitle = "Site Administrator");
-
-		SitePages.openPagesAdmin(siteURLKey = "Child SiteName");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		SitePages.openPagesAdmin(siteURLKey = "Child SiteName");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignSiteRoleCP(
-			resourceName = "userfn userln",
-			roleTitle = "Site Administrator");
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "Child SiteName",
+			parentGroupName = "Parent Site Name",
+			roleTitle = "Site Administrator",
+			userEmailAddress = "userea@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",

@@ -302,7 +302,7 @@ public class ExecutePoshiElement extends PoshiElement {
 		String assignmentsString = assignments.toString();
 
 		int invocationStringLength =
-			blockName.length() + assignmentsString.length();
+			blockName.length() + assignmentsString.length() + 9;
 
 		if ((invocationStringLength > 80) &&
 			!isConditionValidInParent((PoshiElement)getParent())) {

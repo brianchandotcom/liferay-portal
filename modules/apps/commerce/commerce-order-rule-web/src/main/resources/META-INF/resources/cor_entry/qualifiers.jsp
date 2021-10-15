@@ -61,7 +61,7 @@ boolean hasPermission = corEntryQualifiersDisplayContext.hasPermission(ActionKey
 	</div>
 
 	<c:if test='<%= Objects.equals(accountQualifiers, "accounts") %>'>
-		<%@ include file="/cor_entry/qualifier/accounts.jspf" %>
+		<%@ include file="/cor_entry/qualifier/account_entries.jspf" %>
 	</c:if>
 
 	<c:if test='<%= Objects.equals(accountQualifiers, "accountGroups") %>'>
@@ -87,7 +87,7 @@ boolean hasPermission = corEntryQualifiersDisplayContext.hasPermission(ActionKey
 	</div>
 
 	<c:if test='<%= Objects.equals(channelQualifiers, "channels") %>'>
-		<%@ include file="/cor_entry/qualifier/channels.jspf" %>
+		<%@ include file="/cor_entry/qualifier/commerce_channels.jspf" %>
 	</c:if>
 
 	<div class="row">
@@ -109,7 +109,7 @@ boolean hasPermission = corEntryQualifiersDisplayContext.hasPermission(ActionKey
 	</div>
 
 	<c:if test='<%= Objects.equals(orderTypeQualifiers, "orderTypes") %>'>
-		<%@ include file="/cor_entry/qualifier/order_types.jspf" %>
+		<%@ include file="/cor_entry/qualifier/commerce_order_types.jspf" %>
 	</c:if>
 </aui:form>
 

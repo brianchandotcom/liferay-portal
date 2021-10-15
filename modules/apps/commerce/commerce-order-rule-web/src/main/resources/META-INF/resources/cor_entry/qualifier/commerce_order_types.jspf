@@ -15,12 +15,12 @@
 --%>
 
 <c:if test="<%= hasPermission %>">
-	<div id="item-finder-root"></div>
+	<div id="item-finder-root-order-types"></div>
 
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
-				"datasetId", COREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_ACCOUNT_ENTRIES
+				"datasetId", COREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES
 			).put(
 				"orderRuleExternalReferenceCode", HtmlUtil.escapeJS(corEntry.getExternalReferenceCode())
 			).put(
@@ -31,18 +31,18 @@
 				"spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 			).build()
 		%>'
-		module="js/accounts"
+		module="js/commerce_order_types"
 	/>
 
 	<commerce-ui:panel
 		bodyClasses="p-0"
-		title='<%= LanguageUtil.get(request, "accounts") %>'
+		title='<%= LanguageUtil.get(request, "order-types") %>'
 	>
 		<clay:headless-data-set-display
-			apiURL="<%= corEntryQualifiersDisplayContext.getCOREntryAccountsAPIURL() %>"
-			clayDataSetActionDropdownItems="<%= corEntryQualifiersDisplayContext.getAccountEntryClayDataSetActionDropdownItems() %>"
+			apiURL="<%= corEntryQualifiersDisplayContext.getCOREntryOrderTypesAPIURL() %>"
+			clayDataSetActionDropdownItems="<%= corEntryQualifiersDisplayContext.getCommerceOrderTypeClayDataSetActionDropdownItems() %>"
 			formId="fm"
-			id="<%= COREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_ACCOUNT_ENTRIES %>"
+			id="<%= COREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

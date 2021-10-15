@@ -99,8 +99,6 @@ definition {
 		AssertElementNotPresent(
 			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
 			value1 = "Anonymous Anonymous");
-
-
 	}
 
 	@description = "This is a test for LRQA-69710. Verify that the user can see the actual state of the user in the workflow process after approve. "

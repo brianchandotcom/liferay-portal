@@ -18,6 +18,4 @@ definition {
 		Refresh();
 	}
 
-    
-
 }

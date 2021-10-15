@@ -12,7 +12,7 @@
 		},
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
-			"APPLICATION": "onboarding"
+			"APPLICATION": "portal"
 		},
 		"remoteAppEntryKey": "CUSTOMER-PORTAL-ONBOARDING",
 		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL-ONBOARDING$]"

@@ -16,6 +16,11 @@
 	<td>//*[not(@class='total-members-count')]/div[not(@aria-hidden)]/span[contains(@class,'loading-animation')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PREVIEW_NUMBER</td>
+	<td>//div[@class='total-members-count']</td>
+	<td></td>
+</tr>
 
 </tbody>
 </table>

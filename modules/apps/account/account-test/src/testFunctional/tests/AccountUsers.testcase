@@ -31,10 +31,7 @@ definition {
 			accountEntryName = "Account with User",
 			accountEntryType = "Business");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Users");
+		AccountUsers.openAccountUsersAdmin();
 
 		AccountUsers.addUser(
 			accountName = "Account with User",

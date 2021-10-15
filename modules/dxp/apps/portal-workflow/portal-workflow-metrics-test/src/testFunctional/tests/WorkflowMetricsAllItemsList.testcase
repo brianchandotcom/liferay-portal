@@ -900,12 +900,12 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		for (var addBlogs : list "1,2") {	
+		for (var addBlogs : list "1,2") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content ${addBlogs}",
 				entryTitle = "Blogs Entry Title ${addBlogs}");
 		}
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -919,8 +919,6 @@ definition {
 		AssertElementPresent(
 			key_value = "up",
 			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
-		
-
 	}
 
 	@description = "LPS-94146 - Verify that user can close the filters shown as tags clicking on x and the result is applied on items list"

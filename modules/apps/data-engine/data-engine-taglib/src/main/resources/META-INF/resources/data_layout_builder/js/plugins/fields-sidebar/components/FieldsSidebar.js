@@ -13,7 +13,6 @@
  */
 
 import ClayForm from '@clayui/form';
-import classNames from 'classnames';
 import {useFormState} from 'data-engine-js-components-web';
 import React, {useState} from 'react';
 
@@ -23,40 +22,48 @@ import FieldsSidebarSettingsBody from './FieldsSidebarSettingsBody';
 import FieldsSidebarSettingsHeader from './FieldsSidebarSettingsHeader';
 
 export const FieldsSidebar = ({title}) => {
-	const [keywords, setKeywords] = useState('');
 	const {focusedField} = useFormState();
 
-	const hasFocusedField = Object.keys(focusedField).length > 0;
+	return Object.keys(focusedField).length ? (
+		<FieldSettingsSidebar field={focusedField} />
+	) : (
+		<FieldListSidebar title={title} />
+	);
+};
+
+const FieldListSidebar = ({title}) => {
+	const [searchTerm, setSearchTerm] = useState('');
 
 	return (
-		<Sidebar
-			className={classNames({['display-settings']: hasFocusedField})}
-		>
+		<Sidebar>
 			<Sidebar.Header>
-				{hasFocusedField ? (
-					<FieldsSidebarSettingsHeader />
-				) : (
-					<>
-						<Sidebar.Title className="mb-3" title={title} />
-						<ClayForm onSubmit={(event) => event.preventDefault()}>
-							<Sidebar.SearchInput
-								onSearch={(keywords) => setKeywords(keywords)}
-								searchText={keywords}
-							/>
-						</ClayForm>
-					</>
-				)}
+				<Sidebar.Title className="mb-3" title={title} />
+				<ClayForm onSubmit={(event) => event.preventDefault()}>
+					<Sidebar.SearchInput
+						onSearch={(keywords) => setSearchTerm(keywords)}
+						searchText={searchTerm}
+					/>
+				</ClayForm>
+			</Sidebar.Header>
+			<Sidebar.Body>
+				<FieldsSidebarBody
+					keywords={searchTerm}
+					setKeywords={setSearchTerm}
+				/>
+			</Sidebar.Body>
+		</Sidebar>
+	);
+};
+
+const FieldSettingsSidebar = ({field}) => {
+	return (
+		<Sidebar className="display-settings">
+			<Sidebar.Header>
+				<FieldsSidebarSettingsHeader field={field} />
 			</Sidebar.Header>
 
 			<Sidebar.Body>
-				{hasFocusedField ? (
-					<FieldsSidebarSettingsBody />
-				) : (
-					<FieldsSidebarBody
-						keywords={keywords}
-						setKeywords={setKeywords}
-					/>
-				)}
+				<FieldsSidebarSettingsBody field={field} />
 			</Sidebar.Body>
 		</Sidebar>
 	);

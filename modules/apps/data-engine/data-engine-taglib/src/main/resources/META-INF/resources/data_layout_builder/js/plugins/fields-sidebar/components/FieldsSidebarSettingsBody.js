@@ -53,11 +53,10 @@ const getColumn = ({objectFields}) => ({children, column, index}) => {
 	);
 };
 
-export default function FieldsSidebarSettingsBody() {
+export default function FieldsSidebarSettingsBody({field}) {
 	const {
 		defaultLanguageId,
 		editingLanguageId,
-		focusedField,
 		objectFields,
 		pages,
 		rules,
@@ -68,7 +67,7 @@ export default function FieldsSidebarSettingsBody() {
 	const Column = useMemo(() => getColumn({objectFields}), [objectFields]);
 
 	const filteredSettingsContext = useSettingsContextFilter(
-		focusedField.settingsContext
+		field.settingsContext
 	);
 
 	return (
@@ -81,7 +80,7 @@ export default function FieldsSidebarSettingsBody() {
 				displayable={true}
 				editable={false}
 				editingLanguageId={editingLanguageId}
-				focusedField={focusedField}
+				focusedField={field}
 				objectFields={objectFields}
 				onAction={({payload, type}) => {
 					switch (type) {

@@ -13,7 +13,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {useConfig, useForm, useFormState} from 'data-engine-js-components-web';
+import {useConfig, useForm} from 'data-engine-js-components-web';
 import React from 'react';
 
 import Sidebar from '../../../components/sidebar/Sidebar.es';
@@ -21,11 +21,10 @@ import {EVENT_TYPES} from '../../../eventTypes';
 
 import './FieldsSidebarSettingsHeader.scss';
 
-export default function FieldsSidebarSettingsHeader() {
+export default function FieldsSidebarSettingsHeader({field}) {
 	const dispatch = useForm();
 	const {fieldTypes} = useConfig();
-	const {focusedField} = useFormState();
-	const {label} = fieldTypes.find(({name}) => name === focusedField.type);
+	const {label} = fieldTypes.find(({name}) => name === field.type);
 
 	return (
 		<div className="data-engine__field-sidebar-settings-title">

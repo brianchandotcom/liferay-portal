@@ -22,7 +22,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -75,18 +74,7 @@ public class DLAccessFromDesktopDisplayContext {
 	}
 
 	public String getWebDAVHelpMessage() {
-		if (BrowserSnifferUtil.isWindows(_httpServletRequest)) {
-			return LanguageUtil.format(
-				_httpServletRequest, "webdav-windows-help",
-				new Object[] {
-					"https://support.microsoft.com/en-us/kb/892211",
-					_WEBDAV_HELP_ARTICLE
-				},
-				false);
-		}
-
-		return LanguageUtil.format(
-			_httpServletRequest, "webdav-help", _WEBDAV_HELP_ARTICLE, false);
+		return LanguageUtil.get(_httpServletRequest, "webdav-help");
 	}
 
 	public String getWebDAVURL() throws PortalException {
@@ -108,10 +96,6 @@ public class DLAccessFromDesktopDisplayContext {
 
 		return "portlet_image_gallery_display_folder_action";
 	}
-
-	private static final String _WEBDAV_HELP_ARTICLE =
-		"https://help.liferay.com/hc/en-us/articles" +
-			"/360028720352-Desktop-Access-to-Documents-and-Media";
 
 	private final DLRequestHelper _dlRequestHelper;
 	private final HttpServletRequest _httpServletRequest;

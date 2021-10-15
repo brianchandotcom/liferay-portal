@@ -270,15 +270,6 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 					<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() && isLatestVersion %>">
 
 						<%
-						String webDavHelpMessage = null;
-
-						if (BrowserSnifferUtil.isWindows(request)) {
-							webDavHelpMessage = LanguageUtil.format(request, "webdav-windows-help", new Object[] {"https://support.microsoft.com/en-us/kb/892211", "https://help.liferay.com/hc/en-us/articles/360028720352-Desktop-Access-to-Documents-and-Media"}, false);
-						}
-						else {
-							webDavHelpMessage = LanguageUtil.format(request, "webdav-help", "https://help.liferay.com/hc/en-us/articles/360028720352-Desktop-Access-to-Documents-and-Media", false);
-						}
-
 						String webDavURLInputId = liferayPortletResponse.getNamespace() + "webDavURLInput";
 						%>
 
@@ -286,7 +277,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 							<label for="<%= webDavURLInputId %>">
 								<liferay-ui:message key='<%= TextFormatter.format("webDavURL", TextFormatter.K) %>' />
 
-								<liferay-ui:icon-help message="<%= webDavHelpMessage %>" />
+								<liferay-ui:icon-help message='<%= LanguageUtil.get(request, "webdav-help") %>' />
 							</label>
 
 							<div class="input-group input-group-sm">

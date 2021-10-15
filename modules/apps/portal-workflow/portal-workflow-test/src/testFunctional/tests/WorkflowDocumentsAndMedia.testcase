@@ -659,12 +659,28 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69302. Verify created file shows message about publication in process"
-	@ignore = "true"
 	@priority = "3"
 	test ViewPublicationInProcessMessage {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		// TODO LRQA-69302 ViewPublicationInProcessMessage pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media",
+			site = "${siteName}");
 
+		Workflow.configureWorkflowViaPortlet(workflowDefinition = "Single Approver");
+
+		WorkflowDocumentsAndMedia.videoShortcutAddCP(
+			videoShortcutTitle = "test",
+			videoURL = "Test");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DepotNavigator.gotoEdit(depotName = "test");
+
+		WorkflowDocumentsAndMedia.viewWorkflowInProcessMessage(errorMessage = "There is a publication workflow in process. Some actions may be disabled depending on the status and your role through this process.");
+
+		
 	}
-
 }

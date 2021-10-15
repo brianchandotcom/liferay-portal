@@ -208,6 +208,10 @@ public interface BatchPlannerLogLocalService
 	public BatchPlannerLog fetchBatchPlannerLog(long batchPlannerLogId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchPlannerLog fetchBatchPlannerPlanBatchPlannerLog(
+		long batchPlannerPlanId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -235,13 +239,6 @@ public interface BatchPlannerLogLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchPlannerLog> getBatchPlannerLogs(int start, int end);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BatchPlannerLog> getBatchPlannerLogs(long batchPlannerPlanId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BatchPlannerLog> getBatchPlannerLogs(
-		long batchPlannerPlanId, int start, int end);
-
 	/**
 	 * Returns the number of batch planner logs.
 	 *
@@ -254,12 +251,25 @@ public interface BatchPlannerLogLocalService
 	public int getBatchPlannerLogsCount(long batchPlannerPlanId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchPlannerLog getBatchPlannerPlanBatchPlannerLog(
+			long batchPlannerPlanId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+		long companyId, boolean export, int start, int end,
+		OrderByComparator<BatchPlannerLog> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
 		long companyId, int start, int end,
 		OrderByComparator<BatchPlannerLog> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyBatchPlannerLogsCount(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyBatchPlannerLogsCount(long companyId, boolean export);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

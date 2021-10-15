@@ -60,4 +60,6 @@ public interface BatchPlannerPlan
 
 			};
 
+	public BatchPlannerLog fetchBatchPlannerLog();
+
 }

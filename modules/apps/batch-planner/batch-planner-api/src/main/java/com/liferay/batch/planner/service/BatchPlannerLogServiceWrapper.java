@@ -53,28 +53,33 @@ public class BatchPlannerLogServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.batch.planner.model.BatchPlannerLog>
-			getBatchPlannerLogs(long batchPlannerPlanId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _batchPlannerLogService.getBatchPlannerLogs(batchPlannerPlanId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.batch.planner.model.BatchPlannerLog>
-			getBatchPlannerLogs(long batchPlannerPlanId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _batchPlannerLogService.getBatchPlannerLogs(
-			batchPlannerPlanId, start, end);
-	}
-
-	@Override
 	public int getBatchPlannerLogsCount(long batchPlannerPlanId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchPlannerLogService.getBatchPlannerLogsCount(
 			batchPlannerPlanId);
+	}
+
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerLog
+			getBatchPlannerPlanBatchPlannerLog(long batchPlannerPlanId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerLogService.getBatchPlannerPlanBatchPlannerLog(
+			batchPlannerPlanId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.batch.planner.model.BatchPlannerLog>
+			getCompanyBatchPlannerLogs(
+				long companyId, boolean export, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.batch.planner.model.BatchPlannerLog>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerLogService.getCompanyBatchPlannerLogs(
+			companyId, export, start, end, orderByComparator);
 	}
 
 	@Override
@@ -96,6 +101,14 @@ public class BatchPlannerLogServiceWrapper
 
 		return _batchPlannerLogService.getCompanyBatchPlannerLogsCount(
 			companyId);
+	}
+
+	@Override
+	public int getCompanyBatchPlannerLogsCount(long companyId, boolean export)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerLogService.getCompanyBatchPlannerLogsCount(
+			companyId, export);
 	}
 
 	/**

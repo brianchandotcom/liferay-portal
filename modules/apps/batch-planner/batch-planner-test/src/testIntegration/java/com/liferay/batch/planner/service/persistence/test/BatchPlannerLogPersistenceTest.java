@@ -545,6 +545,12 @@ public class BatchPlannerLogPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				batchPlannerLog, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "batchPlannerPlanId"));
+
+		Assert.assertEquals(
+			Long.valueOf(batchPlannerLog.getBatchPlannerPlanId()),
+			ReflectionTestUtil.<Long>invoke(
+				batchPlannerLog, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "batchPlannerPlanId"));
 		Assert.assertEquals(
 			batchPlannerLog.getBatchEngineExportTaskERC(),
 			ReflectionTestUtil.invoke(

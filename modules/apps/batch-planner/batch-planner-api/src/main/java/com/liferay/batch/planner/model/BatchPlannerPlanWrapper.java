@@ -152,6 +152,11 @@ public class BatchPlannerPlanWrapper
 		return wrap(model.cloneWithOriginalValues());
 	}
 
+	@Override
+	public BatchPlannerLog fetchBatchPlannerLog() {
+		return model.fetchBatchPlannerLog();
+	}
+
 	/**
 	 * Returns the active of this batch planner plan.
 	 *

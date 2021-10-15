@@ -56,24 +56,27 @@ public class BatchPlannerLogServiceUtil {
 		return getService().deleteBatchPlannerLog(batchPlannerLogId);
 	}
 
-	public static List<BatchPlannerLog> getBatchPlannerLogs(
-			long batchPlannerPlanId)
-		throws PortalException {
-
-		return getService().getBatchPlannerLogs(batchPlannerPlanId);
-	}
-
-	public static List<BatchPlannerLog> getBatchPlannerLogs(
-			long batchPlannerPlanId, int start, int end)
-		throws PortalException {
-
-		return getService().getBatchPlannerLogs(batchPlannerPlanId, start, end);
-	}
-
 	public static int getBatchPlannerLogsCount(long batchPlannerPlanId)
 		throws PortalException {
 
 		return getService().getBatchPlannerLogsCount(batchPlannerPlanId);
+	}
+
+	public static BatchPlannerLog getBatchPlannerPlanBatchPlannerLog(
+			long batchPlannerPlanId)
+		throws PortalException {
+
+		return getService().getBatchPlannerPlanBatchPlannerLog(
+			batchPlannerPlanId);
+	}
+
+	public static List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+			long companyId, boolean export, int start, int end,
+			OrderByComparator<BatchPlannerLog> orderByComparator)
+		throws PortalException {
+
+		return getService().getCompanyBatchPlannerLogs(
+			companyId, export, start, end, orderByComparator);
 	}
 
 	public static List<BatchPlannerLog> getCompanyBatchPlannerLogs(
@@ -89,6 +92,13 @@ public class BatchPlannerLogServiceUtil {
 		throws PortalException {
 
 		return getService().getCompanyBatchPlannerLogsCount(companyId);
+	}
+
+	public static int getCompanyBatchPlannerLogsCount(
+			long companyId, boolean export)
+		throws PortalException {
+
+		return getService().getCompanyBatchPlannerLogsCount(companyId, export);
 	}
 
 	/**

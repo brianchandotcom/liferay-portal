@@ -185,140 +185,41 @@ public interface BatchPlannerLogPersistence
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Returns all the batch planner logs where batchPlannerPlanId = &#63;.
+	 * Returns the batch planner log where batchPlannerPlanId = &#63; or throws a <code>NoSuchLogException</code> if it could not be found.
 	 *
 	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @return the matching batch planner logs
+	 * @return the matching batch planner log
+	 * @throws NoSuchLogException if a matching batch planner log could not be found
 	 */
-	public java.util.List<BatchPlannerLog> findByBatchPlannerPlanId(
-		long batchPlannerPlanId);
+	public BatchPlannerLog findByBatchPlannerPlanId(long batchPlannerPlanId)
+		throws NoSuchLogException;
 
 	/**
-	 * Returns a range of all the batch planner logs where batchPlannerPlanId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchPlannerLogModelImpl</code>.
-	 * </p>
+	 * Returns the batch planner log where batchPlannerPlanId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param start the lower bound of the range of batch planner logs
-	 * @param end the upper bound of the range of batch planner logs (not inclusive)
-	 * @return the range of matching batch planner logs
+	 * @return the matching batch planner log, or <code>null</code> if a matching batch planner log could not be found
 	 */
-	public java.util.List<BatchPlannerLog> findByBatchPlannerPlanId(
-		long batchPlannerPlanId, int start, int end);
+	public BatchPlannerLog fetchByBatchPlannerPlanId(long batchPlannerPlanId);
 
 	/**
-	 * Returns an ordered range of all the batch planner logs where batchPlannerPlanId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchPlannerLogModelImpl</code>.
-	 * </p>
+	 * Returns the batch planner log where batchPlannerPlanId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param start the lower bound of the range of batch planner logs
-	 * @param end the upper bound of the range of batch planner logs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching batch planner logs
-	 */
-	public java.util.List<BatchPlannerLog> findByBatchPlannerPlanId(
-		long batchPlannerPlanId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerLog>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the batch planner logs where batchPlannerPlanId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchPlannerLogModelImpl</code>.
-	 * </p>
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param start the lower bound of the range of batch planner logs
-	 * @param end the upper bound of the range of batch planner logs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching batch planner logs
+	 * @return the matching batch planner log, or <code>null</code> if a matching batch planner log could not be found
 	 */
-	public java.util.List<BatchPlannerLog> findByBatchPlannerPlanId(
-		long batchPlannerPlanId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerLog>
-			orderByComparator,
-		boolean useFinderCache);
+	public BatchPlannerLog fetchByBatchPlannerPlanId(
+		long batchPlannerPlanId, boolean useFinderCache);
 
 	/**
-	 * Returns the first batch planner log in the ordered set where batchPlannerPlanId = &#63;.
+	 * Removes the batch planner log where batchPlannerPlanId = &#63; from the database.
 	 *
 	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching batch planner log
-	 * @throws NoSuchLogException if a matching batch planner log could not be found
+	 * @return the batch planner log that was removed
 	 */
-	public BatchPlannerLog findByBatchPlannerPlanId_First(
-			long batchPlannerPlanId,
-			com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerLog>
-				orderByComparator)
+	public BatchPlannerLog removeByBatchPlannerPlanId(long batchPlannerPlanId)
 		throws NoSuchLogException;
-
-	/**
-	 * Returns the first batch planner log in the ordered set where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching batch planner log, or <code>null</code> if a matching batch planner log could not be found
-	 */
-	public BatchPlannerLog fetchByBatchPlannerPlanId_First(
-		long batchPlannerPlanId,
-		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerLog>
-			orderByComparator);
-
-	/**
-	 * Returns the last batch planner log in the ordered set where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner log
-	 * @throws NoSuchLogException if a matching batch planner log could not be found
-	 */
-	public BatchPlannerLog findByBatchPlannerPlanId_Last(
-			long batchPlannerPlanId,
-			com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerLog>
-				orderByComparator)
-		throws NoSuchLogException;
-
-	/**
-	 * Returns the last batch planner log in the ordered set where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner log, or <code>null</code> if a matching batch planner log could not be found
-	 */
-	public BatchPlannerLog fetchByBatchPlannerPlanId_Last(
-		long batchPlannerPlanId,
-		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerLog>
-			orderByComparator);
-
-	/**
-	 * Returns the batch planner logs before and after the current batch planner log in the ordered set where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerLogId the primary key of the current batch planner log
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next batch planner log
-	 * @throws NoSuchLogException if a batch planner log with the primary key could not be found
-	 */
-	public BatchPlannerLog[] findByBatchPlannerPlanId_PrevAndNext(
-			long batchPlannerLogId, long batchPlannerPlanId,
-			com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerLog>
-				orderByComparator)
-		throws NoSuchLogException;
-
-	/**
-	 * Removes all the batch planner logs where batchPlannerPlanId = &#63; from the database.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 */
-	public void removeByBatchPlannerPlanId(long batchPlannerPlanId);
 
 	/**
 	 * Returns the number of batch planner logs where batchPlannerPlanId = &#63;.

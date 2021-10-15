@@ -30,6 +30,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Settings;
@@ -42,11 +43,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import java.math.BigDecimal;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -109,23 +106,8 @@ public class CartItemDTOConverter
 						CPDefinition cpDefinition =
 							commerceOrderItem.getCPDefinition();
 
-						Map<Locale, String> urlTitleMap =
-							cpDefinition.getUrlTitleMap();
-
-						Set<Map.Entry<Locale, String>> entries =
-							urlTitleMap.entrySet();
-
-						Stream<Map.Entry<Locale, String>> stream =
-							entries.stream();
-
-						return stream.collect(
-							Collectors.toMap(
-								entry -> {
-									Locale locale = entry.getKey();
-
-									return locale.toString();
-								},
-								Map.Entry::getValue));
+						return LanguageUtils.getLanguageIdMap(
+							cpDefinition.getUrlTitleMap());
 					});
 			}
 		};

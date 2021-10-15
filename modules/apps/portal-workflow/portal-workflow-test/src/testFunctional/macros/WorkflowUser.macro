@@ -1,0 +1,23 @@
+definition {
+
+	macro disableCaptchaToCreateNewUser {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Security Tools",
+			configurationName = "CAPTCHA",
+			configurationScope = "System Scope");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "false",
+			settingFieldName = "Create Account CAPTCHA Enabled");
+
+		Refresh();
+	}
+
+    
+
+}

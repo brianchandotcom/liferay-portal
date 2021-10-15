@@ -25,7 +25,7 @@ import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -35,6 +35,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -110,23 +111,53 @@ public class ObjectEntryRowInfoItemRenderer
 		Stream<Map.Entry<String, Serializable>> entriesStream =
 			entries.stream();
 
-		List<String> objectFieldNames = ListUtil.toList(
+		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
-				objectEntry.getObjectDefinitionId()),
-			ObjectField::getName);
+				objectEntry.getObjectDefinitionId());
+
+		Stream<ObjectField> objectFieldsStream = objectFields.stream();
+
+		Map<String, ObjectField> objectFieldsMap = objectFieldsStream.collect(
+			Collectors.toMap(ObjectField::getName, Function.identity()));
 
 		return entriesStream.filter(
-			entry -> objectFieldNames.contains(entry.getKey())
+			entry -> objectFieldsMap.containsKey(entry.getKey())
 		).sorted(
 			Map.Entry.comparingByKey()
 		).collect(
 			Collectors.toMap(
 				Map.Entry::getKey,
-				entry -> Optional.ofNullable(
-					entry.getValue()
-				).orElse(
-					StringPool.BLANK
-				),
+				entry -> {
+					ObjectField objectField = objectFieldsMap.get(
+						entry.getKey());
+
+					if (Validator.isNotNull(
+							objectField.getRelationshipType())) {
+
+						ObjectEntry relatedObjectEntry =
+							_objectEntryLocalService.fetchObjectEntry(
+								(Long)values.get(objectField.getName()));
+
+						if (relatedObjectEntry != null) {
+							try {
+								return relatedObjectEntry.getTitleValue();
+							}
+							catch (PortalException portalException) {
+								throw new RuntimeException(portalException);
+							}
+						}
+						else {
+							return StringPool.BLANK;
+						}
+					}
+					else {
+						return Optional.ofNullable(
+							entry.getValue()
+						).orElse(
+							StringPool.BLANK
+						);
+					}
+				},
 				(oldValue, newValue) -> oldValue, LinkedHashMap::new)
 		);
 	}

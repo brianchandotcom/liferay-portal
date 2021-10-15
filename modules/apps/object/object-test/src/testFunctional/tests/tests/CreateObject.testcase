@@ -494,11 +494,28 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Object blank"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotLeaveRelationshipObjectBlank {
 
-		// TODO LPS-140584 CannotLeaveRelationshipObjectBlank pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "Custom Relationship",
+			type = "One to Many");
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR",
+			value1 = "No ObjectDefinition exists with the primary key 0");
 
 	}
 

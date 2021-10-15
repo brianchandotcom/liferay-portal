@@ -66,6 +66,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>LABEL_OBJECT_RELATIONSHIP</td>
+		<td>//input[@id ='objectRelationshipLabel']</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>PLURAL_LABEL_CUSTOM_OBJECT</td>
 		<td>//input[@id='objectDefinitionPluralLabel']</td>
 		<td></td>
@@ -106,6 +111,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_RELATIONSHIPS_TAB</td>
+		<td>//a[contains(text(),'Relationships')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OBJECT_FIELDS_LABEL_INPUT</td>
 		<td>//input[contains(@id,'objectFieldLabel')]</td>
 		<td></td>
@@ -123,6 +133,16 @@
 	<tr>
 		<td>OBJECT_FIELDS_TYPE</td>
 		<td>//select[contains(@id,'objectFieldType')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>RELATIONSHIPS_TYPE_FORM</td>
+		<td>//div[contains(@class, 'form-control')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_RELATIONSHIPS_TYPE_OPTION</td>
+		<td>//button[@class = 'dropdown-item']//div[contains(text(),'${key_type}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -178,6 +198,11 @@
 	<tr>
 		<td>SELECT_LANGUAGE</td>
 		<td>//span[contains(text(),'${key_newLanguage}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_OBJECT_RELATIONSHIP</td>
+		<td>//select[@class = 'form-control']</td>
 		<td></td>
 	</tr>
 	<tr>

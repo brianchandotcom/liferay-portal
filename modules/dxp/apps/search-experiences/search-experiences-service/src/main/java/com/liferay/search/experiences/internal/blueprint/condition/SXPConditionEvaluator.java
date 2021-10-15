@@ -93,17 +93,11 @@ public class SXPConditionEvaluator {
 		else if (key.equals("greater_than_equals")) {
 			return sxpParameter.evaluateGreaterThan(true, valueJSONObject);
 		}
-		else if (key.equals("lower_than")) {
-
-			// TODO Rename to less_than
-
-			return !sxpParameter.evaluateGreaterThan(true, valueJSONObject);
-		}
-		else if (key.equals("lower_than_equals")) {
-
-			// TODO Rename to less_than_equals
-
+		else if (key.equals("less_than")) {
 			return !sxpParameter.evaluateGreaterThan(false, valueJSONObject);
+		}
+		else if (key.equals("less_than_equals")) {
+			return !sxpParameter.evaluateGreaterThan(true, valueJSONObject);
 		}
 		else if (key.equals("not_contains")) {
 			return !sxpParameter.evaluateContains(valueJSONObject);

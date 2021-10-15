@@ -680,7 +680,6 @@ definition {
 		DepotNavigator.gotoEdit(depotName = "test");
 
 		WorkflowDocumentsAndMedia.viewWorkflowInProcessMessage(errorMessage = "There is a publication workflow in process. Some actions may be disabled depending on the status and your role through this process.");
-
-		
 	}
+
 }

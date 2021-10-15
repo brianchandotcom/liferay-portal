@@ -34,6 +34,8 @@ public class CSDiagramEntryModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, CSDiagramEntry csDiagramEntry) {
+		document.addNumber(
+			CPField.CP_DEFINITION_ID, csDiagramEntry.getCPDefinitionId());
 		document.addText(CPField.SKU, csDiagramEntry.getSku());
 		document.addNumber("quantity", csDiagramEntry.getQuantity());
 		document.addText("sequence", csDiagramEntry.getSequence());

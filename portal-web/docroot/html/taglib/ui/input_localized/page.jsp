@@ -198,7 +198,9 @@
 							>
 								<%= StringUtil.replace(curLanguageId, '_', '-') %>
 
-								<span class="label label-<%= translationStatusCssClass %>"><%= translationStatus %></span>
+								<span class="dropdown-item-indicator-end w-auto">
+									<span class="label label-<%= translationStatusCssClass %>"><%= translationStatus %></span>
+								</span>
 							</liferay-util:buffer>
 
 							<liferay-ui:icon

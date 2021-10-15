@@ -26,12 +26,55 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69712. Verify that the user can approve a new account by Notifications. "
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanApproveByNotifications {
+		Navigator.openURL();
 
-		// TODO LRQA-69712 CanApproveByNotifications pending implementation
+		WorkflowUser.disableCaptchaToCreateNewUser();
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "User");
+
+		User.logoutPG();
+
+		WorkflowAsset.createNewUserAccount(
+			newPassword = "password",
+			userEmailAddress = "user@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		AssertClick(
+			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+			value1 = "sent you a User for review in the workflow.");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+
+		Workflow.confirmWorkflowAction();
+
+		Workflow._viewActivities(
+			workflowActivityComment = "Test Test completed the task Review.",
+			workflowAssetTitle = "userfn userln");
+
+			
 	}
 
 	@description = "This is a test for LRQA-69708. Verify that the user can delete a new account when there is a Workflow assigned. "

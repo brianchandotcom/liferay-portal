@@ -62,6 +62,7 @@ public class MappedProductDTOConverter
 
 		return new MappedProduct() {
 			{
+				actions = dtoConverterContext.getActions();
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
 					CSDiagramEntry.class.getName(),

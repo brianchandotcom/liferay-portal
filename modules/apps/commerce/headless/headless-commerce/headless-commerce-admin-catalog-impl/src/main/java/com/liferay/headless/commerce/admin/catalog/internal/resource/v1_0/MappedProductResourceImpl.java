@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
+import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -26,11 +27,21 @@ import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.M
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.MappedProductUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,7 +91,8 @@ public class MappedProductResourceImpl
 	@Override
 	public Page<MappedProduct>
 			getProductByExternalReferenceCodeMappedProductsPage(
-				String externalReferenceCode, Pagination pagination)
+				String externalReferenceCode, String search,
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -95,13 +107,13 @@ public class MappedProductResourceImpl
 		}
 
 		return _getMappedProductsPage(
-			cpDefinition.getCPDefinitionId(), pagination);
+			cpDefinition.getCPDefinitionId(), pagination, search, sorts);
 	}
 
 	@NestedField(parentClass = Product.class, value = "mappedProducts")
 	@Override
 	public Page<MappedProduct> getProductIdMappedProductsPage(
-			Long productId, Pagination pagination)
+			Long productId, String search, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -113,7 +125,7 @@ public class MappedProductResourceImpl
 		}
 
 		return _getMappedProductsPage(
-			cpDefinition.getCPDefinitionId(), pagination);
+			cpDefinition.getCPDefinitionId(), pagination, search, sorts);
 	}
 
 	@Override
@@ -204,19 +216,50 @@ public class MappedProductResourceImpl
 		return _toMappedProduct(csDiagramEntry.getCSDiagramEntryId());
 	}
 
-	private Page<MappedProduct> _getMappedProductsPage(
-			long cpDefinitionId, Pagination pagination)
+	private Map<String, Map<String, String>> _getActions(long csDiagramEntryId)
 		throws Exception {
 
-		return Page.of(
-			transform(
-				_csDiagramEntryService.getCSDiagramEntries(
-					cpDefinitionId, pagination.getStartPosition(),
-					pagination.getEndPosition()),
-				csDiagramEntry -> _toMappedProduct(
-					csDiagramEntry.getCSDiagramEntryId())),
-			pagination,
-			_csDiagramEntryService.getCSDiagramEntriesCount(cpDefinitionId));
+		CSDiagramEntry csDiagramEntry =
+			_csDiagramEntryService.getCSDiagramEntry(csDiagramEntryId);
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction(
+				"UPDATE", csDiagramEntry.getCPDefinitionId(),
+				"deleteMappedProduct", _cpDefinitionModelResourcePermission)
+		).put(
+			"update",
+			addAction(
+				"UPDATE", csDiagramEntry.getCPDefinitionId(),
+				"patchMappedProduct", _cpDefinitionModelResourcePermission)
+		).build();
+	}
+
+	private Page<MappedProduct> _getMappedProductsPage(
+			long cpDefinitionId, Pagination pagination, String search,
+			Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			null,
+			booleanQuery -> {
+			},
+			null, CSDiagramEntry.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+
+				if (Validator.isNotNull(search)) {
+					searchContext.setKeywords(search);
+				}
+
+				searchContext.setAttribute(
+					CPField.CP_DEFINITION_ID, cpDefinitionId);
+			},
+			sorts,
+			document -> _toMappedProduct(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	private MappedProduct _toMappedProduct(long csDiagramEntryId)
@@ -224,8 +267,17 @@ public class MappedProductResourceImpl
 
 		return _mappedProductDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				csDiagramEntryId, contextAcceptLanguage.getPreferredLocale()));
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				_getActions(csDiagramEntryId), _dtoConverterRegistry,
+				csDiagramEntryId, contextAcceptLanguage.getPreferredLocale(),
+				contextUriInfo, contextUser));
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinition)"
+	)
+	private ModelResourcePermission<CPDefinition>
+		_cpDefinitionModelResourcePermission;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
@@ -235,6 +287,9 @@ public class MappedProductResourceImpl
 
 	@Reference
 	private CSDiagramEntryService _csDiagramEntryService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private MappedProductDTOConverter _mappedProductDTOConverter;

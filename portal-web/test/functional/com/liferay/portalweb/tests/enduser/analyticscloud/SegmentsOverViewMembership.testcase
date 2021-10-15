@@ -41,16 +41,37 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8490 | Test Summary: Order a Dynamic Segment's Membership Preview Modal"
 	@priority = "3"
 	test OrderDynamicSegmentMembershipPreview {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: members are not appearing in correct order
-		// AC Refactor ticket: LRAC-8767
-
 		var usernameList = "user1,user2,user3";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
+		task ("Add 3 new users in DXP") {
+			for (var name : list "${usernameList}") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "${name}@liferay.com");
+			}
+		}
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		task ("View the page as different users") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "${emailList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
 
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
@@ -78,41 +99,7 @@ definition {
 			ACSegments.saveSegment();
 		}
 
-		task ("Add 3 new users in DXP") {
-			ACUtils.launchDXP();
-
-			for (var name : list "${usernameList}") {
-				JSONUser.addUser(
-					userEmailAddress = "${name}@liferay.com",
-					userFirstName = "${name}",
-					userLastName = "${name}",
-					userScreenName = "${name}");
-
-				JSONUser.setFirstPassword(
-					agreeToTermsAndAnswerReminderQuery = "true",
-					requireReset = "false",
-					userEmailAddress = "${name}@liferay.com");
-			}
-		}
-
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
-		}
-
-		task ("View the page as different users") {
-			ACUtils.navigateToSitePageWithUser(
-				emailList = "${emailList}",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Open AC and view the segment") {
-			ACUtils.launchAC();
-
+		task ("Edit the segment") {
 			ACNavigation.goToSegments();
 
 			ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
@@ -123,14 +110,17 @@ definition {
 
 			ACSegments.filterKnownSegmentMembersList();
 
-			for (var username : list "user3 user3,user2 user2,user1 user1") {
-				ACSegments.viewKnownSegmentMembersSpecificOrder(username = "${username}");
+			ACUtils.viewNameListInOrder(
+				index = "1",
+				name = "user3 user3");
 
-				// Fails here - the order of the members is not consistent
+			ACUtils.viewNameListInOrder(
+				index = "2",
+				name = "user2 user2");
 
-			}
-
-			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
+			ACUtils.viewNameListInOrder(
+				index = "3",
+				name = "user1 user1");
 		}
 	}
 

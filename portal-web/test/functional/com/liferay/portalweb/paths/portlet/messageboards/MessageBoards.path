@@ -203,7 +203,7 @@
 </tr>
 <tr>
 	<td>THREAD_LIST_THREAD_UNREAD</td>
-	<td>//*[@data-qa-id='rowItemContent']/h2/a/strong[contains(.,'${key_threadSubject}')]</td>
+	<td>//*[@data-qa-id='rowItemContent']/div/a/strong[contains(.,'${key_threadSubject}')]</td>
 	<td></td>
 </tr>
 <tr>

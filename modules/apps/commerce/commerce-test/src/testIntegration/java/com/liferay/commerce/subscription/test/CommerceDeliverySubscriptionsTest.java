@@ -100,7 +100,7 @@ public class CommerceDeliverySubscriptionsTest {
 
 	@Test
 	public void testDeliveryAndPaymentSubscription() throws Exception {
-		_commerceOrder = CommerceTestUtil.addCheckoutDetailsToUserOrder(
+		_commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			_commerceOrder, _user.getUserId(), true, true);
 
 		_commerceOrder.setPaymentStatus(
@@ -196,7 +196,7 @@ public class CommerceDeliverySubscriptionsTest {
 
 	@Test
 	public void testDeliverySubscriptionRenew() throws Exception {
-		_commerceOrder = CommerceTestUtil.addCheckoutDetailsToUserOrder(
+		_commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			_commerceOrder, _user.getUserId(), true, true);
 
 		_commerceOrder.setPaymentStatus(

@@ -163,7 +163,7 @@ public class CommerceSubscriptionsNotificationTest {
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), _serviceContext);
 
-		_commerceOrder = CommerceTestUtil.addCheckoutDetailsToUserOrder(
+		_commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			_commerceOrder, _user.getUserId(), true);
 
 		_commerceSubscriptionEntryHelper.checkCommerceSubscriptions(

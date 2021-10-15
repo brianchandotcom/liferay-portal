@@ -329,11 +329,6 @@ public class ExecutePoshiElement extends PoshiElement {
 			}
 		}
 
-		if (multilineSnippet) {
-			sb.append("\n");
-			sb.append(pad);
-		}
-
 		sb.append(");");
 
 		return sb.toString();

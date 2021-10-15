@@ -97,19 +97,18 @@ definition {
 	}
 
 	macro addObjectRelationshipViaUI {
-
 		LexiconEntry.gotoAdd();
 
 		Type(
 			locator1 = "ObjectAdmin#LABEL_OBJECT_RELATIONSHIP",
-			value1  = "${label}");
+			value1 = "${label}");
 
 		if (isSet(type)) {
 			Click(locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_FORM");
 
 			Click(
-				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION",
-				key_type = "${type}");
+				key_type = "${type}",
+				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
 		}
 
 		if (isSet(object)) {

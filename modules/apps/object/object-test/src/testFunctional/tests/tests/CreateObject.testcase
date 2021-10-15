@@ -496,8 +496,6 @@ definition {
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Object blank"
 	@priority = "4"
 	test CannotLeaveRelationshipObjectBlank {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -516,7 +514,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
 			value1 = "No ObjectDefinition exists with the primary key 0");
-
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Type blank"

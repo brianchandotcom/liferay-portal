@@ -52,9 +52,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 				>
 					<aui:field-wrapper label="state">
 						<aui:fieldset>
-							<%=
-							workflowInstanceEditDisplayContext.getStatus(
-								(WorkflowInstance)liferayPortletRequest.getAttribute(WebKeys.WORKFLOW_INSTANCE)) %>
+							<%= workflowInstanceEditDisplayContext.getStatus() %>
 						</aui:fieldset>
 					</aui:field-wrapper>
 				</clay:col>

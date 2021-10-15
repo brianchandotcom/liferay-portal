@@ -69,15 +69,11 @@ public class WorkflowInstanceViewDisplayContextTest {
 	public static void setUpClass() {
 		_setUpPortal();
 
-		_setUpPortletPreferences();
-
-		_setUpLiferayPortletRequest();
-
-		_setUpLiferayPortletResponse();
-
-		_setUpThemeDisplay();
-
 		_setUpFastDateFormatFactory();
+		_setUpLiferayPortletRequest();
+		_setUpLiferayPortletResponse();
+		_setUpPortletPreferences();
+		_setUpThemeDisplay();
 	}
 
 	@Before

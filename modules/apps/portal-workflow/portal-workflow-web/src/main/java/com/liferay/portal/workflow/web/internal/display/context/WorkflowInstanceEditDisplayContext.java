@@ -163,6 +163,10 @@ public class WorkflowInstanceEditDisplayContext
 				String.valueOf(workflowLog.getPreviousUserId())));
 	}
 
+	public String getStatus() {
+		return getStatus(_getWorkflowInstance());
+	}
+
 	public String getTaskCompleted(WorkflowTask workflowTask) {
 		if (workflowTask.isCompleted()) {
 			return LanguageUtil.get(

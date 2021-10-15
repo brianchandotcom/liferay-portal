@@ -39,7 +39,7 @@
 		title='<%= LanguageUtil.get(request, "channels") %>'
 	>
 		<clay:headless-data-set-display
-			apiURL="<%= corEntryQualifiersDisplayContext.getCOREntryChannelsApiURL() %>"
+			apiURL="<%= corEntryQualifiersDisplayContext.getCommerceChannelCOREntriesApiURL() %>"
 			clayDataSetActionDropdownItems="<%= corEntryQualifiersDisplayContext.getCommerceChannelCOREntryClayDataSetActionDropdownItems() %>"
 			formId="fm"
 			id="<%= COREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_COMMERCE_CHANNELS %>"

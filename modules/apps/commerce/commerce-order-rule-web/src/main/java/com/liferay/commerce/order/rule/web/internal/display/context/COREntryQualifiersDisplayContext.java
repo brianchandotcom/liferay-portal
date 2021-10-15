@@ -81,6 +81,11 @@ public class COREntryQualifiersDisplayContext extends COREntryDisplayContext {
 			false);
 	}
 
+	public String getAccountEntryCOREntriesAPIURL() throws PortalException {
+		return "/o/headless-commerce-admin-order/v1.0/order-rules/" +
+			getCOREntryId() + "/order-rule-accounts?nestedFields=account";
+	}
+
 	public List<ClayDataSetActionDropdownItem>
 			getAccountGroupClayDataSetActionDropdownItems()
 		throws PortalException {
@@ -90,6 +95,12 @@ public class COREntryQualifiersDisplayContext extends COREntryDisplayContext {
 				null, "trash", "remove",
 				LanguageUtil.get(httpServletRequest, "remove"), "delete",
 				"delete", "headless"));
+	}
+
+	public String getAccountGroupCOREntriesAPIURL() throws PortalException {
+		return "/o/headless-commerce-admin-order/v1.0/order-rules/" +
+			getCOREntryId() +
+				"/order-rule-account-groups?nestedFields=accountGroup";
 	}
 
 	public String getActiveAccountEligibility() throws PortalException {
@@ -136,6 +147,11 @@ public class COREntryQualifiersDisplayContext extends COREntryDisplayContext {
 		return "all";
 	}
 
+	public String getCommerceChannelCOREntriesApiURL() throws PortalException {
+		return "/o/headless-commerce-admin-order/v1.0/order-rules/" +
+			getCOREntryId() + "/order-rule-channels?nestedFields=channel";
+	}
+
 	public List<ClayDataSetActionDropdownItem>
 			getCommerceChannelCOREntryClayDataSetActionDropdownItems()
 		throws PortalException {
@@ -174,23 +190,9 @@ public class COREntryQualifiersDisplayContext extends COREntryDisplayContext {
 			false);
 	}
 
-	public String getCOREntryAccountGroupsAPIURL() throws PortalException {
-		return "/o/headless-commerce-admin-order/v1.0/order-rules/" +
-			getCOREntryId() +
-				"/order-rule-account-groups?nestedFields=accountGroup";
-	}
+	public String getCommerceOrderTypeCOREntriesAPIURL()
+		throws PortalException {
 
-	public String getCOREntryAccountsAPIURL() throws PortalException {
-		return "/o/headless-commerce-admin-order/v1.0/order-rules/" +
-			getCOREntryId() + "/order-rule-accounts?nestedFields=account";
-	}
-
-	public String getCOREntryChannelsApiURL() throws PortalException {
-		return "/o/headless-commerce-admin-order/v1.0/order-rules/" +
-			getCOREntryId() + "/order-rule-channels?nestedFields=channel";
-	}
-
-	public String getCOREntryOrderTypesAPIURL() throws PortalException {
 		return "/o/headless-commerce-admin-order/v1.0/order-rules/" +
 			getCOREntryId() + "/order-rule-order-types?nestedFields=orderType";
 	}

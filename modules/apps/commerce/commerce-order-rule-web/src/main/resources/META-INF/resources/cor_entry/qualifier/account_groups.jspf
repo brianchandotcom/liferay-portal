@@ -39,7 +39,7 @@
 		title='<%= LanguageUtil.get(request, "account-groups") %>'
 	>
 		<clay:headless-data-set-display
-			apiURL="<%= corEntryQualifiersDisplayContext.getCOREntryAccountGroupsAPIURL() %>"
+			apiURL="<%= corEntryQualifiersDisplayContext.getAccountGroupCOREntriesAPIURL() %>"
 			clayDataSetActionDropdownItems="<%= corEntryQualifiersDisplayContext.getAccountGroupClayDataSetActionDropdownItems() %>"
 			formId="fm"
 			id="<%= COREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_ACCOUNT_GROUPS %>"

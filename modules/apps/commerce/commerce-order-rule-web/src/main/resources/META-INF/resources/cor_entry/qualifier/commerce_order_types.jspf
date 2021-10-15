@@ -39,7 +39,7 @@
 		title='<%= LanguageUtil.get(request, "order-types") %>'
 	>
 		<clay:headless-data-set-display
-			apiURL="<%= corEntryQualifiersDisplayContext.getCOREntryOrderTypesAPIURL() %>"
+			apiURL="<%= corEntryQualifiersDisplayContext.getCommerceOrderTypeCOREntriesAPIURL() %>"
 			clayDataSetActionDropdownItems="<%= corEntryQualifiersDisplayContext.getCommerceOrderTypeClayDataSetActionDropdownItems() %>"
 			formId="fm"
 			id="<%= COREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES %>"

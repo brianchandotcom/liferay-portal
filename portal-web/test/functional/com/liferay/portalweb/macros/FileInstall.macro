@@ -42,7 +42,8 @@ definition {
 
 		if (isSet(filePath)) {
 			ArchiveUtil.archive("${testBaseDirName}tests/${filePath}/${testDependenciesDirName}/${jarFile}", "${deployDir}/${jarFile}");
-		} else {
+		}
+		else {
 			ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/${jarFile}", "${deployDir}/${jarFile}");
 		}
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {CreateAnAccount} from '../components/Steps/CreateAnAccount';
 import Panel from '../components/Steps/Panel';
@@ -6,6 +6,17 @@ import UploadDocuments from '../components/Steps/UploadDocuments';
 import QuoteInfo from '../components/quote-info';
 
 const SelectedQuote = () => {
+	const [sections, setSections] = useState(null);
+	const [stepChecked, setStepChecked] = useState(false);
+
+	const _setSection = (sections) => {
+		setSections(sections);
+	};
+
+	const _setStepChecked = (value) => {
+		setStepChecked(value);
+	};
+
 	return (
 		<div className="selected-quote">
 			<QuoteInfo />
@@ -15,8 +26,16 @@ const SelectedQuote = () => {
 					<CreateAnAccount />
 				</Panel>
 
-				<Panel title="2. Upload Documents">
-					<UploadDocuments />
+				<Panel
+					defaultExpanded
+					sections={sections}
+					stepChecked={stepChecked}
+					title="2. Upload Documents"
+				>
+					<UploadDocuments
+						_setSection={_setSection}
+						_setStepChecked={_setStepChecked}
+					/>
 				</Panel>
 
 				<Panel title="3. Select Payment Method">

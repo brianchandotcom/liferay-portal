@@ -35,25 +35,119 @@
 	width: 100%;
 
 	.panel-header {
-		cursor: pointer;
 		display: flex;
 		justify-content: space-between;
+		flex-direction: row;
+		flex-wrap: wrap;
 
-		.panel-title {
+		.panel-left {
 			color: $neutral-darker;
 			font-size: 24px;
 			font-weight: 700;
 		}
 
-		.panel-title-icon {
-			align-items: center;
-			background-color: #d2d2d3;
-			border-radius: 50%;
+		.panel-middle {
+			margin-top: 10px;
+
+			.view-section {
+				margin-bottom: 24px;
+
+				h3 {
+					font-size: 14px;
+					font-weight: 700;
+					color: #606167;
+					margin-bottom: 8px;
+				}
+
+				.content {
+					display: flex;
+					flex-direction: row;
+
+					.image {
+						border: 1px solid #d3d3d4;
+						border-radius: 4px;
+						margin-right: 8px;
+						height: 48px;
+						width: 48px;
+
+						img {
+							height: 48px;
+							width: 48px;
+							border-radius: 4px;
+							object-fit: cover;
+						}
+					}
+
+					.documents {
+						height: 48px;
+						margin-right: 8px;
+						width: 48px;
+						background-color: #fff;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						box-sizing: border-box;
+						border: 1px solid #d2d2d3;
+						border-radius: 4px;
+
+						svg {
+							height: 24px !important;
+
+							width: 24px !important;
+						}
+
+						.lexicon-icon-document-pdf {
+							fill: #af78ff;
+						}
+
+						.lexicon-icon-document-text {
+							fill: #4d85ff;
+						}
+
+						.lexicon-icon-document-table {
+							fill: #50d2a0;
+						}
+
+						.lexicon-icon-document-presentation {
+							fill: #ffb46e;
+						}
+
+						.lexicon-icon-document-unknown {
+							fill: $neutral-default;
+						}
+					}
+				}
+			}
+		}
+
+		.panel-right {
 			display: flex;
-			fill: $background;
-			height: 32px;
-			justify-content: center;
-			width: 32px;
+			flex-direction: row;
+			justify-content: end;
+
+			.change-link {
+				a {
+					margin-right: 24px;
+					text-decoration: underline;
+					color: #7d7e85;
+					cursor: pointer;
+				}
+			}
+
+			.panel-right-icon {
+				align-items: center;
+				background-color: #d2d2d3;
+				border-radius: 50%;
+				display: flex;
+				fill: $background;
+				height: 32px;
+				justify-content: center;
+				width: 32px;
+
+				&.stepChecked {
+					background-color: #39c38d;
+				}
+			}
 		}
 	}
 
@@ -149,7 +243,10 @@
 						display: flex;
 						flex-direction: column;
 						margin-bottom: -36px;
-						margin-right: 16px;
+
+						&.view-file-margin-right:not(:last-child) {
+							margin-right: 16px;
+						}
 
 						.close-icon {
 							align-items: center;
@@ -255,6 +352,7 @@
 					left: 0px;
 					position: static;
 					top: 64px;
+					margin-left: 16px;
 
 					&.hide {
 						display: none;

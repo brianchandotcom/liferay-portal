@@ -24,7 +24,7 @@ const ViewDocuments = ({
 	showName = true,
 	type = 'image',
 }) => (
-	<div className="view-file-document">
+	<div className="view-file-document view-file-margin-right">
 		<div className="div-document" title={file.name}>
 			<div className="content">
 				{type === 'image' ? (

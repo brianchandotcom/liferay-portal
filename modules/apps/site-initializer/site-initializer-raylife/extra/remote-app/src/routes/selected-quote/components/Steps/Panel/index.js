@@ -1,20 +1,54 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import ViewFilesPanel from './ViewFilesPanel';
 
-const Panel = ({children, defaultExpanded = false, title = ''}) => {
+const Panel = ({
+	children,
+	defaultExpanded = false,
+	sections,
+	stepChecked,
+	title = '',
+}) => {
 	const [showContentPanel, setShowContentPanel] = useState(defaultExpanded);
+
+	useEffect(() => {
+		if (stepChecked) {
+			setShowContentPanel(false);
+		}
+	}, [stepChecked]);
 
 	return (
 		<div className="panel-container">
-			<div
-				className="panel-header"
-				onClick={() => setShowContentPanel(!showContentPanel)}
-			>
-				<div className="panel-title">{title}</div>
+			<div className="panel-header">
+				<div className="panel-left">{title}</div>
 
-				<div className="panel-title-icon">
-					<ClayIcon symbol="check" />
+				<div className="panel-middle">
+					{!showContentPanel && stepChecked && (
+						<ViewFilesPanel sections={sections} />
+					)}
+				</div>
+
+				<div className="panel-right">
+					{stepChecked && (
+						<div className="change-link">
+							<a
+								onClick={() =>
+									setShowContentPanel(!showContentPanel)
+								}
+							>
+								change
+							</a>
+						</div>
+					)}
+
+					<div
+						className={classNames('panel-right-icon', {
+							stepChecked,
+						})}
+					>
+						<ClayIcon symbol="check" />
+					</div>
 				</div>
 			</div>
 

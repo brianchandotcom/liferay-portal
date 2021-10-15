@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 
 import {ApplicationPropertiesContext} from '~/common/context/ApplicationPropertiesProvider';
 
@@ -16,7 +16,7 @@ const dropAreaProps = {
 	widthContainer: '100%',
 };
 
-const UploadDocuments = () => {
+const UploadDocuments = ({_setSection, _setStepChecked}) => {
 	const properties = useContext(ApplicationPropertiesContext);
 
 	const [sections, setSections] = useState([
@@ -99,7 +99,14 @@ const UploadDocuments = () => {
 				}
 			}
 		}
+
+		_setStepChecked(true);
 	};
+
+	useEffect(() => {
+		_setSection(sections);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [sections]);
 
 	return (
 		<div className="upload-container">

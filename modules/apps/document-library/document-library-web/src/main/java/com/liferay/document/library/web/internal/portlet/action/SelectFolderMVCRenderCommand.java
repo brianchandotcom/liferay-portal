@@ -16,22 +16,21 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
-import com.liferay.document.library.web.internal.constants.DLWebKeys;
-import com.liferay.document.library.web.internal.helper.DLTrashHelper;
+import com.liferay.document.library.web.internal.display.context.DLSelectFolderDisplayContext;
+import com.liferay.document.library.web.internal.display.context.logic.DLVisualizationHelper;
+import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -52,16 +51,19 @@ public class SelectFolderMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
 		try {
-			Folder folder = ActionUtil.getFolder(renderRequest);
-
-			renderRequest.setAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
-
 			renderRequest.setAttribute(
-				DLWebKeys.DOCUMENT_LIBRARY_TRASH_HELPER, _dlTrashHelper);
+				DLSelectFolderDisplayContext.class.getName(),
+				new DLSelectFolderDisplayContext(
+					new DLVisualizationHelper(
+						new DLRequestHelper(
+							_portal.getHttpServletRequest(renderRequest))),
+					ActionUtil.getFolder(renderRequest),
+					_portal.getHttpServletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse)));
 
 			return "/document_library/select_folder.jsp";
 		}
@@ -76,6 +78,6 @@ public class SelectFolderMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private DLTrashHelper _dlTrashHelper;
+	private Portal _portal;
 
 }

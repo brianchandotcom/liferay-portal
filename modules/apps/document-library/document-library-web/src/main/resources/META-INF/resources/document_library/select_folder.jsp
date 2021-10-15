@@ -17,23 +17,11 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
+DLSelectFolderDisplayContext dlSelectFolderDisplayContext = (DLSelectFolderDisplayContext)request.getAttribute(DLSelectFolderDisplayContext.class.getName());
 
-long folderId = BeanParamUtil.getLong(folder, request, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-long selectedFolderId = ParamUtil.getLong(request, "selectedFolderId", folderId);
-
-long repositoryId = scopeGroupId;
-String folderName = LanguageUtil.get(request, "home");
-
-if (folder != null) {
-	repositoryId = folder.getRepositoryId();
-	folderName = folder.getName();
-
-	DLBreadcrumbUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+if (dlSelectFolderDisplayContext.getFolder() != null) {
+	DLBreadcrumbUtil.addPortletBreadcrumbEntries(dlSelectFolderDisplayContext.getFolder(), request, renderResponse);
 }
-
-DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
 %>
 
 <clay:container-fluid>
@@ -46,57 +34,20 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 		/>
 
 		<aui:button-row>
-			<c:if test="<%= dlVisualizationHelper.isAddFolderButtonVisible() && DLFolderPermission.contains(permissionChecker, repositoryId, folderId, ActionKeys.ADD_FOLDER) %>">
-				<portlet:renderURL var="editFolderURL">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-					<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
-					<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
-				</portlet:renderURL>
-
-				<aui:button href="<%= editFolderURL %>" value="add-folder" />
+			<c:if test="<%= dlSelectFolderDisplayContext.hasAddFolderPermission() %>">
+				<aui:button href="<%= String.valueOf(dlSelectFolderDisplayContext.getAddFolderPortletURL()) %>" value="add-folder" />
 			</c:if>
 
-			<aui:button
-				cssClass="selector-button"
-				data='<%=
-					HashMapBuilder.<String, Object>put(
-						"folderid", folderId
-					).put(
-						"folderissupportsmetadata", (folder != null) ? folder.isSupportsMetadata() : Boolean.TRUE.toString()
-					).put(
-						"folderissupportssocial", (folder != null) ? folder.isSupportsSocial() : Boolean.TRUE.toString()
-					).put(
-						"foldername", folderName
-					).build()
-				%>'
-				disabled="<%= folderId == selectedFolderId %>"
-				value="select-this-folder"
-			/>
+			<aui:button cssClass="selector-button" data="<%= dlSelectFolderDisplayContext.getSelectorButtonData() %>" disabled="<%= dlSelectFolderDisplayContext.isSelectButtonDisabled() %>" value="select-this-folder" />
 		</aui:button-row>
 
 		<liferay-ui:search-container
 			cssClass="pb-6"
-			iteratorURL='<%=
-				PortletURLBuilder.createRenderURL(
-					renderResponse
-				).setMVCRenderCommandName(
-					"/document_library/select_folder"
-				).setParameter(
-					"folderId", folderId
-				).setParameter(
-					"ignoreRootFolder", true
-				).setParameter(
-					"selectedFolderId", selectedFolderId
-				).setParameter(
-					"showMountFolder", dlVisualizationHelper.isMountFolderVisible()
-				).buildPortletURL()
-			%>'
-			total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId, dlVisualizationHelper.isMountFolderVisible()) %>"
+			iteratorURL="<%= dlSelectFolderDisplayContext.getIteratorPortletURL() %>"
+			total="<%= dlSelectFolderDisplayContext.getFoldersCount() %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, dlVisualizationHelper.isMountFolderVisible(), searchContainer.getStart(), searchContainer.getEnd()) %>"
+				results="<%= dlSelectFolderDisplayContext.getFolders(searchContainer.getStart(), searchContainer.getEnd()) %>"
 			/>
 
 			<liferay-ui:search-container-row
@@ -105,32 +56,10 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 				modelVar="curFolder"
 				rowVar="row"
 			>
-				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
-					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
-					<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
-					<portlet:param name="selectedFolderId" value="<%= String.valueOf(selectedFolderId) %>" />
-					<portlet:param name="showMountFolder" value="<%= String.valueOf(dlVisualizationHelper.isMountFolderVisible()) %>" />
-				</liferay-portlet:renderURL>
 
 				<%
-				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
-
-				AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
-
-				int fileEntriesCount = 0;
-				int foldersCount = 0;
-
-				try {
-					fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), Arrays.asList(curFolder.getFolderId()), WorkflowConstants.STATUS_APPROVED);
-					foldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
-				}
-				catch (com.liferay.portal.kernel.repository.RepositoryException re) {
-					rowURL = null;
-				}
-				catch (com.liferay.portal.kernel.security.auth.PrincipalException pe) {
-					rowURL = null;
-				}
+				int folderFileEntriesCount = dlSelectFolderDisplayContext.getFolderFileEntriesCount(curFolder);
+				int folderFoldersCount = dlSelectFolderDisplayContext.getFolderFoldersCount(curFolder);
 				%>
 
 				<liferay-ui:search-container-column-text
@@ -138,47 +67,32 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 					name="folder"
 				>
 					<liferay-ui:icon
-						icon="<%= assetRenderer.getIconCssClass() %>"
+						icon="<%= dlSelectFolderDisplayContext.getIconCssClass(curFolder) %>"
 						label="<%= true %>"
 						localizeMessage="<%= false %>"
 						markupView="lexicon"
 						message="<%= HtmlUtil.escape(curFolder.getName()) %>"
-						url="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>"
+						url="<%= String.valueOf(dlSelectFolderDisplayContext.getRowPortletURL(curFolder)) %>"
 					/>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-smallest table-column-text-end"
-					href="<%= rowURL %>"
+					href="<%= dlSelectFolderDisplayContext.getRowPortletURL(curFolder) %>"
 					name="folders"
-					value="<%= String.valueOf(foldersCount) %>"
+					value="<%= String.valueOf(folderFoldersCount) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-smallest table-column-text-end"
-					href="<%= rowURL %>"
+					href="<%= dlSelectFolderDisplayContext.getRowPortletURL(curFolder) %>"
 					name="documents"
-					value="<%= String.valueOf(fileEntriesCount) %>"
+					value="<%= String.valueOf(folderFileEntriesCount) %>"
 				/>
 
 				<liferay-ui:search-container-column-text>
-					<c:if test="<%= rowURL != null %>">
-						<aui:button
-							cssClass="selector-button"
-							data='<%=
-								HashMapBuilder.<String, Object>put(
-									"folderid", curFolder.getFolderId()
-								).put(
-									"folderissupportsmetadata", curFolder.isSupportsMetadata()
-								).put(
-									"folderissupportssocial", curFolder.isSupportsSocial()
-								).put(
-									"foldername", curFolder.getName()
-								).build()
-							%>'
-							disabled="<%= curFolder.getFolderId() == selectedFolderId %>"
-							value="select"
-						/>
+					<c:if test="<%= (folderFileEntriesCount > 0) || (folderFoldersCount > 0) %>">
+						<aui:button cssClass="selector-button" data="<%= dlSelectFolderDisplayContext.getSelectorButtonData(curFolder) %>" disabled="<%= dlSelectFolderDisplayContext.isSelectButtonDisabled(curFolder.getFolderId()) %>" value="select" />
 					</c:if>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>

@@ -83,7 +83,6 @@ definition {
 	@description = "LPS-135400 - Verify it is possible to cancel the creation of a Relationship"
 	@priority = "4"
 	test CanCancelRelationshipCreation {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -116,9 +115,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No items were found.");
-
-
-
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a BigDecimal field"

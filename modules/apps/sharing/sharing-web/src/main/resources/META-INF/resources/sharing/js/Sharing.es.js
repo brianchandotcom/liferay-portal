@@ -393,7 +393,15 @@ const Sharing = ({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton displayType="primary" type="submit">
+						<ClayButton
+							disabled={
+								!selectedItems.length ||
+								!!emailAddressErrorMessages.length ||
+								multiSelectValue.trim() !== ''
+							}
+							displayType="primary"
+							type="submit"
+						>
 							{Liferay.Language.get('share')}
 						</ClayButton>
 					</ClayButton.Group>

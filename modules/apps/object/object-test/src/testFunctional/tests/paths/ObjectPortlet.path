@@ -56,6 +56,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>FIELD_LABEL_NAME</td>
+		<td>//label[contains(text(),'${key_fieldLabelName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>DELETE_ENTRY_BUTTON</td>
 		<td>//div[contains(@class,'show')]//button[contains(.,'Delete')]</td>
 		<td></td>

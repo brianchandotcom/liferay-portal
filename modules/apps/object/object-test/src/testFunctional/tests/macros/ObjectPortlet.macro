@@ -12,6 +12,13 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
 	}
 
+	macro assertFieldLabelName {
+		AssertTextEquals(
+			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
+			key_fieldLabelName = "${fieldLabelName}",
+			value1 = "${key_fieldLabelName}");
+	}
+
 	macro assertFilterResultsSpecificOrder {
 		var resultOrder = "0";
 

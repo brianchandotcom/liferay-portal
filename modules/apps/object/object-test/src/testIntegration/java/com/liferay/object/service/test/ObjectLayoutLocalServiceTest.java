@@ -16,6 +16,7 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.exception.DefaultObjectLayoutException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectLayout;
@@ -74,6 +75,108 @@ public class ObjectLayoutLocalServiceTest {
 	}
 
 	@Test
+	public void testAddDefaultObjectLayoutWithMandatoryFieldsInManyTabs()
+		throws Exception {
+
+		try {
+			ObjectLayoutTab objectLayoutTab1 =
+				_objectLayoutTabPersistence.create(0);
+
+			objectLayoutTab1.setNameMap(
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString()));
+			objectLayoutTab1.setObjectLayoutBoxes(
+				Arrays.asList(_addObjectLayoutBox(), _addObjectLayoutBox()));
+
+			ObjectLayoutTab objectLayoutTab2 =
+				_objectLayoutTabPersistence.create(0);
+
+			objectLayoutTab2.setNameMap(
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString()));
+			objectLayoutTab2.setObjectLayoutBoxes(
+				Arrays.asList(_addObjectLayoutBox(), _addObjectLayoutBox()));
+
+			List<ObjectLayoutTab> objectLayoutTabs = Arrays.asList(
+				objectLayoutTab1, objectLayoutTab2);
+
+			_objectLayoutLocalService.addObjectLayout(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				objectLayoutTabs);
+
+			Assert.fail();
+		}
+		catch (DefaultObjectLayoutException defaultObjectLayoutException) {
+			String message = defaultObjectLayoutException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"All mandatory fields must be mapped to the" +
+						" first tab of a default object layout"));
+		}
+	}
+
+	@Test
+	public void testAddDefaultObjectLayoutWithNoFields() throws Exception {
+		try {
+			ObjectLayoutTab objectLayoutTab =
+				_objectLayoutTabPersistence.create(0);
+
+			objectLayoutTab.setNameMap(
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString()));
+
+			_objectLayoutLocalService.addObjectLayout(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Collections.singletonList(objectLayoutTab));
+		}
+		catch (DefaultObjectLayoutException defaultObjectLayoutException) {
+			String message = defaultObjectLayoutException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"The default object layout must have at least one field"));
+		}
+	}
+
+	@Test
+	public void testAddMoreThanOneDefaultObjectLayout() throws Exception {
+		try {
+			ObjectLayoutTab objectLayoutTab =
+				_objectLayoutTabPersistence.create(0);
+
+			objectLayoutTab.setNameMap(
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString()));
+			objectLayoutTab.setObjectLayoutBoxes(
+				Arrays.asList(_addObjectLayoutBox(), _addObjectLayoutBox()));
+
+			_objectLayoutLocalService.addObjectLayout(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Collections.singletonList(objectLayoutTab));
+
+			_objectLayoutLocalService.addObjectLayout(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Collections.singletonList(objectLayoutTab));
+		}
+		catch (DefaultObjectLayoutException defaultObjectLayoutException) {
+			String message = defaultObjectLayoutException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"There can only be one default object layout"));
+		}
+	}
+
+	@Test
 	public void testAddObjectLayout() throws Exception {
 		try {
 			ObjectLayoutTab objectLayoutTab =
@@ -105,7 +208,7 @@ public class ObjectLayoutLocalServiceTest {
 
 			_objectLayoutLocalService.addObjectLayout(
 				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), true,
+				_objectDefinition.getObjectDefinitionId(), false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Collections.singletonList(objectLayoutTab));
 
@@ -120,7 +223,7 @@ public class ObjectLayoutLocalServiceTest {
 						"than 12"));
 		}
 
-		ObjectLayout objectLayout = _addObjectLayout();
+		ObjectLayout objectLayout = _addObjectLayout(false);
 
 		_assertObjectLayout(objectLayout);
 
@@ -130,7 +233,7 @@ public class ObjectLayoutLocalServiceTest {
 
 	@Test
 	public void testGetObjectLayout() throws Exception {
-		_addObjectLayout();
+		_addObjectLayout(false);
 
 		List<ObjectLayout> objectLayouts =
 			_objectLayoutLocalService.getObjectLayouts(
@@ -156,13 +259,15 @@ public class ObjectLayoutLocalServiceTest {
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), false, false, null,
-			LocalizedMapUtil.getLocalizedMap(name), StringUtil.randomId(),
-			false, "String");
+			LocalizedMapUtil.getLocalizedMap(name), StringUtil.randomId(), true,
+			"String");
 
 		return objectField.getObjectFieldId();
 	}
 
-	private ObjectLayout _addObjectLayout() throws Exception {
+	private ObjectLayout _addObjectLayout(boolean defaultObjectLayout)
+		throws Exception {
+
 		ObjectLayoutTab objectLayoutTab = _objectLayoutTabPersistence.create(0);
 
 		objectLayoutTab.setNameMap(
@@ -173,7 +278,7 @@ public class ObjectLayoutLocalServiceTest {
 
 		return _objectLayoutLocalService.addObjectLayout(
 			TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), true,
+			_objectDefinition.getObjectDefinitionId(), defaultObjectLayout,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			Collections.singletonList(objectLayoutTab));
 	}

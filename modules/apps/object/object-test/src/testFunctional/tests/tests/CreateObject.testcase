@@ -770,8 +770,6 @@ definition {
 	@description = "LPS-135389 - Verify it is possible to set a different language value for a Field Label"
 	@priority = "4"
 	test CanSetDifferentLanguageForFieldLabel {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -812,7 +810,6 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		ObjectPortlet.assertFieldLabelName(fieldLabelName = "Campo Costumizado");
-
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for an Object Label"

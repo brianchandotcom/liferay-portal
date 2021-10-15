@@ -14,8 +14,8 @@ definition {
 
 	macro assertFieldLabelName {
 		AssertTextEquals(
-			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			key_fieldLabelName = "${fieldLabelName}",
+			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			value1 = "${key_fieldLabelName}");
 	}
 

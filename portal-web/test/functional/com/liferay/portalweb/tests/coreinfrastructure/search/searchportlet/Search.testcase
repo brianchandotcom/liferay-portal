@@ -412,6 +412,7 @@ definition {
 	@priority = "4"
 	test CannotViewTermsOfUseWhenEnterpriseSearchIsDisabled {
 		property custom.properties = "enterprise.product.enterprise.search.enabled=false${line.separator}enterprise.product.notification.enabled=true";
+		property test.run.environment = "EE";
 
 		SelectFrame(value1 = "relative=top");
 
@@ -431,6 +432,7 @@ definition {
 	@priority = "4"
 	test CanViewTermsOfUseWhenEnterpriseSearchIsEnabled {
 		property custom.properties = "enterprise.product.notification.enabled=true";
+		property test.run.environment = "EE";
 
 		SelectFrame(value1 = "relative=top");
 

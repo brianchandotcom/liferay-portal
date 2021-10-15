@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.catalog.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -68,7 +69,8 @@ public interface MappedProductResource {
 
 	public Page<MappedProduct>
 			getProductByExternalReferenceCodeMappedProductsPage(
-				String externalReferenceCode, Pagination pagination)
+				String externalReferenceCode, String search,
+				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public MappedProduct postProductByExternalReferenceCodeMappedProduct(
@@ -81,7 +83,7 @@ public interface MappedProductResource {
 		throws Exception;
 
 	public Page<MappedProduct> getProductIdMappedProductsPage(
-			Long productId, Pagination pagination)
+			Long productId, String search, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public MappedProduct postProductIdMappedProduct(

@@ -538,13 +538,15 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productByExternalReferenceCodeMappedProducts(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productByExternalReferenceCodeMappedProducts(externalReferenceCode: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public MappedProductPage productByExternalReferenceCodeMappedProducts(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("search") String search,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -553,13 +555,16 @@ public class Query {
 			mappedProductResource -> new MappedProductPage(
 				mappedProductResource.
 					getProductByExternalReferenceCodeMappedProductsPage(
-						externalReferenceCode, Pagination.of(page, pageSize))));
+						externalReferenceCode, search,
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							mappedProductResource, sortsString))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productByExternalReferenceCodeMappedProductBySequence(externalReferenceCode: ___, sequence: ___){customFields, id, productExternalReferenceCode, productId, productName, quantity, sequence, sku, skuExternalReferenceCode, skuId, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productByExternalReferenceCodeMappedProductBySequence(externalReferenceCode: ___, sequence: ___){actions, customFields, id, productExternalReferenceCode, productId, productName, quantity, sequence, sku, skuExternalReferenceCode, skuId, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public MappedProduct productByExternalReferenceCodeMappedProductBySequence(
@@ -579,13 +584,15 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdMappedProducts(page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdMappedProducts(page: ___, pageSize: ___, productId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public MappedProductPage productIdMappedProducts(
 			@GraphQLName("productId") Long productId,
+			@GraphQLName("search") String search,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -593,13 +600,15 @@ public class Query {
 			this::_populateResourceContext,
 			mappedProductResource -> new MappedProductPage(
 				mappedProductResource.getProductIdMappedProductsPage(
-					productId, Pagination.of(page, pageSize))));
+					productId, search, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(
+						mappedProductResource, sortsString))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productMappedProductBySequence(productId: ___, sequence: ___){customFields, id, productExternalReferenceCode, productId, productName, quantity, sequence, sku, skuExternalReferenceCode, skuId, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productMappedProductBySequence(productId: ___, sequence: ___){actions, customFields, id, productExternalReferenceCode, productId, productName, quantity, sequence, sku, skuExternalReferenceCode, skuId, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public MappedProduct productMappedProductBySequence(
@@ -1755,8 +1764,10 @@ public class Query {
 
 		@GraphQLField
 		public MappedProductPage productByExternalReferenceCodeMappedProducts(
+				@GraphQLName("search") String search,
 				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -1765,8 +1776,10 @@ public class Query {
 				mappedProductResource -> new MappedProductPage(
 					mappedProductResource.
 						getProductByExternalReferenceCodeMappedProductsPage(
-							_catalog.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
+							_catalog.getExternalReferenceCode(), search,
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								mappedProductResource, sortsString))));
 		}
 
 		private Catalog _catalog;
@@ -2154,8 +2167,10 @@ public class Query {
 
 		@GraphQLField
 		public MappedProductPage productIdMappedProducts(
+				@GraphQLName("search") String search,
 				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -2163,8 +2178,10 @@ public class Query {
 				Query.this::_populateResourceContext,
 				mappedProductResource -> new MappedProductPage(
 					mappedProductResource.getProductIdMappedProductsPage(
-						_diagram.getProductId(),
-						Pagination.of(page, pageSize))));
+						_diagram.getProductId(), search,
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							mappedProductResource, sortsString))));
 		}
 
 		private Diagram _diagram;

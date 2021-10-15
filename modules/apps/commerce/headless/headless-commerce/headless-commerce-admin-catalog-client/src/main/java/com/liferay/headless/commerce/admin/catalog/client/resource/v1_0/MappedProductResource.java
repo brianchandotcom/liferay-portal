@@ -63,12 +63,14 @@ public interface MappedProductResource {
 
 	public Page<MappedProduct>
 			getProductByExternalReferenceCodeMappedProductsPage(
-				String externalReferenceCode, Pagination pagination)
+				String externalReferenceCode, String search,
+				Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getProductByExternalReferenceCodeMappedProductsPageHttpResponse(
-				String externalReferenceCode, Pagination pagination)
+				String externalReferenceCode, String search,
+				Pagination pagination, String sortString)
 		throws Exception;
 
 	public MappedProduct postProductByExternalReferenceCodeMappedProduct(
@@ -91,11 +93,13 @@ public interface MappedProductResource {
 		throws Exception;
 
 	public Page<MappedProduct> getProductIdMappedProductsPage(
-			Long productId, Pagination pagination)
+			Long productId, String search, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProductIdMappedProductsPageHttpResponse(
-			Long productId, Pagination pagination)
+			Long productId, String search, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public MappedProduct postProductIdMappedProduct(
@@ -427,12 +431,13 @@ public interface MappedProductResource {
 
 		public Page<MappedProduct>
 				getProductByExternalReferenceCodeMappedProductsPage(
-					String externalReferenceCode, Pagination pagination)
+					String externalReferenceCode, String search,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getProductByExternalReferenceCodeMappedProductsPageHttpResponse(
-					externalReferenceCode, pagination);
+					externalReferenceCode, search, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -473,7 +478,8 @@ public interface MappedProductResource {
 
 		public HttpInvoker.HttpResponse
 				getProductByExternalReferenceCodeMappedProductsPageHttpResponse(
-					String externalReferenceCode, Pagination pagination)
+					String externalReferenceCode, String search,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -497,11 +503,19 @@ public interface MappedProductResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(
@@ -690,12 +704,13 @@ public interface MappedProductResource {
 		}
 
 		public Page<MappedProduct> getProductIdMappedProductsPage(
-				Long productId, Pagination pagination)
+				Long productId, String search, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getProductIdMappedProductsPageHttpResponse(
-					productId, pagination);
+					productId, search, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -736,7 +751,8 @@ public interface MappedProductResource {
 
 		public HttpInvoker.HttpResponse
 				getProductIdMappedProductsPageHttpResponse(
-					Long productId, Pagination pagination)
+					Long productId, String search, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -760,11 +776,19 @@ public interface MappedProductResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(

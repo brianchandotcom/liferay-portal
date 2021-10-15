@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.MappedProductSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -55,6 +56,8 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +69,9 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -250,7 +255,7 @@ public abstract class BaseMappedProductResourceTestCase {
 		Page<MappedProduct> page =
 			mappedProductResource.
 				getProductByExternalReferenceCodeMappedProductsPage(
-					externalReferenceCode, Pagination.of(1, 10));
+					externalReferenceCode, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -263,7 +268,8 @@ public abstract class BaseMappedProductResourceTestCase {
 			page =
 				mappedProductResource.
 					getProductByExternalReferenceCodeMappedProductsPage(
-						irrelevantExternalReferenceCode, Pagination.of(1, 2));
+						irrelevantExternalReferenceCode, null,
+						Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -284,7 +290,7 @@ public abstract class BaseMappedProductResourceTestCase {
 		page =
 			mappedProductResource.
 				getProductByExternalReferenceCodeMappedProductsPage(
-					externalReferenceCode, Pagination.of(1, 10));
+					externalReferenceCode, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -320,7 +326,7 @@ public abstract class BaseMappedProductResourceTestCase {
 		Page<MappedProduct> page1 =
 			mappedProductResource.
 				getProductByExternalReferenceCodeMappedProductsPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, null, Pagination.of(1, 2), null);
 
 		List<MappedProduct> mappedProducts1 =
 			(List<MappedProduct>)page1.getItems();
@@ -331,7 +337,7 @@ public abstract class BaseMappedProductResourceTestCase {
 		Page<MappedProduct> page2 =
 			mappedProductResource.
 				getProductByExternalReferenceCodeMappedProductsPage(
-					externalReferenceCode, Pagination.of(2, 2));
+					externalReferenceCode, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -344,11 +350,145 @@ public abstract class BaseMappedProductResourceTestCase {
 		Page<MappedProduct> page3 =
 			mappedProductResource.
 				getProductByExternalReferenceCodeMappedProductsPage(
-					externalReferenceCode, Pagination.of(1, 3));
+					externalReferenceCode, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(mappedProduct1, mappedProduct2, mappedProduct3),
 			(List<MappedProduct>)page3.getItems());
+	}
+
+	@Test
+	public void testGetProductByExternalReferenceCodeMappedProductsPageWithSortDateTime()
+		throws Exception {
+
+		testGetProductByExternalReferenceCodeMappedProductsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, mappedProduct1, mappedProduct2) -> {
+				BeanUtils.setProperty(
+					mappedProduct1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetProductByExternalReferenceCodeMappedProductsPageWithSortInteger()
+		throws Exception {
+
+		testGetProductByExternalReferenceCodeMappedProductsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, mappedProduct1, mappedProduct2) -> {
+				BeanUtils.setProperty(mappedProduct1, entityField.getName(), 0);
+				BeanUtils.setProperty(mappedProduct2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetProductByExternalReferenceCodeMappedProductsPageWithSortString()
+		throws Exception {
+
+		testGetProductByExternalReferenceCodeMappedProductsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, mappedProduct1, mappedProduct2) -> {
+				Class<?> clazz = mappedProduct1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				java.lang.reflect.Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						mappedProduct1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						mappedProduct2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						mappedProduct1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						mappedProduct2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						mappedProduct1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						mappedProduct2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void
+			testGetProductByExternalReferenceCodeMappedProductsPageWithSort(
+				EntityField.Type type,
+				UnsafeTriConsumer
+					<EntityField, MappedProduct, MappedProduct, Exception>
+						unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetProductByExternalReferenceCodeMappedProductsPage_getExternalReferenceCode();
+
+		MappedProduct mappedProduct1 = randomMappedProduct();
+		MappedProduct mappedProduct2 = randomMappedProduct();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, mappedProduct1, mappedProduct2);
+		}
+
+		mappedProduct1 =
+			testGetProductByExternalReferenceCodeMappedProductsPage_addMappedProduct(
+				externalReferenceCode, mappedProduct1);
+
+		mappedProduct2 =
+			testGetProductByExternalReferenceCodeMappedProductsPage_addMappedProduct(
+				externalReferenceCode, mappedProduct2);
+
+		for (EntityField entityField : entityFields) {
+			Page<MappedProduct> ascPage =
+				mappedProductResource.
+					getProductByExternalReferenceCodeMappedProductsPage(
+						externalReferenceCode, null, Pagination.of(1, 2),
+						entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(mappedProduct1, mappedProduct2),
+				(List<MappedProduct>)ascPage.getItems());
+
+			Page<MappedProduct> descPage =
+				mappedProductResource.
+					getProductByExternalReferenceCodeMappedProductsPage(
+						externalReferenceCode, null, Pagination.of(1, 2),
+						entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(mappedProduct2, mappedProduct1),
+				(List<MappedProduct>)descPage.getItems());
+		}
 	}
 
 	protected MappedProduct
@@ -486,7 +626,7 @@ public abstract class BaseMappedProductResourceTestCase {
 
 		Page<MappedProduct> page =
 			mappedProductResource.getProductIdMappedProductsPage(
-				productId, Pagination.of(1, 10));
+				productId, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -496,7 +636,7 @@ public abstract class BaseMappedProductResourceTestCase {
 					irrelevantProductId, randomIrrelevantMappedProduct());
 
 			page = mappedProductResource.getProductIdMappedProductsPage(
-				irrelevantProductId, Pagination.of(1, 2));
+				irrelevantProductId, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -515,7 +655,7 @@ public abstract class BaseMappedProductResourceTestCase {
 				productId, randomMappedProduct());
 
 		page = mappedProductResource.getProductIdMappedProductsPage(
-			productId, Pagination.of(1, 10));
+			productId, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -549,7 +689,7 @@ public abstract class BaseMappedProductResourceTestCase {
 
 		Page<MappedProduct> page1 =
 			mappedProductResource.getProductIdMappedProductsPage(
-				productId, Pagination.of(1, 2));
+				productId, null, Pagination.of(1, 2), null);
 
 		List<MappedProduct> mappedProducts1 =
 			(List<MappedProduct>)page1.getItems();
@@ -559,7 +699,7 @@ public abstract class BaseMappedProductResourceTestCase {
 
 		Page<MappedProduct> page2 =
 			mappedProductResource.getProductIdMappedProductsPage(
-				productId, Pagination.of(2, 2));
+				productId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -571,11 +711,139 @@ public abstract class BaseMappedProductResourceTestCase {
 
 		Page<MappedProduct> page3 =
 			mappedProductResource.getProductIdMappedProductsPage(
-				productId, Pagination.of(1, 3));
+				productId, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(mappedProduct1, mappedProduct2, mappedProduct3),
 			(List<MappedProduct>)page3.getItems());
+	}
+
+	@Test
+	public void testGetProductIdMappedProductsPageWithSortDateTime()
+		throws Exception {
+
+		testGetProductIdMappedProductsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, mappedProduct1, mappedProduct2) -> {
+				BeanUtils.setProperty(
+					mappedProduct1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetProductIdMappedProductsPageWithSortInteger()
+		throws Exception {
+
+		testGetProductIdMappedProductsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, mappedProduct1, mappedProduct2) -> {
+				BeanUtils.setProperty(mappedProduct1, entityField.getName(), 0);
+				BeanUtils.setProperty(mappedProduct2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetProductIdMappedProductsPageWithSortString()
+		throws Exception {
+
+		testGetProductIdMappedProductsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, mappedProduct1, mappedProduct2) -> {
+				Class<?> clazz = mappedProduct1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				java.lang.reflect.Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						mappedProduct1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						mappedProduct2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						mappedProduct1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						mappedProduct2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						mappedProduct1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						mappedProduct2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetProductIdMappedProductsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, MappedProduct, MappedProduct, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long productId = testGetProductIdMappedProductsPage_getProductId();
+
+		MappedProduct mappedProduct1 = randomMappedProduct();
+		MappedProduct mappedProduct2 = randomMappedProduct();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, mappedProduct1, mappedProduct2);
+		}
+
+		mappedProduct1 = testGetProductIdMappedProductsPage_addMappedProduct(
+			productId, mappedProduct1);
+
+		mappedProduct2 = testGetProductIdMappedProductsPage_addMappedProduct(
+			productId, mappedProduct2);
+
+		for (EntityField entityField : entityFields) {
+			Page<MappedProduct> ascPage =
+				mappedProductResource.getProductIdMappedProductsPage(
+					productId, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(mappedProduct1, mappedProduct2),
+				(List<MappedProduct>)ascPage.getItems());
+
+			Page<MappedProduct> descPage =
+				mappedProductResource.getProductIdMappedProductsPage(
+					productId, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(mappedProduct2, mappedProduct1),
+				(List<MappedProduct>)descPage.getItems());
+		}
 	}
 
 	protected MappedProduct testGetProductIdMappedProductsPage_addMappedProduct(
@@ -783,6 +1051,14 @@ public abstract class BaseMappedProductResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (mappedProduct.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (mappedProduct.getCustomFields() == null) {
 					valid = false;
@@ -960,6 +1236,17 @@ public abstract class BaseMappedProductResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)mappedProduct1.getActions(),
+						(Map)mappedProduct2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1179,6 +1466,11 @@ public abstract class BaseMappedProductResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(

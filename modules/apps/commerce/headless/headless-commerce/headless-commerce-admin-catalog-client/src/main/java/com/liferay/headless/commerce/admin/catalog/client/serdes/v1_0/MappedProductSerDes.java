@@ -57,6 +57,16 @@ public class MappedProductSerDes {
 
 		sb.append("{");
 
+		if (mappedProduct.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(mappedProduct.getActions()));
+		}
+
 		if (mappedProduct.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -216,6 +226,13 @@ public class MappedProductSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (mappedProduct.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(mappedProduct.getActions()));
+		}
+
 		if (mappedProduct.getCustomFields() == null) {
 			map.put("customFields", null);
 		}
@@ -322,7 +339,14 @@ public class MappedProductSerDes {
 			MappedProduct mappedProduct, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "customFields")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					mappedProduct.setActions(
+						(Map)MappedProductSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					mappedProduct.setCustomFields(
 						Stream.of(

@@ -32,6 +32,7 @@ jest.mock(
 					name: 'color1',
 					tokenCategoryLabel: 'Category 1',
 					tokenSetLabel: 'TokenSet 1',
+					value: '#fff',
 				},
 				color2: {
 					editorType: 'ColorPicker',
@@ -39,6 +40,7 @@ jest.mock(
 					name: 'color2',
 					tokenCategoryLabel: 'Category1',
 					tokenSetLabel: 'TokenSet 2',
+					value: '#000',
 				},
 				color3: {
 					editorType: 'ColorPicker',
@@ -46,6 +48,7 @@ jest.mock(
 					name: 'color3',
 					tokenCategoryLabel: 'Category 2',
 					tokenSetLabel: 'TokenSet 3',
+					value: '#ff0',
 				},
 			},
 			styleBookEntryId: 0,

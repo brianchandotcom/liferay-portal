@@ -69,6 +69,24 @@ definition {
 		}
 	}
 
+	@description = "Verify that the Submit for Publication button is not available after the Page is submitted for publication"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ButtonNotAvailableAfterSubmitForPublication {
+
+		// TODO LRQA-70876 ButtonNotAvailableAfterSubmitForPublication pending implementation
+
+	}
+
+	@description = "Verify that, after approval, the Page status is Ready for Publish"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PageIsReadyForPublishAfterApproval {
+
+		// TODO LRQA-70877 PageIsReadyForPublishAfterApproval pending implementation
+
+	}
+
 	@priority = "4"
 	test RejectPageRevisionPG {
 		var pageName = "Page Revision Page";
@@ -153,6 +171,33 @@ definition {
 			livePage = "true",
 			pageName = "${pageName}",
 			workflowStatus = "Pending (Update)");
+	}
+
+	@description = "Verify that when the Approved page is edited it's status comes to Draft"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test StatusComesToDraftWhenPageIsEdited {
+
+		// TODO LRQA-70878 StatusComesToDraftWhenPageIsEdited pending implementation
+
+	}
+
+	@description = "Verify that a Staging Area Page is Pending after it is submitted for publication"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test StatusIsPendingAfterSubmitForPublication {
+
+		// TODO LRQA-70875 StatusIsPendingAfterSubmitForPublication pending implementation
+
+	}
+
+	@description = "Verify that when the Approved page is edited the button Submit for Publication is displayed"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SubmitForPublicationButtonIsDisplayedWhenPageIsEdited {
+
+		// TODO LRQA-70879 SubmitForPublicationButtonIsDisplayedWhenPageIsEdited pending implementation
+
 	}
 
 	@description = "This is a use case for LPS-65319."

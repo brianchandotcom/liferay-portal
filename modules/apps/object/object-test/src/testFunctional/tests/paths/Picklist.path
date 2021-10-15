@@ -110,6 +110,11 @@
 		<td>//div[contains(.,'${key_itemKey}')]/..//button[contains(.,'${key_picklistItemOption}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>PICKLIST_ITEM_DETAILS</td>
+		<td>//div[@class='modal-title']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

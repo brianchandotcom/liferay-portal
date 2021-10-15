@@ -68,6 +68,14 @@ definition {
 		AssertElementPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM");
 	}
 
+	macro assertPicklistItemDetails {
+		IFrame.selectTopFrame();
+
+		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_ITEM_MODAL");
+
+		AssertElementPresent(locator1 = "Picklist#PICKLIST_ITEM_DETAILS");
+	}
+	
 	macro optionsPicklistItem {
 		var key_itemKey = "${itemKey}";
 

@@ -225,13 +225,27 @@ definition {
 		Picklist.assertPicklistDetails(title = "Basic Info");
 	}
 
-	@description = "LPS-136595 - Verify it is possible to view a Picklist item"
-	@ignore = "Test Stub"
+    @description = "LPS-136595 - Verify it is possible to view a Picklist item"
 	@priority = "4"
 	test CanViewPicklistItem {
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		// TODO LPS-139765 CanViewPicklistItem pending implementation
+		Picklist.addPicklistItemViaAPI(
+			itemKey = "PicklistItemKeyTest",
+			itemName = "Picklist Item Name Test",
+			picklistName = "Picklist Test");
 
+		Picklist.gotoPicklists();
+
+		Picklist.optionsPicklist(
+			picklistName = "Picklist Test",
+			picklistOption = "View");
+
+		Picklist.optionsPicklistItem(
+			itemKey = "PicklistItemKeyTest",
+			picklistItemOption = "View");
+
+		Picklist.assertPicklistItemDetails();
 	}
 
 	@description = "LPS-136595 - Verify the empty state message when there is no Picklist"

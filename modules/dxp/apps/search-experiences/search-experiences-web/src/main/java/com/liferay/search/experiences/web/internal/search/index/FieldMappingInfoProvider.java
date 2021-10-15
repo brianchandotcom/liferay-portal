@@ -32,6 +32,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Petteri Karttunen
@@ -151,13 +153,10 @@ public class FieldMappingInfoProvider {
 	}
 
 	private String _getLanguageId(String fieldName) {
+		Matcher matcher = _languageIdPattern.matcher(fieldName);
 
-		// TODO Use java.util.regex.Matcher as this call is expensive
-
-		String pattern = "(.*)(_[a-z]{2}_[A-Z]{2})(_.*)?";
-
-		if (fieldName.matches(pattern)) {
-			return fieldName.replaceFirst(pattern, "$2");
+		if (matcher.matches()) {
+			return matcher.group(2);
 		}
 
 		return null;
@@ -165,6 +164,9 @@ public class FieldMappingInfoProvider {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FieldMappingInfoProvider.class);
+
+	private static final Pattern _languageIdPattern = Pattern.compile(
+		"(.*)(_[a-z]{2}_[A-Z]{2})(_.*)?");
 
 	private final IndexInformation _indexInformation;
 	private final IndexNameBuilder _indexNameBuilder;

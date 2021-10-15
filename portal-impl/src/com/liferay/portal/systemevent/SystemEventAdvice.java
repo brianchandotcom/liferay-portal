@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.TypedModel;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
@@ -97,6 +99,8 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 		long groupId = getGroupId(classedModel);
 
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
 		String className = getClassName(classedModel);
 
 		String referrerClassName = null;
@@ -115,7 +119,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 		if ((systemEventHierarchyEntry != null) &&
 			systemEventHierarchyEntry.hasTypedModel(className, classPK)) {
 
-			if (groupId > 0) {
+			if (group != null) {
 				SystemEventLocalServiceUtil.addSystemEvent(
 					0, groupId, systemEventHierarchyEntry.getClassName(),
 					classPK, systemEventHierarchyEntry.getUuid(),
@@ -131,7 +135,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 					systemEventHierarchyEntry.getExtraData());
 			}
 		}
-		else if (groupId > 0) {
+		else if (group != null) {
 			SystemEventLocalServiceUtil.addSystemEvent(
 				0, groupId, className, classPK, getUuid(classedModel),
 				referrerClassName, systemEvent.type(), StringPool.BLANK);

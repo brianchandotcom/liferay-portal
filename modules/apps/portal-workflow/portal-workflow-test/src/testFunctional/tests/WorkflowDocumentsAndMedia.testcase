@@ -688,8 +688,6 @@ definition {
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Draft",
 			dmDocumentTitle = "${documentTitle}");
-
-
 	}
 
 	@description = "This is a test for LRQA-69301. Verify the status is changed to pending after a checkout is cancelled"

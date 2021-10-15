@@ -94,9 +94,6 @@ definition {
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Pending",
 			dmDocumentTitle = "Document_2");
-
-
-			
 	}
 
 	@priority = "5"

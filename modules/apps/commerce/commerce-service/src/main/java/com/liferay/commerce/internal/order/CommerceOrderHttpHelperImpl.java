@@ -514,6 +514,31 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		return userCommerceOrder;
 	}
 
+	private String _fetchCommerceOrderUuid(
+		CommerceChannel commerceChannel,
+		HttpServletRequest httpServletRequest) {
+
+		if (commerceChannel == null) {
+			return null;
+		}
+
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(httpServletRequest);
+
+		HttpSession httpSession = originalHttpServletRequest.getSession();
+
+		String cookieName = getCookieName(commerceChannel.getGroupId());
+
+		String commerceOrderUuid = (String)httpSession.getAttribute(cookieName);
+
+		if (Validator.isNull(commerceOrderUuid)) {
+			commerceOrderUuid = CookieKeys.getCookie(
+				httpServletRequest, cookieName, true);
+		}
+
+		return commerceOrderUuid;
+	}
+
 	private CommerceContext _getCommerceContext(
 		HttpServletRequest httpServletRequest) {
 
@@ -527,6 +552,13 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		throws PortalException {
 
 		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.fetchCommerceChannel(
+				commerceContext.getCommerceChannelId());
+
+		String commerceOrderUuid = _fetchCommerceOrderUuid(
+			commerceChannel, httpServletRequest);
 
 		CommerceOrder commerceOrder = _commerceOrderThreadLocal.get();
 
@@ -544,33 +576,17 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			if ((commerceAccount == null) ||
 				(commerceAccount.getCommerceAccountId() ==
 					CommerceAccountConstants.ACCOUNT_ID_GUEST) ||
-				(commerceAccount.getCommerceAccountId() ==
-					commerceOrder.getCommerceAccountId())) {
+				(Validator.isNotNull(commerceOrderUuid) &&
+				 commerceOrderUuid.equals(commerceOrder.getUuid()) &&
+				 (commerceAccount.getCommerceAccountId() ==
+					 commerceOrder.getCommerceAccountId()))) {
 
 				return commerceOrder;
 			}
 		}
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.fetchCommerceChannel(
-				commerceContext.getCommerceChannelId());
-
 		if ((commerceAccount == null) || (commerceChannel == null)) {
 			return null;
-		}
-
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(httpServletRequest);
-
-		HttpSession httpSession = originalHttpServletRequest.getSession();
-
-		String cookieName = getCookieName(commerceChannel.getGroupId());
-
-		String commerceOrderUuid = (String)httpSession.getAttribute(cookieName);
-
-		if (Validator.isNull(commerceOrderUuid)) {
-			commerceOrderUuid = CookieKeys.getCookie(
-				httpServletRequest, cookieName, true);
 		}
 
 		if (commerceAccount.getCommerceAccountId() !=

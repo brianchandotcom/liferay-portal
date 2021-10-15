@@ -148,13 +148,13 @@ export default ({
 			const model = modelsRef.current[modelKeys[i]];
 
 			if (model.groupId) {
-				model.siteName = siteNames[model.groupId.toString()];
+				model.siteName = siteNames[model.groupId];
 			}
 			else {
 				model.siteName = GLOBAL_SITE_NAME;
 			}
 
-			model.typeName = typeNames[model.modelClassNameId.toString()];
+			model.typeName = typeNames[model.modelClassNameId];
 
 			if (model.ctEntryId) {
 				model.changeTypeLabel = Liferay.Language.get('modified');
@@ -166,9 +166,8 @@ export default ({
 					model.changeTypeLabel = Liferay.Language.get('deleted');
 				}
 
-				model.portraitURL =
-					userInfo[model.userId.toString()].portraitURL;
-				model.userName = userInfo[model.userId.toString()].userName;
+				model.portraitURL = userInfo[model.userId].portraitURL;
+				model.userName = userInfo[model.userId].userName;
 
 				if (model.siteName === GLOBAL_SITE_NAME) {
 					let key = Liferay.Language.get('x-modified-a-x-x-ago');
@@ -318,7 +317,7 @@ export default ({
 				for (let i = 0; i < changes.length; i++) {
 					const modelKey = changes[i];
 
-					const model = modelsRef.current[modelKey.toString()];
+					const model = modelsRef.current[modelKey];
 
 					if (
 						modelClassNameId === model.modelClassNameId &&
@@ -345,8 +344,7 @@ export default ({
 					for (let j = 0; j < contextNode.children.length; j++) {
 						const child = contextNode.children[j];
 
-						const model =
-							modelsRef.current[child.modelKey.toString()];
+						const model = modelsRef.current[child.modelKey];
 
 						if (
 							model.modelClassNameId ===
@@ -434,7 +432,7 @@ export default ({
 			}
 
 			const json = JSON.parse(
-				JSON.stringify(modelsRef.current[modelKey.toString()])
+				JSON.stringify(modelsRef.current[modelKey])
 			);
 
 			json.nodeId = nodeId;
@@ -452,9 +450,7 @@ export default ({
 					return {children: getModels(changes)};
 				}
 
-				return JSON.parse(
-					JSON.stringify(modelsRef.current[nodeId.toString()])
-				);
+				return JSON.parse(JSON.stringify(modelsRef.current[nodeId]));
 			}
 			else if (
 				filterClass !== FILTER_CLASS_EVERYTHING &&
@@ -488,9 +484,7 @@ export default ({
 
 				if (element.nodeId === nodeId) {
 					const entry = JSON.parse(
-						JSON.stringify(
-							modelsRef.current[element.modelKey.toString()]
-						)
+						JSON.stringify(modelsRef.current[element.modelKey])
 					);
 
 					entry.children = getModels(element.children);
@@ -509,8 +503,7 @@ export default ({
 					if (!child.parents) {
 						const parents = element.parents.slice(0);
 
-						const model =
-							modelsRef.current[element.modelKey.toString()];
+						const model = modelsRef.current[element.modelKey];
 
 						parents.push({
 							hideable: model.hideable,
@@ -611,7 +604,7 @@ export default ({
 				showHideable.toString();
 
 			if (keywords) {
-				return path + '&' + PARAM_KEYWORDS + '=' + keywords.toString();
+				return path + '&' + PARAM_KEYWORDS + '=' + keywords;
 			}
 
 			return path;
@@ -654,10 +647,7 @@ export default ({
 
 				if (node.modelClassNameId) {
 					tree +=
-						'/' +
-						node.modelClassNameId.toString() +
-						'-' +
-						node.modelClassPK.toString();
+						'/' + node.modelClassNameId + '-' + node.modelClassPK;
 				}
 			}
 
@@ -1250,16 +1240,16 @@ export default ({
 				activeCTCollection.toString()
 			);
 
-			return setParameter(url, 'ctEntryId', node.ctEntryId.toString());
+			return setParameter(url, 'ctEntryId', node.ctEntryId);
 		}
 
 		const url = setParameter(
 			dataURL,
 			'modelClassNameId',
-			node.modelClassNameId.toString()
+			node.modelClassNameId
 		);
 
-		return setParameter(url, 'modelClassPK', node.modelClassPK.toString());
+		return setParameter(url, 'modelClassPK', node.modelClassPK);
 	};
 
 	const getDiscardURL = useCallback(
@@ -1267,13 +1257,13 @@ export default ({
 			const url = setParameter(
 				discardURL,
 				'modelClassNameId',
-				node.modelClassNameId.toString()
+				node.modelClassNameId
 			);
 
 			return setParameter(
 				url,
 				'modelClassPK',
-				node.modelClassPK.toString()
+				node.modelClassPK
 			);
 		},
 		[discardURL, setParameter]
@@ -2075,9 +2065,9 @@ export default ({
 								discardURL={getDiscardURL(renderState.node)}
 								getCache={() =>
 									renderCache.current[
-										renderState.node.modelClassNameId.toString() +
+										renderState.node.modelClassNameId +
 											'-' +
-											renderState.node.modelClassPK.toString()
+											renderState.node.modelClassPK
 									]
 								}
 								showDropdown={
@@ -2088,9 +2078,9 @@ export default ({
 								title={renderState.node.title}
 								updateCache={(data) => {
 									renderCache.current[
-										renderState.node.modelClassNameId.toString() +
+										renderState.node.modelClassNameId +
 											'-' +
-											renderState.node.modelClassPK.toString()
+											renderState.node.modelClassPK
 									] = data;
 
 									setRenderState({

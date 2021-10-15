@@ -1,0 +1,22 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "3",
+					"description": "number-of-slides",
+					"label": "Number of Slides",
+					"name": "numberOfSlides",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 1,
+							"type": "number"
+						}
+					}
+				}
+			]
+		}
+	]
+}

@@ -299,8 +299,8 @@ definition {
 		}
 
 		DMDocument.viewStatus(
-				dmDocumentStatus = "Pending",
-				dmDocumentTitle = "Document_1");
+			dmDocumentStatus = "Pending",
+			dmDocumentTitle = "Document_1");
 	}
 
 	@description = "This is a test for LRQA-69303. Verify created file can be shared. "

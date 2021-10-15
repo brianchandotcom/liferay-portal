@@ -14,15 +14,19 @@
 
 package com.liferay.content.dashboard.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -30,6 +34,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.ValidatorException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Arques
@@ -50,20 +55,42 @@ public class UpdateContentDashboardConfigurationMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String[] assetVocabularyNames = StringUtil.split(
-			ParamUtil.getString(actionRequest, "assetVocabularyNames"));
+		String assetVocabularyIdsFromParams = ParamUtil.getString(
+			actionRequest, "assetVocabularyIds");
 
-		if (ArrayUtil.isEmpty(assetVocabularyNames)) {
+		String[] assetVocabularyIds = StringUtil.split(
+			assetVocabularyIdsFromParams);
+
+		if (!StringUtil.equalsIgnoreCase(
+				assetVocabularyIdsFromParams, "empty")) {
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			AssetVocabulary audience =
+				_assetVocabularyLocalService.fetchGroupVocabulary(
+					themeDisplay.getCompanyGroupId(), "audience");
+
+			AssetVocabulary stage =
+				_assetVocabularyLocalService.fetchGroupVocabulary(
+					themeDisplay.getCompanyGroupId(), "stage");
+
+			assetVocabularyIds = new String[] {
+				String.valueOf(audience.getVocabularyId()),
+				String.valueOf(stage.getVocabularyId())
+			};
+		}
+
+		if (ArrayUtil.isEmpty(assetVocabularyIds)) {
 			hideDefaultSuccessMessage(actionRequest);
-			SessionMessages.add(
-				actionRequest, "emptyAssetVocabularyNames", true);
+			SessionMessages.add(actionRequest, "emptyAssetVocabularyIds", true);
 		}
 		else {
 			PortletPreferences portletPreferences =
 				actionRequest.getPreferences();
 
 			portletPreferences.setValues(
-				"assetVocabularyNames", assetVocabularyNames);
+				"assetVocabularyIds", assetVocabularyIds);
 
 			try {
 				portletPreferences.store();
@@ -81,5 +108,8 @@ public class UpdateContentDashboardConfigurationMVCActionCommand
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 	}
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 }

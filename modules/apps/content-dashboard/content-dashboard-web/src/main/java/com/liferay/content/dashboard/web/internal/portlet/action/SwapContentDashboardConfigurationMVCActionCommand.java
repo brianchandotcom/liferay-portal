@@ -53,13 +53,13 @@ public class SwapContentDashboardConfigurationMVCActionCommand
 			PortletPreferences portletPreferences =
 				actionRequest.getPreferences();
 
-			String[] assetVocabularyNames = portletPreferences.getValues(
-				"assetVocabularyNames", new String[0]);
+			String[] assetVocabularyIds = portletPreferences.getValues(
+				"assetVocabularyIds", new String[0]);
 
-			if (assetVocabularyNames.length == 2) {
-				ArrayUtil.reverse(assetVocabularyNames);
+			if (assetVocabularyIds.length == 2) {
+				ArrayUtil.reverse(assetVocabularyIds);
 				portletPreferences.setValues(
-					"assetVocabularyNames", assetVocabularyNames);
+					"assetVocabularyIds", assetVocabularyIds);
 				portletPreferences.store();
 			}
 

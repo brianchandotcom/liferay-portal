@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetVocabulariesProvider {
 
 	public List<AssetVocabulary> getAssetVocabularies(
-		String[] assetVocabularyNames, long companyId) {
+		String[] assetVocabularyIds, long companyId) {
 
 		List<Long> groupIds = _groupLocalService.getGroupIds(companyId, true);
 
@@ -52,11 +52,11 @@ public class AssetVocabulariesProvider {
 			try {
 				result.addAll(
 					Stream.of(
-						assetVocabularyNames
+						assetVocabularyIds
 					).map(
-						assetVocabularyName ->
+						assetVocabularyId ->
 							_assetVocabularyLocalService.fetchGroupVocabulary(
-								groupId, assetVocabularyName)
+								groupId, assetVocabularyId)
 					).filter(
 						Objects::nonNull
 					).filter(

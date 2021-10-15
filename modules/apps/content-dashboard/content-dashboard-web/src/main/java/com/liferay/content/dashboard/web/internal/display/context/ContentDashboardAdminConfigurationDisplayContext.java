@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -35,6 +36,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import javax.portlet.ActionURL;
@@ -49,11 +52,11 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 
 	public ContentDashboardAdminConfigurationDisplayContext(
 		AssetVocabularyLocalService assetVocabularyLocalService,
-		String[] assetVocabularyNames, GroupLocalService groupLocalService,
+		long[] assetVocabularyIds, GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
 		_assetVocabularyLocalService = assetVocabularyLocalService;
-		_assetVocabularyNames = assetVocabularyNames;
+		_assetVocabularyIds = assetVocabularyIds;
 		_groupLocalService = groupLocalService;
 		_renderResponse = renderResponse;
 
@@ -72,9 +75,9 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 	}
 
 	public JSONArray getAvailableVocabularyJSONArray() {
-		String[] assetVocabularyNames = ArrayUtil.clone(_assetVocabularyNames);
+		long[] assetVocabularyIds = ArrayUtil.clone(_assetVocabularyIds);
 
-		Arrays.sort(assetVocabularyNames);
+		Arrays.sort(assetVocabularyIds);
 
 		List<AssetVocabulary> availableAssetVocabularies =
 			_getAvailableAssetVocabularies();
@@ -84,12 +87,10 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		return stream.filter(
 			assetVocabulary -> {
 				int pos = Arrays.binarySearch(
-					assetVocabularyNames, assetVocabulary.getName());
+					assetVocabularyIds, assetVocabulary.getVocabularyId());
 
 				return pos < 0;
 			}
-		).filter(
-			Objects::nonNull
 		).sorted(
 			Comparator.comparing(
 				this::_getAssetVocabularyLabel, String.CASE_INSENSITIVE_ORDER)
@@ -101,23 +102,26 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 	}
 
 	public JSONArray getCurrentVocabularyJSONArray() {
-		return Stream.of(
-			_assetVocabularyNames
-		).map(
-			assetVocabularyName -> {
-				long[] groupIds = _getGroupIds(_themeDisplay.getCompanyId());
+		LongStream vocabularyIdsLongStream = Arrays.stream(_assetVocabularyIds);
 
-				for (long groupId : groupIds) {
-					AssetVocabulary assetVocabulary =
-						_assetVocabularyLocalService.fetchGroupVocabulary(
-							groupId, assetVocabularyName);
+		List<Long> vocabulariesIdsList = vocabularyIdsLongStream.boxed(
+		).collect(
+			Collectors.toList()
+		);
 
-					if (assetVocabulary != null) {
-						return assetVocabulary;
-					}
+		Stream<Long> streamVocabulariesIds = vocabulariesIdsList.stream();
+
+		return streamVocabulariesIds.map(
+			assetVocabularyId -> {
+				try {
+					return _assetVocabularyLocalService.getAssetVocabulary(
+						assetVocabularyId);
 				}
+				catch (PortalException portalException) {
+					portalException.printStackTrace();
 
-				return null;
+					return null;
+				}
 			}
 		).filter(
 			Objects::nonNull
@@ -191,6 +195,8 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		return JSONUtil.put(
 			"global", group.isCompany()
 		).put(
+			"id", assetVocabulary.getVocabularyId()
+		).put(
 			"label", HtmlUtil.escape(_getAssetVocabularyLabel(assetVocabulary))
 		).put(
 			"site", assetVocabulary.getGroupId()
@@ -200,8 +206,8 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 	}
 
 	private List<AssetVocabulary> _assetVocabularies;
+	private final long[] _assetVocabularyIds;
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
-	private final String[] _assetVocabularyNames;
 	private List<AssetVocabulary> _availableAssetVocabularies;
 	private final GroupLocalService _groupLocalService;
 	private final RenderResponse _renderResponse;

@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-
-<portlet-preferences>
-	<preference>
-		<name>assetVocabularyNames</name>
-		<value>audience</value>
-		<value>stage</value>
-	</preference>
-</portlet-preferences>

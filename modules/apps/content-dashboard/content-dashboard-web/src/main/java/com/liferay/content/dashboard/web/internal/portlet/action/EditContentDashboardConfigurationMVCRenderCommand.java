@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -51,13 +54,21 @@ public class EditContentDashboardConfigurationMVCRenderCommand
 
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
+		String[] assetVocabularyIdsString = portletPreferences.getValues(
+			"assetVocabularyIds", new String[0]);
+
+		Stream<String> streamAssetVocabularyIdsString = Arrays.stream(
+			assetVocabularyIdsString);
+
+		long[] assetVocabularyIds = streamAssetVocabularyIdsString.mapToLong(
+			Long::parseLong
+		).toArray();
+
 		renderRequest.setAttribute(
 			ContentDashboardWebKeys.
 				CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT,
 			new ContentDashboardAdminConfigurationDisplayContext(
-				_assetVocabularyLocalService,
-				portletPreferences.getValues(
-					"assetVocabularyNames", new String[0]),
+				_assetVocabularyLocalService, assetVocabularyIds,
 				_groupLocalService,
 				_portal.getHttpServletRequest(renderRequest), renderResponse));
 

@@ -1879,6 +1879,38 @@ definition {
 		}
 	}
 
+	macro viewThreadSubscribeLink {
+		var key_threadSubject = "${threadSubject}";
+
+		if (isSet(disabledEmailConfiguration)) {
+			Click(locator1 = "MessageBoards#VERTICAL_ELLIPSIS");
+
+			MenuItem.viewNotPresent(menuItem = "Unsubscribe");
+
+			AssertClick(
+				locator1 = "MessageBoards#THREAD_LIST_THREAD",
+				value1 = "${threadSubject}");
+
+			Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.viewNotPresent(menuItem = "Unsubscribe");
+		}
+
+		else {
+			Click(locator1 = "MessageBoards#VERTICAL_ELLIPSIS");
+
+			MenuItem.viewPresent(menuItem = "Unsubscribe");
+
+			AssertClick(
+				locator1 = "MessageBoards#THREAD_LIST_THREAD",
+				value1 = "${threadSubject}");
+
+			Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.viewPresent(menuItem = "Unsubscribe");
+		}
+	}
+
 	macro viewWithWorkflowPG {
 		var key_threadBody = "threadBody";
 		var key_threadSubject = "${threadSubject}";

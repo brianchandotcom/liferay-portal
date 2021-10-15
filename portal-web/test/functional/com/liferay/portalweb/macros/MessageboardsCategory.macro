@@ -170,7 +170,12 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_message_boards_web_portlet_MBAdminPortlet&_com_liferay_message_boards_web_portlet_MBAdminPortlet_mvcRenderCommandName=%2Fmessage_boards%2Fview_category&_com_liferay_message_boards_web_portlet_MBAdminPortlet_mbCategoryId=${categoryId}");
+		if (isSet(layoutName)) {
+			Open(locator1 = "${baseURL}/web/${siteURLKey}/${layoutName}/-/message_boards/category/${categoryId}");
+		}
+		else {
+			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_message_boards_web_portlet_MBAdminPortlet&_com_liferay_message_boards_web_portlet_MBAdminPortlet_mvcRenderCommandName=%2Fmessage_boards%2Fview_category&_com_liferay_message_boards_web_portlet_MBAdminPortlet_mbCategoryId=${categoryId}");
+		}
 	}
 
 	macro openToEditCategory {
@@ -253,6 +258,40 @@ definition {
 		AssertElementNotPresent(locator1 = "MessageBoards#CATEGORY_TABLE_PANEL");
 
 		AssertElementNotPresent(locator1 = "MessageBoards#CATEGORY_TABLE_CATEGORY_GENERIC");
+	}
+
+	macro viewCategorySubscribeLink {
+		var key_categoryName = "${categoryName}";
+
+		if (isSet(disabledEmailConfiguration)) {
+			Click(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
+
+			MenuItem.viewNotPresent(menuItem = "Subscribe");
+
+			AssertClick(
+				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
+				value1 = "${categoryName}");
+
+			Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+			AssertElementNotPresent(locator1 = "Link#SUBSCRIBE");
+		}
+
+		else {
+			Click(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
+
+			MenuItem.viewPresent(menuItem = "Subscribe");
+
+			AssertClick(
+				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
+				value1 = "${categoryName}");
+
+			Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+			AssertTextEquals(
+				locator1 = "Link#SUBSCRIBE",
+				value1 = "Subscribe");
+		}
 	}
 
 	macro viewCP {

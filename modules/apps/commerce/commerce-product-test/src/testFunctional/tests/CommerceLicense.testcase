@@ -106,6 +106,68 @@ definition {
 		CommerceLicense.executeSmoke();
 	}
 
+	@priority = "4"
+	test TermsOfUseNotShownToNonAdminUser {
+		property commerce.enabled = "true";
+		property custom.properties = "enterprise.product.notification.enabled=true";
+
+		SelectFrame(value1 = "relative=top");
+
+		Click(locator1 = "Button#DONE");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Guest",
+			roleTitle = "Site Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		AssertElementNotPresent(locator1 = "Modal#MODAL");
+	}
+
+	@priority = "4"
+	test TermsOfUseShownToAdminOnFirstLoginOnly {
+		property commerce.enabled = "true";
+		property custom.properties = "enterprise.product.notification.enabled=true";
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Terms of Use");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Modal#BODY",
+			value1 = "Use of Liferay Commerce apps is not covered by Liferay Support");
+
+		Click(locator1 = "Button#DONE");
+
+		AssertElementNotPresent(locator1 = "Modal#MODAL");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		AssertElementNotPresent(locator1 = "Modal#MODAL");
+	}
+
 	@priority = "5"
 	test ViewCommerceEnabled {
 		property commerce.enabled = "true";

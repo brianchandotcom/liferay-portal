@@ -69,7 +69,7 @@ definition {
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
 			value1 = "Submit for Publication");
 	}
-	
+
 	macro videoShortcutAddCP {
 		if (!(isSet(skipNavigation))) {
 			DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "External Video Shortcut");

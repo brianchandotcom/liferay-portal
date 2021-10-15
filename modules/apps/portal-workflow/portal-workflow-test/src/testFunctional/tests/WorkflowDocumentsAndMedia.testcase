@@ -268,11 +268,11 @@ definition {
 			workflowAssetTitle = "Document_1",
 			workflowAssetType = "Document",
 			workflowTask = "Review");
-		
+
 		Workflow.approveTaskByActions(
-				workflowAssetTitle = "Document_1",
-				workflowAssetType = "Document",
-				workflowTask = "Review");
+			workflowAssetTitle = "Document_1",
+			workflowAssetType = "Document",
+			workflowTask = "Review");
 
 		Navigator.openURL();
 
@@ -284,9 +284,6 @@ definition {
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Approved",
 			dmDocumentTitle = "Document_1.jpg");
-
-
-			
 	}
 
 	@description = "This is a test for LRQA-69297. Assert that the user can publish multiple files"

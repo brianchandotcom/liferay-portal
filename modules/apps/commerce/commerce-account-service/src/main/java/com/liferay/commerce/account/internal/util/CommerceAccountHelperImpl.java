@@ -149,15 +149,15 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 		if ((commerceAccount == null) || !commerceAccount.isActive()) {
 			commerceAccount = _getSingleCommerceAccount(
-				commerceChannel.getSiteGroupId(), httpServletRequest);
+				commerceChannelGroupId, httpServletRequest);
 
 			if (commerceAccount == null) {
 				setCurrentCommerceAccount(
-					httpServletRequest, commerceChannel.getSiteGroupId(), -1);
+					httpServletRequest, commerceChannelGroupId, -1);
 			}
 			else {
 				setCurrentCommerceAccount(
-					httpServletRequest, commerceChannel.getSiteGroupId(),
+					httpServletRequest, commerceChannelGroupId,
 					commerceAccount.getCommerceAccountId());
 			}
 		}

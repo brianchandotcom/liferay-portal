@@ -2,7 +2,7 @@ import ClayIcon from '@clayui/icon';
 
 const ViewFilesPanel = ({sections}) => (
 	<>
-		{sections.map((section, index) => (
+		{sections?.map((section, index) => (
 			<div className="view-section" key={index}>
 				<h3>{section.title.toUpperCase()}</h3>
 

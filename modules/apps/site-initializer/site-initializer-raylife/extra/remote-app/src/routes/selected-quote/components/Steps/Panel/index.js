@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
@@ -13,10 +14,15 @@ const Panel = ({
 	const [showContentPanel, setShowContentPanel] = useState(defaultExpanded);
 
 	useEffect(() => {
-		if (stepChecked) {
-			setShowContentPanel(false);
+		setShowContentPanel(false);
+		if (!stepChecked && defaultExpanded) {
+			setShowContentPanel(true);
 		}
-	}, [stepChecked]);
+	}, [stepChecked, defaultExpanded]);
+
+	useEffect(() => {
+		console.log('showContentPanel', showContentPanel);
+	}, [showContentPanel]);
 
 	return (
 		<div className="panel-container">
@@ -32,11 +38,7 @@ const Panel = ({
 				<div className="panel-right">
 					{stepChecked && (
 						<div className="change-link">
-							<a
-								onClick={() =>
-									setShowContentPanel(!showContentPanel)
-								}
-							>
+							<a onClick={() => setShowContentPanel(true)}>
 								change
 							</a>
 						</div>

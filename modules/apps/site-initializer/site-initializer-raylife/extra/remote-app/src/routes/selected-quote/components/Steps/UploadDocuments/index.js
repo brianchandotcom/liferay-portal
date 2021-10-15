@@ -16,8 +16,9 @@ const dropAreaProps = {
 	widthContainer: '100%',
 };
 
-const UploadDocuments = ({_setSection, _setStepChecked}) => {
+const UploadDocuments = ({_setExpanded, _setSection, _setStepChecked}) => {
 	const properties = useContext(ApplicationPropertiesContext);
+	const [loading, setLoading] = useState(false);
 
 	const [sections, setSections] = useState([
 		{
@@ -58,13 +59,13 @@ const UploadDocuments = ({_setSection, _setStepChecked}) => {
 		);
 	};
 
-	const onProgressChange = (id, progress) => {
+	const setFilePropertyValue = (id, key, value) => {
 		setSections((sections) =>
 			sections.map((section) => ({
 				...section,
 				files: section.files.map((fileEntry) => {
 					if (fileEntry.id === id) {
-						fileEntry.progress = progress;
+						fileEntry[key] = value;
 
 						return fileEntry;
 					}
@@ -76,6 +77,8 @@ const UploadDocuments = ({_setSection, _setStepChecked}) => {
 	};
 
 	const onClickConfirmUpload = async () => {
+		setLoading(true);
+
 		const quoteFolder = await createRootFolders(
 			properties.applicationsfoldername
 		);
@@ -88,19 +91,34 @@ const UploadDocuments = ({_setSection, _setStepChecked}) => {
 			);
 
 			for (const fileEntry of section.files) {
+				if (fileEntry.documentId) {
+					continue;
+				}
+
 				try {
-					await createDocumentInFolder(
+					const {
+						data,
+					} = await createDocumentInFolder(
 						sectionFolder.id,
 						fileEntry,
-						(progress) => onProgressChange(fileEntry.id, progress)
+						(progress) =>
+							setFilePropertyValue(
+								fileEntry.id,
+								'progress',
+								progress
+							)
 					);
+
+					setFilePropertyValue(fileEntry.id, 'documentId', data.id);
 				} catch (error) {
 					console.error(error);
 				}
 			}
 		}
 
-		_setStepChecked(true);
+		setLoading(false);
+		_setExpanded('selectPaymentMethod');
+		_setStepChecked('uploadDocuments');
 	};
 
 	useEffect(() => {
@@ -139,7 +157,13 @@ const UploadDocuments = ({_setSection, _setStepChecked}) => {
 				</div>
 			))}
 			<div className="upload-footer">
-				<button onClick={onClickConfirmUpload}>CONFIRM UPLOADS</button>
+				<button
+					className="btn btn-lg btn-primary"
+					disabled={loading}
+					onClick={onClickConfirmUpload}
+				>
+					CONFIRM UPLOADS
+				</button>
 			</div>
 		</div>
 	);

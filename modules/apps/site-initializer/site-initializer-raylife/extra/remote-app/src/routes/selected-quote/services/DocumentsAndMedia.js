@@ -15,7 +15,7 @@ export const createDocumentInFolder = async (folderId, fileEntry, callback) => {
 
 	formData.append('file', fileEntry);
 
-	await axios.post(
+	return axios.post(
 		`${DeliveryAPI}/v1.0/document-folders/${folderId}/documents`,
 		formData,
 		{

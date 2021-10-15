@@ -6,7 +6,12 @@ import {
 	validadePassword,
 } from '~/routes/selected-quote/utils/CreateAccount';
 import {ListRules} from '../CreateAnAccount/ListRules';
-import {CHECK_VALUE, INITIAL_VALIDATION, NATURAL_VALUE} from './constants';
+import {
+	CHECK_VALUE,
+	INITIAL_VALIDATION,
+	NATURAL_VALUE,
+	UNCHECKED_VALUE,
+} from './constants';
 
 const _isEmailValid = (email) => {
 	const regex = new RegExp(EMAIL_REGEX);
@@ -14,7 +19,7 @@ const _isEmailValid = (email) => {
 	return regex.test(email);
 };
 
-export const CreateAnAccount = () => {
+export const CreateAnAccount = ({_setExpanded, _setStepChecked}) => {
 	const [alert, setAlert] = useState(NATURAL_VALUE);
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [email, setEmail] = useState('');
@@ -28,6 +33,11 @@ export const CreateAnAccount = () => {
 	const onCreateAccount = () => {
 		if (isMatchingAllRules) {
 			const response = SendAccountRequest(email, password);
+
+			if (response === CHECK_VALUE) {
+				_setExpanded('uploadDocuments');
+				_setStepChecked('createAnAccount');
+			}
 
 			setAlert(response);
 		}
@@ -128,7 +138,7 @@ export const CreateAnAccount = () => {
 				</button>
 			</div>
 
-			{email && alert === CHECK_VALUE && (
+			{email && alert === UNCHECKED_VALUE && (
 				<div className="ca-alert-create">
 					<WarningBadge>
 						Unable to create your account. Please try again

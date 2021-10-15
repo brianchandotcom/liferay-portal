@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.Objects;
-
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -98,7 +96,7 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 					companyId));
 		}
 		else {
-			boolean export = _isExport(navigation);
+			boolean export = isExport(navigation);
 
 			_searchContainer.setResults(
 				BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
@@ -113,10 +111,6 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		}
 
 		return _searchContainer;
-	}
-
-	private boolean _isExport(String navigation) {
-		return Objects.equals(navigation, "export");
 	}
 
 	private final RenderRequest _renderRequest;

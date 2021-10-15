@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -74,6 +75,10 @@ public abstract class BaseDisplayContext {
 	public String getSimpleInternalClassName(String internalClassName) {
 		return internalClassName.substring(
 			internalClassName.lastIndexOf(StringPool.PERIOD) + 1);
+	}
+
+	protected boolean isExport(String navigation) {
+		return Objects.equals(navigation, "export");
 	}
 
 	protected HttpServletRequest httpServletRequest;

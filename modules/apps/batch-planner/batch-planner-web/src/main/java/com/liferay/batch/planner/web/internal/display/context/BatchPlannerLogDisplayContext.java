@@ -80,18 +80,37 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 
 		long companyId = PortalUtil.getCompanyId(renderRequest);
 
-		_searchContainer.setResults(
-			TransformUtil.transform(
-				BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogs(
-					companyId, _searchContainer.getStart(),
-					_searchContainer.getEnd(),
-					OrderByComparatorFactoryUtil.create(
-						"BatchPlannerLog", orderByCol,
-						orderByType.equals("asc"))),
-				this::_toBatchPlannerLogDisplay));
-		_searchContainer.setTotal(
-			BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogsCount(
-				companyId));
+		String navigation = ParamUtil.getString(
+			renderRequest, "navigation", "all");
+
+		if (navigation.equals("all")) {
+			_searchContainer.setResults(
+				TransformUtil.transform(
+					BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogs(
+						companyId, _searchContainer.getStart(),
+						_searchContainer.getEnd(),
+						OrderByComparatorFactoryUtil.create(
+							"BatchPlannerLog", orderByCol,
+							orderByType.equals("asc"))),
+					this::_toBatchPlannerLogDisplay));
+			_searchContainer.setTotal(
+				BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogsCount(
+					companyId));
+		}
+		else {
+			_searchContainer.setResults(
+				TransformUtil.transform(
+					BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogs(
+						companyId, isExport(navigation),
+						_searchContainer.getStart(), _searchContainer.getEnd(),
+						OrderByComparatorFactoryUtil.create(
+							"BatchPlannerLog", orderByCol,
+							orderByType.equals("asc"))),
+					this::_toBatchPlannerLogDisplay));
+			_searchContainer.setTotal(
+				BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogsCount(
+					companyId, isExport(navigation)));
+		}
 
 		return _searchContainer;
 	}

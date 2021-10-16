@@ -24,8 +24,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.dom4j.Element;
 
@@ -348,97 +346,6 @@ public class PullRequestPortalTopLevelBuild
 		}
 
 		return false;
-	}
-
-	public static class WorkspaceBranchInformation
-		implements BranchInformation {
-
-		@Override
-		public String getCachedRemoteGitRefName() {
-			return _workspaceGitRepository.getGitHubDevBranchName();
-		}
-
-		@Override
-		public String getOriginName() {
-			return _workspaceGitRepository.getSenderBranchUsername();
-		}
-
-		@Override
-		public Integer getPullRequestNumber() {
-			Matcher matcher = _pattern.matcher(
-				_workspaceGitRepository.getGitHubURL());
-
-			if (!matcher.find()) {
-				return 0;
-			}
-
-			return Integer.parseInt(matcher.group("pullNumber"));
-		}
-
-		@Override
-		public String getReceiverUsername() {
-			Matcher matcher = _pattern.matcher(
-				_workspaceGitRepository.getGitHubURL());
-
-			if (!matcher.find()) {
-				return "liferay";
-			}
-
-			return matcher.group("username");
-		}
-
-		@Override
-		public String getRepositoryName() {
-			return _workspaceGitRepository.getName();
-		}
-
-		@Override
-		public String getSenderBranchName() {
-			return _workspaceGitRepository.getSenderBranchName();
-		}
-
-		@Override
-		public String getSenderBranchSHA() {
-			return _workspaceGitRepository.getSenderBranchSHA();
-		}
-
-		@Override
-		public RemoteGitRef getSenderRemoteGitRef() {
-			String remoteURL = JenkinsResultsParserUtil.combine(
-				"git@github.com:", getSenderUsername(), "/",
-				getRepositoryName(), ".git");
-
-			return GitUtil.getRemoteGitRef(
-				getSenderBranchName(), new File("."), remoteURL);
-		}
-
-		@Override
-		public String getSenderUsername() {
-			return _workspaceGitRepository.getSenderBranchUsername();
-		}
-
-		@Override
-		public String getUpstreamBranchName() {
-			return _workspaceGitRepository.getUpstreamBranchName();
-		}
-
-		@Override
-		public String getUpstreamBranchSHA() {
-			return _workspaceGitRepository.getBaseBranchSHA();
-		}
-
-		protected WorkspaceBranchInformation(
-			WorkspaceGitRepository workspaceGitRepository) {
-
-			_workspaceGitRepository = workspaceGitRepository;
-		}
-
-		private static final Pattern _pattern = Pattern.compile(
-			"https://github.com/(?<username>[^/]+)/[^/]/pull/" +
-				"(?<pullNumber>\\d+)");
-
-		private final WorkspaceGitRepository _workspaceGitRepository;
-
 	}
 
 	protected Element getFailedStableJobSummaryElement() {

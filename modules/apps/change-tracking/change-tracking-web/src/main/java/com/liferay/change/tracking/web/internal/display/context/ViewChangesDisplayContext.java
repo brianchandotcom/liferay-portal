@@ -488,6 +488,8 @@ public class ViewChangesDisplayContext {
 				CTEntryTable.INSTANCE, _themeDisplay, _userLocalService,
 				CTEntryTable.INSTANCE.ctCollectionId.eq(
 					_ctCollection.getCtCollectionId()))
+		).put(
+			"usersFromURL", ParamUtil.getString(_renderRequest, "users")
 		).build();
 	}
 

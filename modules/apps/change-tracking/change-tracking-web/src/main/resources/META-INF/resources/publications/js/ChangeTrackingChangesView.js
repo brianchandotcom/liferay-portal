@@ -117,6 +117,7 @@ export default ({
 	typeNames,
 	updateCTCommentURL,
 	userInfo,
+	usersFromURL,
 }) => {
 	const CHANGE_TYPE_ADDITION = 0;
 	const CHANGE_TYPE_DELETION = 1;
@@ -130,6 +131,7 @@ export default ({
 	const GLOBAL_SITE_NAME = Liferay.Language.get('global');
 	const MENU_CHANGE_TYPES = 'MENU_CHANGE_TYPES';
 	const MENU_ROOT = 'MENU_ROOT';
+	const MENU_USERS = 'MENU_USERS';
 	const MVC_RENDER_COMMAND_NAME = '/change_tracking/view_changes';
 	const PARAM_CHANGE_TYPES = namespace + 'changeTypes';
 	const PARAM_CT_COLLECTION_ID = namespace + 'ctCollectionId';
@@ -137,6 +139,7 @@ export default ({
 	const PARAM_MVC_RENDER_COMMAND_NAME = namespace + 'mvcRenderCommandName';
 	const PARAM_PATH = namespace + 'path';
 	const PARAM_SHOW_HIDEABLE = namespace + 'showHideable';
+	const PARAM_USERS = namespace + 'users';
 	const POP_STATE = 'popstate';
 	const VIEW_TYPE_CHANGES = 'changes';
 	const VIEW_TYPE_CONTEXT = 'context';
@@ -194,6 +197,7 @@ export default ({
 	params.delete(PARAM_KEYWORDS);
 	params.delete(PARAM_PATH);
 	params.delete(PARAM_SHOW_HIDEABLE);
+	params.delete(PARAM_USERS);
 
 	const basePath = useRef(pathname + '?' + params.toString());
 
@@ -609,25 +613,33 @@ export default ({
 		DIRECTION_NEXT
 	);
 	const [dropdownActive, setDropdownActive] = useState(false);
+	const [entrySearchTerms, setEntrySearchTerms] = useState(keywordsFromURL);
+	const [filterSearchTerms, setFilterSearchTerms] = useState('');
 	const [menu, setMenu] = useState(MENU_ROOT);
 	const [resultsKeywords, setResultsKeywords] = useState(keywordsFromURL);
-	const [searchTerms, setSearchTerms] = useState(keywordsFromURL);
-	const [showComments, setShowComments] = useState(false);
 	const [searchMobile, setSearchMobile] = useState(false);
+	const [showComments, setShowComments] = useState(false);
 
-	const getFilters = useCallback((changeTypes) => {
+	const getFilters = useCallback((changeTypes, users) => {
 		let changeTypeIds = [];
 
 		if (changeTypes) {
 			changeTypeIds = changeTypes.split(',').map((id) => Number(id));
 		}
 
+		let userIds = [];
+
+		if (users) {
+			userIds = users.split(',').map((id) => Number(id));
+		}
+
 		return {
 			changeTypes: changeTypeIds,
+			users: userIds,
 		};
 	}, []);
 
-	const initialFilters = getFilters(changeTypesFromURL);
+	const initialFilters = getFilters(changeTypesFromURL, usersFromURL);
 
 	const [filtersState, setFiltersState] = useState(initialFilters);
 
@@ -659,6 +671,15 @@ export default ({
 				if (
 					changeTypes.length > 0 &&
 					!changeTypes.includes(node.changeType)
+				) {
+					return false;
+				}
+
+				const userIds = filters['users'];
+
+				if (
+					userIds.length > 0 &&
+					!userIds.includes(Number(node.userId))
 				) {
 					return false;
 				}
@@ -716,13 +737,25 @@ export default ({
 					changeTypes.join(',');
 			}
 
+			const userIds = filters['users'];
+
+			if (userIds && userIds.length > 0) {
+				path = path + '&' + PARAM_USERS + '=' + userIds.join(',');
+			}
+
 			if (keywords) {
 				path = path + '&' + PARAM_KEYWORDS + '=' + keywords.toString();
 			}
 
 			return path;
 		},
-		[PARAM_CHANGE_TYPES, PARAM_KEYWORDS, PARAM_PATH, PARAM_SHOW_HIDEABLE]
+		[
+			PARAM_CHANGE_TYPES,
+			PARAM_KEYWORDS,
+			PARAM_PATH,
+			PARAM_SHOW_HIDEABLE,
+			PARAM_USERS,
+		]
 	);
 
 	const getPathParam = (filterClass, node, viewType) => {
@@ -815,6 +848,7 @@ export default ({
 			if (viewType === VIEW_TYPE_CONTEXT) {
 				filters = {
 					changeTypes: [],
+					users: [],
 				};
 				keywords = '';
 			}
@@ -835,7 +869,7 @@ export default ({
 			if (viewType === VIEW_TYPE_CONTEXT) {
 				setFiltersState(filters);
 				setResultsKeywords(keywords);
-				setSearchTerms(keywords);
+				setEntrySearchTerms(keywords);
 			}
 
 			setRenderState({
@@ -932,7 +966,10 @@ export default ({
 				keywords = '';
 			}
 
-			const filters = getFilters(params.get(PARAM_CHANGE_TYPES));
+			const filters = getFilters(
+				params.get(PARAM_CHANGE_TYPES),
+				params.get(PARAM_USERS)
+			);
 
 			const showHideable =
 				node.hideable ||
@@ -958,12 +995,13 @@ export default ({
 				viewType,
 			});
 			setResultsKeywords(keywords);
-			setSearchTerms(keywords);
+			setEntrySearchTerms(keywords);
 		},
 		[
 			PARAM_CHANGE_TYPES,
 			PARAM_KEYWORDS,
 			PARAM_PATH,
+			PARAM_USERS,
 			VIEW_TYPE_CONTEXT,
 			filterNodes,
 			getFilters,
@@ -1388,9 +1426,24 @@ export default ({
 	const getFilterList = (items, name) => {
 		const checkedIds = filtersState[name];
 
+		const pattern = filterSearchTerms
+			.toLowerCase()
+			.replace(/[^0-9a-z]+/g, '|')
+			.replace(/^\||\|$/g, '');
+
 		return (
 			<ClayDropDown.Group>
 				{items
+					.filter((item) => {
+						if (
+							filterSearchTerms &&
+							!item.label.toLowerCase().match(pattern)
+						) {
+							return false;
+						}
+
+						return true;
+					})
 					.sort((a, b) => {
 						if (a.label < b.label) {
 							return -1;
@@ -1434,6 +1487,23 @@ export default ({
 		return getFilterList(items, 'changeTypes');
 	};
 
+	const getUsersFilterList = () => {
+		const users = [];
+
+		const userIds = Object.keys(userInfo);
+
+		for (let i = 0; i < userIds.length; i++) {
+			const user = userInfo[userIds[i]];
+
+			users.push({
+				id: Number(userIds[i]),
+				label: user.userName,
+			});
+		}
+
+		return getFilterList(users, 'users');
+	};
+
 	const getDrilldownRootItem = (label, value) => {
 		return (
 			<ClayButton
@@ -1442,6 +1512,7 @@ export default ({
 				onClick={() => {
 					setMenu(value);
 					setDrilldownDirection(DIRECTION_NEXT);
+					setFilterSearchTerms('');
 				}}
 			>
 				<span className="dropdown-item-indicator-text-end">
@@ -1454,7 +1525,12 @@ export default ({
 		);
 	};
 
-	const getDrilldownMenu = (getFilterList, header, value) => {
+	const getDrilldownMenu = (
+		getFilterListFunction,
+		header,
+		showSearch,
+		value
+	) => {
 		return (
 			<DrilldownMenu
 				active={menu === value}
@@ -1463,12 +1539,58 @@ export default ({
 				onBack={() => {
 					setMenu(MENU_ROOT);
 					setDrilldownDirection(DIRECTION_PREV);
+					setFilterSearchTerms('');
 				}}
 				spritemap={spritemap}
 			>
+				{showSearch && (
+					<div className="dropdown-section">
+						<ClayInput.Group small>
+							<ClayInput.GroupItem>
+								<ClayInput
+									insetAfter
+									onChange={(event) =>
+										setFilterSearchTerms(event.target.value)
+									}
+									placeholder={`${Liferay.Language.get(
+										'search'
+									)}...`}
+									type="text"
+									value={filterSearchTerms}
+								/>
+								<ClayInput.GroupInsetItem after tag="span">
+									{filterSearchTerms ? (
+										<ClayButton
+											displayType="unstyled"
+											onClick={() =>
+												setFilterSearchTerms('')
+											}
+											type="button"
+										>
+											<ClayIcon
+												spritemap={spritemap}
+												symbol="times-circle"
+											/>
+										</ClayButton>
+									) : (
+										<ClayButton
+											displayType="unstyled"
+											type="button"
+										>
+											<ClayIcon
+												spritemap={spritemap}
+												symbol="search"
+											/>
+										</ClayButton>
+									)}
+								</ClayInput.GroupInsetItem>
+							</ClayInput.GroupItem>
+						</ClayInput.Group>
+					</div>
+				)}
 				<div className="inline-scroller">
 					<ClayDropDown.ItemList>
-						{getFilterList()}
+						{getFilterListFunction()}
 					</ClayDropDown.ItemList>
 				</div>
 			</DrilldownMenu>
@@ -1803,6 +1925,7 @@ export default ({
 						onActiveChange={(value) => {
 							if (!value) {
 								setMenu(MENU_ROOT);
+								setFilterSearchTerms('');
 							}
 
 							setDropdownActive(value);
@@ -1849,11 +1972,22 @@ export default ({
 										Liferay.Language.get('change-types'),
 										MENU_CHANGE_TYPES
 									)}
+									{getDrilldownRootItem(
+										Liferay.Language.get('users'),
+										MENU_USERS
+									)}
 								</DrilldownMenu>
 								{getDrilldownMenu(
 									getChangeTypesFilterList,
 									Liferay.Language.get('change-types'),
+									false,
 									MENU_CHANGE_TYPES
+								)}
+								{getDrilldownMenu(
+									getUsersFilterList,
+									Liferay.Language.get('users'),
+									true,
+									MENU_USERS
 								)}
 							</div>
 						</form>
@@ -1880,7 +2014,7 @@ export default ({
 
 							handleFiltersUpdate(
 								filtersState,
-								searchTerms.trim()
+								entrySearchTerms.trim()
 							);
 						}}
 						showMobile={searchMobile}
@@ -1892,13 +2026,13 @@ export default ({
 									className="form-control input-group-inset input-group-inset-after"
 									disabled={changes.length === 0}
 									onChange={(event) =>
-										setSearchTerms(event.target.value)
+										setEntrySearchTerms(event.target.value)
 									}
 									placeholder={`${Liferay.Language.get(
 										'search'
 									)}...`}
 									type="text"
-									value={searchTerms}
+									value={entrySearchTerms}
 								/>
 								<ClayInput.GroupInsetItem after tag="span">
 									<ClayButtonWithIcon
@@ -2191,6 +2325,19 @@ export default ({
 			}
 		}
 
+		const userIds = filtersState['users'];
+
+		if (userIds && userIds.length > 0) {
+			for (let i = 0; i < userIds.length; i++) {
+				const user = userInfo[userIds[i]];
+
+				labels.push({
+					label: Liferay.Language.get('user') + ': ' + user.userName,
+					onClick: () => toggleFilter('users', userIds[i]),
+				});
+			}
+		}
+
 		if (!resultsKeywords && labels.length === 0) {
 			return '';
 		}
@@ -2235,7 +2382,7 @@ export default ({
 						closeButtonProps={{
 							onClick: () => {
 								handleFiltersUpdate(filtersState, '');
-								setSearchTerms('');
+								setEntrySearchTerms('');
 							},
 						}}
 						displayType="unstyled"
@@ -2273,8 +2420,8 @@ export default ({
 					className="component-link tbar-link"
 					displayType="unstyled"
 					onClick={() => {
-						handleFiltersUpdate({changeTypes: []}, '');
-						setSearchTerms('');
+						handleFiltersUpdate({changeTypes: [], users: []}, '');
+						setEntrySearchTerms('');
 					}}
 				>
 					{Liferay.Language.get('clear')}

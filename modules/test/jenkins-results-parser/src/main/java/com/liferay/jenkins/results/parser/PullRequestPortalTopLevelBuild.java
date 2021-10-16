@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.net.URL;
@@ -66,40 +65,14 @@ public class PullRequestPortalTopLevelBuild
 		WorkspaceGitRepository workspaceGitRepository =
 			workspace.getPrimaryWorkspaceGitRepository();
 
-		workspaceGitRepository.setUp();
-
-		String ciTestRelevantBypassFilePathPatterns =
-			JenkinsResultsParserUtil.getCIProperty(
-				workspaceGitRepository.getUpstreamBranchName(),
-				"ci.test.relevant.bypass.file.path.patterns",
-				workspaceGitRepository.getName());
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(
-				ciTestRelevantBypassFilePathPatterns)) {
-
+		if (!(workspaceGitRepository instanceof PortalWorkspaceGitRepository)) {
 			return false;
 		}
 
-		MultiPattern multiPattern = new MultiPattern(
-			ciTestRelevantBypassFilePathPatterns.split("\\s*,\\s*"));
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			(PortalWorkspaceGitRepository)workspaceGitRepository;
 
-		List<String> modifiedFilePaths = new ArrayList<>();
-
-		GitWorkingDirectory gitWorkingDirectory =
-			workspaceGitRepository.getGitWorkingDirectory();
-
-		for (File modifiedFile : gitWorkingDirectory.getModifiedFilesList()) {
-			modifiedFilePaths.add(
-				JenkinsResultsParserUtil.getCanonicalPath(modifiedFile));
-		}
-
-		if (!multiPattern.matchesAll(
-				modifiedFilePaths.toArray(new String[0]))) {
-
-			return false;
-		}
-
-		return true;
+		return portalWorkspaceGitRepository.bypassCITestRelevant();
 	}
 
 	@Override

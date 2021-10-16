@@ -418,6 +418,13 @@ public class PortalWorkspace extends BaseWorkspace {
 			portalWorkspaceGitRepository.getGitWorkingDirectory();
 
 		System.out.println(gitWorkingDirectory.status());
+
+		gitWorkingDirectory.commitFileToCurrentBranch(
+			"modules/dxp/apps/osb/osb-asah",
+			JenkinsResultsParserUtil.combine(
+				"Committing changes from ", workspaceGitRepository.getName(),
+				" at ", workspaceGitRepository.getSenderBranchSHA(),
+				" for testing on CI"));
 	}
 
 	private boolean _updateWorkspaceGitRepository(

@@ -17,8 +17,10 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -29,6 +31,41 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
+
+	public boolean bypassCITestRelevant() {
+		setUp();
+
+		String ciTestRelevantBypassFilePathPatterns =
+			JenkinsResultsParserUtil.getCIProperty(
+				getUpstreamBranchName(),
+				"ci.test.relevant.bypass.file.path.patterns", getName());
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(
+				ciTestRelevantBypassFilePathPatterns)) {
+
+			return false;
+		}
+
+		MultiPattern multiPattern = new MultiPattern(
+			ciTestRelevantBypassFilePathPatterns.split("\\s*,\\s*"));
+
+		List<String> modifiedFilePaths = new ArrayList<>();
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		for (File modifiedFile : gitWorkingDirectory.getModifiedFilesList()) {
+			modifiedFilePaths.add(
+				JenkinsResultsParserUtil.getCanonicalPath(modifiedFile));
+		}
+
+		if (!multiPattern.matchesAll(
+				modifiedFilePaths.toArray(new String[0]))) {
+
+			return false;
+		}
+
+		return true;
+	}
 
 	public String getLiferayFacesAlloyURL() {
 		return _getLiferayFacesURL(

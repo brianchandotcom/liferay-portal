@@ -32,6 +32,22 @@ public class SourceFormatBuild
 	extends DefaultTopLevelBuild
 	implements PortalBranchInformationBuild, PullRequestBuild, WorkspaceBuild {
 
+	public boolean bypassCITestRelevant() {
+		Workspace workspace = getWorkspace();
+
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		if (!(workspaceGitRepository instanceof PortalWorkspaceGitRepository)) {
+			return false;
+		}
+
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			(PortalWorkspaceGitRepository)workspaceGitRepository;
+
+		return portalWorkspaceGitRepository.bypassCITestRelevant();
+	}
+
 	@Override
 	public String getBaseGitRepositoryName() {
 		PullRequest pullRequest = getPullRequest();

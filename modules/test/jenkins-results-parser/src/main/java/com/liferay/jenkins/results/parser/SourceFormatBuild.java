@@ -30,7 +30,7 @@ import org.dom4j.Element;
  */
 public class SourceFormatBuild
 	extends DefaultTopLevelBuild
-	implements PortalBranchInformationBuild, PullRequestBuild {
+	implements PortalBranchInformationBuild, PullRequestBuild, WorkspaceBuild {
 
 	@Override
 	public String getBaseGitRepositoryName() {
@@ -148,6 +148,35 @@ public class SourceFormatBuild
 
 		return Dom4JUtil.getNewElement(
 			"html", null, getResultElement(), detailsElement);
+	}
+
+	@Override
+	public Workspace getWorkspace() {
+		PullRequest pullRequest = getPullRequest();
+
+		Workspace workspace = WorkspaceFactory.newWorkspace(
+			pullRequest.getGitRepositoryName(),
+			pullRequest.getUpstreamRemoteGitBranchName(), getJobName());
+
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		workspaceGitRepository.setGitHubURL(pullRequest.getHtmlURL());
+
+		String senderBranchSHA = getParameterValue("GITHUB_SENDER_BRANCH_SHA");
+
+		if (JenkinsResultsParserUtil.isSHA(senderBranchSHA)) {
+			workspaceGitRepository.setSenderBranchSHA(senderBranchSHA);
+		}
+
+		String upstreamBranchSHA = getParameterValue(
+			"GITHUB_UPSTREAM_BRANCH_SHA");
+
+		if (JenkinsResultsParserUtil.isSHA(upstreamBranchSHA)) {
+			workspaceGitRepository.setBaseBranchSHA(upstreamBranchSHA);
+		}
+
+		return workspace;
 	}
 
 	public static class PullRequestBranchInformation

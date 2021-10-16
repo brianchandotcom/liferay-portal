@@ -263,7 +263,7 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	@Override
-	public void setUp() {
+	public synchronized void setUp() {
 		if (_setUp) {
 			return;
 		}

@@ -34,7 +34,9 @@ public class SourceFormatBuild
 
 	@Override
 	public String getBaseGitRepositoryName() {
-		return _pullRequest.getGitHubRemoteGitRepositoryName();
+		PullRequest pullRequest = getPullRequest();
+
+		return pullRequest.getGitHubRemoteGitRepositoryName();
 	}
 
 	@Override
@@ -61,7 +63,9 @@ public class SourceFormatBuild
 
 	@Override
 	public String getBranchName() {
-		return _pullRequest.getUpstreamRemoteGitBranchName();
+		PullRequest pullRequest = getPullRequest();
+
+		return pullRequest.getUpstreamRemoteGitBranchName();
 	}
 
 	@Override
@@ -81,11 +85,18 @@ public class SourceFormatBuild
 
 	@Override
 	public BranchInformation getPortalBranchInformation() {
-		return new PullRequestBranchInformation(this, _pullRequest);
+		return new PullRequestBranchInformation(this, getPullRequest());
 	}
 
 	@Override
 	public PullRequest getPullRequest() {
+		if (_pullRequest != null) {
+			return _pullRequest;
+		}
+
+		_pullRequest = PullRequestFactory.newPullRequest(
+			getParameterValue("PULL_REQUEST_URL"));
+
 		return _pullRequest;
 	}
 
@@ -213,9 +224,6 @@ public class SourceFormatBuild
 
 	protected SourceFormatBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
-
-		_pullRequest = PullRequestFactory.newPullRequest(
-			getParameterValue("PULL_REQUEST_URL"));
 	}
 
 	@Override
@@ -230,16 +238,18 @@ public class SourceFormatBuild
 	}
 
 	protected Element getSenderBranchDetailsElement() {
+		PullRequest pullRequest = getPullRequest();
+
 		String gitHubRemoteGitRepositoryName =
-			_pullRequest.getGitHubRemoteGitRepositoryName();
-		String senderBranchName = _pullRequest.getSenderBranchName();
-		String senderUsername = _pullRequest.getSenderUsername();
+			pullRequest.getGitHubRemoteGitRepositoryName();
+		String senderBranchName = pullRequest.getSenderBranchName();
+		String senderUsername = pullRequest.getSenderUsername();
 
 		String senderBranchURL = JenkinsResultsParserUtil.combine(
 			"https://github.com/", senderUsername, "/",
 			gitHubRemoteGitRepositoryName, "/tree/", senderBranchName);
 
-		String senderSHA = _pullRequest.getSenderSHA();
+		String senderSHA = pullRequest.getSenderSHA();
 
 		String senderCommitURL = JenkinsResultsParserUtil.combine(
 			"https://github.com/", senderUsername, "/",

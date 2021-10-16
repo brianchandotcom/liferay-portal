@@ -301,7 +301,7 @@ public class PullRequestPortalTopLevelBuild
 
 		Workspace workspace = WorkspaceFactory.newWorkspace(
 			pullRequest.getGitRepositoryName(),
-			pullRequest.getUpstreamRemoteGitBranchName());
+			pullRequest.getUpstreamRemoteGitBranchName(), getJobName());
 
 		if (workspace instanceof PortalWorkspace) {
 			PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;

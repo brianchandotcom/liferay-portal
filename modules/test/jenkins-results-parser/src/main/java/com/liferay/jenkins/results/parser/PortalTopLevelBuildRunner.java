@@ -31,7 +31,8 @@ public abstract class PortalTopLevelBuildRunner
 
 		_workspace = WorkspaceFactory.newWorkspace(
 			portalTopLevelBuildData.getPortalGitHubRepositoryName(),
-			portalTopLevelBuildData.getPortalUpstreamBranchName());
+			portalTopLevelBuildData.getPortalUpstreamBranchName(),
+			portalTopLevelBuildData.getTopLevelJobName());
 
 		WorkspaceGitRepository workspaceGitRepository =
 			_workspace.getPrimaryWorkspaceGitRepository();

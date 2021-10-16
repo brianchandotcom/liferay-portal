@@ -52,23 +52,6 @@ public class PullRequestPortalTopLevelBuild
 
 			exception.printStackTrace();
 		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("https://github.com/");
-		sb.append(getParameterValue("GITHUB_RECEIVER_USERNAME"));
-		sb.append("/liferay-portal");
-
-		String branchName = getBranchName();
-
-		if (!branchName.equals("master")) {
-			sb.append("-ee");
-		}
-
-		sb.append("/pull/");
-		sb.append(getParameterValue("GITHUB_PULL_REQUEST_NUMBER"));
-
-		_pullRequest = PullRequestFactory.newPullRequest(sb.toString());
 	}
 
 	public boolean bypassCITestRelevant() {
@@ -169,6 +152,27 @@ public class PullRequestPortalTopLevelBuild
 
 	@Override
 	public PullRequest getPullRequest() {
+		if (_pullRequest != null) {
+			return _pullRequest;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("https://github.com/");
+		sb.append(getParameterValue("GITHUB_RECEIVER_USERNAME"));
+		sb.append("/liferay-portal");
+
+		String branchName = getBranchName();
+
+		if (!branchName.equals("master")) {
+			sb.append("-ee");
+		}
+
+		sb.append("/pull/");
+		sb.append(getParameterValue("GITHUB_PULL_REQUEST_NUMBER"));
+
+		_pullRequest = PullRequestFactory.newPullRequest(sb.toString());
+
 		return _pullRequest;
 	}
 
@@ -595,7 +599,7 @@ public class PullRequestPortalTopLevelBuild
 		}
 	}
 
-	private final PullRequest _pullRequest;
+	private PullRequest _pullRequest;
 	private Job _stableJob;
 	private String _stableJobResult;
 

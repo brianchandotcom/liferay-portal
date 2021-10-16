@@ -97,6 +97,13 @@ public class PortalWorkspace extends BaseWorkspace {
 		super(primaryRepositoryName, upstreamBranchName);
 	}
 
+	protected PortalWorkspace(
+		String primaryRepositoryName, String upstreamBranchName,
+		String jobName) {
+
+		super(primaryRepositoryName, upstreamBranchName, jobName);
+	}
+
 	private void _configureBladeSamplesWorkspaceGitRepository() {
 		_updateWorkspaceGitRepository(
 			"git-commit-blade-samples", "liferay-blade-samples");

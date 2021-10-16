@@ -31,4 +31,11 @@ public class DefaultWorkspace extends BaseWorkspace {
 		super(primaryRepositoryName, upstreamBranchName);
 	}
 
+	protected DefaultWorkspace(
+		String primaryRepositoryName, String upstreamBranchName,
+		String jobName) {
+
+		super(primaryRepositoryName, upstreamBranchName, jobName);
+	}
+
 }

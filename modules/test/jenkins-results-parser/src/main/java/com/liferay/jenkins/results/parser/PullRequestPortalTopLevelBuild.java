@@ -279,9 +279,9 @@ public class PullRequestPortalTopLevelBuild
 		if (workspace instanceof PortalWorkspace) {
 			PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
 
+			portalWorkspace.setBuildProfile(getBuildProfile());
 			portalWorkspace.setOSBAsahGitHubURL(_getOSBAsahGitHubURL());
 			portalWorkspace.setOSBFaroGitHubURL(_getOSBFaroGitHubURL());
-			portalWorkspace.setPortalBuildProfile(_getPortalBuildProfile());
 		}
 
 		WorkspaceGitRepository workspaceGitRepository =
@@ -509,17 +509,6 @@ public class PullRequestPortalTopLevelBuild
 		}
 
 		return null;
-	}
-
-	private String _getPortalBuildProfile() {
-		String portalBuildProfile = getParameterValue(
-			"TEST_PORTAL_BUILD_PROFILE");
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBuildProfile)) {
-			return "dxp";
-		}
-
-		return portalBuildProfile;
 	}
 
 	private String _getSenderBranchSHA() {

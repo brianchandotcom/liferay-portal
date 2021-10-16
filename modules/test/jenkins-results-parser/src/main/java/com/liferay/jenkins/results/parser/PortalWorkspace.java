@@ -30,8 +30,19 @@ import org.json.JSONObject;
  */
 public class PortalWorkspace extends BaseWorkspace {
 
-	public String getPortalBuildProfile() {
-		return jsonObject.optString("portal_build_profile", "dxp");
+	public Job.BuildProfile getBuildProfile() {
+		String buildProfileString = jsonObject.optString(
+			"build_profile", "dxp");
+
+		return Job.BuildProfile.getByString(buildProfileString);
+	}
+
+	public void setBuildProfile(Job.BuildProfile buildProfile) {
+		if (buildProfile == null) {
+			throw new RuntimeException("Invalid build profile " + buildProfile);
+		}
+
+		jsonObject.put("build_profile", buildProfile.toString());
 	}
 
 	public void setOSBAsahGitHubURL(String osbAsahGitHubURL) {
@@ -42,19 +53,6 @@ public class PortalWorkspace extends BaseWorkspace {
 		_osbFaroGitHubURL = osbFaroGitHubURL;
 	}
 
-	public void setPortalBuildProfile(String portalBuildProfile) {
-		portalBuildProfile = portalBuildProfile.toLowerCase();
-
-		if (!portalBuildProfile.equals("dxp") &&
-			!portalBuildProfile.equals("portal")) {
-
-			throw new RuntimeException(
-				"Invalid portal build profile " + portalBuildProfile);
-		}
-
-		jsonObject.put("portal_build_profile", portalBuildProfile);
-	}
-
 	@Override
 	public void setUp() {
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
@@ -62,9 +60,9 @@ public class PortalWorkspace extends BaseWorkspace {
 
 		portalWorkspaceGitRepository.setUp();
 
-		String portalBuildProfile = getPortalBuildProfile();
+		Job.BuildProfile buildProfile = getBuildProfile();
 
-		if (portalBuildProfile.equals("dxp")) {
+		if (buildProfile == Job.BuildProfile.DXP) {
 			portalWorkspaceGitRepository.setUpPortalProfile();
 		}
 

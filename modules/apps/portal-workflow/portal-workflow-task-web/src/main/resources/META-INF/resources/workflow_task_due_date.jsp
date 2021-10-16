@@ -53,29 +53,67 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 </div>
 
 <aui:script use="aui-base">
-	var maxLength = Liferay.AUI.getDateFormat().replace(/%[mdY]/gm, '').length + 8;
+	var liferayForm = Liferay.Form.get('<portlet:namespace />updateFm');
 
-	A.all('#<portlet:namespace />dueDate').set('maxLength', maxLength);
+	var dueDateTimeInput = A.one('#<portlet:namespace />dueDateTime');
 
-	var done = A.one('#<portlet:namespace />done');
+	dueDateTimeInput.after('blur', () => {
+		liferayForm.formValidator.validateField('<portlet:namespace />dueDate');
+	});
 
-	if (done) {
-		done.on('click', (event) => {
-			var data = new FormData(
-				document.querySelector('#<portlet:namespace />updateFm')
+	var doneButton = A.one('#<portlet:namespace />done');
+
+	doneButton.on('click', (event) => {
+		var data = new FormData(
+			document.querySelector('#<portlet:namespace />updateFm')
+		);
+
+		Liferay.Util.fetch('<%= updateURL.toString() %>', {
+			body: data,
+			method: 'POST',
+		}).then(() => {
+			Liferay.Util.getOpener().<portlet:namespace />refreshPortlet(
+				'<%= PortalUtil.escapeRedirect(redirect.toString()) %>'
 			);
-
-			Liferay.Util.fetch('<%= updateURL.toString() %>', {
-				body: data,
-				method: 'POST',
-			}).then(() => {
-				Liferay.Util.getOpener().<portlet:namespace />refreshPortlet(
-					'<%= PortalUtil.escapeRedirect(redirect.toString()) %>'
-				);
-				Liferay.Util.getWindow(
-					'<portlet:namespace />updateDialog'
-				).destroy();
-			});
+			Liferay.Util.getWindow('<portlet:namespace />updateDialog').destroy();
 		});
+	});
+
+	var dueDateDateInput = A.one('#<portlet:namespace />dueDate');
+
+	dueDateDateInput.set(
+		'maxLength',
+		Liferay.AUI.getDateFormat().replace(/%[mdY]/gm, '').length + 8
+	);
+
+	var fieldRules = [
+		{
+			body: function (val, fieldNode, ruleValue) {
+				var valid = true;
+				if (
+					dueDateDateInput.get('value') === '' ||
+					dueDateTimeInput.get('value') === ''
+				) {
+					valid = false;
+				}
+
+				doneButton.attr('disabled', !valid);
+
+				return valid;
+			},
+			custom: true,
+			errorMessage:
+				'<%= LanguageUtil.get(request, "please-enter-a-valid-due-date") %>',
+			fieldName: '<portlet:namespace />dueDate',
+			validatorName: 'required',
+		},
+	];
+
+	var oldFieldRules = liferayForm.get('fieldRules');
+
+	if (oldFieldRules) {
+		fieldRules = fieldRules.concat(oldFieldRules);
 	}
+
+	liferayForm.set('fieldRules', fieldRules);
 </aui:script>

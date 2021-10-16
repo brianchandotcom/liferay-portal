@@ -61,6 +61,12 @@ public class WorkspaceFactory {
 	public static Workspace newWorkspace(
 		String repositoryName, String upstreamBranchName) {
 
+		return newWorkspace(repositoryName, upstreamBranchName, null);
+	}
+
+	public static Workspace newWorkspace(
+		String repositoryName, String upstreamBranchName, String jobName) {
+
 		String gitDirectoryName = JenkinsResultsParserUtil.getGitDirectoryName(
 			repositoryName, upstreamBranchName);
 
@@ -83,11 +89,12 @@ public class WorkspaceFactory {
 		}
 
 		if (repositoryName.matches("liferay-portal(-ee)?")) {
-			workspace = new PortalWorkspace(repositoryName, upstreamBranchName);
+			workspace = new PortalWorkspace(
+				repositoryName, upstreamBranchName, jobName);
 		}
 		else {
 			workspace = new DefaultWorkspace(
-				repositoryName, upstreamBranchName);
+				repositoryName, upstreamBranchName, jobName);
 		}
 
 		_workspaces.put(gitDirectoryName, workspace);

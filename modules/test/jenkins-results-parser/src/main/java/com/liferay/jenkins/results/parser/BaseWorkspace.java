@@ -225,6 +225,13 @@ public abstract class BaseWorkspace implements Workspace {
 	protected BaseWorkspace(
 		String primaryRepositoryName, String upstreamBranchName) {
 
+		this(primaryRepositoryName, upstreamBranchName, null);
+	}
+
+	protected BaseWorkspace(
+		String primaryRepositoryName, String upstreamBranchName,
+		String jobName) {
+
 		_primaryWorkspaceGitRepository =
 			GitRepositoryFactory.getWorkspaceGitRepository(
 				primaryRepositoryName, upstreamBranchName);
@@ -248,7 +255,8 @@ public abstract class BaseWorkspace implements Workspace {
 					JenkinsResultsParserUtil.getBuildProperties(),
 					"workspace.repository.dir.names",
 					_primaryWorkspaceGitRepository.getName(),
-					_primaryWorkspaceGitRepository.getUpstreamBranchName()));
+					_primaryWorkspaceGitRepository.getUpstreamBranchName(),
+					jobName));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

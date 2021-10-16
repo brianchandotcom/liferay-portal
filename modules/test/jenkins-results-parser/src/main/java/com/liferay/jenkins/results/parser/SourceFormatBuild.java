@@ -61,6 +61,18 @@ public class SourceFormatBuild
 			return _baseGitRepositorySHA;
 		}
 
+		if (!fromArchive) {
+			Workspace workspace = getWorkspace();
+
+			WorkspaceGitRepository primaryWorkspaceGitRepository =
+				workspace.getPrimaryWorkspaceGitRepository();
+
+			_baseGitRepositorySHA =
+				primaryWorkspaceGitRepository.getBaseBranchSHA();
+
+			return _baseGitRepositorySHA;
+		}
+
 		String consoleText = getConsoleText();
 
 		for (String line : consoleText.split("\\s*\\n\\s*")) {
@@ -229,7 +241,12 @@ public class SourceFormatBuild
 			"https://github.com/", senderUsername, "/",
 			gitHubRemoteGitRepositoryName, "/tree/", senderBranchName);
 
-		String senderSHA = pullRequest.getSenderSHA();
+		Workspace workspace = getWorkspace();
+
+		WorkspaceGitRepository primaryWorkspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		String senderSHA = primaryWorkspaceGitRepository.getSenderBranchSHA();
 
 		String senderCommitURL = JenkinsResultsParserUtil.combine(
 			"https://github.com/", senderUsername, "/",

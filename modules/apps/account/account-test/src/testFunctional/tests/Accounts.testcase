@@ -421,6 +421,28 @@ definition {
 		AssetCategorization.viewVocabulary(vocabularyName = "Vocabulary Name 1");
 	}
 
+	@description = "This test asserts that multiple accounts can be added with the same domain"
+	@priority = "3"
+	test CanAddMultipleAccountsWithSameDomain {
+		task ("Enable account email domains") {
+			AccountConfiguration.enableAccountEmailDomain();
+		}
+
+		task ("Add multiple accounts with the same domain") {
+			Accounts.openAccountsAdmin();
+
+			for (var accountNum : list "1,2,3") {
+				Accounts.addAccountWithDomain(
+					accountName = "Account Name ${accountNum}",
+					domainNames = "liferay.com");
+
+				Accounts.openAccountsAdmin();
+
+				LexiconEntry.viewEntryName(rowEntry = "Account Name ${accountNum}");
+			}
+		}
+	}
+
 	@description = "This test asserts that users can add more than one domain to a business account."
 	@priority = "4"
 	test CanAddMultipleDomainsToAccount {

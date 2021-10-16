@@ -301,7 +301,7 @@ public class GitWorkingDirectory {
 
 	public void commitFileToCurrentBranch(String fileName, String message) {
 		String commitCommand = JenkinsResultsParserUtil.combine(
-			"git commit -m \"", message, "\" ", fileName);
+			"git add " + fileName + " ; git commit -m \"", message, "\"");
 
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,

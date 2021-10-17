@@ -303,10 +303,6 @@ public abstract class PoshiElement
 
 		sb.append(" {");
 
-		if (blockName.equals("definition")) {
-			sb.append("\n");
-		}
-
 		PoshiNode<?, ?> previousPoshiNode = null;
 
 		for (Iterator<PoshiNode<?, ?>> iterator = poshiNodes.iterator();
@@ -329,7 +325,16 @@ public abstract class PoshiElement
 					"\n\n", "\n");
 			}
 
-			sb.append(padPoshiScriptSnippet(poshiScriptSnippet));
+			String padPoshiScriptSnippet = padPoshiScriptSnippet(
+				poshiScriptSnippet);
+
+			if (blockName.equals("definition") &&
+				!padPoshiScriptSnippet.startsWith("\n\n")) {
+
+				sb.append("\n");
+			}
+
+			sb.append(padPoshiScriptSnippet);
 
 			previousPoshiNode = poshiNode;
 		}

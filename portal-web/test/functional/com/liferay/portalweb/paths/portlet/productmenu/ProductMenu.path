@@ -61,7 +61,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GO_TO_SITES_LINK</td>
+	<td>HOME_PAGE_LINK</td>
 	<td>//a[contains(@class,'navigation-link') and contains(.,'Home')]</td>
 	<td></td>
 </tr>

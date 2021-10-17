@@ -1,5 +1,11 @@
 definition {
 
+	macro gotoHomePage {
+		ProductMenuHelper.openProductMenu();
+
+		Click(locator1 = "ProductMenu#HOME_PAGE_LINK");
+	}
+
 	@summary = "Navigate to the Live site"
 	macro gotoLiveSite {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {

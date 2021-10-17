@@ -757,7 +757,7 @@ definition {
 		}
 
 		task ("Preview the draft content page via Page Tree in staging site") {
-			Click(locator1 = "ProductMenu#GO_TO_SITES_LINK");
+			ProductMenu.gotoHomePage();
 
 			PagesFinder.gotoPageEllipsisItem(
 				item = "Preview Draft",

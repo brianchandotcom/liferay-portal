@@ -562,7 +562,7 @@ definition {
 			key_itemName = "Content Collection Page Name",
 			locator1 = "SitePages#LIST_GROUP_ITEM");
 
-		Click(locator1 = "ProductMenu#GO_TO_SITES_LINK");
+		ProductMenu.gotoHomePage();
 
 		PagesFinder.goToFindAPage();
 
@@ -686,7 +686,7 @@ definition {
 			key_pageName = "Content Collection Page Name",
 			locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE");
 
-		Click(locator1 = "ProductMenu#GO_TO_SITES_LINK");
+		ProductMenu.gotoHomePage();
 
 		PagesFinder.goToFindAPage();
 

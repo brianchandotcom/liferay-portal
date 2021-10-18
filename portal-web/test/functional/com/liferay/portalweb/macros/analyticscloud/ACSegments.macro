@@ -86,6 +86,12 @@ definition {
 
 		Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 
+		while (IsElementNotPresent(locator1 = "ACSegments#TABLE_CHECKBOX") && (maxIterations = "50")) {
+			ACSegments.searchSegment(findSegment = "${tableMember}");
+
+			ACUtils.clearSearchBar();
+		}
+
 		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
 
 		Click(locator1 = "ACSegments#ADD_BUTTON");

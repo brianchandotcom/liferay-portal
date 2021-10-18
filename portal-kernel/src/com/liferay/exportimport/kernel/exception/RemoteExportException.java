@@ -25,6 +25,8 @@ public class RemoteExportException extends PortalException {
 
 	public static final int INVALID_GROUP = 2;
 
+	public static final int INVALID_STATE = 6;
+
 	public static final int NO_GROUP = 3;
 
 	public static final int NO_PERMISSIONS = 5;

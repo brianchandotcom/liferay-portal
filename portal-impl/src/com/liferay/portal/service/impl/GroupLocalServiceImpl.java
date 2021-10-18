@@ -5172,6 +5172,24 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 				throw remoteExportException;
 			}
+
+			// Ensure that local staging is not enabled in the remote group
+
+			boolean remoteStaged = GetterUtil.getBoolean(
+				remoteGroup.getTypeSettingsProperty("staged"));
+			boolean remoteStagedRemotely = GetterUtil.getBoolean(
+				remoteGroup.getTypeSettingsProperty("stagedRemotely"));
+
+			if (remoteStaged && !remoteStagedRemotely) {
+				RemoteExportException remoteExportException =
+					new RemoteExportException(
+						RemoteExportException.INVALID_STATE,
+						"Local staging already enabled in remote group");
+
+				remoteExportException.setGroupId(remoteGroupId);
+
+				throw remoteExportException;
+			}
 		}
 		catch (NoSuchGroupException noSuchGroupException) {
 

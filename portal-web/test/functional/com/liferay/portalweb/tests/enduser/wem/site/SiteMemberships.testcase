@@ -694,7 +694,7 @@ definition {
 		for (var i : list "1,2") {
 			JSONGroup.addGroup(
 				groupName = "Site Name ${i}",
-				type = "Restricted");
+				membershipType = "Restricted");
 		}
 
 		JSONUser.addUser(

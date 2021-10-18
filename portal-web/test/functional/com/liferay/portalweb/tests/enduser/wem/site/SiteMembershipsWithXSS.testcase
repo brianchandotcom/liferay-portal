@@ -37,8 +37,9 @@ definition {
 		task ("Add a site") {
 			JSONGroup.addGroup(
 				groupName = "Site Name",
-				type = "Restricted");
+				membershipType = "Restricted");
 		}
+
 		task ("Add a My Sites widget to Liferay Home page and add view permission to it") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Home",

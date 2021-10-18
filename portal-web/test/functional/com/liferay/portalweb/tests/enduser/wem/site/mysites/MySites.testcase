@@ -167,7 +167,7 @@ definition {
 		task ("Create a restricted site") {
 			JSONGroup.addGroup(
 				groupName = "Site Name",
-				type = "Restricted");
+				membershipType = "Restricted");
 		}
 
 		task ("Create a user and set its password") {

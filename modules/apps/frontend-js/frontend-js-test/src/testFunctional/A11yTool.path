@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>A11yTool</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">A11yTool</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>ACCESSIBILITY_PANEL_HEADING</td>
+	<td>//span[contains(text(),'Accessibility Violations')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

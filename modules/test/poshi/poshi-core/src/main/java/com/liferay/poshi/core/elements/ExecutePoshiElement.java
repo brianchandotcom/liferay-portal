@@ -289,22 +289,18 @@ public class ExecutePoshiElement extends PoshiElement {
 	protected String createPoshiScriptSnippet(List<String> assignments) {
 		StringBuilder sb = new StringBuilder();
 
-		String blockName = getBlockName();
 		String pad = getPad();
 
 		sb.append("\n\n");
 		sb.append(pad);
-		sb.append(StringUtil.replace(blockName, '#', '.'));
+		sb.append(StringUtil.replace(getBlockName(), '#', '.'));
 		sb.append("(");
 
 		boolean multilineSnippet = false;
 
 		String assignmentsString = assignments.toString();
 
-		int invocationStringLength =
-			blockName.length() + assignmentsString.length() + 9;
-
-		if ((invocationStringLength > 80) &&
+		if (assignmentsString.matches("\\[\\w+ = \".+?\", .+\\]") &&
 			!isConditionValidInParent((PoshiElement)getParent())) {
 
 			multilineSnippet = true;
@@ -333,25 +329,27 @@ public class ExecutePoshiElement extends PoshiElement {
 			});
 
 		for (String assignment : assignments) {
-			if (multilineSnippet) {
+			String s = sb.toString();
+
+			s = s.substring(s.lastIndexOf("\n"));
+
+			if (multilineSnippet ||
+				((s.length() + assignment.length() + 1) > 80)) {
+
+				if (s.endsWith(" ")) {
+					sb.setLength(sb.length() - 1);
+				}
+
 				sb.append("\n\t");
 				sb.append(pad);
 			}
 
 			sb.append(assignment);
-			sb.append(",");
-
-			if (!multilineSnippet) {
-				sb.append(" ");
-			}
+			sb.append(", ");
 		}
 
 		if (!assignments.isEmpty()) {
-			sb.setLength(sb.length() - 1);
-
-			if (!multilineSnippet) {
-				sb.setLength(sb.length() - 1);
-			}
+			sb.setLength(sb.length() - 2);
 		}
 
 		sb.append(");");

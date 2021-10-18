@@ -146,7 +146,7 @@ definition {
 					key_dmDocumentTitle = "${dmDocumentTitle}",
 					locator1 = "DocumentsAndMedia#TABLE_DOCUMENT_SHARED");
 			}
-			else{
+			else {
 				AssertVisible(
 					key_dmDocumentTitle = "${dmDocumentTitle}",
 					locator1 = "DocumentsAndMedia#ICON_DOCUMENT_SHARED");
@@ -156,6 +156,21 @@ definition {
 			AssertElementNotPresent(
 				key_dmDocumentTitle = "${dmDocumentTitle}",
 				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_SHARED");
+		}
+	}
+
+	macro viewSharingOption {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Click(
+			key_dmDocumentTitle = "${dmDocumentTitle}",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+		if ("${sharing}" == "true") {
+			MenuItem.viewPresent(menuItem = "Share");
+		}
+		else {
+			MenuItem.viewNotPresent(menuItem = "Share");
 		}
 	}
 

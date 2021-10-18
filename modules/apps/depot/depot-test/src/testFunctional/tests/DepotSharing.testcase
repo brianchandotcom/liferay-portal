@@ -181,13 +181,9 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		Click(
-			key_dmDocumentTitle = "Document_1.doc",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
-
-		MenuItem.viewPresent(menuItem = "Share");
+		DMDocumentSharing.viewSharingOption(
+			dmDocumentTitle = "Document_1.doc",
+			sharing = "true");
 
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
@@ -206,13 +202,7 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		Click(
-			key_dmDocumentTitle = "Document_1.txt",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
-
-		MenuItem.viewNotPresent(menuItem = "Share");
+		DMDocumentSharing.viewSharingOption(dmDocumentTitle = "Document_1.doc");
 	}
 
 	@description = "This test ensures that sharing a depot document to a user, and changing its sharing permissions via Manage Collaborators."

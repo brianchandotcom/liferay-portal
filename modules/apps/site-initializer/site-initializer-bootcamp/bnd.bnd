@@ -1,5 +1,6 @@
 Bundle-Name: Liferay Site Initializer Bootcamp
 Bundle-SymbolicName: com.liferay.site.initializer.bootcamp
 Bundle-Version: 1.0.0
+Liferay-Site-Initializer-Name: Bootcamp
 Provide-Capability: liferay.site.initializer
 Web-ContextPath: /site-initializer-bootcamp

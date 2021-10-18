@@ -96,9 +96,10 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		AssertVisible(
-			key_dmDocumentTitle = "Document_3",
-			locator1 = "DocumentsAndMedia#TABLE_DOCUMENT_SHARED");
+		DMDocumentSharing.viewSharedFlag(
+			detailsView = "true",
+			displayStyle = "table",
+			dmDocumentTitle = "Document_3");
 
 		User.logoutPG();
 

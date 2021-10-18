@@ -141,11 +141,17 @@ definition {
 
 	macro viewSharedFlag {
 		if (isSet(detailsView)) {
-			AssertVisible(
-				key_dmDocumentTitle = "${dmDocumentTitle}",
-				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_SHARED");
+			if ("${displayStyle}" == "table") {
+				AssertVisible(
+					key_dmDocumentTitle = "${dmDocumentTitle}",
+					locator1 = "DocumentsAndMedia#TABLE_DOCUMENT_SHARED");
+			}
+			else{
+				AssertVisible(
+					key_dmDocumentTitle = "${dmDocumentTitle}",
+					locator1 = "DocumentsAndMedia#ICON_DOCUMENT_SHARED");
+			}
 		}
-
 		else {
 			AssertElementNotPresent(
 				key_dmDocumentTitle = "${dmDocumentTitle}",

@@ -127,8 +127,6 @@ definition {
 	@description = "This is a test for LPS-136760. It checks that content can be added in code view."
 	@priority = "2"
 	test CanAddContentInCodeView {
-		property portal.acceptance = "false";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -142,19 +140,20 @@ definition {
 			layoutName = "Blogs Page",
 			siteURLKey = "guest");
 
-		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+		Blogs.addEntryWithHTML(
+			entryContent = '''<h2>Blogs Entry Content</h2>''',
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			skipNavigation = "true");
 
-		AlloyEditor.addSourceContent(content = '''<h2>Blogs Entry Content</h2>''');
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
-		Button.clickPublish();
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Liferay DXP");
-
-		AssertTextEquals(
-			locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
-			value1 = "Blogs Entry Content");
+		BlogsEntry.viewEntryPG(
+			entryContentHTML = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This is a test for LPS-136762. It checks that content can be added in full screen mode."

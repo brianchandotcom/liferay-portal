@@ -167,8 +167,9 @@ definition {
 
 		Picklist.gotoPicklistView(picklistName = "Picklist Test");
 
-		Picklist.addPicklistItemViaUI(picklistItemName = "Picklist Item Name Test",
-		picklistItemKey = "");
+		Picklist.addPicklistItemViaUI(
+			picklistItemName = "Picklist Item Name Test",
+			picklistItemKey = "");
 
 		Picklist.clickSaveButton();
 

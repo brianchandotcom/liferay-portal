@@ -188,8 +188,6 @@ definition {
 	@description = "This is a test for LPS-136761. It checks that special characters can be added to a custom abstract"
 	@priority = "3"
 	test CanAddSpecialCharactersToCustomAbstract {
-		property portal.acceptance = "false";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -209,15 +207,16 @@ definition {
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomAbstract(entryAbstractDescription = "~!@#$%^&*");
+		BlogsEntry.addCustomAbstract(entryAbstractDescription = '''~!@#$%^&*''');
 
 		Button.clickPublish();
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		AssertTextEquals(
-			locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
-			value1 = "~!@#$%^&*");
+		BlogsEntry.viewAbstractDisplay(
+			entryAbstractDescription = '''~!@#$%^&*''',
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This is the same case as BlogsPage#CanAddTitleWithoutEscapingCharacters, but due to LPS-130537 we should ensure both contexts are covered."

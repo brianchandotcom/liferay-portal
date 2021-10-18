@@ -14,6 +14,7 @@
 
 package com.liferay.release.feature.flag.web.internal.upgrade.util;
 
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.release.feature.flag.ReleaseFeatureFlag;
@@ -30,7 +31,10 @@ public class UpgradeReleaseFeatureFlag implements UpgradeStep {
 
 	@Override
 	public void upgrade(DBProcessContext dbProcessContext) {
-		ReleaseFeatureFlagManagerUtil.setEnabled(_releaseFeatureFlag, false);
+		if (!StartupHelperUtil.isDBNew() && StartupHelperUtil.isUpgrading()) {
+			ReleaseFeatureFlagManagerUtil.setEnabled(
+				_releaseFeatureFlag, false);
+		}
 	}
 
 	private final ReleaseFeatureFlag _releaseFeatureFlag;

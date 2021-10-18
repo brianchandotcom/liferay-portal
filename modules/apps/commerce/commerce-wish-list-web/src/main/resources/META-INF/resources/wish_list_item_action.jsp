@@ -33,6 +33,7 @@ CProduct cProduct = commerceWishListItem.getCProduct();
 			alignment="left"
 			CPInstanceId="<%= cpInstance.getCPInstanceId() %>"
 			inline="<%= true %>"
+			options='<%= "[]" %>'
 			size="md"
 		/>
 	</c:when>

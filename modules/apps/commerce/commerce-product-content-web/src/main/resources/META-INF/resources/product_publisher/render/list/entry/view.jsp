@@ -88,6 +88,7 @@ String productDetailURL = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDi
 								alignment="full-width"
 								CPCatalogEntry="<%= cpCatalogEntry %>"
 								inline="<%= false %>"
+								options='<%= "[]" %>'
 								size="md"
 							/>
 						</div>

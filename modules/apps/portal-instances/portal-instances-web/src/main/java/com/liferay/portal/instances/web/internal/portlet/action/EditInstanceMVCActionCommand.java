@@ -163,6 +163,12 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 			// Update instance
 
+			if (companyId ==
+					_portalInstancesLocalService.getDefaultCompanyId()) {
+
+				active = true;
+			}
+
 			_companyService.updateCompany(
 				companyId, virtualHostname, mx, maxUsers, active);
 		}

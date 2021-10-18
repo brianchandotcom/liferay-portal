@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, {useState} from 'react';
 
 import {CreateAnAccount} from '../components/Steps/CreateAnAccount';
@@ -7,45 +6,44 @@ import UploadDocuments from '../components/Steps/UploadDocuments';
 import QuoteInfo from '../components/quote-info';
 
 const SelectedQuote = () => {
-	const [sections, setSections] = useState(null);
-	const [stepChecked, setStepChecked] = useState({
-		createAnAccount: false,
-		selectPaymentMethod: false,
-		uploadDocuments: false,
+	const [panel, setPanel] = useState({
+		createAnAccount: {
+			checked: false,
+			expanded: true,
+		},
+		selectPaymentMethod: {
+			checked: false,
+			expanded: false,
+		},
+		uploadDocuments: {
+			checked: false,
+			expanded: false,
+		},
 	});
-	const [expanded, setExpanded] = useState({
-		createAnAccount: true,
-		selectPaymentMethod: false,
-		uploadDocuments: false,
-	});
 
-	const setState = (state, value) => {
-		const stateParam = state;
+	const [sections, setSections] = useState([]);
 
-		for (var item in stateParam) {
-			stateParam[item] = false;
-			if (item === value) {
-				stateParam[item] = true;
-			}
-		}
+	const _setPanel = (panelKey, panelKeyProperty, value) => {
+		const newPanel = {...panel};
 
-		return stateParam;
+		newPanel[panelKey][panelKeyProperty] =
+			value ?? !newPanel[panelKey][panelKeyProperty];
+
+		setPanel(newPanel);
 	};
 
-	const _setExpanded = (property) => {
-		const toExpand = setState(expanded, property);
-		setExpanded(toExpand);
+	const setExpanded = (panelKey) => {
+		_setPanel(panelKey, 'expanded');
 	};
 
-	const _setStepChecked = (property) => {
-		setStepChecked({
-			...stepChecked,
-			[property]: true,
-		});
+	const setStepChecked = (panelKey, value) => {
+		_setPanel(panelKey, 'checked', value);
 	};
 
-	const _setSection = (sections) => {
-		setSections(sections);
+	const hasUploadError = () => {
+		const hasError = sections.some(({error}) => error);
+
+		return hasError;
 	};
 
 	return (
@@ -54,32 +52,34 @@ const SelectedQuote = () => {
 
 			<div className="selected-quote-right-page">
 				<Panel
-					defaultExpanded={expanded.createAnAccount}
-					stepChecked={stepChecked.createAnAccount}
+					defaultExpanded={panel.createAnAccount.expanded}
+					stepChecked={panel.createAnAccount.checked}
 					title="1. Create an Account"
 				>
 					<CreateAnAccount
-						_setExpanded={_setExpanded}
-						_setStepChecked={_setStepChecked}
+						setExpanded={setExpanded}
+						setStepChecked={setStepChecked}
 					/>
 				</Panel>
 
 				<Panel
-					defaultExpanded={expanded.uploadDocuments}
+					changeable
+					defaultExpanded={panel.uploadDocuments.expanded}
+					hasError={hasUploadError()}
 					sections={sections}
-					stepChecked={stepChecked.uploadDocuments}
+					stepChecked={panel.uploadDocuments.checked}
 					title="2. Upload Documents"
 				>
 					<UploadDocuments
-						_setExpanded={_setExpanded}
-						_setSection={_setSection}
-						_setStepChecked={_setStepChecked}
+						setExpanded={setExpanded}
+						setSection={(sections) => setSections(sections)}
+						setStepChecked={setStepChecked}
 					/>
 				</Panel>
 
 				<Panel
-					defaultExpanded={expanded.selectPaymentMethod}
-					stepChecked={stepChecked.selectPaymentMethod}
+					defaultExpanded={panel.selectPaymentMethod.expanded}
+					stepChecked={panel.selectPaymentMethod.checked}
 					title="3. Select Payment Method"
 				>
 					Select Payment Method...

@@ -7,7 +7,11 @@ const ViewBody = ({
 	showName = true,
 }) => (
 	<>
-		{showName && <span className="ellipsis">{file.name}</span>}
+		{showName && (
+			<span className="ellipsis" title={file.name}>
+				{file.name}
+			</span>
+		)}
 
 		{showCloseButton && (
 			<div className="close-icon" onClick={() => onRemoveFile(file)}>

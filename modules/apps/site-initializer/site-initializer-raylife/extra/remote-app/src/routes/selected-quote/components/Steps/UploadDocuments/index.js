@@ -1,6 +1,8 @@
 import {useContext, useEffect, useState} from 'react';
+import {WarningBadge} from '~/common/components/fragments/Badges/Warning';
 
 import {ApplicationPropertiesContext} from '~/common/context/ApplicationPropertiesProvider';
+import {smoothScroll} from '~/common/utils/scroll';
 
 import {
 	createDocumentInFolder,
@@ -16,33 +18,56 @@ const dropAreaProps = {
 	widthContainer: '100%',
 };
 
-const UploadDocuments = ({_setExpanded, _setSection, _setStepChecked}) => {
+const UploadDocuments = ({setExpanded, setSection, setStepChecked}) => {
 	const properties = useContext(ApplicationPropertiesContext);
 	const [loading, setLoading] = useState(false);
 
 	const [sections, setSections] = useState([
 		{
+			error: false,
+			errorMessage: 'Please upload a copy of your business license.',
 			files: [],
 			required: true,
+			sectionId: null,
 			subtitle: 'Upload a copy of your business license',
 			title: 'Business License',
 			type: 'document',
 		},
 		{
+			error: false,
 			files: [],
 			required: false,
+			sectionId: null,
 			subtitle: 'Upload a copy of your additional documents.',
 			title: 'Additional Documents',
 			type: 'document',
 		},
 		{
+			error: false,
+			errorMessage: 'Please upload 4 photos of your building interior',
 			files: [],
 			required: true,
+			sectionId: null,
 			subtitle: 'Upload 4 photos of your building interior',
 			title: 'Building Interior Photos',
 			type: 'image',
 		},
 	]);
+
+	const onSetError = (_section, value) => {
+		setSections((sections) =>
+			sections.map((section) => {
+				if (section.title === _section.title) {
+					return {
+						...section,
+						error: value,
+					};
+				}
+
+				return section;
+			})
+		);
+	};
 
 	const onSetFiles = (_section, files) => {
 		setSections((sections) =>
@@ -84,11 +109,19 @@ const UploadDocuments = ({_setExpanded, _setSection, _setStepChecked}) => {
 		);
 
 		for (const section of sections) {
+			onSetError(section, false);
+
 			const sectionFolder = await createFolderIfNotExist(
 				quoteFolder.id,
 				section.title,
 				true
 			);
+
+			if (section.required && section.files.length === 0) {
+				onSetError(section, true);
+
+				continue;
+			}
 
 			for (const fileEntry of section.files) {
 				if (fileEntry.documentId) {
@@ -117,12 +150,14 @@ const UploadDocuments = ({_setExpanded, _setSection, _setStepChecked}) => {
 		}
 
 		setLoading(false);
-		_setExpanded('selectPaymentMethod');
-		_setStepChecked('uploadDocuments');
+		setExpanded('selectPaymentMethod');
+		setExpanded('uploadDocuments');
+		setStepChecked('uploadDocuments', true);
+		smoothScroll();
 	};
 
 	useEffect(() => {
-		_setSection(sections);
+		setSection(sections);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sections]);
 
@@ -154,6 +189,18 @@ const UploadDocuments = ({_setExpanded, _setSection, _setStepChecked}) => {
 							title={section.title}
 						/>
 					</div>
+
+					{section.error && (
+						<div className="upload-alert">
+							<WarningBadge>
+								<div className="alert-content">
+									<div className="alert-description">
+										{section.errorMessage}
+									</div>
+								</div>
+							</WarningBadge>
+						</div>
+					)}
 				</div>
 			))}
 			<div className="upload-footer">

@@ -147,6 +147,7 @@ const DropArea = ({
 		<div
 			className={classNames('drop-area', {
 				hide: !showUpload,
+				'margin-left': files.length > 0,
 			})}
 			ref={dropAreaRef}
 			style={{

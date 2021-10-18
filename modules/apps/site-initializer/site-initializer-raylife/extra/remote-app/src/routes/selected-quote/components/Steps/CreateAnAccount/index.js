@@ -19,7 +19,7 @@ const _isEmailValid = (email) => {
 	return regex.test(email);
 };
 
-export const CreateAnAccount = ({_setExpanded, _setStepChecked}) => {
+export const CreateAnAccount = ({setExpanded, setStepChecked}) => {
 	const [alert, setAlert] = useState(NATURAL_VALUE);
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [email, setEmail] = useState('');
@@ -35,8 +35,8 @@ export const CreateAnAccount = ({_setExpanded, _setStepChecked}) => {
 			const response = SendAccountRequest(email, password);
 
 			if (response === CHECK_VALUE) {
-				_setExpanded('uploadDocuments');
-				_setStepChecked('createAnAccount');
+				setExpanded('uploadDocuments');
+				setStepChecked('createAnAccount', true);
 			}
 
 			setAlert(response);

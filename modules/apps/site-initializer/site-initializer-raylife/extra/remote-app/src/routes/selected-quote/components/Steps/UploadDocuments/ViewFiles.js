@@ -9,7 +9,11 @@ const ViewBody = ({
 	showName = true,
 }) => (
 	<>
-		{showName && <span className="ellipsis">{file.name}</span>}
+		{showName && (
+			<span className="ellipsis" title={file.name}>
+				{file.name}
+			</span>
+		)}
 
 		{showCloseButton && (
 			<div className="close-icon" onClick={() => onRemoveFile(file)}>
@@ -25,7 +29,7 @@ const ViewFiles = ({files = [], onRemoveFile, type}) => {
 			{files.map((file, index) => {
 				if (file.progress < 100) {
 					return (
-						<div className="flex-column">
+						<div className="flex-column" title={file.name}>
 							<div className="card">
 								<p>Uploading...</p>
 

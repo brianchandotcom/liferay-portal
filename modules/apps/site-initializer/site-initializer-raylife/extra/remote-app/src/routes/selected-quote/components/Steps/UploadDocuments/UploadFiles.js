@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
@@ -34,10 +33,10 @@ const UploadFiles = ({dropAreaProps, files, setFiles, title}) => {
 			</div>
 
 			{showBadgeInfo && (
-				<div className="upload-info">
+				<div className="upload-alert">
 					<InfoBadge>
-						<div className="info-content">
-							<div className="info-description">
+						<div className="alert-content">
+							<div className="alert-description">
 								{dropAreaProps.limitFiles} file upload limit
 								reached for {title}.
 							</div>

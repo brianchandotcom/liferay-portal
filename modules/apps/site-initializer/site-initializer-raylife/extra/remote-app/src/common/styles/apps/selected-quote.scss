@@ -220,17 +220,27 @@
 					flex-direction: row;
 					flex-wrap: wrap;
 
-					.card {
-						align-items: center;
-						background: #f0f5ff;
-						border-radius: 16px;
-						display: flex;
-						flex-direction: column;
-						flex-shrink: 0;
-						height: 176px;
-						justify-content: center;
-						margin-right: 20px;
-						width: 176px;
+					.flex-column {
+						.card {
+							align-items: center;
+							background: #f0f5ff;
+							border-radius: 16px;
+							display: flex;
+							flex-direction: column;
+							flex-shrink: 0;
+							height: 176px;
+							justify-content: center;
+							margin-right: 20px;
+							width: 176px;
+							gap: initial;
+						}
+
+						span {
+							color: $neutral-dark;
+							font-size: 13px;
+							margin-top: 4px;
+							width: 176px;
+						}
 					}
 
 					.ellipsis {
@@ -352,7 +362,11 @@
 					left: 0px;
 					position: static;
 					top: 64px;
-					margin-left: 16px;
+
+					&.margin-left {
+						margin-left: 16px;
+					}
+					// margin-left: 16px;
 
 					&.hide {
 						display: none;
@@ -395,7 +409,7 @@
 			}
 		}
 
-		.upload-info {
+		.upload-alert {
 			margin-top: 16px;
 
 			.badge {
@@ -408,13 +422,13 @@
 				}
 			}
 
-			.info-content {
+			.alert-content {
 				align-items: center;
 				display: flex;
 				justify-content: space-between;
 				width: 100%;
 
-				.info-description {
+				.alert-description {
 					font-size: 16px;
 				}
 

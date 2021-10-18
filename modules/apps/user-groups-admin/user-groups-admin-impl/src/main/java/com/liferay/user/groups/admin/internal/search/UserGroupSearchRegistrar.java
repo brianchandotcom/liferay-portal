@@ -39,7 +39,8 @@ public class UserGroupSearchRegistrar {
 			UserGroup.class, bundleContext,
 			modelSearchDefinition -> {
 				modelSearchDefinition.setDefaultSelectedFieldNames(
-					Field.COMPANY_ID, Field.UID, Field.USER_GROUP_ID);
+					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
+					Field.ENTRY_CLASS_PK, Field.UID, Field.USER_GROUP_ID);
 				modelSearchDefinition.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
 				modelSearchDefinition.setModelSummaryContributor(

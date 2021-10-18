@@ -251,6 +251,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>RELATIONSHIP_LABEL</td>
+		<td>//div[(@class = 'table-list-title')]//a[contains(text(),'${key_label}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>KEBAB_MENU</td>
 		<td>//*[contains(@class,'lexicon-icon-ellipsis')]</td>
 		<td></td>

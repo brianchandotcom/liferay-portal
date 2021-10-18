@@ -284,11 +284,34 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is possible to create a One to Many Relationship"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreateOneToManyRelationship {
 
-		// TODO LPS-140587 CanCreateOneToManyRelationship pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object A",
+			objectName = "CustomObjectA",
+			pluralLabelName = "Custom Objects");
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object B",
+			objectName = "CustomObjectB",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object A");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "Relationship",
+			type = "One to Many",
+			object = "CustomObjectB");
+
+		AssertElementPresent(
+			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL",
+			key_label = "Relationship");
 
 	}
 

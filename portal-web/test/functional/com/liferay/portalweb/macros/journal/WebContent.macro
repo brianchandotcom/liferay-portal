@@ -838,8 +838,7 @@ definition {
 					depotName = "${depotName}",
 					folderName = "${folderName}");
 			}
-
-			if (isSet(otherSiteName)) {
+			else if (isSet(otherSiteName)) {
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 				AssertClick(

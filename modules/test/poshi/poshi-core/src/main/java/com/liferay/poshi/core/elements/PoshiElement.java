@@ -322,13 +322,37 @@ public abstract class PoshiElement
 						CommandPoshiElement commandPoshiElement2 =
 							(CommandPoshiElement)poshiNode2;
 
-						String commandName1 =
-							commandPoshiElement1.getBlockName();
+						String poshiScriptKeyword1 =
+							commandPoshiElement1.getPoshiScriptKeyword();
 
-						String commandName2 =
-							commandPoshiElement2.getBlockName();
+						String poshiScriptKeyword2 =
+							commandPoshiElement2.getPoshiScriptKeyword();
 
-						return commandName1.compareTo(commandName2);
+						String blockName1 = commandPoshiElement1.getBlockName();
+
+						String blockName2 = commandPoshiElement2.getBlockName();
+
+						if ((blockName1.startsWith(poshiScriptKeyword1) &&
+							 blockName2.startsWith(poshiScriptKeyword2)) ||
+							(!blockName1.startsWith(poshiScriptKeyword1) &&
+							 !blockName2.startsWith(poshiScriptKeyword2))) {
+
+							return blockName1.compareTo(blockName2);
+						}
+
+						if (blockName1.startsWith(poshiScriptKeyword1) &&
+							!blockName2.startsWith(poshiScriptKeyword2)) {
+
+							return 1;
+						}
+
+						if (blockName2.startsWith(poshiScriptKeyword2) &&
+							!blockName1.startsWith(poshiScriptKeyword1)) {
+
+							return -1;
+						}
+
+						return blockName1.compareTo(blockName2);
 					}
 
 					return 0;

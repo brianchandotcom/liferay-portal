@@ -115,6 +115,11 @@
 		<td>//div[@class='modal-title']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>REQUIRED_KEY_ITEM</td>
+		<td>//label[@for='listTypeEntryKey']/following-sibling::div//span[contains(text(),'Required')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

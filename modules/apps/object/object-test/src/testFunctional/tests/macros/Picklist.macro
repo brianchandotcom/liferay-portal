@@ -90,6 +90,10 @@ definition {
 		AssertElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST");
 	}
 
+	macro assertRequiredKeyItem {
+		AssertElementPresent(locator1 = "Picklist#REQUIRED_KEY_ITEM");
+	}
+
 	macro cancelPicklist {
 		Click.javaScriptClick(locator1 = "Picklist#ADD_PICKLIST_BUTTON");
 

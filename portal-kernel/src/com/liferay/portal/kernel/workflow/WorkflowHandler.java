@@ -116,4 +116,11 @@ public interface WorkflowHandler<T> {
 	public T updateStatus(int status, Map<String, Serializable> workflowContext)
 		throws PortalException;
 
+	public default T updateStatus(
+			T model, int status, Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		return updateStatus(status, workflowContext);
+	}
+
 }

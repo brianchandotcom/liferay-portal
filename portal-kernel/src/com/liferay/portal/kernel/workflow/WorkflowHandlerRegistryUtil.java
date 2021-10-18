@@ -156,7 +156,8 @@ public class WorkflowHandlerRegistryUtil {
 			WorkflowConstants.CONTEXT_USER_ID, String.valueOf(userId)
 		).build();
 
-		T updatedModel = workflowHandler.updateStatus(status, workflowContext);
+		T updatedModel = workflowHandler.updateStatus(
+			model, status, workflowContext);
 
 		if (workflowDefinitionLink != null) {
 			final Map<String, Serializable> tempWorkflowContext =

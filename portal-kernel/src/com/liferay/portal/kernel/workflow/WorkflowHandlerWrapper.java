@@ -192,6 +192,14 @@ public class WorkflowHandlerWrapper<T> implements WorkflowHandler<T> {
 		return _workflowHandler.updateStatus(status, workflowContext);
 	}
 
+	@Override
+	public T updateStatus(
+			T model, int status, Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		return _workflowHandler.updateStatus(model, status, workflowContext);
+	}
+
 	private final WorkflowHandler<T> _workflowHandler;
 
 }

@@ -17,7 +17,6 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayModal from '@clayui/modal';
 import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
@@ -70,88 +69,66 @@ const TranslationAdminContent = ({
 			<ClayModal.Header>
 				{Liferay.Language.get('manage-translations')}
 			</ClayModal.Header>
-			<ClayModal.Header withTitle={false}>
-				<ClayModal.Title>
-					<ClayManagementToolbar
-						aria-label={ariaLabels.managementToolbar}
+
+			<ClayInput.Group className="align-items-center p-3 pl-4 pr-4">
+				<ClayInput.GroupItem>
+					<ClayInput
+						aria-label={Liferay.Language.get('search')}
+						insetAfter={true}
+						onChange={(event) => {
+							const {value} = event.target;
+
+							setSearchValue(value);
+						}}
+						placeholder={Liferay.Language.get('search')}
+						value={searchValue}
+					/>
+
+					<ClayInput.GroupInsetItem after tag="span">
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('search')}
+							displayType="unstyled"
+							onClick={() => {
+								setSearchValue('');
+							}}
+							symbol={searchValue ? 'times' : 'search'}
+						/>
+					</ClayInput.GroupInsetItem>
+				</ClayInput.GroupItem>
+
+				<ClayInput.GroupItem shrink>
+					<ClayDropDown
+						active={
+							creationMenuActive && availableLocales.length > 0
+						}
+						hasLeftSymbols
+						onActiveChange={setCreationMenuActive}
+						trigger={
+							<ClayButtonWithIcon
+								disabled={availableLocales.length === 0}
+								small
+								symbol="plus"
+							/>
+						}
 					>
-						<ClayManagementToolbar.Search showMobile={true}>
-							<ClayInput.Group>
-								<ClayInput.GroupItem>
-									<ClayInput
-										aria-label={Liferay.Language.get(
-											'search'
-										)}
-										insetAfter={true}
-										onChange={(event) => {
-											const {value} = event.target;
-
-											setSearchValue(value);
+						<ClayDropDown.ItemList>
+							{availableLocales.map((availableLocale) => {
+								return (
+									<ClayDropDown.Item
+										key={availableLocale.label}
+										onClick={() => {
+											onAddLocale(availableLocale.id);
 										}}
-										placeholder={Liferay.Language.get(
-											'search'
-										)}
-										value={searchValue}
-									/>
-
-									<ClayInput.GroupInsetItem after tag="span">
-										<ClayButtonWithIcon
-											aria-label={Liferay.Language.get(
-												'search'
-											)}
-											displayType="unstyled"
-											onClick={() => {
-												setSearchValue('');
-											}}
-											symbol={
-												searchValue ? 'times' : 'search'
-											}
-										/>
-									</ClayInput.GroupInsetItem>
-								</ClayInput.GroupItem>
-							</ClayInput.Group>
-						</ClayManagementToolbar.Search>
-
-						<ClayManagementToolbar.ItemList>
-							<ClayDropDown
-								active={
-									creationMenuActive &&
-									availableLocales.length > 0
-								}
-								hasLeftSymbols
-								onActiveChange={setCreationMenuActive}
-								trigger={
-									<ClayButtonWithIcon
-										disabled={availableLocales.length === 0}
-										small
-										symbol="plus"
-									/>
-								}
-							>
-								<ClayDropDown.ItemList>
-									{availableLocales.map((availableLocale) => {
-										return (
-											<ClayDropDown.Item
-												key={availableLocale.label}
-												onClick={() => {
-													onAddLocale(
-														availableLocale.id
-													);
-												}}
-												symbolLeft={
-													availableLocale.symbol
-												}
-											>
-												{availableLocale.label}
-											</ClayDropDown.Item>
-										);
-									})}
-								</ClayDropDown.ItemList>
-							</ClayDropDown>
-						</ClayManagementToolbar.ItemList>
-					</ClayManagementToolbar>
-				</ClayModal.Title>
-			</ClayModal.Header>
+										symbolLeft={availableLocale.symbol}
+									>
+										{availableLocale.label}
+									</ClayDropDown.Item>
+								);
+							})}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
 
 			<ClayModal.Body className="pb-0 pt-3" scrollable>
 				<ClayTable>

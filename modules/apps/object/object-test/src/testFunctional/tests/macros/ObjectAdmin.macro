@@ -18,24 +18,15 @@ definition {
 	}
 
 	macro addObjectBoleanFieldEntryViaUI {
-		LexiconEntry.gotoAdd();
-
-		Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
-
-		Button.clickSave();
+		ObjectAdmin.goToCustomObject(objectName = "${objectName}");
 
 		LexiconEntry.gotoAdd();
 
 		WaitForPageLoad();
 
-		Button.clickSave();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Custom Objects");
-
-		LexiconEntry.gotoAdd();
+		if ("${value}" != "true") {
+			Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
+		}
 
 		Button.clickSave();
 	}

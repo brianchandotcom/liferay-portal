@@ -87,7 +87,7 @@
 	</tr>
 	<tr>
 		<td>SAVE_BUTTON</td>
-		<td>//button[@class='btn btn-primary']</td>
+		<td>//button[@type = "submit" and text() = "Save"]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -100,12 +100,12 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var objectID_1 = JSONObject.getObjectId(
-			objectName_1 = "${objectName_1}",
+			objectName = "${objectName_1}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
 
 		var objectID_2 = JSONObject.getObjectId(
-			objectName_2 = "${objectName_2}",
+			objectName = "${objectName_2}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
 
@@ -135,6 +135,7 @@ definition {
 			"objectDefinitionId2": ${objectID_2},
 			"objectDefinitionName2": "${objectName_2}",
 			"type": "${relationshipType}"
+			}'
 		''';
 
 		JSONCurlUtil.post("${curl}");

@@ -16,12 +16,12 @@ definition {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Classic Theme Page");
-		
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",
 			layoutName = "Classic Theme Page",
 			widgetName = "JS Clay Sample Web");
-		
+
 		Navigator.gotoPage(pageName = "Classic Theme Page");
 	}
 
@@ -44,7 +44,8 @@ definition {
 		if (IsElementPresent(locator1 = "A11yTool#ACCESSIBILITY_PANEL_HEADING")) {
 			Refresh();
 		}
-		
+
 		AssertElementNotPresent(locator1 = "A11yTool#ACCESSIBILITY_PANEL_HEADING");
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	@summary = "This calls the JSON WS API to add a DL Folder"
 	macro addFolder {
 		var portalURL = JSONCompany.getPortalURL();
@@ -46,8 +47,9 @@ definition {
 
 		var curl ='''
 			${portalURL}/api/jsonws/dlfolder/delete-folder \
-  			-u test@liferay.com:test \
-  			-d folderId=${folderId}
-  		''';
+			-u test@liferay.com:test \
+			-d folderId=${folderId}
+		''';
 	}
+
 }

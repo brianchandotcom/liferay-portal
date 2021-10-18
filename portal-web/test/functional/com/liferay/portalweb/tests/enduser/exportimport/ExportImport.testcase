@@ -1715,6 +1715,58 @@ definition {
 			uploadFrom = "dependencies");
 	}
 
+	@description = "This is a test for LPS-135706 - Verified that exporting and importing a Documents & Media URL does not append UUID to the imported URL if it was not there to begin with"
+	@priority = "3"
+	test ImportDMUrlWithoutUUID {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.expandInfo();
+
+		var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
+		var editDocumentURL = StringUtil.extractFirst("${dmDocumentURL}", "jpg");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddCP();
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		CKEditor.addSourceContent(content = '''<a href="${editDocumentURL}jpg">Link to Document</a>''');
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			portlet = "Export");
+
+		LexiconEntry.gotoAdd();
+
+		LAR.exportWithAssertionOnSuccess();
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		CKEditor.assertSourceContent();
+	}
+
 	@description = "This is a use case for LPS-84290 - Verified that can export Home Folder Permissions"
 	@priority = "3"
 	test ImportSiteHomeFolderPermissions {

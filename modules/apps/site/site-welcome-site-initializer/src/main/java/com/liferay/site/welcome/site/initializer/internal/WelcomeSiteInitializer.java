@@ -240,21 +240,24 @@ public class WelcomeSiteInitializer implements SiteInitializer {
 		FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
 			groupId, repository.getDlFolderId(), _FILE_NAME_TREE_IMAGE);
 
-		if (fileEntry == null) {
-			URL url = _bundle.getEntry(_PATH + _FILE_NAME_TREE_IMAGE);
-
-			byte[] bytes = null;
-
-			try (InputStream inputStream = url.openStream()) {
-				bytes = FileUtil.getBytes(inputStream);
-			}
-
-			fileEntry = _portletFileRepository.addPortletFileEntry(
-				groupId, userId, Layout.class.getName(), plid,
-				Layout.class.getName(), repository.getDlFolderId(), bytes,
-				_FILE_NAME_TREE_IMAGE,
-				MimeTypesUtil.getContentType(_FILE_NAME_TREE_IMAGE), false);
+		if (fileEntry != null) {
+			_portletFileRepository.deletePortletFileEntry(
+				fileEntry.getFileEntryId());
 		}
+
+		URL url = _bundle.getEntry(_PATH + _FILE_NAME_TREE_IMAGE);
+
+		byte[] bytes = null;
+
+		try (InputStream inputStream = url.openStream()) {
+			bytes = FileUtil.getBytes(inputStream);
+		}
+
+		fileEntry = _portletFileRepository.addPortletFileEntry(
+			groupId, userId, Layout.class.getName(), plid,
+			Layout.class.getName(), repository.getDlFolderId(), bytes,
+			_FILE_NAME_TREE_IMAGE,
+			MimeTypesUtil.getContentType(_FILE_NAME_TREE_IMAGE), false);
 
 		return fileEntry.getFileEntryId();
 	}

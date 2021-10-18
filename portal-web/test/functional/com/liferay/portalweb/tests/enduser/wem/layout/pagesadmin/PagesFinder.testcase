@@ -112,7 +112,7 @@ definition {
 	test AddCollectionPage {
 		property portal.acceptance = "true";
 
-		task ("Add three Web Content Articles based on Basic Web Content") {
+		task ("Add three web contents based on Basic Web Content") {
 			for (var n : list "1,2,3") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
@@ -170,7 +170,7 @@ definition {
 			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 1*");
 		}
 
-		task ("Add a Collection Page based on Highest Rated Assets via page tree") {
+		task ("Add a collection page based on Highest Rated Assets via page tree") {
 			PagesFinder.goToFindAPage();
 
 			PagesFinder.addPublicCollectionPage(
@@ -205,7 +205,7 @@ definition {
 			}
 		}
 
-		task ("View the collection name as draft in the page tree") {
+		task ("View the draft collection page name in the page tree") {
 			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 1*");
 		}
 	}
@@ -280,11 +280,9 @@ definition {
 				type = "content");
 		}
 
-		task ("Navigate to Test Site Name") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
-		}
-
 		task ("Access to the Page Tree") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
 			PagesFinder.goToFindAPage();
 		}
 
@@ -440,7 +438,7 @@ definition {
 	@description = "This is a test for LPS-102544. Can quickly browse and go to different pages with page tree."
 	@priority = "4"
 	test NavigateToDifferentPages {
-		task ("Add layouts of various types for the pages finder") {
+		task ("Add different types of pages") {
 			var i = "1";
 
 			for (var pageType : list "portlet,content,embedded,full_page_application,panel") {
@@ -743,7 +741,7 @@ definition {
 	test SearchAllPageTypes {
 		property portal.acceptance = "true";
 
-		task ("Add layouts of various types for the pages finder") {
+		task ("Add different types of pages") {
 			var i = "1";
 
 			for (var pageType : list "portlet,content,embedded,full_page_application,panel") {
@@ -762,17 +760,17 @@ definition {
 			}
 		}
 
-		task ("Navigate to Test site Name") {
+		task ("Access to the Page Tree ") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			PagesFinder.goToFindAPage();
 		}
 
-		task ("Type search term in pages finder") {
-			PagesFinder.goToFindAPage();
-
+		task ("Type search term") {
 			PagesFinder.inputPageSearch(keyword = "Test");
 		}
 
-		task ("Assert that we find all 11 pages within Pages Administration") {
+		task ("Assert all 11 pages shown in Pages Administration") {
 			PagesFinder.viewInPagesAdministration();
 
 			AssertTextEquals(
@@ -797,17 +795,17 @@ definition {
 			}
 		}
 
-		task ("Navigate to Test site Name") {
+		task ("Access to the Page Tree") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			PagesFinder.goToFindAPage();
 		}
 
-		task ("Type search term in pages finder") {
-			PagesFinder.goToFindAPage();
-
+		task ("Type search term") {
 			PagesFinder.inputPageSearch(keyword = '''"1"''');
 		}
 
-		task ("View 1 result via sidebar") {
+		task ("View 1 result shown") {
 			AssertVisible(
 				key_pageName = "Test Page Name 1",
 				locator1 = "PagesFinder#PAGE_SEARCH_RESULT");

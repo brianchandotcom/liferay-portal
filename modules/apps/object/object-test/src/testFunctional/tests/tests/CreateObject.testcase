@@ -1616,12 +1616,11 @@ definition {
 	test RelationshipFieldAutomaticallyCreated {
 		property portal.acceptance = "true";
 
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object A",
 			objectName = "CustomObjectA",
 			pluralLabelName = "Custom Objects");
-		
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object B",
 			objectName = "CustomObjectB",
@@ -1635,8 +1634,8 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			type = "One to Many",
-			object = "CustomObjectB");
+			object = "CustomObjectB",
+			type = "One to Many");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -1647,7 +1646,6 @@ definition {
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Custom Object A",
 			fieldType = "Long");
-
 	}
 
 	@description = "LPS-135549 - Verify that the columns Name, System and Status displays the correct value on the Objects table when a Custom Object is created"

@@ -105,9 +105,7 @@ public class DLPreviewURLRefreshTimestampTransformerListener
 	}
 
 	private String _replace(String s) {
-		if (Validator.isNull(s) || !s.contains("<img") ||
-			!s.contains("/documents/")) {
-
+		if (Validator.isNull(s) || !s.contains("/documents/")) {
 			return s;
 		}
 
@@ -146,8 +144,9 @@ public class DLPreviewURLRefreshTimestampTransformerListener
 		DLPreviewURLRefreshTimestampTransformerListener.class);
 
 	private static final Pattern _pattern = Pattern.compile(
-		"(<img\\s+(?:[^>]*\\s)*src=['\"](?:/?[^\\s]*)/documents/(\\d+)/(\\d+)" +
-			"/([^/?]+)(?:/([-0-9a-fA-F]+))?)(?:\\?t=\\d+)?(['\"][^>]*/>)");
+		"(<(?:a|img)\\s+(?:[^>]*\\s)*(?:href|src)=['\"](?:/?[^\\s]*)" +
+			"/documents/(\\d+)/(\\d+)/([^/?]+)(?:/([-0-9a-fA-F]+))?)" +
+				"(?:\\?t=\\d+)?(['\"](?:\\s*>.*</a>|[^>]*/>))");
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

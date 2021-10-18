@@ -1475,7 +1475,6 @@ definition {
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
 		ObjectAdmin.viewFieldDetails();
-		
 	}
 
 	@description = "LPS-135549 - Verify that the columns Name and Type are displayed for the Fields table"

@@ -248,26 +248,11 @@ definition {
 			openNotification = "true",
 			ownerName = "Test Test");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		DMDocumentSharing.viewDocumentViaSharedContent(
+			contentSharingPermission = "Comment",
+			dmDocumentTitle = "Document_1.doc");
 
-		AssertElementPresent(locator1 = "CKEditor#BODY");
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertElementNotPresent(locator1 = "Button#EDIT");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
-
-		AssertTextEquals(
-			key_contentTitle = "Document_1.doc",
-			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
-			value1 = "Document_1.doc");
-
-		AssertElementNotPresent(
-			key_contentTitle = "Document_1.doc",
-			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
+		DMDocumentSharing.viewNoDuplicateDocument(dmDocumentTitle = "Document_1.doc");
 
 		User.logoutPG();
 
@@ -305,18 +290,7 @@ definition {
 
 		Button.clickPublish();
 
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
-
-		AssertTextEquals(
-			key_contentTitle = "DM Document Title",
-			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
-			value1 = "DM Document Title");
-
-		AssertElementNotPresent(
-			key_contentTitle = "DM Document Title",
-			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
+		DMDocumentSharing.viewNoDuplicateDocument(dmDocumentTitle = "DM Document Title");
 	}
 
 	@description = "This ensures that a document can be shared with another user in a depot."
@@ -409,16 +383,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea2@liferay.com");
 
-		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
-
-		AssertTextEquals(
-			key_contentTitle = "Document_1.jpg",
-			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
-			value1 = "Document_1.jpg");
-
-		AssertElementNotPresent(
-			key_contentTitle = "Document_1.jpg",
-			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
+		DMDocumentSharing.viewNoDuplicateDocument(dmDocumentTitle = "Document_1.jpg");
 	}
 
 	@description = "This test makes sure all collaborators will view all collaborators of a depot document that was shared to him. It also covers that a user can successfully remove collaborators through Manage Collaborators and asserts that empty message displays when all collaborators are removed."

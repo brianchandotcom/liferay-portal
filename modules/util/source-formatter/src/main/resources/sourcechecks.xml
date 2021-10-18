@@ -1227,11 +1227,6 @@
 			<description name="Finds incorrect indentation in poshi files." />
 			<property name="enabled" value="false" />
 		</check>
-		<check name="PoshiParametersOrderCheck">
-			<category name="Styling" />
-			<description name="Checks the order of parameters in `.function` and `.macro` files." />
-			<property name="enabled" value="false" />
-		</check>
 		<check name="PoshiStylingCheck">
 			<category name="Styling" />
 			<description name="Applies rules to enforce consisteny in code style." />

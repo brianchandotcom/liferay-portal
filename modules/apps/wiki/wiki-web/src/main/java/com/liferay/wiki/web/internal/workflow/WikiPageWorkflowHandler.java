@@ -57,16 +57,26 @@ public class WikiPageWorkflowHandler extends BaseWorkflowHandler<WikiPage> {
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		long userId = GetterUtil.getLong(
-			(String)workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
 		long classPK = GetterUtil.getLong(
 			(String)workflowContext.get(
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
+		WikiPage page = _wikiPageLocalService.getPageByPageId(classPK);
+
+		return updateStatus(page, status, workflowContext);
+	}
+
+	@Override
+	public WikiPage updateStatus(
+			WikiPage page, int status,
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		long userId = GetterUtil.getLong(
+			(String)workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
+
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
-
-		WikiPage page = _wikiPageLocalService.getPageByPageId(classPK);
 
 		return _wikiPageLocalService.updateStatus(
 			userId, page, status, serviceContext, workflowContext);

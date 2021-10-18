@@ -1,0 +1,19 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "org.jdom", name: "jdom2", version: "2.0.6"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/jdom2/input/SAXBuilder.java"
+
+	originalLibModuleName = "jdom2"
+}

@@ -92,6 +92,24 @@ definition {
 		Click.javaScriptClick(locator1 = "PublicationsChanges#COMMENT_BUTTON");
 	}
 
+	macro sortChanges {
+		Click(
+			key_name = "${sortName}",
+			locator1 = "PublicationsChanges#SORT_BUTTON");
+
+		if ("${sort}" == "descending") {
+			if (IsElementPresent(locator1 = "PublicationsChanges#SORTED_ASCENDING_ICON")) {
+				Click(locator1 = "PublicationsChanges#SORTED_ASCENDING_ICON");
+			}
+		}
+
+		if ("${sort}" == "ascending") {
+			if (IsElementPresent(locator1 = "PublicationsChanges#SORTED_DESCENDING_ICON")) {
+				Click(locator1 = "PublicationsChanges#SORTED_DESCENDING_ICON");
+			}
+		}
+	}
+
 	macro viewChangesViaChangesStyle {
 		if ("${publishedPublication}" == "true") {
 			Click(

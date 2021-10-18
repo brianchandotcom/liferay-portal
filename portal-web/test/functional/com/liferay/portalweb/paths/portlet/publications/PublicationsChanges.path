@@ -105,6 +105,21 @@
 	<td>//input[contains(@class,'toggle-switch-check')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SORT_BUTTON</td>
+	<td>//button[contains(.,'${key_name}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORTED_ASCENDING_ICON</td>
+	<td>//span//*[name()='svg'][contains(@class,'lexicon-icon-order-list-up')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORTED_DESCENDING_ICON</td>
+	<td>//span//*[name()='svg'][contains(@class,'lexicon-icon-order-list-down')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

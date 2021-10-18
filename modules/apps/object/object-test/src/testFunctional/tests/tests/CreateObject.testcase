@@ -1494,11 +1494,25 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify the empty state message when there is no Relationship"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test EmptyStateWhenNoRelationship {
 
-		// TODO LPS-140580 EmptyStateWhenNoRelationship pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");	
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No items were found.");
+
 
 	}
 

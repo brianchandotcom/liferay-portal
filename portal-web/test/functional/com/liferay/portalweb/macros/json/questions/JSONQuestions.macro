@@ -25,7 +25,7 @@ definition {
 				-d parentMessageId=${messageId} \
 				-d subject=RE: ${threadSubject} \
 				-d body=<p>${replyBody}</p> \
-				-d format='bbcode' \
+				-d format='creole' \
 				-d inputStreamOVPs= \
 				-d anonymous=false \
 			 	-d priority=0 \

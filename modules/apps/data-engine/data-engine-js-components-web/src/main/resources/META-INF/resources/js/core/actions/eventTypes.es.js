@@ -63,6 +63,7 @@ const LANGUAGE = {
 	ADD: 'language_add',
 	CHANGE: 'language_change',
 	DELETE: 'language_delete',
+	UPDATE: 'language_update',
 };
 
 export const EVENT_TYPES = {

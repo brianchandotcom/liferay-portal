@@ -12,7 +12,14 @@
  * details.
  */
 
-import {useConfig, useForm, useFormState} from 'data-engine-js-components-web';
+import {State} from '@liferay/frontend-js-state-web';
+import {
+	EVENT_TYPES,
+	useConfig,
+	useForm,
+	useFormState,
+} from 'data-engine-js-components-web';
+import {activeLanguageIdsAtom} from 'frontend-js-components-web';
 import {useEffect, useRef} from 'react';
 
 const SYMBOL_INTERNAL = Symbol('data.engine.internal');
@@ -74,6 +81,20 @@ export const DataEngineTaglibCompatibilityLayer = () => {
 			Liferay.destroyComponent(dataLayoutBuilderId);
 		};
 	}, [dataEngineCompatibilityLayerRef, dataLayoutBuilderId]);
+
+	useEffect(() => {
+		const {dispose} = State.subscribe(
+			activeLanguageIdsAtom,
+			(activeLanguageIds) => {
+				dispatch({
+					payload: {activeLanguageIds},
+					type: EVENT_TYPES.LANGUAGE.UPDATE,
+				});
+			}
+		);
+
+		return dispose;
+	}, [dispatch]);
 
 	return null;
 };

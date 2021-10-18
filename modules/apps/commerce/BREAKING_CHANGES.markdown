@@ -381,13 +381,13 @@ This change was introduced to follow Liferay source formatting.
 
 #### What changed?
 
-BOM feature is replaced by Shop by Diagram feature. This means that 
-the enties Folder and BOM entry do not exist and there is a new 
+BOM feature is replaced by Shop by Diagram feature. This means that
+the enties Folder and BOM entry do not exist and there is a new
 Product Type called Diagram.
 
 #### Who is affected?
 
-Product specialists that need to create diagrams for their store will 
+Product specialists that need to create diagrams for their store will
 not need to create products with the Diagram product type.
 
 #### Why was this change made?

@@ -1298,6 +1298,8 @@ definition {
 
 		var emailList = "userea@liferay.com,user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
 
+		var nameList = "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5";
+
 		task ("Add 5 more new users") {
 			for (var name : list "${usernameList}") {
 				JSONUser.addUser(
@@ -1347,9 +1349,7 @@ definition {
 		}
 
 		task ("View all users are shown in current page") {
-			for (var username : list "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5,userfn userln") {
-				ACUtils.viewNameList(nameList = "${username}");
-			}
+			ACUtils.viewNameList(nameList = "${nameList},userfn userln");
 		}
 
 		task ("Select the 5 items in Add Members modal") {
@@ -1357,9 +1357,7 @@ definition {
 		}
 
 		task ("View only 5 users are shown in current page") {
-			for (var username : list "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5") {
-				ACUtils.viewNameList(nameList = "${username}");
-			}
+			ACUtils.viewNameList(nameList = "${nameList}");
 
 			AssertElementNotPresent(
 				key_TableMember = "userfn userln",

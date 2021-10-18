@@ -110,6 +110,22 @@ definition {
 		}
 	}
 
+	macro viewChangesResultNotPresent {
+		var key_changeCategory = "${changeCategory}";
+		var key_changeTitle = "${changeTitle}";
+
+		if (isSet(changeOrder)) {
+			var changeOrder = "${changeOrder}";
+		}
+		else {
+			var changeOrder = "1";
+		}
+
+		AssertElementNotPresent(
+			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
+			value1 = "${changeTitle}");
+	}
+
 	macro viewChangesViaChangesStyle {
 		if ("${publishedPublication}" == "true") {
 			Click(

@@ -12,10 +12,16 @@ definition {
 
 		var parentGroupId = JSONGroupSetter.setParentGroupId(parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
 
+		var type = JSONGroupSetter.setMembershipType(membershipType = "${membershipType}");
+
+		var manualMembership = JSONGroupSetter.setAllowManualMembershipManagement(allowManualMembershipManagement = "${allowManualMembershipManagement}");
+
 		JSONGroupAPI._addGroup(
 			groupDescriptionMap = "${groupDescriptionMap}",
 			groupNameMap = "${groupNameMap}",
-			parentGroupId = "${parentGroupId}");
+			manualMembership = "${manualMembership}",
+			parentGroupId = "${parentGroupId}",
+			type = "${type}");
 	}
 
 	@summary = "Add a basic site"
@@ -29,6 +35,10 @@ definition {
 			groupName = "${groupName}");
 
 		var parentGroupId = JSONGroupSetter.setParentGroupId(groupName = "${parentGroupName}");
+
+		var type = JSONGroupSetter.setMembershipType(membershipType = "${membershipType}");
+
+		var manualMembership = JSONGroupSetter.setAllowManualMembershipManagement(allowManualMembershipManagement = "${allowManualMembershipManagement}");
 
 		JSONGroupAPI._addGroup(
 			groupDescriptionMap = "${groupDescriptionMap}",

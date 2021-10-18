@@ -513,11 +513,39 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Name blank"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotLeaveRelationshipNameBlank {
 
-		// TODO LPS-140582 CannotLeaveRelationshipNameBlank pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		LexiconEntry.gotoAdd();
+
+		Click(locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_FORM");
+
+		Click(
+			key_type = "One to Many",
+			locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+
+		Select(
+			locator1 = "ObjectAdmin#SELECT_OBJECT_RELATIONSHIP",
+			value1 = "CustomObject");
+
+		Button.clickSave();
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR",
+			value1 = "Name is null");
+
 
 	}
 

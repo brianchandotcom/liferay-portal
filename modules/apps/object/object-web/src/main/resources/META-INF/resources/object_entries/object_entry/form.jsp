@@ -44,7 +44,7 @@ portletDisplay.setURLBack(backURL);
 			<clay:sheet-section>
 				<clay:row>
 					<clay:col
-						md="11"
+						md="12"
 					>
 						<%= objectEntryDisplayContext.renderDDMForm(pageContext) %>
 					</clay:col>
@@ -61,6 +61,36 @@ portletDisplay.setURLBack(backURL);
 </liferay-frontend:edit-form>
 
 <aui:script>
+	function getPath(objectEntryId) {
+		const scope = '<%= objectDefinition.getScope() %>';
+		const contextPath = '/o<%= objectDefinition.getRESTContextPath() %>';
+		const pathScopedBySite = contextPath.concat(
+			`/scopes/\${themeDisplay.getSiteGroupId()}`
+		);
+
+		const postPath = scope === 'site' ? pathScopedBySite : contextPath;
+		const putPath = contextPath.concat('/', `\${objectEntryId}`);
+
+		return objectEntryId ? putPath : postPath;
+	}
+
+	function getObjectEntryId() {
+		return Number(
+			'<%= (objectEntry == null) ? 0 : objectEntry.getObjectEntryId() %>'
+		);
+	}
+
+	function getValues(fields) {
+		return fields.reduce((obj, field) => {
+			let value = field.value;
+			if (field.type === 'select' && !field.multiple) {
+				value = field.value[0];
+			}
+
+			return Object.assign(obj, {[field.fieldName]: value});
+		}, {});
+	}
+
 	function <portlet:namespace />submitObjectEntry() {
 		const form = document.getElementById('<portlet:namespace />fm');
 
@@ -70,12 +100,7 @@ portletDisplay.setURLBack(backURL);
 
 		current.validate().then((result) => {
 			if (result) {
-				const ddmFormValues = form.querySelector(
-					'#<portlet:namespace />ddmFormValues'
-				);
-
 				const fields = current.getFields();
-
 				let shouldSubmitForm = true;
 
 				fields.forEach((field) => {
@@ -93,15 +118,43 @@ portletDisplay.setURLBack(backURL);
 				});
 
 				if (shouldSubmitForm) {
-					const values = fields.reduce(
-						(obj, cur) =>
-							Object.assign(obj, {[cur.fieldName]: cur.value}),
-						{}
-					);
+					const values = getValues(fields);
+					const objectEntryId = getObjectEntryId();
+					const path = getPath(objectEntryId);
 
-					ddmFormValues.value = JSON.stringify(values);
+					Liferay.Util.fetch(path, {
+						body: JSON.stringify(values),
+						headers: new Headers({
+							Accept: 'application/json',
+							'Content-Type': 'application/json',
+						}),
+						method: objectEntryId ? 'PUT' : 'POST',
+					})
+						.then((response) => {
+							if (response.status === 401) {
+								window.location.reload();
+							}
+							else if (response.ok) {
+								Liferay.Util.openToast({
+									message:
+										'<%= LanguageUtil.get(request, "your-request-completed-successfully") %>',
+									type: 'success',
+								});
 
-					Liferay.Util.submitForm(form);
+								Liferay.Util.navigate('<%= backURL%>');
+							}
+							else {
+								return response.json();
+							}
+						})
+						.then((response) => {
+							if (response && response.title) {
+								Liferay.Util.openToast({
+									message: response.title,
+									type: 'danger',
+								});
+							}
+						});
 				}
 			}
 		});

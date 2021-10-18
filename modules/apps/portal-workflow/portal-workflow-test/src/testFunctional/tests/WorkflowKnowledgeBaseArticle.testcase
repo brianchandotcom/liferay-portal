@@ -1,0 +1,130 @@
+@component-name = "portal-workflow"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Workflow";
+
+	var workflowAssetType = "Knowledge Base Article";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Knowledge Base");
+
+		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WebContent.tearDownCP();
+
+			Workflow.tearDownPortalWorkflow();
+
+			Workflow.tearDownSiteWorkflow();
+		}
+	}
+
+	@description = "Verify that the Basic Article status is Pending after Submit for Publication"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ArticleStatusIsPendingAfterSubmitForPublication {
+
+		// TODO LRQA-69926 ArticleStatusIsPendingAfterSubmitForPublication pending implementation
+
+	}
+
+	@description = "Verify that the user can Approve a Basic Article"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanApproveBasicArticle {
+
+		// TODO LRQA-69927 CanApproveBasicArticle pending implementation
+
+	}
+
+	@description = "Verify that the user can Approve a Basic Article when the Child Article is Pending"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanApproveBasicArticleWhenChildPending {
+
+		// TODO LRQA-69933 CanApproveBasicArticleWhenChildPending pending implementation
+
+	}
+
+	@description = "Verify that the user can Approve a Basic Child Article"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanApproveBasicChildArticle {
+
+		// TODO LRQA-69931 CanApproveBasicChildArticle pending implementation
+
+	}
+
+	@description = "Verify that the user can Approve a Basic Child Article when the Parent Article is Pending"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanApproveBasicChildArticleWhenParentPending {
+
+		// TODO LRQA-69932 CanApproveBasicChildArticleWhenParentPending	pending implementation
+
+	}
+
+	@description = "Verify that when the user Edit an approved Basic Article it's status comes to Pending"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanEditApprovedBasicArticle {
+
+		// TODO LRQA-69928 CanEditApprovedBasicArticle pending implementation
+
+	}
+
+	@description = "Create a Knowledge Base child Article and approve the child, assert that the parent is still pending"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanRejectBasicArticle {
+
+		// TODO LRQA-69929 CanRejectBasicArticle pending implementation
+
+	}
+
+	@description = "Verify that when the Basic Article is saved as Draft it's status is Draft"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSaveAsDraft {
+
+		// TODO LRQA-69924 CanSaveAsDraft pending implementation
+
+	}
+
+	@description = "Verify that the child Basic Article status is Pending after Submit for Publication"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ChildArticleStatusIsPendingAfterSubmitForPublication {
+
+		// TODO LRQA-69930 ChildArticleStatusIsPendingAfterSubmitForPublication pending implementation
+
+	}
+
+	@description = "Verify that when the Basic Article is saved as Draft the Submit for Publication button still available"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SubmitForPublicationButtonIsAvaliable {
+
+		// TODO LRQA-69925 SubmitForPublicationButtonIsAvaliable pending implementation
+
+	}
+
+}

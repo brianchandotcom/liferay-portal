@@ -175,8 +175,11 @@ definition {
 		}
 
 		task ("Sign in with the new user to visit the site pages") {
-			ACUtils.navigateToSitePageWithUser(
-				emailList = "ac@liferay.com",
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

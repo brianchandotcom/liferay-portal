@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.net.InetAddress;
+import java.net.URI;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -89,8 +90,9 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 		themeDisplay.setServerPort(portalServerPort);
 		themeDisplay.setSiteGroupId(layout.getGroupId());
 
-		HttpGet httpGet = new HttpGet(
-			_portal.getLayoutFullURL(layout, themeDisplay));
+		URI uri = new URI(_portal.getLayoutFullURL(layout, themeDisplay));
+
+		HttpGet httpGet = new HttpGet(uri);
 
 		httpGet.setHeader("Host", company.getVirtualHostname());
 

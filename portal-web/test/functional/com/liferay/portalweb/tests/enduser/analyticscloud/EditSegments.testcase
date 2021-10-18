@@ -957,9 +957,7 @@ definition {
 
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
 
-			for (var user : list "${users}") {
-				ACSegments.addStaticMember(tableMember = "${user} ${user}");
-			}
+			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
 		}
 
 		task ("Click view added members") {

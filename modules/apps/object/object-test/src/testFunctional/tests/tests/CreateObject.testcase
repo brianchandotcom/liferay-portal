@@ -1612,12 +1612,41 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify that relationship field is automatically created"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test RelationshipFieldAutomaticallyCreated {
 		property portal.acceptance = "true";
 
-		// TODO LPS-140588 RelationshipFieldAutomaticallyCreated pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object A",
+			objectName = "CustomObjectA",
+			pluralLabelName = "Custom Objects");
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object B",
+			objectName = "CustomObjectB",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object A");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "Relationship",
+			type = "One to Many",
+			object = "CustomObjectB");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object B");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.assertObjectField(
+			fieldLabel = "Custom Object A",
+			fieldType = "Long");
 
 	}
 

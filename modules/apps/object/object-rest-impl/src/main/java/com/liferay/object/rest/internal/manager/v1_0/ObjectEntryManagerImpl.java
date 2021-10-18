@@ -24,7 +24,7 @@ import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
-import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -82,7 +82,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
-			_objectEntryLocalService.addObjectEntry(
+			_objectEntryService.addObjectEntry(
 				userId, _getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
@@ -102,7 +102,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
-			_objectEntryLocalService.addOrUpdateObjectEntry(
+			_objectEntryService.addOrUpdateObjectEntry(
 				externalReferenceCode, userId,
 				_getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId(),
@@ -115,7 +115,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Override
 	public void deleteObjectEntry(long objectEntryId) throws Exception {
-		_objectEntryLocalService.deleteObjectEntry(objectEntryId);
+		_objectEntryService.deleteObjectEntry(objectEntryId);
 	}
 
 	@Override
@@ -124,9 +124,12 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
 
-		_objectEntryLocalService.deleteObjectEntry(
-			externalReferenceCode, companyId,
-			_getGroupId(objectDefinition, scopeKey));
+		com.liferay.object.model.ObjectEntry objectEntry =
+			_objectEntryService.getObjectEntryByExternalReferenceCode(
+				companyId, _getGroupId(objectDefinition, scopeKey),
+				externalReferenceCode);
+
+		_objectEntryService.deleteObjectEntry(objectEntry.getObjectEntryId());
 	}
 
 	@Override
@@ -136,7 +139,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry objectEntry =
-			_objectEntryLocalService.fetchObjectEntry(objectEntryId);
+			_objectEntryService.fetchObjectEntry(objectEntryId);
 
 		if (objectEntry != null) {
 			return _toObjectEntry(
@@ -216,7 +219,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
-			_objectEntryLocalService.getObjectEntry(objectEntryId));
+			_objectEntryService.getObjectEntry(objectEntryId));
 	}
 
 	@Override
@@ -228,9 +231,9 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
-			_objectEntryLocalService.getObjectEntry(
-				externalReferenceCode, companyId,
-				_getGroupId(objectDefinition, scopeKey)));
+			_objectEntryService.getObjectEntryByExternalReferenceCode(
+				companyId, _getGroupId(objectDefinition, scopeKey),
+				externalReferenceCode));
 	}
 
 	@Override
@@ -241,12 +244,12 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryLocalService.getObjectEntry(objectEntryId);
+			_objectEntryService.getObjectEntry(objectEntryId);
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
-			_objectEntryLocalService.updateObjectEntry(
-				userId, objectEntryId,
+			_objectEntryService.updateObjectEntry(
+				objectEntryId,
 				_toObjectValues(
 					serviceBuilderObjectEntry.getObjectDefinitionId(),
 					objectEntry.getProperties(),
@@ -398,7 +401,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	private ObjectEntryDTOConverter _objectEntryDTOConverter;
 
 	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
+	private ObjectEntryService _objectEntryService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

@@ -15,6 +15,7 @@
 package com.liferay.poshi.core.elements;
 
 import com.liferay.poshi.core.script.PoshiScriptParserException;
+import com.liferay.poshi.core.util.ListUtil;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -125,9 +126,8 @@ public class CommandPoshiElement extends PoshiElement {
 			sb.append(poshiElementAttribute.toPoshiScript());
 		}
 
-		sb.append(createPoshiScriptBlock(getPoshiNodes()));
-
-		return sb.toString();
+		return ListUtil.sort(sb.toString(), "\n") +
+			createPoshiScriptBlock(getPoshiNodes());
 	}
 
 	protected CommandPoshiElement() {

@@ -473,8 +473,6 @@ public class ObjectLayoutLocalServiceImpl
 			boolean defaultObjectLayout, List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
-		boolean hasRequiredObjectField = false;
-
 		Set<Long> objectFieldIds = new HashSet<>();
 
 		ObjectLayoutTab objectLayoutTab = objectLayoutTabs.get(0);
@@ -523,14 +521,6 @@ public class ObjectLayoutLocalServiceImpl
 					"All required object fields must be associated to the " +
 						"first tab of a default object layout");
 			}
-
-			hasRequiredObjectField = true;
-		}
-
-		if (!hasRequiredObjectField) {
-			throw new DefaultObjectLayoutException(
-				"The default object layout must have at least one required " +
-					"object field");
 		}
 
 		ObjectLayout objectLayout =

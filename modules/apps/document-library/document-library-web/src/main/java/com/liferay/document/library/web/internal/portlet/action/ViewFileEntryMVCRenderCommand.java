@@ -155,7 +155,8 @@ public class ViewFileEntryMVCRenderCommand
 		DLViewFileEntryDisplayContext dlViewFileEntryDisplayContext =
 			new DLViewFileEntryDisplayContext(
 				dlAdminDisplayContext, _dlDisplayContextProvider, _html,
-				_language, _portal, renderRequest, renderResponse);
+				_portal.getHttpServletRequest(renderRequest), _language,
+				_portal, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			DLViewFileEntryDisplayContext.class.getName(),

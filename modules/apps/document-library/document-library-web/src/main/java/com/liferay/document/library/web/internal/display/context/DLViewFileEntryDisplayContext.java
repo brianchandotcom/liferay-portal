@@ -67,18 +67,18 @@ public class DLViewFileEntryDisplayContext {
 	public DLViewFileEntryDisplayContext(
 		DLAdminDisplayContext dlAdminDisplayContext,
 		DLDisplayContextProvider dlDisplayContextProvider, Html html,
-		Language language, Portal portal, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, Language language, Portal portal,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_dlAdminDisplayContext = dlAdminDisplayContext;
 		_dlDisplayContextProvider = dlDisplayContextProvider;
 		_html = html;
+		_httpServletRequest = httpServletRequest;
 		_language = language;
 		_portal = portal;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_httpServletRequest = _portal.getHttpServletRequest(renderRequest);
 		_httpServletResponse = _portal.getHttpServletResponse(renderResponse);
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -302,7 +302,7 @@ public class DLViewFileEntryDisplayContext {
 
 	public boolean isShowComments() {
 		boolean showComments = ParamUtil.getBoolean(
-			_renderRequest, "showComments", true);
+			_httpServletRequest, "showComments", true);
 
 		FileEntry fileEntry = getFileEntry();
 
@@ -317,7 +317,7 @@ public class DLViewFileEntryDisplayContext {
 
 	public boolean isShowHeader() {
 		boolean showHeader = ParamUtil.getBoolean(
-			_renderRequest, "showHeader", true);
+			_httpServletRequest, "showHeader", true);
 
 		FileEntry fileEntry = getFileEntry();
 

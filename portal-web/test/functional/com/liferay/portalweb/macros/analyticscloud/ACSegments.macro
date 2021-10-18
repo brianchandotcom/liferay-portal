@@ -233,6 +233,8 @@ definition {
 	macro deleteSegmentViaSegmentListInlineButton {
 		var key_segmentName = "${segmentName}";
 
+		ACUtils.waitForLoading();
+
 		Click.javaScriptClick(locator1 = "ACSegments#DELETE_SEGMENT_INLINE_BUTTON");
 
 		Click(locator1 = "ACSegments#CONFIRM_DELETION");

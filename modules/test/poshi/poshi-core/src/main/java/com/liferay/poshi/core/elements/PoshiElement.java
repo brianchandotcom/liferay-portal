@@ -328,7 +328,7 @@ public abstract class PoshiElement
 			String padPoshiScriptSnippet = padPoshiScriptSnippet(
 				poshiScriptSnippet);
 
-			if (blockName.equals("definition") &&
+			if (StringUtil.endsWith(sb.toString(), "definition {") &&
 				!padPoshiScriptSnippet.startsWith("\n\n")) {
 
 				sb.append("\n");

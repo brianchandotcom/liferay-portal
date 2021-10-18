@@ -30,7 +30,8 @@ definition {
 
 	@description = "This is the test for LPS-103104. Can add a child page via page tree panel."
 	@priority = "5"
-	test AddChildPageViaPageFinder {
+	@uitest
+	test AddChildPage {
 		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(
@@ -52,7 +53,8 @@ definition {
 
 	@description = "This is the test for LPS-107774. Can create a Collection Page based on Collections or Collection Providers in Pages Tree panel."
 	@priority = "5"
-	test AddCollectionPageViaPageFinder {
+	@uitest
+	test AddCollectionPage {
 		property portal.acceptance = "true";
 
 		task ("Add three Web Content Articles based on Basic Web Content") {

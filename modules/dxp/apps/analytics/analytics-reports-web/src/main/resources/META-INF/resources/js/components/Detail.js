@@ -30,10 +30,12 @@ const TRAFFIC_CHANNELS = {
 
 export default function Detail({
 	currentPage,
+	handleDetailPeriodChange,
 	onCurrentPageChange,
 	onTrafficSourceNameChange,
 	timeSpanOptions,
 	trafficShareDataProvider,
+	trafficSourcesDataProvider,
 	trafficVolumeDataProvider,
 }) {
 	const chartDispatch = useContext(ChartDispatchContext);
@@ -86,8 +88,10 @@ export default function Detail({
 			{currentPage.view === TRAFFIC_CHANNELS.SOCIAL && (
 				<SocialDetail
 					currentPage={currentPage}
+					handleDetailPeriodChange={handleDetailPeriodChange}
 					timeSpanOptions={timeSpanOptions}
 					trafficShareDataProvider={trafficShareDataProvider}
+					trafficSourcesDataProvider={trafficSourcesDataProvider}
 					trafficVolumeDataProvider={trafficVolumeDataProvider}
 				/>
 			)}
@@ -106,5 +110,6 @@ Detail.propTypes = {
 		})
 	).isRequired,
 	trafficShareDataProvider: PropTypes.func.isRequired,
+	trafficSourcesDataProvider: PropTypes.func.isRequired,
 	trafficVolumeDataProvider: PropTypes.func.isRequired,
 };

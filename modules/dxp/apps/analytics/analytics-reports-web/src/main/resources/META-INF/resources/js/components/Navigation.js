@@ -101,7 +101,10 @@ export default function Navigation({
 		timeSpanOffset,
 	]);
 
-	const handleTrafficSourceClick = (trafficSources, trafficSourceName) => {
+	const updateTrafficSourcesAndCurrentPage = (
+		trafficSources,
+		trafficSourceName
+	) => {
 		setTrafficSources(trafficSources);
 		setTrafficSourceName(trafficSourceName);
 
@@ -180,7 +183,9 @@ export default function Navigation({
 								: [handleHistoricalViews]
 						}
 						onSelectedLanguageClick={onSelectedLanguageClick}
-						onTrafficSourceClick={handleTrafficSourceClick}
+						onTrafficSourceClick={
+							updateTrafficSourcesAndCurrentPage
+						}
 						pagePublishDate={pagePublishDate}
 						pageTitle={pageTitle}
 						timeSpanOptions={timeSpanOptions}
@@ -198,10 +203,14 @@ export default function Navigation({
 			{currentPage.view !== 'main' && (
 				<Detail
 					currentPage={currentPage}
+					handleDetailPeriodChange={
+						updateTrafficSourcesAndCurrentPage
+					}
 					onCurrentPageChange={handleCurrentPage}
 					onTrafficSourceNameChange={handleTrafficSourceName}
 					timeSpanOptions={timeSpanOptions}
 					trafficShareDataProvider={handleTrafficShare}
+					trafficSourcesDataProvider={handleTrafficSources}
 					trafficVolumeDataProvider={handleTrafficVolume}
 				/>
 			)}

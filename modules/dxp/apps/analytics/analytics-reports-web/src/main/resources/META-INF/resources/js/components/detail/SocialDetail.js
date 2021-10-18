@@ -12,15 +12,18 @@
 import ClayList from '@clayui/list';
 import className from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 
 import {
-	ChartDispatchContext,
 	ChartStateContext,
 	useDateTitle,
 	useIsPreviousPeriodButtonDisabled,
 } from '../../context/ChartStateContext';
-import {StoreStateContext} from '../../context/StoreContext';
+import ConnectionContext from '../../context/ConnectionContext';
+import {
+	StoreDispatchContext,
+	StoreStateContext,
+} from '../../context/StoreContext';
 import {generateDateFormatters as dateFormat} from '../../utils/dateFormat';
 import {numberFormat} from '../../utils/numberFormat';
 import TimeSpanSelector from '../TimeSpanSelector';
@@ -40,34 +43,32 @@ const SOCIAL_MEDIA_COLORS = {
 
 export default function SocialDetail({
 	currentPage,
-	showTimeSpanSelector = false,
+	handleDetailPeriodChange,
 	timeSpanOptions,
 	trafficShareDataProvider,
+	trafficSourcesDataProvider,
 	trafficVolumeDataProvider,
 }) {
 	const {languageTag} = useContext(StoreStateContext);
 
 	const {referringSocialMedia} = currentPage.data;
 
-	const dateFormatters = useMemo(() => dateFormat(languageTag), [
-		languageTag,
-	]);
+	const dateFormatters = useMemo(
+		() => dateFormat(languageTag),
+		[languageTag]
+	);
 
 	const {firstDate, lastDate} = useDateTitle();
 
 	const title = dateFormatters.formatChartTitle([firstDate, lastDate]);
 
-	const dispatch = useContext(ChartDispatchContext);
+	const dispatch = useContext(StoreDispatchContext);
 
 	const {timeSpanKey, timeSpanOffset} = useContext(ChartStateContext);
 
+	const {validAnalyticsConnection} = useContext(ConnectionContext);
+
 	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
-
-	const handleTimeSpanChange = (event) => {
-		const {value} = event.target;
-
-		dispatch({payload: {key: value}, type: 'CHANGE_TIME_SPAN_KEY'});
-	};
 
 	const keyToHexColor = (name) => {
 		return SOCIAL_MEDIA_COLORS[name] ?? '#666666';
@@ -86,6 +87,8 @@ export default function SocialDetail({
 
 	const [highlighted, setHighlighted] = useState(null);
 
+	const firstUpdate = useRef(true);
+
 	function handleLegendMouseEnter(name) {
 		setHighlighted(name);
 	}
@@ -94,31 +97,37 @@ export default function SocialDetail({
 		setHighlighted(null);
 	}
 
+	useEffect(() => {
+		if (firstUpdate.current) {
+			firstUpdate.current = false;
+			return;
+		}
+
+		if (validAnalyticsConnection) {
+			trafficSourcesDataProvider()
+				.then((trafficSources) =>
+					handleDetailPeriodChange(trafficSources, 'social')
+				)
+				.catch(() => {
+					dispatch({type: 'ADD_WARNING'});
+				});
+		}
+	}, [timeSpanKey, timeSpanOffset]);
+
 	return (
 		<div className="c-p-3 traffic-source-detail">
-			{showTimeSpanSelector && (
-				<>
-					<div className="c-mb-3 c-mt-2">
-						<TimeSpanSelector
-							disabledNextTimeSpan={timeSpanOffset === 0}
-							disabledPreviousPeriodButton={
-								isPreviousPeriodButtonDisabled
-							}
-							onNextTimeSpanClick={() =>
-								dispatch({type: 'NEXT_TIME_SPAN'})
-							}
-							onPreviousTimeSpanClick={() =>
-								dispatch({type: 'PREV_TIME_SPAN'})
-							}
-							onTimeSpanChange={handleTimeSpanChange}
-							timeSpanKey={timeSpanKey}
-							timeSpanOptions={timeSpanOptions}
-						/>
-					</div>
+			<div className="c-mb-3 c-mt-2">
+				<TimeSpanSelector
+					disabledNextTimeSpan={timeSpanOffset === 0}
+					disabledPreviousPeriodButton={
+						isPreviousPeriodButtonDisabled
+					}
+					timeSpanKey={timeSpanKey}
+					timeSpanOptions={timeSpanOptions}
+				/>
+			</div>
 
-					{title && <h5 className="c-mb-4">{title}</h5>}
-				</>
-			)}
+			{title && <h5 className="c-mb-4">{title}</h5>}
 
 			<TotalCount
 				className="c-mb-2"
@@ -186,9 +195,8 @@ export default function SocialDetail({
 								>
 									<div
 										style={{
-											backgroundColor: keyToHexColor(
-												name
-											),
+											backgroundColor:
+												keyToHexColor(name),
 											height: '16px',
 											width: keyToWidth(index),
 										}}
@@ -213,7 +221,7 @@ export default function SocialDetail({
 
 SocialDetail.propTypes = {
 	currentPage: PropTypes.object.isRequired,
-	showTimeSpanSelector: PropTypes.bool,
+	handleDetailPeriodChange: PropTypes.func.isRequired,
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string,
@@ -221,5 +229,6 @@ SocialDetail.propTypes = {
 		})
 	).isRequired,
 	trafficShareDataProvider: PropTypes.func.isRequired,
+	trafficSourcesDataProvider: PropTypes.func.isRequired,
 	trafficVolumeDataProvider: PropTypes.func.isRequired,
 };

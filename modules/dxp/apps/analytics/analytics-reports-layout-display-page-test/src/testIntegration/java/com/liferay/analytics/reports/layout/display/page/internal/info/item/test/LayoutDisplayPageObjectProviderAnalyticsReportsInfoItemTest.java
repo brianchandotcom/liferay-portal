@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -62,8 +63,10 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.Arrays;
 import java.util.Date;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -89,12 +92,20 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() {
+		_className = ClassNameLocalServiceUtil.addClassName(
+			MockObject.class.getName());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		ClassNameLocalServiceUtil.deleteClassName(_className);
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_className = _classNameLocalService.addClassName(
-			MockObject.class.getName());
 	}
 
 	@Test
@@ -397,12 +408,11 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemTest {
 		}
 	}
 
+	private static ClassName _className;
+
 	@Inject
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
-
-	@DeleteAfterTestRun
-	private ClassName _className;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

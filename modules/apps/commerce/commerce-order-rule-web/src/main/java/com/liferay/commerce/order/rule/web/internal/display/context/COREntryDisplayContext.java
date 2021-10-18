@@ -31,6 +31,7 @@ import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSet
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -93,6 +93,24 @@ public class COREntryDisplayContext {
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
+	}
+
+	public List<CommerceCurrency> getCommerceCurrencies()
+		throws PortalException {
+
+		return _commerceCurrencyService.getCommerceCurrencies(
+			corEntryRequestHelper.getCompanyId(), true, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	public String getCommerceCurrencyCode() throws PortalException {
+		CommerceCurrency commerceCurrency = _getCommerceCurrency();
+
+		if (commerceCurrency == null) {
+			return StringPool.BLANK;
+		}
+
+		return commerceCurrency.getCode();
 	}
 
 	public COREntry getCOREntry() throws PortalException {
@@ -172,38 +190,6 @@ public class COREntryDisplayContext {
 		}
 
 		return creationMenu;
-	}
-
-	public String getDefaultCommerceCurrencyCode() throws PortalException {
-		CommerceCurrency commerceCurrency = _getCommerceCurrency();
-
-		if (commerceCurrency == null) {
-			return StringPool.BLANK;
-		}
-
-		return commerceCurrency.getCode();
-	}
-
-	public String getEditCOREntryActionURL() throws Exception {
-		COREntry corEntry = getCOREntry();
-
-		if (corEntry == null) {
-			return StringPool.BLANK;
-		}
-
-		return PortletURLBuilder.create(
-			portal.getControlPanelPortletURL(
-				corEntryRequestHelper.getRequest(),
-				COREntryPortletKeys.COR_ENTRY, PortletRequest.ACTION_PHASE)
-		).setActionName(
-			"/cor_entry/edit_cor_entry"
-		).setCMD(
-			Constants.UPDATE
-		).setParameter(
-			"corEntryId", corEntry.getCOREntryId()
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
 	}
 
 	public PortletURL getEditCOREntryRenderURL() {
@@ -343,8 +329,29 @@ public class COREntryDisplayContext {
 	protected final Portal portal;
 
 	private CommerceCurrency _getCommerceCurrency() throws PortalException {
-		return _commerceCurrencyService.fetchPrimaryCommerceCurrency(
-			corEntryRequestHelper.getCompanyId());
+		COREntry corEntry = getCOREntry();
+
+		if (corEntry == null) {
+			return null;
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				corEntry.getTypeSettings()
+			).build();
+
+		String commerceCurrencyCode = GetterUtil.getString(
+			typeSettingsUnicodeProperties.getProperty(
+				COREntryConstants.
+					TYPE_MINIMUM_ORDER_AMOUNT_FIELD_CURRENCY_CODE));
+
+		if (Validator.isNull(commerceCurrencyCode)) {
+			return _commerceCurrencyService.fetchPrimaryCommerceCurrency(
+				corEntryRequestHelper.getCompanyId());
+		}
+
+		return _commerceCurrencyService.getCommerceCurrency(
+			corEntryRequestHelper.getCompanyId(), commerceCurrencyCode);
 	}
 
 	private String _getManagePermissionsURL() throws PortalException {

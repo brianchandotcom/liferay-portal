@@ -26,11 +26,30 @@ COREntryDisplayContext corEntryDisplayContext = (COREntryDisplayContext)request.
 			bodyClasses="flex-fill"
 			title='<%= LanguageUtil.get(request, "configuration") %>'
 		>
-			<aui:input name='<%= "type--settings--" + COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_CURRENCY_CODE + "--" %>' type="hidden" value="<%= HtmlUtil.escape(corEntryDisplayContext.getDefaultCommerceCurrencyCode()) %>" />
+			<div class="row">
+				<div class="col">
+					<aui:input label="minimum-order-amount" name='<%= "type--settings--" + COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_AMOUNT + "--" %>' required="<%= true %>" type="text" value="<%= corEntryDisplayContext.getMinimumAmount() %>">
+						<aui:validator name="number" />
+					</aui:input>
+				</div>
 
-			<aui:input label="minimum-order-amount" name='<%= "type--settings--" + COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_AMOUNT + "--" %>' required="<%= true %>" suffix="<%= HtmlUtil.escape(corEntryDisplayContext.getDefaultCommerceCurrencyCode()) %>" type="text" value="<%= corEntryDisplayContext.getMinimumAmount() %>">
-				<aui:validator name="number" />
-			</aui:input>
+				<div class="col-auto">
+					<aui:select label="currency" name='<%= "type--settings--" + COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_CURRENCY_CODE + "--" %>' required="<%= true %>" title="currency">
+
+						<%
+						for (CommerceCurrency commerceCurrency : corEntryDisplayContext.getCommerceCurrencies()) {
+							String commerceCurrencyCode = commerceCurrency.getCode();
+						%>
+
+							<aui:option label="<%= commerceCurrency.getName(locale) %>" selected="<%= commerceCurrencyCode.equals(corEntryDisplayContext.getCommerceCurrencyCode()) %>" value="<%= commerceCurrencyCode %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+				</div>
+			</div>
 		</commerce-ui:panel>
 	</div>
 </div>

@@ -48,4 +48,78 @@ definition {
 			value8 = "userId:${userId}");
 	}
 
+	@description = "LPS-133646 and LPS-133653 TC-2: Asserting that Console output the same X-Request-ID as inputted X-Request-ID."
+	@priority = "5"
+	test AssertInvalidXRequestId {
+		property test.name.skip.portal.instance = "Audit#AssertXRequestId";
+
+		var companyId = JSONCompany.getCompanyId();
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Audit",
+			configurationName = "Audit Log Context",
+			configurationScope = "System Scope");
+
+		Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_ENABLED_BUTTON");
+
+		Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_USE_X-REQUEST-ID");
+
+		PortletEntry.save();
+
+		Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
+
+		// Shorter than 20 characters
+
+		var invalidXRequestId = "invalidXRID";
+
+		var curl =
+		'''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${inValidXRequestId}' ''';
+
+		var userId = JSONCurlUtil.get("${curl}");
+
+		AssertConsoleTextNotPresent(value1 = "${inValidXRequestId}");
+	}
+
+	@description = "LPS-133646 and LPS-133653 TC-2: Asserting that Console output the same X-Request-ID as inputted X-Request-ID."
+	@priority = "5"
+	test AssertValidXRequestId {
+		property test.name.skip.portal.instance = "Audit#AssertXRequestId";
+
+		var companyId = JSONCompany.getCompanyId();
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Audit",
+			configurationName = "Audit Log Context",
+			configurationScope = "System Scope");
+
+		Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_ENABLED_BUTTON");
+
+		Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_USE_X-REQUEST-ID");
+
+		PortletEntry.save();
+
+		Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
+
+		var validXRequestId = StringUtil.randomString("40");
+
+		var curl =
+		'''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${validXRequestId}' ''';
+
+		var userId = JSONCurlUtil.get("${curl}");
+
+		AssertConsoleTextPresent(value1 = "${validXRequestId}");
+	}
+
 }

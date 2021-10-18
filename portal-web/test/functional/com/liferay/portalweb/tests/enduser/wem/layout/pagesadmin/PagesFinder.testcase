@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@description = "This is the test for LPS-103104. Can add a child page via page tree panel."
+	@description = "This is a test for LPS-103104. Can add pages of different types via page tree panel."
 	@priority = "5"
 	@uitest
 	test AddChildPage {
@@ -51,7 +51,7 @@ definition {
 			parentPageName = "Test Page Name");
 	}
 
-	@description = "This is the test for LPS-107774. Can create a Collection Page based on Collections or Collection Providers in Pages Tree panel."
+	@description = "This is a test for LPS-107774. Can create a Collection Page based on Collections or Collection Providers in Pages Tree panel."
 	@priority = "5"
 	@uitest
 	test AddCollectionPage {
@@ -231,7 +231,7 @@ definition {
 		PagesFinder.viewPageNameInPagesFinder(pageName = "Private Widget Page");
 	}
 
-	@description = "This is the test for LPS-103104. Can add a widget page via page tree panel."
+	@description = "This is a test for LPS-103104. Can add a widget page via page tree panel."
 	@priority = "5"
 	test AddPageViaPageFinder {
 		property portal.acceptance = "true";
@@ -245,7 +245,7 @@ definition {
 		PagesFinder.navigateToPage(pageName = "Test Public Page");
 	}
 
-	@description = "Users cannot see the preview draft option for a content page when the page has not draft."
+	@description = "This is a test for LPS-139064. Users cannot see the preview draft option for a content page when the page has not draft."
 	@priority = "5"
 	test CannotPreviewDraftContentPageWhenDraftNonExistent {
 		task ("Add a content page") {
@@ -336,7 +336,7 @@ definition {
 		}
 	}
 
-	@description = "This is the test for LPS-116618. Configure page via Page Tree panel."
+	@description = "This is a test for LPS-116618. Configure page via Page Tree panel."
 	@priority = "4"
 	test ConfigurePageViaPageFinder {
 		task ("Assert Test Page Name is shown in Pages admin") {
@@ -410,7 +410,7 @@ definition {
 		PagesFinder.navigateToPage(pageName = "Test Portlet Page");
 	}
 
-	@description = "This is a test for LPS-102544. Can quickly browse and go to different pages with sidebar tree."
+	@description = "This is a test for LPS-102544. Can quickly browse and go to different pages with page tree."
 	@priority = "4"
 	test NavigateToDifferentPageViaPageFinder {
 		task ("Add layouts of various types for the pages finder") {
@@ -625,7 +625,7 @@ definition {
 		}
 	}
 
-	@description = "Users can preview draft for a content page from page tree when they exist."
+	@description = "This is a test for LPS-139064. Users can preview draft for a content page from page tree when they exist."
 	@priority = "4"
 	test PreviewDraftContentPage {
 		task ("Add a content page") {

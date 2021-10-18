@@ -679,12 +679,16 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69299. Verify that the user can set Single Approver Workflow to Documents and Media"
-	@ignore = "true"
 	@priority = "3"
 	test SetSingleApproverToDocumentsAndMedia {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
 
-		// TODO LRQA-69299 SetSingleApproverToDocumentsAndMedia pending implementation
+		Workflow.configureWorkflowViaPortlet(workflowDefinition = "Single Approver");
 
+		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
 	}
 
 	@description = "This is a test for LRQA-69300. Verify the status as Draft after file checkout"

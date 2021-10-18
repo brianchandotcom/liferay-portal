@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.internal.struts;
 
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.petra.string.StringBundler;
@@ -102,7 +103,7 @@ public class RSSStrutsAction implements StrutsAction {
 
 		String rss = StringPool.BLANK;
 
-		if (threadId > 0) {
+		if (threadId != 0) {
 			String feedURL = StringBundler.concat(
 				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
 				"/message_boards/find_thread?p_l_id=", plid, "&threadId=",
@@ -112,7 +113,7 @@ public class RSSStrutsAction implements StrutsAction {
 				threadId, WorkflowConstants.STATUS_APPROVED, max, type, version,
 				displayStyle, feedURL, entryURL, themeDisplay);
 		}
-		else if (categoryId > 0) {
+		else if (categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 			String feedURL = StringBundler.concat(
 				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
 				"/message_boards/find_category?p_l_id=", plid, "&mbCategoryId=",
@@ -122,7 +123,7 @@ public class RSSStrutsAction implements StrutsAction {
 				groupId, categoryId, WorkflowConstants.STATUS_APPROVED, max,
 				type, version, displayStyle, feedURL, entryURL, themeDisplay);
 		}
-		else if (groupId > 0) {
+		else if (groupId != 0) {
 			String mvcRenderCommandName = ParamUtil.getString(
 				httpServletRequest, "mvcRenderCommandName");
 
@@ -156,7 +157,7 @@ public class RSSStrutsAction implements StrutsAction {
 					version, displayStyle, feedURL, entryURL, themeDisplay);
 			}
 		}
-		else if (companyId > 0) {
+		else if (companyId != 0) {
 			String feedURL = StringPool.BLANK;
 
 			rss = _mbMessageService.getCompanyMessagesRSS(

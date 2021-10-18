@@ -40,7 +40,8 @@ public class OrganizationSearchRegistrar {
 			Organization.class, bundleContext,
 			modelSearchDefinition -> {
 				modelSearchDefinition.setDefaultSelectedFieldNames(
-					Field.COMPANY_ID, Field.ORGANIZATION_ID, Field.UID);
+					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
+					Field.ENTRY_CLASS_PK, Field.ORGANIZATION_ID, Field.UID);
 
 				modelSearchDefinition.setModelIndexWriteContributor(
 					modelIndexWriterContributor);

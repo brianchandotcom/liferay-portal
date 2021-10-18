@@ -31,6 +31,8 @@ public class UpgradeReleaseFeatureFlag implements UpgradeStep {
 
 	@Override
 	public void upgrade(DBProcessContext dbProcessContext) {
+		//	TODO Do this only for DXP
+
 		if (!StartupHelperUtil.isDBNew() && StartupHelperUtil.isUpgrading()) {
 			ReleaseFeatureFlagManagerUtil.setEnabled(
 				_releaseFeatureFlag, false);

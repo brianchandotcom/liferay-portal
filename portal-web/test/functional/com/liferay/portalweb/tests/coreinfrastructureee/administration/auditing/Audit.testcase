@@ -37,6 +37,11 @@ definition {
 
 		Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 
+		var curl =
+		'''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address''';
+
+		var userId = JSONCurlUtil.get("${curl}");
+
 		AssertConsoleTextPresent(
 			value1 = "xRequestId",
 			value2 = "sessionId",
@@ -86,7 +91,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "${inValidXRequestId}");
 	}
 
-	@description = "LPS-133646 and LPS-133653 TC-2: Asserting that Console output the same X-Request-ID as inputted X-Request-ID."
+	@description = "LPS-133646 and LPS-133653 TC-3: Asserting that Console output a different X-Request-ID if an invalid X-Request-ID was inputted."
 	@priority = "5"
 	test AssertValidXRequestId {
 		property test.name.skip.portal.instance = "Audit#AssertXRequestId";

@@ -154,7 +154,9 @@ definition {
 	}
 
 	macro addEntryWithHTML {
-		BlogsNavigator.gotoAddEntry();
+		if (!(isSet(skipNavigation))) {
+			BlogsNavigator.gotoAddEntry();
+		}
 
 		BlogsEntry.addTitle(entryTitle = "${entryTitle}");
 

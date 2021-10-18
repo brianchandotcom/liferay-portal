@@ -106,6 +106,8 @@ definition {
 	@priority = "4"
 	test TermsOfUseNotShownToNonAdminUser {
 		property custom.properties = "enterprise.product.notification.enabled=true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "CommerceLicense#TermsOfUseNotShownToNonAdminUser";
 
 		SelectFrame(value1 = "relative=top");
 
@@ -141,6 +143,8 @@ definition {
 	@priority = "4"
 	test TermsOfUseShownToAdminOnFirstLoginOnly {
 		property custom.properties = "enterprise.product.notification.enabled=true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "CommerceLicense#TermsOfUseShownToAdminOnFirstLoginOnly";
 
 		SelectFrame(value1 = "relative=top");
 
@@ -166,6 +170,8 @@ definition {
 	@priority = "4"
 	test TermsOfUseShownToNewAdmin {
 		property custom.properties = "enterprise.product.notification.enabled=true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "CommerceLicense#TermsOfUseShownToNewAdmin";
 
 		SelectFrame(value1 = "relative=top");
 

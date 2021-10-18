@@ -63,9 +63,13 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 			return StringPool.BLANK;
 		}
 
+		int portalServerPort = _portal.getPortalServerPort(_isHttpsEnabled());
+
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
-		HttpClient httpClient = httpClientBuilder.setUserAgent(
+		HttpClient httpClient = httpClientBuilder.setSchemePortResolver(
+			httpHost -> portalServerPort
+		).setUserAgent(
 			_USER_AGENT
 		).build();
 
@@ -82,8 +86,7 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 		themeDisplay.setLocale(locale);
 		themeDisplay.setScopeGroupId(layout.getGroupId());
 		themeDisplay.setServerName(inetAddress.getHostName());
-		themeDisplay.setServerPort(
-			_portal.getPortalServerPort(_isHttpsEnabled()));
+		themeDisplay.setServerPort(portalServerPort);
 		themeDisplay.setSiteGroupId(layout.getGroupId());
 
 		HttpGet httpGet = new HttpGet(

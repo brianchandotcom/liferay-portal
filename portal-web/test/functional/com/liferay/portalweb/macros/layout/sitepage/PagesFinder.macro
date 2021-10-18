@@ -207,6 +207,10 @@ definition {
 	macro goToPagesFinder {
 		ProductMenuHelper.openProductMenu();
 
+		if (IsElementPresent(key_text = "Page Tree", locator1 = "Button#ANY_DISABLED")) {
+			ProductMenu.gotoHomePage();
+		}
+
 		if (IsElementNotPresent(locator1 = "PagesFinder#INPUT_FIELD")) {
 			Click(
 				key_text = "Page Tree",

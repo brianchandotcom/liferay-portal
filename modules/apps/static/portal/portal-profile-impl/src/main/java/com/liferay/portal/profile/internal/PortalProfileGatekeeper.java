@@ -46,15 +46,13 @@ public class PortalProfileGatekeeper {
 				bundleContext.getProperty("whitelist.portal.profile.names")));
 
 		if (whitelistPortalProfileNames.isEmpty()) {
-			String name = ReleaseInfo.getName();
-
-			if (name.contains("Community")) {
+			if (ReleaseInfo.isDXP()) {
 				whitelistPortalProfileNames.add(
-					PortalProfile.PORTAL_PROFILE_NAME_CE);
+					PortalProfile.PORTAL_PROFILE_NAME_DXP);
 			}
 			else {
 				whitelistPortalProfileNames.add(
-					PortalProfile.PORTAL_PROFILE_NAME_DXP);
+					PortalProfile.PORTAL_PROFILE_NAME_CE);
 			}
 		}
 

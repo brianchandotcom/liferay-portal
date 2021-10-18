@@ -21,11 +21,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OUTLINE_ICON</td>
-	<td>//button[contains(.,'Page Tree')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_ELLIPSIS_ICON</td>
 	<td>//span[contains(@class,'tree-label') and contains(.,'${key_pageName}')]//button[contains(@class,'dropdown')]</td>
 	<td></td>

@@ -24,6 +24,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -31,21 +33,22 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -84,7 +87,7 @@ public class BundleSiteInitializerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_user = UserTestUtil.addUser();
+		_user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -117,6 +120,7 @@ public class BundleSiteInitializerTest {
 
 		siteInitializer.initialize(group.getGroupId());
 
+		_assertCommerceChannel();
 		_assertDocuments(group);
 		_assertObjectDefinitions(group);
 		_assertDDMStructure(group);
@@ -128,6 +132,25 @@ public class BundleSiteInitializerTest {
 		GroupLocalServiceUtil.deleteGroup(group);
 
 		bundle.uninstall();
+	}
+
+	private void _assertCommerceChannel() throws Exception {
+		ChannelResource.Builder channelResourceBuilder =
+			_channelResourceFactory.create();
+
+		ChannelResource channelResource = channelResourceBuilder.user(
+			_user
+		).build();
+
+		Page<Channel> commerceChannelsPage = channelResource.getChannelsPage(
+			"", channelResource.toFilter("name eq 'Test Channel'"), null, null);
+
+		Channel channel = commerceChannelsPage.fetchFirstItem();
+
+		Assert.assertNotNull(channel);
+		Assert.assertEquals("USD", channel.getCurrencyCode());
+		Assert.assertEquals("site", channel.getType());
+		Assert.assertEquals("RAYTEST0001", channel.getExternalReferenceCode());
 	}
 
 	private void _assertDDMStructure(Group group) {
@@ -238,6 +261,9 @@ public class BundleSiteInitializerTest {
 	}
 
 	@Inject
+	private ChannelResource.Factory _channelResourceFactory;
+
+	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Inject
@@ -267,7 +293,9 @@ public class BundleSiteInitializerTest {
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
-	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

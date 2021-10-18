@@ -37,6 +37,12 @@ definition {
 		return "${companyId}";
 	}
 
+	macro getDefaultPortalURL {
+		var portalURL = PropsUtil.get("default.portal.url");
+
+		return "${portalURL}";
+	}
+
 	macro getPortalInstanceName {
 		var testNameSkipPortalInstance = PropsUtil.get("test.name.skip.portal.instance");
 		var testPortalInstance = PropsUtil.get("test.portal.instance");

@@ -2,10 +2,7 @@ definition {
 
 	@summary = "Get all current companies in a JSON format"
 	macro _getPortalInstances {
-		var portalURL = PropsUtil.get("portal.url");
-		var portalURL = StringUtil.replace("${portalURL}", "http://", "");
-		var port = StringUtil.extractLast("${portalURL}", ":");
-		var portalURL = "http://localhost:${port}";
+		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		if ("${authenticationMethod}" == "By Screen Name") {
 			var userName = "test";
@@ -29,10 +26,7 @@ definition {
 	macro addPortalInstance {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId}");
 
-		var portalURL = PropsUtil.get("portal.url");
-		var portalURL = StringUtil.replace("${portalURL}", "http://", "");
-		var port = StringUtil.extractLast("${portalURL}", ":");
-		var portalURL = "http://localhost:${port}";
+		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		var parameters = JSONUtil2._addJSONObject(
 			JSON = "{}",
@@ -128,10 +122,7 @@ definition {
 	macro deletePortalInstance {
 		Variables.assertDefined(parameterList = "${portalInstanceId}");
 
-		var portalURL = PropsUtil.get("portal.url");
-		var portalURL = StringUtil.replace("${portalURL}", "http://", "");
-		var port = StringUtil.extractLast("${portalURL}", ":");
-		var portalURL = "http://localhost:${port}";
+		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		var portalInstanceId = StringUtil.replace("${portalInstanceId}", " ", "%20");
 

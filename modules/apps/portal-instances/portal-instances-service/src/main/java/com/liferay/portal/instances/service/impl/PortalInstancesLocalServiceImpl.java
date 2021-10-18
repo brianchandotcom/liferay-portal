@@ -35,7 +35,9 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -141,6 +143,9 @@ public class PortalInstancesLocalServiceImpl
 			Group group = _groupLocalService.getGroup(
 				company.getCompanyId(), GroupConstants.GUEST);
 
+			_layoutLocalService.deleteLayouts(
+				group.getGroupId(), false, new ServiceContext());
+
 			siteInitializer.initialize(group.getGroupId());
 		}
 		finally {
@@ -230,6 +235,9 @@ public class PortalInstancesLocalServiceImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private PermissionCheckerFactory _permissionCheckerFactory;

@@ -68,10 +68,6 @@ definition {
 		AssertElementPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM");
 	}
 
-	macro assertRequiredKeyItem {
-		AssertElementPresent(locator1 = "Picklist#REQUIRED_KEY_ITEM");
-	}
-
 	macro assertPicklistItemNotPresent {
 		var key_picklistItemName = "${picklistItemName}";
 
@@ -84,6 +80,10 @@ definition {
 		var key_picklistName = "${picklistName}";
 
 		AssertElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST");
+	}
+
+	macro assertRequiredKeyItem {
+		AssertElementPresent(locator1 = "Picklist#REQUIRED_KEY_ITEM");
 	}
 
 	macro cancelPicklist {

@@ -149,7 +149,7 @@ definition {
 
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
-		ACUtils.navigateToSitePageWithUser(
+		ACUtils.navigateToSitePage(
 			actionType = "View Blog",
 			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title",
 			pageName = "AC Page",

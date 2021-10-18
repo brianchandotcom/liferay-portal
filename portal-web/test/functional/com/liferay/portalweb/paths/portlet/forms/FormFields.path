@@ -877,6 +877,11 @@
 </tr>
 <!--VALIDATION-->
 <tr>
+	<td>VALIDATION_ACCEPTED_DATE</td>
+	<td>//div[contains(@class,"form-group") and @data-field-name='selectedValidation']//div[contains(@class,"form-control results-chosen select-field-trigger")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VALIDATION_ARGUMENT</td>
 	<td>//div[contains(@data-field-name,'selectedValidation')]//div[contains(@class,'select-field-trigger')]</td>
 	<td></td>
@@ -904,6 +909,61 @@
 <tr>
 	<td>VALIDATION_ERROR_MESSAGE</td>
 	<td>//input[contains(@class,'message-input')] | //input[contains(@name,'errorMessage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATION_STARTS_FROM</td>
+	<td>//div[contains(@class,"form-group") and @data-field-name='selectedParameter']//label[text()='Starts From']/..//div[contains(@class,"form-control results-chosen select-field-trigger")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATION_STARTS_FROM_OPERATION</td>
+	<td>//div[@data-field-name='selectedOperation_startsFrom']//div//div/div[text()='${startsFromOperation}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATION_STARTS_FROM_QUANTITY</td>
+	<td>//input[@name='inputedQuantity_startsFrom']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATION_STARTS_FROM_QUANTITY_VALUE</td>
+	<td>//input[@name='inputedQuantity_startsFrom' and @value='${key_startsFromQuantity}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATION_STARTS_FROM_UNIT</td>
+	<td>//div[@data-field-name='selectedUnit_startsFrom']//div[contains(@class,'option-selected') and text()='${key_startsFromUnit}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATION_ENDS_ON</td>
+	<td>//div[contains(@class,"form-group") and @data-field-name='selectedParameter']//label[text()='Ends On']/..//div[contains(@class,"form-control results-chosen select-field-trigger")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATION_ENDS_ON_OPERATION</td>
+	<td>//div[contains(@data-field-name,'selectedOperation_endsOn')]//div//div//div[text()='${key_endsOnOperation}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATION_ENDS_ON_QUANTITY</td>
+	<td>//input[@name='inputedQuantity_endsOn' and @value='1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATION_ENDS_ON_QUANTITY_VALUE</td>
+	<td>//input[@name='inputedQuantity_endsOn' and @value='${key_endsOnQuantity}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATION_ENDS_ON_UNIT</td>
+	<td>//div[@data-field-name='selectedUnit_endsOn']//div[contains(@class,'option-selected') and text()='Days']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATION_ENDS_ON_UNIT_VALUE</td>
+	<td>//div[@data-field-name='selectedUnit_endsOn']//div[contains(@class,'option-selected') and text()='${key_endsOnUnit}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -1000,6 +1000,52 @@ definition {
 			radioOption = "${textFieldLineOption}");
 	}
 
+	macro selectValidationCustomDateEndsOn {
+		var key_endsOnOperation = "${endsOnOperation}";
+		var key_endsOnOption = "${endsOnOption}";
+		var key_endsOnQuantity = "${endsOnQuantity}";
+		var key_endsOnUnit = "${endsOnUnit}";
+
+		Click(locator1 = "FormFields#VALIDATION_ENDS_ON");
+
+		DropdownMenuItem.click(menuItem = "${key_endsOnOption}");
+
+		Click(locator1 = "FormFields#VALIDATION_ENDS_ON_OPERATION");
+
+		DropdownMenuItem.click(menuItem = "${key_endsOnOperation}");
+
+		Type(
+			locator1 = "FormFields#VALIDATION_ENDS_ON_QUANTITY",
+			value1 = "${key_endsOnQuantity}");
+
+		Click(locator1 = "FormFields#VALIDATION_ENDS_ON_UNIT");
+
+		DropdownMenuItem.click(menuItem = "${key_endsOnUnit}");
+	}
+
+	macro selectValidationCustomDateStartsFrom {
+		var key_startsFromOperation = "${startsFromOperation}";
+		var key_startsFromOption = "${startsFromOption}";
+		var key_startsFromQuantity = "${startsFromQuantity}";
+		var key_startsFromUnit = "${startsFromUnit}";
+
+		Click(locator1 = "FormFields#VALIDATION_STARTS_FROM");
+
+		DropdownMenuItem.click(menuItem = "${key_startsFromOption}");
+
+		Click(locator1 = "FormFields#VALIDATION_STARTS_FROM_OPERATION");
+
+		DropdownMenuItem.click(menuItem = "${startsFromOperation}");
+
+		Type(
+			locator1 = "FormFields#VALIDATION_STARTS_FROM_QUANTITY",
+			value1 = "${key_startsFromQuantity}");
+
+		Click(locator1 = "FormFields#VALIDATION_STARTS_FROM_UNIT");
+
+		DropdownMenuItem.click(menuItem = "${key_startsFromUnit}");
+	}
+
 	macro setImagePredefinedValue {
 		Form.gotoAdvancedTab();
 
@@ -1055,6 +1101,14 @@ definition {
 			key_fieldName = "",
 			key_radioOption = "${maskOption}",
 			locator1 = "FormFields#RADIO_OPTION_LABEL");
+	}
+
+	macro setValidationAcceptedDate {
+		var key_acceptedDateOption = "${acceptedDateOption}";
+
+		Click(locator1 = "FormFields#VALIDATION_ACCEPTED_DATE");
+
+		DropdownMenuItem.click(menuItem = "${key_acceptedDateOption}");
 	}
 
 	macro toggleCKEditorContentStyle {
@@ -2147,6 +2201,68 @@ definition {
 		AssertTextEquals.assertText(
 			locator1 = "Form#FIELD_LABEL",
 			value1 = "${fieldLabel}");
+	}
+
+	macro viewValidationCustomDateEndsOn {
+		var key_endsOnOperation = "${endsOnOperation}";
+		var key_endsOnOption = "${endsOnOption}";
+		var key_endsOnQuantity = "${endsOnQuantity}";
+		var key_endsOnUnit = "${endsOnUnit}";
+
+		if (isSet(endsOnOption)) {
+			Click(locator1 = "FormFields#VALIDATION_ENDS_ON");
+
+			DropdownMenuItem.click(menuItem = "${key_endsOnOption}");
+		}
+
+		if (isSet(endsOnOperation)) {
+			AssertTextEquals(
+				locator1 = "FormFields#VALIDATION_ENDS_ON_OPERATION",
+				value1 = "${key_endsOnOperation}");
+		}
+
+		if (isSet(endsOnQuantity)) {
+			AssertTextEquals.assertValue(
+				locator1 = "FormFields#VALIDATION_ENDS_ON_QUANTITY_VALUE",
+				value1 = "${key_endsOnQuantity}");
+		}
+
+		if (isSet(endsOnUnit)) {
+			AssertTextEquals(
+				locator1 = "FormFields#VALIDATION_ENDS_ON_UNIT_VALUE",
+				value1 = "${key_endsOnUnit}");
+		}
+	}
+
+	macro viewValidationCustomDateStartsFrom {
+		var key_startsFromOperation = "${startsFromOperation}";
+		var key_startsFromOption = "${startsFromOption}";
+		var key_startsFromQuantity = "${startsFromQuantity}";
+		var key_startsFromUnit = "${startsFromUnit}";
+
+		if (isSet(startsFromOption)) {
+			Click(locator1 = "FormFields#VALIDATION_STARTS_FROM");
+
+			DropdownMenuItem.click(menuItem = "${key_startsFromOption}");
+		}
+
+		if (isSet(startsFromOperation)) {
+			AssertTextEquals(
+				locator1 = "FormFields#VALIDATION_STARTS_FROM_OPERATION",
+				value1 = "${key_startsFromOperation}");
+		}
+
+		if (isSet(startsFromQuantity)) {
+			AssertTextEquals.assertValue(
+				locator1 = "FormFields#VALIDATION_STARTS_FROM_QUANTITY_VALUE",
+				value1 = "${key_startsFromQuantity}");
+		}
+
+		if (isSet(startsFromUnit)) {
+			AssertTextEquals(
+				locator1 = "FormFields#VALIDATION_STARTS_FROM_UNIT",
+				value1 = "${key_startsFromUnit}");
+		}
 	}
 
 	macro viewValidationValueFieldNotPresent {

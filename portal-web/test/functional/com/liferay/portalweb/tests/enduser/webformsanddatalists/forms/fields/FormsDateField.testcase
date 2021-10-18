@@ -31,6 +31,116 @@ definition {
 		}
 	}
 
+	@description = "Verify that is able to add a future validation using the response date as parameter"
+	@priority = "5"
+	test CanAddFutureValidationUsingResponseDate {
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayDateMonth = DateUtil.getCurrentMonth();
+		var displayDateYear = DateUtil.getCurrentYear();
+		var futureYear = ${displayDateYear} + 1;
+		var displayFutureDate = "${displayDateMonth}/${displayDateDay}/${futureYear}";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "Date Field");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Validation");
+
+		FormFields.setValidationAcceptedDate(acceptedDateOption = "Future Dates");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewLabel(
+			fieldLabel = "Date Field",
+			fieldName = "Date Field");
+
+		FormViewBuilder.editDate(
+			fieldName = "Date Field",
+			fieldValue = "01/01/2020");
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "This field is invalid.");
+
+		FormViewBuilder.editDate(
+			fieldName = "Date Field",
+			fieldValue = "${displayFutureDate}");
+
+		FormPortlet.submitSuccessfully();
+
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Date Field",
+			fieldValue = "${displayFutureDate}");
+	}
+
+	@description = "Verify that is able to add a past and range validation using the response date as parameter"
+	@priority = "5"
+	test CanAddPastValidationUsingResponseDate {
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayDateMonth = DateUtil.getCurrentMonth();
+		var displayDateYear = DateUtil.getCurrentYear();
+		var futureYear = ${displayDateYear} + 1;
+		var pastYear = ${displayDateYear} - 1;
+		var displayFutureDate = "${displayDateMonth}/${displayDateDay}/${futureYear}";
+		var displayPastDate = "${displayDateMonth}/${displayDateDay}/${pastYear}";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "Date Field");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Validation");
+
+		FormFields.setValidationAcceptedDate(acceptedDateOption = "Past Dates");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewLabel(
+			fieldLabel = "Date Field",
+			fieldName = "Date Field");
+
+		FormViewBuilder.editDate(
+			fieldName = "Date Field",
+			fieldValue = "${displayFutureDate}");
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "This field is invalid.");
+
+		FormViewBuilder.editDate(
+			fieldName = "Date Field",
+			fieldValue = "${displayPastDate}");
+
+		FormPortlet.submitSuccessfully();
+
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Date Field",
+			fieldValue = "${displayPastDate}");
+	}
+
 	@description = "Verify that a Date Field can be created"
 	@priority = "5"
 	test CanBeCreated {
@@ -308,6 +418,36 @@ definition {
 		FormPortlet.submitSuccessfully();
 	}
 
+	@description = "Verify if the Custom Date has Plus, 1 and Days as default value"
+	@priority = "5"
+	test CanBeSetValidationWithCustomDate {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Validation");
+
+		FormFields.setValidationAcceptedDate(acceptedDateOption = "Range");
+
+		FormFields.viewValidationCustomDateStartsFrom(
+			startsFromOperation = "Plus",
+			startsFromOption = "Custom Date",
+			startsFromQuantity = "1",
+			startsFromUnit = "Days");
+
+		FormFields.viewValidationCustomDateEndsOn(
+			endsOnOperation = "Plus",
+			endsOnOption = "Custom Date",
+			endsOnQuantity = "1",
+			endsOnUnit = "Days");
+	}
+
 	@description = "Verify that a Form can be submitted with the Date Field"
 	@priority = "5"
 	test CanBeSubmitted {
@@ -352,6 +492,78 @@ definition {
 			fieldLabel = "Date",
 			fieldName = "Date",
 			fieldValue = "01/01/2021");
+	}
+
+	@description = "Verify that its possible to have more than one Date field using the Validation with custom date in a form"
+	@priority = "5"
+	test CanHaveMoreThanOneDateFieldUsingDateValidation {
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayDateMonth = DateUtil.getCurrentMonth();
+		var displayDateYear = DateUtil.getCurrentYear();
+		var futureYear = ${displayDateYear} + 1;
+		var displayFutureDate = "${displayDateMonth}/${displayDateDay}/${futureYear}";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Validation");
+
+		FormFields.setValidationAcceptedDate(acceptedDateOption = "Range");
+
+		FormFields.selectValidationCustomDateStartsFrom(
+			startsFromOperation = "Plus",
+			startsFromOption = "Custom Date",
+			startsFromQuantity = "1",
+			startsFromUnit = "Days");
+
+		FormFields.selectValidationCustomDateEndsOn(
+			endsOnOperation = "Plus",
+			endsOnOption = "Custom Date",
+			endsOnQuantity = "2",
+			endsOnUnit = "Years");
+
+		FormFields.duplicateField();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewLabel(
+			fieldLabel = "Date",
+			fieldName = "Date");
+
+		FormFields.viewLabel(
+			fieldLabel = "Copy of Date",
+			fieldName = "Copy of Date");
+
+		FormViewBuilder.editDate(
+			fieldName = "Date",
+			fieldValue = "${displayFutureDate}");
+
+		FormViewBuilder.editDate(
+			fieldName = "Copy of Date",
+			fieldValue = "${displayFutureDate}");
+
+		FormPortlet.submitSuccessfully();
+
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Date",
+			fieldValue = "${displayFutureDate}");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Copy of Date",
+			fieldValue = "${displayFutureDate}");
 	}
 
 	@description = "Verify that changes to the Field can be canceled"
@@ -526,6 +738,233 @@ definition {
 
 		// TODO LPS-132818 TypeCanBeChanged pending implementation
 
+	}
+
+	@description = "Verify if the Repeatable option is working correctly on the Date field using the Validation with custom date"
+	@priority = "4"
+	test ValidationCanBeRepeatable {
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayDateMonth = DateUtil.getCurrentMonth();
+		var displayDateYear = DateUtil.getCurrentYear();
+		var futureYear = ${displayDateYear} + 1;
+		var displayFutureDate = "${displayDateMonth}/${displayDateDay}/${futureYear}";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Validation");
+
+		FormViewBuilder.setFieldRepeatable();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.addRepeatableField(
+			fieldName = "Date",
+			repeatableFieldNumber = "1");
+
+		FormFields.viewPublishedFormFieldByIndex(
+			fieldLabel = "Date",
+			index = "1");
+
+		FormFields.viewPublishedFormFieldByIndex(
+			fieldLabel = "Date",
+			index = "2");
+
+		FormFields.editDateByIndex(
+			index = "1",
+			key_value = "${displayFutureDate}");
+
+		FormFields.editDateByIndex(
+			index = "2",
+			key_value = "${displayFutureDate}");
+
+		FormPortlet.submitSuccessfully();
+
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Date",
+			fieldValue = "${displayFutureDate}, ${displayFutureDate}");
+	}
+
+	@description = "Verify if the Date field using the Validation with custom date can be translated"
+	@priority = "4"
+	test ValidationCanBeTranslated {
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayDateMonth = DateUtil.getCurrentMonth();
+		var displayDateYear = DateUtil.getCurrentYear();
+		var futureYear = ${displayDateYear} + 1;
+		var displayDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
+		var displayFutureDate = "${displayDateMonth}/${displayDateDay}/${futureYear}";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Validation");
+
+		FormFields.setValidationAcceptedDate(acceptedDateOption = "Range");
+
+		FormFields.selectValidationCustomDateStartsFrom(
+			startsFromOperation = "Plus",
+			startsFromOption = "Custom Date",
+			startsFromQuantity = "1",
+			startsFromUnit = "Days");
+
+		FormFields.selectValidationCustomDateEndsOn(
+			endsOnOperation = "Plus",
+			endsOnOption = "Custom Date",
+			endsOnQuantity = "2",
+			endsOnUnit = "Years");
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		FormFields.viewValidationCustomDateStartsFrom(
+			startsFromOperation = "Plus",
+			startsFromQuantity = "1",
+			startsFromUnit = "Days");
+
+		FormFields.viewValidationCustomDateEndsOn(
+			endsOnOperation = "Plus",
+			endsOnQuantity = "2",
+			endsOnUnit = "Years");
+
+		Type(
+			locator1 = "FormFields#VALIDATION_ERROR_MESSAGE",
+			value1 = "Esse campo e invalido.");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "${displayDate}");
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "This field is invalid.");
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "${displayFutureDate}");
+
+		FormPortlet.submitSuccessfully();
+
+		Refresh();
+
+		FormPortlet.changeLocale(locale = "português-Brasil");
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "${displayDateDay}/${displayDateMonth}/${displayDateYear}");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Esse campo e invalido.");
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "${displayDateDay}/${displayDateMonth}/${futureYear}");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+	}
+
+	@description = "Verify if that with date validation in the datefield the error message appears correctly on forms"
+	@priority = "5"
+	test ValidationErrorMessageCanBeEdited {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Validation");
+
+		Type(
+			locator1 = "FormFields#VALIDATION_ERROR_MESSAGE",
+			value1 = "This is a customized message to test feature: 12345 &!@#$%");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/2000");
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "This is a customized message to test feature: 12345 &!@#$%");
+
+		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "This is a customized message to test feature: 12345 &!@#$%r");
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/2030");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
+	}
+
+	@description = "Verify if the Predefined values are working correctly on the Date field using the Validation with custom date"
+	@priority = "5"
+	test ValidationIsWorkingOnPredefinedValue {
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayDateMonth = DateUtil.getCurrentMonth();
+		var displayDateYear = DateUtil.getCurrentYear();
+		var futureYear = ${displayDateYear} + 1;
+		var pastYear = ${displayDateYear} - 1;
+		var displayPastDate = "${displayDateMonth}/${displayDateDay}/${pastYear}";
+		var displayFutureDate = "${displayDateMonth}/${displayDateDay}/${futureYear}";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Validation");
+
+		FormFields.editDatePredefinedValue(fieldValue = "${displayPastDate}");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "This field is invalid.");
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "${displayFutureDate}");
+
+		FormPortlet.submitSuccessfully();
+
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Date",
+			fieldValue = "${displayFutureDate}");
 	}
 
 }

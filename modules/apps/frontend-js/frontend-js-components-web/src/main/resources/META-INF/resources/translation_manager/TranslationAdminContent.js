@@ -79,14 +79,18 @@ const TranslationAdminContent = ({
 							<ClayInput.Group>
 								<ClayInput.GroupItem>
 									<ClayInput
-										aria-label={Liferay.Language.get('search')}
+										aria-label={Liferay.Language.get(
+											'search'
+										)}
 										insetAfter={true}
 										onChange={(event) => {
 											const {value} = event.target;
 
 											setSearchValue(value);
 										}}
-										placeholder={Liferay.Language.get('search')}
+										placeholder={Liferay.Language.get(
+											'search'
+										)}
 										value={searchValue}
 									/>
 
@@ -118,21 +122,25 @@ const TranslationAdminContent = ({
 								onActiveChange={setCreationMenuActive}
 								trigger={
 									<ClayButtonWithIcon
-									disabled={availableLocales.length === 0}
-									small
-									symbol="plus"
+										disabled={availableLocales.length === 0}
+										small
+										symbol="plus"
 									/>
 								}
-								>
+							>
 								<ClayDropDown.ItemList>
 									{availableLocales.map((availableLocale) => {
 										return (
 											<ClayDropDown.Item
-											key={availableLocale.label}
-											onClick={() => {
-												onAddLocale(availableLocale.id);
-											}}
-											symbolLeft={availableLocale.symbol}
+												key={availableLocale.label}
+												onClick={() => {
+													onAddLocale(
+														availableLocale.id
+													);
+												}}
+												symbolLeft={
+													availableLocale.symbol
+												}
 											>
 												{availableLocale.label}
 											</ClayDropDown.Item>

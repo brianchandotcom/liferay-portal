@@ -228,7 +228,6 @@
 											<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#automatic-translate" />
 										</svg>
 									</span>
-
 									<span><liferay-ui:message key="manage-translations" /></span>
 								</button>
 							</li>

@@ -29,6 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-103104. Can add pages of different types via page tree panel."
+	test AddAllTypesOfPages {
 	@priority = "5"
 	@uitest
 	test AddChildPage {
@@ -145,7 +146,7 @@ definition {
 
 	@description = "This is a test for LPS-107775. Can add new collections when add a collection page from page tree panel."
 	@priority = "5"
-	test AddCollectionViaAddingCollectionPage {
+	test AddCollectionWhenAddingCollectionPage {
 		property portal.acceptance = "true";
 
 		ProductMenu.gotoSite(site = "Test Site Name");
@@ -233,7 +234,7 @@ definition {
 
 	@description = "This is a test for LPS-103104. Can add a widget page via page tree panel."
 	@priority = "5"
-	test AddPageViaPageFinder {
+	test AddWidgetPage {
 		property portal.acceptance = "true";
 
 		Navigator.openSiteURL(siteName = "Test Site Name");
@@ -338,7 +339,7 @@ definition {
 
 	@description = "This is a test for LPS-116618. Configure page via Page Tree panel."
 	@priority = "4"
-	test ConfigurePageViaPageFinder {
+	test ConfigurePage {
 		task ("Assert Test Page Name is shown in Pages admin") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -382,7 +383,7 @@ definition {
 
 	@description = "This is a test for LPS-102544. Can navigate to both public and private pages from pages finder."
 	@priority = "5"
-	test NavigateToBothPageTypesViaPageFinder {
+	test NavigateToBothPageTypes {
 		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(
@@ -412,7 +413,7 @@ definition {
 
 	@description = "This is a test for LPS-102544. Can quickly browse and go to different pages with page tree."
 	@priority = "4"
-	test NavigateToDifferentPageViaPageFinder {
+	test NavigateToDifferentPages {
 		task ("Add layouts of various types for the pages finder") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -459,7 +460,7 @@ definition {
 
 	@description = "This is a test for LPS-133709. The user can navigate to private and public pages defined in navigation menu via the Page Tree."
 	@priority = "4"
-	test NavigateToPrivateAndPublicPagesDefinedInNavigationMenuViaPageTree {
+	test NavigateToPrivateAndPublicPagesDefinedInNavigationMenu {
 		task ("Add a public content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -556,7 +557,7 @@ definition {
 
 	@description = "This is a test for LPS-133709. The user can navigate to public pages defined in navigation menu via the Page Tree."
 	@priority = "4"
-	test NavigateToPublicPagesDefinedInNavigationMenuViaPageTree {
+	test NavigateToPublicPagesDefinedInNavigationMenu {
 		task ("Add two public widget pages") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
@@ -671,7 +672,7 @@ definition {
 
 	@description = "This is a test for LPS-116428. Can reorganize the pages via Page Tree panel."
 	@priority = "4"
-	test ReorganizePagesViaPageFinder {
+	test ReorganizePages {
 		task ("Access to Page Tree panel in Test Site Name") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BODY_SOURCE_VALUE_1</td>
+	<td>//*[contains(@value, 'Link to Document')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_TEXT</td>
 	<td>//body[contains(@class,'cke_editable') and contains(.,'${key_text}')]</td>
 	<td></td>

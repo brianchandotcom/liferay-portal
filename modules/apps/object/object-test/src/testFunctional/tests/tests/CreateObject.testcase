@@ -286,13 +286,11 @@ definition {
 	@description = "LPS-135400 - Verify it is possible to create a One to Many Relationship"
 	@priority = "4"
 	test CanCreateOneToManyRelationship {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object A",
 			objectName = "CustomObjectA",
 			pluralLabelName = "Custom Objects");
-		
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object B",
 			objectName = "CustomObjectB",
@@ -306,13 +304,12 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			type = "One to Many",
-			object = "CustomObjectB");
+			object = "CustomObjectB",
+			type = "One to Many");
 
 		AssertElementPresent(
-			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL",
-			key_label = "Relationship");
-
+			key_label = "Relationship",
+			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to create a Picklist field"

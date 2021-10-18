@@ -351,6 +351,25 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to move a document to a trash"
+	macro moveToRecycleBin {
+		var fileEntryId = JSONDocument.getFileEntryId(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			folderId = "${folderId}",
+			groupName = "${groupName}",
+			portalURL = "${baseURL}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/dltrash/move-file-entry-to-trash \
+			-u test@liferay.com:test \
+			-d fileEntryId=${fileEntryId}
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to subscribe to a folder"
 	macro subscribeToFolder {
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(

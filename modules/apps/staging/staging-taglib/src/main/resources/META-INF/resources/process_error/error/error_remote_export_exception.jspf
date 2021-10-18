@@ -32,6 +32,10 @@
 		<liferay-ui:message arguments='<%= "<em>" + ree.getGroupId() + "</em>" %>' key="unable-to-activate-remote-staging-on-site-with-id-x.-global-site-can-only-be-staged-to-another-global-site" translateArguments="<%= false %>" />
 	</c:if>
 
+	<c:if test="<%= ree.getType() == RemoteExportException.INVALID_STATE %>">
+		<liferay-ui:message arguments='<%= "<em>" + ree.getGroupId() + "</em>" %>' key="unable-to-activate-remote-staging-on-site-with-id-x.-the-remote-live-site-cannot-be-locally-staged" translateArguments="<%= false %>" />
+	</c:if>
+
 	<c:if test="<%= ree.getType() == RemoteExportException.NO_GROUP %>">
 		<liferay-ui:message arguments='<%= "<em>" + ree.getGroupId() + "</em>" %>' key="no-site-exists-on-the-remote-server-with-site-id-x" translateArguments="<%= false %>" />
 	</c:if>

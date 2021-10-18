@@ -115,6 +115,7 @@ export default ({
 	siteNames,
 	spritemap,
 	typeNames,
+	typesFromURL,
 	updateCTCommentURL,
 	userInfo,
 	usersFromURL,
@@ -131,6 +132,7 @@ export default ({
 	const GLOBAL_SITE_NAME = Liferay.Language.get('global');
 	const MENU_CHANGE_TYPES = 'MENU_CHANGE_TYPES';
 	const MENU_ROOT = 'MENU_ROOT';
+	const MENU_TYPES = 'MENU_TYPES';
 	const MENU_USERS = 'MENU_USERS';
 	const MVC_RENDER_COMMAND_NAME = '/change_tracking/view_changes';
 	const PARAM_CHANGE_TYPES = namespace + 'changeTypes';
@@ -139,6 +141,7 @@ export default ({
 	const PARAM_MVC_RENDER_COMMAND_NAME = namespace + 'mvcRenderCommandName';
 	const PARAM_PATH = namespace + 'path';
 	const PARAM_SHOW_HIDEABLE = namespace + 'showHideable';
+	const PARAM_TYPES = namespace + 'types';
 	const PARAM_USERS = namespace + 'users';
 	const POP_STATE = 'popstate';
 	const VIEW_TYPE_CHANGES = 'changes';
@@ -197,6 +200,7 @@ export default ({
 	params.delete(PARAM_KEYWORDS);
 	params.delete(PARAM_PATH);
 	params.delete(PARAM_SHOW_HIDEABLE);
+	params.delete(PARAM_TYPES);
 	params.delete(PARAM_USERS);
 
 	const basePath = useRef(pathname + '?' + params.toString());
@@ -620,11 +624,20 @@ export default ({
 	const [searchMobile, setSearchMobile] = useState(false);
 	const [showComments, setShowComments] = useState(false);
 
-	const getFilters = useCallback((changeTypes, users) => {
+	const getFilters = useCallback((changeTypes, types, users) => {
 		let changeTypeIds = [];
 
 		if (changeTypes) {
 			changeTypeIds = changeTypes.split(',').map((id) => Number(id));
+		}
+
+		let typeIds = [];
+
+		if (types) {
+			typeIds = types
+				.split(',')
+				.filter((id) => !!typesRef.current[id])
+				.map((id) => Number(id));
 		}
 
 		let userIds = [];
@@ -635,11 +648,16 @@ export default ({
 
 		return {
 			changeTypes: changeTypeIds,
+			types: typeIds,
 			users: userIds,
 		};
 	}, []);
 
-	const initialFilters = getFilters(changeTypesFromURL, usersFromURL);
+	const initialFilters = getFilters(
+		changeTypesFromURL,
+		typesFromURL,
+		usersFromURL
+	);
 
 	const [filtersState, setFiltersState] = useState(initialFilters);
 
@@ -647,6 +665,17 @@ export default ({
 		(filters, keywords, nodes, showHideable, viewType) => {
 			if (!nodes) {
 				return nodes;
+			}
+
+			let filterTypes = [];
+
+			const typeIds = filters['types'];
+
+			if (typeIds && typeIds.length > 0) {
+				filterTypes = typeIds
+					.map((typeId) => typesRef.current[typeId])
+					.filter((type) => showHideable || !type.hideable)
+					.map((type) => type.name);
 			}
 
 			let pattern = null;
@@ -671,6 +700,13 @@ export default ({
 				if (
 					changeTypes.length > 0 &&
 					!changeTypes.includes(node.changeType)
+				) {
+					return false;
+				}
+
+				if (
+					filterTypes.length > 0 &&
+					!filterTypes.includes(node.typeName)
 				) {
 					return false;
 				}
@@ -737,6 +773,12 @@ export default ({
 					changeTypes.join(',');
 			}
 
+			const typeIds = filters['types'];
+
+			if (typeIds && typeIds.length > 0) {
+				path = path + '&' + PARAM_TYPES + '=' + typeIds.join(',');
+			}
+
 			const userIds = filters['users'];
 
 			if (userIds && userIds.length > 0) {
@@ -754,6 +796,7 @@ export default ({
 			PARAM_KEYWORDS,
 			PARAM_PATH,
 			PARAM_SHOW_HIDEABLE,
+			PARAM_TYPES,
 			PARAM_USERS,
 		]
 	);
@@ -848,6 +891,7 @@ export default ({
 			if (viewType === VIEW_TYPE_CONTEXT) {
 				filters = {
 					changeTypes: [],
+					types: [],
 					users: [],
 				};
 				keywords = '';
@@ -968,15 +1012,28 @@ export default ({
 
 			const filters = getFilters(
 				params.get(PARAM_CHANGE_TYPES),
+				params.get(PARAM_TYPES),
 				params.get(PARAM_USERS)
 			);
 
-			const showHideable =
+			let showHideable =
 				node.hideable ||
 				(filterClass !== FILTER_CLASS_EVERYTHING &&
 					contextViewRef.current[filterClass].hideable)
 					? true
 					: !!renderState.showHideable;
+
+			if (!showHideable) {
+				const typeIds = filters['types'];
+
+				if (typeIds) {
+					showHideable = !!typeIds.find((typeId) => {
+						const type = typesRef.current[typeId];
+
+						return type.hideable;
+					});
+				}
+			}
 
 			setFiltersState(filters);
 			setRenderState({
@@ -1001,6 +1058,7 @@ export default ({
 			PARAM_CHANGE_TYPES,
 			PARAM_KEYWORDS,
 			PARAM_PATH,
+			PARAM_TYPES,
 			PARAM_USERS,
 			VIEW_TYPE_CONTEXT,
 			filterNodes,
@@ -1487,6 +1545,25 @@ export default ({
 		return getFilterList(items, 'changeTypes');
 	};
 
+	const getTypesFilterList = () => {
+		const types = [];
+
+		const keys = Object.keys(typesRef.current);
+
+		for (let i = 0; i < keys.length; i++) {
+			const type = typesRef.current[keys[i]];
+
+			if (type.ctEntry && (renderState.showHideable || !type.hideable)) {
+				types.push({
+					id: Number(keys[i]),
+					label: type.label,
+				});
+			}
+		}
+
+		return getFilterList(types, 'types');
+	};
+
 	const getUsersFilterList = () => {
 		const users = [];
 
@@ -1848,12 +1925,34 @@ export default ({
 
 		const oldPathParam = params.get(PARAM_PATH);
 
+		const filters = JSON.parse(JSON.stringify(filtersState));
+
+		let updatedFilters = false;
+
+		if (!showHideable) {
+			const typeIds = filters['types'];
+
+			if (typeIds && typeIds.length > 0) {
+				filters['types'] = typeIds.filter((typeId) => {
+					const type = typesRef.current[typeId];
+
+					if (type.hideable) {
+						updatedFilters = true;
+
+						return false;
+					}
+
+					return true;
+				});
+			}
+		}
+
 		if (
 			isWithinApp(params) &&
-			(!oldPathParam || oldPathParam === pathParam)
+			(updatedFilters || !oldPathParam || oldPathParam === pathParam)
 		) {
 			const path = getPath(
-				filtersState,
+				filters,
 				resultsKeywords,
 				pathParam,
 				showHideable
@@ -1870,12 +1969,18 @@ export default ({
 				newState.path = path;
 			}
 
-			window.history.replaceState(newState, document.title, path);
+			if (updatedFilters) {
+				window.history.pushState(newState, document.title, path);
+			}
+			else {
+				window.history.replaceState(newState, document.title, path);
+			}
 		}
 
+		setFiltersState(filters);
 		setRenderState({
 			children: filterNodes(
-				filtersState,
+				filters,
 				resultsKeywords,
 				renderState.node.children,
 				showHideable,
@@ -1973,6 +2078,10 @@ export default ({
 										MENU_CHANGE_TYPES
 									)}
 									{getDrilldownRootItem(
+										Liferay.Language.get('types'),
+										MENU_TYPES
+									)}
+									{getDrilldownRootItem(
 										Liferay.Language.get('users'),
 										MENU_USERS
 									)}
@@ -1982,6 +2091,12 @@ export default ({
 									Liferay.Language.get('change-types'),
 									false,
 									MENU_CHANGE_TYPES
+								)}
+								{getDrilldownMenu(
+									getTypesFilterList,
+									Liferay.Language.get('types'),
+									true,
+									MENU_TYPES
 								)}
 								{getDrilldownMenu(
 									getUsersFilterList,
@@ -2325,6 +2440,21 @@ export default ({
 			}
 		}
 
+		const typeIds = filtersState['types'];
+
+		if (typeIds && typeIds.length > 0) {
+			for (let i = 0; i < typeIds.length; i++) {
+				const type = typesRef.current[typeIds[i]];
+
+				if (renderState.showHideable || !type.hideable) {
+					labels.push({
+						label: Liferay.Language.get('type') + ': ' + type.label,
+						onClick: () => toggleFilter('types', typeIds[i]),
+					});
+				}
+			}
+		}
+
 		const userIds = filtersState['users'];
 
 		if (userIds && userIds.length > 0) {
@@ -2420,7 +2550,7 @@ export default ({
 					className="component-link tbar-link"
 					displayType="unstyled"
 					onClick={() => {
-						handleFiltersUpdate({changeTypes: [], users: []}, '');
+						handleFiltersUpdate({changeTypes: [], types: [], users: []}, '');
 						setEntrySearchTerms('');
 					}}
 				>

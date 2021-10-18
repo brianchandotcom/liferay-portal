@@ -468,6 +468,8 @@ public class ViewChangesDisplayContext {
 				return typeNamesJSONObject;
 			}
 		).put(
+			"typesFromURL", ParamUtil.getString(_renderRequest, "types")
+		).put(
 			"updateCTCommentURL",
 			() -> {
 				ResourceURL updateCTCommentURL =

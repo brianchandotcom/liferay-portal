@@ -126,6 +126,22 @@ definition {
 			value1 = "${changeTitle}");
 	}
 
+	macro viewChangesResultsOrder {
+		var changeOrder = "0";
+
+		for (var changeTitle : list "${changesList}") {
+			var changeOrder = ${changeOrder} + 1;
+
+			var key_changeCategory = "${changeCategory}";
+			var key_changeTitle = "${changeTitle}";
+
+			AssertTextEquals(
+				changeOrder = "${changeOrder}",
+				locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
+				value1 = "${changeTitle}");
+		}
+	}
+
 	macro viewChangesViaChangesStyle {
 		if ("${publishedPublication}" == "true") {
 			Click(

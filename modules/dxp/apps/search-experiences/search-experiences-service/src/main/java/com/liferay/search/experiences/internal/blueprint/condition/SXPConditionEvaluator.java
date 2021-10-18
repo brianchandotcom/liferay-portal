@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.internal.blueprint.condition;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
@@ -30,17 +31,7 @@ public class SXPConditionEvaluator {
 			return true;
 		}
 
-		// TODO any_of and all_of
-
-		for (String key : jsonObject.keySet()) {
-			if (!_evaluate(
-					jsonObject.getJSONObject(key), key, sxpParameterData)) {
-
-				return false;
-			}
-		}
-
-		return true;
+		return _evaluate(StringPool.BLANK, jsonObject, sxpParameterData);
 	}
 
 	private static boolean _evaluate(
@@ -113,6 +104,33 @@ public class SXPConditionEvaluator {
 		}
 
 		throw new IllegalArgumentException("Unknown condition " + key);
+	}
+
+	private static boolean _evaluate(
+		String groupCondition, JSONObject jsonObject,
+		SXPParameterData sxpParameterData) {
+
+		boolean valid = false;
+
+		for (String key : jsonObject.keySet()) {
+			if (key.equals("any_of") || key.equals("all_of")) {
+				valid = _evaluate(
+					key, jsonObject.getJSONObject(key), sxpParameterData);
+			}
+			else {
+				valid = _evaluate(
+					jsonObject.getJSONObject(key), key, sxpParameterData);
+			}
+
+			if (!valid && !groupCondition.equals("any_of")) {
+				return false;
+			}
+			else if (valid && groupCondition.equals("any_of")) {
+				return true;
+			}
+		}
+
+		return valid;
 	}
 
 }

@@ -26,6 +26,8 @@ import com.liferay.poshi.core.util.StringUtil;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -304,6 +306,35 @@ public abstract class PoshiElement
 		sb.append(" {");
 
 		PoshiNode<?, ?> previousPoshiNode = null;
+
+		Collections.sort(
+			poshiNodes,
+			new Comparator<PoshiNode>() {
+
+				@Override
+				public int compare(PoshiNode poshiNode1, PoshiNode poshiNode2) {
+					if ((poshiNode1 instanceof CommandPoshiElement) &&
+						(poshiNode2 instanceof CommandPoshiElement)) {
+
+						CommandPoshiElement commandPoshiElement1 =
+							(CommandPoshiElement)poshiNode1;
+
+						CommandPoshiElement commandPoshiElement2 =
+							(CommandPoshiElement)poshiNode2;
+
+						String commandName1 =
+							commandPoshiElement1.getBlockName();
+
+						String commandName2 =
+							commandPoshiElement2.getBlockName();
+
+						return commandName1.compareTo(commandName2);
+					}
+
+					return 0;
+				}
+
+			});
 
 		for (Iterator<PoshiNode<?, ?>> iterator = poshiNodes.iterator();
 			 iterator.hasNext();) {

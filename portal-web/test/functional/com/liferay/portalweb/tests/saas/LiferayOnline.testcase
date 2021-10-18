@@ -186,19 +186,19 @@ definition {
 
 	}
 
-	@description = "View the Bootcamp Fragments Collections"
+	@description = "View the Bootcamp Documents"
 	@ignore = "Test Stub"
-	@priority = "3"
-	test ViewBootcampFragmentsCollections {
+	@priority = "4"
+	test ViewBootcampDocuments {
 
 		// TODO Create the automation about the LPS-137508.
 
 	}
 
-	@description = "View the Bootcamp Documents"
+	@description = "View the Bootcamp Fragments Collections"
 	@ignore = "Test Stub"
-	@priority = "4"
-	test ViewBootcampDocuments {
+	@priority = "3"
+	test ViewBootcampFragmentsCollections {
 
 		// TODO Create the automation about the LPS-137508.
 
@@ -221,14 +221,5 @@ definition {
 		// TODO Create the automation about the LPS-137508.
 
 	}
-
-	@description = "View the Bootcamp Web Content"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test ViewBootcampWebContent {
-
-		// TODO Create the automation about the LPS-137508.
-
-	}	
 
 }

@@ -6,13 +6,13 @@ definition {
 	property testray.main.component.name = "Site Pages Administration";
 
 	setUp {
-		task ("Default setup") {
+		task ("Set up instance and sign in") {
 			TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
 		}
 
-		task ("Create new Sites") {
+		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 	}

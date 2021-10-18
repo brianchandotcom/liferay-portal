@@ -223,9 +223,11 @@
 							<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 							<li>
 								<button class="dropdown-item" id="manage-translations">
-									<svg class="lexicon-icon lexicon-icon-automatic-translate" role="presentation">
-										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#automatic-translate" />
-									</svg>
+									<span class="inline-item inline-item-before">
+										<svg class="lexicon-icon lexicon-icon-automatic-translate" role="presentation">
+											<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#automatic-translate" />
+										</svg>
+									</span>
 
 									<span><liferay-ui:message key="manage-translations" /></span>
 								</button>

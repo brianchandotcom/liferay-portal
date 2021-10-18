@@ -32,6 +32,17 @@ public class ObjectEntryServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntry addObjectEntry(
+			long userId, long groupId, long objectDefinitionId,
+			java.util.Map<String, java.io.Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.addObjectEntry(
+			userId, groupId, objectDefinitionId, values, serviceContext);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry addObjectEntry(
 			long groupId, long objectDefinitionId,
 			java.util.Map<String, java.io.Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -39,6 +50,19 @@ public class ObjectEntryServiceWrapper
 
 		return _objectEntryService.addObjectEntry(
 			groupId, objectDefinitionId, values, serviceContext);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry addOrUpdateObjectEntry(
+			String externalReferenceCode, long userId, long groupId,
+			long objectDefinitionId,
+			java.util.Map<String, java.io.Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.addOrUpdateObjectEntry(
+			externalReferenceCode, userId, groupId, objectDefinitionId, values,
+			serviceContext);
 	}
 
 	@Override
@@ -75,6 +99,16 @@ public class ObjectEntryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryService.getObjectEntry(objectEntryId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry
+			getObjectEntryByExternalReferenceCode(
+				long companyId, long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.getObjectEntryByExternalReferenceCode(
+			companyId, groupId, externalReferenceCode);
 	}
 
 	/**

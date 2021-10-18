@@ -41,6 +41,16 @@ public class ObjectEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectEntry addObjectEntry(
+			long userId, long groupId, long objectDefinitionId,
+			Map<String, Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addObjectEntry(
+			userId, groupId, objectDefinitionId, values, serviceContext);
+	}
+
+	public static ObjectEntry addObjectEntry(
 			long groupId, long objectDefinitionId,
 			Map<String, Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -48,6 +58,17 @@ public class ObjectEntryServiceUtil {
 
 		return getService().addObjectEntry(
 			groupId, objectDefinitionId, values, serviceContext);
+	}
+
+	public static ObjectEntry addOrUpdateObjectEntry(
+			String externalReferenceCode, long userId, long groupId,
+			long objectDefinitionId, Map<String, Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateObjectEntry(
+			externalReferenceCode, userId, groupId, objectDefinitionId, values,
+			serviceContext);
 	}
 
 	public static ObjectEntry addOrUpdateObjectEntry(
@@ -77,6 +98,14 @@ public class ObjectEntryServiceUtil {
 		throws PortalException {
 
 		return getService().getObjectEntry(objectEntryId);
+	}
+
+	public static ObjectEntry getObjectEntryByExternalReferenceCode(
+			long companyId, long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getObjectEntryByExternalReferenceCode(
+			companyId, groupId, externalReferenceCode);
 	}
 
 	/**

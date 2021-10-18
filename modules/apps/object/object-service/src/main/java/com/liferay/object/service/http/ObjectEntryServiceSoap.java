@@ -117,6 +117,26 @@ public class ObjectEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.object.model.ObjectEntrySoap
+			getObjectEntryByExternalReferenceCode(
+				long companyId, long groupId, String externalReferenceCode)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectEntry returnValue =
+				ObjectEntryServiceUtil.getObjectEntryByExternalReferenceCode(
+					companyId, groupId, externalReferenceCode);
+
+			return com.liferay.object.model.ObjectEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ObjectEntryServiceSoap.class);
 

@@ -457,8 +457,6 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 			(corEntry.getDisplayDate() != null) &&
 			date.before(corEntry.getDisplayDate())) {
 
-			corEntry.setActive(false);
-
 			status = WorkflowConstants.STATUS_SCHEDULED;
 		}
 
@@ -467,10 +465,6 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 
 			if ((expirationDate != null) && expirationDate.before(date)) {
 				corEntry.setExpirationDate(null);
-			}
-
-			if (corEntry.getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
-				corEntry.setActive(true);
 			}
 		}
 

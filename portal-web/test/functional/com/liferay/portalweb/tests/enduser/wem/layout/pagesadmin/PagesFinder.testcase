@@ -29,27 +29,81 @@ definition {
 	}
 
 	@description = "This is a test for LPS-103104. Can add pages of different types via page tree panel."
+	@priority = "3"
 	test AddAllTypesOfPages {
+		task ("Add different types of pages via page tree") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			PagesFinder.goToFindAPage();
+
+			for (var pageType : list "Widget Page,Panel,Page Set,Link to a Page of This Site,Full Page Application") {
+				PagesFinder.addPublicPage(
+					pageName = "Test ${pageType}",
+					sitePageType = "${pageType}");
+			}
+
+			for (var pageType : list "Embedded,Link to URL") {
+				PagesFinder.addPublicPage(
+					pageName = "Test ${pageType}",
+					pageTypeURL = "https://www.google.com",
+					sitePageType = "${pageType}");
+			}
+
+			PagesFinder.addPublicContentPage(pageName = "Test Content Page");
+
+			PageEditor.clickPublish();
+
+			ProductMenu.gotoHomePage();
+
+			PagesFinder.goToFindAPage();
+
+			PagesFinder.addPrivatePage(
+				pageName = "Test Private Widget Page",
+				sitePageType = "Widget Page");
+		}
+
+		task ("View public page names in page tree") {
+			PagesFinder.selectPageType(optionValue = "Public Pages");
+
+			for (var pageType : list "Widget Page,Panel,Page Set,Link to a Page of This Site,Full Page Application,Embedded,Link to URL,Content Page") {
+				PagesFinder.viewPageNameInPagesFinder(pageName = "Test ${pageType}");
+			}
+		}
+
+		task ("View private page name in page tree") {
+			PagesFinder.selectPageType(optionValue = "Private Pages");
+
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Private Widget Page");
+		}
+	}
+
+	@description = "This is a test for LPS-103104. Can add a child page via page tree panel."
 	@priority = "5"
 	@uitest
 	test AddChildPage {
 		property portal.acceptance = "true";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		Navigator.openSiteURL(siteName = "Test Site Name");
+		task ("Add a child page via page tree") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
 
-		PagesFinder.goToFindAPage();
+			PagesFinder.goToFindAPage();
 
-		PagesFinder.addPublicChildPage(
-			childPageName = "Test Child Page",
-			parentPageName = "Test Page Name");
+			PagesFinder.addPublicChildPage(
+				childPageName = "Test Child Page",
+				parentPageName = "Test Page Name");
+		}
 
-		PagesFinder.navigateToChildPage(
-			childPageName = "Test Child Page",
-			parentPageName = "Test Page Name");
+		task ("Navigate to child page via page tree") {
+			PagesFinder.navigateToChildPage(
+				childPageName = "Test Child Page",
+				parentPageName = "Test Page Name");
+		}
 	}
 
 	@description = "This is a test for LPS-107774. Can create a Collection Page based on Collections or Collection Providers in Pages Tree panel."
@@ -59,15 +113,15 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add three Web Content Articles based on Basic Web Content") {
-			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
+			for (var n : list "1,2,3") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
 					groupName = "Test Site Name",
-					title = "${entryTitle}");
+					title = "Web Content Title ${n}");
 			}
 		}
 
-		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
+		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
 				itemSubtype = "Basic Web Content",
@@ -75,7 +129,7 @@ definition {
 				title = "Dynamic Collection");
 		}
 
-		task ("Add a Collection Page based on Dynamic Collection via Pages Tree Panel") {
+		task ("Add a collection page based on dynamic collection via page tree") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
 			PagesFinder.goToFindAPage();
@@ -84,63 +138,75 @@ definition {
 				collectionName = "Dynamic Collection",
 				pageName = "Test Collection Page Name 1",
 				tabName = "Collections");
+		}
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "ControlMenu#PAGE_TYPE",
-				value1 = "Collection Page");
+		task ("View the page name is shown on control menu") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Collection Page Name 1");
+		}
 
+		task ("View the collection name shown in Heading fragment") {
 			AssertVisible(
 				key_elementHeader = "//div[contains(.,'Dynamic Collection') and contains(@id,'fragment-')]",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
 
-			var n = "1";
+		task ("View web contents are shown in Collection Display") {
+			var i = "1";
 
-			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
+			for (var n : list "3,2,1") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "${title}",
+					key_entryTitle = "Web Content Title ${n}",
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
+					key_rowPosition = "${i}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
-				var n = ${n} + 1;
+				var i = ${i} + 1;
 			}
+		}
 
+		task ("View the collection name as draft in the page tree") {
 			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 1*");
 		}
 
-		task ("Add a Collection Page based on Highest Rated Assets via Pages Tree Panel") {
+		task ("Add a Collection Page based on Highest Rated Assets via page tree") {
 			PagesFinder.goToFindAPage();
 
 			PagesFinder.addPublicCollectionPage(
 				collectionName = "Highest Rated Assets",
 				pageName = "Test Collection Page Name 2",
 				tabName = "Collection Providers");
+		}
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "ControlMenu#PAGE_TYPE",
-				value1 = "Collection Page");
+		task ("View the page name is shown on control menu") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Collection Page Name 2");
+		}
 
+		task ("View the collection name shown in Heading fragment") {
 			AssertVisible(
 				key_elementHeader = "//div[contains(.,'Highest Rated Assets') and contains(@id,'fragment-')]",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
 
-			var n = "1";
+		task ("View web contents are shown in Collection Display") {
+			var i = "1";
 
-			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
+			for (var n : list "3,2,1") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "${title}",
+					key_entryTitle = "Web Content Title ${n}",
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
+					key_rowPosition = "${i}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
-				var n = ${n} + 1;
+				var i = ${i} + 1;
 			}
+		}
 
-			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 2*");
+		task ("View the collection name as draft in the page tree") {
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 1*");
 		}
 	}
 
@@ -149,87 +215,37 @@ definition {
 	test AddCollectionWhenAddingCollectionPage {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoSite(site = "Test Site Name");
+		task ("Add a collection page based on manual collection via page tree") {
+			ProductMenu.gotoSite(site = "Test Site Name");
 
-		PagesFinder.goToFindAPage();
+			PagesFinder.goToFindAPage();
 
-		PagesFinder.addPublicCollectionPage(
-			collectionName = "Manual Collection Name",
-			menuItem = "Manual Collection",
-			pageName = "Manual Collection Page Name",
-			selectedAsset = "All Types",
-			tabName = "Collections");
+			PagesFinder.addPublicCollectionPage(
+				collectionName = "Manual Collection Name",
+				menuItem = "Manual Collection",
+				pageName = "Manual Collection Page Name",
+				selectedAsset = "All Types",
+				tabName = "Collections");
 
-		PageEditor.clickPublish();
-
-		PagesFinder.addPublicCollectionPage(
-			collectionName = "Dynamic Collection Name",
-			menuItem = "Dynamic Collection",
-			pageName = "Dynamic Collection Page Name",
-			selectedAsset = "All Types",
-			tabName = "Collections");
-
-		PageEditor.clickPublish();
-
-		PagesFinder.viewPageNameInPagesFinder(pageName = "Manual Collection Page Name");
-
-		PagesFinder.viewPageNameInPagesFinder(pageName = "Dynamic Collection Page Name");
-	}
-
-	@description = "This is the test for LPS-103104. Can add pages of different types via page tree panel."
-	@priority = "3"
-	test AddPagesOfDifferentTypesViaPageFinder {
-		ProductMenu.gotoSite(site = "Test Site Name");
-
-		PagesFinder.goToFindAPage();
-
-		PagesFinder.addPublicPage(
-			pageName = "Widget Page",
-			sitePageType = "Widget Page");
-
-		PagesFinder.addPublicPage(
-			pageName = "Panel",
-			sitePageType = "Panel");
-
-		PagesFinder.addPublicPage(
-			pageName = "Embedded",
-			pageTypeURL = "https://www.google.com",
-			sitePageType = "Embedded");
-
-		PagesFinder.addPublicPage(
-			pageName = "Link to URL",
-			pageTypeURL = "https://www.google.com",
-			sitePageType = "Link to URL");
-
-		PagesFinder.addPublicPage(
-			pageName = "Page Set",
-			sitePageType = "Page Set");
-
-		PagesFinder.addPublicPage(
-			pageName = "Link to a Page of This Site",
-			sitePageType = "Link to a Page of This Site");
-
-		PagesFinder.addPublicContentPage(pageName = "Content Page");
-
-		PageEditor.clickPublish();
-
-		ProductMenu.gotoHomePage();
-
-		PagesFinder.goToFindAPage();
-
-		PagesFinder.addPrivatePage(
-			pageName = "Private Widget Page",
-			sitePageType = "Widget Page");
-
-		PagesFinder.selectPageType(optionValue = "Public Pages");
-
-		for (var pageName : list "Content Page,Embedded,Link to a Page of This Site,Link to URL,Page Set,Panel") {
-			PagesFinder.viewPageNameInPagesFinder(pageName = "${pageName}");
+			PageEditor.clickPublish();
 		}
 
-		PagesFinder.selectPageType(optionValue = "Private Pages");
+		task ("Add a collection page based on dynamic collection via page tree") {
+			PagesFinder.addPublicCollectionPage(
+				collectionName = "Dynamic Collection Name",
+				menuItem = "Dynamic Collection",
+				pageName = "Dynamic Collection Page Name",
+				selectedAsset = "All Types",
+				tabName = "Collections");
 
-		PagesFinder.viewPageNameInPagesFinder(pageName = "Private Widget Page");
+			PageEditor.clickPublish();
+		}
+
+		task ("View collection page names in page tree") {
+			for (var text : list "Manual,Dynamic") {
+				PagesFinder.viewPageNameInPagesFinder(pageName = "${text} Collection Page Name");
+			}
+		}
 	}
 
 	@description = "This is a test for LPS-103104. Can add a widget page via page tree panel."
@@ -237,13 +253,21 @@ definition {
 	test AddWidgetPage {
 		property portal.acceptance = "true";
 
-		Navigator.openSiteURL(siteName = "Test Site Name");
+		task ("Add a widget page via page tree") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
-		PagesFinder.goToFindAPage();
+			PagesFinder.goToFindAPage();
 
-		PagesFinder.addPublicPage(pageName = "Test Public Page");
+			PagesFinder.addPublicPage(pageName = "Test Page Name");
+		}
 
-		PagesFinder.navigateToPage(pageName = "Test Public Page");
+		task ("View widget page name in page tree") {
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Page Name");
+		}
+
+		task ("Navigate to widget page via page tree") {
+			PagesFinder.navigateToPage(pageName = "Test Page Name");
+		}
 	}
 
 	@description = "This is a test for LPS-139064. Users cannot see the preview draft option for a content page when the page has not draft."
@@ -386,75 +410,61 @@ definition {
 	test NavigateToBothPageTypes {
 		property portal.acceptance = "true";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Portlet Page",
-			type = "portlet");
+		task ("Add a public and private pages") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Public Page");
 
-		JSONLayout.addPrivateLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Private Page",
-			type = "portlet");
-
-		task ("Navigate to Test site Name") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Private Page");
 		}
 
-		PagesFinder.goToFindAPage();
+		task ("Navigate to public page via page tree") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
 
-		PagesFinder.selectPageType(optionValue = "Private Pages");
+			PagesFinder.goToFindAPage();
 
-		PagesFinder.navigateToPage(pageName = "Test Private Page");
+			PagesFinder.selectPageType(optionValue = "Public Pages");
 
-		PagesFinder.selectPageType(optionValue = "Public Pages");
+			PagesFinder.navigateToPage(pageName = "Test Public Page");
+		}
 
-		PagesFinder.navigateToPage(pageName = "Test Portlet Page");
+		task ("Navigate to private page via page tree") {
+			PagesFinder.selectPageType(optionValue = "Private Pages");
+
+			PagesFinder.navigateToPage(pageName = "Test Private Page");
+		}
 	}
 
 	@description = "This is a test for LPS-102544. Can quickly browse and go to different pages with page tree."
 	@priority = "4"
 	test NavigateToDifferentPages {
 		task ("Add layouts of various types for the pages finder") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Portlet Page",
-				type = "portlet");
+			var i = "1";
 
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page",
-				type = "content");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Embedded Page",
-				type = "embedded");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Full Page Application",
-				type = "full_page_application");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Panel Page",
-				type = "panel");
-
-			for (var i : list "1,2,3,4") {
+			for (var pageType : list "portlet,content,embedded,full_page_application,panel") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
-					layoutName = "Test Default Page ${i}");
+					layoutName = "Test Page Name ${i}",
+					type = "${pageType}");
+
+				var i = ${i} + 1;
 			}
+
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 2");
 		}
 
-		task ("Navigate to Test site Name") {
+		task ("Navigate to pages in page tree") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
-		}
 
-		PagesFinder.goToFindAPage();
+			PagesFinder.goToFindAPage();
 
-		for (var pageName : list "Test Portlet Page,Test Content Page,Test Embedded Page,Test Full Page Application,Test Panel Page,Test Default Page 1,Test Default Page 2,Test Default Page 3,Test Default Page 4") {
-			PagesFinder.navigateToPage(pageName = "${pageName}");
+			for (var i : list "1,2,3,4,5") {
+				PagesFinder.navigateToPage(pageName = "Test Page Name ${i}");
+			}
 		}
 	}
 
@@ -734,35 +744,21 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add layouts of various types for the pages finder") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Portlet Page",
-				type = "portlet");
+			var i = "1";
 
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page",
-				type = "content");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Embedded Page",
-				type = "embedded");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Full Page Application",
-				type = "full_page_application");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Panel Page",
-				type = "panel");
-
-			for (var i : list "1,2,3,4,5,6") {
+			for (var pageType : list "portlet,content,embedded,full_page_application,panel") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
-					layoutName = "Test Default Page ${i}");
+					layoutName = "Test Page Name ${i}",
+					type = "${pageType}");
+
+				var i = ${i} + 1;
+			}
+
+			for (var i : list "6,7,8,9,10,11") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${i}");
 			}
 		}
 
@@ -788,15 +784,18 @@ definition {
 	@description = "This is a test for LPS-102544. Can search for a page in sidebar."
 	@priority = "4"
 	test SearchPageAndViewViaSidebar {
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Portlet Page",
-			type = "portlet");
+		task ("Add a widget and content pages") {
+			var i = "1";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Content Page",
-			type = "content");
+			for (var pageType : list "portlet,content") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${i}",
+					type = "${pageType}");
+
+				var i = ${i} + 1;
+			}
+		}
 
 		task ("Navigate to Test site Name") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
@@ -805,16 +804,16 @@ definition {
 		task ("Type search term in pages finder") {
 			PagesFinder.goToFindAPage();
 
-			PagesFinder.inputPageSearch(keyword = '''"Test Portlet Page"''');
+			PagesFinder.inputPageSearch(keyword = '''"1"''');
 		}
 
 		task ("View 1 result via sidebar") {
 			AssertVisible(
-				key_pageName = "Test Portlet Page",
+				key_pageName = "Test Page Name 1",
 				locator1 = "PagesFinder#PAGE_SEARCH_RESULT");
 
 			AssertElementNotPresent(
-				key_pageName = "Test Content Page",
+				key_pageName = "Test Page Name 2",
 				locator1 = "PagesFinder#PAGE_SEARCH_RESULT");
 		}
 	}

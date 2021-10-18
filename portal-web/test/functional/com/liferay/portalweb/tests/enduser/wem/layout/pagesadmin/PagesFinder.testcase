@@ -34,7 +34,7 @@ definition {
 		task ("Add different types of pages via page tree") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			for (var pageType : list "Widget Page,Panel,Page Set,Link to a Page of This Site,Full Page Application") {
 				PagesFinder.addPublicPage(
@@ -53,9 +53,7 @@ definition {
 
 			PageEditor.clickPublish();
 
-			ProductMenu.gotoHomePage();
-
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.addPrivatePage(
 				pageName = "Test Private Widget Page",
@@ -92,7 +90,7 @@ definition {
 		task ("Add a child page via page tree") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.addPublicChildPage(
 				childPageName = "Test Child Page",
@@ -132,7 +130,7 @@ definition {
 		task ("Add a collection page based on dynamic collection via page tree") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -171,7 +169,7 @@ definition {
 		}
 
 		task ("Add a collection page based on Highest Rated Assets via page tree") {
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.addPublicCollectionPage(
 				collectionName = "Highest Rated Assets",
@@ -218,7 +216,7 @@ definition {
 		task ("Add a collection page based on manual collection via page tree") {
 			ProductMenu.gotoSite(site = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.addPublicCollectionPage(
 				collectionName = "Manual Collection Name",
@@ -256,7 +254,7 @@ definition {
 		task ("Add a widget page via page tree") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.addPublicPage(pageName = "Test Page Name");
 		}
@@ -283,7 +281,7 @@ definition {
 		task ("Access to the Page Tree") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 		}
 
 		task ("View the page name doesn't have asterisk icon in Page Tree") {
@@ -343,7 +341,7 @@ definition {
 		}
 
 		task ("Access to the Page Tree") {
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 		}
 
 		task ("View the page name doesn't have asterisk icon in Page Tree") {
@@ -379,9 +377,7 @@ definition {
 		}
 
 		task ("Configure page via Page Tree panel") {
-			ProductMenu.gotoHomePage();
-
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.gotoPageEllipsisItem(
 				item = "Configure",
@@ -421,7 +417,7 @@ definition {
 		task ("Navigate to public page via page tree") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.selectPageType(optionValue = "Public Pages");
 
@@ -458,7 +454,7 @@ definition {
 		task ("Navigate to pages in page tree") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			for (var i : list "1,2,3,4,5") {
 				PagesFinder.navigateToPage(pageName = "Test Page Name ${i}");
@@ -549,7 +545,7 @@ definition {
 		task ("Select the navigation menu in page type selctor of Page Tree") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.selectPageType(optionValue = "Navigation Menu Name");
 		}
@@ -620,7 +616,7 @@ definition {
 		task ("Select the navigation menu in page type selctor of Page Tree") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.selectPageType(optionValue = "Navigation Menu Name");
 		}
@@ -655,7 +651,7 @@ definition {
 		}
 
 		task ("Access to the Page Tree") {
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 		}
 
 		task ("View the page name has asterisk icon in Page Tree") {
@@ -699,7 +695,7 @@ definition {
 
 			Navigator.openSiteURL(siteName = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 		}
 
 		task ("Assert the order of Pages in Page Tree panel") {
@@ -763,7 +759,7 @@ definition {
 		task ("Access to the Page Tree ") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 		}
 
 		task ("Type search term") {
@@ -798,7 +794,7 @@ definition {
 		task ("Access to the Page Tree") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 		}
 
 		task ("Type search term") {
@@ -872,7 +868,7 @@ definition {
 		task ("Select the first navigation menu in page type selctor of Page Tree") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.selectPageType(optionValue = "Navigation Menu Name 1");
 		}
@@ -886,7 +882,7 @@ definition {
 		task ("Select the second navigation menu in page type selctor of Page Tree") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.selectPageType(optionValue = "Navigation Menu Name 2");
 		}

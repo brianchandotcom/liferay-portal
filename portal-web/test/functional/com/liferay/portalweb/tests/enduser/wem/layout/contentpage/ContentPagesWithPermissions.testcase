@@ -306,7 +306,7 @@ definition {
 		}
 
 		task ("View the Preview Draft action is invisible in Page Tree") {
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			Click.mouseOverClick(
 				key_pageName = "Test Content Page Name*",

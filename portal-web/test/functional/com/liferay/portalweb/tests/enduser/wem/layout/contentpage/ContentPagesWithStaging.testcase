@@ -177,7 +177,7 @@ definition {
 		}
 
 		task ("View the ellipsis button not shown in Page Tree") {
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			AssertElementNotPresent(
 				key_pageName = "Test Page Name*",
@@ -210,7 +210,7 @@ definition {
 		}
 
 		task ("View the Preview Draft action is invisible in Page Tree") {
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			Click.mouseOverClick(
 				key_pageName = "Test Page Name*",
@@ -725,7 +725,7 @@ definition {
 		}
 
 		task ("View the ellipsis button not shown in Page Tree") {
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			AssertElementNotPresent(
 				key_pageName = "Test Page Name*",

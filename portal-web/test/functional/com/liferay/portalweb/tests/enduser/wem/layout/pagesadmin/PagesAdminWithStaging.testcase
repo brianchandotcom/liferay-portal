@@ -160,7 +160,7 @@ definition {
 
 		ProductMenu.gotoHomePage();
 
-		PagesFinder.goToFindAPage();
+		PagesFinder.goToPagesFinder();
 
 		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name");
 

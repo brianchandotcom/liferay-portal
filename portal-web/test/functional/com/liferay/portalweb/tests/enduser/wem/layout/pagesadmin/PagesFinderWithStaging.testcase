@@ -57,7 +57,7 @@ definition {
 		task ("Add a Collection Page based on Dynamic Collection via Pages Tree Panel") {
 			ProductMenu.gotoStagingSite(site = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -90,7 +90,7 @@ definition {
 		}
 
 		task ("Add a Collection Page based on Most Viewed Assets via Pages Tree Panel") {
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.addPublicCollectionPage(
 				collectionName = "Most Viewed Assets",
@@ -146,7 +146,7 @@ definition {
 		task ("Assert can reorganize pages via Page Tree panel in Staging site") {
 			ProductMenu.gotoStagingSite(site = "Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			var n = "1";
 
@@ -179,7 +179,7 @@ definition {
 		task ("Assert can not reorganize pages via Page Tree panel in Live site") {
 			ProductMenu.gotoLiveSite(site = "Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			for (var pageName : list "Test Widget Page,Test Content Page") {
 				AssertElementPresent(locator1 = "//a[contains(@class,'layout-tree') and contains(@class,'locked')][contains(.,'${pageName}')]");
@@ -221,7 +221,7 @@ definition {
 		task ("Select the navigation menu in page type selctor of Page Tree") {
 			Navigator.openStagingSiteURL(siteName = "Test Site Name");
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.selectPageType(optionValue = "Navigation Menu Name");
 		}

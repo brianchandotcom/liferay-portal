@@ -412,7 +412,7 @@ definition {
 		task ("View the new user cannot add a page via Page Tree panel") {
 			ProductMenuHelper.openProductMenu();
 
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			AssertNotVisible(locator1 = "Icon#PLUS");
 		}
@@ -564,7 +564,7 @@ definition {
 
 		ProductMenu.gotoHomePage();
 
-		PagesFinder.goToFindAPage();
+		PagesFinder.goToPagesFinder();
 
 		for (var i : list "1,2,3") {
 			WaitForLiferayEvent.initializeLiferayEventLog();
@@ -688,7 +688,7 @@ definition {
 
 		ProductMenu.gotoHomePage();
 
-		PagesFinder.goToFindAPage();
+		PagesFinder.goToPagesFinder();
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -1359,7 +1359,7 @@ definition {
 			pageName = "Content Collection Page Name",
 			tabName = "Collections");
 
-		PagesFinder.goToFindAPage();
+		PagesFinder.goToPagesFinder();
 
 		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name*");
 

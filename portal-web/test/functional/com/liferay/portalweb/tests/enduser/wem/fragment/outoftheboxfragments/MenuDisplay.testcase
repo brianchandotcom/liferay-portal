@@ -483,7 +483,7 @@ definition {
 		}
 
 		task ("Navigate via Menu Display in Staging site") {
-			PagesFinder.goToFindAPage();
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.navigateToPage(pageName = "Test Widget Page");
 

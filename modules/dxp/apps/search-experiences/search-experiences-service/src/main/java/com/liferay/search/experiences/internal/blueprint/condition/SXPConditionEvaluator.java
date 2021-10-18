@@ -57,51 +57,45 @@ public class SXPConditionEvaluator {
 			return false;
 		}
 
-		if (sxpParameter == null) {
-			return false;
-		}
-
-		JSONObject valueJSONObject = jsonObject.getJSONObject("value");
-
-		if (valueJSONObject == null) {
+		if ((sxpParameter == null) || !jsonObject.has("value")) {
 			return false;
 		}
 
 		if (key.equals("contains")) {
-			return sxpParameter.evaluateContains(valueJSONObject);
+			return sxpParameter.evaluateContains(jsonObject);
 		}
 		else if (key.equals("equals")) {
-			return sxpParameter.evaluateEquals(valueJSONObject);
+			return sxpParameter.evaluateEquals(jsonObject);
 		}
 		else if (key.equals("in")) {
-			return sxpParameter.evaluateIn(valueJSONObject);
+			return sxpParameter.evaluateIn(jsonObject);
 		}
 		else if (key.equals("in_range")) {
-			return sxpParameter.evaluateInRange(valueJSONObject);
+			return sxpParameter.evaluateInRange(jsonObject);
 		}
 		else if (key.equals("greater_than")) {
-			return sxpParameter.evaluateGreaterThan(false, valueJSONObject);
+			return sxpParameter.evaluateGreaterThan(false, jsonObject);
 		}
 		else if (key.equals("greater_than_equals")) {
-			return sxpParameter.evaluateGreaterThan(true, valueJSONObject);
+			return sxpParameter.evaluateGreaterThan(true, jsonObject);
 		}
 		else if (key.equals("less_than")) {
-			return !sxpParameter.evaluateGreaterThan(false, valueJSONObject);
+			return !sxpParameter.evaluateGreaterThan(false, jsonObject);
 		}
 		else if (key.equals("less_than_equals")) {
-			return !sxpParameter.evaluateGreaterThan(true, valueJSONObject);
+			return !sxpParameter.evaluateGreaterThan(true, jsonObject);
 		}
 		else if (key.equals("not_contains")) {
-			return !sxpParameter.evaluateContains(valueJSONObject);
+			return !sxpParameter.evaluateContains(jsonObject);
 		}
 		else if (key.equals("not_equals")) {
-			return !sxpParameter.evaluateEquals(valueJSONObject);
+			return !sxpParameter.evaluateEquals(jsonObject);
 		}
 		else if (key.equals("not_in")) {
-			return !sxpParameter.evaluateIn(valueJSONObject);
+			return !sxpParameter.evaluateIn(jsonObject);
 		}
 		else if (key.equals("not_in_range")) {
-			return !sxpParameter.evaluateInRange(valueJSONObject);
+			return !sxpParameter.evaluateInRange(jsonObject);
 		}
 
 		throw new IllegalArgumentException("Unknown condition " + key);

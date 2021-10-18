@@ -67,11 +67,11 @@ definition {
 	test AddChildChildSite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			groupName = "Child SiteName",
 			parentGroupName = "Site Name");
 
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			grandParentGroupName = "Site Name",
 			groupName = "Child Child SiteName",
 			parentGroupName = "Child SiteName");
@@ -334,7 +334,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Site Page");
 
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			groupName = "Child SiteName",
 			parentGroupName = "Site Name");
 
@@ -343,7 +343,7 @@ definition {
 			layoutName = "Site Page",
 			parentGroupName = "Site Name");
 
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			grandParentGroupName = "Site Name",
 			groupName = "Child ChildSiteName",
 			parentGroupName = "Child SiteName");
@@ -393,7 +393,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Site Page");
 
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			groupName = "Child Site1Name",
 			parentGroupName = "Site Name");
 
@@ -402,7 +402,7 @@ definition {
 			layoutName = "Site Page",
 			parentGroupName = "Site Name");
 
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			grandParentGroupName = "Site Name",
 			groupName = "Child ChildSite1Name",
 			parentGroupName = "Child Site1Name");
@@ -413,7 +413,7 @@ definition {
 			layoutName = "Site Page",
 			parentGroupName = "Child Site1Name");
 
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			grandParentGroupName = "Site Name",
 			groupName = "Child ChildSite2Name",
 			parentGroupName = "Child Site1Name");
@@ -424,7 +424,7 @@ definition {
 			layoutName = "Site Page",
 			parentGroupName = "Child Site1Name");
 
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			groupName = "Child Site2Name",
 			parentGroupName = "Site Name");
 

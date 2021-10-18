@@ -38,7 +38,7 @@ definition {
 			widgetName = "Sites Directory");
 
 		for (var n : list "1,2,3") {
-			JSONGroup.addChildSite(
+			JSONGroup.addChildGroup(
 				groupName = "Child SiteName ${n}",
 				parentGroupName = "Site Name");
 

@@ -43,7 +43,7 @@ definition {
 	test AddMultipleSites {
 		Site.openSitesAdmin();
 
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			groupName = "Child Site Name",
 			parentGroupName = "Site Name");
 
@@ -271,7 +271,7 @@ definition {
 	@refactorneeded
 	@uitest
 	test ViewImageFromChildSite {
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			groupName = "Child Site Name",
 			parentGroupName = "Site Name");
 

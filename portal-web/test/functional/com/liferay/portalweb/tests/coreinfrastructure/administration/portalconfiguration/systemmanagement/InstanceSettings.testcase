@@ -1193,7 +1193,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "AP Test Page");
 
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			groupName = "Child SiteName",
 			parentGroupName = "Site Name");
 

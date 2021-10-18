@@ -1482,7 +1482,7 @@ definition {
 
 		Staging.publishToLive();
 
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			groupName = "Child Site",
 			parentGroupName = "Site Name");
 

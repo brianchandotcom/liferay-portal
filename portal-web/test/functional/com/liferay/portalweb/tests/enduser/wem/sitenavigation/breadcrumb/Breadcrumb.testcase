@@ -324,7 +324,7 @@ definition {
 	@uitest
 	test DisableShowParentSite {
 		task ("Add a child site") {
-			JSONGroup.addChildSite(
+			JSONGroup.addChildGroup(
 				groupName = "Child SiteName",
 				parentGroupName = "Test Site Name");
 		}

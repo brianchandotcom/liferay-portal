@@ -9,7 +9,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "group name 2");
 
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			groupName = "child group name",
 			parentGroupName = "group name");
 

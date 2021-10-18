@@ -1307,7 +1307,7 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			groupName = "Child SiteName",
 			parentGroupName = "Test Site Name");
 

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Add a child group based on Blank"
-	macro addChildSite {
+	macro addChildGroup {
 		Variables.assertDefined(parameterList = "${groupName},${parentGroupName}");
 
 		var groupDescriptionMap = JSONGroupSetter.setGroupDescriptionMap(

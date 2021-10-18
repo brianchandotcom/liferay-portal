@@ -89,6 +89,7 @@ else {
 >
 	<liferay-asset:asset-display
 		renderer="<%= assetRenderer %>"
+		showComments="<%= false %>"
 	/>
 
 	<c:if test="<%= assetRenderer.isCommentable() %>">

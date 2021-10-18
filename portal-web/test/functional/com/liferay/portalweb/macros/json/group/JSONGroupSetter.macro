@@ -1,5 +1,17 @@
 definition {
 
+	macro setAllowManualMembershipManagement {
+		if ("${allowManualMembershipManagement}" == "false") {
+			var manualMembership = "false";
+		}
+
+		else {
+			var manualMembership = "true";
+		}
+
+		return "${manualMembership}";
+	}
+
 	macro setGrandParentGroupId {
 		if (isSet(grandParentGroupName)) {
 			if (!(isSet(site))) {
@@ -48,6 +60,22 @@ definition {
 		var groupNameMap = '''{"en_US":"${groupName}"}''';
 
 		return "${groupNameMap}";
+	}
+
+	macro setMembershipType {
+		if ("${membershipType}" == "Private") {
+			var type = "3";
+		}
+
+		else if ("${membershipType}" == "Restricted") {
+			var type = "2";
+		}
+
+		else {
+			var type = "1";
+		}
+
+		return "${type}";
 	}
 
 	macro setParentGroupId {

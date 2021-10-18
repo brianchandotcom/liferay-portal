@@ -114,29 +114,6 @@ public class ObjectLayoutLocalServiceTest {
 
 		_deleteObjectFields();
 
-		try {
-			ObjectLayoutTab objectLayoutTab =
-				_objectLayoutTabPersistence.create(0);
-
-			objectLayoutTab.setNameMap(
-				LocalizedMapUtil.getLocalizedMap(
-					RandomTestUtil.randomString()));
-
-			_objectLayoutLocalService.addObjectLayout(
-				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), true,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				Collections.singletonList(objectLayoutTab));
-		}
-		catch (DefaultObjectLayoutException defaultObjectLayoutException) {
-			String message = defaultObjectLayoutException.getMessage();
-
-			Assert.assertTrue(
-				message.contains(
-					"The default object layout must have at least one " +
-						"required object field"));
-		}
-
 		ObjectLayout objectLayout = null;
 
 		try {

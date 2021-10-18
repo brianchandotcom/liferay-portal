@@ -2575,7 +2575,6 @@ definition {
 
 	macro viewAndEditSERPPreview {
 		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Navigator.gotoPage(pageName = "Test Page");
 
@@ -2585,7 +2584,7 @@ definition {
 
 		Page.viewPreview(
 			description = "Description",
-			htmlTitle = "Page HTML Title - ${siteName}",
+			htmlTitle = "Page HTML Title - Liferay DXP",
 			pageName = "Test Page",
 			portalURL = "${portalURL}");
 
@@ -2601,7 +2600,7 @@ definition {
 
 		Page.viewPreview(
 			description = "Page Description Edit",
-			htmlTitle = "Page HTML Title Edit - ${siteName}",
+			htmlTitle = "Page HTML Title Edit - Liferay DXP",
 			pageName = "Test Page",
 			portalURL = "${portalURL}");
 	}

@@ -672,6 +672,63 @@ definition {
 			locator1 = "LexiconTable#TABLE_ENTRY");
 	}
 
+	@description = "Assert publications changes can search and sort"
+	@priority = "4"
+	test PublicationsChangesCanSearchAndSort {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		for (var count : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content ${count}",
+				groupName = "Guest",
+				title = "WC Title ${count}");
+		}
+
+		Publications.gotoReviewChanges(
+			gotoManagePublications = "true",
+			publicationName = "Publication Name");
+
+		Search.searchCP(searchTerm = "1");
+
+		PublicationsChanges.viewChangesResultsOrder(
+			changeCategory = "Web Content Article",
+			changesList = "WC Title 1");
+
+		PublicationsChanges.viewChangesResultNotPresent(
+			changeCategory = "Web Content Article",
+			changeOrder = "2",
+			changeTitle = "WC Title 2");
+
+		PublicationsChanges.viewChangesResultNotPresent(
+			changeCategory = "Web Content Article",
+			changeOrder = "3",
+			changeTitle = "WC Title 3");
+
+		Search.searchCP(searchTerm = "WC");
+
+		PublicationsChanges.viewChangesResultsOrder(
+			changeCategory = "Web Content Article",
+			changesList = "WC Title 1,WC Title 2,WC Title 3");
+
+		PublicationsChanges.sortChanges(
+			sort = "descending",
+			sortName = "Title");
+
+		PublicationsChanges.viewChangesResultsOrder(
+			changeCategory = "Web Content Article",
+			changesList = "WC Title 1,WC Title 2,WC Title 3");
+
+		PublicationsChanges.sortChanges(
+			sort = "ascending",
+			sortName = "Title");
+
+		PublicationsChanges.viewChangesResultsOrder(
+			changeCategory = "Web Content Article",
+			changesList = "WC Title 3,WC Title 2,WC Title 1");
+	}
+
 	@priority = "5"
 	test PublishParallelPublications {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";

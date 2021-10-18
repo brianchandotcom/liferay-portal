@@ -81,6 +81,12 @@ String type = BeanParamUtil.getString(corEntry, renderRequest, "type", COREntryC
 						<aui:input name="description" type="textarea" value="<%= corEntry.getDescription() %>" />
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="col">
+						<aui:input name="priority" />
+					</div>
+				</div>
 			</commerce-ui:panel>
 
 			<%

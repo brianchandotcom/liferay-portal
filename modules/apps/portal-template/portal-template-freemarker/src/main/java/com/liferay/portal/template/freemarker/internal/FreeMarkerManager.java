@@ -613,9 +613,25 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		StringBundler sb = new StringBundler(3 * macroLibrary.length);
 
 		for (String library : macroLibrary) {
-			sb.append(contextName);
-			sb.append(library);
-			sb.append(StringPool.COMMA);
+			String libraryResource = library;
+
+			int indexOfSpace = library.indexOf(StringPool.SPACE);
+
+			if (indexOfSpace != -1) {
+				libraryResource = library.substring(0, indexOfSpace);
+			}
+
+			if (_bundle.getResource(libraryResource) == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to find Macro Library: " + libraryResource);
+				}
+			}
+			else {
+				sb.append(contextName);
+				sb.append(library);
+				sb.append(StringPool.COMMA);
+			}
 		}
 
 		if (macroLibrary.length > 0) {

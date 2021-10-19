@@ -1170,7 +1170,7 @@ definition {
 
 		Click.clickNoMouseOver(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
 
-		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_COLLAPSED");
+		AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON_ACTIVE");
 	}
 
 	macro configureFragment {
@@ -3413,9 +3413,9 @@ definition {
 		}
 
 		else {
-			AssertTextEquals(
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECTION_TITLE",
-				value1 = "Comments");
+			AssertVisible(
+				key_sidebarButton = "Comments",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			AssertTextEquals(
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_CENTER_TEXT",

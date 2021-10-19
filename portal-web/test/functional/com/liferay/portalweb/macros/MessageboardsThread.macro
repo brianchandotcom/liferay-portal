@@ -1318,6 +1318,24 @@ definition {
 			value1 = "Draft");
 	}
 
+	macro viewLinkedEntry {
+		Click(
+			key_text = "${linkedEntry}",
+			locator1 = "Link#ANY");
+
+		if (isSet(imageFileName)) {
+			AssertElementPresent(
+				key_imageSourceURL = "${imageFileName}",
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+		}
+
+		if (isSet(pageName)) {
+			AssertVisible(
+				key_pageName = "${pageName}",
+				locator1 = "Home#PAGE_ACTIVE");
+		}
+	}
+
 	macro viewLockedPG {
 		var key_threadStatus = "Locked";
 		var key_threadSubject = "${threadSubject}";

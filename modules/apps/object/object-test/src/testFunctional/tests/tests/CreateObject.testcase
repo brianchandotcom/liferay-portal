@@ -591,8 +591,6 @@ definition {
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Type blank"
 	@priority = "4"
 	test CannotLeaveRelationshipTypeBlank {
-
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -611,7 +609,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
 			value1 = "Invalid type null");
-
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Type field blank"

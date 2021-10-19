@@ -241,6 +241,17 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
+	macro viewFragmentBackgroundImage {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertVisible(
+			image = "${image}",
+			index = "${index}",
+			locator1 = "Fragment#FRAGMENT_BACKGROUND_IMAGE");
+	}
+
 	macro viewFragmentImage {
 		if (!(isSet(index))) {
 			var index = "1";

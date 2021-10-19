@@ -19,23 +19,20 @@ import '../css/main.scss';
 export default () => {
 	return (
 		<div>
-			<h2>
-				A11y Test Portlet
-			</h2>
+			<h2>A11y Test Portlet</h2>
 			<p className="a11y-test-class">
-				This widget is used to test basic A11y Tool features are functioning as expected.
-				Simply add whatever A11y violations you want to test to App.js and redeploy.
+				This widget is used to test basic A11y Tool features are
+				functioning as expected. Simply add whatever A11y violations you
+				want to test to App.js and redeploy.
 			</p>
-			<hr/>
+			<hr />
 			<div>
 				{/* This is where your code goes... */}
-				<h3>
-					Violation: ID Attribute Values Must Be Unique
-				</h3>
+				<h3>Violation: ID Attribute Values Must Be Unique</h3>
 				<p id="violation"> Text1 </p>
 				<p id="violation"> Text2 </p>
 			</div>
-			<hr/>
+			<hr />
 		</div>
 	);
 };

@@ -21,6 +21,10 @@ definition {
 			layoutName = "A11y Test Page",
 			widgetName = "JS A11y Sample Web");
 
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blank Test Page");
+
 		Navigator.gotoPage(pageName = "A11y Test Page");
 	}
 
@@ -34,19 +38,27 @@ definition {
 			JSONLayout.deletePublicLayout(
 				groupName = "Guest",
 				layoutName = "A11y Test Page");
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Blank Test Page");
 		}
 	}
 
 	@description = "LPS-140736. Ensures there is no accessibility side panel on a page with no violations."
 	@priority = "5"
 	test CanDetectNoViolations {
-		Navigator.gotoPage(pageName = "Home");
+		Navigator._gotoPage(pageName = "Blank Test Page");
 
 		if (IsElementPresent(locator1 = "A11yTool#ACCESSIBILITY_PANEL_HEADING")) {
 			Refresh();
 		}
 
 		AssertElementNotPresent(locator1 = "A11yTool#ACCESSIBILITY_PANEL_HEADING");
+
+		AssertElementNotPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
+
+		AssertElementNotPresent(locator1 = "A11yTool#ICON_ELEMENT");
 	}
 
 }

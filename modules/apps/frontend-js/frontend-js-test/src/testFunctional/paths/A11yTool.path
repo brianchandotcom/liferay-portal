@@ -12,7 +12,17 @@
 <tbody>
 <tr>
 	<td>ACCESSIBILITY_PANEL_HEADING</td>
-	<td>//span[contains(text(),'Accessibility Violations')]</td>
+	<td>//div[contains(@class,'a11y-panel--violations-header')]//span[contains(text(),'Accessibility Violations')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIGHLIGHTED_ELEMENT</td>
+	<td>//div[contains(@class,'a11y-backdrop')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ICON_ELEMENT</td>
+	<td>//div[*[name()='svg'][contains(@class,'info-circle')]]</td>
 	<td></td>
 </tr>
 </tbody>

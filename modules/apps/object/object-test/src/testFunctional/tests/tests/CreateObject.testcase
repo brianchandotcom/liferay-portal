@@ -373,8 +373,6 @@ definition {
 	@description = "LPS-135400 - Verify it is possible to delete a Relationship"
 	@priority = "5"
 	test CanDeleteRelationship {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -398,7 +396,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No items were found.");
-
 	}
 
 	@description = "LPS-135549 - Verify that it is not possible to create a Field with a duplicated Field Name"

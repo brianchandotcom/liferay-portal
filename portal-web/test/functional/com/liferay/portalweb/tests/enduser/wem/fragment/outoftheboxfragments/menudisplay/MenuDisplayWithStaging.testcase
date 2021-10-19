@@ -1,0 +1,171 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-120091. Can navigate via Menu Display in Staging and Live site."
+	@priority = "4"
+	test NavigateViaMenuDisplayInStagingAndLiveSite {
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Add a custom master page") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+		}
+
+		task ("Add a Menu Display fragment as header in custom master page") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Menu Display",
+				dropTarget = "Header",
+				fragmentName = "Menu Display",
+				scope = "Master");
+		}
+
+		task ("Select Navigation Menu Name in Menu Display") {
+			PageEditor.editMenuDisplay(
+				panel = "General",
+				siteMenus = "Navigation Menu Name");
+
+			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Add a widget page and add it to navigation menu") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicPage(
+				navigationMenus = "Navigation Menu Name",
+				pageName = "Test Widget Page");
+		}
+
+		task ("Change Master to custom master page") {
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertClick(
+				key_text = "Change Master",
+				locator1 = "Button#ANY",
+				value1 = "Change Master");
+
+			MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Custom Masters Page Template",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
+
+			PortletEntry.save();
+		}
+
+		task ("Add a content page and add it to navigation menu") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				navigationMenus = "Navigation Menu Name",
+				pageName = "Test Content Page");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add an URL type item to navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addItem(
+				item = "URL",
+				url = "https://www.liferay.com",
+				urlName = "Liferay");
+		}
+
+		task ("Enable Local Live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+			Staging.activateStagingCP(siteName = "Test Site Name");
+		}
+
+		task ("Navigate via Menu Display in Staging site") {
+			PagesFinder.goToPagesFinder();
+
+			PagesFinder.navigateToPage(pageName = "Test Widget Page");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Test Widget Page");
+
+			Click(
+				key_pageName = "Test Content Page",
+				locator1 = "Home#PAGE");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Test Content Page");
+
+			Click(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+		}
+
+		task ("Navigate via Menu Display in Live site") {
+			Navigator.gotoSitePage(
+				pageName = "Test Widget Page",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Test Widget Page");
+
+			Click(
+				key_pageName = "Test Content Page",
+				locator1 = "Home#PAGE");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Test Content Page");
+
+			Click(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+		}
+	}
+
+}

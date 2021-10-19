@@ -656,7 +656,7 @@ AUI.add(
 					'<input id="{namespace}{id}_{value}" name="{namespace}{fieldNamePrefix}{name}_{value}{fieldNameSuffix}" type="hidden" value="" />',
 
 				TRANSLATION_STATUS_TEMPLATE:
-					'{languageId} <span class="label label-{translationStatusCssClass}">{translationStatus}</span>',
+					'{languageId} <span class="dropdown-item-indicator-end w-auto"><span class="label label-{translationStatusCssClass}">{translationStatus}</span></span>',
 
 				TRIGGER_TEMPLATE:
 					'<span class="inline-item">{flag}</span><span class="btn-section">{languageId}</span>',

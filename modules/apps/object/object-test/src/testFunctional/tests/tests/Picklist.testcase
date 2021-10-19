@@ -163,7 +163,7 @@ definition {
 
 		Picklist.clickSaveButton();
 
-		Picklist.assertErrorMensage(errorMensage = "Key must only contain letters and digits");
+		Picklist.assertPicklistMessage(picklistMessage = "Key must only contain letters and digits");
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to leave Key field empty for a Picklist item"
@@ -294,11 +294,17 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify that the updating or deleting a picklist item warn message is displayed"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test WarnMessageDisplayedOnPickListItemScreen {
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		// TODO LPS-139758 WarnMessageDisplayedOnPickListItemScreen pending implementation
+		Picklist.gotoPicklists();
+
+		Picklist.gotoPicklistView(picklistName = "Picklist Test");
+
+		Picklist.selectPickilistModalFrame();
+
+		Picklist.assertPicklistMessage(picklistMessage = "Updating or deleting a picklist item will automatically update every entry that is using the specific item value. This may affect multiple objects.");
 
 	}
 

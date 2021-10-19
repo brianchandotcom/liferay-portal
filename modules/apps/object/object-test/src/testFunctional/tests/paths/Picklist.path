@@ -121,8 +121,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>KEY_ERROR_MENSAGE</td>
-		<td>//div[(@class='autofit-section') and contains(.,'${key_errorMensage}')]</td>
+		<td>PICKLIST_MESSAGE</td>
+		<td>//div[(@class='autofit-section') and contains(.,'${key_picklistMessage}')]</td>
 		<td></td>
 	</tr>
 </tbody>

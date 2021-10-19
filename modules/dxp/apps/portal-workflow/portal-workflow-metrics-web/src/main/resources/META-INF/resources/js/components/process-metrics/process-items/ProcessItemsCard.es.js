@@ -44,7 +44,7 @@ const ProcessItemsCard = ({
 		}
 
 		return [new Promise((_, reject) => reject())];
-	}, [fetchData, timeRange.dateEnd, timeRange.dateStart]);
+	}, [completed, timeRange.dateEnd, timeRange.dateStart]);
 
 	return (
 		<PromisesResolver promises={promises}>

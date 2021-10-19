@@ -40,19 +40,20 @@ const DashboardTab = ({processId, routeParams}) => {
 	const {fetchDateModified} = useContext(AppContext);
 
 	const {dateModified, fetchData} = useDateModified({
-		fetchDateModified,
 		processId,
 	});
 
 	const previousFetchData = usePrevious(fetchData);
+
 	const promises = useMemo(() => {
-		if (previousFetchData !== fetchData) {
+		if (previousFetchData !== fetchData && fetchDateModified) {
 			return [fetchData()];
 		}
 
 		return [];
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [fetchData]);
+	}, [fetchDateModified, routeParams]);
 
 	return (
 		<PromisesResolver promises={promises}>
@@ -86,19 +87,20 @@ function PerformanceTab({processId, routeParams}) {
 	const {fetchDateModified} = useContext(AppContext);
 
 	const {dateModified, fetchData} = useDateModified({
-		fetchDateModified,
 		processId,
 	});
 
 	const previousFetchData = usePrevious(fetchData);
+
 	const promises = useMemo(() => {
-		if (previousFetchData !== fetchData) {
+		if (previousFetchData !== fetchData && fetchDateModified) {
 			return [fetchData()];
 		}
 
 		return [];
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [fetchData]);
+	}, [fetchDateModified, routeParams]);
 
 	useTimeRangeFetch();
 

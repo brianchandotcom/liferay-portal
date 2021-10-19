@@ -42,7 +42,6 @@ export default function Header({
 	totalCount,
 }) {
 	const {dateModified, fetchData} = useDateModified({
-		fetchDateModified: !!items?.length,
 		processId,
 	});
 
@@ -59,13 +58,14 @@ export default function Header({
 	const previousFetchData = usePrevious(fetchData);
 
 	const promises = useMemo(() => {
-		if (previousFetchData !== fetchData) {
+		if (previousFetchData !== fetchData && items?.length) {
 			return [fetchData()];
 		}
 
 		return [];
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [fetchData]);
+	}, [items?.length, routeParams]);
 
 	const handleClick = useCallback(
 		(bulkModal, singleModal) => {
@@ -139,11 +139,13 @@ export default function Header({
 			]);
 			setSelectAll(items.length === remainingItems.length);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [items]);
 
 	useEffect(() => {
 		setSelectAll(totalCount > 0 && totalCount === selectedItems.length);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [totalCount]);
 
@@ -161,6 +163,7 @@ export default function Header({
 			setSelectAll(totalCount > 0 && totalCount === updatedItems.length);
 			setSelectedItems(updatedItems);
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[items, remainingItems, selectedItems]
 	);

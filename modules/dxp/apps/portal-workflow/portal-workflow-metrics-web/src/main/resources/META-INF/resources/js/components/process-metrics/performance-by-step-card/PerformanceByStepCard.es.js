@@ -99,7 +99,9 @@ function PerformanceByStepCard({routeParams}) {
 		}
 
 		return [new Promise((_, reject) => reject(filtersError))];
-	}, [fetchData, filtersError, timeRange.dateEnd, timeRange.dateStart]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [filtersError, routeParams, timeRange.dateEnd, timeRange.dateStart]);
 
 	return (
 		<ClayPanel className="mt-4 tabs-card">
@@ -108,17 +110,17 @@ function PerformanceByStepCard({routeParams}) {
 					disableFilters={filtersError}
 					prefixKey={prefixKey}
 					processId={processId}
-					totalCount={data.totalCount}
+					totalCount={data?.totalCount}
 				/>
 
 				<PerformanceByStepCard.Body {...data} />
 
-				{data.totalCount > 0 && (
+				{data?.totalCount > 0 && (
 					<PerformanceByStepCard.Footer
 						processId={processId}
 						processVersion={processVersion}
 						timeRange={{key, ...timeRange}}
-						totalCount={data.totalCount}
+						totalCount={data?.totalCount}
 					/>
 				)}
 			</PromisesResolver>

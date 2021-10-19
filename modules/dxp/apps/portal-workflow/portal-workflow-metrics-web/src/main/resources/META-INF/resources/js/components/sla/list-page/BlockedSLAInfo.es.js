@@ -27,7 +27,7 @@ export default function BlockedSLAInfo({processId}) {
 	}, []);
 
 	return (
-		data.totalCount > 0 &&
+		data?.totalCount > 0 &&
 		visible && (
 			<ClayAlert
 				displayType="danger"

@@ -57,28 +57,29 @@ function SingleReassignModal() {
 	const {postData} = usePost({
 		admin: true,
 		body: {assigneeId},
+		callback: () => {
+			toaster.success(
+				Liferay.Language.get('this-task-has-been-reassigned')
+			);
+
+			onCloseModal(true);
+			setErrorToast(false);
+			setSendingPost(false);
+		},
 		url: `/workflow-tasks/${taskId}/assign-to-user`,
 	});
 
 	const reassignButtonHandler = useCallback(() => {
 		setErrorToast(false);
 		setSendingPost(true);
-		postData()
-			.then(() => {
-				toaster.success(
-					Liferay.Language.get('this-task-has-been-reassigned')
-				);
 
-				onCloseModal(true);
-				setErrorToast(false);
-				setSendingPost(false);
-			})
-			.catch(() => {
-				setErrorToast(true);
-				setSendingPost(false);
-			});
+		postData().catch(() => {
+			setErrorToast(true);
+			setSendingPost(false);
+		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [postData]);
+	}, [toaster]);
 
 	const promises = useMemo(() => {
 		setErrorToast(false);
@@ -94,8 +95,9 @@ function SingleReassignModal() {
 		}
 
 		return [];
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [fetchData, retry, visibleModal]);
+	}, [retry, selectedInstance, visibleModal]);
 
 	const statesProps = {
 		errorProps: {

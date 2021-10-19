@@ -48,8 +48,9 @@ function SelectAssigneesStep({setErrorToast}) {
 		}
 
 		return [];
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [postData, retry]);
+	}, [tasks.length, retry]);
 
 	return (
 		<div className="fixed-height modal-metrics-content">

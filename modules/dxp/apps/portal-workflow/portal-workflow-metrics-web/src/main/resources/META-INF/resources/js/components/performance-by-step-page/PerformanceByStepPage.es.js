@@ -51,7 +51,12 @@ function PerformanceByStepPage({query, routeParams}) {
 		url: `/processes/${processId}/nodes/metrics`,
 	});
 
-	const promises = useMemo(() => [fetchData()], [fetchData]);
+	const promises = useMemo(
+		() => [fetchData()],
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[routeParams]
+	);
 
 	return (
 		<PromisesResolver promises={promises}>
@@ -60,7 +65,7 @@ function PerformanceByStepPage({query, routeParams}) {
 				hideFilters={hideFilters}
 				routeParams={{...routeParams, search}}
 				selectedFilters={selectedFilters}
-				totalCount={data.totalCount}
+				totalCount={data?.totalCount}
 			/>
 
 			<PerformanceByStepPage.Body

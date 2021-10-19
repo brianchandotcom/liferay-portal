@@ -23,14 +23,17 @@ const CompletedItemsCard = ({routeParams}) => {
 
 	const {
 		filterValues: {
-			completedDateEnd,
-			completedDateStart,
-			completedTimeRange: [key] = [],
+			completionDateEnd,
+			completionDateStart,
+			completionTimeRange: [key] = [],
 		},
 		filtersError,
 	} = useFilter({filterKeys, prefixKeys});
 
-	const timeRange = getTimeRangeParams(completedDateStart, completedDateEnd);
+	const timeRange = getTimeRangeParams(
+		completionDateStart,
+		completionDateEnd
+	);
 
 	return (
 		<ProcessItemsCard

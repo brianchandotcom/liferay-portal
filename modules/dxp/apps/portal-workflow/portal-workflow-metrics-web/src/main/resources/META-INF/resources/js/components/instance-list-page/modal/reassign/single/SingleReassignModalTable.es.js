@@ -32,11 +32,16 @@ function AssigneeInput({setAssigneeId, taskId}) {
 		[setAssigneeId]
 	);
 
-	const promises = useMemo(() => [fetchData()], [fetchData]);
+	const promises = useMemo(
+		() => [fetchData()],
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[]
+	);
 
 	return (
 		<Autocomplete
-			items={data.items}
+			items={data?.items}
 			onSelect={handleSelect}
 			promises={promises}
 		/>

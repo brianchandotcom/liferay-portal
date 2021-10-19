@@ -21,13 +21,22 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		if (isSet(displayTextWithLink)) {
+			CKEditor.addTextWithLink(
+				displayText = "${displayText}",
+				dmDocumentTitle = "${dmDocumentTitle}",
+				fieldLabel = "${fieldLabel}",
+				pageName = "${pageName}");
+		}
+		else {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-		Type(
-			locator1 = "CKEditor#BODY",
-			value1 = "${threadBody}");
+			Type(
+				locator1 = "CKEditor#BODY",
+				value1 = "${threadBody}");
 
-		SelectFrame(value1 = "relative=top");
+			SelectFrame(value1 = "relative=top");
+		}
 
 		if (isSet(categoryName)) {
 			Panel.expandPanel(panel = "Categorization");

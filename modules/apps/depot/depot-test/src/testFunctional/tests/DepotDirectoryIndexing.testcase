@@ -270,22 +270,17 @@ definition {
 
 		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
-		JSONDocument.addFile(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document SVG",
-			groupName = "Test Depot Name");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document SVG");
-
-		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
-			addOrRemoveViewPermission = "Remove",
-			roleList = "Guest");
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Test Depot Name",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
 		Depot.viewDocumentInFTP(
 			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document SVG");
+			dmDocumentTitle = "Document_1.doc");
 
 		Navigator.openURL();
 
@@ -293,7 +288,7 @@ definition {
 
 		Depot.viewNoDocumentInFTP(
 			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document SVG");
+			dmDocumentTitle = "Document_1.doc");
 
 		User.loginPG();
 	}

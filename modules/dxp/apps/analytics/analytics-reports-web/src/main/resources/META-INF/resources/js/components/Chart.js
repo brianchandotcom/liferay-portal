@@ -138,7 +138,7 @@ export default function Chart({dataProviders = [], publishDate}) {
 
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
-	const {dataSet, loading, timeRange, timeSpanKey, timeSpanOffset} =
+	const {dataSet, lineChartLoading, timeRange, timeSpanKey, timeSpanOffset} =
 		useContext(ChartStateContext);
 
 	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
@@ -239,14 +239,14 @@ export default function Chart({dataProviders = [], publishDate}) {
 			: dateFormatters.formatNumericDay;
 
 	const lineChartWrapperClasses = className('line-chart-wrapper', {
-		'line-chart-wrapper--loading': loading,
+		'line-chart-wrapper--loading': lineChartLoading,
 	});
 
 	return (
 		<>
 			{dataSet ? (
 				<div className={lineChartWrapperClasses}>
-					{loading && (
+					{lineChartLoading && (
 						<ClayLoadingIndicator
 							className="chart-loading-indicator"
 							small

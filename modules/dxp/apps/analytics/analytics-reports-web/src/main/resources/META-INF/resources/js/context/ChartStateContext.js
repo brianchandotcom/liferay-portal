@@ -16,10 +16,12 @@ const CHANGE_TIME_SPAN_KEY = 'CHANGE_TIME_SPAN_KEY';
 const NEXT_TIME_SPAN = 'NEXT_TIME_SPAN';
 const PREV_TIME_SPAN = 'PREV_TIME_SPAN';
 const SET_LOADING = 'SET_LOADING';
+const SET_PIE_CHART_LOADING = 'SET_PIE_CHART_LOADING';
 
 const INITIAL_STATE = {
 	dataSet: {histogram: [], keyList: [], totals: []},
-	loading: true,
+	lineChartloading: true,
+	pieChartLoading: true,
 	publishDate: null,
 	timeRange: null,
 	timeSpanKey: null,
@@ -66,8 +68,7 @@ export function useDateTitle() {
 			firstDate: new Date(firstDateLabel),
 			lastDate: new Date(lastDateLabel),
 		};
-	}
-	else {
+	} else {
 		return {
 			firstDate: new Date(timeRange.startDate),
 			lastDate: new Date(timeRange.endDate),
@@ -94,7 +95,8 @@ export function useIsPreviousPeriodButtonDisabled() {
 
 /**
  * {
-		"loading": false,
+		"lineChartloading": false,
+		"pieChartloading": false,
 		"timeSpanOffset": 1,
 		"timeSpanKey": "last-7-days",
 		"dataSet": {
@@ -123,7 +125,7 @@ function reducer(state, action) {
 
 	switch (action.type) {
 		case ADD_DATA_SET_ITEMS:
-			nextState = setLoadingState(state);
+			nextState = setLineChartLoadingState(state);
 			nextState = [...action.payload.keys].reduce((state, key) => {
 				const dataSetItem =
 					action.payload.dataSetItems?.[key] ??
@@ -143,7 +145,7 @@ function reducer(state, action) {
 		case CHANGE_TIME_SPAN_KEY:
 			nextState = {
 				...state,
-				loading: true,
+				lineChartLoading: true,
 				timeSpanKey: action.payload.key,
 				timeSpanOffset: 0,
 			};
@@ -151,19 +153,25 @@ function reducer(state, action) {
 		case NEXT_TIME_SPAN:
 			nextState = {
 				...state,
-				loading: true,
+				lineChartLoading: true,
 				timeSpanOffset: state.timeSpanOffset - 1,
 			};
 			break;
 		case PREV_TIME_SPAN:
 			nextState = {
 				...state,
-				loading: true,
+				lineChartLoading: true,
 				timeSpanOffset: state.timeSpanOffset + 1,
 			};
 			break;
 		case SET_LOADING:
-			nextState = setLoadingState(state);
+			nextState = setLineChartLoadingState(state);
+			break;
+		case SET_PIE_CHART_LOADING:
+			nextState = {
+				...state,
+				pieChartLoading: action.payload.loading,
+			};
 			break;
 		default:
 			nextState = state;
@@ -176,13 +184,12 @@ function reducer(state, action) {
 /**
  * Declares the state as loading and resets the dataSet histogram values
  */
-function setLoadingState(state) {
-
+function setLineChartLoadingState(state) {
 	/**
 	 * The dataSet does not need to be reset
 	 */
 	if (!state.dataSet) {
-		return {...state, loading: true};
+		return {...state, lineChartLoading: true};
 	}
 
 	const histogram = state.dataSet.histogram.map((set) => {
@@ -195,8 +202,7 @@ function setLoadingState(state) {
 
 			if (key === 'label') {
 				newSet[key] = value;
-			}
-			else {
+			} else {
 				newSet[key] = null;
 			}
 		}
@@ -221,7 +227,7 @@ function setLoadingState(state) {
 			histogram,
 			totals,
 		},
-		loading: true,
+		lineChartLoading: true,
 	};
 
 	return nextState;
@@ -280,8 +286,7 @@ function mergeDataSets({
 			mergeHistogram.push({
 				...newFormattedHistogram[start],
 			});
-		}
-		else if (
+		} else if (
 			newFormattedHistogram[start].label ===
 			previousDataSet.histogram[start].label
 		) {
@@ -315,12 +320,12 @@ function mergeDataSets({
  * }
  */
 function addDataSetItem(state, payload, validAnalyticsConnection) {
-
 	/**
 	 * The dataSetItem is recognized as substitutive when the
 	 * previous state was in loading state.
 	 */
-	const previousDataSet = state.loading === true ? undefined : state.dataSet;
+	const previousDataSet =
+		state.lineChartLoading === true ? undefined : state.dataSet;
 
 	return {
 		...state,
@@ -332,6 +337,6 @@ function addDataSetItem(state, payload, validAnalyticsConnection) {
 			timeSpanComparator: payload.timeSpanComparator,
 			validAnalyticsConnection,
 		}),
-		loading: false,
+		lineChartLoading: false,
 	};
 }

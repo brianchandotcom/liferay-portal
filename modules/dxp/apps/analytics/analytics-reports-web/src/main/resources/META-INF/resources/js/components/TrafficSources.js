@@ -19,7 +19,10 @@ import {Cell, Pie, PieChart, Tooltip} from 'recharts';
 
 import ConnectionContext from '../context/ConnectionContext';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
-import {ChartStateContext} from '../context/ChartStateContext';
+import {
+	ChartDispatchContext,
+	ChartStateContext,
+} from '../context/ChartStateContext';
 import {numberFormat} from '../utils/numberFormat';
 import EmptyPieChart from './EmptyPieChart';
 import Hint from './Hint';
@@ -54,24 +57,42 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 
 	const dispatch = useContext(StoreDispatchContext);
 
+	const chartDispatch = useContext(ChartDispatchContext);
+
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
-	const {loading, timeSpanKey, timeSpanOffset} =
+	const {pieChartLoading, timeSpanKey, timeSpanOffset} =
 		useContext(ChartStateContext);
 
 	const [trafficSources, setTrafficSources] = useStateSafe([]);
 
 	const pieChartWrapperClasses = className('pie-chart-wrapper', {
-		'pie-chart-wrapper--loading': loading,
+		'pie-chart-wrapper--loading': pieChartLoading,
 	});
 
 	useEffect(() => {
 		if (validAnalyticsConnection) {
+			chartDispatch({
+				payload: {
+					loading: true,
+				},
+				type: 'SET_PIE_CHART_LOADING',
+			});
 			dataProvider()
-				.then((trafficSources) => setTrafficSources(trafficSources))
+				.then((trafficSources) => {
+					setTrafficSources(trafficSources);
+				})
 				.catch(() => {
 					setTrafficSources([]);
 					dispatch({type: 'ADD_WARNING'});
+				})
+				.finally(() => {
+					chartDispatch({
+						payload: {
+							loading: false,
+						},
+						type: 'SET_PIE_CHART_LOADING',
+					});
 				});
 		}
 	}, [
@@ -129,7 +150,7 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 				</div>
 			)}
 			<div className={pieChartWrapperClasses}>
-				{loading && (
+				{pieChartLoading && (
 					<ClayLoadingIndicator
 						className="chart-loading-indicator"
 						small

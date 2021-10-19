@@ -113,6 +113,7 @@ export default ({
 	rootDisplayClasses,
 	showHideableFromURL,
 	siteNames,
+	sitesFromURL,
 	spritemap,
 	typeNames,
 	typesFromURL,
@@ -132,6 +133,7 @@ export default ({
 	const GLOBAL_SITE_NAME = Liferay.Language.get('global');
 	const MENU_CHANGE_TYPES = 'MENU_CHANGE_TYPES';
 	const MENU_ROOT = 'MENU_ROOT';
+	const MENU_SITES = 'MENU_SITES';
 	const MENU_TYPES = 'MENU_TYPES';
 	const MENU_USERS = 'MENU_USERS';
 	const MVC_RENDER_COMMAND_NAME = '/change_tracking/view_changes';
@@ -141,6 +143,7 @@ export default ({
 	const PARAM_MVC_RENDER_COMMAND_NAME = namespace + 'mvcRenderCommandName';
 	const PARAM_PATH = namespace + 'path';
 	const PARAM_SHOW_HIDEABLE = namespace + 'showHideable';
+	const PARAM_SITES = namespace + 'sites';
 	const PARAM_TYPES = namespace + 'types';
 	const PARAM_USERS = namespace + 'users';
 	const POP_STATE = 'popstate';
@@ -200,6 +203,7 @@ export default ({
 	params.delete(PARAM_KEYWORDS);
 	params.delete(PARAM_PATH);
 	params.delete(PARAM_SHOW_HIDEABLE);
+	params.delete(PARAM_SITES);
 	params.delete(PARAM_TYPES);
 	params.delete(PARAM_USERS);
 
@@ -222,6 +226,7 @@ export default ({
 				model.siteName = siteNames[model.groupId];
 			}
 			else {
+				model.groupId = 0;
 				model.siteName = GLOBAL_SITE_NAME;
 			}
 
@@ -624,37 +629,54 @@ export default ({
 	const [searchMobile, setSearchMobile] = useState(false);
 	const [showComments, setShowComments] = useState(false);
 
-	const getFilters = useCallback((changeTypes, types, users) => {
-		let changeTypeIds = [];
+	const getFilters = useCallback(
+		(changeTypes, sites, types, users) => {
+			let changeTypeIds = [];
 
-		if (changeTypes) {
-			changeTypeIds = changeTypes.split(',').map((id) => Number(id));
-		}
+			if (changeTypes) {
+				changeTypeIds = changeTypes.split(',').map((id) => Number(id));
+			}
 
-		let typeIds = [];
+			let siteIds = [];
 
-		if (types) {
-			typeIds = types
-				.split(',')
-				.filter((id) => !!typesRef.current[id])
-				.map((id) => Number(id));
-		}
+			if (sites) {
+				siteIds = sites
+					.split(',')
+					.map((id) => Number(id))
+					.filter((id) => id === 0 || !!siteNames[id]);
+			}
 
-		let userIds = [];
+			let typeIds = [];
 
-		if (users) {
-			userIds = users.split(',').map((id) => Number(id));
-		}
+			if (types) {
+				typeIds = types
+					.split(',')
+					.filter((id) => !!typesRef.current[id])
+					.map((id) => Number(id));
+			}
 
-		return {
-			changeTypes: changeTypeIds,
-			types: typeIds,
-			users: userIds,
-		};
-	}, []);
+			let userIds = [];
+
+			if (users) {
+				userIds = users
+					.split(',')
+					.filter((id) => !!userInfo[id])
+					.map((id) => Number(id));
+			}
+
+			return {
+				changeTypes: changeTypeIds,
+				sites: siteIds,
+				types: typeIds,
+				users: userIds,
+			};
+		},
+		[siteNames, userInfo]
+	);
 
 	const initialFilters = getFilters(
 		changeTypesFromURL,
+		sitesFromURL,
 		typesFromURL,
 		usersFromURL
 	);
@@ -711,6 +733,24 @@ export default ({
 					return false;
 				}
 
+				const siteIds = filters['sites'];
+
+				if (siteIds.length > 0) {
+					let groupId = Number(node.groupId);
+
+					if (groupId > 0) {
+						const siteName = siteNames[groupId];
+
+						if (siteName === GLOBAL_SITE_NAME) {
+							groupId = 0;
+						}
+					}
+
+					if (!siteIds.includes(groupId)) {
+						return false;
+					}
+				}
+
 				const userIds = filters['users'];
 
 				if (
@@ -730,7 +770,7 @@ export default ({
 				return true;
 			});
 		},
-		[VIEW_TYPE_CONTEXT]
+		[GLOBAL_SITE_NAME, VIEW_TYPE_CONTEXT, siteNames]
 	);
 
 	const [renderState, setRenderState] = useState({
@@ -773,6 +813,16 @@ export default ({
 					changeTypes.join(',');
 			}
 
+			if (keywords) {
+				path = path + '&' + PARAM_KEYWORDS + '=' + keywords.toString();
+			}
+
+			const siteIds = filters['sites'];
+
+			if (siteIds && siteIds.length > 0) {
+				path = path + '&' + PARAM_SITES + '=' + siteIds.join(',');
+			}
+
 			const typeIds = filters['types'];
 
 			if (typeIds && typeIds.length > 0) {
@@ -785,10 +835,6 @@ export default ({
 				path = path + '&' + PARAM_USERS + '=' + userIds.join(',');
 			}
 
-			if (keywords) {
-				path = path + '&' + PARAM_KEYWORDS + '=' + keywords.toString();
-			}
-
 			return path;
 		},
 		[
@@ -796,6 +842,7 @@ export default ({
 			PARAM_KEYWORDS,
 			PARAM_PATH,
 			PARAM_SHOW_HIDEABLE,
+			PARAM_SITES,
 			PARAM_TYPES,
 			PARAM_USERS,
 		]
@@ -891,6 +938,7 @@ export default ({
 			if (viewType === VIEW_TYPE_CONTEXT) {
 				filters = {
 					changeTypes: [],
+					sites: [],
 					types: [],
 					users: [],
 				};
@@ -1012,6 +1060,7 @@ export default ({
 
 			const filters = getFilters(
 				params.get(PARAM_CHANGE_TYPES),
+				params.get(PARAM_SITES),
 				params.get(PARAM_TYPES),
 				params.get(PARAM_USERS)
 			);
@@ -1058,6 +1107,7 @@ export default ({
 			PARAM_CHANGE_TYPES,
 			PARAM_KEYWORDS,
 			PARAM_PATH,
+			PARAM_SITES,
 			PARAM_TYPES,
 			PARAM_USERS,
 			VIEW_TYPE_CONTEXT,
@@ -1543,6 +1593,38 @@ export default ({
 		];
 
 		return getFilterList(items, 'changeTypes');
+	};
+
+	const getSitesFilterList = () => {
+		const sites = [];
+
+		let hasGlobal = false;
+
+		const siteIds = Object.keys(siteNames);
+
+		for (let i = 0; i < siteIds.length; i++) {
+			const label = siteNames[siteIds[i]];
+
+			if (label === GLOBAL_SITE_NAME) {
+				if (!hasGlobal) {
+					sites.push({
+						id: 0,
+						label: GLOBAL_SITE_NAME,
+					});
+
+					hasGlobal = true;
+				}
+
+				continue;
+			}
+
+			sites.push({
+				id: Number(siteIds[i]),
+				label,
+			});
+		}
+
+		return getFilterList(sites, 'sites');
 	};
 
 	const getTypesFilterList = () => {
@@ -2078,6 +2160,10 @@ export default ({
 										MENU_CHANGE_TYPES
 									)}
 									{getDrilldownRootItem(
+										Liferay.Language.get('sites'),
+										MENU_SITES
+									)}
+									{getDrilldownRootItem(
 										Liferay.Language.get('types'),
 										MENU_TYPES
 									)}
@@ -2091,6 +2177,12 @@ export default ({
 									Liferay.Language.get('change-types'),
 									false,
 									MENU_CHANGE_TYPES
+								)}
+								{getDrilldownMenu(
+									getSitesFilterList,
+									Liferay.Language.get('sites'),
+									true,
+									MENU_SITES
 								)}
 								{getDrilldownMenu(
 									getTypesFilterList,
@@ -2440,6 +2532,19 @@ export default ({
 			}
 		}
 
+		const siteIds = filtersState['sites'];
+
+		if (siteIds && siteIds.length > 0) {
+			for (let i = 0; i < siteIds.length; i++) {
+				const siteName = siteNames[siteIds[i]];
+
+				labels.push({
+					label: Liferay.Language.get('site') + ': ' + siteName,
+					onClick: () => toggleFilter('sites', siteIds[i]),
+				});
+			}
+		}
+
 		const typeIds = filtersState['types'];
 
 		if (typeIds && typeIds.length > 0) {
@@ -2550,7 +2655,10 @@ export default ({
 					className="component-link tbar-link"
 					displayType="unstyled"
 					onClick={() => {
-						handleFiltersUpdate({changeTypes: [], types: [], users: []}, '');
+						handleFiltersUpdate(
+							{changeTypes: [], sites: [], types: [], users: []},
+							''
+						);
 						setEntrySearchTerms('');
 					}}
 				>

@@ -449,6 +449,8 @@ public class ViewChangesDisplayContext {
 				return siteNamesJSONObject;
 			}
 		).put(
+			"sitesFromURL", ParamUtil.getString(_renderRequest, "sites")
+		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).put(
 			"typeNames",

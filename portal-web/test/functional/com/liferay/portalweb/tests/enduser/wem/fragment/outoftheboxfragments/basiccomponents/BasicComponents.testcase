@@ -276,7 +276,7 @@ definition {
 		}
 
 		task ("Remove the Heading") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.removeFragment(fragmentName = "Heading");
 		}

@@ -396,7 +396,7 @@ definition {
 		}
 
 		task ("Map custom ddmfield of document type to Paragraph fragment in Collection Display based on the manual collection") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.removeFragment(fragmentName = "Collection Display");
 
@@ -2723,7 +2723,7 @@ definition {
 		}
 
 		task ("Select the Bulleted List as List Style and Title as List Item Style") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
@@ -2763,7 +2763,7 @@ definition {
 		}
 
 		task ("Select the Inline List as List Style and Title as List Item Style") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
@@ -2803,7 +2803,7 @@ definition {
 		}
 
 		task ("Select the Numbered List as List Style and Title as List Item Style") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
@@ -2843,7 +2843,7 @@ definition {
 		}
 
 		task ("Select the Unstyled List as List Style and Title as List Item Style") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",

@@ -111,7 +111,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -374,7 +374,7 @@ definition {
 
 			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertTextEquals(
 				key_fragmentName = "heading",

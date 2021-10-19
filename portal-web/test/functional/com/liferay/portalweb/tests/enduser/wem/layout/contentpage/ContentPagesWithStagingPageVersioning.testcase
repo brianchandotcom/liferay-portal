@@ -409,7 +409,7 @@ definition {
 		}
 
 		task ("Access to content page in edit mode") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 		}
 
 		task ("Assert the Site Page Variation is not shown in management bar") {

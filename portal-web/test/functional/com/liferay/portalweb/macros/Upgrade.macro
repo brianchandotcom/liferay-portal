@@ -220,7 +220,7 @@ definition {
 		}
 
 		task ("Navigate to the content page's 'Edit Mode'") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 		}
 
 		task ("Edit the Title fragment's editable text") {
@@ -247,7 +247,7 @@ definition {
 		}
 
 		task ("Navigate to the content page's 'Edit Mode'") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 		}
 
 		task ("Add a Rich Text fragment to the content page") {
@@ -908,7 +908,7 @@ definition {
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-fragment-content-page");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -937,7 +937,7 @@ definition {
 		task ("Assert could delete fragment upgrading from 7.2") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-fragment-content-page");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.removeFragment(fragmentName = "Fragment Name");
 		}
@@ -945,7 +945,7 @@ definition {
 		task ("Assert the experience survived and could edit") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-experience-content-page");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.changeExperience(newExperience = "New Experience Name");
 
@@ -972,7 +972,7 @@ definition {
 		task ("Assert layout has been converted to a section with columns inside") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-layout-content-page");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertElementPresent(
 				key_elementType = "Container",
@@ -988,7 +988,7 @@ definition {
 		task ("Assert translation is working after migration") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-translation-content-page");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertVisible(
 				key_content = "New editable fragment en-US text",
@@ -2372,7 +2372,7 @@ definition {
 	macro viewAndEditContentPageReview {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.gotoTab(tabName = "Comments");
 
@@ -2391,7 +2391,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addComment(
 			fragmentComment = "This is a new fragment comment",
@@ -2403,7 +2403,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.gotoTab(tabName = "Comments");
 
@@ -3551,7 +3551,7 @@ definition {
 		}
 
 		task ("View the inline text of the card fragment at edit mode after Upgrade") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertTextEquals(
 				id = "02-title",

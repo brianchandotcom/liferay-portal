@@ -173,7 +173,7 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.gotoTab(tabName = "Browser");
 
@@ -372,7 +372,7 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.gotoTab(tabName = "Browser");
 
@@ -541,7 +541,7 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
 				PageEditor.gotoTab(tabName = "Browser");
@@ -691,7 +691,7 @@ definition {
 		}
 
 		task ("Assert can access to web content editor via Contents panel in edit mode") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
 				PageEditor.gotoTab(tabName = "Browser");
@@ -871,7 +871,7 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertElementNotPresent(
 				key_fragmentName = "Paragraph",
@@ -937,7 +937,7 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1033,7 +1033,7 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertElementNotPresent(
 				key_fragmentName = "Paragraph",

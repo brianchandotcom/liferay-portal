@@ -572,7 +572,7 @@ definition {
 		task ("View the Custom Masters Page Template is still selected") {
 			Navigator.gotoBack();
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
@@ -1872,7 +1872,7 @@ definition {
 				key_fragmentName = "heading",
 				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertVisible(
 				key_fragmentName = "heading",

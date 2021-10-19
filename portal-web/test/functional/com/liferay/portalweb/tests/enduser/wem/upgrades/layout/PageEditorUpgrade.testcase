@@ -64,7 +64,7 @@ definition {
 		}
 
 		task ("View the outer Container styles in edit mode") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertElementNotPresent(
 				key_contentDisplay = "",
@@ -182,7 +182,7 @@ definition {
 		}
 
 		task ("View the Container styles in edit mode") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertElementNotPresent(
 				key_contentDisplay = "",
@@ -288,7 +288,7 @@ definition {
 		}
 
 		task ("View the outer Container styles in edit mode") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertElementNotPresent(
 				key_contentDisplay = "",
@@ -406,7 +406,7 @@ definition {
 		}
 
 		task ("View the Container styles in edit mode") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertElementNotPresent(
 				key_contentDisplay = "",
@@ -549,7 +549,7 @@ definition {
 		}
 
 		task ("View the edited inline content at edit mode") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.viewFragmentEditableText(
 				contributed = "false",
@@ -596,7 +596,7 @@ definition {
 		}
 
 		task ("View the edited inline content at edit mode") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "Edited Banner Title",
@@ -640,7 +640,7 @@ definition {
 		}
 
 		task ("View the edited inline content at edit mode") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.viewFragmentEditableText(
 				contributed = "false",
@@ -687,7 +687,7 @@ definition {
 		}
 
 		task ("View the edited inline content at edit mode") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "Edited Banner Title",

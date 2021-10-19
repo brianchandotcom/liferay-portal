@@ -385,7 +385,7 @@ definition {
 
 		Navigator.openURL();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addWidget(
 			portletName = "Language Selector",

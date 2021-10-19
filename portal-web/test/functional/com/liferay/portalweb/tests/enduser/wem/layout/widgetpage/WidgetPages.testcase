@@ -444,7 +444,7 @@ definition {
 			pageName = "Home",
 			siteName = "Site Name");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addWidget(portletName = "Blogs");
 

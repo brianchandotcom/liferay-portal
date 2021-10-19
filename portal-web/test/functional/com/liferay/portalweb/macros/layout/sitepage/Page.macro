@@ -185,7 +185,7 @@ definition {
 	}
 
 	macro changeSinglePageTheme {
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.gotoTab(tabName = "Page Design Options");
 

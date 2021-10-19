@@ -79,7 +79,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -98,7 +98,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addExperience(
 			experienceName = "NewAnyoneExperience",
@@ -139,7 +139,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addExperience(
 			experienceName = "NewExp1",
@@ -299,7 +299,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -311,7 +311,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "Experience For Org with Country");
 
@@ -361,7 +361,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -373,7 +373,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "Experience For Org with Modified Date");
 
@@ -427,7 +427,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -439,7 +439,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "Experience For Org with Hierarchy Path");
 
@@ -493,7 +493,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -505,7 +505,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "Experience For Org with Name");
 
@@ -553,7 +553,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -565,7 +565,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "Experience For Users In A Specific Org");
 
@@ -637,7 +637,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -649,7 +649,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "Experience For Parent Organization");
 
@@ -720,7 +720,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -732,7 +732,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "Experience For Org with Region");
 
@@ -797,7 +797,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -809,7 +809,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "Experience For Org with Tag");
 
@@ -896,7 +896,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -908,7 +908,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "Experience For Org with Type");
 
@@ -960,7 +960,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -979,7 +979,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addExperience(
 			experienceName = "NewBrowserExperience",
@@ -1385,7 +1385,7 @@ definition {
 
 		Navigator._gotoPage(pageName = "Experience Content Page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -1401,7 +1401,7 @@ definition {
 
 		Navigator._gotoPage(pageName = "Experience Content Page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "New Experience");
 
@@ -1715,7 +1715,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -1734,7 +1734,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addExperience(
 			experienceName = "NewSignedInExperience",
@@ -1913,7 +1913,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -1925,7 +1925,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "New Experience");
 
@@ -1975,7 +1975,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -1987,7 +1987,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "New Experience");
 
@@ -2039,7 +2039,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -2051,7 +2051,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "New Experience");
 
@@ -2103,7 +2103,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -2115,7 +2115,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "New Experience");
 
@@ -2167,7 +2167,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -2179,7 +2179,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "New Experience");
 
@@ -2231,7 +2231,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -2243,7 +2243,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "New Experience");
 
@@ -2295,7 +2295,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -2307,7 +2307,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "New Experience");
 
@@ -2359,7 +2359,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -2371,7 +2371,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "New Experience");
 
@@ -2423,7 +2423,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -2435,7 +2435,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "New Experience");
 
@@ -3078,7 +3078,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -3091,7 +3091,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addExperience(
 			experienceName = "NewExp1",
@@ -3099,7 +3099,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "NewExp1");
 
@@ -3112,7 +3112,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "NewExp1");
 
@@ -3120,7 +3120,7 @@ definition {
 
 		Button.clickPublish();
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.changeExperience(newExperience = "NewExp1 (Copy)");
 
@@ -3149,7 +3149,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addExperience(
 			experienceName = "exp1",

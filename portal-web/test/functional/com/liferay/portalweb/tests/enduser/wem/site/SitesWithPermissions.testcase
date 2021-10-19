@@ -43,7 +43,7 @@ definition {
 				siteName = "${siteName}",
 				siteTemplateName = "Site Template Name");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -115,7 +115,7 @@ definition {
 
 			SiteTemplates.resetPageChanges(widgetName = "Asset Publisher");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertElementNotPresent(
 				key_fragmentName = "Asset Publisher",

@@ -160,7 +160,7 @@ definition {
 				locator1 = "Portlet#MESSAGE_INFO",
 				value1 = "You do not have permission to access the requested resource.");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertElementNotPresent(
 				key_content = "[normalize-space(text())='Web Content Content']",
@@ -210,7 +210,7 @@ definition {
 				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT");
 		}
 
-		ContentPages.clickPencil();
+		ContentPages.gotoPageEditor();
 
 		task ("Assert there is a message in page editor informing the page author that the content is no longer available") {
 			AssertVisible(
@@ -608,7 +608,7 @@ definition {
 				key_content = "[normalize-space(text())='Web Content Content']",
 				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertVisible(
 				key_fragmentName = "Content Display",
@@ -634,7 +634,7 @@ definition {
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content");
 
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			AssertTextEquals(
 				key_fragmentName = "Content Display",

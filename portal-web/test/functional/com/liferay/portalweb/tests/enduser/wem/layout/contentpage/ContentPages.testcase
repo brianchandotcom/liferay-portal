@@ -112,7 +112,7 @@ definition {
 		}
 
 		task ("Navigate to the content page's 'Edit Mode'") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 		}
 
 		task ("Assert the content page can be edited in 'Edit Mode' by asserting the fragments side bar is present") {

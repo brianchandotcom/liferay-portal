@@ -159,7 +159,7 @@ definition {
 		}
 
 		task ("Change to default style book via Look and Feel") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
@@ -330,7 +330,7 @@ definition {
 		}
 
 		task ("Change to the default style book via Page Design Options panel") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 

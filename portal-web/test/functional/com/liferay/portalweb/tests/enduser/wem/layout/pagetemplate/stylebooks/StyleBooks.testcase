@@ -390,7 +390,7 @@ definition {
 		}
 
 		task ("Change to default style book via Look and Feel") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 

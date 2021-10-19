@@ -660,7 +660,7 @@ definition {
 	@uitest
 	test CreateABTestByClick {
 		task ("Edit the Content page to add a button fragment") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1399,7 +1399,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create an experience and add on content page") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1444,7 +1444,7 @@ definition {
 		}
 
 		task ("Create an experience and add on content page") {
-			ContentPages.clickPencil();
+			ContentPages.gotoPageEditor();
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",

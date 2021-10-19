@@ -87,6 +87,10 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 		catch (Exception exception) {
 			String mvcPath = "/error.jsp";
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
 			if (exception instanceof NoSuchCompanyException ||
 				exception instanceof PrincipalException) {
 

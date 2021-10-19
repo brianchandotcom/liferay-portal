@@ -46,130 +46,6 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that users get the proper notification based on depot sharing permissions granted to him."
-	@priority = "5"
-	@refactorneeded
-	test CanViewSharingNotifications {
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.png,Document_3.odt");
-
-		DepotNavigator.gotoShare(dmDocumentTitle = "Document_1");
-
-		Asset.share(
-			noAutocomplete = "true",
-			sharingPermissions = "View",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
-
-		DMDocumentSharing.viewSharedFlag(
-			detailsView = "true",
-			dmDocumentTitle = "Document_1");
-
-		DepotNavigator.gotoShare(dmDocumentTitle = "Document_2");
-
-		Asset.share(
-			sharingPermissions = "Update",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocumentSharing.viewSharedFlag(
-			detailsView = "true",
-			dmDocumentTitle = "Document_2");
-
-		DepotNavigator.gotoShare(dmDocumentTitle = "Document_3");
-
-		Asset.share(
-			sharingPermissions = "Comment",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-		DMDocumentSharing.viewSharedFlag(
-			detailsView = "true",
-			displayStyle = "table",
-			dmDocumentTitle = "Document_3");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Notifications.viewBadgeCount(notificationCount = "3");
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewSharedContent(
-			contentSharingPermission = "viewing",
-			contentTitle = "Document_1",
-			ownerName = "Test Test");
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewSharedContent(
-			contentSharingPermission = "updating",
-			contentTitle = "Document_2",
-			openNotification = "true",
-			ownerName = "Test Test");
-
-		NotificationsPortlet.configureNotificationPG(menuItem = "Edit");
-
-		DMDocument.editCmd(dmDocumentTitleEdit = "DM Document Title");
-
-		Button.clickPublish();
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewSharedContent(
-			contentSharingPermission = "commenting",
-			contentTitle = "Document_3",
-			ownerName = "Test Test");
-	}
-
-	@description = "This test ensures that depot sharing can be disabled at the instance level."
-	@priority = "4"
-	test CanDisableDepotSharingAtInstanceScope {
-		property test.name.skip.portal.instance = "DepotSharing#CanDisableDepotSharingAtInstanceScope";
-
-		DepotNavigator.openToConfigSharingInInstanceSettings();
-
-		FormFields.disableCheckbox(fieldName = "enabled");
-
-		SystemSettings.saveConfiguration();
-
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Depot.viewNoPanel(panelName = "Sharing");
-	}
-
-	@description = "This test ensures that depot sharing can be disabled at the system level."
-	@priority = "4"
-	test CanDisableDepotSharingAtSystemScope {
-		property test.name.skip.portal.instance = "DepotSharing#CanDisableDepotSharingAtSystemScope";
-
-		DepotNavigator.openToConfigSharingInSystemSettings();
-
-		FormFields.disableCheckbox(fieldName = "enabled");
-
-		SystemSettings.saveConfiguration();
-
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Depot.viewNoPanel(panelName = "Sharing");
-	}
-
 	@description = "This test ensures that sharing can be disabled in a depot."
 	@priority = "5"
 	@refactorneeded
@@ -203,6 +79,38 @@ definition {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocumentSharing.viewSharingOption(dmDocumentTitle = "Document_1.doc");
+	}
+
+	@description = "This test ensures that depot sharing can be disabled at the instance level."
+	@priority = "4"
+	test CanDisableDepotSharingAtInstanceScope {
+		property test.name.skip.portal.instance = "DepotSharing#CanDisableDepotSharingAtInstanceScope";
+
+		DepotNavigator.openToConfigSharingInInstanceSettings();
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
+
+		Depot.viewNoPanel(panelName = "Sharing");
+	}
+
+	@description = "This test ensures that depot sharing can be disabled at the system level."
+	@priority = "4"
+	test CanDisableDepotSharingAtSystemScope {
+		property test.name.skip.portal.instance = "DepotSharing#CanDisableDepotSharingAtSystemScope";
+
+		DepotNavigator.openToConfigSharingInSystemSettings();
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
+
+		Depot.viewNoPanel(panelName = "Sharing");
 	}
 
 	@description = "This test ensures that sharing a depot document to a user, and changing its sharing permissions via Manage Collaborators."
@@ -467,6 +375,98 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#NO_ENTRIES",
 			value1 = "No entries were found.");
+	}
+
+	@description = "This test asserts that users get the proper notification based on depot sharing permissions granted to him."
+	@priority = "5"
+	@refactorneeded
+	test CanViewSharingNotifications {
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.png,Document_3.odt");
+
+		DepotNavigator.gotoShare(dmDocumentTitle = "Document_1");
+
+		Asset.share(
+			noAutocomplete = "true",
+			sharingPermissions = "View",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
+
+		DMDocumentSharing.viewSharedFlag(
+			detailsView = "true",
+			dmDocumentTitle = "Document_1");
+
+		DepotNavigator.gotoShare(dmDocumentTitle = "Document_2");
+
+		Asset.share(
+			sharingPermissions = "Update",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocumentSharing.viewSharedFlag(
+			detailsView = "true",
+			dmDocumentTitle = "Document_2");
+
+		DepotNavigator.gotoShare(dmDocumentTitle = "Document_3");
+
+		Asset.share(
+			sharingPermissions = "Comment",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		DMDocumentSharing.viewSharedFlag(
+			detailsView = "true",
+			displayStyle = "table",
+			dmDocumentTitle = "Document_3");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "3");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = "Document_1",
+			ownerName = "Test Test");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "updating",
+			contentTitle = "Document_2",
+			openNotification = "true",
+			ownerName = "Test Test");
+
+		NotificationsPortlet.configureNotificationPG(menuItem = "Edit");
+
+		DMDocument.editCmd(dmDocumentTitleEdit = "DM Document Title");
+
+		Button.clickPublish();
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "commenting",
+			contentTitle = "Document_3",
+			ownerName = "Test Test");
 	}
 
 }

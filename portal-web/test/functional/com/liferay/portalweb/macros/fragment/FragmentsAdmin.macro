@@ -166,4 +166,11 @@ definition {
 			cardLabel = "${workflowStatus}");
 	}
 
+	macro viewSiteUsages {
+		LexiconTable.viewTableEntryInfo(
+			columnName = "usages",
+			tableEntry = "${siteName}",
+			tableEntryInfo = "${usages}");
+	}
+
 }

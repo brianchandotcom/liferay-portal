@@ -34,6 +34,34 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that no document shows in FTP mode after deleting it in a depot."
+	@priority = "5"
+	@refactorneeded
+	test CanNotViewDocumentAfterDeleting {
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
+
+		Panel.expandPanel(panel = "Documents and Media");
+
+		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
+
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document PDF",
+			groupName = "Test Depot Name");
+
+		Depot.viewDocumentInFTP(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document PDF");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
+
+		Depot.viewNoDocumentInFTP(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document PDF");
+	}
+
 	@description = "This test asserts that Not Found error returns when visiting FTP mode if indexing is disabled."
 	@priority = "5"
 	@refactorneeded
@@ -53,6 +81,92 @@ definition {
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
 			value1 = "Not Found");
+	}
+
+	@description = "This test asserts that a document without guest permissions in a depot can not be accessed from FTP mode."
+	@priority = "4"
+	@refactorneeded
+	test CanNotViewDocumentWithoutPermissions {
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
+
+		Panel.expandPanel(panel = "Documents and Media");
+
+		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Test Depot Name",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Depot.viewDocumentInFTP(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Document_1.doc");
+
+		Navigator.openURL();
+
+		User.logoutPG();
+
+		Depot.viewNoDocumentInFTP(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Document_1.doc");
+
+		User.loginPG();
+	}
+
+	@description = "This test asserts that the approved document in a depot can be accessed from FTP mode."
+	@priority = "4"
+	@refactorneeded
+	test CanViewApprovedDocument {
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
+
+		Panel.expandPanel(panel = "Documents and Media");
+
+		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMFolder.configureWorkflowCP(
+			dmFolderName = "DM Folder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.addWithWorkflowCP(
+			dmDocumentFile = "Document_1.xls",
+			dmDocumentTitle = "DM Document XLS");
+
+		Depot.viewNoDocumentInFTP(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document XLS",
+			dmFolderName = "DM Folder Name");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "DM Document XLS",
+			workflowAssetType = "Document",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "DM Document XLS",
+			workflowAssetType = "Document",
+			workflowTask = "Review");
+
+		Depot.viewDocumentInFTP(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document XLS",
+			dmFolderName = "DM Folder Name");
 	}
 
 	@description = "This test asserts that a document stored in a depot can be accessed from FTP mode."
@@ -83,34 +197,6 @@ definition {
 		Depot.viewDocumentInFTP(
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document JPG");
-	}
-
-	@description = "This test asserts that no document shows in FTP mode after deleting it in a depot."
-	@priority = "5"
-	@refactorneeded
-	test CanNotViewDocumentAfterDeleting {
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Panel.expandPanel(panel = "Documents and Media");
-
-		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
-
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document PDF",
-			groupName = "Test Depot Name");
-
-		Depot.viewDocumentInFTP(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document PDF");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
-
-		Depot.viewNoDocumentInFTP(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document PDF");
 	}
 
 	@description = "This test asserts that an edited document stored in a depot can be accessed from FTP mode."
@@ -183,59 +269,6 @@ definition {
 			dmFolderName = "DM Folder Name");
 	}
 
-	@description = "This test asserts that the approved document in a depot can be accessed from FTP mode."
-	@priority = "4"
-	@refactorneeded
-	test CanViewApprovedDocument {
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Panel.expandPanel(panel = "Documents and Media");
-
-		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
-
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Test Depot Name");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMFolder.configureWorkflowCP(
-			dmFolderName = "DM Folder Name",
-			workflowDefinition = "Single Approver",
-			workflowRestriction = "Default Workflow");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.addWithWorkflowCP(
-			dmDocumentFile = "Document_1.xls",
-			dmDocumentTitle = "DM Document XLS");
-
-		Depot.viewNoDocumentInFTP(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document XLS",
-			dmFolderName = "DM Folder Name");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "DM Document XLS",
-			workflowAssetType = "Document",
-			workflowTask = "Review");
-
-		Workflow.approveTaskByActions(
-			workflowAssetTitle = "DM Document XLS",
-			workflowAssetType = "Document",
-			workflowTask = "Review");
-
-		Depot.viewDocumentInFTP(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document XLS",
-			dmFolderName = "DM Folder Name");
-	}
-
 	@description = "This test asserts that a document with escape characters stored in a depot can be accessed from FTP mode."
 	@priority = "3"
 	@refactorneeded
@@ -258,39 +291,6 @@ definition {
 		Depot.viewDocumentInFTP(
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "&amp; &lt; &gt; DM Document");
-	}
-
-	@description = "This test asserts that a document without guest permissions in a depot can not be accessed from FTP mode."
-	@priority = "4"
-	@refactorneeded
-	test CanNotViewDocumentWithoutPermissions {
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Panel.expandPanel(panel = "Documents and Media");
-
-		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.doc",
-			groupName = "Test Depot Name",
-			guestPermissions = "false",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		Depot.viewDocumentInFTP(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "Document_1.doc");
-
-		Navigator.openURL();
-
-		User.logoutPG();
-
-		Depot.viewNoDocumentInFTP(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "Document_1.doc");
-
-		User.loginPG();
 	}
 
 }

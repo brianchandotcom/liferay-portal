@@ -117,7 +117,7 @@ definition {
 		task ("Create a private site") {
 			JSONGroup.addGroup(
 				groupName = "Site Name",
-				type = "Private");
+				membershipType = "Private");
 		}
 
 		task ("Create a user and set its password") {
@@ -476,8 +476,8 @@ definition {
 
 		task ("Add new site with manual membership disabled") {
 			JSONGroup.addGroup(
-				groupName = "Site Name",
-				manualMembership = "false");
+				allowManualMembershipManagement = "false",
+				groupName = "Site Name");
 		}
 
 		task ("Add My Sites widget to Site Page in Home Site") {
@@ -513,8 +513,8 @@ definition {
 
 		task ("Add new site with manual membership disabled") {
 			JSONGroup.addGroup(
-				groupName = "Site Name",
-				manualMembership = "false");
+				allowManualMembershipManagement = "false",
+				groupName = "Site Name");
 		}
 
 		task ("Add My Sites widget to Site Page in Home Site") {

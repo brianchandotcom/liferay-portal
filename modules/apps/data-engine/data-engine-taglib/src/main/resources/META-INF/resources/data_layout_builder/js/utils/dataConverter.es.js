@@ -74,7 +74,7 @@ export function getDDMFormField({
 	return ddmFormField;
 }
 
-export function getDDMFormFieldSettingsContext({
+function getDDMFormFieldSettingsContext({
 	dataDefinitionField,
 	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
 	editingLanguageId = defaultLanguageId,

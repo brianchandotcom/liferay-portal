@@ -112,11 +112,7 @@ const updateFieldProperty = ({
 export default (state, action, config) => {
 	switch (action.type) {
 		case EVENT_TYPES.FIELD.ADD: {
-			const {
-				data: {parentFieldName},
-				indexes,
-			} = action.payload;
-
+			const {data, fieldType, indexes} = action.payload;
 			const {
 				availableLanguageIds,
 				defaultLanguageId,
@@ -143,7 +139,7 @@ export default (state, action, config) => {
 						fieldNameGenerator,
 						portletNamespace,
 					},
-					action.payload
+					{fieldType}
 				);
 
 			const settingsVisitor = new PagesVisitor(
@@ -174,7 +170,7 @@ export default (state, action, config) => {
 				indexes,
 				newField,
 				pages,
-				parentFieldName,
+				parentFieldName: data?.parentFieldName,
 			});
 
 			return {

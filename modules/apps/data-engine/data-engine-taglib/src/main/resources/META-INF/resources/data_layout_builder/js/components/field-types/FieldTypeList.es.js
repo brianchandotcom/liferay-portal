@@ -21,7 +21,6 @@ import {
 } from 'data-engine-js-components-web';
 import React from 'react';
 
-import {dropLayoutBuilderField} from '../../actions.es';
 import {getSearchRegex} from '../../utils/search.es';
 import CollapsablePanel from '../collapsable-panel/CollapsablePanel.es';
 import EmptyState from '../empty-state/EmptyState.es';
@@ -52,16 +51,19 @@ const FieldTypeWrapper = ({
 			icon={getIcon()}
 			onDoubleClick={({name}) => {
 				dispatch({
-					payload: dropLayoutBuilderField({
-						addedToPlaceholder: true,
-						fieldTypeName: name,
-						fieldTypes,
+					payload: {
+						fieldType: {
+							...fieldTypes.find(
+								({name: typeName}) => typeName === name
+							),
+							editable: true,
+						},
 						indexes: {
 							columnIndex: 0,
 							pageIndex: activePage,
 							rowIndex: pages[activePage].rows.length,
 						},
-					}),
+					},
 					type: CORE_EVENT_TYPES.FIELD.ADD,
 				});
 			}}

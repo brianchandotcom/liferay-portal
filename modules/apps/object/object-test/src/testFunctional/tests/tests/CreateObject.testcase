@@ -433,8 +433,6 @@ definition {
 	@description = "LPS-135400 - Verify it is not possible to create duplicated Relationship name"
 	@priority = "4"
 	test CannotCreateDuplicatedRelationshipName {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -458,7 +456,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
 			value1 = "Duplicate name relationship");
-
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to delete a Relationship when an Object is published"

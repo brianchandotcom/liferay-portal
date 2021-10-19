@@ -391,6 +391,48 @@ definition {
 			assigneeType = "Organizations");
 	}
 
+	@description = "This test asserts Account Administrators can view all account users"
+	@priority = "5"
+	test AdminCanViewAllAccountUsers {
+		task ("Add several users to account") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			for (var userNum : list "2,3,4") {
+				Accounts.addNewUserToBusinessAccount(
+					accountName = "Account Name",
+					assigneeName = "userfn${userNum}",
+					userEmailAddress = "userea${userNum}@liferay.com",
+					userFirstName = "userfn${userNum}",
+					userLastName = "userln${userNum}",
+					userScreenName = "usersn${userNum}");
+			}
+		}
+
+		task ("Assert all users can be viewed") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
+
+			LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+
+			for (var userNum : list "2,3,4") {
+				LexiconEntry.viewEntryName(rowEntry = "userfn${userNum} userln${userNum}");
+			}
+		}
+	}
+
 	@description = "This test checks that the size of the pagination list can be changed."
 	@priority = "4"
 	test CanChangePaginationInAccounts {

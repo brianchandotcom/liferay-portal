@@ -974,6 +974,10 @@ definition {
 			checkboxName = "Required Field",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
+		AssertVisible(
+			key_text = "Save",
+			locator1 = "Button#ANY_ENABLED");
+
 		Click(locator1 = "Sidebar#BACK");
 	}
 

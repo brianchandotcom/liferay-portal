@@ -1,6 +1,8 @@
 {
 	"dependencies": {
-		"react": "16.12.0"
+		"dagre": "0.8.2",
+		"react": "16.12.0",
+		"react-flow-renderer": "9.1.0"
 	},
 	"jest": {
 		"setupFilesAfterEnv": [

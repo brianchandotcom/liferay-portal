@@ -207,8 +207,6 @@ definition {
 
 		DMDocumentType.gotoEditField(fieldName = "Image");
 
-		DMDocumentType.gotoTab(tabName = "Builder");
-
 		Navigator.gotoNavTab(navTab = "Advanced");
 
 		AssertTextEquals.assertValue(

@@ -29,6 +29,14 @@ definition {
 		Confirm();
 	}
 
+	macro viewTableEntryInfo {
+		AssertTextEquals(
+			key_columnName = "${columnName}",
+			key_tableEntry = "${tableEntry}",
+			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+			value1 = "${tableEntryInfo}");
+	}
+
 	macro viewTableEntryNotPresent {
 		AssertElementNotPresent(
 			key_tableEntry = "${tableEntry}",

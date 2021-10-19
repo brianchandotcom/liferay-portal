@@ -589,11 +589,28 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Type blank"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotLeaveRelationshipTypeBlank {
 
-		// TODO LPS-140583 CannotLeaveRelationshipTypeBlank pending implementation
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "Relationship",
+			object = "CustomObject");
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR",
+			value1 = "Invalid type null");
 
 	}
 

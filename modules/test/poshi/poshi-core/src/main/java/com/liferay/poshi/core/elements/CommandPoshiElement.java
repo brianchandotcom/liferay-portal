@@ -126,13 +126,17 @@ public class CommandPoshiElement extends PoshiElement {
 			sb.append(poshiElementAttribute.toPoshiScript());
 		}
 
-		String sortedAnnotations = ListUtil.sort(sb.toString(), "\n");
+		String annotations = sb.toString();
+
+		String sortedAnnotations = ListUtil.sort(
+			annotations.replaceFirst("\n\n", ""), "\"\n");
 
 		if (sortedAnnotations.length() > 0) {
-			return sortedAnnotations + createPoshiScriptBlock(getPoshiNodes());
+			return "\n\n" + sortedAnnotations +
+				createPoshiScriptBlock(getPoshiNodes());
 		}
 
-		return "\n" + createPoshiScriptBlock(getPoshiNodes());
+		return "\n\n" + createPoshiScriptBlock(getPoshiNodes());
 	}
 
 	protected CommandPoshiElement() {

@@ -20,7 +20,7 @@ import classNames from 'classnames';
 import {ALIGN_POSITIONS, align} from 'frontend-js-web';
 import React, {useContext, useLayoutEffect, useRef, useState} from 'react';
 
-import LayoutSelector from './LayoutSelector';
+import PreviewSelector from './PreviewSelector';
 import {StyleBookContext} from './StyleBookContext';
 import {config} from './config';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
@@ -40,7 +40,7 @@ export default function Toolbar() {
 						<span className="style-book-editor__page-preview-text">
 							{`${Liferay.Language.get('preview')}:`}
 						</span>
-						<LayoutSelector />
+						<PreviewSelector />
 					</li>
 				</ul>
 

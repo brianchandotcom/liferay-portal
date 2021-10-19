@@ -3,6 +3,7 @@
 $controlMenuDesktopHeight: 56px;
 $previewInfoBarHeight: 36px;
 $toolbarDesktopHeight: 56px;
+$previewSelectorWidth: 168px;
 
 html#{$cadmin-selector} {
 	.cadmin {
@@ -144,6 +145,12 @@ html#{$cadmin-selector} {
 					max-width: calc(100% - 33px);
 					vertical-align: middle;
 				}
+			}
+
+			&__preview-selector {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				width: $previewSelectorWidth;
 			}
 
 			&__sidebar {

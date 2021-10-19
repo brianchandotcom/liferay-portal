@@ -54,11 +54,12 @@ public class DLSelectFolderDisplayContext {
 
 	public DLSelectFolderDisplayContext(
 		Folder folder, HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse, long selectedFolderId) {
 
 		_folder = folder;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_selectedFolderId = selectedFolderId;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -163,8 +164,7 @@ public class DLSelectFolderDisplayContext {
 	}
 
 	public long getSelectedFolderId() {
-		return ParamUtil.getLong(
-			_httpServletRequest, "selectedFolderId", getFolderId());
+		return _selectedFolderId;
 	}
 
 	public Map<String, Object> getSelectorButtonData() {
@@ -262,6 +262,7 @@ public class DLSelectFolderDisplayContext {
 	private final Folder _folder;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final long _selectedFolderId;
 	private final ThemeDisplay _themeDisplay;
 
 }

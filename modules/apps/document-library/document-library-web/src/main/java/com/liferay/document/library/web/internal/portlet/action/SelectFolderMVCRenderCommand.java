@@ -19,8 +19,10 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.web.internal.display.context.DLSelectFolderDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletException;
@@ -53,12 +55,16 @@ public class SelectFolderMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
+			Folder folder = ActionUtil.getFolder(renderRequest);
+
 			renderRequest.setAttribute(
 				DLSelectFolderDisplayContext.class.getName(),
 				new DLSelectFolderDisplayContext(
-					ActionUtil.getFolder(renderRequest),
-					_portal.getHttpServletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)));
+					folder, _portal.getHttpServletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse),
+					ParamUtil.getLong(
+						renderRequest, "selectedFolderId",
+						folder.getFolderId())));
 
 			return "/document_library/select_folder.jsp";
 		}

@@ -217,6 +217,9 @@ public class NumericDDMFormFieldTemplateContextContributor
 			).put(
 				"appendType", numericInputMaskJSONObject.getString("appendType")
 			).put(
+				"decimalPlaces",
+				numericInputMaskJSONObject.getInt("decimalPlaces")
+			).put(
 				"symbols", numericInputMaskJSONObject.getJSONObject("symbols")
 			).build();
 		}

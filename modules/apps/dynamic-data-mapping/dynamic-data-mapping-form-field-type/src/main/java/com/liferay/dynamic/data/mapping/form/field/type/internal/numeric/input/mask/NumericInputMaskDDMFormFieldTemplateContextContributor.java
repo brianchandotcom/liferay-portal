@@ -140,6 +140,8 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributor
 			).put(
 				"appendType", valueJSONObject.getString("appendType")
 			).put(
+				"decimalPlaces", valueJSONObject.getInt("decimalPlaces")
+			).put(
 				"decimalSymbol", symbolsJSONObject.getString("decimalSymbol")
 			).put(
 				"thousandsSeparator",

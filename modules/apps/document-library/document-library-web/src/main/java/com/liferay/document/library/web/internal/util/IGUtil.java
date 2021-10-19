@@ -16,14 +16,11 @@ package com.liferay.document.library.web.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,28 +41,11 @@ public class IGUtil {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		String mvcRenderCommandName = ParamUtil.getString(
-			httpServletRequest, "mvcRenderCommandName");
-
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		if (mvcRenderCommandName.equals("/document_library/select_folder")) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			portletURL.setParameter(
-				"mvcRenderCommandName", mvcRenderCommandName);
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				httpServletRequest, themeDisplay.translate("home"),
-				portletURL.toString());
-		}
-		else {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/image_gallery_display/view");
-		}
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			PortalUtil.getLiferayPortletResponse(renderResponse)
+		).setMVCRenderCommandName(
+			"/image_gallery_display/view"
+		).buildRenderURL();
 
 		long rootFolderId = getRootFolderId(httpServletRequest);
 

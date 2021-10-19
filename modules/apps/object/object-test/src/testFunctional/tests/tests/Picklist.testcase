@@ -305,7 +305,6 @@ definition {
 		Picklist.selectPickilistModalFrame();
 
 		Picklist.assertPicklistMessage(picklistMessage = "Updating or deleting a picklist item will automatically update every entry that is using the specific item value. This may affect multiple objects.");
-
 	}
 
 }

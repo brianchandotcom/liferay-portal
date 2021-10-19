@@ -14,6 +14,7 @@
 
 package com.liferay.batch.planner.web.internal.display.context;
 
+import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.string.StringPool;
 
@@ -34,6 +35,21 @@ public class EditBatchPlannerPlanDisplayContext {
 		Map<String, String> headlessEndpoints) {
 
 		_headlessEndpoints = Collections.unmodifiableMap(headlessEndpoints);
+	}
+
+	public List<SelectOption> getExternalTypeSelectOptions() {
+		List<SelectOption> selectOptions = new ArrayList<>();
+
+		for (BatchEngineTaskContentType batchEngineTaskContentType :
+				BatchEngineTaskContentType.values()) {
+
+			selectOptions.add(
+				new SelectOption(
+					batchEngineTaskContentType.toString(),
+					batchEngineTaskContentType.toString()));
+		}
+
+		return selectOptions;
 	}
 
 	public Map<String, String> getHeadlessEndpoints() {

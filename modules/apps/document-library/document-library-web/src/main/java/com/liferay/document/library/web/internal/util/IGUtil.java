@@ -81,8 +81,13 @@ public class IGUtil {
 				portletURL.toString());
 		}
 
-		portletURL.setParameter(
-			"folderId", String.valueOf(folder.getFolderId()));
+		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		if (folder != null) {
+			folderId = folder.getFolderId();
+		}
+
+		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest, folder.getName(), portletURL.toString());

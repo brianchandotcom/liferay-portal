@@ -1401,8 +1401,6 @@ definition {
 	@description = "LPS-135400 - There is an explanation about each Relationship type"
 	@priority = "3"
 	test CanViewExplanationRelationshipTypes {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -1419,14 +1417,12 @@ definition {
 		Click(locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_FORM");
 
 		ObjectAdmin.assertRelationshipsTypeDescription(
-			type = "One to Many",
-			description = "One object's entry interacts with many others object's entries.");
+			description = "One object's entry interacts with many others object's entries.",
+			type = "One to Many");
 
 		ObjectAdmin.assertRelationshipsTypeDescription(
-			type = "Many to Many",
-			description = "Multiple object's entries can interact with many others object's entries.");
-
-		
+			description = "Multiple object's entries can interact with many others object's entries.",
+			type = "Many to Many");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on the eye icon"

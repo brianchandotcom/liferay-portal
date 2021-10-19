@@ -232,8 +232,8 @@ definition {
 
 	macro assertRelationshipsTypeDescription {
 		AssertTextEquals(
-			locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_DESCRIPTION",
 			key_type = "${type}",
+			locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_DESCRIPTION",
 			value1 = "${description}");
 	}
 

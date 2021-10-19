@@ -740,8 +740,6 @@ definition {
 
 		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Test Entry");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
-
 		Refresh();
 
 		ObjectPortlet.assertDuplicatedEntryNotPresent(entry = "Test Entry");

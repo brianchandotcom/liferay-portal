@@ -81,14 +81,10 @@ definition {
 		Click(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTION");
 
 		Click(
-			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION",
-			key_picklistOption = "${picklistOption}");
+			key_picklistOption = "${picklistOption}",
+			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 
 		Button.clickSave();
-
-
-
-
 	}
 
 	macro addObjectRelationshipViaAPI {
@@ -337,9 +333,6 @@ definition {
 
 	macro goToDetailsTab {
 		Click(locator1 = "ObjectAdmin#OBJECT_DETAILS_TAB");
-
-
-		
 	}
 
 	macro goToFieldsDetails {

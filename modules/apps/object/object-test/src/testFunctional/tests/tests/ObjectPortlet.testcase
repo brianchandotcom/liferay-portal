@@ -169,11 +169,10 @@ definition {
 	@description = "LPS-135396 - Verify it is possible to add a Picklist field on layout"
 	@priority = "4"
 	test CanAddPicklistEntryOnLayout {
-
 		Picklist.gotoPicklists();
 
 		Picklist.addPicklistViaUI(picklistName = "Custom Picklist");
-		
+
 		Picklist.gotoPicklists();
 
 		Picklist.gotoPicklistView(picklistName = "Custom Picklist");
@@ -190,13 +189,11 @@ definition {
 
 		Picklist.clickSaveButton();
 
-		
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.addNewObject(
 			fieldLabelName = "Custom Object",
 			pluralLabelName = "Custom Objects");
-
 
 		ObjectAdmin.saveCustomObject();
 
@@ -227,13 +224,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "itemTest1");
-
-
-
-
-
-
-
 	}
 
 	@description = "LPS-140084 - Verify it is possible to add special characters on a field that with the Field Name as 'Name'"

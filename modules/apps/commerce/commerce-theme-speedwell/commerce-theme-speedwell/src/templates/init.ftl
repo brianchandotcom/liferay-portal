@@ -117,7 +117,7 @@
 
 <#assign show_sign_in = theme_display.isShowSignInIcon() />
 
-<#if show_sign_in>
+<#if true>
 	<#assign
 		sign_in_text = languageUtil.get(locale, "sign-in")
 		sign_in_url = htmlUtil.escape(theme_display.getURLSignIn())

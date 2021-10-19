@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class IGUtil {
 			}
 		}
 
-		Collections.reverse(ancestorFolders);
+		Collections.reverse(new ArrayList<>(ancestorFolders));
 
 		for (Folder ancestorFolder : ancestorFolders) {
 			portletURL.setParameter(

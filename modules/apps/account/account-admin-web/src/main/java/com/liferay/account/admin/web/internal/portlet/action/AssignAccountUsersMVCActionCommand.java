@@ -74,7 +74,7 @@ public class AssignAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
 				portletId),
-			actionRequest, "enableAutomaticSiteMembership");
+			actionRequest, "enableAutomaticSiteMembership", true);
 
 		if (enableAutomaticSiteMembership) {
 			_userLocalService.addGroupUsers(

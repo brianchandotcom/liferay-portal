@@ -235,7 +235,7 @@ definition {
 			locator1 = "Fragment#FRAGMENT_HEADER");
 	}
 
-	macro clickPencil {
+	macro gotoPageEditor {
 		Click(locator1 = "Icon#EDIT_PENCIL");
 
 		PageEditor.assertFragmentSidebarLoaded();

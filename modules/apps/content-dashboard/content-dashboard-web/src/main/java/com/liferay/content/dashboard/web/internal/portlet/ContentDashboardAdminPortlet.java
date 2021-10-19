@@ -82,7 +82,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + ContentDashboardPortletKeys.CONTENT_DASHBOARD_ADMIN,
 		"javax.portlet.portlet-mode=text/html",
-		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},

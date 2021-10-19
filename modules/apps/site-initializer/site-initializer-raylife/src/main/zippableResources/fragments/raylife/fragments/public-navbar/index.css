@@ -3,6 +3,19 @@
 	padding-top: var(--spacer-2);
 }
 
+.public-site-navbar .logo-text {
+	color: var(--color-brand-secondary);
+	font-size: 12px;
+	font-weight: bold;
+	margin-left: 8px;
+	text-align: center;
+}
+
+.public-site-navbar .navbar-brand {
+	display: flex;
+	flex-direction: column;
+}
+
 .public-site-navbar-divider::before {
 	border: 1px solid #d2d2d3;
 	content: '';

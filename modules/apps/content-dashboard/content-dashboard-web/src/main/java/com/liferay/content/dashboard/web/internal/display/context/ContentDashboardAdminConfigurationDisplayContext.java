@@ -195,13 +195,11 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		return JSONUtil.put(
 			"global", group.isCompany()
 		).put(
-			"id", assetVocabulary.getVocabularyId()
-		).put(
 			"label", HtmlUtil.escape(_getAssetVocabularyLabel(assetVocabulary))
 		).put(
 			"site", assetVocabulary.getGroupId()
 		).put(
-			"value", assetVocabulary.getName()
+			"value", assetVocabulary.getVocabularyId()
 		);
 	}
 

@@ -198,6 +198,8 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 					).put(
 						"appendType", "suffix"
 					).put(
+						"decimalPlaces", 2
+					).put(
 						"symbols",
 						JSONUtil.put(
 							"decimalSymbol", "."
@@ -215,6 +217,7 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 
 		Assert.assertEquals("%", parameters.get("append"));
 		Assert.assertEquals("suffix", parameters.get("appendType"));
+		Assert.assertEquals(2, parameters.get("decimalPlaces"));
 		Assert.assertEquals(
 			JSONUtil.put(
 				"decimalSymbol", "."
@@ -233,6 +236,7 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 
 		Assert.assertEquals("$", parameters.get("append"));
 		Assert.assertEquals("prefix", parameters.get("appendType"));
+		Assert.assertEquals(2, parameters.get("decimalPlaces"));
 		Assert.assertEquals(
 			JSONUtil.put(
 				"decimalSymbol", ","
@@ -317,6 +321,8 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 					"append", "$"
 				).put(
 					"appendType", "prefix"
+				).put(
+					"decimalPlaces", 2
 				).put(
 					"symbols",
 					JSONUtil.put(

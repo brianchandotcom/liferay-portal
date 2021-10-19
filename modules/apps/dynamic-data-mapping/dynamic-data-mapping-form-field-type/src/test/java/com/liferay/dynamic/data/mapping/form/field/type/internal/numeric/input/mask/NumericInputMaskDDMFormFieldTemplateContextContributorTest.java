@@ -70,6 +70,7 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributorTest
 
 		Assert.assertEquals("$", parameters.get("append"));
 		Assert.assertEquals("prefix", parameters.get("appendType"));
+		Assert.assertEquals(2, parameters.get("decimalPlaces"));
 		Assert.assertEquals(",", parameters.get("decimalSymbol"));
 
 		List<Object> decimalSymbols = (List<Object>)parameters.get(
@@ -163,6 +164,8 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributorTest
 				"append", "$"
 			).put(
 				"appendType", "prefix"
+			).put(
+				"decimalPlaces", 2
 			).put(
 				"symbols",
 				JSONUtil.put(

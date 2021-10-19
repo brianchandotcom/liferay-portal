@@ -80,6 +80,44 @@ definition {
 			fieldName = "Web Content");
 	}
 
+	@description = "This is a test for LRQA-70033. This test verifies that is possible to clear the Web Content field"
+	@priority = "5"
+	test CanClearInput {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInWebContentField(
+			contentName = "Web Content Title 1",
+			fieldLabel = "Web Content");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.clearDataOnField(fieldLabel = "Web Content");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertWebContentNotPresent(
+			contentName = "Web Content Title 1",
+			fieldLabel = "Web Content");
+	}
+
 	@description = "This is a test for LRQA-68658. This test verifies that Label and Help text can be edited."
 	@priority = "5"
 	test CanEditLabelAndHelpText {
@@ -115,6 +153,150 @@ definition {
 			fieldFieldLabel = "Web Content Edited",
 			fieldHelp = "Help Text Edited",
 			fieldName = "Web Content");
+	}
+
+	@description = "This is a test for LRQA-70033. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"
+	@priority = "5"
+	test CanInputDataOnDuplicatedField {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Web Content");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Web Content");
+
+		DERenderer.inputDataInWebContentField(
+			contentName = "Web Content Title 1",
+			fieldLabel = "Web Content",
+			index = "1");
+
+		DERenderer.inputDataInWebContentField(
+			contentName = "Web Content Title 2",
+			fieldLabel = "Web Content",
+			index = "2");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInWebContentField(
+			contentName = "Web Content Title 1",
+			fieldLabel = "Web Content",
+			index = "1");
+
+		DERenderer.assertDataInWebContentField(
+			contentName = "Web Content Title 2",
+			fieldLabel = "Web Content",
+			index = "2");
+	}
+
+	@description = "This is a test for LRQA-70033. This test verifies that is possible to link an Web Content on the Web Content field"
+	@priority = "5"
+	test CanInputLink {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInWebContentField(
+			contentName = "Web Content Title 1",
+			fieldLabel = "Web Content");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInWebContentField(
+			contentName = "Web Content Title 1",
+			fieldLabel = "Web Content");
+	}
+
+	@description = "This is a test for LRQA-70033. This test verifies that is not possible to publish the Web Content with a required field blank"
+	@priority = "4"
+	test CanNotPublishBlankRequiredField {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		DataEngine.editFieldRequired(fieldFieldLabel = "Web Content");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		Button.clickPublish();
+
+		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
+	}
+
+	@description = "This is a test for LRQA-70033. This test verifies that is possible to remove a duplicated field (repeatable)"
+	@priority = "4"
+	test CanRemoveDuplicatedField {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Web Content");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Web Content");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.removeRepeatableField(fieldLabel = "Web Content");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DEBuilder.assertFieldNotPresent(
+			fieldLabel = "Web Content",
+			index = "2");
 	}
 
 	@description = "This is a test for LRQA-68658. This test verifies that Default Searchable property is Disable when System Setting is left unchecked."

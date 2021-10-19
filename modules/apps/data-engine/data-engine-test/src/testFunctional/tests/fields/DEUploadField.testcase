@@ -108,7 +108,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		DERenderer.clearImageField(fieldLabel = "Upload");
+		DERenderer.clearDataOnField(fieldLabel = "Upload");
 
 		Button.clickPublish();
 

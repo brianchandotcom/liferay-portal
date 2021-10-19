@@ -67,6 +67,8 @@ public class ObjectDefinitionResourceTest
 	public void testGetObjectDefinitionsPageWithSortString() throws Exception {
 		ObjectDefinition objectDefinition1 = randomObjectDefinition();
 
+		objectDefinition1.setName("A" + objectDefinition1.getName());
+
 		objectDefinition1 = testGetObjectDefinitionsPage_addObjectDefinition(
 			objectDefinition1);
 
@@ -96,7 +98,7 @@ public class ObjectDefinitionResourceTest
 
 		assertEquals(
 			Arrays.asList(objectDefinition2, objectDefinition1),
-			items.subList(2, items.size()));
+			items.subList(items.size() - 2, items.size()));
 	}
 
 	@Ignore
@@ -122,11 +124,11 @@ public class ObjectDefinitionResourceTest
 		objectDefinition.setActive(false);
 		objectDefinition.setLabel(
 			Collections.singletonMap(
-				"en_US", "A" + objectDefinition.getName()));
-		objectDefinition.setName("A" + objectDefinition.getName());
+				"en_US", "O" + objectDefinition.getName()));
+		objectDefinition.setName("O" + objectDefinition.getName());
 		objectDefinition.setPluralLabel(
 			Collections.singletonMap(
-				"en_US", "A" + objectDefinition.getName()));
+				"en_US", "O" + objectDefinition.getName()));
 		objectDefinition.setObjectFields(
 			new ObjectField[] {
 				new ObjectField() {

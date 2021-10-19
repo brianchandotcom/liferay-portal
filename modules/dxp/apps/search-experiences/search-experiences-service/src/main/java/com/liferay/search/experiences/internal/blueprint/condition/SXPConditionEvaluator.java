@@ -27,7 +27,7 @@ public class SXPConditionEvaluator {
 	public static boolean evaluate(
 		JSONObject jsonObject, SXPParameterData sxpParameterData) {
 
-		if (jsonObject == null) {
+		if ((jsonObject == null) || (jsonObject.length() == 0)) {
 			return true;
 		}
 
@@ -80,10 +80,10 @@ public class SXPConditionEvaluator {
 			return sxpParameter.evaluateGreaterThan(true, jsonObject);
 		}
 		else if (key.equals("less_than")) {
-			return !sxpParameter.evaluateGreaterThan(false, jsonObject);
+			return !sxpParameter.evaluateGreaterThan(true, jsonObject);
 		}
 		else if (key.equals("less_than_equals")) {
-			return !sxpParameter.evaluateGreaterThan(true, jsonObject);
+			return !sxpParameter.evaluateGreaterThan(false, jsonObject);
 		}
 		else if (key.equals("not_contains")) {
 			return !sxpParameter.evaluateContains(jsonObject);

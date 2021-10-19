@@ -32,10 +32,10 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 >
 	<aui:input name="redirect" type="hidden" value="<%= contentDashboardAdminConfigurationDisplayContext.getRedirect() %>" />
 
-	<aui:input name="assetVocabularyNames" type="hidden" />
+	<aui:input name="assetVocabularyIds" type="hidden" />
 
 	<liferay-frontend:edit-form-body>
-		<c:if test='<%= GetterUtil.getBoolean(SessionMessages.get(renderRequest, "emptyAssetVocabularyNames")) %>'>
+		<c:if test='<%= GetterUtil.getBoolean(SessionMessages.get(renderRequest, "emptyAssetVocabularyIds")) %>'>
 			<clay:alert
 				dismissible="<%= true %>"
 				displayType="warning"
@@ -55,11 +55,11 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 							module="js/VocabulariesSelectionBox"
 							props='<%=
 								HashMapBuilder.<String, Object>put(
-									"leftBoxName", "availableAssetVocabularyNames"
+									"leftBoxName", "availableAssetVocabularyIds"
 								).put(
 									"leftList", contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyJSONArray()
 								).put(
-									"rightBoxName", "currentAssetVocabularyNames"
+									"rightBoxName", "currentAssetVocabularyIds"
 								).put(
 									"rightList", contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyJSONArray()
 								).build()
@@ -83,8 +83,8 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 		var form = document.<portlet:namespace />fm;
 		Liferay.Util.postForm(form, {
 			data: {
-				assetVocabularyNames: Liferay.Util.listSelect(
-					Liferay.Util.getFormElement(form, 'currentAssetVocabularyNames')
+				assetVocabularyIds: Liferay.Util.listSelect(
+					Liferay.Util.getFormElement(form, 'currentAssetVocabularyIds')
 				),
 			},
 		});

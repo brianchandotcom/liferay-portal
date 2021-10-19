@@ -20,7 +20,7 @@ import '@testing-library/jest-dom/extend-expect';
 import VocabulariesSelectionBox from '../../../src/main/resources/META-INF/resources/js/VocabulariesSelectionBox';
 
 const mockProps = {
-	leftBoxName: 'availableAssetVocabularyNames',
+	leftBoxName: 'availableAssetVocabularyIds',
 	leftList: [
 		{
 			global: false,
@@ -43,7 +43,7 @@ const mockProps = {
 	],
 	portletNamespace:
 		'_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_',
-	rightBoxName: 'currentAssetVocabularyNames',
+	rightBoxName: 'currentAssetVocabularyIds',
 	rightList: [
 		{
 			global: true,
@@ -61,7 +61,7 @@ const mockProps = {
 };
 
 const mockPropsWithoutSelected = {
-	leftBoxName: 'availableAssetVocabularyNames',
+	leftBoxName: 'availableAssetVocabularyIds',
 	leftList: [
 		{
 			global: false,
@@ -102,7 +102,7 @@ const mockPropsWithoutSelected = {
 	],
 	portletNamespace:
 		'_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_',
-	rightBoxName: 'currentAssetVocabularyNames',
+	rightBoxName: 'currentAssetVocabularyIds',
 	rightList: [],
 };
 
@@ -120,10 +120,10 @@ describe('VocabulariesSelectionBox', () => {
 		expect(getByText('Audience (Global)')).toBeInTheDocument();
 
 		const availableVocabularies = container.querySelectorAll(
-			'#availableAssetVocabularyNames option'
+			'#availableAssetVocabularyIds option'
 		);
 		const selectedVocabularies = container.querySelectorAll(
-			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyNames option'
+			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyIds option'
 		);
 
 		expect(availableVocabularies.length).toBe(3);
@@ -134,7 +134,7 @@ describe('VocabulariesSelectionBox', () => {
 		const {container} = render(<VocabulariesSelectionBox {...mockProps} />);
 
 		const disabledVocabularies = container.querySelectorAll(
-			"#availableAssetVocabularyNames option[value='extension']:disabled"
+			"#availableAssetVocabularyIds option[value='extension']:disabled"
 		);
 		expect(disabledVocabularies.length).toBe(1);
 	});
@@ -145,26 +145,26 @@ describe('VocabulariesSelectionBox', () => {
 		);
 
 		const availableVocabularies = container.querySelectorAll(
-			'#availableAssetVocabularyNames option'
+			'#availableAssetVocabularyIds option'
 		);
 		const selectedVocabularies = container.querySelectorAll(
-			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyNames option'
+			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyIds option'
 		);
 
 		expect(availableVocabularies.length).toBe(6);
 		expect(selectedVocabularies.length).toBe(0);
 
 		const availableSelect = container.querySelector(
-			'#availableAssetVocabularyNames'
+			'#availableAssetVocabularyIds'
 		);
 		fireEvent.change(availableSelect, {target: {value: 'extension'}});
 		fireEvent.click(container.querySelector('.transfer-button-ltr'));
 
 		const availableVocabulariesAfterLTR = container.querySelectorAll(
-			'#availableAssetVocabularyNames option'
+			'#availableAssetVocabularyIds option'
 		);
 		const selectedVocabulariesAfterLTR = container.querySelectorAll(
-			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyNames option'
+			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyIds option'
 		);
 
 		expect(availableVocabulariesAfterLTR.length).toBe(5);
@@ -173,7 +173,7 @@ describe('VocabulariesSelectionBox', () => {
 		// Region  vocabulary must be disabled now becasue is from another site
 
 		const disabledVocabularies = container.querySelectorAll(
-			"#availableAssetVocabularyNames option[value='region']:disabled"
+			"#availableAssetVocabularyIds option[value='region']:disabled"
 		);
 		expect(disabledVocabularies.length).toBe(1);
 	});
@@ -182,16 +182,16 @@ describe('VocabulariesSelectionBox', () => {
 		const {container} = render(<VocabulariesSelectionBox {...mockProps} />);
 
 		const selectedSelect = container.querySelector(
-			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyNames'
+			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyIds'
 		);
 		fireEvent.change(selectedSelect, {target: {value: 'region'}});
 		fireEvent.click(container.querySelector('.transfer-button-rtl'));
 
 		const availableVocabulariesAfterRTL = container.querySelectorAll(
-			'#availableAssetVocabularyNames option'
+			'#availableAssetVocabularyIds option'
 		);
 		const selectedVocabulariesAfterRTL = container.querySelectorAll(
-			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyNames option'
+			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyIds option'
 		);
 
 		expect(availableVocabulariesAfterRTL.length).toBe(4);
@@ -201,7 +201,7 @@ describe('VocabulariesSelectionBox', () => {
 		// and it is from Global site
 
 		const disabledVocabularies = container.querySelectorAll(
-			'#availableAssetVocabularyNames option:disabled'
+			'#availableAssetVocabularyIds option:disabled'
 		);
 		expect(disabledVocabularies.length).toBe(0);
 	});

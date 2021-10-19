@@ -29,15 +29,33 @@ public class FolderItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _selectedFolderId;
 	}
 
+	public boolean isIgnoreRootFolder() {
+		return _ignoreRootFolder;
+	}
+
+	public boolean isShowMountFolder() {
+		return _showMountFolder;
+	}
+
 	public void setFolderId(long folderId) {
 		_folderId = folderId;
+	}
+
+	public void setIgnoreRootFolder(boolean ignoreRootFolder) {
+		_ignoreRootFolder = ignoreRootFolder;
 	}
 
 	public void setSelectedFolderId(long selectedFolderId) {
 		_selectedFolderId = selectedFolderId;
 	}
 
+	public void setShowMountFolder(boolean showMountFolder) {
+		_showMountFolder = showMountFolder;
+	}
+
 	private long _folderId;
+	private boolean _ignoreRootFolder;
 	private long _selectedFolderId;
+	private boolean _showMountFolder;
 
 }

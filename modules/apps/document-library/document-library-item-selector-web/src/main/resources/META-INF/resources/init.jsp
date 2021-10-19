@@ -31,7 +31,8 @@ page import="com.liferay.document.library.item.selector.web.internal.util.DLBrea
 page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %>
+page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <liferay-theme:defineObjects />
 

@@ -113,10 +113,14 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 	if (openFolderSelectorButton) {
 		openFolderSelectorButton.addEventListener('click', (event) => {
-			Liferay.Util.getOpener().Liferay.Util.openSelectionModal({
-				id:
-					'_<%= HtmlUtil.escapeJS(igRequestHelper.getPortletResource()) %>_selectFolder',
+			Liferay.Util.openSelectionModal({
+				selectEventName: 'itemSelected',
+				multiple: false,
 				onSelect: function (selectedItem) {
+					if (!selectedItem) {
+						return;
+					}
+
 					var folderData = {
 						idString: 'rootFolderId',
 						idValue: selectedItem.folderid,
@@ -138,16 +142,20 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 					rootFolderNotFoundWarning.classList.add('hide');
 				},
-				selectEventName:
-					'_<%= HtmlUtil.escapeJS(igRequestHelper.getPortletResource()) %>_selectFolder',
 				title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
-				<liferay-portlet:renderURL portletName="<%= igRequestHelper.getPortletResource() %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
-					<portlet:param name="folderId" value="<%= (rootFolderInTrash || rootFolderNotFound) ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID): String.valueOf(rootFolderId) %>" />
-					<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
-					<portlet:param name="selectedFolderId" value="<%= String.valueOf(rootFolderId) %>" />
-				</liferay-portlet:renderURL>
+				<%
+				ItemSelector itemSelector = (ItemSelector)request.getAttribute(ItemSelector.class.getName());
+
+				FolderItemSelectorCriterion folderItemSelectorCriterion = new FolderItemSelectorCriterion();
+
+				folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new FolderItemSelectorReturnType());
+				folderItemSelectorCriterion.setFolderId((rootFolderInTrash || rootFolderNotFound) ? DLFolderConstants.DEFAULT_PARENT_FOLDER_ID : rootFolderId);
+				folderItemSelectorCriterion.setIgnoreRootFolder(true);
+				folderItemSelectorCriterion.setSelectedFolderId(rootFolderId);
+
+				PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), "itemSelected", folderItemSelectorCriterion);
+				%>
 
 				url: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>',
 			});

@@ -146,10 +146,14 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 				if (selectFolderButton) {
 					selectFolderButton.addEventListener('click', (event) => {
-						Liferay.Util.getOpener().Liferay.Util.openSelectionModal({
-							id:
-								'_<%= HtmlUtil.escapeJS(dlRequestHelper.getPortletResource()) %>_selectFolder',
+						Liferay.Util.openSelectionModal({
+							selectEventName: 'itemSelected',
+							multiple: false,
 							onSelect: function (selectedItem) {
+								if (!selectedItem) {
+									return;
+								}
+
 								var folderData = {
 									idString: 'rootFolderId',
 									idValue: selectedItem.folderid,
@@ -171,17 +175,21 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 								rootFolderNotFoundWarning.classList.add('hide');
 							},
-							selectEventName:
-								'_<%= HtmlUtil.escapeJS(dlRequestHelper.getPortletResource()) %>_selectFolder',
 							title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
-							<liferay-portlet:renderURL portletName="<%= dlRequestHelper.getPortletResource() %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-								<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
-								<portlet:param name="folderId" value="<%= (dlAdminDisplayContext.isRootFolderInTrash() || dlAdminDisplayContext.isRootFolderNotFound()) ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(dlAdminDisplayContext.getRootFolderId()) %>" />
-								<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
-								<portlet:param name="selectedFolderId" value="<%= String.valueOf(dlAdminDisplayContext.getRootFolderId()) %>" />
-								<portlet:param name="showMountFolder" value="<%= Boolean.FALSE.toString() %>" />
-							</liferay-portlet:renderURL>
+							<%
+							ItemSelector itemSelector = (ItemSelector)request.getAttribute(ItemSelector.class.getName());
+
+							FolderItemSelectorCriterion folderItemSelectorCriterion = new FolderItemSelectorCriterion();
+
+							folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new FolderItemSelectorReturnType());
+							folderItemSelectorCriterion.setFolderId((dlAdminDisplayContext.isRootFolderInTrash() || dlAdminDisplayContext.isRootFolderNotFound()) ? DLFolderConstants.DEFAULT_PARENT_FOLDER_ID : dlAdminDisplayContext.getRootFolderId());
+							folderItemSelectorCriterion.setIgnoreRootFolder(true);
+							folderItemSelectorCriterion.setSelectedFolderId(dlAdminDisplayContext.getRootFolderId());
+							folderItemSelectorCriterion.setShowMountFolder(false);
+
+							PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), "itemSelected", folderItemSelectorCriterion);
+							%>
 
 							url: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>',
 						});

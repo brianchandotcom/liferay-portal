@@ -16,6 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ page import="com.liferay.item.selector.ItemSelector" %><%@
+page import="com.liferay.item.selector.criteria.FolderItemSelectorReturnType" %><%@
+page import="com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion" %><%@
+page import="com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil" %>
+
 <%
 if (layout.isTypeControlPanel()) {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, DLPortletKeys.DOCUMENT_LIBRARY, null);

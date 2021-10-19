@@ -1065,6 +1065,39 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that group scope permissions can be defined in the Roles Admin portlet."
+	@priority = "5"
+	test CanDefineGroupScopePermissionsInRolesAdmin {
+		task ("Create a new role through Roles Admin Portlet") {
+			Role.openRolesAdmin();
+
+			Navigator.gotoNavTab(navTab = "Account Roles");
+
+			Role.add(roleTitle = "Test Role");
+
+			Navigator.gotoNavTab(navTab = "Define Group Scope Permissions");
+		}
+
+		task ("Add all Account Management permissions under the Site and Asset Library Administration tab") {
+			var key_navItem = "Site and Asset Library Administration";
+
+			var key_subItem = "Account Management";
+
+			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
+
+			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM");
+
+			Check(locator1 = "RolesPermissions#ACCOUNTS_APPLICATION_PERMISSIONS_SELECT_ALL");
+
+			Button.clickSave();
+
+			AssertElementPresent(
+				key_permissionDefinitionValue = "All Sites and Asset Libraries",
+				key_permissionNavigationValue = "Account Management: Permissions",
+				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+		}
+	}
+
 	@description = "This only tests the UI for defining permissions for an Owned or account specific role. Permissioning will be covered when 2B widgets are implemented."
 	@priority = "4"
 	test CanDefinePermissionsForOwnedAccountRole {

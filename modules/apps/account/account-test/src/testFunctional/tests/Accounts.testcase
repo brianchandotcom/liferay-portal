@@ -2221,6 +2221,54 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that a user can filter addresses by shipping type"
+	@priority = "4"
+	test FilterAddressesByShippingType {
+		task ("Add an account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Accounts Name",
+				accountEntryType = "Business");
+		}
+
+		task ("Add a billing address and a shipping address to account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Accounts Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			Accounts.addAddress(
+				addressCity = "Chicago",
+				addressCountry = "United States",
+				addressName = "Chicago",
+				addressPostalCode = "60606",
+				addressRegion = "Illinois",
+				addressStreet1 = "205 W. Wacker Dr",
+				addressStreet2 = "Suite 720",
+				addressType = "Billing",
+				phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
+
+			Accounts.addAddress(
+				addressCity = "Dalian",
+				addressCountry = "China",
+				addressName = "Liferay Dalian Software Co., Ltd.",
+				addressPostalCode = "116023",
+				addressRegion = "Liaoning Sheng",
+				addressStreet1 = "537 Huangpu Road Taide Building,",
+				addressStreet2 = "1005 High-Tech Zone",
+				addressType = "Shipping",
+				phoneNumber = "+86 (0)411 88120855");
+		}
+
+		task ("Assert the user can filter by shipping address type") {
+			ManagementBar.setFilterAndOrder(filterBy = "Shipping");
+
+			LexiconEntry.viewEntryName(rowEntry = "Liferay Dalian Software Co., Ltd.");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Chicago");
+		}
+	}
+
 	@description = "This is a use case for LPS-117171. It asserts that Filter By Navigation does not display when assigning a user to a Person Account since domains are not applicable for this type of account."
 	@priority = "3"
 	test NoFilterByNavigationForPersonAccount {

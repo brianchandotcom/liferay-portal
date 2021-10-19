@@ -18,6 +18,7 @@ import {ClayInput} from '@clayui/form';
 import React, {useState} from 'react';
 
 import Select from '../Select/Select.es';
+import {limitValue} from '../util/limitValue';
 import {EVENT_TYPES} from './validationReducer';
 
 const MAX_QUANTITY = 999;
@@ -136,6 +137,7 @@ const CustomDates = ({
 	eventType,
 	handleChangeParameters,
 	localizationMode,
+	name,
 	operation,
 	quantity,
 	readOnly,
@@ -183,24 +185,24 @@ const CustomDates = ({
 				</div>
 				<div className="ddm-form-field-type__validation-date pr-2">
 					<div className="form-group">
-						<label htmlFor="validation_date_quantity">
+						<label htmlFor={`${name}_validation_date_quantity`}>
 							{Liferay.Language.get('quantity')}
 						</label>
 						<ClayInput
 							className="ddm-field-text"
 							disabled={readOnly}
-							id="validation_date_quantity"
+							id={`${name}_validation_date_quantity`}
 							max={MAX_QUANTITY}
 							name={`inputedQuantity_${eventType}`}
 							onBlur={(event) => {
 								let {value: newValue} = event.target;
 
-								if (newValue > MAX_QUANTITY) {
-									newValue = MAX_QUANTITY;
-								}
-								else if (newValue < MIN_QUANTITY) {
-									newValue = MIN_QUANTITY;
-								}
+								newValue = limitValue({
+									defaultValue: MIN_QUANTITY,
+									max: MAX_QUANTITY,
+									min: MIN_QUANTITY,
+									value: newValue,
+								});
 
 								newValue =
 									operation === 'minus'
@@ -455,6 +457,7 @@ const ValidationDate = ({
 								endDate={endDate}
 								eventType={element.name}
 								handleChangeParameters={handleChangeParameters}
+								name={name}
 								operation={
 									startSection ? startOperation : endOperation
 								}

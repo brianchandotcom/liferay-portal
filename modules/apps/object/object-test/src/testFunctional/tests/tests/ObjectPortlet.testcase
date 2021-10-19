@@ -606,7 +606,7 @@ definition {
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
-			fieldType = "String",
+			fieldType = "Long",
 			isRequired = "false",
 			objectName = "CustomObject");
 
@@ -615,15 +615,15 @@ definition {
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
 			objectName = "CustomObject",
-			value = "Test Entry");
+			value = "12345678");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntryDetails(entry = "Test Entry");
+		ObjectPortlet.viewEntryDetails(entry = "12345678");
 
 		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
 
-		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "Test Entry");
+		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "12345678");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to view other user's Object entry with the View permission"

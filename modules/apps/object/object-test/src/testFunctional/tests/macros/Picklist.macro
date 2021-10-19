@@ -1,12 +1,5 @@
 definition {
 
-	macro assertErrorMensage {
-
-		var key_errorMensage = "${errorMensage}";
-
-		AssertElementPresent(locator1 = "Picklist#KEY_ERROR_MENSAGE");
-	}
-
 	macro addPicklistItemViaAPI {
 		JSONObject.addPicklistItem(
 			itemKey = "${itemKey}",
@@ -47,6 +40,12 @@ definition {
 			value1 = "${picklistName}");
 
 		Button.clickSave();
+	}
+
+	macro assertErrorMensage {
+		var key_errorMensage = "${errorMensage}";
+
+		AssertElementPresent(locator1 = "Picklist#KEY_ERROR_MENSAGE");
 	}
 
 	macro assertPicklist {

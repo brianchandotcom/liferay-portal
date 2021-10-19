@@ -79,8 +79,10 @@ export default function Detail({
 			{currentPage.view === TRAFFIC_CHANNELS.REFERRAL && (
 				<ReferralDetail
 					currentPage={currentPage}
+					handleDetailPeriodChange={handleDetailPeriodChange}
 					timeSpanOptions={timeSpanOptions}
 					trafficShareDataProvider={trafficShareDataProvider}
+					trafficSourcesDataProvider={trafficSourcesDataProvider}
 					trafficVolumeDataProvider={trafficVolumeDataProvider}
 				/>
 			)}

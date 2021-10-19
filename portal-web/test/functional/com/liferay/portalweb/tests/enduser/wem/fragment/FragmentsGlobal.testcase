@@ -368,4 +368,169 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-101230 and LPS-100540. Global fragments are visible in Fragments admin. The View Site Usages action is unavailable if fragment is unused."
+	@priority = "5"
+	test ViewGlobalFragments {
+		property portal.acceptance = "true";
+
+		task ("Add the first global fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
+
+			FragmentsAdmin.addFragment(fragmentName = "Global Fragment Name 1");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.css");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.js");
+
+			FragmentsEditor.waitForAutoSave();
+
+			PortletEntry.publish();
+		}
+
+		task ("View the fragment shown in collection") {
+			FragmentsAdmin.viewEntryPresent(entry = "Global Fragment Name 1");
+		}
+
+		task ("Assert the View Site Usages action not shown") {
+			LexiconCard.viewMenuItemNotPresent(
+				card = "Global Fragment Name 1",
+				item = "View Site Usages");
+		}
+
+		task ("Add the second global fragment via JSON") {
+			JSONFragment.addSection(
+				collectionName = "Global Collection Name",
+				fragmentStatus = "Approved",
+				groupName = "Global",
+				name = "Global Fragment Name 2");
+		}
+
+		task ("View both fragments shown in normal site") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
+
+			for (var n : list "1,2") {
+				FragmentsAdmin.viewEntryPresent(entry = "Global Fragment Name ${n}");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-100540. The View Site Usages action of global fragments shows all the usage"
+	@priority = "5"
+	test ViewGlobalFragmentsSiteUsages {
+		property portal.acceptance = "true";
+
+		task ("Add two global fragments") {
+			for (var n : list "1,2") {
+				JSONFragment.addSection(
+					collectionName = "Global Collection Name",
+					fragmentStatus = "Approved",
+					groupName = "Global",
+					name = "Global Fragment Name ${n}");
+			}
+		}
+
+		task ("Add two global fragments to the first content page in the first normal site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Global Collection Name",
+				fragmentName = "Global Fragment Name 1");
+
+			PageEditor.addFragment(
+				collectionName = "Global Collection Name",
+				fragmentName = "Global Fragment Name 2",
+				targetFragmentName = "Global Fragment Name 1");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add two global fragments to the second content page in the first normal site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name 2",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name 2",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Global Collection Name",
+				fragmentName = "Global Fragment Name 1");
+
+			PageEditor.addFragment(
+				collectionName = "Global Collection Name",
+				fragmentName = "Global Fragment Name 2",
+				targetFragmentName = "Global Fragment Name 1");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add two global fragments to a content page in the second normal site") {
+			JSONGroup.addGroup(groupName = "Test Site Name 2");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name 2",
+				layoutName = "Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name 2");
+
+			PageEditor.addFragment(
+				collectionName = "Global Collection Name",
+				fragmentName = "Global Fragment Name 1");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View site usages of the first global fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Global Fragment Name 1",
+				item = "View Site Usages");
+
+			FragmentsAdmin.viewSiteUsages(
+				siteName = "Test Site Name",
+				usages = "4");
+
+			FragmentsAdmin.viewSiteUsages(
+				siteName = "Test Site Name 2",
+				usages = "2");
+		}
+
+		task ("View site usages of the second global fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Global Fragment Name 2",
+				item = "View Site Usages");
+
+			FragmentsAdmin.viewSiteUsages(
+				siteName = "Test Site Name",
+				usages = "4");
+
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "Test Site Name 2");
+		}
+	}
+
 }

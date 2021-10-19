@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/document_library/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 DLSelectFolderDisplayContext dlSelectFolderDisplayContext = (DLSelectFolderDisplayContext)request.getAttribute(DLSelectFolderDisplayContext.class.getName());

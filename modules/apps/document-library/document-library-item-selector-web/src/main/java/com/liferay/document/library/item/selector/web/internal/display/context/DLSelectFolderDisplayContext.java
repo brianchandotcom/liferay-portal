@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.display.context;
+package com.liferay.document.library.item.selector.web.internal.display.context;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;

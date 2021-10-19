@@ -31,7 +31,6 @@ page import="com.liferay.document.library.web.internal.display.context.DLEditFol
 page import="com.liferay.document.library.web.internal.display.context.DLFileEntryAdditionalMetadataSetsDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLFileEntryTypeDetailsDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLInfoPanelDisplayContext" %><%@
-page import="com.liferay.document.library.web.internal.display.context.DLSelectFolderDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewEntriesDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewFileEntryDisplayContext" %><%@

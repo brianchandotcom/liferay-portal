@@ -327,7 +327,7 @@ definition {
 			pageName = "AC Page",
 			siteName = "Site Name");
 
-		ACUtils.closeAllSessionsAndWait();
+	 	ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -347,9 +347,8 @@ definition {
 			endYear = "${displayDateYear}",
 			startDay = "${previousDay}",
 			startMonth = "${previousMonth}",
-			startYear = "${displayDateYear}");
-
-		AssertElementPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
+			startYear = "${displayDateYear}",
+			timeFilter = "Custom Range");
 	}
 
 	@description = "Set custom range filter with empty data for individual activity"

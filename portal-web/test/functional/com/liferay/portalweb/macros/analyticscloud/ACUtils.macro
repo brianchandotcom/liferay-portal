@@ -96,6 +96,11 @@ definition {
 					startMonth = "${previousMonth}",
 					startYear = "${displayDateYear}");
 			}
+<<<<<<< HEAD
+=======
+
+			Refresh();
+>>>>>>> 45b15af (LRAC-9538 Fix CanSetDataWithCustomRangeOnIndividualActivitiesCard)
 		}
 
 		AssertElementPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
@@ -796,64 +801,6 @@ definition {
 
 	macro waitForLoading {
 		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
-	}
-
-	macro assertActiveIndividualChat {
-		var key_timeFilter = "${timeFilter}";
-
-		while (IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART") && (maxIterations = "50")) {
-			if ("${timeFilter}" == "Last 24 hours") {
-				ACTimeFilter.clickTimeFilterButton();
-
-				ACTimeFilter.setLast24Hours();
-			}
-			if ("${timeFilter}" == "Yesterday") {
-				ACTimeFilter.clickTimeFilterButton();
-
-				ACTimeFilter.setYesterday();
-			}
-			if ("${timeFilter}" == "Last 7 days") {
-				ACTimeFilter.clickTimeFilterButton();
-				
-				ACTimeFilter.setLast7Days();
-			}
-			if ("${timeFilter}" == "Last 28 days") {
-				ACTimeFilter.setLast28Days();
-			}
-			if ("${timeFilter}" == "Last 30 days") {
-				ACTimeFilter.clickTimeFilterButton();
-
-				ACTimeFilter.setLast30Days();
-			}
-			if ("${timeFilter}" == "Last 90 days") {
-				ACTimeFilter.clickTimeFilterButton();
-				
-				ACTimeFilter.setLast90Days();
-			}
-			if ("${timeFilter}" == "Last 180 days") {
-				ACTimeFilter.clickTimeFilterButton();
-
-				ACTimeFilter.setLast180Days();
-			}
-			if ("${timeFilter}" == "Last Year") {
-				ACTimeFilter.clickTimeFilterButton();
-
-				ACTimeFilter.setLastYear();
-			}
-			if ("${timeFilter}" == "Custom Range") {
-				ACTimeFilter.setCustomRange(
-					endDay = "${displayDateDay}",
-					endMonth = "${displayDateMonth}",
-					endYear = "${displayDateYear}",
-					startDay = "${previousDay}",
-					startMonth = "${previousMonth}",
-					startYear = "${displayDateYear}");
-			}
-
-			Refresh();
-		}
-
-		AssertElementPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
 	}
 
 }

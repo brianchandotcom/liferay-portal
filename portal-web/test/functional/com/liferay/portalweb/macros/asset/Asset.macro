@@ -45,7 +45,7 @@ definition {
 			var incomingValue = "false";
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_sharing_web_portlet_SharedAssetsPortlet&p_p_state=maximized&p_p_mode=view&_com_liferay_sharing_web_portlet_SharedAssetsPortlet_incoming=false");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_sharing_web_portlet_SharedAssetsPortlet&p_p_state=maximized&p_p_mode=view&_com_liferay_sharing_web_portlet_SharedAssetsPortlet_incoming=${incomingValue}");
 	}
 
 	macro share {

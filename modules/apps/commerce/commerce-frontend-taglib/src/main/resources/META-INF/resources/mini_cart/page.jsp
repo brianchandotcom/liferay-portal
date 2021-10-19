@@ -24,6 +24,7 @@
 			checkoutURL: '<%= HtmlUtil.escapeJS(checkoutURL) %>',
 			orderDetailURL: '<%= HtmlUtil.escapeJS(orderDetailURL) %>',
 			siteDefaultURL: '<%= HtmlUtil.escapeJS(siteDefaultURL) %>',
+			templateProductPageURL: '/group/demo/p/{productId}',
 		},
 		displayDiscountLevels: <%= displayDiscountLevels %>,
 		displayTotalItemsQuantity: <%= displayTotalItemsQuantity %>,

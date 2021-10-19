@@ -61,8 +61,6 @@ definition {
 
 		Panel.expandPanel(panel = "Documents and Media");
 
-		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Checkbox#ENABLE_DIRECTORY_INDEXING");
-
 		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
 		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#ENABLE_DIRECTORY_INDEXING");
@@ -241,8 +239,6 @@ definition {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Panel.expandPanel(panel = "Documents and Media");
-
-		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Checkbox#ENABLE_DIRECTORY_INDEXING");
 
 		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 

@@ -62,7 +62,7 @@ definition {
 		}
 
 		task ("Close Sessions") {
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -105,7 +105,7 @@ definition {
 		}
 
 		task ("Close Sessions") {
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {

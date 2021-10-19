@@ -15,6 +15,20 @@ definition {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Search Bar");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Search Results");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
 	}
 
 	tearDown {
@@ -40,20 +54,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ReenableSearchability {
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Bar");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Results");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
@@ -99,20 +99,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test SearchForDocument {
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Bar");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Results");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -141,20 +127,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test SearchForDocumentFromDisconnectedSite {
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Bar");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Results");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -173,20 +145,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test SearchForTag {
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Bar");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Results");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		Pause(locator1 = "3000");
@@ -220,20 +178,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test SearchForUnsearchableDocument {
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Bar");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Results");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -264,20 +208,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test SearchForUnsearchableTag {
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Bar");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Results");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.addCP(
@@ -311,20 +241,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test SearchForUnsearchableUser {
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Bar");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Results");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -369,20 +285,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test SearchForUnsearchableWC {
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Bar");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Results");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
@@ -414,20 +316,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test SearchForUser {
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Bar");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Results");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -463,20 +351,6 @@ definition {
 	@refactorneeded
 	test SearchForWebContent {
 		property portal.acceptance = "true";
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Bar");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Results");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

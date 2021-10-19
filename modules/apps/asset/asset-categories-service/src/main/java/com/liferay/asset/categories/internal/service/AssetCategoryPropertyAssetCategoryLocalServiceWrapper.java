@@ -63,10 +63,10 @@ public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 
 	@Override
 	public AssetCategory addCategory(
-			long userId, long groupId, long parentCategoryId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			long vocabularyId, String[] categoryProperties,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long parentCategoryId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, long vocabularyId,
+			String[] categoryProperties, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -90,8 +90,8 @@ public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 		}
 
 		AssetCategory assetCategory = super.addCategory(
-			null, userId, groupId, parentCategoryId, titleMap, descriptionMap,
-			vocabularyId, categoryProperties, serviceContext);
+			externalReferenceCode, userId, groupId, parentCategoryId, titleMap,
+			descriptionMap, vocabularyId, categoryProperties, serviceContext);
 
 		if (categoryProperties == null) {
 			return assetCategory;

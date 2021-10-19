@@ -143,7 +143,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 
 		<div class="mt-4">
 			<liferay-frontend:edit-form-footer>
-				<aui:button name="export" type="submit" />
+				<aui:button name="export" type="submit" value="export" />
 
 				<aui:button href="<%= backURL %>" type="cancel" />
 			</liferay-frontend:edit-form-footer>

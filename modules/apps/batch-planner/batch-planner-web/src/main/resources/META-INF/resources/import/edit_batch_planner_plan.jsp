@@ -28,98 +28,118 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 
 <portlet:actionURL name="/batch_planner/edit_import_batch_planner_plan" var="editBatchPlannerPlanURL" />
 
-<liferay-frontend:edit-form
-	action="<%= editBatchPlannerPlanURL %>"
->
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (batchPlannerPlanId == 0) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
-	<aui:input name="batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
+<div class="container pt-4">
+	<liferay-frontend:edit-form
+		action="<%= editBatchPlannerPlanURL %>"
+	>
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (batchPlannerPlanId == 0) ? Constants.ADD : Constants.UPDATE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
+		<aui:input name="batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
 
-	<liferay-frontend:edit-form-body>
-		<aui:input bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="name" />
+		<div class="card">
+			<h4 class="card-header"><%= LanguageUtil.get(request, "import-settings") %></h4>
 
-		<aui:select bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="externalType">
-			<aui:option label="CSV" value="CSV" />
-			<aui:option label="TXT" value="TXT" />
-			<aui:option label="XLS" value="XLS" />
-			<aui:option label="XML" value="XML" />
-		</aui:select>
+			<div class="card-body">
+				<liferay-frontend:edit-form-body>
+					<aui:input bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="name" />
 
-		<aui:input name="importFile" required="<%= true %>" type="file" />
+					<aui:select bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="externalType">
+						<aui:option label="CSV" value="CSV" />
+						<aui:option label="TXT" value="TXT" />
+						<aui:option label="XLS" value="XLS" />
+						<aui:option label="XML" value="XML" />
+					</aui:select>
 
-		<%
-		EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBatchPlannerPlanDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-		%>
+					<aui:input name="importFile" required="<%= true %>" type="file" />
 
-		<clay:row>
-			<clay:col
-				md="6"
-			>
-				<clay:select
-					id='<%= liferayPortletResponse.getNamespace() + "headlessEndpoint" %>'
-					label="headless-endpoint"
-					name="headlessEndpoint"
-					options="<%= editBatchPlannerPlanDisplayContext.getSelectOptions() %>"
-				/>
-			</clay:col>
+					<%
+					EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBatchPlannerPlanDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+					%>
 
-			<clay:col
-				md="6"
-			>
-				<clay:select
-					disabled="<%= true %>"
-					id='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
-					label="internal-class-name"
-					name="internalClassName"
-					options="<%= editBatchPlannerPlanDisplayContext.getSelectOptions() %>"
-				/>
-			</clay:col>
-		</clay:row>
+					<clay:row>
+						<clay:col
+							md="6"
+						>
+							<clay:select
+								id='<%= liferayPortletResponse.getNamespace() + "headlessEndpoint" %>'
+								label="headless-endpoint"
+								name="headlessEndpoint"
+								options="<%= editBatchPlannerPlanDisplayContext.getSelectOptions() %>"
+							/>
+						</clay:col>
 
-		<clay:row>
-			<clay:col
-				md="6"
-			>
-				<clay:checkbox
-					checked="<%= true %>"
-					id='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
-					label="contains-headers"
-					name='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
-				/>
-			</clay:col>
-		</clay:row>
+						<clay:col
+							md="6"
+						>
+							<clay:select
+								disabled="<%= true %>"
+								id='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
+								label="internal-class-name"
+								name="internalClassName"
+								options="<%= editBatchPlannerPlanDisplayContext.getSelectOptions() %>"
+							/>
+						</clay:col>
+					</clay:row>
 
-		<clay:content-section>
-			<clay:row
-				cssClass="plan-mappings"
-			>
+					<clay:content-section>
+						<clay:row>
+							<clay:col
+								md="6"
+							>
+								<clay:checkbox
+									checked="<%= true %>"
+									id='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
+									label="contains-headers"
+									name='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
+								/>
+							</clay:col>
+						</clay:row>
+					</clay:content-section>
+				</liferay-frontend:edit-form-body>
+			</div>
+		</div>
 
-			</clay:row>
+		<div class="card hide">
+			<h4 class="card-header"><%= LanguageUtil.get(request, "import-mappings") %></h4>
 
-			<clay:row
-				cssClass="hide plan-mappings-template"
-			>
-				<clay:col
-					md="6"
-				>
-					<aui:input name="externalFieldName_ID_TEMPLATE" value="" />
-				</clay:col>
+			<div class="card-body">
+				<liferay-frontend:edit-form-body>
+					<clay:content-section>
+						<clay:row
+							cssClass="plan-mappings"
+						>
 
-				<clay:col
-					md="6"
-				>
-					<aui:input name="internalFieldName_ID_TEMPLATE" value="VALUE_TEMPLATE" />
-				</clay:col>
-			</clay:row>
-		</clay:content-section>
-	</liferay-frontend:edit-form-body>
+						</clay:row>
 
-	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
+						<clay:row
+							cssClass="hide plan-mappings-template"
+						>
+							<clay:col
+								md="6"
+							>
+								<aui:input name="externalFieldName_ID_TEMPLATE" value="" />
+							</clay:col>
 
-		<aui:button href="<%= backURL %>" type="cancel" />
-	</liferay-frontend:edit-form-footer>
-</liferay-frontend:edit-form>
+							<clay:col
+								md="6"
+							>
+								<aui:input name="internalFieldName_ID_TEMPLATE" value="VALUE_TEMPLATE" />
+							</clay:col>
+						</clay:row>
+					</clay:content-section>
+				</liferay-frontend:edit-form-body>
+			</div>
+		</div>
+
+		<div class="mt-4">
+			<liferay-frontend:edit-form-footer>
+				<aui:button name="save" type="submit" value="import" />
+
+				<aui:button href="<%= backURL %>" type="cancel" />
+			</liferay-frontend:edit-form-footer>
+		</div>
+	</liferay-frontend:edit-form>
+</div>
 
 <aui:script use="aui-io-request,aui-parse-content">
 	A.one('#<portlet:namespace />headlessEndpoint').on('change', function (event) {
@@ -243,6 +263,8 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 
 					curId++;
 				}
+
+				mappingArea.ancestor('.card').removeClass('hide');
 			})
 			.catch((response) => {
 				alert('FETCH failed ' + response);

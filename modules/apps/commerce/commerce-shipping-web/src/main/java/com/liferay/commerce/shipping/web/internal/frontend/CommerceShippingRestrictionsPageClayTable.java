@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -130,7 +131,7 @@ public class CommerceShippingRestrictionsPageClayTable
 					country.getTitle(themeDisplay.getLocale()),
 					_getFields(
 						country.getCountryId(), commerceShippingMethods,
-						themeDisplay.getLanguageId())));
+						LocaleUtil.toLanguageId(themeDisplay.getLocale()))));
 		}
 
 		return shippingRestrictions;

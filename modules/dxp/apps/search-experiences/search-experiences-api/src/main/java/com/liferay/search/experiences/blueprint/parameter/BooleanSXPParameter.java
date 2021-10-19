@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Petteri Karttunen
@@ -30,16 +30,15 @@ public class BooleanSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean evaluateEquals(JSONObject jsonObject) {
-		boolean value = jsonObject.getBoolean("value");
-
-		if (_value.booleanValue() == value) {
+	public boolean evaluateEquals(Object object) {
+		if (_value.booleanValue() == GetterUtil.getBoolean(object)) {
 			return true;
 		}
 
 		return false;
 	}
 
+	@Override
 	public Boolean getValue() {
 		return _value;
 	}

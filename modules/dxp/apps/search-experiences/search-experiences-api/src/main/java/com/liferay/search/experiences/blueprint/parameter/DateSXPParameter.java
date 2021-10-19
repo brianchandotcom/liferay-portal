@@ -15,8 +15,6 @@
 package com.liferay.search.experiences.blueprint.parameter;
 
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -32,6 +30,7 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * @author Petteri Karttunen
@@ -45,50 +44,39 @@ public class DateSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean evaluateEquals(JSONObject jsonObject) {
-		DateFormat dateFormat = new SimpleDateFormat(
-			jsonObject.getString("date_format"));
+	public boolean evaluateEquals(Object object, String format) {
+		DateFormat dateFormat = new SimpleDateFormat(format);
 
 		return Objects.equals(
-			dateFormat.format(_value), jsonObject.getString("value"));
+			dateFormat.format(_value), GetterUtil.getString(object));
 	}
 
 	@Override
-	public boolean evaluateGreaterThan(
-		boolean closedRange, JSONObject jsonObject) {
+	public boolean evaluateRange(
+		Object gt, Object gte, Object lt, Object lte, String format) {
 
-		try {
-			DateFormat dateFormat = new SimpleDateFormat(
-				jsonObject.getString("date_format"));
+		DateFormat dateFormat = new SimpleDateFormat(format);
 
-			return _value.after(
-				dateFormat.parse(jsonObject.getString("value")));
-		}
-		catch (ParseException parseException) {
-			return ReflectionUtil.throwException(parseException);
-		}
-	}
+		Function<Object, Integer> function = object -> _value.compareTo(
+			_parse(dateFormat, GetterUtil.getString(object)));
 
-	@Override
-	public boolean evaluateInRange(JSONObject jsonObject) {
-		try {
-			DateFormat dateFormat = new SimpleDateFormat(
-				jsonObject.getString("date_format"));
-
-			JSONArray jsonArray = jsonObject.getJSONArray("value");
-
-			Date lowerBoundDate = dateFormat.parse(jsonArray.getString(0));
-			Date upperBoundDate = dateFormat.parse(jsonArray.getString(1));
-
-			if (_value.after(lowerBoundDate) && _value.before(upperBoundDate)) {
-				return true;
-			}
-
+		if ((gt != null) && (function.apply(gt) <= 0)) {
 			return false;
 		}
-		catch (ParseException parseException) {
-			return ReflectionUtil.throwException(parseException);
+
+		if ((gte != null) && (function.apply(gte) < 0)) {
+			return false;
 		}
+
+		if ((lt != null) && (function.apply(lt) >= 0)) {
+			return false;
+		}
+
+		if ((lte != null) && (function.apply(lte) > 0)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -163,6 +151,15 @@ public class DateSXPParameter extends BaseSXPParameter {
 		zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
 
 		return Date.from(zonedDateTime.toInstant());
+	}
+
+	private Date _parse(DateFormat dateFormat, String string) {
+		try {
+			return dateFormat.parse(string);
+		}
+		catch (ParseException parseException) {
+			return ReflectionUtil.throwException(parseException);
+		}
 	}
 
 	private final Date _value;

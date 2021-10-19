@@ -14,8 +14,7 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
@@ -32,10 +31,8 @@ public class FloatSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean evaluateEquals(JSONObject jsonObject) {
-		float value = GetterUtil.getFloat(jsonObject.get("value"));
-
-		if (_value.floatValue() == value) {
+	public boolean evaluateEquals(Object object) {
+		if (_value.floatValue() == GetterUtil.getFloat(object)) {
 			return true;
 		}
 
@@ -43,54 +40,30 @@ public class FloatSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean evaluateGreaterThan(
-		boolean closedRange, JSONObject jsonObject) {
+	public boolean evaluateIn(Object[] values) {
+		return ArrayUtil.contains(
+			GetterUtil.getFloatValues(ArrayUtil.toStringArray(values)), _value);
+	}
 
-		float value = GetterUtil.getFloat(jsonObject.get("value"));
-
-		if (closedRange) {
-			if (_value.compareTo(value) >= 0) {
-				return true;
-			}
-
+	@Override
+	public boolean evaluateRange(Object gt, Object gte, Object lt, Object lte) {
+		if ((gt != null) && (_value <= GetterUtil.getFloat(gt))) {
 			return false;
 		}
-		else if (_value.compareTo(value) > 0) {
-			return true;
+
+		if ((gte != null) && (_value < GetterUtil.getFloat(gte))) {
+			return false;
 		}
 
-		return false;
-	}
-
-	@Override
-	public boolean evaluateIn(JSONObject jsonObject) {
-		JSONArray jsonArray = jsonObject.getJSONArray("value");
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			if (_value.floatValue() == GetterUtil.getFloat(
-					jsonArray.getString(i))) {
-
-				return true;
-			}
+		if ((lt != null) && (_value >= GetterUtil.getFloat(lt))) {
+			return false;
 		}
 
-		return false;
-	}
-
-	@Override
-	public boolean evaluateInRange(JSONObject jsonObject) {
-		JSONArray jsonArray = jsonObject.getJSONArray("value");
-
-		float lowerBound = GetterUtil.getFloat(jsonArray.getString(0));
-		float upperBound = GetterUtil.getFloat(jsonArray.getString(1));
-
-		if ((_value.compareTo(lowerBound) >= 0) &&
-			(_value.compareTo(upperBound) <= 0)) {
-
-			return true;
+		if ((lte != null) && (_value > GetterUtil.getFloat(lte))) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override

@@ -14,8 +14,6 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
-import com.liferay.portal.kernel.json.JSONObject;
-
 import java.util.Map;
 
 /**
@@ -23,16 +21,18 @@ import java.util.Map;
  */
 public interface SXPParameter {
 
-	public boolean evaluateContains(JSONObject jsonObject);
+	public boolean evaluateContains(Object value, Object[] values);
 
-	public boolean evaluateEquals(JSONObject jsonObject);
+	public boolean evaluateEquals(Object object);
 
-	public boolean evaluateGreaterThan(
-		boolean closedRange, JSONObject jsonObject);
+	public boolean evaluateEquals(Object object, String format);
 
-	public boolean evaluateIn(JSONObject jsonObject);
+	public boolean evaluateIn(Object[] values);
 
-	public boolean evaluateInRange(JSONObject jsonObject);
+	public boolean evaluateRange(Object gt, Object gte, Object lt, Object lte);
+
+	public boolean evaluateRange(
+		Object gt, Object gte, Object lt, Object lte, String format);
 
 	public String evaluateToString(Map<String, String> options);
 

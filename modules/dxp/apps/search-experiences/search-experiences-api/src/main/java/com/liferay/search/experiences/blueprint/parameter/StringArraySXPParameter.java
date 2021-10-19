@@ -14,8 +14,6 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -36,14 +34,12 @@ public class StringArraySXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean evaluateContains(JSONObject jsonObject) {
-		Object value = jsonObject.get("value");
+	public boolean evaluateContains(Object value, Object[] values) {
+		if (values != null) {
+			for (Object object : values) {
+				if (ArrayUtil.contains(
+						_value, GetterUtil.getString(object), true)) {
 
-		if (value instanceof JSONArray) {
-			JSONArray jsonArray = (JSONArray)value;
-
-			for (int i = 0; i < jsonArray.length(); i++) {
-				if (ArrayUtil.contains(_value, jsonArray.getString(i), true)) {
 					return true;
 				}
 			}

@@ -129,7 +129,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 			try {
 				sxpSearchRequestBodyContributor.contribute(
-					searchRequestBuilder, sxpBlueprint);
+					searchRequestBuilder, sxpBlueprint, sxpParameterData);
 			}
 			catch (Exception exception) {
 				runtimeException.addSuppressed(exception);

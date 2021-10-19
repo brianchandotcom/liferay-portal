@@ -19,9 +19,12 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.search.experiences.internal.blueprint.condition.SXPConditionEvaluator;
 import com.liferay.search.experiences.internal.blueprint.exception.InvalidQueryEntryException;
+import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.query.QueryConverter;
 import com.liferay.search.experiences.rest.dto.v1_0.Clause;
+import com.liferay.search.experiences.rest.dto.v1_0.Condition;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryEntry;
@@ -45,7 +48,8 @@ public class QuerySXPSearchRequestBodyContributor
 
 	@Override
 	public void contribute(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
+		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
+		SXPParameterData sxpParameterData) {
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
@@ -60,7 +64,8 @@ public class QuerySXPSearchRequestBodyContributor
 
 		_processQueryEntries(
 			runtimeException::addSuppressed,
-			queryConfiguration.getQueryEntries(), searchRequestBuilder);
+			queryConfiguration.getQueryEntries(), searchRequestBuilder,
+			sxpParameterData);
 
 		if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
 			throw runtimeException;
@@ -79,6 +84,23 @@ public class QuerySXPSearchRequestBodyContributor
 		return "query";
 	}
 
+	private boolean _evaluate(
+		Condition condition, SXPParameterData sxpParameterData) {
+
+		if (condition == null) {
+			return true;
+		}
+
+		SXPConditionEvaluator sxpConditionEvaluator = new SXPConditionEvaluator(
+			sxpParameterData);
+
+		if (sxpConditionEvaluator.evaluate(condition)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _processClause(
 		Clause clause, SearchRequestBuilder searchRequestBuilder) {
 
@@ -93,7 +115,8 @@ public class QuerySXPSearchRequestBodyContributor
 
 	private void _processQueryEntries(
 		ExceptionListener exceptionListener, QueryEntry[] queryEntries,
-		SearchRequestBuilder searchRequestBuilder) {
+		SearchRequestBuilder searchRequestBuilder,
+		SXPParameterData sxpParameterData) {
 
 		if (ArrayUtil.isEmpty(queryEntries)) {
 			return;
@@ -102,7 +125,8 @@ public class QuerySXPSearchRequestBodyContributor
 		for (int index = 0; index < queryEntries.length; index++) {
 			try {
 				_processQueryEntry(
-					index, queryEntries[index], searchRequestBuilder);
+					index, queryEntries[index], searchRequestBuilder,
+					sxpParameterData);
 			}
 			catch (Exception exception) {
 				exceptionListener.exceptionThrown(exception);
@@ -112,9 +136,12 @@ public class QuerySXPSearchRequestBodyContributor
 
 	private void _processQueryEntry(
 		int index, QueryEntry queryEntry,
-		SearchRequestBuilder searchRequestBuilder) {
+		SearchRequestBuilder searchRequestBuilder,
+		SXPParameterData sxpParameterData) {
 
-		if (!GetterUtil.getBoolean(queryEntry.getEnabled())) {
+		if (!GetterUtil.getBoolean(queryEntry.getEnabled()) ||
+			!_evaluate(queryEntry.getCondition(), sxpParameterData)) {
+
 			return;
 		}
 

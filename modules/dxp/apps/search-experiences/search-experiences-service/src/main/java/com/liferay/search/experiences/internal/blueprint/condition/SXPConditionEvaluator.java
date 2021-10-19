@@ -14,119 +14,157 @@
 
 package com.liferay.search.experiences.internal.blueprint.condition;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
+import com.liferay.search.experiences.rest.dto.v1_0.Condition;
+import com.liferay.search.experiences.rest.dto.v1_0.Contains;
+import com.liferay.search.experiences.rest.dto.v1_0.Equals;
+import com.liferay.search.experiences.rest.dto.v1_0.Exists;
+import com.liferay.search.experiences.rest.dto.v1_0.In;
+import com.liferay.search.experiences.rest.dto.v1_0.Range;
 
 /**
  * @author Petteri Karttunen
  */
 public class SXPConditionEvaluator {
 
-	public static boolean evaluate(
-		JSONObject jsonObject, SXPParameterData sxpParameterData) {
+	public SXPConditionEvaluator(SXPParameterData sxpParameterData) {
+		_sxpParameterData = sxpParameterData;
+	}
 
-		if ((jsonObject == null) || (jsonObject.length() == 0)) {
+	public boolean evaluate(Condition condition) {
+		if (condition == null) {
 			return true;
 		}
 
-		return _evaluateConditions(
-			jsonObject, StringPool.BLANK, sxpParameterData);
+		if (!_evaluateAllConditions(condition.getAllConditions()) ||
+			!_evaluateAnyConditions(condition.getAnyConditions()) ||
+			!_evaluateContains(condition.getContains()) ||
+			!_evaluateEquals(condition.getEquals()) ||
+			!_evaluateExists(condition.getExists()) ||
+			!_evaluateIn(condition.getIn()) ||
+			!_evaluateNot(condition.getNot()) ||
+			!_evaluateRange(condition.getRange())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
-	private static boolean _evaluateCondition(
-		JSONObject jsonObject, String key, SXPParameterData sxpParameterData) {
-
-		SXPParameter sxpParameter =
-			sxpParameterData.getSXPParameterByTemplateVariable(
-				jsonObject.getString("parameter_name"));
-
-		if (key.equals("exists")) {
-			if (sxpParameter != null) {
-				return true;
-			}
-
-			return false;
-		}
-		else if (key.equals("not_exists")) {
-			if (sxpParameter == null) {
-				return true;
-			}
-
-			return false;
+	private boolean _evaluateAllConditions(Condition[] conditions) {
+		if (conditions == null) {
+			return true;
 		}
 
-		if ((sxpParameter == null) || !jsonObject.has("value")) {
-			return false;
-		}
-
-		if (key.equals("contains")) {
-			return sxpParameter.evaluateContains(jsonObject);
-		}
-		else if (key.equals("equals")) {
-			return sxpParameter.evaluateEquals(jsonObject);
-		}
-		else if (key.equals("in")) {
-			return sxpParameter.evaluateIn(jsonObject);
-		}
-		else if (key.equals("in_range")) {
-			return sxpParameter.evaluateInRange(jsonObject);
-		}
-		else if (key.equals("greater_than")) {
-			return sxpParameter.evaluateGreaterThan(false, jsonObject);
-		}
-		else if (key.equals("greater_than_equals")) {
-			return sxpParameter.evaluateGreaterThan(true, jsonObject);
-		}
-		else if (key.equals("less_than")) {
-			return !sxpParameter.evaluateGreaterThan(true, jsonObject);
-		}
-		else if (key.equals("less_than_equals")) {
-			return !sxpParameter.evaluateGreaterThan(false, jsonObject);
-		}
-		else if (key.equals("not_contains")) {
-			return !sxpParameter.evaluateContains(jsonObject);
-		}
-		else if (key.equals("not_equals")) {
-			return !sxpParameter.evaluateEquals(jsonObject);
-		}
-		else if (key.equals("not_in")) {
-			return !sxpParameter.evaluateIn(jsonObject);
-		}
-		else if (key.equals("not_in_range")) {
-			return !sxpParameter.evaluateInRange(jsonObject);
-		}
-
-		throw new IllegalArgumentException("Unknown condition " + key);
-	}
-
-	private static boolean _evaluateConditions(
-		JSONObject jsonObject, String key, SXPParameterData sxpParameterData) {
-
-		boolean valid = false;
-
-		for (String currentKey : jsonObject.keySet()) {
-			if (currentKey.equals("all_of") || currentKey.equals("any_of")) {
-				valid = _evaluateConditions(
-					jsonObject.getJSONObject(currentKey), currentKey,
-					sxpParameterData);
-			}
-			else {
-				valid = _evaluateCondition(
-					jsonObject.getJSONObject(currentKey), currentKey,
-					sxpParameterData);
-			}
-
-			if (!valid && !key.equals("any_of")) {
+		for (Condition condition : conditions) {
+			if (!evaluate(condition)) {
 				return false;
 			}
-			else if (valid && key.equals("any_of")) {
+		}
+
+		return true;
+	}
+
+	private boolean _evaluateAnyConditions(Condition[] conditions) {
+		if (conditions == null) {
+			return true;
+		}
+
+		for (Condition condition : conditions) {
+			if (evaluate(condition)) {
 				return true;
 			}
 		}
 
-		return valid;
+		return false;
 	}
+
+	private boolean _evaluateContains(Contains contains) {
+		if (contains == null) {
+			return true;
+		}
+
+		SXPParameter sxpParameter = _getSXPParameter(
+			contains.getParameterName());
+
+		return sxpParameter.evaluateContains(
+			contains.getValue(), contains.getValues());
+	}
+
+	private boolean _evaluateEquals(Equals equals) {
+		if (equals == null) {
+			return true;
+		}
+
+		SXPParameter sxpParameter = _getSXPParameter(equals.getParameterName());
+
+		if (equals.getFormat() != null) {
+			return sxpParameter.evaluateEquals(
+				equals.getValue(), equals.getFormat());
+		}
+
+		return sxpParameter.evaluateEquals(equals.getValue());
+	}
+
+	private boolean _evaluateExists(Exists exists) {
+		if (exists == null) {
+			return true;
+		}
+
+		SXPParameter sxpParameter = _getSXPParameter(exists.getParameterName());
+
+		if (sxpParameter != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _evaluateIn(In in) {
+		if (in == null) {
+			return true;
+		}
+
+		SXPParameter sxpParameter = _getSXPParameter(in.getParameterName());
+
+		return sxpParameter.evaluateIn(in.getValues());
+	}
+
+	private boolean _evaluateNot(Condition condition) {
+		if (condition == null) {
+			return true;
+		}
+
+		if (evaluate(condition)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _evaluateRange(Range range) {
+		if (range == null) {
+			return true;
+		}
+
+		SXPParameter sxpParameter = _getSXPParameter(range.getParameterName());
+
+		if (range.getFormat() != null) {
+			return sxpParameter.evaluateRange(
+				range.getGt(), range.getGte(), range.getLt(), range.getLte(),
+				range.getFormat());
+		}
+
+		return sxpParameter.evaluateRange(
+			range.getGt(), range.getGte(), range.getLt(), range.getLte());
+	}
+
+	private SXPParameter _getSXPParameter(String parameterName) {
+		return _sxpParameterData.getSXPParameterByTemplateVariable(
+			parameterName);
+	}
+
+	private final SXPParameterData _sxpParameterData;
 
 }

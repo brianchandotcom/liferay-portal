@@ -24,6 +24,7 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.internal.blueprint.aggregation.AggregationWrapper;
 import com.liferay.search.experiences.internal.blueprint.aggregation.AggregationWrapperConverter;
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
+import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.query.QueryConverter;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
@@ -51,7 +52,8 @@ public class AggsSXPSearchRequestBodyContributor
 
 	@Override
 	public void contribute(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
+		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
+		SXPParameterData sxpParameterData) {
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
 

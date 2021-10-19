@@ -341,7 +341,7 @@ definition {
 		var previousDay = DateUtil.getFormattedDate("-1", "d");
 		var previousMonth = DateUtil.getFormattedDate("-1", "MMMM");
 
-		ACTimeFilter.setCustomRange(
+		ACUtils.assertActiveIndividualChart(
 			endDay = "${displayDateDay}",
 			endMonth = "${displayDateMonth}",
 			endYear = "${displayDateYear}",

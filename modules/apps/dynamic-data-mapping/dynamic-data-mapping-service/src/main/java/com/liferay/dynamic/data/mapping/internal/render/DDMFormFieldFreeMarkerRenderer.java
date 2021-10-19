@@ -178,7 +178,9 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			"required", Boolean.toString(ddmFormField.isRequired()));
 
 		if (Objects.equals(
-				ddmFormField.getType(), DDMFormFieldTypeConstants.DDM_IMAGE)) {
+				ddmFormField.getType(), DDMFormFieldTypeConstants.DDM_IMAGE) ||
+			Objects.equals(
+				ddmFormField.getType(), DDMFormFieldTypeConstants.IMAGE)) {
 
 			if (ddmFormField.isRequired()) {
 				fieldContext.put(

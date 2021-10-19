@@ -25,7 +25,10 @@ definition {
 	@description = "This test deletes an account group."
 	@priority = "4"
 	test CanDeleteAnAccountGroup {
-		AccountGroups.openAccountGroupsAdmin();
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Account Groups");
 
 		AccountGroups.addCP(
 			accountGroupDescription = "This is an Account Group to make search field works.",

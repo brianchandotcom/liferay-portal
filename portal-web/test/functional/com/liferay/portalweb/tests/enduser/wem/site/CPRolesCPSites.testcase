@@ -123,7 +123,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Parent Site Name");
 
-		JSONGroup.addChildSite(
+		JSONGroup.addChildGroup(
 			groupName = "Child SiteName",
 			parentGroupName = "Parent Site Name");
 

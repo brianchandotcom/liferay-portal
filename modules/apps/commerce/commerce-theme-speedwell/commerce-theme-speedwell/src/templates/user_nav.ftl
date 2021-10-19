@@ -40,7 +40,7 @@
 				</a>
 			</#if>
 		</div>
-	<#else>
+	<#elseif show_sign_in>
 		<div class="speedwell-user-nav__sign-in">
 			<a class="main-link" href="${sign_in_url}">
 				<div class="main-link__label">${sign_in_text}</div>

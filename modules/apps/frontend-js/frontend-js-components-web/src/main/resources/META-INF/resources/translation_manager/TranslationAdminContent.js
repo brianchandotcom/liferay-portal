@@ -101,7 +101,8 @@ const TranslationAdminContent = ({
 						<ClayInput.GroupItem shrink>
 							<ClayDropDown
 								active={
-									creationMenuActive && availableLocales.length > 0
+									creationMenuActive &&
+									availableLocales.length > 0
 								}
 								hasLeftSymbols
 								onActiveChange={setCreationMenuActive}
@@ -119,9 +120,13 @@ const TranslationAdminContent = ({
 											<ClayDropDown.Item
 												key={availableLocale.label}
 												onClick={() => {
-													onAddLocale(availableLocale.id);
+													onAddLocale(
+														availableLocale.id
+													);
 												}}
-												symbolLeft={availableLocale.symbol}
+												symbolLeft={
+													availableLocale.symbol
+												}
 											>
 												{availableLocale.label}
 											</ClayDropDown.Item>

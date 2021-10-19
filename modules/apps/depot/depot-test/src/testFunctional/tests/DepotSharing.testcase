@@ -209,10 +209,13 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ManageCollaborators {
-		JSONDocument.addFile(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.doc",
-			groupName = "Test Depot Name");
+			groupName = "Test Depot Name",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -297,10 +300,13 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ShareDocument {
-		JSONDocument.addFile(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Depot Name");
+			groupName = "Test Depot Name",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -350,6 +356,7 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",
 			groupName = "Test Depot Name",
+			guestPermissions = "false",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
@@ -401,10 +408,13 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea2@liferay.com");
 
-		JSONDocument.addFile(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.doc",
-			groupName = "Test Depot Name");
+			groupName = "Test Depot Name",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 

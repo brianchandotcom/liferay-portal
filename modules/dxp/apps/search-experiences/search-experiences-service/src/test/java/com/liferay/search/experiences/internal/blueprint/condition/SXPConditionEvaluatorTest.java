@@ -231,8 +231,8 @@ public class SXPConditionEvaluatorTest {
 	public void testLessThanEquals() throws Exception {
 		Assert.assertTrue(
 			_evaluateDate(
-				"less_than_equals", "yyyyMMddhhmmssS",
-				_toDateString(0, "yyyyMMddhhmmssS")));
+				"less_than_equals", "yyyyMMddHHmmssS",
+				_toDateString(0, "yyyyMMddHHmmssS")));
 		Assert.assertTrue(_evaluate("less_than_equals", "double", 1.0D));
 		Assert.assertTrue(_evaluate("less_than_equals", "float", 1.0F));
 		Assert.assertTrue(_evaluate("less_than_equals", "integer", 1));
@@ -241,8 +241,42 @@ public class SXPConditionEvaluatorTest {
 
 	@Test
 	public void testNestedAllOf() throws Exception {
-
-		// TODO Assert.assertFalse
+		Assert.assertFalse(
+			_evaluate(
+				JSONUtil.put(
+					"all_of",
+					JSONUtil.put(
+						"all_of",
+						JSONUtil.put(
+							"equals",
+							JSONUtil.put(
+								"parameter_name", "${integer}"
+							).put(
+								"value", 1
+							)
+						).put(
+							"greater_than",
+							JSONUtil.put(
+								"parameter_name", "${double}"
+							).put(
+								"value", 1.0D
+							)
+						).put(
+							"less_than_equals",
+							JSONUtil.put(
+								"parameter_name", "${float}"
+							).put(
+								"value", 2.0F
+							)
+						)
+					).put(
+						"equals",
+						JSONUtil.put(
+							"parameter_name", "${long}"
+						).put(
+							"value", 1
+						)
+					))));
 
 		Assert.assertTrue(
 			_evaluate(
@@ -284,8 +318,42 @@ public class SXPConditionEvaluatorTest {
 
 	@Test
 	public void testNestedAnyOf() throws Exception {
-
-		// TODO Assert.assertFalse
+		Assert.assertFalse(
+			_evaluate(
+				JSONUtil.put(
+					"any_of",
+					JSONUtil.put(
+						"any_of",
+						JSONUtil.put(
+							"equals",
+							JSONUtil.put(
+								"parameter_name", "${integer}"
+							).put(
+								"value", 0
+							)
+						).put(
+							"greater_than",
+							JSONUtil.put(
+								"parameter_name", "${double}"
+							).put(
+								"value", 2.0D
+							)
+						).put(
+							"less_than_equals",
+							JSONUtil.put(
+								"parameter_name", "${float}"
+							).put(
+								"value", 0.0F
+							)
+						)
+					).put(
+						"equals",
+						JSONUtil.put(
+							"parameter_name", "${long}"
+						).put(
+							"value", 0L
+						)
+					))));
 
 		Assert.assertTrue(
 			_evaluate(

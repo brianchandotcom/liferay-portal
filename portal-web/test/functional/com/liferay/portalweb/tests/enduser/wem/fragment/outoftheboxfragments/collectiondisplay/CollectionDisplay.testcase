@@ -432,12 +432,10 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertTextEquals(
-				key_colPosition = "1",
-				key_fragmentName = "paragraph",
-				key_rowPosition = "1",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-				value1 = "DM Document Text");
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "DM Document Text");
 		}
 	}
 
@@ -536,14 +534,12 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertTextEquals(
-				key_fragmentName = "paragraph",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
 
-			AssertVisible(
-				key_imageName = "Document_1.jpg",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
 		}
 	}
 
@@ -641,11 +637,10 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(
+			ContentPages.viewFragmentImage(
+				fragmentName = "image",
 				id = "image-square",
-				key_image = "Document_1.jpg",
-				key_imageDescription = "",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+				image = "Document_1.jpg");
 		}
 	}
 
@@ -902,12 +897,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Document Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Document Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -929,12 +923,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Blogs Entry Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Blogs Entry Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -956,12 +949,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Web Content Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Web Content Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -987,12 +979,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Document Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Document Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -1014,12 +1005,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Web Content Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Web Content Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -1041,12 +1031,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Blogs Entry Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Blogs Entry Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -1159,12 +1148,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Document Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Document Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -1172,12 +1160,11 @@ definition {
 			var n = "6";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Blogs Entry Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Blogs Entry Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -1185,12 +1172,11 @@ definition {
 			var n = "11";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Web Content Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Web Content Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -1215,12 +1201,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Document Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Document Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -1242,12 +1227,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Blogs Entry Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Blogs Entry Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -1269,12 +1253,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Web Content Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Web Content Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -1296,12 +1279,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Document Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Document Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -1323,12 +1305,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Blogs Entry Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Blogs Entry Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -1350,12 +1331,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Web Content Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Web Content Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -1381,12 +1361,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Document Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Document Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -1408,12 +1387,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Blogs Entry Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Blogs Entry Title ${i}");
 
 				var n = ${n} + 1;
 			}
@@ -1435,12 +1413,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "Web Content Title ${i}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					index = "${n}",
+					text = "Web Content Title ${i}");
 
 				var n = ${n} + 1;
 			}

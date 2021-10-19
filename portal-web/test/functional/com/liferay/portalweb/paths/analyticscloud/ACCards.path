@@ -63,7 +63,7 @@
 </tr>
 <tr>
 	<td>METRIC_VALUE</td>
-	<td>//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//li[contains(@class,'card-tab')][.//*[normalize-space(text())='${key_metricName}']]//div[contains(@class,'metric-value')]</td>
+	<td>//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//li[contains(@class,'card-tab')][.//*[normalize-space(text())='${key_metricName}']]//div[text()='${key_metricValue}']</td>
 	<td></td>
 </tr>
 <tr>

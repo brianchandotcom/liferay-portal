@@ -124,9 +124,13 @@ definition {
 
 		var key_metricName = "${metricName}";
 
-		AssertTextEquals(
-			locator1 = "ACCards#METRIC_VALUE",
-			value1 = "${metricValue}");
+		var key_metricValue = "${metricValue}";
+
+		while (IsElementNotPresent(locator1 = "ACCards#METRIC_VALUE") && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+		}
+
+		AssertElementPresent(locator1 = "ACCards#METRIC_VALUE");
 	}
 
 	macro viewSelectedInterval {

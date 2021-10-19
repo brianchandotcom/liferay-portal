@@ -17,6 +17,7 @@ package com.liferay.style.book.web.internal.display.context;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.util.comparator.LayoutModifiedDateComparator;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -68,6 +69,8 @@ public class EditStyleBookEntryDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
+		_itemSelector = (ItemSelector)_renderRequest.getAttribute(
+			ItemSelector.class.getName());
 		_frontendTokenDefinitionRegistry =
 			(FrontendTokenDefinitionRegistry)_renderRequest.getAttribute(
 				FrontendTokenDefinitionRegistry.class.getName());
@@ -304,6 +307,7 @@ public class EditStyleBookEntryDisplayContext {
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private StyleBookEntry _styleBookEntry;

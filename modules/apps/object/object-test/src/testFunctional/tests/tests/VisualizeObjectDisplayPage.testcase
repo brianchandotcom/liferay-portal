@@ -175,7 +175,6 @@ definition {
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Simple"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSetPaginationSimple {
 		ObjectAdmin.addObjectViaAPI(

@@ -141,6 +141,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>RELATIONSHIPS_TYPE_DESCRIPTION</td>
+		<td>//div[text() = '${key_type}']/..//span[@class = 'text-small']</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>RELATIONSHIPS_TYPE_FORM</td>
 		<td>//div[contains(@class, 'form-control')]</td>
 		<td></td>

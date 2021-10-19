@@ -230,6 +230,13 @@ definition {
 			locator1 = "ObjectAdmin#OBJECT_STATUS");
 	}
 
+	macro assertRelationshipsTypeDescription {
+		AssertTextEquals(
+			locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_DESCRIPTION",
+			key_type = "${type}",
+			value1 = "${description}");
+	}
+
 	macro assertTypeFieldRequired {
 		AssertElementPresent(locator1 = "ObjectAdmin#TYPE_FIELD_REQUIRED");
 	}

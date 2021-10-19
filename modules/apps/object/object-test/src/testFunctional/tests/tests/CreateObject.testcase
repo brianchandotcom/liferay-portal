@@ -1399,12 +1399,34 @@ definition {
 	}
 
 	@description = "LPS-135400 - There is an explanation about each Relationship type"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewExplanationRelationshipTypes {
 
-		// TODO LPS-140581 CanViewExplanationRelationshipTypes pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		LexiconEntry.gotoAdd();
+
+		Click(locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_FORM");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			type = "One to Many",
+			description = "One object's entry interacts with many others object's entries.");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			type = "Many to Many",
+			description = "Multiple object's entries can interact with many others object's entries.");
+
+		
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on the eye icon"

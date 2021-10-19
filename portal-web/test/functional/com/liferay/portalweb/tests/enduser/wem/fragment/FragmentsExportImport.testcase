@@ -305,113 +305,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test case for LPS-110462. The value of editable field is reset in saved composition when unchecking Save Mapping Configuration."
-	@priority = "4"
-	test ExportImportFragmentCompositionWithCheckingSaveMappingConfiguration {
-		task ("Add a document with an image") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_1.jpg",
-				groupName = "Test Site Name",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_1.jpg");
-		}
-
-		task ("Add a Container to content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-		}
-
-		task ("Add an Image fragment into Container") {
-			PageEditor.addElementToContainer(
-				collectionName = "Basic Components",
-				fragmentName = "Image",
-				navTab = "Fragments");
-		}
-
-		task ("Map the Preview Image field of document to Imag fragment") {
-			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Image",
-				id = "image");
-
-			PageEditorMapping.mapEditableFieldToAsset(
-				entryTitle = "Document_1.jpg",
-				navItem = "Documents and Media");
-
-			Select(
-				locator1 = "PageEditorEditableLink#FIELD",
-				value1 = "Preview Image");
-
-			SelectFrame(value1 = "relative=top");
-
-			PageEditor.waitForAutoSave();
-		}
-
-		task ("View the mapped image shown in Image fragment") {
-			PageEditor.viewFragmentEditableImage(
-				id = "image-square",
-				imageDescription = "",
-				imageFileName = "Document_1.jpg");
-		}
-
-		task ("Save the fragment composition as fragment") {
-			PageEditor.gotoSaveAsFragment(fragmentName = "Container");
-
-			PageEditorComposition.saveAsFragment(
-				fragmentName = "New Fragment Name",
-				saveMappingConfigurationAndLink = "true");
-		}
-
-		task ("Export the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
-
-			FragmentsAdmin.exportCollection(collectionName = "Saved Fragments");
-		}
-
-		task ("Import the fragment collection into a new site") {
-			JSONGroup.addGroup(groupName = "New Site Name");
-
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
-
-			FragmentsAdmin.importCollectionFromTempFolder();
-		}
-
-		task ("Add an imported fragment composition to content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "New Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "New Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Saved Fragments",
-				composition = "true",
-				fragmentName = "New Fragment Name");
-		}
-
-		task ("View the mapped image shown in Image fragment") {
-			PageEditor.viewFragmentEditableImage(
-				id = "image-square",
-				imageDescription = "",
-				imageFileName = "Document_1.jpg");
-		}
-	}
-
 	@description = "This is a test case for LPS-101255. The composition of fragments can be saved in an existing collection."
 	@priority = "5"
 	test ExportImportFragmentCompositionWithCustomConfigurations {
@@ -781,6 +674,113 @@ definition {
 				key_elementHeader = "//div[contains(@class,'page-editor')]//*[contains(.,'Basic Text')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+	}
+
+	@description = "This is a test case for LPS-110462. The value of editable field is reset in saved composition when unchecking Save Mapping Configuration."
+	@priority = "4"
+	test ExportImportFragmentCompositionWithMappingConfiguration {
+		task ("Add a document with an image") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_1.jpg",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a Container to content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Add an Image fragment into Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Image",
+				navTab = "Fragments");
+		}
+
+		task ("Map the Preview Image field of document to Imag fragment") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Image",
+				id = "image");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Document_1.jpg",
+				navItem = "Documents and Media");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Preview Image");
+
+			SelectFrame(value1 = "relative=top");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("View the mapped image shown in Image fragment") {
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "Document_1.jpg");
+		}
+
+		task ("Save the fragment composition as fragment with mapping configuration") {
+			PageEditor.gotoSaveAsFragment(fragmentName = "Container");
+
+			PageEditorComposition.saveAsFragment(
+				fragmentName = "New Fragment Name",
+				saveMappingConfigurationAndLink = "true");
+		}
+
+		task ("Export the fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
+
+			FragmentsAdmin.exportCollection(collectionName = "Saved Fragments");
+		}
+
+		task ("Import the fragment collection into a new site") {
+			JSONGroup.addGroup(groupName = "New Site Name");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
+
+			FragmentsAdmin.importCollectionFromTempFolder();
+		}
+
+		task ("Add an imported fragment composition to content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "New Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "New Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Saved Fragments",
+				composition = "true",
+				fragmentName = "New Fragment Name");
+		}
+
+		task ("View the mapped image shown in Image fragment") {
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "Document_1.jpg");
 		}
 	}
 

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -176,6 +177,8 @@ public class RESTBuilder {
 			"configYAML", _configYAML
 		).put(
 			"freeMarkerTool", freeMarkerTool
+		).put(
+			"portalBuildNumber", ReleaseInfo.getBuildNumber()
 		).put(
 			"stringUtil", StringUtil_IW.getInstance()
 		).put(

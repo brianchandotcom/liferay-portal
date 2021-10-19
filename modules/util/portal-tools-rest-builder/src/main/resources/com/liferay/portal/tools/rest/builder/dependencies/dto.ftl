@@ -118,14 +118,18 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 	}
 
 	public static ${schemaName} unsafeToDTO(String json) {
-		${schemaName} ${schemaVarName} =
-			ObjectMapperUtil.readValue(${schemaName}.class, json);
+		<#if portalBuildNumber lt 7412>
+			${schemaName} ${schemaVarName} =
+				ObjectMapperUtil.readValue(${schemaName}.class, json);
 
-		if (${schemaVarName} == null) {
-			throw new RuntimeException("Error processing JSON " + json);
-		}
+			if (${schemaVarName} == null) {
+				throw new RuntimeException("Error processing JSON " + json);
+			}
 
-		return ${schemaVarName};
+			return ${schemaVarName};
+		<#else>
+			return ObjectMapperUtil.unsafeReadValue(${schemaName}.class, json);
+		</#if>
 	}
 
 	<#assign

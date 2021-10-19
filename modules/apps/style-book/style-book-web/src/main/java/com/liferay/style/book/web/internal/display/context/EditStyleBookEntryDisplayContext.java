@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.util.comparator.LayoutModifiedDateComparator;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -50,6 +52,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
@@ -198,6 +201,19 @@ public class EditStyleBookEntryDisplayContext {
 			new LayoutModifiedDateComparator(false));
 
 		return JSONUtil.put(
+			"itemSelectorURL",
+			() -> {
+				PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+					RequestBackedPortletURLFactoryUtil.create(
+						_httpServletRequest),
+					_themeDisplay.getScopeGroup(),
+					_themeDisplay.getScopeGroupId(),
+					_renderResponse.getNamespace() + "selectPreviewItem",
+					new LayoutItemSelectorCriterion());
+
+				return itemSelectorURL.toString();
+			}
+		).put(
 			"recentLayouts",
 			() -> {
 				Stream<Layout> layoutsStream = layouts.stream();

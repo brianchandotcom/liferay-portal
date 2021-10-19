@@ -20,6 +20,7 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 declare type TObjectDefinition = {
 	id: string;
 	name: string;
+	system: boolean;
 };
 declare const ModalWithProvider: React.FC<IProps>;
 export default ModalWithProvider;

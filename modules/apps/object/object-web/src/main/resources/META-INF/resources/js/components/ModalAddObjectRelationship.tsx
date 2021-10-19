@@ -34,6 +34,7 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 type TObjectDefinition = {
 	id: string;
 	name: string;
+	system: boolean;
 };
 
 type TFormState = {
@@ -295,12 +296,13 @@ const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
 
 			const {items = []} = await result.json();
 
-			const objectDefinitions = items.map(
-				({id, name}: TObjectDefinition) => ({
+			const objectDefinitions = items
+				.map(({id, name, system}: TObjectDefinition) => ({
 					id,
 					name,
-				})
-			);
+					system,
+				}))
+				.filter(({system}: TObjectDefinition) => !system);
 
 			setObjectDefinitions(objectDefinitions);
 		};

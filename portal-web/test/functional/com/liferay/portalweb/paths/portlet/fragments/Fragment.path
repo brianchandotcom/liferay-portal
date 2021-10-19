@@ -289,11 +289,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE</td>
-	<td>xpath=(//*[contains(@data-lfr-editable-id,'${id}')])[${key_position}][normalize-space()='${key_text}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_CK_EDITOR</td>
 	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//*[contains(@data-lfr-editable-id,'${id}')]//div[contains(@class,'cke_editable_inline')]</td>
 	<td></td>
@@ -346,6 +341,12 @@
 <tr>
 	<td>INLINE_RICH_TEXT_STYLE</td>
 	<td>xpath=(//lfr-editable[contains(@id,'${id}')])[${key_position}]${key_style}[normalize-space()='${key_text}']</td>
+	<td></td>
+</tr>
+<!--FRAGMENT_CONTENT_AT_VIEW_MODE-->
+<tr>
+	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE</td>
+	<td>xpath=(//*[contains(@data-lfr-editable-id,'${id}')])[${key_position}][normalize-space()='${key_text}']</td>
 	<td></td>
 </tr>
 <!--FRAGMENT_HEADER-->

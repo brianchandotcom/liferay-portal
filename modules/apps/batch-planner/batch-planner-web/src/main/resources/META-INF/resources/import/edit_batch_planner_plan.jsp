@@ -102,13 +102,13 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				<clay:col
 					md="6"
 				>
-					<aui:input name="externalFieldName_ID_TEMPLATE" placeholder="external field name" value="" />
+					<aui:input name="externalFieldName_ID_TEMPLATE" value="" />
 				</clay:col>
 
 				<clay:col
 					md="6"
 				>
-					<aui:input name="internalFieldName_ID_TEMPLATE" placeholder="open API field name" value="VALUE_TEMPLATE" />
+					<aui:input name="internalFieldName_ID_TEMPLATE" value="VALUE_TEMPLATE" />
 				</clay:col>
 			</clay:row>
 		</clay:content-section>

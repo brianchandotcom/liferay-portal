@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -137,6 +138,16 @@ public class PortalInstancesLocalServiceImpl
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
+		ServiceContext currentServiceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ServiceContext serviceContext =
+			(ServiceContext)currentServiceContext.clone();
+
+		serviceContext.setUserId(user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setInitializingPortalInstance(true)) {
 
@@ -151,6 +162,7 @@ public class PortalInstancesLocalServiceImpl
 		finally {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 			PrincipalThreadLocal.setName(name);
+			ServiceContextThreadLocal.pushServiceContext(currentServiceContext);
 		}
 	}
 

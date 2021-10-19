@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>METRIC_VALUE</td>
-	<td>//span[@class='title'and text()='${key_metricTitle}']/..//div[@class='metric-value']</td>
+	<td>//span[@class='title'and text()='${key_metricTitle}']/..//div[text()='${key_metricValue}']</td>
 	<td></td>
 </tr>
 <tr>

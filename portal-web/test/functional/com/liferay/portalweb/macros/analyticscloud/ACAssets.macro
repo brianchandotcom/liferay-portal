@@ -114,6 +114,12 @@ definition {
 	macro viewVisitorsBehaviorMetric {
 		var key_metricTitle = "${metricTitle}";
 
+		var key_metricValue = "${metricValue}";
+
+		while (IsElementNotPresent(locator1 = "ACAssets#METRIC_VALUE") && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+		}
+
 		AssertTextEquals(
 			locator1 = "ACAssets#METRIC_VALUE",
 			value1 = "${metricValue}");

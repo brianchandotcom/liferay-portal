@@ -1,5 +1,67 @@
 components:
     schemas:
+        Condition:
+            properties:
+                in:
+                    properties:
+                        parameterName:
+                            type: string
+                        values:
+                            items:
+                                type: object
+                            type: array
+                    type: object
+                allConditions:
+                    items:
+                        $ref: "#/components/schemas/Condition"
+                    type: array
+                anyConditions:
+                    items:
+                        $ref: "#/components/schemas/Condition"
+                    type: array
+                contains:
+                    properties:
+                        parameterName:
+                            type: string
+                        value:
+                            type: object
+                        values:
+                            items:
+                                type: object
+                            type: array
+                    type: object
+                equals:
+                    properties:
+                        format:
+                            type: string
+                        parameterName:
+                            type: string
+                        value:
+                            type: object
+                    type: object
+                exists:
+                    properties:
+                        parameterName:
+                            type: string
+                    type: object
+                not:
+                    $ref: "#/components/schemas/Condition"
+                range:
+                    properties:
+                        format:
+                            type: string
+                        gt:
+                            type: object
+                        gte:
+                            type: object
+                        lt:
+                            type: object
+                        lte:
+                            type: object
+                        parameterName:
+                            type: string
+                    type: object
+            type: object
         DocumentField:
             properties:
                 values:
@@ -160,6 +222,8 @@ components:
                                                             type: object
                                                     type: object
                                                 type: array
+                                            condition:
+                                                $ref: "#/components/schemas/Condition"
                                             enabled:
                                                 type: boolean
                                         type: object

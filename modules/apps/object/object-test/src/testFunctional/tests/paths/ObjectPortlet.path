@@ -104,7 +104,22 @@
 	<td>SORT_FIELD</td>
 	<td>//button[@class='btn-sorting inline-item text-nowrap text-truncate-inline btn btn-sm btn-unstyled' and contains(text(), '${key_sortFieldName}')]</td>
 	<td></td>
-</tr>
+	</tr>
+	<tr>
+		<td>VIEW_ENTRY_BUTTON</td>
+		<td>//div[contains(@class,'show')]//a[contains(.,'View')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_ENTRY_DETAILS_LABEL</td>
+		<td>//label[contains(@class,'ddm-label') and contains(text(),'${key_entryLabel}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_ENTRY_DETAILS_VALUE</td>
+		<td>//input[contains(@value, '${key_entryValue}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

@@ -626,12 +626,34 @@ definition {
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view a Long entry and label on layout"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewLongEntryOnLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-140553 CanViewLongEntryOnLayout pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Test Entry");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "Test Entry");
+
+		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
+
+		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "Test Entry");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to view other user's Object entry with the View permission"

@@ -167,11 +167,72 @@ definition {
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a Picklist field on layout"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddPicklistEntryOnLayout {
 
-		// TODO LPS-140558 CanAddPicklistEntryOnLayout pending implementation
+		Picklist.gotoPicklists();
+
+		Picklist.addPicklistViaUI(picklistName = "Custom Picklist");
+		
+		Picklist.gotoPicklists();
+
+		Picklist.gotoPicklistView(picklistName = "Custom Picklist");
+
+		Picklist.addPicklistItemViaUI(picklistItemName = "Item Test 1");
+
+		Picklist.clickSaveButton();
+
+		Picklist.gotoPicklists();
+
+		Picklist.gotoPicklistView(picklistName = "Custom Picklist");
+
+		Picklist.addPicklistItemViaUI(picklistItemName = "Item Test 2");
+
+		Picklist.clickSaveButton();
+
+		
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Object",
+			pluralLabelName = "Custom Objects");
+
+
+		ObjectAdmin.saveCustomObject();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Field Picklist",
+			fieldPicklist = "Custom Picklist",
+			fieldType = "Picklist");
+
+		ObjectAdmin.goToDetailsTab();
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Item Test 1");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntry(entry = "itemTest1");
+
+
+
+
+
+
 
 	}
 

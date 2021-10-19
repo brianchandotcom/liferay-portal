@@ -75,6 +75,22 @@ definition {
 		Button.clickSave();
 	}
 
+	macro addObjectPicklistFieldEntryViaUI {
+		LexiconEntry.gotoAdd();
+
+		Click(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTION");
+
+		Click(
+			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION",
+			key_picklistOption = "${picklistOption}");
+
+		Button.clickSave();
+
+
+
+
+	}
+
 	macro addObjectRelationshipViaAPI {
 		JSONObject.addObjectRelationship(
 			deletionType = "${deletionType}",
@@ -317,6 +333,13 @@ definition {
 			userPassword = "${userPassword}");
 
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectID}");
+	}
+
+	macro goToDetailsTab {
+		Click(locator1 = "ObjectAdmin#OBJECT_DETAILS_TAB");
+
+
+		
 	}
 
 	macro goToFieldsDetails {

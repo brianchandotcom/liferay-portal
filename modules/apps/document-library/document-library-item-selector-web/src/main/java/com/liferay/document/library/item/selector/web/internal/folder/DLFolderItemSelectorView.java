@@ -16,12 +16,18 @@ package com.liferay.document.library.item.selector.web.internal.folder;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorViewConstants;
+import com.liferay.document.library.item.selector.web.internal.display.context.DLSelectFolderDisplayContext;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.PortletItemSelectorView;
 import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
+import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 
@@ -35,11 +41,15 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -87,6 +97,37 @@ public class DLFolderItemSelectorView
 			FolderItemSelectorCriterion itemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
+
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher("/select_folder.jsp");
+
+		long folderId = BeanParamUtil.getLong(
+			itemSelectorCriterion, (HttpServletRequest)servletRequest,
+			"folderId");
+
+		servletRequest.setAttribute(
+			DLSelectFolderDisplayContext.class.getName(),
+			new DLSelectFolderDisplayContext(
+				_fetchFolder(folderId), (HttpServletRequest)servletRequest,
+				portletURL,
+				BeanParamUtil.getLong(
+					itemSelectorCriterion, (HttpServletRequest)servletRequest,
+					"selectedFolderId", folderId)));
+
+		requestDispatcher.include(servletRequest, servletResponse);
+	}
+
+	private Folder _fetchFolder(long folderId) {
+		try {
+			if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				return null;
+			}
+
+			return _dlAppService.getFolder(folderId);
+		}
+		catch (Exception exception) {
+			return null;
+		}
 	}
 
 	private static final List<String> _portletIds = Arrays.asList(
@@ -94,5 +135,16 @@ public class DLFolderItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new FolderItemSelectorReturnType());
+
+	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.item.selector.web)"
+	)
+	private ServletContext _servletContext;
 
 }

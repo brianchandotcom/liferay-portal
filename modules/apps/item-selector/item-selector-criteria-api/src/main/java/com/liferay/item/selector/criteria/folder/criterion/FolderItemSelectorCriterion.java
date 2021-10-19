@@ -20,4 +20,24 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  * @author Adolfo Pérez
  */
 public class FolderItemSelectorCriterion extends BaseItemSelectorCriterion {
+
+	public long getFolderId() {
+		return _folderId;
+	}
+
+	public long getSelectedFolderId() {
+		return _selectedFolderId;
+	}
+
+	public void setFolderId(long folderId) {
+		_folderId = folderId;
+	}
+
+	public void setSelectedFolderId(long selectedFolderId) {
+		_selectedFolderId = selectedFolderId;
+	}
+
+	private long _folderId;
+	private long _selectedFolderId;
+
 }

@@ -21,7 +21,6 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
-import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,6 +28,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -38,11 +39,14 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,11 +58,11 @@ public class DLSelectFolderDisplayContext {
 
 	public DLSelectFolderDisplayContext(
 		Folder folder, HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse, long selectedFolderId) {
+		PortletURL portletURL, long selectedFolderId) {
 
 		_folder = folder;
 		_httpServletRequest = httpServletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
+		_portletURL = portletURL;
 		_selectedFolderId = selectedFolderId;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -66,8 +70,10 @@ public class DLSelectFolderDisplayContext {
 	}
 
 	public PortletURL getAddFolderPortletURL() {
-		return PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_httpServletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/document_library/edit_folder"
 		).setRedirect(
@@ -147,8 +153,11 @@ public class DLSelectFolderDisplayContext {
 		return assetRenderer.getIconCssClass();
 	}
 
-	public PortletURL getIteratorPortletURL() throws PortalException {
-		return _getFolderPortletURL(getFolderId());
+	public PortletURL getIteratorPortletURL(
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException, PortletException {
+
+		return _getFolderPortletURL(getFolderId(), liferayPortletResponse);
 	}
 
 	public long getRepositoryId() {
@@ -159,8 +168,12 @@ public class DLSelectFolderDisplayContext {
 		return _themeDisplay.getScopeGroupId();
 	}
 
-	public PortletURL getRowPortletURL(Folder folder) throws PortalException {
-		return _getFolderPortletURL(folder.getFolderId());
+	public PortletURL getRowPortletURL(
+			Folder folder, LiferayPortletResponse liferayPortletResponse)
+		throws PortalException, PortletException {
+
+		return _getFolderPortletURL(
+			folder.getFolderId(), liferayPortletResponse);
 	}
 
 	public long getSelectedFolderId() {
@@ -173,7 +186,14 @@ public class DLSelectFolderDisplayContext {
 
 	public Map<String, Object> getSelectorButtonData(Folder folder) {
 		return HashMapBuilder.<String, Object>put(
-			"folderid", getFolderId()
+			"folderid",
+			() -> {
+				if (folder != null) {
+					return folder.getFolderId();
+				}
+
+				return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			}
 		).put(
 			"folderissupportsmetadata",
 			() -> {
@@ -193,7 +213,14 @@ public class DLSelectFolderDisplayContext {
 				return true;
 			}
 		).put(
-			"foldername", getFolderName()
+			"foldername",
+			() -> {
+				if (folder != null) {
+					return folder.getName();
+				}
+
+				return getFolderName();
+			}
 		).build();
 	}
 
@@ -221,11 +248,12 @@ public class DLSelectFolderDisplayContext {
 		return false;
 	}
 
-	private PortletURL _getFolderPortletURL(long folderId) {
-		return PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setMVCRenderCommandName(
-			"/document_library/select_folder"
+	private PortletURL _getFolderPortletURL(
+			long folderId, LiferayPortletResponse liferayPortletResponse)
+		throws PortletException {
+
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(_portletURL, liferayPortletResponse)
 		).setParameter(
 			"folderId", folderId
 		).setParameter(
@@ -261,7 +289,7 @@ public class DLSelectFolderDisplayContext {
 
 	private final Folder _folder;
 	private final HttpServletRequest _httpServletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
+	private final PortletURL _portletURL;
 	private final long _selectedFolderId;
 	private final ThemeDisplay _themeDisplay;
 

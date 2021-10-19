@@ -43,7 +43,7 @@ if (dlSelectFolderDisplayContext.getFolder() != null) {
 
 		<liferay-ui:search-container
 			cssClass="pb-6"
-			iteratorURL="<%= dlSelectFolderDisplayContext.getIteratorPortletURL() %>"
+			iteratorURL="<%= dlSelectFolderDisplayContext.getIteratorPortletURL(liferayPortletResponse) %>"
 			total="<%= dlSelectFolderDisplayContext.getFoldersCount() %>"
 		>
 			<liferay-ui:search-container-results
@@ -72,20 +72,20 @@ if (dlSelectFolderDisplayContext.getFolder() != null) {
 						localizeMessage="<%= false %>"
 						markupView="lexicon"
 						message="<%= HtmlUtil.escape(curFolder.getName()) %>"
-						url="<%= String.valueOf(dlSelectFolderDisplayContext.getRowPortletURL(curFolder)) %>"
+						url="<%= String.valueOf(dlSelectFolderDisplayContext.getRowPortletURL(curFolder, liferayPortletResponse)) %>"
 					/>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-smallest table-column-text-end"
-					href="<%= dlSelectFolderDisplayContext.getRowPortletURL(curFolder) %>"
+					href="<%= dlSelectFolderDisplayContext.getRowPortletURL(curFolder, liferayPortletResponse) %>"
 					name="folders"
 					value="<%= String.valueOf(folderFoldersCount) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-smallest table-column-text-end"
-					href="<%= dlSelectFolderDisplayContext.getRowPortletURL(curFolder) %>"
+					href="<%= dlSelectFolderDisplayContext.getRowPortletURL(curFolder, liferayPortletResponse) %>"
 					name="documents"
 					value="<%= String.valueOf(folderFileEntriesCount) %>"
 				/>

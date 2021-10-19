@@ -1,0 +1,19 @@
+.codemirror-editor-wrapper {
+	border: 1px solid $mainLighten74;
+	border-radius: 4px;
+
+	.CodeMirror-foldmarker {
+		border-radius: 0.25rem;
+		color: $primary;
+		padding: 0 4px;
+		text-shadow: none;
+
+		&:hover {
+			background-color: $primaryL4;
+		}
+	}
+
+	.cm-s-default {
+		font-size: 13px;
+	}
+}

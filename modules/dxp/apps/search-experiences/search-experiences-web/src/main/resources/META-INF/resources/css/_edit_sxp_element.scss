@@ -1,0 +1,146 @@
+$sxpElementHeaderHeight: 48px;
+
+.edit-sxp-element-root {
+	height: calc(100vh - 96px);
+
+	.sxp-element-row {
+		height: 100%;
+		padding-top: 64px;
+	}
+
+	.sxp-element-section {
+		border-color: $mainLighten74;
+		border-style: solid;
+		border-width: 0.0625rem;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		margin: 0 4px;
+
+		.sxp-element-header {
+			background-color: $secondaryHover;
+			border-color: $mainLighten74;
+			border-style: solid;
+			border-width: 0 0 0.0625rem;
+			display: flex;
+			height: $sxpElementHeaderHeight;
+
+			button {
+				margin: 8px 12px;
+			}
+
+			.expand-header {
+				flex-grow: 1;
+
+				.header-label {
+					text-align: center;
+
+					label {
+						color: $secondary;
+						margin: 0;
+						padding-bottom: 12px;
+						padding-top: 12px;
+
+						.sticker {
+							.lexicon-icon {
+								margin-top: -3px;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.json-section {
+			height: 100%;
+			min-height: calc(100% - #{$sxpElementHeaderHeight});
+			padding: 0;
+
+			.sidebar {
+				background-color: $white;
+				border-color: $mainLighten74;
+				border-right-width: 0.0625rem;
+				border-style: solid;
+
+				.sidebar-dd {
+					margin: 0;
+
+					button {
+						padding: 8px 12px;
+
+						&:hover {
+							background-color: $primaryL4;
+						}
+					}
+
+					&:last-of-type {
+						margin-bottom: 8px;
+					}
+				}
+
+				.sidebar-dt {
+					padding: 8px 0;
+
+					.sidebar-arrow {
+						position: absolute;
+						right: 0;
+					}
+				}
+
+				.sidebar-input {
+					margin-bottom: 24px;
+				}
+
+				.text-truncate {
+					color: $secondary;
+					font-size: 14px;
+					font-weight: 600;
+				}
+			}
+		}
+
+		.codemirror-editor-wrapper {
+			border-width: 0;
+			height: 100%;
+			width: 100%;
+
+			.cm-s-default {
+				height: 100%;
+			}
+
+			.CodeMirror-gutters {
+				background-color: $white;
+				border-width: 0;
+			}
+		}
+	}
+
+	.row {
+		height: 100%;
+		margin: 0;
+		min-height: calc(100% - #{$sxpElementHeaderHeight});
+
+		> div {
+			height: 100%;
+		}
+
+		div:first-child {
+			.sxp-element-section {
+				margin-left: 8px;
+			}
+		}
+
+		div:last-child {
+			.sxp-element-section {
+				margin-right: 8px;
+			}
+		}
+
+		.col-4,
+		.col-8 {
+			background-color: $lightBackground;
+			padding: 0;
+		}
+	}
+}

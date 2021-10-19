@@ -1,0 +1,22 @@
+.autocomplete-dropdown-menu {
+	min-width: 320px;
+}
+
+.sxp-blueprint-field-row-dropdown {
+	.dropdown-item {
+		padding-right: 80px;
+	}
+
+	.lexicon-icon-globe {
+		margin-left: 4px;
+	}
+
+	.type {
+		color: $mainLighten52;
+		font-size: 12px;
+		position: absolute;
+		right: 16px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}

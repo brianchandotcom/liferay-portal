@@ -1,0 +1,50 @@
+.preview-sidebar {
+	overflow-x: overlay;
+	width: $previewSidebarWidth;
+
+	.btn:focus {
+		box-shadow: unset;
+	}
+
+	.preview-error-list {
+		margin: 0 16px;
+	}
+
+	.preview-results-list {
+		.list-group {
+			margin-bottom: 16px;
+
+			.list-group-title {
+				padding: 6px 0;
+			}
+		}
+
+		&.sidebar-body {
+			padding: 0;
+		}
+	}
+
+	.raw-response {
+		font-weight: 400;
+	}
+
+	.search-message {
+		color: $secondary;
+		margin: 0.5rem auto 1.5rem;
+		padding: 16px 0;
+		text-align: center;
+		width: 340px;
+	}
+
+	.sidebar-search {
+		border-bottom: 0;
+	}
+
+	.total-hits-label {
+		margin-right: 16px;
+	}
+
+	.warning-container + .preview-error-list {
+		margin-top: 16px;
+	}
+}

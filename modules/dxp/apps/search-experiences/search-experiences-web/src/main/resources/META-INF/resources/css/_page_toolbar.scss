@@ -1,0 +1,52 @@
+.page-toolbar-root {
+	position: fixed;
+	width: 100%;
+	z-index: 971;
+
+	.entry-description {
+		color: $secondary;
+		font-size: 14px;
+		font-weight: 400;
+
+		.entry-description-blank {
+			font-style: italic;
+		}
+	}
+
+	.entry-heading-edit-button {
+		display: block;
+
+		.entry-heading-edit-icon {
+			color: $main;
+			font-size: 0.875rem;
+			line-height: 1.15;
+			margin-left: 8px;
+			opacity: 0;
+		}
+
+		&:focus,
+		&:hover {
+			.entry-heading-edit-icon {
+				opacity: 1;
+			}
+		}
+	}
+
+	.entry-title {
+		color: $main;
+		font-size: 18px;
+		font-weight: 700;
+		line-height: 1;
+	}
+
+	.tbar-divider {
+		background-color: $secondary;
+		height: 16px;
+		width: 1px;
+	}
+
+	.tbar-item {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+	}
+}

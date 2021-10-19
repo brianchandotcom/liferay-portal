@@ -145,15 +145,13 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test SearchForTag {
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		Pause(locator1 = "3000");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "depot",
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title",
-			tagNameList = "depot");
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_4.jpg");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
@@ -208,13 +206,13 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test SearchForUnsearchableTag {
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "depot",
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document_1.doc",
-			tagNameList = "depot");
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",

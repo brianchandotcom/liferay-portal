@@ -19,6 +19,7 @@ import com.liferay.poshi.core.PoshiGetterUtil;
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.script.UnbalancedCodeException;
 import com.liferay.poshi.core.util.Dom4JUtil;
+import com.liferay.poshi.core.util.NaturalOrderStringComparator;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.RegexUtil;
 import com.liferay.poshi.core.util.StringUtil;
@@ -307,58 +308,7 @@ public abstract class PoshiElement
 
 		PoshiNode<?, ?> previousPoshiNode = null;
 
-		Collections.sort(
-			poshiNodes,
-			new Comparator<PoshiNode>() {
-
-				@Override
-				public int compare(PoshiNode poshiNode1, PoshiNode poshiNode2) {
-					if ((poshiNode1 instanceof CommandPoshiElement) &&
-						(poshiNode2 instanceof CommandPoshiElement)) {
-
-						CommandPoshiElement commandPoshiElement1 =
-							(CommandPoshiElement)poshiNode1;
-
-						CommandPoshiElement commandPoshiElement2 =
-							(CommandPoshiElement)poshiNode2;
-
-						String poshiScriptKeyword1 =
-							commandPoshiElement1.getPoshiScriptKeyword();
-
-						String poshiScriptKeyword2 =
-							commandPoshiElement2.getPoshiScriptKeyword();
-
-						String blockName1 = commandPoshiElement1.getBlockName();
-
-						String blockName2 = commandPoshiElement2.getBlockName();
-
-						if ((blockName1.startsWith(poshiScriptKeyword1) &&
-							 blockName2.startsWith(poshiScriptKeyword2)) ||
-							(!blockName1.startsWith(poshiScriptKeyword1) &&
-							 !blockName2.startsWith(poshiScriptKeyword2))) {
-
-							return blockName1.compareTo(blockName2);
-						}
-
-						if (blockName1.startsWith(poshiScriptKeyword1) &&
-							!blockName2.startsWith(poshiScriptKeyword2)) {
-
-							return 1;
-						}
-
-						if (blockName2.startsWith(poshiScriptKeyword2) &&
-							!blockName1.startsWith(poshiScriptKeyword1)) {
-
-							return -1;
-						}
-
-						return blockName1.compareTo(blockName2);
-					}
-
-					return 0;
-				}
-
-			});
+		Collections.sort(poshiNodes, new CommandComparator());
 
 		for (Iterator<PoshiNode<?, ?>> iterator = poshiNodes.iterator();
 			 iterator.hasNext();) {
@@ -1202,5 +1152,61 @@ public abstract class PoshiElement
 	}
 
 	private String _poshiScript;
+
+	private class CommandComparator implements Comparator<PoshiNode> {
+
+		@Override
+		public int compare(PoshiNode poshiNode1, PoshiNode poshiNode2) {
+			if ((poshiNode1 instanceof CommandPoshiElement) &&
+				(poshiNode2 instanceof CommandPoshiElement)) {
+
+				CommandPoshiElement commandPoshiElement1 =
+					(CommandPoshiElement)poshiNode1;
+
+				CommandPoshiElement commandPoshiElement2 =
+					(CommandPoshiElement)poshiNode2;
+
+				String poshiScriptKeyword1 =
+					commandPoshiElement1.getPoshiScriptKeyword();
+
+				String poshiScriptKeyword2 =
+					commandPoshiElement2.getPoshiScriptKeyword();
+
+				String blockName1 = commandPoshiElement1.getBlockName();
+
+				String blockName2 = commandPoshiElement2.getBlockName();
+
+				NaturalOrderStringComparator naturalOrderStringComparator =
+					new NaturalOrderStringComparator();
+
+				if ((blockName1.startsWith(poshiScriptKeyword1) &&
+					 blockName2.startsWith(poshiScriptKeyword2)) ||
+					(!blockName1.startsWith(poshiScriptKeyword1) &&
+					 !blockName2.startsWith(poshiScriptKeyword2))) {
+
+					return naturalOrderStringComparator.compare(
+						blockName1, blockName2);
+				}
+
+				if (blockName1.startsWith(poshiScriptKeyword1) &&
+					!blockName2.startsWith(poshiScriptKeyword2)) {
+
+					return 1;
+				}
+
+				if (blockName2.startsWith(poshiScriptKeyword2) &&
+					!blockName1.startsWith(poshiScriptKeyword1)) {
+
+					return -1;
+				}
+
+				return naturalOrderStringComparator.compare(
+					blockName1, blockName2);
+			}
+
+			return 0;
+		}
+
+	}
 
 }

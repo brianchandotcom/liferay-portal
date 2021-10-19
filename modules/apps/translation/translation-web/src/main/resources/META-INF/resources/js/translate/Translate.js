@@ -324,6 +324,7 @@ const Translate = ({
 					) : (
 						<>
 							<TranslateHeader
+								autoTranslateEnabled={autoTranslateEnabled}
 								sourceLanguageIdTitle={sourceLanguageIdTitle}
 								targetLanguageIdTitle={targetLanguageIdTitle}
 							/>

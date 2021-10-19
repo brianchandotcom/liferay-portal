@@ -65,7 +65,9 @@ const buildList = (items = []) => {
 				<img alt="icon" src="${imageSrc}" />
 				${title}
 			</td>
-			<td>${typeof formattedValue === 'string' ? formattedValue : ''}</td>
+			<td class="text-right">${
+				typeof formattedValue === 'string' ? formattedValue : ''
+			}</td>
 			</tr>`;
 		})
 		.join('');

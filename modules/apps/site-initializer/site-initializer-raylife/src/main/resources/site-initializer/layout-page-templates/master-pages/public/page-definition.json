@@ -6,14 +6,16 @@
 					"fragment": {
 						"key": "public-navbar"
 					},
-					"fragmentConfig": {},
+					"fragmentConfig": {
+					},
 					"fragmentFields": [
 						{
 							"id": "image-logo",
 							"value": {
 								"fragmentImage": {
 									"url": {
-										"value_i18n": {}
+										"value_i18n": {
+										}
 									}
 								},
 								"fragmentLink": {
@@ -26,7 +28,8 @@
 						}
 					],
 					"fragmentStyle": {
-						"backgroundFragmentImage": {},
+						"backgroundFragmentImage": {
+						},
 						"borderRadius": "",
 						"borderWidth": "0",
 						"fontFamily": "",
@@ -129,10 +132,13 @@
 					"fragment": {
 						"key": "public-footer"
 					},
-					"fragmentConfig": {},
-					"fragmentFields": [],
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
 					"fragmentStyle": {
-						"backgroundFragmentImage": {},
+						"backgroundFragmentImage": {
+						},
 						"borderRadius": "",
 						"borderWidth": "0",
 						"fontFamily": "",

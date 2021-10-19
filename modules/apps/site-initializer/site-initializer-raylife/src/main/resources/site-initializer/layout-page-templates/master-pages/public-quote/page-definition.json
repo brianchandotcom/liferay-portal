@@ -6,18 +6,21 @@
 					"fragment": {
 						"key": "quote-navbar"
 					},
-					"fragmentConfig": {},
+					"fragmentConfig": {
+					},
 					"fragmentFields": [
 						{
 							"id": "image-logo",
 							"value": {
 								"fragmentImage": {
 									"url": {
-										"value_i18n": {}
+										"value_i18n": {
+										}
 									}
 								},
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						}
@@ -79,8 +82,10 @@
 					"fragment": {
 						"key": "public-footer"
 					},
-					"fragmentConfig": {},
-					"fragmentFields": [],
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
 					"fragmentStyle": {
 						"borderWidth": "0",
 						"marginBottom": "0",

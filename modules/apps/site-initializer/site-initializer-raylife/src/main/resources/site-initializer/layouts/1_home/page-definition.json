@@ -19,9 +19,13 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {"key": "business-home-cover"},
-							"fragmentConfig": {},
-							"fragmentFields": [],
+							"fragment": {
+								"key": "business-home-cover"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
 							"fragmentStyle": {
 								"borderWidth": "0",
 								"marginBottom": "",
@@ -59,9 +63,13 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragment": {"key": "our-philosophy"},
-									"fragmentConfig": {},
-									"fragmentFields": [],
+									"fragment": {
+										"key": "our-philosophy"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"borderWidth": "0",
 										"marginBottom": "",

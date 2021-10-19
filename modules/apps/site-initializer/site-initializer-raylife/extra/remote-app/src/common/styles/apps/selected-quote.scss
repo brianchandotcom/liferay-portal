@@ -36,9 +36,9 @@
 
 	.panel-header {
 		display: flex;
-		justify-content: space-between;
 		flex-direction: row;
 		flex-wrap: wrap;
+		justify-content: space-between;
 
 		.panel-left {
 			color: $neutral-darker;
@@ -53,9 +53,9 @@
 				margin-bottom: 24px;
 
 				h3 {
+					color: #606167;
 					font-size: 14px;
 					font-weight: 700;
-					color: #606167;
 					margin-bottom: 8px;
 				}
 
@@ -66,29 +66,29 @@
 					.image {
 						border: 1px solid #d3d3d4;
 						border-radius: 4px;
-						margin-right: 8px;
 						height: 48px;
+						margin-right: 8px;
 						width: 48px;
 
 						img {
-							height: 48px;
-							width: 48px;
 							border-radius: 4px;
+							height: 48px;
 							object-fit: cover;
+							width: 48px;
 						}
 					}
 
 					.documents {
-						height: 48px;
-						margin-right: 8px;
-						width: 48px;
-						background-color: #fff;
-						display: flex;
-						justify-content: center;
 						align-items: center;
-						box-sizing: border-box;
+						background-color: #fff;
 						border: 1px solid #d2d2d3;
 						border-radius: 4px;
+						box-sizing: border-box;
+						display: flex;
+						height: 48px;
+						justify-content: center;
+						margin-right: 8px;
+						width: 48px;
 
 						svg {
 							height: 24px !important;
@@ -127,10 +127,10 @@
 
 			.change-link {
 				a {
-					margin-right: 24px;
-					text-decoration: underline;
 					color: #7d7e85;
 					cursor: pointer;
+					margin-right: 24px;
+					text-decoration: underline;
 				}
 			}
 
@@ -228,11 +228,11 @@
 							display: flex;
 							flex-direction: column;
 							flex-shrink: 0;
+							gap: initial;
 							height: 176px;
 							justify-content: center;
 							margin-right: 20px;
 							width: 176px;
-							gap: initial;
 						}
 
 						span {
@@ -366,7 +366,6 @@
 					&.margin-left {
 						margin-left: 16px;
 					}
-					// margin-left: 16px;
 
 					&.hide {
 						display: none;

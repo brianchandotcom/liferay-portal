@@ -1,30 +1,39 @@
 import ClayIcon from '@clayui/icon';
 
-const ViewFilesPanel = ({sections}) => (
-	<>
-		{sections?.map((section, index) => {
-			if (section.files.length > 0) {
-				return (
-					<div className="view-section" key={index}>
-						<h3>{section.title.toUpperCase()}</h3>
+const ViewFilesPanel = ({sections = []}) => {
+	if (sections.length) {
+		return;
+	}
 
-						<div className="content">
-							{section.files.map((file) => {
-								const isImage = file.type.includes('image');
+	return (
+		<>
+			{sections.map((section, index) => {
+				if (section.files.length) {
+					return (
+						<div className="view-section" key={index}>
+							<h3>{section.title.toUpperCase()}</h3>
 
-								if (isImage) {
+							<div className="content">
+								{section.files.map((file, sectionIndex) => {
+									if (file.type.includes('image')) {
+										return (
+											<div
+												className="image"
+												key={sectionIndex}
+											>
+												<img
+													alt={file.name}
+													src={file.fileURL}
+												/>
+											</div>
+										);
+									}
+
 									return (
-										<div className="image">
-											<img
-												alt={file.name}
-												key={index}
-												src={file.fileURL}
-											/>
-										</div>
-									);
-								} else {
-									return (
-										<div className="documents">
+										<div
+											className="documents"
+											key={sectionIndex}
+										>
 											<ClayIcon
 												className={file.icon}
 												key={index}
@@ -32,14 +41,14 @@ const ViewFilesPanel = ({sections}) => (
 											/>
 										</div>
 									);
-								}
-							})}
+								})}
+							</div>
 						</div>
-					</div>
-				);
-			}
-		})}
-	</>
-);
+					);
+				}
+			})}
+		</>
+	);
+};
 
 export default ViewFilesPanel;

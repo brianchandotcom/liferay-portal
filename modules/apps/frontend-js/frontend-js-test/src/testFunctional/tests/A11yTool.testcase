@@ -1,28 +1,27 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
+	property osgi.modules.includes = "frontend-js-a11y-sample-web";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "User Interface";
 	property testray.main.component.name = "User Interface";
 
 	setUp {
-		property osgi.modules.includes = "frontend-js-clay-sample-web";
-
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
-			layoutName = "Classic Theme Page");
+			layoutName = "A11y Test Page");
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",
-			layoutName = "Classic Theme Page",
-			widgetName = "JS Clay Sample Web");
+			layoutName = "A11y Test Page",
+			widgetName = "JS A11y Sample Web");
 
-		Navigator.gotoPage(pageName = "Classic Theme Page");
+		Navigator.gotoPage(pageName = "A11y Test Page");
 	}
 
 	tearDown {
@@ -32,7 +31,9 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Page.tearDownCP();
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "A11y Test Page");
 		}
 	}
 

@@ -82,6 +82,9 @@ definition {
 		else if ("${widgetName}" == "Invite Members") {
 			var portletId = "com_liferay_invitation_invite_members_web_portlet_InviteMembersPortlet";
 		}
+		else if ("${widgetName}" == "JS A11y Sample Web") {
+			var portletId = "com_liferay_frontend_js_a11y_sample_web_internal_portlet_FrontendJSA11ySampleWebPortlet";
+		}
 		else if ("${widgetName}" == "JS Clay Sample Web") {
 			var portletId = "com_liferay_frontend_js_clay_sample_web_internal_portlet_FrontendJSClaySampleWebPortlet";
 		}

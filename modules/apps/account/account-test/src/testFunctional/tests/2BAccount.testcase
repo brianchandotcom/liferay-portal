@@ -581,6 +581,74 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that account users can be filtered by status."
+	@priority = "4"
+	test CanFilterAccountUsersByStatus {
+		task ("Add new users to account") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			for (var userNum : list "2,3,4") {
+				Accounts.addNewUserToBusinessAccount(
+					accountName = "Account Name",
+					assigneeName = "userfn${userNum}",
+					userEmailAddress = "userea${userNum}@liferay.com",
+					userFirstName = "userfn${userNum}",
+					userLastName = "userln${userNum}",
+					userScreenName = "usersn${userNum}");
+			}
+		}
+
+		task ("Deactivate some users") {
+			AccountUsers.openAccountUsersAdmin();
+
+			for (var userNum : list "3,4") {
+				AccountUsers.deactivateUser(userFirstName = "userfn${userNum}");
+			}
+		}
+
+		task ("Sign back in as Account Administrator and view account users") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
+		}
+
+		task ("Assert users can be filtered by Active status") {
+			ManagementBar.setFilterAndOrder(filterBy = "Active");
+
+			LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+
+			LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
+
+			for (var userNum : list "3,4") {
+				LexiconEntry.viewNoEntry(rowEntry = "userfn${userNum} userln${userNum}");
+			}
+		}
+
+		task ("Asser users can be filtered by Inactive status") {
+			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+			for (var userNum : list "3,4") {
+				LexiconEntry.viewEntryName(rowEntry = "userfn${userNum} userln${userNum}");
+			}
+
+			LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
+
+			LexiconEntry.viewNoEntry(rowEntry = "userfn2 userln2");
+		}
+	}
+
 	@description = "This test asserts that an Account Admin cannot view accounts not assigned to him."
 	@priority = "5"
 	test CannotViewOtherAccounts {

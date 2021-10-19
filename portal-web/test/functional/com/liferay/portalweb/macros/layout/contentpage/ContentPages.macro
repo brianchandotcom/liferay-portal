@@ -241,4 +241,17 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
+	macro viewFragmentText {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertTextEquals(
+			fragmentName = "${fragmentName}",
+			id = "${id}",
+			index = "${index}",
+			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+			value1 = "${text}");
+	}
+
 }

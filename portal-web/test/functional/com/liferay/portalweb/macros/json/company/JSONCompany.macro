@@ -40,6 +40,10 @@ definition {
 	macro getDefaultPortalURL {
 		var portalURL = PropsUtil.get("default.portal.url");
 
+		if (!(contains("${portalURL}", "http"))) {
+			var portalURL = "http://${portalURL}";
+		}
+
 		return "${portalURL}";
 	}
 

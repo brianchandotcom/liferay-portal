@@ -95,10 +95,7 @@ definition {
 
 		// TODO Review
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Account Groups");
+		AccountGroups.openAccountGroupsAdmin();
 
 		Click(locator1 = "Button#PLUS");
 

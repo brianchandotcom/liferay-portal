@@ -1527,7 +1527,7 @@ definition {
 
 		Role.viewPermissionSubdirectory(
 			navItem = "Control Panel",
-			subItemList = "General Permissions,Users,Sites,Configuration,Security,System,Marketplace");
+			subItemList = "General Permissions,Users,Sites,Configuration,Security,System,Marketplace,Accounts");
 
 		Role.viewPermissionSubdirectory(
 			navItem = "Site and Asset Library Administration",
@@ -1539,7 +1539,7 @@ definition {
 
 		Role.viewPermissionSubdirectory(
 			navItem = "Applications Menu",
-			subItemList = "Content,Workflow,Communication,Accounts");
+			subItemList = "Content,Workflow,Communication");
 	}
 
 	@priority = "4"

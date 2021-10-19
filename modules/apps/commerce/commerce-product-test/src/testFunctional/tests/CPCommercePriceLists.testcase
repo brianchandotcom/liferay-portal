@@ -621,10 +621,7 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Accounts");
+		Accounts.openAccountsAdmin();
 
 		Accounts.addBusinessAccount(
 			accountDescription = "This is an Account added for Account Group.",
@@ -636,10 +633,7 @@ definition {
 			accountDescription = "This is an Account added for Account Group.",
 			accountName = "Account2");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Account Groups");
+		AccountGroups.openAccountGroupsAdmin();
 
 		Click(locator1 = "Button#PLUS");
 

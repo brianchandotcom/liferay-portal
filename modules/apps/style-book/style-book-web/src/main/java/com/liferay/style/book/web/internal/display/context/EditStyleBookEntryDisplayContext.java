@@ -243,6 +243,8 @@ public class EditStyleBookEntryDisplayContext {
 						layoutPageTemplateEntry -> JSONUtil.put(
 							"name", layoutPageTemplateEntry.getName()
 						).put(
+							"private", false
+						).put(
 							"url", _getPreviewURL(layoutPageTemplateEntry)
 						)
 					).toArray(
@@ -290,6 +292,8 @@ public class EditStyleBookEntryDisplayContext {
 					layoutsStream.map(
 						layout -> JSONUtil.put(
 							"name", layout.getName(_themeDisplay.getLocale())
+						).put(
+							"private", layout.isPrivateLayout()
 						).put(
 							"url", _getPreviewURL(layout)
 						)

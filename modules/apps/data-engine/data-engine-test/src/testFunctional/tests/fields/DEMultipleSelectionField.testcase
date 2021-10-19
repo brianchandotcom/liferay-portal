@@ -242,11 +242,6 @@ definition {
 			fieldLabel = "Multiple Selection",
 			optionValue = "Option 2");
 
-		DERenderer.inputDataInMultipleSelectionField(
-			fieldIndex = "2",
-			fieldLabel = "Multiple Selection",
-			optionValue = "Option 2");
-
 		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");

@@ -123,7 +123,6 @@ export default ({
 	const COLUMN_SITE = 'SITE';
 	const COLUMN_TITLE = 'TITLE';
 	const COLUMN_USER = 'USER';
-	const FILTER_CLASS_EVERYTHING = 'everything';
 	const GLOBAL_SITE_NAME = Liferay.Language.get('global');
 	const MENU_CHANGE_TYPES = 'MENU_CHANGE_TYPES';
 	const MENU_ROOT = 'MENU_ROOT';
@@ -340,126 +339,39 @@ export default ({
 		(param) => {
 			if (!param) {
 				return {
-					filterClass: FILTER_CLASS_EVERYTHING,
 					nodeId: 0,
 				};
 			}
 
-			const parts = param.split('/');
-
-			const path = [];
-
-			if (parts.length > 1) {
-				for (let i = 1; i < parts.length; i++) {
-					const part = parts[i];
-
-					const keys = part.split('-');
-
-					path.push({
-						modelClassNameId: keys[0],
-						modelClassPK: keys[1],
-					});
-				}
-			}
-
 			const pathState = {
-				filterClass: parts[0],
 				nodeId: 0,
 			};
 
-			if (
-				pathState.filterClass !== FILTER_CLASS_EVERYTHING &&
-				!contextViewRef.current[pathState.filterClass]
-			) {
-				pathState.filterClass = FILTER_CLASS_EVERYTHING;
-			}
-			else if (path.length > 0) {
-				const modelClassNameId = path[0].modelClassNameId;
-				const modelClassPK = path[0].modelClassPK;
+			const parts = param.split('-');
 
-				for (let i = 0; i < changes.length; i++) {
-					const modelKey = changes[i];
+			const modelClassNameId = parts[0];
+			const modelClassPK = parts[1];
 
-					const model = modelsRef.current[modelKey];
+			for (let i = 0; i < changes.length; i++) {
+				const modelKey = changes[i];
 
-					if (
-						modelClassNameId === model.modelClassNameId &&
-						modelClassPK === model.modelClassPK
-					) {
-						pathState.nodeId = modelKey;
-					}
-				}
-			}
+				const model = modelsRef.current[modelKey];
 
-			let contextNode = contextViewRef.current.everything;
-
-			if (pathState.filterClass !== FILTER_CLASS_EVERYTHING) {
-				contextNode = contextViewRef.current[pathState.filterClass];
-			}
-
-			for (let i = 0; i < path.length; i++) {
-				if (!contextNode.children) {
-					break;
-				}
-
-				const sessionNode = path[i];
-
-				for (let j = 0; j < contextNode.children.length; j++) {
-					const child = contextNode.children[j];
-
-					const model = modelsRef.current[child.modelKey];
-
-					if (
-						model.modelClassNameId ===
-							sessionNode.modelClassNameId &&
-						model.modelClassPK === sessionNode.modelClassPK
-					) {
-						if (
-							pathState.filterClass !== FILTER_CLASS_EVERYTHING &&
-							i === 0
-						) {
-							const stack = [contextViewRef.current.everything];
-
-							while (stack.length > 0) {
-								const element = stack.pop();
-
-								if (element.nodeId === child.nodeId) {
-									contextNode = element;
-
-									break;
-								}
-								else if (!element.children) {
-									continue;
-								}
-
-								for (
-									let i = 0;
-									i < element.children.length;
-									i++
-								) {
-									stack.push(element.children[i]);
-								}
-							}
-						}
-						else {
-							contextNode = child;
-						}
-
-						pathState.nodeId = contextNode.nodeId;
-
-						break;
-					}
+				if (
+					modelClassNameId === model.modelClassNameId &&
+					modelClassPK === model.modelClassPK
+				) {
+					pathState.nodeId = modelKey;
 				}
 			}
 
 			return pathState;
 		},
-		[FILTER_CLASS_EVERYTHING, changes]
+		[changes]
 	);
 
 	const pathState = getPathState(pathFromURL);
 
-	const initialFilterClass = pathState.filterClass;
 	const initialNodeId = pathState.nodeId;
 
 	const getModels = useCallback((nodes) => {
@@ -502,7 +414,7 @@ export default ({
 	}, []);
 
 	const getNode = useCallback(
-		(filterClass, nodeId) => {
+		(nodeId) => {
 			if (nodeId === 0) {
 				return {children: getModels(changes)};
 			}
@@ -512,14 +424,11 @@ export default ({
 		[changes, getModels]
 	);
 
-	const initialNode = getNode(initialFilterClass, initialNodeId);
+	const initialNode = getNode(initialNodeId);
 
-	const initialShowHideable =
-		initialNode.hideable ||
-		(initialFilterClass !== FILTER_CLASS_EVERYTHING &&
-			contextViewRef.current[initialFilterClass].hideable)
-			? true
-			: !!showHideableFromURL;
+	const initialShowHideable = initialNode.hideable
+		? true
+		: !!showHideableFromURL;
 
 	const [ascendingState, setAscendingState] = useState(true);
 	const [columnState, setColumnState] = useState(COLUMN_TITLE);
@@ -683,7 +592,6 @@ export default ({
 			initialNode.children,
 			initialShowHideable
 		),
-		filterClass: initialFilterClass,
 		id: initialNodeId,
 		node: initialNode,
 		page: 1,
@@ -749,8 +657,8 @@ export default ({
 		]
 	);
 
-	const getPathParam = (filterClass, node) => {
-		let path = filterClass;
+	const getPathParam = (node) => {
+		let path = '';
 
 		const nodes = [];
 
@@ -782,12 +690,6 @@ export default ({
 
 	const handleNavigationUpdate = useCallback(
 		(json) => {
-			let filterClass = json.filterClass;
-
-			if (!filterClass) {
-				filterClass = renderState.filterClass;
-			}
-
 			const nodeId = json.nodeId;
 
 			let showHideable = renderState.showHideable;
@@ -796,9 +698,9 @@ export default ({
 				showHideable = json.showHideable;
 			}
 
-			const node = getNode(filterClass, nodeId);
+			const node = getNode(nodeId);
 
-			const pathParam = getPathParam(filterClass, node);
+			const pathParam = getPathParam(node);
 
 			const path = getPath(
 				filtersState,
@@ -821,7 +723,6 @@ export default ({
 					node.children,
 					showHideable
 				),
-				filterClass,
 				id: nodeId,
 				node,
 				page: 1,
@@ -876,10 +777,9 @@ export default ({
 
 			const pathState = getPathState(params.get(PARAM_PATH));
 
-			const filterClass = pathState.filterClass;
 			const nodeId = pathState.nodeId;
 
-			const node = getNode(filterClass, nodeId);
+			const node = getNode(nodeId);
 
 			let keywords = params.get(PARAM_KEYWORDS);
 
@@ -894,12 +794,9 @@ export default ({
 				params.get(PARAM_USERS)
 			);
 
-			let showHideable =
-				node.hideable ||
-				(filterClass !== FILTER_CLASS_EVERYTHING &&
-					contextViewRef.current[filterClass].hideable)
-					? true
-					: !!renderState.showHideable;
+			let showHideable = node.hideable
+				? true
+				: !!renderState.showHideable;
 
 			if (!showHideable) {
 				const typeIds = filters['types'];
@@ -921,7 +818,6 @@ export default ({
 					node.children,
 					showHideable
 				),
-				filterClass,
 				id: nodeId,
 				node,
 				page: 1,
@@ -1173,7 +1069,7 @@ export default ({
 		return nodes;
 	};
 
-	const getBreadcrumbItems = (filterClass, node, nodeId) => {
+	const getBreadcrumbItems = (node, nodeId) => {
 		if (nodeId === 0) {
 			return [
 				{
@@ -1597,10 +1493,7 @@ export default ({
 	};
 
 	const handleFiltersUpdate = (filters, keywords) => {
-		const pathParam = getPathParam(
-			renderState.filterClass,
-			renderState.node
-		);
+		const pathParam = getPathParam(renderState.node);
 
 		const path = getPath(
 			filters,
@@ -1625,7 +1518,6 @@ export default ({
 				renderState.node.children,
 				renderState.showHideable
 			),
-			filterClass: renderState.filterClass,
 			id: renderState.id,
 			node: renderState.node,
 			page: renderState.page,
@@ -1637,7 +1529,6 @@ export default ({
 
 	const handleShowHideableToggle = (showHideable) => {
 		const breadcrumbItems = getBreadcrumbItems(
-			renderState.filterClass,
 			renderState.node,
 			renderState.id
 		);
@@ -1669,10 +1560,7 @@ export default ({
 
 		const oldState = window.history.state;
 
-		const pathParam = getPathParam(
-			renderState.filterClass,
-			renderState.node
-		);
+		const pathParam = getPathParam(renderState.node);
 
 		const params = new URLSearchParams(window.location.search);
 
@@ -1738,7 +1626,6 @@ export default ({
 				renderState.node.children,
 				showHideable
 			),
-			filterClass: renderState.filterClass,
 			id: renderState.id,
 			node: renderState.node,
 			page: renderState.page,
@@ -2212,7 +2099,6 @@ export default ({
 							setDeltaState(delta);
 							setRenderState({
 								children: renderState.children,
-								filterClass: renderState.filterClass,
 								id: renderState.id,
 								node: renderState.node,
 								page: 1,
@@ -2222,7 +2108,6 @@ export default ({
 						onPageChange={(page) =>
 							setRenderState({
 								children: renderState.children,
-								filterClass: renderState.filterClass,
 								id: renderState.id,
 								node: renderState.node,
 								page,
@@ -2258,11 +2143,7 @@ export default ({
 
 				<ClayBreadcrumb
 					ellipsisBuffer={1}
-					items={getBreadcrumbItems(
-						renderState.filterClass,
-						renderState.node,
-						renderState.id
-					)}
+					items={getBreadcrumbItems(renderState.node, renderState.id)}
 					spritemap={spritemap}
 				/>
 
@@ -2301,7 +2182,6 @@ export default ({
 
 									setRenderState({
 										children: renderState.children,
-										filterClass: renderState.filterClass,
 										id: renderState.id,
 										node: renderState.node,
 										page: renderState.page,

@@ -120,6 +120,11 @@
 		<td>//label[@for='listTypeEntryKey']/following-sibling::div//span[contains(text(),'Required')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>KEY_ERROR_MENSAGE</td>
+		<td>//div[(@class='autofit-section') and contains(.,'${key_errorMensage}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

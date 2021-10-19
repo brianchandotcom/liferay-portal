@@ -219,10 +219,15 @@ export default function FragmentsSidebar() {
 						symbol={
 							displayStyleButtonDisabled ||
 							displayStyle === FRAGMENTS_DISPLAY_STYLES.LIST
-								? 'list'
-								: 'cards2'
+								? 'cards2'
+								: 'list'
 						}
-						title={Liferay.Language.get('change-view')}
+						title={Liferay.Util.sub(
+							Liferay.Language.get('switch-to-x-view'),
+							displayStyle === FRAGMENTS_DISPLAY_STYLES.LIST
+								? Liferay.Language.get('card')
+								: Liferay.Language.get('list')
+						)}
 					/>
 				</div>
 				{searchValue ? (

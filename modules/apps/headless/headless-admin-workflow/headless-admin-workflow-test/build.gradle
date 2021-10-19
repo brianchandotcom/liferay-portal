@@ -2,7 +2,6 @@ dependencies {
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.12.4"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.12.4"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.12.4"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "commons-beanutils", name: "commons-beanutils", version: "1.9.4"
 	testIntegrationCompile group: "commons-lang", name: "commons-lang", version: "2.6"
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
@@ -10,8 +9,5 @@ dependencies {
 	testIntegrationCompile project(":apps:headless:headless-admin-workflow:headless-admin-workflow-client")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
-	testIntegrationCompile project(":core:petra:petra-function")
-	testIntegrationCompile project(":core:petra:petra-reflect")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -1,14 +1,8 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay", name: "org.hibernate.core", version: "3.6.10.LIFERAY-PATCHED-6"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationCompile group: "org.springframework", name: "spring-tx", version: "4.3.22.RELEASE"
 	testIntegrationCompile project(":apps:view-count:view-count-api")
-	testIntegrationCompile project(":core:petra:petra-concurrent")
-	testIntegrationCompile project(":core:petra:petra-function")
-	testIntegrationCompile project(":core:petra:petra-lang")
-	testIntegrationCompile project(":core:petra:petra-reflect")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

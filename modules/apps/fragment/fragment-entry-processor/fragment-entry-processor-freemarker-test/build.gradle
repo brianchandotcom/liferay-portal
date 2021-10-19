@@ -2,7 +2,6 @@ dependencies {
 	testIntegrationCompile group: "com.github.everit-org.json-schema", name: "org.everit.json.schema", version: "1.11.1"
 	testIntegrationCompile group: "com.liferay", name: "org.freemarker", version: "2.3.29.LIFERAY-PATCHED-2"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	testIntegrationCompile group: "org.jsoup", name: "jsoup", version: "1.10.2"
 	testIntegrationCompile project(":apps:asset:asset-list-api")
@@ -12,6 +11,5 @@ dependencies {
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":apps:journal:journal-test-util")
 	testIntegrationCompile project(":apps:layout:layout-test-util")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

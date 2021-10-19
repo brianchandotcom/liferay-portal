@@ -1,8 +1,5 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:portal:portal-notifications-test-util")
 	testIntegrationCompile project(":apps:sharing:sharing-api")
-	testIntegrationCompile project(":core:petra:petra-sql-dsl-api")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

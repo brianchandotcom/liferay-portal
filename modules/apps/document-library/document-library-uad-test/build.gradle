@@ -1,11 +1,9 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:document-library:document-library-api")
 	testIntegrationCompile project(":apps:document-library:document-library-uad")
 	testIntegrationCompile project(":apps:message-boards:message-boards-api")
 	testIntegrationCompile project(":apps:message-boards:message-boards-test-util")
 	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-api")
 	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-test-util")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

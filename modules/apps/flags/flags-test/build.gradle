@@ -1,5 +1,4 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:flags:flags-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

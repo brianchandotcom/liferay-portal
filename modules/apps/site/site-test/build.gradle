@@ -1,6 +1,5 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
 	testIntegrationCompile project(":apps:layout:layout-test-util")
@@ -8,7 +7,5 @@ dependencies {
 	testIntegrationCompile project(":apps:portal:portal-verify-test-util")
 	testIntegrationCompile project(":apps:site:site-api")
 	testIntegrationCompile project(":apps:trash:trash-test-util")
-	testIntegrationCompile project(":core:petra:petra-sql-dsl-api")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

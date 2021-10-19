@@ -1,5 +1,4 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
@@ -8,6 +7,5 @@ dependencies {
 	testIntegrationCompile project(":apps:portal:portal-local-service-tree-test-util")
 	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	testIntegrationCompile project(":apps:users-admin:users-admin-test-util")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

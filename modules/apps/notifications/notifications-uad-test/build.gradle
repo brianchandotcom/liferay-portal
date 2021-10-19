@@ -1,5 +1,4 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:notifications:notifications-uad")
 	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-api")
 	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-test-util")

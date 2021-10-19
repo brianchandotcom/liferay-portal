@@ -1,10 +1,5 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "org.hsqldb", name: "hsqldb", version: "2.3.3"
-	testIntegrationCompile project(":core:petra:petra-concurrent")
-	testIntegrationCompile project(":core:petra:petra-process")
-	testIntegrationCompile project(":core:petra:petra-reflect")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

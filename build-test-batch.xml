@@ -1631,6 +1631,59 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="run-empty-osgi-core-dir-test">
+		<sequential>
+			<run-batch-test>
+				<test-action>
+					<database-test-run-test database.type="mysql" stop.app.server="true">
+						<test-action>
+							<local name="junit.failure.count" />
+							<local name="junit.failure.message" />
+
+							<trycatch property="junit.failure.message">
+								<try>
+									<if>
+										<available file="${liferay.home}/osgi/core" type="dir" />
+										<then>
+											<fileset
+												dir="${liferay.home}/osgi/core"
+												id="osgiCore"
+											>
+												<include name="*" />
+											</fileset>
+
+											<property name="osgiCoreFiles" refid="osgiCore" />
+
+											<fail message="osgi/core directory has been found in the portal bundle. Files found in directory: ${osgiCoreFiles}" />
+										</then>
+									</if>
+								</try>
+								<finally>
+									<condition else="0" property="junit.failure.count" value="1">
+										<isset property="junit.failure.message" />
+									</condition>
+
+									<get-junit-failure-message-element />
+
+									<generate-backend-batch-junit-report
+										junit.failure.count="${junit.failure.count}"
+										junit.failure.message.element="${junit.failure.message.element}"
+										test.class.name="EmptyOsgiCoreDir"
+										test.command.name="emptyOsgiCoreDir"
+									/>
+								</finally>
+							</trycatch>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+
+				<test-set-up>
+					<setup-test-environment />
+				</test-set-up>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="run-empty-temp-dir-test">
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
@@ -3908,6 +3961,10 @@ log.sanitizer.enabled=false</echo>
 				dist.type="${dist.type}"
 			/>
 		</parallel>
+	</target>
+
+	<target name="empty-osgi-core-dir-jdk8">
+		<run-empty-osgi-core-dir-test />
 	</target>
 
 	<target name="empty-temp-dir-jdk8">

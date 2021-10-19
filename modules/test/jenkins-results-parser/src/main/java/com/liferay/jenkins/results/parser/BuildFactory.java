@@ -161,6 +161,13 @@ public class BuildFactory {
 				url, (TopLevelBuild)parentBuild);
 		}
 
+		if (jobName.matches(
+				"test-subrepository-acceptance-pullrequest\\(.*\\)")) {
+
+			return new PullRequestSubrepositoryTopLevelBuild(
+				url, (TopLevelBuild)parentBuild);
+		}
+
 		if (jobName.contains("plugins")) {
 			return new PluginsTopLevelBuild(url, (TopLevelBuild)parentBuild);
 		}

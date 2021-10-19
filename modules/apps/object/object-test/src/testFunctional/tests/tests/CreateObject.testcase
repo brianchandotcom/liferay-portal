@@ -444,7 +444,6 @@ definition {
 	test CannotDeleteRelationshipWhenPublished {
 		property portal.acceptance = "true";
 
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -452,7 +451,7 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "CustomObject",
-            objectName_2 = "CustomObject",
+			objectName_2 = "CustomObject",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
@@ -470,8 +469,6 @@ definition {
 		AssertElementNotPresent(
 			key_kebabOption = "Delete",
 			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
-
-
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Field Name field blank"

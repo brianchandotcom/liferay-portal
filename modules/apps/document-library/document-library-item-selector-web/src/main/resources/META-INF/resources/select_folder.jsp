@@ -19,9 +19,7 @@
 <%
 DLSelectFolderDisplayContext dlSelectFolderDisplayContext = (DLSelectFolderDisplayContext)request.getAttribute(DLSelectFolderDisplayContext.class.getName());
 
-if (dlSelectFolderDisplayContext.getFolder() != null) {
-	DLBreadcrumbUtil.addPortletBreadcrumbEntries(dlSelectFolderDisplayContext.getFolder(), request, renderResponse);
-}
+DLBreadcrumbUtil.addPortletBreadcrumbEntries(dlSelectFolderDisplayContext.getFolder(), ParamUtil.getString(request, "displayStyle"), request, dlSelectFolderDisplayContext.getIteratorPortletURL(liferayPortletResponse));
 %>
 
 <clay:container-fluid>

@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorWebKeys" %><%@
 page import="com.liferay.document.library.item.selector.web.internal.display.context.DLItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.document.library.item.selector.web.internal.display.context.DLSelectFolderDisplayContext" %><%@
+page import="com.liferay.document.library.item.selector.web.internal.util.DLBreadcrumbUtil" %><%@
 page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@

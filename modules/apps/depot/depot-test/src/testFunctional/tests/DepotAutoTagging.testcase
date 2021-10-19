@@ -129,7 +129,9 @@ definition {
 
 		Panel.expandPanel(panel = "Asset Auto Tagging");
 
-		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+		Depot.viewDepotConfiguration(
+			configuration = "enabled",
+			toggleSwitchLabel = "Enable Auto Tagging");
 	}
 
 	@description = "This ensures that the depot auto-tagging can be disabled and enabled at the system level."
@@ -150,7 +152,9 @@ definition {
 
 		Panel.expandPanel(panel = "Asset Auto Tagging");
 
-		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+		Depot.viewDepotConfiguration(
+			configuration = "enabled",
+			toggleSwitchLabel = "Enable Auto Tagging");
 	}
 
 	@description = "This test asserts that no auto-tag is generated when an image is uploaded to a depot that has auto-tagging disabled."
@@ -255,7 +259,9 @@ definition {
 
 		Panel.expandPanel(panel = "Asset Auto Tagging");
 
-		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+		Depot.viewDepotConfiguration(
+			configuration = "enabled",
+			toggleSwitchLabel = "Enable Auto Tagging");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

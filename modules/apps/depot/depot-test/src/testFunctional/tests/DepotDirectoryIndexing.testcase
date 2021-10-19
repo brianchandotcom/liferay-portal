@@ -42,7 +42,9 @@ definition {
 
 		Panel.expandPanel(panel = "Documents and Media");
 
-		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Checkbox#ENABLE_DIRECTORY_INDEXING");
+		Depot.viewDepotConfiguration(
+			configuration = "disabled",
+			toggleSwitchLabel = "Enable Directory Indexing");
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -63,7 +65,9 @@ definition {
 
 		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
-		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#ENABLE_DIRECTORY_INDEXING");
+		Depot.viewDepotConfiguration(
+			configuration = "enabled",
+			toggleSwitchLabel = "Enable Directory Indexing");
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",

@@ -350,7 +350,9 @@ definition {
 
 			AssertConfirm(value1 = "Disabling the Recycle Bin prevents the restoring of content that has been moved to the Recycle Bin.");
 
-			AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Checkbox#ENABLE_RECYCLE_BIN");
+			Depot.viewDepotConfiguration(
+				configuration = "disabled",
+				toggleSwitchLabel = "Enable Recycle Bin");
 		}
 
 		PortletEntry.save();
@@ -931,6 +933,19 @@ definition {
 		}
 
 		AssertElementPresent(locator1 = "Button#SAVE");
+	}
+
+	macro viewDepotConfiguration {
+		if ("${configuration}" == "enabled") {
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "${toggleSwitchLabel}",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if ("${configuration}" == "disabled") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "${toggleSwitchLabel}",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
 	}
 
 	macro viewDMWorkflowPresent {

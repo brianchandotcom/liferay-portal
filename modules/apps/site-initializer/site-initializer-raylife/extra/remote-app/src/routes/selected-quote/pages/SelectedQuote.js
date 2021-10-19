@@ -21,7 +21,7 @@ const SelectedQuote = () => {
 		},
 	});
 
-	const [sections, setSections] = useState([]);
+	const [sections, setSections] = useState(null);
 
 	const _setPanel = (panelKey, panelKeyProperty, value) => {
 		const newPanel = {...panel};
@@ -41,7 +41,7 @@ const SelectedQuote = () => {
 	};
 
 	const hasUploadError = () => {
-		const hasError = sections.some(({error}) => error);
+		const hasError = sections?.some(({error}) => error);
 
 		return hasError;
 	};

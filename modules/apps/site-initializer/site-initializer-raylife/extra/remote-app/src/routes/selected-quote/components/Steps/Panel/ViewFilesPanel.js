@@ -1,8 +1,8 @@
 import ClayIcon from '@clayui/icon';
 
 const ViewFilesPanel = ({sections = []}) => {
-	if (sections.length) {
-		return;
+	if (!sections.length) {
+		return null;
 	}
 
 	return (

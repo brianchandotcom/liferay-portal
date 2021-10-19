@@ -97,30 +97,28 @@ public class PullRequestPortalTopLevelBuild
 	public BranchInformation getPluginsBranchInformation() {
 		Workspace workspace = getWorkspace();
 
-		WorkspaceGitRepository workspaceGitRepository =
-			workspace.getPrimaryWorkspaceGitRepository();
-
-		String pluginsUpstreamBranchName =
-			workspaceGitRepository.getUpstreamBranchName();
-
-		if (!pluginsUpstreamBranchName.startsWith("ee-")) {
-			pluginsUpstreamBranchName = "7.0.x";
+		if (!(workspace instanceof PortalWorkspace)) {
+			return null;
 		}
 
+		PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
+
 		return new WorkspaceBranchInformation(
-			workspace.getWorkspaceGitRepository(
-				JenkinsResultsParserUtil.getGitDirectoryName(
-					"liferay-plugins-ee", pluginsUpstreamBranchName)));
+			portalWorkspace.getPluginsWorkspaceGitRepository());
 	}
 
 	@Override
 	public BranchInformation getPortalBranchInformation() {
 		Workspace workspace = getWorkspace();
 
-		WorkspaceGitRepository workspaceGitRepository =
-			workspace.getPrimaryWorkspaceGitRepository();
+		if (!(workspace instanceof PortalWorkspace)) {
+			return null;
+		}
 
-		return new WorkspaceBranchInformation(workspaceGitRepository);
+		PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
+
+		return new WorkspaceBranchInformation(
+			portalWorkspace.getPortalWorkspaceGitRepository());
 	}
 
 	@Override

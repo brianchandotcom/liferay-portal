@@ -46,6 +46,7 @@ const Autocomplete = ({
 		if (!selected) {
 			setValue('');
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selected]);
 
@@ -56,6 +57,7 @@ const Autocomplete = ({
 			setDropDownVisible(true);
 			setValue(value);
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[onSelect, selected]
 	);
@@ -118,6 +120,7 @@ const Autocomplete = ({
 		if (disabled) {
 			setValue('');
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [disabled]);
 

@@ -17,10 +17,10 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
-import com.liferay.document.library.web.internal.display.context.logic.DLVisualizationHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -52,14 +53,15 @@ import javax.servlet.http.HttpServletRequest;
 public class DLSelectFolderDisplayContext {
 
 	public DLSelectFolderDisplayContext(
-		DLVisualizationHelper dlVisualizationHelper, Folder folder,
-		HttpServletRequest httpServletRequest,
+		Folder folder, HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_dlVisualizationHelper = dlVisualizationHelper;
 		_folder = folder;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public PortletURL getAddFolderPortletURL() {
@@ -124,14 +126,13 @@ public class DLSelectFolderDisplayContext {
 
 	public List<Folder> getFolders(int start, int end) throws PortalException {
 		return DLAppServiceUtil.getFolders(
-			getRepositoryId(), getFolderId(),
-			_dlVisualizationHelper.isMountFolderVisible(), start, end);
+			getRepositoryId(), getFolderId(), _isMountFolderVisible(), start,
+			end);
 	}
 
 	public int getFoldersCount() throws PortalException {
 		return DLAppServiceUtil.getFoldersCount(
-			getRepositoryId(), getFolderId(),
-			_dlVisualizationHelper.isMountFolderVisible());
+			getRepositoryId(), getFolderId(), _isMountFolderVisible());
 	}
 
 	public String getIconCssClass(Folder folder) throws PortalException {
@@ -154,11 +155,7 @@ public class DLSelectFolderDisplayContext {
 			return _folder.getRepositoryId();
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getScopeGroupId();
+		return _themeDisplay.getScopeGroupId();
 	}
 
 	public PortletURL getRowPortletURL(Folder folder) throws PortalException {
@@ -201,13 +198,9 @@ public class DLSelectFolderDisplayContext {
 	}
 
 	public boolean hasAddFolderPermission() throws PortalException {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (_dlVisualizationHelper.isAddFolderButtonVisible() &&
+		if (_isAddFolderButtonVisible() &&
 			DLFolderPermission.contains(
-				themeDisplay.getPermissionChecker(), getRepositoryId(),
+				_themeDisplay.getPermissionChecker(), getRepositoryId(),
 				getFolderId(), ActionKeys.ADD_FOLDER)) {
 
 			return true;
@@ -240,16 +233,35 @@ public class DLSelectFolderDisplayContext {
 		).setParameter(
 			"selectedFolderId", getSelectedFolderId()
 		).setParameter(
-			"showMountFolder", _dlVisualizationHelper.isMountFolderVisible()
+			"showMountFolder", _isMountFolderVisible()
 		).buildRenderURL();
+	}
+
+	private boolean _isAddFolderButtonVisible() {
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		String portletName = portletDisplay.getPortletName();
+
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isMountFolderVisible() {
+		return ParamUtil.getBoolean(
+			_httpServletRequest, "showMountFolder", true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLSelectFolderDisplayContext.class);
 
-	private final DLVisualizationHelper _dlVisualizationHelper;
 	private final Folder _folder;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final ThemeDisplay _themeDisplay;
 
 }

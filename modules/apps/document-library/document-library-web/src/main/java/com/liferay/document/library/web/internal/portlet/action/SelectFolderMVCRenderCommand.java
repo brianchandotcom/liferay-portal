@@ -17,8 +17,6 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.web.internal.display.context.DLSelectFolderDisplayContext;
-import com.liferay.document.library.web.internal.display.context.logic.DLVisualizationHelper;
-import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -58,9 +56,6 @@ public class SelectFolderMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				DLSelectFolderDisplayContext.class.getName(),
 				new DLSelectFolderDisplayContext(
-					new DLVisualizationHelper(
-						new DLRequestHelper(
-							_portal.getHttpServletRequest(renderRequest))),
 					ActionUtil.getFolder(renderRequest),
 					_portal.getHttpServletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));

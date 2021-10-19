@@ -348,22 +348,6 @@
 	<td>//section[contains(@id,'content')]</td>
 	<td></td>
 </tr>
-<!--EDITABLE_FIELD_TOOLBAR-->
-<tr>
-	<td>EDITABLE_FIELD_TOOLBAR_MAPPED_BUTTON</td>
-	<td>//div[contains(@class,'form-group') and contains(.,'${key_mappedField}')]//button[@*='Map' and contains(@class,'active')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDITABLE_FIELD_TOOLBAR_MAP_BUTTON_SPECIFIC</td>
-	<td>//div[contains(@class,'form-group') and contains(.,'${key_mappedField}')]//button[@*='Map']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDITABLE_FIELD_TOOLBAR_LAYOUT_BACKGROUND_IMAGE_BUTTON</td>
-	<td>//button[@data-panel-id='layout_background_image']</td>
-	<td></td>
-</tr>
 <!--EXPERIENCE-->
 <tr>
 	<td>EXPERIENCE_BUTTON_NAME</td>
@@ -439,11 +423,6 @@
 <tr>
 	<td>FRAGMENT_SIDEBAR_BODY</td>
 	<td>//div[contains(@class,'page-editor__sidebar')][contains(@class,'theme-adapter-forms')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SIDEBAR_TAB_COLLAPSED</td>
-	<td>//button[@*='${key_tabName}' and contains(@aria-pressed,'false')]</td>
 	<td></td>
 </tr>
 <tr>

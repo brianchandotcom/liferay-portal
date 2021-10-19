@@ -153,8 +153,9 @@ definition {
 		}
 
 		Click(
-			key_mappedField = "${mappedFieldName}",
-			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON_SPECIFIC");
+			key_fieldLabel = "${mappedFieldName}",
+			key_text = "bolt",
+			locator1 = "Icon#ANY_ITEM_SELECTOR");
 
 		for (var field : list "${field}" ) {
 			if ("${textType}" == "TextInput") {

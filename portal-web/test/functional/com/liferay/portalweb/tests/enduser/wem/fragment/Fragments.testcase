@@ -50,63 +50,57 @@ definition {
 	test MarkFragmentCreatedInPortalAsCacheable {
 		property portal.acceptance = "true";
 
-		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		task ("Add a new fragment") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
-		FragmentsAdminNavigator.gotoEntryEllipsisItem(
-			entry = "Fragment Name",
-			item = "Edit");
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "Edit");
+		}
 
-		AssertElementPresent(
-			checkboxName = "Cacheable",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		task ("Mark the fragment as cacheable") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "Cacheable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 
-		AssertNotChecked.assertNotCheckedNotVisible(
-			checkboxName = "Cacheable",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+			Check.checkNotVisible(
+				checkboxName = "Cacheable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 
-		Check.checkNotVisible(
-			checkboxName = "Cacheable",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-
-		AssertChecked.assertCheckedNotVisible(
-			checkboxName = "Cacheable",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 	}
 
 	@description = "This is a test for LPS-108376. Can check Cacheable for fragments without Read-Only label imported to portal and they are non-Cachable by default."
 	@priority = "4"
 	test MarkFragmentWithoutReadOnlyImportedToPortalAsCacheable {
-		FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
+		task ("Import a fragment collection without Read-Only") {
+			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
+		}
 
-		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		task ("Edit the imported fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
-		FragmentsAdminNavigator.gotoEntryEllipsisItem(
-			entry = "Content",
-			item = "Edit");
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Content",
+				item = "Edit");
+		}
 
-		AssertElementNotPresent(locator1 = "FragmentEditor#READ_ONLY_VIEW");
+		task ("Mark the fragment as cacheable") {
+			AssertElementNotPresent(locator1 = "FragmentEditor#READ_ONLY_VIEW");
 
-		AssertElementPresent(
-			checkboxName = "Cacheable",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+			AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "Cacheable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 
-		AssertNotChecked.assertNotCheckedNotVisible(
-			checkboxName = "Cacheable",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+			Check.checkNotVisible(
+				checkboxName = "Cacheable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 
-		Check.checkNotVisible(
-			checkboxName = "Cacheable",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-
-		AssertChecked.assertCheckedNotVisible(
-			checkboxName = "Cacheable",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 	}
 
 	@description = "This is a test for LPS-111657. Can save Container and nested elements as a new composition when the Container is inside a column of Row."
@@ -197,248 +191,70 @@ definition {
 	@description = "This is a test for LPS-101258. Can save a composition containing a fragment that has a Drop Zone area as fragment."
 	@priority = "4"
 	test SaveFragmentCompositionWithDropZoneInFragment {
-		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-
-		FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
-
-		FragmentsEditor.typeHtmlEditor(content = '''<lfr-drop-zone id="drop-zone"></lfr-drop-zone>''');
-
-		Button.clickPublish();
-
-		VerifyElementPresent(locator1 = "Message#SUCCESS");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page Name",
-			type = "content");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Layout Elements",
-			fragmentName = "Container");
-
-		PageEditor.addElementToContainer(
-			collectionName = "Collection Name",
-			fragmentName = "Fragment Name",
-			navTab = "Fragments");
-
-		PageEditor.gotoSaveAsFragment(fragmentName = "Container");
-
-		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page Name 2",
-			type = "content");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name 2",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			composition = "true",
-			fragmentName = "New Fragment Name");
-
-		AssertElementPresent(
-			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name')]//li[contains(@class,'title')]",
-			key_position = "1",
-			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
-	}
-
-	@description = "This is a test for LPS-101230 and LPS-100540. Global fragments are visible in fragment admin and added ones are visible in Test Site Name site. Global fragments "View Site Usages" option is not available if fragment is not used in any page"
-	@priority = "5"
-	test ViewGlobalFragments {
-		property osgi.module.configuration.file.names = "com.liferay.fragment.web.internal.configuration.FragmentGlobalPanelAppConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		property portal.acceptance = "true";
-
-		task ("Add a fragment collection in Global site") {
-			JSONFragment.addFragmentCollection(
-				groupName = "Global",
-				name = "Global Collection Name");
-		}
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
-		}
-
-		task ("Add a section fragment that uses the Button fragment code") {
-			FragmentsAdmin.addFragment(fragmentName = "Global Fragment Name 1");
-
-			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
-
-			FragmentsEditor.typeFileContent(fileName = "fragment_button.css");
-
-			FragmentsEditor.typeFileContent(fileName = "fragment_button.js");
-		}
-
-		task ("Publish the section fragment") {
-			Button.clickPublish();
-		}
-
-		task ("Assert the fragment appears in Fragments Admin") {
-			FragmentsAdmin.viewEntryPresent(entry = "Global Fragment Name");
-		}
-
-		task ("Assert the View Site Usages doesn not display in fragment's kebab menu") {
-			LexiconCard.viewMenuItemNotPresent(
-				card = "Global Fragment Name 1",
-				item = "View Site Usages");
-		}
-
-		task ("Add a section fragment to the fragment collection via JSON") {
-			JSONFragment.addSection(
-				collectionName = "Global Collection Name",
-				fragmentStatus = "Approved",
-				groupName = "Global",
-				name = "Global Fragment Name 2");
-		}
-
-		task ("Navigate to fragments admin") {
+		task ("Add a new fragment with drop-zone") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
+
+			FragmentsEditor.typeHtmlEditor(content = '''<lfr-drop-zone id="drop-zone"></lfr-drop-zone>''');
+
+			FragmentsEditor.waitForAutoSave();
+
+			PortletEntry.publish();
 		}
 
-		task ("Navigate to Global Collection") {
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
+		task ("Add a Container to content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
 		}
 
-		task ("Assert the fragments appear in Fragments Admin") {
-			FragmentsAdmin.viewEntryPresent(entry = "Global Fragment Name 1");
-			FragmentsAdmin.viewEntryPresent(entry = "Global Fragment Name 2");
-		}
-	}
-
-	@description = "This is a test for LPS-100540. Global fragments "View Site Usages" option shows all the Sites that use the fragment and how many usages there are per site"
-	@priority = "5"
-	test ViewGlobalFragmentsSiteUsages {
-		property osgi.module.configuration.file.names = "com.liferay.fragment.web.internal.configuration.FragmentGlobalPanelAppConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		property portal.acceptance = "true";
-
-		task ("Add a fragment collection in Global site") {
-			JSONFragment.addFragmentCollection(
-				groupName = "Global",
-				name = "Global Collection Name");
+		task ("Add a new fragment into Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name",
+				navTab = "Fragments");
 		}
 
-		task ("Add a section fragment to the fragment collection via JSON") {
-			JSONFragment.addSection(
-				collectionName = "Global Collection Name",
-				fragmentStatus = "Approved",
-				groupName = "Global",
-				name = "Global Fragment Name 1");
+		task ("Save the fragment composition as fragment") {
+			PageEditor.gotoSaveAsFragment(fragmentName = "Container");
+
+			PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
 		}
 
-		task ("Add a section fragment to the fragment collection via JSON") {
-			JSONFragment.addSection(
-				collectionName = "Global Collection Name",
-				fragmentStatus = "Approved",
-				groupName = "Global",
-				name = "Global Fragment Name 2");
+		task ("Add a fragment composition to a new content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name 2",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name 2",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				composition = "true",
+				fragmentName = "New Fragment Name");
 		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page Name",
-			type = "content");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Global Collection Name",
-			fragmentName = "Global Fragment Name 1");
-
-		PageEditor.addFragment(
-			collectionName = "Global Collection Name",
-			fragmentName = "Global Fragment Name 2",
-			targetFragmentName = "Global Fragment Name 1");
-
-		PageEditor.clickPublish();
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page Name 2",
-			type = "content");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name 2",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Global Collection Name",
-			fragmentName = "Global Fragment Name 1");
-
-		PageEditor.addFragment(
-			collectionName = "Global Collection Name",
-			fragmentName = "Global Fragment Name 2",
-			targetFragmentName = "Global Fragment Name 1");
-
-		PageEditor.clickPublish();
-
-		JSONGroup.addGroup(groupName = "Test Site Name 2");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name 2",
-			layoutName = "Content Page Name",
-			type = "content");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name 2");
-
-		PageEditor.addFragment(
-			collectionName = "Global Collection Name",
-			fragmentName = "Global Fragment Name 1");
-
-		PageEditor.clickPublish();
-
-		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
-
-		FragmentsAdminNavigator.gotoEntryEllipsisItem(
-			entry = "Global Fragment Name 1",
-			item = "View Site Usages");
-
-		AssertTextEquals(
-			locator1 = "//tr[1]/td[2]",
-			value1 = "Test Site Name");
-
-		AssertTextEquals(
-			locator1 = "//tr[1]/td[3]",
-			value1 = "4");
-
-		AssertTextEquals(
-			locator1 = "//tr[2]/td[2]",
-			value1 = "Test Site Name 2");
-
-		AssertTextEquals(
-			locator1 = "//tr[2]/td[3]",
-			value1 = "2");
-
-		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
-
-		FragmentsAdminNavigator.gotoEntryEllipsisItem(
-			entry = "Global Fragment Name 2",
-			item = "View Site Usages");
-
-		AssertTextEquals(
-			locator1 = "//tr[1]/td[2]",
-			value1 = "Test Site Name");
-
-		AssertTextEquals(
-			locator1 = "//tr[1]/td[3]",
-			value1 = "4");
-
-		AssertElementNotPresent(locator1 = "//*[contains(.,'Test Site Name 2')]");
+		task ("View the fragment composition is rendered well") {
+			AssertElementPresent(
+				key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
 	}
 
 }

@@ -164,25 +164,6 @@ definition {
 			locator1 = "ProcessBuilderListView#UNPUBLISHED_OPTION");
 	}
 
-	@description = "Verify that the user is not able to search by Workflow description"
-	@priority = "3"
-	test CanNotSearchByDescription {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		ProcessBuilderListView.searchForWorkflow(workflowName = "workflow content");
-
-		ProcessBuilderListView.validateIfSearchItem(
-			numberResults = "0",
-			workflowName = "workflow content");
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No workflow definitions are defined.");
-	}
-
 	@description = "Verify that the user can not unpublish a Workflow is in use and system displays an error message"
 	@priority = "5"
 	test CanNotUnpublishWorkflowInUse {
@@ -309,6 +290,40 @@ definition {
 			key_rowNumber = "3",
 			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
 			value1 = "Single Approver");
+	}
+
+	@description = "Verify that the user is not able to search by Workflow description"
+	@ignore = "true"
+	@priority = "3"
+	test CanSearchByDescription {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		task ("Search for existing Description") {
+			ProcessBuilderListView.searchForWorkflow(workflowName = "workflow content");
+
+			ProcessBuilderListView.validateIfSearchItem(
+				numberResults = "1",
+				workflowName = "workflow content");
+
+			AssertElementPresent(
+				key_workflowDefinitionTitle = "Single Approver",
+				locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED");
+		}
+
+		task ("Search for non existing Description") {
+			ProcessBuilderListView.searchForWorkflow(workflowName = "new process");
+
+			ProcessBuilderListView.validateIfSearchItem(
+				numberResults = "0",
+				workflowName = "new process");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No workflow definitions are defined.");
+		}
 	}
 
 	@description = "Verify that the user is able to search by Workflow title"

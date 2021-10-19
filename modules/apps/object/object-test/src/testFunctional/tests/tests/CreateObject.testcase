@@ -699,6 +699,15 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "Name must only contain letters and digits");
 	}
 
+	@description = "LPS-139005 - Verify that is not possible to submit entries in a form with an Object that was inactivated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotSubmitEntriesInFormAfterObjectInactivated {
+
+		// TODO LPS-140864 CannotSubmitEntriesInFormAfterObjectInactivated pending implementation
+
+	}
+
 	@description = "LPS-135635 - Verify it is not possible to update the Mandatory of a Field after the Object is published"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -980,6 +989,15 @@ definition {
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
 		CreateObject.assertToggleMandatory();
+	}
+
+	@description = "LPS-139005 - Verify that is possible to submit entries in a form with an Object that was reactivated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSubmitEntriesOnFormWhenReactivated {
+
+		// TODO LPS-140884 CanSubmitEntriesOnFormWhenReactivated pending implementation
+
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Label of a Field after the Object is published"
@@ -1671,114 +1689,6 @@ definition {
 		ObjectAdmin.viewFieldSearchableSectionLanguage();
 	}
 
-	@description = "LPS-135549 - Verify that the Object Name is autofilled when Label is filled"
-	@priority = "4"
-	test ObjectNameIsAutofilled {
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Object",
-			pluralLabelName = "");
-
-		CreateObject.assertObjectDefinitionName(objectName = "CustomObject");
-	}
-
-	@description = "LPS-135400 - Verify that relationship field is automatically created"
-	@priority = "5"
-	test RelationshipFieldAutomaticallyCreated {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object A",
-			objectName = "CustomObjectA",
-			pluralLabelName = "Custom Objects");
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object B",
-			objectName = "CustomObjectB",
-			pluralLabelName = "Custom Objects");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object A");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.addObjectRelationshipViaUI(
-			label = "Relationship",
-			object = "CustomObjectB",
-			type = "One to Many");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object B");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.assertObjectField(
-			fieldLabel = "Custom Object A",
-			fieldType = "Long");
-	}
-
-	@description = "LPS-135549 - Verify that the columns Name, System and Status displays the correct value on the Objects table when a Custom Object is created"
-	@priority = "4"
-	test TableDisplayCorrectValueWhenObjectCreated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.assertObjectColumnValue(
-			label = "Custom Object",
-			status = "Draft",
-			system = "No");
-	}
-
-	@description = "LPS-135548 - Verify that user can view custom objects"
-	@priority = "5"
-	test ViewCustomObjects {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.viewCustomObject(name = "Custom Object");
-	}
-
-	@description = "LPS-135548 - Verify that user can view system objects"
-	@priority = "5"
-	test ViewSystemObjects {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.viewSystemObject(name = "User");
-	}
-
-	@description = "LPS-139005 - Verify that is not possible to submit entries in a form with an Object that was inactivated"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CannotSubmitEntriesInFormAfterObjectInactivated {
-
-		// TODO LPS-140864 CannotSubmitEntriesInFormAfterObjectInactivated pending implementation
-
-	}
-
-	@description = "LPS-139005 - Verify that is possible to submit entries in a form with an Object that was reactivated"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanSubmitEntriesOnFormWhenReactivated {
-
-		// TODO LPS-140884 CanSubmitEntriesOnFormWhenReactivated pending implementation
-
-	}
-
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Collection Providers when inactivated"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -1887,6 +1797,18 @@ definition {
 
 	}
 
+	@description = "LPS-135549 - Verify that the Object Name is autofilled when Label is filled"
+	@priority = "4"
+	test ObjectNameIsAutofilled {
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Object",
+			pluralLabelName = "");
+
+		CreateObject.assertObjectDefinitionName(objectName = "CustomObject");
+	}
+
 	@description = "LPS-139005 - Verify that the Object portlet is no longer displayed on the Open Menu when inactivated"
 	@ignore = "Test Stub"
 	@priority = "5"
@@ -1978,6 +1900,43 @@ definition {
 
 	}
 
+	@description = "LPS-135400 - Verify that relationship field is automatically created"
+	@priority = "5"
+	test RelationshipFieldAutomaticallyCreated {
+		property portal.acceptance = "true";
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object A",
+			objectName = "CustomObjectA",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object B",
+			objectName = "CustomObjectB",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object A");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "Relationship",
+			object = "CustomObjectB",
+			type = "One to Many");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object B");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.assertObjectField(
+			fieldLabel = "Custom Object A",
+			fieldType = "Long");
+	}
+
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed on a Collection Display with List Style set as Table when the parent object is inactivated"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -2048,6 +2007,47 @@ definition {
 
 		// TODO LPS-140873 RelationshipTabReappearsWhenReactivatedOneToMany pending implementation
 
+	}
+
+	@description = "LPS-135549 - Verify that the columns Name, System and Status displays the correct value on the Objects table when a Custom Object is created"
+	@priority = "4"
+	test TableDisplayCorrectValueWhenObjectCreated {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.assertObjectColumnValue(
+			label = "Custom Object",
+			status = "Draft",
+			system = "No");
+	}
+
+	@description = "LPS-135548 - Verify that user can view custom objects"
+	@priority = "5"
+	test ViewCustomObjects {
+		property portal.acceptance = "true";
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.viewCustomObject(name = "Custom Object");
+	}
+
+	@description = "LPS-135548 - Verify that user can view system objects"
+	@priority = "5"
+	test ViewSystemObjects {
+		property portal.acceptance = "true";
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.viewSystemObject(name = "User");
 	}
 
 }

@@ -7,11 +7,11 @@ const getIconSpriteMap = () => {
 			new Error('themeDisplay is not defined');
 		}
 
-		// eslint-disable-next-line no-undef
 		return `${themeDisplay.getPathThemeImages()}/clay/icons.svg`;
 	} catch (error) {
 		console.warn(error.message);
 
+		// eslint-disable-next-line no-undef
 		return require('@clayui/css/lib/images/icons/icons.svg').default;
 	}
 };

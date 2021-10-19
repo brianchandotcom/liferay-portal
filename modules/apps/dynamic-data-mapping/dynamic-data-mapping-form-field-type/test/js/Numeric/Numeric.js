@@ -415,6 +415,7 @@ describe('Field Numeric', () => {
 			const {container} = render(
 				<Numeric
 					dataType="double"
+					decimalPlaces="2"
 					inputMask
 					name="numericField"
 					symbols={{decimalSymbol: ','}}
@@ -424,6 +425,28 @@ describe('Field Numeric', () => {
 			const input = container.querySelector('input');
 
 			expect(input).toHaveAttribute('placeholder', '0,00');
+		});
+
+		it('allows user to input ony the decimal quantity defined by decimal places field', () => {
+			const onChange = jest.fn();
+			const {container} = render(
+				<Numeric
+					dataType="double"
+					decimalPlaces={3}
+					inputMask
+					name="numericField"
+					onChange={onChange}
+					symbols={{decimalSymbol: ','}}
+				/>
+			);
+
+			const input = container.querySelector('input');
+
+			userEvent.type(input, '1,2345678');
+
+			expect(onChange).toHaveBeenLastCalledWith({
+				target: {value: '1,234'},
+			});
 		});
 
 		/**

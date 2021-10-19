@@ -204,6 +204,10 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 					masterLayoutPageTemplateEntry.getGroupId(),
 					masterLayoutPageTemplateEntry.getPlid());
 
+		if (masterLayoutPageTemplateStructure == null) {
+			return null;
+		}
+
 		return masterLayoutPageTemplateStructure.getData(
 			SegmentsExperienceConstants.ID_DEFAULT);
 	}

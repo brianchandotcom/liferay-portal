@@ -9,19 +9,24 @@
  * distribution rights of the Software.
  */
 
-import {useCallback, useContext} from 'react';
+import {fetch} from 'frontend-js-web';
+import {useCallback} from 'react';
 
-import {AppContext} from '../../components/AppContext.es';
+import {adminBaseURL, headers, metricsBaseURL} from '../rest/fetch.es';
 
-const usePatch = ({body = {}, admin = false, url}) => {
-	const {getClient} = useContext(AppContext);
+const usePatch = ({admin = false, body = {}, callback = () => {}, url}) => {
+	const fetchURL = admin
+		? `${adminBaseURL}${url}`
+		: `${metricsBaseURL}${url}`;
 
-	const client = getClient(admin);
-	const queryBodyStr = JSON.stringify(body);
 	const patchData = useCallback(
-		(patchBody) => client.patch(url, patchBody || body),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[queryBodyStr, url, admin]
+		(patchBody) =>
+			fetch(fetchURL, {
+				body: JSON.stringify(patchBody) || JSON.stringify(body),
+				headers: {...headers, 'Content-Type': 'application/json'},
+				method: 'PATCH',
+			}).then(callback),
+		[fetchURL, body, callback]
 	);
 
 	return {patchData};

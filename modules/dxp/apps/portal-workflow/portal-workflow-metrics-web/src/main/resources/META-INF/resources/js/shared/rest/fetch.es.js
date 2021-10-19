@@ -9,38 +9,12 @@
  * distribution rights of the Software.
  */
 
-import axios from 'axios';
-import qs from 'qs';
+const adminBaseURL = '/o/headless-admin-workflow/v1.0';
 
-/**
- * @module fetch
- * @description Basic alias of fetch client to perform consults in portal rest API.
- * @example
- * import fetch from '@/shared/rest/fetch';
- * fetch.get('/process').then(res => console.log(res));
- */
-axios.defaults.headers.common[
-	'Accept-Language'
-] = Liferay.ThemeDisplay.getBCP47LanguageId();
+const metricsBaseURL = '/o/portal-workflow-metrics/v1.0';
 
-axios.defaults.params = {
-	['p_auth']: Liferay.authToken,
+const headers = {
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 };
 
-axios.defaults.paramsSerializer = (params) =>
-	qs.stringify(params, {arrayFormat: 'repeat'});
-
-const adminClient = axios.create({
-	baseURL: '/o/headless-admin-workflow/v1.0',
-});
-
-const metricsClient = axios.create({
-	baseURL: '/o/portal-workflow-metrics/v1.0',
-});
-
-const getClient = (admin) => {
-	return admin ? adminClient : metricsClient;
-};
-
-export {getClient};
-export default metricsClient;
+export {adminBaseURL, headers, metricsBaseURL};

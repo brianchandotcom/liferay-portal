@@ -9,31 +9,50 @@
  * distribution rights of the Software.
  */
 
-import {useCallback, useContext, useState} from 'react';
+import {fetch} from 'frontend-js-web';
+import {useCallback, useState} from 'react';
 
-import {AppContext} from '../../components/AppContext.es';
+import {adminBaseURL, headers, metricsBaseURL} from '../rest/fetch.es';
 
 const useFetch = ({
 	admin = false,
 	callback = (data) => data,
 	params = {},
+	plainText = false,
 	url,
 }) => {
-	const {getClient} = useContext(AppContext);
-	const [data, setData] = useState({});
+	const [data, setData] = useState();
 
-	const client = getClient(admin);
-	const queryParamsStr = JSON.stringify(params);
+	let fetchURL = admin ? `${adminBaseURL}${url}` : `${metricsBaseURL}${url}`;
+
+	fetchURL = new URL(fetchURL, Liferay.ThemeDisplay.getPortalURL());
+
+	Object.entries(params).map(([key, value]) => {
+		if (value) {
+			fetchURL.searchParams.append(key, value);
+		}
+	});
 
 	const fetchData = useCallback(
 		() =>
-			client.get(url, {params}).then(({data}) => {
-				setData(data);
+			fetch(fetchURL, {
+				headers,
+				method: 'GET',
+			})
+				.then((response) => {
+					if (plainText) {
+						return response.text();
+					}
+					else {
+						return response.json();
+					}
+				})
+				.then((data) => {
+					setData(data);
 
-				return callback(data);
-			}),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[client, queryParamsStr, url]
+					return callback(data);
+				}),
+		[callback, fetchURL, plainText]
 	);
 
 	return {

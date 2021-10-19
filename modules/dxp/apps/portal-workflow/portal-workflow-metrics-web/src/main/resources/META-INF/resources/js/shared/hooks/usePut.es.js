@@ -9,20 +9,25 @@
  * distribution rights of the Software.
  */
 
-import {useCallback, useContext} from 'react';
+import {fetch} from 'frontend-js-web';
+import {useCallback} from 'react';
 
-import {AppContext} from '../../components/AppContext.es';
+import {adminBaseURL, headers, metricsBaseURL} from '../rest/fetch.es';
 
 const usePut = ({body = {}, admin = false, url}) => {
-	const {getClient} = useContext(AppContext);
-
-	const client = getClient(admin);
-	const queryBodyStr = JSON.stringify(body);
+	const fetchURL = admin
+		? `${adminBaseURL}${url}`
+		: `${metricsBaseURL}${url}`;
 
 	return useCallback(
-		() => client.put(url, body),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[queryBodyStr, url, client]
+		() =>
+			fetch(fetchURL, {
+				body: JSON.stringify(body),
+				headers: {...headers, 'Content-Type': 'application/json'},
+				method: 'PUT',
+			}),
+
+		[body, fetchURL]
 	);
 };
 

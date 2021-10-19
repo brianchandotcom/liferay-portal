@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.internal.blueprint.condition;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -34,6 +35,9 @@ import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterD
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import java.util.Date;
 
 import org.junit.Assert;
@@ -52,6 +56,93 @@ public class SXPConditionEvaluatorTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	public void testAllOf() throws Exception {
+		Assert.assertTrue(
+			_evaluate(
+				JSONUtil.put(
+					"all_of",
+					JSONUtil.put(
+						"equals",
+						JSONUtil.put(
+							"parameter_name", "${integer}"
+						).put(
+							"value", 1
+						)
+					).put(
+						"greater_than",
+						JSONUtil.put(
+							"parameter_name", "${double}"
+						).put(
+							"value", 0.0D
+						)
+					).put(
+						"less_than_equals",
+						JSONUtil.put(
+							"parameter_name", "${float}"
+						).put(
+							"value", 1.0F
+						)
+					))));
+
+		Assert.assertFalse(
+			_evaluate(
+				JSONUtil.put(
+					"all_of",
+					JSONUtil.put(
+						"equals",
+						JSONUtil.put(
+							"parameter_name", "${integer}"
+						).put(
+							"value", 1
+						)
+					).put(
+						"greater_than",
+						JSONUtil.put(
+							"parameter_name", "${double}"
+						).put(
+							"value", 2.0D
+						)
+					).put(
+						"less_than_equals",
+						JSONUtil.put(
+							"parameter_name", "${float}"
+						).put(
+							"value", 1.0F
+						)
+					))));
+	}
+
+	@Test
+	public void testAnyOf() throws Exception {
+		Assert.assertTrue(
+			_evaluate(
+				JSONUtil.put(
+					"any_of",
+					JSONUtil.put(
+						"equals",
+						JSONUtil.put(
+							"parameter_name", "${integer}"
+						).put(
+							"value", 2
+						)
+					).put(
+						"greater_than",
+						JSONUtil.put(
+							"parameter_name", "${double}"
+						).put(
+							"value", 0.0D
+						)
+					).put(
+						"less_than_equals",
+						JSONUtil.put(
+							"parameter_name", "${float}"
+						).put(
+							"value", 0.0F
+						)
+					))));
+	}
+
+	@Test
 	public void testContains() throws Exception {
 		Assert.assertTrue(_evaluate("contains", "integer_array", 1));
 		Assert.assertTrue(_evaluate("contains", "long_array", 1L));
@@ -59,24 +150,182 @@ public class SXPConditionEvaluatorTest {
 	}
 
 	@Test
+	public void testEmpty() throws Exception {
+		Assert.assertTrue(
+			SXPConditionEvaluator.evaluate(null, _sxpParameterData));
+		Assert.assertTrue(
+			SXPConditionEvaluator.evaluate(
+				JSONFactoryUtil.createJSONObject(), _sxpParameterData));
+	}
+
+	@Test
 	public void testEquals() throws Exception {
 		Assert.assertTrue(_evaluate("equals", "boolean", true));
 		Assert.assertTrue(
-			_evaluate(
-				JSONUtil.put(
-					"equals",
-					JSONUtil.put(
-						"date_format", "yyyyMMdd"
-					).put(
-						"parameter_name", "${date}"
-					).put(
-						"value", _toDateString("yyyyMMdd")
-					))));
+			_evaluateDate("equals", _toDateString(new Date(_now.getTime()))));
 		Assert.assertTrue(_evaluate("equals", "double", 1.0D));
 		Assert.assertTrue(_evaluate("equals", "float", 1.0F));
 		Assert.assertTrue(_evaluate("equals", "integer", 1));
 		Assert.assertTrue(_evaluate("equals", "long", 1L));
 		Assert.assertTrue(_evaluate("equals", "string", "one"));
+	}
+
+	@Test
+	public void testGreaterThan() throws Exception {
+		Assert.assertTrue(
+			_evaluateDate("greater_than", _toDateString(new Date(), -1L)));
+		Assert.assertTrue(_evaluate("greater_than", "double", 0.0D));
+		Assert.assertTrue(_evaluate("greater_than", "float", 0.0F));
+		Assert.assertTrue(_evaluate("greater_than", "integer", 0));
+		Assert.assertTrue(_evaluate("greater_than", "long", 0L));
+	}
+
+	@Test
+	public void testGreaterThanEquals() throws Exception {
+		Assert.assertTrue(
+			_evaluateDate(
+				"greater_than_equals",
+				_toDateString(new Date(_now.getTime()))));
+		Assert.assertTrue(_evaluate("greater_than_equals", "double", 1.0D));
+		Assert.assertTrue(_evaluate("greater_than_equals", "float", 1.0F));
+		Assert.assertTrue(_evaluate("greater_than_equals", "integer", 1));
+		Assert.assertTrue(_evaluate("greater_than_equals", "long", 1L));
+	}
+
+	@Test
+	public void testIn() throws Exception {
+		Assert.assertTrue(
+			_evaluate("in", "double", JSONUtil.putAll(1.0D, 2.0D)));
+		Assert.assertTrue(
+			_evaluate("in", "float", JSONUtil.putAll(1.0F, 2.0F)));
+		Assert.assertTrue(_evaluate("in", "integer", JSONUtil.putAll(1, 2)));
+		Assert.assertTrue(_evaluate("in", "long", JSONUtil.putAll(1L, 2L)));
+		Assert.assertTrue(
+			_evaluate("in", "string", JSONUtil.putAll("one", "two")));
+	}
+
+	@Test
+	public void testInRange() throws Exception {
+		Date date = new Date(_now.getTime());
+
+		Assert.assertTrue(
+			_evaluateDate(
+				"in_range",
+				JSONUtil.putAll(
+					_toDateString(date, -1L), _toDateString(date, 1L))));
+
+		Assert.assertTrue(
+			_evaluate("in_range", "double", JSONUtil.putAll(0.0D, 2.0D)));
+		Assert.assertTrue(
+			_evaluate("in_range", "float", JSONUtil.putAll(0.0F, 2.0F)));
+		Assert.assertTrue(
+			_evaluate("in_range", "integer", JSONUtil.putAll(0, 2)));
+		Assert.assertTrue(
+			_evaluate("in_range", "long", JSONUtil.putAll(0L, 2L)));
+	}
+
+	@Test
+	public void testLessThan() throws Exception {
+		Assert.assertTrue(
+			_evaluateDate(
+				"less_than", _toDateString(new Date(_now.getTime()), 1L)));
+		Assert.assertTrue(_evaluate("less_than", "double", 2.0D));
+		Assert.assertTrue(_evaluate("less_than", "float", 2.0F));
+		Assert.assertTrue(_evaluate("less_than", "integer", 2));
+		Assert.assertTrue(_evaluate("less_than", "long", 2L));
+	}
+
+	@Test
+	public void testLessThanEquals() throws Exception {
+		Assert.assertTrue(
+			_evaluateDate(
+				"less_than_equals",
+				_toDateString(new Date(_now.getTime()), 0L, "yyyyMMddhhmmssS"),
+				"yyyyMMddhhmmssS"));
+		Assert.assertTrue(_evaluate("less_than_equals", "double", 1.0D));
+		Assert.assertTrue(_evaluate("less_than_equals", "float", 1.0F));
+		Assert.assertTrue(_evaluate("less_than_equals", "integer", 1));
+		Assert.assertTrue(_evaluate("less_than_equals", "long", 1L));
+	}
+
+	@Test
+	public void testNestedAllOf() throws Exception {
+		Assert.assertTrue(
+			_evaluate(
+				JSONUtil.put(
+					"all_of",
+					JSONUtil.put(
+						"all_of",
+						JSONUtil.put(
+							"equals",
+							JSONUtil.put(
+								"parameter_name", "${integer}"
+							).put(
+								"value", 1
+							)
+						).put(
+							"greater_than",
+							JSONUtil.put(
+								"parameter_name", "${double}"
+							).put(
+								"value", 0.0D
+							)
+						).put(
+							"less_than_equals",
+							JSONUtil.put(
+								"parameter_name", "${float}"
+							).put(
+								"value", 1.0F
+							)
+						)
+					).put(
+						"equals",
+						JSONUtil.put(
+							"parameter_name", "${long}"
+						).put(
+							"value", 1
+						)
+					))));
+	}
+
+	@Test
+	public void testNestedAnyOf() throws Exception {
+		Assert.assertTrue(
+			_evaluate(
+				JSONUtil.put(
+					"any_of",
+					JSONUtil.put(
+						"any_of",
+						JSONUtil.put(
+							"equals",
+							JSONUtil.put(
+								"parameter_name", "${integer}"
+							).put(
+								"value", 0
+							)
+						).put(
+							"greater_than",
+							JSONUtil.put(
+								"parameter_name", "${double}"
+							).put(
+								"value", 1.0D
+							)
+						).put(
+							"less_than_equals",
+							JSONUtil.put(
+								"parameter_name", "${float}"
+							).put(
+								"value", 1.0F
+							)
+						)
+					).put(
+						"equals",
+						JSONUtil.put(
+							"parameter_name", "${long}"
+						).put(
+							"value", 0
+						)
+					))));
 	}
 
 	@Test
@@ -90,21 +339,45 @@ public class SXPConditionEvaluatorTest {
 	public void testNotEquals() throws Exception {
 		Assert.assertTrue(_evaluate("not_equals", "boolean", false));
 		Assert.assertTrue(
-			_evaluate(
-				JSONUtil.put(
-					"not_equals",
-					JSONUtil.put(
-						"date_format", "yyyyMMdd"
-					).put(
-						"parameter_name", "${date}"
-					).put(
-						"value", _toDateString("yyyyMMddmmss")
-					))));
+			_evaluateDate("not_equals", _toDateString(new Date(), -1L)));
 		Assert.assertTrue(_evaluate("not_equals", "double", 2.0D));
 		Assert.assertTrue(_evaluate("not_equals", "float", 2.0F));
 		Assert.assertTrue(_evaluate("not_equals", "integer", 2));
 		Assert.assertTrue(_evaluate("not_equals", "long", 2L));
 		Assert.assertTrue(_evaluate("not_equals", "string", "two"));
+	}
+
+	@Test
+	public void testNotIn() throws Exception {
+		Assert.assertTrue(
+			_evaluate("not_in", "double", JSONUtil.putAll(2.0D, 3.0D)));
+		Assert.assertTrue(
+			_evaluate("not_in", "float", JSONUtil.putAll(2.0F, 3.0F)));
+		Assert.assertTrue(
+			_evaluate("not_in", "integer", JSONUtil.putAll(2, 3)));
+		Assert.assertTrue(_evaluate("not_in", "long", JSONUtil.putAll(2L, 3L)));
+		Assert.assertTrue(
+			_evaluate("not_in", "string", JSONUtil.putAll("two", "three")));
+	}
+
+	@Test
+	public void testNotInRange() throws Exception {
+		Date date = new Date();
+
+		Assert.assertTrue(
+			_evaluateDate(
+				"not_in_range",
+				JSONUtil.putAll(
+					_toDateString(date, 1L), _toDateString(date, 2L))));
+
+		Assert.assertTrue(
+			_evaluate("not_in_range", "double", JSONUtil.putAll(2.0D, 3.0D)));
+		Assert.assertTrue(
+			_evaluate("not_in_range", "float", JSONUtil.putAll(2.0F, 3.0F)));
+		Assert.assertTrue(
+			_evaluate("not_in_range", "integer", JSONUtil.putAll(2, 3)));
+		Assert.assertTrue(
+			_evaluate("not_in_range", "long", JSONUtil.putAll(2L, 3L)));
 	}
 
 	private boolean _evaluate(JSONObject jsonObject) {
@@ -122,18 +395,54 @@ public class SXPConditionEvaluatorTest {
 				)));
 	}
 
-	private String _toDateString(String pattern) {
+	private boolean _evaluateDate(String key, Object value) {
+		return _evaluateDate(key, value, _DATE_FORMAT);
+	}
+
+	private boolean _evaluateDate(String key, Object value, String pattern) {
+		return _evaluate(
+			JSONUtil.put(
+				key,
+				JSONUtil.put(
+					"date_format", pattern
+				).put(
+					"parameter_name", "${date}"
+				).put(
+					"value", value
+				)));
+	}
+
+	private String _toDateString(Date date) {
+		return _toDateString(date, 0L);
+	}
+
+	private String _toDateString(Date date, long offsetInDays) {
+		return _toDateString(date, offsetInDays, _DATE_FORMAT);
+	}
+
+	private String _toDateString(Date date, long offsetInDays, String pattern) {
 		DateFormat dateFormat = new SimpleDateFormat(pattern);
 
-		return dateFormat.format(new Date());
+		if (offsetInDays == 0L) {
+			return dateFormat.format(date);
+		}
+
+		Instant instant = date.toInstant();
+
+		return dateFormat.format(
+			Date.from(instant.plus(Duration.ofDays(offsetInDays))));
 	}
+
+	private static final String _DATE_FORMAT = "yyyyMMdd";
+
+	private static final Date _now = new Date();
 
 	private final SXPParameterData _sxpParameterData = new SXPParameterData(
 		"test",
 		SetUtil.fromArray(
 			new SXPParameter[] {
 				new BooleanSXPParameter("boolean", true, true),
-				new DateSXPParameter("date", true, new Date()),
+				new DateSXPParameter("date", true, _now),
 				new DoubleSXPParameter("double", true, 1.0D),
 				new FloatSXPParameter("float", true, 1.0F),
 				new IntegerSXPParameter("integer", true, 1),

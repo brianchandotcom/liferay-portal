@@ -72,7 +72,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 						<clay:row>
 							<clay:col>
 								<clay:select
-									label="external-type"
+									label="export-file-format"
 									name="externalType"
 									options="<%=
 										editBatchPlannerPlanDisplayContext.getExternalTypeSelectOptions()

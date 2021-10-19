@@ -15,14 +15,8 @@
 import ClayAlert from '@clayui/alert';
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown, {Align, ClayDropDownWithItems} from '@clayui/drop-down';
-import {
-	ClayCheckbox,
-	ClayInput,
-	ClayRadio,
-	ClayRadioGroup,
-	ClayToggle,
-} from '@clayui/form';
+import ClayDropDown from '@clayui/drop-down';
+import {ClayCheckbox, ClayInput, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayManagementToolbar, {
@@ -147,8 +141,6 @@ export default ({
 	const PARAM_TYPES = namespace + 'types';
 	const PARAM_USERS = namespace + 'users';
 	const POP_STATE = 'popstate';
-	const VIEW_TYPE_CHANGES = 'changes';
-	const VIEW_TYPE_CONTEXT = 'context';
 
 	const isWithinApp = useCallback(
 		(params) => {
@@ -350,7 +342,6 @@ export default ({
 				return {
 					filterClass: FILTER_CLASS_EVERYTHING,
 					nodeId: 0,
-					viewType: VIEW_TYPE_CHANGES,
 				};
 			}
 
@@ -358,8 +349,8 @@ export default ({
 
 			const path = [];
 
-			if (parts.length > 2) {
-				for (let i = 2; i < parts.length; i++) {
+			if (parts.length > 1) {
+				for (let i = 1; i < parts.length; i++) {
 					const part = parts[i];
 
 					const keys = part.split('-');
@@ -372,9 +363,8 @@ export default ({
 			}
 
 			const pathState = {
-				filterClass: parts[1],
+				filterClass: parts[0],
 				nodeId: 0,
-				viewType: parts[0],
 			};
 
 			if (
@@ -383,10 +373,7 @@ export default ({
 			) {
 				pathState.filterClass = FILTER_CLASS_EVERYTHING;
 			}
-			else if (
-				pathState.viewType === VIEW_TYPE_CHANGES &&
-				path.length > 0
-			) {
+			else if (path.length > 0) {
 				const modelClassNameId = path[0].modelClassNameId;
 				const modelClassPK = path[0].modelClassPK;
 
@@ -403,68 +390,64 @@ export default ({
 					}
 				}
 			}
-			else if (pathState.viewType === VIEW_TYPE_CONTEXT) {
-				let contextNode = contextViewRef.current.everything;
 
-				if (pathState.filterClass !== FILTER_CLASS_EVERYTHING) {
-					contextNode = contextViewRef.current[pathState.filterClass];
+			let contextNode = contextViewRef.current.everything;
+
+			if (pathState.filterClass !== FILTER_CLASS_EVERYTHING) {
+				contextNode = contextViewRef.current[pathState.filterClass];
+			}
+
+			for (let i = 0; i < path.length; i++) {
+				if (!contextNode.children) {
+					break;
 				}
 
-				for (let i = 0; i < path.length; i++) {
-					if (!contextNode.children) {
-						break;
-					}
+				const sessionNode = path[i];
 
-					const sessionNode = path[i];
+				for (let j = 0; j < contextNode.children.length; j++) {
+					const child = contextNode.children[j];
 
-					for (let j = 0; j < contextNode.children.length; j++) {
-						const child = contextNode.children[j];
+					const model = modelsRef.current[child.modelKey];
 
-						const model = modelsRef.current[child.modelKey];
-
+					if (
+						model.modelClassNameId ===
+							sessionNode.modelClassNameId &&
+						model.modelClassPK === sessionNode.modelClassPK
+					) {
 						if (
-							model.modelClassNameId ===
-								sessionNode.modelClassNameId &&
-							model.modelClassPK === sessionNode.modelClassPK
+							pathState.filterClass !== FILTER_CLASS_EVERYTHING &&
+							i === 0
 						) {
-							if (
-								pathState.filterClass !==
-									FILTER_CLASS_EVERYTHING &&
-								i === 0
-							) {
-								const stack = [
-									contextViewRef.current.everything,
-								];
+							const stack = [contextViewRef.current.everything];
 
-								while (stack.length > 0) {
-									const element = stack.pop();
+							while (stack.length > 0) {
+								const element = stack.pop();
 
-									if (element.nodeId === child.nodeId) {
-										contextNode = element;
+								if (element.nodeId === child.nodeId) {
+									contextNode = element;
 
-										break;
-									}
-									else if (!element.children) {
-										continue;
-									}
+									break;
+								}
+								else if (!element.children) {
+									continue;
+								}
 
-									for (
-										let i = 0;
-										i < element.children.length;
-										i++
-									) {
-										stack.push(element.children[i]);
-									}
+								for (
+									let i = 0;
+									i < element.children.length;
+									i++
+								) {
+									stack.push(element.children[i]);
 								}
 							}
-							else {
-								contextNode = child;
-							}
-
-							pathState.nodeId = contextNode.nodeId;
-
-							break;
 						}
+						else {
+							contextNode = child;
+						}
+
+						pathState.nodeId = contextNode.nodeId;
+
+						break;
 					}
 				}
 			}
@@ -478,7 +461,6 @@ export default ({
 
 	const initialFilterClass = pathState.filterClass;
 	const initialNodeId = pathState.nodeId;
-	const initialViewType = pathState.viewType;
 
 	const getModels = useCallback((nodes) => {
 		if (!nodes) {
@@ -520,93 +502,17 @@ export default ({
 	}, []);
 
 	const getNode = useCallback(
-		(filterClass, nodeId, viewType) => {
-			if (viewType === VIEW_TYPE_CHANGES) {
-				if (nodeId === 0) {
-					return {children: getModels(changes)};
-				}
-
-				return JSON.parse(JSON.stringify(modelsRef.current[nodeId]));
-			}
-			else if (
-				filterClass !== FILTER_CLASS_EVERYTHING &&
-				nodeId === 0
-			) {
-				return {
-					children: getModels(
-						contextViewRef.current[filterClass].children
-					),
-				};
-			}
-
-			const rootNode = contextViewRef.current.everything;
-
+		(filterClass, nodeId) => {
 			if (nodeId === 0) {
-				return {children: getModels(rootNode.children)};
+				return {children: getModels(changes)};
 			}
 
-			if (!rootNode.parents) {
-				rootNode.parents = [];
-
-				for (let i = 0; i < rootNode.children.length; i++) {
-					rootNode.children[i].parents = [];
-				}
-			}
-
-			const stack = [rootNode];
-
-			while (stack.length > 0) {
-				const element = stack.pop();
-
-				if (element.nodeId === nodeId) {
-					const entry = JSON.parse(
-						JSON.stringify(modelsRef.current[element.modelKey])
-					);
-
-					entry.children = getModels(element.children);
-					entry.nodeId = nodeId;
-					entry.parents = element.parents;
-
-					return entry;
-				}
-				else if (!element.children) {
-					continue;
-				}
-
-				for (let i = 0; i < element.children.length; i++) {
-					const child = element.children[i];
-
-					if (!child.parents) {
-						const parents = element.parents.slice(0);
-
-						const model = modelsRef.current[element.modelKey];
-
-						parents.push({
-							hideable: model.hideable,
-							modelClassNameId: model.modelClassNameId,
-							modelClassPK: model.modelClassPK,
-							nodeId: element.nodeId,
-							title: model.title,
-							typeName: model.typeName,
-						});
-
-						child.parents = parents;
-					}
-
-					stack.push(child);
-				}
-			}
-
-			return null;
+			return JSON.parse(JSON.stringify(modelsRef.current[nodeId]));
 		},
-		[FILTER_CLASS_EVERYTHING, changes, getModels]
+		[changes, getModels]
 	);
 
-	const initialNode = getNode(
-		initialFilterClass,
-		initialNodeId,
-		initialViewType
-	);
+	const initialNode = getNode(initialFilterClass, initialNodeId);
 
 	const initialShowHideable =
 		initialNode.hideable ||
@@ -684,7 +590,7 @@ export default ({
 	const [filtersState, setFiltersState] = useState(initialFilters);
 
 	const filterNodes = useCallback(
-		(filters, keywords, nodes, showHideable, viewType) => {
+		(filters, keywords, nodes, showHideable) => {
 			if (!nodes) {
 				return nodes;
 			}
@@ -712,9 +618,6 @@ export default ({
 			return nodes.slice(0).filter((node) => {
 				if (!showHideable && node.hideable) {
 					return false;
-				}
-				else if (viewType === VIEW_TYPE_CONTEXT) {
-					return true;
 				}
 
 				const changeTypes = filters['changeTypes'];
@@ -770,7 +673,7 @@ export default ({
 				return true;
 			});
 		},
-		[GLOBAL_SITE_NAME, VIEW_TYPE_CONTEXT, siteNames]
+		[GLOBAL_SITE_NAME, siteNames]
 	);
 
 	const [renderState, setRenderState] = useState({
@@ -778,15 +681,13 @@ export default ({
 			initialFilters,
 			keywordsFromURL,
 			initialNode.children,
-			initialShowHideable,
-			initialViewType
+			initialShowHideable
 		),
 		filterClass: initialFilterClass,
 		id: initialNodeId,
 		node: initialNode,
 		page: 1,
 		showHideable: initialShowHideable,
-		viewType: initialViewType,
 	});
 
 	const getPath = useCallback(
@@ -848,24 +749,10 @@ export default ({
 		]
 	);
 
-	const getPathParam = (filterClass, node, viewType) => {
-		let path = viewType + '/' + filterClass;
+	const getPathParam = (filterClass, node) => {
+		let path = filterClass;
 
 		const nodes = [];
-
-		if (viewType === VIEW_TYPE_CONTEXT && node.parents) {
-			for (let i = 0; i < node.parents.length; i++) {
-				const parent = node.parents[i];
-
-				if (parent.modelClassNameId) {
-					nodes.push({
-						label: parent.title,
-						modelClassNameId: parent.modelClassNameId,
-						modelClassPK: parent.modelClassPK,
-					});
-				}
-			}
-		}
 
 		if (node.modelClassNameId) {
 			nodes.push({
@@ -909,47 +796,16 @@ export default ({
 				showHideable = json.showHideable;
 			}
 
-			let viewType = json.viewType;
+			const node = getNode(filterClass, nodeId);
 
-			if (!viewType) {
-				viewType = renderState.viewType;
-			}
+			const pathParam = getPathParam(filterClass, node);
 
-			if (
-				viewType === VIEW_TYPE_CONTEXT &&
-				contextViewRef.current.errorMessage
-			) {
-				setRenderState({
-					children: renderState.children,
-					filterClass: renderState.filterClass,
-					id: renderState.id,
-					node: renderState.node,
-					page: renderState.page,
-					showHideable: renderState.showHideable,
-					viewType: VIEW_TYPE_CONTEXT,
-				});
-
-				return;
-			}
-
-			let filters = filtersState;
-			let keywords = resultsKeywords;
-
-			if (viewType === VIEW_TYPE_CONTEXT) {
-				filters = {
-					changeTypes: [],
-					sites: [],
-					types: [],
-					users: [],
-				};
-				keywords = '';
-			}
-
-			const node = getNode(filterClass, nodeId, viewType);
-
-			const pathParam = getPathParam(filterClass, node, viewType);
-
-			const path = getPath(filters, keywords, pathParam, showHideable);
+			const path = getPath(
+				filtersState,
+				resultsKeywords,
+				pathParam,
+				showHideable
+			);
 
 			const state = {
 				path,
@@ -958,32 +814,23 @@ export default ({
 
 			window.history.pushState(state, document.title, path);
 
-			if (viewType === VIEW_TYPE_CONTEXT) {
-				setFiltersState(filters);
-				setResultsKeywords(keywords);
-				setEntrySearchTerms(keywords);
-			}
-
 			setRenderState({
 				children: filterNodes(
-					filters,
-					keywords,
+					filtersState,
+					resultsKeywords,
 					node.children,
-					showHideable,
-					viewType
+					showHideable
 				),
 				filterClass,
 				id: nodeId,
 				node,
 				page: 1,
 				showHideable,
-				viewType,
 			});
 
 			window.scrollTo(0, 0);
 		},
 		[
-			VIEW_TYPE_CONTEXT,
 			filtersState,
 			filterNodes,
 			getNode,
@@ -1031,26 +878,8 @@ export default ({
 
 			const filterClass = pathState.filterClass;
 			const nodeId = pathState.nodeId;
-			const viewType = pathState.viewType;
 
-			if (
-				viewType === VIEW_TYPE_CONTEXT &&
-				contextViewRef.current.errorMessage
-			) {
-				setRenderState({
-					children: renderState.children,
-					filterClass: renderState.filterClass,
-					id: renderState.id,
-					node: renderState.node,
-					page: renderState.page,
-					showHideable: renderState.showHideable,
-					viewType: VIEW_TYPE_CONTEXT,
-				});
-
-				return;
-			}
-
-			const node = getNode(filterClass, nodeId, viewType);
+			const node = getNode(filterClass, nodeId);
 
 			let keywords = params.get(PARAM_KEYWORDS);
 
@@ -1090,15 +919,13 @@ export default ({
 					filters,
 					keywords,
 					node.children,
-					showHideable,
-					viewType
+					showHideable
 				),
 				filterClass,
 				id: nodeId,
 				node,
 				page: 1,
 				showHideable,
-				viewType,
 			});
 			setResultsKeywords(keywords);
 			setEntrySearchTerms(keywords);
@@ -1110,7 +937,6 @@ export default ({
 			PARAM_SITES,
 			PARAM_TYPES,
 			PARAM_USERS,
-			VIEW_TYPE_CONTEXT,
 			filterNodes,
 			getFilters,
 			getNode,
@@ -1137,7 +963,7 @@ export default ({
 	}, [handlePopState]);
 
 	const filterDisplayNodes = (nodes) => {
-		if (getColumn() === COLUMN_CHANGE_TYPE) {
+		if (columnState === COLUMN_CHANGE_TYPE) {
 			nodes.sort((a, b) => {
 				if (a.changeType < b.changeType) {
 					if (ascendingState) {
@@ -1180,7 +1006,7 @@ export default ({
 				return 0;
 			});
 		}
-		else if (getColumn() === COLUMN_SITE) {
+		else if (columnState === COLUMN_SITE) {
 			nodes.sort((a, b) => {
 				const siteNameA = a.siteName.toLowerCase();
 				const siteNameB = b.siteName.toLowerCase();
@@ -1234,7 +1060,7 @@ export default ({
 				return 0;
 			});
 		}
-		else if (getColumn() === COLUMN_TITLE) {
+		else if (columnState === COLUMN_TITLE) {
 			nodes.sort((a, b) => {
 				const typeNameA = a.typeName.toLowerCase();
 				const typeNameB = b.typeName.toLowerCase();
@@ -1269,7 +1095,7 @@ export default ({
 				return 0;
 			});
 		}
-		else if (getColumn() === COLUMN_USER) {
+		else if (columnState === COLUMN_USER) {
 			nodes.sort((a, b) => {
 				const userNameA = a.userName.toLowerCase();
 				const userNameB = b.userName.toLowerCase();
@@ -1347,132 +1173,31 @@ export default ({
 		return nodes;
 	};
 
-	const getBreadcrumbItems = (filterClass, node, nodeId, viewType) => {
-		if (viewType === VIEW_TYPE_CHANGES) {
-			if (nodeId === 0) {
-				return [
-					{
-						active: true,
-						label: Liferay.Language.get('home'),
-					},
-				];
-			}
-
+	const getBreadcrumbItems = (filterClass, node, nodeId) => {
+		if (nodeId === 0) {
 			return [
 				{
-					label: Liferay.Language.get('home'),
-					onClick: () =>
-						handleNavigationUpdate({
-							nodeId: 0,
-						}),
-				},
-				{
 					active: true,
-					label: node.title,
-					modelClassNameId: node.modelClassNameId,
-					modelClassPK: node.modelClassPK,
+					label: Liferay.Language.get('home'),
 				},
 			];
 		}
 
-		const breadcrumbItems = [];
-		const homeBreadcrumbItem = {label: Liferay.Language.get('home')};
-
-		if (filterClass === FILTER_CLASS_EVERYTHING && nodeId === 0) {
-			homeBreadcrumbItem.active = true;
-
-			breadcrumbItems.push(homeBreadcrumbItem);
-
-			return breadcrumbItems;
-		}
-
-		homeBreadcrumbItem.onClick = () =>
-			handleNavigationUpdate({
-				filterClass: FILTER_CLASS_EVERYTHING,
-				nodeId: 0,
-			});
-
-		breadcrumbItems.push(homeBreadcrumbItem);
-
-		let showParent = false;
-
-		if (filterClass === FILTER_CLASS_EVERYTHING) {
-			showParent = true;
-		}
-		else {
-			let label = filterClass;
-
-			if (label.includes('.')) {
-				label = label.substring(
-					label.lastIndexOf('.') + 1,
-					label.length
-				);
-			}
-
-			const rootDisplayClassBreadcrumb = {label};
-
-			if (nodeId === 0) {
-				rootDisplayClassBreadcrumb.active = true;
-
-				breadcrumbItems.push(rootDisplayClassBreadcrumb);
-
-				return breadcrumbItems;
-			}
-
-			rootDisplayClassBreadcrumb.onClick = () =>
-				handleNavigationUpdate({
-					filterClass: renderState.filterClass,
-					nodeId: 0,
-				});
-
-			breadcrumbItems.push(rootDisplayClassBreadcrumb);
-		}
-
-		if (!node.parents) {
-			return null;
-		}
-
-		for (let i = 0; i < node.parents.length; i++) {
-			const parent = node.parents[i];
-
-			if (parent.typeName === filterClass) {
-				showParent = true;
-			}
-
-			if (!showParent) {
-				continue;
-			}
-
-			breadcrumbItems.push({
-				hideable: parent.hideable,
-				label: parent.title,
-				modelClassNameId: parent.modelClassNameId,
-				modelClassPK: parent.modelClassPK,
-				nodeId: parent.nodeId,
+		return [
+			{
+				label: Liferay.Language.get('home'),
 				onClick: () =>
 					handleNavigationUpdate({
-						filterClass: renderState.filterClass,
-						nodeId: parent.nodeId,
+						nodeId: 0,
 					}),
-			});
-		}
-
-		breadcrumbItems.push({
-			active: true,
-			label: node.title,
-			modelClassNameId: node.modelClassNameId,
-			modelClassPK: node.modelClassPK,
-		});
-
-		return breadcrumbItems;
-	};
-
-	const getColumn = () => {
-		if (renderState.viewType === VIEW_TYPE_CONTEXT) {
-			return COLUMN_TITLE;
-		}
-
-		return columnState;
+			},
+			{
+				active: true,
+				label: node.title,
+				modelClassNameId: node.modelClassNameId,
+				modelClassPK: node.modelClassPK,
+			},
+		];
 	};
 
 	const getColumnHeader = (column, title) => {
@@ -1813,36 +1538,22 @@ export default ({
 
 				rows.push(
 					<ClayTable.Row divider>
-						<ClayTable.Cell
-							colSpan={
-								renderState.viewType === VIEW_TYPE_CHANGES
-									? 5
-									: 1
-							}
-						>
+						<ClayTable.Cell colSpan={5}>
 							{node.typeName}
 						</ClayTable.Cell>
 					</ClayTable.Row>
 				);
 			}
 
-			const cells = [];
-
-			if (renderState.viewType === VIEW_TYPE_CONTEXT) {
-				cells.push(
-					<ClayTable.Cell>
-						<div className="publication-name">{node.title}</div>
-
-						{node.description && (
-							<div className="publication-description">
-								{node.description}
-							</div>
-						)}
-					</ClayTable.Cell>
-				);
-			}
-			else {
-				cells.push(
+			rows.push(
+				<ClayTable.Row
+					className="cursor-pointer"
+					onClick={() =>
+						handleNavigationUpdate({
+							nodeId: node.nodeId,
+						})
+					}
+				>
 					<ClayTable.Cell>
 						<ClaySticker
 							className={`sticker-user-icon ${
@@ -1865,42 +1576,19 @@ export default ({
 							)}
 						</ClaySticker>
 					</ClayTable.Cell>
-				);
-
-				cells.push(<ClayTable.Cell>{node.siteName}</ClayTable.Cell>);
-
-				cells.push(
+					<ClayTable.Cell>{node.siteName}</ClayTable.Cell>
 					<ClayTable.Cell className="publication-name table-cell-expand">
 						{node.title}
 					</ClayTable.Cell>
-				);
-
-				cells.push(
 					<ClayTable.Cell className="table-cell-expand-smallest">
 						{node.changeTypeLabel}
 					</ClayTable.Cell>
-				);
-
-				cells.push(
 					<ClayTable.Cell className="table-cell-expand-smallest">
 						{Liferay.Util.sub(
 							Liferay.Language.get('x-ago'),
 							node.timeDescription
 						)}
 					</ClayTable.Cell>
-				);
-			}
-
-			rows.push(
-				<ClayTable.Row
-					className="cursor-pointer"
-					onClick={() =>
-						handleNavigationUpdate({
-							nodeId: node.nodeId,
-						})
-					}
-				>
-					{cells}
 				</ClayTable.Row>
 			);
 		}
@@ -1911,8 +1599,7 @@ export default ({
 	const handleFiltersUpdate = (filters, keywords) => {
 		const pathParam = getPathParam(
 			renderState.filterClass,
-			renderState.node,
-			renderState.viewType
+			renderState.node
 		);
 
 		const path = getPath(
@@ -1936,15 +1623,13 @@ export default ({
 				filters,
 				keywords,
 				renderState.node.children,
-				renderState.showHideable,
-				renderState.viewType
+				renderState.showHideable
 			),
 			filterClass: renderState.filterClass,
 			id: renderState.id,
 			node: renderState.node,
 			page: renderState.page,
 			showHideable: renderState.showHideable,
-			viewType: renderState.viewType,
 		});
 
 		window.scrollTo(0, 0);
@@ -1954,24 +1639,11 @@ export default ({
 		const breadcrumbItems = getBreadcrumbItems(
 			renderState.filterClass,
 			renderState.node,
-			renderState.id,
-			renderState.viewType
+			renderState.id
 		);
 
 		if (!showHideable) {
-			if (
-				renderState.viewType === VIEW_TYPE_CONTEXT &&
-				contextViewRef.current[renderState.filterClass].hideable
-			) {
-				handleNavigationUpdate({
-					filterClass: FILTER_CLASS_EVERYTHING,
-					nodeId: 0,
-					showHideable,
-				});
-
-				return;
-			}
-			else if (renderState.node.hideable) {
+			if (renderState.node.hideable) {
 				let nodeId = 0;
 
 				for (let i = breadcrumbItems.length - 2; i > 0; i--) {
@@ -1999,8 +1671,7 @@ export default ({
 
 		const pathParam = getPathParam(
 			renderState.filterClass,
-			renderState.node,
-			renderState.viewType
+			renderState.node
 		);
 
 		const params = new URLSearchParams(window.location.search);
@@ -2065,15 +1736,13 @@ export default ({
 				filters,
 				resultsKeywords,
 				renderState.node.children,
-				showHideable,
-				renderState.viewType
+				showHideable
 			),
 			filterClass: renderState.filterClass,
 			id: renderState.id,
 			node: renderState.node,
 			page: renderState.page,
 			showHideable,
-			viewType: renderState.viewType,
 		});
 	};
 
@@ -2096,10 +1765,6 @@ export default ({
 	};
 
 	const renderFilterDropdown = () => {
-		if (renderState.viewType === VIEW_TYPE_CONTEXT) {
-			return '';
-		}
-
 		return (
 			<ClayManagementToolbar.ItemList>
 				<ClayManagementToolbar.Item>
@@ -2206,158 +1871,64 @@ export default ({
 
 	const renderManagementToolbar = () => {
 		return (
-			<ClayManagementToolbar
-				className={
-					renderState.viewType === VIEW_TYPE_CONTEXT
-						? 'nav-item-expand'
-						: ''
-				}
-			>
+			<ClayManagementToolbar>
 				{renderFilterDropdown()}
-				{renderState.viewType === VIEW_TYPE_CHANGES && (
-					<ClayManagementToolbar.Search
-						onSubmit={(event) => {
-							event.preventDefault();
+				<ClayManagementToolbar.Search
+					onSubmit={(event) => {
+						event.preventDefault();
 
-							handleFiltersUpdate(
-								filtersState,
-								entrySearchTerms.trim()
-							);
-						}}
-						showMobile={searchMobile}
-					>
-						<ClayInput.Group>
-							<ClayInput.GroupItem>
-								<ClayInput
-									aria-label={Liferay.Language.get('search')}
-									className="form-control input-group-inset input-group-inset-after"
-									disabled={changes.length === 0}
-									onChange={(event) =>
-										setEntrySearchTerms(event.target.value)
-									}
-									placeholder={`${Liferay.Language.get(
-										'search'
-									)}...`}
-									type="text"
-									value={entrySearchTerms}
-								/>
-								<ClayInput.GroupInsetItem after tag="span">
-									<ClayButtonWithIcon
-										className="navbar-breakpoint-d-none"
-										disabled={changes.length === 0}
-										displayType="unstyled"
-										onClick={() => setSearchMobile(false)}
-										spritemap={spritemap}
-										symbol="times"
-									/>
-									<ClayButtonWithIcon
-										displayType="unstyled"
-										spritemap={spritemap}
-										symbol="search"
-										type="submit"
-									/>
-								</ClayInput.GroupInsetItem>
-							</ClayInput.GroupItem>
-						</ClayInput.Group>
-					</ClayManagementToolbar.Search>
-				)}
-				<ClayManagementToolbar.ItemList>
-					{renderState.viewType === VIEW_TYPE_CHANGES ? (
-						<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
-							<ClayButton
-								className="nav-link nav-link-monospaced"
+						handleFiltersUpdate(
+							filtersState,
+							entrySearchTerms.trim()
+						);
+					}}
+					showMobile={searchMobile}
+				>
+					<ClayInput.Group>
+						<ClayInput.GroupItem>
+							<ClayInput
+								aria-label={Liferay.Language.get('search')}
+								className="form-control input-group-inset input-group-inset-after"
 								disabled={changes.length === 0}
-								displayType="unstyled"
-								onClick={() => setSearchMobile(true)}
-							>
-								<ClayIcon
+								onChange={(event) =>
+									setEntrySearchTerms(event.target.value)
+								}
+								placeholder={`${Liferay.Language.get(
+									'search'
+								)}...`}
+								type="text"
+								value={entrySearchTerms}
+							/>
+							<ClayInput.GroupInsetItem after tag="span">
+								<ClayButtonWithIcon
+									className="navbar-breakpoint-d-none"
+									disabled={changes.length === 0}
+									displayType="unstyled"
+									onClick={() => setSearchMobile(false)}
+									spritemap={spritemap}
+									symbol="times"
+								/>
+								<ClayButtonWithIcon
+									displayType="unstyled"
 									spritemap={spritemap}
 									symbol="search"
+									type="submit"
 								/>
-							</ClayButton>
-						</ClayManagementToolbar.Item>
-					) : (
-						<ClayManagementToolbar.Item>
-							<ClayDropDownWithItems
-								items={[
-									{
-										items: [
-											{
-												active:
-													getColumn() ===
-													COLUMN_TITLE,
-												label: Liferay.Language.get(
-													'title'
-												),
-												onClick: () =>
-													setColumnState(
-														COLUMN_TITLE
-													),
-											},
-										],
-										label: Liferay.Language.get('order-by'),
-										type: 'group',
-									},
-								]}
-								spritemap={spritemap}
-								trigger={
-									<ClayButton
-										className="nav-link"
-										disabled={changes.length === 0}
-										displayType="unstyled"
-									>
-										<span className="navbar-breakpoint-down-d-none">
-											<span className="navbar-text-truncate">
-												{Liferay.Language.get(
-													'filter-and-order'
-												)}
-											</span>
-
-											<ClayIcon
-												className="inline-item inline-item-after"
-												spritemap={spritemap}
-												symbol="caret-bottom"
-											/>
-										</span>
-										<span className="navbar-breakpoint-d-none">
-											<ClayIcon
-												spritemap={spritemap}
-												symbol="filter"
-											/>
-										</span>
-									</ClayButton>
-								}
-							/>
-						</ClayManagementToolbar.Item>
-					)}
-					{renderState.viewType === VIEW_TYPE_CONTEXT && (
-						<ClayManagementToolbar.Item
-							data-tooltip-align="top"
-							title={Liferay.Language.get(
-								'reverse-sort-direction'
-							)}
+							</ClayInput.GroupInsetItem>
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</ClayManagementToolbar.Search>
+				<ClayManagementToolbar.ItemList>
+					<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
+						<ClayButton
+							className="nav-link nav-link-monospaced"
+							disabled={changes.length === 0}
+							displayType="unstyled"
+							onClick={() => setSearchMobile(true)}
 						>
-							<ClayButton
-								disabled={changes.length === 0}
-								displayType="unstyled"
-								onClick={() =>
-									setAscendingState(!ascendingState)
-								}
-							>
-								<ClayIcon
-									spritemap={spritemap}
-									symbol={
-										ascendingState
-											? 'order-list-down'
-											: 'order-list-up'
-									}
-								/>
-							</ClayButton>
-						</ClayManagementToolbar.Item>
-					)}
-					{renderState.viewType === VIEW_TYPE_CONTEXT && (
-						<ClayManagementToolbar.Item className="nav-item-expand" />
-					)}
+							<ClayIcon spritemap={spritemap} symbol="search" />
+						</ClayButton>
+					</ClayManagementToolbar.Item>
 					<ClayManagementToolbar.Item className="simple-toggle-switch-reverse">
 						<ClayToggle
 							disabled={changes.length === 0}
@@ -2368,62 +1939,6 @@ export default ({
 							toggled={renderState.showHideable}
 						/>
 					</ClayManagementToolbar.Item>
-					{contextViewRef.current && (
-						<ClayManagementToolbar.Item
-							data-tooltip-align="top"
-							title={Liferay.Language.get('display-style')}
-						>
-							<ClayDropDownWithItems
-								alignmentPosition={Align.BottomLeft}
-								items={[
-									{
-										active:
-											renderState.viewType ===
-											VIEW_TYPE_CHANGES,
-										label: Liferay.Language.get('changes'),
-										onClick: () =>
-											handleNavigationUpdate({
-												filterClass: FILTER_CLASS_EVERYTHING,
-												nodeId: 0,
-												viewType: VIEW_TYPE_CHANGES,
-											}),
-										symbolLeft: 'list',
-									},
-									{
-										active:
-											renderState.viewType ===
-											VIEW_TYPE_CONTEXT,
-										label: Liferay.Language.get('context'),
-										onClick: () =>
-											handleNavigationUpdate({
-												filterClass: FILTER_CLASS_EVERYTHING,
-												nodeId: 0,
-												viewType: VIEW_TYPE_CONTEXT,
-											}),
-										symbolLeft: 'pages-tree',
-									},
-								]}
-								spritemap={spritemap}
-								trigger={
-									<ClayButton
-										className="nav-link nav-link-monospaced"
-										disabled={changes.length === 0}
-										displayType="unstyled"
-									>
-										<ClayIcon
-											spritemap={spritemap}
-											symbol={
-												renderState.viewType ===
-												VIEW_TYPE_CHANGES
-													? 'list'
-													: 'pages-tree'
-											}
-										/>
-									</ClayButton>
-								}
-							/>
-						</ClayManagementToolbar.Item>
-					)}
 					<ClayManagementToolbar.Item
 						data-tooltip-align="top"
 						title={Liferay.Language.get('comments')}
@@ -2446,68 +1961,7 @@ export default ({
 		);
 	};
 
-	const renderPanel = () => {
-		if (renderState.viewType === VIEW_TYPE_CHANGES) {
-			return '';
-		}
-
-		const items = [];
-
-		items.push(
-			<ClayRadio
-				label={Liferay.Language.get('everything')}
-				value={FILTER_CLASS_EVERYTHING}
-			/>
-		);
-
-		for (let i = 0; i < rootDisplayClasses.length; i++) {
-			const className = rootDisplayClasses[i];
-
-			if (
-				!renderState.showHideable &&
-				contextViewRef.current[className].hideable
-			) {
-				continue;
-			}
-
-			let label = className;
-
-			if (label.includes('.')) {
-				label = label.substring(
-					label.lastIndexOf('.') + 1,
-					label.length
-				);
-			}
-
-			items.push(<ClayRadio label={label} value={className} />);
-		}
-
-		return (
-			<div className="col-md-3">
-				<div className="panel panel-secondary">
-					<div className="panel-body">
-						<ClayRadioGroup
-							onSelectedValueChange={(filterClass) =>
-								handleNavigationUpdate({
-									filterClass,
-									nodeId: 0,
-								})
-							}
-							selectedValue={renderState.filterClass}
-						>
-							{items}
-						</ClayRadioGroup>
-					</div>
-				</div>
-			</div>
-		);
-	};
-
 	const renderResultsBar = () => {
-		if (renderState.viewType === VIEW_TYPE_CONTEXT) {
-			return '';
-		}
-
 		const labels = [];
 
 		const changeTypes = filtersState['changeTypes'];
@@ -2674,8 +2128,7 @@ export default ({
 		if (!renderState.children || renderState.children.length === 0) {
 			if (
 				renderState.node.children &&
-				renderState.node.children.length > 0 &&
-				renderState.viewType === VIEW_TYPE_CHANGES
+				renderState.node.children.length > 0
 			) {
 				return (
 					<div className="sheet taglib-empty-result-message">
@@ -2700,52 +2153,49 @@ export default ({
 					hover
 					noWrap
 				>
-					{renderState.viewType === VIEW_TYPE_CHANGES && (
-						<ClayTable.Head>
-							<ClayTable.Row>
-								<ClayTable.Cell headingCell>
-									{getColumnHeader(
-										COLUMN_USER,
-										Liferay.Language.get('user')
-									)}
-								</ClayTable.Cell>
-								<ClayTable.Cell headingCell>
-									{getColumnHeader(
-										COLUMN_SITE,
-										Liferay.Language.get('site')
-									)}
-								</ClayTable.Cell>
-								<ClayTable.Cell
-									className="table-cell-expand"
-									headingCell
-								>
-									{getColumnHeader(
-										COLUMN_TITLE,
-										Liferay.Language.get('title')
-									)}
-								</ClayTable.Cell>
-								<ClayTable.Cell
-									className="table-cell-expand-smallest"
-									headingCell
-								>
-									{getColumnHeader(
-										COLUMN_CHANGE_TYPE,
-										Liferay.Language.get('change-type')
-									)}
-								</ClayTable.Cell>
-								<ClayTable.Cell
-									className="table-cell-expand-smallest"
-									headingCell
-								>
-									{getColumnHeader(
-										COLUMN_MODIFIED_DATE,
-										Liferay.Language.get('last-modified')
-									)}
-								</ClayTable.Cell>
-							</ClayTable.Row>
-						</ClayTable.Head>
-					)}
-
+					<ClayTable.Head>
+						<ClayTable.Row>
+							<ClayTable.Cell headingCell>
+								{getColumnHeader(
+									COLUMN_USER,
+									Liferay.Language.get('user')
+								)}
+							</ClayTable.Cell>
+							<ClayTable.Cell headingCell>
+								{getColumnHeader(
+									COLUMN_SITE,
+									Liferay.Language.get('site')
+								)}
+							</ClayTable.Cell>
+							<ClayTable.Cell
+								className="table-cell-expand"
+								headingCell
+							>
+								{getColumnHeader(
+									COLUMN_TITLE,
+									Liferay.Language.get('title')
+								)}
+							</ClayTable.Cell>
+							<ClayTable.Cell
+								className="table-cell-expand-smallest"
+								headingCell
+							>
+								{getColumnHeader(
+									COLUMN_CHANGE_TYPE,
+									Liferay.Language.get('change-type')
+								)}
+							</ClayTable.Cell>
+							<ClayTable.Cell
+								className="table-cell-expand-smallest"
+								headingCell
+							>
+								{getColumnHeader(
+									COLUMN_MODIFIED_DATE,
+									Liferay.Language.get('last-modified')
+								)}
+							</ClayTable.Cell>
+						</ClayTable.Row>
+					</ClayTable.Head>
 					<ClayTable.Body>
 						{getTableRows(filterDisplayNodes(renderState.children))}
 					</ClayTable.Body>
@@ -2767,7 +2217,6 @@ export default ({
 								node: renderState.node,
 								page: 1,
 								showHideable: renderState.showHideable,
-								viewType: renderState.viewType,
 							});
 						}}
 						onPageChange={(page) =>
@@ -2778,7 +2227,6 @@ export default ({
 								node: renderState.node,
 								page,
 								showHideable: renderState.showHideable,
-								viewType: renderState.viewType,
 							})
 						}
 						totalItems={renderState.children.length}
@@ -2789,17 +2237,7 @@ export default ({
 	};
 
 	const renderMainContent = () => {
-		if (
-			renderState.viewType === VIEW_TYPE_CONTEXT &&
-			contextViewRef.current.errorMessage
-		) {
-			return (
-				<ClayAlert displayType="danger">
-					{contextViewRef.current.errorMessage}
-				</ClayAlert>
-			);
-		}
-		else if (changes.length === 0) {
+		if (changes.length === 0) {
 			return (
 				<div className="container-fluid container-fluid-max-xl">
 					{renderExpiredBanner()}
@@ -2823,22 +2261,13 @@ export default ({
 					items={getBreadcrumbItems(
 						renderState.filterClass,
 						renderState.node,
-						renderState.id,
-						renderState.viewType
+						renderState.id
 					)}
 					spritemap={spritemap}
 				/>
 
 				<div className="publications-changes-content row">
-					{renderPanel()}
-
-					<div
-						className={
-							renderState.viewType === VIEW_TYPE_CHANGES
-								? 'col-md-12'
-								: 'col-md-9'
-						}
-					>
+					<div className="col-md-12">
 						{renderState.node.modelClassNameId && (
 							<ChangeTrackingRenderView
 								ctEntry={!!renderState.node.ctEntryId}
@@ -2877,7 +2306,6 @@ export default ({
 										node: renderState.node,
 										page: renderState.page,
 										showHideable: renderState.showHideable,
-										viewType: renderState.viewType,
 									});
 								}}
 							/>

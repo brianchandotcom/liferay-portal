@@ -1963,7 +1963,7 @@ definition {
 			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
 
 		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			locator1 = "PageEditor#MAPPING_PANEL_TYPE_LABEL",
 			value1 = "Type:Asset");
 
 		for (var field : list "Title,Description,Summary,User Name,Create Date,Modified Date,Expiration Date,View Count,URL,All Categories,Tags") {
@@ -1987,7 +1987,7 @@ definition {
 			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
 
 		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			locator1 = "PageEditor#MAPPING_PANEL_TYPE_LABEL",
 			value1 = "Type:Asset");
 
 		for (var field : list "Title,Description,Summary,User Name,Create Date,Modified Date,Expiration Date,View Count,URL,All Categories,Tags") {
@@ -2058,11 +2058,11 @@ definition {
 			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
 
 		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			locator1 = "PageEditor#MAPPING_PANEL_TYPE_LABEL",
 			value1 = "Type:Web Content Article");
 
 		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SUB_TYPE_LABEL",
+			locator1 = "PageEditor#MAPPING_PANEL_SUB_TYPE_LABEL",
 			value1 = "Subtype:Basic Web Content");
 
 		PageEditor.editCollectionDisplay(
@@ -2079,11 +2079,11 @@ definition {
 			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
 
 		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			locator1 = "PageEditor#MAPPING_PANEL_TYPE_LABEL",
 			value1 = "Type:Document");
 
 		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SUB_TYPE_LABEL",
+			locator1 = "PageEditor#MAPPING_PANEL_SUB_TYPE_LABEL",
 			value1 = "Subtype:Basic Document");
 	}
 
@@ -2157,7 +2157,7 @@ definition {
 			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
 
 		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			locator1 = "PageEditor#MAPPING_PANEL_TYPE_LABEL",
 			value1 = "Type:Web Content Article");
 
 		PageEditor.editCollectionDisplay(
@@ -2174,7 +2174,7 @@ definition {
 			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
 
 		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			locator1 = "PageEditor#MAPPING_PANEL_TYPE_LABEL",
 			value1 = "Type:Blogs Entry");
 
 		PageEditor.editCollectionDisplay(
@@ -2191,7 +2191,7 @@ definition {
 			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
 
 		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			locator1 = "PageEditor#MAPPING_PANEL_TYPE_LABEL",
 			value1 = "Type:Document");
 	}
 

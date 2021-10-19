@@ -1171,11 +1171,11 @@ definition {
 
 		task ("View the details of mapped web content in Mapping panel") {
 			AssertTextEquals(
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+				locator1 = "PageEditor#MAPPING_PANEL_TYPE_LABEL",
 				value1 = "Type:Web Content Article");
 
 			AssertTextEquals(
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_SUB_TYPE_LABEL",
+				locator1 = "PageEditor#MAPPING_PANEL_SUB_TYPE_LABEL",
 				value1 = "Subtype:Basic Web Content");
 		}
 
@@ -1205,7 +1205,7 @@ definition {
 				id = "element-text");
 
 			AssertTextEquals(
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+				locator1 = "PageEditor#MAPPING_PANEL_TYPE_LABEL",
 				value1 = "Type:Asset");
 		}
 	}

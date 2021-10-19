@@ -150,7 +150,7 @@ definition {
 			PageEditor.gotoTab(tabName = "Widgets");
 
 			Type.sendKeysApplicationSearch(
-				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
 				value1 = "Asset Publisher");
 
 			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(

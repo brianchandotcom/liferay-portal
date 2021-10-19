@@ -138,7 +138,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			Type.sendKeysApplicationSearch(
-				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
 				value1 = "Blogs");
 
 			DragOver(
@@ -207,7 +207,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			Type.sendKeysApplicationSearch(
-				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
 				value1 = "Blogs");
 
 			MouseOver(

@@ -326,7 +326,7 @@ const AddModal = ({
 										description={Liferay.Language.get(
 											'select-all-clauses-description'
 										)}
-										imagePath={`${contextPath}/images/all-clauses.svg`}
+										imagePath={`${contextPath}/sxp_blueprint_admin/images/all-clauses.svg`}
 										onChange={() =>
 											setFramework(FRAMEWORK_TYPES.ALL)
 										}
@@ -346,7 +346,7 @@ const AddModal = ({
 										description={Liferay.Language.get(
 											'select-baseline-clauses-description'
 										)}
-										imagePath={`${contextPath}/images/baseline-clauses.svg`}
+										imagePath={`${contextPath}/sxp_blueprint_admin/images/baseline-clauses.svg`}
 										onChange={() =>
 											setFramework(
 												FRAMEWORK_TYPES.BASELINE

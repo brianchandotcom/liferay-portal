@@ -61,8 +61,8 @@ public class UpdateContentDashboardConfigurationMVCActionCommand
 		String[] assetVocabularyIds = StringUtil.split(
 			assetVocabularyIdsFromParams);
 
-		if (!StringUtil.equalsIgnoreCase(
-				assetVocabularyIdsFromParams, "empty")) {
+		if ((!StringUtil.equalsIgnoreCase(
+				assetVocabularyIdsFromParams, "empty")) && (ArrayUtil.isEmpty(assetVocabularyIds))) {
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);

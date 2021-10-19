@@ -128,8 +128,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 		List<AssetVocabulary> assetVocabularies =
 			_assetVocabulariesProvider.getAssetVocabularies(
 				portletPreferences.getValues(
-					"assetVocabularyIds", new String[0]),
-				_portal.getCompanyId(liferayPortletRequest));
+					"assetVocabularyIds", new String[0]));
 
 		ContentDashboardAdminDisplayContext
 			contentDashboardAdminDisplayContext =

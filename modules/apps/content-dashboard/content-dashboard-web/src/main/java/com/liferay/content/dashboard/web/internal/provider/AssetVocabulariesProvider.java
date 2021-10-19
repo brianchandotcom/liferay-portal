@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.web.internal.provider;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -38,25 +39,25 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetVocabulariesProvider {
 
 	public List<AssetVocabulary> getAssetVocabularies(
-		String[] assetVocabularyIds, long companyId) {
-
-		List<Long> groupIds = _groupLocalService.getGroupIds(companyId, true);
-
-		if (ListUtil.isEmpty(groupIds)) {
-			return Collections.emptyList();
-		}
+		String[] assetVocabularyIds) {
 
 		List<AssetVocabulary> result = new ArrayList<>();
 
-		for (Long groupId : groupIds) {
 			try {
 				result.addAll(
 					Stream.of(
 						assetVocabularyIds
 					).map(
 						assetVocabularyId ->
-							_assetVocabularyLocalService.fetchGroupVocabulary(
-								groupId, assetVocabularyId)
+						{
+							try {
+								return _assetVocabularyLocalService.getAssetVocabulary(Long.parseLong(assetVocabularyId));
+							}
+							catch (PortalException portalException) {
+								portalException.printStackTrace();
+								return null;
+							}
+						}
 					).filter(
 						Objects::nonNull
 					).filter(
@@ -73,7 +74,7 @@ public class AssetVocabulariesProvider {
 						exception);
 				}
 			}
-		}
+
 
 		return result;
 	}

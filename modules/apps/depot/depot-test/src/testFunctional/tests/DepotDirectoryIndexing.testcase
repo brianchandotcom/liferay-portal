@@ -126,7 +126,7 @@ definition {
 
 		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
-		JSONDocument.addFolder(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Depot Name");

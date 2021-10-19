@@ -1,0 +1,13 @@
+.sxp-blueprint-searchable-types-modal {
+	.inline-scroller {
+		max-height: unset;
+	}
+
+	.component-text {
+		margin-left: 12px;
+
+		&.link-primary {
+			font-weight: 600;
+		}
+	}
+}

@@ -1,0 +1,43 @@
+.sxp-blueprint-edit-title-modal .modal-body {
+	.form-check-card {
+		height: calc(100% - 1.5rem);
+
+		&.selected {
+			.card {
+				box-shadow: 0 0 0 2px $primaryL2;
+
+				.card-item-first {
+					background-color: $primaryL4;
+				}
+			}
+		}
+
+		.card {
+			cursor: pointer;
+			height: 100%;
+		}
+
+		.card-item-first {
+			background-color: $lightBackground;
+		}
+
+		.card-subtitle {
+			line-height: 1.2rem;
+		}
+
+		.custom-checkbox {
+			display: block;
+			margin-bottom: 1rem;
+			position: relative;
+
+			.custom-control-input,
+			.custom-control-label {
+				left: 0;
+			}
+		}
+	}
+
+	.form-group:last-of-type {
+		margin-bottom: 0;
+	}
+}

@@ -1,0 +1,74 @@
+.builder {
+	padding-bottom: 40px;
+	padding-top: $pageToolbarHeight + 40px;
+
+	.builder-content-shift {
+		margin-left: auto;
+		margin-right: calc(50% - #{$builderMaxWidth} / 2);
+		max-width: $builderMaxWidth;
+		transition: margin-right ease 0.2s;
+	}
+
+	.configuration-header {
+		font-weight: bold;
+		margin-bottom: 1.25rem;
+
+		&.configuration-header-settings {
+			margin-top: 30px;
+		}
+
+		.builder-actions {
+			float: right;
+
+			.collapse-button {
+				color: $mainLighten28;
+				font-size: 0.875rem;
+				margin: 0.125rem 1rem 0 0;
+			}
+		}
+	}
+
+	.sheet + .sheet {
+		margin-top: 0;
+	}
+
+	.sheet-text {
+		font-size: 14px;
+	}
+
+	.has-error {
+		.codemirror-editor-wrapper {
+			border: 1px solid $errorL1;
+
+			.CodeMirror {
+				background-color: $errorL2;
+			}
+
+			.CodeMirror-gutters {
+				background-color: $errorL2;
+			}
+		}
+	}
+}
+
+@media (min-width: calc(#{$builderMinWidth} + #{$sidebarWidth})) {
+	.open-sidebar .builder-content-shift {
+		margin-right: calc(
+			max(
+				50% - (#{$builderMaxWidth} / 2),
+				#{$sidebarWidth} - (50vw - 50%) + 24px
+			)
+		);
+	}
+}
+
+@media (min-width: calc(#{$builderMinWidth} + #{$previewSidebarWidth})) {
+	.open-preview .builder-content-shift {
+		margin-right: calc(
+			max(
+				50% - (#{$builderMaxWidth} / 2),
+				#{$previewSidebarWidth} - (50vw - 50%) + 24px
+			)
+		);
+	}
+}

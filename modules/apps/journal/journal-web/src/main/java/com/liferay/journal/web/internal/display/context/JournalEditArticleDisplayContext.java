@@ -188,7 +188,7 @@ public class JournalEditArticleDisplayContext {
 		return _classPK;
 	}
 
-	public Map<String, Object> getComponentContext() {
+	public Map<String, Object> getComponentContext() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
 			"articleId", getArticleId()
 		).put(
@@ -199,6 +199,8 @@ public class JournalEditArticleDisplayContext {
 			"contentTitle", "titleMapAsXML"
 		).put(
 			"defaultLanguageId", getDefaultArticleLanguageId()
+		).put(
+			"hasSavePermission", hasSavePermission()
 		).build();
 	}
 

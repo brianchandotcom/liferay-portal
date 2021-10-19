@@ -292,13 +292,9 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				_getCommercePricingConfigurationKey(),
 				CommercePricingConstants.VERSION_2_0)) {
 
-			_updateCommercePriceEntry(
-				cpInstance, CommercePriceListConstants.TYPE_PRICE_LIST, price,
-				serviceContext);
-
-			_updateCommercePriceEntry(
-				cpInstance, CommercePriceListConstants.TYPE_PROMOTION,
-				promoPrice, serviceContext);
+			_updateCommercePriceEntries(
+				cpInstance, price, promoPrice,
+				ServiceContextFactory.getInstance(actionRequest));
 		}
 
 		// Update shipping info
@@ -361,6 +357,20 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 					CommercePricingConstants.SERVICE_NAME));
 
 		return commercePricingConfiguration.commercePricingCalculationKey();
+	}
+
+	private void _updateCommercePriceEntries(
+			CPInstance cpInstance, BigDecimal price, BigDecimal promoPrice,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		_updateCommercePriceEntry(
+			cpInstance, CommercePriceListConstants.TYPE_PRICE_LIST, price,
+			serviceContext);
+
+		_updateCommercePriceEntry(
+			cpInstance, CommercePriceListConstants.TYPE_PROMOTION, promoPrice,
+			serviceContext);
 	}
 
 	private void _updateCommercePriceEntry(

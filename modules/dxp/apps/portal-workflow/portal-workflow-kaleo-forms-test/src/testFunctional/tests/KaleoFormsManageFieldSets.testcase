@@ -75,11 +75,22 @@ definition {
 	}
 
 	@description = "Verify that the user can create a new field set on Manage FIeld Sets Area."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanCreateANewFieldSet {
+		Click(locator1 = "Button#PLUS");
 
-		// TODO LRQA-70705 CanCreateANewFieldSet pending implementation
+		PortletEntry.inputName(name = "Workflow Field");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		KaleoFormsAdmin.saveFieldSet();
+
+		AssertElementPresent(
+			key_ddlDataDefinitionName = "Workflow Field",
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME");
 
 	}
 

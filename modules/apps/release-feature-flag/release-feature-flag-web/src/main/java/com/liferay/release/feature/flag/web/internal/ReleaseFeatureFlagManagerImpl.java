@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.release.feature.flag.ReleaseFeatureFlag;
 import com.liferay.release.feature.flag.ReleaseFeatureFlagManager;
 import com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration;
@@ -85,8 +86,10 @@ public class ReleaseFeatureFlagManagerImpl
 		for (String disabledReleaseFeatureFlag :
 				releaseFeatureFlagConfiguration.disabledReleaseFeatureFlags()) {
 
-			_disabledReleaseFeatureFlags.add(
-				ReleaseFeatureFlag.valueOf(disabledReleaseFeatureFlag));
+			if (Validator.isNotNull(disabledReleaseFeatureFlag)) {
+				_disabledReleaseFeatureFlags.add(
+					ReleaseFeatureFlag.valueOf(disabledReleaseFeatureFlag));
+			}
 		}
 	}
 

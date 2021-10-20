@@ -195,6 +195,19 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	}
 
 	@Override
+	public int getLayoutPageTemplateCollectionsCount(
+		long groupId, String name) {
+
+		if (Validator.isNull(name)) {
+			return layoutPageTemplateCollectionPersistence.countByGroupId(
+				groupId);
+		}
+
+		return layoutPageTemplateCollectionPersistence.countByG_LikeN(
+			groupId, name);
+	}
+
+	@Override
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name,
 			String description)

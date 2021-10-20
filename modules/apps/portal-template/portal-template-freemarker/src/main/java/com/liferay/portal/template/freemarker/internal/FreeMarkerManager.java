@@ -614,24 +614,13 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		StringBundler sb = new StringBundler(3 * macroLibrary.length);
 
 		for (String library : macroLibrary) {
-			String libraryResource = library;
-
-			int indexOfSpace = library.indexOf(CharPool.SPACE);
-
-			if (indexOfSpace != -1) {
-				libraryResource = library.substring(0, indexOfSpace);
-			}
-
-			if (_bundle.getResource(libraryResource) == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to find Macro Library: " + libraryResource);
-				}
-			}
-			else {
+			if (_hasLibraryResource(library)) {
 				sb.append(contextName);
 				sb.append(library);
 				sb.append(StringPool.COMMA);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn("Unable to find Macro Library: " + library);
 			}
 		}
 
@@ -640,6 +629,20 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		}
 
 		return sb.toString();
+	}
+
+	private boolean _hasLibraryResource(String library) {
+		int index = library.indexOf(CharPool.SPACE);
+
+		if (index != -1) {
+			library = library.substring(0, index);
+		}
+
+		if (_bundle.getResource(library) == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private void _initAsyncRender(BundleContext bundleContext) {

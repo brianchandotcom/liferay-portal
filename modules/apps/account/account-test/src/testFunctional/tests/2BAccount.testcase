@@ -433,6 +433,83 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that a newly created site will have default account type settings even after changing settings on original site."
+	@priority = "5"
+	test AllowedAccountTypeIsSiteWide {
+		task ("Log in as Super User to give permissions for account adding to Account Administrator User") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
+			Accounts.setAddAccountEntryPermissions(
+				roleTitle = "Reg Role Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Only allow for Person accounts to be created or visible") {
+			Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Person");
+		}
+
+		task ("Create a Person account as the Account Administrator user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			Accounts.addPersonAccount(accountName = "Person Account");
+		}
+
+		task ("Assert that the Account Administrator can only see the Person account and not the Business account made in the setup") {
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Account Name");
+
+			LexiconEntry.viewEntryName(rowEntry = "Person Account");
+		}
+
+		task ("Log back in as Super User to create a new site and add a new page with the Account Management Widget") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
+
+			Site.addBlankCP(siteName = "Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			SitePages.addPublicPage(
+				pageName = "2B New Site",
+				sitePageType = "Widget Page");
+
+			Navigator.gotoSitePage(
+				pageName = "2B New Site",
+				siteName = "Site Name");
+
+			Portlet.addPG(portletName = "Account Management");
+		}
+
+		task ("As the Account Administrator, go to new site and assert that both account types are now visible due to default allowed account type settings") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoSitePage(
+				pageName = "2B New Site",
+				siteName = "Site Name");
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Name");
+
+			LexiconEntry.viewEntryName(rowEntry = "Person Account");
+		}
+	}
+
 	@description = "This test checks that the size of the pagination list can be changed."
 	@priority = "4"
 	test CanChangePaginationInAccounts {

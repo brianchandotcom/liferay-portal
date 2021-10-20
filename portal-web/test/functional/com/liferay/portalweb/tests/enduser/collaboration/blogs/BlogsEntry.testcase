@@ -864,13 +864,27 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136765. It checks that Javascript cannot be executed in the custom abstract."
-	@ignore = "true"
 	@priority = "3"
 	test CannotExecuteXSSInCustomAbstract {
-		property portal.acceptance = "false";
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
 
-		// TODO LPS-136765 CannotExecuteXSSInCustomAbstract pending implementation
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addWithCustomAbstract(
+			entryAbstractDescription = '''<script>alert(123);</script>''',
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		AssertAlertNotPresent();
 	}
 
 	@description = "This is a test for LPS-136788. It checks that a user cannot rate a post when it is disabled in the configuration."

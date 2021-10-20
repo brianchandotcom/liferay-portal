@@ -15,18 +15,18 @@ components:
                     type: string
                 endTime:
                     description:
-                        The end time of import task operation.
+                        The end time of export task operation.
                     example: 2019-27-09'T'08:33:33'Z'
                     format: date-time
                     type: string
                 errorMessage:
                     description:
-                        The error message in case of import task's failed execution.
+                        The error message in case of export task's failed execution.
                     example: File import failed
                     type: string
                 executeStatus:
                     description:
-                        The status of import task's execution.
+                        The status of export task's execution.
                     enum: [COMPLETED, FAILED, INITIAL, STARTED]
                     example: INITIALIZED
                     type: string
@@ -45,7 +45,7 @@ components:
                     type: integer
                 startTime:
                     description:
-                        The start time of import task operation.
+                        The start time of export task operation.
                     example: 2019-27-09'T'08:23:33'Z'
                     format: date-time
                     type: string

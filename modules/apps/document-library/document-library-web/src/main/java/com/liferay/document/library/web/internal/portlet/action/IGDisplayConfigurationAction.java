@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.util.TrashWebKeys;
@@ -50,6 +51,8 @@ public class IGDisplayConfigurationAction
 		throws Exception {
 
 		httpServletRequest.setAttribute(
+			ItemSelector.class.getName(), _itemSelector);
+		httpServletRequest.setAttribute(
 			TrashWebKeys.TRASH_HELPER, _trashHelper);
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
@@ -63,6 +66,9 @@ public class IGDisplayConfigurationAction
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private TrashHelper _trashHelper;

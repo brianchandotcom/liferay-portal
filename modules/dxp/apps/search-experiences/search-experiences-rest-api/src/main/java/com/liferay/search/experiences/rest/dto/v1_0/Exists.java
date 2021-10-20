@@ -35,8 +35,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -44,35 +42,34 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("QueryEntry")
+@GraphQLName("Exists")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "QueryEntry")
-public class QueryEntry implements Serializable {
+@XmlRootElement(name = "Exists")
+public class Exists implements Serializable {
 
-	public static QueryEntry toDTO(String json) {
-		return ObjectMapperUtil.readValue(QueryEntry.class, json);
+	public static Exists toDTO(String json) {
+		return ObjectMapperUtil.readValue(Exists.class, json);
 	}
 
-	public static QueryEntry unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(QueryEntry.class, json);
+	public static Exists unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Exists.class, json);
 	}
 
 	@Schema
-	@Valid
-	public Clause[] getClauses() {
-		return clauses;
+	public String getParameterName() {
+		return parameterName;
 	}
 
-	public void setClauses(Clause[] clauses) {
-		this.clauses = clauses;
+	public void setParameterName(String parameterName) {
+		this.parameterName = parameterName;
 	}
 
 	@JsonIgnore
-	public void setClauses(
-		UnsafeSupplier<Clause[], Exception> clausesUnsafeSupplier) {
+	public void setParameterName(
+		UnsafeSupplier<String, Exception> parameterNameUnsafeSupplier) {
 
 		try {
-			clauses = clausesUnsafeSupplier.get();
+			parameterName = parameterNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -84,64 +81,7 @@ public class QueryEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Clause[] clauses;
-
-	@Schema
-	@Valid
-	public Condition getCondition() {
-		return condition;
-	}
-
-	public void setCondition(Condition condition) {
-		this.condition = condition;
-	}
-
-	@JsonIgnore
-	public void setCondition(
-		UnsafeSupplier<Condition, Exception> conditionUnsafeSupplier) {
-
-		try {
-			condition = conditionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Condition condition;
-
-	@Schema
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	@JsonIgnore
-	public void setEnabled(
-		UnsafeSupplier<Boolean, Exception> enabledUnsafeSupplier) {
-
-		try {
-			enabled = enabledUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean enabled;
+	protected String parameterName;
 
 	@Override
 	public boolean equals(Object object) {
@@ -149,13 +89,13 @@ public class QueryEntry implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof QueryEntry)) {
+		if (!(object instanceof Exists)) {
 			return false;
 		}
 
-		QueryEntry queryEntry = (QueryEntry)object;
+		Exists exists = (Exists)object;
 
-		return Objects.equals(toString(), queryEntry.toString());
+		return Objects.equals(toString(), exists.toString());
 	}
 
 	@Override
@@ -170,44 +110,18 @@ public class QueryEntry implements Serializable {
 
 		sb.append("{");
 
-		if (clauses != null) {
+		if (parameterName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"clauses\": ");
+			sb.append("\"parameterName\": ");
 
-			sb.append("[");
+			sb.append("\"");
 
-			for (int i = 0; i < clauses.length; i++) {
-				sb.append(String.valueOf(clauses[i]));
+			sb.append(_escape(parameterName));
 
-				if ((i + 1) < clauses.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (condition != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"condition\": ");
-
-			sb.append(String.valueOf(condition));
-		}
-
-		if (enabled != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"enabled\": ");
-
-			sb.append(enabled);
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -217,7 +131,7 @@ public class QueryEntry implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.QueryEntry",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Exists",
 		name = "x-class-name"
 	)
 	public String xClassName;

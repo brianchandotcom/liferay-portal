@@ -44,35 +44,61 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("QueryEntry")
+@GraphQLName("Range")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "QueryEntry")
-public class QueryEntry implements Serializable {
+@XmlRootElement(name = "Range")
+public class Range implements Serializable {
 
-	public static QueryEntry toDTO(String json) {
-		return ObjectMapperUtil.readValue(QueryEntry.class, json);
+	public static Range toDTO(String json) {
+		return ObjectMapperUtil.readValue(Range.class, json);
 	}
 
-	public static QueryEntry unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(QueryEntry.class, json);
+	public static Range unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Range.class, json);
 	}
+
+	@Schema
+	public String getFormat() {
+		return format;
+	}
+
+	public void setFormat(String format) {
+		this.format = format;
+	}
+
+	@JsonIgnore
+	public void setFormat(
+		UnsafeSupplier<String, Exception> formatUnsafeSupplier) {
+
+		try {
+			format = formatUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String format;
 
 	@Schema
 	@Valid
-	public Clause[] getClauses() {
-		return clauses;
+	public Object getGt() {
+		return gt;
 	}
 
-	public void setClauses(Clause[] clauses) {
-		this.clauses = clauses;
+	public void setGt(Object gt) {
+		this.gt = gt;
 	}
 
 	@JsonIgnore
-	public void setClauses(
-		UnsafeSupplier<Clause[], Exception> clausesUnsafeSupplier) {
-
+	public void setGt(UnsafeSupplier<Object, Exception> gtUnsafeSupplier) {
 		try {
-			clauses = clausesUnsafeSupplier.get();
+			gt = gtUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -84,24 +110,22 @@ public class QueryEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Clause[] clauses;
+	protected Object gt;
 
 	@Schema
 	@Valid
-	public Condition getCondition() {
-		return condition;
+	public Object getGte() {
+		return gte;
 	}
 
-	public void setCondition(Condition condition) {
-		this.condition = condition;
+	public void setGte(Object gte) {
+		this.gte = gte;
 	}
 
 	@JsonIgnore
-	public void setCondition(
-		UnsafeSupplier<Condition, Exception> conditionUnsafeSupplier) {
-
+	public void setGte(UnsafeSupplier<Object, Exception> gteUnsafeSupplier) {
 		try {
-			condition = conditionUnsafeSupplier.get();
+			gte = gteUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -113,23 +137,22 @@ public class QueryEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Condition condition;
+	protected Object gte;
 
 	@Schema
-	public Boolean getEnabled() {
-		return enabled;
+	@Valid
+	public Object getLt() {
+		return lt;
 	}
 
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
+	public void setLt(Object lt) {
+		this.lt = lt;
 	}
 
 	@JsonIgnore
-	public void setEnabled(
-		UnsafeSupplier<Boolean, Exception> enabledUnsafeSupplier) {
-
+	public void setLt(UnsafeSupplier<Object, Exception> ltUnsafeSupplier) {
 		try {
-			enabled = enabledUnsafeSupplier.get();
+			lt = ltUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -141,7 +164,62 @@ public class QueryEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean enabled;
+	protected Object lt;
+
+	@Schema
+	@Valid
+	public Object getLte() {
+		return lte;
+	}
+
+	public void setLte(Object lte) {
+		this.lte = lte;
+	}
+
+	@JsonIgnore
+	public void setLte(UnsafeSupplier<Object, Exception> lteUnsafeSupplier) {
+		try {
+			lte = lteUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Object lte;
+
+	@Schema
+	public String getParameterName() {
+		return parameterName;
+	}
+
+	public void setParameterName(String parameterName) {
+		this.parameterName = parameterName;
+	}
+
+	@JsonIgnore
+	public void setParameterName(
+		UnsafeSupplier<String, Exception> parameterNameUnsafeSupplier) {
+
+		try {
+			parameterName = parameterNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String parameterName;
 
 	@Override
 	public boolean equals(Object object) {
@@ -149,13 +227,13 @@ public class QueryEntry implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof QueryEntry)) {
+		if (!(object instanceof Range)) {
 			return false;
 		}
 
-		QueryEntry queryEntry = (QueryEntry)object;
+		Range range = (Range)object;
 
-		return Objects.equals(toString(), queryEntry.toString());
+		return Objects.equals(toString(), range.toString());
 	}
 
 	@Override
@@ -170,44 +248,72 @@ public class QueryEntry implements Serializable {
 
 		sb.append("{");
 
-		if (clauses != null) {
+		if (format != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"clauses\": ");
+			sb.append("\"format\": ");
 
-			sb.append("[");
+			sb.append("\"");
 
-			for (int i = 0; i < clauses.length; i++) {
-				sb.append(String.valueOf(clauses[i]));
+			sb.append(_escape(format));
 
-				if ((i + 1) < clauses.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append("\"");
 		}
 
-		if (condition != null) {
+		if (gt != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"condition\": ");
+			sb.append("\"gt\": ");
 
-			sb.append(String.valueOf(condition));
+			sb.append(String.valueOf(gt));
 		}
 
-		if (enabled != null) {
+		if (gte != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"enabled\": ");
+			sb.append("\"gte\": ");
 
-			sb.append(enabled);
+			sb.append(String.valueOf(gte));
+		}
+
+		if (lt != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"lt\": ");
+
+			sb.append(String.valueOf(lt));
+		}
+
+		if (lte != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"lte\": ");
+
+			sb.append(String.valueOf(lte));
+		}
+
+		if (parameterName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parameterName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(parameterName));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -217,7 +323,7 @@ public class QueryEntry implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.QueryEntry",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Range",
 		name = "x-class-name"
 	)
 	public String xClassName;

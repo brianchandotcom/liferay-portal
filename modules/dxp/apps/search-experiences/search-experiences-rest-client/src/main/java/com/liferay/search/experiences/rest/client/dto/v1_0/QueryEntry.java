@@ -55,6 +55,27 @@ public class QueryEntry implements Cloneable, Serializable {
 
 	protected Clause[] clauses;
 
+	public Condition getCondition() {
+		return condition;
+	}
+
+	public void setCondition(Condition condition) {
+		this.condition = condition;
+	}
+
+	public void setCondition(
+		UnsafeSupplier<Condition, Exception> conditionUnsafeSupplier) {
+
+		try {
+			condition = conditionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Condition condition;
+
 	public Boolean getEnabled() {
 		return enabled;
 	}

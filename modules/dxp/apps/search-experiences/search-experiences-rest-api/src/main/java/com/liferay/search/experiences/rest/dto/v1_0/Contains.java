@@ -44,35 +44,63 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("QueryEntry")
+@GraphQLName("Contains")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "QueryEntry")
-public class QueryEntry implements Serializable {
+@XmlRootElement(name = "Contains")
+public class Contains implements Serializable {
 
-	public static QueryEntry toDTO(String json) {
-		return ObjectMapperUtil.readValue(QueryEntry.class, json);
+	public static Contains toDTO(String json) {
+		return ObjectMapperUtil.readValue(Contains.class, json);
 	}
 
-	public static QueryEntry unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(QueryEntry.class, json);
+	public static Contains unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Contains.class, json);
 	}
+
+	@Schema
+	public String getParameterName() {
+		return parameterName;
+	}
+
+	public void setParameterName(String parameterName) {
+		this.parameterName = parameterName;
+	}
+
+	@JsonIgnore
+	public void setParameterName(
+		UnsafeSupplier<String, Exception> parameterNameUnsafeSupplier) {
+
+		try {
+			parameterName = parameterNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String parameterName;
 
 	@Schema
 	@Valid
-	public Clause[] getClauses() {
-		return clauses;
+	public Object getValue() {
+		return value;
 	}
 
-	public void setClauses(Clause[] clauses) {
-		this.clauses = clauses;
+	public void setValue(Object value) {
+		this.value = value;
 	}
 
 	@JsonIgnore
-	public void setClauses(
-		UnsafeSupplier<Clause[], Exception> clausesUnsafeSupplier) {
+	public void setValue(
+		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
 
 		try {
-			clauses = clausesUnsafeSupplier.get();
+			value = valueUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -84,24 +112,24 @@ public class QueryEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Clause[] clauses;
+	protected Object value;
 
 	@Schema
 	@Valid
-	public Condition getCondition() {
-		return condition;
+	public Object[] getValues() {
+		return values;
 	}
 
-	public void setCondition(Condition condition) {
-		this.condition = condition;
+	public void setValues(Object[] values) {
+		this.values = values;
 	}
 
 	@JsonIgnore
-	public void setCondition(
-		UnsafeSupplier<Condition, Exception> conditionUnsafeSupplier) {
+	public void setValues(
+		UnsafeSupplier<Object[], Exception> valuesUnsafeSupplier) {
 
 		try {
-			condition = conditionUnsafeSupplier.get();
+			values = valuesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -113,35 +141,7 @@ public class QueryEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Condition condition;
-
-	@Schema
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	@JsonIgnore
-	public void setEnabled(
-		UnsafeSupplier<Boolean, Exception> enabledUnsafeSupplier) {
-
-		try {
-			enabled = enabledUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean enabled;
+	protected Object[] values;
 
 	@Override
 	public boolean equals(Object object) {
@@ -149,13 +149,13 @@ public class QueryEntry implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof QueryEntry)) {
+		if (!(object instanceof Contains)) {
 			return false;
 		}
 
-		QueryEntry queryEntry = (QueryEntry)object;
+		Contains contains = (Contains)object;
 
-		return Objects.equals(toString(), queryEntry.toString());
+		return Objects.equals(toString(), contains.toString());
 	}
 
 	@Override
@@ -170,44 +170,52 @@ public class QueryEntry implements Serializable {
 
 		sb.append("{");
 
-		if (clauses != null) {
+		if (parameterName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"clauses\": ");
+			sb.append("\"parameterName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(parameterName));
+
+			sb.append("\"");
+		}
+
+		if (value != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"value\": ");
+
+			sb.append(String.valueOf(value));
+		}
+
+		if (values != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"values\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < clauses.length; i++) {
-				sb.append(String.valueOf(clauses[i]));
+			for (int i = 0; i < values.length; i++) {
+				sb.append("\"");
 
-				if ((i + 1) < clauses.length) {
+				sb.append(_escape(values[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < values.length) {
 					sb.append(", ");
 				}
 			}
 
 			sb.append("]");
-		}
-
-		if (condition != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"condition\": ");
-
-			sb.append(String.valueOf(condition));
-		}
-
-		if (enabled != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"enabled\": ");
-
-			sb.append(enabled);
 		}
 
 		sb.append("}");
@@ -217,7 +225,7 @@ public class QueryEntry implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.QueryEntry",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Contains",
 		name = "x-class-name"
 	)
 	public String xClassName;

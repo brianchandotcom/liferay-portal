@@ -14,8 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.Clause;
-import com.liferay.search.experiences.rest.client.dto.v1_0.QueryEntry;
+import com.liferay.search.experiences.rest.client.dto.v1_0.Equals;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -23,7 +22,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -32,22 +30,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class QueryEntrySerDes {
+public class EqualsSerDes {
 
-	public static QueryEntry toDTO(String json) {
-		QueryEntryJSONParser queryEntryJSONParser = new QueryEntryJSONParser();
+	public static Equals toDTO(String json) {
+		EqualsJSONParser equalsJSONParser = new EqualsJSONParser();
 
-		return queryEntryJSONParser.parseToDTO(json);
+		return equalsJSONParser.parseToDTO(json);
 	}
 
-	public static QueryEntry[] toDTOs(String json) {
-		QueryEntryJSONParser queryEntryJSONParser = new QueryEntryJSONParser();
+	public static Equals[] toDTOs(String json) {
+		EqualsJSONParser equalsJSONParser = new EqualsJSONParser();
 
-		return queryEntryJSONParser.parseToDTOs(json);
+		return equalsJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(QueryEntry queryEntry) {
-		if (queryEntry == null) {
+	public static String toJSON(Equals equals) {
+		if (equals == null) {
 			return "null";
 		}
 
@@ -55,44 +53,46 @@ public class QueryEntrySerDes {
 
 		sb.append("{");
 
-		if (queryEntry.getClauses() != null) {
+		if (equals.getFormat() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"clauses\": ");
+			sb.append("\"format\": ");
 
-			sb.append("[");
+			sb.append("\"");
 
-			for (int i = 0; i < queryEntry.getClauses().length; i++) {
-				sb.append(String.valueOf(queryEntry.getClauses()[i]));
+			sb.append(_escape(equals.getFormat()));
 
-				if ((i + 1) < queryEntry.getClauses().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append("\"");
 		}
 
-		if (queryEntry.getCondition() != null) {
+		if (equals.getParameterName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"condition\": ");
+			sb.append("\"parameterName\": ");
 
-			sb.append(String.valueOf(queryEntry.getCondition()));
+			sb.append("\"");
+
+			sb.append(_escape(equals.getParameterName()));
+
+			sb.append("\"");
 		}
 
-		if (queryEntry.getEnabled() != null) {
+		if (equals.getValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"enabled\": ");
+			sb.append("\"value\": ");
 
-			sb.append(queryEntry.getEnabled());
+			sb.append("\"");
+
+			sb.append(_escape(equals.getValue()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -101,81 +101,72 @@ public class QueryEntrySerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		QueryEntryJSONParser queryEntryJSONParser = new QueryEntryJSONParser();
+		EqualsJSONParser equalsJSONParser = new EqualsJSONParser();
 
-		return queryEntryJSONParser.parseToMap(json);
+		return equalsJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(QueryEntry queryEntry) {
-		if (queryEntry == null) {
+	public static Map<String, String> toMap(Equals equals) {
+		if (equals == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (queryEntry.getClauses() == null) {
-			map.put("clauses", null);
+		if (equals.getFormat() == null) {
+			map.put("format", null);
 		}
 		else {
-			map.put("clauses", String.valueOf(queryEntry.getClauses()));
+			map.put("format", String.valueOf(equals.getFormat()));
 		}
 
-		if (queryEntry.getCondition() == null) {
-			map.put("condition", null);
+		if (equals.getParameterName() == null) {
+			map.put("parameterName", null);
 		}
 		else {
-			map.put("condition", String.valueOf(queryEntry.getCondition()));
+			map.put("parameterName", String.valueOf(equals.getParameterName()));
 		}
 
-		if (queryEntry.getEnabled() == null) {
-			map.put("enabled", null);
+		if (equals.getValue() == null) {
+			map.put("value", null);
 		}
 		else {
-			map.put("enabled", String.valueOf(queryEntry.getEnabled()));
+			map.put("value", String.valueOf(equals.getValue()));
 		}
 
 		return map;
 	}
 
-	public static class QueryEntryJSONParser
-		extends BaseJSONParser<QueryEntry> {
+	public static class EqualsJSONParser extends BaseJSONParser<Equals> {
 
 		@Override
-		protected QueryEntry createDTO() {
-			return new QueryEntry();
+		protected Equals createDTO() {
+			return new Equals();
 		}
 
 		@Override
-		protected QueryEntry[] createDTOArray(int size) {
-			return new QueryEntry[size];
+		protected Equals[] createDTOArray(int size) {
+			return new Equals[size];
 		}
 
 		@Override
 		protected void setField(
-			QueryEntry queryEntry, String jsonParserFieldName,
+			Equals equals, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "clauses")) {
+			if (Objects.equals(jsonParserFieldName, "format")) {
 				if (jsonParserFieldValue != null) {
-					queryEntry.setClauses(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ClauseSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Clause[size]
-						));
+					equals.setFormat((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "condition")) {
+			else if (Objects.equals(jsonParserFieldName, "parameterName")) {
 				if (jsonParserFieldValue != null) {
-					queryEntry.setCondition(
-						ConditionSerDes.toDTO((String)jsonParserFieldValue));
+					equals.setParameterName((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "enabled")) {
+			else if (Objects.equals(jsonParserFieldName, "value")) {
 				if (jsonParserFieldValue != null) {
-					queryEntry.setEnabled((Boolean)jsonParserFieldValue);
+					equals.setValue((Object)jsonParserFieldValue);
 				}
 			}
 		}

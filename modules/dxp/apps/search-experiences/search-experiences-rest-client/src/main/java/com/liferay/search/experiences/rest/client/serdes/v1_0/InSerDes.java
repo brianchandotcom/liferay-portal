@@ -14,8 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.Clause;
-import com.liferay.search.experiences.rest.client.dto.v1_0.QueryEntry;
+import com.liferay.search.experiences.rest.client.dto.v1_0.In;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -23,7 +22,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -32,22 +30,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class QueryEntrySerDes {
+public class InSerDes {
 
-	public static QueryEntry toDTO(String json) {
-		QueryEntryJSONParser queryEntryJSONParser = new QueryEntryJSONParser();
+	public static In toDTO(String json) {
+		InJSONParser inJSONParser = new InJSONParser();
 
-		return queryEntryJSONParser.parseToDTO(json);
+		return inJSONParser.parseToDTO(json);
 	}
 
-	public static QueryEntry[] toDTOs(String json) {
-		QueryEntryJSONParser queryEntryJSONParser = new QueryEntryJSONParser();
+	public static In[] toDTOs(String json) {
+		InJSONParser inJSONParser = new InJSONParser();
 
-		return queryEntryJSONParser.parseToDTOs(json);
+		return inJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(QueryEntry queryEntry) {
-		if (queryEntry == null) {
+	public static String toJSON(In in) {
+		if (in == null) {
 			return "null";
 		}
 
@@ -55,44 +53,42 @@ public class QueryEntrySerDes {
 
 		sb.append("{");
 
-		if (queryEntry.getClauses() != null) {
+		if (in.getParameterName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"clauses\": ");
+			sb.append("\"parameterName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(in.getParameterName()));
+
+			sb.append("\"");
+		}
+
+		if (in.getValues() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"values\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < queryEntry.getClauses().length; i++) {
-				sb.append(String.valueOf(queryEntry.getClauses()[i]));
+			for (int i = 0; i < in.getValues().length; i++) {
+				sb.append("\"");
 
-				if ((i + 1) < queryEntry.getClauses().length) {
+				sb.append(_escape(in.getValues()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < in.getValues().length) {
 					sb.append(", ");
 				}
 			}
 
 			sb.append("]");
-		}
-
-		if (queryEntry.getCondition() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"condition\": ");
-
-			sb.append(String.valueOf(queryEntry.getCondition()));
-		}
-
-		if (queryEntry.getEnabled() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"enabled\": ");
-
-			sb.append(queryEntry.getEnabled());
 		}
 
 		sb.append("}");
@@ -101,81 +97,59 @@ public class QueryEntrySerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		QueryEntryJSONParser queryEntryJSONParser = new QueryEntryJSONParser();
+		InJSONParser inJSONParser = new InJSONParser();
 
-		return queryEntryJSONParser.parseToMap(json);
+		return inJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(QueryEntry queryEntry) {
-		if (queryEntry == null) {
+	public static Map<String, String> toMap(In in) {
+		if (in == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (queryEntry.getClauses() == null) {
-			map.put("clauses", null);
+		if (in.getParameterName() == null) {
+			map.put("parameterName", null);
 		}
 		else {
-			map.put("clauses", String.valueOf(queryEntry.getClauses()));
+			map.put("parameterName", String.valueOf(in.getParameterName()));
 		}
 
-		if (queryEntry.getCondition() == null) {
-			map.put("condition", null);
+		if (in.getValues() == null) {
+			map.put("values", null);
 		}
 		else {
-			map.put("condition", String.valueOf(queryEntry.getCondition()));
-		}
-
-		if (queryEntry.getEnabled() == null) {
-			map.put("enabled", null);
-		}
-		else {
-			map.put("enabled", String.valueOf(queryEntry.getEnabled()));
+			map.put("values", String.valueOf(in.getValues()));
 		}
 
 		return map;
 	}
 
-	public static class QueryEntryJSONParser
-		extends BaseJSONParser<QueryEntry> {
+	public static class InJSONParser extends BaseJSONParser<In> {
 
 		@Override
-		protected QueryEntry createDTO() {
-			return new QueryEntry();
+		protected In createDTO() {
+			return new In();
 		}
 
 		@Override
-		protected QueryEntry[] createDTOArray(int size) {
-			return new QueryEntry[size];
+		protected In[] createDTOArray(int size) {
+			return new In[size];
 		}
 
 		@Override
 		protected void setField(
-			QueryEntry queryEntry, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			In in, String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "clauses")) {
+			if (Objects.equals(jsonParserFieldName, "parameterName")) {
 				if (jsonParserFieldValue != null) {
-					queryEntry.setClauses(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ClauseSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Clause[size]
-						));
+					in.setParameterName((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "condition")) {
+			else if (Objects.equals(jsonParserFieldName, "values")) {
 				if (jsonParserFieldValue != null) {
-					queryEntry.setCondition(
-						ConditionSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "enabled")) {
-				if (jsonParserFieldValue != null) {
-					queryEntry.setEnabled((Boolean)jsonParserFieldValue);
+					in.setValues((Object[])jsonParserFieldValue);
 				}
 			}
 		}

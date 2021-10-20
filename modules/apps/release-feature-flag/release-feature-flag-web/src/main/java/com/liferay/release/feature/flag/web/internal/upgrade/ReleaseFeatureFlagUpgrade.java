@@ -32,11 +32,6 @@ public class ReleaseFeatureFlagUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		if (!ReleaseInfo.isDXP() || StartupHelperUtil.isDBNew() ||
-			!StartupHelperUtil.isUpgrading()) {
-
-			//return;
-		}
 
 		// See https://tinyurl.com/3fkpt96p on how to use this
 
@@ -55,8 +50,12 @@ public class ReleaseFeatureFlagUpgrade implements UpgradeStepRegistrator {
 
 		@Override
 		public void upgrade(DBProcessContext dbProcessContext) {
-			ReleaseFeatureFlagManagerUtil.setEnabled(
-				_releaseFeatureFlag, false);
+			if (ReleaseInfo.isDXP() && !StartupHelperUtil.isDBNew() &&
+				StartupHelperUtil.isUpgrading()) {
+
+				ReleaseFeatureFlagManagerUtil.setEnabled(
+					_releaseFeatureFlag, false);
+			}
 		}
 
 		private final ReleaseFeatureFlag _releaseFeatureFlag;

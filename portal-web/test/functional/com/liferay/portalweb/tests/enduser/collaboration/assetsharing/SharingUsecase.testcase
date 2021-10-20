@@ -31,13 +31,15 @@ definition {
 
 	tearDown {
 		JSONGroup.deleteGroupByName(groupName = "Test Site");
+
+		JSONUser.tearDownNonAdminUsers();
 	}
 
 	@description = "This test ensures that Sharing can be disabled at the instance level."
 	@priority = "4"
-	@refactorneeded
-	test DisableSharingAtInstanceScope {
-		property test.name.skip.portal.instance = "SharingUsecase#DisableSharingAtInstanceScope";
+	@refactordone
+	test CanDisableSharingAtInstanceScope {
+		property test.name.skip.portal.instance = "SharingUsecase#CanDisableSharingAtInstanceScope";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -50,9 +52,8 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Navigator.openURL();
-
 		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
 			groupName = "Test Site",
 			layoutName = "Test Page",
 			widgetName = "Documents and Media");
@@ -69,49 +70,37 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs with sharing disabled",
+			groupName = "Test Site");
+
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
 			siteName = "Test Site");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		LexiconEntry.viewNoEntryMenuItem(
+			menuItem = "Share",
+			rowEntry = "Document with sharing disabled");
 
-		LexiconEntry.openEntryMenu(rowEntry = "Document with sharing disabled");
-
-		AssertElementNotPresent(
-			key_menuItem = "Share",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
-
-		AssertClick(
-			key_dmDocumentTitle = "Document with sharing disabled",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Document with sharing disabled");
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document with sharing disabled");
 
 		AssertElementNotPresent(
 			key_text = "Share",
 			locator1 = "Button#ANY");
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs with sharing disabled");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		Click(
-			key_listEntry = "Blogs with sharing disabled",
-			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
-
-		AssertElementNotPresent(
-			key_menuItem = "Share",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
+		LexiconEntry.viewNoEntryMenuItem(
+			menuItem = "Share",
+			rowEntry = "Blogs with sharing disabled");
 	}
 
 	@description = "This test ensures that Sharing can be disabled at the system level."
 	@priority = "4"
-	@refactorneeded
-	test DisableSharingAtSystemScope {
-		property test.name.skip.portal.instance = "SharingUsecase#DisableSharingAtSystemScope";
+	@refactordone
+	test CanDisableSharingAtSystemScope {
+		property test.name.skip.portal.instance = "SharingUsecase#CanDisableSharingAtSystemScope";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -124,9 +113,8 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Navigator.openURL();
-
 		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
 			groupName = "Test Site",
 			layoutName = "Test Page",
 			widgetName = "Documents and Media");
@@ -143,50 +131,36 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs with sharing disabled",
+			groupName = "Test Site");
+
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
 			siteName = "Test Site");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		LexiconEntry.viewNoEntryMenuItem(
+			menuItem = "Share",
+			rowEntry = "Document with sharing disabled");
 
-		LexiconEntry.openEntryMenu(rowEntry = "Document with sharing disabled");
-
-		AssertElementNotPresent(
-			key_menuItem = "Share",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
-
-		AssertClick(
-			key_dmDocumentTitle = "Document with sharing disabled",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Document with sharing disabled");
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document with sharing disabled");
 
 		AssertElementNotPresent(
 			key_text = "Share",
 			locator1 = "Button#ANY");
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs with sharing disabled");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		Click(
-			key_listEntry = "Blogs with sharing disabled",
-			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
-
-		AssertElementNotPresent(
-			key_menuItem = "Share",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
+		LexiconEntry.viewNoEntryMenuItem(
+			menuItem = "Share",
+			rowEntry = "Blogs with sharing disabled");
 	}
 
 	@description = "This test ensures that users can Filter By AssetType in the Shared Content app."
 	@priority = "3"
-	@refactorneeded
-	test FilterByAssetType {
-		property test.name.skip.portal.instance = "SharingUsecase#FilterByAssetType";
-
+	@refactordone
+	test CanFilterByAssetType {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Test Site",
 			layoutName = "Test Page",
@@ -198,29 +172,30 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Site",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site");
+
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
 			siteName = "Test Site");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.addMultiplePG(
-			dmDocumentFileList = "Document_1.jpeg,Document_2.docx",
-			viewableBy = "Owner");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "Document_1");
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site");
 
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
@@ -235,69 +210,32 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Navigator.openURL();
+		Asset.openTosharedContent(
+			navTab = "Shared with Me",
+			siteURLKey = "guest");
 
-		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
+		Asset.setFilterAndOrder(
+			assetType = "Document",
+			filterBy = "Asset Types");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Asset Types");
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
 
-		AssertTextEquals(
-			locator1 = "Portlet#MODAL_TITLE",
-			value1 = "Select Asset Type");
+		LexiconEntry.viewNoEntry(rowEntry = "Blogs Entry Title");
 
-		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
+		Asset.setFilterAndOrder(
+			assetType = "Blogs Entry",
+			filterBy = "Asset Types",
+			restoreFilter = "true");
 
-		var key_assetType = "Document";
+		LexiconEntry.viewEntryName(rowEntry = "Blogs Entry Title");
 
-		AssertClick(
-			locator1 = "Sharing#SHARED_CONTENT_ASSET_TYPE",
-			value1 = "Document");
-
-		SelectFrame(value1 = "relative=top");
-
-		var key_contentTitle = "Document_1";
-
-		AssertTextEquals(
-			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
-			value1 = "Document_1");
-		AssertElementNotPresent(
-			key_contentTitle = "Blogs Entry Title",
-			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
-
-		ManagementBar.setFilterAndOrder(filterBy = "All");
-
-		ManagementBar.setFilterAndOrder(filterBy = "Asset Types");
-
-		AssertTextEquals(
-			locator1 = "Portlet#MODAL_TITLE",
-			value1 = "Select Asset Type");
-
-		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
-
-		var key_assetType = "Blogs Entry";
-
-		AssertClick(
-			locator1 = "Sharing#SHARED_CONTENT_ASSET_TYPE",
-			value1 = "Blogs Entry");
-
-		SelectFrame(value1 = "relative=top");
-
-		var key_contentTitle = "Blogs Entry Title";
-
-		AssertTextEquals(
-			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
-			value1 = "Blogs Entry Title");
-		AssertElementNotPresent(
-			key_contentTitle = "Document_1",
-			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
+		LexiconEntry.viewNoEntry(rowEntry = "DM Document Title");
 	}
 
 	@description = "This test ensures that users can Order By Shared Date in the Shared Content app."
 	@priority = "3"
-	@refactorneeded
-	test OrderBySharedDate {
-		property test.name.skip.portal.instance = "SharingUsecase#OrderBySharedDate";
-
+	@refactordone
+	test CanOrderBySharedDate {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Test Site",
 			layoutName = "Test Page",
@@ -309,42 +247,32 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Test Site");
+		for (var num : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title${num}",
+				groupName = "Test Site",
+				guestPermissions = "false",
+				mimeType = "application/msword",
+				sourceFileName = "Document_${num}.doc");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+			Navigator.gotoSitePage(
+				pageName = "Test Page",
+				siteName = "Test Site");
 
-		for (var dmDocumentFile : list "Document_1.jpeg,Document_2.docx") {
-			DMDocument.addPG(
-				dmDocumentFile = "${dmDocumentFile}",
-				dmDocumentTitle = "${dmDocumentFile}",
-				viewableBy = "Owner");
+			DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title${num}");
+
+			DMDocument.sharePG(
+				userEmailAddress = "userea@liferay.com",
+				userName = "userfn userln");
 		}
-
-		DMNavigator.gotoShare(dmDocumentTitle = "Document_1.jpeg");
-
-		DMDocument.sharePG(
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Test Site");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "Document_2.docx");
-
-		DMDocument.sharePG(
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site");
 
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
@@ -359,9 +287,9 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
+		Asset.openTosharedContent(
+			navTab = "Shared with Me",
+			siteURLKey = "guest");
 
 		ManagementBar.setFilterAndOrder(orderBy = "Shared Date");
 
@@ -372,11 +300,13 @@ definition {
 		AssertElementPresent(
 			key_contentTitle = "Blogs Entry Title",
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE");
+
 		AssertElementPresent(
-			key_contentTitle = "Document_2.docx",
+			key_contentTitle = "DM Document Title2",
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
+
 		AssertElementPresent(
-			key_contentTitle = "Document_1.jpeg",
+			key_contentTitle = "DM Document Title1",
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_3");
 	}
 

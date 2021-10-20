@@ -130,7 +130,7 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 
 		Document lastDocument = null;
 
-		List<Document> documentList = new ArrayList<>();
+		List<Document> documentsList = new ArrayList<>();
 
 		Sort sort = new Sort(Field.ENTRY_CLASS_PK, Sort.LONG_TYPE, false);
 
@@ -149,21 +149,21 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 
 			Hits hits = indexer.search(searchContext);
 
-			Document[] docs = hits.getDocs();
+			Document[] documents = hits.getDocs();
 
-			if (docs.length == 0) {
+			if (documents.length == 0) {
 				break;
 			}
 
 			if (start < indexSearchLimit) {
-				Collections.addAll(documentList, docs);
+				Collections.addAll(documentsList, documents);
 
 				if (end < indexSearchLimit) {
 					break;
 				}
 			}
 
-			lastDocument = docs[docs.length - 1];
+			lastDocument = documents[documents.length - 1];
 
 			start = Math.max(0, start - indexSearchLimit);
 			end = Math.max(0, end - indexSearchLimit);
@@ -171,8 +171,8 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 
 		Hits hits = new HitsImpl();
 
-		hits.setDocs(documentList.toArray(new Document[0]));
-		hits.setLength(documentList.size());
+		hits.setDocs(documentsList.toArray(new Document[0]));
+		hits.setLength(documentsList.size());
 		hits.setStart(0);
 
 		return hits;

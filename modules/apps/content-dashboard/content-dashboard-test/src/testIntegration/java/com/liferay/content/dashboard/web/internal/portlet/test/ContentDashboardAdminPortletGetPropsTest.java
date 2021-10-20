@@ -50,12 +50,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.test.MockLiferayPortletContext;
-
-import java.util.Map;
-
-import javax.portlet.Portlet;
-import javax.portlet.PortletPreferences;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,6 +58,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import javax.portlet.Portlet;
+import javax.portlet.PortletPreferences;
+import java.util.Map;
 
 /**
  * @author David Arques
@@ -136,7 +134,9 @@ public class ContentDashboardAdminPortletGetPropsTest {
 
 			Map<String, Object> data = _getData(
 				_getMockLiferayPortletRenderRequest(
-					new String[] {assetVocabulary.getName()}));
+					new String[] {
+						String.valueOf(assetVocabulary.getVocabularyId())
+					}));
 
 			Map<String, Object> props = (Map<String, Object>)data.get("props");
 
@@ -223,8 +223,8 @@ public class ContentDashboardAdminPortletGetPropsTest {
 			Map<String, Object> data = _getData(
 				_getMockLiferayPortletRenderRequest(
 					new String[] {
-						assetVocabulary.getName(),
-						childAssetVocabulary.getName()
+						String.valueOf(assetVocabulary.getVocabularyId()),
+						String.valueOf(childAssetVocabulary.getVocabularyId())
 					}));
 
 			Map<String, Object> props = (Map<String, Object>)data.get("props");
@@ -318,8 +318,8 @@ public class ContentDashboardAdminPortletGetPropsTest {
 			Map<String, Object> data = _getData(
 				_getMockLiferayPortletRenderRequest(
 					new String[] {
-						assetVocabulary.getName(),
-						childAssetVocabulary.getName()
+						String.valueOf(assetVocabulary.getVocabularyId()),
+						String.valueOf(childAssetVocabulary.getVocabularyId())
 					}));
 
 			Map<String, Object> props = (Map<String, Object>)data.get("props");
@@ -403,8 +403,8 @@ public class ContentDashboardAdminPortletGetPropsTest {
 			Map<String, Object> data = _getData(
 				_getMockLiferayPortletRenderRequest(
 					new String[] {
-						assetVocabulary.getName(),
-						childAssetVocabulary.getName()
+						String.valueOf(assetVocabulary.getVocabularyId()),
+						String.valueOf(childAssetVocabulary.getVocabularyId())
 					}));
 
 			Map<String, Object> props = (Map<String, Object>)data.get("props");
@@ -460,8 +460,8 @@ public class ContentDashboardAdminPortletGetPropsTest {
 			Map<String, Object> data = _getData(
 				_getMockLiferayPortletRenderRequest(
 					new String[] {
-						assetVocabulary.getName(),
-						childAssetVocabulary.getName()
+						String.valueOf(assetVocabulary.getVocabularyId()),
+						String.valueOf(childAssetVocabulary.getVocabularyId())
 					}));
 
 			Map<String, Object> props = (Map<String, Object>)data.get("props");
@@ -531,8 +531,8 @@ public class ContentDashboardAdminPortletGetPropsTest {
 			Map<String, Object> data = _getData(
 				_getMockLiferayPortletRenderRequest(
 					new String[] {
-						assetVocabulary.getName(),
-						childAssetVocabulary.getName()
+						String.valueOf(assetVocabulary.getVocabularyId()),
+						String.valueOf(childAssetVocabulary.getVocabularyId())
 					}));
 
 			Map<String, Object> props = (Map<String, Object>)data.get("props");
@@ -613,7 +613,7 @@ public class ContentDashboardAdminPortletGetPropsTest {
 	}
 
 	private MockLiferayPortletRenderRequest _getMockLiferayPortletRenderRequest(
-			String[] assetVocabularyNames)
+			String[] assetVocabularyIds)
 		throws Exception {
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
@@ -643,8 +643,7 @@ public class ContentDashboardAdminPortletGetPropsTest {
 		PortletPreferences portletPreferences =
 			mockLiferayPortletRenderRequest.getPreferences();
 
-		portletPreferences.setValues(
-			"assetVocabularyNames", assetVocabularyNames);
+		portletPreferences.setValues("assetVocabularyIds", assetVocabularyIds);
 
 		return mockLiferayPortletRenderRequest;
 	}

@@ -24,15 +24,14 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import javax.portlet.PortletException;
-import javax.portlet.PortletPreferences;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 
 /**
  * @author David Arques
@@ -51,10 +50,10 @@ public class UpdateContentDashboardConfigurationMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		String[] assetVocabularyNames = {"vocabulary1", "vocabulary2"};
+		String[] assetVocabularyIds = {"vocabulary1", "vocabulary2"};
 
 		mockLiferayPortletActionRequest.setParameter(
-			"assetVocabularyNames", StringUtil.merge(assetVocabularyNames));
+			"assetVocabularyIds", StringUtil.merge(assetVocabularyIds));
 
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest,
@@ -64,24 +63,23 @@ public class UpdateContentDashboardConfigurationMVCActionCommandTest {
 			mockLiferayPortletActionRequest.getPreferences();
 
 		Assert.assertArrayEquals(
-			assetVocabularyNames,
-			portletPreferences.getValues(
-				"assetVocabularyNames", new String[0]));
+			assetVocabularyIds,
+			portletPreferences.getValues("assetVocabularyIds", new String[0]));
 
 		Assert.assertNull(
 			SessionMessages.get(
-				mockLiferayPortletActionRequest, "emptyAssetVocabularyNames"));
+				mockLiferayPortletActionRequest, "emptyAssetVocabularyIds"));
 	}
 
 	@Test
-	public void testProcessActionWithEmptyAssetVocabularyNames()
+	public void testProcessActionWithEmptyAssetVocabularyIdsDuringInitialization()
 		throws PortletException {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.setParameter(
-			"assetVocabularyNames", new String[0]);
+			"assetVocabularyIds", new String[0]);
 
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest,
@@ -92,14 +90,13 @@ public class UpdateContentDashboardConfigurationMVCActionCommandTest {
 
 		Assert.assertArrayEquals(
 			new String[0],
-			portletPreferences.getValues(
-				"assetVocabularyNames", new String[0]));
+			portletPreferences.getValues("assetVocabularyIds", new String[0]));
 
-		Object emptyAssetVocabularyNames = SessionMessages.get(
-			mockLiferayPortletActionRequest, "emptyAssetVocabularyNames");
+		Object emptyAssetVocabularyIds = SessionMessages.get(
+			mockLiferayPortletActionRequest, "emptyAssetVocabularyIds");
 
-		Assert.assertNotNull(emptyAssetVocabularyNames);
-		Assert.assertTrue((Boolean)emptyAssetVocabularyNames);
+		Assert.assertNotNull(emptyAssetVocabularyIds);
+		Assert.assertTrue((Boolean)emptyAssetVocabularyIds);
 	}
 
 	@Inject(

@@ -21,15 +21,14 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import javax.portlet.PortletException;
-import javax.portlet.PortletPreferences;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 
 /**
  * @author David Arques
@@ -51,7 +50,7 @@ public class SwapContentDashboardConfigurationMVCActionCommandTest {
 			mockLiferayPortletActionRequest.getPreferences();
 
 		portletPreferences.setValues(
-			"assetVocabularyNames", "vocabulary1", "vocabulary2");
+			"assetVocabularyIds", "vocabularyId1", "vocabularyId2");
 
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest,
@@ -60,9 +59,8 @@ public class SwapContentDashboardConfigurationMVCActionCommandTest {
 		portletPreferences = mockLiferayPortletActionRequest.getPreferences();
 
 		Assert.assertArrayEquals(
-			new String[] {"vocabulary2", "vocabulary1"},
-			portletPreferences.getValues(
-				"assetVocabularyNames", new String[0]));
+			new String[] {"vocabularyId2", "vocabularyId1"},
+			portletPreferences.getValues("assetVocabularyIds", new String[0]));
 	}
 
 	@Test
@@ -75,7 +73,7 @@ public class SwapContentDashboardConfigurationMVCActionCommandTest {
 		PortletPreferences portletPreferences =
 			mockLiferayPortletActionRequest.getPreferences();
 
-		portletPreferences.setValues("assetVocabularyNames", "vocabulary1");
+		portletPreferences.setValues("assetVocabularyIds", "vocabulary1");
 
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest,
@@ -85,8 +83,7 @@ public class SwapContentDashboardConfigurationMVCActionCommandTest {
 
 		Assert.assertArrayEquals(
 			new String[] {"vocabulary1"},
-			portletPreferences.getValues(
-				"assetVocabularyNames", new String[0]));
+			portletPreferences.getValues("assetVocabularyIds", new String[0]));
 	}
 
 	@Inject(

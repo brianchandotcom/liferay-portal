@@ -17,6 +17,7 @@ package com.liferay.content.dashboard.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -28,23 +29,20 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.List;
-import java.util.Locale;
-
-import javax.portlet.PortletPreferences;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import javax.portlet.PortletPreferences;
+import java.util.Locale;
 
 /**
  * @author David Arques
@@ -76,29 +74,27 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 	public void testGetAvailableVocabularyNames() throws Exception {
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest(
-				_audienceAssetVocabulary.getName(),
-				_stageAssetVocabulary.getName());
+				String.valueOf(_audienceAssetVocabulary.getVocabularyId()),
+				String.valueOf(_stageAssetVocabulary.getVocabularyId()));
 
 		_mvcRenderCommand.render(
 			mockLiferayPortletRenderRequest,
 			new MockLiferayPortletRenderResponse());
 
-		List<KeyValuePair> keyValuePairs = ReflectionTestUtil.invoke(
+		JSONArray keyValuePairsJSONArray = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
 				"CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT"),
-			"getAvailableVocabularyNames", new Class<?>[0]);
+			"getAvailableVocabularyJSONArray", new Class<?>[0]);
 
-		Assert.assertFalse(
-			keyValuePairs.contains(
-				new KeyValuePair(
-					_audienceAssetVocabulary.getName(),
-					_audienceAssetVocabulary.getTitle(_locale))));
+		Assert.assertTrue(keyValuePairsJSONArray.length() > 0);
 
-		Assert.assertFalse(
-			keyValuePairs.contains(
-				new KeyValuePair(
-					_stageAssetVocabulary.getName(),
-					_stageAssetVocabulary.getTitle(_locale))));
+		String expectedResult =
+			"[{\"site\":\"20126\",\"global\":true," +
+				"\"label\":\"Topic (Global)\",\"value\":\"20133\"}]";
+
+		Assert.assertTrue(
+			StringUtil.equalsIgnoreCase(
+				expectedResult, keyValuePairsJSONArray.toString()));
 	}
 
 	@Test
@@ -107,59 +103,59 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest(
-				_audienceAssetVocabulary.getName());
+				String.valueOf(_audienceAssetVocabulary.getVocabularyId()));
 
 		_mvcRenderCommand.render(
 			mockLiferayPortletRenderRequest,
 			new MockLiferayPortletRenderResponse());
 
-		List<KeyValuePair> keyValuePairs = ReflectionTestUtil.invoke(
+		JSONArray keyValuePairsJSONArray = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
 				"CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT"),
-			"getAvailableVocabularyNames", new Class<?>[0]);
+			"getAvailableVocabularyJSONArray", new Class<?>[0]);
 
-		Assert.assertFalse(
-			keyValuePairs.contains(
-				new KeyValuePair(
-					_audienceAssetVocabulary.getName(),
-					_audienceAssetVocabulary.getTitle(_locale))));
+		Assert.assertTrue(keyValuePairsJSONArray.length() > 0);
 
 		Assert.assertTrue(
-			keyValuePairs.contains(
-				new KeyValuePair(
-					_stageAssetVocabulary.getName(),
-					_stageAssetVocabulary.getTitle(_locale))));
+			keyValuePairsJSONArray.toString(
+			).contains(
+				"Stage"
+			));
+		Assert.assertTrue(
+			keyValuePairsJSONArray.toString(
+			).contains(
+				"Topic"
+			));
 	}
 
 	@Test
 	public void testGetCurrentVocabularyNames() throws Exception {
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest(
-				_audienceAssetVocabulary.getName(),
-				_stageAssetVocabulary.getName());
+				String.valueOf(_audienceAssetVocabulary.getVocabularyId()),
+				String.valueOf(_stageAssetVocabulary.getVocabularyId()));
 
 		_mvcRenderCommand.render(
 			mockLiferayPortletRenderRequest,
 			new MockLiferayPortletRenderResponse());
 
-		List<KeyValuePair> keyValuePairs = ReflectionTestUtil.invoke(
+		JSONArray keyValuePairsJSONArray = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
 				"CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT"),
-			"getCurrentVocabularyNames", new Class<?>[0]);
+			"getCurrentVocabularyJSONArray", new Class<?>[0]);
 
-		Assert.assertEquals(keyValuePairs.toString(), 2, keyValuePairs.size());
+		Assert.assertEquals(2, keyValuePairsJSONArray.length());
 
-		Assert.assertEquals(
-			keyValuePairs.get(0),
-			new KeyValuePair(
-				_audienceAssetVocabulary.getName(),
-				_audienceAssetVocabulary.getTitle(_locale)));
-
-		Assert.assertEquals(
-			keyValuePairs.get(1),
-			new KeyValuePair(
-				_stageAssetVocabulary.getName(),
-				_stageAssetVocabulary.getTitle(_locale)));
+		Assert.assertTrue(
+			keyValuePairsJSONArray.toString(
+			).contains(
+				"Audience"
+			));
+		Assert.assertTrue(
+			keyValuePairsJSONArray.toString(
+			).contains(
+				"Stage"
+			));
 	}
 
 	@Test
@@ -168,28 +164,28 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest(
-				_audienceAssetVocabulary.getName());
+				String.valueOf(_audienceAssetVocabulary.getVocabularyId()));
 
 		_mvcRenderCommand.render(
 			mockLiferayPortletRenderRequest,
 			new MockLiferayPortletRenderResponse());
 
-		List<KeyValuePair> keyValuePairs = ReflectionTestUtil.invoke(
+		JSONArray keyValuePairsJSONArray = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
 				"CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT"),
-			"getCurrentVocabularyNames", new Class<?>[0]);
+			"getCurrentVocabularyJSONArray", new Class<?>[0]);
 
-		Assert.assertEquals(keyValuePairs.toString(), 1, keyValuePairs.size());
+		Assert.assertEquals(1, keyValuePairsJSONArray.length());
 
-		Assert.assertEquals(
-			keyValuePairs.get(0),
-			new KeyValuePair(
-				_audienceAssetVocabulary.getName(),
-				_audienceAssetVocabulary.getTitle(_locale)));
+		Assert.assertTrue(
+			keyValuePairsJSONArray.toString(
+			).contains(
+				"Audience"
+			));
 	}
 
 	private MockLiferayPortletRenderRequest _getMockLiferayPortletRenderRequest(
-			String... assetVocabularyNames)
+			String... assetVocabularyIds)
 		throws Exception {
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
@@ -198,8 +194,7 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 		PortletPreferences portletPreferences =
 			mockLiferayPortletRenderRequest.getPreferences();
 
-		portletPreferences.setValues(
-			"assetVocabularyNames", assetVocabularyNames);
+		portletPreferences.setValues("assetVocabularyIds", assetVocabularyIds);
 
 		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());

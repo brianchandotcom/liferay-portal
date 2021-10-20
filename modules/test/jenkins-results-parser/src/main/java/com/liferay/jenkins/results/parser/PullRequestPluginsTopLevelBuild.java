@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * @author Michael Hashimoto
  */
 public class PullRequestPluginsTopLevelBuild
-	extends PluginsTopLevelBuild implements PullRequestBuild {
+	extends PluginsTopLevelBuild implements PullRequestBuild, WorkspaceBuild {
 
 	public PullRequestPluginsTopLevelBuild(
 		String url, TopLevelBuild topLevelBuild) {
@@ -90,6 +90,61 @@ public class PullRequestPluginsTopLevelBuild
 		}
 
 		return ciTestSuite;
+	}
+
+	@Override
+	public Workspace getWorkspace() {
+		PullRequest pullRequest = getPullRequest();
+
+		Workspace workspace = WorkspaceFactory.newWorkspace(
+			pullRequest.getGitRepositoryName(),
+			pullRequest.getUpstreamRemoteGitBranchName(), getJobName());
+
+		if (workspace instanceof PortalWorkspace) {
+			PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
+
+			portalWorkspace.setBuildProfile(getBuildProfile());
+		}
+
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		workspaceGitRepository.setGitHubURL(pullRequest.getHtmlURL());
+
+		String senderBranchSHA = _getSenderBranchSHA();
+
+		if (JenkinsResultsParserUtil.isSHA(senderBranchSHA)) {
+			workspaceGitRepository.setSenderBranchSHA(senderBranchSHA);
+		}
+
+		String upstreamBranchSHA = _getUpstreamBranchSHA();
+
+		if (JenkinsResultsParserUtil.isSHA(upstreamBranchSHA)) {
+			workspaceGitRepository.setBaseBranchSHA(upstreamBranchSHA);
+		}
+
+		return workspace;
+	}
+
+	private String _getSenderBranchSHA() {
+		String senderBranchSHA = getParameterValue("GITHUB_SENDER_BRANCH_SHA");
+
+		if (JenkinsResultsParserUtil.isSHA(senderBranchSHA)) {
+			return senderBranchSHA;
+		}
+
+		return null;
+	}
+
+	private String _getUpstreamBranchSHA() {
+		String upstreamBranchSHA = getParameterValue(
+			"GITHUB_UPSTREAM_BRANCH_SHA");
+
+		if (JenkinsResultsParserUtil.isSHA(upstreamBranchSHA)) {
+			return upstreamBranchSHA;
+		}
+
+		return null;
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

@@ -49,6 +49,9 @@ public class WorkspaceFactory {
 		if (primaryRepositoryName.matches("com-liferay-.*")) {
 			workspace = new SubrepositoryWorkspace(workspaceJSONObject);
 		}
+		else if (primaryRepositoryName.matches("liferay-plugins(-ee)?")) {
+			workspace = new PluginsWorkspace(workspaceJSONObject);
+		}
 		else if (primaryRepositoryName.matches("liferay-portal(-ee)?")) {
 			workspace = new PortalWorkspace(workspaceJSONObject);
 		}
@@ -93,6 +96,10 @@ public class WorkspaceFactory {
 
 		if (repositoryName.matches("com-liferay-.*")) {
 			workspace = new SubrepositoryWorkspace(
+				repositoryName, upstreamBranchName, jobName);
+		}
+		else if (repositoryName.matches("liferay-plugins(-ee)?")) {
+			workspace = new PluginsWorkspace(
 				repositoryName, upstreamBranchName, jobName);
 		}
 		else if (repositoryName.matches("liferay-portal(-ee)?")) {

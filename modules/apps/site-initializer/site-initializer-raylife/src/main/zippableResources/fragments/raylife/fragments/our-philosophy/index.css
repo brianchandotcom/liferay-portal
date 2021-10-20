@@ -1,17 +1,18 @@
-.product-actions a {
-	color: var(--body-color);
-}
-
 .product-actions .product-actions-title {
 	font-size: var(--display4-size);
-	font-weight: var(--display4-weight);
+	font-weight: var(--font-weight-bold);
 	margin-bottom: var(--spacer-3);
 }
 
 .product-actions .title-highlight {
-	color: #9A4DFF;
+	color: var(--color-accent-3);
+}
+
+.product-actions .product-actions-title {
+	color: var(--color-neutral-1);
 }
 
 .product-actions .product-actions-description {
+	color: var(--color-neutral-2);
 	font-size: var(--font-size-lg);
 }

@@ -1481,12 +1481,43 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is possible to update a Relationship"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanUpdateRelationship {
 		property portal.acceptance = "true";
 
-		// TODO LPS-140590 CanUpdateRelationship pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject",
+			objectName_2 = "CustomObject",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		CreateObject.editLabel(labelName = "Relationship Updated");
+
+		Button.clickSave();
+
+		Refresh();
+
+		AssertTextEquals(
+			locator1 ="ObjectAdmin#RELATIONSHIP_LABEL",
+			key_label = "Relationship Updated",
+			value1 = "Relationship Updated");
+			
 
 	}
 

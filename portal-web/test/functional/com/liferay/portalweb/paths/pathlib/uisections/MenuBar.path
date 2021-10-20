@@ -16,8 +16,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACTIVE_NAV_LINK_IN_STACK</td>
+	<td>//nav[contains(@class,'menubar')]//ul[contains(@class,'nav-stacked')][normalize-space()='${key_stackName}']//li[contains(@class,'nav-item')]//a[contains(@class,'active')][normalize-space()='${key_menuBar}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAV_LINK</td>
 	<td>//nav[contains(@class,'menubar')]//li[contains(@class,'nav-item')]//a[normalize-space()='${key_menuBar}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAV_LINK_IN_STACK</td>
+	<td>//nav[contains(@class,'menubar')]//li[contains(@class,'nav-item')][normalize-space()='${key_stackName}']//a[normalize-space()='${key_menuBar}']</td>
 	<td></td>
 </tr>
 </tbody>

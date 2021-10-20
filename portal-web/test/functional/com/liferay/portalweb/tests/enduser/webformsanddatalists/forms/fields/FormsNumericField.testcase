@@ -1098,6 +1098,8 @@ definition {
 
 		FormFields.enableSwitch(fieldName = "Input Mask");
 
+		ScrollBy(value1 = "0, 2000");
+
 		FormFields.setInputMaskOnDecimal(
 			decimalSeparator = "0,00",
 			prefix = "ABC",
@@ -1106,6 +1108,8 @@ definition {
 		FormFields.viewNumericInputMask(inputMaskValue = "0,00");
 
 		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		ScrollBy(value1 = "0, 2000");
 
 		FormFields.setInputMaskOnDecimal(
 			decimalSeparator = "0.00",

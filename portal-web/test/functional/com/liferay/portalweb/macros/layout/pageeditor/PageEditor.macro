@@ -748,25 +748,8 @@ definition {
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 		}
 
-		if ("${fragmentName}" == "Collection Display") {
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_message = "No Collection Selected Yet",
-				locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
-		}
-
-		if ("${fragmentName}" == "Content Display") {
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_messageIfo = "The selected content will be shown here.",
-				locator1 = "Fragment#MESSAGE_INFO");
-		}
-
-		if ("${fragmentName}" == "Display Page Content") {
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_messageIfo = "The display page content will be shown here.",
-				locator1 = "Fragment#MESSAGE_INFO");
+		if (("${fragmentName}" == "Content Display") || ("${fragmentName}" == "Collection Display") || ("${fragmentName}" == "Display Page Content")) {
+			PageEditor.viewFragmentMessageInfo(fragmentName = "${fragmentName}");
 		}
 
 		if (isSet(composition)) {

@@ -63,7 +63,8 @@ const ListItems = ({
 									width={50}
 								/>
 							</div>
-							{title}
+
+							<span>{title}</span>
 						</div>
 						{formattedValue}
 					</li>
@@ -103,7 +104,7 @@ const ProductComparison = ({
 					<div className="title">{category}</div>
 
 					<div className="value">
-						&#36;{price}
+						&#36;{Number(price).toLocaleString('en-US')}
 						<div>/yr</div>
 					</div>
 

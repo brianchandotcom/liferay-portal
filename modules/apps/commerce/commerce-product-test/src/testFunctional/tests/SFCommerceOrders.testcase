@@ -211,7 +211,7 @@ definition {
 	@description = "COMMERCE-6383. As a buyer, I want to be able to Reorder the Placed Order by clicking on 'Reorder' button"
 	@priority = "3"
 	test ReorderFromPlacedOrdersDetailsPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -528,7 +528,7 @@ definition {
 	@description = "COMMERCE-6382. As a buyer, I want to be able to see the list of shipments for an order item by clicking on 'Shipments'"
 	@priority = "3"
 	test ViewListOfShipmentsInPlacedOrdersDetailsPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

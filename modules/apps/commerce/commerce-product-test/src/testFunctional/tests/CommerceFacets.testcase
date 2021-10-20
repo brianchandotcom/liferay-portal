@@ -53,7 +53,7 @@ definition {
 	@description = "COMMERCE-6165. As a buyer, I want to filter products using Option Facet widget and the results should be visible on the Search Results widget"
 	@priority = "3"
 	test AssertProductsAreFilteredByOptionFacet {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

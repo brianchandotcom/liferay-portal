@@ -218,7 +218,7 @@ definition {
 	@description = "COMMERCE-6344. As a buyer, I want to be able to select the quantity of a cart item starting from a minimum quantity, if set"
 	@priority = "3"
 	test AssertSelectableQuantitiesInMiniCartItemStartFromMinimumQuantitySet {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -279,7 +279,7 @@ definition {
 	@description = "COMMERCE-6335. As a buyer, I want to edit the quantity of an bundled product in the mini-cart using it's quantity selector and I want to view the changes applied to the mini-cart summary and the bundled items to change their quantity"
 	@priority = "3"
 	test EditBundledProductQuantityFromMiniCart {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -445,7 +445,7 @@ definition {
 	@description = "COMMERCE-6333. As a buyer, I want to edit the quantity of an item in the mini-cart using it's quantity selector and I want to view the changes applied to the mini-cart summary"
 	@priority = "3"
 	test EditCartItemQuantityFromMiniCart {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -880,7 +880,7 @@ definition {
 	@description = "COMMERCE-6332. As a buyer, I want to view cart item details in the mini-cart(Name, SKU, Quantity, Options(if present), List Price, Image) and I want to be able to view the number of different products I have in my cart"
 	@priority = "3"
 	test ViewMiniCartItemDetails {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1043,7 +1043,7 @@ definition {
 	@description = "COMMERCE-6338. As a buyer, I want to see the barred list price, the discount percentage and the discounted price of an item in the mini-cart, if a discount is set"
 	@priority = "3"
 	test ViewMiniCartItemWithDiscount {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1190,7 +1190,7 @@ definition {
 	@description = "COMMERCE-6340. As a buyer, I want to be able to view subtotal and it's total price changed in the mini-cart summary when a discount with target 'Subtotal' is set"
 	@priority = "3"
 	test ViewMiniCartItemWithDiscountToSubtotal {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1314,7 +1314,7 @@ definition {
 	@description = "COMMERCE-6336. As a buyer, I want to see the barred list price and a sale price of an item in the mini-cart, if a promotion is set"
 	@priority = "3"
 	test ViewMiniCartItemWithPromotion {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

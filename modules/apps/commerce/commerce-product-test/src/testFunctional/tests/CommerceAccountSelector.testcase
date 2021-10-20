@@ -98,7 +98,7 @@ definition {
 	@description = "COMMERCE-5924. As a buyer, I want the account I have currently selected to be highlighted in the account selector dropdown"
 	@priority = "3"
 	test AssertActiveAccountIsVisibleOnAccountSelectorDropdown {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -120,7 +120,7 @@ definition {
 	@description = "COMMERCE-5927. As a buyer, I want to be able to select an account from the list (which is not the selected one), and have the selected account change to the newly selected account"
 	@priority = "3"
 	test ChangeActiveAccountFromAccountsList {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -164,7 +164,7 @@ definition {
 	@description = "COMMERCE-5929. As a buyer, I want to be able to select an order from the list (which is not the selected one), and have the selected order change to the newly selected order"
 	@priority = "3"
 	test ChangeActiveOrderFromOrdersList {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

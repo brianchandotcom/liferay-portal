@@ -164,7 +164,7 @@ definition {
 	@description = "COMMERCE-5914. As a buyer, I want to deselect a item in Product Details for compare in Product Widget"
 	@priority = "3"
 	test RemoveComparisonItemFromProductDetailsPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

@@ -70,7 +70,7 @@ definition {
 	@description = "COMMERCE-6326. As a buyer, I want to be able to search an entry in All Content using Global Search and the results should be visible on Search page"
 	@priority = "3"
 	test GlobalSearchSearchEntryInAllContent {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -210,7 +210,7 @@ definition {
 	@description = "COMMERCE-6327. As a buyer, I want to search for different products by typing their SKUs in the Global Search and I want to see the products with that SKUs in the suggestions(single SKU, multiple SKUs)"
 	@priority = "3"
 	test GlobalSearchSearchProductsBySKUs {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -456,7 +456,7 @@ definition {
 	@description = "COMMERCE-6148. As a buyer, I want to search a product by its name using the Search Bar widget and I want the results to be visible on the Search Results widget"
 	@priority = "3"
 	test SearchBarWidgetSearchProductByName {
-		property portal.acceptance = "Intern Test";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -574,7 +574,7 @@ definition {
 	@description = "COMMERCE-6155. As a buyer, I want to search for products by typing a Category in Search Bar widget and the results should be visible on Search Results widget"
 	@priority = "3"
 	test SearchBarWidgetSearchProductsByCategory {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

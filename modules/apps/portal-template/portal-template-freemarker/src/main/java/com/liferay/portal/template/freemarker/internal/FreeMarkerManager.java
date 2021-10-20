@@ -23,6 +23,7 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -615,7 +616,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		for (String library : macroLibrary) {
 			String libraryResource = library;
 
-			int indexOfSpace = library.indexOf(StringPool.SPACE);
+			int indexOfSpace = library.indexOf(CharPool.SPACE);
 
 			if (indexOfSpace != -1) {
 				libraryResource = library.substring(0, indexOfSpace);

@@ -66,6 +66,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>TOGGLE_INACTIVE</td>
+		<td>//input[@id = '_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_active']</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>VIEW_OBJECT_SCOPE_DISABLED</td>
 		<td>//label[contains(text(),'Scope')]/..//select[@class = 'form-control disabled']</td>
 		<td></td>

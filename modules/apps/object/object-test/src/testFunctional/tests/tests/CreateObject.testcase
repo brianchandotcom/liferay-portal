@@ -1902,12 +1902,35 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object portlet is no longer displayed on the Open Menu when inactivated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ObjectPorletDisapperasOpenMenuWhenInactivated {
 		property portal.acceptance = "true";
 
-		// TODO LPS-140856 ObjectPorletDisapperasOpenMenuWhenInactivated pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
+		AssertElementNotPresent(
+			key_category = "Object",
+			key_portlet = "Custom Objects",
+			locator1 = "ApplicationsMenu#PORTLET");
+
 
 	}
 

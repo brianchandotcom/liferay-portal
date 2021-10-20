@@ -74,6 +74,10 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_MANDATORY");
 	}
 
+	macro checkToggleInactive {
+		Uncheck.uncheckToggleSwitch(locator1 = "CreateObject#TOGGLE_INACTIVE");
+	}
+
 	macro editLabel {
 		Type(
 			locator1 = "CreateObject#OBJECT_LABEL",

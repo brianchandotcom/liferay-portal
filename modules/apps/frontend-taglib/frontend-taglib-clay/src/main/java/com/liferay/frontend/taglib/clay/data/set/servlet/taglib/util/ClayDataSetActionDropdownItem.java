@@ -34,6 +34,19 @@ public class ClayDataSetActionDropdownItem extends DropdownItem {
 		setTarget(target);
 	}
 
+	public ClayDataSetActionDropdownItem(
+		String confirmationMessage, String href, String icon, String id,
+		String label, String method, String permissionKey, String target) {
+
+		this(href, icon, id, label, method, permissionKey, target);
+
+		setConfirmationMessage(confirmationMessage);
+	}
+
+	public void setConfirmationMessage(String confirmationMessage) {
+		putData("confirmationMessage", confirmationMessage);
+	}
+
 	public void setId(String id) {
 		putData("id", id);
 	}

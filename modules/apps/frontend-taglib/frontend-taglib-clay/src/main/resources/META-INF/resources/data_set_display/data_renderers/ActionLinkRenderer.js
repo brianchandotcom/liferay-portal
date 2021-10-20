@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import DataSetDisplayContext from '../DataSetDisplayContext';
-import {formatActionURL} from '../utils/index';
+import {formatActionURL, liferayNavigate} from '../utils/index';
 import DefaultContent from './DefaultRenderer';
 
 function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
@@ -61,6 +61,13 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 		currentAction.href && formatActionURL(currentAction.href, itemData);
 
 	function handleClickOnLink(event) {
+		if (
+			currentAction.data &&
+			currentAction.data.confirmationMessage &&
+			!confirm(currentAction.data.confirmationMessage)
+		) {
+			return;
+		}
 		if (currentAction.target === 'modal') {
 			event.preventDefault();
 
@@ -118,7 +125,25 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 			<ClayLink
 				data-senna-off
 				href={formattedHref || '#'}
-				onClick={isNotALink() ? handleClickOnLink : null}
+				onClick={
+					isNotALink()
+						? handleClickOnLink
+						: (event) => {
+								event.preventDefault();
+
+								if (
+									currentAction.data &&
+									currentAction.data.confirmationMessage &&
+									!confirm(
+										currentAction.data.confirmationMessage
+									)
+								) {
+									return;
+								}
+
+								liferayNavigate(formattedHref);
+						  }
+				}
 			>
 				{value || <ClayIcon symbol={currentAction.icon} />}
 			</ClayLink>
@@ -130,6 +155,7 @@ ActionLinkRenderer.propTypes = {
 	actions: PropTypes.arrayOf(
 		PropTypes.shape({
 			data: PropTypes.shape({
+				confirmationMessage: PropTypes.string,
 				method: PropTypes.oneOf(['get', 'delete']),
 				permissionKey: PropTypes.string,
 				successMessage: PropTypes.string,

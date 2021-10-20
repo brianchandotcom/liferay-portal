@@ -35,6 +35,7 @@ export function isLink(target, onClick) {
 
 export function handleAction(
 	{
+		confirmationMessage,
 		event,
 		itemId,
 		method,
@@ -54,6 +55,10 @@ export function handleAction(
 		toggleItemInlineEdit,
 	}
 ) {
+	if (confirmationMessage && !confirm(confirmationMessage)) {
+		return;
+	}
+
 	if (target?.includes('modal')) {
 		event.preventDefault();
 
@@ -137,6 +142,7 @@ function ActionItem({
 
 		handleAction(
 			{
+				confirmationMessage: data?.confirmationMessage,
 				event,
 				itemId,
 				method,
@@ -382,6 +388,7 @@ ActionsDropdownRenderer.propTypes = {
 	actions: PropTypes.arrayOf(
 		PropTypes.shape({
 			data: PropTypes.shape({
+				confirmationMessage: PropTypes.string,
 				method: PropTypes.oneOf(['get', 'delete']),
 				permissionKey: PropTypes.string,
 				successMessage: PropTypes.string,

@@ -338,6 +338,13 @@ definition {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectID}");
 	}
 
+	macro goToDetailsTab {
+		Click(locator1 = "ObjectAdmin#OBJECT_DETAILS_TAB");
+
+
+
+	}
+
 	macro goToFieldsDetails {
 		Click(
 			key_label = "${label}",

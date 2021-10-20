@@ -830,13 +830,32 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136764. It checks that Javascript cannot be executed in the content field."
-	@ignore = "true"
 	@priority = "3"
 	test CannotExecuteXSSInContent {
-		property portal.acceptance = "false";
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
 
-		// TODO LPS-136764 CannotExecuteXSSInContent pending implementation
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addEntryContentViaCodeView(entryContent = '''<script>alert(123);</script>''');
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Guest");
+
+		AssertAlertNotPresent();
 	}
 
 	@description = "This is a test for LPS-136773. It checks that XSS cannot be executed in the cover image caption."

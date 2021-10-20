@@ -87,8 +87,14 @@ public class ReleaseFeatureFlagManagerImpl
 				releaseFeatureFlagConfiguration.disabledReleaseFeatureFlags()) {
 
 			if (Validator.isNotNull(disabledReleaseFeatureFlag)) {
-				_disabledReleaseFeatureFlags.add(
-					ReleaseFeatureFlag.valueOf(disabledReleaseFeatureFlag));
+				try {
+					_disabledReleaseFeatureFlags.add(
+						ReleaseFeatureFlag.valueOf(disabledReleaseFeatureFlag));
+				}
+				catch (IllegalArgumentException illegalArgumentException) {
+					_log.error(
+						illegalArgumentException, illegalArgumentException);
+				}
 			}
 		}
 	}

@@ -60,9 +60,9 @@ definition {
 
 		task ("Assert the deployed collection is not present") {
 			AssertElementNotPresent(
-				collectionName = "Imported",
-				locator1 = "FragmentAdmin#FRAGMENT_COLLECTION_SPECIFIC_SCOPE",
-				scope = "Test Site Name");
+				key_menuBar = "Imported",
+				key_stackName = "Test Site Name",
+				locator1 = "MenuBar#NAV_LINK_IN_STACK");
 		}
 	}
 
@@ -98,9 +98,9 @@ definition {
 
 		task ("Assert the deployed collection is not present") {
 			AssertElementNotPresent(
-				collectionName = "Imported",
-				locator1 = "FragmentAdmin#FRAGMENT_COLLECTION_SPECIFIC_SCOPE",
-				scope = "Default");
+				key_menuBar = "Imported",
+				key_stackName = "Default",
+				locator1 = "MenuBar#NAV_LINK_IN_STACK");
 		}
 	}
 
@@ -136,9 +136,9 @@ definition {
 
 		task ("Assert the deployed collection is not present") {
 			AssertElementNotPresent(
-				collectionName = "Imported",
-				locator1 = "FragmentAdmin#FRAGMENT_COLLECTION_SPECIFIC_SCOPE",
-				scope = "Global");
+				key_menuBar = "Imported",
+				key_stackName = "Global",
+				locator1 = "MenuBar#NAV_LINK_IN_STACK");
 		}
 	}
 
@@ -288,9 +288,9 @@ definition {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "guest");
 
 			AssertElementNotPresent(
-				collectionName = "Imported",
-				locator1 = "FragmentAdmin#FRAGMENT_COLLECTION_SPECIFIC_SCOPE",
-				scope = "Liferay");
+				key_menuBar = "Imported",
+				key_stackName = "Liferay",
+				locator1 = "MenuBar#NAV_LINK_IN_STACK");
 		}
 	}
 

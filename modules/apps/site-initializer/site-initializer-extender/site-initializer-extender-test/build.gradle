@@ -1,5 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-catalog-api")
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-channel-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:fragment:fragment-api")

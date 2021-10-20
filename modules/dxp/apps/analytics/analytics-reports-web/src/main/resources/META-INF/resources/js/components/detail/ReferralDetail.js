@@ -11,10 +11,13 @@
 
 import ClayButton from '@clayui/button';
 import ClayList from '@clayui/list';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import className from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 
 import {
+	ChartDispatchContext,
 	ChartStateContext,
 	useDateTitle,
 	useIsPreviousPeriodButtonDisabled,
@@ -63,13 +66,23 @@ export default function ReferralDetail({
 
 	const dispatch = useContext(StoreDispatchContext);
 
-	const {timeSpanKey, timeSpanOffset} = useContext(ChartStateContext);
+	const chartDispatch = useContext(ChartDispatchContext);
+
+	const {pieChartLoading, timeSpanKey, timeSpanOffset} =
+		useContext(ChartStateContext);
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
 	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
 
 	const firstUpdate = useRef(true);
+
+	const trafficSourceDetailClasses = className(
+		'c-p-3 traffic-source-detail',
+		{
+			'traffic-source-detail--loading': pieChartLoading,
+		}
+	);
 
 	useEffect(() => {
 		if (firstUpdate.current) {
@@ -78,18 +91,39 @@ export default function ReferralDetail({
 		}
 
 		if (validAnalyticsConnection) {
+			chartDispatch({
+				payload: {
+					loading: true,
+				},
+				type: 'SET_PIE_CHART_LOADING',
+			});
+
 			trafficSourcesDataProvider()
 				.then((trafficSources) =>
 					handleDetailPeriodChange(trafficSources, 'referral')
 				)
 				.catch(() => {
 					dispatch({type: 'ADD_WARNING'});
+				})
+				.finally(() => {
+					chartDispatch({
+						payload: {
+							loading: false,
+						},
+						type: 'SET_PIE_CHART_LOADING',
+					});
 				});
 		}
 	}, [timeSpanKey, timeSpanOffset]);
 
 	return (
-		<div className="c-p-3 traffic-source-detail">
+		<div className={trafficSourceDetailClasses}>
+			{pieChartLoading && (
+				<ClayLoadingIndicator
+					className="chart-loading-indicator"
+					small
+				/>
+			)}
 			<div className="c-mb-3 c-mt-2">
 				<TimeSpanSelector
 					disabledNextTimeSpan={timeSpanOffset === 0}

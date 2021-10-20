@@ -141,6 +141,13 @@ html#{$cadmin-selector} {
 			}
 
 			.traffic-source-detail {
+				position: relative;
+
+				&--loading {
+					opacity: 0.6;
+					pointer-events: none;
+				}
+
 				thead > tr {
 					height: 40px;
 				}

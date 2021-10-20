@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -275,8 +276,35 @@ public class VarPoshiElement extends PoshiElement {
 					String content = getParentheticalContent(value);
 
 					if (!content.equals("")) {
-						value = StringUtil.replace(
-							value, content, swapParameterQuotations(content));
+						Matcher matcher = _mathUtilMethodCallPattern.matcher(
+							value);
+
+						String mathOperator = "";
+
+						if (matcher.find()) {
+							for (Map.Entry<String, String> entry :
+									_mathOperatorsMap.entrySet()) {
+
+								if (Objects.equals(
+										entry.getValue(), matcher.group(1))) {
+
+									mathOperator = " " + entry.getKey() + " ";
+
+									break;
+								}
+							}
+						}
+
+						if (!mathOperator.equals("")) {
+							value =
+								matcher.group(2) + mathOperator +
+									matcher.group(3);
+						}
+						else {
+							value = StringUtil.replace(
+								value, content,
+								swapParameterQuotations(content));
+						}
 					}
 				}
 			}
@@ -458,6 +486,8 @@ public class VarPoshiElement extends PoshiElement {
 				put("/", "quotient");
 			}
 		};
+	private static final Pattern _mathUtilMethodCallPattern = Pattern.compile(
+		"MathUtil\\.(\\w+)\\('(.+)', '(.+)'\\)");
 	private static final Pattern _statementPattern;
 	private static final Pattern _varValueMathExpressionPattern;
 

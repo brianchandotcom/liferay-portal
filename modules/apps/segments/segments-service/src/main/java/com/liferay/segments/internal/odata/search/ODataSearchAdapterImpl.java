@@ -240,17 +240,17 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 				"Missing " + sortField + " in last document");
 		}
 
-		BooleanQuery booleanQueryFromLastDocument = new BooleanQueryImpl();
+		BooleanQuery lastDocumentBooleanQuery = new BooleanQueryImpl();
 
-		booleanQueryFromLastDocument.add(booleanQuery, BooleanClauseOccur.MUST);
+		lastDocumentBooleanQuery.add(booleanQuery, BooleanClauseOccur.MUST);
 
 		TermRangeQuery termRangeQuery = new TermRangeQueryImpl(
 			sortField, lastDocument.get(sortField), null, false, true);
 
-		booleanQueryFromLastDocument.add(
+		lastDocumentBooleanQuery.add(
 			termRangeQuery, BooleanClauseOccur.MUST);
 
-		return booleanQueryFromLastDocument;
+		return lastDocumentBooleanQuery;
 	}
 
 	private com.liferay.portal.kernel.search.filter.Filter _getSearchFilter(

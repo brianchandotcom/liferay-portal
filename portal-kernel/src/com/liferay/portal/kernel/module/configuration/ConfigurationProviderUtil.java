@@ -14,14 +14,11 @@
 
 package com.liferay.portal.kernel.module.configuration;
 
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.settings.SettingsLocator;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Dictionary;
-import java.util.Iterator;
 
 /**
  * @author Jorge Ferrer
@@ -32,95 +29,65 @@ public class ConfigurationProviderUtil {
 			Class<T> clazz, long companyId)
 		throws ConfigurationException {
 
-		ConfigurationProvider configurationProvider =
-			getConfigurationProvider();
-
-		configurationProvider.deleteCompanyConfiguration(clazz, companyId);
+		_configurationProvider.deleteCompanyConfiguration(clazz, companyId);
 	}
 
 	public static <T> void deleteGroupConfiguration(
 			Class<T> clazz, long groupId)
 		throws ConfigurationException {
 
-		ConfigurationProvider configurationProvider =
-			getConfigurationProvider();
-
-		configurationProvider.deleteGroupConfiguration(clazz, groupId);
+		_configurationProvider.deleteGroupConfiguration(clazz, groupId);
 	}
 
 	public static <T> void deletePortletInstanceConfiguration(
 			Class<T> clazz, String portletId)
 		throws ConfigurationException {
 
-		ConfigurationProvider configurationProvider =
-			getConfigurationProvider();
-
-		configurationProvider.deletePortletInstanceConfiguration(
+		_configurationProvider.deletePortletInstanceConfiguration(
 			clazz, portletId);
 	}
 
 	public static <T> void deleteSystemConfiguration(Class<T> clazz)
 		throws ConfigurationException {
 
-		ConfigurationProvider configurationProvider =
-			getConfigurationProvider();
-
-		configurationProvider.deleteSystemConfiguration(clazz);
+		_configurationProvider.deleteSystemConfiguration(clazz);
 	}
 
 	public static <T> T getCompanyConfiguration(Class<T> clazz, long companyId)
 		throws ConfigurationException {
 
-		ConfigurationProvider configurationProvider =
-			getConfigurationProvider();
-
-		return configurationProvider.getCompanyConfiguration(clazz, companyId);
+		return _configurationProvider.getCompanyConfiguration(clazz, companyId);
 	}
 
 	public static <T> T getConfiguration(
 			Class<T> clazz, SettingsLocator settingsLocator)
 		throws ConfigurationException {
 
-		ConfigurationProvider configurationProvider =
-			getConfigurationProvider();
-
-		return configurationProvider.getConfiguration(clazz, settingsLocator);
+		return _configurationProvider.getConfiguration(clazz, settingsLocator);
 	}
 
 	public static ConfigurationProvider getConfigurationProvider() {
-		Iterator<ConfigurationProvider> iterator =
-			_configurationProvider.iterator();
-
-		return iterator.next();
+		return _configurationProvider;
 	}
 
 	public static <T> T getGroupConfiguration(Class<T> clazz, long groupId)
 		throws ConfigurationException {
 
-		ConfigurationProvider configurationProvider =
-			getConfigurationProvider();
-
-		return configurationProvider.getGroupConfiguration(clazz, groupId);
+		return _configurationProvider.getGroupConfiguration(clazz, groupId);
 	}
 
 	public static <T> T getPortletInstanceConfiguration(
 			Class<T> clazz, Layout layout, String portletId)
 		throws ConfigurationException {
 
-		ConfigurationProvider configurationProvider =
-			getConfigurationProvider();
-
-		return configurationProvider.getPortletInstanceConfiguration(
+		return _configurationProvider.getPortletInstanceConfiguration(
 			clazz, layout, portletId);
 	}
 
 	public static <T> T getSystemConfiguration(Class<T> clazz)
 		throws ConfigurationException {
 
-		ConfigurationProvider configurationProvider =
-			getConfigurationProvider();
-
-		return configurationProvider.getSystemConfiguration(clazz);
+		return _configurationProvider.getSystemConfiguration(clazz);
 	}
 
 	public static <T> void saveCompanyConfiguration(
@@ -128,10 +95,7 @@ public class ConfigurationProviderUtil {
 			Dictionary<String, Object> properties)
 		throws ConfigurationException {
 
-		ConfigurationProvider configurationProvider =
-			getConfigurationProvider();
-
-		configurationProvider.saveCompanyConfiguration(
+		_configurationProvider.saveCompanyConfiguration(
 			clazz, companyId, properties);
 	}
 
@@ -139,10 +103,7 @@ public class ConfigurationProviderUtil {
 			Class<T> clazz, long groupId, Dictionary<String, Object> properties)
 		throws ConfigurationException {
 
-		ConfigurationProvider configurationProvider =
-			getConfigurationProvider();
-
-		configurationProvider.saveGroupConfiguration(
+		_configurationProvider.saveGroupConfiguration(
 			clazz, groupId, properties);
 	}
 
@@ -151,10 +112,7 @@ public class ConfigurationProviderUtil {
 			Dictionary<String, Object> properties)
 		throws ConfigurationException {
 
-		ConfigurationProvider configurationProvider =
-			getConfigurationProvider();
-
-		configurationProvider.savePortletInstanceConfiguration(
+		_configurationProvider.savePortletInstanceConfiguration(
 			clazz, portletId, properties);
 	}
 
@@ -162,16 +120,12 @@ public class ConfigurationProviderUtil {
 			Class<T> clazz, Dictionary<String, Object> properties)
 		throws ConfigurationException {
 
-		ConfigurationProvider configurationProvider =
-			getConfigurationProvider();
-
-		configurationProvider.saveSystemConfiguration(clazz, properties);
+		_configurationProvider.saveSystemConfiguration(clazz, properties);
 	}
 
-	private static final ServiceTrackerList
-		<ConfigurationProvider, ConfigurationProvider> _configurationProvider =
-			ServiceTrackerListFactory.open(
-				SystemBundleUtil.getBundleContext(),
-				ConfigurationProvider.class);
+	private static volatile ConfigurationProvider _configurationProvider =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			ConfigurationProvider.class, ConfigurationProviderUtil.class,
+			"_configurationProvider", true);
 
 }

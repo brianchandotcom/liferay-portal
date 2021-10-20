@@ -14,11 +14,7 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-
-import java.util.Iterator;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Iván Zaera
@@ -28,74 +24,69 @@ public class SettingsLocatorHelperUtil {
 	public static Settings getCompanyConfigurationBeanSettings(
 		long companyId, String configurationPid, Settings parentSettings) {
 
-		return getSettingsLocatorHelper().getCompanyConfigurationBeanSettings(
+		return _settingsLocatorHelper.getCompanyConfigurationBeanSettings(
 			companyId, configurationPid, parentSettings);
 	}
 
 	public static Settings getCompanyPortletPreferencesSettings(
 		long companyId, String settingsId, Settings parentSettings) {
 
-		return getSettingsLocatorHelper().getCompanyPortletPreferencesSettings(
+		return _settingsLocatorHelper.getCompanyPortletPreferencesSettings(
 			companyId, settingsId, parentSettings);
 	}
 
 	public static Settings getGroupConfigurationBeanSettings(
 		long groupId, String configurationPid, Settings parentSettings) {
 
-		return getSettingsLocatorHelper().getGroupConfigurationBeanSettings(
+		return _settingsLocatorHelper.getGroupConfigurationBeanSettings(
 			groupId, configurationPid, parentSettings);
 	}
 
 	public static Settings getPortletInstanceConfigurationBeanSettings(
 		String portletId, String configurationPid, Settings parentSettings) {
 
-		return getSettingsLocatorHelper().
+		return _settingsLocatorHelper.
 			getPortletInstanceConfigurationBeanSettings(
 				portletId, configurationPid, parentSettings);
 	}
 
 	public static SettingsLocatorHelper getSettingsLocatorHelper() {
-		Iterator<SettingsLocatorHelper> iterator =
-			_settingsLocatorHelpers.iterator();
-
-		return iterator.next();
+		return _settingsLocatorHelper;
 	}
 
 	public Settings getConfigurationBeanSettings(String settingsId) {
-		return getSettingsLocatorHelper().getConfigurationBeanSettings(
-			settingsId);
+		return _settingsLocatorHelper.getConfigurationBeanSettings(settingsId);
 	}
 
 	public Settings getGroupPortletPreferencesSettings(
 		long groupId, String settingsId, Settings parentSettings) {
 
-		return getSettingsLocatorHelper().getGroupPortletPreferencesSettings(
+		return _settingsLocatorHelper.getGroupPortletPreferencesSettings(
 			groupId, settingsId, parentSettings);
 	}
 
 	public Settings getPortalPreferencesSettings(
 		long companyId, Settings parentSettings) {
 
-		return getSettingsLocatorHelper().getPortalPreferencesSettings(
+		return _settingsLocatorHelper.getPortalPreferencesSettings(
 			companyId, parentSettings);
 	}
 
 	public Settings getPortletInstancePortletPreferencesSettings(
 		long companyId, long plid, String portletId, Settings parentSettings) {
 
-		return getSettingsLocatorHelper().
+		return _settingsLocatorHelper.
 			getPortletInstancePortletPreferencesSettings(
 				companyId, plid, portletId, parentSettings);
 	}
 
 	public Settings getServerSettings(String settingsId) {
-		return getSettingsLocatorHelper().getServerSettings(settingsId);
+		return _settingsLocatorHelper.getServerSettings(settingsId);
 	}
 
-	private static final ServiceTrackerList
-		<SettingsLocatorHelper, SettingsLocatorHelper> _settingsLocatorHelpers =
-			ServiceTrackerListFactory.open(
-				SystemBundleUtil.getBundleContext(),
-				SettingsLocatorHelper.class);
+	private static volatile SettingsLocatorHelper _settingsLocatorHelper =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			SettingsLocatorHelper.class, SettingsLocatorHelperUtil.class,
+			"_settingsLocatorHelper", true);
 
 }

@@ -14,11 +14,8 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -31,43 +28,42 @@ public class SettingsFactoryUtil {
 			long groupId, String portletId, String name)
 		throws SettingsException {
 
-		return getSettingsFactory().getPortletInstanceArchivedSettings(
+		return _settingsFactory.getPortletInstanceArchivedSettings(
 			groupId, portletId, name);
 	}
 
 	public static List<ArchivedSettings> getPortletInstanceArchivedSettingsList(
 		long groupId, String portletId) {
 
-		return getSettingsFactory().getPortletInstanceArchivedSettingsList(
+		return _settingsFactory.getPortletInstanceArchivedSettingsList(
 			groupId, portletId);
 	}
 
 	public static Settings getSettings(SettingsLocator settingsLocator)
 		throws SettingsException {
 
-		return getSettingsFactory().getSettings(settingsLocator);
+		return _settingsFactory.getSettings(settingsLocator);
 	}
 
 	public static SettingsDescriptor getSettingsDescriptor(String settingsId) {
-		return getSettingsFactory().getSettingsDescriptor(settingsId);
+		return _settingsFactory.getSettingsDescriptor(settingsId);
 	}
 
 	public static SettingsFactory getSettingsFactory() {
-		Iterator<SettingsFactory> iterator = _settingsFactories.iterator();
-
-		return iterator.next();
+		return _settingsFactory;
 	}
 
 	public static void registerSettingsMetadata(
 		Class<?> settingsClass, Object configurationBean,
 		FallbackKeys fallbackKeys) {
 
-		getSettingsFactory().registerSettingsMetadata(
+		_settingsFactory.registerSettingsMetadata(
 			settingsClass, configurationBean, fallbackKeys);
 	}
 
-	private static final ServiceTrackerList<SettingsFactory, SettingsFactory>
-		_settingsFactories = ServiceTrackerListFactory.open(
-			SystemBundleUtil.getBundleContext(), SettingsFactory.class);
+	private static volatile SettingsFactory _settingsFactory =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			SettingsFactory.class, SettingsFactoryUtil.class,
+			"_settingsFactory", true);
 
 }

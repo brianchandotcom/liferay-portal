@@ -48,6 +48,38 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_sharing_web_portlet_SharedAssetsPortlet&p_p_state=maximized&p_p_mode=view&_com_liferay_sharing_web_portlet_SharedAssetsPortlet_incoming=${incomingValue}");
 	}
 
+	macro setFilterAndOrder {
+		if (isSet(restoreFilter)) {
+			ManagementBar.setFilterAndOrder(filterBy = "All");
+		}
+
+		ManagementBar.setFilterAndOrder(
+			filterBy = "${filterBy}",
+			orderBy = "${orderBy}");
+
+		if ("${filterBy}" == "Asset Types") {
+			AssertTextEquals(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Select Asset Type");
+
+			SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
+
+			if ("${assetType}" == "Document") {
+				var assetType = "${assetType}";
+			}
+
+			if ("${assetType}" == "Blogs Entry") {
+				var assetType = "${assetType}";
+			}
+
+			Click(
+				key_assetType = "${assetType}",
+				locator1 = "Sharing#SHARED_CONTENT_ASSET_TYPE");
+
+			SelectFrame(value1 = "relative=top");
+		}
+	}
+
 	macro share {
 		IFrame.selectModalFrame();
 

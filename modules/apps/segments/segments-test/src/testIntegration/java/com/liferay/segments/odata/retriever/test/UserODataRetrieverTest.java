@@ -1119,11 +1119,11 @@ public class UserODataRetrieverTest {
 
 		String filterString = String.format("(firstName eq '%s')", "firstName");
 
-		List<User> results = _oDataRetriever.getResults(
+		List<User> users = _oDataRetriever.getResults(
 			_group1.getCompanyId(), filterString, LocaleUtil.getDefault(),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertTrue(MORE_THAN_10K == results.size());
+		Assert.assertTrue(MORE_THAN_10K == users.size());
 	}
 
 	private Team _addTeam() throws Exception {

@@ -300,7 +300,7 @@ public class ExecutePoshiElement extends PoshiElement {
 
 		String assignmentsString = assignments.toString();
 
-		if (assignmentsString.matches("\\[\\w+ = \".+?\", .+\\]") &&
+		if (assignmentsString.matches("\\[\\w+ = (\"|(''')).+?\\1, .+\\]") &&
 			!isConditionValidInParent((PoshiElement)getParent())) {
 
 			multilineSnippet = true;

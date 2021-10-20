@@ -285,9 +285,10 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Category DPT");
 
-			AssertTextEquals(
-				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
-				value1 = "Category Name");
+			ContentPages.viewFragmentText(
+				assetType = "category",
+				fragmentName = "Content Display",
+				text = "Category Name");
 		}
 
 		task ("Publish to live") {
@@ -355,9 +356,10 @@ definition {
 				key_tab = "Live",
 				locator1 = "NavTab#ACTIVE_TAB_LINK");
 
-			AssertTextEquals(
-				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
-				value1 = "Category Name");
+			ContentPages.viewFragmentText(
+				assetType = "category",
+				fragmentName = "Content Display",
+				text = "Category Name");
 		}
 	}
 

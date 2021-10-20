@@ -17,10 +17,12 @@ package com.liferay.object.web.internal.object.definitions.frontend.taglib.servl
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsDetailsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -78,11 +80,17 @@ public class ObjectDefinitionsDetailsScreenNavigationCategory
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsDetailsDisplayContext(
-				httpServletRequest, _objectScopeProviderRegistry,
-				_panelCategoryRegistry));
+				httpServletRequest, _objectDefinitionModelResourcePermission,
+				_objectScopeProviderRegistry, _panelCategoryRegistry));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"
+	)
+	private ModelResourcePermission<ObjectDefinition>
+		_objectDefinitionModelResourcePermission;
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;

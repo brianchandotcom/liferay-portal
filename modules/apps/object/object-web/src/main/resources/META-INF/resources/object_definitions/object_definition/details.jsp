@@ -182,7 +182,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 		<aui:button name="save" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(true);" %>' value="save" />
 
 		<c:if test="<%= !objectDefinition.isApproved() %>">
-			<aui:button name="publish" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(false);" %>' type="submit" value="publish" />
+			<aui:button disabled="<%= !objectDefinitionsDetailsDisplayContext.hasPublishObjectPermission() %>" name="publish" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(false);" %>' type="submit" value="publish" />
 		</c:if>
 
 		<aui:button href="<%= backURL %>" type="cancel" />

@@ -16,12 +16,15 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -37,9 +40,13 @@ public class ObjectDefinitionsDetailsDisplayContext {
 
 	public ObjectDefinitionsDetailsDisplayContext(
 		HttpServletRequest httpServletRequest,
+		ModelResourcePermission<ObjectDefinition>
+			objectDefinitionModelResourcePermission,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		PanelCategoryRegistry panelCategoryRegistry) {
 
+		_objectDefinitionModelResourcePermission =
+			objectDefinitionModelResourcePermission;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_panelCategoryRegistry = panelCategoryRegistry;
 
@@ -104,6 +111,18 @@ public class ObjectDefinitionsDetailsDisplayContext {
 			objectDefinition.getScope());
 	}
 
+	public boolean hasPublishObjectPermission() {
+		PortletResourcePermission portletResourcePermission =
+			_objectDefinitionModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			_objectRequestHelper.getPermissionChecker(), null,
+			ObjectActionKeys.PUBLISH_OBJECT_DEFINITION);
+	}
+
+	private final ModelResourcePermission<ObjectDefinition>
+		_objectDefinitionModelResourcePermission;
 	private final ObjectRequestHelper _objectRequestHelper;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final PanelCategoryRegistry _panelCategoryRegistry;

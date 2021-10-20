@@ -1351,6 +1351,11 @@ definition {
 			key_fieldName = "repeatable",
 			locator1 = "Checkbox#SWITCH");
 
+		WaitForElementPresent(
+			index = "${index}",
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "DataEngineRenderer#REPEATABLE_FIELD_ADD_BUTTON_INDEXED");
+
 		Click(locator1 = "Sidebar#BACK");
 	}
 

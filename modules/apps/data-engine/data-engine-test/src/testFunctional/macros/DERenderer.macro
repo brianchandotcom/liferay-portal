@@ -201,15 +201,10 @@ definition {
 	}
 
 	macro assertWebContentNotPresent {
-		if (!(isSet(index))) {
-			var index = "1";
-		}
-
 		AssertElementNotPresent(
+			key_contentName = "${contentName}",
 			key_fieldLabel = "${fieldLabel}",
-			key_index = "${index}",
-			locator1 = "DataEngineRenderer#SELECTOR_INPUT_INDEXED",
-			value1 = "${contentName}");
+			locator1 = "DataEngineRenderer#SELECTOR_INPUT_BY_CONTENT_NAME");
 	}
 
 	macro clearDataOnField {

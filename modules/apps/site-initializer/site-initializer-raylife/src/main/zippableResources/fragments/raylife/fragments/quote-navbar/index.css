@@ -1,13 +1,14 @@
 .quote-site-navbar .menu-container {
-    border-radius: 32px;
-	box-shadow: 0px 5px 15px rgba(77, 133, 255, 0.12);
-	cursor: pointer;
-	padding: 8px 12px;
-	user-select: none;
+  border-radius: 32px;
+  box-shadow: 0px 5px 15px rgba(77, 133, 255, 0.12);
+  cursor: pointer;
+  padding: 8px 12px;
+  user-select: none;
+  background-color: var(--color-action-neutral-inverted);
 }
 
 .quote-site-navbar .menu-container span {
-	color: #7D7E85;
-	font-size: 14px;
-	font-weight: bold;
+  color: var(--color-action-neutral-default);
+  font-size: 14px;
+  font-weight: var(--font-weight-bold);
 }

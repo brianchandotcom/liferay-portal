@@ -3706,6 +3706,48 @@ definition {
 		}
 	}
 
+	macro viewFragmentMessageInfo {
+		if ("${fragmentName}" == "Collection Display") {
+			if (!(isSet(messageInfo))) {
+				var messageInfo = "No Collection Selected Yet";
+			}
+
+			AssertVisible(
+				key_fragmentName = "${fragmentName}",
+				key_messageInfo = "${messageInfo}",
+				locator1 = "Fragment#NO_COLLECTION_SELECTED_MESSAGE");
+		}
+
+		else if ("${fragmentName}" == "Content Display") {
+			if (!(isSet(messageInfo))) {
+				var messageInfo = "The selected content will be shown here.";
+			}
+
+			AssertVisible(
+				key_fragmentName = "${fragmentName}",
+				key_messageInfo = "${messageInfo}",
+				locator1 = "Fragment#MESSAGE_INFO");
+		}
+
+		else if ("${fragmentName}" == "Display Page Content") {
+			if (!(isSet(messageInfo))) {
+				var messageInfo = "The display page content will be shown here.";
+			}
+
+			AssertVisible(
+				key_fragmentName = "${fragmentName}",
+				key_messageInfo = "${messageInfo}",
+				locator1 = "Fragment#MESSAGE_INFO");
+		}
+
+		else {
+			AssertVisible(
+				key_fragmentName = "${fragmentName}",
+				key_messageInfo = "${messageInfo}",
+				locator1 = "Fragment#MESSAGE_INFO");
+		}
+	}
+
 	macro viewFragmentOrder {
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",

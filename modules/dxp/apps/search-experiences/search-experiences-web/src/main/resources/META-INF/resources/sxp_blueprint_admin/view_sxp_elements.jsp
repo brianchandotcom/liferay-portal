@@ -15,3 +15,32 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+ViewSXPElementsDisplayContext viewSXPElementsDisplayContext = (ViewSXPElementsDisplayContext)request.getAttribute(SXPBlueprintWebKeys.VIEW_SXP_ELEMENTS_DISPLAY_CONTEXT);
+%>
+
+<clay:container-fluid>
+	<aui:form method="post" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+		<liferay-ui:search-container
+			cssClass="blueprints-search-container"
+			id="sxpElementEntries"
+			searchContainer="<%= viewSXPElementsDisplayContext.getSearchContainer() %>"
+		>
+			<liferay-ui:search-container-row
+				className="com.liferay.search.experiences.model.SXPElement"
+				keyProperty="sxpElementId"
+				modelVar="entry"
+			>
+				<%@ include file="/sxp_blueprint_admin/sxp_element_search_columns.jspf" %>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator
+				displayStyle="<%= viewSXPElementsDisplayContext.getDisplayStyle() %>"
+				markupView="lexicon"
+			/>
+		</liferay-ui:search-container>
+	</aui:form>
+</clay:container-fluid>

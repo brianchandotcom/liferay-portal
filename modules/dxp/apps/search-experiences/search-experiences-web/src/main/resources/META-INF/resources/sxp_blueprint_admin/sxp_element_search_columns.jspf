@@ -1,0 +1,138 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+--%>
+
+<portlet:renderURL var="editEntryURL">
+	<portlet:param name="mvcRenderCommandName" value="/sxp_blueprint_admin/edit_sxp_element" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="sxpElementId" value="<%= String.valueOf(entry.getSXPElementId()) %>" />
+</portlet:renderURL>
+
+<%
+String entryTitle = entry.getTitle(locale);
+String entryDescription = entry.getDescription(locale);
+
+String[] languageIds = entry.getAvailableLanguageIds();
+
+for (int i = 0; Validator.isNull(entryTitle) && (i < languageIds.length); i++) {
+	entryTitle = entry.getTitle(languageIds[i]);
+	entryDescription = entry.getDescription(languageIds[i]);
+}
+%>
+
+<c:choose>
+	<c:when test='<%= viewSXPElementsDisplayContext.getDisplayStyle().equals("descriptive") %>'>
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
+			<h4>
+				<c:choose>
+					<c:when test="<%= SXPElementEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+						<aui:a href="<%= editEntryURL %>">
+							<%= HtmlUtil.escape(entryTitle) %>
+						</aui:a>
+					</c:when>
+					<c:otherwise>
+						<%= HtmlUtil.escape(entryTitle) %>
+					</c:otherwise>
+				</c:choose>
+
+				<c:if test="<%= entry.getReadOnly() %>">
+					<liferay-ui:icon
+						icon="lock"
+						iconCssClass="ml-1 text-muted"
+						markupView="lexicon"
+						message="read-only"
+					/>
+				</c:if>
+			</h4>
+
+			<h5 class="text-default text-truncate" title="<%= HtmlUtil.escape(entryDescription) %>">
+				<%= HtmlUtil.escape(entryDescription) %>
+			</h5>
+
+			<h5 class="text-default text-truncate">
+				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getModifiedDate().getTime(), true) %>" key="modified-x-ago" />
+			</h5>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-jsp
+			path="/sxp_element_actions.jsp"
+		/>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand table-cell-minw-200 table-title"
+			name="title"
+		>
+			<c:choose>
+				<c:when test="<%= SXPElementEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+					<aui:a href="<%= editEntryURL %>">
+						<%= HtmlUtil.escape(entryTitle) %>
+
+						<c:if test="<%= entry.getReadOnly() %>">
+							<liferay-ui:icon
+								icon="lock"
+								iconCssClass="ml-1 text-muted"
+								markupView="lexicon"
+								message="read-only"
+							/>
+						</c:if>
+					</aui:a>
+				</c:when>
+				<c:otherwise>
+					<%= HtmlUtil.escape(entryTitle) %>
+
+					<c:if test="<%= entry.getReadOnly() %>">
+						<liferay-ui:icon
+							icon="lock"
+							iconCssClass="ml-1 text-muted"
+							markupView="lexicon"
+							message="read-only"
+						/>
+					</c:if>
+				</c:otherwise>
+			</c:choose>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand table-cell-minw-200"
+			name="description"
+			value="<%= HtmlUtil.escape(entryDescription) %>"
+		/>
+
+		<liferay-ui:search-container-column-user
+			name="author"
+			showDetails="<%= false %>"
+			userId="<%= entry.getUserId() %>"
+		/>
+
+		<liferay-ui:search-container-column-date
+			cssClass="table-cell-minw-150"
+			name="created"
+			property="createDate"
+		/>
+
+		<liferay-ui:search-container-column-date
+			cssClass="table-cell-minw-150"
+			name="modified"
+			property="modifiedDate"
+		/>
+
+		<liferay-ui:search-container-column-jsp
+			path="/sxp_blueprint_admin/sxp_element_actions.jsp"
+		/>
+	</c:otherwise>
+</c:choose>

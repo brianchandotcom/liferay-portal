@@ -4,7 +4,7 @@
 <service-builder auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.batch.planner">
 	<author>Igor Beslic</author>
 	<namespace>BatchPlanner</namespace>
-	<entity local-service="true" name="BatchPlannerLog">
+	<entity local-service="true" name="BatchPlannerLog" remote-service="true">
 
 		<!-- PK fields -->
 

@@ -287,6 +287,37 @@ public class ImportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Operation operation;
 
+	@DecimalMin("0")
+	@Schema(description = "Number of items processed by import task opeartion.")
+	public Integer getProcessedItemsCount() {
+		return processedItemsCount;
+	}
+
+	public void setProcessedItemsCount(Integer processedItemsCount) {
+		this.processedItemsCount = processedItemsCount;
+	}
+
+	@JsonIgnore
+	public void setProcessedItemsCount(
+		UnsafeSupplier<Integer, Exception> processedItemsCountUnsafeSupplier) {
+
+		try {
+			processedItemsCount = processedItemsCountUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "Number of items processed by import task opeartion."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer processedItemsCount;
+
 	@Schema(description = "The start time of import task operation.")
 	public Date getStartTime() {
 		return startTime;
@@ -314,6 +345,39 @@ public class ImportTask implements Serializable {
 	@GraphQLField(description = "The start time of import task operation.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date startTime;
+
+	@DecimalMin("0")
+	@Schema(
+		description = "Total number of items that will be processed by import task operation."
+	)
+	public Integer getTotalItemsCount() {
+		return totalItemsCount;
+	}
+
+	public void setTotalItemsCount(Integer totalItemsCount) {
+		this.totalItemsCount = totalItemsCount;
+	}
+
+	@JsonIgnore
+	public void setTotalItemsCount(
+		UnsafeSupplier<Integer, Exception> totalItemsCountUnsafeSupplier) {
+
+		try {
+			totalItemsCount = totalItemsCountUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "Total number of items that will be processed by import task operation."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer totalItemsCount;
 
 	@Override
 	public boolean equals(Object object) {
@@ -439,6 +503,16 @@ public class ImportTask implements Serializable {
 			sb.append("\"");
 		}
 
+		if (processedItemsCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"processedItemsCount\": ");
+
+			sb.append(processedItemsCount);
+		}
+
 		if (startTime != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -451,6 +525,16 @@ public class ImportTask implements Serializable {
 			sb.append(liferayToJSONDateFormat.format(startTime));
 
 			sb.append("\"");
+		}
+
+		if (totalItemsCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalItemsCount\": ");
+
+			sb.append(totalItemsCount);
 		}
 
 		sb.append("}");

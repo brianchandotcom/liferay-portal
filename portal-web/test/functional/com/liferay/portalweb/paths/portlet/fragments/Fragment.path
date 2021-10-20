@@ -21,6 +21,18 @@
 	<td>//div[contains(@class,'content')]//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@src,'${key_image}')] | //div[contains(@class,'content')]//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@style,'${key_image}')]</td>
 	<td></td>
 </tr>
+<!--CONTENT_DISPLAY_FRAGMENT-->
+<tr>
+	<td>CONTENT_DISPLAY_TEXT</td>
+	<td>xpath=(//div[contains(@data-analytics-asset-type,'${assetType}')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_DISPLAY_ASSET_SUMMARY</td>
+	<td>xpath=(//div[contains(@class,'asset-summary')])[${index}]</td>
+	<td></td>
+</tr>
+<!--FRAGMENT-->
 <tr>
 	<td>FRAGMENT</td>
 	<td>//div[contains(@class,'layout-content')]//*[contains(@class,'fragment-${key_fragmentClass}') and contains(.,'${key_content}')]</td>

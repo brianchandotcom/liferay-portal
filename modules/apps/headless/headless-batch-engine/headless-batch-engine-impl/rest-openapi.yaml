@@ -37,12 +37,24 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                processedItemsCount:
+                    description:
+                        Number of items processed by export task opeartion.
+                    example: 100
+                    minimum: 0
+                    type: integer
                 startTime:
                     description:
                         The start time of import task operation.
                     example: 2019-27-09'T'08:23:33'Z'
                     format: date-time
                     type: string
+                totalItemsCount:
+                    description:
+                        Total number of items that will be processed by export task operation.
+                    example: 1000
+                    minimum: 0
+                    type: integer
             type: object
         ImportTask:
             # @review
@@ -87,12 +99,24 @@ components:
                     enum: [CREATE, DELETE, UPDATE]
                     example: CREATE
                     type: string
+                processedItemsCount:
+                    description:
+                        Number of items processed by import task opeartion.
+                    example: 100
+                    minimum: 0
+                    type: integer
                 startTime:
                     description:
                         The start time of import task operation.
                     example: 2019-27-09'T'08:23:33'Z'
                     format: date-time
                     type: string
+                totalItemsCount:
+                    description:
+                        Total number of items that will be processed by import task operation.
+                    example: 1000
+                    minimum: 0
+                    type: integer
             type: object
 info:
     license:

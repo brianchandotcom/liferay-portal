@@ -16,6 +16,8 @@ package com.liferay.site.my.sites.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,12 +46,15 @@ public class SiteVerticalCard implements VerticalCard {
 
 	public SiteVerticalCard(
 		BaseModel<?> baseModel, RenderRequest renderRequest,
-		RenderResponse renderResponse, String tabs1, int groupUsersCount) {
+		RenderResponse renderResponse, String tabs1, int groupUsersCount,
+		int groupOrganizationsCount, int groupUserGroupsCount) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_tabs1 = tabs1;
 		_groupUsersCount = groupUsersCount;
+		_groupOrganizationsCount = groupOrganizationsCount;
+		_groupUserGroupsCount = groupUserGroupsCount;
 
 		_group = (Group)baseModel;
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
@@ -107,8 +112,54 @@ public class SiteVerticalCard implements VerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		return LanguageUtil.get(_httpServletRequest, "members") + ": " +
-			_groupUsersCount;
+		StringBundler sb = new StringBundler(5);
+
+		if (_groupUsersCount == 1) {
+			sb.append(
+				LanguageUtil.format(
+					_httpServletRequest, "x-user", _groupUsersCount, false));
+		}
+		else {
+			sb.append(
+				LanguageUtil.format(
+					_httpServletRequest, "x-users", _groupUsersCount, false));
+		}
+
+		if (_groupOrganizationsCount > 0) {
+			sb.append(StringPool.COMMA + StringPool.SPACE);
+
+			if (_groupOrganizationsCount == 1) {
+				sb.append(
+					LanguageUtil.format(
+						_httpServletRequest, "x-organization",
+						_groupOrganizationsCount, false));
+			}
+			else {
+				sb.append(
+					LanguageUtil.format(
+						_httpServletRequest, "x-organizations",
+						_groupOrganizationsCount, false));
+			}
+		}
+
+		if (_groupUserGroupsCount > 0) {
+			sb.append(StringPool.COMMA + StringPool.SPACE);
+
+			if (_groupUserGroupsCount == 1) {
+				sb.append(
+					LanguageUtil.format(
+						_httpServletRequest, "x-user-group",
+						_groupUserGroupsCount, false));
+			}
+			else {
+				sb.append(
+					LanguageUtil.format(
+						_httpServletRequest, "x-user-groups",
+						_groupUserGroupsCount, false));
+			}
+		}
+
+		return sb.toString();
 	}
 
 	@Override
@@ -135,6 +186,8 @@ public class SiteVerticalCard implements VerticalCard {
 		SiteVerticalCard.class);
 
 	private final Group _group;
+	private final int _groupOrganizationsCount;
+	private final int _groupUserGroupsCount;
 	private final int _groupUsersCount;
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;

@@ -40,6 +40,18 @@ SearchContainer<BatchPlannerLogDisplay> batchPlannerLogDisplaySearchContainer = 
 			modelVar="batchPlannerLogDisplay"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="important table-cell-expand"
+				href='<%=
+					PortletURLBuilder.createRenderURL(
+						renderResponse
+					).setMVCRenderCommandName(
+						"/batch_planner/view_batch_planner_log"
+					).setRedirect(
+						currentURL
+					).setParameter(
+						"batchPlannerLogId", batchPlannerLogDisplay.getBatchPlannerLogId()
+					).buildPortletURL()
+				%>'
 				name="title"
 				value="<%= batchPlannerLogDisplay.getTitle() %>"
 			/>

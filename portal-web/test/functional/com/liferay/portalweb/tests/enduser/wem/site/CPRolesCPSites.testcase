@@ -206,37 +206,16 @@ definition {
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addChildGroup(
+			groupName = "Child SiteName1",
+			parentGroupName = "Site Name");
 
-		Site.addBlankCP(
-			parentSiteName = "Site Name",
-			siteName = "Child SiteName1");
+		JSONGroup.assignUserToGroup(
+			groupName = "Child SiteName1",
+			parentGroupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
 
-		SitePages.openPagesAdmin(siteURLKey = "Child SiteName1");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.add(roleTitle = "Regrole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		JSONRole.addRegularRole(roleTitle = "Regrole Name");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Regrole Name",

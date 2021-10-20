@@ -581,8 +581,9 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 					commerceOrderUuid, commerceChannel.getGroupId());
 
 			if ((commerceOrder == null) ||
-				(commerceAccount.getCommerceAccountId() !=
-					commerceOrder.getCommerceAccountId())) {
+				(!commerceOrder.isGuestOrder() &&
+				 (commerceAccount.getCommerceAccountId() !=
+					 commerceOrder.getCommerceAccountId()))) {
 
 				commerceOrder = _commerceOrderService.fetchCommerceOrder(
 					commerceAccount.getCommerceAccountId(),

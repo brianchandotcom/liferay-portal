@@ -247,8 +247,7 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 		TermRangeQuery termRangeQuery = new TermRangeQueryImpl(
 			sortField, lastDocument.get(sortField), null, false, true);
 
-		lastDocumentBooleanQuery.add(
-			termRangeQuery, BooleanClauseOccur.MUST);
+		lastDocumentBooleanQuery.add(termRangeQuery, BooleanClauseOccur.MUST);
 
 		return lastDocumentBooleanQuery;
 	}

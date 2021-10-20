@@ -521,6 +521,12 @@ AUI.add(
 
 					currentFlagsNode.innerHTML = newFlagsNode.innerHTML;
 
+					Object.entries(instance.get('availableLocales')).forEach(
+						([key]) => {
+							this._updateTranslationStatus(key);
+						}
+					);
+
 					var boundingBox = instance.get('boundingBox');
 					instance._flags = boundingBox.one('.palette-container');
 

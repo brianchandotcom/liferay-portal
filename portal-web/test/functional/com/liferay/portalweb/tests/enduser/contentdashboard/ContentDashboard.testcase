@@ -3015,4 +3015,180 @@ definition {
 		}
 	}
 
+	@description = "LPS-133354 Given The Extension filter modal
+	When there are file extensions for the MIME type 'code'
+	Then the MIME type 'code' appears as father and all of the file extensions for it appear as children and available to be selected"
+	@ignore = "true"
+	@priority = "4"
+	test MimeTypeCode {
+
+		// TODO LPS-133354 MimeTypeCode pending implementation
+
+	}
+
+	@description = "LPS-133354: Given The Extension filter modal
+	When there are file extensions for the MIME type 'compressed'
+	Then the MIME type 'compressed' appears as father and all of the file extensions for it appear as children and available to be selected"
+	@ignore = "true"
+	@priority = "4"
+	test MimeTypeCompressed {
+
+		// TODO LPS-133354 MimeTypeCompressed pending implementation
+
+	}
+
+	@description = "LPS-133354: Given The Extension filter modal
+	When there are file extensions for the MIME type 'audio'
+	Then the MIME type 'audio' appears as father and all of the file extensions for it appear as children and available to be selected"
+	@ignore = "true"
+	@priority = "4"
+	test MimeTypeAudio {
+
+		// TODO LPS-133354 MimeTypeAudio pending implementation
+
+	}
+
+	@description = "LPS-133354: Given The Extension filter modal
+	When there are file extensions for the MIME type 'video'
+	Then the MIME type 'video' appears as father and all of the file extensions for it appear as children and available to be selected"
+	@ignore = "true"
+	@priority = "4"
+	test MimeTypeVideo {
+
+		// TODO LPS-133354 MimeTypeVideo pending implementation
+
+	}
+
+	@description = "LPS-133354: Given The Extension filter modal
+	When there are file extensions for the MIME type 'presentation'
+	Then the MIME type 'presentation' appears as father and all of the file extensions for it appear as children and available to be selected"
+	@ignore = "true"
+	@priority = "4"
+	test MimeTypePresentation {
+
+		// TODO LPS-133354 MimeTypePresentation pending implementation
+
+	}
+
+	@description = "LPS-133354: Given The Extension filter modal
+	When there are file extensions for the MIME type 'spreadSheet'
+	Then the MIME type 'spreadSheet' appears as father and all of the file extensions for it appear as children and available to be selected"
+	@ignore = "true"
+	@priority = "4"
+	test MimeTypeSpreadsheet {
+
+		// TODO LPS-133354 MimeTypeSpreadsheet pending implementation
+
+	}
+
+	@description = "LPS-133354: Given The Extension filter modal
+	When there are file extensions for the MIME type 'text'
+	Then the MIME type 'text' appears as father and all of the file extensions for it appear as children and available to be selected"
+	@ignore = "true"
+	@priority = "4"
+	test MimeTypeText {
+
+		// TODO LPS-133354 MimeTypeText pending implementation
+
+	}
+
+	@description = "LPS-133354: Given The Extension filter modal
+	When there are file extensions for the MIME type 'vectorial'
+	Then the MIME type 'vectorial' appears as father and all of the file extensions for it appear as children and available to be selected"
+	@ignore = "true"
+	@priority = "4"
+	test MimeTypeVectorial {
+
+		// TODO LPS-133354 MimeTypeVectorial pending implementation
+
+	}
+
+	@description = "LPS-133354: Given The Extension filter modal
+	When there are file extensions for the MIME type 'others'
+	Then the MIME type 'others' appears as father and all of the file extensions for it appear as children and available to be selected"
+	@ignore = "true"
+	@priority = "4"
+	test MimeTypeOthers {
+
+		// TODO LPS-133354 MimeTypeOthers pending implementation
+
+	}
+
+	@description = "LPS-133354: Given The Extension filter modal
+	When there are NOT file extensions for any MIME type
+	Then the MIME type does NOT appear listed in the Extension modal"
+	@ignore = "true"
+	@priority = "3"
+	test NoMimeType{
+
+		// TODO LPS-133354 NoMimeType pending implementation
+
+	}
+
+	@description = "LPS-133354: Given The Extension filter modal
+	When the text input matches to one or more extensions from a MIME type and the user clicks on the MIME type parent
+	Then all the children that appear filtered will be selected"
+	@ignore = "true"
+	@priority = "3"
+	test SelectedParentAndChildExtensions {
+
+		// TODO LPS-133354 SelectedParentAndChildExtensions pending implementation
+
+	}
+
+	@description = "LPS-133354: Given The Extension filter modal
+	When the user selects one or more extensions and clicks on 'Select' button
+	Then the extensions selected appear as filter boxes above the Content table in the Content Dashboard, with the format 'Extension: [extension_name]' "
+	@ignore = "true"
+	@priority = "5"
+	test FilteringExtensionsOnTheDashboard {
+
+		// TODO LPS-133354 FilteringExtensionsOnTheDashboard pending implementation
+
+	}
+
+	@description = "LPS-133354: Given The Extension filter modal
+	When the user selects one or more extensions
+	Then the number of file extensions preselected will be shown as a text with the format '[number] Subtypes selected' "
+	@ignore = "true"
+	@priority = "3"
+	test SelectedExtensionNumbers {
+
+		// TODO LPS-133354 SelectedExtensionNumbers pending implementation
+
+	}
+
+	@description = "LPS-131793: Given the categorization section in Documents and Media
+	Then the OOTB Internal (Topic) and Public (Audience & Stage) vocabularies are shown"
+	@ignore = "true"
+	@priority = "3"
+	test CategorizationInOotbTable {
+
+		// TODO LPS-131793 CategorizationInOotbTable pending implementation
+
+	}
+	@description = "LPS-131793: Given the categorization section in Documents and Media
+	When the user creates a Global internal vocabulary
+	Then the vocabulary is shown"
+	@ignore = "true"
+	@priority = "3"
+	test NewVocabularyGlobalInOOTBTable {
+
+		// TODO LPS-131793 NewVocabularyGlobalInOOTBTable pending implementation
+
+	}
+
+	@description = "LPS-131793: Given the categorization section in Documents and Media
+	When the user creates a Site internal vocabulary
+	Then the vocabulary is shown"
+	@ignore = "true"
+	@priority = "3"
+	test NewVocabularyInternalInOOTBTable {
+
+		// TODO LPS-131793 NewVocabularyInternalInOOTBTable pending implementation
+
+	}
+
+
+
 }

@@ -21,7 +21,7 @@ definition {
 
 	@description = "Verify user can configure AMD loader log level"
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test LogLevelCanBeConfigured {
 		property test.name.skip.portal.instance = "AMDLoader#LogLevelCanBeConfigured";
 

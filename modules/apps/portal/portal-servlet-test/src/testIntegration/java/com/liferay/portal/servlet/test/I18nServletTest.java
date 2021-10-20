@@ -74,6 +74,7 @@ public class I18nServletTest extends I18nServlet {
 		_availableLocales = _language.getAvailableLocales();
 		_defaultLocale = LocaleUtil.getDefault();
 		_localesEnabled = PropsValues.LOCALES_ENABLED;
+		_hebrewLocale = new Locale("iw", "IL");
 
 		_language.init();
 
@@ -81,14 +82,15 @@ public class I18nServletTest extends I18nServlet {
 			_portal.getDefaultCompanyId(),
 			Arrays.asList(
 				LocaleUtil.CANADA_FRENCH, LocaleUtil.SPAIN, LocaleUtil.UK,
-				LocaleUtil.US),
+				LocaleUtil.US, _hebrewLocale),
 			LocaleUtil.US);
 
 		PropsValues.LOCALES_ENABLED = new String[] {
 			_language.getLanguageId(LocaleUtil.CANADA_FRENCH),
 			_language.getLanguageId(LocaleUtil.SPAIN),
 			_language.getLanguageId(LocaleUtil.UK),
-			_language.getLanguageId(LocaleUtil.US)
+			_language.getLanguageId(LocaleUtil.US),
+			_language.getLanguageId(_hebrewLocale)
 		};
 	}
 
@@ -345,6 +347,42 @@ public class I18nServletTest extends I18nServlet {
 	}
 
 	@Test
+	public void testSendRedirectWithHebrewLocale() throws Exception {
+		MockServletContext mockServletContext = new MockServletContext();
+
+		String contextPath = StringPool.SLASH + RandomTestUtil.randomString(10);
+
+		mockServletContext.setContextPath(contextPath);
+
+		init(new MockServletConfig(mockServletContext));
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setServletPath(
+			String.format(
+				"/%s_%s", _hebrewLocale.getLanguage(),
+				_hebrewLocale.getCountry()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		sendRedirect(
+			mockHttpServletRequest, mockHttpServletResponse,
+			getI18nData(mockHttpServletRequest));
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_MOVED_PERMANENTLY,
+			mockHttpServletResponse.getStatus());
+
+		Assert.assertEquals(
+			String.format(
+				"%s/%s-%s/", contextPath, _hebrewLocale.getLanguage(),
+				_hebrewLocale.getCountry()),
+			mockHttpServletResponse.getHeader("Location"));
+	}
+
+	@Test
 	public void testSendRedirectWithoutContext() throws Exception {
 		init(new MockServletConfig(new MockServletContext()));
 
@@ -493,6 +531,7 @@ public class I18nServletTest extends I18nServlet {
 
 	private static Set<Locale> _availableLocales;
 	private static Locale _defaultLocale;
+	private static Locale _hebrewLocale;
 
 	@Inject
 	private static Language _language;

@@ -120,24 +120,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9206 | Test Summary: Add segment using a session property 'Language'"
-	@ignore = "true"
-	@priority = "4"
-	test CanCreateSessionAttributeUsingLanguage {
-
-		// TODO LRAC-9206 CanCreateSessionAttributeUsingLanguage pending implementation
-
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9207 | Test Summary: Add segment using a session property 'Last Sign In Date'"
-	@ignore = "true"
-	@priority = "4"
-	test CanCreateSessionAttributeUsingLastSignInDate {
-
-		// TODO LRAC-9207 CanCreateSessionAttributeUsingLastSignInDate pending implementation
-
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9208 | Test Summary: Add segment using a session property 'Referrer URL'"
 	@priority = "4"
 	test CanCreateSessionAttributeUsingReferrerURL {
@@ -238,24 +220,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9209 | Test Summary: Add segment using a session property 'Request Parameters'"
-	@ignore = "true"
-	@priority = "4"
-	test CanCreateSessionAttributeUsingRequestParameters {
-
-		// TODO LRAC-9209 CanCreateSessionAttributeUsingRequestParameters pending implementation
-
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9210 | Test Summary: Add segment using a session property 'Signed In'"
-	@ignore = "true"
-	@priority = "4"
-	test CanCreateSessionAttributeUsingSignedIn {
-
-		// TODO LRAC-9210 CanCreateSessionAttributeUsingSignedIn pending implementation
-
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9211 | Test Summary: Add segment using a session property 'URL'"
 	@priority = "4"
 	test CanCreateSessionAttributeUsingURL {
@@ -340,15 +304,6 @@ definition {
 
 			ACSegments.assertMember(memberName = "ac ac");
 		}
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9212 | Test Summary: Create a Segment of Session in a Topic"
-	@ignore = "true"
-	@priority = "4"
-	test CreateSegmentSessionInATopic {
-
-		// TODO LRAC-9212 CreateSegmentSessionInATopic pending implementation
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9213 | Test Summary: Show 'duplicate' and 'delete' options in a list for every segment criteria"

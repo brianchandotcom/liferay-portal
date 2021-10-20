@@ -103,24 +103,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-8830 | Test Summary: Add DXP data source and configure only an Organization's users"
-	@ignore = "true"
-	@priority = "3"
-	test AddDataSourceForOrganizationUsers {
-
-		// TODO LRAC-8830 AddDataSourceForOrganizationUsers
-
-	}
-
-	@description = "Automation ID: LRAC-8831 | Test Summary: Add DXP data source and configure only an User Group's users"
-	@ignore = "true"
-	@priority = "3"
-	test AddDataSourceForUsersGroups {
-
-		// TODO LRAC-8831 AddDataSourceForUsersGroups
-
-	}
-
 	@description = "Automation ID: LRAC-8108 | Test Summary: Add date source page that allows user to choose type of data source"
 	@priority = "5"
 	test AddDataSourcePageAllowsUserToChooseWhatKind {
@@ -344,15 +326,6 @@ definition {
 		AnalyticsCloud.takeInvalidTokenFromAnalyticsCloud();
 	}
 
-	@description = "Automation ID: LRAC-8820 | Test Summary: There is a list of connected data sources including a table of properties/status"
-	@ignore = "true"
-	@priority = "5"
-	test ListOfConnectedDataSourcesIncludingTablePropertiesStatus {
-
-		// TODO LRAC-8820 ListOfConnectedDataSourcesIncludingTablePropertiesStatus
-
-	}
-
 	@description = "Automation ID: LRAC-8839 | Test Summary: Preview the number of Organization contacts to sync"
 	@priority = "3"
 	test OrganizationContactSyncPreview {
@@ -459,15 +432,6 @@ definition {
 				locator1 = "ACDXPSettings#SYNC_BY_ORGANIZATIONS_PREVIEW",
 				value1 = "${newEntrieOrg}");
 		}
-	}
-
-	@description = "Automation ID: LRAC-8833 | Test Summary: Preview number of contacts to be added when configuring contacts"
-	@ignore = "true"
-	@priority = "5"
-	test PreviewNumberOfContactsToAddedWhenSyncContacts {
-
-		// TODO LRAC-8833 PreviewNumberOfContactsToAddedWhenSyncContacts
-
 	}
 
 	@description = "Automation ID: LRAC-8822 | Test Summary: Sync Liferay Data Source Contacts by User Groups"

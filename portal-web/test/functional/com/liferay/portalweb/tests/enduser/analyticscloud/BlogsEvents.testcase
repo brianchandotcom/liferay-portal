@@ -188,15 +188,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8667 | Test Summary: Check blogDepthReached events triggers on blog widgets outside of a blog page"
-	@ignore = "true"
-	@priority = "3"
-	test CheckBlogDepthReachedOutsideBlogPage {
-
-		// TODO LRAC-8667 CheckBlogDepthReachedOutsideBlogPage pending implementation
-
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8663 | Test Summary: Check blogDepthReached triggers (Level 1)"
 	@priority = "5"
 	test CheckBlogDepthReachedTo25AndCheckProperties {

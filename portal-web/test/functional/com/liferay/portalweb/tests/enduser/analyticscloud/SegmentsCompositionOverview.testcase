@@ -28,15 +28,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8494 | Test Summary: Assert Segment Overview shows include anonymous"
-	@ignore = "true"
-	@priority = "3"
-	test AssertSegmentOverviewShowsIncludeAnonymous {
-
-		// TODO LRAC-8494 PENDING IMPLEMENTATION
-
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8493 | Test Summary: Segment Composition shows Active and Known individuals"
 	@priority = "3"
 	test SegmentCompositionShowsActiveAndKnownIndividuals {

@@ -25,7 +25,7 @@ definition {
 			var content = '''<p>${content}</p>''';
 		}
 
-		HeadlessWebcontentAPI._addWebContent(
+		var articleId = HeadlessWebcontentAPI._addWebContent(
 			assetCategoryIds = "${assetCategoryIds}",
 			assetTagNames = "${assetTagNames}",
 			content = "${content}",
@@ -37,6 +37,8 @@ definition {
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}",
 			viewableBy = "${viewableBy}");
+
+		return "${articleId}";
 	}
 
 }

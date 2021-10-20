@@ -80,7 +80,13 @@ definition {
 				}
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		var articleId = JSONCurlUtil.post("${curl}", "$.id");
+
+		if ("${articleId}" == "") {
+			fail("FAIL. Cannot add journal article.");
+		}
+
+		return "${articleId}";
 	}
 
 }

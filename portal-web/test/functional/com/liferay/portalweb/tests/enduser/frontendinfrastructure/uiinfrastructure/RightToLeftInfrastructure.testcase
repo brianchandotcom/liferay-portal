@@ -25,7 +25,7 @@ definition {
 
 	@description = "Verify the right to left localization css values are applied to a text field"
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test RTLDirectionStyleAppliedToTextField {
 		property app.server.types = "tomcat";
 		property database.types = "mysql";
@@ -55,7 +55,7 @@ definition {
 
 	@description = "Verify the right to left localization css values are applied to page layout"
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test RTLStylesAppliedToPageLayout {
 		property app.server.types = "tomcat";
 		property database.types = "mysql";
@@ -64,15 +64,16 @@ definition {
 		property test.name.skip.portal.instance = "RightToLeftInfrastructure#RTLStylesAppliedToPageLayout";
 		property testray.component.names = "WYSIWYG";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "RTL Test Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "RTL Test Page");
 
 		Navigator.gotoPage(pageName = "RTL Test Page");
 
-		Portlet.addPG(portletName = "Language Selector");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "RTL Test Page",
+			widgetName = "Language Selector");
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "ar_SA",

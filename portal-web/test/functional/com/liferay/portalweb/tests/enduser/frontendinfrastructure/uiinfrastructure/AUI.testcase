@@ -25,7 +25,7 @@ definition {
 
 	@description = "Verify portal can be enabled to preload AUI modules"
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanBeEnabledToPreloadModules {
 		property test.name.skip.portal.instance = "AUI#CanBeEnabledToPreloadModules";
 

@@ -585,7 +585,7 @@ definition {
 	@description = "This is a test for COMMERCE-6102. CreateNewChannelCompileAll"
 	@priority = "3"
 	test CreateNewChannelCompileAll {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1435,7 +1435,7 @@ definition {
 	@description = "This is a test for COMMERCE-6270. RemoveNotificationQueue"
 	@priority = "3"
 	test RemoveNotificationQueue {
-		property portal.acceptance = "Intern Test";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

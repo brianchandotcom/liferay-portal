@@ -30,7 +30,7 @@ definition {
 	@description = "This is a test for COMMERCE-6017. CreateAnOptionForAllTheFieldType"
 	@priority = "3"
 	test CreateAnOptionForAllTheFieldType {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -102,7 +102,7 @@ definition {
 	@description = "This is a test for COMMERCE-6019. EditAndRemoveAnOptionWithValues"
 	@priority = "3"
 	test EditAndRemoveAnOptionWithValues {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

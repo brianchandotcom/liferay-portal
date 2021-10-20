@@ -30,7 +30,7 @@ definition {
 	@description = "This is a test for COMMERCE-6283. EditSpecificationGroup"
 	@priority = "3"
 	test EditSpecificationGroup {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -68,7 +68,7 @@ definition {
 	@description = "This is a test for COMMERCE-6284. EditSpecificationLabel"
 	@priority = "3"
 	test EditSpecificationLabel {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

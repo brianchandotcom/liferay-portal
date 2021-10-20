@@ -67,7 +67,7 @@ definition {
 	@description = "This is a test for COMMERCE-6065. AddAPreExistingProductGroup"
 	@priority = "3"
 	test AddAPreExistingProductGroup {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

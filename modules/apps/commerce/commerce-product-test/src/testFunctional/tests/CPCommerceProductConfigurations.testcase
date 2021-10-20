@@ -30,7 +30,7 @@ definition {
 	@description = "This is a test for COMMERCE-6094. UseConfiguration"
 	@priority = "3"
 	test UseConfiguration {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

@@ -28,7 +28,7 @@ definition {
 	@description = "This is a test for COMMERCE-6278. AddAnImageToCatalogAndRemove"
 	@priority = "3"
 	test AddAnImageToCatalogAndRemove {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -119,7 +119,7 @@ definition {
 	@description = "This is a test for COMMERCE-6273. EditACatalog"
 	@priority = "3"
 	test EditACatalog {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

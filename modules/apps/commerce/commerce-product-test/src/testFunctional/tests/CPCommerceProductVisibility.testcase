@@ -150,7 +150,7 @@ definition {
 	@description = "This is a test for COMMERCE-6087. RemoveAChannelFilter"
 	@priority = "3"
 	test RemoveAChannelFilter {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceProductVisibility#RemoveAChannelFilter";
 
 		CommerceNavigator.gotoPortlet(

@@ -139,7 +139,7 @@ definition {
 	@description = "This is a test for COMMERCE-6302. AddGroupedProduct"
 	@priority = "3"
 	test AddGroupedProduct {
-		property portal.acceptance = "Intern Test";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -198,7 +198,7 @@ definition {
 	@description = "This is a test for COMMERCE-6020. AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic"
 	@priority = "3"
 	test AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -381,7 +381,7 @@ definition {
 	@description = "This is a test for COMMERCE-6751. ConfigureVirtualProduct"
 	@priority = "3"
 	test ConfigureVirtualProduct {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -723,7 +723,7 @@ definition {
 	@description = "This is a test for COMMERCE-5808. EditAProduct"
 	@priority = "3"
 	test EditAProduct {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -759,7 +759,7 @@ definition {
 	@description = "This is a test for COMMERCE-5807. EditSkuAndDelete"
 	@priority = "3"
 	test EditSkuAndDelete {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -907,7 +907,7 @@ definition {
 	@description = "COMMERCE-5802. Use a filter always check that the results are correct"
 	@priority = "3"
 	test UseFilters {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

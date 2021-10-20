@@ -12,6 +12,10 @@
 	padding: 0px;
 }
 
+.get-in-touch .contact-agent-title-suport {
+	color: var(--color-neutral-1);
+}
+
 .get-in-touch .content-agent-text-adictional {
 	color: var(--color-neutral-2);
 	font-size: 13px;

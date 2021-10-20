@@ -3,7 +3,7 @@
 }
 
 .congrats h1 {
-	color: #4d85ff;
+	color: var(--color-action-primary-default);
 	font-size: 43px;
 	font-weight: 800;
 	height: 48px;
@@ -11,21 +11,21 @@
 }
 
 .congrats h2 {
-	color: #2f313d;
+	color: var(--color-neutral-1);
 	font-size: 21px;
 	font-weight: 800;
 	line-height: 32px;
 }
 
 .congrats h3 {
-	color: #2f313d;
+	color: var(--color-neutral-1);
 	font-size: 21px;
 	font-weight: 500;
 	line-height: 32px;
 }
 
 .congrats h4 {
-	color: #2f313d;
+	color: var(--color-neutral-1);
 	font-size: 16px;
 	font-weight: 500;
 	line-height: 24px;

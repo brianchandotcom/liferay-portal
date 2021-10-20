@@ -1903,7 +1903,7 @@ definition {
 
 	@description = "LPS-139005 - Verify that the Object portlet is no longer displayed on the Open Menu when inactivated"
 	@priority = "5"
-	test ObjectPorletDisapperasOpenMenuWhenInactivated {
+	test ObjectPorletDisappearsOpenMenuWhenInactivated {
 		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(

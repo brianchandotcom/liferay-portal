@@ -445,6 +445,17 @@ definition {
 	}
 
 	macro deleteContentViaBulkEditing {
+		if (isSet(webContentTitle)) {
+			Check(
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "WC#ENTRY_LIST_CHECKBOX");
+		}
+		else if (isSet(dmDocumentTitle)) {
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			DMDocument.selectDocuments(dmDocumentTitle = "${dmDocumentTitle}");
+		}
+
 		if (isSet(recycleBinDisabled)) {
 			ClickNoError(locator1 = "Icon#DELETE");
 

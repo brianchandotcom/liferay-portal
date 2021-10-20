@@ -189,9 +189,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		var key_dmDocumentTitle = "DM Document Title";
-
-		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		DMDocument.selectDocuments(dmDocumentTitle = "DM Document Title");
 
 		Click(locator1 = "Icon#EDIT_CATEGORIES");
 

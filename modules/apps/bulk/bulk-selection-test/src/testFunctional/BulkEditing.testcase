@@ -47,9 +47,7 @@ definition {
 	test AddTagToSingleAsset {
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.jpeg,Document_2.docx");
 
-		var key_dmDocumentTitle = "Document_1";
-
-		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1");
 
 		Click(locator1 = "Icon#EDIT_TAGS");
 
@@ -84,17 +82,13 @@ definition {
 
 		DMDocument.editCategoryTags(categoryNameList = "Books,Plants");
 
-		Uncheck(
-			key_dmDocumentTitle = "Document_1",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		DMDocument.unselectDocuments(dmDocumentTitle = "Document_1");
 
 		DMNavigator.gotoAddCategoriesPG(dmDocumentTitleList = "Document_2");
 
 		DMDocument.editCategoryTags(categoryNameList = "Books,Pets");
 
-		Uncheck(
-			key_dmDocumentTitle = "Document_2",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		DMDocument.unselectDocuments(dmDocumentTitle = "Document_2");
 
 		DMNavigator.gotoAddCategoriesPG(dmDocumentTitleList = "Document_1,Document_2");
 
@@ -154,9 +148,7 @@ definition {
 	test EditAndAppendTags {
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt");
 
-		for (var key_dmDocumentTitle : list "Document_2,Document_4") {
-			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
-		}
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_2,Document_4");
 
 		Click(locator1 = "Icon#EDIT_TAGS");
 
@@ -173,9 +165,7 @@ definition {
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}
 
-		for (var key_dmDocumentTitle : list "Document_2,Document_4") {
-			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
-		}
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_2,Document_4");
 
 		Click(locator1 = "Icon#EDIT_TAGS");
 
@@ -210,37 +200,29 @@ definition {
 	test EditAndReplaceTags {
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt");
 
-		var key_dmDocumentTitle = "Document_1";
-
-		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1");
 
 		Click(locator1 = "Icon#EDIT_TAGS");
 
 		DMDocument.editTags(tagName = "one");
 
-		Uncheck(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		DMDocument.unselectDocuments(dmDocumentTitle = "Document_1");
 
-		var key_dmDocumentTitle = "Document_2";
-
-		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_2");
 
 		Click(locator1 = "Icon#EDIT_TAGS");
 
 		DMDocument.editTags(tagName = "two");
 
-		Uncheck(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		DMDocument.unselectDocuments(dmDocumentTitle = "Document_2");
 
-		var key_dmDocumentTitle = "Document_3";
-
-		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_3");
 
 		Click(locator1 = "Icon#EDIT_TAGS");
 
 		DMDocument.editTags(tagName = "three");
 
-		for (var key_dmDocumentTitle : list "Document_1,Document_3") {
-			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
-		}
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_3");
 
 		Click(locator1 = "Icon#EDIT_TAGS");
 
@@ -276,9 +258,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		for (var key_dmDocumentTitle : list "Document_1,Document_2") {
-			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
-		}
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2");
 
 		Click(locator1 = "Icon#EDIT_TAGS");
 
@@ -306,9 +286,7 @@ definition {
 
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.doc");
 
-		for (var key_dmDocumentTitle : list "Document_1,Document_2") {
-			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
-		}
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2");
 
 		DMDocument.moveToFolderPG(
 			bulkSelection = "2 of 3 Selected",
@@ -347,17 +325,13 @@ definition {
 
 		DMDocument.editCategoryTags(categoryNameList = "Books,Plants");
 
-		Uncheck(
-			key_dmDocumentTitle = "Document_1",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		DMDocument.unselectDocuments(dmDocumentTitle = "Document_1");
 
 		DMNavigator.gotoAddCategoriesPG(dmDocumentTitleList = "Document_2");
 
 		DMDocument.editCategoryTags(categoryNameList = "Books,Pets");
 
-		Uncheck(
-			key_dmDocumentTitle = "Document_2",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		DMDocument.unselectDocuments(dmDocumentTitle = "Document_2");
 
 		DMNavigator.gotoAddCategoriesPG(dmDocumentTitleList = "Document_1,Document_2");
 
@@ -383,9 +357,7 @@ definition {
 	test SaveTags {
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt");
 
-		for (var key_dmDocumentTitle : list "Document_1,Document_2,Document_3,Document_4") {
-			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
-		}
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2,Document_3,Document_4");
 
 		Click(locator1 = "Icon#EDIT_TAGS");
 
@@ -487,9 +459,7 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		for (var key_dmDocumentTitle : list "DM Document 1 in Folder,DM Document 2 in Folder") {
-			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
-		}
+		DMDocument.selectDocuments(dmDocumentTitle = "DM Document 1 in Folder,DM Document 2 in Folder");
 
 		AssertElementPresent(locator1 = "Icon#EDIT_TAGS_DISABLED");
 	}

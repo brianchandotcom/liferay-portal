@@ -444,9 +444,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		Check(
-			key_dmDocumentTitle = "Untitled",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		DMDocument.selectDocuments(dmDocumentTitle = "Untitled");
 
 		AssertElementPresent(locator1 = "Icon#EDIT_TAGS_DISABLED");
 
@@ -512,9 +510,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		Check(
-			key_dmDocumentTitle = "Untitled",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		DMDocument.selectDocuments(dmDocumentTitle = "Untitled");
 
 		AssertElementPresent(locator1 = "Icon#EDIT_TAGS_DISABLED");
 

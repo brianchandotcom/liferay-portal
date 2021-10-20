@@ -56,9 +56,7 @@ definition {
 			dmDocumentFileList = "Document_1.doc,Document_2.docx");
 
 		for (var tagName : list "tagone,tagtwo,tagthree") {
-			var key_dmDocumentTitle = "Document_1";
-
-			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+			DMDocument.selectDocuments(dmDocumentTitle = "Document_1");
 
 			Click(locator1 = "Icon#EDIT_TAGS");
 
@@ -73,9 +71,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		var key_dmDocumentTitle = "Document_2";
-
-		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_2");
 
 		Click(locator1 = "Icon#EDIT_TAGS");
 

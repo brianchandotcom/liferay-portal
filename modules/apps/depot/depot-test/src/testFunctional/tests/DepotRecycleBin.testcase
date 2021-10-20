@@ -51,13 +51,11 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");;
 
-		Check(
-			key_webContentTitle = "WC WebContent Title",
-			locator1 = "WC#ENTRY_LIST_CHECKBOX");
-
-		Depot.deleteContentViaBulkEditing(webContent = "true");
+		Depot.deleteContentViaBulkEditing(
+			webContent = "true",
+			webContentTitle = "WC WebContent Title");
 
 		DepotNavigator.openDepotRecycleBinAdmin(depotName = "Test Depot Name");
 
@@ -95,13 +93,9 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		var key_dmDocumentTitle = "DM Document Title";
-
-		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
-
-		Depot.deleteContentViaBulkEditing(recycleBinDisabled = "true");
+		Depot.deleteContentViaBulkEditing(
+			dmDocumentTitle = "DM Document Title",
+			recycleBinDisabled = "true");
 	}
 
 	@description = "This ensures that the web content can be deleted after the recycle bin is disabled."
@@ -151,13 +145,7 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		for (var key_dmDocumentTitle : list "Document_1,Document_2") {
-			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
-		}
-
-		Depot.deleteContentViaBulkEditing();
+		Depot.deleteContentViaBulkEditing(dmDocumentTitle = "Document_1,Document_2");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -171,7 +159,7 @@ definition {
 			assetType = "Document",
 			multipleAssets = "true");
 
-		Refresh();
+		DepotNavigator.openDepotRecycleBinAdmin(depotName = "Test Depot Name");
 
 		RecycleBin.restoreCP(
 			assetName = "Document_2",

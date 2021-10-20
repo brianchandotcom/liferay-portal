@@ -570,7 +570,7 @@
 <!--FRAGMENTS_AND_WIDGETS_PANEL-->
 <tr>
 	<td>FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON</td>
-	<td>//div[contains(@class,'fragments-widgets-panel')]//button[contains(@class,'tooltip')][*[name()='svg'][contains(@class,'icon-${key_displayStyle}')]]</td>
+	<td>//div[contains(@class,'fragments-widgets-panel')]//button[contains(@class,'tooltip')][*[name()='svg'][contains(@class,'icon-${key_switchTo}')]]</td>
 	<td></td>
 </tr>
 <tr>

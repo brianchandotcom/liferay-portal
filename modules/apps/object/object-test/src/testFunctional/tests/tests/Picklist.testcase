@@ -185,11 +185,26 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to update a Picklist item's key"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotUpdatePicklistItemKey {
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		// TODO LPS-139766 CannotUpdatePicklistItemKey pending implementation
+		Picklist.addPicklistItemViaAPI(
+			itemKey = "PicklistItemKeyTest",
+			itemName = "Picklist Item Name Test",
+			picklistName = "Picklist Test");
+
+		Picklist.gotoPicklists();
+
+		Picklist.optionsPicklist(
+			picklistName = "Picklist Test",
+			picklistOption = "View");
+
+		Picklist.optionsPicklistItem(
+			itemKey = "PicklistItemKeyTest",
+			picklistItemOption = "View");
+
+		Picklist.assertDisableKey();
 
 	}
 

@@ -181,4 +181,12 @@ definition {
 			value1 = "${picklistName}");
 	}
 
+	macro assertDisableKey {
+		IFrame.selectTopFrame();
+
+		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_ITEM_MODAL");
+
+		AssertElementPresent(locator1 = "Picklist#DISABLE_PICKLIST_KEY");
+	}
+
 }

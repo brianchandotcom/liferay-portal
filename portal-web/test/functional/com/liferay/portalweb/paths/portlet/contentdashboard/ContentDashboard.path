@@ -241,7 +241,7 @@
 </tr>
 <tr>
 	<td>PANEL_INFO_VIEW</td>
-	<td>//*[contains(@title,'View')]</td>
+	<td>//*[contains(@class,'link-outline-secondary')]</td>
 	<td></td>
 </tr>
 <tr>

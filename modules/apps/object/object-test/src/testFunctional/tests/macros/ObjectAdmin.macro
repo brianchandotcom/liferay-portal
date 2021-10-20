@@ -340,9 +340,6 @@ definition {
 
 	macro goToDetailsTab {
 		Click(locator1 = "ObjectAdmin#OBJECT_DETAILS_TAB");
-
-
-
 	}
 
 	macro goToFieldsDetails {

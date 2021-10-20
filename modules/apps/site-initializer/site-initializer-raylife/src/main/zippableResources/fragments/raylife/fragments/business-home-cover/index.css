@@ -3,14 +3,11 @@
 }
 
 .business-home-cover .btn {
-	background-color: var(--primary-raylife, #F69D37) !important;
-	border-color: var(--primary-raylife, #F69D37) !important;
-	min-height: 48px;
-	padding: 12px 16px;
+	border-radius: 4px;
 }
 
 .business-home-cover .business-home-cover-box {
-	background-color: var(--white);
+	background-color: var(--color-neutral-10);
 	border-radius: 8px;
 	box-shadow: 0px 10px 30px rgba(77, 133, 255, 0.09);
 	font-size: var(--font-size-lg);
@@ -30,7 +27,7 @@
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	appearance: none;
-	border: 0.0625rem solid #7d7e85;
+	border: 0.0625rem solid var(--color-action-neutral-default);
 	font-size: var(--font-size-base);
 	font-weight: var(--font-weight-bolder);
 	height: 48px;
@@ -44,7 +41,7 @@
 }
 
 .business-home-cover .select-icon {
-	color: #7d7e85;
+	color: var(--color-action-neutral-default);
 	pointer-events: none;
 	right: 20px;
 	top: 17px;
@@ -61,7 +58,7 @@
 	.business-home-cover-box
 	.business-home-cover-box-title
 	.title-highlight {
-	color: var(--primary);
+	color: var(--color-brand-primary);
 	display: block;
 }
 
@@ -84,28 +81,28 @@
 }
 
 .business-home-cover .business-email-delivered p {
-	color: #606167;
+	color: var(--color-neutral-2);
 	font-size: var(--font-size-base);
 }
 
 .business-home-cover .business-home-cover-link {
-	color: #606167;
+	color: var(--color-neutral-2);
 	font-weight: bold;
 }
 
 .business-home-cover .has-error input, .business-home-cover .has-error select {
-	border-color: #EA6136;
-	outline-color: #EA6136;
+	border-color: var(--color-state-error);
+	outline-color: var(--color-state-error);
 }
 
 .business-home-cover .has-error label {
-	color: #EA6136;
+	color: var(--color-state-error);
 }
 
 .business-home-cover .error-feedback {
-	background-color: #FFE4DC;
+	background-color: var(--color-state-error-lighten-1);
 	border-radius: 8px;
-	color: #EA6136;
+	color: var(--color-state-error);
 	display: none;
 	font-size: 13px;
 	font-weight: var(--display3-weight);

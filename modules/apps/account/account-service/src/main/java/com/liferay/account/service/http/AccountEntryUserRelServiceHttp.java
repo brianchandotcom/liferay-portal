@@ -98,6 +98,52 @@ public class AccountEntryUserRelServiceHttp {
 	}
 
 	public static com.liferay.account.model.AccountEntryUserRel
+			addAccountEntryUserRel(
+				HttpPrincipal httpPrincipal, long accountEntryId,
+				long creatorUserId, String screenName, String emailAddress,
+				java.util.Locale locale, String firstName, String middleName,
+				String lastName, long prefixId, long suffixId, String jobTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryUserRelServiceUtil.class, "addAccountEntryUserRel",
+				_addAccountEntryUserRelParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountEntryId, creatorUserId, screenName,
+				emailAddress, locale, firstName, middleName, lastName, prefixId,
+				suffixId, jobTitle);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.account.model.AccountEntryUserRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.account.model.AccountEntryUserRel
 			addAccountEntryUserRelByEmailAddress(
 				HttpPrincipal httpPrincipal, long accountEntryId,
 				String emailAddress, long[] accountRoleIds,
@@ -109,7 +155,7 @@ public class AccountEntryUserRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryUserRelServiceUtil.class,
 				"addAccountEntryUserRelByEmailAddress",
-				_addAccountEntryUserRelByEmailAddressParameterTypes1);
+				_addAccountEntryUserRelByEmailAddressParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, emailAddress, accountRoleIds,
@@ -302,8 +348,14 @@ public class AccountEntryUserRelServiceHttp {
 			java.util.Locale.class, String.class, String.class, String.class,
 			long.class, long.class
 		};
+	private static final Class<?>[] _addAccountEntryUserRelParameterTypes1 =
+		new Class[] {
+			long.class, long.class, String.class, String.class,
+			java.util.Locale.class, String.class, String.class, String.class,
+			long.class, long.class, String.class
+		};
 	private static final Class<?>[]
-		_addAccountEntryUserRelByEmailAddressParameterTypes1 = new Class[] {
+		_addAccountEntryUserRelByEmailAddressParameterTypes2 = new Class[] {
 			long.class, String.class, long[].class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

@@ -1122,6 +1122,61 @@ definition {
 			searchTerm = "Entry Title");
 	}
 
+	test SearchCompanyScopedObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects",
+			scope = "company");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "title",
+			fieldName = "title",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "title",
+			objectName = "CustomObject",
+			value = "apple");
+
+		Search.openSearchPage();
+
+		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Everything");
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		var objectEntryID = JSONObject.getObjectEntryId(
+			objectName = "CustomObject",
+			fieldName = "title",
+			entryValue = "apple");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "${objectEntryID}",
+			searchAssetType = "Custom Object");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Type Facet",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertElementPresent(
+			assetType = "Custom Object",
+			locator1 = "Search#TYPE_FACET_CURRENT_ASSET_TYPE");
+
+		IFrame.closeFrame();
+
+		SearchFacetPortlet.checkFacet(facetValueName = "Custom Object");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "${objectEntryID}",
+			searchAssetType = "Custom Object");
+	}
+
 	@priority = "4"
 	test SearchContentPagesSmoke {
 		JSONGroup.addGroup(groupName = "Site Name");

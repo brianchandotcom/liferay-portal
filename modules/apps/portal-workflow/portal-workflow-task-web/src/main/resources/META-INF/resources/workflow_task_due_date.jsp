@@ -58,12 +58,20 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 	var dueDateTimeInput = A.one('#<portlet:namespace />dueDateTime');
 
 	dueDateTimeInput.after('blur', () => {
-		liferayForm.formValidator.validateField('<portlet:namespace />dueDate');
+		liferayForm.formValidator.validate();
 	});
 
 	var doneButton = A.one('#<portlet:namespace />done');
 
 	doneButton.on('click', (event) => {
+		liferayForm.formValidator.validate();
+
+		if (liferayForm.formValidator.hasErrors()) {
+			event.preventDefault();
+
+			return;
+		}
+
 		var data = new FormData(
 			document.querySelector('#<portlet:namespace />updateFm')
 		);

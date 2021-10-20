@@ -12,12 +12,12 @@
 <tbody>
 <tr>
 	<td>ACTIVE_NAV_LINK</td>
-	<td>//div[contains(@class,'menubar')]//a[contains(@class,'active') and normalize-space()='${key_menuBar}']</td>
+	<td>//nav[contains(@class,'menubar')]//li[contains(@class,'nav-item')]//a[contains(@class,'active')][normalize-space()='${key_menuBar}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAV_LINK</td>
-	<td>//div[contains(@class,'menubar')]//a[normalize-space()='${key_menuBar}']</td>
+	<td>//nav[contains(@class,'menubar')]//li[contains(@class,'nav-item')]//a[normalize-space()='${key_menuBar}']</td>
 	<td></td>
 </tr>
 </tbody>

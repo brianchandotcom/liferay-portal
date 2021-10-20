@@ -576,6 +576,8 @@ definition {
 			groupName = "Test Site Name",
 			sourceURL = "test-page1");
 
+		Redirect.openToAddEntry(siteURLKey = "test-site-name");
+
 		Redirect.addEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-page1",
 			noUpdateRedirect = "true",

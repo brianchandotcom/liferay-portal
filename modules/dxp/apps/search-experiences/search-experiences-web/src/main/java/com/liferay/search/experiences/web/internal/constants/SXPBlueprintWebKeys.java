@@ -18,4 +18,11 @@ package com.liferay.search.experiences.web.internal.constants;
  * @author Petteri Karttunen
  */
 public class SXPBlueprintWebKeys {
+
+	public static final String VIEW_SXP_BLUEPRINTS_DISPLAY_CONTEXT =
+		"VIEW_SXP_BLUEPRINTS_DISPLAY_CONTEXT";
+
+	public static final String VIEW_SXP_ELEMENTS_DISPLAY_CONTEXT =
+		"VIEW_SXP_ELEMENTS_DISPLAY_CONTEXT";
+
 }

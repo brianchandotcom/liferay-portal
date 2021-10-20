@@ -56,31 +56,31 @@ definition {
 
 		task ("View the tooltip when hover on the display style button") {
 			MouseOver(
-				key_displayStyle = "list",
+				key_switchTo = "card",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 
 			AssertVisible(
-				key_content = "Change View",
+				key_content = "Switch to Card View",
 				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 
 		task ("Change to card display style") {
 			Click(
-				key_displayStyle = "list",
+				key_switchTo = "card",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 
 			AssertVisible(
-				key_displayStyle = "card",
+				key_switchTo = "list",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 		}
 
 		task ("View the tooltip when hover on the display style button") {
 			MouseOver(
-				key_displayStyle = "card",
+				key_switchTo = "list",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 
 			AssertVisible(
-				key_content = "Change View",
+				key_content = "Switch to List View",
 				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 
@@ -100,7 +100,7 @@ definition {
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 			AssertVisible(
-				key_displayStyle = "card",
+				key_switchTo = "list",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 		}
 	}
@@ -120,7 +120,7 @@ definition {
 
 		task ("View the display style is list") {
 			AssertVisible(
-				key_displayStyle = "list",
+				key_switchTo = "card",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 		}
 
@@ -153,11 +153,11 @@ definition {
 
 		task ("Change to card display style") {
 			Click(
-				key_displayStyle = "list",
+				key_switchTo = "card",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 
 			AssertVisible(
-				key_displayStyle = "card",
+				key_switchTo = "list",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 		}
 
@@ -187,7 +187,7 @@ definition {
 
 		task ("View the display style is list") {
 			AssertVisible(
-				key_displayStyle = "list",
+				key_switchTo = "card",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 		}
 
@@ -227,11 +227,11 @@ definition {
 			Navigator.gotoNavTab(navTab = "Fragments");
 
 			Click(
-				key_displayStyle = "list",
+				key_switchTo = "card",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 
 			AssertVisible(
-				key_displayStyle = "card",
+				key_switchTo = "list",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 		}
 

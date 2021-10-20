@@ -75,14 +75,22 @@ definition {
 			var displayStyle = "list";
 		}
 
-		if (IsElementNotPresent(key_displayStyle = "${displayStyle}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
+		if ("${displayStyle}" == "list") {
+			var switchTo = "card";
+		}
+
+		else {
+			var switchTo = "list";
+		}
+
+		if (IsElementNotPresent(key_switchTo = "${switchTo}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 			Click(
-				key_displayStyle = "",
+				key_switchTo = "",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 		}
 
 		AssertVisible(
-			key_displayStyle = "${displayStyle}",
+			key_switchTo = "${switchTo}",
 			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 
 		Navigator.gotoNavTab(navTab = "${navTab}");
@@ -258,16 +266,22 @@ definition {
 				var displayStyle = "list";
 			}
 
-			if (IsElementNotPresent(
-					key_displayStyle = "${displayStyle}", locator1 =
-					"PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
+			if ("${displayStyle}" == "list") {
+				var switchTo = "card";
+			}
+
+			else {
+				var switchTo = "list";
+			}
+
+			if (IsElementNotPresent(key_switchTo = "${switchTo}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 				Click(
-					key_displayStyle = "",
+					key_switchTo = "",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 			}
 
 			AssertVisible(
-				key_displayStyle = "${displayStyle}",
+				key_switchTo = "${switchTo}",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 
 			Navigator.gotoNavTab(navTab = "${navTab}");
@@ -385,14 +399,22 @@ definition {
 			var displayStyle = "list";
 		}
 
-		if (IsElementNotPresent(key_displayStyle = "${displayStyle}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
+		if ("${displayStyle}" == "list") {
+			var switchTo = "card";
+		}
+
+		else {
+			var switchTo = "list";
+		}
+
+		if (IsElementNotPresent(key_switchTo = "${switchTo}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 			Click(
-				key_displayStyle = "",
+				key_switchTo = "",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 		}
 
 		AssertVisible(
-			key_displayStyle = "${displayStyle}",
+			key_switchTo = "${switchTo}",
 			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 
 		Navigator.gotoNavTab(navTab = "${navTab}");
@@ -477,14 +499,22 @@ definition {
 			var displayStyle = "list";
 		}
 
-		if (IsElementNotPresent(key_displayStyle = "${displayStyle}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
+		if ("${displayStyle}" == "list") {
+			var switchTo = "card";
+		}
+
+		else {
+			var switchTo = "list";
+		}
+
+		if (IsElementNotPresent(key_switchTo = "${switchTo}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 			Click(
-				key_displayStyle = "",
+				key_switchTo = "",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 		}
 
 		AssertVisible(
-			key_displayStyle = "${displayStyle}",
+			key_switchTo = "${switchTo}",
 			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 
 		Navigator.gotoNavTab(navTab = "${navTab}");
@@ -623,14 +653,22 @@ definition {
 			var displayStyle = "list";
 		}
 
-		if (IsElementNotPresent(key_displayStyle = "${displayStyle}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
+		if ("${displayStyle}" == "list") {
+			var switchTo = "card";
+		}
+
+		else {
+			var switchTo = "list";
+		}
+
+		if (IsElementNotPresent(key_switchTo = "${switchTo}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 			Click(
-				key_displayStyle = "",
+				key_switchTo = "",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 		}
 
 		AssertVisible(
-			key_displayStyle = "${displayStyle}",
+			key_switchTo = "${switchTo}",
 			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 
 		Navigator.gotoNavTab(navTab = "Fragments");
@@ -772,14 +810,22 @@ definition {
 			var displayStyle = "list";
 		}
 
-		if (IsElementNotPresent(key_displayStyle = "${displayStyle}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
+		if ("${displayStyle}" == "list") {
+			var switchTo = "card";
+		}
+
+		else {
+			var switchTo = "list";
+		}
+
+		if (IsElementNotPresent(key_switchTo = "${switchTo}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 			Click(
-				key_displayStyle = "",
+				key_switchTo = "",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 		}
 
 		AssertVisible(
-			key_displayStyle = "${displayStyle}",
+			key_switchTo = "${switchTo}",
 			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 
 		Navigator.gotoNavTab(navTab = "Fragments");
@@ -850,14 +896,22 @@ definition {
 			var displayStyle = "list";
 		}
 
-		if (IsElementNotPresent(key_displayStyle = "${displayStyle}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
+		if ("${displayStyle}" == "list") {
+			var switchTo = "card";
+		}
+
+		else {
+			var switchTo = "list";
+		}
+
+		if (IsElementNotPresent(key_switchTo = "${switchTo}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 			Click(
-				key_displayStyle = "",
+				key_switchTo = "",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 		}
 
 		AssertVisible(
-			key_displayStyle = "${displayStyle}",
+			key_switchTo = "${switchTo}",
 			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 
 		Navigator.gotoNavTab(navTab = "Widgets");

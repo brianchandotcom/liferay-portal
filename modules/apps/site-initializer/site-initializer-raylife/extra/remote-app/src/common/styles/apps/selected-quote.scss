@@ -231,8 +231,12 @@
 							gap: initial;
 							height: 176px;
 							justify-content: center;
-							margin-right: 20px;
+
 							width: 176px;
+
+							&.margin-right {
+								margin-right: 16px;
+							}
 						}
 
 						span {

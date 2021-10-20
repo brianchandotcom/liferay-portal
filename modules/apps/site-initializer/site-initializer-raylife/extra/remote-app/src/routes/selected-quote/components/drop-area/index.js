@@ -11,7 +11,13 @@ const BASE_WIDTH = '176px';
 const BASE_HEIGHT = '176px';
 
 const DropArea = ({
-	dropAreaProps: {heightContainer, limitFiles, type, widthContainer},
+	dropAreaProps: {
+		heightContainer,
+
+		limitFiles,
+		type,
+		widthContainer,
+	},
 	files = [],
 	setFiles,
 	setShowBadgeInfo,
@@ -141,6 +147,10 @@ const DropArea = ({
 			_setShowUpload(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [files]);
+
+	useEffect(() => {
+		filesRef.current = files;
 	}, [files]);
 
 	return (

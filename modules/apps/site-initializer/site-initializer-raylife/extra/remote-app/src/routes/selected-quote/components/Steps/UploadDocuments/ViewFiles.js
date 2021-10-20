@@ -1,4 +1,5 @@
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import ProgressBar from '~/common/components/progress-bar';
 import ViewDocuments from './ViewDocuments';
 
@@ -30,7 +31,11 @@ const ViewFiles = ({files = [], onRemoveFile, type}) => {
 				if (file.progress < 100) {
 					return (
 						<div className="flex-column" title={file.name}>
-							<div className="card">
+							<div
+								className={classNames('card', {
+									'margin-right': index < 3,
+								})}
+							>
 								<p>Uploading...</p>
 
 								<ProgressBar

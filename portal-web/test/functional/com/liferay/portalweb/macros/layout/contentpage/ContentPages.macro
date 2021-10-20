@@ -270,12 +270,31 @@ definition {
 			var index = "1";
 		}
 
-		AssertTextEquals(
-			fragmentName = "${fragmentName}",
-			id = "${id}",
-			index = "${index}",
-			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
-			value1 = "${text}");
+		if ("${fragmentName}" == "Content Display") {
+			if ("${assetType}" == "category") {
+				AssertTextEquals(
+					index = "${index}",
+					locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY",
+					value1 = "${text}");
+			}
+
+			else {
+				AssertTextEquals(
+					assetType = "${assetType}",
+					index = "${index}",
+					locator1 = "Fragment#CONTENT_DISPLAY_TEXT",
+					value1 = "${text}");
+			}
+		}
+
+		else {
+			AssertTextEquals(
+				fragmentName = "${fragmentName}",
+				id = "${id}",
+				index = "${index}",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				value1 = "${text}");
+		}
 	}
 
 }

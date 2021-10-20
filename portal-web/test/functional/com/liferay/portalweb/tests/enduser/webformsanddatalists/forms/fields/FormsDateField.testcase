@@ -433,6 +433,8 @@ definition {
 
 		FormFields.enableSwitch(fieldName = "Validation");
 
+		ScrollBy(value1 = "0, 2000");
+
 		FormFields.setValidationAcceptedDate(acceptedDateOption = "Range");
 
 		FormFields.viewValidationCustomDateStartsFrom(
@@ -514,6 +516,8 @@ definition {
 		Form.gotoAdvancedTab();
 
 		FormFields.enableSwitch(fieldName = "Validation");
+
+		ScrollBy(value1 = "0, 2000");
 
 		FormFields.setValidationAcceptedDate(acceptedDateOption = "Range");
 
@@ -819,6 +823,8 @@ definition {
 		Form.gotoAdvancedTab();
 
 		FormFields.enableSwitch(fieldName = "Validation");
+
+		ScrollBy(value1 = "0, 2000");
 
 		FormFields.setValidationAcceptedDate(acceptedDateOption = "Range");
 

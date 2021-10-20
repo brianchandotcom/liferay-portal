@@ -117,9 +117,7 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 			BooleanQuery booleanQuery, int start, int end)
 		throws PortalException {
 
-		if (start == QueryUtil.ALL_POS) {
-			start = 0;
-		}
+		List<Document> documentsList = new ArrayList<>();
 
 		if (end == QueryUtil.ALL_POS) {
 			end = Integer.MAX_VALUE;
@@ -127,25 +125,25 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 
 		int indexSearchLimit = GetterUtil.getInteger(
 			_props.get(PropsKeys.INDEX_SEARCH_LIMIT));
-
 		Document lastDocument = null;
-
-		List<Document> documentsList = new ArrayList<>();
 
 		Sort sort = new Sort(Field.ENTRY_CLASS_PK, Sort.LONG_TYPE, false);
 
 		searchContext.setSorts(sort);
 
-		while (start != end) {
-			searchContext.setEnd(Math.min(end, indexSearchLimit));
-			searchContext.setStart(Math.min(start, indexSearchLimit - 1));
+		if (start == QueryUtil.ALL_POS) {
+			start = 0;
+		}
 
+		while (start != end) {
 			searchContext.setBooleanClauses(
 				new BooleanClause[] {
 					_getBooleanClause(
 						_getBooleanQueryFromLastDocument(
 							booleanQuery, sort.getFieldName(), lastDocument))
 				});
+			searchContext.setEnd(Math.min(end, indexSearchLimit));
+			searchContext.setStart(Math.min(start, indexSearchLimit - 1));
 
 			Hits hits = indexer.search(searchContext);
 

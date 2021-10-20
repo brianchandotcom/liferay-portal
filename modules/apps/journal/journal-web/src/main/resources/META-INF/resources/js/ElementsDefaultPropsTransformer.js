@@ -92,6 +92,10 @@ const ACTIONS = {
 		});
 	},
 
+	discardArticleDraft({itemData}) {
+		this.send(itemData.discardArticleDraftURL);
+	},
+
 	expireArticles({itemData}) {
 		this.send(itemData.expireURL);
 	},

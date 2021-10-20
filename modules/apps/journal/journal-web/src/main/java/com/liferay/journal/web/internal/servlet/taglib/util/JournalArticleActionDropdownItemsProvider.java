@@ -137,6 +137,11 @@ public class JournalArticleActionDropdownItemsProvider {
 						_getEditArticleActionUnsafeConsumer()
 					).add(
 						() ->
+							hasUpdatePermission && _article.isDraft() &&
+							_article.hasApprovedVersion(),
+						_getDiscardDraftActionUnsafeConsumer()
+					).add(
+						() ->
 							hasViewPermission &&
 							(previewContentArticleAction != null),
 						previewContentArticleAction
@@ -456,6 +461,29 @@ public class JournalArticleActionDropdownItemsProvider {
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete-translations") +
 					StringPool.TRIPLE_PERIOD);
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDiscardDraftActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "discardArticleDraft");
+			dropdownItem.putData(
+				"discardArticleDraftURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/journal/discard_article_draft"
+				).setRedirect(
+					_getRedirect()
+				).setParameter(
+					"articleId", _article.getArticleId()
+				).setParameter(
+					"groupId", _article.getGroupId()
+				).buildString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "discard-draft"));
 		};
 	}
 

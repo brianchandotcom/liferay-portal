@@ -691,7 +691,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "single_approver_updated.xml",
+			workflowDefinitionFile = "single-approver-updated-workflow-definition.xml",
 			workflowDefinitionTitle = "Single Approver Updated");
 
 		Navigator.openURL();
@@ -739,6 +739,8 @@ definition {
 			rowName = "review2",
 			rowNumber = "1",
 			version = "2.0");
+
+			
 	}
 
 	@description = "LPS-101075 - Verify that when the user clicks on View All Steps the Performance by Step page displays the same steps displayed in the card"

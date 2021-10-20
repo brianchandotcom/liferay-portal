@@ -1,5 +1,22 @@
 definition {
 
+	macro addFileWithWorkflow {
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "${dmDocumentTypeName}");
+
+		WorkflowDocumentsAndMedia.editImageFileDocument(
+			dmDocumentDescription = "${dmDocumentDescription}",
+			dmDocumentTitle = "${dmDocumentTitle}",
+			workflowPNGFile = "${workflowPNGFile}");
+
+		ScrollWebElementIntoView(locator1 = "Button#SUBMIT_FOR_PUBLICATION");
+
+		Button.clickSubmitForPublication();
+
+		var key_dmDocumentTitle = "${dmDocumentTitle}";
+
+		DMDocument.viewCardTitle(dmDocumentTitle = "${dmDocumentTitle}");
+	}
+
 	macro addMultipleCP {
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Multiple Files Upload");
 
@@ -134,5 +151,25 @@ definition {
 			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE",
 			value1 = "${errorMessage}");
 	}
+
+	macro editImageFileDocument {
+		var projectDir = PropsUtil.get("project.dir");
+
+		UploadFile(
+			locator1 = "TextInput#FILE",
+			value1 = "${projectDir}/modules/apps/portal-workflow/portal-workflow-test/src/testFunctional/tests/dependencies/${workflowPNGFile}");
+
+		if (isSet(useCurrentTitle)) {
+			echo("Use the title automatically added after uploading a file.");
+		}
+		else {
+			PortletEntry.inputTitle(title = "${dmDocumentTitle}");
+		}
+
+		if (isSet(dmDocumentDescription)) {
+			PortletEntry.inputDescription(description = "${dmDocumentDescription}");
+		}
+	}
+
 
 }

@@ -284,6 +284,7 @@ module.framework.properties.osgi.console=11312</echo>
 
 					<gradle-execute dir="@{osgi.module.path}" forcedcacheenabled="false" task="deploy">
 						<arg value="clean" />
+						<arg value="-Pnodejs.node.env=development" />
 					</gradle-execute>
 
 					<move

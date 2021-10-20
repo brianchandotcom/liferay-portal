@@ -1003,12 +1003,6 @@ definition {
 		}
 	}
 
-	macro assertEntryIsRendered {
-		AssertElementPresent(
-			key_selectedEntry = "${selectedEntry}",
-			locator1 = "PageEditor#PREVIEW_WITH_SELECTED_ENTRY");
-	}
-
 	macro assertFalseEntryIsNotPresent {
 		AssertElementNotPresent(locator1 = "PageEditor#COLLECTION_ITEM_FALSE_ENTRY");
 	}
@@ -3276,7 +3270,7 @@ definition {
 			value1 = "${option}");
 	}
 
-	macro selectItemToPreviewWith {
+	macro selectItemToPreviewWithObject {
 		Click(locator1 = "PageEditor#PREVIEW_WITH_DROPDOWN_MENU");
 
 		Click(locator1 = "PageEditor#PREVIEW_WITH_OTHER_ITEM");
@@ -3285,9 +3279,11 @@ definition {
 			key_title = "Select",
 			locator1 = "IFrame#MODAL_ANY");
 
-		Portlet.expandTree();
+		Click(
+			key_objectLabel = "${objectLabel}",
+			locator1 = "PageEditor#PREVIEW_WITH_CUSTOM_OBJECT_ITEM");
 
-		Click(locator1 = "PageEditor#PREVIEW_WITH_CUSTOM_OBJECT_ITEM");
+		IFrame.selectTopFrame();
 	}
 
 	macro switchViewport {

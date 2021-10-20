@@ -660,9 +660,9 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Field");
 
-		PageEditor.selectItemToPreviewWith();
+		PageEditor.selectItemToPreviewWithObject(objectLabel = "Custom Object");
 
-		PageEditor.assertEntryIsRendered(selectedEntry = "Test Entry");
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Test Entry");
 	}
 
 	@description = "LPS-137106 - Verify if it is possible to link a Mapped URL with the Objects Page Template"

@@ -785,8 +785,6 @@ definition {
 	@description = "LPS-135635 - Verify it is not possible to update the Mandatory of a Field after the Object is published"
 	@priority = "4"
 	test CannotUpdateFieldMandatoryAfterPublished {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -810,7 +808,6 @@ definition {
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH_DISABLED");
-
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Name of a Field after the Object is published"

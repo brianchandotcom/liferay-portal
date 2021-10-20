@@ -382,6 +382,8 @@ AUI.add(
 
 					var listNode = menu.one('ul');
 
+					overlay.show();
+
 					var listNodeHeight = listNode.get('offsetHeight');
 					var listNodeWidth = listNode.get('offsetWidth');
 
@@ -412,8 +414,6 @@ AUI.add(
 							focusManager.focus(0);
 						}
 					}
-
-					overlay.show();
 
 					if (cssClass.indexOf(CSS_EXTENDED) > -1) {
 						trigger.addClass(CSS_BTN_PRIMARY);

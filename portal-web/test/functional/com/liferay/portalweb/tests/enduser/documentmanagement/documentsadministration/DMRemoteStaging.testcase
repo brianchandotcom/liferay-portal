@@ -910,6 +910,8 @@ definition {
 
 		Portlet.addPG(portletName = "Web Content Display");
 
+		Portlet.viewSpecificPG(portletName = "Web Content Display");
+
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 
 		Staging.gotoPublishToLive();
@@ -1021,6 +1023,8 @@ definition {
 			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
+
+		Portlet.viewSpecificPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 

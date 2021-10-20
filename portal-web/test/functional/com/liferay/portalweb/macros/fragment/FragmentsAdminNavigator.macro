@@ -12,9 +12,7 @@ definition {
 	}
 
 	macro gotoCollection {
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "FragmentAdmin#FRAGMENT_COLLECTION",
-			value1 = "${collectionName}");
+		MenuBar.click(menuBar = "${collectionName}");
 	}
 
 	macro gotoEntry {
@@ -53,9 +51,9 @@ definition {
 	}
 
 	macro gotoSpecificScopeCollection {
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "FragmentAdmin#FRAGMENT_COLLECTION_SPECIFIC_SCOPE",
-			value1 = "${collectionName}");
+		MenuBar.clickInStack(
+			menuBar = "${collectionName}",
+			stackName = "${scope}");
 	}
 
 	macro openFragmentsAdmin {

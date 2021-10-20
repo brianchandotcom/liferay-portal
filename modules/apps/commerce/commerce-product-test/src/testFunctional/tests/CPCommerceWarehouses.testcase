@@ -28,7 +28,7 @@ definition {
 	@description = "This is a test for COMMERCE-6207. UI inventory items lifecycle"
 	@priority = "3"
 	test AddEditAndRemoveItemToWarehouse {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -249,7 +249,7 @@ definition {
 	@description = "This is a test for COMMERCE-6200. Consume booked quantities of one item in multiple warehouses"
 	@priority = "3"
 	test ConsumeBookedQuantitiesFromMultipleWarehouses {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -440,7 +440,7 @@ definition {
 	@description = "This is a test for COMMERCE-6201. Consume quantities of one item in multiple warehouses"
 	@priority = "3"
 	test ConsumeQuantitiesFromMultipleWarehouses {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -758,7 +758,7 @@ definition {
 	@description = "This is a test for COMMERCE-6199. Get available quantities of one item in multiple warehouses"
 	@priority = "3"
 	test GetAvailableQuantityFromMultipleWarehouses {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -969,7 +969,7 @@ definition {
 	@description = "This is a test for COMMERCE-6205. Get warehouse names given a SKU"
 	@priority = "3"
 	test GetWarehouseNameGivenChannel {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1121,7 +1121,7 @@ definition {
 	@description = "This is a test for COMMERCE-5708. As a product specialist i want to update the quantity of a product inside a warehouse"
 	@priority = "3"
 	test UpdateInventorySKUQuantity {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

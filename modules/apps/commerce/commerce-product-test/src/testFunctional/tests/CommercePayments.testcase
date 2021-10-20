@@ -146,7 +146,7 @@ definition {
 	@description = "This is a test for COMMERCE-6218. MoneyOrder Payment Method lifecycle"
 	@priority = "3"
 	test MoneyOrderCheckout {
-		property portal.acceptance = "Intern Test";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance ="CommercePayments#MoneyOrderCheckout";
 
 		// TODO Review

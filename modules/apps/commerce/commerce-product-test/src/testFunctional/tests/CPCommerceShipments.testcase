@@ -157,7 +157,7 @@ definition {
 	@description = "This is a test for COMMERCE-6248. It should not be possible to add non-shippable items to a shipment"
 	@priority = "3"
 	test AssertAddingNonShippableItemToShipmentNotPossible {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -253,7 +253,7 @@ definition {
 	@description = "This is a test for COMMERCE-6249. Shipment items should be taken only from active warehouses"
 	@priority = "3"
 	test AssertShipmentItemTakenFromActiveWarehouses {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -678,7 +678,7 @@ definition {
 	@description = "This is a test for COMMERCE-6250. Delete shipment"
 	@priority = "3"
 	test DeleteShipment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -921,6 +921,7 @@ definition {
 	@description = "This is a test for COMMERCE-6240. Remove shipment items from a shipment"
 	@priority = "3"
 	test RemoveItemFromShipment {
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1731,7 +1732,7 @@ definition {
 	@description = "This is a test for COMMERCE-6246. Check that shipping discount amount is correctly calculated in the order"
 	@priority = "3"
 	test ViewOrderShipmentDiscountAmountIsCorrect {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

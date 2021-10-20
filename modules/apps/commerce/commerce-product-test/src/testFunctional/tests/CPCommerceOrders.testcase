@@ -1,7 +1,6 @@
 @component-name = "portal-commerce"
 definition {
 
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Order Management";
@@ -177,7 +176,7 @@ definition {
 
 		Button.clickSave();
 	}
-
+	@ignore = "true"
 	test EditOrder {
 		property portal.acceptance = "quarantine";
 		property portal.release = "quarantine";
@@ -259,6 +258,8 @@ definition {
 
 	@description = "This is a workaround for an issue with Minium's sidebar on CI"
 	test EditOrderCheckingOutViaOrderDetails {
+		property portal.acceptance = "true";
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -892,7 +893,7 @@ definition {
 	@description = "This is a test for COMMERCE-6216. Search Order from UI"
 	@priority = "3"
 	test SearchOrder {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -997,7 +998,7 @@ definition {
 	@description = "This is a test for COMMERCE-5845. As a product specialist I want to see if a SKU is on order"
 	@priority = "3"
 	test ViewOrderSKU {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

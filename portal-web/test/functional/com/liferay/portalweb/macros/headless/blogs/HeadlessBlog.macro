@@ -17,6 +17,7 @@ definition {
 			coverImageId = "${coverImageId}",
 			description = "${description}",
 			groupId = "${groupId}",
+			subtitle = "${subtitle}",
 			title = "${title}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}",

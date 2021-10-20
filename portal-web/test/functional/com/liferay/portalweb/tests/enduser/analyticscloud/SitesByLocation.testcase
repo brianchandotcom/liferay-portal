@@ -94,7 +94,7 @@ definition {
 	@priority = "3"
 	test LocationsBySession {
 
-		// TODO LRAC-8308 LocationsBySession
+		// TODO LRAC-8308 LocationsBySession pending implementation
 
 	}
 

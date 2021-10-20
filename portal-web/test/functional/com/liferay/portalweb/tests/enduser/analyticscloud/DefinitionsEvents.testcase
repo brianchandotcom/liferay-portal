@@ -33,21 +33,21 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Automation ID: LRAC-8122 | Test Summary: Show Attributes in AC"
+	@description = "Feature ID: Release-3.0.0 | Automation ID: LRAC-8122 | Test Summary: Show Attributes in AC"
 	@ignore = "true"
 	@priority = "5"
 	test AttributesShownInAC {
 
-		// TODO LRAC-8122 AttributesShownInAC
+		// TODO LRAC-8122 AttributesShownInAC pending implementation
 
 	}
 
-	@description = "Automation ID: LRAC-8123 | Test Summary: Show Custom Events in AC"
+	@description = "Feature ID: Release-3.0.0 | Automation ID: LRAC-8123 | Test Summary: Show Custom Events in AC"
 	@ignore = "true"
 	@priority = "5"
 	test CustomEventShownInAC {
 
-		// TODO LRAC-8123 CustomEventShownInAC
+		// TODO LRAC-8123 CustomEventShownInAC pending implementation
 
 	}
 

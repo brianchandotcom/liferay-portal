@@ -1514,11 +1514,9 @@ definition {
 		Refresh();
 
 		AssertTextEquals(
-			locator1 ="ObjectAdmin#RELATIONSHIP_LABEL",
 			key_label = "Relationship Updated",
+			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL",
 			value1 = "Relationship Updated");
-			
-
 	}
 
 	@description = "LPS-135400 - There is an explanation about each Relationship type"

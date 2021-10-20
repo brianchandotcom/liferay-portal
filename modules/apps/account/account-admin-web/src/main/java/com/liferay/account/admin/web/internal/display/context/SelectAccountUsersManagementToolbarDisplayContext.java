@@ -54,6 +54,10 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 			searchContainer);
 	}
 
+	public long getAccountRoleId() {
+		return ParamUtil.getLong(liferayPortletRequest, "accountRoleId");
+	}
+
 	@Override
 	public String getClearResultsURL() {
 		return PortletURLBuilder.create(
@@ -107,6 +111,14 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 	@Override
 	public Boolean isSelectable() {
 		return !isSingleSelect();
+	}
+
+	public boolean isSelectAccountRoleUsers() {
+		if (getAccountRoleId() > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowCreateButton() {

@@ -23,7 +23,10 @@ SearchContainer<AccountUserDisplay> userSearchContainer = AssignableAccountUserD
 
 SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementToolbarDisplayContext = new SelectAccountUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, userSearchContainer);
 
-if (selectAccountUsersManagementToolbarDisplayContext.isSingleSelect()) {
+if (selectAccountUsersManagementToolbarDisplayContext.isSelectAccountRoleUsers()) {
+	userSearchContainer.setRowChecker(new SelectAccountRoleUserRowChecker(liferayPortletResponse, accountEntryId, selectAccountUsersManagementToolbarDisplayContext.getAccountRoleId()));
+}
+else if (selectAccountUsersManagementToolbarDisplayContext.isSingleSelect()) {
 	userSearchContainer.setRowChecker(null);
 }
 %>

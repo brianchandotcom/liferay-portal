@@ -98,6 +98,9 @@ public class ViewObjectEntriesDisplayContext {
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
 				"get", null, null),
 			new ClayDataSetActionDropdownItem(
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					"are-you-sure-you-want-to-delete-this-entry"),
 				_apiURL + "/{id}", "trash", "delete",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", "async"),

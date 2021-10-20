@@ -72,9 +72,6 @@ definition {
 			key_kfFieldSetName = "Contacts",
 			locator1 = "KaleoFormsAdminEditProcess#SELECTED_FIELD_SET",
 			value1 = "${key_kfFieldSetName}");
-
-
-
 	}
 
 	@description = "Verify that the user can only choose one Workflow."

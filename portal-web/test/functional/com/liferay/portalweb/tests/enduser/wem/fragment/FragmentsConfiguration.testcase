@@ -918,10 +918,9 @@ main();
 				collectionName = "Collection Name",
 				fragmentName = "Fragment Name");
 
-			AssertVisible(
-				key_fragmentName = "Fragment Name",
-				key_messageIfo = "Please enter info in configuration.",
-				locator1 = "Fragment#MESSAGE_INFO");
+			PageEditor.viewFragmentMessageInfo(
+				fragmentName = "Fragment Name",
+				messageInfo = "Please enter info in configuration.");
 		}
 
 		task ("View alert message is shown when type t@liferay.com in Email Address field") {
@@ -1026,10 +1025,9 @@ main();
 				collectionName = "Collection Name",
 				fragmentName = "Fragment Name");
 
-			AssertVisible(
-				key_fragmentName = "Fragment Name",
-				key_messageIfo = "Please enter info in configuration.",
-				locator1 = "Fragment#MESSAGE_INFO");
+			PageEditor.viewFragmentMessageInfo(
+				fragmentName = "Fragment Name",
+				messageInfo = "Please enter info in configuration.");
 		}
 
 		task ("View alert message is shown when type 10 in Age field") {
@@ -1125,10 +1123,9 @@ main();
 				collectionName = "Collection Name",
 				fragmentName = "Fragment Name");
 
-			AssertVisible(
-				key_fragmentName = "Fragment Name",
-				key_messageIfo = "Please enter info in configuration.",
-				locator1 = "Fragment#MESSAGE_INFO");
+			PageEditor.viewFragmentMessageInfo(
+				fragmentName = "Fragment Name",
+				messageInfo = "Please enter info in configuration.");
 		}
 
 		task ("View alert message is shown when type https://w.liferay.com in URL field") {

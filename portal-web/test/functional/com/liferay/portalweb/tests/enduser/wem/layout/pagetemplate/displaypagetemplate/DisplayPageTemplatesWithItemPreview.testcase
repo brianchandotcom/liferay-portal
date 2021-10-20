@@ -620,10 +620,9 @@ definition {
 		}
 
 		task ("View the no items message is shown in Collection Display") {
-			AssertVisible(
-				key_fragmentName = "Collection Display",
-				key_message = "There are no items to display.",
-				locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
+			PageEditor.viewFragmentMessageInfo(
+				fragmentName = "Collection Display",
+				messageInfo = "There are no items to display.");
 		}
 
 		task ("Select the category via preview item selector") {
@@ -653,10 +652,9 @@ definition {
 		}
 
 		task ("View the no items message is shown in Collection Display") {
-			AssertVisible(
-				key_fragmentName = "Collection Display",
-				key_message = "There are no items to display.",
-				locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
+			PageEditor.viewFragmentMessageInfo(
+				fragmentName = "Content Display",
+				messageInfo = "There are no items to display.");
 		}
 
 		task ("Open the Preview modal") {
@@ -700,8 +698,8 @@ definition {
 
 			AssertElementNotPresent(
 				key_fragmentName = "Collection Display",
-				key_message = "There are no items to display.",
-				locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
+				key_messageInfo = "There are no items to display.",
+				locator1 = "Fragment#NO_COLLECTION_SELECTED_MESSAGE");
 		}
 	}
 
@@ -1244,10 +1242,7 @@ definition {
 		}
 
 		task ("View the default info shown in Content Display") {
-			AssertVisible(
-				key_fragmentName = "Content Display",
-				key_messageIfo = "The selected content will be shown here.",
-				locator1 = "Fragment#MESSAGE_INFO");
+			PageEditor.viewFragmentMessageInfo(fragmentName = "Content Display");
 		}
 
 		task ("Open the Preview modal") {
@@ -1369,10 +1364,7 @@ definition {
 		}
 
 		task ("View the default info shown in Content Display") {
-			AssertVisible(
-				key_fragmentName = "Content Display",
-				key_messageIfo = "The selected content will be shown here.",
-				locator1 = "Fragment#MESSAGE_INFO");
+			PageEditor.viewFragmentMessageInfo(fragmentName = "Content Display");
 		}
 
 		task ("Open the Preview modal") {
@@ -1495,10 +1487,7 @@ definition {
 		}
 
 		task ("View the default info shown in Content Display") {
-			AssertVisible(
-				key_fragmentName = "Content Display",
-				key_messageIfo = "The selected content will be shown here.",
-				locator1 = "Fragment#MESSAGE_INFO");
+			PageEditor.viewFragmentMessageInfo(fragmentName = "Content Display");
 		}
 
 		task ("Open the Preview modal") {

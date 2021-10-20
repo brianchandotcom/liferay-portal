@@ -355,23 +355,9 @@ definition {
 		task ("Assert the Collection Display and the Display Page Template are shown in display page template") {
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			Click.clickNoWaitForVisible(
-				key_fragmentName = "Collection Display",
-				locator1 = "Fragment#FRAGMENT_HEADER");
-
-			AssertVisible(
-				key_fragmentName = "Collection Display",
-				key_message = "No Collection Selected Yet",
-				locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
-
-			AssertElementPresent(
-				key_fragmentName = "Display Page Content",
-				locator1 = "Fragment#FRAGMENT_HEADER");
-
-			AssertVisible(
-				key_fragmentName = "Display Page Content",
-				key_messageIfo = "The display page content will be shown here.",
-				locator1 = "Fragment#MESSAGE_INFO");
+			for (var fragmentName : list "Collection Display,Display Page Content") {
+				PageEditor.viewFragmentMessageInfo(fragmentName = "${fragmentName}");
+			}
 		}
 	}
 

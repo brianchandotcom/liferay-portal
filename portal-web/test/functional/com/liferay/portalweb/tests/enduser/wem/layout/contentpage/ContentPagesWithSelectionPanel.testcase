@@ -579,10 +579,7 @@ definition {
 		}
 
 		task ("View the default empty message is shown in Content Display") {
-			AssertVisible(
-				key_fragmentName = "Content Display",
-				key_messageIfo = "The selected content will be shown here.",
-				locator1 = "Fragment#MESSAGE_INFO");
+			PageEditor.viewFragmentMessageInfo(fragmentName = "Content Display");
 		}
 	}
 
@@ -800,10 +797,7 @@ definition {
 		}
 
 		task ("View the default empty message is shown in Collection Display") {
-			AssertVisible(
-				key_fragmentName = "Collection Display",
-				key_message = "No Collection Selected Yet",
-				locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
+			PageEditor.viewFragmentMessageInfo(fragmentName = "Collection Display");
 		}
 	}
 

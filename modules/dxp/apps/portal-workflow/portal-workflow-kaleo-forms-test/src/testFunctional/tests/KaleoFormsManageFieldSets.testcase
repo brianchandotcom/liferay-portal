@@ -91,7 +91,6 @@ definition {
 		AssertElementPresent(
 			key_ddlDataDefinitionName = "Workflow Field",
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME");
-
 	}
 
 	@description = "Verify that the user can delete a field set."

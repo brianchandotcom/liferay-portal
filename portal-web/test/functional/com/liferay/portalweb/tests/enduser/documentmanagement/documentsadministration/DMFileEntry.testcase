@@ -250,7 +250,7 @@ definition {
 			dmDocumentFileName = '''>.jpg''',
 			dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.openToEntryInAdmin(
+		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest",
 			siteURLKey = "guest");

@@ -249,43 +249,16 @@ public class ContentDashboardSearchContextBuilder {
 
 		BooleanFilter booleanFilter = new BooleanFilter();
 
-		Optional<Filter> assetCategoryIdsFilterOptional =
-			_getAssetCategoryIdsFilterOptional(assetCategoryIds);
-
-		if (assetCategoryIdsFilterOptional.isPresent()) {
-			booleanFilter.add(
-				assetCategoryIdsFilterOptional.get(), BooleanClauseOccur.MUST);
-		}
-
-		Optional<Filter> assetTagNamesFilterOptional =
-			_getAssetTagNamesFilterOptional(assetTagNames);
-
-		if (assetTagNamesFilterOptional.isPresent()) {
-			booleanFilter.add(
-				assetTagNamesFilterOptional.get(), BooleanClauseOccur.MUST);
-		}
-
-		Optional<Filter> authorIdsFilterOptional = _getAuthorIdsFilterOptional(
-			authorIds);
-
-		if (authorIdsFilterOptional.isPresent()) {
-			booleanFilter.add(
-				authorIdsFilterOptional.get(), BooleanClauseOccur.MUST);
-		}
-
-		Optional<Filter> fileExtensionsFilterOptional =
-			_getFileExtensionsFilterOptional(fileExtensions);
-
-		fileExtensionsFilterOptional.map(
-			fileExtensionsFilter -> booleanFilter.add(
-				fileExtensionsFilterOptional.get(), BooleanClauseOccur.MUST));
-
-		Optional<Filter> googleDriveShortcutFilterOptional =
-			_getGoogleDriveShortcutFilterOptional(companyId);
-
-		googleDriveShortcutFilterOptional.map(
-			googleDriveShortcutFilter -> booleanFilter.add(
-				googleDriveShortcutFilter, BooleanClauseOccur.MUST));
+		Stream.of(
+			_getAssetCategoryIdsFilterOptional(assetCategoryIds),
+			_getAssetTagNamesFilterOptional(assetTagNames),
+			_getAuthorIdsFilterOptional(authorIds),
+			_getFileExtensionsFilterOptional(fileExtensions),
+			_getGoogleDriveShortcutFilterOptional(companyId)
+		).forEach(
+			filterOptional -> filterOptional.map(
+				filter -> booleanFilter.add(filter, BooleanClauseOccur.MUST))
+		);
 
 		booleanQueryImpl.setPreBooleanFilter(booleanFilter);
 

@@ -141,6 +141,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH_DISABLED</td>
+		<td>//label[contains(@class,'simple-toggle-switch toggle-switch disabled')]//span[contains(text(),'Mandatory')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OBJECT_FIELDS_TYPE</td>
 		<td>//select[contains(@id,'objectFieldType')]</td>
 		<td></td>

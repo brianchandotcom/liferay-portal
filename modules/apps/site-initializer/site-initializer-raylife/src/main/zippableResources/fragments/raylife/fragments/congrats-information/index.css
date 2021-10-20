@@ -1,83 +1,84 @@
 .congrats-information {
-	border: 1px solid #a6c2ff;
-	border-radius: 8px;
-	box-shadow: 0px 10px 30px rgba(77, 133, 255, 0.09);
-	height: 396px;
-	padding: 40px 45px;
-	width: 749px;
+  background-color: var(--color-neutral-10);
+  border: 1px solid var(--color-brand-primary-lighten-3);
+  border-radius: 8px;
+  box-shadow: 0px 10px 30px rgba(77, 133, 255, 0.09);
+  height: 396px;
+  padding: 40px 45px;
+  width: 749px;
 }
 
 .congrats-information h1 {
-	color: #09101d;
-	font-size: 32px;
-	font-weight: bold;
-	line-height: 40px;
+  color: var(--color-neutral-0);
+  font-size: 32px;
+  font-weight: var(--font-weight-bold);
+  line-height: 40px;
 }
 
 .congrats-info-price {
-	color: #2f313d;
-	font-size: 32px;
-	font-weight: 300;
-	line-height: 40px;
+  color: var(--color-neutral-1);
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 40px;
 }
 
 .congrats-info-price span {
-	color: #09101d;
-	font-size: 32px;
-	font-weight: bold;
-	line-height: 40px;
-	position: static;
+  color: var(--color-neutral-0);
+  font-size: 32px;
+  font-weight: var(--font-weight-bold);
+  line-height: 40px;
+  position: static;
 }
 
 .congrats-information h2 {
-	color: #2f313d;
-	font-size: 18px;
-	font-weight: bold;
-	line-height: 20px;
+  color: var(--color-neutral-1);
+  font-size: 18px;
+  font-weight: var(--font-weight-bold);
+  line-height: 20px;
 }
 
 .congrats-information h3 {
-	color: #09101d;
-	font-size: 16px;
-	font-weight: 500;
-	left: 0;
-	line-height: 24px;
-	width: 200px;
+  color: var(--color-neutral-0);
+  font-size: 16px;
+  font-weight: 500;
+  left: 0;
+  line-height: 24px;
+  width: 200px;
 }
 
 .congrats-information table {
-	border-collapse: separate;
-	border-spacing: 0 1rem;
-	margin-top: -5px;
+  border-collapse: separate;
+  border-spacing: 0 1rem;
+  margin-top: -5px;
 }
 
 .congrats-information table td {
-	color: #606167;
-	font-size: 13px;
-	font-weight: 500;
-	line-height: 20px;
+  color: var(--color-neutral-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
 }
 
 .congrats-information table td:first-child {
-	width: 280px;
+  width: 280px;
 }
 
 .congrats-information ul {
-	list-style: none;
-	margin-top: 10px;
+  list-style: none;
+  margin-top: 10px;
 }
 
 .congrats-information li {
-	color: #7d7e85;
-	display: flex;
-	font-size: 18px;
-	font-weight: 600;
-	justify-content: end;
-	line-height: 24px;
-	margin-bottom: 20px;
+  color: var(--color-action-neutral-default);
+  cursor: pointer;
+  display: flex;
+  font-size: 18px;
+  font-weight: var(--font-weight-bold);
+  justify-content: end;
+  line-height: 24px;
+  margin-bottom: 20px;
 }
 
 .congrats-information li img {
-	cursor: pointer;
-	margin-left: 6px;
+  margin-left: 6px;
 }

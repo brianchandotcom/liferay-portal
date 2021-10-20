@@ -65,9 +65,7 @@ const buildList = (items = []) => {
 				<img alt="icon" src="${imageSrc}" />
 				${title}
 			</td>
-			<td class="text-right">${
-				typeof formattedValue === 'string' ? formattedValue : ''
-			}</td>
+			<td class="text-right">${typeof formattedValue === 'string' ? formattedValue : ''}</td>
 			</tr>`;
 		})
 		.join('');
@@ -112,7 +110,7 @@ const main = async () => {
 		},
 		{
 			title: 'Business Personal Property',
-			value: quoteComparison.businessPersonalProperty,
+			value: quoteComparison.businessPersonalProperty || false,
 		},
 		{
 			title: 'Product Recall or Replacement',

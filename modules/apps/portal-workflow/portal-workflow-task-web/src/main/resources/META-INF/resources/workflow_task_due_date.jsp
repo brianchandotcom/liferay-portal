@@ -98,10 +98,12 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 		{
 			body: function (val, fieldNode, ruleValue) {
 				var valid = true;
-				if (
-					dueDateDateInput.get('value') === '' ||
-					dueDateTimeInput.get('value') === ''
-				) {
+				var date = A.DataType.Date.parse(
+					Liferay.AUI.getDateFormat(),
+					dueDateDateInput.get('value')
+				);
+
+				if (!date || dueDateTimeInput.get('value') === '') {
 					valid = false;
 				}
 

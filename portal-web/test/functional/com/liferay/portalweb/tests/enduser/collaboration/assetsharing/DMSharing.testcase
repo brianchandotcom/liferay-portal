@@ -35,10 +35,6 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.enableActionsMenuOnPortlet();
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 	}
 
 	tearDown {
@@ -56,40 +52,479 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that users get the proper notification based on sharing permissions granted to him, also covers LPS-94448"
-	@priority = "4"
-	@refactorneeded
-	test AssertNotifications {
-		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
+	@description = "This ensures that sharing a document to a user, and changing its sharing permissions via Manage Collaborators. This test also covers permissions and making sure users only have access to sharing permissions assigned to him."
+	@priority = "5"
+	@refactordone
+	test CanChangePermissionsViaManageCollaborators {
+		property portal.acceptance = "true";
+
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title 1");
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocumentSharing.changePermission(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			selectPermission = "Can Comment",
+			userName = "userfn userln");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "2");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "commenting",
+			contentTitle = "DM Document Title",
+			openNotification = "true",
+			ownerName = "Test Test");
+
+		DMDocumentSharing.viewDocumentViaSharedContent(
+			contentSharingPermission = "Comment",
+			dmDocumentTitle = "DM Document Title");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocumentSharing.changePermission(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			selectPermission = "Can Update",
+			userName = "userfn userln");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "2");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "updating",
+			contentTitle = "DM Document Title",
+			openNotification = "true",
+			ownerName = "Test Test");
+
+		DMDocumentSharing.viewDocumentViaSharedContent(
+			contentSharingPermission = "Update",
+			dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This test covers LPS-94284 and LPS-105038. It ensures that the invalid email cannot be added if it has space, also covers the input field that still contains the invalid email after pressing enter."
+	@priority = "4"
+	@refactordone
+	test CannotShareWithInvalidAddress {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title 1",
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title 1");
+
+		IFrame.selectModalFrame();
+
+		Type.sendKeys(
+			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
+			value1 = "userea2@liferay.com ");
+
+		KeyPress(
+			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
+			value1 = "\RETURN");
+
+		AssertElementPresent(
+			key_userEmailAddress = "userea2@liferay.com",
+			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_FEEDBACK_ITEM");
+
+		AssertElementNotPresent(
+			key_userName = "userea2@liferay.com",
+			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_TAG");
+
+		Type(
+			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
+			value1 = "userea3@liferay.com");
+
+		KeyPress(
+			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
+			value1 = "\RETURN");
+
+		AssertTextEquals(
+			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
+			value1 = "userea3@liferay.com");
+	}
+
+	@description = "This test share an content to a user and disable the sharing option. This test asserts that a collaborator without sharing permissions will not be able to share this content."
+	@priority = "5"
+	@refactordone
+	test CannotShareWithoutPermissions {
+		property portal.acceptance = "true";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea1@liferay.com");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Asset.openTosharedContent(
+			navTab = "Shared with Me",
+			siteURLKey = "guest");
+
+		LexiconEntry.viewNoEntryMenuItem(
+			menuItem = "Share",
+			rowEntry = "DM Document Title");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.viewNoEntryMenuItem(
+			menuItem = "Share",
+			rowEntry = "DM Document Title");
+	}
+
+	@description = "This test covers LPS-101927. It ensures that a user can reply to a comment on an image via shared content"
+	@priority = "4"
+	@refactordone
+	test CanReplyToCommentViaSharedContent {
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea2@liferay.com");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			sharingPermissions = "Comment",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			sharingPermissions = "Comment",
+			userEmailAddress = "userea2@liferay.com",
+			userName = "userfn2 userln2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "commenting",
+			contentTitle = "DM Document Title",
+			openNotification = "true",
+			ownerName = "Test Test");
+
+		Comments.addPG(entryComment = "This is a comment");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "This is a comment",
+			userFullName = "userfn userln");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "commenting",
+			contentTitle = "DM Document Title",
+			openNotification = "true",
+			ownerName = "Test Test");
+
+		Comments.replyToComment(commentReply = "This is a reply comment");
+
+		Comments.viewPG(
+			commentCount = "2",
+			entryComment = "This is a reply comment",
+			userFullName = "userfn2 userln2");
+	}
+
+	@description = "This test covers LPS-94585. It ensures that users can share via Shared Content app."
+	@priority = "5"
+	@refactordone
+	test CanShareViaSharedContent {
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea2@liferay.com");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			shareable = "true",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Asset.openTosharedContent(
+			navTab = "Shared with Me",
+			siteURLKey = "guest");
+
+		DMNavigator.gotoShareViaSharedContent(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.shareWithNoSharingPermissionsUser(userEmailAddress = "userea2@liferay.com");
+
+		AssertConsoleTextNotPresent(value1 = "ArrayIndexOutOfBoundsException");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = "DM Document Title",
+			openNotification = "true",
+			ownerName = "userfn userln");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONDocument.moveToRecycleBin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Asset.openTosharedContent(
+			navTab = "Shared with Me",
+			siteURLKey = "guest");
+
+		LexiconEntry.viewNoEntryMenu(rowEntry = "DM Document Title");
+	}
+
+	@description = "This test covers LPS-94294. This test asserts that a user can comment on a document it is shared with him"
+	@priority = "4"
+	@refactordone
+	test CanShareWithCommentPermissions {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			sharingPermissions = "Comment",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		DMDocumentSharing.viewSharedFlag(
+			detailsView = "true",
+			dmDocumentTitle = "DM Document Title");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "commenting",
+			contentTitle = "DM Document Title",
+			openNotification = "true",
+			ownerName = "Test Test");
+
+		DMDocumentSharing.viewDocumentViaSharedContent(
+			contentSharingPermission = "Comment",
+			dmDocumentTitle = "DM Document Title");
+
+		Comments.addPG(entryComment = "test");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "test",
+			userFullName = "userfn userln");
+	}
+
+	@description = "This test covers LPS-94661. It ensures that the user can share a document with an apostrophe in the title."
+	@priority = "3"
+	@refactordone
+	test CanShareWithSpecialCharacter {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = '''DM Document's Title''',
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Share",
+			rowEntry = "DM Document");
 
 		DMDocument.sharePG(
 			noAutocomplete = "true",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		User.logoutPG();
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
-		DMDocumentSharing.viewSharedFlag(
-			detailsView = "true",
-			dmDocumentTitle = "DM Document Title 1");
+		Notifications.viewBadgeCount(notificationCount = "1");
 
-		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = '''DM Document's Title''',
+			ownerName = "Test Test",
+			specialCharacter = "true");
+	}
+
+	@description = "This test asserts that a user can update a document once it is shared with him, also covers LPS-94448 and LPS-94294"
+	@priority = "4"
+	@refactordone
+	test CanShareWithUpdatePermissions {
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.png",
-			dmDocumentTitle = "DM Document Title 2");
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title 2");
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
 			sharingPermissions = "Update",
@@ -102,29 +537,7 @@ definition {
 
 		DMDocumentSharing.viewSharedFlag(
 			detailsView = "true",
-			dmDocumentTitle = "DM Document Title 2");
-
-		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.odt",
-			dmDocumentTitle = "DM Document Title 3");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title 3");
-
-		DMDocument.sharePG(
-			sharingPermissions = "Comment",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-		AssertVisible(
-			key_dmDocumentTitle = "DM Document Title 3",
-			locator1 = "DocumentsAndMedia#TABLE_DOCUMENT_SHARED");
+			dmDocumentTitle = "DM Document Title");
 
 		User.logoutPG();
 
@@ -132,47 +545,173 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "3");
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewSharedContent(
-			contentSharingPermission = "viewing",
-			contentTitle = "DM Document Title 1",
-			ownerName = "Test Test");
+		Notifications.viewBadgeCount(notificationCount = "1");
 
 		Notifications.gotoNotifications();
 
 		Notifications.viewNewSharedContent(
 			contentSharingPermission = "updating",
-			contentTitle = "DM Document Title 2",
+			contentTitle = "DM Document Title",
 			openNotification = "true",
 			ownerName = "Test Test");
 
 		NotificationsPortlet.configureNotificationPG(menuItem = "Edit");
 
-		DMDocument.editCmd(dmDocumentTitleEdit = "DM Document Title");
+		DMDocument.editCmd(dmDocumentTitleEdit = "DM Document Title Edit");
 
 		Button.clickPublish();
+
+		DMDocumentSharing.viewDocumentViaSharedContent(
+			contentSharingPermission = "Update",
+			dmDocumentTitle = "DM Document Title Edit");
+	}
+
+	@description = "This test asserts that a user can only view a document once it is shared with him"
+	@priority = "4"
+	@refactordone
+	test CanShareWithViewPermissions {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			noAutocomplete = "true",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
+
+		DMDocumentSharing.viewSharedFlag(
+			detailsView = "true",
+			dmDocumentTitle = "DM Document Title");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
 
 		Notifications.gotoNotifications();
 
 		Notifications.viewNewSharedContent(
-			contentSharingPermission = "commenting",
-			contentTitle = "DM Document Title 3",
+			contentSharingPermission = "viewing",
+			contentTitle = "DM Document Title",
+			openNotification = "true",
 			ownerName = "Test Test");
+
+		DMDocumentSharing.viewDocumentViaSharedContent(
+			contentSharingPermission = "View",
+			dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This test makes sure all collaborators will view all collaborators of the document that was shared to him. This usecase also tests that a user can successfully remove collaborators through Manage Collaborators and asserts that empty message displays when all collaborators are removed."
+	@priority = "5"
+	@refactordone
+	test CanViewAndRemoveCollaborators {
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea2@liferay.com");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			noAutocomplete = "true",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			userEmailAddress = "userea2@liferay.com",
+			userName = "userfn2 userln2");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title");
+
+		DMDocumentSharing.viewCollaborators(collaboratorList = "userfn,userfn2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentUploader = "Test Test");
+
+		DMDocumentSharing.viewCollaborators(collaboratorList = "userfn,userfn2");
+
+		AssertElementNotPresent(
+			key_text = "Manage Collaborators",
+			locator1 = "Button#ANY");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentUploader = "Test Test");
+
+		DMDocumentSharing.removeCollaborator(
+			collaboratorList = "userfn,userfn2",
+			emptyStateMessage = "true");
 	}
 
 	@description = "This test covers LPS-94858. It asserts deleted entry displays in a user's Shared Content using share button from info panel."
 	@priority = "4"
-	@refactorneeded
-	test AssertSingleDeleteEntry {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
+	@refactordone
+	test CanViewDeletedEntryInSharedContent {
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -182,9 +721,9 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.deletePG(dmDocumentTitle = "DM Document Title");
+		JSONDocument.moveToRecycleBin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest");
 
 		User.logoutPG();
 
@@ -199,128 +738,34 @@ definition {
 		AssertTextEquals(
 			locator1 = "Sharing#NOTIFICATIONS_DELETE_ENTRY_TITLE",
 			value1 = "Notification no longer applies.");
+
 		AssertTextEquals(
 			locator1 = "Sharing#NOTIFICATIONS_DELETE_ENTRY_CONTENT",
 			value1 = "Notification for Sharing was deleted.");
 
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
+		Asset.openTosharedContent(
+			navTab = "Shared with Me",
+			siteURLKey = "guest");
 
 		AssertElementPresent(
 			key_status = "Not Visible",
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_STATUS");
+
 		AssertElementNotPresent(
 			key_contentTitle = "DM Document Title",
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_OPTIONS");
+
 		AssertElementNotPresent(
 			key_contentTitle = "DM Document Title",
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE");
 	}
 
-	@description = "This test asserts only one entry displays in a user's Shared Content app when multiple users share the same document to him."
-	@priority = "4"
-	@refactorneeded
-	test AssertSingleEntry {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
-			roleTitle = "Administrator",
-			userScreenName = "usersn");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea2@liferay.com",
-			userFirstName = "userfn2",
-			userLastName = "userln2",
-			userScreenName = "usersn2");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea2@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.sharePG(
-			userEmailAddress = "userea2@liferay.com",
-			userName = "userfn2 userln2");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.sharePG(
-			userEmailAddress = "userea2@liferay.com",
-			userName = "userfn2 userln2");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea2@liferay.com");
-
-		Notifications.viewBadgeCount(notificationCount = "2");
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewSharedContent(
-			contentSharingPermission = "viewing",
-			contentTitle = "DM Document Title",
-			openNotification = "true",
-			ownerName = "Test Test");
-
-		Navigator.openURL();
-
-		Notifications.viewBadgeCount(notificationCount = "1");
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewSharedContent(
-			contentSharingPermission = "viewing",
-			contentTitle = "DM Document Title",
-			openNotification = "true",
-			ownerName = "userfn userln");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
-
-		DMDocumentSharing.viewSharedFlag(dmDocumentTitle = "DM Document Title");
-
-		var key_contentTitle = "DM Document Title";
-
-		AssertTextEquals(
-			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
-			value1 = "DM Document Title");
-		AssertElementNotPresent(
-			key_contentTitle = "DM Document Title",
-			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
-	}
-
 	@description = "This test ensures that users receives an email when a document is shared with them. This email contains a link that navigates user to Shared Content app."
 	@priority = "4"
-	@refactorneeded
-	test GoToSharedContentViaEmail {
+	@refactordone
+	test CanViewSharedContentViaEmail {
 		property custom.properties = "message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.smtp.auth=true${line.separator}mail.session.mail.store.protocol=pop3${line.separator}mail.session.mail.transport.protocol=smtp";
-		property test.name.skip.portal.instance = "DMSharing#GoToSharedContentViaEmail";
+		property test.name.skip.portal.instance = "DMSharing#CanViewSharedContentViaEmail";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -377,12 +822,13 @@ definition {
 			userEmailAddress = PropsUtil.get("email.address.4"),
 			userScreenName = "usersn1");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -419,22 +865,40 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This test ensures that users receive a notification in portal when a document is shared to them, and that clicking on that notification navigates them to the Shared Content app."
+	@description = "This test asserts only one entry displays in a user's Shared Content app when multiple users share the same document to him."
 	@priority = "4"
-	@refactorneeded
-	test GoToSharedContentViaNotifications {
-		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
+	@refactordone
+	test CanViewSingleEntryAfterMultipleSharing {
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea2@liferay.com");
+
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
+			userEmailAddress = "userea2@liferay.com",
+			userName = "userfn2 userln2");
 
 		User.logoutPG();
 
@@ -442,7 +906,21 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			userEmailAddress = "userea2@liferay.com",
+			userName = "userfn2 userln2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "2");
 
 		Notifications.gotoNotifications();
 
@@ -452,502 +930,7 @@ definition {
 			openNotification = "true",
 			ownerName = "Test Test");
 
-		DMDocumentSharing.viewDocumentViaSharedContent(
-			contentSharingPermission = "View",
-			dmDocumentTitle = "DM Document Title");
-	}
-
-	@description = "This test covers LPS-94284 and LPS-105038. It ensures that the invalid email cannot be added if it has space, also covers the input field that still contains the invalid email after pressing enter."
-	@priority = "4"
-	@refactorneeded
-	test InvalidAddressCanNotBeShared {
-		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title 1");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title 1");
-
-		IFrame.selectModalFrame();
-
-		Type.sendKeys(
-			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
-			value1 = "userea2@liferay.com ");
-
-		KeyPress(
-			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
-			value1 = "\RETURN");
-
-		AssertElementPresent(
-			key_userEmailAddress = "userea2@liferay.com",
-			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_FEEDBACK_ITEM");
-
-		AssertElementNotPresent(
-			key_userName = "userea2@liferay.com",
-			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_TAG");
-
-		Type(
-			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
-			value1 = "userea3@liferay.com");
-
-		KeyPress(
-			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
-			value1 = "\RETURN");
-
-		AssertTextEquals(
-			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
-			value1 = "userea3@liferay.com");
-	}
-
-	@description = "This test covers LPS-94294. It ensures that sharing a document to a user, and changing its sharing permissions via Manage Collaborators. This test also covers permissions and making sure users only have access to sharing permissions assigned to him."
-	@priority = "5"
-	@refactorneeded
-	test ManageCollaborators {
-		property portal.acceptance = "true";
-
-		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.sharePG(
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title");
-
-		AssertElementNotPresent(locator1 = "Comments#COMMENT_FIELD");
-
-		AssertElementNotPresent(locator1 = "Button#EDIT");
-
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocumentSharing.changePermission(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			selectPermission = "Can Comment",
-			userName = "userfn userln");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocumentComment.addPG(
-			commentBody = "DM Document Comment Body",
-			dmDocumentTitle = "DM Document Title");
-
-		AssertElementNotPresent(locator1 = "Button#EDIT");
-
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocumentSharing.changePermission(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			selectPermission = "Can Update",
-			userName = "userfn userln");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.editPG(
-			dmDocumentDescriptionEdit = "DM Document Description Edited",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edited");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description Edited",
-			dmDocumentTitle = "DM Document Title Edited");
-	}
-
-	@description = "This test covers LPS-101927. It ensures that a user can reply to a comment on an image via shared content"
-	@priority = "4"
-	@refactorneeded
-	test ReplyToCommentViaSharedContent {
-		JSONUser.addUser(
-			userEmailAddress = "userea2@liferay.com",
-			userFirstName = "userfn2",
-			userLastName = "userln2",
-			userScreenName = "usersn2");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea2@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.sharePG(
-			sharingPermissions = "Comment",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.sharePG(
-			sharingPermissions = "Comment",
-			userEmailAddress = "userea2@liferay.com",
-			userName = "userfn2 userln2");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
 		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
-
-		AssertClick(
-			key_contentTitle = "DM Document Title",
-			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
-			value1 = "DM Document Title");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
-
-		Type(
-			locator1 = "CKEditor#BODY",
-			value1 = "Userea Comment");
-
-		Pause(locator1 = "3000");
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertClick(
-			locator1 = "Button#REPLY",
-			value1 = "Reply");
-
-		Alert.viewSuccessMessage();
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea2@liferay.com");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
-
-		AssertClick(
-			key_contentTitle = "DM Document Title",
-			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
-			value1 = "DM Document Title");
-
-		Click(locator1 = "Sharing#SHARED_CONTENT_REPLY_TO_COMMENT");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
-
-		Type(
-			locator1 = "CKEditor#BODY",
-			value1 = "Userea2 Reply To Comment");
-
-		Pause(locator1 = "3000");
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertClick(
-			locator1 = "Button#REPLY_LAST",
-			value1 = "Reply");
-
-		Alert.viewSuccessMessage();
-	}
-
-	@description = "This test covers LPS-94585. It ensures that users can share via Shared Content app."
-	@priority = "5"
-	@refactorneeded
-	test ShareViaSharedContent {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea2@liferay.com",
-			userFirstName = "userfn2",
-			userLastName = "userln2",
-			userScreenName = "usersn2");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea2@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.sharePG(
-			shareable = "true",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
-
-		DMNavigator.gotoShareViaSharedContent(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.shareWithNoSharingPermissionsUser(userEmailAddress = "userea2@liferay.com");
-
-		AssertConsoleTextNotPresent(value1 = "ArrayIndexOutOfBoundsException");
-
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
-			roleTitle = "Administrator",
-			userScreenName = "usersn");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
-
-		DMNavigator.gotoShareViaSharedContent(dmDocumentTitle = "DM Document Title");
-
-		IFrame.selectModalFrame();
-
-		Type(
-			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
-			value1 = "userea2@liferay.com");
-
-		AssertElementPresent(locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_DROPDOWN");
-
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.unassignRegularRoleCP(
-			regularRoleName = "Administrator",
-			userScreenName = "usersn");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships",
-			site = "${siteName}");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn2",
-			userLastName = "userln2",
-			userScreenName = "usersn2");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
-
-		DMNavigator.gotoShareViaSharedContent(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.sharePG(
-			shareable = "true",
-			userEmailAddress = "userea2@liferay.com",
-			userName = "userfn2 userln2");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea2@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentUploader = "Test Test");
-	}
-
-	@description = "This test share an content to a user and disable the sharing option. This test asserts that a collaborator without sharing permissions will not be able to share this content."
-	@priority = "5"
-	@refactorneeded
-	test ShareWithNoSharingPermissions {
-		property portal.acceptance = "true";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea1@liferay.com",
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea1@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.sharePG(
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
-
-		var key_contentTitle = "DM Document Title";
-		var key_dmDocumentTitle = "DM Document Title";
-
-		Click(locator1 = "Sharing#SHARED_CONTENT_CONTENT_OPTIONS");
-
-		MenuItem.viewNotPresent(menuItem = "Share");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
-
-		MenuItem.viewNotPresent(menuItem = "Share");
-	}
-
-	@description = "This test covers LPS-94661. It ensures that the user can share a document with an apostrophe in the title."
-	@priority = "3"
-	@refactorneeded
-	test ShareWithSpecialCharacter {
-		property test.name.skip.portal.instance = "DMSharing#ShareWithSpecialCharacter";
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document&apos;s Title",
-			viewableBy = "Owner");
-
-		Click(
-			key_dmDocumentTitle = "DM Document&apos;s Title",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS_SPECIFIC");
-
-		ClickNoError(
-			key_menuItem = "Permissions",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
-			roleTitle = "Guest");
-
-		IFrame.closeFrame();
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Click(
-			key_dmDocumentTitle = "DM Document&apos;s Title",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS_SPECIFIC");
-
-		ClickNoError(
-			key_menuItem = "Share",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
-
-		DMDocument.sharePG(
-			noAutocomplete = "true",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -955,98 +938,24 @@ definition {
 
 		Notifications.viewNewSharedContent(
 			contentSharingPermission = "viewing",
-			contentTitle = "DM Document&apos;s Title",
-			ownerName = "Test Test",
-			specialCharacter = "true");
-	}
+			contentTitle = "DM Document Title",
+			openNotification = "true",
+			ownerName = "userfn userln");
 
-	@description = "This test makes sure all collaborators will view all collaborators of the document that was shared to him. This usecase also tests that a user can successfully remove collaborators through Manage Collaborators and asserts that empty message displays when all collaborators are removed."
-	@priority = "5"
-	@refactorneeded
-	test ViewAndRemoveCollaborators {
-		JSONUser.addUser(
-			userEmailAddress = "userea2@liferay.com",
-			userFirstName = "userfn2",
-			userLastName = "userln2",
-			userScreenName = "usersn2");
+		Asset.openTosharedContent(
+			navTab = "Shared with Me",
+			siteURLKey = "guest");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea2@liferay.com");
+		DMDocumentSharing.viewSharedFlag(dmDocumentTitle = "DM Document Title");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.sharePG(
-			noAutocomplete = "true",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.sharePG(
-			userEmailAddress = "userea2@liferay.com",
-			userName = "userfn2 userln2");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title");
-
-		DMDocumentSharing.viewCollaborators(collaboratorList = "userfn,userfn2");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea2@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentUploader = "Test Test");
-
-		var key_collaborator = "userfn";
-		var key_text = "Manage Collaborators";
-
-		AssertVisible(
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_COLLABORATOR_TOOLTIP",
-			value1 = "userfn");
+		AssertTextEquals(
+			key_contentTitle = "DM Document Title",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
+			value1 = "DM Document Title");
 
 		AssertElementNotPresent(
-			locator1 = "Button#ANY",
-			value1 = "Manage Collaborators");
-
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentUploader = "Test Test");
-
-		DMDocumentSharing.removeCollaborator(
-			collaboratorList = "userfn,userfn2",
-			emptyStateMessage = "true");
+			key_contentTitle = "DM Document Title",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
 	}
 
 }

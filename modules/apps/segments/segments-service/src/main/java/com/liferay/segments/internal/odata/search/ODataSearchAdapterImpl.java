@@ -139,8 +139,8 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 			searchContext.setBooleanClauses(
 				new BooleanClause[] {
 					_getBooleanClause(
-						_getBooleanQueryFromLastDocument(
-							booleanQuery, sort.getFieldName(), lastDocument))
+						_getLastDocumentBooleanQuery(
+							booleanQuery, lastDocument, sort.getFieldName()))
 				});
 			searchContext.setEnd(Math.min(end, indexSearchLimit));
 			searchContext.setStart(Math.min(start, indexSearchLimit - 1));
@@ -227,8 +227,8 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 		return booleanQuery;
 	}
 
-	private BooleanQuery _getBooleanQueryFromLastDocument(
-			BooleanQuery booleanQuery, String sortField, Document lastDocument)
+	private BooleanQuery _getLastDocumentBooleanQuery(
+			BooleanQuery booleanQuery, Document lastDocument, String sortField)
 		throws ParseException {
 
 		if (lastDocument == null) {

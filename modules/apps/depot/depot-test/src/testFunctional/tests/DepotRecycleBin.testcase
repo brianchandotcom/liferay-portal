@@ -59,11 +59,7 @@ definition {
 
 		Depot.deleteContentViaBulkEditing(webContent = "true");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Recycle Bin");
+		DepotNavigator.openDepotRecycleBinAdmin(depotName = "Test Depot Name");
 
 		RecycleBin.viewCP(
 			assetName = "DM Document Title",
@@ -197,11 +193,7 @@ definition {
 			assetType = "Web Content Article",
 			webContentTitle = "WC WebContent Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Recycle Bin");
+		DepotNavigator.openDepotRecycleBinAdmin(depotName = "Test Depot Name");
 
 		RecycleBin.restoreCP(
 			assetName = "WC WebContent Title",

@@ -89,7 +89,7 @@ function createInterval() {
 (function main() {
 	let intervalId = createInterval();
 
-	if (this.nextItemIndex) {
+	if (this.nextItemIndex && this.nextItemIndex < items.length) {
 		const activeItem = fragmentElement.querySelector(
 			'.carousel-item.active'
 		);

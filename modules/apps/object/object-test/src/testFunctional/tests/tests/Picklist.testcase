@@ -205,7 +205,6 @@ definition {
 			picklistItemOption = "View");
 
 		Picklist.assertDisableKey();
-
 	}
 
 	@description = "LPS-136595 - Verify it is possible to search for a Picklist"

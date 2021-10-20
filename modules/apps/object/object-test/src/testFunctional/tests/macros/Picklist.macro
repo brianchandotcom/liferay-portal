@@ -42,6 +42,14 @@ definition {
 		Button.clickSave();
 	}
 
+	macro assertDisableKey {
+		IFrame.selectTopFrame();
+
+		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_ITEM_MODAL");
+
+		AssertElementPresent(locator1 = "Picklist#DISABLE_PICKLIST_KEY");
+	}
+
 	macro assertPicklist {
 		var key_picklistName = "${picklistName}";
 
@@ -179,14 +187,6 @@ definition {
 		Type(
 			locator1 = "Picklist#UPDATE_PICKLIST_NAME",
 			value1 = "${picklistName}");
-	}
-
-	macro assertDisableKey {
-		IFrame.selectTopFrame();
-
-		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_ITEM_MODAL");
-
-		AssertElementPresent(locator1 = "Picklist#DISABLE_PICKLIST_KEY");
 	}
 
 }

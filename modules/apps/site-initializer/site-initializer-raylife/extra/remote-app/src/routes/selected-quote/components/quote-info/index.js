@@ -30,9 +30,7 @@ const QuoteInfo = () => {
 				/>
 			)}
 
-			<div className="application-id">
-				Application {`#${applicationId}`}
-			</div>
+			<div className="policy-id">POLICY {`#${applicationId}`}</div>
 		</div>
 	);
 };

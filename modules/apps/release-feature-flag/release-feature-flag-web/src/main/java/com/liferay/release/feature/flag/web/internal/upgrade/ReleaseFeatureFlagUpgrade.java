@@ -33,7 +33,7 @@ public class ReleaseFeatureFlagUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 
-		// See https://tinyurl.com/3fkpt96p on how to use this
+		// See https://tinyurl.com/yuzbmuzp on how to use this
 
 		/*registry.register(
 			"0.0.0", "1.0.0",

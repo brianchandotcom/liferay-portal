@@ -50,11 +50,30 @@ definition {
 	}
 
 	@description = "Verify that the user can only choose one Field Set."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanOnlyChooseOneFieldSet {
+		KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70678 CanOnlyChooseOneFIeldSet pending implementation
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process Name");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "Contacts",
+			kfProcessName = "Kaleo Forms Process Name");
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "Inventory",
+			kfProcessName = "Kaleo Forms Process Name");
+
+		AssertElementNotPresent(
+			key_kfFieldSetName = "Contacts",
+			locator1 = "KaleoFormsAdminEditProcess#SELECTED_FIELD_SET",
+			value1 = "${key_kfFieldSetName}");
+
+
 
 	}
 

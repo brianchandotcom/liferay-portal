@@ -691,7 +691,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "single_approver_updated.xml",
+			workflowDefinitionFile = "single-approver-updated-workflow-definition.xml",
 			workflowDefinitionTitle = "Single Approver Updated");
 
 		Navigator.openURL();

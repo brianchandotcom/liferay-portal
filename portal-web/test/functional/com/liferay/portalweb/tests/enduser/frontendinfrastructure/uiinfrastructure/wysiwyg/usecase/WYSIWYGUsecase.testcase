@@ -218,8 +218,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanDisplayFormattedHTMLFromCopyPaste {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property app.server.types = "tomcat";
+		property database.types = "mysql";
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
@@ -422,6 +422,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewSourceCodeFormattedInTextView {
+		property app.server.types = "tomcat";
+		property database.types = "mysql";
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 

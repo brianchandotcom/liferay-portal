@@ -27,8 +27,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test RTLDirectionStyleAppliedToTextField {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property app.server.types = "tomcat";
+		property database.types = "mysql";
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "RightToLeftInfrastructure#RTLDirectionStyleAppliedToTextField";
@@ -57,8 +57,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test RTLStylesAppliedToPageLayout {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property app.server.types = "tomcat";
+		property database.types = "mysql";
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "RightToLeftInfrastructure#RTLStylesAppliedToPageLayout";

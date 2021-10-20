@@ -29,8 +29,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test AdminPageCanDisplayStyleCorrectlyAfterPageRefresh {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property app.server.types = "tomcat";
+		property database.types = "mysql";
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
@@ -86,8 +86,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test PortletBoundariesAreContained {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property app.server.types = "tomcat";
+		property database.types = "mysql";
 		property environment.acceptance = "true";
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 		property portal.acceptance = "true";
@@ -238,8 +238,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test SitePageCanDisplayStyleCorrectlyAfterPageRefresh {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property app.server.types = "tomcat";
+		property database.types = "mysql";
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 

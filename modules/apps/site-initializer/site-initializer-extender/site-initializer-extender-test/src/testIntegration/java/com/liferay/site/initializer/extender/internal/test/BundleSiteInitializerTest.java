@@ -24,6 +24,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
 import com.liferay.journal.model.JournalArticle;
@@ -120,6 +122,7 @@ public class BundleSiteInitializerTest {
 
 		siteInitializer.initialize(group.getGroupId());
 
+		_assertCommerceCatalogs();
 		_assertCommerceChannel();
 		_assertDocuments(group);
 		_assertObjectDefinitions(group);
@@ -132,6 +135,31 @@ public class BundleSiteInitializerTest {
 		GroupLocalServiceUtil.deleteGroup(group);
 
 		bundle.uninstall();
+	}
+
+	private void _assertCommerceCatalogs() throws Exception {
+		CatalogResource.Builder catalogResourceBuilder =
+			_catalogResourceFactory.create();
+
+		CatalogResource catalogResource = catalogResourceBuilder.user(
+			_user
+		).build();
+
+		Catalog commerceCatalog =
+			catalogResource.getCatalogByExternalReferenceCode("TESTCATG0001");
+
+		Assert.assertNotNull(commerceCatalog);
+		Assert.assertEquals("Catalog Test 01", commerceCatalog.getName());
+		Assert.assertEquals("USD", commerceCatalog.getCurrencyCode());
+		Assert.assertEquals("en_US", commerceCatalog.getDefaultLanguageId());
+
+		commerceCatalog = catalogResource.getCatalogByExternalReferenceCode(
+			"TESTCATG0002");
+
+		Assert.assertNotNull(commerceCatalog);
+		Assert.assertEquals("Catalog Test 02", commerceCatalog.getName());
+		Assert.assertEquals("USD", commerceCatalog.getCurrencyCode());
+		Assert.assertEquals("en_US", commerceCatalog.getDefaultLanguageId());
 	}
 
 	private void _assertCommerceChannel() throws Exception {
@@ -227,7 +255,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("content", layout.getType());
 	}
 
-	private void _assertObjectDefinitions(Group group) {
+	private void _assertObjectDefinitions(Group group) throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				group.getCompanyId(), "C_BundleSiteInitializerTest");
@@ -235,6 +263,9 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 		Assert.assertEquals(objectDefinition.isSystem(), false);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
 	}
 
 	private void _assertStyleBookEntry(Group group) {
@@ -259,6 +290,9 @@ public class BundleSiteInitializerTest {
 			return bundleContext.installBundle(location, inputStream);
 		}
 	}
+
+	@Inject
+	private CatalogResource.Factory _catalogResourceFactory;
 
 	@Inject
 	private ChannelResource.Factory _channelResourceFactory;

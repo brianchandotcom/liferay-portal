@@ -575,36 +575,44 @@ definition {
 	test MapDMImageToBackgroundImageOfContainer {
 		property portal.acceptance = "true";
 
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.jpg",
-			groupName = "Test Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
+		task ("Add a document with an image") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_1.jpg",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Container to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Layout Elements",
-			fragmentName = "Container");
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
 
-		PageEditor.editLayoutContainer(
-			backgroundImage = "Mapping",
-			entryTitle = "Document_1.jpg",
-			fieldName = "File URL",
-			navItem = "Documents and Media",
-			paddingTop = "2",
-			panel = "Styles");
+		task ("Map the File URL field of document to background image of Container") {
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Mapping",
+				entryTitle = "Document_1.jpg",
+				fieldName = "File URL",
+				navItem = "Documents and Media",
+				paddingTop = "2",
+				panel = "Styles");
 
-		PageEditor.clickPublish();
+			PageEditor.clickPublish();
+		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+		task ("View the mapped image shown in Container at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		AssertElementPresent(
-			key_imageName = "Document_1.jpg",
-			locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
+		}
 	}
 
 	@description = "This is a test for LPS-119817. Map manual URL to Container element."
@@ -666,65 +674,75 @@ definition {
 	test MapWebContentImageToBackgroundImageOfContainerInContentPage {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a web content structure with an Image field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoStructures();
+			NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
-			fieldName = "Image");
+			DataEngine.addField(
+				fieldFieldLabel = "Image",
+				fieldName = "Image");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a template for new structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoTemplates();
+			NavItem.gotoTemplates();
 
-		WebContentTemplates.addCP(
-			structureName = "WC Structure Name",
-			templateDescription = "WC Template Description",
-			templateFieldNames = "Image",
-			templateName = "WC Template Name");
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Image",
+				templateName = "WC Template Name");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a web content based on new structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(
-			navTab = "Web Content Images",
-			structureName = "WC Structure Name",
-			templateName = "WC Template Name",
-			webContentImage = "Document_2.jpeg",
-			webContentTitle = "WC WebContent Title");
+			WebContent.addWithStructureCP(
+				navTab = "Web Content Images",
+				structureName = "WC Structure Name",
+				templateName = "WC Template Name",
+				webContentImage = "Document_2.jpeg",
+				webContentTitle = "WC WebContent Title");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Container to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Layout Elements",
-			fragmentName = "Container");
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
 
-		PageEditor.editLayoutContainer(
-			backgroundImage = "Mapping",
-			entryTitle = "WC WebContent Title",
-			navItem = "Web Content",
-			panel = "Styles");
+		task ("Map the Image field of web content to background image of Container") {
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Mapping",
+				entryTitle = "WC WebContent Title",
+				navItem = "Web Content",
+				panel = "Styles");
 
-		task ("Assert the layout background field contains the mapped image.") {
 			PageEditor.clickPublish();
+		}
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+		task ("View the mapped image shown in Container at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-			AssertElementPresent(
-				key_imageName = "Document_2.jpeg",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "Document_2.jpeg");
 		}
 	}
 

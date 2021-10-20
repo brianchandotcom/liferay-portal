@@ -554,14 +554,14 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Icon#PLUS");
 
-		Redirect.openRedirectAdmin(siteURLKey = "guest");
-
 		JSONRedirect.updateEntry(
 			destinationURL = "${portalURL}/web/guest/test-destination-page",
-			groupName = "Organization Name",
+			groupName = "Guest",
 			permanent = "true",
 			sourceURL = "test-source-page",
 			userEmailAddress = "userea@liferay.com");
+
+		Redirect.openRedirectAdmin(siteURLKey = "guest");
 
 		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/guest/test-destination-page",

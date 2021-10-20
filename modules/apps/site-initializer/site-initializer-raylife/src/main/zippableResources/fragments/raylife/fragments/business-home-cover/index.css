@@ -23,7 +23,8 @@
 	top: -12px;
 }
 
-.business-home-cover .business-home-cover-box input, select {
+.business-home-cover .business-home-cover-box input,
+select {
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	appearance: none;
@@ -36,8 +37,8 @@
 }
 
 .business-home-cover .business-home-cover-box #zip-container {
+	margin-right: 21px;
 	width: 119px;
-	margin-right: 21px
 }
 
 .business-home-cover .select-icon {
@@ -60,6 +61,14 @@
 	.title-highlight {
 	color: var(--color-brand-primary);
 	display: block;
+}
+
+.business-home-cover .subtitle {
+	color: var(--color-neutral-1);
+}
+
+.business-home-cover .placeholder-title {
+	color: var(--color-neutral-0);
 }
 
 .business-home-cover .business-home-cover-box p {
@@ -90,7 +99,8 @@
 	font-weight: bold;
 }
 
-.business-home-cover .has-error input, .business-home-cover .has-error select {
+.business-home-cover .has-error input,
+.business-home-cover .has-error select {
 	border-color: var(--color-state-error);
 	outline-color: var(--color-state-error);
 }

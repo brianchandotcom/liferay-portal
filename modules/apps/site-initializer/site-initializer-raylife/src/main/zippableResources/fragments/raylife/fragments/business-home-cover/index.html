@@ -1,4 +1,4 @@
-[#assign clayIconSVG = themeDisplay.getCDNBaseURL() +
+z[#assign clayIconSVG = themeDisplay.getCDNBaseURL() +
 "/o/admin-theme/images/clay/icons.svg" /]
 
 <div class="business-home-cover">
@@ -6,7 +6,7 @@
 		<div class="business-home-cover-box mb-0 px-5 py-6">
 			<div class="business-home-cover-box-title">
 			<span class="title-highlight" data-lfr-editable-id="business-home-cover-title" data-lfr-editable-type="text">More than Insurance.</span>
-			<span data-lfr-editable-id="business-home-cover-title2" data-lfr-editable-type="text">We partner with your business.</span>
+			<span class="subtitle" data-lfr-editable-id="business-home-cover-title2" data-lfr-editable-type="text">We partner with your business.</span>
 			</div>
 
 			<div class="d-flex">
@@ -50,7 +50,7 @@
 				<div class="position-relative" id="retrieve-quote">
 					<form class="align-items-start d-flex" id="get-quote-form">
 						<div id="zip-container">
-						<label for="zip" class="position-absolute bg-white px-1">Zip</label>
+						<label for="zip" class="position-absolute placeholder-title bg-white px-1">Zip</label>
 
 						<input class="px-3 rounded w-100" id="zip" maxlength="5" name="zip" placeholder="Zip" type="text" />
 
@@ -60,7 +60,7 @@
 						</div>
 
 						<div class="flex-grow-1 position-relative" id="product-container">
-						<label for="product" class="position-absolute bg-white px-1">Product</label>
+						<label for="product" class="position-absolute placeholder-title bg-white px-1">Product</label>
 
 						<svg class="lexicon-icon lexicon-icon-caret-bottom position-absolute select-icon" focusable="false" role="presentation">
 								<use xlink:href="${clayIconSVG}#caret-bottom" />

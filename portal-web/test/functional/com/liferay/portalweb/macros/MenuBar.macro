@@ -12,6 +12,17 @@ definition {
 		MenuBar.viewActive(menuBar = "${menuBar}");
 	}
 
+	macro clickInStack {
+		var key_menuBar = "${menuBar}";
+		var key_stackName = "${stackName}";
+
+		if (IsElementNotPresent(locator1 = "MenuBar#ACTIVE_NAV_LINK_IN_STACK")) {
+			Click(locator1 = "MenuBar#NAV_LINK_IN_STACK");
+		}
+
+		AssertElementPresent(locator1 = "MenuBar#ACTIVE_NAV_LINK_IN_STACK");
+	}
+
 	macro gotoAddresses {
 		MenuBar.click(menuBar = "Addresses");
 	}

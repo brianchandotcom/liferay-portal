@@ -12,22 +12,15 @@
  * details.
  */
 
- function getCookie(name) {
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookies = decodedCookie.split(';');
-		name = name + '=';
+const userApplicationIdKey = 'customer-portal-user-application';
+let userApplication = sessionStorage.getItem(userApplicationIdKey);
 
-    for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (!cookie.indexOf(name)) {
-            return cookie.substring(name.length, cookie.length);
-        }
+if (userApplication) {
+    var user = JSON.parse(userApplication);
+
+    document.getElementById('select-user-application').textContent = user.name;
+
+    if (user.image) {
+        document.getElementById('user-icon-application').src = user.image;
     }
-}
-
-const applicationIdCookie = getCookie(nameCookieId);
-
-if (applicationIdCookie) {
-    document.getElementById('content-agent-text-your-application').textContent =
-        'Your Application #' + applicationIdCookie;
-}
+} 

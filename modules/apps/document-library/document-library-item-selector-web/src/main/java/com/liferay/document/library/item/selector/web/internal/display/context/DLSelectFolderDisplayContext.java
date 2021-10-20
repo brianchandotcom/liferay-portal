@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -57,9 +57,11 @@ import javax.servlet.http.HttpServletRequest;
 public class DLSelectFolderDisplayContext {
 
 	public DLSelectFolderDisplayContext(
-		Folder folder, HttpServletRequest httpServletRequest,
-		PortletURL portletURL, long selectedFolderId) {
+		DLAppService dlAppService, Folder folder,
+		HttpServletRequest httpServletRequest, PortletURL portletURL,
+		long selectedFolderId) {
 
+		_dlAppService = dlAppService;
 		_folder = folder;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
@@ -93,7 +95,7 @@ public class DLSelectFolderDisplayContext {
 
 	public int getFolderFileEntriesCount(Folder folder) {
 		try {
-			return DLAppServiceUtil.getFoldersFileEntriesCount(
+			return _dlAppService.getFoldersFileEntriesCount(
 				folder.getRepositoryId(),
 				Collections.singletonList(folder.getFolderId()),
 				WorkflowConstants.STATUS_APPROVED);
@@ -107,7 +109,7 @@ public class DLSelectFolderDisplayContext {
 
 	public int getFolderFoldersCount(Folder folder) {
 		try {
-			return DLAppServiceUtil.getFoldersCount(
+			return _dlAppService.getFoldersCount(
 				folder.getRepositoryId(), folder.getFolderId());
 		}
 		catch (PortalException portalException) {
@@ -132,13 +134,13 @@ public class DLSelectFolderDisplayContext {
 	}
 
 	public List<Folder> getFolders(int start, int end) throws PortalException {
-		return DLAppServiceUtil.getFolders(
+		return _dlAppService.getFolders(
 			getRepositoryId(), getFolderId(), _isMountFolderVisible(), start,
 			end);
 	}
 
 	public int getFoldersCount() throws PortalException {
-		return DLAppServiceUtil.getFoldersCount(
+		return _dlAppService.getFoldersCount(
 			getRepositoryId(), getFolderId(), _isMountFolderVisible());
 	}
 
@@ -287,6 +289,7 @@ public class DLSelectFolderDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLSelectFolderDisplayContext.class);
 
+	private final DLAppService _dlAppService;
 	private final Folder _folder;
 	private final HttpServletRequest _httpServletRequest;
 	private final PortletURL _portletURL;

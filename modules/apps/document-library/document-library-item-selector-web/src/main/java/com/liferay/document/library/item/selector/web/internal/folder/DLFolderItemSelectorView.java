@@ -108,8 +108,8 @@ public class DLFolderItemSelectorView
 		servletRequest.setAttribute(
 			DLSelectFolderDisplayContext.class.getName(),
 			new DLSelectFolderDisplayContext(
-				_fetchFolder(folderId), (HttpServletRequest)servletRequest,
-				portletURL,
+				_dlAppService, _fetchFolder(folderId),
+				(HttpServletRequest)servletRequest, portletURL,
 				BeanParamUtil.getLong(
 					itemSelectorCriterion, (HttpServletRequest)servletRequest,
 					"selectedFolderId", folderId)));

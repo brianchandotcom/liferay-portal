@@ -1,9 +1,10 @@
 h1 {
+	color: var(--color-neutral-1);
 	font-weight: var(--display1-weight);
 }
 
 p {
-	color: var(--gray-700)
+	color: var(--color-neutral-2);
 }
 
 .hang-tight-image {

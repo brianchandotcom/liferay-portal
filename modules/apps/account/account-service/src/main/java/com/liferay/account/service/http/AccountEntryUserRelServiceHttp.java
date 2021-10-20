@@ -189,6 +189,53 @@ public class AccountEntryUserRelServiceHttp {
 		}
 	}
 
+	public static com.liferay.account.model.AccountEntryUserRel
+			addPersonTypeAccountEntryUserRel(
+				HttpPrincipal httpPrincipal, long accountEntryId,
+				long creatorUserId, String screenName, String emailAddress,
+				java.util.Locale locale, String firstName, String middleName,
+				String lastName, long prefixId, long suffixId, String jobTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryUserRelServiceUtil.class,
+				"addPersonTypeAccountEntryUserRel",
+				_addPersonTypeAccountEntryUserRelParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountEntryId, creatorUserId, screenName,
+				emailAddress, locale, firstName, middleName, lastName, prefixId,
+				suffixId, jobTitle);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.account.model.AccountEntryUserRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void addAccountEntryUserRels(
 			HttpPrincipal httpPrincipal, long accountEntryId,
 			long[] accountUserIds)
@@ -235,7 +282,7 @@ public class AccountEntryUserRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryUserRelServiceUtil.class,
 				"deleteAccountEntryUserRelByEmailAddress",
-				_deleteAccountEntryUserRelByEmailAddressParameterTypes3);
+				_deleteAccountEntryUserRelByEmailAddressParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, emailAddress);
@@ -362,7 +409,13 @@ public class AccountEntryUserRelServiceHttp {
 	private static final Class<?>[] _addAccountEntryUserRelsParameterTypes2 =
 		new Class[] {long.class, long[].class};
 	private static final Class<?>[]
-		_deleteAccountEntryUserRelByEmailAddressParameterTypes3 = new Class[] {
+		_addPersonTypeAccountEntryUserRelParameterTypes3 = new Class[] {
+			long.class, long.class, String.class, String.class,
+			java.util.Locale.class, String.class, String.class, String.class,
+			long.class, long.class, String.class
+		};
+	private static final Class<?>[]
+		_deleteAccountEntryUserRelByEmailAddressParameterTypes4 = new Class[] {
 			long.class, String.class
 		};
 	private static final Class<?>[] _deleteAccountEntryUserRelsParameterTypes4 =

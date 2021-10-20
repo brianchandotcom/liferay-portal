@@ -70,6 +70,18 @@ public class AccountEntryUserRelServiceUtil {
 			userExternalReferenceCode, serviceContext);
 	}
 
+	public static AccountEntryUserRel addPersonTypeAccountEntryUserRel(
+			long accountEntryId, long creatorUserId, String screenName,
+			String emailAddress, java.util.Locale locale, String firstName,
+			String middleName, String lastName, long prefixId, long suffixId,
+			String jobTitle)
+		throws PortalException {
+
+		return getService().addPersonTypeAccountEntryUserRel(
+			accountEntryId, creatorUserId, screenName, emailAddress, locale,
+			firstName, middleName, lastName, prefixId, suffixId, jobTitle);
+	}
+
 	public static void addAccountEntryUserRels(
 			long accountEntryId, long[] accountUserIds)
 		throws PortalException {

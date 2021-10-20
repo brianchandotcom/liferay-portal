@@ -138,6 +138,31 @@ public class AccountEntryUserRelServiceSoap {
 		}
 	}
 
+	public static com.liferay.account.model.AccountEntryUserRelSoap
+			addPersonTypeAccountEntryUserRel(
+				long accountEntryId, long creatorUserId, String screenName,
+				String emailAddress, String locale, String firstName,
+				String middleName, String lastName, long prefixId,
+				long suffixId, String jobTitle)
+		throws RemoteException {
+
+		try {
+			com.liferay.account.model.AccountEntryUserRel returnValue =
+				AccountEntryUserRelServiceUtil.addPersonTypeAccountEntryUserRel(
+					accountEntryId, creatorUserId, screenName, emailAddress,
+					LocaleUtil.fromLanguageId(locale), firstName, middleName,
+					lastName, prefixId, suffixId, jobTitle);
+
+			return com.liferay.account.model.AccountEntryUserRelSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void addAccountEntryUserRels(
 			long accountEntryId, long[] accountUserIds)
 		throws RemoteException {

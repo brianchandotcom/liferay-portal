@@ -32,7 +32,9 @@ public class ReleaseFeatureFlagUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		if (ReleaseInfo.isDXP() || StartupHelperUtil.isDBNew()) {
+		if (!ReleaseInfo.isDXP() || StartupHelperUtil.isDBNew() ||
+			!StartupHelperUtil.isUpgrading()) {
+
 			//return;
 		}
 

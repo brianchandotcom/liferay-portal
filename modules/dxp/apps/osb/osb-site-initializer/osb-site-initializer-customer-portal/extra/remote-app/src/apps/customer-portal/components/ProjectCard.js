@@ -2,7 +2,7 @@ import ClayCard from '@clayui/card';
 import BaseButton from '~/shared/components/BaseButton';
 import StatusTag from './StatusTag';
 
-const ProjectCard = ({ endDate, onClick, small, state, status, title }) => {
+const ProjectCard = ({ endDate, onClick, region, small, status, title }) => {
 
   return (
     <ClayCard className={`project-card${small ? "-sm" : ""} m-0`} onClick={() => onClick}>
@@ -20,7 +20,7 @@ const ProjectCard = ({ endDate, onClick, small, state, status, title }) => {
             </div>
 
             <div className="text-neutral-5 text-paragraph-sm">
-              {state}
+              {region}
             </div>
           </ClayCard.Description>
           {!small && <BaseButton appendIcon="angle-right" borderless className="p-0 text-brand-primary">

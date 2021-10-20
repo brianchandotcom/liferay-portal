@@ -346,7 +346,10 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				id = batchEngineImportTask.getBatchEngineImportTaskId();
 				operation = ImportTask.Operation.create(
 					batchEngineImportTask.getOperation());
+				processedItemsCount =
+					batchEngineImportTask.getProcessedItemsCount();
 				startTime = batchEngineImportTask.getStartTime();
+				totalItemsCount = batchEngineImportTask.getTotalItemsCount();
 			}
 		};
 	}

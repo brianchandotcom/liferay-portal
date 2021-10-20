@@ -134,7 +134,10 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 				executeStatus = ExportTask.ExecuteStatus.create(
 					batchEngineExportTask.getExecuteStatus());
 				id = batchEngineExportTask.getBatchEngineExportTaskId();
+				processedItemsCount =
+					batchEngineExportTask.getProcessedItemsCount();
 				startTime = batchEngineExportTask.getStartTime();
+				totalItemsCount = batchEngineExportTask.getTotalItemsCount();
 			}
 		};
 	}

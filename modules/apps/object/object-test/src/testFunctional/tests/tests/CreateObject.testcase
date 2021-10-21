@@ -1875,11 +1875,38 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Workflow Site Menu page when inactivated"
-	@ignore = "Test Stub"
 	@priority = "4"
-	test ObjectDisapperasWorkflowSiteMenuWhenInactivated {
+	test ObjectDisappearsWorkflowSiteMenuWhenInactivated {
 
-		// TODO LPS-140859 ObjectDisapperasWorkflowSiteMenuWhenInactivated pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects",
+			scope = "Site",
+			panelCategoryKey = "Site Administration > Content & Data");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow");
+
+		AssertElementNotPresent(
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW",
+			key_workflowResourceValue = "Custom Object");
+
+
 
 	}
 

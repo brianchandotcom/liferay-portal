@@ -187,6 +187,10 @@ definition {
 			webContent = "true",
 			webContentTitle = "WC WebContent Title");
 
+		Depot.deleteContentViaBulkEditing(
+			webContent = "true",
+			webContentTitle = "WC WebContent Title");
+
 		DepotNavigator.openDepotRecycleBinAdmin(depotName = "Test Depot Name");
 
 		RecycleBin.viewCP(

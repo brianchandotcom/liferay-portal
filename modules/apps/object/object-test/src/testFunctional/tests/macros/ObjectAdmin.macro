@@ -24,7 +24,7 @@ definition {
 
 		WaitForPageLoad();
 
-		if ("${value}" != "true") {
+		if ("${value}" == "true") {
 			Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
 		}
 

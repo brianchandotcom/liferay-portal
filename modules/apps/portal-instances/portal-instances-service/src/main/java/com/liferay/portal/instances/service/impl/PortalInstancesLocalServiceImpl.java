@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -41,10 +42,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
@@ -121,38 +124,38 @@ public class PortalInstancesLocalServiceImpl
 				"Invalid site initializer key " + siteInitializerKey);
 		}
 
-		Role role = _roleLocalService.fetchRole(
-			companyId, RoleConstants.ADMINISTRATOR);
-
-		List<User> users = _userLocalService.getRoleUsers(role.getRoleId());
-
-		User user = users.get(0);
-
-		PermissionChecker permissionChecker =
+		PermissionChecker currentThreadPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		PermissionThreadLocal.setPermissionChecker(
-			_permissionCheckerFactory.create(user));
+		String currentThreadPrincipalName = PrincipalThreadLocal.getName();
 
-		String name = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(user.getUserId());
-
-		ServiceContext currentServiceContext =
+		ServiceContext currentThreadServiceContext =
 			ServiceContextThreadLocal.getServiceContext();
-
-		ServiceContext serviceContext =
-			(ServiceContext)currentServiceContext.clone();
-
-		serviceContext.setUserId(user.getUserId());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setInitializingPortalInstance(true)) {
 
+			Role role = _roleLocalService.fetchRole(
+				companyId, RoleConstants.ADMINISTRATOR);
+
+			List<User> users = _userLocalService.getRoleUsers(role.getRoleId());
+
+			User user = users.get(0);
+
+			PermissionChecker permissionChecker =
+				_permissionCheckerFactory.create(user);
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+			PrincipalThreadLocal.setName(user.getUserId());
+
 			Group group = _groupLocalService.getGroup(
 				company.getCompanyId(), GroupConstants.GUEST);
+
+			ServiceContextThreadLocal.pushServiceContext(
+				_getServiceContext(
+					company, group, permissionChecker,
+					currentThreadServiceContext, user));
 
 			_layoutLocalService.deleteLayouts(
 				group.getGroupId(), false, new ServiceContext());
@@ -160,9 +163,11 @@ public class PortalInstancesLocalServiceImpl
 			siteInitializer.initialize(group.getGroupId());
 		}
 		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			PrincipalThreadLocal.setName(name);
-			ServiceContextThreadLocal.pushServiceContext(currentServiceContext);
+			PermissionThreadLocal.setPermissionChecker(
+				currentThreadPermissionChecker);
+			PrincipalThreadLocal.setName(currentThreadPrincipalName);
+			ServiceContextThreadLocal.pushServiceContext(
+				currentThreadServiceContext);
 		}
 	}
 
@@ -234,6 +239,60 @@ public class PortalInstancesLocalServiceImpl
 		catch (Exception exception) {
 			_log.error(exception, exception);
 		}
+	}
+
+	private ServiceContext _getServiceContext(
+			Company company, Group group, PermissionChecker permissionChecker,
+			ServiceContext currentServiceContext, User user)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			(ServiceContext)currentServiceContext.clone();
+
+		serviceContext.setCompanyId(user.getCompanyId());
+		serviceContext.setScopeGroupId(group.getGroupId());
+		serviceContext.setUserId(user.getUserId());
+
+		HttpServletRequest httpServletRequest =
+			currentServiceContext.getRequest();
+
+		if (httpServletRequest != null) {
+			long controlPanelPlid = _portal.getControlPanelPlid(
+				company.getCompanyId());
+
+			Layout controlPanelLayout = _layoutLocalService.getLayout(
+				controlPanelPlid);
+
+			httpServletRequest.setAttribute(WebKeys.LAYOUT, controlPanelLayout);
+
+			ThemeDisplay currentThemeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			serviceContext.setRequest(httpServletRequest);
+
+			try {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)currentThemeDisplay.clone();
+
+				themeDisplay.setCompany(company);
+				themeDisplay.setLayout(controlPanelLayout);
+				themeDisplay.setPermissionChecker(permissionChecker);
+				themeDisplay.setPlid(controlPanelPlid);
+				themeDisplay.setRequest(httpServletRequest);
+				themeDisplay.setScopeGroupId(group.getGroupId());
+				themeDisplay.setSiteGroupId(group.getGroupId());
+				themeDisplay.setUser(user);
+
+				httpServletRequest.setAttribute(
+					WebKeys.THEME_DISPLAY, themeDisplay);
+			}
+			catch (CloneNotSupportedException cloneNotSupportedException) {
+				_log.error(cloneNotSupportedException);
+			}
+		}
+
+		return serviceContext;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

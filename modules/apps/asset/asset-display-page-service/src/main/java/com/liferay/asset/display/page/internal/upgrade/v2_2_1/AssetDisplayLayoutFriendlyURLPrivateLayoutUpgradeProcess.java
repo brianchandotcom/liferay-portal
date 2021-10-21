@@ -69,7 +69,7 @@ public class AssetDisplayLayoutFriendlyURLPrivateLayoutUpgradeProcess
 	private void _upgradeAssetDisplayLayoutFriendlyURLs() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select distinct LayoutFriendlyURL.groupId, ",
+					"select distinct LayoutFriendlyURL.plid, ",
 					"LayoutFriendlyURL.groupId, ",
 					"LayoutFriendlyURL.friendlyURL, ",
 					"LayoutFriendlyURL.languageId from LayoutFriendlyURL ",
@@ -84,10 +84,10 @@ public class AssetDisplayLayoutFriendlyURLPrivateLayoutUpgradeProcess
 					"LayoutFriendlyURL.friendlyURL = ? and ",
 					"LayoutFriendlyURL.languageId = ?"));
 			PreparedStatement preparedStatement3 =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
 						"update LayoutFriendlyURL set privateLayout = ?," +
-							"friendlyURL = ? where plid = ?"))) {
+							"friendlyURL = ? where plid = ?")) {
 
 			preparedStatement1.setString(1, LayoutConstants.TYPE_ASSET_DISPLAY);
 			preparedStatement1.setBoolean(2, true);
@@ -114,12 +114,12 @@ public class AssetDisplayLayoutFriendlyURLPrivateLayoutUpgradeProcess
 
 					preparedStatement3.setBoolean(1, false);
 					preparedStatement3.setString(2, newFriendlyURL);
-					preparedStatement3.setLong(2, plid);
+					preparedStatement3.setLong(3, plid);
 
-					preparedStatement2.addBatch();
+					preparedStatement3.addBatch();
 				}
 
-				preparedStatement2.executeBatch();
+				preparedStatement3.executeBatch();
 			}
 		}
 	}

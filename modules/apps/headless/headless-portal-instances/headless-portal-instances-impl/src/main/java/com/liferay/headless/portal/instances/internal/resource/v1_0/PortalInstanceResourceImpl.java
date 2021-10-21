@@ -16,8 +16,10 @@ package com.liferay.headless.portal.instances.internal.resource.v1_0;
 
 import com.liferay.headless.portal.instances.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.resource.v1_0.PortalInstanceResource;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -107,9 +109,14 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 			portalInstance.getVirtualHost(), portalInstance.getDomain(), false,
 			0, true);
 
-		_portalInstancesLocalService.initializePortalInstance(
-			company.getCompanyId(), portalInstance.getSiteInitializerKey(),
-			_servletContext);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					company.getCompanyId())) {
+
+			_portalInstancesLocalService.initializePortalInstance(
+				company.getCompanyId(), portalInstance.getSiteInitializerKey(),
+				_servletContext);
+		}
 
 		_portalInstancesLocalService.synchronizePortalInstances();
 

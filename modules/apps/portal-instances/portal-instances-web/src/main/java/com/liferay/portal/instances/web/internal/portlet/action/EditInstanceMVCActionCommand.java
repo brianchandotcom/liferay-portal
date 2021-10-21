@@ -14,6 +14,7 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.CompanyMxException;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CompanyService;
@@ -160,8 +162,13 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 			ServletContext servletContext =
 				(ServletContext)actionRequest.getAttribute(WebKeys.CTX);
 
-			_portalInstancesLocalService.initializePortalInstance(
-				company.getCompanyId(), siteInitializerKey, servletContext);
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setWithSafeCloseable(
+						company.getCompanyId())) {
+
+				_portalInstancesLocalService.initializePortalInstance(
+					company.getCompanyId(), siteInitializerKey, servletContext);
+			}
 		}
 		else {
 

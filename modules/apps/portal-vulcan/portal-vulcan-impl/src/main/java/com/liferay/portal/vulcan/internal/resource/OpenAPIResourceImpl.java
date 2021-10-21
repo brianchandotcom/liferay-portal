@@ -367,6 +367,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			private Schema<Object> _addSchema(DTOProperty dtoProperty) {
 				Schema<Object> schema = new Schema<>();
 
+				schema.setExtensions(dtoProperty.getExtensions());
 				schema.setName(dtoProperty.getName());
 
 				String type = dtoProperty.getType();

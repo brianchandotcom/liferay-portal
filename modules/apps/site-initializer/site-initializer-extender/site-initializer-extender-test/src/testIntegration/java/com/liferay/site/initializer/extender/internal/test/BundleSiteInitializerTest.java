@@ -15,6 +15,12 @@
 package com.liferay.site.initializer.extender.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
+import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -24,11 +30,9 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
-import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
-import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
-import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.io.StreamUtil;
@@ -50,7 +54,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -99,7 +102,18 @@ public class BundleSiteInitializerTest {
 	}
 
 	@After
-	public void tearDown() {
+	public void tearDown() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_user.getGroupId(), _user.getUserId());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				serviceContext.getCompanyId(), "C_BundleSiteInitializerTest");
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
+
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
@@ -122,63 +136,61 @@ public class BundleSiteInitializerTest {
 
 		siteInitializer.initialize(group.getGroupId());
 
-		_assertCommerceCatalogs();
-		_assertCommerceChannel();
-		_assertDocuments(group);
-		_assertObjectDefinitions(group);
+		_assertCommerceCatalogs(group);
+		_assertCommerceChannel(group);
+		_assertCommerceInventoryWarehouse(group);
 		_assertDDMStructure(group);
 		_assertDDMTemplate(group);
+		_assertDocuments(group);
 		_assertFragments(group);
-		_assertStyleBookEntry(group);
+		_assertLayoutPageTemplates(group);
 		_assertLayouts(group);
+		_assertObjectDefinitions(group);
+		_assertStyleBookEntry(group);
 
 		GroupLocalServiceUtil.deleteGroup(group);
 
 		bundle.uninstall();
 	}
 
-	private void _assertCommerceCatalogs() throws Exception {
-		CatalogResource.Builder catalogResourceBuilder =
-			_catalogResourceFactory.create();
-
-		CatalogResource catalogResource = catalogResourceBuilder.user(
-			_user
-		).build();
-
-		Catalog commerceCatalog =
-			catalogResource.getCatalogByExternalReferenceCode("TESTCATG0001");
+	private void _assertCommerceCatalogs(Group group) throws Exception {
+		CommerceCatalog commerceCatalog =
+			_commerceCatalogLocalService.
+				fetchCommerceCatalogByExternalReferenceCode(
+					group.getCompanyId(), "TESTCATG0001");
 
 		Assert.assertNotNull(commerceCatalog);
 		Assert.assertEquals("Catalog Test 01", commerceCatalog.getName());
-		Assert.assertEquals("USD", commerceCatalog.getCurrencyCode());
-		Assert.assertEquals("en_US", commerceCatalog.getDefaultLanguageId());
 
-		commerceCatalog = catalogResource.getCatalogByExternalReferenceCode(
-			"TESTCATG0002");
+		commerceCatalog =
+			_commerceCatalogLocalService.
+				fetchCommerceCatalogByExternalReferenceCode(
+					group.getCompanyId(), "TESTCATG0002");
 
 		Assert.assertNotNull(commerceCatalog);
 		Assert.assertEquals("Catalog Test 02", commerceCatalog.getName());
-		Assert.assertEquals("USD", commerceCatalog.getCurrencyCode());
-		Assert.assertEquals("en_US", commerceCatalog.getDefaultLanguageId());
 	}
 
-	private void _assertCommerceChannel() throws Exception {
-		ChannelResource.Builder channelResourceBuilder =
-			_channelResourceFactory.create();
-
-		ChannelResource channelResource = channelResourceBuilder.user(
-			_user
-		).build();
-
-		Page<Channel> commerceChannelsPage = channelResource.getChannelsPage(
-			"", channelResource.toFilter("name eq 'Test Channel'"), null, null);
-
-		Channel channel = commerceChannelsPage.fetchFirstItem();
+	private void _assertCommerceChannel(Group group) throws Exception {
+		CommerceChannel channel =
+			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+				group.getGroupId());
 
 		Assert.assertNotNull(channel);
-		Assert.assertEquals("USD", channel.getCurrencyCode());
+		Assert.assertEquals("Test Channel", channel.getName());
 		Assert.assertEquals("site", channel.getType());
-		Assert.assertEquals("RAYTEST0001", channel.getExternalReferenceCode());
+		Assert.assertEquals("TESTVOC0001", channel.getExternalReferenceCode());
+	}
+
+	private void _assertCommerceInventoryWarehouse(Group group) {
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			_commerceInventoryWarehouseLocalService.
+				fetchCommerceInventoryWarehouseByExternalReferenceCode(
+					group.getCompanyId(), "WTEST0001");
+
+		Assert.assertNotNull(commerceInventoryWarehouse);
+		Assert.assertEquals(
+			"Warehouse Test", commerceInventoryWarehouse.getName());
 	}
 
 	private void _assertDDMStructure(Group group) {
@@ -230,6 +242,15 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("fragment2", fragment2.getName());
 	}
 
+	private void _assertLayoutPageTemplates(Group group) throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				group.getGroupId(), "Test", 3);
+
+		Assert.assertNotNull(layoutPageTemplateEntry);
+		Assert.assertEquals("Test", layoutPageTemplateEntry.getName());
+	}
+
 	private void _assertLayouts(Group group) throws Exception {
 		List<Layout> layouts = _layoutLocalService.getLayouts(
 			group.getGroupId(), true);
@@ -263,9 +284,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 		Assert.assertEquals(objectDefinition.isSystem(), false);
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
 	}
 
 	private void _assertStyleBookEntry(Group group) {
@@ -292,10 +310,14 @@ public class BundleSiteInitializerTest {
 	}
 
 	@Inject
-	private CatalogResource.Factory _catalogResourceFactory;
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Inject
-	private ChannelResource.Factory _channelResourceFactory;
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Inject
+	private CommerceInventoryWarehouseLocalService
+		_commerceInventoryWarehouseLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
@@ -311,6 +333,10 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

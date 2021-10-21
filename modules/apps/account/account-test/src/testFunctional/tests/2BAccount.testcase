@@ -391,6 +391,67 @@ definition {
 			assigneeType = "Organizations");
 	}
 
+	@description = "This test asserts Account Administrators can search for account users"
+	@priority = "5"
+	test AdminCanSearchForAccountUsers {
+		task ("Add several users to account") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			for (var userNum : list "2,3,4") {
+				Accounts.addNewUserToBusinessAccount(
+					accountName = "Account Name",
+					assigneeName = "userfn${userNum}",
+					userEmailAddress = "userea${userNum}@liferay.com",
+					userFirstName = "userfn${userNum}",
+					userLastName = "userln${userNum}",
+					userScreenName = "usersn${userNum}");
+			}
+		}
+
+		task ("Sign back in as Account Administrator and view account users") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
+		}
+
+		task ("Assert all users can be searched") {
+			for (var userNum : list "2,3,4") {
+				Search.searchPG(
+					portletName = "Account Name",
+					searchTerm = "userfn${userNum} userln${userNum}");
+
+				LexiconEntry.viewEntryName(rowEntry = "userfn${userNum} userln${userNum}");
+
+				LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
+
+				if ("${userNum}" == "2") {
+					LexiconEntry.viewNoEntry(rowEntry = "userfn3 userln3");
+					LexiconEntry.viewNoEntry(rowEntry = "userfn4 userln4");
+				}
+				else if ("${userNum}" == "3") {
+					LexiconEntry.viewNoEntry(rowEntry = "userfn2 userln2");
+					LexiconEntry.viewNoEntry(rowEntry = "userfn4 userln4");
+				}
+				else {
+					LexiconEntry.viewNoEntry(rowEntry = "userfn2 userln3");
+					LexiconEntry.viewNoEntry(rowEntry = "userfn3 userln3");
+				}
+			}
+		}
+	}
+
 	@description = "This test asserts Account Administrators can view all account users"
 	@priority = "5"
 	test AdminCanViewAllAccountUsers {

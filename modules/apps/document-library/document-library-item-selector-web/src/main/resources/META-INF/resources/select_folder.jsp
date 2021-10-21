@@ -89,9 +89,7 @@ DLBreadcrumbUtil.addPortletBreadcrumbEntries(dlSelectFolderDisplayContext.getFol
 				/>
 
 				<liferay-ui:search-container-column-text>
-					<c:if test="<%= (folderFileEntriesCount > 0) || (folderFoldersCount > 0) %>">
-						<aui:button cssClass="selector-button" data="<%= dlSelectFolderDisplayContext.getSelectorButtonData(curFolder) %>" disabled="<%= dlSelectFolderDisplayContext.isSelectButtonDisabled(curFolder.getFolderId()) %>" value="select" />
-					</c:if>
+					<aui:button cssClass="selector-button" data="<%= dlSelectFolderDisplayContext.getSelectorButtonData(curFolder) %>" disabled="<%= dlSelectFolderDisplayContext.isSelectButtonDisabled(curFolder.getFolderId()) %>" value="select" />
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 

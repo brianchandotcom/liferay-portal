@@ -57,6 +57,10 @@ AUI.add(
 			Liferay.Language.get('today') +
 			'</button>';
 
+		var TPL_SCHEDULER_VIEWS =
+			'<div aria-label="{ariaLabel}" class="col-xs-5 form-inline scheduler-base-views" role="listbox">' +
+			'</div>';
+
 		var WEEKLY = 'WEEKLY';
 
 		var Time = Liferay.Time;
@@ -172,6 +176,18 @@ AUI.add(
 									ariaLabel: instance.getAriaLabel('today'),
 								}
 							)
+						);
+					},
+				},
+
+				viewsNode: {
+					valueFn() {
+						var instance = this;
+
+						return A.Node.create(
+							A.Lang.sub(TPL_SCHEDULER_VIEWS, {
+								ariaLabel: instance.getAriaLabel('calendar'),
+							})
 						);
 					},
 				},

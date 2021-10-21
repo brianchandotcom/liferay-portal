@@ -16,6 +16,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIOLATION_PANEL_NO_VIOLATIONS</td>
+	<td>//*[contains(@class,'a11y-panel')]//*[contains(.,'There are no accessibility violations')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIOLATION_PANEL_RULE_LIST_ITEM</td>
+	<td>//*[contains(@class,'a11y-panel')]//ul//*[contains(@class,'rule-list-item') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HIGHLIGHTED_ELEMENT</td>
 	<td>//*[contains(@class,'a11y-overlay')]//*[contains(@class,'a11y-backdrop')]</td>
 	<td></td>

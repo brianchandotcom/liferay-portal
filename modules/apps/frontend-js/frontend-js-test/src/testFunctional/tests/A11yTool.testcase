@@ -48,17 +48,22 @@ definition {
 	@description = "LPS-140736. Ensures there is no accessibility side panel on a page with no violations."
 	@priority = "5"
 	test CanDetectNoViolations {
-		Navigator._gotoPage(pageName = "Blank Test Page");
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 
-		if (IsElementPresent(locator1 = "A11yTool#ACCESSIBILITY_PANEL_HEADING")) {
+		Navigator.gotoPage(pageName = "Blank Test Page");
+
+		if (IsElementPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
 			Refresh();
 		}
 
-		AssertElementNotPresent(locator1 = "A11yTool#ACCESSIBILITY_PANEL_HEADING");
+		AssertElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER");
 
 		AssertElementNotPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
 
-		AssertElementNotPresent(locator1 = "A11yTool#ICON_ELEMENT");
+		AssertElementNotPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+
+		takeScreenshot();
 	}
 
 }

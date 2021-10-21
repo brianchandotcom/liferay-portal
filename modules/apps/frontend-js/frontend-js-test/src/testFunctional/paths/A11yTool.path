@@ -11,18 +11,18 @@
 
 <tbody>
 <tr>
-	<td>ACCESSIBILITY_PANEL_HEADING</td>
-	<td>//div[contains(@class,'a11y-panel--violations-header')]//span[contains(text(),'Accessibility Violations')]</td>
+	<td>VIOLATION_PANEL_HEADER</td>
+	<td>//*[contains(@class,'a11y-panel') and contains(@class,'violations-header') and contains(.,'Accessibility Violations')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HIGHLIGHTED_ELEMENT</td>
-	<td>//div[contains(@class,'a11y-backdrop')]</td>
+	<td>//*[contains(@class,'a11y-overlay')]//*[contains(@class,'a11y-backdrop')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ICON_ELEMENT</td>
-	<td>//div[*[name()='svg'][contains(@class,'info-circle')]]</td>
+	<td>HIGHLIGHTED_ELEMENT_ICON</td>
+	<td>//*[contains(@class,'a11y-overlay')]//*[*[name()='svg'][contains(@class,'info-circle')]]</td>
 	<td></td>
 </tr>
 </tbody>

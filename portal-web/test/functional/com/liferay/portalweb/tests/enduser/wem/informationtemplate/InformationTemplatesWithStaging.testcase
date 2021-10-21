@@ -1,0 +1,88 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content and Application Templates";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-138780. The template creator can see the information template when enabling staging with unstaged Templates portlet."
+	@priority = "4"
+	test ViewUnstagedInformationTemplateAvailableToLiveSite {
+		task ("Enable local live with unstaged Templates portlet") {
+			JSONStaging.enableLocalStaging(
+				groupName = "Test Site Name",
+				unCheckedContent = "com_liferay_template_web_internal_portlet_TemplatePortlet");
+		}
+
+		task ("View warning message is shown in Information Templates admin") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name-staging");
+
+			Alert.viewWarningSpecific(warningMessage = "The data of this portlet is not staged. Any data changes are immediately available to the Local Live site.");
+		}
+
+		task ("Add an information template in staging site") {
+			InformationTemplates.addCP(
+				informationTemplateName = "Test Information Template",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+
+			for (var fieldName : list "Title,Author Name") {
+				InformationTemplates.addField(
+					fieldName = "${fieldName}",
+					panelTitle = "Basic Information");
+			}
+
+			PortletEntry.save();
+		}
+
+		task ("View the information template in staging site") {
+			InformationTemplates.viewTemplate(
+				informationTemplateName = "Test Information Template",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("View the information template in live site") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+
+			InformationTemplates.viewTemplate(
+				informationTemplateName = "Test Information Template",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("View the code snippets shown in CodeMirror") {
+			InformationTemplates.gotoInformationTemplateEllipsisItem(
+				informationTemplateName = "Test Information Template",
+				item = "Edit");
+
+			for (var fieldName : list "title,authorName") {
+				InformationTemplates.viewScriptContent(scriptContent = "${fieldName}.getData()");
+			}
+		}
+	}
+
+}

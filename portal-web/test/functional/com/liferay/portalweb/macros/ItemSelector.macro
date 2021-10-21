@@ -60,10 +60,12 @@ definition {
 			locator1 = "TextInput#URL",
 			value1 = "${imageSourceURL}");
 
-		AssertElementPresent.pauseAssertVisible(locator1 = "ItemSelector#URL_IMAGE_SOURCE");
+		if (contains("${imageSourceURL}", "/documents/")) {
+			AssertElementPresent.pauseAssertVisible(locator1 = "ItemSelector#URL_IMAGE_SOURCE");
 
-		if (IsElementPresent(locator1 = "ItemSelector#URL_IMAGE_EXAMPLE")) {
-			Click(locator1 = "ItemSelector#URL_IMAGE_EXAMPLE");
+			if (IsElementPresent(locator1 = "ItemSelector#URL_IMAGE_EXAMPLE")) {
+				Click(locator1 = "ItemSelector#URL_IMAGE_EXAMPLE");
+			}
 		}
 
 		MouseOver(

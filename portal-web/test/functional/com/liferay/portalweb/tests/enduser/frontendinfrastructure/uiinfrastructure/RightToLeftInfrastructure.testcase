@@ -68,12 +68,12 @@ definition {
 			groupName = "Guest",
 			layoutName = "RTL Test Page");
 
-		Navigator.gotoPage(pageName = "RTL Test Page");
-
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",
 			layoutName = "RTL Test Page",
 			widgetName = "Language Selector");
+
+		Navigator.gotoPage(pageName = "RTL Test Page");
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "ar_SA",

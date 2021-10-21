@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +45,10 @@ public class UserNameFieldQueryBuilder implements FieldQueryBuilder {
 		for (String token : tokens) {
 			token = StringUtil.removeChar(token, CharPool.PERCENT);
 
-			if (token.isEmpty()) {
+			if (token.isEmpty() &&
+				!Objects.equals(
+					_searchEngineInformation.getVendorString(), "Solr")) {
+
 				continue;
 			}
 
@@ -65,5 +70,8 @@ public class UserNameFieldQueryBuilder implements FieldQueryBuilder {
 
 	@Reference
 	private KeywordTokenizer _keywordTokenizer;
+
+	@Reference
+	private SearchEngineInformation _searchEngineInformation;
 
 }

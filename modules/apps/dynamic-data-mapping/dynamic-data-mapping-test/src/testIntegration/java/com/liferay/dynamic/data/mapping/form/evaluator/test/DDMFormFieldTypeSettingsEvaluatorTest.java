@@ -26,17 +26,13 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMDataProviderTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -164,39 +160,7 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 		builder.withGroupId(1L);
 
 		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
-			null;
-
-		// LRQA-66927
-
-		try {
-			ddmFormEvaluatorEvaluateResponse = _ddmFormEvaluator.evaluate(
-				builder.build());
-		}
-		catch (NullPointerException nullPointerException) {
-			String ddmFormEvaluatorString = null;
-
-			if (_ddmFormEvaluator != null) {
-				ddmFormEvaluatorString = _ddmFormEvaluator.toString();
-			}
-
-			StringBundler sb = new StringBundler();
-
-			sb.append("DDM form evaluator: ");
-			sb.append(ddmFormEvaluatorString);
-
-			List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
-
-			for (DDMFormRule ddmFormRule : ddmFormRules) {
-				if (!ddmFormRule.isEnabled()) {
-					continue;
-				}
-
-				sb.append(", DDM form rule condition: ");
-				sb.append(ddmFormRule.getCondition());
-			}
-
-			_log.error(sb.toString(), nullPointerException);
-		}
+			_ddmFormEvaluator.evaluate(builder.build());
 
 		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
 			ddmFormFieldsPropertyChanges =
@@ -328,9 +292,6 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 
 		return ddmFormFieldsPropertyChanges.get(ddmFormFieldContextKey);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormFieldTypeSettingsEvaluatorTest.class);
 
 	@Inject(filter = "ddm.data.provider.type=rest")
 	private DDMDataProvider _ddmDataProvider;

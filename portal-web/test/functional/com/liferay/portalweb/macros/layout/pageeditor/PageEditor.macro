@@ -165,41 +165,7 @@ definition {
 			}
 		}
 
-		if (("${navTab}" == "Widgets") && ("${displayStyle}" == "card")) {
-			Type.sendKeysApplicationSearch(
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
-				value1 = "${portletName}");
-
-			if ((isSet(targetFragmentName)) && ("${height}" == "Short")) {
-				DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
-					key_portletName = "${portletName}",
-					key_targetFragmentName = "${targetFragmentName}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
-					locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
-					value1 = "${portletName}");
-			}
-
-			if ((isSet(targetFragmentName)) && ("${height}" == "Tall")) {
-				DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
-					key_portletName = "${portletName}",
-					key_targetFragmentName = "${targetFragmentName}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
-					locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
-					value1 = "${portletName}");
-			}
-
-			else {
-				DragAndDrop.javaScriptDragAndDropToObject(
-					key_columnNumber = "${columnNumber}",
-					key_portletName = "${portletName}",
-					key_position = "${position}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
-					locator2 = "PageEditor#GRID_COLUMN",
-					value1 = "${portletName}");
-			}
-		}
-
-		if (("${navTab}" == "Widgets") && ("${displayStyle}" == "list")) {
+		if ("${navTab}" == "Widgets") {
 			Type.sendKeysApplicationSearch(
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
 				value1 = "${portletName}");
@@ -312,21 +278,7 @@ definition {
 					value1 = "");
 			}
 
-			if (("${navTab}" == "Widgets") && ("${displayStyle}" == "card")) {
-				Type.sendKeysApplicationSearch(
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
-					value1 = "${portletName}");
-
-				DragAndDrop.javaScriptDragAndDropToObject(
-					key_elementType = "Container",
-					key_portletName = "${portletName}",
-					key_position = "${position}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
-					locator2 = "PageEditor#CONTAINER_CONTAINER",
-					value1 = "${portletName}");
-			}
-
-			if (("${navTab}" == "Widgets") && ("${displayStyle}" == "list")) {
+			if ("${navTab}" == "Widgets") {
 				Type.sendKeysApplicationSearch(
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
 					value1 = "${portletName}");
@@ -441,19 +393,7 @@ definition {
 				locator2 = "Fragment#DROPDOWN_FRAGMENT_MENU_CONTENT");
 		}
 
-		if (("${navTab}" == "Widgets") && ("${displayStyle}" == "card")) {
-			Type.sendKeysApplicationSearch(
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
-				value1 = "${portletName}");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_element = "//div[contains(@class,'page-editor__root page-editor__topper')]",
-				key_portletName = "${portletName}",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
-				locator2 = "Fragment#DROPDOWN_FRAGMENT_MENU_CONTENT");
-		}
-
-		if (("${navTab}" == "Widgets") && ("${displayStyle}" == "list")) {
+		if ("${navTab}" == "Widgets") {
 			Type.sendKeysApplicationSearch(
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
 				value1 = "${portletName}");
@@ -543,20 +483,7 @@ definition {
 				value1 = "");
 		}
 
-		if (("${navTab}" == "Widgets") && ("${displayStyle}" == "card")) {
-			Type.sendKeysApplicationSearch(
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
-				value1 = "${portletName}");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_index = "${index}",
-				key_portletName = "${portletName}",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
-				locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
-				value1 = "${portletName}");
-		}
-
-		if (("${navTab}" == "Widgets") && ("${displayStyle}" == "list")) {
+		if ("${navTab}" == "Widgets") {
 			Type.sendKeysApplicationSearch(
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
 				value1 = "${portletName}");
@@ -892,28 +819,6 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-		if (!(isSet(displayStyle))) {
-			var displayStyle = "list";
-		}
-
-		if ("${displayStyle}" == "list") {
-			var switchTo = "card";
-		}
-
-		else {
-			var switchTo = "list";
-		}
-
-		if (IsElementNotPresent(key_switchTo = "${switchTo}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
-			Click(
-				key_switchTo = "",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
-		}
-
-		AssertVisible(
-			key_switchTo = "${switchTo}",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
-
 		Navigator.gotoNavTab(navTab = "Widgets");
 
 		Type.sendKeysApplicationSearch(
@@ -922,88 +827,44 @@ definition {
 
 		var key_portletName = "${portletName}";
 
-		if ("${displayStyle}" == "card") {
-			if ((isSet(scope)) && ("${dropTarget}" == "Header")) {
-				DragAndDrop.javaScriptDragAndDropToUp(
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
-					locator2 = "PageEditor#HEADER_DROP_TARGET",
-					value1 = "");
-			}
-
-			if ((isSet(scope)) && ("${dropTarget}" == "Footer")) {
-				DragAndDrop.javaScriptDragAndDropToBottom(
-					key_targetFragmentName = "Drop Zone",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
-					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-					value1 = "");
-			}
-
-			if ((isSet(targetFragmentName)) && (isSet(collectionName))) {
-				DragAndDrop.javaScriptDragAndDropToBottom(
-					key_collectionName = "${collectionName}",
-					key_fragmentName = "${portletName}",
-					key_targetFragmentName = "${targetFragmentName}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
-					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-					value1 = "");
-			}
-
-			if ((isSet(targetFragmentName)) && (!(isSet(collectionName)))) {
-				DragAndDrop.javaScriptDragAndDropToBottom(
-					key_targetFragmentName = "${targetFragmentName}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
-					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-					value1 = "${portletName}");
-			}
-
-			else {
-				DragAndDrop.javaScriptDragAndDropToObject(
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
-					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
-					value1 = "${portletName}");
-			}
+		if ((isSet(scope)) && ("${dropTarget}" == "Header")) {
+			DragAndDrop.javaScriptDragAndDropToUp(
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+				locator2 = "PageEditor#HEADER_DROP_TARGET",
+				value1 = "");
 		}
 
-		if ("${displayStyle}" == "list") {
-			if ((isSet(scope)) && ("${dropTarget}" == "Header")) {
-				DragAndDrop.javaScriptDragAndDropToUp(
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-					locator2 = "PageEditor#HEADER_DROP_TARGET",
-					value1 = "");
-			}
+		if ((isSet(scope)) && ("${dropTarget}" == "Footer")) {
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_targetFragmentName = "Drop Zone",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
+				value1 = "");
+		}
 
-			if ((isSet(scope)) && ("${dropTarget}" == "Footer")) {
-				DragAndDrop.javaScriptDragAndDropToBottom(
-					key_targetFragmentName = "Drop Zone",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-					value1 = "");
-			}
+		if ((isSet(targetFragmentName)) && (isSet(collectionName))) {
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_collectionName = "${collectionName}",
+				key_fragmentName = "${portletName}",
+				key_targetFragmentName = "${targetFragmentName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
+				value1 = "");
+		}
 
-			if ((isSet(targetFragmentName)) && (isSet(collectionName))) {
-				DragAndDrop.javaScriptDragAndDropToBottom(
-					key_collectionName = "${collectionName}",
-					key_fragmentName = "${portletName}",
-					key_targetFragmentName = "${targetFragmentName}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-					value1 = "");
-			}
+		if ((isSet(targetFragmentName)) && (!(isSet(collectionName)))) {
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_targetFragmentName = "${targetFragmentName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
+				value1 = "${portletName}");
+		}
 
-			if ((isSet(targetFragmentName)) && (!(isSet(collectionName)))) {
-				DragAndDrop.javaScriptDragAndDropToBottom(
-					key_targetFragmentName = "${targetFragmentName}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-					value1 = "${portletName}");
-			}
-
-			else {
-				DragAndDrop.javaScriptDragAndDropToObject(
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
-					value1 = "${portletName}");
-			}
+		else {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+				value1 = "${portletName}");
 		}
 
 		PageEditor.waitForAutoSave();

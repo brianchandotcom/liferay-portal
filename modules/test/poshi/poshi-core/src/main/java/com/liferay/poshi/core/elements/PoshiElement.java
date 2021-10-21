@@ -324,7 +324,9 @@ public abstract class PoshiElement
 			if (((previousPoshiNode == null) ||
 				 ((previousPoshiNode instanceof VarPoshiElement) &&
 				  !(previousPoshiNode instanceof PropertyPoshiElement) &&
-				  (poshiNode instanceof VarPoshiElement))) &&
+				  (poshiNode instanceof VarPoshiElement)) ||
+				 ((previousPoshiNode instanceof PropertyPoshiElement) &&
+				  (poshiNode instanceof PropertyPoshiElement))) &&
 				poshiScriptSnippet.startsWith("\n\n")) {
 
 				poshiScriptSnippet = poshiScriptSnippet.replaceFirst(

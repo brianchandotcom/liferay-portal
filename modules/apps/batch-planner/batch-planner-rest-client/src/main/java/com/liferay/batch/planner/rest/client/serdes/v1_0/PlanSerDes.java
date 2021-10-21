@@ -182,6 +182,20 @@ public class PlanSerDes {
 			sb.append("]");
 		}
 
+		if (plan.getTaskItemDelegateName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taskItemDelegateName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(plan.getTaskItemDelegateName()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -265,6 +279,15 @@ public class PlanSerDes {
 			map.put("policies", String.valueOf(plan.getPolicies()));
 		}
 
+		if (plan.getTaskItemDelegateName() == null) {
+			map.put("taskItemDelegateName", null);
+		}
+		else {
+			map.put(
+				"taskItemDelegateName",
+				String.valueOf(plan.getTaskItemDelegateName()));
+		}
+
 		return map;
 	}
 
@@ -342,6 +365,13 @@ public class PlanSerDes {
 						).toArray(
 							size -> new Policy[size]
 						));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taskItemDelegateName")) {
+
+				if (jsonParserFieldValue != null) {
+					plan.setTaskItemDelegateName((String)jsonParserFieldValue);
 				}
 			}
 		}

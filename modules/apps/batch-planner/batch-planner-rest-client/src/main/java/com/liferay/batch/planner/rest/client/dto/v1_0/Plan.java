@@ -219,6 +219,27 @@ public class Plan implements Cloneable, Serializable {
 
 	protected Policy[] policies;
 
+	public String getTaskItemDelegateName() {
+		return taskItemDelegateName;
+	}
+
+	public void setTaskItemDelegateName(String taskItemDelegateName) {
+		this.taskItemDelegateName = taskItemDelegateName;
+	}
+
+	public void setTaskItemDelegateName(
+		UnsafeSupplier<String, Exception> taskItemDelegateNameUnsafeSupplier) {
+
+		try {
+			taskItemDelegateName = taskItemDelegateNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String taskItemDelegateName;
+
 	@Override
 	public Plan clone() throws CloneNotSupportedException {
 		return (Plan)super.clone();

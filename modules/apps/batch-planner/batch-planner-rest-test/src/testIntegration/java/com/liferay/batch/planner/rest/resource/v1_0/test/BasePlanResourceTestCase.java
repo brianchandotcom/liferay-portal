@@ -184,6 +184,7 @@ public abstract class BasePlanResourceTestCase {
 		plan.setExternalURL(regex);
 		plan.setInternalClassName(regex);
 		plan.setName(regex);
+		plan.setTaskItemDelegateName(regex);
 
 		String json = PlanSerDes.toJSON(plan);
 
@@ -195,6 +196,7 @@ public abstract class BasePlanResourceTestCase {
 		Assert.assertEquals(regex, plan.getExternalURL());
 		Assert.assertEquals(regex, plan.getInternalClassName());
 		Assert.assertEquals(regex, plan.getName());
+		Assert.assertEquals(regex, plan.getTaskItemDelegateName());
 	}
 
 	@Test
@@ -474,6 +476,16 @@ public abstract class BasePlanResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"taskItemDelegateName", additionalAssertFieldName)) {
+
+				if (plan.getTaskItemDelegateName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -649,6 +661,19 @@ public abstract class BasePlanResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"taskItemDelegateName", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						plan1.getTaskItemDelegateName(),
+						plan2.getTaskItemDelegateName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -803,6 +828,14 @@ public abstract class BasePlanResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("taskItemDelegateName")) {
+			sb.append("'");
+			sb.append(String.valueOf(plan.getTaskItemDelegateName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -857,6 +890,8 @@ public abstract class BasePlanResourceTestCase {
 				internalClassName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				taskItemDelegateName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}

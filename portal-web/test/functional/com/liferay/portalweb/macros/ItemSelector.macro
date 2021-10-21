@@ -68,9 +68,9 @@ definition {
 			}
 		}
 
-		MouseOver(
+		WaitForElementPresent(
 			key_text = "Add",
-			locator1 = "Button#ANY");
+			locator1 = "Button#ANY_ENABLED");
 
 		Button.clickAdd();
 

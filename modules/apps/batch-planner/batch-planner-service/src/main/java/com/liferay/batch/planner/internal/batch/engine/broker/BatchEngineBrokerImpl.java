@@ -18,6 +18,7 @@ import com.liferay.batch.planner.batch.engine.broker.BatchEngineBroker;
 import com.liferay.batch.planner.exception.BatchPlannerMappingExternalFieldNameException;
 import com.liferay.batch.planner.internal.jaxrs.uri.EmptyUriInfo;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
+import com.liferay.batch.planner.model.BatchPlannerMappingModel;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.batch.planner.service.BatchPlannerLogLocalService;
@@ -114,8 +115,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		if (Validator.isNull(headerNamesString)) {
 			return _getHeaderNames(
 				batchPlannerMappings,
-				batchPlannerMapping ->
-					batchPlannerMapping.getExternalFieldName());
+				BatchPlannerMappingModel::getExternalFieldName);
 		}
 
 		String[] headerNames = headerNamesString.split(delimiter);
@@ -123,8 +123,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		if (batchPlannerMappings.size() != headerNames.length) {
 			return _getHeaderNames(
 				batchPlannerMappings,
-				batchPlannerMapping ->
-					batchPlannerMapping.getExternalFieldName());
+				BatchPlannerMappingModel::getExternalFieldName);
 		}
 
 		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
@@ -133,7 +132,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 				return _getHeaderNames(
 					batchPlannerMappings,
-					mapping -> mapping.getExternalFieldName());
+					BatchPlannerMappingModel::getExternalFieldName);
 			}
 		}
 
@@ -153,7 +152,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 		_exportTaskResource.setContextCompany(
 			_companyLocalService.getCompany(batchPlannerPlan.getCompanyId()));
-		_exportTaskResource.setContextUriInfo(new EmptyUriInfo());
+		_exportTaskResource.setContextUriInfo(
+			new EmptyUriInfo(batchPlannerPlan.getTaskItemDelegateName()));
 		_exportTaskResource.setContextUser(
 			_userLocalService.getUser(batchPlannerPlan.getUserId()));
 
@@ -163,12 +163,13 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 		String[] headerNames = _getHeaderNames(
 			batchPlannerMappings,
-			batchPlannerMapping -> batchPlannerMapping.getInternalFieldName());
+			BatchPlannerMappingModel::getInternalFieldName);
 
 		ExportTask exportTask = _exportTaskResource.postExportTask(
 			batchPlannerPlan.getInternalClassName(),
 			batchPlannerPlan.getExternalType(), null,
-			StringUtil.merge(headerNames, StringPool.COMMA), null);
+			StringUtil.merge(headerNames, StringPool.COMMA),
+			batchPlannerPlan.getTaskItemDelegateName());
 
 		_batchPlannerLogLocalService.addBatchPlannerLog(
 			batchPlannerPlan.getUserId(),
@@ -194,7 +195,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 				batchPlannerPlan.getBatchPlannerPlanId(), jsonlFile);
 
 			ImportTask importTask = _importTaskResource.postImportTask(
-				batchPlannerPlan.getInternalClassName(), null, null, null,
+				batchPlannerPlan.getInternalClassName(), null, null,
+				batchPlannerPlan.getTaskItemDelegateName(),
 				MultipartBody.of(
 					Collections.singletonMap(
 						"file",

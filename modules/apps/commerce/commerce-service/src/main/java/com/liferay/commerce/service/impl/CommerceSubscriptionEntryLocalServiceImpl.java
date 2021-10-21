@@ -30,7 +30,6 @@ import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.base.CommerceSubscriptionEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,16 +53,12 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.portal.vulcan.dto.converter.DTOConverter;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.io.Serializable;
 
@@ -639,7 +634,8 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 
 		// Messaging
 
-		sendSubscriptionStatusMessage(commerceSubscriptionEntry);
+		sendSubscriptionStatusMessage(
+			commerceSubscriptionEntryId, subscriptionStatus);
 
 		return commerceSubscriptionEntryPersistence.update(
 			commerceSubscriptionEntry);
@@ -663,7 +659,8 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 
 		// Messaging
 
-		sendSubscriptionStatusMessage(commerceSubscriptionEntry);
+		sendSubscriptionStatusMessage(
+			commerceSubscriptionEntryId, subscriptionStatus);
 
 		return commerceSubscriptionEntryPersistence.update(
 			commerceSubscriptionEntry);
@@ -782,37 +779,21 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 	}
 
 	protected void sendSubscriptionStatusMessage(
-		CommerceSubscriptionEntry commerceSubscriptionEntry) {
+		long commerceSubscriptionEntryId, int subscriptionStatus) {
 
 		TransactionCommitCallbackUtil.registerCallback(
 			new Callable<Void>() {
 
 				@Override
 				public Void call() throws Exception {
-					DTOConverter<?, ?> dtoConverter =
-						_dtoConverterRegistry.getDTOConverter(
-							CommerceSubscriptionEntry.class.getName());
-
-					Object object = dtoConverter.toDTO(
-						new DefaultDTOConverterContext(
-							_dtoConverterRegistry,
-							commerceSubscriptionEntry.
-								getCommerceSubscriptionEntryId(),
-							LocaleUtil.getSiteDefault(), null, null));
-
 					Message message = new Message();
 
 					message.setPayload(
 						JSONUtil.put(
-							"commerceSubscriptionEntry",
-							JSONFactoryUtil.createJSONObject(object.toString())
-						).put(
 							"commerceSubscriptionEntryId",
-							commerceSubscriptionEntry.
-								getCommerceSubscriptionEntryId()
+							commerceSubscriptionEntryId
 						).put(
-							"subscriptionStatus",
-							commerceSubscriptionEntry.getSubscriptionStatus()
+							"subscriptionStatus", subscriptionStatus
 						));
 
 					MessageBusUtil.sendMessage(
@@ -867,8 +848,5 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 
 	@ServiceReference(type = CPSubscriptionTypeRegistry.class)
 	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
-
-	@ServiceReference(type = DTOConverterRegistry.class)
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 }

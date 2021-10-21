@@ -94,7 +94,7 @@ const main = async () => {
 	);
 	setValueToElement(
 		fragmentElement.querySelector('#congrats-price'),
-		`$${quoteComparison.price}`
+		`$${Number(quoteComparison.price).toLocaleString('en-US')}`
 	);
 	setValueToElement(
 		fragmentElement.querySelector('#congrats-info-date'),

@@ -2,6 +2,8 @@ import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
 import {InfoBadge} from '~/common/components/fragments/Badges/Info';
+import {RemoveDocument} from '../../../services/DocumentsAndMedia';
+
 import DropArea from '../../drop-area';
 
 import ViewFiles from './ViewFiles';
@@ -9,10 +11,18 @@ import ViewFiles from './ViewFiles';
 const UploadFiles = ({dropAreaProps, files, setFiles, title}) => {
 	const [showBadgeInfo, setShowBadgeInfo] = useState(false);
 
-	const onRemoveFile = ({id}) => {
-		const newList = files.filter((file) => file.id !== id);
+	const onRemoveFile = (_file) => {
+		try {
+			if (typeof DeleteDocument === 'function' && _file.documentId) {
+				RemoveDocument(_file.documentId);
+			}
 
-		setFiles(newList);
+			const newList = files.filter((file) => file.id !== _file.id);
+
+			setFiles(newList);
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	return (

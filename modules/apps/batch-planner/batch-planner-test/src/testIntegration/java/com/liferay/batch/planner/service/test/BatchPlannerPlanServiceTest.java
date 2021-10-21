@@ -59,7 +59,7 @@ public class BatchPlannerPlanServiceTest {
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 				"/" + RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), name, false);
+				RandomTestUtil.randomString(), name, null, false);
 
 		Assert.assertEquals(
 			BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
@@ -70,7 +70,7 @@ public class BatchPlannerPlanServiceTest {
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				true, "", "/" + RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				false);
+				null, false);
 
 			Assert.fail();
 		}
@@ -90,7 +90,7 @@ public class BatchPlannerPlanServiceTest {
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 				"/" + RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), "", false);
+				RandomTestUtil.randomString(), "", null, false);
 
 			Assert.fail();
 		}
@@ -108,7 +108,7 @@ public class BatchPlannerPlanServiceTest {
 				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 				"/" + RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(maxLength + 1), false);
+				RandomTestUtil.randomString(maxLength + 1), null, false);
 
 			Assert.fail();
 		}
@@ -122,7 +122,7 @@ public class BatchPlannerPlanServiceTest {
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 				"/" + RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), name, false);
+				RandomTestUtil.randomString(), name, null, false);
 
 			Assert.fail();
 		}

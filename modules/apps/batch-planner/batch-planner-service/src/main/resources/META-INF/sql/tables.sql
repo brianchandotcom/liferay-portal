@@ -45,6 +45,7 @@ create table BatchPlannerPlan (
 	externalURL STRING null,
 	internalClassName VARCHAR(75) null,
 	name VARCHAR(75) null,
+	taskItemDelegateName VARCHAR(75) null,
 	template BOOLEAN
 );
 

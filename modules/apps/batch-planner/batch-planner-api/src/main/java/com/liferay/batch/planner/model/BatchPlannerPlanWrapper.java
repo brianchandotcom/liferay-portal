@@ -55,6 +55,7 @@ public class BatchPlannerPlanWrapper
 		attributes.put("externalURL", getExternalURL());
 		attributes.put("internalClassName", getInternalClassName());
 		attributes.put("name", getName());
+		attributes.put("taskItemDelegateName", getTaskItemDelegateName());
 		attributes.put("template", isTemplate());
 
 		return attributes;
@@ -138,6 +139,13 @@ public class BatchPlannerPlanWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String taskItemDelegateName = (String)attributes.get(
+			"taskItemDelegateName");
+
+		if (taskItemDelegateName != null) {
+			setTaskItemDelegateName(taskItemDelegateName);
 		}
 
 		Boolean template = (Boolean)attributes.get("template");
@@ -275,6 +283,16 @@ public class BatchPlannerPlanWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the task item delegate name of this batch planner plan.
+	 *
+	 * @return the task item delegate name of this batch planner plan
+	 */
+	@Override
+	public String getTaskItemDelegateName() {
+		return model.getTaskItemDelegateName();
 	}
 
 	/**
@@ -470,6 +488,16 @@ public class BatchPlannerPlanWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the task item delegate name of this batch planner plan.
+	 *
+	 * @param taskItemDelegateName the task item delegate name of this batch planner plan
+	 */
+	@Override
+	public void setTaskItemDelegateName(String taskItemDelegateName) {
+		model.setTaskItemDelegateName(taskItemDelegateName);
 	}
 
 	/**

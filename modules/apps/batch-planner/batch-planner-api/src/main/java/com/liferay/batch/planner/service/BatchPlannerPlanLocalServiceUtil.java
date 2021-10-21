@@ -64,12 +64,12 @@ public class BatchPlannerPlanLocalServiceUtil {
 	public static BatchPlannerPlan addBatchPlannerPlan(
 			long userId, boolean export, String externalType,
 			String externalURL, String internalClassName, String name,
-			boolean template)
+			String taskItemDelegateName, boolean template)
 		throws PortalException {
 
 		return getService().addBatchPlannerPlan(
 			userId, export, externalType, externalURL, internalClassName, name,
-			template);
+			taskItemDelegateName, template);
 	}
 
 	/**

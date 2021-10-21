@@ -78,7 +78,7 @@ public class BatchPlannerPlanCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -106,6 +106,8 @@ public class BatchPlannerPlanCacheModel
 		sb.append(internalClassName);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", taskItemDelegateName=");
+		sb.append(taskItemDelegateName);
 		sb.append(", template=");
 		sb.append(template);
 		sb.append("}");
@@ -174,6 +176,13 @@ public class BatchPlannerPlanCacheModel
 			batchPlannerPlanImpl.setName(name);
 		}
 
+		if (taskItemDelegateName == null) {
+			batchPlannerPlanImpl.setTaskItemDelegateName("");
+		}
+		else {
+			batchPlannerPlanImpl.setTaskItemDelegateName(taskItemDelegateName);
+		}
+
 		batchPlannerPlanImpl.setTemplate(template);
 
 		batchPlannerPlanImpl.resetOriginalValues();
@@ -201,6 +210,7 @@ public class BatchPlannerPlanCacheModel
 		externalURL = objectInput.readUTF();
 		internalClassName = objectInput.readUTF();
 		name = objectInput.readUTF();
+		taskItemDelegateName = objectInput.readUTF();
 
 		template = objectInput.readBoolean();
 	}
@@ -257,6 +267,13 @@ public class BatchPlannerPlanCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		if (taskItemDelegateName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(taskItemDelegateName);
+		}
+
 		objectOutput.writeBoolean(template);
 	}
 
@@ -273,6 +290,7 @@ public class BatchPlannerPlanCacheModel
 	public String externalURL;
 	public String internalClassName;
 	public String name;
+	public String taskItemDelegateName;
 	public boolean template;
 
 }

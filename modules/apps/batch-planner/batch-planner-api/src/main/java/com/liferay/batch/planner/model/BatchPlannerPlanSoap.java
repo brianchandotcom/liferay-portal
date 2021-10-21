@@ -46,6 +46,7 @@ public class BatchPlannerPlanSoap implements Serializable {
 		soapModel.setExternalURL(model.getExternalURL());
 		soapModel.setInternalClassName(model.getInternalClassName());
 		soapModel.setName(model.getName());
+		soapModel.setTaskItemDelegateName(model.getTaskItemDelegateName());
 		soapModel.setTemplate(model.isTemplate());
 
 		return soapModel;
@@ -220,6 +221,14 @@ public class BatchPlannerPlanSoap implements Serializable {
 		_name = name;
 	}
 
+	public String getTaskItemDelegateName() {
+		return _taskItemDelegateName;
+	}
+
+	public void setTaskItemDelegateName(String taskItemDelegateName) {
+		_taskItemDelegateName = taskItemDelegateName;
+	}
+
 	public boolean getTemplate() {
 		return _template;
 	}
@@ -245,6 +254,7 @@ public class BatchPlannerPlanSoap implements Serializable {
 	private String _externalURL;
 	private String _internalClassName;
 	private String _name;
+	private String _taskItemDelegateName;
 	private boolean _template;
 
 }

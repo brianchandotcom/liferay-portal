@@ -289,6 +289,21 @@ public interface BatchPlannerPlanModel
 	public void setName(String name);
 
 	/**
+	 * Returns the task item delegate name of this batch planner plan.
+	 *
+	 * @return the task item delegate name of this batch planner plan
+	 */
+	@AutoEscape
+	public String getTaskItemDelegateName();
+
+	/**
+	 * Sets the task item delegate name of this batch planner plan.
+	 *
+	 * @param taskItemDelegateName the task item delegate name of this batch planner plan
+	 */
+	public void setTaskItemDelegateName(String taskItemDelegateName);
+
+	/**
 	 * Returns the template of this batch planner plan.
 	 *
 	 * @return the template of this batch planner plan

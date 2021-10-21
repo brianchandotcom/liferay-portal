@@ -82,7 +82,8 @@ public class BatchPlannerPlanModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
 		{"export", Types.BOOLEAN}, {"externalType", Types.VARCHAR},
 		{"externalURL", Types.VARCHAR}, {"internalClassName", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"template", Types.BOOLEAN}
+		{"name", Types.VARCHAR}, {"taskItemDelegateName", Types.VARCHAR},
+		{"template", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -102,11 +103,12 @@ public class BatchPlannerPlanModelImpl
 		TABLE_COLUMNS_MAP.put("externalURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("internalClassName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("taskItemDelegateName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("template", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchPlannerPlan (mvccVersion LONG default 0 not null,batchPlannerPlanId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,export BOOLEAN,externalType VARCHAR(75) null,externalURL STRING null,internalClassName VARCHAR(75) null,name VARCHAR(75) null,template BOOLEAN)";
+		"create table BatchPlannerPlan (mvccVersion LONG default 0 not null,batchPlannerPlanId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,export BOOLEAN,externalType VARCHAR(75) null,externalURL STRING null,internalClassName VARCHAR(75) null,name VARCHAR(75) null,taskItemDelegateName VARCHAR(75) null,template BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table BatchPlannerPlan";
 
@@ -201,6 +203,7 @@ public class BatchPlannerPlanModelImpl
 		model.setExternalURL(soapModel.getExternalURL());
 		model.setInternalClassName(soapModel.getInternalClassName());
 		model.setName(soapModel.getName());
+		model.setTaskItemDelegateName(soapModel.getTaskItemDelegateName());
 		model.setTemplate(soapModel.isTemplate());
 
 		return model;
@@ -425,6 +428,12 @@ public class BatchPlannerPlanModelImpl
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<BatchPlannerPlan, String>)BatchPlannerPlan::setName);
+		attributeGetterFunctions.put(
+			"taskItemDelegateName", BatchPlannerPlan::getTaskItemDelegateName);
+		attributeSetterBiConsumers.put(
+			"taskItemDelegateName",
+			(BiConsumer<BatchPlannerPlan, String>)
+				BatchPlannerPlan::setTaskItemDelegateName);
 		attributeGetterFunctions.put("template", BatchPlannerPlan::getTemplate);
 		attributeSetterBiConsumers.put(
 			"template",
@@ -731,6 +740,26 @@ public class BatchPlannerPlanModelImpl
 
 	@JSON
 	@Override
+	public String getTaskItemDelegateName() {
+		if (_taskItemDelegateName == null) {
+			return "";
+		}
+		else {
+			return _taskItemDelegateName;
+		}
+	}
+
+	@Override
+	public void setTaskItemDelegateName(String taskItemDelegateName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_taskItemDelegateName = taskItemDelegateName;
+	}
+
+	@JSON
+	@Override
 	public boolean getTemplate() {
 		return _template;
 	}
@@ -829,6 +858,7 @@ public class BatchPlannerPlanModelImpl
 		batchPlannerPlanImpl.setExternalURL(getExternalURL());
 		batchPlannerPlanImpl.setInternalClassName(getInternalClassName());
 		batchPlannerPlanImpl.setName(getName());
+		batchPlannerPlanImpl.setTaskItemDelegateName(getTaskItemDelegateName());
 		batchPlannerPlanImpl.setTemplate(isTemplate());
 
 		batchPlannerPlanImpl.resetOriginalValues();
@@ -866,6 +896,8 @@ public class BatchPlannerPlanModelImpl
 			this.<String>getColumnOriginalValue("internalClassName"));
 		batchPlannerPlanImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
+		batchPlannerPlanImpl.setTaskItemDelegateName(
+			this.<String>getColumnOriginalValue("taskItemDelegateName"));
 		batchPlannerPlanImpl.setTemplate(
 			this.<Boolean>getColumnOriginalValue("template"));
 
@@ -1017,6 +1049,18 @@ public class BatchPlannerPlanModelImpl
 			batchPlannerPlanCacheModel.name = null;
 		}
 
+		batchPlannerPlanCacheModel.taskItemDelegateName =
+			getTaskItemDelegateName();
+
+		String taskItemDelegateName =
+			batchPlannerPlanCacheModel.taskItemDelegateName;
+
+		if ((taskItemDelegateName != null) &&
+			(taskItemDelegateName.length() == 0)) {
+
+			batchPlannerPlanCacheModel.taskItemDelegateName = null;
+		}
+
 		batchPlannerPlanCacheModel.template = isTemplate();
 
 		return batchPlannerPlanCacheModel;
@@ -1124,6 +1168,7 @@ public class BatchPlannerPlanModelImpl
 	private String _externalURL;
 	private String _internalClassName;
 	private String _name;
+	private String _taskItemDelegateName;
 	private boolean _template;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1168,6 +1213,8 @@ public class BatchPlannerPlanModelImpl
 		_columnOriginalValues.put("externalURL", _externalURL);
 		_columnOriginalValues.put("internalClassName", _internalClassName);
 		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put(
+			"taskItemDelegateName", _taskItemDelegateName);
 		_columnOriginalValues.put("template", _template);
 	}
 
@@ -1218,7 +1265,9 @@ public class BatchPlannerPlanModelImpl
 
 		columnBitmasks.put("name", 4096L);
 
-		columnBitmasks.put("template", 8192L);
+		columnBitmasks.put("taskItemDelegateName", 8192L);
+
+		columnBitmasks.put("template", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

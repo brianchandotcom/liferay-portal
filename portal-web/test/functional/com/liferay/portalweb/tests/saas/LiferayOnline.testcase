@@ -1,12 +1,11 @@
-@component-name = "portal-liferay-online"
+@component-name = "portal-lol"
 definition {
 
 	property database.types = "mysql";
 	property liferay.online.properties = "true";
 	property portal.release = "true";
-	property portal.upstream = "false";
-	property test.assert.warning.exceptions = "true";
-	property testray.main.component.name = "Liferay Online";
+	property portal.upstream = "true";
+	property testray.main.component.name = "LOL";
 
 	setUp {
 		TestCase.setUpPortalInstance();

@@ -116,14 +116,23 @@ definition {
 			groupName = "WYSIWYG Site Name",
 			title = "Web Content Title");
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
+		var portalURL = PropsUtil.get("portal.url");
+
 		ItemSelector.addImageFromURL(
-			imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg",
+			imageSourceURL = "${portalURL}/webdav/guest/document_library/Document_1.jpg",
 			navTab = "URL");
 
 		PortletEntry.publish();

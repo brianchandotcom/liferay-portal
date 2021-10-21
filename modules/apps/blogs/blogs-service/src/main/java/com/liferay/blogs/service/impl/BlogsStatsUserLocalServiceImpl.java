@@ -14,15 +14,25 @@
 
 package com.liferay.blogs.service.impl;
 
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.model.BlogsEntryTable;
 import com.liferay.blogs.model.BlogsStatsUser;
+import com.liferay.blogs.model.BlogsStatsUserDAO;
+import com.liferay.blogs.model.impl.BlogsStatsUserDAOImpl;
 import com.liferay.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl;
-import com.liferay.blogs.util.comparator.StatsUserLastPostDateComparator;
+import com.liferay.blogs.service.persistence.BlogsEntryPersistence;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.ratings.kernel.model.RatingsEntryTable;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,19 +50,113 @@ public class BlogsStatsUserLocalServiceImpl
 	extends BlogsStatsUserLocalServiceBaseImpl {
 
 	@Override
-	public List<BlogsStatsUser> getGroupsStatsUsers(
+	public List<BlogsStatsUserDAO> getGroupsStatsUsers(
 		long companyId, long groupId, int start, int end) {
 
-		return blogsStatsUserFinder.findByGroupIds(
-			companyId, groupId, start, end);
+		List<Object[]> results = _blogsEntryPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				BlogsEntryTable.INSTANCE.userId, _lastPostDateExpression,
+				_entryCountExpression, _ratingsTotalEntriesExpression,
+				_ratingsAverageScoreExpression, _ratingsTotalScoreExpression
+			).from(
+				BlogsEntryTable.INSTANCE
+			).leftJoinOn(
+				RatingsEntryTable.INSTANCE,
+				BlogsEntryTable.INSTANCE.entryId.eq(
+					RatingsEntryTable.INSTANCE.classPK
+				).and(
+					RatingsEntryTable.INSTANCE.classNameId.eq(
+						_classNameLocalService.getClassNameId(
+							BlogsEntry.class.getName()))
+				)
+			).where(
+				BlogsEntryTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					BlogsEntryTable.INSTANCE.companyId.eq(companyId)
+				)
+			).groupBy(
+				BlogsEntryTable.INSTANCE.userId
+			).orderBy(
+				_entryCountExpression.descending()
+			).limit(
+				start, end
+			));
+
+		List<BlogsStatsUserDAO> blogsStatsUsers = new ArrayList<>(
+			results.size());
+
+		for (Object[] columns : results) {
+			Long userId = (Long)columns[0];
+			Long entryCount = (Long)columns[1];
+			Date lastPostDate = (Date)columns[2];
+			Integer ratingsTotalEntries = (Integer)columns[3];
+			Double ratingsAverageScore = (Double)columns[4];
+			Double ratingsTotalScore = (Double)columns[5];
+
+			blogsStatsUsers.add(
+				new BlogsStatsUserDAOImpl(
+					groupId, userId, lastPostDate, entryCount,
+					ratingsTotalEntries, ratingsAverageScore,
+					ratingsTotalScore));
+		}
+
+		return blogsStatsUsers;
 	}
 
 	@Override
-	public List<BlogsStatsUser> getGroupStatsUsers(
+	public List<BlogsStatsUserDAO> getGroupStatsUsers(
 		long groupId, int start, int end) {
 
-		return blogsStatsUserPersistence.findByG_NotE(
-			groupId, 0, start, end, new StatsUserLastPostDateComparator());
+		List<Object[]> results = _blogsEntryPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				BlogsEntryTable.INSTANCE.userId, _lastPostDateExpression,
+				_entryCountExpression, _ratingsTotalEntriesExpression,
+				_ratingsAverageScoreExpression, _ratingsTotalScoreExpression
+			).from(
+				BlogsEntryTable.INSTANCE
+			).leftJoinOn(
+				RatingsEntryTable.INSTANCE,
+				BlogsEntryTable.INSTANCE.entryId.eq(
+					RatingsEntryTable.INSTANCE.classPK
+				).and(
+					RatingsEntryTable.INSTANCE.classNameId.eq(
+						_classNameLocalService.getClassNameId(
+							BlogsEntry.class.getName()))
+				)
+			).where(
+				BlogsEntryTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					_entryCountExpression.neq(0L)
+				)
+			).groupBy(
+				BlogsEntryTable.INSTANCE.userId
+			).orderBy(
+				_lastPostDateExpression.descending()
+			).limit(
+				start, end
+			));
+
+		List<BlogsStatsUserDAO> blogsStatsUsers = new ArrayList<>(
+			results.size());
+
+		for (Object[] columns : results) {
+			Long userId = (Long)columns[0];
+			Long entryCount = (Long)columns[1];
+			Date lastPostDate = (Date)columns[2];
+			Integer ratingsTotalEntries = (Integer)columns[3];
+			Double ratingsAverageScore = (Double)columns[4];
+			Double ratingsTotalScore = (Double)columns[5];
+
+			blogsStatsUsers.add(
+				new BlogsStatsUserDAOImpl(
+					groupId, userId, lastPostDate, entryCount,
+					ratingsTotalEntries, ratingsAverageScore,
+					ratingsTotalScore));
+		}
+
+		return blogsStatsUsers;
 	}
 
 	@Override
@@ -65,30 +169,85 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public BlogsStatsUser getStatsUser(long groupId, long userId)
+	public BlogsStatsUserDAO getStatsUser(long groupId, long userId)
 		throws PortalException {
 
-		BlogsStatsUser statsUser = blogsStatsUserPersistence.fetchByG_U(
-			groupId, userId);
+		List<Object[]> results = _blogsEntryPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				BlogsEntryTable.INSTANCE.userId, _lastPostDateExpression,
+				_entryCountExpression, _ratingsTotalEntriesExpression,
+				_ratingsAverageScoreExpression, _ratingsTotalScoreExpression
+			).from(
+				BlogsEntryTable.INSTANCE
+			).leftJoinOn(
+				RatingsEntryTable.INSTANCE,
+				BlogsEntryTable.INSTANCE.entryId.eq(
+					RatingsEntryTable.INSTANCE.classPK
+				).and(
+					RatingsEntryTable.INSTANCE.classNameId.eq(
+						_classNameLocalService.getClassNameId(
+							BlogsEntry.class.getName()))
+				)
+			).where(
+				BlogsEntryTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					BlogsEntryTable.INSTANCE.userId.eq(userId)
+				)
+			).groupBy(
+				BlogsEntryTable.INSTANCE.userId
+			));
 
-		if (statsUser == null) {
-			Group group = _groupLocalService.getGroup(groupId);
+		Object[] blogsStatsUser = results.get(0);
 
-			long statsUserId = counterLocalService.increment();
+		Date lastPostDate = (Date)blogsStatsUser[1];
+		Long entryCount = (Long)blogsStatsUser[2];
+		Long ratingsTotalEntries = (Long)blogsStatsUser[3];
+		Double ratingsAverageScore = (Double)blogsStatsUser[4];
+		Double ratingsTotalScore = (Double)blogsStatsUser[5];
 
-			statsUser = blogsStatsUserPersistence.create(statsUserId);
-
-			statsUser.setGroupId(groupId);
-			statsUser.setCompanyId(group.getCompanyId());
-			statsUser.setUserId(userId);
-
-			statsUser = blogsStatsUserPersistence.update(statsUser);
-		}
-
-		return statsUser;
+		return new BlogsStatsUserDAOImpl(
+			groupId, userId, lastPostDate, entryCount,
+			GetterUtil.get(ratingsTotalEntries, 0L),
+			GetterUtil.get(ratingsAverageScore, 0D),
+			GetterUtil.get(ratingsTotalScore, 0D));
 	}
 
 	@Reference
-	private GroupLocalService _groupLocalService;
+	private BlogsEntryPersistence _blogsEntryPersistence;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	private final Expression<Long> _entryCountExpression =
+		DSLFunctionFactoryUtil.countDistinct(
+			BlogsEntryTable.INSTANCE.entryId
+		).as(
+			"entryCount"
+		);
+	private final Expression<Date> _lastPostDateExpression =
+		DSLFunctionFactoryUtil.max(
+			BlogsEntryTable.INSTANCE.modifiedDate
+		).as(
+			"lastPostDate"
+		);
+	private final Expression<Number> _ratingsAverageScoreExpression =
+		DSLFunctionFactoryUtil.avg(
+			RatingsEntryTable.INSTANCE.score
+		).as(
+			"averageScore"
+		);
+	private final Expression<Long> _ratingsTotalEntriesExpression =
+		DSLFunctionFactoryUtil.countDistinct(
+			RatingsEntryTable.INSTANCE.entryId
+		).as(
+			"totalEntries"
+		);
+	private final Expression<Number> _ratingsTotalScoreExpression =
+		DSLFunctionFactoryUtil.sum(
+			RatingsEntryTable.INSTANCE.score
+		).as(
+			"totalScore"
+		);
 
 }

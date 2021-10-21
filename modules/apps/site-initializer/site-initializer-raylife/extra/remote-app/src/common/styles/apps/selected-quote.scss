@@ -444,7 +444,7 @@
 }
 
 #ca {
-	margin: $spacer-5 $spacer-0 $spacer-4 $spacer-4;
+	margin: $spacer-6 $spacer-0 $spacer-5 $spacer-5;
 
 	.ca-alert-create {
 		background-color: $color-state-error-lighten-1;
@@ -463,11 +463,11 @@
 	.ca-btn {
 		background: $color-action-primary-default;
 		color: $background;
-		margin: 5rem $spacer-0 $spacer-0 23.7rem;
+		margin: $spacer-8 $spacer-0 $spacer-0;
 	}
 
 	#ca-content-input {
-		margin-top: $spacer-3;
+		margin-top: $spacer-4;
 		position: relative;
 
 		#ca-input-email {
@@ -543,8 +543,7 @@
 	.ca-sub-title {
 		font-size: 18px;
 		font-weight: $font-weight-bolder;
-		margin-bottom: $spacer-5;
-		margin-top: $spacer-3;
+		margin: $spacer-5 $spacer-0;
 	}
 
 	.ca-width-div {

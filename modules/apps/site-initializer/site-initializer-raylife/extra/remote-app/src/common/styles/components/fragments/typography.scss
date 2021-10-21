@@ -6,7 +6,7 @@
 
 	& > .primary {
 		color: $color-action-primary-default;
-		padding-left: 0.5rem;
+		padding-left: $spacer-2;
 	}
 }
 
@@ -14,6 +14,6 @@
 	color: $color-neutral-0;
 	font-size: 0.7rem;
 	font-weight: 500;
-	margin-left: 1rem !important;
+	margin-left: $spacer-3 !important;
 	opacity: 0.6;
 }

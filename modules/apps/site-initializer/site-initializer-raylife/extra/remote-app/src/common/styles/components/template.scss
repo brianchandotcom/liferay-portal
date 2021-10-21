@@ -1,8 +1,8 @@
 .template {
-	padding: 2rem 0 2rem 2rem;
+	padding: $spacer-5 0 $spacer-5 $spacer-5;
 
 	.title-area {
-		margin: 0rem 7rem 3rem $card-padding;
+		margin: 0 $spacer-10 $spacer-6 $card-padding;
 		width: 595px;
 	}
 

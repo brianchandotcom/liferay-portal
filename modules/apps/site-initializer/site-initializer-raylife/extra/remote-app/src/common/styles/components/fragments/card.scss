@@ -3,7 +3,7 @@
 	box-shadow: 0 10px 30px rgba(77, 133, 255, 0.09);
 	display: flex;
 	flex-direction: column;
-	gap: 3rem;
+	gap: $spacer-6;
 	padding: $card-padding;
 	width: 688px;
 
@@ -12,7 +12,7 @@
 		align-items: center;
 		display: flex;
 		flex-direction: row;
-		gap: 1rem;
+		gap: $spacer-3;
 		justify-content: space-between;
 
 		div {
@@ -23,24 +23,24 @@
 	& > .card-content {
 		display: flex;
 		flex-direction: column;
-		gap: 2rem;
+		gap: $spacer-5;
 
 		.content-row {
 			align-items: flex-start;
 			display: flex;
 			flex: 1;
 			flex-direction: row;
-			gap: 1rem;
+			gap: $spacer-3;
 			justify-content: space-between;
-			margin-bottom: 0.25rem;
-			margin-top: 0.5rem;
+			margin-bottom: $spacer-1;
+			margin-top: $spacer-2;
 		}
 
 		.content-column {
 			display: flex;
 			flex: 1;
 			flex-direction: column;
-			gap: 1rem;
+			gap: $spacer-3;
 		}
 	}
 }

@@ -1,6 +1,5 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"
 	testIntegrationCompile group: "commons-collections", name: "commons-collections", version: "3.2.2"
 	testIntegrationCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
@@ -8,7 +7,5 @@ dependencies {
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:petra:petra-mail")
 	testIntegrationCompile project(":apps:static:portal-osgi-web:portal-osgi-web-portlet-container-test-util")
-	testIntegrationCompile project(":core:petra:petra-reflect")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

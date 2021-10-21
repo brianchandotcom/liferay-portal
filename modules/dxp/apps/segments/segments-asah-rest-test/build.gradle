@@ -2,14 +2,11 @@ dependencies {
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.12.4"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.12.4"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.12.4"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":apps:segments:segments-api")
 	testIntegrationCompile project(":apps:segments:segments-test-util")
-	testIntegrationCompile project(":core:petra:petra-function")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":dxp:apps:segments:segments-asah-rest-api")
 	testIntegrationCompile project(":dxp:apps:segments:segments-asah-rest-client")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

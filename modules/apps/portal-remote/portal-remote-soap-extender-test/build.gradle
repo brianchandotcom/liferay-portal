@@ -1,6 +1,5 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "org.apache.cxf", name: "cxf-core", version: "3.4.4"
 	testIntegrationCompile group: "org.apache.cxf", name: "cxf-rt-frontend-jaxws", version: "3.4.4"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
@@ -8,6 +7,5 @@ dependencies {
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationCompile project(":apps:static:osgi:osgi-util")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

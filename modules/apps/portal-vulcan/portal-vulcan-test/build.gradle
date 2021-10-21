@@ -1,6 +1,5 @@
 dependencies {
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.12.4"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationCompile group: "org.apache.cxf", name: "cxf-core", version: "3.4.4"
 	testIntegrationCompile group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.4.4"

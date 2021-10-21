@@ -1,6 +1,5 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	testIntegrationCompile project(":apps:portal:portal-uad")
 	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-api")

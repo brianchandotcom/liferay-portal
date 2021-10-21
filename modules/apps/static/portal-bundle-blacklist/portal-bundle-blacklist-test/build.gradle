@@ -8,7 +8,6 @@ dependencies {
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	testIntegrationCompile project(":apps:static:osgi:osgi-util")
 	testIntegrationCompile project(":apps:static:portal-bundle-blacklist:portal-bundle-blacklist-api")
-	testIntegrationCompile project(":core:petra:petra-function")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }
 

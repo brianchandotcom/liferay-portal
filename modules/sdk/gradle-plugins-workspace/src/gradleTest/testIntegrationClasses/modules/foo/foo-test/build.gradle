@@ -1,7 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.string"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test.integration"
 	testIntegrationCompile group: "junit", name: "junit"

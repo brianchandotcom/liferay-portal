@@ -1,5 +1,4 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:portal-rules-engine:portal-rules-engine-api")
 	testIntegrationCompile project(":dxp:apps:portal-rules-engine-drools:portal-rules-engine-drools")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

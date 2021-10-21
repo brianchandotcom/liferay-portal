@@ -1,8 +1,5 @@
 dependencies {
 	testIntegrationCompile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testIntegrationCompile project(":core:petra:petra-lang")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

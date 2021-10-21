@@ -1,6 +1,5 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
 	testIntegrationCompile group: "commons-io", name: "commons-io", version: "2.8.0"
@@ -15,9 +14,5 @@ dependencies {
 	testIntegrationCompile project(":apps:petra:petra-portlet-url-builder")
 	testIntegrationCompile project(":apps:static:portal-osgi-web:portal-osgi-web-portlet-container-test-util")
 	testIntegrationCompile project(":apps:upload:upload-api")
-	testIntegrationCompile project(":core:petra:petra-function")
-	testIntegrationCompile project(":core:petra:petra-io")
-	testIntegrationCompile project(":core:petra:petra-lang")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

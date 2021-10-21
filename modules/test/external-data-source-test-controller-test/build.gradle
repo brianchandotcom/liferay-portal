@@ -1,12 +1,10 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "org.hsqldb", name: "hsqldb", version: "2.3.3"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationCompile project(":apps:portal:portal-spring-extender-api")
 	testIntegrationCompile project(":apps:xstream:xstream-configurator-api")
-	testIntegrationCompile project(":core:petra:petra-io")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 	testIntegrationCompile project(":test:external-data-source-test")
 	testIntegrationCompile project(":test:external-data-source-test-api")

@@ -2,7 +2,6 @@ task zipPortlet(type: Zip)
 task zipTheme(type: Zip)
 
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

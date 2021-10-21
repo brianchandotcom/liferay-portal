@@ -1,8 +1,6 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:segments:segments-api")
 	testIntegrationCompile project(":apps:segments:segments-test-util")
-	testIntegrationCompile project(":core:petra:petra-function")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

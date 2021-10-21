@@ -1,6 +1,5 @@
 dependencies {
 	testIntegrationCompile group: "com.github.ignaciotcrespo", name: "frutilla", version: "0.7.1"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:commerce:commerce-account-api")
 	testIntegrationCompile project(":apps:commerce:commerce-account-test-util")
 	testIntegrationCompile project(":apps:commerce:commerce-api")
@@ -13,6 +12,5 @@ dependencies {
 	testIntegrationCompile project(":apps:commerce:commerce-test-util")
 	testIntegrationCompile project(":apps:portal-search:portal-search-api")
 	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

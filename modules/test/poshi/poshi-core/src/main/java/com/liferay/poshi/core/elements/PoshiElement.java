@@ -323,6 +323,7 @@ public abstract class PoshiElement
 
 			if (((previousPoshiNode == null) ||
 				 ((previousPoshiNode instanceof VarPoshiElement) &&
+				  !(previousPoshiNode instanceof PropertyPoshiElement) &&
 				  (poshiNode instanceof VarPoshiElement))) &&
 				poshiScriptSnippet.startsWith("\n\n")) {
 

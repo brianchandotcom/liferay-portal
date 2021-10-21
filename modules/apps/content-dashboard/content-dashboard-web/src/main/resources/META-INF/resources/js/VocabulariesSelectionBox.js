@@ -14,7 +14,7 @@
 
 import {ClayDualListBox} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 const VocabulariesSelectionBox = ({
 	leftBoxName,
@@ -27,18 +27,24 @@ const VocabulariesSelectionBox = ({
 
 	const [leftElements, rightElements] = items;
 
-	useEffect(() => {
+	const selectorRef = useRef();
+
+	const enableAllOptions = () => {
+		const options = Array.from(
+			selectorRef.current.querySelectorAll(
+				'.vocabularies-selection option'
+			)
+		);
+
+		options.forEach((option) => {
+			option.disabled = false;
+		});
+	};
+
+	const disableNonSelectableOptions = () => {
 		const selectedVocabulaboriesFromNonGlobalSite = rightElements.filter(
 			(elem) => !elem.global
 		);
-
-		// Enable all available options
-
-		document.querySelector(
-			'.vocabularies-selection option'
-		).disabled = false;
-
-		// Disable options that are not selectable
 
 		if (selectedVocabulaboriesFromNonGlobalSite.length) {
 			leftElements.forEach((elem) => {
@@ -47,30 +53,37 @@ const VocabulariesSelectionBox = ({
 					elem.site !==
 						selectedVocabulaboriesFromNonGlobalSite[0].site
 				) {
-					document.querySelector(
+					selectorRef.current.querySelector(
 						`option[value='${elem.value}']`
 					).disabled = true;
 				}
 			});
 		}
+	};
+
+	useEffect(() => {
+		enableAllOptions();
+		disableNonSelectableOptions();
 	});
 
 	return (
-		<ClayDualListBox
-			className="vocabularies-selection"
-			disableLTR={rightElements.length >= 2}
-			disableRTL={rightElements.length === 0}
-			items={items}
-			left={{
-				id: leftBoxName,
-				label: Liferay.Language.get('available'),
-			}}
-			onItemsChange={setItems}
-			right={{
-				id: `${portletNamespace}${rightBoxName}`,
-				label: Liferay.Language.get('in-use'),
-			}}
-		/>
+		<div ref={selectorRef}>
+			<ClayDualListBox
+				className="vocabularies-selection"
+				disableLTR={rightElements.length >= 2}
+				disableRTL={rightElements.length === 0}
+				items={items}
+				left={{
+					id: leftBoxName,
+					label: Liferay.Language.get('available'),
+				}}
+				onItemsChange={setItems}
+				right={{
+					id: `${portletNamespace}${rightBoxName}`,
+					label: Liferay.Language.get('in-use'),
+				}}
+			/>
+		</div>
 	);
 };
 

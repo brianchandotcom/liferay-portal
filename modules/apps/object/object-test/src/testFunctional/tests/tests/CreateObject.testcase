@@ -1982,14 +1982,12 @@ definition {
 	@description = "LPS-139005 - Verify that the Object portlet is no longer displayed on the Site Menu when inactivated"
 	@priority = "4"
 	test ObjectPorletDisappearsSiteMenuWhenInactivated {
-
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
+			panelCategoryKey = "Site Administration > Content & Data",
 			pluralLabelName = "Custom Objects",
-			scope = "Site",
-			panelCategoryKey = "Site Administration > Content & Data");
+			scope = "Site");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 

@@ -264,6 +264,13 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				let curId = 1;
 
 				for (key in schemaEntry.properties) {
+
+					const object = schemaEntry.properties[key];
+
+					if (object.readOnly) {
+						continue;
+					}
+
 					let mappingRow = mappingRowTemplate
 						.replaceAll('ID_TEMPLATE', curId)
 						.replace('VALUE_TEMPLATE', key);

@@ -24,7 +24,6 @@ import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.WrapsDriver;
 
 /**
  * @author Calum Ragan
@@ -62,12 +61,8 @@ public class LiferayByUtil {
 		@Override
 		public List<WebElement> findElements(SearchContext searchContext) {
 			if (searchContext instanceof WebDriver) {
-				WrapsDriver wrapsDriver = (WrapsDriver)searchContext;
-
-				WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
 				JavascriptExecutor javascriptExecutor =
-					(JavascriptExecutor)webDriver;
+					(JavascriptExecutor)searchContext;
 
 				String[] partialCssSelectors = _cssSelector.split(">>>");
 

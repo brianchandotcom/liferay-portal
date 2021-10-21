@@ -18,20 +18,32 @@
 
 <%
 CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrderListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+PortletURL portletURL = commerceOrderListDisplayContext.getPortletURL();
+
+request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<clay:headless-data-set-display
-	apiURL="/o/headless-commerce-admin-order/v1.0/orders?nestedFields=account,channel"
-	bulkActionDropdownItems="<%= commerceOrderListDisplayContext.getBulkActionDropdownItems() %>"
-	clayDataSetActionDropdownItems="<%= commerceOrderListDisplayContext.getClayDataSetActionDropdownItems() %>"
-	formId="fm"
-	id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_ORDERS %>"
-	itemsPerPage="<%= 20 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL="<%= commerceOrderListDisplayContext.getPortletURL() %>"
-	selectedItemsKey="id"
-	selectionType="multiple"
-	sortItemList="<%= commerceOrderListDisplayContext.getSortItemList() %>"
-	style="fluid"
-/>
+<div class="pt-4" id="<portlet:namespace />orderDefinitionsContainer">
+	<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input name="deleteCPDefinitionIds" type="hidden" />
+
+		<clay:headless-data-set-display
+			apiURL="/o/headless-commerce-admin-order/v1.0/orders?nestedFields=account,channel"
+			bulkActionDropdownItems="<%= commerceOrderListDisplayContext.getBulkActionDropdownItems() %>"
+			clayDataSetActionDropdownItems="<%= commerceOrderListDisplayContext.getClayDataSetActionDropdownItems() %>"
+			formId="fm"
+			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_ORDERS %>"
+			itemsPerPage="<%= 20 %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
+			portletURL="<%= commerceOrderListDisplayContext.getPortletURL() %>"
+			selectedItemsKey="id"
+			selectionType="multiple"
+			sortItemList="<%= commerceOrderListDisplayContext.getSortItemList() %>"
+			style="fluid"
+		/>
+	</aui:form>
+</div>

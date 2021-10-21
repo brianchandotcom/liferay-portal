@@ -3015,9 +3015,14 @@ definition {
 
 		AssertElementPresent(locator1 = "Checkbox#REMEMBER_ME");
 
-		AssertTextEquals(
-			locator1 = "Button#SIGN_IN",
-			value1 = "Sign In");
+		if ("${loginPG}" == "Full Screen") {
+			AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "Button#SIGN_IN",
+				value1 = "Sign In");
+		}
 	}
 
 	macro viewNotPrimary {

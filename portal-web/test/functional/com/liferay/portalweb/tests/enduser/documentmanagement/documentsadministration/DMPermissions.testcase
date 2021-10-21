@@ -1638,7 +1638,7 @@ definition {
 			key_dmDocumentTitle = "DM Document Title",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
 
-		User.viewLoggedOutPG();
+		User.viewLoginPG(loginPG = "Full Screen");
 	}
 
 	@description = "This ensures that the user can create document viewable only by the owner."

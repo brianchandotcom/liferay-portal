@@ -551,10 +551,8 @@ export default ({
 	const [filtersState, setFiltersState] = useState(initialFilters);
 
 	const filterNodes = useCallback(
-		(filters, keywords, nodes, showHideable) => {
-			if (!nodes) {
-				return nodes;
-			}
+		(filters, keywords, showHideable) => {
+			const nodes = getModels(changes);
 
 			let filterTypes = [];
 
@@ -634,14 +632,13 @@ export default ({
 				return true;
 			});
 		},
-		[GLOBAL_SITE_NAME, siteNames]
+		[GLOBAL_SITE_NAME, changes, getModels, siteNames]
 	);
 
 	const [renderState, setRenderState] = useState({
-		children: filterNodes(
+		changes: filterNodes(
 			initialFilters,
 			keywordsFromURL,
-			initialNode.children,
 			initialShowHideable
 		),
 		id: initialNode.nodeId,
@@ -746,10 +743,9 @@ export default ({
 			window.history.pushState(state, document.title, path);
 
 			setRenderState({
-				children: filterNodes(
+				changes: filterNodes(
 					filtersState,
 					resultsKeywords,
-					node.children,
 					showHideable
 				),
 				id: nodeId,
@@ -837,12 +833,7 @@ export default ({
 
 			setFiltersState(filters);
 			setRenderState({
-				children: filterNodes(
-					filters,
-					keywords,
-					node.children,
-					showHideable
-				),
+				changes: filterNodes(filters, keywords, showHideable),
 				id: node.nodeId,
 				node,
 				page: 1,
@@ -1509,12 +1500,7 @@ export default ({
 		setFiltersState(filters);
 		setResultsKeywords(keywords);
 		setRenderState({
-			children: filterNodes(
-				filters,
-				keywords,
-				renderState.node.children,
-				renderState.showHideable
-			),
+			changes: filterNodes(filters, keywords, renderState.showHideable),
 			id: renderState.id,
 			node: renderState.node,
 			page: renderState.page,
@@ -1585,12 +1571,7 @@ export default ({
 
 		setFiltersState(filters);
 		setRenderState({
-			children: filterNodes(
-				filters,
-				resultsKeywords,
-				renderState.node.children,
-				showHideable
-			),
+			changes: filterNodes(filters, resultsKeywords, showHideable),
 			id: renderState.id,
 			node: renderState.node,
 			page: renderState.page,
@@ -1920,12 +1901,12 @@ export default ({
 				<span className="component-text text-truncate-inline">
 					<span className="text-truncate">
 						{Liferay.Util.sub(
-							renderState.children &&
-								renderState.children.length === 1
+							renderState.changes &&
+								renderState.changes.length === 1
 								? Liferay.Language.get('x-result-for')
 								: Liferay.Language.get('x-results-for'),
-							renderState.children
-								? renderState.children.length.toString()
+							renderState.changes
+								? renderState.changes.length.toString()
 								: '0'
 						)}
 					</span>
@@ -1998,24 +1979,17 @@ export default ({
 		if (renderState.id > 0) {
 			return '';
 		}
-		else if (!renderState.children || renderState.children.length === 0) {
-			if (
-				renderState.node.children &&
-				renderState.node.children.length > 0
-			) {
-				return (
-					<div className="sheet taglib-empty-result-message">
-						<div className="taglib-empty-search-result-message-header" />
-						<div className="sheet-text text-center">
-							{Liferay.Language.get(
-								'there-are-no-changes-to-display-in-this-view'
-							)}
-						</div>
+		else if (!renderState.changes || renderState.changes.length === 0) {
+			return (
+				<div className="sheet taglib-empty-result-message">
+					<div className="taglib-empty-search-result-message-header" />
+					<div className="sheet-text text-center">
+						{Liferay.Language.get(
+							'there-are-no-changes-to-display-in-this-view'
+						)}
 					</div>
-				);
-			}
-
-			return '';
+				</div>
+			);
 		}
 
 		return (
@@ -2070,10 +2044,10 @@ export default ({
 						</ClayTable.Row>
 					</ClayTable.Head>
 					<ClayTable.Body>
-						{getTableRows(filterDisplayNodes(renderState.children))}
+						{getTableRows(filterDisplayNodes(renderState.changes))}
 					</ClayTable.Body>
 				</ClayTable>
-				{renderState.children.length > 5 && (
+				{renderState.changes.length > 5 && (
 					<ClayPaginationBarWithBasicItems
 						activeDelta={deltaState}
 						activePage={renderState.page}
@@ -2084,7 +2058,7 @@ export default ({
 						onDeltaChange={(delta) => {
 							setDeltaState(delta);
 							setRenderState({
-								children: renderState.children,
+								changes: renderState.changes,
 								id: renderState.id,
 								node: renderState.node,
 								page: 1,
@@ -2093,14 +2067,14 @@ export default ({
 						}}
 						onPageChange={(page) =>
 							setRenderState({
-								children: renderState.children,
+								changes: renderState.changes,
 								id: renderState.id,
 								node: renderState.node,
 								page,
 								showHideable: renderState.showHideable,
 							})
 						}
-						totalItems={renderState.children.length}
+						totalItems={renderState.changes.length}
 					/>
 				)}
 			</>
@@ -2179,7 +2153,7 @@ export default ({
 									] = data;
 
 									setRenderState({
-										children: renderState.children,
+										changes: renderState.changes,
 										id: renderState.id,
 										node: renderState.node,
 										page: renderState.page,

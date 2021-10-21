@@ -142,6 +142,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 		</finder>
+		<finder name="C_T" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="template" />
+		</finder>
 		<finder name="C_E_T" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="export" />

@@ -221,8 +221,10 @@ public class NewEnvJVMTestRuleTest {
 	private static Map<String, String> _getEnvironment() {
 		Map<String, String> environment = new HashMap<>(System.getenv());
 
+		environment.remove("CACHE_DIR");
 		environment.remove("MODULES_BASE_DIR_NAMES_WITH_CHANGES");
 		environment.remove("PROJECT_NAMES");
+		environment.remove("PORTAL_BUNDLES_DIST_URL");
 		environment.remove("SUBREPOSITORY_PACKAGE_NAMES");
 		environment.remove("TERMCAP");
 

@@ -16,6 +16,7 @@ export default function itemSelectorValueToSiteNavigationMenuItem(
 	siteNavigationMenuItem
 ) {
 	const {
+		contextualMenu,
 		parentSiteNavigationMenuItemId,
 		privateLayout,
 		returnType,
@@ -24,6 +25,7 @@ export default function itemSelectorValueToSiteNavigationMenuItem(
 	} = siteNavigationMenuItem;
 
 	return {
+		contextualMenu,
 		parentSiteNavigationMenuItemId,
 		privateLayout,
 		siteNavigationMenuId,

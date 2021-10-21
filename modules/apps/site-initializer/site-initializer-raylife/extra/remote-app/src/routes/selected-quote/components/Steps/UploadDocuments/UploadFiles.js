@@ -13,7 +13,7 @@ const UploadFiles = ({dropAreaProps, files, setFiles, title}) => {
 
 	const onRemoveFile = (_file) => {
 		try {
-			if (typeof DeleteDocument === 'function' && _file.documentId) {
+			if (typeof RemoveDocument === 'function' && _file.documentId) {
 				RemoveDocument(_file.documentId);
 			}
 

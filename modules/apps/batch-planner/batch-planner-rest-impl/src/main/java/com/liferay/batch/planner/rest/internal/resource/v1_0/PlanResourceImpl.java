@@ -97,7 +97,8 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				plan.getExport(), plan.getExternalType(), plan.getExternalURL(),
-				plan.getInternalClassName(), plan.getName(), false);
+				plan.getInternalClassName(), plan.getName(),
+				plan.getTaskItemDelegateName(), false);
 
 		Mapping[] mappings = plan.getMappings();
 
@@ -157,6 +158,8 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 				mappings = _getMappings(batchPlannerPlan);
 				name = batchPlannerPlan.getName();
 				policies = _getPolicies(batchPlannerPlan);
+				taskItemDelegateName =
+					batchPlannerPlan.getTaskItemDelegateName();
 			}
 		};
 	}

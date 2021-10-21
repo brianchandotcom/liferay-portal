@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 
@@ -45,8 +46,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Cristina González
@@ -59,32 +60,33 @@ public class ContentDashboardItemSearchContainerFactory {
 		ContentDashboardItemFactoryTracker contentDashboardItemFactoryTracker,
 		ContentDashboardSearchRequestBuilderFactory
 			contentDashboardSearchRequestBuilderFactory,
-		Portal portal, RenderRequest renderRequest,
-		RenderResponse renderResponse, Searcher searcher) {
+		Portal portal, PortletRequest portletRequest,
+		PortletResponse portletResponse, Searcher searcher) {
 
 		return new ContentDashboardItemSearchContainerFactory(
 			assetCategoryLocalService, assetVocabularyLocalService,
 			contentDashboardItemFactoryTracker,
-			contentDashboardSearchRequestBuilderFactory, portal, renderRequest,
-			renderResponse, searcher);
+			contentDashboardSearchRequestBuilderFactory, portal, portletRequest,
+			portletResponse, searcher);
 	}
 
 	public SearchContainer<ContentDashboardItem<?>> create()
 		throws PortletException {
 
 		SearchContainer<ContentDashboardItem<?>> searchContainer =
-			new SearchContainer<>(
-				_renderRequest,
-				PortletURLUtil.clone(
-					PortletURLUtil.getCurrent(_renderRequest, _renderResponse),
-					_renderResponse),
-				null, "there-is-no-content");
+			_getContentDashboardItemSearchContainer();
 
-		searchContainer.setOrderByCol(_getOrderByCol());
-		searchContainer.setOrderByType(_getOrderByType());
+		return create(
+			searchContainer.getStart(), searchContainer.getEnd(),
+			searchContainer);
+	}
 
-		SearchResponse searchResponse = _getSearchResponse(
-			searchContainer.getEnd(), searchContainer.getStart());
+	public SearchContainer<ContentDashboardItem<?>> create(
+			int begin, int end,
+			SearchContainer<ContentDashboardItem<?>> searchContainer)
+		throws PortletException {
+
+		SearchResponse searchResponse = _getSearchResponse(end, begin);
 
 		searchContainer.setResults(
 			_getContentDashboardItems(searchResponse.getDocuments71()));
@@ -93,14 +95,23 @@ public class ContentDashboardItemSearchContainerFactory {
 		return searchContainer;
 	}
 
+	public SearchContainer<ContentDashboardItem<?>> createWithAllResults()
+		throws PortletException {
+
+		SearchContainer<ContentDashboardItem<?>> searchContainer =
+			_getContentDashboardItemSearchContainer();
+
+		return create(-1, -1, searchContainer);
+	}
+
 	private ContentDashboardItemSearchContainerFactory(
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetVocabularyLocalService assetVocabularyLocalService,
 		ContentDashboardItemFactoryTracker contentDashboardItemFactoryTracker,
 		ContentDashboardSearchRequestBuilderFactory
 			contentDashboardSearchRequestBuilderFactory,
-		Portal portal, RenderRequest renderRequest,
-		RenderResponse renderResponse, Searcher searcher) {
+		Portal portal, PortletRequest portletRequest,
+		PortletResponse portletResponse, Searcher searcher) {
 
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetVocabularyLocalService = assetVocabularyLocalService;
@@ -109,11 +120,11 @@ public class ContentDashboardItemSearchContainerFactory {
 		_contentDashboardSearchRequestBuilderFactory =
 			contentDashboardSearchRequestBuilderFactory;
 		_portal = portal;
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
+		_portletRequest = portletRequest;
+		_portletResponse = portletResponse;
 		_searcher = searcher;
 
-		_locale = _portal.getLocale(_renderRequest);
+		_locale = _portal.getLocale(_portletRequest);
 	}
 
 	private List<ContentDashboardItem<?>> _getContentDashboardItems(
@@ -132,9 +143,29 @@ public class ContentDashboardItemSearchContainerFactory {
 		);
 	}
 
+	private SearchContainer<ContentDashboardItem<?>>
+			_getContentDashboardItemSearchContainer()
+		throws PortletException {
+
+		SearchContainer<ContentDashboardItem<?>> searchContainer =
+			new SearchContainer<>(
+				_portletRequest,
+				PortletURLUtil.clone(
+					PortletURLUtil.getCurrent(
+						PortalUtil.getLiferayPortletRequest(_portletRequest),
+						PortalUtil.getLiferayPortletResponse(_portletResponse)),
+					PortalUtil.getLiferayPortletResponse(_portletResponse)),
+				null, "there-is-no-content");
+
+		searchContainer.setOrderByCol(_getOrderByCol());
+		searchContainer.setOrderByType(_getOrderByType());
+
+		return searchContainer;
+	}
+
 	private String _getOrderByCol() {
 		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
+			_portletRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
 			"modified-date");
 	}
 
@@ -142,7 +173,7 @@ public class ContentDashboardItemSearchContainerFactory {
 		String orderByCol = _getOrderByCol();
 
 		String orderByType = ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM);
+			_portletRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM);
 
 		if (Objects.equals(orderByCol, "title")) {
 			if (Objects.equals("desc", orderByType)) {
@@ -163,7 +194,7 @@ public class ContentDashboardItemSearchContainerFactory {
 		return _searcher.search(
 			_contentDashboardSearchRequestBuilderFactory.builder(
 				new ContentDashboardSearchContextBuilder(
-					_portal.getHttpServletRequest(_renderRequest),
+					_portal.getHttpServletRequest(_portletRequest),
 					_assetCategoryLocalService, _assetVocabularyLocalService
 				).withEnd(
 					end
@@ -234,8 +265,8 @@ public class ContentDashboardItemSearchContainerFactory {
 		_contentDashboardSearchRequestBuilderFactory;
 	private final Locale _locale;
 	private final Portal _portal;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
+	private final PortletRequest _portletRequest;
+	private final PortletResponse _portletResponse;
 	private final Searcher _searcher;
 
 }

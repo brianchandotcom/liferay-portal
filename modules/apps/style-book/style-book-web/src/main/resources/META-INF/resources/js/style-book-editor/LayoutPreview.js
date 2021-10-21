@@ -55,7 +55,7 @@ export default function LayoutPreview() {
 	return (
 		<>
 			<div className="style-book-editor__page-preview">
-				{previewLayout?.layoutURL ? (
+				{previewLayout?.url ? (
 					<>
 						{!config.templatesPreviewEnabled && <PreviewInfoBar />}
 						<iframe
@@ -65,9 +65,7 @@ export default function LayoutPreview() {
 								loadFrontendTokenValues();
 							}}
 							ref={iframeRef}
-							src={urlWithPreviewParameter(
-								previewLayout?.layoutURL
-							)}
+							src={previewLayout?.url}
 						/>
 					</>
 				) : (
@@ -80,15 +78,6 @@ export default function LayoutPreview() {
 			</div>
 		</>
 	);
-}
-
-function urlWithPreviewParameter(url) {
-	const nextURL = new URL(url);
-
-	nextURL.searchParams.set('p_l_mode', 'preview');
-	nextURL.searchParams.set('styleBookEntryPreview', true);
-
-	return nextURL.href;
 }
 
 function loadOverlay(iframeRef) {

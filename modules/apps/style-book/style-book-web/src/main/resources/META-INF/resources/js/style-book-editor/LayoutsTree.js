@@ -89,8 +89,8 @@ class LayoutsTreeContent extends React.Component {
 
 					if (target?.dataset?.label && target?.dataset?.url) {
 						this.props.onPageClick({
-							layoutName: target.dataset.label,
-							layoutURL: target.dataset.url,
+							name: target.dataset.label,
+							url: target.dataset.url,
 						});
 					}
 				}}

@@ -21,11 +21,11 @@ import {StyleBookContextProvider} from './StyleBookContext';
 import Toolbar from './Toolbar';
 import {config, initializeConfig} from './config';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
+import {LAYOUT_TYPES} from './constants/layoutTypes';
 import {useCloseProductMenu} from './useCloseProductMenu';
 
 const StyleBookEditor = ({
 	frontendTokensValues: initialFrontendTokensValues,
-	initialPreviewLayout,
 }) => {
 	useCloseProductMenu();
 
@@ -33,7 +33,9 @@ const StyleBookEditor = ({
 		initialFrontendTokensValues
 	);
 	const [draftStatus, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
-	const [previewLayout, setPreviewLayout] = useState(initialPreviewLayout);
+	const [previewLayout, setPreviewLayout] = useState(
+		getMostRecentPage(config.previewOptions)
+	);
 
 	useEffect(() => {
 		if (frontendTokensValues === initialFrontendTokensValues) {
@@ -85,9 +87,9 @@ const StyleBookEditor = ({
 export default function ({
 	frontendTokenDefinition = [],
 	frontendTokensValues = {},
-	initialPreviewLayout,
 	layoutsTreeURL,
 	namespace,
+	previewOptions,
 	publishURL,
 	redirectURL,
 	saveDraftURL,
@@ -97,9 +99,9 @@ export default function ({
 } = {}) {
 	initializeConfig({
 		frontendTokenDefinition,
-		initialPreviewLayout,
 		layoutsTreeURL,
 		namespace,
+		previewOptions,
 		publishURL,
 		redirectURL,
 		saveDraftURL,
@@ -108,12 +110,7 @@ export default function ({
 		themeName,
 	});
 
-	return (
-		<StyleBookEditor
-			frontendTokensValues={frontendTokensValues}
-			initialPreviewLayout={initialPreviewLayout}
-		/>
-	);
+	return <StyleBookEditor frontendTokensValues={frontendTokensValues} />;
 }
 
 function saveDraft(frontendTokensValues, styleBookEntryId) {
@@ -145,4 +142,12 @@ function saveDraft(frontendTokensValues, styleBookEntryId) {
 
 			return body;
 		});
+}
+
+function getMostRecentPage(previewOptions) {
+	const pages = previewOptions.find(
+		(option) => option.type === LAYOUT_TYPES.page
+	).data.recentLayouts;
+
+	return pages[0];
 }

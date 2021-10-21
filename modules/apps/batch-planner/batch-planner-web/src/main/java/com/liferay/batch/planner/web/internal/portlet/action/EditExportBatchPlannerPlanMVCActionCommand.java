@@ -62,11 +62,13 @@ public class EditExportBatchPlannerPlanMVCActionCommand
 			actionRequest, "externalType");
 		String internalClassName = ParamUtil.getString(
 			actionRequest, "internalClassName");
+		String taskItemDelegateName = ParamUtil.getString(
+			actionRequest, "taskItemDelegateName");
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				true, externalType, StringPool.SLASH, internalClassName, name,
-				false);
+				taskItemDelegateName, false);
 
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",

@@ -93,6 +93,8 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 			actionRequest, "externalType");
 		String internalClassName = ParamUtil.getString(
 			actionRequest, "internalClassName");
+		String taskItemDelegateName = ParamUtil.getString(
+			actionRequest, "taskItemDelegateName");
 
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(actionRequest);
@@ -106,7 +108,7 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 			BatchPlannerPlan batchPlannerPlan =
 				_batchPlannerPlanService.addBatchPlannerPlan(
 					export, externalType, importFileURI.toString(),
-					internalClassName, name, false);
+					internalClassName, name, taskItemDelegateName, false);
 
 			_batchPlannerPolicyService.addBatchPlannerPolicy(
 				batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",

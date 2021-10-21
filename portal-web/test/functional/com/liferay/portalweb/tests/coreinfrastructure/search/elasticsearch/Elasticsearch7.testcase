@@ -58,9 +58,10 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 		var port = Elasticsearch.getServerPort();
+		var portalHostname = PropsUtil.get("portal.hostname");
 
 		var curl = '''
-			http://localhost:${port}/liferay-${companyId}/_delete_by_query?pretty \
+			http://${portalHostname}:${port}/liferay-${companyId}/_delete_by_query?pretty \
 			-H 'Content-Type: application/json' \
 			-d '{
 				"query": {
@@ -438,8 +439,10 @@ definition {
 			groupName = "Guest",
 			title = "apple");
 
+		var portalHostname = PropsUtil.get("portal.hostname");
+
 		var curlSecondConnection = '''
-			http://localhost:9202/connection2_index/_doc/1?pretty \
+			http://${portalHostname}:9202/connection2_index/_doc/1?pretty \
 				-H 'Content-Type: application/json' \
 				-d '{"connection2_field" : "multiple connections is cool"}'
 		''';
@@ -517,7 +520,9 @@ definition {
 		property osgi.module.configurations = "clusterName=&quot;LiferayElasticsearchCluster1&quot;";
 		property portal.acceptance = "true";
 
-		Navigator.openSpecificURL(url = "http://localhost:9201");
+		var portalHostname = PropsUtil.get("portal.hostname");
+
+		Navigator.openSpecificURL(url = "http://${portalHostname}:9201");
 
 		Elasticsearch.viewClusterStatus(clusterStatus = "&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;");
 	}
@@ -526,7 +531,9 @@ definition {
 		property embedded.elasticsearch.only = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#SearchWithNonLiferayIndex";
 
-		Navigator.openSpecificURL(url = "http://localhost:9201");
+		var portalHostname = PropsUtil.get("portal.hostname");
+
+		Navigator.openSpecificURL(url = "http://${portalHostname}:9201");
 
 		AntCommand(
 			locator1 = "build-test-elasticsearch7.xml",
@@ -683,7 +690,9 @@ definition {
 
 		Pause(locator1 = "30000");
 
-		Navigator.openSpecificURL(url = "http://localhost:9201");
+		var portalHostname = PropsUtil.get("portal.hostname");
+
+		Navigator.openSpecificURL(url = "http://${portalHostname}:9201");
 
 		Elasticsearch.viewClusterStatus(clusterStatus = "&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;");
 

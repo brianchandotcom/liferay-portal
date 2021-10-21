@@ -1806,8 +1806,9 @@ definition {
 			webContentTitle = "WC Title");
 
 		var port = Elasticsearch.getServerPort();
+		var portalHostname = PropsUtil.get("portal.hostname");
 
-		var curl = "http://localhost:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
+		var curl = "http://${portalHostname}:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
 
 		var journalArticleDocumentType = JSONCurlUtil.get("${curl}");
 

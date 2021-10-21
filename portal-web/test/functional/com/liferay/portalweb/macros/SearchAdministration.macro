@@ -23,7 +23,9 @@ definition {
 
 		var port = Elasticsearch.getServerPort();
 
-		var curl = "http://localhost:${port}/_tasks";
+		var portalHostname = PropsUtil.get("portal.hostname");
+
+		var curl = "http://${portalHostname}:${port}/_tasks";
 
 		var reindexElapsedTime = "0";
 

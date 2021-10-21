@@ -28,7 +28,9 @@ definition {
 			var port = Elasticsearch.getServerPort();
 		}
 
-		var curl = "http://localhost:${port}";
+		var portalHostname = PropsUtil.get("portal.hostname");
+
+		var curl = "http://${portalHostname}:${port}";
 
 		var serverInfo = JSONCurlUtil.get("${curl}");
 
@@ -71,7 +73,9 @@ definition {
 
 	@description = "Elasticsearch provides a Cluster Health API (http://localhost:${nodePort}/_cluster/health?pretty=true) to easily view the current status of the cluster."
 	macro viewClusterStatusViaClusterHealthAPI {
-		Navigator.openSpecificURL(url = "http://localhost:${nodePort}/_cluster/health?level=indices&amp;pretty");
+		var portalHostname = PropsUtil.get("portal.hostname");
+
+		Navigator.openSpecificURL(url = "http://${portalHostname}:${nodePort}/_cluster/health?level=indices&amp;pretty");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "//body",

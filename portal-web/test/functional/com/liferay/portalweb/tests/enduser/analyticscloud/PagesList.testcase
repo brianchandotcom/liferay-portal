@@ -79,7 +79,7 @@ definition {
 				userLoginFullName = "ac ac");
 
 			for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
-				Navigator.gotoSitePage(
+				ACUtils.navigateToSitePage(
 					pageName = "${pageName}",
 					siteName = "Site Name");
 			}
@@ -135,7 +135,7 @@ definition {
 		}
 
 		task ("Visit the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -198,7 +198,7 @@ definition {
 		}
 
 		task ("Visit the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -253,7 +253,7 @@ definition {
 		}
 
 		task ("Visit the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -327,7 +327,7 @@ definition {
 				userLoginFullName = "ac ac");
 
 			for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
-				Navigator.gotoSitePage(
+				ACUtils.navigateToSitePage(
 					pageName = "${pageName}",
 					siteName = "Site Name");
 			}

@@ -462,11 +462,11 @@ definition {
 		}
 
 		task ("Download the document") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "Download DM",
+				documentTitleList = "DM AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
 		}
 
 		task ("Get the ip country") {
@@ -523,11 +523,11 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Download the document") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "Download DM",
+				documentTitleList = "DM AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
 		}
 
 		task ("Close sessions") {
@@ -696,13 +696,11 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		for (var documentTitle : list "DM AC Title,DM AC Title 2,DM AC Title 3,DM AC Title 4") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${documentTitle}");
-		}
+		ACUtils.navigateToSitePage(
+			actionType = "Download DM",
+			documentTitleList = "DM AC Title,DM AC Title 2,DM AC Title 3,DM AC Title 4",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		ACUtils.closeAllSessionsAndWait();
 

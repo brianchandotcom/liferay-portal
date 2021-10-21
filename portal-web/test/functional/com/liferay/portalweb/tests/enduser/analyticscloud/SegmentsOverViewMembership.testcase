@@ -188,15 +188,11 @@ definition {
 		}
 
 		task ("Sign in as new user and view the site page") {
-			for (var n : list "1,2") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "user1@liferay.com",
-					userLoginFullName = "user1 user1");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				documentTitleList = "1,2",
+				emailList = "user1@liferay.com",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {
@@ -280,15 +276,11 @@ definition {
 		}
 
 		task ("Sign in as new user and view the site page") {
-			for (var n : list "1,2") {
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "user1@liferay.com",
-					userLoginFullName = "user1 user1");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-			}
+			ACUtils.navigateToSitePageWithUser(
+				documentTitleList = "1,2",
+				emailList = "user1@liferay.com",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {
@@ -358,11 +350,9 @@ definition {
 
 			User.logoutPG();
 
-			for (var n : list "1,2") {
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-			}
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {

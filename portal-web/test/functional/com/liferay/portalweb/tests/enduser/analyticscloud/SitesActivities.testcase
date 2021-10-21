@@ -46,7 +46,7 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Interation with page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 
@@ -84,7 +84,7 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Interation with page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 
@@ -218,21 +218,19 @@ definition {
 		// AC Refactor ticket: LRAC-8770
 
 		task ("Site and blogs creation and connection with AC") {
-			ACUtils.addSiteAndPage();
-
 			ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Interation with pages") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Test 2",
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			BlogsNavigator.gotoPG(entryTitle = "Test 2");
-
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("AC launch and go to property menu") {
@@ -264,21 +262,19 @@ definition {
 		// AC Refactor ticket: LRAC-8772
 
 		task ("Site and blogs creation and connection with AC") {
-			ACUtils.addSiteAndPage();
-
 			ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Interation with pages") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Test 2",
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			BlogsNavigator.gotoPG(entryTitle = "Test 2");
-
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("AC launch and go to property menu") {
@@ -310,21 +306,19 @@ definition {
 		// AC Refactor ticket: LRAC-8771
 
 		task ("Site and blogs creation and connection with AC") {
-			ACUtils.addSiteAndPage();
-
 			ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Interation with pages") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Test 2",
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			BlogsNavigator.gotoPG(entryTitle = "Test 2");
-
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("AC launch and go to property menu") {
@@ -382,7 +376,7 @@ definition {
 		task ("Access the page as a anonymous user") {
 			User.logoutPG();
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -521,11 +515,13 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Interation with page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+		}
 
-			ACUtils.closeAllSessions();
+		task ("Close all sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("AC launch") {

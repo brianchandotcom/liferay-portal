@@ -56,7 +56,7 @@ definition {
 		}
 
 		task ("Launch DXP and visit the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

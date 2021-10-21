@@ -456,7 +456,7 @@ definition {
 				userLoginEmailAddress = "randy.smith@liferay.com",
 				userLoginFullName = "Randy Smith");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -657,11 +657,11 @@ definition {
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
 		}
 
 		task ("Switch to new property in AC") {
@@ -735,7 +735,7 @@ definition {
 				userLoginFullName = "ac ac");
 
 			for (var pageName : list "Movies,Sports") {
-				Navigator.gotoSitePage(
+				ACUtils.navigateToSitePage(
 					pageName = "${pageName}",
 					siteName = "Site Name");
 			}

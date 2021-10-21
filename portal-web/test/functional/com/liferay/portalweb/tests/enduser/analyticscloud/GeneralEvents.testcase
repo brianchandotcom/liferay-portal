@@ -97,7 +97,7 @@ definition {
 		}
 
 		task ("Enable the Show Actions in Documents and Media") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "Document",
 				siteName = "Site Name");
 
@@ -156,7 +156,7 @@ definition {
 		}
 
 		task ("View the WebContent page as guest") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "WebContent",
 				siteName = "Site Name");
 		}
@@ -500,7 +500,7 @@ definition {
 		}
 
 		task ("View the Blog page as guest") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "Blog",
 				siteName = "Site Name");
 		}

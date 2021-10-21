@@ -83,7 +83,7 @@ definition {
 				userLoginFullName = "ac ac");
 
 			for (var pageName : list "Movies,Music,Science,Sports,Technology") {
-				Navigator.gotoSitePage(
+				ACUtils.navigateToSitePage(
 					pageName = "${pageName}",
 					siteName = "Site Name");
 			}
@@ -95,7 +95,7 @@ definition {
 				userLoginFullName = "usera usera");
 
 			for (var pageName : list "Movies,Music,Science,Sports,Technology") {
-				Navigator.gotoSitePage(
+				ACUtils.navigateToSitePage(
 					pageName = "${pageName}",
 					siteName = "Site Name");
 			}
@@ -163,7 +163,7 @@ definition {
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page 1",
 				siteName = "Site Name");
 		}
@@ -234,7 +234,7 @@ definition {
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page 1",
 				siteName = "Site Name");
 		}
@@ -302,7 +302,7 @@ definition {
 				userLoginFullName = "ac ac");
 
 			for (var pageName : list "Movies,Sports,Technology") {
-				Navigator.gotoSitePage(
+				ACUtils.navigateToSitePage(
 					pageName = "${pageName}",
 					siteName = "Site Name");
 			}
@@ -377,7 +377,7 @@ definition {
 				userLoginFullName = "ac ac");
 
 			for (var pageName : list "Movies,Music,Science,Sports,Technology") {
-				Navigator.gotoSitePage(
+				ACUtils.navigateToSitePage(
 					pageName = "${pageName}",
 					siteName = "Site Name");
 			}

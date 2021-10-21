@@ -68,7 +68,7 @@ definition {
 				userLoginEmailAddress = "user1@liferay.com",
 				userLoginFullName = "user1 user1");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -134,7 +134,7 @@ definition {
 				userLoginEmailAddress = "user1@liferay.com",
 				userLoginFullName = "user1 user1");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -199,7 +199,7 @@ definition {
 				userLoginEmailAddress = "user1@liferay.com",
 				userLoginFullName = "user1 user1");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

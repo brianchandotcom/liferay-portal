@@ -92,13 +92,11 @@ definition {
 		}
 
 		task ("Download the document from widget") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "New Document",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			Click(
-				key_card = "New Document",
-				locator1 = "Card#CARD_TITLE");
 
 			DMDocument.expandInfo();
 
@@ -193,7 +191,7 @@ definition {
 		}
 
 		task ("Download the document from widget") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 

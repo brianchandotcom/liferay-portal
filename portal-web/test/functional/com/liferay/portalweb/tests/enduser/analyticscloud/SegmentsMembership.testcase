@@ -27,29 +27,17 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Blogs Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
-
 		ACUtils.createBlogsAndAddToPage(layoutName = "Blogs Page");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Documents Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Documents Page",
-			siteName = "Site Name");
-
 		ACUtils.createDMAndAddToPage(layoutName = "Documents Page");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Web Content Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
-			siteName = "Site Name");
 
 		ACUtils.createWCAndAddToPage(layoutName = "Web Content Page");
 
@@ -158,14 +146,6 @@ definition {
 			ACUtils.closeAllSessions();
 		}
 
-		User.logoutPG();
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessions();
-
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -264,14 +244,6 @@ definition {
 
 			ACUtils.closeAllSessions();
 		}
-
-		User.logoutPG();
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessions();
 
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
@@ -375,14 +347,6 @@ definition {
 
 			ACUtils.closeAllSessions();
 		}
-
-		User.logoutPG();
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessions();
 
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
@@ -494,14 +458,6 @@ definition {
 
 			ACUtils.closeAllSessions();
 		}
-
-		User.logoutPG();
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessions();
 
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
@@ -618,14 +574,6 @@ definition {
 			ACUtils.closeAllSessions();
 		}
 
-		User.logoutPG();
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessions();
-
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -734,14 +682,6 @@ definition {
 
 			ACUtils.closeAllSessions();
 		}
-
-		User.logoutPG();
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessions();
 
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
@@ -853,14 +793,6 @@ definition {
 
 			ACUtils.closeAllSessions();
 		}
-
-		User.logoutPG();
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessions();
 
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
@@ -978,14 +910,6 @@ definition {
 			ACUtils.closeAllSessions();
 		}
 
-		User.logoutPG();
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessions();
-
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -1102,14 +1026,6 @@ definition {
 			ACUtils.closeAllSessions();
 		}
 
-		User.logoutPG();
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessions();
-
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -1223,14 +1139,6 @@ definition {
 
 			ACUtils.closeAllSessions();
 		}
-
-		User.logoutPG();
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessions();
 
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();

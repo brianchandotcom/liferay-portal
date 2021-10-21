@@ -92,7 +92,7 @@ definition {
 		}
 
 		task ("Navigate to the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -174,7 +174,7 @@ definition {
 		}
 
 		task ("Navigate to the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -237,7 +237,7 @@ definition {
 		}
 
 		task ("Navigate to the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -298,7 +298,7 @@ definition {
 		}
 
 		task ("Navigate to the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -359,7 +359,7 @@ definition {
 		}
 
 		task ("Navigate to the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -422,7 +422,7 @@ definition {
 		}
 
 		task ("Navigate to the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -513,7 +513,7 @@ definition {
 		}
 
 		task ("Navigate to the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -608,7 +608,7 @@ definition {
 		}
 
 		task ("Navigate to the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -668,7 +668,7 @@ definition {
 		}
 
 		task ("Navigate to the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -725,7 +725,7 @@ definition {
 		}
 
 		task ("Navigate to the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -797,7 +797,7 @@ definition {
 		}
 
 		task ("Navigate to the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -844,7 +844,7 @@ definition {
 		}
 
 		task ("Navigate to the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -907,7 +907,7 @@ definition {
 		}
 
 		task ("Navigate to the site page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

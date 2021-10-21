@@ -57,11 +57,11 @@ definition {
 				userLoginEmailAddress = "testac@liferay.com",
 				userLoginFullName = "Test Test");
 
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 		}
 
 		task ("Launch AC and navigate to Segments") {

@@ -69,7 +69,7 @@ definition {
 		}
 
 		task ("Navigate to AC Page and change display style to list") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 
@@ -157,7 +157,7 @@ definition {
 		}
 
 		task ("Navigate to AC Page and change display style to list") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 
@@ -171,7 +171,7 @@ definition {
 		}
 
 		task ("View the comment") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 

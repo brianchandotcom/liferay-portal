@@ -24,6 +24,11 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		JSONUser.tearDownNonAdminUsers();
 
 		ACUtils.tearDownAC();
 	}
@@ -37,17 +42,17 @@ definition {
 		// AC Refactor ticket: LRAC-8744
 
 		task ("Site and page creation and connection with AC") {
-			ACUtils.addSiteAndPage(layoutName = "AC Page");
+			ACUtils.addSiteAndPage();
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Interation with page") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("AC launch") {
@@ -138,13 +143,13 @@ definition {
 		}
 
 		task ("Interation with pages") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Test 2",
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			BlogsNavigator.gotoPG(entryTitle = "Test 2");
-
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("AC launch") {
@@ -192,13 +197,13 @@ definition {
 		}
 
 		task ("Interation with pages") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Test 2",
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			BlogsNavigator.gotoPG(entryTitle = "Test 2");
-
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("AC launch") {

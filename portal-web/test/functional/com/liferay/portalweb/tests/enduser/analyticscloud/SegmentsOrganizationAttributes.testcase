@@ -14,6 +14,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
+
+		ACUtils.addSiteAndPage();
 	}
 
 	tearDown {
@@ -24,6 +26,11 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		JSONUser.tearDownNonAdminUsers();
 
 		ACUtils.tearDownAC();
 	}
@@ -249,17 +256,7 @@ definition {
 		}
 
 		task ("Add blog") {
-			ACUtils.addSiteAndPage();
-
-			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Blogs Page");
-
-			Navigator.gotoSitePage(
-				pageName = "Blogs Page",
-				siteName = "Site Name");
-
-			ACUtils.createBlogsAndAddToPage(layoutName = "Blogs Page");
+			ACUtils.createBlogsAndAddToPage();
 		}
 
 		task ("Connect to AC") {
@@ -271,8 +268,8 @@ definition {
 				userLoginEmailAddress = "userea1@liferay.com",
 				userLoginFullName = "userfn1 userln1");
 
-			Navigator.gotoSitePage(
-				pageName = "Blogs Page",
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
 				siteName = "Site Name");
 		}
 
@@ -386,17 +383,7 @@ definition {
 		}
 
 		task ("Add blog") {
-			ACUtils.addSiteAndPage();
-
-			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Blogs Page");
-
-			Navigator.gotoSitePage(
-				pageName = "Blogs Page",
-				siteName = "Site Name");
-
-			ACUtils.createBlogsAndAddToPage(layoutName = "Blogs Page");
+			ACUtils.createBlogsAndAddToPage();
 		}
 
 		task ("Connect to AC") {
@@ -408,8 +395,8 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Navigator.gotoSitePage(
-				pageName = "Blogs Page",
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
 				siteName = "Site Name");
 		}
 
@@ -495,17 +482,7 @@ definition {
 		}
 
 		task ("Add blog") {
-			ACUtils.addSiteAndPage();
-
-			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Blogs Page");
-
-			Navigator.gotoSitePage(
-				pageName = "Blogs Page",
-				siteName = "Site Name");
-
-			ACUtils.createBlogsAndAddToPage(layoutName = "Blogs Page");
+			ACUtils.createBlogsAndAddToPage();
 		}
 
 		task ("Connect to AC") {
@@ -517,8 +494,8 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Navigator.gotoSitePage(
-				pageName = "Blogs Page",
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
 				siteName = "Site Name");
 		}
 
@@ -599,17 +576,7 @@ definition {
 		}
 
 		task ("Add blog") {
-			ACUtils.addSiteAndPage();
-
-			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Blogs Page");
-
-			Navigator.gotoSitePage(
-				pageName = "Blogs Page",
-				siteName = "Site Name");
-
-			ACUtils.createBlogsAndAddToPage(layoutName = "Blogs Page");
+			ACUtils.createBlogsAndAddToPage();
 		}
 
 		task ("Connect to AC") {
@@ -621,8 +588,8 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Navigator.gotoSitePage(
-				pageName = "Blogs Page",
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
 				siteName = "Site Name");
 		}
 

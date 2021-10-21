@@ -61,11 +61,11 @@ definition {
 		}
 
 		task ("Go to the site page and click the blog content") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 
 			Click(
 				key_entryContent = "This is the blog test for AC",
@@ -138,11 +138,11 @@ definition {
 		}
 
 		task ("Go to the site page and click the blog content") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 
 			Click(
 				key_entryTitle = "Blogs AC Title",
@@ -222,11 +222,11 @@ definition {
 		}
 
 		task ("Go to the site page and view the blog content") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Digital Transformation or Digital Experience",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Digital Transformation or Digital Experience");
 
 			ScrollBy(value1 = "0, 1000");
 
@@ -302,11 +302,11 @@ definition {
 		}
 
 		task ("Go to the site page and view the blog content") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Digital Transformation or Digital Experience",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Digital Transformation or Digital Experience");
 
 			ScrollBy(value1 = "0, 2000");
 
@@ -382,11 +382,11 @@ definition {
 		}
 
 		task ("Go to the site page and view the blog content") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Digital Transformation or Digital Experience",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Digital Transformation or Digital Experience");
 
 			ScrollBy(value1 = "0, 2500");
 
@@ -462,11 +462,11 @@ definition {
 		}
 
 		task ("Go to the site page and view the blog content") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Digital Transformation or Digital Experience",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Digital Transformation or Digital Experience");
 
 			ScrollBy(value1 = "0, 2700");
 
@@ -535,7 +535,7 @@ definition {
 		}
 
 		task ("Go to the site page to assert the blog entry is displayed but don't visit it") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 
@@ -590,11 +590,11 @@ definition {
 		}
 
 		task ("Go to the site page to visit the blog") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 		}
 
 		task ("Get entryId of blog entry") {

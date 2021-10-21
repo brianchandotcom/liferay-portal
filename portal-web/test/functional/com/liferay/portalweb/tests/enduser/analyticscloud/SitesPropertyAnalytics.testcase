@@ -53,7 +53,7 @@ definition {
 		}
 
 		task ("View the site page as Test Test") {
-			Navigator.gotoSitePage(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

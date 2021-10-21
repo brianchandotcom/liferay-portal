@@ -66,6 +66,11 @@ BatchPlannerPlanManagementToolbarDisplayContext batchPlannerPlanManagementToolba
 				/>
 
 				<liferay-ui:search-container-column-text
+					name="create-date"
+					value="<%= dateFormatDateTime.format(batchPlannerPlan.getCreateDate()) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
 					name="action"
 					value='<%= LanguageUtil.get(request, batchPlannerPlan.isExport() ? "export" : "import") %>'
 				/>
@@ -78,16 +83,6 @@ BatchPlannerPlanManagementToolbarDisplayContext batchPlannerPlanManagementToolba
 				<liferay-ui:search-container-column-text
 					name="user"
 					value="<%= batchPlannerPlan.getUserName() %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					name="create-date"
-					value="<%= dateFormatDateTime.format(batchPlannerPlan.getCreateDate()) %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					name="status"
-					value='<%= LanguageUtil.get(request, batchPlannerPlan.isActive() ? "active" : "inactive") %>'
 				/>
 
 				<liferay-ui:search-container-column-jsp

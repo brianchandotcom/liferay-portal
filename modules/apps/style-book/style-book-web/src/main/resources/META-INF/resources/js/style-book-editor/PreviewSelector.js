@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useState} from 'react';
 
+import {config} from './config';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 
 const LAYOUT_TYPES_OPTIONS = [
@@ -83,17 +84,25 @@ function LayoutTypeSelector({layoutType, setLayoutType}) {
 			}
 		>
 			<ClayDropDown.ItemList>
-				{LAYOUT_TYPES_OPTIONS.map(({label, type}) => (
-					<ClayDropDown.Item
-						key={type}
-						onClick={() => {
-							setActive(false);
-							setLayoutType(type);
-						}}
-					>
-						{label}
-					</ClayDropDown.Item>
-				))}
+				{LAYOUT_TYPES_OPTIONS.map(({label, type}) => {
+					const previewData = config.previewOptions.find(
+						(option) => option.type === type
+					).data;
+
+					const {totalLayouts} = previewData;
+
+					return totalLayouts ? (
+						<ClayDropDown.Item
+							key={type}
+							onClick={() => {
+								setActive(false);
+								setLayoutType(type);
+							}}
+						>
+							{label}
+						</ClayDropDown.Item>
+					) : null;
+				})}
 			</ClayDropDown.ItemList>
 		</ClayDropDown>
 	);

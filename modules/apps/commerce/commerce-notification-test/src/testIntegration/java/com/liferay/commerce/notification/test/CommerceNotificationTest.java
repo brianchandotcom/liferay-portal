@@ -33,7 +33,6 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -46,7 +45,6 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -61,7 +59,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -80,23 +77,17 @@ public class CommerceNotificationTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.addUser(_company);
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(), 0);
+		_group = GroupTestUtil.addGroup();
+
+		_user = UserTestUtil.addUser();
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			_company.getCompanyId());
+			_group.getCompanyId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
+			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
 		_commerceChannelLocalService.addCommerceChannel(
 			StringPool.BLANK, _group.getGroupId(),
@@ -323,7 +314,7 @@ public class CommerceNotificationTest {
 			_serviceContext);
 
 		_accountAdminRole = _roleLocalService.fetchRole(
-			_company.getCompanyId(),
+			_group.getCompanyId(),
 			CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR);
 
 		if (_accountAdminRole == null) {
@@ -357,7 +348,7 @@ public class CommerceNotificationTest {
 			new long[] {_serviceContext.getScopeGroupId()}, _serviceContext);
 
 		_orderManagerRole = _roleLocalService.fetchRole(
-			_company.getCompanyId(), "Order Manager");
+			_group.getCompanyId(), "Order Manager");
 
 		if (_orderManagerRole == null) {
 			_orderManagerRole = _roleLocalService.addRole(
@@ -382,7 +373,7 @@ public class CommerceNotificationTest {
 
 	private String _setUpUserGroup() throws Exception {
 		UserGroup userGroup = _userGroupLocalService.addUserGroup(
-			_user.getUserId(), _company.getCompanyId(), "Test User Group",
+			_user.getUserId(), _group.getCompanyId(), "Test User Group",
 			RandomTestUtil.randomString(), _serviceContext);
 
 		long[] userIds = new long[1];
@@ -395,7 +386,6 @@ public class CommerceNotificationTest {
 		return userGroup.getName();
 	}
 
-	private static Company _company;
 	private static User _user;
 
 	@DeleteAfterTestRun

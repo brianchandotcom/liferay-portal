@@ -22,7 +22,6 @@ import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -67,9 +65,7 @@ public class CommerceAccountLocalServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.addUser(_company);
+		_user = UserTestUtil.addUser();
 	}
 
 	@Test
@@ -717,7 +713,6 @@ public class CommerceAccountLocalServiceTest {
 			_user.getCompanyId(), _user.getGroupId(), _user.getUserId());
 	}
 
-	private static Company _company;
 	private static User _user;
 
 	@Inject

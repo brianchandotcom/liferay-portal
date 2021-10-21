@@ -28,10 +28,14 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -316,6 +320,20 @@ public class JournalArticleContentDashboardItem
 			}
 		).orElse(
 			StringPool.BLANK
+		);
+	}
+
+	@Override
+	public JSONObject getSpecificInformationJSONObject(
+		String backURL, LiferayPortletResponse liferayPortletResponse,
+		Locale locale, ThemeDisplay themeDisplay) {
+
+		return JSONUtil.put(
+			"creationDate", _journalArticle.getCreateDate()
+		).put(
+			"displayDate", _journalArticle.getDisplayDate()
+		).put(
+			"languagesTranslated", _journalArticle.getAvailableLanguageIds()
 		);
 	}
 

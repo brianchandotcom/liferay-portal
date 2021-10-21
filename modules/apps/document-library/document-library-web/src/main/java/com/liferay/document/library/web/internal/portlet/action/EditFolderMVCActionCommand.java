@@ -221,7 +221,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		String description = ParamUtil.getString(actionRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
+			DLFolder.class.getName(), actionRequest);
 
 		if (folderId <= 0) {
 

@@ -1859,8 +1859,6 @@ definition {
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Workflow Process Builder page when inactivated"
 	@priority = "4"
 	test ObjectDisappearsProcessBuilderWhenInactivated {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -1879,9 +1877,8 @@ definition {
 		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
 
 		AssertElementNotPresent(
-			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW",
-			key_workflowResourceValue = "Custom Object");
-
+			key_workflowResourceValue = "Custom Object",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
 	}
 
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Form's storage type when inactivated"

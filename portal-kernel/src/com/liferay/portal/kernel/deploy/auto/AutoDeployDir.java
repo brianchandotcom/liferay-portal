@@ -57,12 +57,7 @@ public class AutoDeployDir {
 		throws AutoDeployException {
 
 		if (_serviceTrackerList != null) {
-			Iterator<AutoDeployListener> iterator =
-				_serviceTrackerList.iterator();
-
-			while (iterator.hasNext()) {
-				AutoDeployListener autoDeployListener = iterator.next();
-
+			for (AutoDeployListener autoDeployListener : _serviceTrackerList) {
 				if (autoDeployListener.isDeployable(autoDeploymentContext)) {
 					autoDeployListener.deploy(autoDeploymentContext);
 

@@ -29,11 +29,9 @@ import java.util.List;
 public class ConvertProcessUtil {
 
 	public static Collection<ConvertProcess> getConvertProcesses() {
-		Iterator<ConvertProcess> iterator = _convertProcesses.iterator();
-
 		List<ConvertProcess> convertProcesses = new ArrayList<>();
 
-		iterator.forEachRemaining(convertProcesses::add);
+		_convertProcesses.forEach(convertProcesses::add);
 
 		return convertProcesses;
 	}

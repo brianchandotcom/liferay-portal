@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -48,11 +47,7 @@ public class CPDataSourceRegistryImpl implements CPDataSourceRegistry {
 			return null;
 		}
 
-		Iterator<CPDataSource> iterator = _serviceTrackerList.iterator();
-
-		while (iterator.hasNext()) {
-			CPDataSource cpDataSource = iterator.next();
-
+		for (CPDataSource cpDataSource : _serviceTrackerList) {
 			if (key.equals(cpDataSource.getName())) {
 				return cpDataSource;
 			}

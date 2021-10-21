@@ -55,7 +55,8 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 							aria-hidden="true"
 							class="loading-animation
 							vocabularies-selection-loader"
-						/>
+						>
+						</span>
 
 						<react:component
 							module="js/VocabulariesSelectionBox"

@@ -15,11 +15,12 @@
 package com.liferay.search.experiences.rest.dto.v1_0.util;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.Clause;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
-import com.liferay.search.experiences.rest.dto.v1_0.QueryEntry;
+import com.liferay.search.experiences.rest.dto.v1_0.Rescore;
 import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
 
 import java.util.Map;
@@ -47,13 +48,19 @@ public class ConfigurationUtil {
 			configuration.getQueryConfiguration();
 
 		if (queryConfiguration != null) {
-			for (QueryEntry queryEntry : queryConfiguration.getQueryEntries()) {
-				for (Clause clause : queryEntry.getClauses()) {
-					clause.setQuery(
-						JSONFactoryUtil.createJSONObject(
-							(Map<?, ?>)clause.getQuery()));
-				}
-			}
+			ArrayUtil.isNotEmptyForEach(
+				queryConfiguration.getQueryEntries(),
+				queryEntry -> {
+					ArrayUtil.isNotEmptyForEach(
+						queryEntry.getClauses(), ConfigurationUtil::_unpack);
+
+					ArrayUtil.isNotEmptyForEach(
+						queryEntry.getPostFilterClauses(),
+						ConfigurationUtil::_unpack);
+
+					ArrayUtil.isNotEmptyForEach(
+						queryEntry.getRescores(), ConfigurationUtil::_unpack);
+				});
 		}
 
 		SortConfiguration sortConfiguration =
@@ -66,6 +73,21 @@ public class ConfigurationUtil {
 		}
 
 		return configuration;
+	}
+
+	private static void _unpack(Clause clause) {
+		if (clause.getQuery() != null) {
+			clause.setQuery(
+				JSONFactoryUtil.createJSONObject((Map<?, ?>)clause.getQuery()));
+		}
+	}
+
+	private static void _unpack(Rescore rescore) {
+		if (rescore.getQuery() != null) {
+			rescore.setQuery(
+				JSONFactoryUtil.createJSONObject(
+					(Map<?, ?>)rescore.getQuery()));
+		}
 	}
 
 }

@@ -23,6 +23,7 @@ import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
 import com.liferay.portal.search.highlight.HighlightBuilderFactory;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.rescore.RescoreBuilderFactory;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.significance.SignificanceHeuristics;
@@ -93,7 +94,8 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 			new GeneralSXPSearchRequestBodyContributor(),
 			new HighlightSXPSearchRequestBodyContributor(highlightConverter),
 			new QuerySXPSearchRequestBodyContributor(
-				_complexQueryPartBuilderFactory, queryConverter),
+				_complexQueryPartBuilderFactory, queryConverter,
+				_rescoreBuilderFactory),
 			new SuggestSXPSearchRequestBodyContributor(),
 			new SortSXPSearchRequestBodyContributor(
 				_geoBuilders, queryConverter, scriptConverter, _sorts));
@@ -226,6 +228,9 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 	@Reference
 	private Queries _queries;
+
+	@Reference
+	private RescoreBuilderFactory _rescoreBuilderFactory;
 
 	@Reference
 	private Scripts _scripts;

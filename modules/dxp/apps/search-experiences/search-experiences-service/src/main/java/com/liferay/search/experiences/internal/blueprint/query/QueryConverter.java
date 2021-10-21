@@ -37,6 +37,10 @@ public class QueryConverter {
 	}
 
 	public Query toQuery(JSONObject jsonObject) {
+		if (jsonObject == null) {
+			return null;
+		}
+
 		Iterator<String> iterator = jsonObject.keys();
 
 		String type = iterator.next();

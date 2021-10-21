@@ -439,21 +439,118 @@ definition {
 	}
 
 	@description = "LPS-130215 - Verify that, selecting all versions, the filter considers only the steps touched by the task"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test FilterConsidersStepsTouchedByTaksOnPage {
+		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#FilterConsidersStepsTouchedByTaksOnPage";
 
-		// TODO LRQA-68935 FilterConsidersStepsTouchedByTaksOnPage pending implementation
+		task ("Configure Single Approver Workflow to Blogs Entry") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
 
+			Navigator.gotoNavItem(navItem = "Configuration");
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Blogs Entry");
+		}
+
+		task ("Create blog entry and approve it") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				panel = "Site Administration",
+				portlet = "Blogs");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry 1");
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Blogs Entry 1",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "Review");
+
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Blogs Entry 1",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "Review");
+		}
+
+		task ("Edit Single Approver Workflow") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
+
+			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+			KaleoDesigner.selectNode(nodeNodeLabel = "review");
+
+			KaleoDesigner.editNodeName(nodeName = "review2");
+
+			KaleoDesigner.selectNode(nodeNodeLabel = "update");
+
+			KaleoDesigner.editNodeName(nodeName = "update2");
+
+			Button.clickUpdate();
+		}
+
+		Navigator.gotoBack();
+
+		task ("Create blog entry and approve it") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry 2");
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Blogs Entry 2",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "review2");
+
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Blogs Entry 2",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "review2");
+		}
+
+		task ("Assert that the step Update is not displayed on Performance by Step page") {
+			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+			WorkflowMetricsPerformanceByStep.goToPerformanceTab();
+
+			Click(
+				key_stepsNumber = "3",
+				locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
+
+			AssertElementNotPresent(
+				key_stepName = "Update",
+				locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
+		}
 	}
 
 	@description = "LPS-130215 - Verify that the Process Version filter is available on the Performance by Step page"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test FilterIsAvailableOnPage {
+		task ("Go to Performance by Step Page") {
+			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-68931 FilterIsAvailableOnPage pending implementation
+			WorkflowMetricsPerformanceByStep.goToPerformanceTab();
 
+			Click(
+				key_stepsNumber = "3",
+				locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
+		}
+
+		task ("Assert that the Process Version filter is present") {
+			AssertElementPresent(locator1 = "WorkflowMetricsPerformanceByStep#PROCESS_VERSION_DROPDOWN");
+		}
 	}
 
 	@description = "LPS-100674 - Verify that when the user selects Last 7 Days time period, the result and filter options displayed in accordance with reference"
@@ -779,12 +876,105 @@ definition {
 	}
 
 	@description = "LPS-101075 - Verify that, when a task do not touch the workflow task, the step is not displayed for the specific version"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test StepIsNotDisplayedForSpecificVersion {
+		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#StepIsNotDisplayedForSpecificVersion";
 
-		// TODO LRQA-68928 StepIsNotDisplayedForSpecificVersion pending implementation
+		task ("Configure Single Approver Workflow to Blogs Entry") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
 
+			Navigator.gotoNavItem(navItem = "Configuration");
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Blogs Entry");
+		}
+
+		Navigator.openURL();
+
+		task ("Create blog entry and approve it") {
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				panel = "Site Administration",
+				portlet = "Blogs");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry 1");
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Blogs Entry 1",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "Review");
+
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Blogs Entry 1",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "Review");
+		}
+
+		task ("Assert that the steps displayed on Performance by Step card are Review and Update") {
+			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+			WorkflowMetricsPerformanceByStep.goToPerformanceTab();
+
+			WorkflowMetricsPerformanceByStep.viewPerformanceByStepValues(
+				avgCompletionTimeValue = "1min",
+				isNotPresent = "",
+				slaBreachedValue = "0 (0%)",
+				stepName = "Review");
+
+			WorkflowMetricsPerformanceByStep.viewPerformanceByStepValues(
+				avgCompletionTimeValue = "0min",
+				isNotPresent = "",
+				slaBreachedValue = "0 (0%)",
+				stepName = "Update");
+		}
+
+		task ("Edit Single Approver Workflow") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
+
+			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+			KaleoDesigner.selectNode(nodeNodeLabel = "review");
+
+			KaleoDesigner.editNodeName(nodeName = "review2");
+
+			KaleoDesigner.selectNode(nodeNodeLabel = "update");
+
+			KaleoDesigner.editNodeName(nodeName = "update2");
+
+			Button.clickUpdate();
+		}
+
+		task ("On Performance by Step card, select Version 1.0") {
+			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+			WorkflowMetricsPerformanceByStep.goToPerformanceTab();
+
+			Click(
+				key_dateRange = "All Version",
+				key_title = "Performance by Step",
+				locator1 = "WorkflowMetrics#METRICS_DATE_RANGE_DROPDOWN_BY_TITLE");
+
+			Click(
+				key_dateRange = "1.0",
+				locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
+		}
+
+		task ("Assert that the Update step is not displayed on Performance by Step card") {
+			AssertElementNotPresent(
+				key_stepName = "Update",
+				locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
+		}
 	}
 
 	@description = "LPS-97667 - Verify that when there are tasks with average time smaller than 1 minute the average completion time is displayed"

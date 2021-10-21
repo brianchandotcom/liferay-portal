@@ -32,6 +32,11 @@
 	<td>xpath=(//div[contains(@class,'asset-summary')])[${index}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CONTENT_DISPLAY_IMAGE</td>
+	<td>xpath=(//div[contains(@data-analytics-asset-type,'${assetType}')])[${index}]//img[contains(@src,'${image}')]</td>
+	<td></td>
+</tr>
 <!--FRAGMENT-->
 <tr>
 	<td>FRAGMENT</td>

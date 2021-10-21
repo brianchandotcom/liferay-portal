@@ -20,6 +20,10 @@
 				combine: Liferay.AUI.getCombine(),
 				filter: Liferay.AUI.getFilterConfig(),
 				modules: {
+					'liferay-calendar-a11y': {
+						path: 'calendar_a11y.js',
+						requires: ['calendar'],
+					},
 					'liferay-calendar-container': {
 						path: 'calendar_container.js',
 						requires: [
@@ -121,6 +125,7 @@
 							'aui-datatype',
 							'aui-scheduler',
 							'dd-plugin',
+							'liferay-calendar-a11y',
 							'liferay-calendar-message-util',
 							'liferay-calendar-recurrence-converter',
 							'liferay-calendar-recurrence-util',

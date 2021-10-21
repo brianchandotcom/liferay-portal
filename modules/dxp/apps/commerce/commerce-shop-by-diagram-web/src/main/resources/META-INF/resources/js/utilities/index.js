@@ -50,6 +50,7 @@ export function formatMappedProduct(type, quantity, sequence, selectedProduct) {
 		case 'sku':
 			return {
 				...definition,
+				productId: selectedProduct.productId,
 				quantity,
 				sku: selectedProduct.sku,
 				skuId: selectedProduct.id,

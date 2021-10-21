@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -51,7 +49,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -70,17 +67,11 @@ public class CPInstanceIndexerTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.addUser(_company);
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(), 0);
+		_group = GroupTestUtil.addGroup();
+
+		_user = UserTestUtil.addUser();
 
 		_indexer = _indexerRegistry.getIndexer(CPInstance.class);
 	}
@@ -188,7 +179,6 @@ public class CPInstanceIndexerTest {
 		return searchContext;
 	}
 
-	private static Company _company;
 	private static Indexer<CPInstance> _indexer;
 
 	@Inject

@@ -26,7 +26,6 @@ import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
@@ -57,7 +55,6 @@ import org.frutilla.FrutillaRule;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -76,17 +73,11 @@ public class SpecificationOptionFacetsTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.addUser(_company);
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(), 0);
+		_group = GroupTestUtil.addGroup();
+
+		_user = UserTestUtil.addUser();
 
 		_commerceCatalog = _commerceCatalogLocalService.addCommerceCatalog(
 			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -141,7 +132,7 @@ public class SpecificationOptionFacetsTest {
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			_commerceCatalog.getGroupId());
 
-		searchContext.setCompanyId(_company.getCompanyId());
+		searchContext.setCompanyId(_group.getCompanyId());
 		searchContext.setUserId(_user.getUserId());
 
 		Facet facet = new SimpleFacet(searchContext);
@@ -218,7 +209,7 @@ public class SpecificationOptionFacetsTest {
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			_commerceCatalog.getGroupId());
 
-		searchContext.setCompanyId(_company.getCompanyId());
+		searchContext.setCompanyId(_group.getCompanyId());
 		searchContext.setUserId(_user.getUserId());
 
 		Facet facet = new SimpleFacet(searchContext);
@@ -242,7 +233,6 @@ public class SpecificationOptionFacetsTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static Company _company;
 	private static User _user;
 
 	private CommerceCatalog _commerceCatalog;

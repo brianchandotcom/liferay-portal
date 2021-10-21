@@ -11,13 +11,7 @@ const BASE_WIDTH = '176px';
 const BASE_HEIGHT = '176px';
 
 const DropArea = ({
-	dropAreaProps: {
-		heightContainer,
-
-		limitFiles,
-		type,
-		widthContainer,
-	},
+	dropAreaProps: {heightContainer, limitFiles, type, widthContainer},
 	files = [],
 	setFiles,
 	setShowBadgeInfo,

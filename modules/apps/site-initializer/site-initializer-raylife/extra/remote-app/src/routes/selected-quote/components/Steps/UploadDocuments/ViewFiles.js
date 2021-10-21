@@ -33,7 +33,7 @@ const ViewFiles = ({files = [], onRemoveFile, type}) => {
 						<div className="flex-column" title={file.name}>
 							<div
 								className={classNames('card', {
-									'margin-right': index < 3,
+									spaced: index < 3,
 								})}
 							>
 								<p>Uploading...</p>

@@ -72,6 +72,21 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 		return "/view.jsp";
 	}
 
+	private void _addHeadlessEndpoints(
+		ApplicationDTO applicationDTO, Map<String, String> headlessEndpoints,
+		ResourceMethodInfoDTO resourceMethodInfoDTO) {
+
+		String openApi = StringBundler.concat(
+			"/o", applicationDTO.base, resourceMethodInfoDTO.path);
+
+		if (!openApi.contains("openapi")) {
+			return;
+		}
+
+		headlessEndpoints.put(
+			applicationDTO.base, openApi.replaceAll("\\{.+\\}", "json"));
+	}
+
 	private Map<String, String> _getHeadlessEndpoints() {
 		Map<String, String> headlessEndpoints = new HashMap<>();
 
@@ -82,17 +97,17 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 				for (ResourceMethodInfoDTO resourceMethodInfoDTO :
 						resourceDTO.resourceMethods) {
 
-					String openApi = StringBundler.concat(
-						"/o", applicationDTO.base, resourceMethodInfoDTO.path);
-
-					if (!openApi.contains("openapi")) {
-						continue;
-					}
-
-					headlessEndpoints.put(
-						applicationDTO.base,
-						openApi.replaceAll("\\{.+\\}", "json"));
+					_addHeadlessEndpoints(
+						applicationDTO, headlessEndpoints,
+						resourceMethodInfoDTO);
 				}
+			}
+
+			for (ResourceMethodInfoDTO resourceMethod :
+					applicationDTO.resourceMethods) {
+
+				_addHeadlessEndpoints(
+					applicationDTO, headlessEndpoints, resourceMethod);
 			}
 		}
 

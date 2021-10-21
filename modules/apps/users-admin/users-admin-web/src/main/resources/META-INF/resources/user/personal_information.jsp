@@ -32,7 +32,9 @@ if (selContact != null) {
 	birthday.setTime(selContact.getBirthday());
 }
 
-String organizationIdsString = ParamUtil.getString(request, "organizationsSearchContainerPrimaryKeys");
+String addOrganizationIds = ParamUtil.getString(request, "addOrganizationIds");
+
+String organizationIdsString = ParamUtil.getString(request, "organizationsSearchContainerPrimaryKeys", addOrganizationIds);
 %>
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />

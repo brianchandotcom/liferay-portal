@@ -1865,26 +1865,15 @@ definition {
 
 	}
 
-	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Form's storage type when inactivated"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test ObjectDisapperasFormStorageSettingsWhenInactivated {
-
-		// TODO LPS-140863 ObjectDisapperasFormStorageSettingsWhenInactivated pending implementation
-
-	}
-
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Workflow Site Menu page when inactivated"
 	@priority = "4"
 	test ObjectDisappearsWorkflowSiteMenuWhenInactivated {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
+			panelCategoryKey = "Site Administration > Content & Data",
 			pluralLabelName = "Custom Objects",
-			scope = "Site",
-			panelCategoryKey = "Site Administration > Content & Data");
+			scope = "Site");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
@@ -1903,10 +1892,16 @@ definition {
 			portlet = "Workflow");
 
 		AssertElementNotPresent(
-			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW",
-			key_workflowResourceValue = "Custom Object");
+			key_workflowResourceValue = "Custom Object",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
+	}
 
+	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Form's storage type when inactivated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ObjectDisapperasFormStorageSettingsWhenInactivated {
 
+		// TODO LPS-140863 ObjectDisapperasFormStorageSettingsWhenInactivated pending implementation
 
 	}
 

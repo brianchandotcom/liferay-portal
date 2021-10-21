@@ -1,7 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property osgi.modules.includes = "frontend-js-a11y-sample-web";
+	property osgi.modules.includes = "frontend-js-a11y-sample-web,frontend-js-a11y-web";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "User Interface";

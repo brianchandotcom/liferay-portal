@@ -259,7 +259,7 @@ public class BatchPlannerPlanServiceHttp {
 
 	public static java.util.List
 		<com.liferay.batch.planner.model.BatchPlannerPlan> getBatchPlannerPlans(
-			HttpPrincipal httpPrincipal, long companyId, boolean export,
+			HttpPrincipal httpPrincipal, long companyId, boolean template,
 			int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.batch.planner.model.BatchPlannerPlan>
@@ -271,7 +271,7 @@ public class BatchPlannerPlanServiceHttp {
 				_getBatchPlannerPlansParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, export, start, end, orderByComparator);
+				methodKey, companyId, template, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -399,7 +399,7 @@ public class BatchPlannerPlanServiceHttp {
 	}
 
 	public static int getBatchPlannerPlansCount(
-		HttpPrincipal httpPrincipal, long companyId, boolean export) {
+		HttpPrincipal httpPrincipal, long companyId, boolean template) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -407,7 +407,7 @@ public class BatchPlannerPlanServiceHttp {
 				_getBatchPlannerPlansCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, export);
+				methodKey, companyId, template);
 
 			Object returnObj = null;
 

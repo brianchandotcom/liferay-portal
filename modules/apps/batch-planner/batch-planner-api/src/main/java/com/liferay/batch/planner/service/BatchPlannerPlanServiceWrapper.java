@@ -86,13 +86,13 @@ public class BatchPlannerPlanServiceWrapper
 	@Override
 	public java.util.List<com.liferay.batch.planner.model.BatchPlannerPlan>
 		getBatchPlannerPlans(
-			long companyId, boolean export, int start, int end,
+			long companyId, boolean template, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.batch.planner.model.BatchPlannerPlan>
 					orderByComparator) {
 
 		return _batchPlannerPlanService.getBatchPlannerPlans(
-			companyId, export, start, end, orderByComparator);
+			companyId, template, start, end, orderByComparator);
 	}
 
 	@Override
@@ -121,9 +121,9 @@ public class BatchPlannerPlanServiceWrapper
 	}
 
 	@Override
-	public int getBatchPlannerPlansCount(long companyId, boolean export) {
+	public int getBatchPlannerPlansCount(long companyId, boolean template) {
 		return _batchPlannerPlanService.getBatchPlannerPlansCount(
-			companyId, export);
+			companyId, template);
 	}
 
 	@Override

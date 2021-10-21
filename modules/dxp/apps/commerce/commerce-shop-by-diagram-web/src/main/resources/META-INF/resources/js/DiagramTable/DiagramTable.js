@@ -110,6 +110,7 @@ function DiagramTable({isAdmin, productId}) {
 
 			{results && !results.length && !loaderActive && (
 				<ClayEmptyState
+					className="my-5 text-center"
 					title={Liferay.Language.get('there-are-no-results')}
 				/>
 			)}

@@ -27,8 +27,10 @@ CSDiagramSetting csDiagramSetting = csDiagramCPTypeDisplayContext.getCSDiagramSe
 %>
 
 <div class="row">
-	<div class="col-lg-8">
+	<div class="col-lg-8 d-flex flex-column">
 		<commerce-ui:panel
+			bodyClasses="p-0"
+			elementClasses="flex-fill"
 			title='<%= LanguageUtil.get(resourceBundle, "diagram-mapping") %>'
 		>
 
@@ -45,18 +47,19 @@ CSDiagramSetting csDiagramSetting = csDiagramCPTypeDisplayContext.getCSDiagramSe
 
 	<div class="col-lg-4">
 		<commerce-ui:panel
+			bodyClasses="p-0"
 			elementClasses="flex-fill"
 			title='<%= LanguageUtil.get(resourceBundle, "mapped-products") %>'
 		>
-			<clay:headless-data-set-display
-				apiURL="<%= csDiagramCPTypeDisplayContext.getCSDiagramMappedProductsAPIURL(cpCatalogEntry) %>"
-				formId="fm"
-				id="<%= CSDiagramDataSetConstants.CS_DIAGRAM_MAPPED_PRODUCTS_DATA_SET_KEY %>"
-				itemsPerPage="<%= 10 %>"
-				namespace="<%= liferayPortletResponse.getNamespace() %>"
-				pageNumber="<%= 1 %>"
-				portletURL="<%= currentURLObj %>"
-				style="stacked"
+			<react:component
+				module="js/DiagramTable/DiagramTable"
+				props='<%=
+					HashMapBuilder.<String, Object>put(
+						"isAdmin", true
+					).put(
+						"productId", cpCatalogEntry.getCProductId()
+					).build()
+				%>'
 			/>
 		</commerce-ui:panel>
 	</div>

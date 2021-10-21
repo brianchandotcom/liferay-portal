@@ -16,13 +16,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
 import {UPDATE_DATASET_DISPLAY} from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
 import PropTypes from 'prop-types';
-import React, {
-	useEffect,
-	useLayoutEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {
 	DEFAULT_LINK_OPTION,
@@ -30,20 +24,15 @@ import {
 	LINKING_OPTIONS,
 } from '../utilities/constants';
 import {deletePin, savePin} from '../utilities/data';
-import {
-	calculateTooltipStyleFromTarget,
-	formatMappedProduct,
-} from '../utilities/index';
+import {formatMappedProduct} from '../utilities/index';
 
-function Tooltip({
+function AdminTooltipContent({
 	closeTooltip,
-	containerRef,
 	datasetDisplayId,
 	productId,
 	readOnlySequence,
 	selectedPin,
 	sequence: sequenceProp,
-	target,
 	updatePins,
 	x,
 	y,
@@ -62,15 +51,7 @@ function Tooltip({
 	);
 	const [saving, updateSaving] = useState(false);
 	const [deleting, updateDeleting] = useState(false);
-	const [tooltipStyle, updateTooltipStyle] = useState({});
 	const isMounted = useIsMounted();
-	const tooltipRef = useRef();
-
-	useLayoutEffect(() => {
-		const style = calculateTooltipStyleFromTarget(target, containerRef);
-
-		updateTooltipStyle(style);
-	}, [target, containerRef]);
 
 	useEffect(() => {
 		updateQuantity(selectedPin?.mappedProduct.quantity || 1);
@@ -80,24 +61,6 @@ function Tooltip({
 		updateType(selectedPin?.mappedProduct.type || DEFAULT_LINK_OPTION);
 		updateMappedProduct(selectedPin?.mappedProduct || null);
 	}, [selectedPin, sequenceProp]);
-
-	useLayoutEffect(() => {
-		function handleWindowClick(event) {
-			if (
-				!tooltipRef.current.contains(event.target) &&
-				event.target.tagName !== 'text' &&
-				!event.target.closest('.autocomplete-dropdown-menu')
-			) {
-				closeTooltip();
-			}
-		}
-
-		document.addEventListener('mousedown', handleWindowClick);
-
-		return () => {
-			document.removeEventListener('mousedown', handleWindowClick);
-		};
-	}, [closeTooltip]);
 
 	function _handleSubmit(event) {
 		event.preventDefault();
@@ -233,118 +196,109 @@ function Tooltip({
 	const disabled = !mappedProduct || !sequence || loading;
 
 	return (
-		<div
-			className="diagram-tooltip p-4"
-			ref={tooltipRef}
-			style={tooltipStyle}
-		>
-			<ClayForm onSubmit={_handleSubmit}>
-				<ClayForm.Group>
-					<label htmlFor="sequenceInput">
-						{Liferay.Language.get('position')}
-					</label>
+		<ClayForm onSubmit={_handleSubmit}>
+			<ClayForm.Group>
+				<label htmlFor="sequenceInput">
+					{Liferay.Language.get('position')}
+				</label>
 
-					<ClayInput
-						id="sequenceInput"
-						onChange={(event) => updateSequence(event.target.value)}
-						readOnly={readOnlySequence}
-						type="text"
-						value={sequence}
-					/>
-				</ClayForm.Group>
+				<ClayInput
+					id="sequenceInput"
+					onChange={(event) => updateSequence(event.target.value)}
+					readOnly={readOnlySequence}
+					type="text"
+					value={sequence}
+				/>
+			</ClayForm.Group>
 
-				<ClayForm.Group>
-					<label htmlFor="typeInput">
-						{Liferay.Language.get('type')}
-					</label>
+			<ClayForm.Group>
+				<label htmlFor="typeInput">
+					{Liferay.Language.get('type')}
+				</label>
 
-					<ClaySelect
-						id="typeInput"
-						onChange={(event) => {
-							updateMappedProduct(null);
-							updateType(event.target.value);
-						}}
-						value={type}
-					>
-						{['sku', 'diagram', 'external'].map((link) => (
-							<ClaySelect.Option
-								key={link}
-								label={LINKING_OPTIONS[link].label}
-								value={link}
-							/>
-						))}
-					</ClaySelect>
-				</ClayForm.Group>
-
-				<div className="row">
-					<div className="col">
-						<LinkedProductFormGroup
-							updateValue={updateMappedProduct}
-							value={mappedProduct}
+				<ClaySelect
+					id="typeInput"
+					onChange={(event) => {
+						updateMappedProduct(null);
+						updateType(event.target.value);
+					}}
+					value={type}
+				>
+					{['sku', 'diagram', 'external'].map((link) => (
+						<ClaySelect.Option
+							key={link}
+							label={LINKING_OPTIONS[link].label}
+							value={link}
 						/>
-					</div>
+					))}
+				</ClaySelect>
+			</ClayForm.Group>
 
-					{type !== 'diagram' && (
-						<div className="col-3">
-							<ClayForm.Group>
-								<label htmlFor="quantityInput">
-									{Liferay.Language.get('quantity')}
-								</label>
-
-								<ClayInput
-									id="quantityInput"
-									min={1}
-									onChange={(event) =>
-										updateQuantity(event.target.value)
-									}
-									type="number"
-									value={quantity}
-								/>
-							</ClayForm.Group>
-						</div>
-					)}
+			<div className="row">
+				<div className="col">
+					<LinkedProductFormGroup
+						updateValue={updateMappedProduct}
+						value={mappedProduct}
+					/>
 				</div>
 
-				<div className="d-flex justify-content-end mt-3">
-					{selectedPin && (
-						<ClayButton
-							className="mr-auto"
-							disabled={loading}
-							displayType="link"
-							onClick={_handleDelete}
-							type="button"
-						>
-							{deleting ? (
-								<ClayLoadingIndicator small />
-							) : (
-								Liferay.Language.get('delete')
-							)}
-						</ClayButton>
-					)}
+				{type !== 'diagram' && (
+					<div className="col-3">
+						<ClayForm.Group>
+							<label htmlFor="quantityInput">
+								{Liferay.Language.get('quantity')}
+							</label>
 
+							<ClayInput
+								id="quantityInput"
+								min={1}
+								onChange={(event) =>
+									updateQuantity(event.target.value)
+								}
+								type="number"
+								value={quantity}
+							/>
+						</ClayForm.Group>
+					</div>
+				)}
+			</div>
+
+			<div className="d-flex justify-content-end mt-3">
+				{selectedPin && (
 					<ClayButton
-						className="mr-3"
-						displayType="secondary"
-						onClick={() => closeTooltip()}
+						className="mr-auto"
+						disabled={loading}
+						displayType="link"
+						onClick={_handleDelete}
 						type="button"
 					>
-						{Liferay.Language.get('cancel')}
+						{deleting ? (
+							<ClayLoadingIndicator small />
+						) : (
+							Liferay.Language.get('delete')
+						)}
 					</ClayButton>
+				)}
 
-					<ClayButton disabled={disabled} type="submit">
-						{saving ? <ClayLoadingIndicator small /> : saveMessage}
-					</ClayButton>
-				</div>
-			</ClayForm>
-		</div>
+				<ClayButton
+					className="mr-3"
+					displayType="secondary"
+					onClick={() => closeTooltip()}
+					type="button"
+				>
+					{Liferay.Language.get('cancel')}
+				</ClayButton>
+
+				<ClayButton disabled={disabled} type="submit">
+					{saving ? <ClayLoadingIndicator small /> : saveMessage}
+				</ClayButton>
+			</div>
+		</ClayForm>
 	);
 }
 
-Tooltip.propTypes = {
+AdminTooltipContent.propTypes = {
 	closeTooltip: PropTypes.func.isRequired,
-	containerRef: PropTypes.shape({
-		current: PropTypes.any,
-	}).isRequired,
 	datasetDisplayId: PropTypes.string,
 	productId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 		.isRequired,
@@ -366,4 +320,4 @@ Tooltip.propTypes = {
 	y: PropTypes.number,
 };
 
-export default Tooltip;
+export default AdminTooltipContent;

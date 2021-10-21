@@ -11,7 +11,7 @@
 
 import {DIAGRAM_LABELS_MAX_LENGTH, DRAG_AND_DROP_THRESHOLD} from './constants';
 
-export function calculateTooltipStyleFromTarget(target, containerRef) {
+export function calculateTooltipStyleFromTarget(target) {
 	const {
 		height: targetHeight,
 		left: targetLeft,
@@ -19,33 +19,22 @@ export function calculateTooltipStyleFromTarget(target, containerRef) {
 		width: targetWidth,
 	} = target.getBoundingClientRect();
 
+	const distanceFromTop = window.pageYOffset + targetTop;
 	const targetRight = window.innerWidth - targetLeft - targetWidth;
-	const targetBottom = window.innerHeight - targetTop - targetHeight;
-
-	const {
-		height: containerHeight,
-		left: containerLeft,
-		top: containerTop,
-		width: containerWidth,
-	} = containerRef.current.getBoundingClientRect();
-
-	const containerRight = window.innerWidth - containerLeft - containerWidth;
-	const containerBottom = window.innerHeight - containerTop - containerHeight;
-
 	const style = {};
 
-	if (targetLeft + targetWidth / 2 < window.innerWidth / 2) {
-		style.left = targetLeft - containerLeft + targetWidth;
+	if (targetTop + targetHeight / 2 < window.innerHeight / 2) {
+		style.top = distanceFromTop + targetHeight;
 	}
 	else {
-		style.right = targetRight - containerRight + targetWidth;
+		style.top = distanceFromTop + targetHeight - 150;
 	}
 
-	if (targetTop + targetHeight / 2 < window.innerHeight / 2) {
-		style.top = targetTop - containerTop + targetHeight;
+	if (targetLeft + targetWidth / 2 < window.innerWidth / 2) {
+		style.left = targetLeft + targetWidth + 10;
 	}
 	else {
-		style.bottom = targetBottom - containerBottom + targetHeight;
+		style.right = targetRight + targetWidth + 10;
 	}
 
 	return style;

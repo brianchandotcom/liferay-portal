@@ -20,9 +20,10 @@ import React, {
 	useState,
 } from 'react';
 
+import AdminTooltipContent from '../components/AdminTooltipContent';
 import DiagramFooter from '../components/DiagramFooter';
 import Sequence from '../components/Sequence';
-import Tooltip from '../components/Tooltip';
+import TooltipProvider from '../components/TooltipProvider';
 import {DIAGRAM_TABLE_EVENTS} from '../utilities/constants';
 import {loadPins} from '../utilities/data';
 import D3Handler from './D3Handler';
@@ -229,19 +230,23 @@ function Diagram({
 						/>
 					)}
 				</div>
+			</div>
 
-				{isAdmin && tooltipData && (
-					<Tooltip
+			{isAdmin && tooltipData && (
+				<TooltipProvider
+					closeTooltip={() => setTooltipData(null)}
+					target={tooltipData.target}
+				>
+					<AdminTooltipContent
 						closeTooltip={() => setTooltipData(null)}
-						containerRef={wrapperRef}
 						datasetDisplayId={datasetDisplayId}
 						productId={productId}
 						readOnlySequence={true}
 						updatePins={updatePins}
 						{...tooltipData}
 					/>
-				)}
-			</div>
+				</TooltipProvider>
+			)}
 
 			<DiagramFooter
 				chartInstance={chartInstance}

@@ -28,10 +28,12 @@ class D3Handler extends DiagramZoomHandler {
 		imageURL,
 		updateZoomState,
 		setTooltipData,
-		closeDropdowns
+		closeDropdowns,
+		allowPinsUpdate
 	) {
 		super();
 
+		this._allowPinsUpdate = allowPinsUpdate;
 		this._closeDropdowns = closeDropdowns;
 		this._currentScale = 1;
 		this._d3diagramWrapper = d3select(diagramWrapper);
@@ -43,7 +45,6 @@ class D3Handler extends DiagramZoomHandler {
 		this._updateZoomState = updateZoomState;
 		this._zoomWrapper = zoomWrapper;
 
-		this._handleClickOutside = this._handleClickOutside.bind(this);
 		this._handleDragEnded = this._handleDragEnded.bind(this);
 		this._handleDragStarted = this._handleDragStarted.bind(this);
 		this._handleDragging = this._handleDragging.bind(this);
@@ -132,6 +133,12 @@ class D3Handler extends DiagramZoomHandler {
 
 	_handleImageClick() {
 		this._resetActivePinsState();
+
+		if (!this._allowPinsUpdate) {
+			this._setTooltipData(null);
+
+			return;
+		}
 
 		const [x, y] = getPercentagePositions(
 			d3event.x,
@@ -245,15 +252,18 @@ class D3Handler extends DiagramZoomHandler {
 						this._currentScale
 					)})`
 			)
-			.call(
+			.on('click', (_d, index, nodes) => {
+				this._selectPinNode(nodes[index]);
+			});
+
+		if (this._allowPinsUpdate) {
+			pinsWrapper.call(
 				d3drag()
 					.on('start', this._handleDragStarted)
 					.on('drag', this._handleDragging)
 					.on('end', this._handleDragEnded)
-			)
-			.on('click', (_d, index, nodes) => {
-				this._selectPinNode(nodes[index]);
-			});
+			);
+		}
 
 		const radiusHandlers = pinsWrapper
 			.append('g')

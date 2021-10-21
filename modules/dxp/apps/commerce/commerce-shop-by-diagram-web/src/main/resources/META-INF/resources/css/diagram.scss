@@ -45,16 +45,6 @@ $diagram-height: 700px;
 		}
 	}
 
-	.diagram-tooltip {
-		background: $white;
-		border-radius: 3px;
-		box-shadow: 1px 6px 11px rgba(0, 0, 0, 0.1);
-		padding: $spacer;
-		position: absolute;
-		width: 400px;
-		z-index: 4;
-	}
-
 	.empty-pin-node {
 		.pin-node-background {
 			fill: $primary;
@@ -205,4 +195,14 @@ $diagram-height: 700px;
 		flex-grow: 1;
 		max-height: none;
 	}
+}
+
+.diagram-tooltip {
+	background: $white;
+	border-radius: 3px;
+	box-shadow: 1px 6px 11px rgba(0, 0, 0, 0.1);
+	padding: map-get($spacers, 4);
+	position: absolute;
+	width: 400px;
+	z-index: 900;
 }

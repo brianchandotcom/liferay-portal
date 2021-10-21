@@ -15,9 +15,10 @@ import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 
+import AdminTooltipContent from '../components/AdminTooltipContent';
 import DiagramFooter from '../components/DiagramFooter';
 import DiagramHeader from '../components/DiagramHeader';
-import Tooltip from '../components/Tooltip';
+import TooltipProvider from '../components/TooltipProvider';
 import {PINS_RADIUS} from '../utilities/constants';
 import {loadPins, updateGlobalPinsRadius} from '../utilities/data';
 import D3Handler from './D3Handler';
@@ -39,7 +40,6 @@ function Diagram({
 	const chartInstance = useRef(null);
 	const pinsRadiusInitialized = useRef(false);
 	const svgRef = useRef(null);
-	const wrapperRef = useRef(null);
 	const zoomHandlerRef = useRef(null);
 	const [currentZoom, updateCurrentZoom] = useState(1);
 	const [expanded, updateExpanded] = useState(false);
@@ -82,46 +82,49 @@ function Diagram({
 			imageURL,
 			updateCurrentZoom,
 			setTooltipData,
-			() => setDropdownActive(false)
+			() => setDropdownActive(false),
+			isAdmin
 		);
 
 		return () => {
 			chartInstance.current.cleanUp();
 		};
-	}, [imageURL]);
+	}, [imageURL, isAdmin]);
 
 	return (
 		<div className={classNames('shop-by-diagram', {expanded})}>
-			<DiagramHeader
-				dropdownActive={dropdownActive}
-				pinsRadius={pinsRadius}
-				setDropdownActive={setDropdownActive}
-				updatePinsRadius={updatePinsRadius}
-			/>
+			{isAdmin && (
+				<DiagramHeader
+					dropdownActive={dropdownActive}
+					pinsRadius={pinsRadius}
+					setDropdownActive={setDropdownActive}
+					updatePinsRadius={updatePinsRadius}
+				/>
+			)}
 
-			<div
-				className="bg-white border-bottom border-top view-wrapper"
-				ref={wrapperRef}
-			>
+			<div className="bg-white border-bottom border-top view-wrapper">
 				<ClayLoadingIndicator className="svg-loader" />
 
 				<svg className="svg-wrapper" ref={svgRef}>
 					<g className="zoom-handler" ref={zoomHandlerRef} />
 				</svg>
+			</div>
 
-				{isAdmin && tooltipData && (
-					<Tooltip
+			{isAdmin && tooltipData && (
+				<TooltipProvider
+					closeTooltip={() => setTooltipData(null)}
+					target={tooltipData.target}
+				>
+					<AdminTooltipContent
 						closeTooltip={() => setTooltipData(null)}
-						containerRef={wrapperRef}
 						datasetDisplayId={datasetDisplayId}
 						productId={productId}
 						readOnlySequence={false}
 						updatePins={updatePins}
 						{...tooltipData}
 					/>
-				)}
-			</div>
-
+				</TooltipProvider>
+			)}
 			<DiagramFooter
 				chartInstance={chartInstance}
 				currentZoom={currentZoom}

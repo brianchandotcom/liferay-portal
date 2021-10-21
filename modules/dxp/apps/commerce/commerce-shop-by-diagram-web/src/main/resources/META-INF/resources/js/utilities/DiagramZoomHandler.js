@@ -18,10 +18,14 @@ import {
 import {ZOOM_VALUES} from './constants';
 
 class DiagramZoomHandler {
+	constructor() {
+		this._handleClickOutside = this._handleClickOutside.bind(this);
+	}
+
 	_handleClickOutside(event) {
 		if (
 			!this._diagramWrapper.parentNode.contains(event.target) &&
-			!event.target.closest('.autocomplete-dropdown-menu')
+			!event.target.closest('.diagram-tooltip-wrapper')
 		) {
 			this._resetActivePinsState();
 		}

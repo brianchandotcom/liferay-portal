@@ -28,109 +28,117 @@ String type = BeanParamUtil.getString(csDiagramSetting, renderRequest, "type", D
 CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(type);
 %>
 
-<div class="pt-4">
-	<portlet:actionURL name="/cp_definitions/edit_cs_diagram_setting" var="editProductDefinitionDiagramSettingActionURL" />
+<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/commerce-shop-by-diagram-web/css/shop-by-diagram-edit-page.css") %>" rel="stylesheet" />
 
-	<aui:form action="<%= editProductDefinitionDiagramSettingActionURL %>" cssClass="mt-4" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateCSDiagramSetting" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
-		<aui:input name="radius" type="hidden" value="<%= (csDiagramSetting != null) ? csDiagramSetting.getRadius() : csDiagramSettingDisplayContext.getRadius() %>" />
+<portlet:actionURL name="/cp_definitions/edit_cs_diagram_setting" var="editProductDefinitionDiagramSettingActionURL" />
 
-		<liferay-ui:error exception="<%= NoSuchCPAttachmentFileEntryException.class %>" message="please-select-an-existing-file" />
-		<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="please-select-an-existing-file" />
+<aui:form action="<%= editProductDefinitionDiagramSettingActionURL %>" cssClass="mt-4" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateCSDiagramSetting" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
+	<aui:input name="radius" type="hidden" value="<%= (csDiagramSetting != null) ? csDiagramSetting.getRadius() : csDiagramSettingDisplayContext.getRadius() %>" />
 
-		<div class="row">
-			<div class="col-lg-8">
-				<commerce-ui:panel
-					title='<%= LanguageUtil.get(resourceBundle, "diagram-settings") %>'
-				>
-					<aui:select bean="<%= csDiagramSetting %>" label="type" model="<%= CSDiagramSetting.class %>" name="type">
+	<liferay-ui:error exception="<%= NoSuchCPAttachmentFileEntryException.class %>" message="please-select-an-existing-file" />
+	<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="please-select-an-existing-file" />
 
-						<%
-						for (CSDiagramType curCSDiagramType : csDiagramSettingDisplayContext.getCSDiagramTypes()) {
-							String csDiagramTypeKey = curCSDiagramType.getKey();
-						%>
-
-							<aui:option label="<%= curCSDiagramType.getLabel(locale) %>" selected="<%= (csDiagramSetting != null) && csDiagramTypeKey.equals(type) %>" value="<%= curCSDiagramType.getKey() %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-				</commerce-ui:panel>
-
-				<commerce-ui:panel
-					bodyClasses="p-0"
-					title='<%= LanguageUtil.get(resourceBundle, "diagram-mapping") %>'
-				>
+	<div class="row">
+		<div class="col-lg-8 d-flex flex-column">
+			<commerce-ui:panel
+				elementClasses="flex-fill"
+				title='<%= LanguageUtil.get(resourceBundle, "diagram-settings") %>'
+			>
+				<aui:select bean="<%= csDiagramSetting %>" label="type" model="<%= CSDiagramSetting.class %>" name="type">
 
 					<%
-					if (csDiagramSetting != null) {
-						csDiagramType.render(csDiagramSetting, request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
-					}
-					else {
+					for (CSDiagramType curCSDiagramType : csDiagramSettingDisplayContext.getCSDiagramTypes()) {
+						String csDiagramTypeKey = curCSDiagramType.getKey();
 					%>
 
-						<div class="p-3 text-center">
-							<liferay-ui:message key="please-upload-a-file" />
-						</div>
+						<aui:option label="<%= curCSDiagramType.getLabel(locale) %>" selected="<%= (csDiagramSetting != null) && csDiagramTypeKey.equals(type) %>" value="<%= curCSDiagramType.getKey() %>" />
 
 					<%
 					}
 					%>
 
-				</commerce-ui:panel>
-			</div>
-
-			<div class="col-lg-4">
-				<commerce-ui:panel
-					elementClasses="flex-fill"
-					title='<%= LanguageUtil.get(resourceBundle, "diagram-file") %>'
-				>
-
-					<%
-					FileEntry fileEntry = csDiagramSettingDisplayContext.fetchFileEntry();
-					%>
-
-					<aui:model-context bean="<%= fileEntry %>" model="<%= FileEntry.class %>" />
-
-					<div class="lfr-attachment-cover-image-selector">
-						<portlet:actionURL name="/cp_definitions/upload_cs_diagram_setting_image" var="uploadCSDiagramSettingImageActionURL" />
-
-						<liferay-item-selector:image-selector
-							draggableImage="vertical"
-							fileEntryId='<%= BeanParamUtil.getLong(fileEntry, request, "fileEntryId") %>'
-							itemSelectorEventName="addFileEntry"
-							itemSelectorURL="<%= csDiagramSettingDisplayContext.getImageItemSelectorUrl() %>"
-							maxFileSize="<%= csDiagramSettingDisplayContext.getImageMaxSize() %>"
-							paramName="fileEntry"
-							uploadURL="<%= uploadCSDiagramSettingImageActionURL %>"
-							validExtensions="<%= StringUtil.merge(csDiagramSettingDisplayContext.getImageExtensions(), StringPool.COMMA_AND_SPACE) %>"
-						/>
-					</div>
-				</commerce-ui:panel>
-
-				<commerce-ui:panel
-					bodyClasses="p-0"
-					elementClasses="flex-fill"
-					title='<%= LanguageUtil.get(resourceBundle, "mapped-products") %>'
-				>
-					<clay:headless-data-set-display
-						apiURL="<%= csDiagramSettingDisplayContext.getCSDiagramEntriesAPIURL() %>"
-						formId="fm"
-						id="<%= CSDiagramDataSetConstants.CS_DIAGRAM_MAPPED_PRODUCTS_DATA_SET_KEY %>"
-						itemsPerPage="<%= 10 %>"
-						namespace="<%= liferayPortletResponse.getNamespace() %>"
-						pageNumber="<%= 1 %>"
-						portletURL="<%= csDiagramSettingDisplayContext.getPortletURL() %>"
-					/>
-				</commerce-ui:panel>
-			</div>
+				</aui:select>
+			</commerce-ui:panel>
 		</div>
-	</aui:form>
-</div>
+
+		<div class="col-lg-4">
+			<commerce-ui:panel
+				bodyClasses="p-0 preview-container"
+				elementClasses="flex-fill"
+				title='<%= LanguageUtil.get(resourceBundle, "diagram-file") %>'
+			>
+
+				<%
+				FileEntry fileEntry = csDiagramSettingDisplayContext.fetchFileEntry();
+				%>
+
+				<aui:model-context bean="<%= fileEntry %>" model="<%= FileEntry.class %>" />
+
+				<div class="lfr-attachment-cover-image-selector">
+					<portlet:actionURL name="/cp_definitions/upload_cs_diagram_setting_image" var="uploadCSDiagramSettingImageActionURL" />
+
+					<liferay-item-selector:image-selector
+						draggableImage="vertical"
+						fileEntryId='<%= BeanParamUtil.getLong(fileEntry, request, "fileEntryId") %>'
+						itemSelectorEventName="addFileEntry"
+						itemSelectorURL="<%= csDiagramSettingDisplayContext.getImageItemSelectorUrl() %>"
+						maxFileSize="<%= csDiagramSettingDisplayContext.getImageMaxSize() %>"
+						paramName="fileEntry"
+						uploadURL="<%= uploadCSDiagramSettingImageActionURL %>"
+						validExtensions="<%= StringUtil.merge(csDiagramSettingDisplayContext.getImageExtensions(), StringPool.COMMA_AND_SPACE) %>"
+					/>
+				</div>
+			</commerce-ui:panel>
+		</div>
+
+		<div class="col-lg-8 d-flex flex-column">
+			<commerce-ui:panel
+				bodyClasses="p-0"
+				elementClasses="flex-fill"
+				title='<%= LanguageUtil.get(resourceBundle, "diagram-mapping") %>'
+			>
+
+				<%
+				if (csDiagramSetting != null) {
+					csDiagramType.render(csDiagramSetting, request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
+				}
+				else {
+				%>
+
+					<div class="p-3 text-center">
+						<liferay-ui:message key="please-upload-a-file" />
+					</div>
+
+				<%
+				}
+				%>
+
+			</commerce-ui:panel>
+		</div>
+
+		<div class="col-lg-4">
+			<commerce-ui:panel
+				bodyClasses="p-0"
+				elementClasses="flex-fill"
+				title='<%= LanguageUtil.get(resourceBundle, "mapped-products") %>'
+			>
+				<react:component
+					module="js/DiagramTable/DiagramTable"
+					props='<%=
+						HashMapBuilder.<String, Object>put(
+							"isAdmin", true
+						).put(
+							"productId", cpDefinition.getCProductId()
+						).build()
+					%>'
+				/>
+			</commerce-ui:panel>
+		</div>
+	</div>
+</aui:form>
 
 <liferay-frontend:component
 	context='<%=

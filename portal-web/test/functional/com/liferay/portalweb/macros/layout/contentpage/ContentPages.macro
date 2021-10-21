@@ -257,12 +257,22 @@ definition {
 			var index = "1";
 		}
 
-		AssertVisible(
-			fragmentName = "${fragmentName}",
-			id = "${id}",
-			image = "${image}",
-			index = "${index}",
-			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_IMAGE");
+		if ("${fragmentName}" == "Content Display") {
+			AssertVisible(
+				assetType = "${assetType}",
+				image = "${image}",
+				index = "${index}",
+				locator1 = "Fragment#CONTENT_DISPLAY_IMAGE");
+		}
+
+		else {
+			AssertVisible(
+				fragmentName = "${fragmentName}",
+				id = "${id}",
+				image = "${image}",
+				index = "${index}",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_IMAGE");
+		}
 	}
 
 	macro viewFragmentText {

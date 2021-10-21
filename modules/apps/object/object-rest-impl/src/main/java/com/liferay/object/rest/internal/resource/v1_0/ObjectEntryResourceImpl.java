@@ -228,6 +228,30 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
+	public Page<ObjectEntry> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
+		throws Exception {
+
+		_loadObjectDefinition(parameters);
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				_objectDefinition.getScope());
+
+		if (objectScopeProvider.isGroupAware()) {
+			return getScopeScopeKeyPage(
+				(String)parameters.get("scopeKey"),
+				Boolean.parseBoolean((String)parameters.get("flatten")), search,
+				null, filter, pagination, sorts);
+		}
+
+		return getObjectEntriesPage(
+			Boolean.parseBoolean((String)parameters.get("flatten")), search,
+			null, filter, pagination, sorts);
+	}
+
+	@Override
 	public void update(
 			Collection<ObjectEntry> objectEntries,
 			Map<String, Serializable> parameters)
@@ -282,5 +306,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 }

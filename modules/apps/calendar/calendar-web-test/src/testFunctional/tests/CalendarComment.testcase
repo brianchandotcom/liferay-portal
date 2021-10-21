@@ -93,10 +93,9 @@ definition {
 			user = "Test Test");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AddToEventRegular {
-		property portal.acceptance = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoAddEvent();

@@ -1830,11 +1830,34 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Collection Providers when inactivated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectDisappearsCollectionProvidersWhenInactivated {
 
-		// TODO LPS-140860 ObjectDisappearsCollectionProvidersWhenInactivated pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		VisualizeObjectCollectionDisplay.openObjectCollectionProvider();
+
+		AssertElementNotPresent(
+			key_labelName = "Custom Objects",
+			locator1 = "VisualizeObjectCollectionDisplay#VIEW_OBJECT_COLLECTION_DISPLAY");
+
+
+
+
 
 	}
 

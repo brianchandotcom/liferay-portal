@@ -83,58 +83,71 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-101248. Can select any custom web content template as a "Template" for web content selected in content fragment."
+	@description = "This is a test for LPS-101248. Can select any custom web content template as a Template for web content selected in content fragment."
 	@priority = "5"
 	test SelectCustomWebContentTemplate {
 		property portal.acceptance = "true";
 
-		JSONWebcontent.addWebContent(
-			content = "This content maps from web content",
-			groupName = "Test Site Name",
-			title = "Webcontent Title");
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "This content maps from web content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a template for Basic Web Content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoTemplates();
+			NavItem.gotoTemplates();
 
-		WebContentTemplates.addCP(
-			generalVariables = "Site ID",
-			structureName = "Basic Web Content",
-			templateDescription = "WC Template Description",
-			templateName = "WC Template Name");
+			WebContentTemplates.addCP(
+				generalVariables = "Site ID",
+				structureName = "Basic Web Content",
+				templateDescription = "WC Template Description",
+				templateName = "WC Template Name");
+		}
 
-		var siteID = Site.getSiteId();
+		task ("Add a Content Display to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Content Display");
+		task ("Select the web content and template in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				template = "WC Template Name",
+				webcontent = "true",
+				webContentTitle = "Webcontent Title");
 
-		PageEditor.editContentDisplay(
-			fragmentName = "Content Display",
-			template = "WC Template Name",
-			webcontent = "true",
-			webContentTitle = "Webcontent Title");
+			PageEditor.clickPublish();
+		}
 
-		PageEditor.clickPublish();
+		task ("View only the Site ID shown in Content Display at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
+			var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
-		AssertTextEquals.assertPartialTextAceEditor(
-			locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
-			value1 = "${siteID}");
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = "${siteID}");
 
-		AssertTextNotEquals.assertNotPartialText(
-			locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
-			value1 = "This content maps from web content");
+			AssertTextNotEquals.assertNotPartialText(
+				assetType = "web-content",
+				index = "1",
+				locator1 = "Fragment#CONTENT_DISPLAY_TEXT",
+				value1 = "This content maps from web content");
+		}
 	}
 
-	@description = "This is a test for LPS-101248. Can select web content template from Global site as a "Template" for Content Display fragment."
+	@description = "This is a test for LPS-101248. Can select web content template from Global site as a Template for Content Display fragment."
 	@priority = "2"
 	test SelectWebContentTemplateFromGlobalSite {
 		task ("Add a web content based on Basic Web Content") {
@@ -371,39 +384,212 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-101248. Display web content with all fields in Content Display."
+	@description = "This is a test for LPS-101248. Display web content with Color field in Content Display."
 	@priority = "3"
-	test ViewSelectedWebContentWithAllFields {
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name");
-		}
-
-		task ("Add a web content based on Basic Web Content") {
-			JSONWebcontent.addWebContent(
-				content = "WC Content",
-				groupName = "Test Site Name",
-				title = "WC Title");
-		}
-
-		task ("Add a web content structure with all fields") {
+	test ViewSelectedWebContentWithColorField {
+		task ("Add a web content structure with a Color field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page");
+			DataEngine.addField(
+				fieldFieldLabel = "Color",
+				fieldName = "Color");
 
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
 		}
 
 		task ("Add a template for new structure") {
 			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
 
 			WebContentTemplates.addCP(
-				templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
+				templateFieldNames = "Color",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentColor = "FF0D0D",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and template in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				template = "WC Template Name",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the Color field is shown in Content Display") {
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = "FF0D0D");
+		}
+	}
+
+	@description = "This is a test for LPS-101248. Display web content with Date field in Content Display."
+	@priority = "3"
+	test ViewSelectedWebContentWithDateField {
+		task ("Add a web content structure with a Date field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Date",
+				fieldName = "Date");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Date",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentDate = "10/10/2020",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and template in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				template = "WC Template Name",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the Date field is shown in Content Display") {
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = "10 Oct 2020");
+		}
+	}
+
+	@description = "This is a test for LPS-101248. Display web content with Geolocation field in Content Display."
+	@priority = "3"
+	test ViewSelectedWebContentWithGeolocationField {
+		task ("Add a web content structure with a Geolocation field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Geolocation",
+				fieldName = "Geolocation");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Geolocation",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and template in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				template = "WC Template Name",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the Geolocation field is shown in Content Display") {
+			AssertVisible(
+				key_content = "//div[contains(@id,'Geolocation')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+		}
+	}
+
+	@description = "This is a test for LPS-101248. Display web content with Grid field in Content Display."
+	@priority = "3"
+	test ViewSelectedWebContentWithGridField {
+		task ("Add a web content structure with a Grid field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addFields(fieldNameList = "Grid");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Grid",
 				templateName = "WC Template Name");
 		}
 
@@ -414,23 +600,645 @@ definition {
 
 			WebContent.addWithStructureCP(
 				column = "1",
-				dmNavTab = "User Personal Folder",
-				navTab = "Web Content Images",
 				row = "1",
-				templateName = "WC Template Name",
-				webContentColor = "FF0D0D",
-				webContentDate = "10/10/2020",
 				webContentGrid = "true",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and template in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				template = "WC Template Name",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the Grid field is shown in Content Display") {
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = '''{"R1":"C1"}''');
+		}
+	}
+
+	@description = "This is a test for LPS-101248. Display web content with Image field in Content Display."
+	@priority = "3"
+	test ViewSelectedWebContentWithImageField {
+		task ("Add a web content structure with a Image field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Image",
+				fieldName = "Image");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Image",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				navTab = "Web Content Images",
 				webContentImage = "Document_3.png",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and template in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				template = "WC Template Name",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the Image field is shown in Content Display") {
+			ContentPages.viewFragmentImage(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				image = "Document_3.png");
+		}
+	}
+
+	@description = "This is a test for LPS-101248. Display web content with Link to Page field in Content Display."
+	@priority = "3"
+	test ViewSelectedWebContentWithLinkToPageField {
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a web content structure with a Link to Page field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Link to Page",
+				fieldName = "Link to Page");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Link to Page",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
 				webContentLinkToPage = "Test Page Name",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and template in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				template = "WC Template Name",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the Link to Page field is shown in Content Display") {
+			AssertVisible(
+				key_content = "//a[contains(.,'Link to Page')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+		}
+	}
+
+	@description = "This is a test for LPS-101248. Display web content with Multiple Selection field in Content Display."
+	@priority = "3"
+	test ViewSelectedWebContentWithMultipleSelectionField {
+		task ("Add a web content structure with a Multiple Selection field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addFields(fieldNameList = "Multiple Selection");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Multiple Selection",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
 				webContentMultipleSelection = "Option 1",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and template in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				template = "WC Template Name",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the Multiple Selection field is shown in Content Display") {
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = '''["First"]''');
+		}
+	}
+
+	@description = "This is a test for LPS-101248. Display web content with Numeric field in Content Display."
+	@priority = "3"
+	test ViewSelectedWebContentWithNumericField {
+		task ("Add a web content structure with a Numeric field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Numeric",
+				fieldName = "Numeric");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Numeric",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
 				webContentNumeric = "9",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and template in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				template = "WC Template Name",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the Numeric field is shown in Content Display") {
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = "9");
+		}
+	}
+
+	@description = "This is a test for LPS-101248. Display web content with Rich Text field in Content Display."
+	@priority = "3"
+	test ViewSelectedWebContentWithRichTextField {
+		task ("Add a web content structure with a Rich Text field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Rich Text",
+				fieldName = "Rich Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Rich Text",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
 				webContentRichText = "This is a Rich Text field",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and template in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				template = "WC Template Name",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the Rich Text field is shown in Content Display") {
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = "This is a Rich Text field");
+		}
+	}
+
+	@description = "This is a test for LPS-101248. Display web content with Select from List field in Content Display."
+	@priority = "3"
+	test ViewSelectedWebContentWithSelectFromListField {
+		task ("Add a web content structure with a Select from List field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addFields(fieldNameList = "Select from List");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Select from List",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
 				webContentSelectFromList = "Option 2",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and template in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				template = "WC Template Name",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the Select from List field is shown in Content Display") {
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = "Value2");
+		}
+	}
+
+	@description = "This is a test for LPS-101248. Display web content with Single Selection field in Content Display."
+	@priority = "3"
+	test ViewSelectedWebContentWithSingleSelectionField {
+		task ("Add a web content structure with a Single Selection field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addFields(fieldNameList = "Single Selection");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Single Selection",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
 				webContentSingleSelection = "Option 3",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and template in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				template = "WC Template Name",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the Single Selection field is shown in Content Display") {
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = "Value3");
+		}
+	}
+
+	@description = "This is a test for LPS-101248. Display web content with Text field in Content Display."
+	@priority = "3"
+	test ViewSelectedWebContentWithTextField {
+		task ("Add a web content structure with a Text field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Text",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
 				webContentText = "This is a Text field",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and template in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				template = "WC Template Name",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the Text field is shown in Content Display") {
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = "This is a Text field");
+		}
+	}
+
+	@description = "This is a test for LPS-101248. Display web content with Upload field in Content Display."
+	@priority = "3"
+	test ViewSelectedWebContentWithUploadField {
+		task ("Add a web content structure with a Upload field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Upload",
+				fieldName = "Upload");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Upload",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				dmNavTab = "User Personal Folder",
 				webContentTitle = "Web Content Title",
-				webContentUpload = "Document_1.jpg",
+				webContentUpload = "Document_1.jpg");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and template in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				template = "WC Template Name",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the Upload field is shown in Content Display") {
+			AssertVisible(
+				key_content = "//a[contains(@href,'Document_1.jpg')][contains(.,'Download Upload')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+		}
+	}
+
+	@description = "This is a test for LPS-101248. Display web content with Web Content field in Content Display."
+	@priority = "3"
+	test ViewSelectedWebContentWithWebContentField {
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
+
+		task ("Add a web content structure with a Web Content field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Web Content",
+				fieldName = "Web Content");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Web Content",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentTitle = "Web Content Title",
 				webContentWebContent = "WC Title");
 
 			PortletEntry.publish();
@@ -455,46 +1263,8 @@ definition {
 		}
 
 		task ("View the web content is shown in Content Display") {
-			for (var content : list "This is a Text field,Value2,Value3,10 Oct 2020,9,FF0D0D") {
-				AssertTextEquals.assertPartialText(
-					locator1 = "WCD#WEB_CONTENT_CONTENT",
-					value1 = "${content}");
-			}
-
-			var multipleSelectionFieldValue = '''["First"]''';
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "${multipleSelectionFieldValue}");
-
-			var gridFieldValue = '''{"R1":"C1"}''';
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "${gridFieldValue}");
-
-			AssertVisible(
-				key_content = "//img[contains(@src,'Document_3.png')]",
-				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
-
-			AssertVisible(
-				key_content = "//p[contains(.,'This is a Rich Text field')]",
-				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
-
-			AssertVisible(
-				key_content = "//a[contains(@href,'Document_1.jpg')][contains(.,'Download Upload')]",
-				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
-
 			AssertVisible(
 				key_content = "//a[contains(.,'WC Title')]",
-				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
-
-			AssertVisible(
-				key_content = "//div[contains(@id,'Geolocation')]",
-				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
-
-			AssertVisible(
-				key_content = "//a[contains(.,'Link to Page')]",
 				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
 		}
 	}

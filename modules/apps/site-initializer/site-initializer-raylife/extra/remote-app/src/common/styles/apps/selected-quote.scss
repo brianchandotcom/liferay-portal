@@ -30,7 +30,7 @@
 }
 
 .panel-container {
-	border-bottom: 1px solid #d3d3d4;
+	border-bottom: 1px solid $color-neutral-7;
 	padding: 34px 48px;
 	width: 100%;
 
@@ -41,7 +41,7 @@
 		justify-content: space-between;
 
 		.panel-left {
-			color: $neutral-darker;
+			color: $color-neutral-1;
 			font-size: 24px;
 			font-weight: 700;
 		}
@@ -53,7 +53,7 @@
 				margin-bottom: 24px;
 
 				h3 {
-					color: #606167;
+					color: $color-neutral-2;
 					font-size: 14px;
 					font-weight: 700;
 					margin-bottom: 8px;
@@ -64,7 +64,7 @@
 					flex-direction: row;
 
 					.image {
-						border: 1px solid #d3d3d4;
+						border: 1px solid $color-neutral-7;
 						border-radius: 4px;
 						height: 48px;
 						margin-right: 8px;
@@ -80,7 +80,7 @@
 
 					.documents {
 						align-items: center;
-						background-color: #fff;
+						background-color: $color-neutral-white;
 						border: 1px solid #d2d2d3;
 						border-radius: 4px;
 						box-sizing: border-box;
@@ -101,7 +101,7 @@
 						}
 
 						.lexicon-icon-document-text {
-							fill: #4d85ff;
+							fill: $color-brand-primary;
 						}
 
 						.lexicon-icon-document-table {
@@ -113,7 +113,7 @@
 						}
 
 						.lexicon-icon-document-unknown {
-							fill: $neutral-default;
+							fill: $color-action-neutral-default;
 						}
 					}
 				}
@@ -127,7 +127,7 @@
 
 			.change-link {
 				a {
-					color: #7d7e85;
+					color: $color-action-neutral-default;
 					cursor: pointer;
 					margin-right: 24px;
 					text-decoration: underline;
@@ -145,7 +145,7 @@
 				width: 32px;
 
 				&.stepChecked {
-					background-color: #39c38d;
+					background-color: $color-state-success;
 				}
 			}
 		}
@@ -196,12 +196,12 @@
 				}
 
 				span.optional {
-					color: $neutral-dark;
+					color: $color-neutral-2;
 				}
 			}
 
 			.subtitle {
-				color: $neutral-dark;
+				color: $color-neutral-2;
 				font-size: 16px;
 				font-weight: 500;
 			}
@@ -223,7 +223,7 @@
 					.flex-column {
 						.card {
 							align-items: center;
-							background: #f0f5ff;
+							background: $color-brand-primary-lighten-6;
 							border-radius: 16px;
 							display: flex;
 							flex-direction: column;
@@ -236,7 +236,7 @@
 						}
 
 						span {
-							color: $neutral-dark;
+							color: $color-neutral-2;
 							font-size: 13px;
 							margin-top: 4px;
 							width: 176px;
@@ -264,7 +264,7 @@
 							border-radius: 50%;
 							cursor: pointer;
 							display: flex;
-							fill: $neutral-default;
+							fill: $color-action-neutral-default;
 							height: 36px;
 							justify-content: center;
 							left: 137px;
@@ -282,15 +282,15 @@
 							text-align: center;
 
 							span {
-								color: $neutral-dark;
+								color: $color-neutral-2;
 								font-size: 13px;
 								margin-top: 4px;
 								width: 176px;
 							}
 
 							.content {
-								background-color: #fafafa;
-								border: 1px solid #e2e2e4;
+								background-color: $color-neutral-9;
+								border: 1px solid $color-neutral-8;
 								border-radius: 16px;
 								height: 176px;
 								object-fit: cover;
@@ -320,7 +320,7 @@
 								}
 
 								.lexicon-icon-document-text {
-									fill: #4d85ff;
+									fill: $color-brand-primary;
 									height: 64px !important;
 									width: 64px !important;
 								}
@@ -338,7 +338,7 @@
 								}
 
 								.lexicon-icon-document-unknown {
-									fill: $neutral-default;
+									fill: $color-action-neutral-default;
 									height: 64px !important;
 									width: 64px !important;
 								}
@@ -349,10 +349,10 @@
 
 				.drop-area {
 					align-items: center;
-					background: #f0f5ff;
-					border: 2px dashed #a8c4ff;
+					background: $color-brand-primary-lighten-6;
+					border: 2px dashed $color-brand-primary-lighten-3;
 					border-radius: 16px;
-					color: $neutral-dark;
+					color: $color-neutral-2;
 					display: flex;
 					flex-direction: row;
 					flex-wrap: wrap;
@@ -380,9 +380,9 @@
 						.link-button {
 							align-items: center;
 							background: none;
-							border: 1px solid $primary-default-light;
+							border: 1px solid $color-action-primary-default;
 							border-radius: 4px;
-							color: $primary-default-light;
+							color: $color-action-primary-default;
 							cursor: pointer;
 							display: flex;
 							font-size: 14px;
@@ -398,7 +398,7 @@
 						}
 
 						svg {
-							fill: $primary-default-light;
+							fill: $color-action-primary-default;
 							height: 12px !important;
 							margin-right: 9px;
 							width: 12px !important;
@@ -443,16 +443,14 @@
 	}
 }
 
-// alalalla
-
 #ca {
-	margin: 3.5rem 0rem 2rem 2.3rem;
+	margin: $spacer-5 $spacer-0 $spacer-4 $spacer-4;
 
 	.ca-alert-create {
-		background-color: #ffe4dc;
+		background-color: $color-state-error-lighten-1;
 		border-radius: 8px;
-		margin-top: 3rem;
-		padding: 0.8rem 0rem;
+		margin-top: $spacer-5;
+		padding: $spacer-2 $spacer-0;
 		vertical-align: middle;
 		width: 100%;
 	}
@@ -463,27 +461,23 @@
 	}
 
 	.ca-btn {
-		background: rgba(76, 133, 255, 1);
-		color: #fff;
-		margin: 5rem 0rem 0rem 23.7rem;
-	}
-
-	.ca-btn:disabled {
-		background: rgba(76, 133, 255, 0.5);
+		background: $color-action-primary-default;
+		color: $background;
+		margin: 5rem $spacer-0 $spacer-0 23.7rem;
 	}
 
 	#ca-content-input {
-		margin-top: 1.75rem;
+		margin-top: $spacer-3;
 		position: relative;
 
 		#ca-input-email {
-			background-color: #fff;
-			border: solid 1px #7d7e85;
+			background-color: $background;
+			border: solid 1px $color-action-neutral-default;
 		}
 
 		#ca-input-email + .ca-label {
-			background-color: #fff;
-			color: #7d7e85;
+			background-color: $background;
+			color: $color-action-neutral-default;
 			font-size: 13px;
 			transform: translate(0, -21px) scale(1);
 		}
@@ -491,10 +485,10 @@
 		.ca-label {
 			color: transparent;
 			font-size: 16px;
-			font-weight: 700;
+			font-weight: $font-weight-bolder;
 			left: 12px;
-			margin: 1rem 0rem;
-			padding: 0rem 0.3rem;
+			margin: $spacer-2 $spacer-0;
+			padding: $spacer-0 $spacer-1;
 			pointer-events: none;
 			position: absolute;
 			top: -5px;
@@ -502,32 +496,32 @@
 		}
 
 		input:valid {
-			background-color: #fff;
-			border: solid 1px #000;
+			background-color: $background;
+			border: solid 1px $color-neutral-0;
 		}
 
 		input:valid + .ca-label {
-			background-color: #fff;
-			color: #000;
+			background-color: $background;
+			color: $color-neutral-0;
 			font-size: 13px;
 			transform: translate(0, -21px) scale(1);
 		}
 
 		input:focus {
-			background-color: #fff;
-			border: solid 1px #4c85ff;
+			background-color: $background;
+			border: solid 1px $color-action-primary-default;
 		}
 
 		input:focus + .ca-label {
-			background-color: #fff;
-			color: #4c85ff;
+			background-color: $background;
+			color: $color-action-primary-default;
 			font-size: 13px;
 			transform: translate(0, -21px) scale(1);
 		}
 
 		::placeholder {
-			color: #080f1b;
-			font-weight: 700;
+			color: $color-neutral-0;
+			font-weight: $font-weight-bolder;
 		}
 
 		input:focus::placeholder {
@@ -535,18 +529,10 @@
 		}
 	}
 
-	.ca-icon-rule {
-		border: solid 1.2px;
-		border-radius: 1rem;
-		fill: #fff;
-		margin-right: 0.3rem;
-		padding: 1px;
-	}
-
 	.ca-input {
-		background-color: aliceblue;
+		background-color: $color-brand-primary-lighten-6;
 		border: none;
-		height: 3rem;
+		height: $spacer-5;
 		width: 100%;
 	}
 
@@ -556,11 +542,49 @@
 
 	.ca-sub-title {
 		font-size: 18px;
-		font-weight: 700;
-		margin-top: 1.7rem;
+		font-weight: $font-weight-bolder;
+		margin-bottom: $spacer-5;
+		margin-top: $spacer-3;
 	}
 
 	.ca-width-div {
 		width: 28.5rem;
+	}
+
+	.ca-rule-anchor {
+		&.checked {
+			color: $color-state-success;
+
+			.ca-icon-rule {
+				background-color: $color-state-success;
+				border: $color-state-success;
+			}
+		}
+
+		&.unchecked {
+			color: $color-state-error;
+
+			.ca-icon-rule {
+				background-color: $color-state-error;
+				border: $color-state-error;
+			}
+		}
+
+		&.neutral {
+			color: $color-neutral-3;
+
+			.ca-icon-rule {
+				border-color: $color-neutral-3;
+				fill: $color-neutral-3;
+			}
+		}
+
+		.ca-icon-rule {
+			border: solid 1.2px;
+			border-radius: $spacer-2;
+			fill: $background;
+			margin-right: $spacer-1;
+			padding: 1px;
+		}
 	}
 }

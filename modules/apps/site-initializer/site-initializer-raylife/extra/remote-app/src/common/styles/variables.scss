@@ -1,27 +1,33 @@
-$primary-dark: var(--btn-link-color, #295ccc);
-$primary-default: var(--primary-raylife, #295ccc);
-$primary-default-light: var(--primary-light-raylife, #4c85ff);
-$primary-light: var(--gray-300, #e1ebff);
-
-$secondary-dark: var(--btn-secondary-raylife-color, #f4870b);
-$secondary-default: var(--secondary-raylife, #f69d37);
-
-$color-action-primary-default: var(--color-action-primary-default, #4c85ff);
-
-$neutral-black: var(--color-neutral-0, #09101d);
-$neutral-darker: var(--color-neutral-1, #2f313d);
-$neutral-dark: var(--gray-600, #606167);
-$neutral-default: var(--color-action-neutral-default, #7d7e85);
-$neutral-light: var(--gray-400, #98999b);
-
 $background: var(--body-bg, #fff);
-$foreground: var(--light, #f9f9f9);
+$card-padding: 3rem;
 
-$error-default: var(--danger, #ea6136);
-$error-light: var(--danger-background, #ffe4dc);
+// Colors
 
-$info-default: var(--info, #295ccc);
-$info-light: var(--info-background, #e5ebf9);
+$color-action-neutral-default: var(--color-action-neutral-default, #7d7e85);
+$color-action-primary-default: var(--color-action-primary-default, #4c85ff);
+$color-action-primary-hover: var(--color-action-primary-hover, #295ccc);
+$color-action-secondary-default: var(--color-action-secondary-default, #f69d37);
+$color-brand-primary: var(--color-brand-primary, #4d85ff);
+$color-brand-primary-lighten-3: var(--color-brand-primary-lighten-3, #a8c4ff);
+$color-brand-primary-lighten-5: var(--color-brand-primary-lighten-5, #e1ebff);
+$color-brand-primary-lighten-6: var(--color-brand-primary-lighten-6, #f0f5ff);
+$color-brand-secondary: var(--color-brand-secondary, #f4870b);
+$color-neutral-0: var(--color-neutral-0, #080f1b);
+$color-neutral-1: var(--color-neutral-1, #2f313d);
+$color-neutral-2: var(--color-neutral-2, #5f6167);
+$color-neutral-3: var(--color-neutral-3, #808185);
+$color-neutral-4: var(--color-neutral-4, #98999a);
+$color-neutral-5: var(--color-neutral-5, #afafb1);
+$color-neutral-6: var(--color-neutral-6, #c1c1c2);
+$color-neutral-7: var(--color-neutral-7, #d3d3d4);
+$color-neutral-8: var(--color-neutral-8, #e2e2e4);
+$color-neutral-9: var(--color-neutral-9, #fafafa);
+$color-neutral-black: var(--color-neutral-black, #09101d);
+$color-neutral-white: var(--color-neutral-10, #fff);
+
+$color-state-error-lighten-1: var(--color-state-error-lighten-1, #ffe4dc);
+$color-state-error: var(--color-state-error, #ea6136);
+$color-state-success: var(--color-state-success, #39c38d);
 
 $font-family: var(
 	--font-family-sans-serif,
@@ -32,4 +38,24 @@ $font-family: var(
 	sans-serif
 );
 
-$card-padding: 3rem;
+$error-default: var(--danger, #ea6136);
+$error-light: var(--danger-background, #ffe4dc);
+$font-weight-bolder: var(--font-weight-bolder, 700);
+$foreground: var(--light, #f9f9f9);
+$info-default: var(--info, #295ccc);
+$info-light: var(--info-background, #e5ebf9);
+$neutral-dark: var(--gray-600, #606167);
+
+// Spacing
+
+$spacer-0: var(--spacer-0, 0);
+$spacer-1: var(--spacer-1, 0.25rem);
+$spacer-2: var(--spacer-2, 0.5rem);
+$spacer-3: var(--spacer-3, 1rem);
+$spacer-4: var(--spacer-4, 1.5rem);
+$spacer-5: var(--spacer-5, 2rem);
+$spacer-6: var(--spacer-6, 3rem);
+$spacer-7: var(--spacer-7, 4rem);
+$spacer-8: var(--spacer-8, 5rem);
+$spacer-9: var(--spacer-8, 6rem);
+$spacer-10: var(--spacer-10, 7rem);

@@ -30,7 +30,7 @@
 		}
 
 		p {
-			color: $neutral-dark;
+			color: $color-neutral-2;
 			font-size: 0.813rem;
 			font-weight: 500;
 		}
@@ -38,10 +38,10 @@
 
 	&.selected {
 		background: #295ccc19;
-		border: 1px solid $primary-default-light;
+		border: 1px solid $color-action-primary-default;
 
 		label {
-			color: $primary-default-light;
+			color: $color-action-primary-default;
 		}
 	}
 }
@@ -60,7 +60,7 @@
 	width: fit-content;
 
 	&::before {
-		border: 1px solid $primary-default-light;
+		border: 1px solid $color-action-primary-default;
 		border-radius: 1rem;
 		content: '';
 		cursor: pointer;

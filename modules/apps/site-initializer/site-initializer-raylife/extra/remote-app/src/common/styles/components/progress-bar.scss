@@ -1,12 +1,12 @@
 .progress-bar {
-	background: #e2e2e4;
+	background: $color-neutral-8;
 	border-radius: 2px;
 	height: 4px;
 	margin-top: 4px;
 	width: 144px;
 
 	&__progress {
-		background: #4c85ff;
+		background: $color-action-primary-default;
 		border-radius: 2px;
 		height: 4px;
 	}

@@ -467,6 +467,10 @@
 		"cssVariableMapping": "color-neutral-9",
 		"value": "#FAFAFA"
 	},
+	"colorNeutralBlack": {
+		"cssVariableMapping": "color-neutral-black",
+		"value": "#09101D"
+	},
 	"colorStateError": {
 		"cssVariableMapping": "color-state-error",
 		"value": "#EA6136"
@@ -645,11 +649,27 @@
 	},
 	"spacer": {
 		"cssVariableMapping": "spacer",
-		"value": "4rem"
+		"value": "0rem"
+	},
+	"spacer1": {
+		"cssVariableMapping": "spacer-1",
+		"value": "0.25rem"
 	},
 	"spacer10": {
 		"cssVariableMapping": "spacer-10",
 		"value": "7rem"
+	},
+	"spacer2": {
+		"cssVariableMapping": "spacer-2",
+		"value": "0.5rem"
+	},
+	"spacer3": {
+		"cssVariableMapping": "spacer-3",
+		"value": "1rem"
+	},
+	"spacer4": {
+		"cssVariableMapping": "spacer-4",
+		"value": "1.5rem"
 	},
 	"spacer5": {
 		"cssVariableMapping": "spacer-5",

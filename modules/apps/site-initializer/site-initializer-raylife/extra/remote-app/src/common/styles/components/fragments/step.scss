@@ -7,14 +7,14 @@
 
 	.step-item {
 		align-items: center;
-		color: $neutral-light;
+		color: $color-neutral-4;
 		display: flex;
 		font-family: $font-family;
 		font-size: 1.15rem;
 		font-weight: bold;
 		gap: 0.875rem;
 		height: 1rem;
-	
+
 		& > i {
 			align-items: center;
 			border-radius: 1rem;
@@ -23,9 +23,9 @@
 			justify-content: center;
 			width: 1rem;
 		}
-	
+
 		& > i::after {
-			background: $neutral-light;
+			background: $color-neutral-4;
 			border-radius: 0.5rem;
 			content: '';
 			display: block;
@@ -34,14 +34,14 @@
 			width: 0.5rem;
 		}
 
-		&.partially { 
-			color: $primary-default-light;
+		&.partially {
+			color: $color-action-primary-default;
 			cursor: pointer;
 			opacity: 0.7;
 			overflow: visible;
 
 			i::after {
-				background: $primary-default-light;
+				background: $color-action-primary-default;
 				border-radius: 1rem;
 				height: 0.8rem;
 				width: 0.8rem;
@@ -54,7 +54,7 @@
 				z-index: 1;
 			}
 		}
-	
+
 		&.completed {
 			i {
 				display: none;
@@ -75,13 +75,13 @@
 				height: 10px !important;
 			}
 		}
-	
+
 		&.selected {
-			color: $primary-default-light;
+			color: $color-action-primary-default;
 			opacity: 1;
-			
+
 			i::after {
-				background: $primary-default-light;
+				background: $color-action-primary-default;
 				border-radius: 1rem;
 				height: 0.8rem;
 				width: 0.8rem;
@@ -89,4 +89,3 @@
 		}
 	}
 }
-

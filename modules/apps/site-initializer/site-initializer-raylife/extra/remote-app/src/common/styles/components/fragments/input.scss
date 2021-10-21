@@ -20,7 +20,7 @@
 }
 
 label {
-	color: $neutral-black;
+	color: $color-neutral-0;
 	display: flex;
 	font-family: $font-family;
 	font-size: 1.125rem;
@@ -40,9 +40,9 @@ label {
 input,
 .input {
 	background: $background;
-	border: 1px solid $neutral-default;
+	border: 1px solid $color-action-neutral-default;
 	border-radius: 0.25rem;
-	color: $neutral-black;
+	color: $color-neutral-0;
 	display: flex;
 	flex: 1;
 	font-family: $font-family;
@@ -55,7 +55,7 @@ input,
 
 	&:focus,
 	&:hover {
-		border-color: $primary-default;
+		border-color: $color-action-primary-hover;
 	}
 
 	&:disabled {
@@ -87,7 +87,7 @@ select {
 
 .select-icon {
 	bottom: 10px;
-	fill: $neutral-default;
+	fill: $color-action-neutral-default;
 	height: 24px !important;
 	pointer-events: none;
 	position: absolute;

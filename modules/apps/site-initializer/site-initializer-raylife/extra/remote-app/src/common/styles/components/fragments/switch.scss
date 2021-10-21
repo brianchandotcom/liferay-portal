@@ -8,20 +8,20 @@
 
 .switch {
 	background: inherit;
-	border: 1px solid $primary-default-light;
+	border: 1px solid $color-action-primary-default;
 	border-radius: 2rem;
-	color: $primary-default-light;
+	color: $color-action-primary-default;
 	padding-left: 2.5rem;
 	padding-right: 2.5rem;
 
 	&:hover {
-		background: $primary-dark;
-		border-color: $primary-dark;
+		background: $color-action-primary-hover;
+		border-color: $color-action-primary-hover;
 		color: $background;
 	}
 
 	&.selected {
-		background: $primary-default;
+		background: $color-action-primary-hover;
 		color: $background;
 	}
 }

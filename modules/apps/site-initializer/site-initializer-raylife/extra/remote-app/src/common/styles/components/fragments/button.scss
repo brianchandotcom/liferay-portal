@@ -29,22 +29,22 @@
 }
 
 .btn.btn-primary {
-	background: $primary-default;
+	background: $color-action-primary-hover;
 	color: $background;
 	fill: $background;
 
 	&:hover {
-		background: $primary-dark;
+		background: $color-action-primary-hover;
 	}
 }
 
 .btn.btn-secondary {
-	background: $secondary-default;
+	background: $color-action-secondary-default;
 	color: $background;
 	fill: $background;
 
 	&:hover {
-		background: $secondary-dark;
+		background: $color-brand-secondary;
 	}
 }
 
@@ -54,23 +54,23 @@
 
 .btn.btn-flat {
 	background: $background;
-	color: $neutral-default;
-	fill: $neutral-default;
+	color: $color-action-neutral-default;
+	fill: $color-action-neutral-default;
 	padding: 0;
 }
 
 .btn.btn-outline {
 	background: $background;
-	border: 1px solid $neutral-default;
-	color: $neutral-default;
-	fill: $neutral-default;
+	border: 1px solid $color-action-neutral-default;
+	color: $color-action-neutral-default;
+	fill: $color-action-neutral-default;
 	padding: 1rem 1.125rem;
 }
 
 .btn.badge {
-	background: $primary-light;
-	color: $primary-default-light;
-	fill: $primary-default-light;
+	background: $color-brand-primary-lighten-5;
+	color: $color-action-primary-default;
+	fill: $color-action-primary-default;
 	font-size: 0.813rem;
 	gap: 0.5rem;
 	height: 1.5rem;

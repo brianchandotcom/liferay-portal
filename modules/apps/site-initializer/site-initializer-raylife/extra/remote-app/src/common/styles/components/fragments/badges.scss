@@ -1,11 +1,11 @@
 .badge {
 	align-items: center;
-	background: $primary-light;
+	background: $color-brand-primary-lighten-5;
 	border: none;
 	border-radius: 0.25rem;
-	color: $primary-default;
+	color: $color-action-primary-hover;
 	display: flex;
-	fill: $primary-default;
+	fill: $color-action-primary-hover;
 	font-family: $font-family;
 	font-size: 0.8rem;
 	font-weight: 500;
@@ -17,20 +17,20 @@
 }
 
 button.btn.badge {
-	background: #e1ebff;
+	background: $color-brand-primary-lighten-5;
 	font-weight: 500;
 
 	&.open {
-		background: $primary-default;
-		color: #fff;
-		fill: #fff;
+		background: $color-action-primary-hover;
+		color: $color-neutral-white;
+		fill: $color-neutral-white;
 	}
 }
 
 .badge-primary {
-	background: $primary-light;
-	color: $primary-default;
-	fill: $primary-default;
+	background: $color-brand-primary-lighten-5;
+	color: $color-action-primary-hover;
+	fill: $color-action-primary-hover;
 }
 
 .badge-error {

@@ -1,6 +1,6 @@
 #quote-comparison {
-	background-color: #fff;
-	border: 1px solid #a6c2ff;
+	background-color: $color-neutral-white;
+	border: 1px solid $color-brand-primary-lighten-3;
 	border-radius: 8px;
 	box-shadow: 0px 10px 30px rgba(77, 133, 255, 0.09);
 	height: 576px;
@@ -14,9 +14,9 @@
 
 	.most-popular {
 		align-items: center;
-		background-color: $secondary-dark;
+		background-color: $color-brand-secondary;
 		border-radius: 7px 7px 0 0;
-		color: #fff;
+		color: $color-neutral-white;
 		display: flex;
 		font-size: 18px;
 		font-weight: 600;
@@ -26,7 +26,7 @@
 	}
 
 	.no-most-popular {
-		background-color: #fff;
+		background-color: $color-neutral-white;
 		border-radius: 7px 7px 0 0;
 		height: 25px;
 	}
@@ -43,18 +43,18 @@
 		text-align: center;
 
 		.subtitle {
-			color: $neutral-dark;
+			color: $color-neutral-2;
 			font-size: 11px;
 			font-weight: 500;
 			line-height: 16px;
 
 			span {
-				color: #4d85ff;
+				color: $color-brand-primary;
 			}
 		}
 
 		.title {
-			color: #4d85ff;
+			color: $color-brand-primary;
 			font-size: 24px;
 			font-weight: 700;
 			line-height: 28px;
@@ -62,7 +62,7 @@
 		}
 
 		.value {
-			color: #09101d;
+			color: $color-neutral-black;
 			display: flex;
 			flex-direction: row;
 			font-size: 49px;
@@ -71,7 +71,7 @@
 			line-height: 56px;
 
 			div {
-				color: $neutral-darker;
+				color: $color-neutral-1;
 				font-size: 37px;
 				font-weight: 300;
 			}
@@ -84,9 +84,9 @@
 
 		#purchase {
 			background: none;
-			border: 1px solid $primary-default-light;
+			border: 1px solid $color-action-primary-default;
 			border-radius: 4px;
-			color: $primary-default-light;
+			color: $color-action-primary-default;
 			cursor: pointer;
 			font-size: 16px;
 			font-weight: 700;
@@ -97,10 +97,10 @@
 			width: 215px;
 
 			&.most-popular {
-				background: $primary-default-light;
-				border: 1px solid $primary-default-light;
+				background: $color-action-primary-default;
+				border: 1px solid $color-action-primary-default;
 				border-radius: 4px;
-				color: #fff;
+				color: $color-neutral-white;
 				cursor: pointer;
 				font-size: 16px;
 				font-weight: 700;
@@ -111,20 +111,20 @@
 			}
 
 			&.most-popular:hover {
-				background: $primary-dark;
-				color: #fff;
+				background: $color-action-primary-hover;
+				color: $color-neutral-white;
 			}
 		}
 
 		#purchase:hover {
-			border: 1px solid $primary-dark;
-			color: $primary-dark;
+			border: 1px solid $color-action-primary-hover;
+			color: $color-action-primary-hover;
 		}
 
 		#details {
 			background: none;
 			border: none;
-			color: $neutral-default;
+			color: $color-action-neutral-default;
 			cursor: pointer;
 			font-size: 16px;
 			font-weight: 500;
@@ -144,7 +144,7 @@
 	}
 
 	li {
-		color: #606167;
+		color: $color-neutral-2;
 		display: flex;
 		flex: auto;
 		font-size: 13px;
@@ -153,7 +153,7 @@
 		list-style: none;
 
 		.timesIcon {
-			color: #a0a0a4;
+			color: $color-neutral-3;
 		}
 
 		.checkIcon,
@@ -165,7 +165,7 @@
 		.checkIcon {
 			div {
 				align-items: center;
-				border: 1.5px solid #4d85ff;
+				border: 1.5px solid $color-brand-primary;
 				border-radius: 50%;
 				display: flex;
 				flex-shrink: 0;
@@ -175,7 +175,7 @@
 				width: 16px;
 
 				svg {
-					fill: #4d85ff;
+					fill: $color-brand-primary;
 					width: 10px !important;
 				}
 			}
@@ -201,7 +201,7 @@
 				width: 16px;
 
 				svg {
-					fill: #a0a0a4;
+					fill: $color-neutral-2;
 				}
 			}
 		}

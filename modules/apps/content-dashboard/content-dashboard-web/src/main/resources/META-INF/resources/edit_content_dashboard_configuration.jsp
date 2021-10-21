@@ -50,7 +50,13 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 						<liferay-ui:message key="select-vocabularies-description" />
 					</p>
 
-					<div>
+					<div class="vocabularies-selection-wrapper">
+						<span
+							aria-hidden="true"
+							class="loading-animation
+							vocabularies-selection-loader"
+						/>
+
 						<react:component
 							module="js/VocabulariesSelectionBox"
 							props='<%=

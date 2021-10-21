@@ -15,6 +15,7 @@
 import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
 import itemFinder from 'commerce-frontend-js/components/item_finder/entry';
 import {UPDATE_DATASET_DISPLAY} from 'commerce-frontend-js/utilities/eventsDefinitions';
+import {openToast} from 'frontend-js-web';
 
 export default function ({
 	commerceOrderTypeId,
@@ -38,11 +39,18 @@ export default function ({
 		return CommerceOrderTypeChannelsResource.addOrderTypeChannel(
 			commerceOrderTypeId,
 			channelData
-		).then(() => {
-			Liferay.fire(UPDATE_DATASET_DISPLAY, {
-				id: datasetId,
+		)
+			.then(() => {
+				Liferay.fire(UPDATE_DATASET_DISPLAY, {
+					id: datasetId,
+				});
+			})
+			.catch((error) => {
+				openToast({
+					message: error.title,
+					type: 'danger',
+				});
 			});
-		});
 	}
 
 	itemFinder('itemFinder', 'item-finder-root-channel', {

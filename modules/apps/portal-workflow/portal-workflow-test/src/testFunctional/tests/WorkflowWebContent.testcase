@@ -103,6 +103,8 @@ definition {
 	@description = "LRQA-70845 Verify that cannot bypass workflow by duplicating article."
 	@priority = "5"
 	test CannotBypassWorkflowByduplicatingArticle {
+		property portal.upstream = "quarantine";
+
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
 		ApplicationsMenu.gotoPortlet(

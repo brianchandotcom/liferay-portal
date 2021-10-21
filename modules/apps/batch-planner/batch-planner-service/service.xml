@@ -117,6 +117,7 @@
 		<column name="externalURL" type="String" />
 		<column name="internalClassName" type="String" />
 		<column name="name" type="String" />
+		<column name="taskItemDelegateName" type="String" />
 		<column name="template" type="boolean" />
 
 		<!-- Order -->

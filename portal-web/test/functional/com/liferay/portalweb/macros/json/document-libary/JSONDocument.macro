@@ -318,6 +318,34 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to move a document entry to trash"
+	macro moveFileEntryToTrash {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(folderName)) {
+			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
+				name = "${folderName}",
+				groupName = "${groupName}");
+		}
+		else {
+			var folderId = "0";
+		}
+
+		var fileEntryId = JSONDocument.getFileEntryId(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			folderId = "${folderId}",
+			groupName = "${groupName}",
+			portalURL = "${baseURL}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/dltrash/move-file-entry-to-trash \
+			-u test@liferay.com:test \
+			-d fileEntryId=${fileEntryId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to subscribe to a folder"
 	macro subscribeToFolder {
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(

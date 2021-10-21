@@ -19,11 +19,13 @@ const HEADERS = new Headers({
 	'x-csrf-token': window.Liferay.authToken,
 });
 
-function getOptionElement(label, value) {
+function getOptionElement(label, schemaName, value) {
 	const optionElement = document.createElement('option');
 
-	optionElement.value = value;
 	optionElement.innerHTML = label;
+	optionElement.value = value;
+
+	optionElement.setAttribute("schemaName", schemaName);
 
 	return optionElement;
 }
@@ -34,6 +36,10 @@ export default function ({namespace}) {
 	);
 	const internalClassNameSelect = document.querySelector(
 		`#${namespace}internalClassName`
+	);
+
+	const taskItemDelegateNameInput = document.querySelector(
+		`#${namespace}taskItemDelegateName`
 	);
 
 	headlessEnpointSelect.addEventListener('change', (event) => {
@@ -63,7 +69,7 @@ export default function ({namespace}) {
 			.then(({components}) => {
 				internalClassNameSelect.innerHTML = '';
 
-				internalClassNameSelect.appendChild(getOptionElement('', ''));
+				internalClassNameSelect.appendChild(getOptionElement('', '', ''));
 
 				const keys = Object.keys(components.schemas).sort();
 
@@ -74,11 +80,12 @@ export default function ({namespace}) {
 						return;
 					}
 
-					const value = properties['x-class-name'].default;
+					const className = properties['x-class-name'].default;
+
+					const schemaName = properties['x-schema-name']?.default;
 
 					const optionElement = getOptionElement(
-						trimPackage(value),
-						value
+						trimPackage(className), schemaName, className
 					);
 
 					internalClassNameSelect.appendChild(optionElement);
@@ -110,8 +117,15 @@ export default function ({namespace}) {
 
 	function handleClassNameSelectChange() {
 		const headlessEnpointValue = headlessEnpointSelect.value;
+
+		const selectedOption = internalClassNameSelect.options[internalClassNameSelect.selectedIndex];
+
+		const schemaName = selectedOption.getAttribute("schema");
+
+		taskItemDelegateNameInput.value = schemaName || "DEFAULT";
+
 		const internalClassNameValue = trimPackage(
-			internalClassNameSelect.value
+			schemaName || selectedOption.value
 		);
 
 		if (!headlessEnpointValue || !internalClassNameValue) {

@@ -181,11 +181,13 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 						continue;
 					}
 
-					let xClassName = properties['x-class-name'];
+					const className = properties['x-class-name'].default;
+
+					const schemaName = properties['x-schema-name']?.default;
 
 					internalClassName.appendChild(
-						'<option value="' +
-							xClassName.default +
+						'<option schemaName="' + schemaName + '" value="' +
+							className +
 							'">' +
 							key +
 							'</option>'
@@ -218,12 +220,18 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 	function <portlet:namespace />renderMappings() {
 		var openAPIURL = A.one('#<portlet:namespace />headlessEndpoint').val();
 
-		var internalClassName = A.one(
-			'#<portlet:namespace />internalClassName'
-		).val();
+		const selectedOption = A.one(
+			'#<portlet:namespace />internalClassName option:checked'
+		);
 
-		internalClassName = internalClassName.substr(
-			internalClassName.lastIndexOf('.') + 1
+		const schemaName = selectedOption.getAttribute("schemaName");
+
+		A.one('#<portlet:namespace />taskItemDelegateName').val(schemaName || "DEFAULT");
+
+		let internalClassNameValue = schemaName || selectedOption.val();
+
+		internalClassNameValue = internalClassNameValue.substr(
+			internalClassNameValue.lastIndexOf('.') + 1
 		);
 
 		Liferay.Util.fetch(openAPIURL, {
@@ -244,7 +252,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 			.then((jsonResponse) => {
 				let schemas = jsonResponse.components.schemas;
 
-				let schemaEntry = schemas[internalClassName];
+				let schemaEntry = schemas[internalClassNameValue];
 
 				var mappingArea = A.one('.plan-mappings');
 				var mappingRowTemplate = A.one(

@@ -1613,10 +1613,10 @@
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-"@liferay/npm-scripts@46.2.0":
-  version "46.2.0"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-46.2.0.tgz#8225ce69668e8e3f719f19f8e3c684f33ddb3d38"
-  integrity sha512-/WuQdov/BDemWZmKUtTQPI9xof+82Knj2W4GNx97Bc/Gt7z7cQTonPziIv84JI1kGark9U8eVUyDz9lVTetMBw==
+"@liferay/npm-scripts@46.4.0":
+  version "46.4.0"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-46.4.0.tgz#2bb8da75c31e3f7c9907df37995694719cdfe82c"
+  integrity sha512-FKTaRzNF2tZ6usXEVJYPuubM7RiyWQITJWiyKPA41j/bwQhDc03XRjFAy7x9g2vDclg04yEHMMn4ntJh4iYvGQ==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -1664,13 +1664,14 @@
     liferay-npm-bridge-generator "2.24.2"
     liferay-npm-bundler "2.24.2"
     liferay-npm-bundler-loader-css-loader "2.24.2"
+    liferay-npm-bundler-loader-json-loader "2.24.2"
     liferay-npm-bundler-plugin-exclude-imports "2.24.2"
     liferay-npm-bundler-plugin-inject-imports-dependencies "2.24.2"
     liferay-npm-bundler-plugin-inject-peer-dependencies "2.24.2"
     liferay-npm-bundler-plugin-namespace-packages "2.24.2"
     liferay-npm-bundler-plugin-replace-browser-modules "2.24.2"
     liferay-npm-bundler-plugin-resolve-linked-dependencies "2.24.2"
-    liferay-theme-tasks "10.5.2"
+    liferay-theme-tasks "10.5.3"
     metal-tools-soy "4.3.2"
     mini-css-extract-plugin "0.11.2"
     minimist "^1.2.0"
@@ -9701,6 +9702,13 @@ liferay-npm-bundler-loader-css-loader@2.24.2:
     liferay-npm-build-tools-common "2.24.2"
     read-json-sync "^2.0.1"
 
+liferay-npm-bundler-loader-json-loader@2.24.2:
+  version "2.24.2"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-loader-json-loader/-/liferay-npm-bundler-loader-json-loader-2.24.2.tgz#6d66d14a9d369e6b75597737b43419e5ff00de9d"
+  integrity sha512-3Dc3zap9XpnG0J8WYZC/dbnz8WBcF7KE04b6OGDAb3ZndzXrs4wLhCNRjICqFIHqQtjUr+ejAfYC5qA2HHK43w==
+  dependencies:
+    liferay-npm-build-tools-common "2.24.2"
+
 liferay-npm-bundler-plugin-exclude-imports@2.24.2:
   version "2.24.2"
   resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-exclude-imports/-/liferay-npm-bundler-plugin-exclude-imports-2.24.2.tgz#cc965321a068af7554fb8e0ec88fbb8258d19094"
@@ -9787,10 +9795,10 @@ liferay-npm-bundler@2.24.2:
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-liferay-theme-tasks@10.5.2:
-  version "10.5.2"
-  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-10.5.2.tgz#eaf7e13d5123031fbfe2a1fdce03df45628d6f30"
-  integrity sha512-RXe9WVhNnpq8gWWdr/MdoVvKxVAVwtgpUQvFJ+8Wjrvd1hpyoFuFSwku/mNuv5+Yz18DxHEu5vljBDsJLCRvdA==
+liferay-theme-tasks@10.5.3:
+  version "10.5.3"
+  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-10.5.3.tgz#0197317d312539e3d797e203d0b5d2fb6d8992ef"
+  integrity sha512-OsTPCu+i5aPJxdMHNn07+DJ2j0248bXad7iw2NSSjGJic9ae4YT86GljN6lNNnoisfy+P7uodaUV4GLNWP6avw==
   dependencies:
     ansi-colors "^4.1.1"
     async "^2.6.1"

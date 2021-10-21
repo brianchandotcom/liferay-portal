@@ -434,7 +434,11 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 		<TopperEmpty item={item}>
 			<Column
 				className={classNames('page-editor__col', {
-					empty: isItemEmpty(item, layoutData, selectedViewportSize),
+					'empty': isItemEmpty(
+						item,
+						layoutData,
+						selectedViewportSize
+					),
 					'page-editor__row-overlay-grid__border':
 						selectedColumn?.itemId === item.itemId &&
 						!isFirstColumnOfRow &&

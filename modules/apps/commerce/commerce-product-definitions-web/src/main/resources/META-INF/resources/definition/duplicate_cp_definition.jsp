@@ -57,7 +57,7 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 				FormUtils.apiSubmit(form, API_URL)
 					.then((payload) => {
 						var headers = new Headers({
-							Accept: 'application/json',
+							'Accept': 'application/json',
 							'Content-Type': 'application/json',
 						});
 

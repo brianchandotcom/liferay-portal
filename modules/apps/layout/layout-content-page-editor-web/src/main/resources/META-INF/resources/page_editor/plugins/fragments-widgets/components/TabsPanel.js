@@ -45,7 +45,7 @@ export default function TabsPanel({
 						active={tab.id === activeTabId}
 						innerProps={{
 							'aria-controls': getTabPanelId(index),
-							id: getTabId(index),
+							'id': getTabId(index),
 						}}
 						key={index}
 						onClick={() => setActiveTabId(tab.id)}

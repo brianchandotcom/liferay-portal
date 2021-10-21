@@ -114,7 +114,7 @@ ListTypeEntry listTypeEntry = (ListTypeEntry)request.getAttribute(ObjectWebKeys.
 					name_i18n: localizedNames,
 				}),
 				headers: new Headers({
-					Accept: 'application/json',
+					'Accept': 'application/json',
 					'Content-Type': 'application/json',
 				}),
 				method: 'PUT',

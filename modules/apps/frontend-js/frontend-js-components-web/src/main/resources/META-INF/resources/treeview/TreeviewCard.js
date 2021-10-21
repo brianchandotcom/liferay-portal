@@ -36,12 +36,12 @@ export default function TreeviewCard({node}) {
 		<div
 			className={classNames({
 				'card-type-directory': true,
-				disabled: node.disabled,
-				focused: node.id === focusedNodeId,
+				'disabled': node.disabled,
+				'focused': node.id === focusedNodeId,
 				'form-check': true,
 				'form-check-card': true,
 				'form-check-middle-left': true,
-				selected: node.selected,
+				'selected': node.selected,
 			})}
 		>
 			<div className="card card-horizontal">

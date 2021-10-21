@@ -23,7 +23,7 @@ import CustomSelect from './form/CustomSelect';
 import Input from './form/Input';
 
 const headers = new Headers({
-	Accept: 'application/json',
+	'Accept': 'application/json',
 	'Content-Type': 'application/json',
 });
 

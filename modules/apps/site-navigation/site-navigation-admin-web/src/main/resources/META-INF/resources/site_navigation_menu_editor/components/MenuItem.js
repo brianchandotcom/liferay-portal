@@ -115,7 +115,7 @@ export const MenuItem = ({item}) => {
 		>
 			<ClayCard
 				className={classNames('site_navigation_menu_editor_MenuItem', {
-					dragging: isDragging,
+					'dragging': isDragging,
 					'site_navigation_menu_editor_MenuItem--selected': selected,
 				})}
 				selectable

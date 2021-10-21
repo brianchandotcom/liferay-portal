@@ -55,7 +55,7 @@ export const ZOOM_STEP = 0.25;
 export const ZOOM_VALUES = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3, 5];
 
 export const HEADERS = new Headers({
-	Accept: 'application/json',
+	'Accept': 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 	'Content-Type': 'application/json',
 });

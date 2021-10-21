@@ -31,7 +31,7 @@ const LOGICAL_OPERATOR = {
 
 const OPERATORS = {
 	'belongs-to': Liferay.Language.get('belongs-to'),
-	contains: Liferay.Language.get('contains'),
+	'contains': Liferay.Language.get('contains'),
 	'equals-to': Liferay.Language.get('is-equal-to'),
 	'greater-than': Liferay.Language.get('is-greater-than'),
 	'greater-than-equals': Liferay.Language.get('is-greater-than-or-equal-to'),
@@ -234,11 +234,11 @@ const ActionDefault = ({action, fields, target}) => (
 
 const ACTIONS = {
 	'auto-fill': ActionAutoFill,
-	calculate: ActionCalculate,
-	enable: ActionDefault,
+	'calculate': ActionCalculate,
+	'enable': ActionDefault,
 	'jump-to-page': ActionJumpToPage,
-	require: ActionDefault,
-	show: ActionDefault,
+	'require': ActionDefault,
+	'show': ActionDefault,
 };
 
 const LogicalOperator = ({children, logicalOperator}) => (

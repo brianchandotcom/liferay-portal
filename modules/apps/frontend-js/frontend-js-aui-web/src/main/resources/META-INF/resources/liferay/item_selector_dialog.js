@@ -116,11 +116,11 @@ AUI.add(
 					Util.selectEntity(
 						{
 							dialog: {
-								constrain: true,
-								cssClass: instance.get('dialogClasses'),
-								destroyOnHide: true,
-								modal: true,
-								on: {
+								'constrain': true,
+								'cssClass': instance.get('dialogClasses'),
+								'destroyOnHide': true,
+								'modal': true,
+								'on': {
 									visibleChange(event) {
 										if (!event.newVal) {
 											instance.set(

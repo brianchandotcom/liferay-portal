@@ -22,10 +22,10 @@ import TextProcessor from './TextProcessor';
 
 export default {
 	'background-image': BackgroundImageProcessor,
-	fallback: FallbackProcessor,
-	html: HTMLProcessor,
-	image: ImageProcessor,
-	link: LinkProcessor,
+	'fallback': FallbackProcessor,
+	'html': HTMLProcessor,
+	'image': ImageProcessor,
+	'link': LinkProcessor,
 	'rich-text': RichTextProcessor,
-	text: TextProcessor,
+	'text': TextProcessor,
 };

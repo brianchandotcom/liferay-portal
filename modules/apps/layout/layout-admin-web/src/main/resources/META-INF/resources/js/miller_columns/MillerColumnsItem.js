@@ -37,8 +37,8 @@ const ITEM_HOVER_TIMEOUT = 500;
 
 const ITEM_STATES_COLORS = {
 	'conversion-draft': 'info',
-	draft: 'secondary',
-	pending: 'info',
+	'draft': 'secondary',
+	'pending': 'info',
 };
 
 const isValidTarget = (sources, target, dropZone) => {
@@ -338,7 +338,7 @@ const MillerColumnsItem = ({
 	return (
 		<ClayLayout.ContentRow
 			className={classNames('list-group-item-flex miller-columns-item', {
-				dragging: isDragging,
+				'dragging': isDragging,
 				'drop-bottom': isOver && dropZone === DROP_ZONES.BOTTOM,
 				'drop-element': isOver && dropZone === DROP_ZONES.ELEMENT,
 				'drop-top': isOver && dropZone === DROP_ZONES.TOP,

@@ -16,8 +16,8 @@ module.exports = {
 	build: {
 		bundler: {
 			exclude: {
-				bootstrap: true,
-				querystring: ['test/**/*'],
+				'bootstrap': true,
+				'querystring': ['test/**/*'],
 				'xss-filters': ['dist/**/*', 'tests/**/*'],
 			},
 		},

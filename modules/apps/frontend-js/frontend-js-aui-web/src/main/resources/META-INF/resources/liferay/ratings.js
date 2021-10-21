@@ -100,8 +100,8 @@ AUI.add(
 
 			_thumbScoreMap: {
 				'-1': -1,
-				down: 0,
-				up: 1,
+				'down': 0,
+				'up': 1,
 			},
 
 			ATTRS: {

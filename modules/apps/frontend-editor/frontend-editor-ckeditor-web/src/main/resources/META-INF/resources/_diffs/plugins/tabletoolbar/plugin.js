@@ -1101,7 +1101,7 @@
 					panel: {
 						attributes: {
 							'aria-label': editor.lang.table.row.menu,
-							role: 'listbox',
+							'role': 'listbox',
 						},
 						css: [CKEDITOR.skin.getPath('editor')].concat(
 							editor.config.contentsCss
@@ -1179,7 +1179,7 @@
 					panel: {
 						attributes: {
 							'aria-label': editor.lang.table.column.menu,
-							role: 'listbox',
+							'role': 'listbox',
 						},
 						css: [CKEDITOR.skin.getPath('editor')].concat(
 							editor.config.contentsCss
@@ -1263,7 +1263,7 @@
 					panel: {
 						attributes: {
 							'aria-label': editor.lang.table.cell.menu,
-							role: 'listbox',
+							'role': 'listbox',
 						},
 						css: [CKEDITOR.skin.getPath('editor')].concat(
 							editor.config.contentsCss

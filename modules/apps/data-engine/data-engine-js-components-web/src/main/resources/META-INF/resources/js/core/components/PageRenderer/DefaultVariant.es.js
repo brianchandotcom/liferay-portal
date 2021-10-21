@@ -30,7 +30,7 @@ export const Container = ({
 	<div
 		className={classnames('fade tab-pane', {
 			'active show': activePage === pageIndex,
-			hide: activePage !== pageIndex,
+			'hide': activePage !== pageIndex,
 		})}
 		role="tabpanel"
 	>

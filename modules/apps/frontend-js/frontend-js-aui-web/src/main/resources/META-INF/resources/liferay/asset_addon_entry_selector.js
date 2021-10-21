@@ -141,9 +141,9 @@ AUI.add(
 
 					if (!dialog) {
 						var dialogConfig = {
-							autoHeightRatio: 0.5,
+							'autoHeightRatio': 0.5,
 							'toolbars.footer': instance._getSelectDialogFooterToolbar(),
-							width: 540,
+							'width': 540,
 						};
 
 						dialog = Liferay.Util.getTop().Liferay.Util.Window.getWindow(

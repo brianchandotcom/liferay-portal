@@ -53,7 +53,7 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({apiURL}) => {
 				name,
 			}),
 			headers: new Headers({
-				Accept: 'application/json',
+				'Accept': 'application/json',
 				'Content-Type': 'application/json',
 			}),
 			method: 'POST',

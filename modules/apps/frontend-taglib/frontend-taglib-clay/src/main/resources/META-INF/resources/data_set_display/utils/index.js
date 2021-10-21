@@ -166,7 +166,7 @@ export function formatItemChanges(itemChanges) {
 export function executeAsyncAction(url, method = 'GET') {
 	return fetch(url, {
 		headers: {
-			Accept: 'application/json',
+			'Accept': 'application/json',
 			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 			'Content-Type': 'application/json',
 		},

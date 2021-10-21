@@ -33,12 +33,12 @@ const transformSearchLocationValues = (fields, data) => {
 	Object.values(fields).forEach(({label, name, type}) => {
 		if (type === 'search_location') {
 			const labels = parse(label, {
-				address: 'Address',
-				city: 'City',
-				country: 'Country',
-				place: 'Search Location',
+				'address': 'Address',
+				'city': 'City',
+				'country': 'Country',
+				'place': 'Search Location',
 				'postal-code': 'Postal Code',
-				state: 'State',
+				'state': 'State',
 			});
 
 			const visibleFields = Object.keys(labels);

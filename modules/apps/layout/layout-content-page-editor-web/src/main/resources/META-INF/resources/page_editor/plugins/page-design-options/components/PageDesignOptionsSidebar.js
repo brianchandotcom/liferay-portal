@@ -150,7 +150,7 @@ export default function PageDesignOptionsSidebar() {
 							active={activeTabId === index}
 							innerProps={{
 								'aria-controls': getTabPanelId(index),
-								id: getTabId(index),
+								'id': getTabId(index),
 							}}
 							key={index}
 							onClick={() => setActiveTabId(index)}

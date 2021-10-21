@@ -75,7 +75,7 @@ CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmen
 					'/accountAddresses/',
 				{
 					headers: new Headers({
-						Accept: 'application/json',
+						'Accept': 'application/json',
 						'Content-Type': 'application/json',
 					}),
 					method: 'GET',

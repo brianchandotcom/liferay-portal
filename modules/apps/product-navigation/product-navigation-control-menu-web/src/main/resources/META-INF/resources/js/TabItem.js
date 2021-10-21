@@ -54,8 +54,8 @@ const TabItem = ({item}) => {
 	return (
 		<li
 			className={classNames('sidebar-body__add-panel__tab-item', {
-				disabled: item.disabled,
-				multiline: isContent,
+				'disabled': item.disabled,
+				'multiline': isContent,
 				'sidebar-body__add-panel__tab-portlet-item':
 					item.data.portletItemId,
 			})}

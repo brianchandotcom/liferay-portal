@@ -133,7 +133,7 @@ AUI.add(
 							'drop:exit'() {
 								Liferay.Layout.updateOverNestedPortletInfo();
 							},
-							placeholderAlign(event) {
+							'placeholderAlign'(event) {
 								var portalLayout = event.currentTarget;
 
 								var activeDrop = portalLayout.activeDrop;

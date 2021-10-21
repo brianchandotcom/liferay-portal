@@ -15,7 +15,7 @@ const METADATA = {
 };
 
 const XML_NAMESPACE = {
-	xmlns: 'urn:liferay.com:liferay-workflow_7.4.0',
+	'xmlns': 'urn:liferay.com:liferay-workflow_7.4.0',
 	'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
 	'xsi:schemaLocation':
 		'urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd',

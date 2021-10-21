@@ -75,7 +75,7 @@ function renderExperienceToolbarSection(
 
 const mockState = {
 	availableSegmentsExperiences: {
-		0: {
+		'0': {
 			hasLockedSegmentsExperiment: false,
 			name: 'Default Experience',
 			priority: -1,

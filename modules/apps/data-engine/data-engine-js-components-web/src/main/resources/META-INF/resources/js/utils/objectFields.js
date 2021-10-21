@@ -17,7 +17,7 @@ import {fetch} from 'frontend-js-web';
 import {EVENT_TYPES} from '../custom/form/eventTypes.es';
 
 const HEADERS = {
-	Accept: 'application/json',
+	'Accept': 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 	'Content-Type': 'application/json',
 };

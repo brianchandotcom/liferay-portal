@@ -68,8 +68,8 @@ window.defaultFetch = fetch;
 
 window.fetch = (resource, {headers, ...init} = {}) => {
 	headers = new Headers({
-		Accept: 'application/json',
-		Authorization: `Basic ${window.btoa('test@liferay.com:test')}`,
+		'Accept': 'application/json',
+		'Authorization': `Basic ${window.btoa('test@liferay.com:test')}`,
 		'Content-Type': 'application/json',
 	});
 

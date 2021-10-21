@@ -17,7 +17,7 @@ import {fetch} from 'frontend-js-web';
 import createOdataFilter from './odata';
 
 export const fetchHeaders = new Headers({
-	Accept: 'application/json',
+	'Accept': 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 	'Content-Type': 'application/json',
 });

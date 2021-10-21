@@ -662,7 +662,7 @@
 	};
 
 	window.<portlet:namespace />miniCalendar = new A.Calendar({
-		after: {
+		'after': {
 			dateChange: <portlet:namespace />refreshVisibleCalendarRenderingRules,
 			dateClick: function (event) {
 				<portlet:namespace />scheduler.setAttrs({
@@ -670,10 +670,10 @@
 				});
 			},
 		},
-		date: new Date(<%= String.valueOf(date) %>),
-		headerRenderer:
+		'date': new Date(<%= String.valueOf(date) %>),
+		'headerRenderer':
 			'<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "b-y")) %>',
-		locale: '<%= themeDisplay.getLocale() %>',
+		'locale': '<%= themeDisplay.getLocale() %>',
 		'strings.first_weekday': <%= weekStartsOn %>,
 	}).render('#<portlet:namespace />miniCalendarContainer');
 

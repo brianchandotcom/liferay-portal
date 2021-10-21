@@ -12,7 +12,7 @@
 import {fetch} from 'frontend-js-web';
 
 export const HEADERS = new Headers({
-	Accept: 'application/json',
+	'Accept': 'application/json',
 	'Content-Type': 'application/json',
 });
 

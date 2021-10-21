@@ -31,35 +31,39 @@ import type {RuleRaw, Violations} from '../hooks/useA11y';
 const IMPACT_FILTER_OPTIONS = [
 	{
 		'data-testid': 'critical',
-		label: Liferay.Language.get('critical'),
-		value: 'critical',
+		'label': Liferay.Language.get('critical'),
+		'value': 'critical',
 	},
 	{
 		'data-testid': 'serious',
-		label: Liferay.Language.get('serious'),
-		value: 'serious',
+		'label': Liferay.Language.get('serious'),
+		'value': 'serious',
 	},
 	{
 		'data-testid': 'moderate',
-		label: Liferay.Language.get('moderate'),
-		value: 'moderate',
+		'label': Liferay.Language.get('moderate'),
+		'value': 'moderate',
 	},
 	{
 		'data-testid': 'minor',
-		label: Liferay.Language.get('minor'),
-		value: 'minor',
+		'label': Liferay.Language.get('minor'),
+		'value': 'minor',
 	},
 ];
 
 const CATEGORY_FILTER_OPTIONS = [
 	{label: 'WCAG 2.0A', value: 'wcag2a'},
-	{'data-testid': 'wcag2aa', label: 'WCAG 2.0 Level AA', value: 'wcag2aa'},
+	{
+		'data-testid': 'wcag2aa',
+		'label': 'WCAG 2.0 Level AA',
+		'value': 'wcag2aa',
+	},
 	{label: 'WCAG 2.1 Level A', value: 'wcag21a'},
 	{label: 'WCAG 2.1 Level AA', value: 'wcag21aa'},
 	{
 		'data-testid': 'best-practice',
-		label: 'Best Practices',
-		value: 'best-practice',
+		'label': 'Best Practices',
+		'value': 'best-practice',
 	},
 ];
 

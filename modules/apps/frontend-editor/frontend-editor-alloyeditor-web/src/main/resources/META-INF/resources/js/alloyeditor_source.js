@@ -144,10 +144,10 @@ AUI.add(
 						Liferay.Util.openWindow(
 							{
 								dialog: {
-									constrain: true,
-									cssClass:
+									'constrain': true,
+									'cssClass':
 										'lfr-fulscreen-source-editor-dialog modal-full-screen',
-									modal: true,
+									'modal': true,
 									'toolbars.footer': [
 										{
 											label: strings.cancel,

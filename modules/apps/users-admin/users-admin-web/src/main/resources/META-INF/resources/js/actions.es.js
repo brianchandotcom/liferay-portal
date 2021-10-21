@@ -48,8 +48,8 @@ export const ACTIONS = {
 					const values = selectedItems.map((item) => item.value);
 
 					const editAssignmentURL = createActionURL(basePortletURL, {
-						addUserIds: values.join(','),
-						assignmentsRedirect: assignmentsRedirectURL.toString(),
+						'addUserIds': values.join(','),
+						'assignmentsRedirect': assignmentsRedirectURL.toString(),
 						'javax.portlet.action':
 							'/users_admin/edit_organization_assignments',
 						organizationId,

@@ -25,15 +25,15 @@ import {renderComponent} from '../../helpers.es';
 
 const mockAnswer = {
 	actions: {
-		delete: {
+		'delete': {
 			operation: 'deleteMessageBoardMessage',
 			type: 'mutation',
 		},
-		get: {
+		'get': {
 			operation: 'messageBoardMessage',
 			type: 'query',
 		},
-		replace: {
+		'replace': {
 			operation: 'updateMessageBoardMessage',
 			type: 'mutation',
 		},
@@ -41,15 +41,15 @@ const mockAnswer = {
 			operation: 'createMessageBoardMessageMessageBoardMessage',
 			type: 'mutation',
 		},
-		subscribe: {
+		'subscribe': {
 			operation: 'updateMessageBoardMessageSubscribe',
 			type: 'mutation',
 		},
-		unsubscribe: {
+		'unsubscribe': {
 			operation: 'updateMessageBoardMessageSubscribe',
 			type: 'mutation',
 		},
-		update: {
+		'update': {
 			operation: 'patchMessageBoardMessage',
 			type: 'mutation',
 		},

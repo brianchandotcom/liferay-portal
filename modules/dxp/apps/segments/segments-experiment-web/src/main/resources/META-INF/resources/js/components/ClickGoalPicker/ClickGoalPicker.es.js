@@ -654,7 +654,7 @@ function TargetTopper({allowEdit, geometry, isEditing, selector}) {
 				'lfr-segments-experiment-click-goal-target-topper': true,
 				'lfr-segments-experiment-click-goal-target-topper-editing': isEditing,
 				'px-2': true,
-				small: true,
+				'small': true,
 				'text-white': true,
 			})}
 			onClick={stopImmediatePropagation}

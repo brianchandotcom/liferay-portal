@@ -254,7 +254,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 	<c:if test="<%= themeDisplay.isSignedIn() || (groupCalendarResource != null) %>">
 		window.<portlet:namespace />myCalendarList = new Liferay.CalendarList({
 			after: {
-				calendarsChange: syncCalendarsMap,
+				'calendarsChange': syncCalendarsMap,
 				'scheduler-calendar:visibleChange': function (event) {
 					syncCalendarsMap();
 
@@ -284,7 +284,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 	<c:if test="<%= themeDisplay.isSignedIn() %>">
 		window.<portlet:namespace />otherCalendarList = new Liferay.CalendarList({
 			after: {
-				calendarsChange: function (event) {
+				'calendarsChange': function (event) {
 					syncCalendarsMap();
 
 					<portlet:namespace />scheduler.load();
@@ -318,7 +318,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 	<c:if test="<%= showSiteCalendars %>">
 		window.<portlet:namespace />siteCalendarList = new Liferay.CalendarList({
 			after: {
-				calendarsChange: syncCalendarsMap,
+				'calendarsChange': syncCalendarsMap,
 				'scheduler-calendar:visibleChange': function (event) {
 					syncCalendarsMap();
 

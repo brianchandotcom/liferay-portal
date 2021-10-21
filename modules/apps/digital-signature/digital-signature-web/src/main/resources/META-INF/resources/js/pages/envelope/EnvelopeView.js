@@ -173,10 +173,10 @@ function EnvelopeView({
 			<input
 				type="hidden"
 				value={createActionURL(baseResourceURL, {
-					dsEnvelopeId: envelopeId,
+					'dsEnvelopeId': envelopeId,
 					'javax.portlet.action':
 						'/digital_signature/delete_ds_envelope',
-					p_auth: Liferay.authToken,
+					'p_auth': Liferay.authToken,
 				})}
 			/>
 		</div>

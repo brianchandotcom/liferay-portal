@@ -49,7 +49,7 @@ AUI.add(
 
 				xmlNamespace: {
 					value: {
-						xmlns: 'urn:liferay.com:liferay-workflow_7.4.0',
+						'xmlns': 'urn:liferay.com:liferay-workflow_7.4.0',
 						'xmlns:xsi':
 							'http://www.w3.org/2001/XMLSchema-instance',
 						'xsi:schemaLocation':
@@ -409,7 +409,7 @@ AUI.add(
 
 						if (xmlns && xmlnsXsi && xsiSchemaLocation) {
 							instance.set('xmlNamespace', {
-								xmlns: xmlns[1],
+								'xmlns': xmlns[1],
 								'xmlns:xsi': xmlnsXsi[1],
 								'xsi:schemaLocation': xsiSchemaLocation[1],
 							});

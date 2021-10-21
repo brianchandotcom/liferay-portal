@@ -18,8 +18,8 @@ module.exports = {
 			exclude: {
 				'billboard.js': ['src/**/*', 'dist/*.min.js', 'dist/*.pkgd.js'],
 				'clay-charts': ['src/jsx/**/*', 'src/__tests__/**/*'],
-				commander: true,
-				d3: ['rollup.config.js', 'dist/d3.js'],
+				'commander': true,
+				'd3': ['rollup.config.js', 'dist/d3.js'],
 				'd3-array': [
 					'rollup.config.js',
 					'dist/**/*.min.js',
@@ -144,7 +144,7 @@ module.exports = {
 				],
 				'd3-zoom': ['rollup.config.js', 'dist/**/*.min.js', 'src/**/*'],
 				'iconv-lite': true,
-				rw: true,
+				'rw': true,
 				'safer-buffer': ['tests.js'],
 				'xss-filters': true,
 			},

@@ -43,28 +43,28 @@ if (Validator.isNotNull(tempFileName)) {
 
 		<aui:script use="liferay-upload">
 			var liferayUpload = new Liferay.Upload({
-				boundingBox: '#<portlet:namespace />fileUpload',
+				'boundingBox': '#<portlet:namespace />fileUpload',
 
 				<%
 				DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
 				%>
 
-				decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
-				deleteFile:
+				'decimalSeparator': '<%= decimalFormatSymbols.getDecimalSeparator() %>',
+				'deleteFile':
 					'<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/admin/update_certificate"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /></liferay-portlet:resourceURL>',
-				fileDescription: '*.p12 *.pfx',
-				maxFileSize:
+				'fileDescription': '*.p12 *.pfx',
+				'maxFileSize':
 					'<%= UploadServletRequestConfigurationHelperUtil.getMaxSize() %> B',
-				multipleFiles: false,
-				namespace: '<portlet:namespace />',
-				tempFileURL:
+				'multipleFiles': false,
+				'namespace': '<portlet:namespace />',
+				'tempFileURL':
 					'<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/admin/update_certificate"><portlet:param name="selectUploadedFile" value="<%= Constants.GET_TEMP %>" /><portlet:param name="selectUploadedFile" value='<%= ParamUtil.getString(request, "selectUploadedFile") %>' /></liferay-portlet:resourceURL>',
-				tempRandomSuffix: '<%= SamlTempFileEntryUtil.TEMP_RANDOM_SUFFIX %>',
+				'tempRandomSuffix': '<%= SamlTempFileEntryUtil.TEMP_RANDOM_SUFFIX %>',
 				'strings.dropFileText':
 					'<liferay-ui:message key="drop-a-pkcs12-formatted-keystore-file-here-to-inspect" />',
 				'strings.fileCannotBeSavedText':
 					'<liferay-ui:message key="the-file-x-cannot-be-inspected" />',
-				uploadFile:
+				'uploadFile':
 					'<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/admin/update_certificate"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /></liferay-portlet:resourceURL>',
 			});
 

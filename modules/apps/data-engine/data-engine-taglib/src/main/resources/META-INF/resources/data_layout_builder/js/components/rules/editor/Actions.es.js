@@ -252,16 +252,16 @@ const ActionAutoFill = ({children}) => (
 
 const ACTIONS_TARGET_TYPE = {
 	'auto-fill': ActionAutoFill,
-	calculate: ActionCalculate,
-	enable: ActionDefault,
+	'calculate': ActionCalculate,
+	'enable': ActionDefault,
 	'jump-to-page': ActionDefault,
-	require: ActionDefault,
-	show: ActionDefault,
+	'require': ActionDefault,
+	'show': ActionDefault,
 };
 
 const ACTIONS_CONTENT_TYPE = {
 	'auto-fill': ActionContentAutoFill,
-	calculate: ActionContentCalculate,
+	'calculate': ActionContentCalculate,
 };
 
 function Target({

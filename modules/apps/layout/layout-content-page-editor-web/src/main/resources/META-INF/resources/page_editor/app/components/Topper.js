@@ -142,7 +142,7 @@ function TopperContent({
 	return (
 		<div
 			className={classNames(className, 'page-editor__topper', {
-				active: isActive,
+				'active': isActive,
 				'drag-over-bottom':
 					isOverTarget && targetPosition === TARGET_POSITIONS.BOTTOM,
 				'drag-over-left':
@@ -153,8 +153,8 @@ function TopperContent({
 					isOverTarget && targetPosition === TARGET_POSITIONS.RIGHT,
 				'drag-over-top':
 					isOverTarget && targetPosition === TARGET_POSITIONS.TOP,
-				dragged: isDraggingSource,
-				hovered: isHovered,
+				'dragged': isDraggingSource,
+				'hovered': isHovered,
 			})}
 			onClick={(event) => {
 				event.stopPropagation();

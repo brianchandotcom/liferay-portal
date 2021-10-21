@@ -62,14 +62,14 @@ const pages = [
 ];
 
 const rule = {
-	actions: [
+	'actions': [
 		{
 			action: 'show',
 			label: 'radio',
 			target: 'radio',
 		},
 	],
-	conditions: [
+	'conditions': [
 		{
 			operands: [
 				{

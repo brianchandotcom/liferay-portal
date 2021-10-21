@@ -125,9 +125,9 @@ export const Column = ({
 						isFieldSetOrGroup &&
 						overTarget &&
 						!rootParentField.ddmStructureId,
-					dragging: resizing || isDragging,
-					hovered: editable && firstField.fieldName === hoveredId,
-					selected: editable && firstField.fieldName === activeId,
+					'dragging': resizing || isDragging,
+					'hovered': editable && firstField.fieldName === hoveredId,
+					'selected': editable && firstField.fieldName === activeId,
 					'target-droppable': canDrop,
 					'target-over targetOver':
 						(!rootParentField.ddmStructureId &&

@@ -19,8 +19,8 @@ module.exports = {
 				'lodash-es': true,
 				'loose-envify': true,
 				'node-fetch': true,
-				promise: true,
-				react: ['umd/**/*'],
+				'promise': true,
+				'react': ['umd/**/*'],
 				'react-dnd': ['dist/**/*'],
 				'react-dnd-html5-backend': ['dist/**/*'],
 				'react-dom': [
@@ -34,14 +34,14 @@ module.exports = {
 				'react-modal': ['dist/**/*'],
 				'react-select': ['dist/**/*', 'src/**/*'],
 				'react-tabs': ['dist/**/*', 'esm/**/*', 'src/**/*'],
-				recompose: [
+				'recompose': [
 					'dist/Recompose.esm.js',
 					'dist/Recompose.min.js',
 					'dist/Recompose.umd.js',
 				],
-				redux: ['lib/**/*', 'es/**/*', 'src/**/*'],
+				'redux': ['lib/**/*', 'es/**/*', 'src/**/*'],
 				'regenerator-runtime': true,
-				scheduler: ['umd/**/*'],
+				'scheduler': ['umd/**/*'],
 				'tiny-warning': ['src/**/*'],
 				'whatwg-fetch': true,
 			},

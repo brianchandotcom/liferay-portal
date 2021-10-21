@@ -244,7 +244,7 @@ function FieldBase({
 			aria-labelledby={!renderLabel ? fieldDetailsId : null}
 			className={classNames('form-group', {
 				'has-error': hasError,
-				hide: !visible,
+				'hide': !visible,
 			})}
 			data-field-name={name}
 			onClick={onClick}

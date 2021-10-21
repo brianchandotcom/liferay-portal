@@ -39,14 +39,14 @@
 
 	Liferay.RecurrenceUtil.POSITION_LABELS = {
 		'-1': '<liferay-ui:message key="position.last" />',
-		1: '<liferay-ui:message key="position.first" />',
-		2: '<liferay-ui:message key="position.second" />',
-		3: '<liferay-ui:message key="position.third" />',
-		4: '<liferay-ui:message key="position.fourth" />',
+		'1': '<liferay-ui:message key="position.first" />',
+		'2': '<liferay-ui:message key="position.second" />',
+		'3': '<liferay-ui:message key="position.third" />',
+		'4': '<liferay-ui:message key="position.fourth" />',
 	};
 
 	Liferay.RecurrenceUtil.RECURRENCE_SUMMARIES = {
-		daily: '<liferay-ui:message key="daily" />',
+		'daily': '<liferay-ui:message key="daily" />',
 		'daily-until-x-x-x': '<liferay-ui:message key="daily-until-x-x-x" />',
 		'daily-x-times': '<liferay-ui:message key="daily-x-times" />',
 		'every-mon-wed-fri': '<liferay-ui:message key="every-mon-wed-fri" />',
@@ -87,7 +87,7 @@
 			'<liferay-ui:message key="every-x-years-until-x-x-x" />',
 		'every-x-years-x-times':
 			'<liferay-ui:message key="every-x-years-x-times" />',
-		monthly: '<liferay-ui:message key="monthly" />',
+		'monthly': '<liferay-ui:message key="monthly" />',
 		'monthly-on-x-x': '<liferay-ui:message key="monthly-on-x-x" />',
 		'monthly-on-x-x-until-x-x-x':
 			'<liferay-ui:message key="monthly-on-x-x-until-x-x-x" />',
@@ -100,14 +100,14 @@
 		'position.last': '<liferay-ui:message key="position.last" />',
 		'position.second': '<liferay-ui:message key="position.second" />',
 		'position.third': '<liferay-ui:message key="position.third" />',
-		weekly: '<liferay-ui:message key="weekly" />',
+		'weekly': '<liferay-ui:message key="weekly" />',
 		'weekly-on-x': '<liferay-ui:message key="weekly-on-x" />',
 		'weekly-on-x-until-x-x-x':
 			'<liferay-ui:message key="weekly-on-x-until-x-x-x" />',
 		'weekly-on-x-x-times': '<liferay-ui:message key="weekly-on-x-x-times" />',
 		'weekly-until-x-x-x': '<liferay-ui:message key="weekly-until-x-x-x" />',
 		'weekly-x-times': '<liferay-ui:message key="weekly-x-times" />',
-		yearly: '<liferay-ui:message key="yearly" />',
+		'yearly': '<liferay-ui:message key="yearly" />',
 		'yearly-on-x-x-of-x': '<liferay-ui:message key="yearly-on-x-x-of-x" />',
 		'yearly-on-x-x-of-x-until-x-x-x':
 			'<liferay-ui:message key="yearly-on-x-x-of-x-until-x-x-x" />',

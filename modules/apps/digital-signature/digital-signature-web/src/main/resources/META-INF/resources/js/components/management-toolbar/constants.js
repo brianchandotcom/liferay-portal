@@ -13,7 +13,7 @@
  */
 
 export const FILTER_NAMES = {
-	author: [
+	'author': [
 		Liferay.Language.get('author'),
 		Liferay.Language.get('filter-by-author'),
 	],
@@ -21,7 +21,7 @@ export const FILTER_NAMES = {
 		Liferay.Language.get('deployment-type'),
 		Liferay.Language.get('filter-by-deployment-type'),
 	],
-	status: [
+	'status': [
 		Liferay.Language.get('status'),
 		Liferay.Language.get('filter-by-status'),
 	],

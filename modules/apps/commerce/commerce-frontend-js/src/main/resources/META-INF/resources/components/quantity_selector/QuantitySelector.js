@@ -30,7 +30,7 @@ function QuantitySelector({
 	...quantitySettings
 }) {
 	const commonProps = {
-		className: classnames({
+		'className': classnames({
 			'form-control-lg': large,
 			'quantity-selector': true,
 		}),

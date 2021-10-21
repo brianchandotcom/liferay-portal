@@ -666,7 +666,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 	window.<portlet:namespace />calendarListPending = new Liferay.CalendarList({
 		after: {
-			calendarsChange: function (event) {
+			'calendarsChange': function (event) {
 				var instance = this;
 
 				A.one('#<portlet:namespace />pendingCounter').html(
@@ -690,7 +690,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 	window.<portlet:namespace />calendarListAccepted = new Liferay.CalendarList({
 		after: {
-			calendarsChange: function (event) {
+			'calendarsChange': function (event) {
 				var instance = this;
 
 				A.one('#<portlet:namespace />acceptedCounter').html(
@@ -716,7 +716,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 	window.<portlet:namespace />calendarListDeclined = new Liferay.CalendarList({
 		after: {
-			calendarRemoved: function (event) {
+			'calendarRemoved': function (event) {
 				var calendar = event.calendar;
 
 				if (calendar) {
@@ -727,7 +727,7 @@ while (manageableCalendarsIterator.hasNext()) {
 					);
 				}
 			},
-			calendarsChange: function (event) {
+			'calendarsChange': function (event) {
 				var instance = this;
 
 				A.one('#<portlet:namespace />declinedCounter').html(
@@ -752,7 +752,7 @@ while (manageableCalendarsIterator.hasNext()) {
 	<c:if test="<%= calendarBooking != null %>">
 		window.<portlet:namespace />calendarListMaybe = new Liferay.CalendarList({
 			after: {
-				calendarsChange: function (event) {
+				'calendarsChange': function (event) {
 					var instance = this;
 
 					A.one('#<portlet:namespace />maybeCounter').html(

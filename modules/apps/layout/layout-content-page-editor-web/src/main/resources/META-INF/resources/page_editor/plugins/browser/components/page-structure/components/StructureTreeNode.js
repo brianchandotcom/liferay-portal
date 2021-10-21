@@ -254,7 +254,7 @@ function StructureTreeNodeContent({
 					isOverTarget && targetPosition === TARGET_POSITIONS.MIDDLE,
 				'drag-over-top':
 					isOverTarget && targetPosition === TARGET_POSITIONS.TOP,
-				dragged: isDraggingSource,
+				'dragged': isDraggingSource,
 				'font-weight-semi-bold':
 					node.activable && node.itemType !== ITEM_TYPES.editable,
 				'page-editor__page-structure__tree-node--active': isActive,

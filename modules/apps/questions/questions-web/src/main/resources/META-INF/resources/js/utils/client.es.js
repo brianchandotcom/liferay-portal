@@ -17,7 +17,7 @@ import {GraphQLClient} from 'graphql-hooks';
 import memCache from 'graphql-hooks-memcache';
 
 const headers = {
-	Accept: 'application/json',
+	'Accept': 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 	'Content-Type': 'text/plain; charset=utf-8',
 };

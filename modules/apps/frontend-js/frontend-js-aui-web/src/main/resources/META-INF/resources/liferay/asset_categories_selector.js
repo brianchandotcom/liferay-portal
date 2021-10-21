@@ -302,7 +302,7 @@ AUI.add(
 									'$childrenCount = /assetcategory/get-vocabulary-root-categories-count': {
 										'@vocabularyId':
 											'$vocabularies.vocabularyId',
-										groupId: '$vocabularies.groupId',
+										'groupId': '$vocabularies.groupId',
 									},
 									'$group[descriptiveName] = /group/get-group': {
 										'@groupId': '$vocabularies.groupId',
@@ -599,10 +599,10 @@ AUI.add(
 										'@categoryId':
 											'$display.categories.categoryId',
 									},
-									end: -1,
-									groupIds: vocabularyGroupIds,
-									start: -1,
-									title: searchValue,
+									'end': -1,
+									'groupIds': vocabularyGroupIds,
+									'start': -1,
+									'title': searchValue,
 									vocabularyIds,
 								},
 							},

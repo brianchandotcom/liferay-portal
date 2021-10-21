@@ -102,7 +102,7 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 					label: localizedLabels,
 				}),
 				headers: new Headers({
-					Accept: 'application/json',
+					'Accept': 'application/json',
 					'Content-Type': 'application/json',
 				}),
 				method: 'PUT',

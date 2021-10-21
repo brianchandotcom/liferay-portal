@@ -100,7 +100,7 @@ function ItemConfigurationContent() {
 							active={panel.panelId === activePanelId}
 							innerProps={{
 								'aria-controls': `${panelIdPrefix}-${panel.panelId}`,
-								id: `${tabIdPrefix}-${panel.panelId}`,
+								'id': `${tabIdPrefix}-${panel.panelId}`,
 							}}
 							key={panel.panelId}
 							onClick={() => setActivePanelId(panel.panelId)}

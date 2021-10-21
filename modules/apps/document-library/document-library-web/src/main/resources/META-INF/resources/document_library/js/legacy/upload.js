@@ -582,7 +582,7 @@ AUI.add(
 
 					entryNode.attr({
 						'data-title': name,
-						id: A.guid(),
+						'id': A.guid(),
 					});
 
 					if (displayStyle == CSS_ICON) {

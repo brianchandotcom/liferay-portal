@@ -66,7 +66,7 @@ AUI.add(
 			NAME: A.DataTable.Base.NAME,
 
 			TYPE_EDITOR: {
-				checkbox: A.CheckboxCellEditor,
+				'checkbox': A.CheckboxCellEditor,
 				'ddm-color':
 					FormBuilder.CUSTOM_CELL_EDITORS['color-cell-editor'],
 				'ddm-date': A.DateCellEditor,
@@ -79,10 +79,10 @@ AUI.add(
 				'ddm-link-to-page':
 					FormBuilder.CUSTOM_CELL_EDITORS['link-to-page-cell-editor'],
 				'ddm-number': A.TextCellEditor,
-				radio: A.RadioCellEditor,
-				select: A.DropDownCellEditor,
-				text: A.TextCellEditor,
-				textarea: A.TextAreaCellEditor,
+				'radio': A.RadioCellEditor,
+				'select': A.DropDownCellEditor,
+				'text': A.TextCellEditor,
+				'textarea': A.TextAreaCellEditor,
 			},
 
 			addRecord(recordsetId, displayIndex, fieldsMap, callback) {

@@ -36,8 +36,8 @@ export const MultiStep = ({activePage, editable, pages}) => {
 				{pages.map((page, index) => (
 					<li
 						className={classnames('multi-step-item', {
-							active: index === activePage,
-							complete: index < activePage,
+							'active': index === activePage,
+							'complete': index < activePage,
 							'multi-step-item-expand':
 								index + 1 !== pages.length,
 						})}

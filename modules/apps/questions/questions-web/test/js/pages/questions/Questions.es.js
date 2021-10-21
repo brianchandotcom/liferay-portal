@@ -38,23 +38,23 @@ const mockMessageBoardSections = {
 								'createMessageBoardSectionMessageBoardThread',
 							type: 'mutation',
 						},
-						delete: {
+						'delete': {
 							operation: 'deleteMessageBoardSection',
 							type: 'mutation',
 						},
-						get: {
+						'get': {
 							operation: 'messageBoardSection',
 							type: 'query',
 						},
-						replace: {
+						'replace': {
 							operation: 'updateMessageBoardSection',
 							type: 'mutation',
 						},
-						subscribe: {
+						'subscribe': {
 							operation: 'updateMessageBoardSectionSubscribe',
 							type: 'mutation',
 						},
-						unsubscribe: {
+						'unsubscribe': {
 							operation: 'updateMessageBoardSectionUnsubscribe',
 							type: 'mutation',
 						},

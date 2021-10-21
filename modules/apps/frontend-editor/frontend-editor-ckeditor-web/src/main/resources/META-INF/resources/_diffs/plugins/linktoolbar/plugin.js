@@ -145,8 +145,8 @@
 
 					const attributes = {
 						'data-cke-saved-href': linkInput.value,
-						href: linkInput.value,
-						rel: 'noopener',
+						'href': linkInput.value,
+						'rel': 'noopener',
 					};
 
 					const linkTarget = instance._toolbar.getItem('LinkTarget');

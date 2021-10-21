@@ -466,11 +466,11 @@ function Client({debug}: ClientOptions = {debug: false}) {
 	const messageQueue: Array<Payload> = [];
 
 	const promises = {
-		fetch: {} as PromiseMap<BasicResponse>,
+		'fetch': {} as PromiseMap<BasicResponse>,
 		'fetch:response:blob': {} as PromiseMap<Blob>,
 		'fetch:response:json': {} as PromiseMap<JSONValue>,
 		'fetch:response:text': {} as PromiseMap<string>,
-		get: {} as PromiseMap<string>,
+		'get': {} as PromiseMap<string>,
 	} as const;
 
 	let state: State = 'unregistered';

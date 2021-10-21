@@ -34,9 +34,9 @@ export default function Sequence({containerRef, highlighted, target}) {
 		return {
 			'--border-width': `${backgroundSize / 10}px`,
 			'--size': `${backgroundSize * 1.25}px`,
-			fontSize: `${height}px`,
-			left: `${relativeX + width / 2}px`,
-			top: `${relativeY + height / 2}px`,
+			'fontSize': `${height}px`,
+			'left': `${relativeX + width / 2}px`,
+			'top': `${relativeY + height / 2}px`,
 		};
 	}, [containerRef, target]);
 

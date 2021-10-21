@@ -558,7 +558,7 @@ SideNavigation.prototype = {
 
 			[content, navigation, menu].forEach((element) => {
 				setStyles(element, {
-					height: '',
+					'height': '',
 					'min-height': '',
 				});
 			});
@@ -767,12 +767,12 @@ SideNavigation.prototype = {
 			});
 
 			setStyles(navigation, {
-				height: '100%',
+				'height': '100%',
 				'min-height': tallest,
 			});
 
 			setStyles(menu, {
-				height: '100%',
+				'height': '100%',
 				'min-height': tallest,
 			});
 		}
@@ -912,7 +912,7 @@ SideNavigation.prototype = {
 				'sidenav-transition': true,
 			});
 			setClasses(toggler, {
-				active: true,
+				'active': true,
 				[openClass]: true,
 				'sidenav-transition': true,
 			});
@@ -958,7 +958,7 @@ SideNavigation.prototype = {
 				instance.clearHeight();
 
 				setClasses(toggler, {
-					open: false,
+					'open': false,
 					'sidenav-transition': false,
 				});
 
@@ -966,7 +966,7 @@ SideNavigation.prototype = {
 			}
 			else {
 				setClasses(toggler, {
-					open: true,
+					'open': true,
 					'sidenav-transition': false,
 				});
 

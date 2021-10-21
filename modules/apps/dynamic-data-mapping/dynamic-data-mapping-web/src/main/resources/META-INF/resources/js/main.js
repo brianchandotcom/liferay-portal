@@ -972,10 +972,10 @@ AUI.add(
 					field.set('strings', instance.get('strings'));
 
 					var fieldHiddenAttributeMap = {
-						checkbox: instance.MAP_HIDDEN_FIELD_ATTRS.checkbox,
+						'checkbox': instance.MAP_HIDDEN_FIELD_ATTRS.checkbox,
 						'ddm-separator':
 							instance.MAP_HIDDEN_FIELD_ATTRS.separator,
-						default: instance.MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
+						'default': instance.MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					};
 
 					var hiddenAtributes =

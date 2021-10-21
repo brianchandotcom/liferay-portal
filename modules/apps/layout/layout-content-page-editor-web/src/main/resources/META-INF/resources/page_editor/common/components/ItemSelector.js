@@ -79,8 +79,8 @@ export default function ItemSelector({
 
 			const transformMappedItem = (item) => ({
 				'data-item-id': `${item.classNameId}-${item.classPK}`,
-				label: item.title,
-				onClick: () => onItemSelect(item),
+				'label': item.title,
+				'onClick': () => onItemSelect(item),
 			});
 
 			if (quickMappedInfoItems.length > 0) {

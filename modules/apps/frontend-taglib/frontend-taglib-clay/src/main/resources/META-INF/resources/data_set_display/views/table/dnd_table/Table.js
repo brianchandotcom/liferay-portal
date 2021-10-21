@@ -33,7 +33,7 @@ function Table({children, className}) {
 			className={classNames(
 				'dnd-table',
 				{
-					fixed: isFixed,
+					'fixed': isFixed,
 					'is-dragging': draggingColumnName !== null,
 				},
 				className

@@ -697,12 +697,12 @@
 				contentNode.css('min-height', tallest);
 
 				navNode.css({
-					height: '100%',
+					'height': '100%',
 					'min-height': tallest,
 				});
 
 				sideNavMenuNode.css({
-					height: '100%',
+					'height': '100%',
 					'min-height': tallest,
 				});
 			}
@@ -732,12 +732,12 @@
 				}
 
 				navNode.css({
-					height: '100%',
+					'height': '100%',
 					'min-height': minHeight,
 				});
 
 				sidenavMenuNode.css({
-					height: '100%',
+					'height': '100%',
 					'min-height': minHeight,
 				});
 			}

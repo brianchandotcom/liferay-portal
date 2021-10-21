@@ -44,31 +44,31 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 	<aui:script use="liferay-upload">
 		var liferayUpload = new Liferay.Upload({
-			boundingBox: '#<portlet:namespace />fileUpload',
+			'boundingBox': '#<portlet:namespace />fileUpload',
 
 			<%
 			DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
 			%>
 
-			decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
+			'decimalSeparator': '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 
-			deleteFile:
+			'deleteFile':
 				'<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="/export_import/import_layouts"><portlet:param name="mvcRenderCommandName" value="/export_import/import_layouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />',
 
 			<%
 			DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 			%>
 
-			fileDescription:
+			'fileDescription':
 				'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
 
-			maxFileSize:
+			'maxFileSize':
 				'<%= UploadServletRequestConfigurationHelperUtil.getMaxSize() %> B',
-			metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
-			metadataExplanationContainer:
+			'metadataContainer': '#<portlet:namespace />commonFileMetadataContainer',
+			'metadataExplanationContainer':
 				'#<portlet:namespace />metadataExplanationContainer',
-			multipleFiles: false,
-			namespace: '<portlet:namespace />',
+			'multipleFiles': false,
+			'namespace': '<portlet:namespace />',
 			'strings.dropFileText':
 				'<liferay-ui:message key="drop-a-lar-file-here-to-import" />',
 			'strings.fileCannotBeSavedText':
@@ -77,14 +77,14 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 				'<liferay-ui:message key="this-file-was-previously-uploaded-but-not-actually-imported" />',
 			'strings.uploadsCompleteText':
 				'<liferay-ui:message key="the-file-is-ready-to-be-imported" />',
-			tempFileURL: {
+			'tempFileURL': {
 				method: Liferay.Service.bind('/layout/get-temp-file-names'),
 				params: {
 					folderName: '<%= ExportImportHelper.TEMP_FOLDER_NAME %>',
 					groupId: <%= groupId %>,
 				},
 			},
-			uploadFile:
+			'uploadFile':
 				'<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="/export_import/import_layouts"><portlet:param name="mvcRenderCommandName" value="/export_import/import_layouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /><portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />',
 		});
 

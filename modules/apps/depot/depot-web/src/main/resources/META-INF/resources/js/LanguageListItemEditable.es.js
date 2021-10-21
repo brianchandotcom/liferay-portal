@@ -154,7 +154,7 @@ const LanguageListItem = ({
 	return (
 		<ClayTable.Row
 			className={classNames('language-list-item', {
-				dragging: isDragging,
+				'dragging': isDragging,
 				'drop-bottom': isOver && dropZone === DROP_ZONES.BOTTOM,
 				'drop-top': isOver && dropZone === DROP_ZONES.TOP,
 			})}

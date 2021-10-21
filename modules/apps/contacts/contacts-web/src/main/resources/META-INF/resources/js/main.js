@@ -315,9 +315,9 @@ AUI.add(
 						var url = Liferay.Util.PortletURL.createActionURL(
 							config.baseActionURL,
 							{
-								entryId: contact.entryId,
+								'entryId': contact.entryId,
 								'javax.portlet.action': 'deleteEntry',
-								p_p_state: 'NORMAL',
+								'p_p_state': 'NORMAL',
 							}
 						);
 

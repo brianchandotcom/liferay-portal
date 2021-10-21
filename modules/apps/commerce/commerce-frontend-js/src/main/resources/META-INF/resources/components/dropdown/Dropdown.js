@@ -85,7 +85,7 @@ function Dropdown(props) {
 								  }
 								: {
 										'data-senna-off': true,
-										href: item.href,
+										'href': item.href,
 								  };
 
 						return (

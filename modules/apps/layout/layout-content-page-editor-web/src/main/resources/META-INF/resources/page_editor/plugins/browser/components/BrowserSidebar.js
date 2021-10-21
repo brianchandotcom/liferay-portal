@@ -67,7 +67,7 @@ export default function BrowserSidebar({title}) {
 						active={activeTabId === index}
 						innerProps={{
 							'aria-controls': getTabPanelId(index),
-							id: getTabId(index),
+							'id': getTabId(index),
 						}}
 						key={index}
 						onClick={() => setActiveTabId(index)}

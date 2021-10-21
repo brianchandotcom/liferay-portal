@@ -477,7 +477,7 @@ function DataSetDisplay({
 				...newItemBodyContent,
 			}),
 			headers: {
-				Accept: 'application/json',
+				'Accept': 'application/json',
 				'Content-Type': 'application/json',
 			},
 			method: inlineAddingSettings.method || 'POST',
@@ -531,7 +531,7 @@ function DataSetDisplay({
 				...formatItemChanges(itemsChanges[itemKey]),
 			}),
 			headers: {
-				Accept: 'application/json',
+				'Accept': 'application/json',
 				'Content-Type': 'application/json',
 			},
 			method: itemToBeUpdated.actions.update.method,

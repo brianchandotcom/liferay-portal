@@ -26,7 +26,7 @@ export const saveViewSettings = ({appURL, id, portletId, settings}) => {
 	return fetch(url, {
 		body: JSON.stringify(settings),
 		headers: {
-			Accept: 'application/json',
+			'Accept': 'application/json',
 			'Content-Type': 'application/json',
 		},
 		method: 'POST',

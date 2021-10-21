@@ -12,7 +12,7 @@
 import {fetch, openToast} from 'frontend-js-web';
 
 const headers = new Headers({
-	Accept: 'application/json',
+	'Accept': 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 	'Content-Type': 'application/json',
 });

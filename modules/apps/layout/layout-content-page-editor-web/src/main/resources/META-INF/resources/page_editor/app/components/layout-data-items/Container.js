@@ -161,7 +161,7 @@ const Container = React.forwardRef(
 						contentDisplay === CONTAINER_DISPLAY_OPTIONS.flexColumn,
 					'd-flex flex-row':
 						contentDisplay === CONTAINER_DISPLAY_OPTIONS.flexRow,
-					empty: !item.children.length && !height,
+					'empty': !item.children.length && !height,
 					[`bg-${backgroundColor}`]:
 						backgroundColor && !backgroundColor.startsWith('#'),
 					[justify]: !!justify,

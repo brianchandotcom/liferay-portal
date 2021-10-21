@@ -37,7 +37,7 @@ const objectFieldTypes = [
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const headers = new Headers({
-	Accept: 'application/json',
+	'Accept': 'application/json',
 	'Content-Type': 'application/json',
 });
 

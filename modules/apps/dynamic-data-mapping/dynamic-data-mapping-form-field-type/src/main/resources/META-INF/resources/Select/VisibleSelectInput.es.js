@@ -25,7 +25,7 @@ const LabelOptionListItem = ({onCloseButtonClicked, option}) => (
 			className="ddm-select-option-label"
 			closeButtonProps={{
 				'data-testid': `closeButton${option.value}`,
-				onClick: (event) => {
+				'onClick': (event) => {
 					event.preventDefault();
 					event.stopPropagation();
 
@@ -96,7 +96,7 @@ const VisibleSelectInput = forwardRef(
 					className={classNames(
 						'form-control results-chosen select-field-trigger',
 						{
-							disabled: readOnly,
+							'disabled': readOnly,
 							'multiple-label-list': multiple,
 						}
 					)}

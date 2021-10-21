@@ -101,7 +101,7 @@ function CartItemsListActions() {
 					<div
 						className={classnames({
 							'confirmation-prompt': true,
-							hide: !isAsking,
+							'hide': !isAsking,
 						})}
 					>
 						<span>{Liferay.Language.get('are-you-sure')}</span>

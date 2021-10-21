@@ -64,7 +64,7 @@ export const ACTION_TARGET_SHAPE = {
 		inputs: {},
 		outputs: {},
 	},
-	calculate: {
+	'calculate': {
 		expression: '',
 	},
 };

@@ -56,8 +56,8 @@ export default ({actions, item, noActionsMessage}) => {
 		return cloneElement(DropdownButton, {
 			'data-tooltip-align': 'bottom',
 			'data-tooltip-delay': '200',
-			disabled: true,
-			title: noActionsMessage,
+			'disabled': true,
+			'title': noActionsMessage,
 		});
 	}
 

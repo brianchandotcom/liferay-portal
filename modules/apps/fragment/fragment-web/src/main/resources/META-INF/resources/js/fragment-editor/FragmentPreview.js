@@ -26,7 +26,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
  * Defined ratios for preview sizing.
  */
 const SIZE_RATIOS = {
-	desktop: {
+	'desktop': {
 		height: 9,
 		width: 16,
 	},

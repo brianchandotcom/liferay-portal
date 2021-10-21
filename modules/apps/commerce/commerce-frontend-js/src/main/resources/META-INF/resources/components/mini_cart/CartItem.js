@@ -154,7 +154,7 @@ function CartItem({item: cartItem}) {
 			<div
 				className={classnames({
 					'mini-cart-item-info': true,
-					options: !!options,
+					'options': !!options,
 				})}
 			>
 				<ItemInfoView
@@ -230,8 +230,8 @@ function CartItem({item: cartItem}) {
 
 			<div
 				className={classnames({
-					active: isGettingRemoved,
-					canceled: isRemovalCanceled,
+					'active': isGettingRemoved,
+					'canceled': isRemovalCanceled,
 					'mini-cart-item-removing': true,
 				})}
 			>

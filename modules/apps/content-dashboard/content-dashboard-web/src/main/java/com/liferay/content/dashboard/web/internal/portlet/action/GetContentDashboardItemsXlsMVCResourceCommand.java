@@ -26,7 +26,6 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFacto
 import com.liferay.content.dashboard.web.internal.item.FileEntryContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.JournalArticleContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
-import com.liferay.content.dashboard.web.internal.provider.AssetVocabulariesProvider;
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONObject;

@@ -123,9 +123,13 @@ const updateFieldLanguage = ({
 }) => {
 	const settingsVisitor = new PagesVisitor(settingsContext.pages);
 
-	const currentOptions = settingsVisitor.findField(
+	const fieldOptions = settingsVisitor.findField(
 		({fieldName}) => fieldName === 'options'
-	)?.value[editingLanguageId];
+	);
+
+	const currentOptions =
+		fieldOptions?.value[editingLanguageId] ??
+		fieldOptions?.value[defaultLanguageId];
 
 	const pages = settingsVisitor.mapFields((field) => {
 		const updatedField = localizeField(
@@ -134,12 +138,8 @@ const updateFieldLanguage = ({
 			editingLanguageId
 		);
 
-		if (
-			field.fieldName === 'predefinedValue' &&
-			currentOptions?.length > 1 &&
-			currentOptions[0].edited
-		) {
-			return {...updatedField, options: currentOptions};
+		if (field.fieldName === 'predefinedValue') {
+			updatedField.options = currentOptions;
 		}
 
 		return updatedField;

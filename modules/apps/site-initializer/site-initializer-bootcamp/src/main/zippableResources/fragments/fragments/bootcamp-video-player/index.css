@@ -1,7 +1,7 @@
 .col-to-hide {
 	background-color: var(--brand-color-1);
 	border-bottom: 8px solid var(--white);
-	transform: translateX(-12px)
+	transform: translateX(-12px);
 }
 
 .courses {
@@ -25,9 +25,9 @@
 .courses .btn-play.active:before {
 	content: '▶';
     font-size: 12px;
-    position: absolute;
     left: 24px;
     margin-top: 2px;
+    position: absolute;
 }
 
 .courses .fullscreen {
@@ -51,4 +51,10 @@
 
 .courses:hover .fullscreen {
 	opacity: 1;
+}
+
+@media (max-width: 768px) {
+	.col-to-hide {
+		transform: none;
+	}
 }

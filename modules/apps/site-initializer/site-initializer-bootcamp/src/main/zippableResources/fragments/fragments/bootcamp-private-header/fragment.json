@@ -3,6 +3,7 @@
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Bootcamp User",
+	"name": "Bootcamp Private Header",
+	"thumbnailPath": "thumbnail.png",
 	"type": "section"
 }

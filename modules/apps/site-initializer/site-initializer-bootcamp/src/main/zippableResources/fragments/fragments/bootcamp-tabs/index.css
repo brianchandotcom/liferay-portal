@@ -1,10 +1,10 @@
-.component-tabs .navigation-bar-light {
+.bootcamp-tabs .navigation-bar-light {
 	background-color: transparent;
 	border-bottom: 1px solid var(--gray-300);
 	padding-bottom: 4px;
 }
 
-.component-tabs .navigation-bar-light .icon-caret-bottom {
+.bootcamp-tabs .navigation-bar-light .icon-caret-bottom {
 	border-left: 5px solid transparent;
 	border-radius: 4px;
 	border-right: 5px solid transparent;
@@ -15,7 +15,7 @@
 	width: 0;
 }
 
-.component-tabs .navigation-bar-light .nav-link {
+.bootcamp-tabs .navigation-bar-light .nav-link {
 	background: none;
 	border: none;
 	color: var(--secondary);
@@ -25,19 +25,31 @@
 	padding-right: 0;
 }
 
-.component-tabs .navigation-bar-light .nav-link.active {
+.bootcamp-tabs .navigation-bar-light .nav-link.active {
 	box-shadow: 0 4px var(--gray-900);
 	color: var(--gray-900);
 }
 
-.component-tabs .navigation-bar-light .nav-link span:focus {
+.bootcamp-tabs .navigation-bar-light .nav-link span:focus {
 	outline: none;
 }
 
-.component-tabs .navigation-bar-light .navbar-toggler {
+.bootcamp-tabs .navigation-bar-light .navbar-toggler {
 	color: var(--gray-900);
 }
 
-.navbar-underline.navbar-expand-md .navbar-nav .nav-link.active:after {
+.bootcamp-tabs .navbar-underline.navbar-expand-md .navbar-nav .nav-link.active:after {
 	background-color: var(--primary);
+}
+
+.bootcamp-tabs .navbar-toggler-link {
+	font-family: var(--font-family-sans-serif);
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.bootcamp-tabs .navbar-collapse.show {
+	padding-left: 0;
+	padding-right: 0;
+	
 }

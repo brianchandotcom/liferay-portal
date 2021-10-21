@@ -4,22 +4,55 @@
 	publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
 	publicSiteNavbarClass =""
 	userName = themeDisplay.getUser().getFirstName()
+	myCourses = publicFriendlyURL + "/my-courses"
+	notifications = publicFriendlyURL + "/notifications"
+	accountSettings = publicFriendlyURL + "/account-settings"
+	layout = themeDisplay.getLayout()
+	layoutName = layout.getName(locale)
 /]
 
 [#if !themeDisplay.isSignedIn()]
 	[#assign publicSiteNavbarClass = "logged-in" /]
 [/#if]
 
+<nav class="bootcamp-private-header">
+		<div class="align-items-center d-flex">
+		<h3 class="page-name">
+			${layoutName}
+		</h3>
+		</div>
+<div id="navbarSupportedContent">
+
 			<ul class="bootcamp-navbar-user navbar-nav">
 				[#if themeDisplay.isSignedIn()]
-					<li class="dropdown">
-						<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link p-0" data-toggle="liferay-dropdown" id="${fragmentEntryLinkNamespace}_dropdown_menu" type="button">
+					<li class="dropdown nav-item">
+						<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="liferay-dropdown" id="${fragmentEntryLinkNamespace}_dropdown_menu" type="button">
 							<img alt="" class="btn btn-monospaced" src="[resources:icon_user_logged.svg]" />
 
-							<span class="ml-1 mr-2">${userName}</span>
+							<span class="ml-1 font-weight-bold">${userName}</span>
 						</a>
 
 						<ul aria-labelledby="${fragmentEntryLinkNamespace}_dropdown_menu" class="dropdown-menu right">
+							<li>
+								<a class="dropdown-item" href="${myCourses}">
+									My Courses
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="${notifications}">
+									Notifications
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="accountSettings">
+									Account Settings
+								</a>
+							</li>
+														<li>
+								<a class="dropdown-item" href="${publicFriendlyURL}">
+									Home
+								</a>
+							</li>
 							<li>
 								<a class="dropdown-item" href="${htmlUtil.escape(themeDisplay.getURLSignOut())}?referer=${publicFriendlyURL}">
 									Sign Out
@@ -28,8 +61,6 @@
 						</ul>
 					</li>
 				[#else]
-					[#assign navUserClass = "navbar-brand-bg-color-3" /]
-
 					<li class="nav-item">
 						<a class="nav-link" href="/web/bootcamp/sign-in">
 							<img alt="" class="btn btn-monospaced p-1" src="[resources:icon_user_not_logged.svg]" />
@@ -39,3 +70,5 @@
 					</li>
 				[/#if]
 			</ul>
+		</div>
+</nav>

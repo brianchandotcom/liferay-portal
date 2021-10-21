@@ -23,6 +23,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
 
 import java.util.Collections;
@@ -56,7 +57,7 @@ public interface SearchResponseResource {
 	}
 
 	public SearchResponse postSearch(
-			String query, String sxpBlueprint, Pagination pagination)
+			String query, Pagination pagination, SXPBlueprint sxpBlueprint)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

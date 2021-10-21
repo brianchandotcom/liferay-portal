@@ -211,16 +211,16 @@ public class Mutation {
 	@GraphQLField
 	public SearchResponse createSearch(
 			@GraphQLName("query") String query,
-			@GraphQLName("sxpBlueprint") String sxpBlueprint,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sxpBlueprint") SXPBlueprint sxpBlueprint)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_searchResponseResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			searchResponseResource -> searchResponseResource.postSearch(
-				query, sxpBlueprint, Pagination.of(page, pageSize)));
+				query, Pagination.of(page, pageSize), sxpBlueprint));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -169,6 +170,10 @@ public class FragmentEntryProcessorRegistryImpl
 	@Override
 	public void validateFragmentEntryHTML(String html, String configuration)
 		throws PortalException {
+
+		if (CompanyThreadLocal.isInitializingPortalInstance()) {
+			return;
+		}
 
 		Set<String> validHTMLs = _validHTMLsThreadLocal.get();
 

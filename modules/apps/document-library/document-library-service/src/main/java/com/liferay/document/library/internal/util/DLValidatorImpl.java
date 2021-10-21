@@ -27,6 +27,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -139,6 +140,10 @@ public final class DLValidatorImpl implements DLValidator {
 	@Override
 	public void validateFileExtension(String fileName)
 		throws FileExtensionException {
+
+		if (CompanyThreadLocal.isInitializingPortalInstance()) {
+			return;
+		}
 
 		boolean validFileExtension = false;
 

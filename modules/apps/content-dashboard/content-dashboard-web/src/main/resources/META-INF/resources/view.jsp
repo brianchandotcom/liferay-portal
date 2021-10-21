@@ -94,10 +94,11 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 						<%= LanguageUtil.format(request, "content-x", contentDashboardAdminDisplayContext.getSearchContainer().getTotal(), false) %>
 					</span>
 				</h2>
+
 				<div>
 					<react:component
 						module="js/components/DownloadSpreadsheetButton/DownloadSpreadsheetButton"
-						props="<%= contentDashboardAdminDisplayContext.getXLSXProps() %>"
+						props="<%= contentDashboardAdminDisplayContext.getXLSProps() %>"
 					/>
 				</div>
 			</div>

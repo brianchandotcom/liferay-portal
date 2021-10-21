@@ -28,7 +28,7 @@ export const createDocumentInFolder = async (folderId, fileEntry, callback) => {
 	);
 };
 
-export const RemoveDocument = async (documentId) => {
+export const removeDocumentById = (documentId) => {
 	return axios.delete(`${DeliveryAPI}/v1.0/documents/${documentId}/`);
 };
 

@@ -1545,13 +1545,12 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		JSONDocument.deleteFile(
+		JSONDocument.moveFileEntryToTrash(
 			dmDocumentTitle = "DM Document Title",
-			folderId = "true",
 			folderName = "DM Folder Name",
 			groupName = "Guest");
 
-		JSONFolder.deleteFolder(
+		JSONFolder.moveFolderToTrash(
 			folderName = "DM Folder Name",
 			groupName = "Guest");
 

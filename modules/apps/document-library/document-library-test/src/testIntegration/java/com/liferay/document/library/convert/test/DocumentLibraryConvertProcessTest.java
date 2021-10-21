@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -96,7 +97,7 @@ public class DocumentLibraryConvertProcessTest {
 	public void setUp() throws Exception {
 		_sourceStore = _storeFactory.getStore(_CLASS_NAME_FILE_SYSTEM_STORE);
 
-		_storeFactory.setStore(_CLASS_NAME_FILE_SYSTEM_STORE);
+		_setStore(_CLASS_NAME_FILE_SYSTEM_STORE);
 
 		_group = GroupTestUtil.addGroup();
 
@@ -109,7 +110,7 @@ public class DocumentLibraryConvertProcessTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_storeFactory.setStore(_CLASS_NAME_DB_STORE);
+		_setStore(_CLASS_NAME_DB_STORE);
 
 		_convertProcess.setParameterValues(
 			new String[] {
@@ -122,7 +123,7 @@ public class DocumentLibraryConvertProcessTest {
 		finally {
 			PropsValues.DL_STORE_IMPL = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
 
-			_storeFactory.setStore(PropsValues.DL_STORE_IMPL);
+			_setStore(PropsValues.DL_STORE_IMPL);
 		}
 	}
 
@@ -346,6 +347,11 @@ public class DocumentLibraryConvertProcessTest {
 				rootDLFileEntry.getRepositoryId(),
 				rootDLFileEntry.getFolderId()),
 			rootDLFileEntry.getName(), Store.VERSION_DEFAULT);
+	}
+
+	private void _setStore(String key) {
+		ReflectionTestUtil.setFieldValue(
+			StoreFactory.class, "_defaultStore", _storeFactory.getStore(key));
 	}
 
 	private static final String _CLASS_NAME_DB_STORE =

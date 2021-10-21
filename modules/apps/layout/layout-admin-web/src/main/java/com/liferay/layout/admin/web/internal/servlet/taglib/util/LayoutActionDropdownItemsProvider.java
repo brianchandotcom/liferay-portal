@@ -214,8 +214,9 @@ public class LayoutActionDropdownItemsProvider {
 									"discard-conversion-draft"));
 						}
 					).add(
-						() -> _layoutsAdminDisplayContext.isShowDraftActions(
-							layout),
+						() ->
+							_layoutsAdminDisplayContext.
+								isShowPreviewDraftActions(layout),
 						dropdownItem -> {
 							dropdownItem.put("symbolRight", "shortcut");
 							dropdownItem.setHref(
@@ -227,8 +228,9 @@ public class LayoutActionDropdownItemsProvider {
 							dropdownItem.setTarget("_blank");
 						}
 					).add(
-						() -> _layoutsAdminDisplayContext.isShowDraftActions(
-							layout),
+						() ->
+							_layoutsAdminDisplayContext.
+								isShowDiscardDraftActions(layout),
 						dropdownItem -> {
 							dropdownItem.putData("action", "discardDraft");
 							dropdownItem.putData(

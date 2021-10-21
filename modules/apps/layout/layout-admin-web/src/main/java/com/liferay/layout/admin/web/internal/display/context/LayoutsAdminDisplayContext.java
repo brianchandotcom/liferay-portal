@@ -1502,7 +1502,9 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
-	public boolean isShowDraftActions(Layout layout) throws PortalException {
+	public boolean isShowDiscardDraftActions(Layout layout)
+		throws PortalException {
+
 		if (!layout.isTypeContent() ||
 			!LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), layout,
@@ -1575,6 +1577,35 @@ public class LayoutsAdminDisplayContext {
 		return LayoutPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), layout,
 			ActionKeys.PERMISSIONS);
+	}
+
+	public boolean isShowPreviewDraftActions(Layout layout)
+		throws PortalException {
+
+		if (!layout.isTypeContent() ||
+			!LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), layout,
+				ActionKeys.UPDATE)) {
+
+			return false;
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout == null) {
+			return false;
+		}
+
+		boolean published = GetterUtil.getBoolean(
+			draftLayout.getTypeSettingsProperty("published"));
+
+		if ((draftLayout.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
+			!published) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowPrivatePages() throws PortalException {

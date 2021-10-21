@@ -28,6 +28,75 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-138780. The template creator can see the information template when enabling staging with staged Templates portlet."
+	@priority = "4"
+	test PublishStagedInformationTemplateToLive {
+		task ("Enable local live with staged Templates portlet") {
+			JSONStaging.enableLocalStaging(groupName = "Test Site Name");
+		}
+
+		task ("Add an information template in staging site") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name-staging");
+
+			InformationTemplates.addCP(
+				informationTemplateName = "Test Information Template",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+
+			for (var fieldName : list "Title,Author Name") {
+				InformationTemplates.addField(
+					fieldName = "${fieldName}",
+					panelTitle = "Basic Information");
+			}
+
+			PortletEntry.save();
+		}
+
+		task ("View the information template in staging site") {
+			InformationTemplates.viewTemplate(
+				informationTemplateName = "Test Information Template",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("View the information template is not shown in live site") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+
+			InformationTemplates.viewTemplateNotPresent(informationTemplateName = "Test Information Template");
+		}
+
+		task ("Publish the staged information template to Live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication(checkContentNameList = "Template");
+		}
+
+		task ("View the information template in live site") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+
+			InformationTemplates.viewTemplate(
+				informationTemplateName = "Test Information Template",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("View cannot edit the information template in live site") {
+			AssertElementNotPresent(
+				key_tableEntry = "Test Information Template",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
+
+			Click(
+				key_tableEntry = "Test Information Template",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+			for (var action : list "Edit,Copy,Permissions") {
+				MenuItem.viewNotPresent(menuItem = "${action}");
+			}
+
+			MenuItem.viewPresent(menuItem = "Delete");
+		}
+	}
+
 	@description = "This is a use case for LPS-138780. The template creator can see the information template when enabling staging with unstaged Templates portlet."
 	@priority = "4"
 	test ViewUnstagedInformationTemplateAvailableToLiveSite {

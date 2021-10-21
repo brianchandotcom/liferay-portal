@@ -14,7 +14,7 @@
 
 	&.invalid {
 		input {
-			border-color: $error-default;
+			border-color: $color-state-error;
 		}
 	}
 }
@@ -29,7 +29,7 @@ label {
 	margin-right: -5px;
 
 	& .required::after {
-		color: $error-default;
+		color: $color-state-error;
 		content: '*';
 		font-size: 0.813rem;
 		position: relative;

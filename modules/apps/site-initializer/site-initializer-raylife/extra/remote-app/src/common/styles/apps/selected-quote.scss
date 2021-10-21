@@ -192,7 +192,7 @@
 				margin-bottom: 4px;
 
 				span.required {
-					color: $error-default;
+					color: $color-state-error;
 				}
 
 				span.optional {
@@ -435,7 +435,7 @@
 					align-items: center;
 					cursor: pointer;
 					display: flex;
-					fill: $info-default;
+					fill: $color-action-primary-hover;
 					justify-content: center;
 				}
 			}

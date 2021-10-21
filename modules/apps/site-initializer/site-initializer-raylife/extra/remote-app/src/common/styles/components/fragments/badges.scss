@@ -33,13 +33,13 @@ button.btn.badge {
 }
 
 .badge-error {
-	background: $error-light;
-	color: $error-default;
-	fill: $error-default;
+	background: $color-state-error-lighten-1;
+	color: $color-state-error;
+	fill: $color-state-error;
 }
 
 .badge-info {
-	background: $info-light;
-	color: $info-default;
-	fill: $info-default;
+	background: $color-state-info-lighten-1;
+	color: $color-action-primary-hover;
+	fill: $color-action-primary-hover;
 }

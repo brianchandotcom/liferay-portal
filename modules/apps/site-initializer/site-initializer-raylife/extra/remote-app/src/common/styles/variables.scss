@@ -1,5 +1,4 @@
 $background: var(--body-bg, #fff);
-$card-padding: 3rem;
 
 // Colors
 
@@ -7,10 +6,10 @@ $color-action-neutral-default: var(--color-action-neutral-default, #7d7e85);
 $color-action-primary-default: var(--color-action-primary-default, #4c85ff);
 $color-action-primary-hover: var(--color-action-primary-hover, #295ccc);
 $color-action-secondary-default: var(--color-action-secondary-default, #f69d37);
-$color-brand-primary: var(--color-brand-primary, #4d85ff);
 $color-brand-primary-lighten-3: var(--color-brand-primary-lighten-3, #a8c4ff);
 $color-brand-primary-lighten-5: var(--color-brand-primary-lighten-5, #e1ebff);
 $color-brand-primary-lighten-6: var(--color-brand-primary-lighten-6, #f0f5ff);
+$color-brand-primary: var(--color-brand-primary, #4d85ff);
 $color-brand-secondary: var(--color-brand-secondary, #f4870b);
 $color-neutral-0: var(--color-neutral-0, #080f1b);
 $color-neutral-1: var(--color-neutral-1, #2f313d);
@@ -24,9 +23,9 @@ $color-neutral-8: var(--color-neutral-8, #e2e2e4);
 $color-neutral-9: var(--color-neutral-9, #fafafa);
 $color-neutral-black: var(--color-neutral-black, #09101d);
 $color-neutral-white: var(--color-neutral-10, #fff);
-
 $color-state-error-lighten-1: var(--color-state-error-lighten-1, #ffe4dc);
 $color-state-error: var(--color-state-error, #ea6136);
+$color-state-info-lighten-1: var(--color-state-info-lighten-1, #e5ebf9);
 $color-state-success: var(--color-state-success, #39c38d);
 
 $font-family: var(
@@ -38,13 +37,7 @@ $font-family: var(
 	sans-serif
 );
 
-$error-default: var(--danger, #ea6136);
-$error-light: var(--danger-background, #ffe4dc);
 $font-weight-bolder: var(--font-weight-bolder, 700);
-$foreground: var(--light, #f9f9f9);
-$info-default: var(--info, #295ccc);
-$info-light: var(--info-background, #e5ebf9);
-$neutral-dark: var(--gray-600, #606167);
 
 // Spacing
 

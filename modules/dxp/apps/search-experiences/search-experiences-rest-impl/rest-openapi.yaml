@@ -314,10 +314,6 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: sxpBlueprint
-                  schema:
-                      type: string
-                - in: query
                   name: page
                   schema:
                       type: integer
@@ -325,6 +321,14 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SXPBlueprint"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SXPBlueprint"
             responses:
                 200:
                     content:

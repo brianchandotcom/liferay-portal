@@ -1,0 +1,102 @@
+@component-name = "portal-lol"
+definition {
+
+	property database.types = "mysql";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "LOL";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Page.tearDownCP();
+
+			WebContent.tearDownCP();
+		}
+	}
+
+	@description = "Create a Site with the Bootcamp Site initializer"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AddBootcampSite {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "View the Bootcamp Categories"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ViewBootcampCategories {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "View the Bootcamp Stylebook Classic Theme"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewBootcampClassicStylebook {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "View the Bootcamp Collections"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewBootcampCollections {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "View the Bootcamp Documents"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewBootcampDocuments {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "View the Bootcamp Fragments Collections"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ViewBootcampFragmentsCollections {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "View the Bootcamp Pages"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewBootcampPages {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "View the Bootcamp Page Templates"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewBootcampPageTemplates {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+}

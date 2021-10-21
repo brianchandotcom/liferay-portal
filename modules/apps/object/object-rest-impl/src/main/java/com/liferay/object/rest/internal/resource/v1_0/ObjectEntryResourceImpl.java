@@ -275,6 +275,19 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	private void _loadObjectDefinition(Map<String, Serializable> parameters)
 		throws Exception {
 
+		String taskItemDelegateName = (String)parameters.get(
+			"taskItemDelegateName");
+
+		if (taskItemDelegateName != null) {
+			_objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					contextCompany.getCompanyId(), "C_" + taskItemDelegateName);
+
+			if (_objectDefinition != null) {
+				return;
+			}
+		}
+
 		String parameterValue = (String)parameters.get("objectDefinitionId");
 
 		if ((parameterValue != null) && (parameterValue.length() > 2)) {

@@ -24,6 +24,8 @@ import com.liferay.portal.vulcan.openapi.DTOProperty;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +54,7 @@ public class ObjectEntryApplication extends Application {
 
 		objects.add(
 			new ObjectDefinitionIdContainerRequestFilter(
-				_applicationName, _objectDefinitionId));
+				_objectDefinitionId, _objectDefinitionName));
 		objects.add(
 			new OpenAPIResourceImpl(
 				_openAPIResource, _getOpenAPISchemaFilter(_applicationPath),

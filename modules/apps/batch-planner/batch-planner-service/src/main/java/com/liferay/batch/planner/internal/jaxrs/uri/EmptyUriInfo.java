@@ -29,6 +29,10 @@ import javax.ws.rs.core.UriInfo;
  */
 public class EmptyUriInfo implements UriInfo {
 
+	public EmptyUriInfo(String taskItemDelegateName) {
+		_taskItemDelegateName = taskItemDelegateName;
+	}
+
 	@Override
 	public URI getAbsolutePath() {
 		return null;
@@ -76,7 +80,11 @@ public class EmptyUriInfo implements UriInfo {
 
 	@Override
 	public MultivaluedMap<String, String> getPathParameters() {
-		return new MultivaluedHashMap<>();
+		return new MultivaluedHashMap<String, String>() {
+			{
+				putSingle("taskItemDelegateName", _taskItemDelegateName);
+			}
+		};
 	}
 
 	@Override
@@ -123,5 +131,7 @@ public class EmptyUriInfo implements UriInfo {
 	public URI resolve(URI uri) {
 		return null;
 	}
+
+	private final String _taskItemDelegateName;
 
 }

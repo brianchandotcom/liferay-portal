@@ -25,7 +25,7 @@ function getOptionElement(label, schemaName, value) {
 	optionElement.innerHTML = label;
 	optionElement.value = value;
 
-	optionElement.setAttribute("schemaName", schemaName);
+	optionElement.setAttribute('schemaName', schemaName);
 
 	return optionElement;
 }
@@ -69,7 +69,9 @@ export default function ({namespace}) {
 			.then(({components}) => {
 				internalClassNameSelect.innerHTML = '';
 
-				internalClassNameSelect.appendChild(getOptionElement('', '', ''));
+				internalClassNameSelect.appendChild(
+					getOptionElement('', '', '')
+				);
 
 				const keys = Object.keys(components.schemas).sort();
 
@@ -85,7 +87,9 @@ export default function ({namespace}) {
 					const schemaName = properties['x-schema-name']?.default;
 
 					const optionElement = getOptionElement(
-						trimPackage(className), schemaName, className
+						trimPackage(className),
+						schemaName,
+						className
 					);
 
 					internalClassNameSelect.appendChild(optionElement);
@@ -118,11 +122,14 @@ export default function ({namespace}) {
 	function handleClassNameSelectChange() {
 		const headlessEnpointValue = headlessEnpointSelect.value;
 
-		const selectedOption = internalClassNameSelect.options[internalClassNameSelect.selectedIndex];
+		const selectedOption =
+			internalClassNameSelect.options[
+				internalClassNameSelect.selectedIndex
+			];
 
-		const schemaName = selectedOption.getAttribute("schema");
+		const schemaName = selectedOption.getAttribute('schemaName');
 
-		taskItemDelegateNameInput.value = schemaName || "DEFAULT";
+		taskItemDelegateNameInput.value = schemaName || 'DEFAULT';
 
 		const internalClassNameValue = trimPackage(
 			schemaName || selectedOption.value

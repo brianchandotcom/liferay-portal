@@ -183,10 +183,15 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 
 					const className = properties['x-class-name'].default;
 
-					const schemaName = properties['x-schema-name']?.default;
+					const schemaName =
+						(properties['x-schema-name'] &&
+							properties['x-schema-name'].default) ||
+						'';
 
 					internalClassName.appendChild(
-						'<option schemaName="' + schemaName + '" value="' +
+						'<option schemaName="' +
+							schemaName +
+							'" value="' +
 							className +
 							'">' +
 							key +
@@ -224,9 +229,11 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 			'#<portlet:namespace />internalClassName option:checked'
 		);
 
-		const schemaName = selectedOption.getAttribute("schemaName");
+		const schemaName = selectedOption.getAttribute('schemaName');
 
-		A.one('#<portlet:namespace />taskItemDelegateName').val(schemaName || "DEFAULT");
+		A.one('#<portlet:namespace />taskItemDelegateName').val(
+			schemaName || 'DEFAULT'
+		);
 
 		let internalClassNameValue = schemaName || selectedOption.val();
 
@@ -264,7 +271,6 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				let curId = 1;
 
 				for (key in schemaEntry.properties) {
-
 					const object = schemaEntry.properties[key];
 
 					if (object.readOnly) {

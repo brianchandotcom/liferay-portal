@@ -37,13 +37,11 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.test.util.CommerceAccountGroupTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -58,7 +56,6 @@ import org.frutilla.FrutillaRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -78,23 +75,17 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.addUser(_company);
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(), 0);
+		_group = GroupTestUtil.addGroup();
+
+		_user = UserTestUtil.addUser();
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			_company.getCompanyId());
+			_group.getCompanyId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
+			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
 		_commerceAccount1 =
 			_commerceAccountLocalService.getPersonalCommerceAccount(
@@ -102,8 +93,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		_commerceAccountGroup =
 			_commerceAccountGroupLocalService.addCommerceAccountGroup(
-				_company.getCompanyId(), RandomTestUtil.randomString(), 0,
-				false, null, _serviceContext);
+				_group.getCompanyId(), RandomTestUtil.randomString(), 0, false,
+				null, _serviceContext);
 
 		CommerceAccountGroupCommerceAccountRelLocalServiceUtil.
 			addCommerceAccountGroupCommerceAccountRel(
@@ -203,7 +194,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 	@After
 	public void tearDown() throws Exception {
 		_commercePriceListLocalService.deleteCommercePriceLists(
-			_company.getCompanyId());
+			_group.getCompanyId());
 	}
 
 	@Test
@@ -587,7 +578,6 @@ public class CommercePriceListHierarchyDiscoveryTest {
 	private static final String _TYPE =
 		CommercePriceListConstants.TYPE_PRICE_LIST;
 
-	private static Company _company;
 	private static User _user;
 
 	private CommerceCatalog _catalog;

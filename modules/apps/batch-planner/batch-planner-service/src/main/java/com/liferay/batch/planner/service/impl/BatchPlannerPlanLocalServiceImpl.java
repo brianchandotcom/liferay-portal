@@ -49,7 +49,7 @@ public class BatchPlannerPlanLocalServiceImpl
 	public BatchPlannerPlan addBatchPlannerPlan(
 			long userId, boolean export, String externalType,
 			String externalURL, String internalClassName, String name,
-			boolean template)
+			String taskItemDelegateName, boolean template)
 		throws PortalException {
 
 		_validateExternalType(externalType);
@@ -69,6 +69,7 @@ public class BatchPlannerPlanLocalServiceImpl
 		batchPlannerPlan.setExternalURL(externalURL);
 		batchPlannerPlan.setInternalClassName(internalClassName);
 		batchPlannerPlan.setName(name);
+		batchPlannerPlan.setTaskItemDelegateName(taskItemDelegateName);
 		batchPlannerPlan.setTemplate(template);
 
 		batchPlannerPlan = batchPlannerPlanPersistence.update(batchPlannerPlan);

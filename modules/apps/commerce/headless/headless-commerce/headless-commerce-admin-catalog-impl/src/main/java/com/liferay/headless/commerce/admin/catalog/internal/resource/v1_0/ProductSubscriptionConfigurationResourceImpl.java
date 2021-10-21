@@ -23,6 +23,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.P
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductSubscriptionConfigurationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSubscriptionConfigurationResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -45,6 +46,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 		NestedFieldSupport.class, ProductSubscriptionConfigurationResource.class
 	}
 )
+@CTAware
 public class ProductSubscriptionConfigurationResourceImpl
 	extends BaseProductSubscriptionConfigurationResourceImpl
 	implements NestedFieldSupport {

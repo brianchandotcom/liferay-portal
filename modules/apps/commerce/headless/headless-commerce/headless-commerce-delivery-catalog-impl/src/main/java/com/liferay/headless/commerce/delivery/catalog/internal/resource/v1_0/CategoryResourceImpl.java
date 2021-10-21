@@ -23,6 +23,7 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Category;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.CategoryDTOConverter;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.CategoryResource;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -47,6 +48,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE,
 	service = {CategoryResource.class, NestedFieldSupport.class}
 )
+@CTAware
 public class CategoryResourceImpl
 	extends BaseCategoryResourceImpl implements NestedFieldSupport {
 

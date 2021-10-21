@@ -29,6 +29,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.Custom
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.AttachmentUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -60,6 +61,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE,
 	service = {AttachmentResource.class, NestedFieldSupport.class}
 )
+@CTAware
 public class AttachmentResourceImpl
 	extends BaseAttachmentResourceImpl implements NestedFieldSupport {
 

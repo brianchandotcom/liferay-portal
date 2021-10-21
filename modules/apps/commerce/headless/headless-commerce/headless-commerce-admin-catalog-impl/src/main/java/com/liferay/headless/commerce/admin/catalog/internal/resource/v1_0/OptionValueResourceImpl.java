@@ -26,6 +26,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.O
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -65,6 +66,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE,
 	service = {NestedFieldSupport.class, OptionValueResource.class}
 )
+@CTAware
 public class OptionValueResourceImpl
 	extends BaseOptionValueResourceImpl implements NestedFieldSupport {
 

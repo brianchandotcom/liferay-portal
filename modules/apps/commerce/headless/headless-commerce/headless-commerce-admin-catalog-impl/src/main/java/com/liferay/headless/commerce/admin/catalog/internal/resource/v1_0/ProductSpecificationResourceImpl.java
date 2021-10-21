@@ -25,6 +25,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.ProductS
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductSpecificationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,6 +49,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE,
 	service = {NestedFieldSupport.class, ProductSpecificationResource.class}
 )
+@CTAware
 public class ProductSpecificationResourceImpl
 	extends BaseProductSpecificationResourceImpl implements NestedFieldSupport {
 

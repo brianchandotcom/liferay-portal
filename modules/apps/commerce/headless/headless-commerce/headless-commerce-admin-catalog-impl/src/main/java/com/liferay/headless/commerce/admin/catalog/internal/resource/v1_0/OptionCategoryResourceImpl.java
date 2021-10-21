@@ -24,6 +24,7 @@ import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -55,6 +56,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/option-category.properties",
 	scope = ServiceScope.PROTOTYPE, service = OptionCategoryResource.class
 )
+@CTAware
 public class OptionCategoryResourceImpl
 	extends BaseOptionCategoryResourceImpl implements EntityModelResource {
 

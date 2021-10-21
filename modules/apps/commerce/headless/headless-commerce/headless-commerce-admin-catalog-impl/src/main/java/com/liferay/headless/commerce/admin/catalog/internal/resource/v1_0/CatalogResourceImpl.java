@@ -27,6 +27,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.Ca
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -63,6 +64,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE,
 	service = {CatalogResource.class, NestedFieldSupport.class}
 )
+@CTAware
 public class CatalogResourceImpl
 	extends BaseCatalogResourceImpl
 	implements EntityModelResource, NestedFieldSupport {

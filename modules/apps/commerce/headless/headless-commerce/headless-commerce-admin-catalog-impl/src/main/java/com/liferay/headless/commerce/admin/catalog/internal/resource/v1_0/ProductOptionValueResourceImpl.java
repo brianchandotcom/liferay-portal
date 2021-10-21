@@ -23,6 +23,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.P
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductOptionValueUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductOptionValueResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -44,6 +45,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/product-option-value.properties",
 	scope = ServiceScope.PROTOTYPE, service = ProductOptionValueResource.class
 )
+@CTAware
 public class ProductOptionValueResourceImpl
 	extends BaseProductOptionValueResourceImpl {
 

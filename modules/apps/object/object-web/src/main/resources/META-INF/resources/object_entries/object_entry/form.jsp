@@ -44,7 +44,7 @@ portletDisplay.setURLBack(backURL);
 			<clay:sheet-section>
 				<clay:row>
 					<clay:col
-						md="12"
+						md="11"
 					>
 						<%= objectEntryDisplayContext.renderDDMForm(pageContext) %>
 					</clay:col>
@@ -70,6 +70,10 @@ portletDisplay.setURLBack(backURL);
 
 		current.validate().then((result) => {
 			if (result) {
+				const ddmFormValues = form.querySelector(
+					'#<portlet:namespace />ddmFormValues'
+				);
+
 				const fields = current.getFields();
 
 				let shouldSubmitForm = true;
@@ -89,56 +93,15 @@ portletDisplay.setURLBack(backURL);
 				});
 
 				if (shouldSubmitForm) {
-					const values = fields.reduce((obj, field) => {
-						let value = field.value;
-
-						if (field.type === 'select' && !field.multiple) {
-							value = field.value[0];
-						}
-
-						return Object.assign(obj, {[field.fieldName]: value});
-					}, {});
-
-					const objectEntryId = Number(
-						'<%= (objectEntry == null) ? 0 : objectEntry.getObjectEntryId() %>'
+					const values = fields.reduce(
+						(obj, cur) =>
+							Object.assign(obj, {[cur.fieldName]: cur.value}),
+						{}
 					);
-					const urlFetch =
-						'/o<%= objectDefinition.getRESTContextPath() %>';
-					const putUrlFetch = urlFetch.concat('/', `\${objectEntryId}`);
 
-					Liferay.Util.fetch(objectEntryId ? putUrlFetch : urlFetch, {
-						body: JSON.stringify(values),
-						headers: new Headers({
-							Accept: 'application/json',
-							'Content-Type': 'application/json',
-						}),
-						method: objectEntryId ? 'PUT' : 'POST',
-					})
-						.then((response) => {
-							if (response.status === 401) {
-								window.location.reload();
-							}
-							else if (response.ok) {
-								Liferay.Util.openToast({
-									message:
-										'<%= LanguageUtil.get(request, "your-request-completed-successfully") %>',
-									type: 'success',
-								});
+					ddmFormValues.value = JSON.stringify(values);
 
-								Liferay.Util.navigate('<%= backURL%>');
-							}
-							else {
-								return response.json();
-							}
-						})
-						.then((response) => {
-							if (response && response.title) {
-								Liferay.Util.openToast({
-									message: response.title,
-									type: 'danger',
-								});
-							}
-						});
+					Liferay.Util.submitForm(form);
 				}
 			}
 		});

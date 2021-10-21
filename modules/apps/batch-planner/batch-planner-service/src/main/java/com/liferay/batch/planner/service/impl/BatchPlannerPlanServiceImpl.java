@@ -112,11 +112,11 @@ public class BatchPlannerPlanServiceImpl
 
 	@Override
 	public List<BatchPlannerPlan> getBatchPlannerPlans(
-		long companyId, boolean export, int start, int end,
+		long companyId, boolean template, int start, int end,
 		OrderByComparator<BatchPlannerPlan> orderByComparator) {
 
-		return batchPlannerPlanPersistence.filterFindByC_E(
-			companyId, export, start, end, orderByComparator);
+		return batchPlannerPlanPersistence.filterFindByC_T(
+			companyId, template, start, end, orderByComparator);
 	}
 
 	@Override
@@ -142,8 +142,9 @@ public class BatchPlannerPlanServiceImpl
 	}
 
 	@Override
-	public int getBatchPlannerPlansCount(long companyId, boolean export) {
-		return batchPlannerPlanPersistence.filterCountByC_E(companyId, export);
+	public int getBatchPlannerPlansCount(long companyId, boolean template) {
+		return batchPlannerPlanPersistence.filterCountByC_T(
+			companyId, template);
 	}
 
 	@Override

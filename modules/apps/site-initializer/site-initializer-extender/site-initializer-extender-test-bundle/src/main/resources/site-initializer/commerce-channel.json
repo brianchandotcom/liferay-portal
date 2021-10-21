@@ -1,6 +1,6 @@
 {
 	"currencyCode": "USD",
-	"externalReferenceCode": "RAYTEST0001",
+	"externalReferenceCode": "TESTVOC0001",
 	"name": "Test Channel",
 	"type": "site"
 }

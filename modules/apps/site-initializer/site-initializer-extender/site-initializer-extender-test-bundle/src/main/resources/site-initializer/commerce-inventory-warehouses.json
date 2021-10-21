@@ -1,0 +1,13 @@
+[
+	{
+		"city": "City Test",
+		"country": 76,
+		"externalReferenceCode": "WTEST0001",
+		"latitude": -8.034108994192584, 
+		"longitude": -34.92394934444345,
+		"name": "Warehouse Test",
+		"region": "PE",
+		"street1": "Street Test",
+		"zip": "98993"
+	}
+]

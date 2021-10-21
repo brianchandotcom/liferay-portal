@@ -28,6 +28,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
 import com.liferay.search.experiences.rest.dto.v1_0.Document;
 import com.liferay.search.experiences.rest.dto.v1_0.DocumentField;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
 
@@ -57,7 +58,8 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 
 	@Override
 	public SearchResponse postSearch(
-			String queryString, String sxpBlueprintJSON, Pagination pagination)
+			String queryString, Pagination pagination,
+			SXPBlueprint sxpBlueprint)
 		throws Exception {
 
 		try {
@@ -78,9 +80,10 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 						pagination.getPageSize()
 					).withSearchRequestBuilder(
 						searchRequestBuilder -> {
-							if (Validator.isNotNull(sxpBlueprintJSON)) {
+							if (sxpBlueprint != null) {
 								_sxpBlueprintSearchRequestEnhancer.enhance(
-									searchRequestBuilder, sxpBlueprintJSON);
+									searchRequestBuilder,
+									sxpBlueprint.toString());
 							}
 						}
 					).build()));

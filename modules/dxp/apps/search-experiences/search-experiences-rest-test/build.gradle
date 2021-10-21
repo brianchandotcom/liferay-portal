@@ -7,6 +7,7 @@ dependencies {
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":dxp:apps:search-experiences:search-experiences-api")
 	testIntegrationCompile project(":dxp:apps:search-experiences:search-experiences-rest-api")
 	testIntegrationCompile project(":dxp:apps:search-experiences:search-experiences-rest-client")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

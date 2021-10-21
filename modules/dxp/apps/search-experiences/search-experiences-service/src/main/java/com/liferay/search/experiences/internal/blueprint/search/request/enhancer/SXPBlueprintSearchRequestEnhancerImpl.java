@@ -144,6 +144,10 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 	private void _enhance(
 		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
 
+		if (sxpBlueprint.getConfiguration() == null) {
+			return;
+		}
+
 		SXPParameterData sxpParameterData = _sxpParameterDataCreator.create(
 			searchRequestBuilder.withSearchContextGet(
 				searchContext -> searchContext),

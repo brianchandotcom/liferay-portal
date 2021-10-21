@@ -44,35 +44,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("QueryEntry")
+@GraphQLName("Rescore")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "QueryEntry")
-public class QueryEntry implements Serializable {
+@XmlRootElement(name = "Rescore")
+public class Rescore implements Serializable {
 
-	public static QueryEntry toDTO(String json) {
-		return ObjectMapperUtil.readValue(QueryEntry.class, json);
+	public static Rescore toDTO(String json) {
+		return ObjectMapperUtil.readValue(Rescore.class, json);
 	}
 
-	public static QueryEntry unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(QueryEntry.class, json);
+	public static Rescore unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Rescore.class, json);
 	}
 
 	@Schema
 	@Valid
-	public Clause[] getClauses() {
-		return clauses;
+	public Object getQuery() {
+		return query;
 	}
 
-	public void setClauses(Clause[] clauses) {
-		this.clauses = clauses;
+	public void setQuery(Object query) {
+		this.query = query;
 	}
 
 	@JsonIgnore
-	public void setClauses(
-		UnsafeSupplier<Clause[], Exception> clausesUnsafeSupplier) {
+	public void setQuery(
+		UnsafeSupplier<Object, Exception> queryUnsafeSupplier) {
 
 		try {
-			clauses = clausesUnsafeSupplier.get();
+			query = queryUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -84,24 +84,24 @@ public class QueryEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Clause[] clauses;
+	protected Object query;
 
 	@Schema
 	@Valid
-	public Condition getCondition() {
-		return condition;
+	public Float getQueryWeight() {
+		return queryWeight;
 	}
 
-	public void setCondition(Condition condition) {
-		this.condition = condition;
+	public void setQueryWeight(Float queryWeight) {
+		this.queryWeight = queryWeight;
 	}
 
 	@JsonIgnore
-	public void setCondition(
-		UnsafeSupplier<Condition, Exception> conditionUnsafeSupplier) {
+	public void setQueryWeight(
+		UnsafeSupplier<Float, Exception> queryWeightUnsafeSupplier) {
 
 		try {
-			condition = conditionUnsafeSupplier.get();
+			queryWeight = queryWeightUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -113,52 +113,24 @@ public class QueryEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Condition condition;
-
-	@Schema
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	@JsonIgnore
-	public void setEnabled(
-		UnsafeSupplier<Boolean, Exception> enabledUnsafeSupplier) {
-
-		try {
-			enabled = enabledUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean enabled;
+	protected Float queryWeight;
 
 	@Schema
 	@Valid
-	public Clause[] getPostFilterClauses() {
-		return postFilterClauses;
+	public Float getRescoreQueryWeight() {
+		return rescoreQueryWeight;
 	}
 
-	public void setPostFilterClauses(Clause[] postFilterClauses) {
-		this.postFilterClauses = postFilterClauses;
+	public void setRescoreQueryWeight(Float rescoreQueryWeight) {
+		this.rescoreQueryWeight = rescoreQueryWeight;
 	}
 
 	@JsonIgnore
-	public void setPostFilterClauses(
-		UnsafeSupplier<Clause[], Exception> postFilterClausesUnsafeSupplier) {
+	public void setRescoreQueryWeight(
+		UnsafeSupplier<Float, Exception> rescoreQueryWeightUnsafeSupplier) {
 
 		try {
-			postFilterClauses = postFilterClausesUnsafeSupplier.get();
+			rescoreQueryWeight = rescoreQueryWeightUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -170,24 +142,23 @@ public class QueryEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Clause[] postFilterClauses;
+	protected Float rescoreQueryWeight;
 
 	@Schema
-	@Valid
-	public Rescore[] getRescores() {
-		return rescores;
+	public String getScoreMode() {
+		return scoreMode;
 	}
 
-	public void setRescores(Rescore[] rescores) {
-		this.rescores = rescores;
+	public void setScoreMode(String scoreMode) {
+		this.scoreMode = scoreMode;
 	}
 
 	@JsonIgnore
-	public void setRescores(
-		UnsafeSupplier<Rescore[], Exception> rescoresUnsafeSupplier) {
+	public void setScoreMode(
+		UnsafeSupplier<String, Exception> scoreModeUnsafeSupplier) {
 
 		try {
-			rescores = rescoresUnsafeSupplier.get();
+			scoreMode = scoreModeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -199,7 +170,35 @@ public class QueryEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Rescore[] rescores;
+	protected String scoreMode;
+
+	@Schema
+	public Integer getWindowSize() {
+		return windowSize;
+	}
+
+	public void setWindowSize(Integer windowSize) {
+		this.windowSize = windowSize;
+	}
+
+	@JsonIgnore
+	public void setWindowSize(
+		UnsafeSupplier<Integer, Exception> windowSizeUnsafeSupplier) {
+
+		try {
+			windowSize = windowSizeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer windowSize;
 
 	@Override
 	public boolean equals(Object object) {
@@ -207,13 +206,13 @@ public class QueryEntry implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof QueryEntry)) {
+		if (!(object instanceof Rescore)) {
 			return false;
 		}
 
-		QueryEntry queryEntry = (QueryEntry)object;
+		Rescore rescore = (Rescore)object;
 
-		return Objects.equals(toString(), queryEntry.toString());
+		return Objects.equals(toString(), rescore.toString());
 	}
 
 	@Override
@@ -228,84 +227,58 @@ public class QueryEntry implements Serializable {
 
 		sb.append("{");
 
-		if (clauses != null) {
+		if (query != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"clauses\": ");
+			sb.append("\"query\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < clauses.length; i++) {
-				sb.append(String.valueOf(clauses[i]));
-
-				if ((i + 1) < clauses.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(String.valueOf(query));
 		}
 
-		if (condition != null) {
+		if (queryWeight != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"condition\": ");
+			sb.append("\"queryWeight\": ");
 
-			sb.append(String.valueOf(condition));
+			sb.append(queryWeight);
 		}
 
-		if (enabled != null) {
+		if (rescoreQueryWeight != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"enabled\": ");
+			sb.append("\"rescoreQueryWeight\": ");
 
-			sb.append(enabled);
+			sb.append(rescoreQueryWeight);
 		}
 
-		if (postFilterClauses != null) {
+		if (scoreMode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"postFilterClauses\": ");
+			sb.append("\"scoreMode\": ");
 
-			sb.append("[");
+			sb.append("\"");
 
-			for (int i = 0; i < postFilterClauses.length; i++) {
-				sb.append(String.valueOf(postFilterClauses[i]));
+			sb.append(_escape(scoreMode));
 
-				if ((i + 1) < postFilterClauses.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append("\"");
 		}
 
-		if (rescores != null) {
+		if (windowSize != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"rescores\": ");
+			sb.append("\"windowSize\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < rescores.length; i++) {
-				sb.append(String.valueOf(rescores[i]));
-
-				if ((i + 1) < rescores.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(windowSize);
 		}
 
 		sb.append("}");
@@ -315,7 +288,7 @@ public class QueryEntry implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.QueryEntry",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Rescore",
 		name = "x-class-name"
 	)
 	public String xClassName;

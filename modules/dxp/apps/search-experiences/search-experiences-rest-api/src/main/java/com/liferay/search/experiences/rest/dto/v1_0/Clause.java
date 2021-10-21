@@ -58,6 +58,61 @@ public class Clause implements Serializable {
 	}
 
 	@Schema
+	public Boolean getAdditive() {
+		return additive;
+	}
+
+	public void setAdditive(Boolean additive) {
+		this.additive = additive;
+	}
+
+	@JsonIgnore
+	public void setAdditive(
+		UnsafeSupplier<Boolean, Exception> additiveUnsafeSupplier) {
+
+		try {
+			additive = additiveUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean additive;
+
+	@Schema
+	@Valid
+	public Float getBoost() {
+		return boost;
+	}
+
+	public void setBoost(Float boost) {
+		this.boost = boost;
+	}
+
+	@JsonIgnore
+	public void setBoost(UnsafeSupplier<Float, Exception> boostUnsafeSupplier) {
+		try {
+			boost = boostUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Float boost;
+
+	@Schema
 	public String getContext() {
 		return context;
 	}
@@ -84,6 +139,88 @@ public class Clause implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String context;
+
+	@Schema
+	public Boolean getDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(Boolean disabled) {
+		this.disabled = disabled;
+	}
+
+	@JsonIgnore
+	public void setDisabled(
+		UnsafeSupplier<Boolean, Exception> disabledUnsafeSupplier) {
+
+		try {
+			disabled = disabledUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean disabled;
+
+	@Schema
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
+
+	@JsonIgnore
+	public void setField(
+		UnsafeSupplier<String, Exception> fieldUnsafeSupplier) {
+
+		try {
+			field = fieldUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String field;
+
+	@Schema
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String name;
 
 	@Schema
 	public String getOccur() {
@@ -114,6 +251,34 @@ public class Clause implements Serializable {
 	protected String occur;
 
 	@Schema
+	public String getParent() {
+		return parent;
+	}
+
+	public void setParent(String parent) {
+		this.parent = parent;
+	}
+
+	@JsonIgnore
+	public void setParent(
+		UnsafeSupplier<String, Exception> parentUnsafeSupplier) {
+
+		try {
+			parent = parentUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String parent;
+
+	@Schema
 	@Valid
 	public Object getQuery() {
 		return query;
@@ -142,6 +307,60 @@ public class Clause implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object query;
 
+	@Schema
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String type;
+
+	@Schema
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	@JsonIgnore
+	public void setValue(
+		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
+
+		try {
+			value = valueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String value;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -169,6 +388,26 @@ public class Clause implements Serializable {
 
 		sb.append("{");
 
+		if (additive != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"additive\": ");
+
+			sb.append(additive);
+		}
+
+		if (boost != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"boost\": ");
+
+			sb.append(boost);
+		}
+
 		if (context != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -179,6 +418,44 @@ public class Clause implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(context));
+
+			sb.append("\"");
+		}
+
+		if (disabled != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"disabled\": ");
+
+			sb.append(disabled);
+		}
+
+		if (field != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"field\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(field));
+
+			sb.append("\"");
+		}
+
+		if (name != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(name));
 
 			sb.append("\"");
 		}
@@ -197,6 +474,20 @@ public class Clause implements Serializable {
 			sb.append("\"");
 		}
 
+		if (parent != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parent\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(parent));
+
+			sb.append("\"");
+		}
+
 		if (query != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -205,6 +496,34 @@ public class Clause implements Serializable {
 			sb.append("\"query\": ");
 
 			sb.append(String.valueOf(query));
+		}
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(type));
+
+			sb.append("\"");
+		}
+
+		if (value != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"value\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(value));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

@@ -97,6 +97,48 @@ public class QueryEntry implements Cloneable, Serializable {
 
 	protected Boolean enabled;
 
+	public Clause[] getPostFilterClauses() {
+		return postFilterClauses;
+	}
+
+	public void setPostFilterClauses(Clause[] postFilterClauses) {
+		this.postFilterClauses = postFilterClauses;
+	}
+
+	public void setPostFilterClauses(
+		UnsafeSupplier<Clause[], Exception> postFilterClausesUnsafeSupplier) {
+
+		try {
+			postFilterClauses = postFilterClausesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Clause[] postFilterClauses;
+
+	public Rescore[] getRescores() {
+		return rescores;
+	}
+
+	public void setRescores(Rescore[] rescores) {
+		this.rescores = rescores;
+	}
+
+	public void setRescores(
+		UnsafeSupplier<Rescore[], Exception> rescoresUnsafeSupplier) {
+
+		try {
+			rescores = rescoresUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Rescore[] rescores;
+
 	@Override
 	public QueryEntry clone() throws CloneNotSupportedException {
 		return (QueryEntry)super.clone();

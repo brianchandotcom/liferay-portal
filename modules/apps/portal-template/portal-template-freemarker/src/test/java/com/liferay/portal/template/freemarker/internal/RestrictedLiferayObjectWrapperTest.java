@@ -14,6 +14,7 @@
 
 package com.liferay.portal.template.freemarker.internal;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -438,6 +439,15 @@ public class RestrictedLiferayObjectWrapperTest
 						"Denied access to model object as it does not belong " +
 							"to current company 1",
 						templateModelException.getMessage());
+				}
+
+				// Base model with wrong company ID and disabled checking
+
+				try (SafeCloseable safeCloseable =
+						CompanyThreadLocal.setInitializingPortalInstance(
+							true)) {
+
+					objectWrapper.wrap(new TestBaseModel(123L));
 				}
 			}
 			finally {

@@ -30,7 +30,7 @@
 .public-site-navbar .portlet .nav-item .nav-link {
 	border-bottom: 4px solid transparent;
 	color: var(--color-action-neutral-default);
-	padding: var(--spacer-3) 0 var(--spacer-3);
+	padding: var(--spacer-2) 0 var(--spacer-2);
 }
 
 .public-site-navbar .portlet .nav-item .nav-link:hover {

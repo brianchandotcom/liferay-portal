@@ -27,7 +27,7 @@
 .insured-portal-navbar .portlet .nav-item .nav-link {
 	border-bottom: 4px solid transparent;
 	color: var(--gray-500);
-	padding: var(--spacer-3) 0 var(--spacer-3);
+	padding: var(--spacer-2) 0 var(--spacer-2);
 }
 
 .insured-portal-navbar .portlet .nav-item .nav-link:hover {

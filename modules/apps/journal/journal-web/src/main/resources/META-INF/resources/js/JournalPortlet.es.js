@@ -41,6 +41,9 @@ export default function _JournalPortlet({
 	const form = document.getElementById(formId);
 	const formDateInput = document.getElementById(`${namespace}formDate`);
 	const publishButton = document.getElementById(`${namespace}publishButton`);
+	const resetValuesButton = document.getElementById(
+		`${namespace}resetValuesButton`
+	);
 
 	const availableLocales = [...initialAvailableLocales];
 
@@ -163,6 +166,20 @@ export default function _JournalPortlet({
 		);
 	};
 
+	const handleResetValuesButtonClick = (event) => {
+		publishingLock.lock();
+
+		form.setAttribute('action', event.currentTarget.dataset.url);
+
+		if (classNameId && classNameId !== '0') {
+			actionInput.value = articleId
+				? '/journal/update_data_engine_default_values'
+				: '/journal/add_data_engine_default_values';
+		}
+
+		form.submit();
+	};
+
 	const showAlert = (message) => {
 		const articleContentWrapper = document.querySelector(
 			'.article-content-content'
@@ -226,6 +243,11 @@ export default function _JournalPortlet({
 			handleContextualSidebarButtonClick
 		),
 		attachListener(publishButton, 'click', handlePublishButtonClick),
+		attachListener(
+			resetValuesButton,
+			'click',
+			handleResetValuesButtonClick
+		),
 
 		new LocaleChangedHandler({
 			contentTitle,
@@ -252,7 +274,7 @@ export default function _JournalPortlet({
 		),
 	];
 
-	if (hasSavePermission) {
+	if (hasSavePermission && (!classNameId || classNameId === '0')) {
 		eventHandlers.push(
 			attachFormChangeListener(
 				form,

@@ -67,6 +67,18 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 				</li>
 				<li class="tbar-item">
 					<div class="journal-article-button-row tbar-section text-right">
+						<c:if test="<%= journalEditArticleDisplayContext.getClassNameId() > JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>">
+							<portlet:actionURL name="/journal/reset_values_ddm_structure" var="resetValuesDDMStructureURL">
+								<portlet:param name="mvcPath" value="/edit_data_definition.jsp" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="groupId" value="<%= String.valueOf(journalEditArticleDisplayContext.getGroupId()) %>" />
+								<portlet:param name="articleId" value="<%= journalEditArticleDisplayContext.getArticleId() %>" />
+								<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
+							</portlet:actionURL>
+
+							<aui:button cssClass="btn-secondary btn-sm mr-3" data-url="<%= resetValuesDDMStructureURL %>" name="resetValuesButton" value="reset-values" />
+						</c:if>
+
 						<c:if test="<%= journalEditArticleDisplayContext.hasSavePermission() %>">
 							<aui:button cssClass="btn-sm mr-3" data-actionname="<%= Constants.PUBLISH %>" disabled="<%= journalEditArticleDisplayContext.isPending() %>" name="publishButton" type="submit" value="<%= journalEditArticleDisplayContext.getPublishButtonLabel() %>" />
 						</c:if>

@@ -52,4 +52,21 @@ definition {
 		''';
 	}
 
+	@summary = "This calls the JSON WS API to move a folder to trash"
+	macro moveFolderToTrash {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
+			name = "${folderName}",
+			groupName = "${groupName}");
+
+		var curl ='''
+			${portalURL}/api/jsonws/dltrash/move-folder-to-trash \
+			-u test@liferay.com:test \
+			-d folderId=${folderId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 }

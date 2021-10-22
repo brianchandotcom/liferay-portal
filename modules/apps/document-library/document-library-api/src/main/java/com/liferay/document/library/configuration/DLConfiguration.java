@@ -38,7 +38,7 @@ public interface DLConfiguration {
 	public int checkInterval();
 
 	@Meta.AD(
-		deflt = "text/asp|text/css|text/ecmascript|text/html|text/javascript|text/x-c|text/x-fortran|text/x-java-source|text/x-pascal|text/x-script.perl|text/x-script.perl-module|text/xml",
+		deflt = "application/javascript|text/asp|text/css|text/ecmascript|text/html|text/javascript|text/x-c|text/x-fortran|text/x-jsp|text/x-java-source|text/x-pascal|text/x-script.perl|text/x-script.perl-module|text/xml",
 		name = "code-file-mime-types", required = false
 	)
 	public String[] codeFileMimeTypes();

@@ -27,8 +27,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -156,28 +155,15 @@ public class StagingProcessesWebToolbarDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_httpServletRequest);
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
+		}
 
-		String displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		String displayPreferences = portalPreferences.getValue(
-			StagingProcessesPortletKeys.STAGING_PROCESSES, "display-style",
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest, StagingProcessesPortletKeys.STAGING_PROCESSES,
 			"descriptive");
 
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = displayPreferences;
-		}
-
-		if (displayStyle != displayPreferences) {
-			portalPreferences.setValue(
-				StagingProcessesPortletKeys.STAGING_PROCESSES, "display-style",
-				displayStyle);
-		}
-
-		return displayStyle;
+		return _displayStyle;
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
@@ -328,6 +314,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 		).buildPortletURL();
 	}
 
+	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;

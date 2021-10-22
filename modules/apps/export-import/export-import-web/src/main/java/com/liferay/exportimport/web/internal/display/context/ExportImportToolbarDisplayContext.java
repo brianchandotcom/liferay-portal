@@ -27,8 +27,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -251,28 +250,15 @@ public class ExportImportToolbarDisplayContext {
 	}
 
 	protected String getDisplayStyle() {
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_httpServletRequest);
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
+		}
 
-		String displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		String displayPreferences = portalPreferences.getValue(
-			ExportImportPortletKeys.EXPORT_IMPORT, "display-style",
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest, ExportImportPortletKeys.EXPORT_IMPORT,
 			"descriptive");
 
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = displayPreferences;
-		}
-
-		if (displayStyle != displayPreferences) {
-			portalPreferences.setValue(
-				ExportImportPortletKeys.EXPORT_IMPORT, "display-style",
-				displayStyle);
-		}
-
-		return displayStyle;
+		return _displayStyle;
 	}
 
 	protected PortletURL getRenderURL() {
@@ -428,6 +414,7 @@ public class ExportImportToolbarDisplayContext {
 		).build();
 	}
 
+	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByType;

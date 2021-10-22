@@ -1895,7 +1895,7 @@ public class ContentPageEditorDisplayContext {
 			() -> {
 				Layout layout = themeDisplay.getLayout();
 
-				return layout.getMasterLayoutPlid();
+				return String.valueOf(layout.getMasterLayoutPlid());
 			}
 		);
 	}

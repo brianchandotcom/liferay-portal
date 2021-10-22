@@ -134,8 +134,10 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	macro searchPartialEntryRelationshipField {
-		Click(locator1 = "ObjectPortlet#SEARCH_PARTIAL_RELATIONSHIP_ENTRY");
+	macro searchEntryRelationshipField {
+		Type.type(
+			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
+			value1 = "${entryValue}");
 	}
 
 	macro selectCustomObject {
@@ -163,6 +165,8 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 
 		Click(locator1 = "ObjectPortlet#VIEW_ENTRY_BUTTON");
+
+		WaitForPageLoad();
 	}
 
 }

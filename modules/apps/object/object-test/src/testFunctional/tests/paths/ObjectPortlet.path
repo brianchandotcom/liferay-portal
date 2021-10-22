@@ -96,13 +96,13 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>SEARCH_PARTIAL_RELATIONSHIP_ENTRY</td>
+		<td>SEARCH_RELATIONSHIP_ENTRY</td>
 		<td>//input[contains(@placeholder,'Search')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>SEARCH_RESULT_RELATIONSHIP_ENTRY</td>
-		<td>//button[contains(@class,'dropdown-item')]//strong[contains(text(),'${key_entry}')]</td>
+		<td>//button[contains(@class,'dropdown-item')]//span[contains(text(),'${key_entry}')]</td>
 		<td></td>
 	</tr>
 	<tr>

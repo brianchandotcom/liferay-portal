@@ -699,7 +699,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
-		CreateObject.selectTitleField(titleFieldKey = "Custom Object");
+		CreateObject.selectTitleField(fieldLabel = "Field");
 
 		CreateObject.saveObject();
 
@@ -707,17 +707,23 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Test 1");
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Test 1");
 
-		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Test 2");
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Test 2");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntryDetails(entry = "Test 1");
 
-		ObjectPortlet.searchPartialEntryRelationshipField();
+		ObjectPortlet.searchEntryRelationshipField(entryValue = "Tes");
 
-		ObjectPortlet.assertRelationshipEntrySearchResultsPresent(entry = "0");
+		ObjectPortlet.assertRelationshipEntrySearchResultsPresent(entry = "t 2");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to update an Object entry with the Update permission"

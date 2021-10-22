@@ -649,7 +649,7 @@ definition {
 
 		task ("View the no items message is shown in Collection Display") {
 			PageEditor.viewFragmentMessageInfo(
-				fragmentName = "Content Display",
+				fragmentName = "Collection Display",
 				messageInfo = "There are no items to display.");
 		}
 

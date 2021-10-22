@@ -201,6 +201,77 @@ definition {
 			value1 = "No addresses were found.");
 	}
 
+	@description = "This test asserts that only the chosen address type displays when setting default shipping and billing addresses"
+	@priority = "5"
+	test AddressesFilterCorrectlyDefaultAddress {
+		task ("Add account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+		}
+
+		task ("Add a billing address and a shipping address to account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			Accounts.addAddress(
+				addressCity = "Diamond Bar",
+				addressCountry = "United States",
+				addressName = "Liferay, Inc.",
+				addressPostalCode = "91765",
+				addressRegion = "California",
+				addressStreet1 = "1400 Montefino Ave",
+				addressType = "Billing",
+				phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
+
+			Accounts.addAddress(
+				addressCity = "Dalian",
+				addressCountry = "China",
+				addressName = "Liferay Dalian Software Co., Ltd.",
+				addressPostalCode = "116023",
+				addressRegion = "Liaoning Sheng",
+				addressStreet1 = "537 Huangpu Road Taide Building,",
+				addressStreet2 = "1005 High-Tech Zone",
+				addressType = "Shipping",
+				phoneNumber = "+86 (0)411 88120855");
+		}
+
+		task ("Assert shipping addresses and filter by address type are not availabile when setting default billing address") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Details");
+
+			Click(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SET_DEFAULT_BILLING");
+
+			SelectFrame(
+				key_title = "Set Default Billing Address",
+				locator1 = "IFrame#MODAL_ANY");
+
+			ManagementBar.viewNoSubheaderInFilterAndOrder(subheadItem = "Filter by Type");
+
+			LexiconEntry.viewEntryName(rowEntry = "Liferay, Inc.");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Liferay Dalian Software Co., Ltd.");
+		}
+
+		task ("Assert billing addresses and filter by address type are not availabile when setting default shipping address") {
+			SelectFrameTop();
+
+			Click(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SET_DEFAULT_SHIPPING");
+
+			SelectFrame(
+				key_title = "Set Default Shipping Address",
+				locator1 = "IFrame#MODAL_ANY");
+
+			ManagementBar.viewNoSubheaderInFilterAndOrder(subheadItem = "Filter by Type");
+
+			LexiconEntry.viewEntryName(rowEntry = "Liferay Dalian Software Co., Ltd.");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Liferay, Inc.");
+		}
+	}
+
 	@description = "This test asserts that an Account Manager can view all accounts that are added by other users in the Accounts Admin portlet, not just the ones he created"
 	@priority = "5"
 	test AllAccountsEntriesDisplay {

@@ -32,110 +32,108 @@ definition {
 	@description = "This is a test for LPS-112249. The Content Flags, Content Ratings and Content Display are compatible and consistent in the same cell of Collection Display."
 	@priority = "4"
 	test AddAllThreeContentFragmentsToOneCell {
-		for (var i : list "1,2,3") {
-			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content ${i}",
+		task ("Add three web contents") {
+			for (var i : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${i}",
+					groupName = "Test Site Name",
+					title = "WC WebContent Title ${i}");
+			}
+		}
+
+		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
-				title = "WC WebContent Title ${i}");
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article",
+				title = "Dynamic Asset List Test");
 		}
 
-		JSONAssetlist.addDynamicAssetListEntryWithItemType(
-			groupName = "Test Site Name",
-			itemSubtype = "Basic Web Content",
-			itemType = "Web Content Article",
-			title = "Dynamic Asset List Test");
+		task ("Add a Collection Display fragment to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Collection Display");
-
-		PageEditor.editCollectionDisplay(
-			assetListName = "Dynamic Asset List Test",
-			fragmentName = "Collection Display");
-
-		var n = "1";
-
-		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "${title}",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "${n}",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-
-			var n = ${n} + 1;
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
 		}
 
-		PageEditor.addFragmentToCollectionDisplay(
-			collectionName = "Content Display",
-			entryTitle = "WC WebContent Title 3",
-			fragmentName = "Content Flags");
+		task ("Select the dynamic collection in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Asset List Test",
+				fragmentName = "Collection Display");
 
-		PageEditor.addFragmentToCollectionDisplay(
-			collectionName = "Content Display",
-			fragmentName = "Content Ratings",
-			targetFragmentName = "Content Flags");
+			var n = "1";
 
-		PageEditor.addFragmentToCollectionDisplay(
-			collectionName = "Content Display",
-			fragmentName = "Content Display",
-			targetFragmentName = "Content Ratings");
+			for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+				PageEditor.viewCollectionItem(
+					assetTitle = "${title}",
+					row = "${n}");
 
-		for (var i : list "1,2,3") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_rowPosition = "${i}",
-				locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_EMPTY");
-
-			AssertVisible(
-				key_colPosition = "1",
-				key_rowPosition = "${i}",
-				locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
-
-			AssertTextEquals(
-				index = "${i}",
-				key_fragmentName = "Content Flags",
-				locator1 = "Fragment#FRAGMENT_CONTENT",
-				value1 = "Report");
+				var n = ${n} + 1;
+			}
 		}
 
-		var n = "1";
+		task ("Add a Content Flags, Content Ratings and Content Display into one cell of Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "WC WebContent Title 3",
+				fragmentName = "Content Flags");
 
-		for (var content : list "WC WebContent Content 3,WC WebContent Content 2,WC WebContent Content 1") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "${content}",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "${n}",
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				fragmentName = "Content Ratings",
+				targetFragmentName = "Content Flags");
 
-			var n = ${n} + 1;
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				fragmentName = "Content Display",
+				targetFragmentName = "Content Ratings");
 		}
 
-		PageEditor.gotoConfiguration(fragmentName = "Content Flags");
+		task ("View above fragments also shown in other cells of Collection Display") {
+			for (var i : list "1,2,3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_EMPTY");
 
-		AssertTextEquals(
-			key_text = "Item",
-			locator1 = "TextInput#ANY",
-			value1 = "WC WebContent Title 3");
+				AssertVisible(
+					key_colPosition = "1",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
 
-		PageEditor.gotoConfiguration(fragmentName = "Content Ratings");
+				AssertTextEquals(
+					index = "${i}",
+					key_fragmentName = "Content Flags",
+					locator1 = "Fragment#FRAGMENT_CONTENT",
+					value1 = "Report");
+			}
 
-		AssertTextEquals(
-			key_text = "Item",
-			locator1 = "TextInput#ANY",
-			value1 = "WC WebContent Title 3");
+			var n = "1";
 
-		PageEditor.gotoConfiguration(fragmentName = "Content Display");
+			for (var content : list "WC WebContent Content 3,WC WebContent Content 2,WC WebContent Content 1") {
+				ContentPages.viewFragmentText(
+					assetType = "web-content",
+					fragmentName = "Content Display",
+					index = "${n}",
+					text = "${content}");
 
-		AssertTextEquals(
-			key_text = "Item",
-			locator1 = "TextInput#ANY",
-			value1 = "WC WebContent Title 3");
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the title of collection item shown in item selector") {
+			for (var fragmentName : list "Content Flags,Content Ratings,Content Display") {
+				PageEditor.gotoConfiguration(fragmentName = "${fragmentName}");
+
+				AssertTextEquals(
+					key_text = "Item",
+					locator1 = "TextInput#ANY",
+					value1 = "WC WebContent Title 3");
+			}
+		}
 	}
 
 	@description = "This is a use case for LPS-86141 and for LPS-107665. The fragment should be added to all cells of the Collection Display when add it to one cell."
@@ -185,12 +183,11 @@ definition {
 
 		task ("Assert the Button fragment is also added to other cells") {
 			for (var n : list "1,2,3") {
-				AssertElementPresent(
-					key_colPosition = "1",
-					key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+				PageEditor.viewFragmentEditableText(
+					editableText = "Go Somewhere",
+					fragmentName = "Button",
+					id = "link",
+					position = "${n}");
 			}
 		}
 	}
@@ -249,13 +246,11 @@ definition {
 			var n = "1";
 
 			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
-				AssertTextEquals(
-					key_colPosition = "1",
-					key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-					value1 = "${title}");
+				PageEditor.viewFragmentEditableText(
+					editableText = "${title}",
+					fragmentName = "Heading",
+					id = "element-text",
+					position = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -373,13 +368,10 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			AssertTextEquals(
-				key_colPosition = "1",
-				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-				value1 = "Web Content Content");
+			PageEditor.viewFragmentEditableText(
+				editableText = "Web Content Content",
+				fragmentName = "Heading",
+				id = "element-text");
 
 			PageEditor.clickPublish();
 
@@ -387,12 +379,10 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertTextEquals(
-				key_colPosition = "1",
-				key_fragmentName = "heading",
-				key_rowPosition = "1",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-				value1 = "Web Content Content");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Web Content Content");
 		}
 
 		task ("Map custom ddmfield of document type to Paragraph fragment in Collection Display based on the manual collection") {
@@ -418,13 +408,10 @@ definition {
 				fragmentName = "Paragraph",
 				id = "element-text");
 
-			AssertTextEquals(
-				key_colPosition = "1",
-				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Paragraph')]//*[contains(@data-lfr-editable-id,'element-text')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-				value1 = "DM Document Text");
+			PageEditor.viewFragmentEditableText(
+				editableText = "DM Document Text",
+				fragmentName = "Paragraph",
+				id = "element-text");
 
 			PageEditor.clickPublish();
 
@@ -734,12 +721,9 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Document Title ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				PageEditor.viewCollectionItem(
+					assetTitle = "Document Title ${i}",
+					row = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -747,12 +731,9 @@ definition {
 			var n = "6";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Blogs Entry Title ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				PageEditor.viewCollectionItem(
+					assetTitle = "Blogs Entry Title ${i}",
+					row = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -760,12 +741,9 @@ definition {
 			var n = "11";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				PageEditor.viewCollectionItem(
+					assetTitle = "Web Content Title ${i}",
+					row = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -802,12 +780,9 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Document Title ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				PageEditor.viewCollectionItem(
+					assetTitle = "Document Title ${i}",
+					row = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1148,11 +1123,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				ContentPages.viewFragmentText(
-					fragmentName = "heading",
+				PageEditor.viewFragmentEditableText(
+					editableText = "Document Title ${i}",
+					fragmentName = "Heading",
 					id = "element-text",
-					index = "${n}",
-					text = "Document Title ${i}");
+					index = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1160,11 +1135,11 @@ definition {
 			var n = "6";
 
 			for (var i : list "5,4,3,2,1") {
-				ContentPages.viewFragmentText(
-					fragmentName = "heading",
+				PageEditor.viewFragmentEditableText(
+					editableText = "Blogs Entry Title ${i}",
+					fragmentName = "Heading",
 					id = "element-text",
-					index = "${n}",
-					text = "Blogs Entry Title ${i}");
+					index = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1172,11 +1147,11 @@ definition {
 			var n = "11";
 
 			for (var i : list "5,4,3,2,1") {
-				ContentPages.viewFragmentText(
-					fragmentName = "heading",
+				PageEditor.viewFragmentEditableText(
+					editableText = "Web Content Title ${i}",
+					fragmentName = "Heading",
 					id = "element-text",
-					index = "${n}",
-					text = "Web Content Title ${i}");
+					index = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1201,11 +1176,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				ContentPages.viewFragmentText(
-					fragmentName = "heading",
+				PageEditor.viewFragmentEditableText(
+					editableText = "Document Title ${i}",
+					fragmentName = "Heading",
 					id = "element-text",
-					index = "${n}",
-					text = "Document Title ${i}");
+					index = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1227,11 +1202,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				ContentPages.viewFragmentText(
-					fragmentName = "heading",
+				PageEditor.viewFragmentEditableText(
+					editableText = "Blogs Entry Title ${i}",
+					fragmentName = "Heading",
 					id = "element-text",
-					index = "${n}",
-					text = "Blogs Entry Title ${i}");
+					index = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1253,11 +1228,11 @@ definition {
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
-				ContentPages.viewFragmentText(
-					fragmentName = "heading",
+				PageEditor.viewFragmentEditableText(
+					editableText = "Web Content Title ${i}",
+					fragmentName = "Heading",
 					id = "element-text",
-					index = "${n}",
-					text = "Web Content Title ${i}");
+					index = "${n}");
 
 				var n = ${n} + 1;
 			}

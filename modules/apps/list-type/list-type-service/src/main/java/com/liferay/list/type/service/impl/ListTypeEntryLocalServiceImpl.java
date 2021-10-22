@@ -73,6 +73,14 @@ public class ListTypeEntryLocalServiceImpl
 	}
 
 	@Override
+	public ListTypeEntry fetchListTypeEntry(
+		long listTypeDefinitionId, String key) {
+
+		return listTypeEntryPersistence.fetchByLTDI_K(
+			listTypeDefinitionId, key);
+	}
+
+	@Override
 	public List<ListTypeEntry> getListTypeEntries(long listTypeDefinitionId) {
 		return listTypeEntryPersistence.findByListTypeDefinitionId(
 			listTypeDefinitionId);

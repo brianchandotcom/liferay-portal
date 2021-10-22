@@ -2104,7 +2104,6 @@ definition {
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Page Item Selector when reactivated"
 	@priority = "4"
 	test ObjectReappearsPageItemSelectorWhenReactivated {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -2131,7 +2130,7 @@ definition {
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
 			fragmentName = "Heading");
-		
+
 		VisualizeObjectCollectionDisplay.openHeading();
 
 		Click.javaScriptClick(locator1 = "VisualizeObjectDisplayPage#SELECT_ITEM");
@@ -2143,7 +2142,6 @@ definition {
 		AssertElementPresent(
 			key_pluralLabelName = "Custom Objects",
 			locator1 = "VisualizeObjectDisplayPage#SELECT_OBJECT");
-
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Page Template (subtype) when reactivated"

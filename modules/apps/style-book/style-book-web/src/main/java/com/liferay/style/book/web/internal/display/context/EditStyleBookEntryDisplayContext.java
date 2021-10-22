@@ -20,12 +20,13 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.item.selector.LayoutPageTemplateEntryItemSelectorReturnType;
+import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateEntryItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryModifiedDateComparator;
 import com.liferay.layout.util.comparator.LayoutModifiedDateComparator;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -230,7 +231,28 @@ public class EditStyleBookEntryDisplayContext {
 				new LayoutPageTemplateEntryModifiedDateComparator(false));
 
 		return JSONUtil.put(
-			"itemSelectorURL", StringPool.BLANK
+			"itemSelectorURL",
+			() -> {
+				LayoutPageTemplateEntryItemSelectorCriterion
+					layoutPageTemplateEntryItemSelectorCriterion =
+						new LayoutPageTemplateEntryItemSelectorCriterion();
+
+				layoutPageTemplateEntryItemSelectorCriterion.setLayoutType(
+					layoutType);
+
+				layoutPageTemplateEntryItemSelectorCriterion.
+					setDesiredItemSelectorReturnTypes(
+						new LayoutPageTemplateEntryItemSelectorReturnType());
+
+				PortletURL entryItemSelectorURL =
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							_httpServletRequest),
+						_renderResponse.getNamespace() + "selectPreviewItem",
+						layoutPageTemplateEntryItemSelectorCriterion);
+
+				return entryItemSelectorURL.toString();
+			}
 		).put(
 			"recentLayouts",
 			() -> {

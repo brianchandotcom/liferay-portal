@@ -1,4 +1,16 @@
 definition {
+	macro addEntryViaUI {
+		var key_labelName = "${labelName}";
+
+		Click.javaScriptClick(locator1 = "ObjectPortlet#ADD_CUSTOM_OBJECT_ENTRY");
+
+		Type(
+			locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
+			value1 = "${entry}");
+
+		Button.clickSave();
+
+	}
 
 	macro assertDuplicatedEntryNotPresent {
 		AssertElementNotPresent(

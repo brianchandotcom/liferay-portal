@@ -422,7 +422,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		AssertElementPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
+		ACUtils.assertActiveIndividualChat(timeFilter = "Last 24 hours");
 	}
 
 }

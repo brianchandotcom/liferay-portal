@@ -323,8 +323,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
-	@summary = "This calls the JSON WS API to move a document entry to trash"
-	macro moveFileEntryToTrash {
+	@summary = "This calls the JSON WS API to move a document to a trash"
+	macro moveToRecycleBin {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(folderName)) {
@@ -336,23 +336,6 @@ definition {
 			var folderId = "0";
 		}
 
-		var fileEntryId = JSONDocument.getFileEntryId(
-			dmDocumentTitle = "${dmDocumentTitle}",
-			folderId = "${folderId}",
-			groupName = "${groupName}",
-			portalURL = "${baseURL}");
-
-		var curl = '''
-			${portalURL}/api/jsonws/dltrash/move-file-entry-to-trash \
-			-u test@liferay.com:test \
-			-d fileEntryId=${fileEntryId}
-		''';
-
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
-	}
-
-	@summary = "This calls the JSON WS API to move a document to a trash"
-	macro moveToRecycleBin {
 		var fileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = "${dmDocumentTitle}",
 			folderId = "${folderId}",

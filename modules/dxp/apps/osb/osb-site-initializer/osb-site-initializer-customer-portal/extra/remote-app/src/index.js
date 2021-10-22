@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import CustomerPortal from "~/apps/customer-portal";
-import Onboarding from "~/apps/onboarding";
+import { WebComponent } from "~/common/WebComponent";
+import ClayProvider from "~/common/providers/ClayProvider";
 
-import { WebComponent } from "~/shared/WebComponent";
-import ClayProvider from "~/shared/providers/ClayProvider";
-import SharedStyle from "~/shared/styles/global.scss";
+import SharedStyle from "~/common/styles/global.scss";
+import CustomerPortal from "~/routes/customer-portal";
+import Onboarding from "~/routes/onboarding";
 
 const CustomerPortalApplication = ({ application }) => {
   const SearchParams = new URLSearchParams(window.location.search);

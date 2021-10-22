@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import BaseButton from "~/shared/components/BaseButton";
+import BaseButton from "~/common/components/BaseButton";
 import Intro from "../assets/intro.svg";
 import { AppContext } from "../context";
 import { changeStep } from "../context/actions";

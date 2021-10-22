@@ -1,4 +1,4 @@
-import { action, actionType } from "~/shared/context/actions";
+import { action, actionType } from "~/common/context/actions";
 
 const actionTypes = actionType("ONBOARDING", ["CHANGE_STEP"]);
 

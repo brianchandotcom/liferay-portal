@@ -1,5 +1,5 @@
 import ClayCard from '@clayui/card';
-import BaseButton from '~/shared/components/BaseButton';
+import BaseButton from '~/common/components/BaseButton';
 import StatusTag from './StatusTag';
 
 const ProjectCard = ({ endDate, onClick, region, small, status, title }) => {

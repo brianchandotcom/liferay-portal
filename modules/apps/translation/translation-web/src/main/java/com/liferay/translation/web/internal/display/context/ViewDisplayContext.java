@@ -186,13 +186,9 @@ public class ViewDisplayContext {
 			_liferayPortletRequest, _liferayPortletResponse.createRenderURL(),
 			null, "no-entries-were-found");
 
-		String orderByCol = getOrderByCol();
+		_searchContainer.setOrderByCol(getOrderByCol());
 
-		_searchContainer.setOrderByCol(orderByCol);
-
-		String orderByType = getOrderByType();
-
-		_searchContainer.setOrderByType(orderByType);
+		_searchContainer.setOrderByType(getOrderByType());
 
 		_searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_liferayPortletResponse));

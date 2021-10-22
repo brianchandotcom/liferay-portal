@@ -220,7 +220,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
 			"/view.jsp"
@@ -250,14 +250,10 @@ public class WorkflowDefinitionLinkDisplayContext {
 				return null;
 			}
 		).setParameter(
+			"orderByType", getOrderByType()
+		).setParameter(
 			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK
 		).buildPortletURL();
-
-		String orderByType = getOrderByType();
-
-		portletURL.setParameter("orderByType", orderByType);
-
-		return portletURL;
 	}
 
 	public ResourceBundle getResourceBundle() {
@@ -382,9 +378,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 		).setParameter(
 			"orderByType",
 			() -> {
-				String orderByType = getOrderByType();
-
-				if (Objects.equals(orderByType, "asc")) {
+				if (Objects.equals(getOrderByType(), "asc")) {
 					return "desc";
 				}
 

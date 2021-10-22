@@ -30,11 +30,13 @@ BatchPlannerPlanManagementToolbarDisplayContext batchPlannerPlanManagementToolba
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= batchPlannerPlanManagementToolbarDisplayContext %>"
+	propsTransformer="js/BatchPlannerPlanManagementToolbarPropsTransformer"
 />
 
 <clay:container-fluid>
 	<aui:form method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="batchPlannerPlanIds" type="hidden" />
 
 		<liferay-ui:search-container
 			searchContainer="<%= batchPlannerPlanSearchContainer %>"

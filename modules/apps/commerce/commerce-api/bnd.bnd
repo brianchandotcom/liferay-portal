@@ -16,6 +16,8 @@ Export-Package:\
 	com.liferay.commerce.model,\
 	com.liferay.commerce.order,\
 	com.liferay.commerce.order.engine,\
+	com.liferay.commerce.order.importer.item,\
+	com.liferay.commerce.order.importer.type,\
 	com.liferay.commerce.order.status,\
 	com.liferay.commerce.payment.engine,\
 	com.liferay.commerce.payment.method,\

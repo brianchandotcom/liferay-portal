@@ -1,4 +1,4 @@
-import classNames from 'classNames';
+import classNames from 'classnames';
 import { useEffect } from 'react';
 import useGraphQL from '~/common/hooks/useGraphql';
 import { LiferayTheme } from '~/common/services/liferay';

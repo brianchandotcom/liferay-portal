@@ -27,6 +27,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_QUOTE_CONTENT</td>
+	<td>//div[contains(@class,'entry-body')]//a[contains(.,'${key_entryContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_TITLE</td>
 	<td>//div[contains(@class,'entry-title') and contains(.,'${key_entryTitle}')]/h2/a</td>
 	<td></td>

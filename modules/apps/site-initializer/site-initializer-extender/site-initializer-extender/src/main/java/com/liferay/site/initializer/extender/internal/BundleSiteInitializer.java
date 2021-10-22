@@ -166,14 +166,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
-		CatalogResource.Factory catalogResourceFactory,
-		ChannelResource.Factory channelResourceFactory,
-		CommerceAccountRoleHelper commerceAccountRoleHelper,
-		CommerceCurrencyLocalService commerceCurrencyLocalService,
-		CommerceInventoryWarehousesImporter commerceInventoryWarehousesImporter,
-		CPDefinitionsImporter cpDefinitionsImporter,
-		CPFileImporter cpFileImporter,
-		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
+		CommerceServiceHolder commerceServiceHolder,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -210,15 +203,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
-		_catalogResourceFactory = catalogResourceFactory;
-		_channelResourceFactory = channelResourceFactory;
-		_commerceAccountRoleHelper = commerceAccountRoleHelper;
-		_commerceCurrencyLocalService = commerceCurrencyLocalService;
-		_commerceInventoryWarehousesImporter =
-			commerceInventoryWarehousesImporter;
-		_cpDefinitionsImporter = cpDefinitionsImporter;
-		_cpFileImporter = cpFileImporter;
-		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
+		_commerceServiceHolder = commerceServiceHolder;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -481,8 +466,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
+		CatalogResource.Factory catalogResourceFactory =
+			_commerceServiceHolder.getCatalogResourceFactory();
+
 		CatalogResource.Builder catalogResourceBuilder =
-			_catalogResourceFactory.create();
+			catalogResourceFactory.create();
 
 		CatalogResource catalogResource = catalogResourceBuilder.user(
 			serviceContext.fetchUser()
@@ -524,8 +512,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return null;
 		}
 
+		ChannelResource.Factory channelResourceFactory =
+			_commerceServiceHolder.getChannelResourceFactory();
+
 		ChannelResource.Builder channelResourceBuilder =
-			_channelResourceFactory.create();
+			channelResourceFactory.create();
 
 		ChannelResource channelResource = channelResourceBuilder.user(
 			serviceContext.fetchUser()
@@ -576,9 +567,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		modifiableSettings.store();
 
-		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
-		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
-		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
+		CommerceAccountRoleHelper commerceAccountRoleHelper =
+			_commerceServiceHolder.getCommerceAccountRoleHelper();
+
+		commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
+
+		CommerceCurrencyLocalService commerceCurrencyLocalService =
+			_commerceServiceHolder.getCommerceCurrencyLocalService();
+
+		commerceCurrencyLocalService.importDefaultValues(serviceContext);
+
+		CPMeasurementUnitLocalService cpMeasurementUnitLocalService =
+			_commerceServiceHolder.getCpMeasurementUnitLocalService();
+
+		cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 
 		return channel;
 	}
@@ -587,7 +589,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		return _commerceInventoryWarehousesImporter.
+		CommerceInventoryWarehousesImporter
+			commerceInventoryWarehousesImporter =
+				_commerceServiceHolder.getCommerceInventoryWarehousesImporter();
+
+		return commerceInventoryWarehousesImporter.
 			importCommerceInventoryWarehouses(
 				JSONFactoryUtil.createJSONArray(
 					_read(
@@ -629,7 +635,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 					companyGroup.getGroupId(),
 					channel.getExternalReferenceCode());
 
-		_cpDefinitionsImporter.importCPDefinitions(
+		CPDefinitionsImporter cpDefinitionsImporter =
+			_commerceServiceHolder.getCpDefinitionsImporter();
+
+		cpDefinitionsImporter.importCPDefinitions(
 			JSONFactoryUtil.createJSONArray(json), taxonomyVocabulary.getName(),
 			commerceCatalogGroup.getGroupId(), channel.getId(),
 			ListUtil.toLongArray(
@@ -644,6 +653,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _addCPDefinitions(ServiceContext serviceContext)
 		throws Exception {
+
+		if (_commerceServiceHolder == null) {
+			return;
+		}
 
 		if (GetterUtil.getBoolean(
 				PropsUtil.get("enterprise.product.commerce.enabled"))) {
@@ -1449,13 +1462,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addRoles(ServiceContext serviceContext) throws Exception {
+		if (_commerceServiceHolder == null) {
+			return;
+		}
+
 		String json = _read("/site-initializer/roles.json");
 
 		if (json == null) {
 			return;
 		}
 
-		_cpFileImporter.createRoles(
+		CPFileImporter cpFileImporter =
+			_commerceServiceHolder.getCpFileImporter();
+
+		cpFileImporter.createRoles(
 			_jsonFactory.createJSONArray(json), serviceContext);
 	}
 
@@ -2045,16 +2065,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
-	private final CatalogResource.Factory _catalogResourceFactory;
-	private final ChannelResource.Factory _channelResourceFactory;
 	private final ClassLoader _classLoader;
-	private final CommerceAccountRoleHelper _commerceAccountRoleHelper;
-	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
-	private final CommerceInventoryWarehousesImporter
-		_commerceInventoryWarehousesImporter;
-	private final CPDefinitionsImporter _cpDefinitionsImporter;
-	private final CPFileImporter _cpFileImporter;
-	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
+	private CommerceServiceHolder _commerceServiceHolder;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;

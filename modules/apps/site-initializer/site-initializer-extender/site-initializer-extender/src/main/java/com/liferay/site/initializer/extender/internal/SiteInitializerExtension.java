@@ -15,12 +15,6 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.asset.list.service.AssetListEntryLocalService;
-import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
-import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.initializer.util.CPDefinitionsImporter;
-import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
-import com.liferay.commerce.product.importer.CPFileImporter;
-import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -28,8 +22,6 @@ import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
-import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
-import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
@@ -74,14 +66,7 @@ public class SiteInitializerExtension {
 	public SiteInitializerExtension(
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		BundleContext bundleContext,
-		CatalogResource.Factory catalogResourceFactory,
-		ChannelResource.Factory channelResourceFactory,
-		CommerceAccountRoleHelper commerceAccountRoleHelper,
-		CommerceCurrencyLocalService commerceCurrencyLocalService,
-		CommerceInventoryWarehousesImporter commerceInventoryWarehousesImporter,
-		CPDefinitionsImporter cpDefinitionsImporter,
-		CPFileImporter cpFileImporter,
-		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
+		CommerceServiceHolder commerceServiceHolder,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -123,12 +108,8 @@ public class SiteInitializerExtension {
 		_component.setImplementation(
 			new SiteInitializerRegistrar(
 				assetListEntryLocalService, bundle, bundleContext,
-				catalogResourceFactory, channelResourceFactory,
-				commerceAccountRoleHelper, commerceCurrencyLocalService,
-				commerceInventoryWarehousesImporter, cpDefinitionsImporter,
-				cpFileImporter, cpMeasurementUnitLocalService,
-				ddmStructureLocalService, ddmTemplateLocalService,
-				defaultDDMStructureHelper, dlURLHelper,
+				commerceServiceHolder, ddmStructureLocalService,
+				ddmTemplateLocalService, defaultDDMStructureHelper, dlURLHelper,
 				documentFolderResourceFactory, documentResourceFactory,
 				fragmentsImporter, groupLocalService,
 				journalArticleLocalService, jsonFactory, layoutCopyHelper,

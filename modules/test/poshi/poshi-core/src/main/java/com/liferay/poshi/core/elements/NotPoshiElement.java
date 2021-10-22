@@ -72,11 +72,41 @@ public class NotPoshiElement extends PoshiElement {
 		StringBuilder sb = new StringBuilder();
 
 		for (PoshiElement poshiElement : toPoshiElements(elements())) {
-			sb.append("!(");
+			PoshiElement parentPoshiElement = (PoshiElement)getParent();
 
-			sb.append(poshiElement.toPoshiScript());
+			if (poshiElement instanceof EqualsPoshiElement) {
+				if (parentPoshiElement instanceof AndPoshiElement ||
+					parentPoshiElement instanceof OrPoshiElement) {
 
-			sb.append(")");
+					sb.append("(");
+					sb.append(
+						_toNotEqualsPoshiScript(
+							(EqualsPoshiElement)poshiElement));
+					sb.append(")");
+				}
+				else {
+					sb.append(
+						_toNotEqualsPoshiScript(
+							(EqualsPoshiElement)poshiElement));
+				}
+			}
+			else {
+				if (parentPoshiElement instanceof AndPoshiElement ||
+					parentPoshiElement instanceof OrPoshiElement) {
+
+					sb.append("(");
+					sb.append("!(");
+
+					sb.append(poshiElement.toPoshiScript());
+					sb.append("))");
+				}
+				else {
+					sb.append("!(");
+
+					sb.append(poshiElement.toPoshiScript());
+					sb.append(")");
+				}
+			}
 		}
 
 		return sb.toString();
@@ -115,6 +145,20 @@ public class NotPoshiElement extends PoshiElement {
 		PoshiElement parentPoshiElement, String poshiScript) {
 
 		return isConditionElementType(parentPoshiElement, poshiScript);
+	}
+
+	private String _toNotEqualsPoshiScript(
+		EqualsPoshiElement equalsPoshiElement) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("\"");
+		sb.append(equalsPoshiElement.attributeValue("arg1"));
+		sb.append("\" != \"");
+		sb.append(equalsPoshiElement.attributeValue("arg2"));
+		sb.append("\"");
+
+		return sb.toString();
 	}
 
 	private static final String _ELEMENT_NAME = "not";

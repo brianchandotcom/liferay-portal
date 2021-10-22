@@ -71,9 +71,18 @@ public class AndPoshiElement extends PoshiElement {
 		StringBuilder sb = new StringBuilder();
 
 		for (PoshiElement poshiElement : toPoshiElements(elements())) {
-			sb.append("(");
-			sb.append(poshiElement.toPoshiScript());
-			sb.append(") && ");
+			String poshiScript = poshiElement.toPoshiScript();
+
+			if (poshiScript.startsWith("(")) {
+				sb.append(poshiScript);
+			}
+			else {
+				sb.append("(");
+				sb.append(poshiScript);
+				sb.append(")");
+			}
+
+			sb.append(" && ");
 		}
 
 		sb.setLength(sb.length() - 4);

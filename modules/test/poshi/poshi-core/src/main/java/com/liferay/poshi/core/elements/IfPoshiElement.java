@@ -151,8 +151,12 @@ public class IfPoshiElement extends PoshiElement {
 				PoshiElement poshiElement = (PoshiElement)element(
 					conditionName);
 
-				sb.append(" (");
-				sb.append(poshiElement.toPoshiScript());
+				String poshiScript = poshiElement.toPoshiScript();
+
+				sb.append(" ");
+
+				sb.append("(");
+				sb.append(poshiScript);
 				sb.append(")");
 
 				break;

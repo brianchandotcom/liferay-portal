@@ -41,6 +41,7 @@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.servlet.MultiSessionMessages" %><%@
 page import="com.liferay.portal.kernel.util.DateUtil" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@

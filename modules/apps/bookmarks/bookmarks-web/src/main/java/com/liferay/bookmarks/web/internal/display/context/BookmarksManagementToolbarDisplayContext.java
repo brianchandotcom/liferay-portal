@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -226,13 +227,7 @@ public class BookmarksManagementToolbarDisplayContext {
 		int deltaEntry = ParamUtil.getInteger(
 			_httpServletRequest, "deltaEntry");
 
-		String displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = _portalPreferences.getValue(
-				BookmarksPortletKeys.BOOKMARKS, "display-style", "descriptive");
-		}
+		String displayStyle = _getDisplayStyle();
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
@@ -299,6 +294,17 @@ public class BookmarksManagementToolbarDisplayContext {
 	public boolean isShowSearch() {
 		return _bookmarksGroupServiceOverriddenConfiguration.
 			showFoldersSearch();
+	}
+
+	private String _getDisplayStyle() {
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
+		}
+
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest, BookmarksPortletKeys.BOOKMARKS, "descriptive");
+
+		return _displayStyle;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -382,6 +388,7 @@ public class BookmarksManagementToolbarDisplayContext {
 	private final BookmarksGroupServiceOverriddenConfiguration
 		_bookmarksGroupServiceOverriddenConfiguration;
 	private final PortletURL _currentURLObj;
+	private String _displayStyle;
 	private final long _folderId;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;

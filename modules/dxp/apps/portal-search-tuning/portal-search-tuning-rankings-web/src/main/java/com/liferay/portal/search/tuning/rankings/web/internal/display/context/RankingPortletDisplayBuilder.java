@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -174,7 +175,15 @@ public class RankingPortletDisplayBuilder {
 	}
 
 	protected String getDisplayStyle() {
-		return ParamUtil.getString(_renderRequest, "displayStyle", "list");
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
+		}
+
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest, ResultRankingsPortletKeys.RESULT_RANKINGS,
+			"list");
+
+		return _displayStyle;
 	}
 
 	protected List<DropdownItem> getFilterItemsDropdownItems() {
@@ -386,6 +395,7 @@ public class RankingPortletDisplayBuilder {
 	private static final String _ORDER_BY_COL =
 		RankingFields.QUERY_STRING_KEYWORD;
 
+	private String _displayStyle;
 	private final DocumentToRankingTranslator _documentToRankingTranslator;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;

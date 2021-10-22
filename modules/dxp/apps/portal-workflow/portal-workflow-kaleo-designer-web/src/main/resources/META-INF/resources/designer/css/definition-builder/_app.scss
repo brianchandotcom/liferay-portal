@@ -1,0 +1,9 @@
+.definition-builder-app {
+	height: calc(100vh - 120px);
+
+	.definition-canvas {
+		height: 100%;
+		position: relative;
+		width: 100%;
+	}
+}

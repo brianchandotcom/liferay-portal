@@ -10,14 +10,32 @@
  */
 
 import React from 'react';
+import ReactFlow, {
+	Background,
+	Controls,
+	ReactFlowProvider,
+} from 'react-flow-renderer';
 
 import '../../css/definition-builder/main.scss';
 import UpperToolbar from './shared/components/toolbar/UpperToolbar';
+
+const onLoad = (reactFlowInstance) => {
+	reactFlowInstance.fitView();
+};
 
 export default function (props) {
 	return (
 		<div className="definition-builder-app">
 			<UpperToolbar {...props} />
+
+			<div className="definition-canvas">
+				<ReactFlowProvider>
+					<ReactFlow elements={[]} minZoom="0.1" onLoad={onLoad} />
+
+					<Controls showInteractive={false} />
+					<Background size={1} />
+				</ReactFlowProvider>
+			</div>
 		</div>
 	);
 }

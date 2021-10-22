@@ -856,6 +856,12 @@ definition {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		AssertAlertNotPresent();
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = '''<script>alert(123);</script>''',
+			entryTitle = "Blogs Entry Title");
+
+		AssertAlertNotPresent();
 	}
 
 	@description = "This is a test for LPS-136773. It checks that XSS cannot be executed in the cover image caption."

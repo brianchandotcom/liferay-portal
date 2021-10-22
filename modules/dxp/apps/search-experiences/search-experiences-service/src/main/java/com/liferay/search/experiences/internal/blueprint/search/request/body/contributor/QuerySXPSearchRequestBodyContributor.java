@@ -151,7 +151,7 @@ public class QuerySXPSearchRequestBodyContributor
 		SearchRequestBuilder searchRequestBuilder,
 		SXPParameterData sxpParameterData) {
 
-		if (!GetterUtil.getBoolean(queryEntry.getEnabled()) ||
+		if (!GetterUtil.getBoolean(queryEntry.getEnabled(), true) ||
 			!_evaluate(queryEntry.getCondition(), sxpParameterData)) {
 
 			return;

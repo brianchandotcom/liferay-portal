@@ -15,6 +15,8 @@
 package com.liferay.layout.taglib.servlet.taglib.react;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.layout.item.selector.LayoutItemSelectorReturnType;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -43,6 +45,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -314,6 +317,8 @@ public class SelectLayoutTag extends IncludeTag {
 			).put(
 				"name", layout.getName(themeDisplay.getLocale())
 			).put(
+				"payload", _getPayload(layout, themeDisplay)
+			).put(
 				"privateLayout", layout.isPrivateLayout()
 			).put(
 				"url",
@@ -366,6 +371,35 @@ public class SelectLayoutTag extends IncludeTag {
 			).put(
 				"name", themeDisplay.getScopeGroupName()
 			));
+	}
+
+	private String _getPayload(Layout layout, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (Objects.equals(
+				LayoutItemSelectorReturnType.class.getName(),
+				getItemSelectorReturnType())) {
+
+			return JSONUtil.put(
+				"layoutId", layout.getLayoutId()
+			).put(
+				"name", layout.getName(themeDisplay.getLocale())
+			).put(
+				"plid", layout.getPlid()
+			).put(
+				"url", PortalUtil.getLayoutFullURL(layout, themeDisplay)
+			).put(
+				"uuid", layout.getUuid()
+			).toString();
+		}
+		else if (Objects.equals(
+					UUIDItemSelectorReturnType.class.getName(),
+					getItemSelectorReturnType())) {
+
+			return layout.getUuid();
+		}
+
+		return PortalUtil.getLayoutRelativeURL(layout, themeDisplay, false);
 	}
 
 	private long _getSelPlid() {

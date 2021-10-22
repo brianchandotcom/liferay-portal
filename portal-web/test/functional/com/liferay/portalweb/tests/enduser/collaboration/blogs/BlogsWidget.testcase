@@ -475,16 +475,16 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
 
-		BlogsEntry.viewEntryViaAggregator(
+		BlogsAggregatorPortlet.viewBlogsEntryViaBAPortletPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsConfiguration.selectDisplayStyle(displayStyle = "Quote");
+		BlogsAggregatorPortlet.selectDisplayStyle(displayStyle = "Quote");
 
 		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
 
-		BlogsEntry.viewEntryViaAggregator(
-			entryContent = "Blogs Entry Content...",
+		BlogsAggregatorPortlet.viewBlogsEntryViaBAPortletPG(
+			entryQuoteContent = "Blogs Entry Content...",
 			entryTitle = "Blogs Entry Title");
 	}
 

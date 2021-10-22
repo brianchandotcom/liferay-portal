@@ -36,6 +36,8 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -46,6 +48,8 @@ public class JournalFeedsDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public String getDisplayStyle() {
@@ -54,8 +58,8 @@ public class JournalFeedsDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			JournalPortletKeys.JOURNAL, "feeds-display-style", "list");
+			_httpServletRequest, JournalPortletKeys.JOURNAL,
+			"feeds-display-style", "list");
 
 		return _displayStyle;
 	}
@@ -97,8 +101,8 @@ public class JournalFeedsDisplayContext {
 		}
 
 		_orderByCol = SearchOrderByUtil.getOrderByCol(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			JournalPortletKeys.JOURNAL, "feeds-order-by-col", "name");
+			_httpServletRequest, JournalPortletKeys.JOURNAL,
+			"feeds-order-by-col", "name");
 
 		return _orderByCol;
 	}
@@ -109,8 +113,8 @@ public class JournalFeedsDisplayContext {
 		}
 
 		_orderByType = SearchOrderByUtil.getOrderByType(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			JournalPortletKeys.JOURNAL, "feeds-order-by-type", "asc");
+			_httpServletRequest, JournalPortletKeys.JOURNAL,
+			"feeds-order-by-type", "asc");
 
 		return _orderByType;
 	}
@@ -143,6 +147,7 @@ public class JournalFeedsDisplayContext {
 
 	private String _displayStyle;
 	private FeedSearch _feedSearch;
+	private final HttpServletRequest _httpServletRequest;
 	private String _orderByCol;
 	private String _orderByType;
 	private String _redirect;

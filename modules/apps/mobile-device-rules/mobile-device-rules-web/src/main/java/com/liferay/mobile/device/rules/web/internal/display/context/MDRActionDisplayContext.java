@@ -34,6 +34,8 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Juergen Kappler
  */
@@ -46,6 +48,8 @@ public class MDRActionDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_resourceBundle = resourceBundle;
+
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public SearchContainer<MDRAction> getActionSearchContainer() {
@@ -95,8 +99,7 @@ public class MDRActionDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			MDRPortletKeys.MOBILE_DEVICE_RULES, "list");
+			_httpServletRequest, MDRPortletKeys.MOBILE_DEVICE_RULES, "list");
 
 		return _displayStyle;
 	}
@@ -107,8 +110,8 @@ public class MDRActionDisplayContext {
 		}
 
 		_orderByCol = SearchOrderByUtil.getOrderByCol(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			MDRPortletKeys.MOBILE_DEVICE_RULES, "create-date");
+			_httpServletRequest, MDRPortletKeys.MOBILE_DEVICE_RULES,
+			"create-date");
 
 		return _orderByCol;
 	}
@@ -119,8 +122,7 @@ public class MDRActionDisplayContext {
 		}
 
 		_orderByType = SearchOrderByUtil.getOrderByType(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			MDRPortletKeys.MOBILE_DEVICE_RULES, "asc");
+			_httpServletRequest, MDRPortletKeys.MOBILE_DEVICE_RULES, "asc");
 
 		return _orderByType;
 	}
@@ -157,6 +159,7 @@ public class MDRActionDisplayContext {
 	}
 
 	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private String _orderByCol;
 	private String _orderByType;
 	private PortletURL _portletURL;

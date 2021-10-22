@@ -129,8 +129,7 @@ public class SegmentsDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			SegmentsPortletKeys.SEGMENTS, "list");
+			_httpServletRequest, SegmentsPortletKeys.SEGMENTS, "list");
 
 		return _displayStyle;
 	}
@@ -159,8 +158,7 @@ public class SegmentsDisplayContext {
 		}
 
 		_orderByType = SearchOrderByUtil.getOrderByType(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			SegmentsPortletKeys.SEGMENTS, "asc");
+			_httpServletRequest, SegmentsPortletKeys.SEGMENTS, "asc");
 
 		return _orderByType;
 	}
@@ -341,8 +339,7 @@ public class SegmentsDisplayContext {
 		}
 
 		_orderByCol = SearchOrderByUtil.getOrderByCol(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			SegmentsPortletKeys.SEGMENTS, "modified-date");
+			_httpServletRequest, SegmentsPortletKeys.SEGMENTS, "modified-date");
 
 		return _orderByCol;
 	}

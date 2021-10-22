@@ -384,17 +384,15 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "Webcontent Title",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Title");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_position = "2",
-				key_text = "Test Test",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Test Test");
 		}
 
 		task ("Navigate to the display page template at view mode in live site") {
@@ -402,17 +400,15 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "Webcontent Title",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Title");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_position = "2",
-				key_text = "Webcontent Content",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Content");
 		}
 
 		task ("Publish to live") {
@@ -426,17 +422,15 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "Webcontent Title",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Title");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_position = "2",
-				key_text = "Test Test",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Test Test");
 		}
 	}
 
@@ -489,17 +483,15 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "Webcontent Title",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Title");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_position = "2",
-				key_text = "Webcontent Content",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Content");
 		}
 
 		task ("Navigate to the display page template at view mode in live site") {
@@ -521,17 +513,15 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "Webcontent Title",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Title");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_position = "2",
-				key_text = "Webcontent Content",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Content");
 		}
 	}
 
@@ -588,17 +578,15 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "Webcontent Title",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Title");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_position = "2",
-				key_text = "Webcontent Content",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Content");
 		}
 
 		task ("Navigate to the display page template at view mode in live site") {
@@ -620,17 +608,15 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "Webcontent Title",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Title");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_position = "2",
-				key_text = "Webcontent Content",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Content");
 		}
 	}
 
@@ -695,17 +681,15 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "Webcontent Title",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Title");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_position = "2",
-				key_text = "Webcontent Content",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Content");
 		}
 
 		task ("View the display page template is shown in Display Page Template admin") {

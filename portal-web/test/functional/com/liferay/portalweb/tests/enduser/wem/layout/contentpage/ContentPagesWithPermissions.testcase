@@ -953,11 +953,10 @@ definition {
 		task ("View the Paragraph shown on content page at view mode") {
 			WaitForVisible(locator1 = "Icon#EDIT_PENCIL");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_position = "1",
-				key_text = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
 		}
 	}
 

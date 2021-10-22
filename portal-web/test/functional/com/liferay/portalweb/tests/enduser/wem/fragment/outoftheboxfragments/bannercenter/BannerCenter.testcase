@@ -76,23 +76,20 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "Banner Title Example",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Banner Title Example");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_position = "2",
-				key_text = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "This is a simple banner component that you can use when you need extra attention to featured content or information.");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
 				id = "link",
-				key_position = "1",
-				key_text = "Go Somewhere",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Go Somewhere");
 
 			AssertVisible(
 				backgroundImageStyle = "background-color: var(--gray-500)",

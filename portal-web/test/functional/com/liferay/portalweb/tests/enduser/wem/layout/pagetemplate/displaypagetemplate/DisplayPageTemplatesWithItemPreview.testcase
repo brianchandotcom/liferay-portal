@@ -411,11 +411,10 @@ definition {
 		task ("View mapped content shown in Card fragment") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
 				id = "link",
-				key_position = "1",
-				key_text = "Category Name",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Category Name");
 
 			AssertVisible(
 				id = "img",
@@ -436,11 +435,10 @@ definition {
 		task ("View Go Somewhere shown in Card fragment") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
 				id = "link",
-				key_position = "1",
-				key_text = "Go Somewhere",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Go Somewhere");
 		}
 
 		task ("View image placeholder shown in Card fragment") {
@@ -511,11 +509,10 @@ definition {
 		task ("View the subcategory name shown in Card fragment") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
 				id = "link",
-				key_position = "1",
-				key_text = "Subcategory Name",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Subcategory Name");
 		}
 
 		task ("View image placeholder shown in Card fragment") {
@@ -538,11 +535,10 @@ definition {
 		task ("View the subcategory name shown in Card fragment") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
 				id = "link",
-				key_position = "1",
-				key_text = "Go Somewhere",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Go Somewhere");
 		}
 
 		task ("View image placeholder shown in Card fragment") {

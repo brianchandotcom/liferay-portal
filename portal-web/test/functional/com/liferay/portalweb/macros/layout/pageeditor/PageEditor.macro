@@ -1840,10 +1840,9 @@ definition {
 					value1 = "${imageFileName}");
 
 				if (isSet(sourceFileName)) {
-					AssertElementPresent(
-						key_fragmentName = "${fragmentName}",
-						key_imageName = "${sourceFileName}",
-						locator1 = "Fragment#FRAGMENT_CONTENT_BACKGROUND_IMAGE");
+					PageEditor.viewFragment(fragmentName = "${fragmentName}");
+
+					ContentPages.viewFragmentBackgroundImage(image = "${sourceFileName}");
 				}
 			}
 

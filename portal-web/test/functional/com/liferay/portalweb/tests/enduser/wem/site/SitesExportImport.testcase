@@ -499,11 +499,10 @@ definition {
 		}
 
 		task ("View the Button fragment shown on content page at view mode") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
 				id = "link",
-				key_position = "1",
-				key_text = "Go Somewhere",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Go Somewhere");
 		}
 
 		task ("Export the new site") {
@@ -529,11 +528,10 @@ definition {
 		}
 
 		task ("View the Button fragment shown on content page at view mode") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
 				id = "link",
-				key_position = "1",
-				key_text = "Go Somewhere",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Go Somewhere");
 		}
 	}
 

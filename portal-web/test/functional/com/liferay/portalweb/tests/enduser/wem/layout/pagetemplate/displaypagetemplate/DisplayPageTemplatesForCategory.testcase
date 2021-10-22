@@ -738,21 +738,17 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "Category Name",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Category Name");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
 				id = "link",
-				key_position = "1",
-				key_text = "/web/test-site-name/v/${categoryId}",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "/web/test-site-name/v/${categoryId}");
 
-			AssertVisible(
-				key_imageName = "/images/",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "/images/");
 		}
 	}
 

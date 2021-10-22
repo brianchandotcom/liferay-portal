@@ -114,17 +114,15 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "1 Minute",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "1 Minute");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_position = "2",
-				key_text = "Less Than a Minute Read",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Less Than a Minute Read");
 		}
 	}
 

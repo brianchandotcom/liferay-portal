@@ -243,11 +243,11 @@ definition {
 			var n = "1";
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				AssertVisible(
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
 					id = "element-text",
-					key_position = "${n}",
-					key_text = "${title}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+					position = "${n}",
+					text = "${title}");
 
 				var n = ${n} + 1;
 			}
@@ -257,11 +257,11 @@ definition {
 			var n = "1";
 
 			for (var title : list "Category Name 1,Category Name 2,Category Name 3,Category Name 1,Category Name 2,Category Name 1") {
-				AssertVisible(
+				ContentPages.viewFragmentText(
+					fragmentName = "button",
 					id = "link",
-					key_position = "${n}",
-					key_text = "${title}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+					position = "${n}",
+					text = "${title}");
 
 				var n = ${n} + 1;
 			}
@@ -428,22 +428,21 @@ definition {
 		}
 
 		task ("View the name of associated categories are shown in the first module") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "Category Name",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Category Name");
 		}
 
 		task ("View the title of assets are shown in the second module") {
 			var n = "1";
 
 			for (var title : list "Web Content Title,Document Title,Blogs Entry Title") {
-				AssertVisible(
+				ContentPages.viewFragmentText(
+					fragmentName = "button",
 					id = "link",
-					key_position = "${n}",
-					key_text = "${title}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+					position = "${n}",
+					text = "${title}");
 
 				var n = ${n} + 1;
 			}
@@ -664,11 +663,11 @@ definition {
 			var n = "1";
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				AssertVisible(
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
 					id = "element-text",
-					key_position = "${n}",
-					key_text = "${title}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+					position = "${n}",
+					text = "${title}");
 
 				var n = ${n} + 1;
 			}
@@ -678,11 +677,11 @@ definition {
 			var n = "1";
 
 			for (var title : list "Blogs Entry Title,Web Content Title,Document Title,Web Content Title,Document Title,Blogs Entry Title") {
-				AssertVisible(
+				ContentPages.viewFragmentText(
+					fragmentName = "button",
 					id = "link",
-					key_position = "${n}",
-					key_text = "${title}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+					position = "${n}",
+					text = "${title}");
 
 				var n = ${n} + 1;
 			}
@@ -872,22 +871,21 @@ definition {
 		}
 
 		task ("View the title of web content is shown in the first module") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "Web Content Title",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Web Content Title");
 		}
 
 		task ("View the title of related assets are shown in the second module") {
 			var n = "1";
 
 			for (var title : list "Document Title,Blogs Entry Title") {
-				AssertVisible(
+				ContentPages.viewFragmentText(
+					fragmentName = "button",
 					id = "link",
-					key_position = "${n}",
-					key_text = "${title}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+					position = "${n}",
+					text = "${title}");
 
 				var n = ${n} + 1;
 			}

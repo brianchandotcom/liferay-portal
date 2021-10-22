@@ -569,10 +569,7 @@ definition {
 				fragmentName = "Element",
 				id = "03-link");
 
-			AssertVisible(
-				key_fragmentName = "Element",
-				key_imageName = "Document_1.jpg",
-				locator1 = "Fragment#FRAGMENT_CONTENT_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
 		}
 	}
 
@@ -613,10 +610,7 @@ definition {
 				fragmentName = "Element",
 				id = "03-link");
 
-			AssertVisible(
-				key_fragmentName = "Element",
-				key_imageName = "Document_1.jpg",
-				locator1 = "Fragment#FRAGMENT_CONTENT_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
 		}
 	}
 
@@ -660,10 +654,7 @@ definition {
 				fragmentName = "Element",
 				id = "03-link");
 
-			AssertVisible(
-				key_fragmentName = "Element",
-				key_imageName = "Document_1.jpg",
-				locator1 = "Fragment#FRAGMENT_CONTENT_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
 		}
 	}
 
@@ -704,10 +695,7 @@ definition {
 				fragmentName = "Element",
 				id = "03-link");
 
-			AssertVisible(
-				key_fragmentName = "Element",
-				key_imageName = "Document_1.jpg",
-				locator1 = "Fragment#FRAGMENT_CONTENT_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
 		}
 	}
 

@@ -165,9 +165,7 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			AssertVisible(
-				key_imageName = "high_resolution_photo.jpg",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
 		}
 
 		task ("Assert the orignal image is selected automatically") {
@@ -192,9 +190,7 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			AssertVisible(
-				key_imageName = "high_resolution_photo.jpg",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
 		}
 
 		task ("Assert the Preview-1000x0 is selected automatically") {
@@ -330,9 +326,7 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			AssertVisible(
-				key_imageName = "high_resolution_photo.jpg",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
 		}
 
 		task ("Assert the orignal image is selected automatically") {
@@ -357,9 +351,7 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			AssertVisible(
-				key_imageName = "high_resolution_photo.jpg",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
 		}
 
 		task ("Assert the Preview-1000x0 is selected automatically") {
@@ -621,9 +613,7 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			AssertVisible(
-				key_imageName = "high_resolution_photo.jpg",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
 		}
 
 		task ("Assert the orignal image is selected automatically") {
@@ -648,9 +638,7 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			AssertVisible(
-				key_imageName = "high_resolution_photo.jpg",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
 		}
 
 		task ("Assert the Preview-1000x0 is selected automatically") {
@@ -748,9 +736,7 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			AssertVisible(
-				key_imageName = "high_resolution_photo.jpg",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
 		}
 
 		task ("Assert the orignal image is selected automatically") {
@@ -775,9 +761,7 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			AssertVisible(
-				key_imageName = "high_resolution_photo.jpg",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
 		}
 
 		task ("Assert the Preview-1000x0 is selected automatically") {

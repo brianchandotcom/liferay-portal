@@ -126,15 +126,12 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "userfn1 userln1",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "userfn1 userln1");
 
-			AssertVisible(
-				key_imageName = "${userPortrait}",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "${userPortrait}");
 		}
 	}
 
@@ -269,15 +266,12 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "Test Test",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Test Test");
 
-			AssertVisible(
-				key_imageName = "${userPortrait}",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "${userPortrait}");
 		}
 
 		task ("Add a new user with Administrator role") {
@@ -329,15 +323,12 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "userfn1 userln1",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "userfn1 userln1");
 
-			AssertVisible(
-				key_imageName = "${userPortrait}",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "${userPortrait}");
 		}
 	}
 
@@ -600,17 +591,15 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
 				id = "element-text",
-				key_position = "1",
-				key_text = "Webcontent Text",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Text");
 
-			AssertVisible(
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_position = "2",
-				key_text = "Webcontent Rich Text",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+				text = "Webcontent Rich Text");
 		}
 	}
 
@@ -1022,9 +1011,7 @@ definition {
 		}
 
 		task ("Assert mapped image is shown in display page template") {
-			AssertVisible(
-				key_imageName = "Document_2.jpeg",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			ContentPages.viewFragmentBackgroundImage(image = "Document_2.jpeg");
 		}
 	}
 

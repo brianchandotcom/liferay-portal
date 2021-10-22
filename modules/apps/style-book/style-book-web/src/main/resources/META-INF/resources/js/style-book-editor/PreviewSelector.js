@@ -14,8 +14,9 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
+import {StyleBookContext} from './StyleBookContext';
 import {config} from './config';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 
@@ -48,7 +49,7 @@ export default function PreviewSelector() {
 				setLayoutType={setLayoutType}
 			/>
 
-			<LayoutSelector />
+			<LayoutSelector layoutType={layoutType} />
 		</>
 	);
 }
@@ -108,8 +109,24 @@ function LayoutTypeSelector({layoutType, setLayoutType}) {
 	);
 }
 
-function LayoutSelector() {
+function LayoutSelector({layoutType}) {
 	const [active, setActive] = useState(false);
+	const {previewLayout, setPreviewLayout} = useContext(StyleBookContext);
+
+	const previewData = config.previewOptions.find(
+		(option) => option.type === layoutType
+	).data;
+
+	const [recentLayouts, setRecentLayouts] = useState(
+		previewData.recentLayouts
+	);
+
+	const {totalLayouts} = previewData;
+
+	useEffect(() => {
+		setRecentLayouts(previewData.recentLayouts);
+		setPreviewLayout(previewData.recentLayouts[0]);
+	}, [layoutType, previewData, setPreviewLayout]);
 
 	return (
 		<ClayDropDown
@@ -128,11 +145,65 @@ function LayoutSelector() {
 					small
 					type="button"
 				>
-					<span>Page name</span>
+					<span>{previewLayout?.name}</span>
 				</ClayButton>
 			}
 		>
-			<ClayDropDown.ItemList></ClayDropDown.ItemList>
+			<ClayDropDown.ItemList>
+				<ClayDropDown.Group header={Liferay.Language.get('recent')}>
+					{recentLayouts.map((layout) => (
+						<ClayDropDown.Item
+							key={layout.url}
+							onClick={() => {
+								setActive(false);
+
+								setPreviewLayout(layout);
+								setRecentLayouts(
+									getNextRecentLayouts(recentLayouts, layout)
+								);
+							}}
+						>
+							{layout.name}
+						</ClayDropDown.Item>
+					))}
+				</ClayDropDown.Group>
+				<ClayDropDown.Caption>
+					{Liferay.Util.sub(
+						Liferay.Language.get('showing-x-of-x-items'),
+						recentLayouts.length,
+						totalLayouts
+					)}
+				</ClayDropDown.Caption>
+			</ClayDropDown.ItemList>
 		</ClayDropDown>
 	);
+}
+
+/**
+ * Calculates new recent layouts. Inserts the selected layout in first position.
+ * If it is already present in the array, removes it from current position.
+ * If not, removes the last item instead.
+ *
+ * @param {Array} recentLayouts
+ * @param {object} selectedLayout
+ */
+function getNextRecentLayouts(recentLayouts, selectedLayout) {
+	const selectedLayoutIndex = recentLayouts.findIndex(
+		(layout) =>
+			layout.url === selectedLayout.url &&
+			layout.name === selectedLayout.name
+	);
+
+	const deletedLayoutIndex =
+		selectedLayoutIndex > -1
+			? selectedLayoutIndex
+			: recentLayouts.length - 1;
+
+	const nextRecentLayouts = [
+		selectedLayout,
+		...recentLayouts.slice(0, deletedLayoutIndex),
+		...recentLayouts.slice(deletedLayoutIndex + 1, recentLayouts.length),
+	];
+
+	return nextRecentLayouts;
 }

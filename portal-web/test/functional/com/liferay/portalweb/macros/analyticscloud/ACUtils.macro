@@ -45,7 +45,7 @@ definition {
 			siteName = "Site Name");
 	}
 
-	macro assertActiveIndividualChat {
+	macro assertActiveIndividualChart {
 		var key_timeFilter = "${timeFilter}";
 
 		while (IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART") && (maxIterations = "50")) {
@@ -96,11 +96,6 @@ definition {
 					startMonth = "${previousMonth}",
 					startYear = "${displayDateYear}");
 			}
-<<<<<<< HEAD
-=======
-
-			Refresh();
->>>>>>> 45b15af (LRAC-9538 Fix CanSetDataWithCustomRangeOnIndividualActivitiesCard)
 		}
 
 		AssertElementPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");

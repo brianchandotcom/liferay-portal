@@ -327,7 +327,7 @@ definition {
 			pageName = "AC Page",
 			siteName = "Site Name");
 
-	 	ACUtils.closeAllSessionsAndWait();
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -422,7 +422,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACUtils.assertActiveIndividualChat(timeFilter = "Last 24 hours");
+		ACUtils.assertActiveIndividualChart(timeFilter = "Last 24 hours");
 	}
 
 }

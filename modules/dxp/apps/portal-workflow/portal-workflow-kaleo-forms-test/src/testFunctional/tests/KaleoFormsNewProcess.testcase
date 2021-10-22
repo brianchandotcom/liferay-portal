@@ -118,8 +118,6 @@ definition {
 		KaleoFormsAdmin.viewLanguageByDefault(
 			defaultLanguage = "en-US",
 			infoLaguage = "Default");
-	
-
 	}
 
 	@description = "Verify that a workflow added on the creation of a new process appears on Process Builder tab."

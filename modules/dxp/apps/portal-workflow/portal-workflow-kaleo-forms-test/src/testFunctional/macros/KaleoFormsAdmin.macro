@@ -640,6 +640,26 @@ definition {
 			value1 = "Please add at least one field.");
 	}
 
+	macro viewLanguageByDefault {
+		Click(
+			key_locale = "${defaultLanguage}",
+			locator1 = "Translation#CURRENT_LOCALE_NAME");
+
+		AssertElementPresent(
+			key_infoLaguage = "${infoLaguage}",
+			key_tagLanguage = "${defaultLanguage}",
+			locator1 = "KaleoFormsAdminEditProcess#DROPDOWN_LANGUAGE");
+
+		Click(
+			key_locale = "${defaultLanguage}",
+			locator1 = "Translation#CURRENT_LOCALE_DESCRIPTION");
+
+		AssertElementPresent(
+			key_infoLaguage = "${infoLaguage}",
+			key_tagLanguage = "${defaultLanguage}",
+			locator1 = "KaleoFormsAdminEditProcess#DROPDOWN_LANGUAGE");
+	}
+
 	macro viewNewProcessProgressBar {
 		var key_kfProgressName = "${kfProgressName}";
 
@@ -873,26 +893,6 @@ definition {
 		AssertClick(
 			locator1 = "KaleoFormsAdminEditProcess#WORKFLOW_NAVIGATION_UNPUBLISHED_TAB",
 			value1 = "Unpublished");
-	}
-
-	macro viewLanguageByDefault {
-		Click(
-			key_locale = "${defaultLanguage}",
-			locator1 = "Translation#CURRENT_LOCALE_NAME");
-
-		AssertElementPresent(
-			key_tagLanguage = "${defaultLanguage}",
-			key_infoLaguage = "${infoLaguage}",
-			locator1 = "KaleoFormsAdminEditProcess#DROPDOWN_LANGUAGE");
-
-		Click(
-			key_locale = "${defaultLanguage}",
-			locator1 = "Translation#CURRENT_LOCALE_DESCRIPTION");
-
-		AssertElementPresent(
-			key_tagLanguage = "${defaultLanguage}",
-			key_infoLaguage = "${infoLaguage}",
-			locator1 = "KaleoFormsAdminEditProcess#DROPDOWN_LANGUAGE");
 	}
 
 }

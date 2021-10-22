@@ -1,14 +1,14 @@
-import ClayForm, {ClayInput} from '@clayui/form';
-import {useFormikContext} from 'formik';
-import {useContext} from 'react';
+import ClayForm, { ClayInput } from '@clayui/form';
+import { useFormikContext } from 'formik';
+import { useContext } from 'react';
 import BaseButton from '~/common/components/BaseButton';
 import Input from '~/common/components/Input';
 import Select from '~/common/components/Select';
-import {AppContext} from '../context';
-import {getInitialDxpAdmin, getRolesList} from '../utils/constants';
+import { AppContext } from '../context';
+import { getInitialDxpAdmin, getRoles } from '../utils/constants';
 import Layout from './layout';
 
-const AdminInputs = ({id}) => {
+const AdminInputs = ({ id }) => {
 	return (
 		<ClayForm.Group className="mb-0 pb-1">
 			<hr className="mb-4 mt-4 mx-3" />
@@ -55,7 +55,7 @@ const AdminInputs = ({id}) => {
 
 const SetupDXP = () => {
 	const [state] = useContext(AppContext);
-	const {setFieldValue, values} = useFormikContext();
+	const { setFieldValue, values } = useFormikContext();
 
 	return (
 		<Layout
@@ -106,9 +106,9 @@ const SetupDXP = () => {
 						groupStyle="mb-0"
 						label="Primary Data Center Region"
 						name="dxp.dataCenterRegion"
-						options={getRolesList().map((option) => ({
-							label: option.name,
-							value: option.id,
+						options={getRoles().map(({ id, name }) => ({
+							label: name,
+							value: id,
 						}))}
 						required
 					/>

@@ -1,15 +1,15 @@
-import ClayForm, {ClayInput} from '@clayui/form';
-import {useFormikContext} from 'formik';
-import {useContext} from 'react';
+import ClayForm, { ClayInput } from '@clayui/form';
+import { useFormikContext } from 'formik';
+import { useContext } from 'react';
 import BaseButton from '~/common/components/BaseButton';
 import Input from '~/common/components/Input';
 import Select from '~/common/components/Select';
-import {AppContext} from '../context';
-import {changeStep} from '../context/actions';
-import {getInitialInvite, getRolesList, steps} from '../utils/constants';
+import { AppContext } from '../context';
+import { changeStep } from '../context/actions';
+import { getInitialInvite, getRoles, steps } from '../utils/constants';
 import Layout from './layout';
 
-const HorizontalInputs = ({id}) => {
+const HorizontalInputs = ({ id }) => {
 	return (
 		<ClayInput.Group>
 			<ClayInput.GroupItem className="m-0">
@@ -27,9 +27,9 @@ const HorizontalInputs = ({id}) => {
 					groupStyle="m-0"
 					label="Role"
 					name={`invites[${id}].roleId`}
-					options={getRolesList().map((option) => ({
-						label: option.name,
-						value: option.id,
+					options={getRoles().map(({ id, name }) => ({
+						label: name,
+						value: id,
 					}))}
 				/>
 			</ClayInput.GroupItem>
@@ -39,7 +39,7 @@ const HorizontalInputs = ({id}) => {
 
 const Invites = () => {
 	const [, dispatch] = useContext(AppContext);
-	const {setFieldValue, values} = useFormikContext();
+	const { setFieldValue, values } = useFormikContext();
 
 	return (
 		<Layout

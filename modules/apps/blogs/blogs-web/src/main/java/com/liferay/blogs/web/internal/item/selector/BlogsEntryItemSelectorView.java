@@ -293,13 +293,9 @@ public class BlogsEntryItemSelectorView
 						JavaConstants.JAVAX_PORTLET_REQUEST),
 					_portletURL, null, "no-entries-were-found");
 
-			String orderByCol = getOrderByCol();
+			entriesSearchContainer.setOrderByCol(getOrderByCol());
 
-			entriesSearchContainer.setOrderByCol(orderByCol);
-
-			String orderByType = getOrderByType();
-
-			entriesSearchContainer.setOrderByType(orderByType);
+			entriesSearchContainer.setOrderByType(getOrderByType());
 
 			entriesSearchContainer.setOrderByComparator(
 				BlogsUtil.getOrderByComparator(

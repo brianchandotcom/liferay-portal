@@ -179,13 +179,9 @@ public class BlogEntriesDisplayContext {
 				PortletURLUtil.clone(portletURL, _liferayPortletResponse), null,
 				"no-entries-were-found");
 
-		String orderByCol = getOrderByCol();
+		entriesSearchContainer.setOrderByCol(getOrderByCol());
 
-		entriesSearchContainer.setOrderByCol(orderByCol);
-
-		String orderByType = getOrderByType();
-
-		entriesSearchContainer.setOrderByType(orderByType);
+		entriesSearchContainer.setOrderByType(getOrderByType());
 
 		entriesSearchContainer.setOrderByComparator(
 			BlogsUtil.getOrderByComparator(

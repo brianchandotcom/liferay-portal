@@ -450,9 +450,7 @@ public class WorkflowDefinitionDisplayContext {
 		).setParameter(
 			"orderByType",
 			() -> {
-				String orderByType = getOrderByType();
-
-				if (Objects.equals(orderByType, "asc")) {
+				if (Objects.equals(getOrderByType(), "asc")) {
 					return "desc";
 				}
 

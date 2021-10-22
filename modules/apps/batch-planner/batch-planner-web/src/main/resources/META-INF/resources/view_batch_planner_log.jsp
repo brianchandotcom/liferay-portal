@@ -19,122 +19,162 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
-long batchPlannerLogId = ParamUtil.getLong(request, "batchPlannerLogId");
-BatchPlannerLog batchPlannerLog;
-batchPlannerLog = BatchPlannerLogServiceUtil.getBatchPlannerLog(batchPlannerLogId);
-
-String creaDate;
-
-if (batchPlannerLog.getCreateDate() != null)
-	creaDate = fastDateFormat.format(batchPlannerLog.getCreateDate());
-	else
-	creaDate = "";
-String modDate;
-
-if (batchPlannerLog.getModifiedDate() != null)
-	modDate = fastDateFormat.format(batchPlannerLog.getModifiedDate());
-	else
-	modDate = "";
-
-String fieldNull = LanguageUtil.get(request, "field.null");
-String importTaskERC = String.valueOf(batchPlannerLog.getBatchEngineImportTaskERC());
-
-if (importTaskERC.compareTo("0") < 0)
-	importTaskERC = fieldNull;
-String exportTaskERC = String.valueOf(batchPlannerLog.getBatchEngineExportTaskERC());
-
-if (exportTaskERC.compareTo("0") < 0)
-	exportTaskERC = fieldNull;
-
-String myTitle = "<i>Error</i>";
-
-if (batchPlannerLog.getStatus() == 1)
-	myTitle = "<em>Success<em>";
+BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <div class="container pt-4">
 	<div class="card">
-		<h4 class="card-header"><%= LanguageUtil.get(request, "batch-jobs") %></h4>
+		<h4 class="card-header"><%= LanguageUtil.get(request, "batch-engine-task-details") %></h4>
 
 		<div class="card-body">
-			<clay:row padded="true>">
-				<clay:col>
-					<p><%= LanguageUtil.get(request, "field.date-created") %> </p>
-				</clay:col>
+			<clay:content-row>
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<clay:row>
+						<clay:col
+							md="2"
+						>
+							<%= LanguageUtil.get(request, "name") %>
+						</clay:col>
 
-				<clay:col>
-					<p> <%= creaDate %> </p>
-				</clay:col>
-			</clay:row>
+						<clay:col
+							md="8"
+						>
+							<%= batchPlannerLogDisplay.getTitle() %>
+						</clay:col>
+					</clay:row>
 
-			<clay:row>
-				<clay:col>
-					<p><%= LanguageUtil.get(request, "field.date-modified") %></p>
-				</clay:col>
+					<clay:row>
+						<clay:col
+							md="2"
+						>
+							<%= LanguageUtil.get(request, "type") %>
+						</clay:col>
 
-				<clay:col>
-					<p><%= modDate %></p>
-				</clay:col>
-			</clay:row>
+						<clay:col
+							md="8"
+						>
 
-			<clay:row>
-				<clay:col>
-					<p><%= LanguageUtil.get(request, "batch-planner-log-plan-id") %></p>
-				</clay:col>
+							<%
+							String exportImportLabel = "import";
 
-				<clay:col>
-					<p><%= String.valueOf(batchPlannerLog.getBatchPlannerPlanId()) %></p>
-				</clay:col>
-			</clay:row>
+							if (batchPlannerLogDisplay.isExport()) {
+								exportImportLabel = "export";
+							}
+							%>
 
-			<clay:row>
-				<clay:col>
-					<p><%= LanguageUtil.get(request, "batch-planner-log-export-task-id") %></p>
-				</clay:col>
+							<%= LanguageUtil.get(request, exportImportLabel) %>
+						</clay:col>
+					</clay:row>
+				</clay:content-col>
 
-				<clay:col>
-					<p><%= exportTaskERC %></p>
-				</clay:col>
-			</clay:row>
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<clay:row>
+						<clay:col
+							md="4"
+						>
+							<%= LanguageUtil.get(request, "id") %>
+						</clay:col>
 
-			<clay:row>
-				<clay:col>
-					<p><%= LanguageUtil.get(request, "batch-planner-log-import-task-id") %></p>
-				</clay:col>
+						<clay:col
+							md="6"
+						>
+							<%= String.valueOf(batchPlannerLogDisplay.getBatchPlannerLogId()) %>
+						</clay:col>
+					</clay:row>
 
-				<clay:col>
-					<p><%= importTaskERC %></p>
-				</clay:col>
-			</clay:row>
+					<clay:row>
+						<clay:col
+							md="4"
+						>
+							<%= LanguageUtil.get(request, "create-date") %>
+						</clay:col>
 
-			<clay:row>
-				<clay:col>
-					<p><%= LanguageUtil.get(request, "batch-planner-log-size") %></p>
-				</clay:col>
+						<clay:col
+							md="6"
+						>
+							<%= dateFormatDateTime.format(batchPlannerLogDisplay.getCreateDate()) %>
+						</clay:col>
+					</clay:row>
 
-				<clay:col>
-					<p><%= String.valueOf(batchPlannerLog.getSize()) %></p>
-				</clay:col>
-			</clay:row>
+					<clay:row>
+						<clay:col
+							md="4"
+						>
+							<%= LanguageUtil.get(request, "modified-date") %>
+						</clay:col>
 
-			<clay:row>
-				<clay:col>
-					<p><%= LanguageUtil.get(request, "batch-planner-log-status") %></p>
-				</clay:col>
+						<clay:col
+							md="6"
+						>
+							<%= dateFormatDateTime.format(batchPlannerLogDisplay.getModifiedDate()) %>
+						</clay:col>
+					</clay:row>
 
-				<clay:col>
-					<p><%= myTitle %></p>
-				</clay:col>
-			</clay:row>
+					<clay:row>
+						<clay:col
+							md="4"
+						>
+							<%= LanguageUtil.get(request, "external-reference-code") %>
+						</clay:col>
 
-			<clay:row>
+						<clay:col
+							md="6"
+						>
+
+							<%
+							String externalReferenceCode = batchPlannerLogDisplay.getBatchEngineImportTaskERC();
+
+							if (batchPlannerLogDisplay.isExport()) {
+								externalReferenceCode = batchPlannerLogDisplay.getBatchEngineExportTaskERC();
+							}
+							%>
+
+							<%= externalReferenceCode %>
+						</clay:col>
+					</clay:row>
+
+					<clay:row>
+						<clay:col
+							md="4"
+						>
+							<%= LanguageUtil.get(request, "count") %>
+						</clay:col>
+
+						<clay:col
+							md="6"
+						>
+							<%= String.valueOf(batchPlannerLogDisplay.getTotalItemsCount()) %>
+						</clay:col>
+					</clay:row>
+
+					<clay:row>
+						<clay:col
+							md="4"
+						>
+							<%= LanguageUtil.get(request, "status") %>
+						</clay:col>
+
+						<clay:col
+							md="6"
+						>
+							<%= batchPlannerLogDisplay.getStatus() %>
+						</clay:col>
+					</clay:row>
+				</clay:content-col>
+			</clay:content-row>
+
+			<div class="mt-4">
 				<clay:link
 					displayType="primary"
 					href="<%= backURL %>"
-					label="cancel"
+					label="back"
 					type="button"
 				/>
-			</clay:row>
+			</div>
 		</div>
 	</div>
 </div>

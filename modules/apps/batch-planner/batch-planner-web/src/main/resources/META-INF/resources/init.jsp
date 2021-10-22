@@ -23,9 +23,7 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.batch.planner.model.BatchPlannerLog" %><%@
-page import="com.liferay.batch.planner.model.BatchPlannerPlan" %><%@
-page import="com.liferay.batch.planner.service.BatchPlannerLogServiceUtil" %><%@
+<%@ page import="com.liferay.batch.planner.model.BatchPlannerPlan" %><%@
 page import="com.liferay.batch.planner.service.BatchPlannerPlanServiceUtil" %><%@
 page import="com.liferay.batch.planner.web.internal.display.BatchPlannerLogDisplay" %><%@
 page import="com.liferay.batch.planner.web.internal.display.context.BatchPlannerLogDisplayContext" %><%@
@@ -60,6 +58,4 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-
-Format fastDateFormat = FastDateFormatFactoryUtil.getDateTime(themeDisplay.getLocale());
 %>

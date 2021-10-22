@@ -61,6 +61,10 @@ public class SelectLayoutTag extends IncludeTag {
 		return _followURLOnTitleClick;
 	}
 
+	public String getItemSelectorReturnType() {
+		return _itemSelectorReturnType;
+	}
+
 	public String getItemSelectorSaveEvent() {
 		return _itemSelectorSaveEvent;
 	}
@@ -121,6 +125,10 @@ public class SelectLayoutTag extends IncludeTag {
 		_followURLOnTitleClick = followURLOnTitleClick;
 	}
 
+	public void setItemSelectorReturnType(String itemSelectorReturnType) {
+		_itemSelectorReturnType = itemSelectorReturnType;
+	}
+
 	public void setItemSelectorSaveEvent(String itemSelectorSaveEvent) {
 		_itemSelectorSaveEvent = itemSelectorSaveEvent;
 	}
@@ -172,6 +180,7 @@ public class SelectLayoutTag extends IncludeTag {
 		_componentId = null;
 		_enableCurrentPage = false;
 		_followURLOnTitleClick = false;
+		_itemSelectorReturnType = null;
 		_itemSelectorSaveEvent = null;
 		_multiSelection = false;
 		_namespace = null;
@@ -394,6 +403,7 @@ public class SelectLayoutTag extends IncludeTag {
 	private String _componentId;
 	private boolean _enableCurrentPage;
 	private boolean _followURLOnTitleClick;
+	private String _itemSelectorReturnType;
 	private String _itemSelectorSaveEvent;
 	private boolean _multiSelection;
 	private String _namespace;

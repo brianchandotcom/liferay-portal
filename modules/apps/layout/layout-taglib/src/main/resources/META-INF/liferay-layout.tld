@@ -278,6 +278,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>itemSelectorReturnType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>itemSelectorSaveEvent</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

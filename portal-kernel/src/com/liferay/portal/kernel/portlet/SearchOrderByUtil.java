@@ -50,8 +50,9 @@ public class SearchOrderByUtil {
 			orderByCol = portalPreferences.getValue(
 				portletName, key, defaultValue);
 		}
-
-		portalPreferences.setValue(portletName, key, orderByCol);
+		else {
+			portalPreferences.setValue(portletName, key, orderByCol);
+		}
 
 		return orderByCol;
 	}
@@ -97,8 +98,9 @@ public class SearchOrderByUtil {
 			orderByType = portalPreferences.getValue(
 				portletName, key, defaultValue);
 		}
-
-		portalPreferences.setValue(portletName, key, orderByType);
+		else {
+			portalPreferences.setValue(portletName, key, orderByType);
+		}
 
 		return orderByType;
 	}

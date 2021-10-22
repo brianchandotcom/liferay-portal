@@ -68,12 +68,13 @@ public class SearchDisplayStyleUtil {
 			displayStyle = portalPreferences.getValue(
 				portletName, key, defaultValue);
 		}
+		else {
+			portalPreferences.setValue(portletName, key, displayStyle);
 
-		portalPreferences.setValue(portletName, key, displayStyle);
-
-		if (clearCache) {
-			httpServletRequest.setAttribute(
-				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+			if (clearCache) {
+				httpServletRequest.setAttribute(
+					WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+			}
 		}
 
 		return displayStyle;

@@ -1078,19 +1078,6 @@ definition {
 			value1 = "APPROVED");
 	}
 
-	macro viewEntryViaAggregator {
-		var key_entryContent = "${entryContent}";
-		var key_entryTitle = "${entryTitle}";
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "BlogsAggregator#ENTRY_CONTENT",
-			value1 = "${entryContent}");
-
-		AssertTextEquals(
-			locator1 = "BlogsAggregator#ENTRY_TITLE",
-			value1 = "${entryTitle}");
-	}
-
 	macro viewEntryViaAPPG {
 		var key_assetContent = "${entryContent}";
 		var key_assetTitle = "${assetTitle}";

@@ -32,6 +32,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.increment.BufferedIncrementThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
@@ -463,7 +464,9 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 
 		@Override
 		protected void doRun() throws Exception {
-			try (SafeCloseable safeCloseable =
+			try (SafeCloseable safeCloseable1 =
+					BufferedIncrementThreadLocal.setWithSafeCloseable(true);
+				SafeCloseable safeCloseable2 =
 					ProxyModeThreadLocal.setWithSafeCloseable(true)) {
 
 				FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(

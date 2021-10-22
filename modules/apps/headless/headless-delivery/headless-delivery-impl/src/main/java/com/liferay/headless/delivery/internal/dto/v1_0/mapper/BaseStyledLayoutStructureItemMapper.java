@@ -299,13 +299,19 @@ public abstract class BaseStyledLayoutStructureItemMapper
 
 				setHidden(
 					() -> {
-						if (!Objects.equals(
-								jsonObject.getString("display"), "none")) {
+						if (Objects.equals(
+								jsonObject.getString("display"), "block")) {
 
-							return null;
+							return false;
 						}
 
-						return true;
+						if (Objects.equals(
+								jsonObject.getString("display"), "none")) {
+
+							return true;
+						}
+
+						return null;
 					});
 			}
 		};
@@ -376,14 +382,23 @@ public abstract class BaseStyledLayoutStructureItemMapper
 
 							setHidden(
 								() -> {
-									if (!Objects.equals(
-											jsonObject.getString("display"),
-											"none")) {
+									if (Objects.equals(
+											styleJSONObject.getString(
+												"display"),
+											"block")) {
 
-										return null;
+										return false;
 									}
 
-									return true;
+									if (Objects.equals(
+											styleJSONObject.getString(
+												"display"),
+											"none")) {
+
+										return true;
+									}
+
+									return null;
 								});
 						}
 					});

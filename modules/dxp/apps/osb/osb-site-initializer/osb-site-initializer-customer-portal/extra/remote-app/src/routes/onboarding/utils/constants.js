@@ -63,6 +63,6 @@ const getInitialDxpAdmin = () => {
 	};
 };
 
-const getRolesList = () => Object.values(roles);
+const getRoles = () => Object.values(roles);
 
-export {steps, roles, getInitialInvite, getInitialDxpAdmin, getRolesList};
+export {steps, roles, getInitialInvite, getInitialDxpAdmin, getRoles};

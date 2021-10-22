@@ -384,12 +384,29 @@ definition {
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a String field on layout"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddStringEntryOnLayout {
 		property portal.acceptance = "true";
 
-		// TODO LPS-140555 CanAddStringEntryOnLayout pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "String",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.addEntryViaUI(entry = "Test text", labelName = "Custom Object");
+
+		ObjectPortlet.viewEntry(entry = "Test text");
 
 	}
 

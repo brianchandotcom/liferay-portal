@@ -156,6 +156,14 @@ public class RemoteAppEntryPersistenceTest {
 
 		newRemoteAppEntry.setType(RandomTestUtil.randomString());
 
+		newRemoteAppEntry.setStatus(RandomTestUtil.nextInt());
+
+		newRemoteAppEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		newRemoteAppEntry.setStatusByUserName(RandomTestUtil.randomString());
+
+		newRemoteAppEntry.setStatusDate(RandomTestUtil.nextDate());
+
 		_remoteAppEntries.add(_persistence.update(newRemoteAppEntry));
 
 		RemoteAppEntry existingRemoteAppEntry = _persistence.findByPrimaryKey(
@@ -208,6 +216,17 @@ public class RemoteAppEntryPersistenceTest {
 			newRemoteAppEntry.getProperties());
 		Assert.assertEquals(
 			existingRemoteAppEntry.getType(), newRemoteAppEntry.getType());
+		Assert.assertEquals(
+			existingRemoteAppEntry.getStatus(), newRemoteAppEntry.getStatus());
+		Assert.assertEquals(
+			existingRemoteAppEntry.getStatusByUserId(),
+			newRemoteAppEntry.getStatusByUserId());
+		Assert.assertEquals(
+			existingRemoteAppEntry.getStatusByUserName(),
+			newRemoteAppEntry.getStatusByUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingRemoteAppEntry.getStatusDate()),
+			Time.getShortTimestamp(newRemoteAppEntry.getStatusDate()));
 	}
 
 	@Test
@@ -258,7 +277,8 @@ public class RemoteAppEntryPersistenceTest {
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"customElementHTMLElementName", true, "iFrameURL", true,
 			"instanceable", true, "name", true, "portletCategoryName", true,
-			"type", true);
+			"type", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -512,6 +532,14 @@ public class RemoteAppEntryPersistenceTest {
 		remoteAppEntry.setProperties(RandomTestUtil.randomString());
 
 		remoteAppEntry.setType(RandomTestUtil.randomString());
+
+		remoteAppEntry.setStatus(RandomTestUtil.nextInt());
+
+		remoteAppEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		remoteAppEntry.setStatusByUserName(RandomTestUtil.randomString());
+
+		remoteAppEntry.setStatusDate(RandomTestUtil.nextDate());
 
 		_remoteAppEntries.add(_persistence.update(remoteAppEntry));
 

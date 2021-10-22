@@ -461,6 +461,15 @@ public class RemoteAppEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.remote.app.model.RemoteAppEntry updateStatus(
+			long userId, long remoteAppEntryId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _remoteAppEntryLocalService.updateStatus(
+			userId, remoteAppEntryId, status);
+	}
+
+	@Override
 	public RemoteAppEntryLocalService getWrappedService() {
 		return _remoteAppEntryLocalService;
 	}

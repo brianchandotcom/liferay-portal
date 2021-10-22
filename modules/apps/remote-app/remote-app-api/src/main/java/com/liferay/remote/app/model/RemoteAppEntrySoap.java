@@ -51,6 +51,10 @@ public class RemoteAppEntrySoap implements Serializable {
 		soapModel.setPortletCategoryName(model.getPortletCategoryName());
 		soapModel.setProperties(model.getProperties());
 		soapModel.setType(model.getType());
+		soapModel.setStatus(model.getStatus());
+		soapModel.setStatusByUserId(model.getStatusByUserId());
+		soapModel.setStatusByUserName(model.getStatusByUserName());
+		soapModel.setStatusDate(model.getStatusDate());
 
 		return soapModel;
 	}
@@ -251,6 +255,38 @@ public class RemoteAppEntrySoap implements Serializable {
 		_type = type;
 	}
 
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+	}
+
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	public String getStatusByUserName() {
+		return _statusByUserName;
+	}
+
+	public void setStatusByUserName(String statusByUserName) {
+		_statusByUserName = statusByUserName;
+	}
+
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _remoteAppEntryId;
@@ -268,5 +304,9 @@ public class RemoteAppEntrySoap implements Serializable {
 	private String _portletCategoryName;
 	private String _properties;
 	private String _type;
+	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 
 }

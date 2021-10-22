@@ -350,4 +350,9 @@ public interface RemoteAppEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry updateRemoteAppEntry(RemoteAppEntry remoteAppEntry);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public RemoteAppEntry updateStatus(
+			long userId, long remoteAppEntryId, int status)
+		throws PortalException;
+
 }

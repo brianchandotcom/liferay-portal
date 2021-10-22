@@ -77,7 +77,7 @@ public class RemoteAppEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -113,6 +113,14 @@ public class RemoteAppEntryCacheModel
 		sb.append(properties);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -215,6 +223,23 @@ public class RemoteAppEntryCacheModel
 			remoteAppEntryImpl.setType(type);
 		}
 
+		remoteAppEntryImpl.setStatus(status);
+		remoteAppEntryImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			remoteAppEntryImpl.setStatusByUserName("");
+		}
+		else {
+			remoteAppEntryImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			remoteAppEntryImpl.setStatusDate(null);
+		}
+		else {
+			remoteAppEntryImpl.setStatusDate(new Date(statusDate));
+		}
+
 		remoteAppEntryImpl.resetOriginalValues();
 
 		return remoteAppEntryImpl;
@@ -245,6 +270,12 @@ public class RemoteAppEntryCacheModel
 		portletCategoryName = objectInput.readUTF();
 		properties = (String)objectInput.readObject();
 		type = objectInput.readUTF();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -331,6 +362,19 @@ public class RemoteAppEntryCacheModel
 		else {
 			objectOutput.writeUTF(type);
 		}
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public long mvccVersion;
@@ -350,5 +394,9 @@ public class RemoteAppEntryCacheModel
 	public String portletCategoryName;
 	public String properties;
 	public String type;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 
 }

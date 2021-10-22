@@ -15,5 +15,9 @@ create table RemoteAppEntry (
 	name STRING null,
 	portletCategoryName VARCHAR(75) null,
 	properties TEXT null,
-	type_ VARCHAR(75) null
+	type_ VARCHAR(75) null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );

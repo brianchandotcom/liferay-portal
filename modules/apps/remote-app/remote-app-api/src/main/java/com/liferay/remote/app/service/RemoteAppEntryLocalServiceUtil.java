@@ -407,6 +407,13 @@ public class RemoteAppEntryLocalServiceUtil {
 		return getService().updateRemoteAppEntry(remoteAppEntry);
 	}
 
+	public static RemoteAppEntry updateStatus(
+			long userId, long remoteAppEntryId, int status)
+		throws PortalException {
+
+		return getService().updateStatus(userId, remoteAppEntryId, status);
+	}
+
 	public static RemoteAppEntryLocalService getService() {
 		return _service;
 	}

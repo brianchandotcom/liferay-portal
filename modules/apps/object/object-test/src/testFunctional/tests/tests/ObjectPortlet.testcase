@@ -113,7 +113,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.addEntryViaUI(entry = "123.123456", labelName = "Custom Object");
+		ObjectPortlet.addEntryViaUI(entry = "123.123456");
+
+		Refresh();
 
 		ObjectPortlet.viewEntry(entry = "123.123456");
 
@@ -162,9 +164,11 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.addEntryViaUI(entry = "2021-09-23", labelName = "Custom Object");
+		ObjectPortlet.addEntryViaUI(entry = "01-01-2001");
 
-		ObjectPortlet.viewEntry(entry = "2021-09-23");
+		Refresh();
+
+		ObjectPortlet.viewEntry(entry = "2001-01-01");
 
 	}
 
@@ -177,7 +181,7 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
-			fieldLabelName = "Field",
+			fieldLabelName = "Double",
 			fieldName = "customObjectField",
 			fieldType = "Double",
 			isRequired = "false",
@@ -187,9 +191,11 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectAdmin.addObjectDoubleFieldEntryViaUI(entryValue = "12345");
+		ObjectPortlet.addEntryViaUI(entry = "1.23");
 
-		ObjectPortlet.viewEntry(entry = "12345");
+		Refresh();
+
+		ObjectPortlet.viewEntry(entry = "1.23");
 	}
 
 	@description = "LPS-140081 - Verify it is possible to add an entry without selecting a value for a Picklist field that is not required"
@@ -275,7 +281,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.addEntryViaUI(entry = "123456789", labelName = "Custom Object");
+		ObjectPortlet.addEntryViaUI(entry = "123456789");
+
+		Refresh();
 
 		ObjectPortlet.viewEntry(entry = "123456789");
 
@@ -300,7 +308,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.addEntryViaUI(entry = "12345678912345678", labelName = "Custom Object");
+		ObjectPortlet.addEntryViaUI(entry = "12345678912345678");
+
+		Refresh();
 
 		ObjectPortlet.viewEntry(entry = "12345678912345678");
 
@@ -420,7 +430,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.addEntryViaUI(entry = "Test text", labelName = "Custom Object");
+		ObjectPortlet.addEntryViaUI(entry = "Test text");
+
+		Refresh();
 
 		ObjectPortlet.viewEntry(entry = "Test text");
 

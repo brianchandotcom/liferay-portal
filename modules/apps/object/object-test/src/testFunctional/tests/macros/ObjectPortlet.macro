@@ -1,8 +1,7 @@
 definition {
 	macro addEntryViaUI {
-		var key_labelName = "${labelName}";
 
-		Click.javaScriptClick(locator1 = "ObjectPortlet#ADD_CUSTOM_OBJECT_ENTRY");
+		LexiconEntry.gotoAdd();
 
 		Type(
 			locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",

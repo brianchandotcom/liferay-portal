@@ -120,14 +120,9 @@
 		<td>//input[contains(@value, '${key_entryValue}')]</td>
 		<td></td>
 	</tr>
-		<tr>
-		<td>ADD_CUSTOM_OBJECT_ENTRY</td>
-		<td>//button[@title='Add ${key_labelName}']</td>
-		<td></td>
-	</tr>
 	<tr>
 		<td>ADD_OBJECT_ENTRY</td>
-		<td>//input[@class='form-control']</td>
+		<td>//input[@class='form-control']|//input[@class='form-control input-group-inset input-group-inset-after']</td>
 		<td></td>
 	</tr>
 </tbody>

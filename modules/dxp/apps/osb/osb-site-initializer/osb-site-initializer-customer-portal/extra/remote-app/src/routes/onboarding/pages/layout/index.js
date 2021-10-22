@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
@@ -5,7 +6,9 @@ const Layout = ({ children, footerProps, headerProps, mainStyles }) => (
   <div className="border d-flex flex-column mt-5 mx-auto onboarding rounded-lg shadow-lg">
     <Header {...headerProps} />
 
-    <main className={`flex-grow-1 overflow-auto ${mainStyles ? mainStyles : ""}`}>{children}</main>
+    <main className={classNames("flex-grow-1", "overflow-auto", {
+      mainStyles,
+    })}>{children}</main>
 
     <Footer {...footerProps} />
   </div>

@@ -1,6 +1,13 @@
+import classNames from 'classnames';
+
 const Footer = ({ leftButton, middleButton, rightButton }) => {
+  const isCornerButton = leftButton || rightButton;
+
   return (
-    <div className={`d-flex justify-content-${leftButton || rightButton ? "between" : "center"} p-4`}>
+    <div className={classNames("d-flex", "p-4", {
+      "justify-content-between": isCornerButton,
+      "justify-content-center": !isCornerButton,
+   })}>
       { leftButton }
       { middleButton }
       { rightButton }

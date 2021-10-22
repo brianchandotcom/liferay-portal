@@ -40,6 +40,25 @@ definition {
 		}
 	}
 
+	@description = "Validate if the user can create a question category"
+	@priority = "5"
+	@refactordone
+	@uitest
+	test CanAddQuestionCategory {
+		property portal.acceptance = "true";
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Question Description",
+			categoryName = "question AddQuestionCategory",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "question AddQuestionCategory");
+
+		Questions.viewTopicDefault();
+	}
+
 	@description = "Validate if the user can create a question with an AL image."
 	@priority = "4"
 	@refactordone
@@ -265,41 +284,6 @@ definition {
 		Questions.changeTopic(
 			parentTopicName = "SubTopicA",
 			subTopicName = "SubTopicB");
-	}
-
-	@description = "Validate if the anonymous user can ask questions and redirected to login, it also covers LPS-129203."
-	@priority = "4"
-	@refactordone
-	test CanAskQuestionsThroughAnonymousUser {
-		property test.name.skip.portal.instance = "QuestionsWidgetActions#CanAskQuestionsThroughAnonymousUser";
-
-		Questions.enableRedirectToLogin();
-
-		Questions.enableAnonymousRead();
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Category",
-			userEmailAddress = "test@liferay.com");
-
-		User.logoutPG();
-
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "category");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			anonymousUser = "true",
-			contentField = "Body Anonymous User Ask questions",
-			password = "test",
-			titleField = "Title Anonymous User Ask questions",
-			userEmailAddress = "test@liferay.com");
-
-		AssertTextEquals(
-			key_questionTitle = "Title Anonymous User Ask questions",
-			locator1 = "Questions#QUESTIONS_TITLE",
-			value1 = "Title Anonymous User Ask questions");
 	}
 
 	@description = "Validate if the user can cancel the deletions."
@@ -749,150 +733,6 @@ definition {
 		AssertElementPresent(
 			key_errorMessage = "This is an invalid tag.",
 			locator1 = "Questions#ASK_QUESTION_ERROR_MESSAGE");
-	}
-
-	@description = "Validate if the user can add root topic without permission."
-	@priority = "4"
-	@refactordone
-	test CannotAddRootTopicWithoutPermission {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.addRegularRole(roleTitle = "Test Regrole Name");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Test Regrole Name",
-			userEmailAddress = "userea@liferay.com");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_message_boards_web_portlet_MBAdminPortlet",
-			roleTitle = "Test Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.message.boards",
-			roleTitle = "Test Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.message.boards.model.MBCategory",
-			roleTitle = "Test Regrole Name");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.viewNoPermissionsAddTopic();
-	}
-
-	@description = "Validate if the user can add subtopic without permission."
-	@priority = "4"
-	@refactordone
-	test CannotAddSubTopicWithoutPermission {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.addRegularRole(roleTitle = "Test Regrole Name");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Test Regrole Name",
-			userEmailAddress = "userea@liferay.com");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_message_boards_web_portlet_MBAdminPortlet",
-			roleTitle = "Test Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.message.boards",
-			roleTitle = "Test Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.message.boards.model.MBCategory",
-			roleTitle = "Test Regrole Name");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
-
-		Questions.viewNoPermissionsAddTopic();
-	}
-
-	@description = "Validate if the guest user cannot ask question, it also covers LPS-128823."
-	@priority = "4"
-	@refactordone
-	test CannotAskQuestionAsGuest {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.addRootTopic(
-			rootTopicDescription = "Questions Test Category Description",
-			rootTopicName = "Questions Test Category");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
-
-		Questions.viewTopicDefault();
-
-		Questions.viewNoPermissionsAddQuestion();
 	}
 
 	@description = "Validate that the user cannot post a question with a tag containing Java Script. It also covers LPS-137561 and LPS-137633."

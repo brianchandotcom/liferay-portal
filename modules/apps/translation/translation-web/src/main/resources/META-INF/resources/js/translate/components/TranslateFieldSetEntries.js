@@ -19,7 +19,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {FETCH_STATUS} from '../constants';
 
@@ -102,43 +102,55 @@ const TranslateFieldEditor = ({
 	targetContent,
 	targetContentDir,
 	onChange = noop,
-}) => (
-	<ClayLayout.Row>
-		<ClayLayout.Col md={6}>
-			<ClayForm.Group>
-				<label className="control-label">{label}</label>
-				<div
-					className="translation-editor-preview"
-					dangerouslySetInnerHTML={{__html: sourceContent}}
-					dir={sourceContentDir}
-				/>
-			</ClayForm.Group>
-		</ClayLayout.Col>
-		<ClayLayout.Col md={6}>
-			<ClayForm.Group>
-				<label className="control-label">{label}</label>
-				<ClassicEditor
-					data={targetContent}
-					editorConfig={{
-						...editorConfiguration.editorConfig,
-						contentsLangDirection: targetContentDir,
-					}}
-					name={id}
-					onChange={(data) => {
-						if (targetContent !== data.trim()) {
+}) => {
+	const [content, setContent] = useState(targetContent);
+
+	return (
+		<ClayLayout.Row>
+			<ClayLayout.Col md={6}>
+				<ClayForm.Group>
+					<label className="control-label">{label}</label>
+					<div
+						className="translation-editor-preview"
+						dangerouslySetInnerHTML={{__html: sourceContent}}
+						dir={sourceContentDir}
+					/>
+				</ClayForm.Group>
+			</ClayLayout.Col>
+			<ClayLayout.Col md={6}>
+				<ClayForm.Group>
+					<label className="control-label">{label}</label>
+					<ClassicEditor
+						editorConfig={{
+							...editorConfiguration.editorConfig,
+							contentsLangDirection: targetContentDir,
+						}}
+						name={id}
+						onChange={(data) => {
+							setContent(data);
 							onChange(data);
-						}
-					}}
-				/>
-				<input defaultValue={targetContent} name={id} type="hidden" />
-				<TranslateFieldFeedback
-					message={fieldStatus.message}
-					status={fieldStatus.status}
-				/>
-			</ClayForm.Group>
-		</ClayLayout.Col>
-	</ClayLayout.Row>
-);
+						}}
+						onInstanceReady={({editor}) => {
+
+							// LPS-139363
+
+							editor?.setData?.(content, {
+								interal: true,
+								noSnapshot: true,
+							});
+						}}
+					/>
+
+					<input defaultValue={content} name={id} type="hidden" />
+					<TranslateFieldFeedback
+						message={fieldStatus.message}
+						status={fieldStatus.status}
+					/>
+				</ClayForm.Group>
+			</ClayLayout.Col>
+		</ClayLayout.Row>
+	);
+};
 
 const TranslateFieldInput = ({
 	fieldStatus,

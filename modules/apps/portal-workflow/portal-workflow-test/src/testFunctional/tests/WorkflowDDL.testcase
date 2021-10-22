@@ -27,12 +27,66 @@ definition {
 		}
 	}
 
+	@description = "Verify that the user can Approve a DDL Entry"
+	@ignore = "true"
+	@priority = "5"
+	test CanApproveDDLEntry {
+
+		// TODO LRQA-69481 CanApproveDDLEntry pending implementation
+
+	}
+
 	@description = "This is a test for LRQA-69474. Verify that if it is possible to create a Dynamic Data List. "
 	@ignore = "true"
 	@priority = "3"
 	test CanCreateDDL {
 
 		// TODO LRQA-69474 CanCreateDDL pending implementation
+
+	}
+
+	@description = "Verify that the user can Publish a Entry after Save as Draft"
+	@ignore = "true"
+	@priority = "4"
+	test CanPublishAfterSaveAsDraft {
+
+		// TODO LRQA-69476 CanPublishAfterSaveAsDraft pending implementation
+
+	}
+
+	@description = "Verify that, when the user Save as Draft, the DDL status is Draft"
+	@ignore = "true"
+	@priority = "3"
+	test CanSaveAsDraft {
+
+		// TODO LRQA-69475 CanSaveAsDraft pending implementation
+
+	}
+
+	@description = "Verify that the Entry is not displayed on My Workflow Tasks when the user Delete a DDL with Pending entry"
+	@ignore = "true"
+	@priority = "4"
+	test DeletedEntryIsNotDisplayedOnMyWorkflowTasks {
+
+		// TODO LRQA-69478 DeletedEntryIsNotDisplayedOnMyWorkflowTasks pending implementation
+
+	}
+
+	@description = "Verify that, when the user Save as Draft, the task is not displayed on My Workflow Tasks"
+	@ignore = "true"
+	@priority = "3"
+	test DraftEntryIsNotDisplayedOnMyWorkflowTasks {
+
+		// TODO LRQA-69477 DraftEntryIsNotDisplayedOnMyWorkflowTasks pending implementation
+
+	}
+
+	@description = "Verify that, editing an Approved entry, the DDL Entry status returns to Pending"
+	@ignore = "true"
+	@priority = "4"
+	test EditApprovedEntryReturnsToPending {
+
+		// TODO LRQA-69482 EditApprovedEntryReturnsToPending pending implementation
 
 	}
 
@@ -150,30 +204,12 @@ definition {
 			workflowTask = "Review");
 	}
 
-	@description = "This is a test for LRQA-69477. Verify if when the user Hover tem Item Subject, the type of DDL is displayed(Dynamic Data Lists Record: New Contacts for List: Data Test). "
+	@description = "Verify that, editing a Pending entry, a message is displayed"
 	@ignore = "true"
-	@priority = "3"
-	test HoverItemSubjectTypeDDLDisplayed {
+	@priority = "2"
+	test MessageIsDisplayedOnEditingPendingEntry {
 
-		// TODO LRQA-69477 HoverItemSubjectTypeDDLDisplayed pending implementation
-
-	}
-
-	@description = "This is a test for LRQA-69479. Verify if when click on View Icon on Submission Page, the user is redirected to a new page with the list details. "
-	@ignore = "true"
-	@priority = "3"
-	test OpenListDetailsInAnotherTab {
-
-		// TODO LRQA-69479 OpenListDetailsInAnotherTab pending implementation
-
-	}
-
-	@description = "This is a test for LRQA-69478. Verify if when click on "Go to Submission Page", a new tab is opened with DDL preview. "
-	@ignore = "true"
-	@priority = "3"
-	test OpenSubmissionPageInAnotherTabDDLPreviewDisplayed {
-
-		// TODO LRQA-69478 OpenSubmissionPageInAnotherTabDDLPreviewDisplayed pending implementation
+		// TODO LRQA-69480 MessageIsDisplayedOnEditingPendingEntry pending implementation
 
 	}
 
@@ -295,48 +331,12 @@ definition {
 			workflowStatus = "Update");
 	}
 
-	@description = "This is a test for LRQA-69476. Verify if when the Data Definition of DDL is changed, the data on All Items disappears. "
+	@description = "Verify that, editing a Pending entry, the DDL Entry status remains on Pending"
 	@ignore = "true"
 	@priority = "3"
-	test ViewDataIsNotDisplayedOnAllItems {
+	test StatusIsPendingWhenPendingEntryIsEdited {
 
-		// TODO LRQA-69476 ViewDataIsNotDisplayedOnAllItems pending implementation
-
-	}
-
-	@description = "This is a test for LRQA-69475. Verify if when Data is created on DDL, it is displayed on All Items. "
-	@ignore = "true"
-	@priority = "3"
-	test ViewDDLDisplayedOnAllItems {
-
-		// TODO LRQA-69475 ViewDDLDisplayedOnAllItems pending implementation
-
-	}
-
-	@description = "This is a test for LRQA-69482. Verify if when the DDL is approved, it is displayed on performance tab. "
-	@ignore = "true"
-	@priority = "3"
-	test ViewDDLDisplayedPerformanceTab {
-
-		// TODO LRQA-69482 ViewDDLDisplayedPerformanceTab pending implementation
-
-	}
-
-	@description = "This is a test for LRQA-69481. Verify if when a SLA is active within 2 minutes, the DDL will change to On Time. "
-	@ignore = "true"
-	@priority = "3"
-	test ViewUserCanDDLOntime {
-
-		// TODO LRQA-69481 ViewUserCanDDLOntime pending implementation
-
-	}
-
-	@description = "This is a test for LRQA-69480. Verify if when a SLA is active after 1 minute, the DDL will change to Overdue. "
-	@ignore = "true"
-	@priority = "3"
-	test ViewUserCanDDLOverdue {
-
-		// TODO LRQA-69480 ViewUserCanDDLOverdue pending implementation
+		// TODO LRQA-69479 StatusIsPendingWhenPendingEntryIsEdited pending implementation
 
 	}
 

@@ -14,6 +14,11 @@
 
 package com.liferay.layout.page.template.item.selector.web.internal;
 
+import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemFormVariation;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
@@ -117,6 +122,9 @@ public class LayoutPageTemplateEntryItemSelectorView
 			new LayoutPageTemplateEntryItemSelectorReturnType());
 
 	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
 	private ItemSelectorViewDescriptorRenderer
 		<LayoutPageTemplateEntryItemSelectorCriterion>
 			_itemSelectorViewDescriptorRenderer;
@@ -205,8 +213,28 @@ public class LayoutPageTemplateEntryItemSelectorView
 						LayoutPageTemplateEntryTypeConstants.
 							TYPE_DISPLAY_PAGE)) {
 
-				return LanguageUtil.get(
-					_httpServletRequest, "display-page-template");
+				String typeLabel = _getTypeLabel();
+
+				if (Validator.isNull(typeLabel)) {
+					return StringPool.DASH;
+				}
+
+				String subtypeLabel = StringPool.BLANK;
+
+				try {
+					subtypeLabel = _getSubtypeLabel();
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception, exception);
+					}
+				}
+
+				if (Validator.isNull(subtypeLabel)) {
+					return typeLabel;
+				}
+
+				return typeLabel + " - " + subtypeLabel;
 			}
 			else if (Objects.equals(
 						_layoutPageTemplateEntry.getType(),
@@ -245,6 +273,45 @@ public class LayoutPageTemplateEntryItemSelectorView
 		@Override
 		public String getUserName() {
 			return _layoutPageTemplateEntry.getUserName();
+		}
+
+		private String _getSubtypeLabel() {
+			InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemFormVariationsProvider.class,
+					_layoutPageTemplateEntry.getClassName());
+
+			if (infoItemFormVariationsProvider == null) {
+				return StringPool.BLANK;
+			}
+
+			InfoItemFormVariation infoItemFormVariation =
+				infoItemFormVariationsProvider.getInfoItemFormVariation(
+					_layoutPageTemplateEntry.getGroupId(),
+					String.valueOf(_layoutPageTemplateEntry.getClassTypeId()));
+
+			if (infoItemFormVariation != null) {
+				return infoItemFormVariation.getLabel(
+					_themeDisplay.getLocale());
+			}
+
+			return StringPool.BLANK;
+		}
+
+		private String _getTypeLabel() {
+			InfoItemDetailsProvider<?> infoItemDetailsProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemDetailsProvider.class,
+					_layoutPageTemplateEntry.getClassName());
+
+			if (infoItemDetailsProvider == null) {
+				return StringPool.BLANK;
+			}
+
+			InfoItemClassDetails infoItemClassDetails =
+				infoItemDetailsProvider.getInfoItemClassDetails();
+
+			return infoItemClassDetails.getLabel(_themeDisplay.getLocale());
 		}
 
 		private final HttpServletRequest _httpServletRequest;

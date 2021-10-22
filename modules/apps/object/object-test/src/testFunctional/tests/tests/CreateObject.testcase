@@ -2102,11 +2102,47 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Page Item Selector when reactivated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectReappearsPageItemSelectorWhenReactivated {
 
-		// TODO LPS-140882 ObjectReappearsPageItemSelectorWhenReactivated pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+		
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		Click.javaScriptClick(locator1 = "VisualizeObjectDisplayPage#SELECT_ITEM");
+
+		SelectFrame(
+			key_title = "Select",
+			locator1 = "IFrame#MODAL_ANY");
+
+		AssertElementPresent(
+			key_pluralLabelName = "Custom Objects",
+			locator1 = "VisualizeObjectDisplayPage#SELECT_OBJECT");
 
 	}
 

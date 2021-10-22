@@ -70,6 +70,10 @@ definition {
 		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectAdmin#OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH");
 	}
 
+	macro checkToggleActive {
+		Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_ACTIVE");
+	}
+
 	macro checkToggleInactive {
 		Uncheck.uncheckToggleSwitch(locator1 = "CreateObject#TOGGLE_INACTIVE");
 	}

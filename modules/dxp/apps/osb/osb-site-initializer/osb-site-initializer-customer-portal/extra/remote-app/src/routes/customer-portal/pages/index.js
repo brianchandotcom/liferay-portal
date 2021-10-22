@@ -1,9 +1,7 @@
 import Home from "./home";
 
 const Pages = () => {
-    return (
-        <Home />
-    );
+    return <Home />;
 };
 
 export default Pages;

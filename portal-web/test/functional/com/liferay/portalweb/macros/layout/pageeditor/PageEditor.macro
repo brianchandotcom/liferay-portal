@@ -3592,11 +3592,16 @@ definition {
 			var position = "1";
 		}
 
+		PageEditor.viewFragment(
+			fragmentName = "${fragmentName}",
+			index = "${index}");
+
 		if ("${contributed}" == "false") {
 			AssertTextEquals(
 				id = "${id}",
+				index = "${position}",
 				key_fragmentName = "${fragmentName}",
-				locator1 = "Fragment#EDITABLE_FIELD",
+				locator1 = "Fragment#EDITABLE_FIELD_ANY",
 				value1 = "${editableText}");
 
 			if (isSet(style)) {
@@ -3608,12 +3613,16 @@ definition {
 					locator1 = "Fragment#INLINE_RICH_TEXT_STYLE");
 			}
 		}
+
 		else {
-			AssertTextEquals(
+			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "${fragmentName}",
 				id = "${id}",
-				key_fragmentName = "${fragmentName}",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
-				value1 = "${editableText}");
+				index = "${index}",
+				text = "${editableText}");
 
 			if (isSet(style)) {
 				AssertVisible(

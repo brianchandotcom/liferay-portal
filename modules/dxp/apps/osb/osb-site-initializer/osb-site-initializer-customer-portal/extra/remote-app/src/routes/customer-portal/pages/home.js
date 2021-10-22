@@ -1,3 +1,4 @@
+import classNames from 'classNames';
 import useGraphQL from '~/common/hooks/useGraphql';
 import { LiferayTheme } from '~/common/services/liferay';
 import { getKoroneikiAccountsByFilter } from '~/common/services/liferay/graphql/koroneiki-accounts';
@@ -47,16 +48,18 @@ const Home = () => {
 			title: accountBriefs?.find(accBrief => accBrief.externalReferenceCode === acc.accountKey).name
 		})) || [];
 
+	const isManyProject = projects.length > 4;
 
 	return (
 		<>
 			<div
-				className={`display-4 font-weight-bold mb-5${projects.length > 4 ? ' pb-2' : ''
-					} text-neutral-0`}
+				className={classNames("display-4", "font-weight-bold", "mb-5", {
+					'pb-2': isManyProject
+				})}
 			>
 				Projects
 			</div>
-			{projects.length > 4 && (
+			{isManyProject && (
 				<div className="align-items-center d-flex justify-content-between mb-4">
 					<SearchProject placeholder="Find a project" />
 
@@ -66,14 +69,16 @@ const Home = () => {
 				</div>
 			)}
 			<div
-				className={`d-flex flex-wrap home-projects${projects.length > 4 ? '-sm pt-2' : ''
-					}`}
+				className={classNames("d-flex", "flex-wrap", {
+					"home-projects": !isManyProject,
+					"home-projects-sm pt-2": isManyProject,
+				})}
 			>
 				{projects.map((project, index) => (
 					<ProjectCard
 						key={index}
+						small={isManyProject}
 						{...project}
-						small={projects.length > 4}
 					/>
 				))}
 			</div>

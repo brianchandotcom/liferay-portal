@@ -31,6 +31,10 @@
 		<column name="properties" type="String" />
 		<column name="sourceCodeURL" type="String" />
 		<column name="type" type="String" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 	</entity>
 	<exceptions>
 		<exception>RemoteAppEntryCustomElementCSSURLs</exception>

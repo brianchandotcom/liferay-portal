@@ -1,6 +1,6 @@
 definition {
-	macro addEntryViaUI {
 
+	macro addEntryViaUI {
 		LexiconEntry.gotoAdd();
 
 		Type(
@@ -8,7 +8,6 @@ definition {
 			value1 = "${entry}");
 
 		Button.clickSave();
-
 	}
 
 	macro assertDuplicatedEntryNotPresent {

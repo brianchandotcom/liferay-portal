@@ -118,7 +118,6 @@ definition {
 		Refresh();
 
 		ObjectPortlet.viewEntry(entry = "123.123456");
-
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a Boolean field on layout"
@@ -169,7 +168,6 @@ definition {
 		Refresh();
 
 		ObjectPortlet.viewEntry(entry = "2001-01-01");
-
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a Double field on layout"
@@ -286,7 +284,6 @@ definition {
 		Refresh();
 
 		ObjectPortlet.viewEntry(entry = "123456789");
-
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a Long field on layout"
@@ -313,7 +310,6 @@ definition {
 		Refresh();
 
 		ObjectPortlet.viewEntry(entry = "12345678912345678");
-
 	}
 
 	@description = "LPS-135390 - Verify it is possible to add an Object entry with the Add Object Entry permission"
@@ -435,7 +431,6 @@ definition {
 		Refresh();
 
 		ObjectPortlet.viewEntry(entry = "Test text");
-
 	}
 
 	@description = "LPS-135390 - Verify it is possible to apply a permission only to a specific site when an Object is scoped by Site"

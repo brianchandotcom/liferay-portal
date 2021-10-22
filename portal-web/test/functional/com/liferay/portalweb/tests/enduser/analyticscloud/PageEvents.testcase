@@ -695,10 +695,8 @@ definition {
 	test CheckPageUnLoadedWhenLeavePage {
 		property proxy.server.enabled = "true";
 
-		task ("Add the second widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Test Page Name");
+		task ("Add the second widget page") {		
+			ACUtils.addPage(layoutName = "Test Page Name");
 		}
 
 		task ("Get site assigned property name") {

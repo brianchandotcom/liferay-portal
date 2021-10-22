@@ -49,9 +49,7 @@ definition {
 
 		task ("Add Site and Page") {
 			for (var n : list "${pageCreation}") {
-				JSONLayout.addPublicLayout(
-					groupName = "Site Name",
-					layoutName = "${n}");
+				ACUtils.addPage(layoutName = "${n}");
 			}
 		}
 
@@ -363,10 +361,9 @@ definition {
 
 			for (var n : list "${pages}") {
 				if ("${n}" != "AC Page") {
-					JSONLayout.addPublicLayout(
-						groupName = "Site Name",
-						layoutName = "${n}");
+					ACUtils.addPage(layoutName = "${n}");
 				}
+
 				ACUtils.addWidgetToPage(
 					layoutName = "${n}",
 					widgetName = "Blogs");

@@ -55,9 +55,7 @@ definition {
 			Navigator.openSiteURL(siteName = "Site Name");
 
 			for (var layoutName : list "Movies,Music,Science,Sports,Technology") {
-				JSONLayout.addPublicLayout(
-					groupName = "Site Name",
-					layoutName = "${layoutName}");
+				ACUtils.addPage(layoutName = "${layoutName}");
 
 				ACUtils.createWCAndAddToPage(
 					layoutName = "${layoutName}",
@@ -139,9 +137,7 @@ definition {
 		task ("Add page and web content to Site as interest topic") {
 			Navigator.openSiteURL(siteName = "Site Name");
 
-			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "AC Page 1");
+			ACUtils.addPage(layoutName = "AC Page 1");
 
 			ACUtils.createWCAndAddToPage(
 				layoutName = "AC Page 1",
@@ -210,9 +206,7 @@ definition {
 		task ("Add page and web content to Site as interest topic") {
 			Navigator.openSiteURL(siteName = "Site Name");
 
-			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "AC Page 1");
+			ACUtils.addPage(layoutName = "AC Page 1");
 
 			ACUtils.createWCAndAddToPage(
 				layoutName = "AC Page 1",
@@ -276,9 +270,7 @@ definition {
 			Navigator.openSiteURL(siteName = "Site Name");
 
 			for (var layoutName : list "Movies,Sports,Technology") {
-				JSONLayout.addPublicLayout(
-					groupName = "Site Name",
-					layoutName = "${layoutName}");
+				ACUtils.addPage(layoutName = "${layoutName}");
 
 				ACUtils.createWCAndAddToPage(
 					layoutName = "${layoutName}",
@@ -351,9 +343,7 @@ definition {
 			Navigator.openSiteURL(siteName = "Site Name");
 
 			for (var layoutName : list "Movies,Music,Science,Sports,Technology") {
-				JSONLayout.addPublicLayout(
-					groupName = "Site Name",
-					layoutName = "${layoutName}");
+				ACUtils.addPage(layoutName = "${layoutName}");
 
 				ACUtils.createWCAndAddToPage(
 					layoutName = "${layoutName}",

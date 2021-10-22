@@ -310,7 +310,7 @@ definition {
 		}
 
 		task ("Create page") {
-			ACUtils.addSiteAndPage(layoutName = "AC Page");
+			ACUtils.addPage(layoutName = "AC Page");
 		}
 
 		task ("Add two new users") {

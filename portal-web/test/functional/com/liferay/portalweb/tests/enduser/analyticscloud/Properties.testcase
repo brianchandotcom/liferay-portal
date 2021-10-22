@@ -46,7 +46,7 @@ definition {
 		var propertyNameList = "AC Site,Site Name";
 
 		task ("Connect the DXP to Analytics Cloud") {
-			ACUtils.addSiteAndPage(siteName = "AC Site");
+			ACUtils.addPage(layoutName = "AC Site");
 
 			ACDXPSettings.goToInstanceSettingsAC();
 

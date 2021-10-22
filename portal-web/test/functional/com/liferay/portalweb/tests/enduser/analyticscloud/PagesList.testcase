@@ -53,7 +53,7 @@ definition {
 
 		task ("Add pages") {
 			for (var layoutName : list "AC Page 2,AC Page 3") {
-				ACUtils.addSiteAndPage(layoutName = "${layoutName}");
+				ACUtils.addPage(layoutName = "${layoutName}");
 			}
 		}
 
@@ -305,7 +305,7 @@ definition {
 
 		task ("Add pages") {
 			for (var layoutName : list "AC Page 2,AC Page 3") {
-				ACUtils.addSiteAndPage(layoutName = "${layoutName}");
+				ACUtils.addPage(layoutName = "${layoutName}");
 			}
 		}
 

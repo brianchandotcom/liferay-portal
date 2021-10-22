@@ -412,7 +412,7 @@ definition {
 
 		task ("Add pages and add web content to earch of the page") {
 			for (var layoutName : list "AC Page 2,AC Page 3") {
-				ACUtils.addSiteAndPage(layoutName = "${layoutName}");
+				ACUtils.addPage(layoutName = "${layoutName}");
 			}
 
 			for (var n : list "2,3") {
@@ -668,7 +668,7 @@ definition {
 		var assetNameList = "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3";
 
 		for (var layoutName : list "AC Page 2,AC Page 3") {
-			ACUtils.addSiteAndPage(layoutName = "${layoutName}");
+			ACUtils.addPage(layoutName = "${layoutName}");
 		}
 
 		for (var n : list "2,3") {

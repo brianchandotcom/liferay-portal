@@ -46,9 +46,7 @@ definition {
 
 		task ("Add specific pages and web contents to Site as interest topics") {
 			for (var layoutName : list "${pageNameList}") {
-				JSONLayout.addPublicLayout(
-					groupName = "Site Name",
-					layoutName = "${layoutName}");
+				ACUtils.addPage(layoutName = "${layoutName}");
 
 				ACUtils.createWCAndAddToPage(
 					layoutName = "${layoutName}",

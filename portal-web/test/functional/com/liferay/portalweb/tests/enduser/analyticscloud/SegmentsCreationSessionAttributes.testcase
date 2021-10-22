@@ -143,10 +143,8 @@ definition {
 			ACDXPSettings.syncNewContactData();
 		}
 
-		task ("Add pages") {
-			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "AC Page 2");
+		task ("Add pages") {		
+			ACUtils.addPage(layoutName = "AC Page 2");
 		}
 
 		task ("Sign in with the new user") {

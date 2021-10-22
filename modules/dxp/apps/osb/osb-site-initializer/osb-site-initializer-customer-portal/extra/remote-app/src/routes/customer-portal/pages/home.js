@@ -1,4 +1,5 @@
 import classNames from 'classNames';
+import { useEffect } from 'react';
 import useGraphQL from '~/common/hooks/useGraphql';
 import { LiferayTheme } from '~/common/services/liferay';
 import { getKoroneikiAccountsByFilter } from '~/common/services/liferay/graphql/koroneiki-accounts';
@@ -9,8 +10,8 @@ import ProjectCard from '../components/ProjectCard';
 import SearchProject from '../components/SearchProject';
 import { status } from '../utils/constants';
 
-const getEndDate = (endEndStr) => {
-	const date = new Date(endEndStr);
+const getCurrentEndDate = (currentEndDate) => {
+	const date = new Date(currentEndDate);
 	const month = date.toLocaleDateString('default', { month: 'short' });
 	const day = date.getDate();
 	const year = date.getFullYear();
@@ -21,31 +22,33 @@ const getEndDate = (endEndStr) => {
 const Home = () => {
 	const { data: userAccount } = useGraphQL(getUserAccountById(LiferayTheme.getUserId()));
 
-	if (userAccount) {
-		Storage.setItem(STORAGE_KEYS.USER_APPLICATION, JSON.stringify({
-			image: userAccount?.image && `${REACT_APP_LIFERAY_API}${userAccount?.image}`,
-			name: userAccount?.name,
-		}));
-	} else {
-		Storage.removeItem(STORAGE_KEYS.USER_APPLICATION);
-	}
+	useEffect(() => {
+		if (userAccount) {
+			Storage.setItem(STORAGE_KEYS.USER_APPLICATION, JSON.stringify({
+				image: userAccount.image && `${REACT_APP_LIFERAY_API}${userAccount.image}`,
+				name: userAccount.name,
+			}));
+		} else {
+			Storage.removeItem(STORAGE_KEYS.USER_APPLICATION);
+		}
+	}, [userAccount]);
 
-	const accountBriefs = userAccount?.accountBriefs;
+	const accountBriefs = userAccount.accountBriefs || [];
 
 	const { data: koroneikiAccounts } = useGraphQL(
 		getKoroneikiAccountsByFilter({
-			accountKeys: accountBriefs?.map(
-				acc => acc.externalReferenceCode
+			accountKeys: accountBriefs.map(
+				({ externalReferenceCode }) => externalReferenceCode
 			)
 		})
 	);
 
 	const projects = koroneikiAccounts?.map(
-		acc => ({
-			endDate: getEndDate(acc.slaCurrentEndDate),
-			region: acc.region,
-			status: acc.slaCurrent ? status.active : status.expired,
-			title: accountBriefs?.find(accBrief => accBrief.externalReferenceCode === acc.accountKey).name
+		({ accountKey, region, slaCurrent, slaCurrentEndDate }) => ({
+			endDate: getCurrentEndDate(slaCurrentEndDate),
+			region,
+			status: slaCurrent ? status.active : status.expired,
+			title: accountBriefs.find(({ externalReferenceCode }) => externalReferenceCode === accountKey).name
 		})) || [];
 
 	const isManyProject = projects.length > 4;

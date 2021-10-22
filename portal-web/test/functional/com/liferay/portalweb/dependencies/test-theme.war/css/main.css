@@ -1498,18 +1498,18 @@ a.taglib-icon.btn:focus .taglib-text, a.taglib-icon.btn:hover .taglib-text {
 
 .alloy-editor-container .alloy-editor {
   outline: 0; }
-  .alloy-editor-container .alloy-editor.alloy-editor-placeholder {
+  .alloy-editor-container .alloy-editor .alloy-editor-placeholder {
     color: #2B4259; }
-    .alloy-editor-container .alloy-editor.alloy-editor-placeholder.ae-placeholder:not(:focus) {
+    .alloy-editor-container .alloy-editor.ae-placeholder ~ .alloy-editor-placeholder:not(:focus) {
       border-left-color: #DBDDE1;
       color: #B0B4BB; }
-    .alloy-editor-container .alloy-editor.alloy-editor-placeholder.readonly {
+    .alloy-editor-container .alloy-editor.ae-placeholder.readonly ~ .alloy-editor-placeholder {
       color: #CCC; }
 
 .alloy-editor-container .alloy-editor-icon {
   color: #869CAD; }
 
-.has-error .alloy-editor-container .alloy-editor.alloy-editor-placeholder.ae-placeholder:not(:focus) {
+.has-error .alloy-editor-container .alloy-editor.ae-placeholder ~ .alloy-editor-placeholder:not(:focus) {
   border-left-color: #CC6677; }
 
 .cke_dialog .cke_dialog_ui_input_text {

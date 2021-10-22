@@ -226,9 +226,10 @@ html#{$cadmin-selector} {
 	}
 
 	.edit-entry {
-		.alloy-editor-placeholder:before {
+		.alloy-editor.ae-placeholder ~ .alloy-editor-placeholder {
 			display: block;
 			text-align: inherit;
+			top: 0.75rem;
 			width: 100%;
 		}
 

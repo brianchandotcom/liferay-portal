@@ -25,6 +25,10 @@
 .alloy-editor-container {
 	position: relative;
 
+	.wrapper {
+		position: relative;
+	}
+
 	.alloy-editor-icon {
 		bottom: 8px;
 		color: #869cad;
@@ -43,26 +47,33 @@
 			left: 8px;
 		}
 
-		&.alloy-editor-placeholder {
-			color: #2b4259;
+		~ .alloy-editor-placeholder {
+			display: none;
+		}
 
-			&:before {
+		&.ae-placeholder {
+			~ .alloy-editor-placeholder {
+				background-color: transparent;
+				color: #2b4259;
+				display: block;
+				padding-left: 10px;
 				pointer-events: none;
+				position: absolute;
+				top: 0.25rem;
 			}
-
-			&.readonly {
+			&.readonly ~ .alloy-editor-placeholder {
 				color: #ccc;
 			}
-
-			&.ae-placeholder:empty {
+			&:empty {
 				min-height: 1.5em;
 			}
+			&:not(:focus) {
+				~ .alloy-editor-placeholder {
+					border-left-color: #dbdde1;
+					color: #b0b4bb;
+				}
 
-			&.ae-placeholder:not(:focus) {
-				border-left-color: #dbdde1;
-				color: #b0b4bb;
-
-				&:not(.form-control) {
+				&:not(.form-control) ~ .alloy-editor-placeholder {
 					border-left: 2px solid;
 					padding-left: 10px;
 				}
@@ -71,9 +82,14 @@
 					border-left-color: #c67;
 				}
 			}
-
-			&.ae-placeholder[data-required='true']:not(:focus):before {
-				content: attr(data-placeholder) ' *';
+			&:focus,
+			&.cke_focus {
+				~ .alloy-editor-placeholder {
+					display: none !important;
+				}
+			}
+			&:not(:focus):before {
+				content: '';
 			}
 		}
 

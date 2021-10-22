@@ -1,15 +1,15 @@
 .alloy-editor-container {
 	.alloy-editor {
-		&.alloy-editor-placeholder {
-			color: #2b4259;
-
-			&.ae-placeholder:not(:focus) {
-				background: transparent;
-				border-left-color: #dbdde1;
-				color: #b0b4bb;
+		&.ae-placeholder {
+			~ .alloy-editor-placeholder {
+				color: #2b4259;
+				&:not(:focus) {
+					background: transparent;
+					border-left-color: #dbdde1;
+					color: #b0b4bb;
+				}
 			}
-
-			&.readonly {
+			&.readonly ~ .alloy-editor-placeholder {
 				color: #ccc;
 			}
 		}

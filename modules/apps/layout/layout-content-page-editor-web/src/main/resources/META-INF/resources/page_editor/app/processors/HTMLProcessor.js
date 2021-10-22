@@ -83,8 +83,7 @@ function createEditor(element, changeCallback, destroyCallback) {
 					if (editorContainer) {
 						editor = new A.LiferayFullScreenSourceEditor({
 							boundingBox: editorContainer,
-							previewCssClass:
-								'alloy-editor alloy-editor-placeholder',
+							previewCssClass: 'alloy-editor',
 							value: element.innerHTML,
 						}).render();
 					}

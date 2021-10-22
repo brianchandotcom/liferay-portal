@@ -506,7 +506,7 @@ definition {
 			ContentPages.viewFragmentText(
 				assetType = "web-content",
 				fragmentName = "Content Display",
-				text = "10 Oct 2020");
+				text = "10 Oct 2020 - 00:00:00");
 		}
 	}
 

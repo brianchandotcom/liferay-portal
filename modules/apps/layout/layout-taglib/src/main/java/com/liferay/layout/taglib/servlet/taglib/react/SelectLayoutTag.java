@@ -321,6 +321,8 @@ public class SelectLayoutTag extends IncludeTag {
 			).put(
 				"privateLayout", layout.isPrivateLayout()
 			).put(
+				"returnType", getItemSelectorReturnType()
+			).put(
 				"url",
 				PortalUtil.getLayoutRelativeURL(layout, themeDisplay, false)
 			);

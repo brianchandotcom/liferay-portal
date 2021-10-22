@@ -134,15 +134,57 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 
 		<div class="mt-4">
 			<liferay-frontend:edit-form-footer>
-				<aui:button name="save" type="submit" value="import" />
+				<clay:button
+					displayType="primary"
+					label="import"
+					type="submit"
+				/>
 
-				<aui:button href="<%= backURL %>" type="cancel" />
+				<clay:button
+					displayType="secondary"
+					id="saveTemplate2"
+					label="save-as-template"
+					type="button"
+				/>
+
+				<aui:button disabled="<%= true %>" name="saveTemplate" value="save-as-template" />
+
+				<clay:link
+					displayType="secondary"
+					href="<%= backURL %>"
+					label="cancel"
+					type="button"
+				/>
 			</liferay-frontend:edit-form-footer>
 		</div>
 	</liferay-frontend:edit-form>
 </div>
 
 <aui:script use="aui-io-request,aui-parse-content">
+	function <portlet:namespace />saveTemplate() {
+		var cmdAttribute = A.one(
+			'#<%= liferayPortletResponse.getNamespace() + Constants.CMD %>'
+		);
+
+		cmdAttribute.val('saveTemplate');
+
+		window.cmdAttribute = cmdAttribute;
+
+		debugger;
+
+		alert('Hey Im In!');
+
+		submitForm(document.querySelector('#<portlet:namespace />fm'));
+	}
+
+	A.one('#<portlet:namespace />saveTemplate').on('click', function (event) {
+		this.attr('disabled', true);
+
+		<portlet:namespace />saveTemplate();
+
+		this.attr('disabled', false);
+	});
+
 	A.one('#<portlet:namespace />headlessEndpoint').on('change', function (event) {
 		this.attr('disabled', true);
 
@@ -287,6 +329,16 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				}
 
 				mappingArea.ancestor('.card').removeClass('hide');
+
+				var saveTemplateButton = A.one(
+					'#<portlet:namespace />saveTemplate'
+				);
+
+				debugger;
+				window.saveTemplateButton = saveTemplateButton;
+
+				saveTemplateButton.removeAttribute('disabled');
+				saveTemplateButton.removeClass('disabled');
 			})
 			.catch((response) => {
 				alert('FETCH failed ' + response);

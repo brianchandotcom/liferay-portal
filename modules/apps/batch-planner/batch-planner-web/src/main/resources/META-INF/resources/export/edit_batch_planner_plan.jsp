@@ -146,6 +146,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 			<liferay-frontend:edit-form-footer>
 				<aui:button name="export" type="submit" value="export" />
 
+				<aui:button disabled="disabled" name="saveTemplate" type="submit" value="save-as-template" />
+
 				<aui:button href="<%= backURL %>" type="cancel" />
 			</liferay-frontend:edit-form-footer>
 		</div>

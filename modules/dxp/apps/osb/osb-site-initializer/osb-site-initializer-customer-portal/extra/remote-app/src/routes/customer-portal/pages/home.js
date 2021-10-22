@@ -1,9 +1,9 @@
-import useGraphQL from '~/shared/hooks/useGraphql';
-import { LiferayTheme } from '~/shared/services/liferay';
-import { getKoroneikiAccountsByFilter } from '~/shared/services/liferay/graphql/koroneiki-accounts';
-import { getUserAccountById } from '~/shared/services/liferay/graphql/user-accounts';
-import { STORAGE_KEYS, Storage } from '~/shared/services/liferay/storage';
-import { REACT_APP_LIFERAY_API } from '~/shared/utils';
+import useGraphQL from '~/common/hooks/useGraphql';
+import { LiferayTheme } from '~/common/services/liferay';
+import { getKoroneikiAccountsByFilter } from '~/common/services/liferay/graphql/koroneiki-accounts';
+import { getUserAccountById } from '~/common/services/liferay/graphql/user-accounts';
+import { STORAGE_KEYS, Storage } from '~/common/services/liferay/storage';
+import { REACT_APP_LIFERAY_API } from '~/common/utils';
 import ProjectCard from '../components/ProjectCard';
 import SearchProject from '../components/SearchProject';
 import { status } from '../utils/constants';

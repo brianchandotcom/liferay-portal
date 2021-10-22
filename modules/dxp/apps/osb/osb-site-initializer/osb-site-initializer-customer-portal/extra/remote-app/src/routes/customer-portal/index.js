@@ -1,4 +1,4 @@
-import CustomerPortalStyles from "~/apps/customer-portal/styles/app.scss";
+import CustomerPortalStyles from "~/routes/customer-portal/styles/app.scss";
 import Pages from "./pages";
 
 const CustomerPortal = () => {

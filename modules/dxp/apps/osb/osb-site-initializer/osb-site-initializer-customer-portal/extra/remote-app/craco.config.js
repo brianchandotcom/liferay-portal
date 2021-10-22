@@ -4,20 +4,20 @@ module.exports = {
   babel: {
     plugins: [
       [
-        "babel-plugin-root-import",
+        'babel-plugin-root-import',
         {
           paths: [
             {
-              rootPathSuffix: "./src",
-              rootPathPrefix: "~/",
+              rootPathPrefix: '~/',
+              rootPathSuffix: './src',
             },
             {
-              rootPathSuffix: "./src/shared",
-              rootPathPrefix: "~/shared",
+              rootPathPrefix: '~/common',
+              rootPathSuffix: './src/common',
             },
             {
-              rootPathSuffix: "./src/apps",
-              rootPathPrefix: "~/apps",
+              rootPathPrefix: '~/routes',
+              rootPathSuffix: './src/routes',
             },
           ],
         },
@@ -25,22 +25,22 @@ module.exports = {
     ],
   },
   webpack: {
-    configure: (webpackConfig, { env, paths }) => {
+    configure: (webpackConfig) => {
       /**
        * This change is necessary to import SCSS as string
        * to inject into style tag
        */
 
       webpackConfig.module.rules[1].oneOf.unshift({
-        test: sassRegex,
         exclude: /node_modules/,
+        test: sassRegex,
         use: [
-          "sass-to-string",
+          'sass-to-string',
           {
-            loader: "sass-loader",
+            loader: 'sass-loader',
             options: {
               sassOptions: {
-                outputStyle: "compressed",
+                outputStyle: 'compressed',
               },
             },
           },
@@ -51,8 +51,8 @@ module.exports = {
        * Avoid hashes in filenames
        */
 
-      webpackConfig.output.chunkFilename = "static/js/[name].js";
-      webpackConfig.output.filename = "static/js/[name].js";
+      webpackConfig.output.chunkFilename = 'static/js/[name].js';
+      webpackConfig.output.filename = 'static/js/[name].js';
 
       return webpackConfig;
     },

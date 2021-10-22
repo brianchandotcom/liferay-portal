@@ -1,9 +1,9 @@
 import ClayForm, {ClayInput} from '@clayui/form';
 import {useFormikContext} from 'formik';
 import {useContext} from 'react';
-import BaseButton from '~/shared/components/BaseButton';
-import Input from '~/shared/components/Input';
-import Select from '~/shared/components/Select';
+import BaseButton from '~/common/components/BaseButton';
+import Input from '~/common/components/Input';
+import Select from '~/common/components/Select';
 import {AppContext} from '../context';
 import {changeStep} from '../context/actions';
 import {getInitialInvite, getRolesList, steps} from '../utils/constants';

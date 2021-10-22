@@ -1,5 +1,5 @@
 import {createContext, useReducer} from 'react';
-import FormProvider from '~/shared/providers/FormProvider';
+import FormProvider from '~/common/providers/FormProvider';
 import {
 	getInitialDxpAdmin,
 	getInitialInvite,

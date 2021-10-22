@@ -412,7 +412,7 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			ContentPages.viewFragmentText(
-				fragmentName = "button",
+				fragmentName = "card",
 				id = "link",
 				text = "Category Name");
 
@@ -436,7 +436,7 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			ContentPages.viewFragmentText(
-				fragmentName = "button",
+				fragmentName = "card",
 				id = "link",
 				text = "Go Somewhere");
 		}
@@ -510,7 +510,7 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			ContentPages.viewFragmentText(
-				fragmentName = "button",
+				fragmentName = "card",
 				id = "link",
 				text = "Subcategory Name");
 		}
@@ -536,7 +536,7 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			ContentPages.viewFragmentText(
-				fragmentName = "button",
+				fragmentName = "card",
 				id = "link",
 				text = "Go Somewhere");
 		}

@@ -25,7 +25,9 @@ function getOptionElement(label, schemaName, value) {
 	optionElement.innerHTML = label;
 	optionElement.value = value;
 
-	optionElement.setAttribute('schemaName', schemaName);
+	if (schemaName) {
+		optionElement.setAttribute('schemaName', schemaName);
+	}
 
 	return optionElement;
 }

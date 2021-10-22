@@ -59,6 +59,38 @@ public class FragmentViewportStyle implements Serializable {
 			FragmentViewportStyle.class, json);
 	}
 
+	@Schema(
+		description = "Specifies if the fragment's viewport is hidden to the user."
+	)
+	public Boolean getHidden() {
+		return hidden;
+	}
+
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
+	}
+
+	@JsonIgnore
+	public void setHidden(
+		UnsafeSupplier<Boolean, Exception> hiddenUnsafeSupplier) {
+
+		try {
+			hidden = hiddenUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "Specifies if the fragment's viewport is hidden to the user."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean hidden;
+
 	@Schema(description = "The fragment viewport's margin bottom.")
 	public String getMarginBottom() {
 		return marginBottom;
@@ -310,6 +342,16 @@ public class FragmentViewportStyle implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (hidden != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"hidden\": ");
+
+			sb.append(hidden);
+		}
 
 		if (marginBottom != null) {
 			if (sb.length() > 1) {

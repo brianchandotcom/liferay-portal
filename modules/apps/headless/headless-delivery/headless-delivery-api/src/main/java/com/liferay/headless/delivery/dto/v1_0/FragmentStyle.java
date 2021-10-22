@@ -316,6 +316,36 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String height;
 
+	@Schema(description = "Specifies if the fragment is hidden to the user.")
+	public Boolean getHidden() {
+		return hidden;
+	}
+
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
+	}
+
+	@JsonIgnore
+	public void setHidden(
+		UnsafeSupplier<Boolean, Exception> hiddenUnsafeSupplier) {
+
+		try {
+			hidden = hiddenUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "Specifies if the fragment is hidden to the user."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean hidden;
+
 	@Schema(description = "The fragment's margin bottom.")
 	public String getMarginBottom() {
 		return marginBottom;
@@ -967,6 +997,16 @@ public class FragmentStyle implements Serializable {
 			sb.append(_escape(height));
 
 			sb.append("\"");
+		}
+
+		if (hidden != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"hidden\": ");
+
+			sb.append(hidden);
 		}
 
 		if (marginBottom != null) {

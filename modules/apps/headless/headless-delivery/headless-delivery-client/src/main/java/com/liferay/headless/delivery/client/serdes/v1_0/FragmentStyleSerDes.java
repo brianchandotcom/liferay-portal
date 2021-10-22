@@ -178,6 +178,16 @@ public class FragmentStyleSerDes {
 			sb.append("\"");
 		}
 
+		if (fragmentStyle.getHidden() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"hidden\": ");
+
+			sb.append(fragmentStyle.getHidden());
+		}
+
 		if (fragmentStyle.getMarginBottom() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -522,6 +532,13 @@ public class FragmentStyleSerDes {
 			map.put("height", String.valueOf(fragmentStyle.getHeight()));
 		}
 
+		if (fragmentStyle.getHidden() == null) {
+			map.put("hidden", null);
+		}
+		else {
+			map.put("hidden", String.valueOf(fragmentStyle.getHidden()));
+		}
+
 		if (fragmentStyle.getMarginBottom() == null) {
 			map.put("marginBottom", null);
 		}
@@ -727,6 +744,11 @@ public class FragmentStyleSerDes {
 			else if (Objects.equals(jsonParserFieldName, "height")) {
 				if (jsonParserFieldValue != null) {
 					fragmentStyle.setHeight((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "hidden")) {
+				if (jsonParserFieldValue != null) {
+					fragmentStyle.setHidden((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "marginBottom")) {

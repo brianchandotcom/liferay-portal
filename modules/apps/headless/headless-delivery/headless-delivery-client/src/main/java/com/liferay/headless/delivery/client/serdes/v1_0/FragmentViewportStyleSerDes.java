@@ -55,6 +55,16 @@ public class FragmentViewportStyleSerDes {
 
 		sb.append("{");
 
+		if (fragmentViewportStyle.getHidden() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"hidden\": ");
+
+			sb.append(fragmentViewportStyle.getHidden());
+		}
+
 		if (fragmentViewportStyle.getMarginBottom() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -188,6 +198,14 @@ public class FragmentViewportStyleSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (fragmentViewportStyle.getHidden() == null) {
+			map.put("hidden", null);
+		}
+		else {
+			map.put(
+				"hidden", String.valueOf(fragmentViewportStyle.getHidden()));
+		}
+
 		if (fragmentViewportStyle.getMarginBottom() == null) {
 			map.put("marginBottom", null);
 		}
@@ -281,7 +299,13 @@ public class FragmentViewportStyleSerDes {
 			FragmentViewportStyle fragmentViewportStyle,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "marginBottom")) {
+			if (Objects.equals(jsonParserFieldName, "hidden")) {
+				if (jsonParserFieldValue != null) {
+					fragmentViewportStyle.setHidden(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "marginBottom")) {
 				if (jsonParserFieldValue != null) {
 					fragmentViewportStyle.setMarginBottom(
 						(String)jsonParserFieldValue);

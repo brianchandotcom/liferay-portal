@@ -15,13 +15,23 @@
 package com.liferay.batch.planner.web.internal.portlet.action;
 
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
+import com.liferay.batch.planner.model.BatchPlannerLog;
+import com.liferay.batch.planner.model.BatchPlannerPlan;
+import com.liferay.batch.planner.service.BatchPlannerLogService;
+import com.liferay.batch.planner.service.BatchPlannerPlanService;
+import com.liferay.batch.planner.web.internal.display.BatchPlannerLogDisplay;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Joe Duffy
@@ -41,7 +51,68 @@ public class ViewBatchPlannerLogMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/view_batch_planner_log.jsp";
+		long batchPlannerLogId = ParamUtil.getLong(
+			renderRequest, "batchPlannerLogId");
+
+		try {
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				_getBatchPlannerLogDisplay(batchPlannerLogId));
+
+			return "/view_batch_planner_log.jsp";
+		}
+		catch (PortalException portalException) {
+			SessionErrors.add(renderRequest, portalException.getClass());
+
+			throw new PortletException(
+				"Unable to render batch planner log " + batchPlannerLogId,
+				portalException);
+		}
 	}
+
+	private BatchPlannerLogDisplay _getBatchPlannerLogDisplay(
+			long batchPlannerLogId)
+		throws PortalException {
+
+		BatchPlannerLog batchPlannerLog =
+			_batchPlannerLogService.getBatchPlannerLog(batchPlannerLogId);
+
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanService.getBatchPlannerPlan(
+				batchPlannerLog.getBatchPlannerPlanId());
+
+		BatchPlannerLogDisplay.Builder builder =
+			new BatchPlannerLogDisplay.Builder();
+
+		builder.batchPlannerLogId(
+			batchPlannerLogId
+		).batchEngineExportTaskERC(
+			batchPlannerLog.getBatchEngineExportTaskERC()
+		).batchEngineImportTaskERC(
+			batchPlannerLog.getBatchEngineImportTaskERC()
+		).status(
+			String.valueOf(batchPlannerLog.getStatus())
+		).createDate(
+			batchPlannerLog.getCreateDate()
+		).export(
+			batchPlannerPlan.isExport()
+		).processedItemsCount(
+			0
+		).totalItemsCount(
+			batchPlannerLog.getTotal()
+		).title(
+			batchPlannerPlan.getName()
+		).modifiedDate(
+			batchPlannerLog.getModifiedDate()
+		);
+
+		return builder.build();
+	}
+
+	@Reference
+	private BatchPlannerLogService _batchPlannerLogService;
+
+	@Reference
+	private BatchPlannerPlanService _batchPlannerPlanService;
 
 }

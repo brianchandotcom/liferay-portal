@@ -123,9 +123,9 @@ public class AssetListDisplayContext {
 
 		OrderByComparator<AssetListEntry> orderByComparator =
 			AssetListPortletUtil.getAssetListEntryOrderByComparator(
-				_getOrderByCol(), getOrderByType());
+				getOrderByCol(), getOrderByType());
 
-		assetListEntriesSearchContainer.setOrderByCol(_getOrderByCol());
+		assetListEntriesSearchContainer.setOrderByCol(getOrderByCol());
 		assetListEntriesSearchContainer.setOrderByComparator(orderByComparator);
 		assetListEntriesSearchContainer.setOrderByType(getOrderByType());
 
@@ -285,7 +285,15 @@ public class AssetListDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		return _getOrderByCol();
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, AssetListPortletKeys.ASSET_LIST,
+			"create-date");
+
+		return _orderByCol;
 	}
 
 	public String getOrderByType() {
@@ -394,18 +402,6 @@ public class AssetListDisplayContext {
 		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
-	}
-
-	private String _getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = SearchOrderByUtil.getOrderByCol(
-			_httpServletRequest, AssetListPortletKeys.ASSET_LIST,
-			"create-date");
-
-		return _orderByCol;
 	}
 
 	private boolean _isSearch() {

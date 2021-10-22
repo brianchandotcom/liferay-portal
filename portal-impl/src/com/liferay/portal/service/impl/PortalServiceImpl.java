@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
-import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.service.base.PortalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 
@@ -132,9 +131,7 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 						"cache");
 			}
 
-			ClassName newClassName = new ClassNameImpl();
-
-			newClassName.setPrimaryKey(className.getClassNameId());
+			ClassName newClassName = className;
 
 			String newValue = "testAutoSyncHibernateSessionStateOnTxCreation2";
 

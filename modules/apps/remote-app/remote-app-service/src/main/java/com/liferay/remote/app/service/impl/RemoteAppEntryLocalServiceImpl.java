@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -42,6 +43,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementCSSURLsException;
@@ -55,10 +58,12 @@ import com.liferay.remote.app.service.base.RemoteAppEntryLocalServiceBaseImpl;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
@@ -122,6 +127,9 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setProperties(properties);
 		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT);
+		remoteAppEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		remoteAppEntry.setStatusByUserId(userId);
+		remoteAppEntry.setStatusDate(new Date());
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -129,7 +137,9 @@ public class RemoteAppEntryLocalServiceImpl
 
 		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
 
-		return remoteAppEntry;
+		// Workflow
+
+		return _startWorkflowInstance(userId, remoteAppEntry);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -164,6 +174,9 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setProperties(properties);
 		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_IFRAME);
+		remoteAppEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		remoteAppEntry.setStatusByUserId(userId);
+		remoteAppEntry.setStatusDate(new Date());
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -171,7 +184,9 @@ public class RemoteAppEntryLocalServiceImpl
 
 		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
 
-		return remoteAppEntry;
+		// Workflow
+
+		return _startWorkflowInstance(userId, remoteAppEntry);
 	}
 
 	@Override
@@ -451,6 +466,33 @@ public class RemoteAppEntryLocalServiceImpl
 		}
 
 		return remoteAppEntries;
+	}
+
+	private RemoteAppEntry _startWorkflowInstance(
+			long userId, RemoteAppEntry remoteAppEntry)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCompanyId(remoteAppEntry.getCompanyId());
+		serviceContext.setScopeGroupId(WorkflowConstants.DEFAULT_GROUP_ID);
+		serviceContext.setUserId(userId);
+
+		Map<String, Serializable> workflowContext = Collections.singletonMap(
+			WorkflowConstants.CONTEXT_URL,
+			Optional.ofNullable(
+				remoteAppEntry.getCustomElementURLs()
+			).orElse(
+				remoteAppEntry.getIFrameURL()
+			));
+
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			remoteAppEntry.getCompanyId(), WorkflowConstants.DEFAULT_GROUP_ID,
+			userId, RemoteAppEntry.class.getName(),
+			remoteAppEntry.getRemoteAppEntryId(), remoteAppEntry,
+			serviceContext, workflowContext);
 	}
 
 	private void _validateCustomElement(

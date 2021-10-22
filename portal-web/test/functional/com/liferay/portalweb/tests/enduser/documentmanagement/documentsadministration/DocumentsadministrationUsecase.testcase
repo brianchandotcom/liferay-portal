@@ -37,46 +37,6 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that the filename character restriction can be configured through the blacklist."
-	@priority = "4"
-	@refactorneeded
-	test AddAndRemoveCharactersFromBlacklist {
-		property custom.properties = "dl.char.blacklist=\\\\,//,:,*,?,<,#,|,../,/..";
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentFileName = '''#.jpg''',
-			dmDocumentTitle = "DM Document Title",
-			validateFileNameRestriction = "true");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentFileName = '''>.jpg''',
-			dmDocumentTitle = "DM Document Title");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "DM Document Title");
-
-		AssertTextEquals(
-			key_fieldLabel = "Title",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "DM Document Title");
-
-		AssertTextEquals(
-			key_fieldLabel = "File Name",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = ">.jpg");
-	}
-
 	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
 	@priority = "5"
 	@refactorneeded
@@ -142,52 +102,6 @@ definition {
 			rowEntry = "DM Document Title");
 
 		DMDocument.viewCategories(categoryNameList = "category");
-	}
-
-	@description = "This case covers LPS-97708. It ensures that a document can be restored from the Recycle Bin even if its original folder no longer exists."
-	@priority = "3"
-	@refactordone
-	test CanRestoreDocumentWithoutOriginalFolder {
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description1",
-			dmDocumentTitle = "DM Document Title",
-			folderName = "DM Folder Name",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		JSONDocument.deleteFile(
-			dmDocumentTitle = "DM Document Title",
-			folderId = "true",
-			folderName = "DM Folder Name",
-			groupName = "Guest");
-
-		JSONFolder.deleteFolder(
-			folderName = "DM Folder Name",
-			groupName = "Guest");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		RecycleBin.deleteCP(
-			assetName = "DM Folder Name",
-			assetType = "Documents Folder",
-			multipleAssets = "true");
-
-		RecycleBin.restoreContentWithoutOriginalFolder(
-			assetName = "DM Document Title",
-			assetRestoreLocation = "Home",
-			assetType = "Document");
-
-		AssertTextNotPresent(value1 = "NoSuchFolderException");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");
 	}
 
 	@description = "This test checks if file uploads can be restricted to .doc format."

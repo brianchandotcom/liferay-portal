@@ -2347,9 +2347,32 @@ definition {
 
 	@description = "LPS-86652 - Verify that hovering the cursor on the process step, when it contains more than 1 option, the toolip will display a bullet list"
 	@priority = "3"
-	test TooltipDisplaysBulletListWhenMultipleItems {
+	test TooltipDisplaysStepsListWhenMultipleItems {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#TooltipDisplaysBulletListWhenMultipleItems";
 
-		// TODO LRQA-67732 TooltipDisplaysBulletListWhenMultipleItems pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "multi-task-process-workflow-definition.xml",
+			workflowDefinitionTitle = "Multi Task Process");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Multi Task Process",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Multi Task Process");
+
+		WorkflowMetricsAllItemsList.assertProcessStepTooltipMessage(workflowInstanceName = "task1, task2, task3");
 
 	}
 

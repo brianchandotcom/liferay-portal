@@ -1,5 +1,15 @@
 definition {
 
+	macro assertProcessStepTooltipMessage {
+		MouseOver(
+			key_workflowInstanceName = "${workflowInstanceName}",
+			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
+
+		AssertElementPresent(
+			key_tooltip = "${workflowInstanceName}",
+			locator1 = "WorkflowAllItems#TOOLTIP_MESSAGE");
+	}
+
 	macro orderByCreationDateAsc {
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_CREATION_DATE");
 

@@ -1543,12 +1543,48 @@ definition {
 	}
 
 	@description = "LPS-86652 - Verify that long texts will display ellipsis"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test LongTextsDisplayEllipsis {
+		Navigator.openURL();
 
-		// TODO LRQA-67728 LongTextsDisplayEllipsis pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		JSONWebcontent.addWebContent(
+			content = "WebContent Content",
+			groupName = "Guest",
+			title = "WebContent Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToWorkflowProcessMetricsAndTotalCompleted(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.viewTableSizeInTheAllItems(
+			itemTable = "Web Content Article: WebContent Title",
+			itemTableSize = "106.887px");
+
+			
 	}
 
 	@description = "LPS-98517 - Verify that the long usernames in the result table do not break into different lines"

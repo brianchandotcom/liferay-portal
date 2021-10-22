@@ -853,9 +853,7 @@ definition {
 
 		Button.clickPublish();
 
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Guest");
+		Navigator.gotoPage(pageName = "Blogs Page");
 
 		AssertAlertNotPresent();
 	}

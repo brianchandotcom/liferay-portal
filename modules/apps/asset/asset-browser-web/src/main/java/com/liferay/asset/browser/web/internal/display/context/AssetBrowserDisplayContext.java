@@ -149,6 +149,9 @@ public class AssetBrowserDisplayContext {
 		if (Objects.equals(getOrderByCol(), "modified-date")) {
 			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
 		}
+		else if (Objects.equals(getOrderByCol(), "relevance")) {
+			sort = new Sort(null, Sort.SCORE_TYPE, false);
+		}
 		else if (Objects.equals(getOrderByCol(), "title")) {
 			String sortFieldName = Field.getSortableFieldName(
 				"localized_title_".concat(themeDisplay.getLanguageId()));
@@ -458,6 +461,13 @@ public class AssetBrowserDisplayContext {
 			return _orderByCol;
 		}
 
+		if (isSearch()) {
+			_orderByCol = ParamUtil.getString(
+				_httpServletRequest, "orderByCol", "relevance");
+
+			return _orderByCol;
+		}
+
 		String orderByCol = ParamUtil.getString(
 			_httpServletRequest, "orderByCol");
 
@@ -482,6 +492,10 @@ public class AssetBrowserDisplayContext {
 			return _orderByType;
 		}
 
+		if (Objects.equals(getOrderByCol(), "relevance")) {
+			return "desc";
+		}
+
 		String orderByType = ParamUtil.getString(
 			_httpServletRequest, "orderByType");
 
@@ -498,6 +512,18 @@ public class AssetBrowserDisplayContext {
 		_orderByType = orderByType;
 
 		return _orderByType;
+	}
+
+	protected boolean isSearch() {
+		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
+			return false;
+		}
+
+		if (Validator.isNotNull(_getKeywords())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private long[] _getClassNameIds() {

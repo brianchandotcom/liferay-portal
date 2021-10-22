@@ -527,7 +527,7 @@
 				},
 				"hidden": {
 					"title": "The hidden Schema",
-					"type": "string"
+					"type": "boolean"
 				},
 				"marginBottom": {
 					"title": "The marginBottom Schema",
@@ -613,7 +613,7 @@
 					"properties": {
 						"hidden": {
 							"title": "The hidden Schema",
-							"type": "string"
+							"type": "boolean"
 						},
 						"marginBottom": {
 							"title": "The marginBottom Schema",

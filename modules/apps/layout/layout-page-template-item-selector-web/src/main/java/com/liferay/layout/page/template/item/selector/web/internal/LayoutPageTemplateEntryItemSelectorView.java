@@ -18,6 +18,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.item.selector.LayoutPageTemplateEntryItemSelectorReturnType;
 import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateEntryItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -27,6 +28,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -47,6 +49,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
@@ -136,9 +139,11 @@ public class LayoutPageTemplateEntryItemSelectorView
 		implements ItemSelectorViewDescriptor.ItemDescriptor {
 
 		public LayoutPageTemplateEntryItemDescriptor(
+			HttpServletRequest httpServletRequest,
 			LayoutPageTemplateEntry layoutPageTemplateEntry,
 			ThemeDisplay themeDisplay) {
 
+			_httpServletRequest = httpServletRequest;
 			_layoutPageTemplateEntry = layoutPageTemplateEntry;
 			_themeDisplay = themeDisplay;
 		}
@@ -188,6 +193,37 @@ public class LayoutPageTemplateEntryItemSelectorView
 
 		@Override
 		public String getSubtitle(Locale locale) {
+			if (Objects.equals(
+					_layoutPageTemplateEntry.getType(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
+
+				return LanguageUtil.get(
+					_httpServletRequest, "content-page-template");
+			}
+			else if (Objects.equals(
+						_layoutPageTemplateEntry.getType(),
+						LayoutPageTemplateEntryTypeConstants.
+							TYPE_DISPLAY_PAGE)) {
+
+				return LanguageUtil.get(
+					_httpServletRequest, "display-page-template");
+			}
+			else if (Objects.equals(
+						_layoutPageTemplateEntry.getType(),
+						LayoutPageTemplateEntryTypeConstants.
+							TYPE_MASTER_LAYOUT)) {
+
+				return LanguageUtil.get(_httpServletRequest, "master");
+			}
+			else if (Objects.equals(
+						_layoutPageTemplateEntry.getType(),
+						LayoutPageTemplateEntryTypeConstants.
+							TYPE_WIDGET_PAGE)) {
+
+				return LanguageUtil.get(
+					_httpServletRequest, "widget-page-template");
+			}
+
 			return StringPool.BLANK;
 		}
 
@@ -206,6 +242,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 			return _layoutPageTemplateEntry.getUserName();
 		}
 
+		private final HttpServletRequest _httpServletRequest;
 		private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 		private final ThemeDisplay _themeDisplay;
 
@@ -235,7 +272,8 @@ public class LayoutPageTemplateEntryItemSelectorView
 
 			return new LayoutPageTemplateEntryItemSelectorView.
 				LayoutPageTemplateEntryItemDescriptor(
-					layoutPageTemplateEntry, _themeDisplay);
+					_httpServletRequest, layoutPageTemplateEntry,
+					_themeDisplay);
 		}
 
 		@Override

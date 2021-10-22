@@ -850,6 +850,13 @@ definition {
 		KaleoFormsAdmin.next();
 	}
 
+	macro viewProgressBarIsShownCorrectly {
+		AssertElementPresent(
+			key_iconType = "${iconType}",
+			key_stepProcess = "${stepProcess}",
+			locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_MULTI_STEP_PROGRESS_BAR_");
+	}
+
 	macro viewPublishedWorkflowDefinitions {
 		AssertClick(
 			locator1 = "KaleoFormsAdminEditProcess#WORKFLOW_NAVIGATION_PUBLISHED_TAB",
@@ -893,13 +900,6 @@ definition {
 		AssertClick(
 			locator1 = "KaleoFormsAdminEditProcess#WORKFLOW_NAVIGATION_UNPUBLISHED_TAB",
 			value1 = "Unpublished");
-	}
-
-	macro viewProgressBarIsShownCorrectly {
-		AssertElementPresent(
-			key_stepProcess = "${stepProcess}",
-			key_iconType = "${iconType}",
-			locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_MULTI_STEP_PROGRESS_BAR_");
 	}
 
 }

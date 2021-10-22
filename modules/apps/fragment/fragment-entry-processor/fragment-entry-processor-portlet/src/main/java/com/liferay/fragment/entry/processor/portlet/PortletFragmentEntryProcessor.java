@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -199,13 +198,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			String defaultPreferences = StringPool.BLANK;
 
-			long plid = ParamUtil.getLong(
-				fragmentEntryProcessorContext.getHttpServletRequest(),
-				"p_l_id");
-
 			if (originalFragmentEntryLink != null) {
 				defaultPreferences = _getPreferences(
-					plid, portletName, originalFragmentEntryLink, id,
+					portletName, originalFragmentEntryLink, id,
 					StringPool.BLANK);
 			}
 			else {
@@ -217,8 +212,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				fragmentEntryProcessorContext.getHttpServletResponse(),
 				portletName, instanceId,
 				_getPreferences(
-					plid, portletName, fragmentEntryLink, id,
-					defaultPreferences));
+					portletName, fragmentEntryLink, id, defaultPreferences));
 
 			Element portletElement = new Element("div");
 
@@ -321,8 +315,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _getPreferences(
-			long plid, String portletName, FragmentEntryLink fragmentEntryLink,
-			String id, String defaultPreferences)
+			String portletName, FragmentEntryLink fragmentEntryLink, String id,
+			String defaultPreferences)
 		throws PortalException {
 
 		String defaultPortletId = _getPortletId(
@@ -356,7 +350,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
 
 			_updateLayoutPortletSetup(
-				plid, portletPreferencesList, jxPortletPreferences);
+				portletPreferencesList, jxPortletPreferences);
 		}
 
 		Document preferencesDocument = _getDocument(
@@ -402,7 +396,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private void _updateLayoutPortletSetup(
-		long layoutPlid,
 		List<com.liferay.portal.kernel.model.PortletPreferences>
 			portletPreferencesList,
 		PortletPreferences jxPortletPreferences) {
@@ -410,7 +403,10 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		long plid = 0;
 
 		if (jxPortletPreferences instanceof PortletPreferencesImpl) {
-			plid = layoutPlid;
+			PortletPreferencesImpl portletPreferencesImpl =
+				(PortletPreferencesImpl)jxPortletPreferences;
+
+			plid = portletPreferencesImpl.getPlid();
 		}
 
 		String portletPreferencesXML = PortletPreferencesFactoryUtil.toXML(

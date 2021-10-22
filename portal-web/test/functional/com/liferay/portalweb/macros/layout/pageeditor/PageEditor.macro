@@ -2867,10 +2867,20 @@ definition {
 	}
 
 	macro gotoTab {
-		if (IsElementNotPresent(key_sidebarButton = "${tabName}", locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE")) {
-			Click.clickNoMouseOver(
+		if (IsElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
+			Click(
 				key_tabName = "${tabName}",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+		}
+
+		else {
+			WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
+
+			if (IsElementNotPresent(key_sidebarButton = "${tabName}", locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE")) {
+				Click(
+					key_tabName = "${tabName}",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+			}
 		}
 	}
 

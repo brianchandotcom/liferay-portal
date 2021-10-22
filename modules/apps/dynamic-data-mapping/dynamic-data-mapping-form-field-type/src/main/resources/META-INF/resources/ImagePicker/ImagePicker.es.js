@@ -29,9 +29,11 @@ const ImagePicker = ({
 	itemSelectorURL,
 	message,
 	name,
+	onBlur,
 	onClearClick,
 	onDescriptionChange,
 	onFieldChanged,
+	onFocus,
 	portletNamespace,
 	readOnly,
 }) => {
@@ -117,7 +119,9 @@ const ImagePicker = ({
 							disabled={readOnly}
 							id={id}
 							lang={editingLanguageId}
+							onBlur={onBlur}
 							onClick={handleItemSelectorTriggerClick}
+							onFocus={onFocus}
 							type="text"
 							value={imageValues.title || ''}
 						/>
@@ -241,7 +245,9 @@ const Main = ({
 	itemSelectorURL,
 	message,
 	name,
+	onBlur,
 	onChange,
+	onFocus,
 	portletNamespace,
 	readOnly,
 	valid,
@@ -298,11 +304,13 @@ const Main = ({
 				itemSelectorURL={itemSelectorURL}
 				message={message}
 				name={name}
+				onBlur={onBlur}
 				onClearClick={({event, ...data}) => onChange(event, data)}
 				onDescriptionChange={({event, ...data}) =>
 					onChange(event, data)
 				}
 				onFieldChanged={({event, ...data}) => onChange(event, data)}
+				onFocus={onFocus}
 				portletNamespace={portletNamespace}
 				readOnly={isSignedIn ? readOnly : true}
 			/>

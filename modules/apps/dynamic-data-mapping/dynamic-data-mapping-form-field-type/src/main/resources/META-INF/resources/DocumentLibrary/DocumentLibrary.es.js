@@ -86,7 +86,9 @@ const DocumentLibrary = ({
 	id,
 	message,
 	name,
+	onBlur,
 	onClearButtonClicked,
+	onFocus,
 	onSelectButtonClicked,
 	placeholder,
 	readOnly,
@@ -119,7 +121,9 @@ const DocumentLibrary = ({
 							disabled={readOnly}
 							id={`${name}inputFile`}
 							lang={editingLanguageId}
+							onBlur={onBlur}
 							onClick={onSelectButtonClicked}
+							onFocus={onFocus}
 							value={transformedFileEntryTitle || ''}
 						/>
 					</ClayInput.GroupItem>
@@ -173,7 +177,9 @@ const GuestUploadFile = ({
 	id,
 	message,
 	name,
+	onBlur,
 	onClearButtonClicked,
+	onFocus,
 	onUploadSelectButtonClicked,
 	placeholder,
 	progress,
@@ -197,7 +203,9 @@ const GuestUploadFile = ({
 					<ClayInput
 						className="bg-light"
 						disabled={readOnly}
+						onBlur={onBlur}
 						onClick={onUploadSelectButtonClicked}
+						onFocus={onFocus}
 						type="text"
 						value={transformedFileEntryTitle || ''}
 					/>
@@ -269,7 +277,9 @@ const Main = ({
 	maximumSubmissionLimitReached,
 	message,
 	name,
+	onBlur,
 	onChange,
+	onFocus,
 	placeholder,
 	readOnly,
 	showUploadPermissionMessage,
@@ -491,6 +501,7 @@ const Main = ({
 					id={id}
 					message={message}
 					name={name}
+					onBlur={onBlur}
 					onClearButtonClicked={(event) => {
 						setCurrentValue(null);
 
@@ -504,6 +515,7 @@ const Main = ({
 							guestUploadInput.value = '';
 						}
 					}}
+					onFocus={onFocus}
 					onUploadSelectButtonClicked={(event) =>
 						handleUploadSelectButtonClicked(event)
 					}
@@ -520,11 +532,13 @@ const Main = ({
 					id={id}
 					message={message}
 					name={name}
+					onBlur={onBlur}
 					onClearButtonClicked={(event) => {
 						setCurrentValue(null);
 
 						onChange(event, '{}');
 					}}
+					onFocus={onFocus}
 					onSelectButtonClicked={() =>
 						handleSelectButtonClicked({
 							itemSelectorURL,

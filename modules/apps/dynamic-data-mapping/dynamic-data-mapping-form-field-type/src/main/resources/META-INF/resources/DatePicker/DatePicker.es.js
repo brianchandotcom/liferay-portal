@@ -175,7 +175,9 @@ const DatePicker = ({
 	locale,
 	localizedValue: localizedValueInitial = {},
 	name,
+	onBlur,
 	onChange,
+	onFocus,
 	spritemap,
 	value: initialValue,
 }) => {
@@ -292,9 +294,11 @@ const DatePicker = ({
 				expanded={expanded}
 				initialMonth={getInitialMonth(value)}
 				months={Months}
+				onBlur={onBlur}
 				onExpandedChange={(expand) => {
 					setExpand(expand);
 				}}
+				onFocus={onFocus}
 				onInput={(event) => {
 					maskInstance.current.update(event.target.value);
 					setLocalizedValue({
@@ -348,7 +352,9 @@ const Main = ({
 	locale = themeDisplay.getDefaultLanguageId(),
 	localizedValue,
 	name,
+	onBlur,
 	onChange,
+	onFocus,
 	placeholder,
 	predefinedValue,
 	readOnly,
@@ -372,7 +378,9 @@ const Main = ({
 			locale={locale}
 			localizedValue={localizedValue}
 			name={name}
+			onBlur={onBlur}
 			onChange={(value) => onChange({}, value)}
+			onFocus={onFocus}
 			placeholder={placeholder}
 			spritemap={spritemap}
 			value={value ? value : predefinedValue}

@@ -2113,8 +2113,6 @@ definition {
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Page Template (subtype) when reactivated"
 	@priority = "4"
 	test ObjectReappearsPageTemplateWhenReactivated {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -2143,8 +2141,6 @@ definition {
 		AssertElementPresent(
 			locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE",
 			value1 = "Custom Object");
-
-
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Workflow Process Builder page when reactivated"

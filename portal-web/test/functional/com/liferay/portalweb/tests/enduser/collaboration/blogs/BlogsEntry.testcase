@@ -847,7 +847,9 @@ definition {
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.addEntryContentViaCodeView(entryContent = '''<script>alert(123);</script>''');
+		BlogsEntry.addContent(
+			entryContent = '''<script>alert(123);</script>''',
+			javascript = "true");
 
 		Button.clickPublish();
 

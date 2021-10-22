@@ -1583,8 +1583,6 @@ definition {
 		WorkflowMetrics.viewTableSizeInTheAllItems(
 			itemTable = "Web Content Article: WebContent Title",
 			itemTableSize = "106.887px");
-
-			
 	}
 
 	@description = "LPS-98517 - Verify that the long usernames in the result table do not break into different lines"

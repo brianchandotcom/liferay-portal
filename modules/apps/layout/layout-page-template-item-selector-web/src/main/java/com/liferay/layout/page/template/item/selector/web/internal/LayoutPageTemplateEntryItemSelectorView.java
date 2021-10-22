@@ -213,7 +213,12 @@ public class LayoutPageTemplateEntryItemSelectorView
 						LayoutPageTemplateEntryTypeConstants.
 							TYPE_MASTER_LAYOUT)) {
 
-				return LanguageUtil.get(_httpServletRequest, "master");
+				int layoutsCount = _layoutLocalService.getMasterLayoutsCount(
+					_layoutPageTemplateEntry.getGroupId(),
+					_layoutPageTemplateEntry.getPlid());
+
+				return LanguageUtil.format(
+					_httpServletRequest, "x-usages", layoutsCount);
 			}
 			else if (Objects.equals(
 						_layoutPageTemplateEntry.getType(),

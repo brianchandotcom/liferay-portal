@@ -1,0 +1,26 @@
+.upper-toolbar-component {
+	background-color: #fff;
+	height: 4rem;
+	width: 100%;
+
+	.version {
+		font-size: 12px;
+
+		&-text {
+			font-weight: 400;
+			margin-left: 0.5rem;
+		}
+	}
+
+	.translation-button {
+		height: 40px;
+		padding: 0;
+		width: 40px;
+
+		.translation-label {
+			color: #6b6c7e;
+			font-size: 11px;
+			white-space: nowrap;
+		}
+	}
+}

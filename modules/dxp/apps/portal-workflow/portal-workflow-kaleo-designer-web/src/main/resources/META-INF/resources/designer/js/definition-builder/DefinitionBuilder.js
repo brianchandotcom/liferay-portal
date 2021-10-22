@@ -11,6 +11,13 @@
 
 import React from 'react';
 
-export default function () {
-	return <>Definition Builder Component</>;
+import '../../css/definition-builder/main.scss';
+import UpperToolbar from './shared/components/toolbar/UpperToolbar';
+
+export default function (props) {
+	return (
+		<div className="definition-builder-app">
+			<UpperToolbar {...props} />
+		</div>
+	);
 }

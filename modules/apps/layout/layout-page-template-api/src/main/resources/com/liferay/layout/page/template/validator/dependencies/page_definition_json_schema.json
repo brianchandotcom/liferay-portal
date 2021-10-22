@@ -525,6 +525,10 @@
 					"title": "The height Schema",
 					"type": "string"
 				},
+				"hidden": {
+					"title": "The hidden Schema",
+					"type": "string"
+				},
 				"marginBottom": {
 					"title": "The marginBottom Schema",
 					"type": "string"
@@ -607,6 +611,10 @@
 				"fragmentViewportStyle": {
 					"additionalProperties": false,
 					"properties": {
+						"hidden": {
+							"title": "The hidden Schema",
+							"type": "string"
+						},
 						"marginBottom": {
 							"title": "The marginBottom Schema",
 							"type": "string"

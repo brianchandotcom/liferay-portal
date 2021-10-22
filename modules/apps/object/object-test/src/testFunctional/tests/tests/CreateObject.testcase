@@ -2095,8 +2095,6 @@ definition {
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Form's storage type when reactivated"
 	@priority = "4"
 	test ObjectReappearsFormStorageTypeWhenReactivated {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -2129,8 +2127,6 @@ definition {
 		AssertElementPresent(
 			key_label = "Custom Object",
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
-
-
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Page Item Selector when reactivated"

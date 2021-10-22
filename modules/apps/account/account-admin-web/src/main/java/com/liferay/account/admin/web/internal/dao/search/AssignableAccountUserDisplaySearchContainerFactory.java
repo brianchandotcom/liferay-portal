@@ -22,6 +22,7 @@ import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -54,7 +55,8 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 
 	public static SearchContainer<AccountUserDisplay> create(
 			long accountEntryId, LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
+			LiferayPortletResponse liferayPortletResponse,
+			RowChecker rowChecker)
 		throws PortalException {
 
 		SearchContainer<AccountUserDisplay> searchContainer =
@@ -76,8 +78,7 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 
 		searchContainer.setOrderByType(orderByType);
 
-		searchContainer.setRowChecker(
-			new AccountUserRowChecker(accountEntryId, liferayPortletResponse));
+		searchContainer.setRowChecker(rowChecker);
 
 		String navigation = ParamUtil.getString(
 			liferayPortletRequest, "navigation");

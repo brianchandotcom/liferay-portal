@@ -369,11 +369,10 @@ definition {
 				fragmentName = "Card",
 				id = "link");
 
-			AssertVisible(
+			ContentPages.viewFragmentImage(
+				fragmentName = "card",
 				id = "img",
-				key_image = "/images/",
-				key_imageDescription = "",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+				image = "/images/");
 		}
 
 		task ("Select the None via preview item selector") {
@@ -390,11 +389,10 @@ definition {
 		}
 
 		task ("View image placeholder shown in Card fragment") {
-			AssertVisible(
+			ContentPages.viewFragmentImage(
+				fragmentName = "card",
 				id = "img",
-				key_image = "data:image/png",
-				key_imageDescription = "",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+				image = "data:image/png");
 		}
 
 		task ("Open the Preview modal") {
@@ -416,11 +414,10 @@ definition {
 				id = "link",
 				text = "Category Name");
 
-			AssertVisible(
+			ContentPages.viewFragmentImage(
+				fragmentName = "card",
 				id = "img",
-				key_image = "/images/",
-				key_imageDescription = "",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+				image = "/images/");
 
 			SelectFrameTop();
 		}
@@ -442,11 +439,10 @@ definition {
 		}
 
 		task ("View image placeholder shown in Card fragment") {
-			AssertVisible(
+			ContentPages.viewFragmentImage(
+				fragmentName = "card",
 				id = "img",
-				key_image = "data:image/png",
-				key_imageDescription = "",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+				image = "data:image/png");
 		}
 
 		task ("Close the iframe") {
@@ -467,11 +463,10 @@ definition {
 		}
 
 		task ("View image placeholder shown in Card fragment") {
-			AssertVisible(
+			ContentPages.viewFragmentImage(
+				fragmentName = "card",
 				id = "img",
-				key_image = "data:image/png",
-				key_imageDescription = "",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+				image = "data:image/png");
 		}
 
 		task ("Select the None via preview item selector") {
@@ -488,11 +483,10 @@ definition {
 		}
 
 		task ("View image placeholder shown in Card fragment") {
-			AssertVisible(
+			ContentPages.viewFragmentImage(
+				fragmentName = "card",
 				id = "img",
-				key_image = "data:image/png",
-				key_imageDescription = "",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+				image = "data:image/png");
 		}
 
 		task ("Open the Preview modal") {
@@ -516,11 +510,10 @@ definition {
 		}
 
 		task ("View image placeholder shown in Card fragment") {
-			AssertVisible(
+			ContentPages.viewFragmentImage(
+				fragmentName = "card",
 				id = "img",
-				key_image = "data:image/png",
-				key_imageDescription = "",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+				image = "data:image/png");
 
 			SelectFrameTop();
 		}
@@ -542,11 +535,10 @@ definition {
 		}
 
 		task ("View image placeholder shown in Card fragment") {
-			AssertVisible(
+			ContentPages.viewFragmentImage(
+				fragmentName = "card",
 				id = "img",
-				key_image = "data:image/png",
-				key_imageDescription = "",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+				image = "data:image/png");
 		}
 	}
 

@@ -3561,9 +3561,14 @@ definition {
 	}
 
 	macro viewFragment {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER");
+			key_index = "${index}",
+			locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 	}
 
 	macro viewFragmentEditableImage {

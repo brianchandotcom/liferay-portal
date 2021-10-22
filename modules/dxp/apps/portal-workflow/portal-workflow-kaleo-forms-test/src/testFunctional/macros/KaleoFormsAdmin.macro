@@ -895,4 +895,11 @@ definition {
 			value1 = "Unpublished");
 	}
 
+	macro viewProgressBarIsShownCorrectly {
+		AssertElementPresent(
+			key_stepProcess = "${stepProcess}",
+			key_iconType = "${iconType}",
+			locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_MULTI_STEP_PROGRESS_BAR_");
+	}
+
 }

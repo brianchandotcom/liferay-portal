@@ -37,6 +37,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_NAVIGATOR_MULTI_STEP_PROGRESS_BAR_</td>
+	<td>//div[contains(text(),'${key_stepProcess}')]//..//*[name()='svg'][contains(@class,'lexicon-icon lexicon-icon-${key_iconType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

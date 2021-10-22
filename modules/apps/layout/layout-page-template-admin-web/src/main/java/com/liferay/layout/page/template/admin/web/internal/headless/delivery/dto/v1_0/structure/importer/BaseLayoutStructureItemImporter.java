@@ -202,11 +202,15 @@ public abstract class BaseLayoutStructureItemImporter {
 			return jsonObject;
 		}
 
-		boolean hidden = GetterUtil.getBoolean(
-			fragmentViewportStyle.get("hidden"));
+		Object hidden = fragmentViewportStyle.get("hidden");
 
-		if (hidden) {
-			jsonObject.put("display", "none");
+		if (hidden != null) {
+			if (GetterUtil.getBoolean(hidden)) {
+				jsonObject.put("display", "none");
+			}
+			else {
+				jsonObject.put("display", "block");
+			}
 		}
 
 		return JSONUtil.put(

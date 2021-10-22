@@ -60,6 +60,8 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		_searchContainer = new SearchContainer<>(
 			renderRequest, getPortletURL(), null, "no-items-were-found");
 
+		_searchContainer.setId("batchPlannerPlanSearchContainer");
+
 		String orderByCol = ParamUtil.getString(
 			renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
 			"modifiedDate");

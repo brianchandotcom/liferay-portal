@@ -340,6 +340,29 @@ public class RemoteAppEntryLocalServiceImpl
 		return remoteAppEntry;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public RemoteAppEntry updateStatus(
+			long userId, long remoteAppEntryId, int status)
+		throws PortalException {
+
+		RemoteAppEntry remoteAppEntry =
+			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
+
+		if (status == remoteAppEntry.getStatus()) {
+			return remoteAppEntry;
+		}
+
+		User user = _userLocalService.getUser(userId);
+
+		remoteAppEntry.setStatus(status);
+		remoteAppEntry.setStatusByUserId(user.getUserId());
+		remoteAppEntry.setStatusByUserName(user.getFullName());
+		remoteAppEntry.setStatusDate(new Date());
+
+		return remoteAppEntryPersistence.update(remoteAppEntry);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;

@@ -330,9 +330,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = " @.~!&ˆ%$&_-");
+		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "@~!& ˆ%$&_-");
 
-		ObjectPortlet.viewEntry(entry = " @.~!&ˆ%$&_-");
+		ObjectPortlet.viewEntry(entry = "@~!& ˆ%$&_-");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a String field on layout"

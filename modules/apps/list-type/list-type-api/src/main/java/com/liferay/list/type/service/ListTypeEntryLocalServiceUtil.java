@@ -221,6 +221,12 @@ public class ListTypeEntryLocalServiceUtil {
 		return getService().fetchListTypeEntry(listTypeEntryId);
 	}
 
+	public static ListTypeEntry fetchListTypeEntry(
+		long listTypeDefinitionId, String key) {
+
+		return getService().fetchListTypeEntry(listTypeDefinitionId, key);
+	}
+
 	/**
 	 * Returns the list type entry with the matching UUID and company.
 	 *

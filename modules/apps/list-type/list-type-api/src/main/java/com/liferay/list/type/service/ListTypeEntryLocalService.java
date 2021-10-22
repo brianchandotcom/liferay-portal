@@ -210,6 +210,10 @@ public interface ListTypeEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ListTypeEntry fetchListTypeEntry(long listTypeEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ListTypeEntry fetchListTypeEntry(
+		long listTypeDefinitionId, String key);
+
 	/**
 	 * Returns the list type entry with the matching UUID and company.
 	 *

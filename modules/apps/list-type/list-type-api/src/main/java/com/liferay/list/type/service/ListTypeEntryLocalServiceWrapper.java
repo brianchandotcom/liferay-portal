@@ -241,6 +241,14 @@ public class ListTypeEntryLocalServiceWrapper
 		return _listTypeEntryLocalService.fetchListTypeEntry(listTypeEntryId);
 	}
 
+	@Override
+	public com.liferay.list.type.model.ListTypeEntry fetchListTypeEntry(
+		long listTypeDefinitionId, String key) {
+
+		return _listTypeEntryLocalService.fetchListTypeEntry(
+			listTypeDefinitionId, key);
+	}
+
 	/**
 	 * Returns the list type entry with the matching UUID and company.
 	 *

@@ -1,21 +1,33 @@
 import ClayCard from '@clayui/card';
+import classNames from 'classNames';
 import BaseButton from '~/common/components/BaseButton';
 import StatusTag from './StatusTag';
 
 const ProjectCard = ({ endDate, onClick, region, small, status, title }) => {
 
   return (
-    <ClayCard className={`project-card${small ? "-sm" : ""} m-0`} onClick={() => onClick}>
-      <ClayCard.Body className={`d-flex flex-${small ? "row" : "column"} h-100 justify-content-between`}>
-        <ClayCard.Description className="text-neutral-3" displayType="title" tag={`${small ? "h4" : "h3"}`}>
+    <ClayCard className={classNames('m-0',
+      {
+        'project-card': !small,
+        'project-card-sm': small
+      }
+    )} onClick={() => onClick}>
+      <ClayCard.Body className={classNames("d-flex", "h-100", "justify-content-between", {
+        'flex-column': !small,
+        'flex-row': small
+      })}>
+        <ClayCard.Description className="text-neutral-3" displayType="title" tag={small ? "h4" : "h3"}>
           {title}
         </ClayCard.Description>
 
-        <div className={`${small ? "" : "align-items-end "}d-flex justify-content-between`}>
+        <div className={classNames("d-flex", "justify-content-between", { "align-items-end": small })}>
           <ClayCard.Description displayType="text" tag="div" title={null} truncate={false}>
             <StatusTag currentStatus={status} />
 
-            <div className={`text-paragraph-sm text-neutral-5${small ? " sm-mb" : " my-1"}`}>
+            <div className={classNames('text-paragraph-sm', 'text-neutral-5', {
+              'my-1': !small,
+              'sm-mb': small
+            })}>
               Ends on <span className="font-weight-bold text-paragraph">{endDate}</span>
             </div>
 

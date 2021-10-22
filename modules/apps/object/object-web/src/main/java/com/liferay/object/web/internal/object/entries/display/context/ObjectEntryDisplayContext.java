@@ -49,6 +49,7 @@ import com.liferay.object.model.ObjectLayoutColumn;
 import com.liferay.object.model.ObjectLayoutRow;
 import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.security.permission.resource.ObjectEntryModelResourcePermissionTracker;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -68,6 +69,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -99,6 +102,8 @@ public class ObjectEntryDisplayContext {
 		ItemSelector itemSelector,
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectEntryModelResourcePermissionTracker
+			objectEntryModelResourcePermissionTracker,
 		ObjectEntryService objectEntryService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectLayoutLocalService objectLayoutLocalService,
@@ -108,6 +113,8 @@ public class ObjectEntryDisplayContext {
 		_itemSelector = itemSelector;
 		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectEntryModelResourcePermissionTracker =
+			objectEntryModelResourcePermissionTracker;
 		_objectEntryService = objectEntryService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectLayoutLocalService = objectLayoutLocalService;
@@ -359,14 +366,14 @@ public class ObjectEntryDisplayContext {
 
 	private void _addDDMFormFields(
 			DDMForm ddmForm, List<ObjectField> objectFields,
-			ObjectLayoutTab objectLayoutTab)
+			ObjectLayoutTab objectLayoutTab, boolean readOnly)
 		throws PortalException {
 
 		for (ObjectLayoutBox objectLayoutBox :
 				objectLayoutTab.getObjectLayoutBoxes()) {
 
 			List<DDMFormField> nestedDDMFormFields = _getNestedDDMFormFields(
-				objectFields, objectLayoutBox);
+				objectFields, objectLayoutBox, readOnly);
 
 			if (nestedDDMFormFields.isEmpty()) {
 				continue;
@@ -428,6 +435,19 @@ public class ObjectEntryDisplayContext {
 
 		ddmForm.addAvailableLocale(_objectRequestHelper.getLocale());
 
+		boolean readOnly = false;
+
+		if (_objectEntry != null) {
+			ModelResourcePermission<ObjectEntry> modelResourcePermission =
+				_objectEntryModelResourcePermissionTracker.
+					getObjectEntryModelResourcePermission(
+						objectDefinition.getClassName());
+
+			readOnly = !modelResourcePermission.contains(
+				_objectRequestHelper.getPermissionChecker(),
+				_objectEntry.getObjectEntryId(), ActionKeys.UPDATE);
+		}
+
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
 				objectDefinition.getObjectDefinitionId());
@@ -438,11 +458,12 @@ public class ObjectEntryDisplayContext {
 					continue;
 				}
 
-				ddmForm.addDDMFormField(_getDDMFormField(objectField));
+				ddmForm.addDDMFormField(
+					_getDDMFormField(objectField, readOnly));
 			}
 		}
 		else {
-			_addDDMFormFields(ddmForm, objectFields, objectLayoutTab);
+			_addDDMFormFields(ddmForm, objectFields, objectLayoutTab, readOnly);
 		}
 
 		ddmForm.setDefaultLocale(_objectRequestHelper.getLocale());
@@ -450,7 +471,8 @@ public class ObjectEntryDisplayContext {
 		return ddmForm;
 	}
 
-	private DDMFormField _getDDMFormField(ObjectField objectField) {
+	private DDMFormField _getDDMFormField(
+		ObjectField objectField, boolean readOnly) {
 
 		// TODO Store the type and the object field type in the database
 
@@ -472,6 +494,8 @@ public class ObjectEntryDisplayContext {
 		ddmFormField.setLabel(ddmFormFieldLabelLocalizedValue);
 
 		ddmFormField.setRequired(objectField.isRequired());
+
+		ddmFormField.setReadOnly(readOnly);
 
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
 			ObjectRelationship objectRelationship =
@@ -571,7 +595,8 @@ public class ObjectEntryDisplayContext {
 	}
 
 	private List<DDMFormField> _getNestedDDMFormFields(
-			List<ObjectField> objectFields, ObjectLayoutBox objectLayoutBox)
+			List<ObjectField> objectFields, ObjectLayoutBox objectLayoutBox,
+			boolean readOnly)
 		throws PortalException {
 
 		List<DDMFormField> nestedDDMFormFields = new ArrayList<>();
@@ -600,7 +625,8 @@ public class ObjectEntryDisplayContext {
 					_objectFieldNames.put(
 						objectLayoutColumn.getObjectFieldId(),
 						objectField.getName());
-					nestedDDMFormFields.add(_getDDMFormField(objectField));
+					nestedDDMFormFields.add(
+						_getDDMFormField(objectField, readOnly));
 				}
 			}
 		}
@@ -730,6 +756,8 @@ public class ObjectEntryDisplayContext {
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private ObjectEntry _objectEntry;
+	private final ObjectEntryModelResourcePermissionTracker
+		_objectEntryModelResourcePermissionTracker;
 	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final Map<Long, String> _objectFieldNames = new HashMap<>();

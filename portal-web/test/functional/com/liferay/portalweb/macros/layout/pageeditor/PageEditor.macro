@@ -1033,7 +1033,9 @@ definition {
 			Click(locator1 = "Fragment#EDITABLE_FIELD_ANY");
 		}
 		else {
-			Click(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_ANY");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+
+			Click(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 	}
 
@@ -2783,7 +2785,9 @@ definition {
 			DoubleClick(locator1 = "Fragment#EDITABLE_FIELD_ANY");
 		}
 		else {
-			DoubleClick(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_ANY");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+
+			DoubleClick(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 	}
 

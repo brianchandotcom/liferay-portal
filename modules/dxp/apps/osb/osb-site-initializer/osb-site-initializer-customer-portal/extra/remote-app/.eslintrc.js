@@ -30,7 +30,7 @@ module.exports = {
 		'@liferay/portal/no-loader-import-specifier': 'off',
 		'@liferay/portal/no-react-dom-render': 'off',
 		'no-case-declarations': 'off',
-		'no-empty': ['error', {allowEmptyCatch: true}],
+		'no-empty': ['error', { allowEmptyCatch: true }],
 		'no-prototype-builtins': 'off',
 	},
 };

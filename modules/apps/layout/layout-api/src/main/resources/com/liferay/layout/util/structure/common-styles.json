@@ -674,16 +674,13 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "",
+				"defaultValue": "left",
 				"label": "text-align",
 				"name": "textAlign",
-				"responsive": false,
+				"responsive": true,
+				"responsiveTemplate": "text{viewport}{value}",
 				"type": "select",
 				"validValues": [
-					{
-						"label": "default",
-						"value": ""
-					},
 					{
 						"label": "left",
 						"value": "left"

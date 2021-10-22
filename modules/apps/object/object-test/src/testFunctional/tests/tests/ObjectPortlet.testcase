@@ -144,11 +144,27 @@ definition {
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a Date field on layout"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddDateEntryOnLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-140543 CanAddDateEntryOnLayout pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Date",
+			fieldName = "customObjectField",
+			fieldType = "Date",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.addEntryViaUI(entry = "2021-09-23", labelName = "Custom Object");
+
+		ObjectPortlet.viewEntry(entry = "2021-09-23");
 
 	}
 

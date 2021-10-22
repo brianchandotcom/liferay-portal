@@ -403,7 +403,7 @@ public class RenderLayoutStructureDisplayContext {
 			!Objects.equals(textAlignCssClass, "none")) {
 
 			if (!StringUtil.startsWith(textAlignCssClass, "text-")) {
-				cssClassSB.append(" text-");
+				cssClassSB.append(" text-lg-");
 			}
 			else {
 				cssClassSB.append(StringPool.SPACE);

@@ -117,7 +117,7 @@ definition {
 				ContentPages.viewFragmentText(
 					assetType = "web-content",
 					fragmentName = "Content Display",
-					index = "${n}",
+					position = "${n}",
 					text = "${content}");
 
 				var n = ${n} + 1;
@@ -875,7 +875,7 @@ definition {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					index = "${n}",
+					position = "${n}",
 					text = "Document Title ${i}");
 
 				var n = ${n} + 1;
@@ -901,7 +901,7 @@ definition {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					index = "${n}",
+					position = "${n}",
 					text = "Blogs Entry Title ${i}");
 
 				var n = ${n} + 1;
@@ -927,7 +927,7 @@ definition {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					index = "${n}",
+					position = "${n}",
 					text = "Web Content Title ${i}");
 
 				var n = ${n} + 1;
@@ -957,7 +957,7 @@ definition {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					index = "${n}",
+					position = "${n}",
 					text = "Document Title ${i}");
 
 				var n = ${n} + 1;
@@ -983,7 +983,7 @@ definition {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					index = "${n}",
+					position = "${n}",
 					text = "Web Content Title ${i}");
 
 				var n = ${n} + 1;
@@ -1009,7 +1009,7 @@ definition {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					index = "${n}",
+					position = "${n}",
 					text = "Blogs Entry Title ${i}");
 
 				var n = ${n} + 1;
@@ -1127,7 +1127,7 @@ definition {
 					editableText = "Document Title ${i}",
 					fragmentName = "Heading",
 					id = "element-text",
-					index = "${n}");
+					position = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1139,7 +1139,7 @@ definition {
 					editableText = "Blogs Entry Title ${i}",
 					fragmentName = "Heading",
 					id = "element-text",
-					index = "${n}");
+					position = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1151,7 +1151,7 @@ definition {
 					editableText = "Web Content Title ${i}",
 					fragmentName = "Heading",
 					id = "element-text",
-					index = "${n}");
+					position = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1180,7 +1180,7 @@ definition {
 					editableText = "Document Title ${i}",
 					fragmentName = "Heading",
 					id = "element-text",
-					index = "${n}");
+					position = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1206,7 +1206,7 @@ definition {
 					editableText = "Blogs Entry Title ${i}",
 					fragmentName = "Heading",
 					id = "element-text",
-					index = "${n}");
+					position = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1232,7 +1232,7 @@ definition {
 					editableText = "Web Content Title ${i}",
 					fragmentName = "Heading",
 					id = "element-text",
-					index = "${n}");
+					position = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1257,7 +1257,7 @@ definition {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					index = "${n}",
+					position = "${n}",
 					text = "Document Title ${i}");
 
 				var n = ${n} + 1;
@@ -1283,7 +1283,7 @@ definition {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					index = "${n}",
+					position = "${n}",
 					text = "Blogs Entry Title ${i}");
 
 				var n = ${n} + 1;
@@ -1309,7 +1309,7 @@ definition {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					index = "${n}",
+					position = "${n}",
 					text = "Web Content Title ${i}");
 
 				var n = ${n} + 1;
@@ -1339,7 +1339,7 @@ definition {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					index = "${n}",
+					position = "${n}",
 					text = "Document Title ${i}");
 
 				var n = ${n} + 1;
@@ -1365,7 +1365,7 @@ definition {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					index = "${n}",
+					position = "${n}",
 					text = "Blogs Entry Title ${i}");
 
 				var n = ${n} + 1;
@@ -1391,7 +1391,7 @@ definition {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					index = "${n}",
+					position = "${n}",
 					text = "Web Content Title ${i}");
 
 				var n = ${n} + 1;

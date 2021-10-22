@@ -271,7 +271,7 @@ definition {
 			ContentPages.viewFragmentText(
 				fragmentName = "paragraph",
 				id = "element-text",
-				index = "3",
+				position = "3",
 				text = "Web Content Title Edit");
 		}
 

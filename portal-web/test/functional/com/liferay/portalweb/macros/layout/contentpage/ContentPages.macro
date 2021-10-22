@@ -237,26 +237,26 @@ definition {
 	}
 
 	macro viewFragmentBackgroundImage {
-		if (!(isSet(index))) {
-			var index = "1";
+		if (!(isSet(position))) {
+			var position = "1";
 		}
 
 		AssertVisible(
 			image = "${image}",
-			index = "${index}",
+			index = "${position}",
 			locator1 = "Fragment#FRAGMENT_BACKGROUND_IMAGE");
 	}
 
 	macro viewFragmentImage {
-		if (!(isSet(index))) {
-			var index = "1";
+		if (!(isSet(position))) {
+			var position = "1";
 		}
 
 		if ("${fragmentName}" == "Content Display") {
 			AssertVisible(
 				assetType = "${assetType}",
 				image = "${image}",
-				index = "${index}",
+				index = "${position}",
 				locator1 = "Fragment#CONTENT_DISPLAY_IMAGE");
 		}
 
@@ -265,20 +265,20 @@ definition {
 				fragmentName = "${fragmentName}",
 				id = "${id}",
 				image = "${image}",
-				index = "${index}",
+				index = "${position}",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_IMAGE");
 		}
 	}
 
 	macro viewFragmentText {
-		if (!(isSet(index))) {
-			var index = "1";
+		if (!(isSet(position))) {
+			var position = "1";
 		}
 
 		if ("${fragmentName}" == "Content Display") {
 			if ("${assetType}" == "category") {
 				AssertTextEquals(
-					index = "${index}",
+					index = "${position}",
 					locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY",
 					value1 = "${text}");
 			}
@@ -286,7 +286,7 @@ definition {
 			else {
 				AssertTextEquals(
 					assetType = "${assetType}",
-					index = "${index}",
+					index = "${position}",
 					locator1 = "Fragment#CONTENT_DISPLAY_TEXT",
 					value1 = "${text}");
 			}
@@ -296,7 +296,7 @@ definition {
 			AssertTextEquals(
 				fragmentName = "${fragmentName}",
 				id = "${id}",
-				index = "${index}",
+				index = "${position}",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				value1 = "${text}");
 		}

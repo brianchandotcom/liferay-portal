@@ -3561,13 +3561,13 @@ definition {
 	}
 
 	macro viewFragment {
-		if (!(isSet(index))) {
-			var index = "1";
+		if (!(isSet(position))) {
+			var position = "1";
 		}
 
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",
-			key_index = "${index}",
+			key_index = "${position}",
 			locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 	}
 
@@ -3594,7 +3594,7 @@ definition {
 
 		PageEditor.viewFragment(
 			fragmentName = "${fragmentName}",
-			index = "${index}");
+			index = "${position}");
 
 		if ("${contributed}" == "false") {
 			AssertTextEquals(
@@ -3621,7 +3621,7 @@ definition {
 			ContentPages.viewFragmentText(
 				fragmentName = "${fragmentName}",
 				id = "${id}",
-				index = "${index}",
+				position = "${position}",
 				text = "${editableText}");
 
 			if (isSet(style)) {

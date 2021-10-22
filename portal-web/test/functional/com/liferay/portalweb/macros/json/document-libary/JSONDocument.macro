@@ -55,7 +55,12 @@ definition {
 			var dmDocumentDescription = "";
 		}
 
+		if (!(isSet(guestPermissions))) {
+			var guestPermissions = "true";
+		}
+
 		var serviceContext = JSONDocumentSetter.setServiceContext(
+			addGuestPermissions = "${guestPermissions}",
 			assetCategoryIds = "${assetCategoryIds}",
 			assetTagNames = "${assetTagNames}",
 			serviceContext = "${serviceContext}",

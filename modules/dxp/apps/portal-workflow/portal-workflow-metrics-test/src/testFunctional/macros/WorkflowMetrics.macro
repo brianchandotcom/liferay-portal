@@ -1828,4 +1828,15 @@ definition {
 		}
 	}
 
+	macro viewTableSizeInTheAllItems {
+		var itemTable = "${itemTable}";
+		var itemTableSize = "${itemTableSize}";
+
+		AssertCssValue(
+			key_stepName = "${itemTable}",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME",
+			locator2 = "max-width",
+			value1 = "${itemTableSize}");
+	}
+
 }

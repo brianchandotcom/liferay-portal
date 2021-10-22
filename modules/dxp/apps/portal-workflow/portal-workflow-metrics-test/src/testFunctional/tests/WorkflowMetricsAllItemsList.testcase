@@ -1551,6 +1551,64 @@ definition {
 
 	}
 
+	@description = "LPS-98517 - Verify that the long usernames in the result table do not break into different lines"
+	@priority = "3"
+	test LongUserNameDisplaysEllipsis {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONUser.addUser(
+			userEmailAddress = "buyerbuyer@liferay.com",
+			userFirstName = "buyerbuyerbuyerbuyerbuyer",
+			userLastName = "buyerbuyerbuyerbuyerbuyer",
+			userScreenName = "buyerbuyerbuyerbuyerbuyer");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "buyerbuyerbuyerbuyerbuyer");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignTaskToUser(
+			assetTitle = "Blogs Entry Title",
+			assetType = "Blogs Entry",
+			assigneeName = "buyerbuyerbuyerbuyerbuyer (buyerbuyerbuyerbuyerbuyer buyerbuyerbuyerbuyerbuyer)",
+			workflowTask = "Review");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetrics.viewTableSizeInTheAllItems(
+			itemTable = "buyerbuyerbuyerbuyerbuyer",
+			itemTableSize = "106.887px");
+	}
+
 	@description = "LPS-98517 - Verify that a long username that exceeds 240px in the assignee dropdown option is placed in more than one line, respecting the alignment of the field"
 	@priority = "3"
 	test LongUserNameIsDisplayedInMoreThanOneLineInDropdown {
@@ -1602,15 +1660,6 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION2",
 			locator2 = "font-weight",
 			value1 = "400");
-	}
-
-	@description = "LPS-98517 - Verify that the long usernames in the result table are placed in more than one line if the text doesn't fit one line"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test LongUserNameIsDisplayedInMoreThanOneLineInTable {
-
-		// TODO LRQA-67758 LongUserNameIsDisplayedInMoreThanOneLineInTable pending implementation
-
 	}
 
 	@description = "LPS-92053 - Verify that the Go to submission page button opens the submission page in another tab"

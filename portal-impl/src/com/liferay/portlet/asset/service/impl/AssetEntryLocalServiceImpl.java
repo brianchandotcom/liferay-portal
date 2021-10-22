@@ -1187,7 +1187,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
+		queryConfig.setScoreEnabled(_hasScoreSort(searchContext));
 
 		assetSearcher.setAssetEntryQuery(assetEntryQuery);
 
@@ -1343,6 +1343,16 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 
 		return assetEntryValidators;
+	}
+
+	private boolean _hasScoreSort(SearchContext searchContext) {
+		for (Sort sort : searchContext.getSorts()) {
+			if (sort.getType() == Sort.SCORE_TYPE) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private void _setAssetCategoryIds(

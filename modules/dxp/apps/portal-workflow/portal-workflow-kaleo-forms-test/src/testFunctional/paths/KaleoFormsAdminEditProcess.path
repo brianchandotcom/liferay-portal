@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_LANGUAGE</td>
+	<td>//div[contains(@class,'input-localized-palette-container')]//a[contains(@class,'dropdown-item') and contains(.,'${key_tagLanguage}') and contains(.,'${key_infoLaguage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

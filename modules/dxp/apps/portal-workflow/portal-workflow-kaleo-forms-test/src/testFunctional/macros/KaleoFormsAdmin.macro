@@ -875,4 +875,24 @@ definition {
 			value1 = "Unpublished");
 	}
 
+	macro viewLanguageByDefault {
+		Click(
+			key_locale = "${defaultLanguage}",
+			locator1 = "Translation#CURRENT_LOCALE_NAME");
+
+		AssertElementPresent(
+			key_tagLanguage = "${defaultLanguage}",
+			key_infoLaguage = "${infoLaguage}",
+			locator1 = "KaleoFormsAdminEditProcess#DROPDOWN_LANGUAGE");
+
+		Click(
+			key_locale = "${defaultLanguage}",
+			locator1 = "Translation#CURRENT_LOCALE_DESCRIPTION");
+
+		AssertElementPresent(
+			key_tagLanguage = "${defaultLanguage}",
+			key_infoLaguage = "${infoLaguage}",
+			locator1 = "KaleoFormsAdminEditProcess#DROPDOWN_LANGUAGE");
+	}
+
 }

@@ -111,11 +111,14 @@ definition {
 	}
 
 	@description = "Verify that the translation icon next to the -Name- and -Description- field is in English by default."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test IconTranslationEnglishByDefault {
+		KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70680 IconTranslationEnglishByDefault pending implementation
+		KaleoFormsAdmin.viewLanguageByDefault(
+			defaultLanguage = "en-US",
+			infoLaguage = "Default");
+	
 
 	}
 

@@ -1545,7 +1545,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		JSONDocument.moveFileEntryToTrash(
+		JSONDocument.moveToRecycleBin(
 			dmDocumentTitle = "DM Document Title",
 			folderName = "DM Folder Name",
 			groupName = "Guest");

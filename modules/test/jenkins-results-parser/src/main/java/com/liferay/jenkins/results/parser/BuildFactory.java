@@ -173,6 +173,11 @@ public class BuildFactory {
 		}
 
 		if (jobName.contains("portal")) {
+			if (jobName.contains("upstream")) {
+				return new UpstreamPortalTopLevelBuild(
+					url, (TopLevelBuild)parentBuild);
+			}
+
 			return new PortalTopLevelBuild(url, (TopLevelBuild)parentBuild);
 		}
 

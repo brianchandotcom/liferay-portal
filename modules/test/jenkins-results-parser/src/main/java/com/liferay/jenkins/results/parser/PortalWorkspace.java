@@ -53,20 +53,16 @@ public class PortalWorkspace extends BaseWorkspace {
 		_osbFaroGitHubURL = osbFaroGitHubURL;
 	}
 
+	public void setPortalPrivateGitHubURL(String portalPrivateGitHubURL) {
+		_portalPrivateGitHubURL = portalPrivateGitHubURL;
+	}
+
 	@Override
 	public void setUp() {
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			getPortalWorkspaceGitRepository();
 
 		portalWorkspaceGitRepository.setUp();
-
-		Job.BuildProfile buildProfile = getBuildProfile();
-
-		if (buildProfile == Job.BuildProfile.DXP) {
-			portalWorkspaceGitRepository.setUpPortalProfile();
-		}
-
-		portalWorkspaceGitRepository.setUpTCKHome();
 
 		_configureBladeSamplesWorkspaceGitRepository();
 		_configureLiferayFacesAlloyWorkspaceGitRepository();
@@ -81,6 +77,14 @@ public class PortalWorkspace extends BaseWorkspace {
 		_configureReleaseToolWorkspaceGitRepository();
 
 		super.setUp();
+
+		Job.BuildProfile buildProfile = getBuildProfile();
+
+		if (buildProfile == Job.BuildProfile.DXP) {
+			portalWorkspaceGitRepository.setUpPortalProfile();
+		}
+
+		portalWorkspaceGitRepository.setUpTCKHome();
 
 		updateOSBAsahModule();
 	}
@@ -391,9 +395,22 @@ public class PortalWorkspace extends BaseWorkspace {
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			(PortalWorkspaceGitRepository)primaryWorkspaceGitRepository;
 
+		String portalPrivateDirectoryName =
+			portalWorkspaceGitRepository.getPortalPrivateRepositoryDirName();
+
+		WorkspaceGitRepository workspaceGitRepository =
+			getWorkspaceGitRepository(portalPrivateDirectoryName);
+
+		if ((workspaceGitRepository == null) ||
+			(_portalPrivateGitHubURL == null)) {
+
+			return;
+		}
+
+		workspaceGitRepository.setGitHubURL(_portalPrivateGitHubURL);
+
 		_updateWorkspaceGitRepository(
-			"git-commit-portal-private",
-			portalWorkspaceGitRepository.getPortalPrivateRepositoryDirName());
+			"git-commit-portal-private", portalPrivateDirectoryName);
 	}
 
 	private void _configurePortalsPlutoWorkspaceGitRepository() {
@@ -473,5 +490,6 @@ public class PortalWorkspace extends BaseWorkspace {
 
 	private String _osbAsahGitHubURL;
 	private String _osbFaroGitHubURL;
+	private String _portalPrivateGitHubURL;
 
 }

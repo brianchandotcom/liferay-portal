@@ -128,7 +128,12 @@ if (batchPlannerLog.getStatus() == 1)
 			</clay:row>
 
 			<clay:row>
-				<aui:button href="<%= backURL %>" type="cancel" />
+				<clay:link
+					displayType="primary"
+					href="<%= backURL %>"
+					label="cancel"
+					type="button"
+				/>
 			</clay:row>
 		</div>
 	</div>

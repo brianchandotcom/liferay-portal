@@ -595,22 +595,13 @@ definition {
 		task ("View the edited inline content at edit mode") {
 			ContentPages.gotoPageEditor();
 
-			PageEditor.viewFragmentEditableText(
-				editableText = "Edited Banner Title",
-				fragmentName = "Element",
-				id = "01-title");
+			PageEditor.viewFragment(fragmentName = "Element");
 
-			PageEditor.viewFragmentEditableText(
-				editableText = "Edited Banner Subtitle",
-				fragmentName = "Element",
-				id = "02-subtitle");
+			for (var text : list "Edited Banner Title,Edited Banner Subtitle,Edited Banner Link") {
+				AssertVisible(locator1 = "//div[contains(@class,'banner')]//*[normalize-space(text())='${text}']");
+			}
 
-			PageEditor.viewFragmentEditableText(
-				editableText = "Edited Banner Link",
-				fragmentName = "Element",
-				id = "03-link");
-
-			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
+			AssertVisible(locator1 = "//div[contains(@class,'banner')][contains(@style,'Document_1.jpg')]");
 		}
 	}
 
@@ -680,22 +671,13 @@ definition {
 		task ("View the edited inline content at edit mode") {
 			ContentPages.gotoPageEditor();
 
-			PageEditor.viewFragmentEditableText(
-				editableText = "Edited Banner Title",
-				fragmentName = "Element",
-				id = "01-title");
+			PageEditor.viewFragment(fragmentName = "Element");
 
-			PageEditor.viewFragmentEditableText(
-				editableText = "Edited Banner Subtitle",
-				fragmentName = "Element",
-				id = "02-subtitle");
+			for (var text : list "Edited Banner Title,Edited Banner Subtitle,Edited Banner Link") {
+				AssertVisible(locator1 = "//div[contains(@class,'banner')]//*[normalize-space(text())='${text}']");
+			}
 
-			PageEditor.viewFragmentEditableText(
-				editableText = "Edited Banner Link",
-				fragmentName = "Element",
-				id = "03-link");
-
-			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
+			AssertVisible(locator1 = "//div[contains(@class,'banner')][contains(@style,'Document_1.jpg')]");
 		}
 	}
 

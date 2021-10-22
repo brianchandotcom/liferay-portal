@@ -21,9 +21,16 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.layout.page.template.item.selector.LayoutPageTemplateEntryItemSelectorReturnType;
 import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateEntryItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
@@ -32,12 +39,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,29 +90,10 @@ public class LayoutPageTemplateEntryItemSelectorView
 			servletRequest, servletResponse,
 			layoutPageTemplateEntryItemSelectorCriterion, portletURL,
 			itemSelectedEventName, search,
-			new ItemSelectorViewDescriptor<LayoutPageTemplateEntry>() {
-
-				@Override
-				public ItemDescriptor getItemDescriptor(
-					LayoutPageTemplateEntry layoutPageTemplateEntry) {
-
-					return null;
-				}
-
-				@Override
-				public ItemSelectorReturnType getItemSelectorReturnType() {
-					return null;
-				}
-
-				@Override
-				public SearchContainer<LayoutPageTemplateEntry>
-						getSearchContainer()
-					throws PortalException {
-
-					return null;
-				}
-
-			});
+			new LayoutPageTemplateEntryItemSelectorViewDescriptor(
+				(HttpServletRequest)servletRequest,
+				layoutPageTemplateEntryItemSelectorCriterion.getLayoutType(),
+				portletURL));
 	}
 
 	private static final List<ItemSelectorReturnType>
@@ -115,9 +105,131 @@ public class LayoutPageTemplateEntryItemSelectorView
 		<LayoutPageTemplateEntryItemSelectorCriterion>
 			_itemSelectorViewDescriptorRenderer;
 
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.page.template.item.selector.web)"
 	)
 	private ServletContext _servletContext;
+
+	private class LayoutPageTemplateEntryItemSelectorViewDescriptor
+		implements ItemSelectorViewDescriptor<LayoutPageTemplateEntry> {
+
+		public LayoutPageTemplateEntryItemSelectorViewDescriptor(
+			HttpServletRequest httpServletRequest, int layoutType,
+			PortletURL portletURL) {
+
+			_httpServletRequest = httpServletRequest;
+			_layoutType = layoutType;
+			_portletURL = portletURL;
+
+			_portletRequest = (PortletRequest)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+			_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		@Override
+		public ItemDescriptor getItemDescriptor(
+			LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+			return null;
+		}
+
+		@Override
+		public ItemSelectorReturnType getItemSelectorReturnType() {
+			return new LayoutPageTemplateEntryItemSelectorReturnType();
+		}
+
+		@Override
+		public String[] getOrderByKeys() {
+			return new String[] {"name"};
+		}
+
+		@Override
+		public SearchContainer<LayoutPageTemplateEntry> getSearchContainer() {
+			SearchContainer<LayoutPageTemplateEntry> searchContainer =
+				new SearchContainer<>(
+					_portletRequest, _portletURL, null,
+					"no-entries-were-found");
+
+			String orderByCol = ParamUtil.getString(
+				_httpServletRequest, "orderByCol", "name");
+
+			searchContainer.setOrderByCol(orderByCol);
+
+			String orderByType = ParamUtil.getString(
+				_httpServletRequest, "orderByType", "asc");
+
+			searchContainer.setOrderByType(orderByType);
+
+			boolean orderByAsc = true;
+
+			if (orderByType.equals("desc")) {
+				orderByAsc = false;
+			}
+
+			searchContainer.setOrderByComparator(
+				new LayoutPageTemplateEntryNameComparator(orderByAsc));
+
+			String keywords = ParamUtil.getString(
+				_httpServletRequest, "keywords");
+
+			if (Validator.isNull(keywords)) {
+				searchContainer.setResults(
+					_layoutPageTemplateEntryService.
+						getLayoutPageTemplateEntries(
+							_themeDisplay.getScopeGroupId(), _layoutType,
+							searchContainer.getStart(),
+							searchContainer.getEnd(),
+							searchContainer.getOrderByComparator()));
+				searchContainer.setTotal(
+					_layoutPageTemplateEntryService.
+						getLayoutPageTemplateEntriesCount(
+							_themeDisplay.getScopeGroupId(), _layoutType));
+			}
+			else {
+				searchContainer.setResults(
+					_layoutPageTemplateEntryService.
+						getLayoutPageTemplateEntries(
+							_themeDisplay.getScopeGroupId(), keywords,
+							_layoutType, WorkflowConstants.STATUS_ANY,
+							searchContainer.getStart(),
+							searchContainer.getEnd(),
+							searchContainer.getOrderByComparator()));
+				searchContainer.setTotal(
+					_layoutPageTemplateEntryService.
+						getLayoutPageTemplateEntriesCount(
+							_themeDisplay.getScopeGroupId(), keywords,
+							_layoutType, WorkflowConstants.STATUS_ANY));
+			}
+
+			return searchContainer;
+		}
+
+		@Override
+		public boolean isShowBreadcrumb() {
+			return false;
+		}
+
+		@Override
+		public boolean isShowManagementToolbar() {
+			return true;
+		}
+
+		@Override
+		public boolean isShowSearch() {
+			return true;
+		}
+
+		private final HttpServletRequest _httpServletRequest;
+		private final int _layoutType;
+		private final PortletRequest _portletRequest;
+		private final PortletURL _portletURL;
+		private final ThemeDisplay _themeDisplay;
+
+	}
 
 }

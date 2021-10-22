@@ -1033,6 +1033,12 @@ definition {
 			Click(locator1 = "Fragment#EDITABLE_FIELD_ANY");
 		}
 		else {
+			if (contains("${fragmentName}", "(Copy)")) {
+				var fragmentName = StringUtil.extractFirst("${fragmentName}", "(Copy)");
+				var fragmentName = StringUtil.trimTrailing("${fragmentName}");
+			}
+
+			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
 			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			Click(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
@@ -2784,6 +2790,12 @@ definition {
 			DoubleClick(locator1 = "Fragment#EDITABLE_FIELD_ANY");
 		}
 		else {
+			if (contains("${fragmentName}", "(Copy)")) {
+				var fragmentName = StringUtil.extractFirst("${fragmentName}", "(Copy)");
+				var fragmentName = StringUtil.trimTrailing("${fragmentName}");
+			}
+
+			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
 			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
 			DoubleClick(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
@@ -3614,6 +3626,11 @@ definition {
 		}
 
 		else {
+			if (contains("${fragmentName}", "(Copy)")) {
+				var fragmentName = StringUtil.extractFirst("${fragmentName}", "(Copy)");
+				var fragmentName = StringUtil.trimTrailing("${fragmentName}");
+			}
+
 			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
 			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 

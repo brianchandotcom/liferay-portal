@@ -3272,6 +3272,23 @@ definition {
 			locator1 = "Fragment#FRAGMENT_HEADER");
 	}
 
+	macro viewCollectionItem {
+		if (!(isSet(column))) {
+			var column = "1";
+		}
+
+		if (!(isSet(row))) {
+			var row = "1";
+		}
+
+		AssertVisible(
+			key_colPosition = "${column}",
+			key_entryTitle = "${assetTitle}",
+			key_fragmentName = "Collection Display",
+			key_rowPosition = "${row}",
+			locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+	}
+
 	macro viewCollectionNotPresent {
 		AssertElementNotPresent(
 			key_collectionName = "${collectionName}",

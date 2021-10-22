@@ -8,16 +8,16 @@ import SharedStyle from "~/common/styles/global.scss";
 import CustomerPortal from "~/routes/customer-portal";
 import Onboarding from "~/routes/onboarding";
 
-const CustomerPortalApplication = ({ application }) => {
+const CustomerPortalApplication = ({ route }) => {
   const SearchParams = new URLSearchParams(window.location.search);
 
-  const route = SearchParams.get("customer_dev_application") || application;
+  const routeEntry = SearchParams.get("customer_dev_application") || route;
 
-  if (route === "portal") {
+  if (routeEntry === "portal") {
     return <CustomerPortal />;
   }
 
-  if (route === "onboarding") {
+  if (routeEntry === "onboarding") {
     return <Onboarding />;
   }
 };
@@ -29,7 +29,7 @@ class DirectToCustomerWebComponent extends WebComponent {
     ReactDOM.render(
       <ClayProvider>
         <CustomerPortalApplication
-          application={super.getAttribute("application")}
+          route={super.getAttribute("route")}
         />
       </ClayProvider>,
       this.mountPoint
@@ -37,7 +37,7 @@ class DirectToCustomerWebComponent extends WebComponent {
   }
 }
 
-const ELEMENT_ID = "liferay-customer-portal";
+const ELEMENT_ID = "liferay-remote-app-customer-portal";
 
 if (!customElements.get(ELEMENT_ID)) {
   customElements.define(ELEMENT_ID, DirectToCustomerWebComponent);

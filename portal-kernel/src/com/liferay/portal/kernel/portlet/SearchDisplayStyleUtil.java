@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,8 +34,25 @@ public class SearchDisplayStyleUtil {
 	}
 
 	public static String getDisplayStyle(
+		HttpServletRequest httpServletRequest, String portletName,
+		String defaultValue, boolean clearCache) {
+
+		return getDisplayStyle(
+			httpServletRequest, portletName, "display-style", defaultValue,
+			clearCache);
+	}
+
+	public static String getDisplayStyle(
 		HttpServletRequest httpServletRequest, String portletName, String key,
 		String defaultValue) {
+
+		return getDisplayStyle(
+			httpServletRequest, portletName, key, defaultValue, false);
+	}
+
+	public static String getDisplayStyle(
+		HttpServletRequest httpServletRequest, String portletName, String key,
+		String defaultValue, boolean clearCache) {
 
 		String displayStyle = ParamUtil.getString(
 			httpServletRequest, "displayStyle");
@@ -49,6 +67,11 @@ public class SearchDisplayStyleUtil {
 		}
 
 		portalPreferences.setValue(portletName, key, displayStyle);
+
+		if (clearCache) {
+			httpServletRequest.setAttribute(
+				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+		}
 
 		return displayStyle;
 	}

@@ -23,10 +23,19 @@ import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTempla
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryNameComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -35,6 +44,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.IOException;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -96,6 +106,9 @@ public class LayoutPageTemplateEntryItemSelectorView
 				portletURL));
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutPageTemplateEntryItemSelectorView.class.getName());
+
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new LayoutPageTemplateEntryItemSelectorReturnType());
@@ -106,12 +119,97 @@ public class LayoutPageTemplateEntryItemSelectorView
 			_itemSelectorViewDescriptorRenderer;
 
 	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.page.template.item.selector.web)"
 	)
 	private ServletContext _servletContext;
+
+	private class LayoutPageTemplateEntryItemDescriptor
+		implements ItemSelectorViewDescriptor.ItemDescriptor {
+
+		public LayoutPageTemplateEntryItemDescriptor(
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			ThemeDisplay themeDisplay) {
+
+			_layoutPageTemplateEntry = layoutPageTemplateEntry;
+			_themeDisplay = themeDisplay;
+		}
+
+		@Override
+		public String getIcon() {
+			return "page";
+		}
+
+		@Override
+		public String getImageURL() {
+			return _layoutPageTemplateEntry.getImagePreviewURL(_themeDisplay);
+		}
+
+		@Override
+		public Date getModifiedDate() {
+			return _layoutPageTemplateEntry.getModifiedDate();
+		}
+
+		@Override
+		public String getPayload() {
+			return JSONUtil.put(
+				"layoutPageTemplateEntryId",
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+			).put(
+				"name", _layoutPageTemplateEntry.getName()
+			).put(
+				"url",
+				() -> {
+					try {
+						Layout layout = _layoutLocalService.getLayout(
+							_layoutPageTemplateEntry.getPlid());
+
+						return _portal.getLayoutFullURL(layout, _themeDisplay);
+					}
+					catch (PortalException portalException) {
+						_log.error(
+							portalException.getMessage(), portalException);
+					}
+
+					return StringPool.BLANK;
+				}
+			).put(
+				"uuid", _layoutPageTemplateEntry.getUuid()
+			).toString();
+		}
+
+		@Override
+		public String getSubtitle(Locale locale) {
+			return StringPool.BLANK;
+		}
+
+		@Override
+		public String getTitle(Locale locale) {
+			return HtmlUtil.escape(_layoutPageTemplateEntry.getName());
+		}
+
+		@Override
+		public long getUserId() {
+			return _layoutPageTemplateEntry.getUserId();
+		}
+
+		@Override
+		public String getUserName() {
+			return _layoutPageTemplateEntry.getUserName();
+		}
+
+		private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
+		private final ThemeDisplay _themeDisplay;
+
+	}
 
 	private class LayoutPageTemplateEntryItemSelectorViewDescriptor
 		implements ItemSelectorViewDescriptor<LayoutPageTemplateEntry> {
@@ -135,7 +233,9 @@ public class LayoutPageTemplateEntryItemSelectorView
 		public ItemDescriptor getItemDescriptor(
 			LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
-			return null;
+			return new LayoutPageTemplateEntryItemSelectorView.
+				LayoutPageTemplateEntryItemDescriptor(
+					layoutPageTemplateEntry, _themeDisplay);
 		}
 
 		@Override

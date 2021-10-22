@@ -160,6 +160,16 @@ definition {
 		ObjectPortlet.viewEntry(entry = "12345");
 	}
 
+	@description = "LPS-135396 - Verify it is possible to add an entry on an object scoped by Site"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddEntryObjectScopedBySite {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141310 CanAddEntryObjectScopedBySite pending implementation
+
+	}
+
 	@description = "LPS-140081 - Verify it is possible to add an entry without selecting a value for a Picklist field that is not required"
 	@priority = "4"
 	test CanAddEntryWithoutSelectingPicklist {

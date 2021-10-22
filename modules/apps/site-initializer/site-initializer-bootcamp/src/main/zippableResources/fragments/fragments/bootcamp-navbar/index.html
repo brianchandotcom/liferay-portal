@@ -13,7 +13,7 @@
 	[#assign publicSiteNavbarClass = "logged-in" /]
 [/#if]
 
-<nav class="align-items-stretch bootcamp-navbar navbar navbar-expand-lg ${publicSiteNavbarClass} position-${configuration.position}">
+<nav class="${publicSiteNavbarClass} align-items-stretch bootcamp-navbar navbar navbar-expand-lg position-${configuration.position}">
 	<div class="flex-fill"></div>
 	<div class="container-fluid container-fluid-max-xl">
 		<a class="d-inline-flex site-logo" href="${publicFriendlyURL}">
@@ -68,7 +68,7 @@
 						<a class="nav-link" href="/web/bootcamp/sign-in">
 							<img alt="" class="btn btn-monospaced p-1" src="[resources:icon_user_not_logged.svg]" />
 
-							<span class="text-uppercase small">Sign In</span>
+							<span class="small text-uppercase">Sign In</span>
 						</a>
 					</li>
 				[/#if]

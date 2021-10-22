@@ -11,6 +11,20 @@ definition {
 			layoutName = "AC Page";
 		}
 
+		ACUtils.addPage(
+			siteName = "${siteName}",
+			layoutName = "${layoutName}");
+	}
+
+	macro addPage {
+		if (!(isSet(siteName))) {
+			siteName = "Site Name";
+		}
+
+		if (!(isSet(layoutName))) {
+			layoutName = "AC Page";
+		}
+
 		JSONLayout.addPublicLayout(
 			groupName = "${siteName}",
 			layoutName = "${layoutName}");

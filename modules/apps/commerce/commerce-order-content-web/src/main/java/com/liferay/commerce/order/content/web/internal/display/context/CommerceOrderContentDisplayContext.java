@@ -34,6 +34,8 @@ import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOrderContentPortletInstanceConfiguration;
 import com.liferay.commerce.order.content.web.internal.portlet.configuration.OpenCommerceOrderContentPortletInstanceConfiguration;
+import com.liferay.commerce.order.importer.type.CommerceOrderImporterType;
+import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
 import com.liferay.commerce.percentage.PercentageFormatter;
@@ -95,6 +97,7 @@ public class CommerceOrderContentDisplayContext {
 	public CommerceOrderContentDisplayContext(
 			CommerceAddressService commerceAddressService,
 			CommerceChannelLocalService commerceChannelLocalService,
+			CommerceOrderImporterTypeRegistry commerceOrderImporterTypeRegistry,
 			CommerceOrderNoteService commerceOrderNoteService,
 			CommerceOrderPriceCalculation commerceOrderPriceCalculation,
 			CommerceOrderService commerceOrderService,
@@ -110,6 +113,7 @@ public class CommerceOrderContentDisplayContext {
 
 		_commerceAddressService = commerceAddressService;
 		_commerceChannelLocalService = commerceChannelLocalService;
+		_commerceOrderImporterTypeRegistry = commerceOrderImporterTypeRegistry;
 		_commerceOrderNoteService = commerceOrderNoteService;
 		_commerceOrderPriceCalculation = commerceOrderPriceCalculation;
 		_commerceOrderService = commerceOrderService;
@@ -171,6 +175,14 @@ public class CommerceOrderContentDisplayContext {
 		return commerceAccountId;
 	}
 
+	public List<CommerceOrderImporterType> getCommerceImporterTypes(
+			CommerceOrder commerceOrder)
+		throws PortalException {
+
+		return _commerceOrderImporterTypeRegistry.getCommerceOrderImporterTypes(
+			commerceOrder);
+	}
+
 	public CommerceOrder getCommerceOrder() throws PortalException {
 		long commerceOrderId = getCommerceOrderId();
 
@@ -198,6 +210,11 @@ public class CommerceOrderContentDisplayContext {
 
 	public long getCommerceOrderId() {
 		return ParamUtil.getLong(_httpServletRequest, "commerceOrderId");
+	}
+
+	public CommerceOrderImporterType getCommerceOrderImporterType(String key) {
+		return _commerceOrderImporterTypeRegistry.getCommerceOrderImporterType(
+			key);
 	}
 
 	public String getCommerceOrderItemsDetailURL(long commerceOrderId) {
@@ -622,6 +639,8 @@ public class CommerceOrderContentDisplayContext {
 	private final CommerceContext _commerceContext;
 	private final Format _commerceOrderDateFormatDate;
 	private final Format _commerceOrderDateFormatTime;
+	private final CommerceOrderImporterTypeRegistry
+		_commerceOrderImporterTypeRegistry;
 	private CommerceOrderNote _commerceOrderNote;
 	private final long _commerceOrderNoteId;
 	private final CommerceOrderNoteService _commerceOrderNoteService;

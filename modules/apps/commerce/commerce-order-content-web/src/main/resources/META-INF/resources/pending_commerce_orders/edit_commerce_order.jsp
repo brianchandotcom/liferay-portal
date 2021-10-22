@@ -300,6 +300,32 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 		showWhenSingleIcon="<%= true %>"
 		triggerCssClass="btn btn-lg btn-monospaced btn-primary position-fixed thumb-menu"
 	>
+
+		<%
+		PortletURL viewCommerceOrderImporterTypeURL = PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCRenderCommandName(
+			"/commerce_open_order_content/view_commerce_order_importer_type"
+		).setParameter(
+			"commerceOrderId", commerceOrder.getCommerceOrderId()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildPortletURL();
+
+		for (CommerceOrderImporterType commerceOrderImporterType : commerceOrderContentDisplayContext.getCommerceImporterTypes(commerceOrder)) {
+			viewCommerceOrderImporterTypeURL.setParameter("commerceOrderImporterTypeKey", commerceOrderImporterType.getKey());
+		%>
+
+			<liferay-ui:icon
+				message="<%= commerceOrderImporterType.getLabel(locale) %>"
+				url="<%= viewCommerceOrderImporterTypeURL.toString() %>"
+				useDialog="<%= true %>"
+			/>
+
+		<%
+		}
+		%>
+
 		<liferay-ui:icon
 			message="print"
 			url='<%= "javascript:window.print();" %>'

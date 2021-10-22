@@ -2093,11 +2093,43 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Form's storage type when reactivated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectReappearsFormStorageTypeWhenReactivated {
 
-		// TODO LPS-140883 ObjectReappearsFormStorageTypeWhenReactivated pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.saveObject();
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_SELECT_OBJECT");
+
+		AssertElementPresent(
+			key_label = "Custom Object",
+			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+
 
 	}
 

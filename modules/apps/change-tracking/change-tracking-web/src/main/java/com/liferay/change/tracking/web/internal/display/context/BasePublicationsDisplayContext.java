@@ -19,11 +19,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.util.ConcurrentModificationException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,33 +40,13 @@ public abstract class BasePublicationsDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		if (_displayStyle != null) {
+		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
 		}
 
-		String displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = _portalPreferences.getValue(
-				CTPortletKeys.PUBLICATIONS,
-				getPortalPreferencesPrefix() + "-display-style", "list");
-		}
-
-		try {
-			_portalPreferences.setValue(
-				CTPortletKeys.PUBLICATIONS,
-				getPortalPreferencesPrefix() + "-display-style", displayStyle);
-		}
-		catch (ConcurrentModificationException
-					concurrentModificationException) {
-
-			log.error(
-				concurrentModificationException,
-				concurrentModificationException);
-		}
-
-		_displayStyle = displayStyle;
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest, CTPortletKeys.PUBLICATIONS,
+			getPortalPreferencesPrefix() + "-display-style", "list");
 
 		return _displayStyle;
 	}

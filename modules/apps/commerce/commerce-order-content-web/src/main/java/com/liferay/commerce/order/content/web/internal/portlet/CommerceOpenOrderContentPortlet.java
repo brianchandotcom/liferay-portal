@@ -22,6 +22,7 @@ import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext;
+import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
@@ -112,6 +113,7 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 				commerceOrderContentDisplayContext =
 					new CommerceOrderContentDisplayContext(
 						_commerceAddressService, _commerceChannelLocalService,
+						_commerceOrderImporterTypeRegistry,
 						_commerceOrderNoteService,
 						_commerceOrderPriceCalculation, _commerceOrderService,
 						_commerceOrderTypeService,
@@ -185,6 +187,10 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
+
+	@Reference
+	private CommerceOrderImporterTypeRegistry
+		_commerceOrderImporterTypeRegistry;
 
 	@Reference
 	private CommerceOrderNoteService _commerceOrderNoteService;

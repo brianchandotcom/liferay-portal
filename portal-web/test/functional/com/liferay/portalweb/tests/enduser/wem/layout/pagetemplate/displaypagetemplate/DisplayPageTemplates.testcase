@@ -506,9 +506,10 @@ definition {
 				id = "element-text");
 
 			AssertTextEquals.assertPartialText(
+				fragmentName = "html",
 				id = "element-html",
-				key_fragmentName = "HTML",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				value1 = "HTML Example");
 		}
 	}

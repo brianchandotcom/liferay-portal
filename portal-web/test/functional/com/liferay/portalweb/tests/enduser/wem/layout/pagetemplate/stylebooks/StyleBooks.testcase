@@ -200,9 +200,10 @@ definition {
 			var fontFamily = '''"Courier New"''';
 
 			AssertCssValue(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_fragmentName = "Paragraph",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-family",
 				value1 = "${fontFamily}");
 
@@ -349,16 +350,18 @@ definition {
 			Navigator.gotoBack();
 
 			AssertCssValue(
+				fragmentName = "button",
 				id = "link",
-				key_fragmentName = "Button",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(0, 255, 0, 1)");
 
 			AssertCssValue(
+				fragmentName = "heading",
 				id = "element-text",
-				key_fragmentName = "Heading",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-size",
 				value1 = "32px");
 
@@ -420,16 +423,18 @@ definition {
 			Navigator.gotoBack();
 
 			AssertCssValue(
+				fragmentName = "button",
 				id = "link",
-				key_fragmentName = "Button",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(107, 108, 126, 1)");
 
 			AssertCssValue(
+				fragmentName = "heading",
 				id = "element-text",
-				key_fragmentName = "Heading",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-size",
 				value1 = "14px");
 

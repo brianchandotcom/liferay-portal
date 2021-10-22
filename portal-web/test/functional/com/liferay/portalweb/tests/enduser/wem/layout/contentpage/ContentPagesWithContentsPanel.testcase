@@ -1153,9 +1153,10 @@ definition {
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
 			AssertCssValue(
+				fragmentName = "heading",
 				id = "element-text",
-				key_fragmentName = "Heading",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "outline-style",
 				value1 = "dashed");
 
@@ -1168,9 +1169,10 @@ definition {
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
 			AssertCssValue(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_fragmentName = "Paragraph",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "outline-style",
 				value1 = "dashed");
 		}
@@ -1197,9 +1199,10 @@ definition {
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
 			AssertCssValue(
+				fragmentName = "heading",
 				id = "element-text",
-				key_fragmentName = "Heading",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "outline-style",
 				value1 = "dashed");
 
@@ -1212,9 +1215,10 @@ definition {
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
 			AssertCssValue(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_fragmentName = "Paragraph",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "outline-style",
 				value1 = "dashed");
 		}
@@ -1306,9 +1310,10 @@ definition {
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
 			AssertCssValue(
+				fragmentName = "heading",
 				id = "element-text",
-				key_fragmentName = "Heading",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "outline-style",
 				value1 = "dashed");
 
@@ -1321,9 +1326,10 @@ definition {
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
 			AssertCssValue(
+				fragmentName = "button",
 				id = "link",
-				key_fragmentName = "Button",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "outline-style",
 				value1 = "dashed");
 

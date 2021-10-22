@@ -119,11 +119,10 @@ definition {
 
 			PageEditor.waitForAutoSave();
 
-			AssertTextEquals(
-				id = "element-text",
-				key_fragmentName = "Paragraph",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
-				value1 = "Web Content Title");
+			PageEditor.viewFragmentEditableText(
+				editableText = "Web Content Title",
+				fragmentName = "Paragraph",
+				id = "element-text");
 		}
 
 		task ("Select document as inline content of Image") {
@@ -179,14 +178,16 @@ definition {
 
 		task ("Assert can edit editable field of Heading fragment") {
 			Click(
+				fragmentName = "heading",
 				id = "element-text",
-				key_fragmentName = "heading",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER");
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			DoubleClick(
+				fragmentName = "heading",
 				id = "element-text",
-				key_fragmentName = "heading",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER");
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			AssertElementPresent(locator1 = "//*[contains(@class,'component-heading') and contains(@data-lfr-editable-id,'element-text')]/div[contains(@class,'cke_editable_inline')]");
 
@@ -195,9 +196,10 @@ definition {
 
 		task ("Assert can select mapped content of Paragraph fragment") {
 			Click(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_fragmentName = "paragraph",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER");
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			Navigator.gotoNavTab(navTab = "Mapping");
 
@@ -266,11 +268,11 @@ definition {
 		}
 
 		task ("Assert Edited Web Content") {
-			AssertTextEquals(
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
 				id = "element-text",
-				key_fragmentName = "paragraph",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER",
-				value1 = "Web Content Title Edit");
+				index = "3",
+				text = "Web Content Title Edit");
 		}
 
 		task ("Assert Edited Blogs Entry") {

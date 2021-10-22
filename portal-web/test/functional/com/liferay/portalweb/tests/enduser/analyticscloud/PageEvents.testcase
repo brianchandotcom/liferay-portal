@@ -695,7 +695,7 @@ definition {
 	test CheckPageUnLoadedWhenLeavePage {
 		property proxy.server.enabled = "true";
 
-		task ("Add the second widget page") {		
+		task ("Add the second widget page") {
 			ACUtils.addPage(layoutName = "Test Page Name");
 		}
 

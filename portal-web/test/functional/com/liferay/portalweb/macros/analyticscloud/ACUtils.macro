@@ -1,21 +1,5 @@
 definition {
 
-	macro addSiteAndPage {
-		if (!(isSet(siteName))) {
-			siteName = "Site Name";
-		}
-
-		JSONGroup.addGroup(groupName = "${siteName}");
-
-		if (!(isSet(layoutName))) {
-			layoutName = "AC Page";
-		}
-
-		ACUtils.addPage(
-			siteName = "${siteName}",
-			layoutName = "${layoutName}");
-	}
-
 	macro addPage {
 		if (!(isSet(siteName))) {
 			siteName = "Site Name";
@@ -28,6 +12,22 @@ definition {
 		JSONLayout.addPublicLayout(
 			groupName = "${siteName}",
 			layoutName = "${layoutName}");
+	}
+
+	macro addSiteAndPage {
+		if (!(isSet(siteName))) {
+			siteName = "Site Name";
+		}
+
+		JSONGroup.addGroup(groupName = "${siteName}");
+
+		if (!(isSet(layoutName))) {
+			layoutName = "AC Page";
+		}
+
+		ACUtils.addPage(
+			layoutName = "${layoutName}",
+			siteName = "${siteName}");
 	}
 
 	macro addWidgetToPage {

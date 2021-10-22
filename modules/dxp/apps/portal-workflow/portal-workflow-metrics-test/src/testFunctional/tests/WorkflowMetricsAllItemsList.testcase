@@ -2373,7 +2373,6 @@ definition {
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Multi Task Process");
 
 		WorkflowMetricsAllItemsList.assertProcessStepTooltipMessage(workflowInstanceName = "task1, task2, task3");
-
 	}
 
 	@description = "LPS-92053 - Verify that the Go to submission page button, on hover, displays a tooltip saying Open page in new tab"

@@ -109,10 +109,11 @@ definition {
 
 		task ("Assert chart popover date formatted") {
 			var formattedDate = ACIndividualsDashboard.getChartPopoverDate();
+			var formattedDate = StringUtil.extractFirst("${formattedDate}",",");
 
 			ACUtils.assertDatePattern(
 				date = "${formattedDate}",
-				format = "yyyy MMM dd");
+				format = "MMM d");
 		}
 	}
 

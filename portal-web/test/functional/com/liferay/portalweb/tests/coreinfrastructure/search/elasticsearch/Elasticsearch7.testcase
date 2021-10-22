@@ -259,11 +259,11 @@ definition {
 		Clustering.viewClusterStatusInConsole();
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Sidecar Elasticsearch liferay started at [\d\.]+:9201",
+			expectedText = "Sidecar Elasticsearch liferay started",
 			nodePort = "8080");
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Sidecar Elasticsearch liferay started at [\d\.]+:9202",
+			expectedText = "Sidecar Elasticsearch liferay started",
 			nodePort = "9080");
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(

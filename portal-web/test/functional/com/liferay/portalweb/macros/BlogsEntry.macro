@@ -3,7 +3,15 @@ definition {
 	var entryAuthorFullName = "Test Test";
 
 	macro addContent {
-		AlloyEditor.addContent(content = "${entryContent}");
+		if (isSet(javascript)) {
+			Type(
+				key_editor = "content",
+				locator1 = "AlloyEditor#EDITOR",
+				value1 = "${entryContent}");
+		}
+		else {
+			AlloyEditor.addContent(content = "${entryContent}");
+		}
 	}
 
 	macro addContentWithInlineImage {

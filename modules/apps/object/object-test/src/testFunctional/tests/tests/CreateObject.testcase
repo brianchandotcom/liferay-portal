@@ -2111,11 +2111,39 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Page Template (subtype) when reactivated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectReappearsPageTemplateWhenReactivated {
 
-		// TODO LPS-140881 ObjectReappearsPageTemplateWhenReactivated pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.saveObject();
+
+		VisualizeObjectDisplayPage.openPageTemplate();
+
+		Click(locator1 = "VisualizeObjectDisplayPage#SELECT_BLANK_OBJECT_DISPLAY_PAGE_TEMPLATE");
+
+		Click(locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE");
+
+		AssertElementPresent(
+			locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE",
+			value1 = "Custom Object");
+
 
 	}
 

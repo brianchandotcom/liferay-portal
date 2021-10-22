@@ -1,4 +1,5 @@
 import ClayForm, { ClayInput } from "@clayui/form";
+import classNames from 'classnames';
 import { useField } from "formik";
 import { email, required, validate } from "../utils/validations.form";
 
@@ -16,16 +17,12 @@ const Input = ({ groupStyle, helper, label, validations, ...props }) => {
         validate: (value) => validate(validations, value)
     });
 
-    const getStyleStatus = () => {
-        if (meta.touched) {
-            return meta.error ? " has-error" : " has-success";
-        }
-
-        return "";
-    };
-
     return (
-        <ClayForm.Group className={`w-100${getStyleStatus()} ${groupStyle ? groupStyle : ""}`}>
+        <ClayForm.Group className={classNames("w-100", {
+            groupStyle,
+            "has-error": meta.touched && meta.error,
+            "has-success": meta.touched && !meta.error,
+        })}>
             <label>
                 {label} {props.required && <span className="ml-n1 text-danger text-paragraph-sm">*</span>}
                 <ClayInput {...field} {...props} />

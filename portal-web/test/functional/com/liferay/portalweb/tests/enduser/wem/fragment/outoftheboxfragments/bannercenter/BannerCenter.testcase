@@ -87,7 +87,7 @@ definition {
 				text = "This is a simple banner component that you can use when you need extra attention to featured content or information.");
 
 			ContentPages.viewFragmentText(
-				fragmentName = "paragraph",
+				fragmentName = "button",
 				id = "link",
 				text = "Go Somewhere");
 

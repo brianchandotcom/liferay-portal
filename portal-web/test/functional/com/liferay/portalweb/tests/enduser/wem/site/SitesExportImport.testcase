@@ -140,7 +140,7 @@ definition {
 ''';
 
 			var htmlSnippet = '''
-<${configuration.headingLevel} class="component-heading mb-0 text-break" data-lfr-editable-id="element-text" data-lfr-editable-type="text">
+<${configuration.headingLevel} class="component-global-fragment-name mb-0 text-break" data-lfr-editable-id="element-text" data-lfr-editable-type="text">
 	Heading Example
 </${configuration.headingLevel}>
 			''';

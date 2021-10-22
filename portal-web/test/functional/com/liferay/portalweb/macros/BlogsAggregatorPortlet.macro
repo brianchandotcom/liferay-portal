@@ -16,6 +16,18 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro selectDisplayStyle {
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		Select(
+			locator1 = "Select#DISPLAY_STYLE",
+			value1 = "${displayStyle}");
+
+		IFrame.saveConfiguration();
+	}
+
 	macro viewBlogsEntryViaBAPortletPG {
 		for (var entryTitle : list "${viewEntryTitle}") {
 			var key_entryTitle = "${entryTitle}";

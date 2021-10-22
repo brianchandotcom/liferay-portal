@@ -48,18 +48,6 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro selectDisplayStyle {
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-		BlogsConfiguration.selectConfigurationIFrame();
-
-		Select(
-			locator1 = "Select#DISPLAY_STYLE",
-			value1 = "${displayStyle}");
-
-		IFrame.saveConfiguration();
-	}
-
 	macro selectDisplayTemplate {
 		Select(
 			locator1 = "Select#DISPLAY_TEMPLATE",

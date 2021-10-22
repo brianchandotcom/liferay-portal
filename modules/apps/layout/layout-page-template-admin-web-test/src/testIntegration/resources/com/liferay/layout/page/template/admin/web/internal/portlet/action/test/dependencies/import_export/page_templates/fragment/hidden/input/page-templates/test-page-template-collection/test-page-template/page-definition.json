@@ -1,0 +1,55 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "test-text-fragment"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "element-text",
+							"value": {
+								"fragmentLink": {
+									"value_i18n": {
+									}
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "p2"
+									}
+								}
+							}
+						}
+					],
+					"fragmentStyle": {
+						"hidden": true
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"hidden": false
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"hidden": true
+							},
+							"id": "portraitMobile"
+						}
+					]
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

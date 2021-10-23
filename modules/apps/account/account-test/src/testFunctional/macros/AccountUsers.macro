@@ -54,13 +54,19 @@ definition {
 	}
 
 	macro editUser {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "${accountUser}");
+		if ("${accountManagementWidget}" == "true") {
+			LexiconEntry.gotoEntry(rowEntry = "${accountUser}");
+		}
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Portlet#HEADER",
-			value1 = "Edit User");
+		else {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${accountUser}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Portlet#HEADER",
+				value1 = "Edit User");
+		}
 
 		if (isSet(editScreenName)) {
 			Type(

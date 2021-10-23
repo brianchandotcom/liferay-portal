@@ -423,7 +423,7 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
 
 		OneDrive.AddDocument(
-			dmDocumentContent = "Alice's Adventures in Wonderland.docx",
+			dmDocumentContent = "Since 2004 Liferay has been helping its customers, employees, partners, and community reach their full potential to serve others. With open source roots, Liferay has grown to over 900 employees in 23 offices across the globe. Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
 			dmDocumentTitle = "Auto Tagging Word Doc Title",
 			dmDocumentTypeName = "Word");
 
@@ -435,7 +435,7 @@ definition {
 
 		DMDocument.viewPG(
 			dmDocumentTitle = "Auto Tagging Word Doc Title",
-			tagNameList = "adventures");
+			tagNameList = "liferay");
 	}
 
 	@description = "This test ensures that no residual data is left in the Portal UI after canceling checkout under site admin on an Excel document during creation."

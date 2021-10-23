@@ -267,6 +267,72 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Account Name");
 	}
 
+	@description = "This test asserts that an Account Administrator can edit the info of users who belong to that account."
+	@priority = "4"
+	test AccountAdminCanEditOtherUserInfo {
+		task ("Sign in as Super User and add additional user into an account") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.addNewUserToBusinessAccount(
+				accountName = "Account Name",
+				assigneeName = "userfn1",
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+		}
+
+		task ("Create and assign a new role to Account Admin that allows for them to view and edit other users") {
+			JSONRole.addRegularRole(roleTitle = "Edit User Role");
+
+			for (var resourceActionIndex : list "UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.portal.kernel.model.User",
+					roleTitle = "Edit User Role");
+			}
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Edit User Role",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Sign back in as Account Admin and edit the other user name") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Navigator.gotoNavTab(navTab = "Users");
+
+			AccountUsers.editUser(
+				accountManagementWidget = "true",
+				accountUser = "userfn1 userln1",
+				editFirstName = "userEdit");
+		}
+
+		task ("Assert that the user has the edited first name and the original name cannot be found") {
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Navigator.gotoNavTab(navTab = "Users");
+
+			LexiconEntry.viewEntryName(rowEntry = "userEdit userln1");
+
+			LexiconEntry.viewNoEntry(rowEntry = "userfn1 userln1");
+		}
+	}
+
 	@description = "This test asserts that an Account Admin can set a billing address to an Account."
 	@priority = "5"
 	test AccountAdminCanSetDefaultBillingAddress {

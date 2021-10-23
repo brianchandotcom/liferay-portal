@@ -142,12 +142,10 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 
 				<clay:button
 					displayType="secondary"
-					id="saveTemplate2"
+					id='<%= liferayPortletResponse.getNamespace() + "saveTemplate" %>'
 					label="save-as-template"
 					type="button"
 				/>
-
-				<aui:button disabled="<%= true %>" name="saveTemplate" value="save-as-template" />
 
 				<clay:link
 					displayType="secondary"

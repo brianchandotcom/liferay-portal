@@ -62,6 +62,10 @@ public interface BatchPlannerLogService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchPlannerLog getBatchPlannerLog(long batchPlannerLogId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBatchPlannerLogsCount(long batchPlannerPlanId)
 		throws PortalException;
 

@@ -105,6 +105,25 @@ public class BatchPlannerLogServiceSoap {
 		}
 	}
 
+	public static com.liferay.batch.planner.model.BatchPlannerLogSoap
+			getBatchPlannerLog(long batchPlannerLogId)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.planner.model.BatchPlannerLog returnValue =
+				BatchPlannerLogServiceUtil.getBatchPlannerLog(
+					batchPlannerLogId);
+
+			return com.liferay.batch.planner.model.BatchPlannerLogSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static int getBatchPlannerLogsCount(long batchPlannerPlanId)
 		throws RemoteException {
 

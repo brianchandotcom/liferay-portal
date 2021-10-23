@@ -53,6 +53,14 @@ public class BatchPlannerLogServiceWrapper
 	}
 
 	@Override
+	public com.liferay.batch.planner.model.BatchPlannerLog getBatchPlannerLog(
+			long batchPlannerLogId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerLogService.getBatchPlannerLog(batchPlannerLogId);
+	}
+
+	@Override
 	public int getBatchPlannerLogsCount(long batchPlannerPlanId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

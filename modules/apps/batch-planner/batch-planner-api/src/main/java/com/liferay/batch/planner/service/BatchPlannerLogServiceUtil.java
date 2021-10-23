@@ -56,6 +56,12 @@ public class BatchPlannerLogServiceUtil {
 		return getService().deleteBatchPlannerLog(batchPlannerLogId);
 	}
 
+	public static BatchPlannerLog getBatchPlannerLog(long batchPlannerLogId)
+		throws PortalException {
+
+		return getService().getBatchPlannerLog(batchPlannerLogId);
+	}
+
 	public static int getBatchPlannerLogsCount(long batchPlannerPlanId)
 		throws PortalException {
 

@@ -40,15 +40,13 @@ definition {
 		Pause(locator1 = "10000");
 
 		if (isSet(dmDocumentContent)) {
-			Pause(locator1 = "10000");
+			WaitForElementPresent(locator1 = "OneDrive#DOCUMENTS_CONTENT");
 
-			Click(locator1 = "OneDrive#DOCUMENTS_CONTENT");
-
-			Pause(locator1 = "10000");
-
-			Type(
+			Type.sendKeys(
 				locator1 = "OneDrive#DOCUMENTS_CONTENT",
 				value1 = "${dmDocumentContent}");
+
+			WaitForElementPresent(locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS");
 		}
 
 		Navigator.closeWindow();

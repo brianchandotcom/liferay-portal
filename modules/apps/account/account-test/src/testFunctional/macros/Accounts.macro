@@ -1124,6 +1124,8 @@ definition {
 				locator1 = "Button#UPDATE",
 				value1 = "Update");
 		}
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro setDefaultBillingAddress {

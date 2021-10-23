@@ -38,7 +38,7 @@
 <!--DOCUMENTS-->
 <tr>
 	<td>DOCUMENTS_SAVE_STATUS</td>
-	<td>//span[@id='BreadcrumbSaveStatus']</td>
+	<td>//span[@data-unique-id='DocumentTitleSaveStatus' and contains(.,'Saved')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -53,7 +53,7 @@
 </tr>
 <tr>
 	<td>DOCUMENTS_CONTENT</td>
-	<td>//div[@id='WACViewPanel_EditingElement']</td>
+	<td>//div[@id='WACViewPanel_EditingElement']//p//span[contains(@class,'NormalTextRun')]</td>
 	<td></td>
 </tr>
 </tbody>

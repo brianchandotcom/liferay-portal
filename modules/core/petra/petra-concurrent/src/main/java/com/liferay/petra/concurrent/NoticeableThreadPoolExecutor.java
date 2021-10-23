@@ -260,18 +260,18 @@ public class NoticeableThreadPoolExecutor
 
 		@Override
 		public void run() {
-			_threadPoolExecutor.execute(_runnable);
+			_workerThreadPoolExecutor.execute(_runnable);
 		}
 
 		private DispatchRunnable(
-			ThreadPoolExecutor threadPoolExecutor, Runnable runnable) {
+			ThreadPoolExecutor workerThreadPoolExecutor, Runnable runnable) {
 
-			_threadPoolExecutor = threadPoolExecutor;
+			_workerThreadPoolExecutor = workerThreadPoolExecutor;
 			_runnable = runnable;
 		}
 
 		private final Runnable _runnable;
-		private final ThreadPoolExecutor _threadPoolExecutor;
+		private final ThreadPoolExecutor _workerThreadPoolExecutor;
 
 	}
 

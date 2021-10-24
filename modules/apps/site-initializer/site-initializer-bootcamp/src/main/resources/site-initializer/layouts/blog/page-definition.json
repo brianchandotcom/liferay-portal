@@ -290,7 +290,7 @@
 																				"key": "bootcamp-button"
 																			},
 																			"fragmentConfig": {
-																				"buttonSize": "nm",
+																				"buttonSize": "lg",
 																				"buttonType": "primary"
 																			},
 																			"fragmentFields": [

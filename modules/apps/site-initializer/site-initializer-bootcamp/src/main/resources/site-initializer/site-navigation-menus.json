@@ -3,7 +3,7 @@
 		"name": "Main Navigation",
 		"pages": [
 			{
-				"friendlyURL": "/home",
+				"friendlyURL": "/courses",
 				"privateLayout": false
 			},
 			{

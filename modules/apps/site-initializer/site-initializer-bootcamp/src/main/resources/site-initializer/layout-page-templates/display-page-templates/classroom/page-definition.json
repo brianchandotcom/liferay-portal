@@ -428,7 +428,6 @@
 																			],
 																			"fragmentStyle": {
 																				"fontFamily": "fontFamilySansSerif",
-																				"fontSize": "fontSizeSm",
 																				"marginBottom": "1"
 																			}
 																		},
@@ -495,7 +494,10 @@
 																						}
 																					}
 																				}
-																			]
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif"
+																			}
 																		},
 																		"type": "Fragment"
 																	}
@@ -582,7 +584,6 @@
 																			],
 																			"fragmentStyle": {
 																				"fontFamily": "fontFamilySansSerif",
-																				"fontSize": "fontSizeSm",
 																				"marginBottom": "1"
 																			}
 																		},
@@ -649,7 +650,10 @@
 																						}
 																					}
 																				}
-																			]
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif"
+																			}
 																		},
 																		"type": "Fragment"
 																	}
@@ -736,7 +740,6 @@
 																			],
 																			"fragmentStyle": {
 																				"fontFamily": "fontFamilySansSerif",
-																				"fontSize": "fontSizeSm",
 																				"marginBottom": "1"
 																			}
 																		},
@@ -803,7 +806,10 @@
 																						}
 																					}
 																				}
-																			]
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif"
+																			}
 																		},
 																		"type": "Fragment"
 																	}
@@ -822,7 +828,7 @@
 														"key": "BASIC_COMPONENT-heading"
 													},
 													"fragmentConfig": {
-														"headingLevel": "h4"
+														"headingLevel": "h5"
 													},
 													"fragmentFields": [
 														{
@@ -1069,11 +1075,11 @@
 											"widgetConfig": {
 												"displayDepth": "0",
 												"displayStyle": "ddmTemplate_NAVBAR-BLANK-FTL",
-												"displayStyleGroupId": "42233",
+												"displayStyleGroupId": "[$GROUP_ID$]",
 												"expandedLevels": "auto",
 												"rootMenuItemLevel": "0",
 												"rootMenuItemType": "absolute",
-												"siteNavigationMenuId": "43346",
+												"siteNavigationMenuName": "Private Area Navigation",
 												"siteNavigationMenuType": "-1"
 											},
 											"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"

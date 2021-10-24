@@ -52,18 +52,18 @@
 									"id": "tablet"
 								}
 							],
-							"size": 3
+							"size": 2
 						},
 						"pageElements": [
 							{
 								"definition": {
 									"fragmentStyle": {
+										"backgroundColor": "",
 										"borderWidth": "0",
 										"height": "100vh",
 										"paddingBottom": "6",
-										"paddingLeft": "6",
-										"paddingRight": "6",
-										"paddingTop": "6"
+										"paddingLeft": "5",
+										"paddingTop": "5"
 									},
 									"fragmentViewports": [
 										{
@@ -79,9 +79,9 @@
 										"marginRight": 0,
 										"marginTop": 0,
 										"paddingBottom": 6,
-										"paddingLeft": 6,
-										"paddingRight": 6,
-										"paddingTop": 6,
+										"paddingLeft": 4,
+										"paddingRight": 0,
+										"paddingTop": 2,
 										"widthType": "Fluid"
 									}
 								},
@@ -89,42 +89,42 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "bootcamp-image"
+												"key": "bootcamp-heading"
 											},
 											"fragmentConfig": {
-												"imageSize": "w-100"
+												"displayLevel": "0",
+												"headingLevel": "h5"
 											},
 											"fragmentFields": [
 												{
-													"id": "image-square",
+													"id": "element-text",
 													"value": {
-														"fragmentImage": {
-															"description": {
-																"value_i18n": {
-																	"en_US": ""
-																}
-															},
-															"url": {
-																"value_i18n": {
-																}
-															}
-														},
 														"fragmentLink": {
 															"value_i18n": {
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Bootcamp"
 															}
 														}
 													}
 												}
 											],
 											"fragmentStyle": {
-												"marginBottom": "6",
-												"width": "140px"
+												"fontFamily": "fontFamilySansSerif",
+												"fontWeight": "fontWeightBold",
+												"marginBottom": "7",
+												"marginTop": "1"
 											}
 										},
 										"type": "Fragment"
 									},
 									{
 										"definition": {
+											"fragmentStyle": {
+												"paddingTop": "1"
+											},
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayDepth": "0",
@@ -168,7 +168,7 @@
 									"id": "tablet"
 								}
 							],
-							"size": 9
+							"size": 10
 						},
 						"pageElements": [
 							{
@@ -177,14 +177,16 @@
 										"backgroundColor": "gray100Color",
 										"borderWidth": "0",
 										"height": "100vh",
+										"marginLeft": "6",
 										"paddingBottom": "5",
 										"paddingLeft": "7",
-										"paddingRight": "6",
-										"paddingTop": "6"
+										"paddingRight": "7",
+										"paddingTop": "4"
 									},
 									"fragmentViewports": [
 										{
 											"fragmentViewportStyle": {
+												"marginLeft": "0",
 												"paddingBottom": "4",
 												"paddingLeft": "2",
 												"paddingRight": "2",
@@ -196,13 +198,13 @@
 									"layout": {
 										"borderWidth": 0,
 										"marginBottom": 0,
-										"marginLeft": 0,
+										"marginLeft": 6,
 										"marginRight": 0,
 										"marginTop": 0,
 										"paddingBottom": 4,
 										"paddingLeft": 8,
-										"paddingRight": 6,
-										"paddingTop": 6,
+										"paddingRight": 8,
+										"paddingTop": 2,
 										"widthType": "Fluid"
 									}
 								},

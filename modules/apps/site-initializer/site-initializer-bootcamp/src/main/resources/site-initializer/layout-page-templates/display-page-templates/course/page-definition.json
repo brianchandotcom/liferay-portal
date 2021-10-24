@@ -154,7 +154,6 @@
 													],
 													"fragmentStyle": {
 														"fontFamily": "fontFamilySansSerif",
-														"fontSize": "fontSizeSm",
 														"marginBottom": "2"
 													}
 												},
@@ -166,7 +165,7 @@
 														"key": "bootcamp-heading"
 													},
 													"fragmentConfig": {
-														"displayLevel": "5",
+														"displayLevel": "4",
 														"headingLevel": "h1"
 													},
 													"fragmentFields": [
@@ -252,18 +251,10 @@
 																"fragmentLink": {
 																	"value_i18n": {
 																	}
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "APPLY NOW&nbsp; &nbsp; ⟶"
-																	}
 																}
 															}
 														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "3"
-													}
+													]
 												},
 												"type": "Fragment"
 											}
@@ -383,6 +374,7 @@
 			{
 				"definition": {
 					"fragmentStyle": {
+						"borderWidth": "0",
 						"paddingBottom": "8",
 						"paddingLeft": "2",
 						"paddingRight": "2",
@@ -443,7 +435,7 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"marginBottom": "8"
+										"marginBottom": "7"
 									},
 									"fragmentViewports": [
 										{
@@ -508,7 +500,7 @@
 													},
 													"fragmentConfig": {
 														"displayLevel": "0",
-														"headingLevel": "h4"
+														"headingLevel": "h5"
 													},
 													"fragmentFields": [
 														{
@@ -529,7 +521,7 @@
 													"fragmentStyle": {
 														"fontFamily": "fontFamilySansSerif",
 														"fontWeight": "fontWeightBold",
-														"marginBottom": "3"
+														"marginBottom": "4"
 													}
 												},
 												"type": "Fragment"
@@ -653,7 +645,6 @@
 															"fragmentStyle": {
 																"borderWidth": "0",
 																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm",
 																"marginBottom": "1"
 															},
 															"layout": {
@@ -738,7 +729,6 @@
 															"fragmentStyle": {
 																"borderWidth": "0",
 																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm",
 																"marginBottom": "1"
 															},
 															"layout": {
@@ -823,7 +813,6 @@
 															"fragmentStyle": {
 																"borderWidth": "0",
 																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm",
 																"marginBottom": "1"
 															},
 															"layout": {
@@ -908,7 +897,6 @@
 															"fragmentStyle": {
 																"borderWidth": "0",
 																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm",
 																"marginBottom": "1"
 															},
 															"layout": {
@@ -993,7 +981,6 @@
 															"fragmentStyle": {
 																"borderWidth": "0",
 																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm",
 																"marginBottom": "1"
 															},
 															"layout": {
@@ -1187,7 +1174,6 @@
 															],
 															"fragmentStyle": {
 																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm",
 																"marginBottom": "1"
 															}
 														},
@@ -1257,7 +1243,6 @@
 															],
 															"fragmentStyle": {
 																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm",
 																"textColor": "secondaryColor"
 															}
 														},
@@ -1291,7 +1276,6 @@
 															],
 															"fragmentStyle": {
 																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm",
 																"marginBottom": "4",
 																"textColor": "secondaryColor"
 															}
@@ -1323,7 +1307,10 @@
 																		}
 																	}
 																}
-															]
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif"
+															}
 														},
 														"type": "Fragment"
 													}
@@ -1410,7 +1397,6 @@
 															],
 															"fragmentStyle": {
 																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm",
 																"marginBottom": "1"
 															}
 														},
@@ -1480,7 +1466,6 @@
 															],
 															"fragmentStyle": {
 																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm",
 																"textColor": "secondaryColor"
 															}
 														},
@@ -1514,7 +1499,6 @@
 															],
 															"fragmentStyle": {
 																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm",
 																"marginBottom": "4",
 																"textColor": "secondaryColor"
 															}
@@ -1546,7 +1530,10 @@
 																		}
 																	}
 																}
-															]
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif"
+															}
 														},
 														"type": "Fragment"
 													}
@@ -1633,7 +1620,6 @@
 															],
 															"fragmentStyle": {
 																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm",
 																"marginBottom": "1"
 															}
 														},
@@ -1703,7 +1689,6 @@
 															],
 															"fragmentStyle": {
 																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm",
 																"textColor": "secondaryColor"
 															}
 														},
@@ -1737,7 +1722,6 @@
 															],
 															"fragmentStyle": {
 																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm",
 																"marginBottom": "4",
 																"textColor": "secondaryColor"
 															}
@@ -1769,7 +1753,10 @@
 																		}
 																	}
 																}
-															]
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif"
+															}
 														},
 														"type": "Fragment"
 													}
@@ -1852,6 +1839,8 @@
 							],
 							"fragmentStyle": {
 								"fontFamily": "fontFamilySansSerif",
+								"fontSize": "fontSizeLg",
+								"fontWeight": "fontWeightBold",
 								"marginBottom": "5",
 								"textAlign": "center"
 							},
@@ -1883,7 +1872,7 @@
 										},
 										"text": {
 											"value_i18n": {
-												"en_US": "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype."
+												"en_US": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 											}
 										}
 									}
@@ -1893,7 +1882,7 @@
 								"marginBottom": "5",
 								"maxWidth": "100%",
 								"textAlign": "center",
-								"width": "600px"
+								"width": "575px"
 							},
 							"fragmentViewports": [
 								{
@@ -1921,11 +1910,6 @@
 									"value": {
 										"fragmentLink": {
 											"value_i18n": {
-											}
-										},
-										"text": {
-											"value_i18n": {
-												"en_US": "Apply now&nbsp; &nbsp;⟶"
 											}
 										}
 									}
@@ -1972,7 +1956,7 @@
 							},
 							"fragmentConfig": {
 								"displayLevel": "0",
-								"headingLevel": "h4"
+								"headingLevel": "h5"
 							},
 							"fragmentFields": [
 								{

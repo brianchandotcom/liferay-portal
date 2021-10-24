@@ -59,7 +59,7 @@
 						"marginBottom": "9",
 						"paddingLeft": "2",
 						"paddingRight": "2",
-						"paddingTop": "10"
+						"paddingTop": "9"
 					},
 					"fragmentViewports": [
 						{
@@ -120,7 +120,6 @@
 							],
 							"fragmentStyle": {
 								"fontFamily": "fontFamilySansSerif",
-								"fontSize": "fontSizeSm",
 								"marginBottom": "4"
 							},
 							"fragmentViewports": [
@@ -163,10 +162,10 @@
 								}
 							],
 							"fragmentStyle": {
-								"marginBottom": "5",
+								"marginBottom": "4",
 								"maxWidth": "100%",
 								"textAlign": "center",
-								"width": "720px"
+								"width": "800px"
 							}
 						},
 						"type": "Fragment"
@@ -202,7 +201,7 @@
 								"marginBottom": "7",
 								"maxWidth": "100%",
 								"textAlign": "center",
-								"width": "640px"
+								"width": "620px"
 							},
 							"fragmentViewports": [
 								{
@@ -293,7 +292,7 @@
 								"marginBottom": "7",
 								"maxWidth": "100%",
 								"textAlign": "center",
-								"width": "720px"
+								"width": "620px"
 							},
 							"fragmentViewports": [
 								{
@@ -335,7 +334,7 @@
 							"fragmentStyle": {
 								"fontSize": "fontSizeLg",
 								"maxWidth": "100%",
-								"width": "720px"
+								"width": "800px"
 							}
 						},
 						"type": "Fragment"
@@ -394,7 +393,7 @@
 								"borderWidth": "0",
 								"maxWidth": "100%",
 								"textAlign": "center",
-								"width": "720px"
+								"width": "680px"
 							},
 							"fragmentViewports": [
 								{
@@ -582,7 +581,7 @@
 									},
 									"fragmentConfig": {
 										"displayLevel": "0",
-										"headingLevel": "h4"
+										"headingLevel": "h5"
 									},
 									"fragmentFields": [
 										{
@@ -626,7 +625,7 @@
 												},
 												"text": {
 													"value_i18n": {
-														"en_US": "ALL ARTICLES&nbsp; &nbsp; ⟶"
+														"en_US": "All Articles"
 													}
 												}
 											}

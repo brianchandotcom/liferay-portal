@@ -333,12 +333,12 @@
 <!--FRAGMENT_CONTENT_AT_VIEW_MODE-->
 <tr>
 	<td>CONTRIBUTED_FRAGMENT_TEXT</td>
-	<td>xpath=(//div[contains(@id,'fragment-')][.//*[contains(@class,'component-${fragmentName}')]])[${index}]//*[contains(@data-lfr-editable-id,'${id}')]</td>
+	<td>xpath=(//div[contains(@id,'fragment-')][.//*[contains(@class,'${fragmentName}')]])[${index}]//*[contains(@data-lfr-editable-id,'${id}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTRIBUTED_FRAGMENT_IMAGE</td>
-	<td>xpath=(//div[contains(@id,'fragment-')][.//*[contains(@class,'component-${fragmentName}')]])[${index}]//*[contains(@data-lfr-editable-id,'${id}')][contains(@src,'${image}')]</td>
+	<td>xpath=(//div[contains(@id,'fragment-')][.//*[contains(@class,'${fragmentName}')]])[${index}]//*[contains(@data-lfr-editable-id,'${id}')][contains(@src,'${image}')]</td>
 	<td></td>
 </tr>
 <tr>

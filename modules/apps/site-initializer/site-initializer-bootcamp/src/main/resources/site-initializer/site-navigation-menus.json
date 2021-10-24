@@ -20,7 +20,7 @@
 		"name": "Private Area Navigation",
 		"pages": [
 			{
-				"friendlyURL": "/my-courses",
+				"friendlyURL": "/my-learning",
 				"privateLayout": false
 			},
 			{

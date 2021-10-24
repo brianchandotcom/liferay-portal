@@ -65,13 +65,6 @@
 										"paddingLeft": "5",
 										"paddingTop": "5"
 									},
-									"fragmentViewports": [
-										{
-											"fragmentViewportStyle": {
-											},
-											"id": "tablet"
-										}
-									],
 									"layout": {
 										"borderWidth": 0,
 										"marginBottom": 0,
@@ -81,7 +74,7 @@
 										"paddingBottom": 6,
 										"paddingLeft": 4,
 										"paddingRight": 0,
-										"paddingTop": 2,
+										"paddingTop": 4,
 										"widthType": "Fluid"
 									}
 								},
@@ -122,9 +115,6 @@
 									},
 									{
 										"definition": {
-											"fragmentStyle": {
-												"paddingTop": "1"
-											},
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayDepth": "0",
@@ -177,10 +167,10 @@
 										"backgroundColor": "gray100Color",
 										"borderWidth": "0",
 										"height": "100vh",
-										"marginLeft": "6",
+										"marginLeft": "7",
 										"paddingBottom": "5",
-										"paddingLeft": "7",
-										"paddingRight": "7",
+										"paddingLeft": "8",
+										"paddingRight": "8",
 										"paddingTop": "4"
 									},
 									"fragmentViewports": [
@@ -198,12 +188,12 @@
 									"layout": {
 										"borderWidth": 0,
 										"marginBottom": 0,
-										"marginLeft": 6,
+										"marginLeft": 8,
 										"marginRight": 0,
 										"marginTop": 0,
 										"paddingBottom": 4,
-										"paddingLeft": 8,
-										"paddingRight": 8,
+										"paddingLeft": 10,
+										"paddingRight": 10,
 										"paddingTop": 2,
 										"widthType": "Fluid"
 									}

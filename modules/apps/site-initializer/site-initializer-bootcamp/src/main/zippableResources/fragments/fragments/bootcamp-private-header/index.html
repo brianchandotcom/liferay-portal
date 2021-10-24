@@ -4,7 +4,7 @@
 	publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
 	publicSiteNavbarClass =""
 	userName = themeDisplay.getUser().getFirstName()
-	myCourses = publicFriendlyURL + "/my-courses"
+	myLearning = publicFriendlyURL + "/my-learning"
 	notifications = publicFriendlyURL + "/notifications"
 	accountSettings = publicFriendlyURL + "/account-settings"
 	layout = themeDisplay.getLayout()
@@ -34,8 +34,8 @@
 
 						<ul aria-labelledby="${fragmentEntryLinkNamespace}_dropdown_menu" class="dropdown-menu right">
 							<li>
-								<a class="dropdown-item" href="${myCourses}">
-									My Courses
+								<a class="dropdown-item" href="${myLearning}">
+									My Learning
 								</a>
 							</li>
 							<li>

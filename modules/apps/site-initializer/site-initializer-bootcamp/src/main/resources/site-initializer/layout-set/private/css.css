@@ -1,12 +1,12 @@
 /*----- TYPOGRAPHY -----*/
 
-/*Crimson Text*/
-
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&display=swap');
-
 /*Montserrat*/
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap');
+
+/*Source Serif*/
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital@0;1&display=swap');
 
 h1,
 h2,
@@ -16,13 +16,18 @@ h5,
 h6 {
 	color: inherit;
 	font-weight: inherit;
-	line-height: 1.1;
+	line-height: 1.25;
+	margin-bottom: var(--spacer-3);
 }
 
 /*-----GENERAL-----*/
 
 body {
-	line-height: 1.5;
+	line-height: 1.65;
+}
+
+p {
+	margin-bottom: var(--spacer-3);
 }
 
 a,
@@ -44,7 +49,7 @@ a:hover {
 	font-family: var(--font-family-sans-serif);
 	font-weight: var(--font-weight-bolder);
 	letter-spacing: 2px;
-	padding: var(--spacer-2) var(--spacer-4);
+	padding: var(--spacer-2) var(--spacer-3);
 	text-transform: uppercase;
 }
 
@@ -65,7 +70,14 @@ a:hover {
 }
 
 .bootcamp-btn .link-arrow {
+	display: inline-block;
 	margin-left: var(--spacer-2);
+	transform: translate(0, -1px);
+}
+
+.bootcamp-btn:hover .link-arrow {
+    transform: translate(4px, -1px);
+	transition: all 0.15s ease-in-out;
 }
 
 /*Form Controls*/
@@ -79,7 +91,6 @@ a:hover {
 }
 
 .form-control-nm {
-	font-size: var(--font-size-sm);
 	padding: var(--spacer) var(--spacer-5);
 }
 
@@ -103,9 +114,8 @@ a:hover {
 }
 
 .lfr-ddm-form-submit {
-	float: none !important;
-
 	border-radius: 0;
+	float: none !important;
 	font-family: var(--font-family-sans-serif);
 	font-size: 12px;
 	font-weight: var(--font-weight-bolder);
@@ -120,21 +130,30 @@ a:hover {
 
 .list-menu ul {
 	font-family: var(--font-family-sans-serif);
-	font-size: var(--font-size-sm);
     list-style: none;
 	padding-left: 0;
 }
 
-.list-menu .lfr-nav-item {
-	padding-bottom: 10px;	
-	padding-top: 10px;
+.list-menu .lfr-nav-item a {
+	display: block;
+	padding: 12px 16px;
+	text-decoration: none;
+	width: 100%;
+}
+
+.list-menu .lfr-nav-item a:hover {
+	color: var(--primary);
 }
 
 .list-menu .lfr-nav-item {
 	color: var(--secondary);
 }
 
-.list-menu .lfr-nav-item.active {
+.list-menu .lfr-nav-item.active a {
+	background-color: var(--gray-100);
 	color: var(--primary);
-	font-weight: var(--font-weight-bold);
+}
+
+.dropdown-item:hover {
+	background-color: var(--brand-color-2);
 }

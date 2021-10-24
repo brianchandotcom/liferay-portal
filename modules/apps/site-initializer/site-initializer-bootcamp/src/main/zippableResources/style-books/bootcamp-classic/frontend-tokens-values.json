@@ -149,7 +149,7 @@
 	},
 	"display1Size": {
 		"cssVariableMapping": "display1-size",
-		"value": "6.5rem"
+		"value": "6rem"
 	},
 	"display1Weight": {
 		"cssVariableMapping": "display1-weight",
@@ -157,7 +157,7 @@
 	},
 	"display2Size": {
 		"cssVariableMapping": "display2-size",
-		"value": "5rem"
+		"value": "4.5rem"
 	},
 	"display2Weight": {
 		"cssVariableMapping": "display2-weight",
@@ -165,7 +165,7 @@
 	},
 	"display3Size": {
 		"cssVariableMapping": "display3-size",
-		"value": "4.5rem"
+		"value": "4rem"
 	},
 	"display3Weight": {
 		"cssVariableMapping": "display3-weight",
@@ -173,7 +173,7 @@
 	},
 	"display4Size": {
 		"cssVariableMapping": "display4-size",
-		"value": "4rem"
+		"value": "3.25rem"
 	},
 	"display4Weight": {
 		"cssVariableMapping": "display4-weight",
@@ -181,11 +181,11 @@
 	},
 	"displayLineHeight": {
 		"cssVariableMapping": "display-line-height",
-		"value": "1"
+		"value": "1.1"
 	},
 	"fontFamilyBase": {
 		"cssVariableMapping": "font-family-base",
-		"value": "'Crimson Text', serif"
+		"value": "'Source Serif Pro', serif"
 	},
 	"fontFamilyMonospace": {
 		"cssVariableMapping": "font-family-monospace",
@@ -197,15 +197,15 @@
 	},
 	"fontSizeBase": {
 		"cssVariableMapping": "font-size-base",
-		"value": "1.25rem"
+		"value": "1rem"
 	},
 	"fontSizeLg": {
 		"cssVariableMapping": "font-size-lg",
-		"value": "1.45rem"
+		"value": "1.25rem"
 	},
 	"fontSizeSm": {
 		"cssVariableMapping": "font-size-sm",
-		"value": "1rem"
+		"value": "0.875rem"
 	},
 	"fontWeightBold": {
 		"cssVariableMapping": "font-weight-bold",
@@ -221,23 +221,23 @@
 	},
 	"h1FontSize": {
 		"cssVariableMapping": "h1-font-size",
-		"value": "3.25rem"
+		"value": "2.75rem"
 	},
 	"h2FontSize": {
 		"cssVariableMapping": "h2-font-size",
-		"value": "2.75rem"
+		"value": "2.5rem"
 	},
 	"h3FontSize": {
 		"cssVariableMapping": "h3-font-size",
-		"value": "2rem"
+		"value": "1.875rem"
 	},
 	"h4FontSize": {
 		"cssVariableMapping": "h4-font-size",
-		"value": "1.5rem"
+		"value": "1.65rem"
 	},
 	"h5FontSize": {
 		"cssVariableMapping": "h5-font-size",
-		"value": "1.25rem"
+		"value": "1.35rem"
 	},
 	"h6FontSize": {
 		"cssVariableMapping": "h6-font-size",

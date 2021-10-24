@@ -15,8 +15,11 @@
 package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -145,10 +148,13 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchUserException ||
+			if (exception instanceof ContactNameException ||
+				exception instanceof NoSuchUserException ||
 				exception instanceof PrincipalException ||
 				exception instanceof
-					RequiredRoleException.MustNotRemoveLastAdministator) {
+					RequiredRoleException.MustNotRemoveLastAdministator ||
+				exception instanceof UserEmailAddressException ||
+				exception instanceof UserScreenNameException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());
 

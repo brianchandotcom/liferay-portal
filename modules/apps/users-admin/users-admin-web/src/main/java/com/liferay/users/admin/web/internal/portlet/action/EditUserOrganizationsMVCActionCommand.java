@@ -14,7 +14,10 @@
 
 package com.liferay.users.admin.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -94,8 +97,11 @@ public class EditUserOrganizationsMVCActionCommand
 				user.getUserGroupIds(), serviceContext);
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchUserException ||
-				exception instanceof PrincipalException) {
+			if (exception instanceof ContactNameException ||
+				exception instanceof NoSuchUserException ||
+				exception instanceof PrincipalException ||
+				exception instanceof UserEmailAddressException ||
+				exception instanceof UserScreenNameException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());
 

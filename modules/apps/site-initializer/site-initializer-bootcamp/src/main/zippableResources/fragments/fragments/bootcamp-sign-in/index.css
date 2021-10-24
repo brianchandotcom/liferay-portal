@@ -30,8 +30,8 @@
 
 .sign-in-form .form-check label {
 	display: inline-block;
-	top: -2px;
 	left: 6px;
+	top: -2px;
 }
 
 .sign-in-form .form-group input {

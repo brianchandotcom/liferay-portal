@@ -1015,25 +1015,28 @@
 						"type": "Fragment"
 					},
 					{
-						"definition" : {
-						  "fragment" : {
-							"key" : "bootcamp-button"
-						  },
-						  "fragmentConfig" : {
-							"buttonType" : "primary",
-							"buttonSize" : "nm"
-						  },
-						  "fragmentFields" : [ {
-							"id" : "link",
-							"value" : {
-							  "fragmentLink" : {
-								"value_i18n" : { }
-							  }
-							}
-						  } ]
+						"definition": {
+							"fragment": {
+								"key": "bootcamp-button"
+							},
+							"fragmentConfig": {
+								"buttonSize": "nm",
+								"buttonType": "primary"
+							},
+							"fragmentFields": [
+								{
+									"id": "link",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										}
+									}
+								}
+							]
 						},
-						"type" : "Fragment"
-					  }
+						"type": "Fragment"
+					}
 				],
 				"type": "Section"
 			},

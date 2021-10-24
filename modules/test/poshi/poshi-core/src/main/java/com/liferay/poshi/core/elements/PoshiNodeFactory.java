@@ -262,6 +262,35 @@ public abstract class PoshiNodeFactory {
 				}
 			}
 
+			Collections.sort(
+				_poshiElements,
+				new Comparator<PoshiElement>() {
+
+					@Override
+					public int compare(
+						PoshiElement poshiElement1,
+						PoshiElement poshiElement2) {
+
+						Class<?> poshiElementClass1 = poshiElement1.getClass();
+						Class<?> poshiElementClass2 = poshiElement2.getClass();
+
+						String classSimpleName1 =
+							poshiElementClass1.getSimpleName();
+						String classSimpleName2 =
+							poshiElementClass2.getSimpleName();
+
+						if (classSimpleName1.equals("AndPoshiElement") ||
+							(classSimpleName1.equals("OrPoshiElement") &&
+							 !classSimpleName2.equals("AndPoshiElement"))) {
+
+							return -1;
+						}
+
+						return classSimpleName1.compareTo(classSimpleName2);
+					}
+
+				});
+
 			_definitionPoshiElement = _getDefinitionPoshiElement();
 		}
 		catch (IllegalAccessException | InstantiationException | IOException

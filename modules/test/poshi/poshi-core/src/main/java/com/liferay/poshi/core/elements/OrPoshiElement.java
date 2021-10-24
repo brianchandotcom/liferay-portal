@@ -134,6 +134,6 @@ public class OrPoshiElement extends PoshiElement {
 	private static final String _ELEMENT_NAME = "or";
 
 	private static final Pattern _conditionPattern = Pattern.compile(
-		"^(?!!|else)[\\s\\S]*\\|\\|[\\s\\S]*$");
+		"^(?!else)[\\s\\S]*\\|\\|[\\s\\S]*$");
 
 }

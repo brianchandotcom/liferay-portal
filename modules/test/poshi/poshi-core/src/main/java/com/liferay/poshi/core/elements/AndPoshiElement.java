@@ -134,6 +134,6 @@ public class AndPoshiElement extends PoshiElement {
 	private static final String _ELEMENT_NAME = "and";
 
 	private static final Pattern _conditionPattern = Pattern.compile(
-		"^(?!!|else)[\\s\\S]*&&[\\s\\S]*$", Pattern.DOTALL);
+		"^(?!else)[\\s\\S]*&&[\\s\\S]*$");
 
 }

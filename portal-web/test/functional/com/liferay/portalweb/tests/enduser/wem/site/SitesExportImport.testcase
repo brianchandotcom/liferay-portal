@@ -243,10 +243,10 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Site Name");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Heading Example");
+			ContentPages.viewFragmentText(
+				fragmentName = "global-fragment-name",
+				id = "element-text",
+				text = "Heading Example");
 		}
 	}
 

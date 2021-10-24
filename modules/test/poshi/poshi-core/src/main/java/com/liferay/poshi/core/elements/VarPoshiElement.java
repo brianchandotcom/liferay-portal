@@ -309,8 +309,6 @@ public class VarPoshiElement extends PoshiElement {
 				}
 			}
 			else {
-				value = StringEscapeUtils.escapeXml(value);
-
 				value = doubleQuoteContent(value);
 			}
 		}

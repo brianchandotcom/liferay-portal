@@ -85,7 +85,7 @@
 									},
 									"fragmentConfig": {
 										"displayLevel": "0",
-										"headingLevel": "h3"
+										"headingLevel": "h2"
 									},
 									"fragmentFields": [
 										{
@@ -105,7 +105,6 @@
 									],
 									"fragmentStyle": {
 										"fontFamily": "fontFamilySansSerif",
-										"fontWeight": "fontWeightBold",
 										"marginBottom": "7",
 										"textAlign": "left"
 									},
@@ -282,7 +281,7 @@
 												"definition": {
 													"fragmentStyle": {
 														"borderWidth": "0",
-														"marginBottom": "1"
+														"marginBottom": "2"
 													},
 													"layout": {
 														"align": "Center",
@@ -322,7 +321,7 @@
 																				"classPKReferences": {
 																					"en_US": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/smile_y.svg$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/smile.svg$]"
 																					}
 																				},
 																				"fragmentImageConfiguration": {
@@ -340,7 +339,6 @@
 																}
 															],
 															"fragmentStyle": {
-																"marginBottom": "1",
 																"marginRight": "2",
 																"textColor": "",
 																"width": "26px"
@@ -372,8 +370,7 @@
 																}
 															],
 															"fragmentStyle": {
-																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm"
+																"fontFamily": "fontFamilySansSerif"
 															}
 														},
 														"type": "Fragment"
@@ -385,7 +382,7 @@
 												"definition": {
 													"fragmentStyle": {
 														"borderWidth": "0",
-														"marginBottom": "1"
+														"marginBottom": "2"
 													},
 													"layout": {
 														"align": "Center",
@@ -425,7 +422,7 @@
 																				"classPKReferences": {
 																					"en_US": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/dollar_y.svg$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/dollar.svg$]"
 																					}
 																				},
 																				"fragmentImageConfiguration": {
@@ -443,7 +440,6 @@
 																}
 															],
 															"fragmentStyle": {
-																"marginBottom": "1",
 																"marginRight": "2",
 																"width": "26px"
 															}
@@ -474,8 +470,7 @@
 																}
 															],
 															"fragmentStyle": {
-																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm"
+																"fontFamily": "fontFamilySansSerif"
 															}
 														},
 														"type": "Fragment"
@@ -527,7 +522,7 @@
 																				"classPKReferences": {
 																					"en_US": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/calendar_y.svg$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/calendar.svg$]"
 																					}
 																				},
 																				"fragmentImageConfiguration": {
@@ -545,7 +540,6 @@
 																}
 															],
 															"fragmentStyle": {
-																"marginBottom": "1",
 																"marginRight": "2",
 																"width": "26px"
 															}
@@ -576,8 +570,7 @@
 																}
 															],
 															"fragmentStyle": {
-																"fontFamily": "fontFamilySansSerif",
-																"fontSize": "fontSizeSm"
+																"fontFamily": "fontFamilySansSerif"
 															}
 														},
 														"type": "Fragment"

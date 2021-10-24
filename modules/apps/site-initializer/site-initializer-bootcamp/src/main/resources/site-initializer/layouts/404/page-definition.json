@@ -5,7 +5,7 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
-						"marginBottom": "7",
+						"marginBottom": "9",
 						"paddingTop": "10",
 						"textAlign": "center"
 					},
@@ -35,7 +35,7 @@
 						"align": "Center",
 						"borderWidth": 0,
 						"contentDisplay": "FlexColumn",
-						"marginBottom": 8,
+						"marginBottom": 10,
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
@@ -136,6 +136,7 @@
 								}
 							],
 							"fragmentStyle": {
+								"fontSize": "fontSizeLg",
 								"marginBottom": "4",
 								"maxWidth": "100%",
 								"paddingLeft": "2",
@@ -164,7 +165,7 @@
 										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Go to Home&nbsp; &nbsp;⟶"
+												"en_US": "Go to Home"
 											}
 										}
 									}

@@ -16,7 +16,7 @@
 }
 
 .bootcamp-footer small {
-	font-size: 75%;
+	font-size: var(--font-size-sm);
 }
 
 .bootcamp-footer-border:after {

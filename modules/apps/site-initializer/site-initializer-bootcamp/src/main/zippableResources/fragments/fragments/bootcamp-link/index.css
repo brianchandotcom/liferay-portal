@@ -1,8 +1,8 @@
-.component-link {
+.bootcamp-link {
 	color: inherit;
 }
 
-.component-link a {
+.bootcamp-link a {
 	border-radius: 0;
 	color: inherit;
 	font-family: var(--font-family-sans-serif);
@@ -12,7 +12,14 @@
 }
 
 .link-arrow {
+	display: inline-block;
 	margin-left: var(--spacer-2);
+	transform: translate(0px, -1px);
+}
+
+.bootcamp-link:hover .link-arrow {
+	transform: translate(4px, -1px);
+	transition: all 0.15s ease-in-out;
 }
 
 .link-lg {
@@ -21,6 +28,6 @@
 }
 
 .link-sm {
-	font-size: 11px;
+	font-size: 11.5px;
 	padding: 0;
 }

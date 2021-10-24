@@ -19,7 +19,7 @@
 }
 
 .hero-image {
-	margin-top: 8.5rem;
+	margin-top: 7rem;
 }
 
 .hero-content-box {
@@ -28,7 +28,6 @@
 
 .hero-pre {
 	font-family: var(--font-family-sans-serif);
-	font-size: var(--font-size-sm);
 	margin-bottom: var(--spacer-2);
 }
 
@@ -45,7 +44,7 @@
 	font-size: calc(var(--font-size-lg));
 	margin-bottom: var(--spacer-5);
 	max-width: 100%;
-	width: 460px;
+	width: 420px;
 }
 
 @media (min-width: 1280px) {

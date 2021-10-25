@@ -636,6 +636,187 @@
 							}
 						],
 						"type": "Section"
+					},
+					{
+						"definition": {
+							"collectionConfig": {
+								"collectionReference": {
+									"className": "com.liferay.asset.list.model.AssetListEntry",
+									"classPK": "[$ASSET_LIST_ENTRY_ID:BLOG-ENTRIES$]"
+								},
+								"collectionType": "Collection"
+							},
+							"listItemStyle": "",
+							"listStyle": "",
+							"numberOfColumns": 3,
+							"numberOfItems": 3,
+							"numberOfItemsPerPage": 5,
+							"templateKey": ""
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"collectionItemConfig": {
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "bootcamp-image"
+											},
+											"fragmentConfig": {
+												"imageSize": "w-100"
+											},
+											"fragmentFields": [
+												{
+													"id": "image-square",
+													"value": {
+														"fragmentImage": {
+															"url": {
+																"mapping": {
+																	"fieldKey": "MainImage",
+																	"itemReference": {
+																		"contextSource": "CollectionItem"
+																	}
+																}
+															}
+														},
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"fieldKey": "displayPageURL",
+																		"itemReference": {
+																			"contextSource": "CollectionItem"
+																		}
+																	}
+																}
+															},
+															"value_i18n": {
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "3"
+											}
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "bootcamp-text-block"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+															"value_i18n": {
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Category"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"fontFamily": "fontFamilySansSerif",
+												"marginBottom": "2",
+												"textColor": "gray600Color"
+											}
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "bootcamp-heading"
+											},
+											"fragmentConfig": {
+												"displayLevel": "0",
+												"headingLevel": "h3"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"fieldKey": "displayPageURL",
+																		"itemReference": {
+																			"contextSource": "CollectionItem"
+																		}
+																	}
+																}
+															},
+															"value_i18n": {
+															}
+														},
+														"text": {
+															"mapping": {
+																"fieldKey": "Title",
+																"itemReference": {
+																	"contextSource": "CollectionItem"
+																}
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "3"
+											}
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "bootcamp-link"
+											},
+											"fragmentConfig": {
+												"linkSize": "sm"
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"fieldKey": "displayPageURL",
+																		"itemReference": {
+																			"contextSource": "CollectionItem"
+																		}
+																	}
+																}
+															},
+															"value_i18n": {
+															}
+														}
+													}
+												}
+											]
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "CollectionItem"
+							}
+						],
+						"type": "Collection"
 					}
 				],
 				"type": "Section"

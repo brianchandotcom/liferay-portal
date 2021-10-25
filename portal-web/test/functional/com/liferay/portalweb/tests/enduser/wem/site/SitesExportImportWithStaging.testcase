@@ -250,7 +250,7 @@ definition {
 
 			AssertVisible(
 				key_content = "Submit",
-				key_fragmentClass = "footer",
+				key_fragmentClass = "button",
 				locator1 = "Fragment#FRAGMENT");
 
 			for (var button : list "Submit,Cancel") {
@@ -267,7 +267,7 @@ definition {
 
 			AssertVisible(
 				key_content = "Submit",
-				key_fragmentClass = "footer",
+				key_fragmentClass = "button",
 				locator1 = "Fragment#FRAGMENT");
 
 			for (var button : list "Submit,Cancel") {
@@ -278,10 +278,10 @@ definition {
 				key_pageName = "Test Regular Content Page",
 				locator1 = "Home#PAGE");
 
-			AssertVisible(
-				key_content = "Lorem ipsum dolor sit amet",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "title",
+				text = "Lorem ipsum dolor sit amet");
 
 			AssertVisible(
 				key_href = "https://www.liferay.com/",
@@ -306,15 +306,15 @@ definition {
 		task ("Assert the web content article and its reference to its display page survived the import") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-2-staging/w/webcontent-title");
 
-			AssertVisible(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "title",
+				text = "Webcontent Title");
 
-			AssertVisible(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "rich-text",
+				text = "Webcontent Content");
 		}
 	}
 

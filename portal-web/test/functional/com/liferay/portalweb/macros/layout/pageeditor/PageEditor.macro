@@ -1428,10 +1428,9 @@ definition {
 		Navigator.gotoNavTab(navTab = "General");
 
 		if (isSet(selectedName)) {
-			AssertTextEquals(
-				key_fieldLabel = "Collection",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "${selectedName}");
+			PageEditor.viewItemSelectorText(
+				fieldLabel = "Collection",
+				text = "${selectedName}");
 
 			if (isSet(filterCollection)) {
 				PageEditor.gotoEllipsisMenuItemInItemSelector(
@@ -1497,10 +1496,9 @@ definition {
 
 				LexiconCard.clickCard(card = "${assetListName}");
 
-				AssertTextEquals(
-					key_fieldLabel = "Collection",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-					value1 = "${assetListName}");
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Collection",
+					text = "${assetListName}");
 			}
 
 			else if (isSet(infoListProviderName)) {
@@ -1508,10 +1506,9 @@ definition {
 
 				LexiconCard.clickCard(card = "${infoListProviderName}");
 
-				AssertTextEquals(
-					key_fieldLabel = "Collection",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-					value1 = "${infoListProviderName}");
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Collection",
+					text = "${infoListProviderName}");
 			}
 
 			else if (isSet(infoItemRelatedListProviderName)) {
@@ -1519,10 +1516,9 @@ definition {
 
 				LexiconCard.clickCard(card = "${infoItemRelatedListProviderName}");
 
-				AssertTextEquals(
-					key_fieldLabel = "Collection",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-					value1 = "${infoItemRelatedListProviderName}");
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Collection",
+					text = "${infoItemRelatedListProviderName}");
 			}
 		}
 
@@ -1673,10 +1669,9 @@ definition {
 		}
 
 		if (isSet(selectedName)) {
-			AssertTextEquals(
-				key_fieldLabel = "Source",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "${selectedName}");
+			PageEditor.viewItemSelectorText(
+				fieldLabel = "Source",
+				text = "${selectedName}");
 		}
 
 		else if (isSet(vocabularyName)) {
@@ -1722,20 +1717,19 @@ definition {
 
 				PageEditor.waitForAutoSave();
 
-				AssertTextEquals(
-					key_fieldLabel = "Source",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-					value1 = "${categoryName}");
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Source",
+					text = "${categoryName}");
 			}
+
 			else {
 				Button.click(button = "Select This Level");
 
 				PageEditor.waitForAutoSave();
 
-				AssertTextEquals(
-					key_fieldLabel = "Source",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-					value1 = "${vocabularyName}");
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Source",
+					text = "${vocabularyName}");
 			}
 		}
 
@@ -1844,10 +1838,9 @@ definition {
 
 				LexiconCard.clickCard(card = "${imageFileName}");
 
-				AssertTextEquals(
-					key_fieldLabel = "Item",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-					value1 = "${imageFileName}");
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Item",
+					text = "${imageFileName}");
 
 				if (isSet(sourceFileName)) {
 					PageEditor.viewFragment(fragmentName = "${fragmentName}");
@@ -1861,10 +1854,9 @@ definition {
 
 				LexiconCard.clickCard(card = "${entryTitle}");
 
-				AssertTextEquals(
-					key_fieldLabel = "Item",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-					value1 = "${entryTitle}");
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Item",
+					text = "${entryTitle}");
 
 				if (isSet(entryContent)) {
 					AssertTextEquals(
@@ -1886,10 +1878,9 @@ definition {
 					key_nodeName = "${assetTitle}",
 					locator1 = "Treeview#NODE_UNSELECTED");
 
-				AssertTextEquals(
-					key_fieldLabel = "Item",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-					value1 = "${assetTitle}");
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Item",
+					text = "${assetTitle}");
 			}
 
 			if (isSet(webcontent)) {
@@ -1918,10 +1909,9 @@ definition {
 					LexiconCard.clickCard(card = "${webContentTitle}");
 				}
 
-				AssertTextEquals(
-					key_fieldLabel = "Item",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-					value1 = "${webContentTitle}");
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Item",
+					text = "${webContentTitle}");
 
 				if (isSet(webContentContent)) {
 					AssertTextEquals(
@@ -2611,10 +2601,9 @@ definition {
 
 				PageEditor.waitForAutoSave();
 
-				AssertTextEquals(
-					key_fieldLabel = "Source",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-					value1 = "${siteMenus}");
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Source",
+					text = "${siteMenus}");
 			}
 
 			if (isSet(displayStyle)) {

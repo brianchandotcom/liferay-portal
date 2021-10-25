@@ -14,12 +14,12 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import {openSelectionModal} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {StyleBookContext} from './StyleBookContext';
 import {config} from './config';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
+import openItemSelector from './openItemSelector';
 
 const LAYOUT_TYPES_OPTIONS = [
 	{
@@ -55,7 +55,7 @@ export default function PreviewSelector() {
 	);
 }
 
-function LayoutTypeSelector({layoutType, setLayoutType}) {
+export function LayoutTypeSelector({layoutType, setLayoutType}) {
 	const [active, setActive] = useState(false);
 
 	return (
@@ -110,7 +110,7 @@ function LayoutTypeSelector({layoutType, setLayoutType}) {
 	);
 }
 
-function LayoutSelector({layoutType}) {
+export function LayoutSelector({layoutType}) {
 	const [active, setActive] = useState(false);
 	const {previewLayout, setPreviewLayout} = useContext(StyleBookContext);
 
@@ -240,22 +240,6 @@ function getNextRecentLayouts(recentLayouts, selectedLayout) {
 	];
 
 	return nextRecentLayouts;
-}
-
-function openItemSelector({
-	callback,
-	destroyedCallback = null,
-	itemSelectorURL,
-}) {
-	openSelectionModal({
-		onClose: destroyedCallback,
-		onSelect: (selectedItem) => {
-			callback(selectedItem);
-		},
-		selectEventName: `${config.namespace}selectPreviewItem`,
-		title: Liferay.Language.get('select'),
-		url: itemSelectorURL,
-	});
 }
 
 function urlWithPreviewParameter(url) {

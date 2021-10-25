@@ -1,0 +1,73 @@
+@component-name = "portal-ab-test"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "A/B Test";
+
+	setUp {
+		task ("Go to DXP portal, login and create site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Navigator.openURL();
+
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Create content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page",
+				type = "content");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Navigator.openURL();
+
+		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-101055: Validate if the A/B test Icon appears in the Liferay DXP bundle"
+	@priority = "3"
+	test CheckABTestIconDXP {
+		task ("Assert 'AB Test' icon is present") {
+			AssertElementPresent(locator1 = "ABTest#AB_TEST_BUTTON");
+		}
+	}
+
+	@description = "LPS-101055: Validate if the A/B test panel is hidden when the user clicks the Hide A/B Test Panel button"
+	@priority = "4"
+	test CheckHiddenABTestPanel {
+		task ("Click on the A/B Test icon and click on 'Hide A/B Test Panel'") {
+			ABTest.openABTestPanel();
+
+			Click(locator1 = "ABTest#HIDE_AB_TEST_BUTTON");
+		}
+
+		task ("Assert 'AB Test' icon is not present") {
+			AssertElementNotPresent(locator1 = "ABTest#AB_TEST_BUTTON");
+		}
+	}
+
+	@description = "LPS-101055: Validate if the Hide A/B Test Panel button is displayed when AC is not connected"
+	@priority = "3"
+	test HideABTestPanel {
+		task ("Click on the A/B Test icon and Assert hide AB Test icon is present") {
+			ABTest.openABTestPanel();
+
+			AssertElementPresent(locator1 = "ABTest#HIDE_AB_TEST_BUTTON");
+		}
+	}
+
+}

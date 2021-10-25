@@ -142,6 +142,13 @@ definition {
 		}
 	}
 
+	macro openABTestPanel {
+		if (IsVisible(locator1 = "ABTest#AB_TEST_SIDE_BAR")) {
+			Click(locator1 = "ABTest#AB_TEST_BUTTON");
+		}
+		Click(locator1 = "ABTest#AB_TEST_BUTTON");
+	}
+
 	macro runTest {
 		Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
 

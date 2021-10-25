@@ -403,31 +403,33 @@ definition {
 		}
 	}
 
-	@description = "LPS-101055: Validate if the A/B test Icon appears in the Liferay DXP bundle"
-	@ignore = "true"
-	@priority = "3"
-	test CheckABTestIconDXP {
-
-		// TODO LPS-137490 CheckABTestIconDXP pending implementation
-
-	}
-
 	@description = "LPS-101055: Validate if the A/B test panel is shown in content pages when AC is configured"
-	@ignore = "true"
 	@priority = "3"
 	test CheckABTestPanelAtContentPages {
-
-		// TODO LPS-137490 CheckABTestPanelAtContentPages pending implementation
-
+		task ("Click on the A/B Test icon and Assert the A/B Test panel is opened") {
+			ABTest.openABTestPanel();
+		}
+		task ("Assert the A/B Test panel is opened") {
+			AssertElementPresent(locator1 = "ABTest#AB_TEST_SIDE_BAR");
+		}
 	}
 
 	@description = "LPS-101055: Validate if the A/B test panel is shown not shown in widget pages"
-	@ignore = "true"
 	@priority = "3"
 	test CheckABTestPanelAtWidgetPages {
+		task ("Create Widget Page") {
+			SitePages.addPublicPage(
+				pageName = "Widget Page Name",
+				sitePageType = "Widget Page");
+		}
 
-		// TODO LPS-137490 CheckABTestPanelAtWidgetPages pending implementation
+		task ("Go to widget pages crieted") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+		}
 
+		task ("Assert 'AB Test' icon is not present") {
+			AssertElementNotPresent(locator1 = "ABTest#AB_TEST_BUTTON");
+		}
 	}
 
 	@description = "LPS-100945: Validate if the Button components have the ID"
@@ -454,15 +456,6 @@ definition {
 	test CheckEmptyStateImage {
 
 		// TODO LPS-137493 CheckEmptyStateImage pending implementation
-
-	}
-
-	@description = "LPS-101055: Validate if the A/B test panel is hidden when the user clicks the "Hide A/B Test Panel" button"
-	@ignore = "true"
-	@priority = "4"
-	test CheckHiddenABTestPanel {
-
-		// TODO LPS-137490 CheckHiddenABTestPanel pending implementation
 
 	}
 
@@ -1116,15 +1109,6 @@ definition {
 
 	}
 
-	@description = "LPS-101055: Validate if the "Hide A/B Test Panel" button is displayed when AC is not connected"
-	@ignore = "true"
-	@priority = "3"
-	test HideABTestPanel {
-
-		// TODO LPS-137490 HideABTestPanel pending implementation
-
-	}
-
 	@description = "LPS-98829: Validate if the History tab appears with the list ordered by modified date DESC"
 	@ignore = "true"
 	@priority = "3"
@@ -1472,10 +1456,7 @@ definition {
 		task ("Create a new A/B test with a new experience") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-2");
 
-			if (IsVisible(locator1 = "ABTest#AB_TEST_SIDE_BAR")) {
-				Click(locator1 = "ABTest#AB_TEST_BUTTON");
-			}
-			Click(locator1 = "ABTest#AB_TEST_BUTTON");
+			ABTest.openABTestPanel();
 
 			ABTest.changeExperienceABTest(experience = "NewAnyoneExperience");
 
@@ -1491,10 +1472,7 @@ definition {
 		}
 
 		task ("Click on the A/B Test icon and Assert ceate AB Test icon is present") {
-			if (IsVisible(locator1 = "ABTest#AB_TEST_SIDE_BAR")) {
-				Click(locator1 = "ABTest#AB_TEST_BUTTON");
-			}
-			Click(locator1 = "ABTest#AB_TEST_BUTTON");
+			ABTest.openABTestPanel();
 
 			AssertElementPresent(locator1 = "ABTest#CREATE_TEST_BUTTON");
 		}

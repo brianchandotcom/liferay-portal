@@ -33,7 +33,7 @@ import javax.portlet.PortletException;
  * @author Petteri Karttunen
  */
 public class ViewSXPBlueprintsDisplayContext
-	extends ViewEntriesDisplayContext<SXPBlueprint> {
+	extends BaseDisplayContext<SXPBlueprint> {
 
 	public ViewSXPBlueprintsDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,

@@ -33,7 +33,7 @@ import javax.portlet.PortletException;
  * @author Petteri Karttunen
  */
 public class ViewSXPElementsDisplayContext
-	extends ViewEntriesDisplayContext<SXPElement> {
+	extends BaseDisplayContext<SXPElement> {
 
 	public ViewSXPElementsDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,

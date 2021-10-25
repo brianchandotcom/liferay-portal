@@ -902,16 +902,17 @@ definition {
 		}
 
 		task ("Assert Heading Example 1 is not shown") {
+			AssertNotVisible(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
+
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
+				position = "2",
 				text = "Heading Example 2");
-
-			AssertElementNotPresent(
-				fragmentName = "heading",
-				id = "element-text",
-				index = "2",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 
 		task ("Show Heading Example 1") {

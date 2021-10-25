@@ -1660,16 +1660,17 @@ definition {
 		}
 
 		task ("Assert Heading Example 1 is not shown even if we click on button and it appears with a gray background") {
+			AssertNotVisible(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
+
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
+				position = "2",
 				text = "Heading Example 2");
-
-			AssertElementNotPresent(
-				fragmentName = "heading",
-				id = "element-text",
-				index = "2",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			PageEditor.gotoTab(tabName = "Browser");
 
@@ -1685,10 +1686,10 @@ definition {
 				key_nodeName = "Heading",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_MASTER_INDEX");
 
-			AssertElementNotPresent(
+			AssertNotVisible(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "2",
+				index = "1",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 
@@ -1696,6 +1697,7 @@ definition {
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
+				position = "2",
 				text = "Heading Example 2");
 
 			AssertElementNotPresent(
@@ -1716,16 +1718,17 @@ definition {
 		}
 
 		task ("Assert only Heading Example 2 is shown") {
+			AssertNotVisible(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
+
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
+				position = "2",
 				text = "Heading Example 2");
-
-			AssertElementNotPresent(
-				fragmentName = "heading",
-				id = "element-text",
-				index = "2",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 	}
 

@@ -361,7 +361,7 @@ definition {
 					text = "Heading Example ${n}");
 			}
 
-			AssertElementNotPresent(
+			AssertNotVisible(
 				fragmentName = "heading",
 				id = "element-text",
 				index = "5",
@@ -386,7 +386,7 @@ definition {
 			}
 
 			for (var n : list "4,5") {
-				AssertElementNotPresent(
+				AssertNotVisible(
 					fragmentName = "heading",
 					id = "element-text",
 					index = "${n}",
@@ -412,7 +412,7 @@ definition {
 			}
 
 			for (var n : list "3,4,5") {
-				AssertElementNotPresent(
+				AssertNotVisible(
 					fragmentName = "heading",
 					id = "element-text",
 					index = "${n}",
@@ -435,7 +435,7 @@ definition {
 				text = "Heading Example 1");
 
 			for (var n : list "2,3,4,5") {
-				AssertElementNotPresent(
+				AssertNotVisible(
 					fragmentName = "heading",
 					id = "element-text",
 					index = "${n}",

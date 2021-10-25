@@ -29,6 +29,10 @@ definition {
 		}
 
 		Button.clickSave();
+
+		WaitForElementNotPresent(
+			key_text = "Save",
+			locator1 = "Button#ANY");
 	}
 
 	macro addObjectDoubleFieldEntryViaUI {
@@ -97,6 +101,10 @@ definition {
 			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 
 		Button.clickSave();
+
+		WaitForElementNotPresent(
+			key_text = "Save",
+			locator1 = "Button#ANY");
 	}
 
 	macro addObjectRelationshipViaAPI {

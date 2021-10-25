@@ -640,7 +640,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Test Entry");
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Test Entry");
 
 		Navigator.openURL();
 

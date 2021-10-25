@@ -17,6 +17,24 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
+	macro getDependenciesDirPath {
+		var projectDir = PropsUtil.get("project.dir");
+		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
+
+		var testName = PropsUtil.get("test.name");
+		var testName = StringUtil.extractLast("${testName}", ".");
+		var testName = StringUtil.extractFirst("${testName}", "#");
+		var testFileName = StringUtil.split("**/${testName}.testcase");
+		var testFilePath = FileUtil.getIncludedResourceURLs("${testFileName}", "${projectDir}");
+		var testFilePath = StringUtil.valueOf("${testFilePath}");
+		var testFilePath = RegexUtil.replace("${testFilePath}", "\[(.*)\]", "1");
+		var testFilePath = StringUtil.extractLast("${testFilePath}", "file:/");
+		var testFileParentDir = StringUtil.extractFirst("${testFilePath}", "${testName}.testcase");
+		var dependenciesDir = "${testFileParentDir}${dependenciesDir}";
+
+		return "${dependenciesDir}";
+	}
+
 	macro getDownloadedTempFileName {
 		var tempDir = PropsUtil.get("output.dir.name");
 

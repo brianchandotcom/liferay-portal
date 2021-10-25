@@ -192,6 +192,7 @@ definition {
 			var curl = '''
 				${portalURL}/api/jsonws/dlapp/add-file-entry \
 				-u test@liferay.com:test \
+				-F externalReferenceCode= \
 				-F repositoryId=${repositoryId} \
 				-F folderId=${folderId} \
 				-F sourceFileName=${sourceFileName} \

@@ -774,6 +774,51 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Account Name 2");
 	}
 
+	@description = "This test asserts that only business accounts can be added when the allowed account type is business"
+	@priority = "5"
+	test CanOnlyAddBusinessAccountsWhenAllowedAccountTypeIsBusiness {
+		task ("Add account entry permission to Account Admin") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Accounts.setAddAccountEntryPermissions(
+				roleTitle = "Reg Role Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Set allowed account type to business") {
+			Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Business");
+		}
+
+		task ("Assert Account Admin can only add business accounts") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.inputName(name = "Business Account Only");
+
+			AssertElementNotPresent(
+				key_fieldLabel = "Type",
+				key_value = "Person",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+
+			SelectField.select(
+				selectFieldLabel = "Type",
+				selectFieldValue = "Business");
+
+			Button.clickSave();
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.viewEntryName(rowEntry = "Business Account Only");
+		}
+	}
+
 	@description = "This test asserts that only person accounts can be added when the allowed account type is person"
 	@priority = "5"
 	test CanOnlyAddPersonAccountsWhenAllowedAccountTypeIsPerson {

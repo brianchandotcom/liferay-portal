@@ -24,8 +24,8 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test ViewMessageBoardsArchive625 {
+	@refactordone
+	test CanViewMessageBoardsArchive625 {
 		property data.archive.type = "data-archive-message-boards";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.5";
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewMessageBoardsArchive71105 {
+	test CanViewMessageBoardsArchive71105 {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.1.10.5";
 
@@ -46,7 +46,7 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewMessageBoardsArchive72104 {
+	test CanViewMessageBoardsArchive72104 {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.2.10.4";
 
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewMessageBoardsArchive73101 {
+	test CanViewMessageBoardsArchive73101 {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.3.10.1";
 
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewMessageBoardsArchive621015 {
+	test CanViewMessageBoardsArchive621015 {
 		property data.archive.type = "data-archive-message-boards";
 		property portal.version = "6.2.10.15";
 
@@ -76,7 +76,7 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewMessageBoardsArchive621021 {
+	test CanViewMessageBoardsArchive621021 {
 		property data.archive.type = "data-archive-message-boards";
 		property portal.version = "6.2.10.21";
 
@@ -86,7 +86,7 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewMessageBoardsArchive701015 {
+	test CanViewMessageBoardsArchive701015 {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.0.10.15";
 

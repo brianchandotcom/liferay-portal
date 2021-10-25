@@ -1347,7 +1347,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	private boolean _hasScoreSort(SearchContext searchContext) {
 		for (Sort sort : searchContext.getSorts()) {
-			if (sort.getType() == Sort.SCORE_TYPE) {
+			if ((sort != null) && (sort.getType() == Sort.SCORE_TYPE)) {
 				return true;
 			}
 		}

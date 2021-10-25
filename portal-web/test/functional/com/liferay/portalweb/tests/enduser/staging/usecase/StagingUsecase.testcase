@@ -892,10 +892,10 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Site Name");
 
-		AssertTextEquals(
-			key_fragmentName = "paragraph",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "DL Image");
+		ContentPages.viewFragmentText(
+			fragmentName = "paragraph",
+			id = "element-text",
+			text = "DL Image");
 
 		Click(
 			key_append = "",

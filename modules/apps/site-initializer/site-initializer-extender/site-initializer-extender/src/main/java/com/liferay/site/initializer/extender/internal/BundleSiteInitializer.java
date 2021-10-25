@@ -314,9 +314,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> documentsStringUtilReplaceValues = _invoke(
 				() -> _addDocuments(serviceContext));
 
-			_invoke(
-				() -> _addAssetListEntries(
-					_ddmStructureLocalService, serviceContext));
+			Map<String, String> assetListEntryIdsStringUtilReplaceValues =
+				_invoke(
+					() -> _addAssetListEntries(
+						_ddmStructureLocalService, serviceContext));
+
 			_invoke(
 				() -> _addDDMTemplates(
 					_ddmStructureLocalService, serviceContext));
@@ -326,6 +328,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues, serviceContext));
 			_invoke(
 				() -> _addLayoutPageTemplates(
+					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues, serviceContext));
 
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues =
@@ -335,7 +338,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(
 				() -> _addLayouts(
-					_assetListEntryLocalService,
+					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues,
 					remoteAppEntryIdsStringUtilReplaceValues, serviceContext));
 		}
@@ -358,15 +361,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
-	private void _addAssetListEntries(
+	private Map<String, String> _addAssetListEntries(
 			DDMStructureLocalService ddmStructureLocalService,
 			ServiceContext serviceContext)
 		throws Exception {
 
+		Map<String, String> assetListEntryIdsStringUtilReplaceValues =
+			new HashMap<>();
+
 		String json = _read("/site-initializer/asset-list-entries.json");
 
 		if (json == null) {
-			return;
+			return assetListEntryIdsStringUtilReplaceValues;
 		}
 
 		JSONArray assetListJSONArray = JSONFactoryUtil.createJSONArray(json);
@@ -378,6 +384,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addAssetListEntry(
 				assetListJSONObject, ddmStructureLocalService, serviceContext);
 		}
+
+		List<AssetListEntry> assetListEntries =
+			_assetListEntryLocalService.getAssetListEntries(
+				serviceContext.getScopeGroupId());
+
+		for (AssetListEntry assetListEntry : assetListEntries) {
+			String assetListEntryKeyUppercase = StringUtil.toUpperCase(
+				assetListEntry.getAssetListEntryKey());
+
+			assetListEntryIdsStringUtilReplaceValues.put(
+				"ASSET_LIST_ENTRY_ID:" + assetListEntryKeyUppercase,
+				String.valueOf(assetListEntry.getAssetListEntryId()));
+		}
+
+		return assetListEntryIdsStringUtilReplaceValues;
 	}
 
 	private void _addAssetListEntry(
@@ -1109,6 +1130,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addLayoutPageTemplates(
+			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
 			Map<String, String> documentsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -1131,7 +1153,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String json = StringUtil.read(url.openStream());
 
 				json = StringUtil.replace(
-					json, "\"[$", "$]\"", documentsStringUtilReplaceValues);
+					json, "\"[$", "$]\"",
+					HashMapBuilder.putAll(
+						assetListEntryIdsStringUtilReplaceValues
+					).putAll(
+						documentsStringUtilReplaceValues
+					).build());
 
 				Group scopeGroup = serviceContext.getScopeGroup();
 
@@ -1162,7 +1189,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addLayouts(
-			AssetListEntryLocalService assetListEntryLocalService,
+			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
 			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues,
 			ServiceContext serviceContext)
@@ -1181,22 +1208,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		sortedResourcePaths.addAll(resourcePaths);
 
 		resourcePaths = sortedResourcePaths;
-
-		Map<String, String> assetListEntryIdsStringUtilReplaceValues =
-			new HashMap<>();
-
-		List<AssetListEntry> assetListEntries =
-			assetListEntryLocalService.getAssetListEntries(
-				serviceContext.getScopeGroupId());
-
-		for (AssetListEntry assetListEntry : assetListEntries) {
-			String assetListEntryKeyUppercase = StringUtil.toUpperCase(
-				assetListEntry.getAssetListEntryKey());
-
-			assetListEntryIdsStringUtilReplaceValues.put(
-				"ASSET_LIST_ENTRY_ID:" + assetListEntryKeyUppercase,
-				String.valueOf(assetListEntry.getAssetListEntryId()));
-		}
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {

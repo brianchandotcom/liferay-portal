@@ -360,9 +360,7 @@ definition {
 		var assetName = "Custom Asset Analytics Cloud,Custom Asset Analytics Cloud 2,Custom Asset Analytics Cloud 3";
 
 		for (var layoutName : list "AC Page 2,AC Page 3") {
-			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "${layoutName}");
+			ACUtils.addPage(layoutName = "${layoutName}");
 		}
 
 		for (var n : list "2,3") {

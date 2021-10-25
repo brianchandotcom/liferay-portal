@@ -938,7 +938,7 @@ definition {
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
-			fieldType = "Integer",
+			fieldType = "Double",
 			isRequired = "false",
 			objectName = "CustomObject");
 

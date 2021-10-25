@@ -22,6 +22,9 @@ const getKoroneikiAccountsByFilter = (filter) => {
                     slaCurrent
                     slaCurrentEndDate
                     region
+                    liferayContactName
+                    liferayContactRole
+                    liferayContactEmailAddress
                   }
                 }
               }

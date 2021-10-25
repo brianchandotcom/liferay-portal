@@ -10,15 +10,6 @@ import ProjectCard from '../components/ProjectCard';
 import SearchProject from '../components/SearchProject';
 import { status } from '../utils/constants';
 
-const getCurrentEndDate = (currentEndDate) => {
-	const date = new Date(currentEndDate);
-	const month = date.toLocaleDateString('default', { month: 'short' });
-	const day = date.getDate();
-	const year = date.getFullYear();
-
-	return `${month} ${day}, ${year}`;
-}
-
 const Home = () => {
 	const { data: userAccount } = useGraphQL(getUserAccountById(LiferayTheme.getUserId()));
 
@@ -33,7 +24,7 @@ const Home = () => {
 		}
 	}, [userAccount]);
 
-	const accountBriefs = userAccount.accountBriefs || [];
+	const accountBriefs = userAccount?.accountBriefs || [];
 
 	const { data: koroneikiAccounts } = useGraphQL(
 		getKoroneikiAccountsByFilter({
@@ -41,17 +32,29 @@ const Home = () => {
 				({ externalReferenceCode }) => externalReferenceCode
 			)
 		})
-	);
+	) || [];
 
 	const projects = koroneikiAccounts?.map(
-		({ accountKey, region, slaCurrent, slaCurrentEndDate }) => ({
-			endDate: getCurrentEndDate(slaCurrentEndDate),
+		({ accountKey, liferayContactEmailAddress, liferayContactName, liferayContactRole, region, slaCurrent, slaCurrentEndDate }) => ({
+			contact: {
+				emailAddress: liferayContactEmailAddress,
+				name: liferayContactName,
+				role: liferayContactRole
+			},
 			region,
+			sla: {
+				current: slaCurrent,
+				currentEndDate: slaCurrentEndDate
+			},
 			status: slaCurrent ? status.active : status.expired,
 			title: accountBriefs.find(({ externalReferenceCode }) => externalReferenceCode === accountKey).name
 		})) || [];
 
 	const isManyProject = projects.length > 4;
+
+	const nextPage = (project) => {
+		Storage.setItem(STORAGE_KEYS.KORONEIKI_APPLICATION, JSON.stringify(project));
+	};
 
 	return (
 		<>
@@ -80,6 +83,7 @@ const Home = () => {
 				{projects.map((project, index) => (
 					<ProjectCard
 						key={index}
+						onClick={() => nextPage(project)}
 						small={isManyProject}
 						{...project}
 					/>

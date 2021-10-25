@@ -146,13 +146,15 @@ definition {
 	test SearchDetailsOfSegmentsInterest {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor: Interests in the segment take time to appear.
 		// AC Refactor ticket: LRAC-9169
 
-		var usernameList = "user1,user2,user3,user4,user5";
+		var nameList = "ac ac,ac2 ac2,ac3 ac3";
 
-		task ("Add 5 more new users") {
-			for (var name : list "${usernameList}") {
+		var newUser = "ac2,ac3";
+
+		task ("Add 2 more new users") {
+			for (var name : list "${newUser}") {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
 					userFirstName = "${name}",
@@ -174,38 +176,26 @@ definition {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-		task ("View the blogs page as different users") {
+		task ("View new pages in site as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
-				emailList = "userea@liferay.com,user1@liferay.com",
-				pageName = "Blogs Page",
+				emailList = "ac@liferay.com",
+				pageName = "sports",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
-		}
-
-		task ("View the documents page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				actionType = "View DM",
-				documentTitleList = "DM AC Title",
-				emailList = "user2@liferay.com,user3@liferay.com",
-				pageName = "Documents Page",
+				emailList = "ac2@liferay.com",
+				pageName = "technology",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
-		}
-
-		task ("View the web content page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "user4@liferay.com,user5@liferay.com",
-				pageName = "Web Content Page",
+				emailList = "ac3@liferay.com",
+				pageName = "science",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");
@@ -221,74 +211,34 @@ definition {
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
 		}
 
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Add the user1 user1 as member") {
-			Click(
-				key_TableMember = "user1 user1",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
-		}
-
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Navigate to page 2") {
-			ACUtils.checkAnyPage(pageNumber = "2");
-		}
-
-		task ("Add the userfn userln as member") {
-			Click(
-				key_TableMember = "userfn userln",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
+		task ("Add the new user as member") {
+			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
 		}
 
 		task ("Create the segment") {
 			ACSegments.saveSegment();
 		}
 
+		// AC Refactor: Interests in the segment take time to appear.
+
 		task ("Go to a segment interest details page") {
-			ACInterests.clickInterest(interestTopic = "liferay dxp");
+			ACInterests.clickInterest(interestTopic = "site");
 		}
 
 		task ("Search Individual tab") {
-			ACUtils.searchBar(searchItem = "user");
+			ACUtils.searchBar(searchItem = "@liferay.com");
 		}
 
 		task ("View individuals") {
-			ACInterests.viewInterestUser(userName = "userfn userln");
-
-			ACInterests.viewInterestUser(userName = "user1 user1");
-
-			ACInterests.viewInterestUser(userName = "user2 user2");
-
-			ACInterests.viewInterestUser(userName = "user3 user3");
+			ACUtils.viewNameList(nameList = "${nameList}");
 		}
 
 		task ("Search Individual tab") {
-			ACInterests.switchTab(tabName = "Active Pages");
+			ACUtils.searchBar(searchItem = "ac@liferay.com");
 		}
 
-		task ("Search Active Pages tab") {
-			ACUtils.searchBar(searchItem = "DXP");
-		}
-
-		task ("View pages") {
-			ACInterests.viewInterestPage(pageName = "Blogs AC Title - Site Name - Liferay DXP");
-
-			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
-
-			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
+		task ("View individuals") {
+			ACUtils.viewNameList(nameList = "ac ac");
 		}
 	}
 

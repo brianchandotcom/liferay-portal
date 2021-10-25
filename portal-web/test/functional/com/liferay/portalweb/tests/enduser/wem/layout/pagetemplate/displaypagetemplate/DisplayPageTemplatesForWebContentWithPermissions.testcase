@@ -74,6 +74,17 @@ definition {
 
 			PortletEntry.publish();
 		}
+
+		task ("Remove permissions for guest users") {
+			PermissionsInline.gotoWCArticle(
+					webContentTitle = "Webcontent Title");
+
+			Role.removePermissionPG(
+					permissionDefinitionKey =
+							"CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+					roleTitle = "Guest");
+
+		}
 	}
 
 	tearDown {
@@ -90,17 +101,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136421. Unlogged users cannot view the content of a Display Page, and after login, they are redirected to the content page."
-	@priority = "5"
+	@priority = "4"
 	test UnloggedUsersAreRedirecteedToWebContentAfterLoging {
-		task ("Remove permissions for guest users") {
-			PermissionsInline.gotoWCArticle(
-					webContentTitle = "Webcontent Title");
 
-			Role.removePermissionPG(
-					permissionDefinitionKey =
-							"CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-					roleTitle = "Guest");
-
+		task ("Logout") {
 			User.logoutPG();
 		}
 
@@ -135,8 +139,21 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136421. Logged users without permission cannot view the content of a Display Page\t"
-	@priority = "5"
-	test loggedUsersWithoutPermissionsCanNotSeeContentOfDisplayPageTemplate {
+	@priority = "3"
+	test LoggedUsersWithoutPermissionsCanNotSeeContentOfDisplayPageTemplate {
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+					userLoginEmailAddress = "userea@liferay.com",
+					userLoginFullName = "userfn userln");
+		}
+
+		task ("Navigate to the display page template at view mode") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
+		}
+
+		task ("Assert error message is shown") {
+			AssertTextPresent(value1 = "You do not have the required permissions to view the content of this page.");
+		}
 
 	}
 

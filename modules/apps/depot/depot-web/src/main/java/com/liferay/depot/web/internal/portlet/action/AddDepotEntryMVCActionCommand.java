@@ -108,14 +108,14 @@ public class AddDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 				JSONUtil.put(
 					"error",
 					_getErrorMessage(
-						exception.getCause(),
 						(ThemeDisplay)actionRequest.getAttribute(
-							WebKeys.THEME_DISPLAY))));
+							WebKeys.THEME_DISPLAY),
+						exception.getCause())));
 		}
 	}
 
 	private String _getErrorMessage(
-		Throwable throwable, ThemeDisplay themeDisplay) {
+		ThemeDisplay themeDisplay, Throwable throwable) {
 
 		if (throwable instanceof DepotEntryNameException) {
 			return LanguageUtil.get(

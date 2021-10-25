@@ -90,10 +90,10 @@ definition {
 				locator1 = "Language#DROPDOWN_LANGUAGE",
 				value1 = "es-ES");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Webcontent Title");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Webcontent Title");
 		}
 
 		task ("Change back to en-US") {
@@ -108,10 +108,10 @@ definition {
 				locator1 = "Language#DROPDOWN_LANGUAGE",
 				value1 = "en-US");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Webcontent Title");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Webcontent Title");
 		}
 	}
 

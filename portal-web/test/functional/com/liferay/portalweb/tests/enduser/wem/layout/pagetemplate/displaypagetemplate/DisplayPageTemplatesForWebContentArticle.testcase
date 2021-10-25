@@ -99,15 +99,15 @@ definition {
 		}
 
 		task ("View displayed content at view mode") {
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Webcontent Title");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Webcontent Title Edit");
 
-			AssertTextEquals(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Go Somewhere");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
 		}
 	}
 
@@ -209,15 +209,15 @@ definition {
 		}
 
 		task ("View the displayed content in display page template") {
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Webcontent Title");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Webcontent Title");
 
-			AssertTextEquals(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Go Somewhere");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
 		}
 
 		task ("Access to the web content editor") {
@@ -233,15 +233,15 @@ definition {
 		}
 
 		task ("View the displayed content in display page template") {
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Webcontent Title Edit");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Webcontent Title Edit");
 
-			AssertTextEquals(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Go Somewhere");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
 		}
 
 		task ("Sign in as the second user") {
@@ -319,10 +319,10 @@ definition {
 		}
 
 		task ("View edited web content at view mode") {
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Webcontent Title Edit");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Webcontent Title Edit");
 		}
 	}
 
@@ -389,10 +389,10 @@ definition {
 
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Webcontent Title");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Webcontent Title");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Webcontent Title");
 		}
 	}
 
@@ -443,10 +443,10 @@ definition {
 			for (var type : list "w,-") {
 				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/${type}/webcontent-title");
 
-				AssertTextEquals(
-					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Webcontent Title");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					text = "Webcontent Title");
 			}
 		}
 	}
@@ -506,10 +506,10 @@ definition {
 				key_title = "Webcontent Title",
 				locator1 = "IFrame#MODAL_ANY");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Webcontent Title");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Webcontent Title");
 		}
 	}
 
@@ -576,10 +576,10 @@ definition {
 				key_title = "Webcontent Title",
 				locator1 = "IFrame#MODAL_ANY");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Webcontent Title");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Webcontent Title");
 		}
 	}
 
@@ -639,10 +639,10 @@ definition {
 				key_title = "Webcontent Title",
 				locator1 = "IFrame#MODAL_ANY");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Webcontent Title");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Webcontent Title");
 		}
 	}
 
@@ -728,10 +728,10 @@ definition {
 		}
 
 		task ("View the title of web content shown") {
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Webcontent Title");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Webcontent Title");
 		}
 
 		task ("View the footer is shown") {
@@ -970,10 +970,10 @@ definition {
 		}
 
 		task ("View the content of web content shown in Button") {
-			AssertTextEquals(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Webcontent Content");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Webcontent Content");
 		}
 	}
 

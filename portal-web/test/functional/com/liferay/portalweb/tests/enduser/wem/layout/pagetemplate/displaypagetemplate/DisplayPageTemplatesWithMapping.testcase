@@ -199,10 +199,10 @@ definition {
 				locator1 = "ControlMenu#HEADING",
 				value1 = "DPT Name");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "This is a short description");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "This is a short description");
 		}
 	}
 

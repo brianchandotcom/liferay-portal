@@ -216,8 +216,10 @@ definition {
 				siteName = "Test Site Name");
 
 			AssertCssValue(
-				key_fragmentName = "paragraph",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				fragmentName = "paragraph",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-family",
 				value1 = "${fontFamily}");
 		}
@@ -234,8 +236,10 @@ definition {
 			Navigator.gotoBack();
 
 			AssertCssValue(
-				key_fragmentName = "paragraph",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				fragmentName = "paragraph",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-family",
 				value1 = "${fontFamily}");
 		}

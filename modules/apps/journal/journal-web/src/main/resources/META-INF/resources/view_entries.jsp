@@ -451,7 +451,6 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 		editEntryUrl: '<portlet:actionURL />',
 		form: {
 			method: 'POST',
-			// eslint-disable-next-line @liferay/aui/no-one
 			node: A.one(document.<portlet:namespace />fm),
 		},
 		moveEntryUrl:

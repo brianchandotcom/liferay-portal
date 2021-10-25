@@ -105,7 +105,6 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 
 		window.<portlet:namespace />eventRecorder = new Liferay.SchedulerEventRecorder({
 			bodyTemplate: new A.Template(
-				// eslint-disable-next-line @liferay/aui/no-one
 				A.one('#<portlet:namespace />eventRecorderBodyTpl').html()
 			),
 			calendarContainer: calendarContainer,
@@ -114,7 +113,6 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			duration: <%= defaultDuration %>,
 			editCalendarBookingURL: '<%= HtmlUtil.escapeJS(editCalendarBookingURL) %>',
 			headerTemplate: new A.Template(
-				// eslint-disable-next-line @liferay/aui/no-one
 				A.one('#<portlet:namespace />eventRecorderHeaderTpl').html()
 			),
 			permissionsCalendarBookingURL:

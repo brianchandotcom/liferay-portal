@@ -927,7 +927,6 @@ while (manageableCalendarsIterator.hasNext()) {
 			});
 		}
 
-		// eslint-disable-next-line @liferay/aui/no-one
 		var inviteResourcesInput = A.one('#<portlet:namespace />inviteResource');
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="calendarResources" var="calendarResourcesURL" />

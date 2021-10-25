@@ -494,7 +494,6 @@
 		visible: false,
 	}).render();
 
-	// eslint-disable-next-line @liferay/aui/no-one
 	A.one('#<portlet:namespace />calendarListContainer').delegate(
 		'click',
 		(event) => {
@@ -523,7 +522,6 @@
 	});
 
 	<c:if test="<%= themeDisplay.isSignedIn() %>">
-		// eslint-disable-next-line @liferay/aui/no-one
 		var addOtherCalendarInput = A.one('#<portlet:namespace />addOtherCalendar');
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="calendarResources" var="calendarResourcesURL" />

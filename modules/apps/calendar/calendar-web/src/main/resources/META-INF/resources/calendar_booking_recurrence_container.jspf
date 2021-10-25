@@ -241,14 +241,11 @@ if (recurrence != null) {
 <%@ include file="/calendar_booking_recurrence_language_keys.jspf" %>
 
 <aui:script use="liferay-calendar-recurrence-dialog,liferay-util-window">
-	// eslint-disable-next-line @liferay/aui/no-one
 	var editEventFormNode = A.one('#<portlet:namespace />fm');
-	// eslint-disable-next-line @liferay/aui/no-one
 	var recurrenceContainerNode = A.one(
 		'#<portlet:namespace />recurrenceContainer'
 	);
 	var repeatCheckboxNode = document.getElementById('<portlet:namespace />repeat');
-	// eslint-disable-next-line @liferay/aui/no-one
 	var summaryNode = A.one('#<portlet:namespace />summary');
 
 	var recurrenceDialogController = new Liferay.RecurrenceDialogController({

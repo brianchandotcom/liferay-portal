@@ -288,26 +288,34 @@ public class PaginationBarTag extends BaseContainerTag {
 
 			int leftIndex = activeIndex - _ellipsisBuffer;
 
-			int[] leftItems = Arrays.copyOfRange(
-				pageNumberItems, 1, Math.max(leftIndex, 1));
+			try {
+				int[] leftItems = Arrays.copyOfRange(
+					pageNumberItems, 1, Math.max(leftIndex, 1));
 
-			if (leftItems.length > 1) {
-				_processEllipsis(pageContext);
+				if (leftItems.length > 1) {
+					_processEllipsis(pageContext);
+				}
+				else if (leftItems.length == 1) {
+					int leftItem = leftItems[0];
+
+					_processItem(pageContext, leftItem);
+				}
 			}
-			else if (leftItems.length == 1) {
-				int leftItem = leftItems[0];
-
-				_processItem(pageContext, leftItem);
+			catch (Exception exception) {
 			}
 
 			int lastIndex = pageNumberItems.length - 1;
 
-			int[] centerItems = Arrays.copyOfRange(
-				pageNumberItems, Math.max(activeIndex - _ellipsisBuffer, 1),
-				Math.min(activeIndex + _ellipsisBuffer + 1, lastIndex));
+			try {
+				int[] centerItems = Arrays.copyOfRange(
+					pageNumberItems, Math.max(activeIndex - _ellipsisBuffer, 1),
+					Math.min(activeIndex + _ellipsisBuffer + 1, lastIndex));
 
-			for (int centerItem : centerItems) {
-				_processItem(pageContext, centerItem);
+				for (int centerItem : centerItems) {
+					_processItem(pageContext, centerItem);
+				}
+			}
+			catch (Exception exception) {
 			}
 
 			int rightIndex = activeIndex + _ellipsisBuffer + 1;
@@ -316,16 +324,21 @@ public class PaginationBarTag extends BaseContainerTag {
 				rightIndex = lastIndex;
 			}
 
-			int[] rightItems = Arrays.copyOfRange(
-				pageNumberItems, rightIndex, Math.max(lastIndex, rightIndex));
+			try {
+				int[] rightItems = Arrays.copyOfRange(
+					pageNumberItems, rightIndex,
+					Math.max(lastIndex, rightIndex));
 
-			if (rightItems.length > 1) {
-				_processEllipsis(pageContext);
+				if (rightItems.length > 1) {
+					_processEllipsis(pageContext);
+				}
+				else if (rightItems.length == 1) {
+					int rightItem = rightItems[0];
+
+					_processItem(pageContext, rightItem);
+				}
 			}
-			else if (rightItems.length == 1) {
-				int rightItem = rightItems[0];
-
-				_processItem(pageContext, rightItem);
+			catch (Exception exception) {
 			}
 
 			if (totalPages > 1) {

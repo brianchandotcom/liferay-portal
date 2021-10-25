@@ -32,8 +32,6 @@ definition {
 				key_toggleSwitchLabel = "Show Footer",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
-
-		WaitForSPARefresh();
 	}
 
 	macro configureLookAndFeelShowHeader {
@@ -47,8 +45,6 @@ definition {
 				key_toggleSwitchLabel = "Show Header",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
-
-		WaitForSPARefresh();
 	}
 
 	macro configureLookAndFeelShowHeaderSearch {
@@ -62,8 +58,6 @@ definition {
 				key_toggleSwitchLabel = "Show Header Search",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
-
-		WaitForSPARefresh();
 	}
 
 	macro configureLookAndFeelShowMaxMinAppLinks {
@@ -77,8 +71,6 @@ definition {
 				key_toggleSwitchLabel = "Show Maximize/Minimize Application Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
-
-		WaitForSPARefresh();
 	}
 
 	macro configureLookAndFeelSpecificLook {
@@ -96,8 +88,6 @@ definition {
 				key_toggleSwitchLabel = "Wrap Widget Page Content",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
-
-		WaitForSPARefresh();
 	}
 
 	macro viewClassicThemeBackgroundColor {

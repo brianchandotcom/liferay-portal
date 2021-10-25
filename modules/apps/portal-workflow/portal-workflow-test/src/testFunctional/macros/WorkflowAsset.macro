@@ -169,4 +169,12 @@ definition {
 			value1 = "${userEmailAddress}");
 	}
 
+	macro createNewBasicWebContent {
+		Portlet.clickPortletPlusIconPG(portletName = "Asset Publisher");
+
+		MenuItem.click(menuItem = "Basic Web Content");
+
+		WebContent.addCP(webContentTitle = "Web Content Title");
+	}
+
 }

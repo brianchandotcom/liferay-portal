@@ -221,12 +221,45 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69814. Verify that a Pending Web Content is not displayed on Asset Publisher."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test PendingWebContentIsNotDisplayed {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-69814 PendingWebContentIsNotDisplayed pending implementation
+		Navigator.gotoNavTab(navTab = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages",
+			site = "Liferay DXP");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WorkflowAsset.createNewBasicWebContent();
+
+		Button.clickSubmitForPublication();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		AssertElementPresent(locator1 = "SitePages#SITE_PENDING_STATUS");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewManualNoAssetsMessagePG();
 	}
 
 	@priority = "4"

@@ -27,6 +27,19 @@ public class PortalTopLevelBuildData
 	}
 
 	@Override
+	public Job.BuildProfile getBuildProfile() {
+		String portalUpstreamBranchName = getPortalUpstreamBranchName();
+
+		if (portalUpstreamBranchName.equals("master") ||
+			portalUpstreamBranchName.startsWith("7")) {
+
+			return Job.BuildProfile.DXP;
+		}
+
+		return Job.BuildProfile.PORTAL;
+	}
+
+	@Override
 	public String getPortalBranchSHA() {
 		return getString("portal_branch_sha");
 	}

@@ -39,6 +39,10 @@ public abstract class PortalBatchBuildRunner<T extends PortalBatchBuildData>
 
 		workspaceGitRepository.addPropertyOption(
 			portalBatchBuildData.getBatchName());
+		workspaceGitRepository.addPropertyOption(
+			String.valueOf(portalBatchBuildData.getBuildProfile()));
+		workspaceGitRepository.addPropertyOption(
+			portalBatchBuildData.getPortalUpstreamBranchName());
 
 		workspaceGitRepository.setSenderBranchSHA(
 			portalBatchBuildData.getPortalBranchSHA());

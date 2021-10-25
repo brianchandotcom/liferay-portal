@@ -27,6 +27,20 @@ public class PortalBatchBuildData
 	}
 
 	@Override
+	public Job.BuildProfile getBuildProfile() {
+		TopLevelBuildData topLevelBuildData = getTopLevelBuildData();
+
+		if (!(topLevelBuildData instanceof PortalTopLevelBuildData)) {
+			throw new RuntimeException("Invalid top level build data");
+		}
+
+		PortalTopLevelBuildData portalTopLevelBuildData =
+			(PortalTopLevelBuildData)topLevelBuildData;
+
+		return portalTopLevelBuildData.getBuildProfile();
+	}
+
+	@Override
 	public String getPortalBranchSHA() {
 		return optString("portal_branch_sha");
 	}

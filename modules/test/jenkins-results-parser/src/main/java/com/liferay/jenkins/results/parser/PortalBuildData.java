@@ -19,6 +19,8 @@ package com.liferay.jenkins.results.parser;
  */
 public interface PortalBuildData extends BuildData {
 
+	public Job.BuildProfile getBuildProfile();
+
 	public String getPortalBranchSHA();
 
 	public String getPortalGitHubBranchName();

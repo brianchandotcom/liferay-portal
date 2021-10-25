@@ -37,6 +37,11 @@ public abstract class PortalTopLevelBuildRunner
 		WorkspaceGitRepository workspaceGitRepository =
 			_workspace.getPrimaryWorkspaceGitRepository();
 
+		workspaceGitRepository.addPropertyOption(
+			String.valueOf(portalTopLevelBuildData.getBuildProfile()));
+		workspaceGitRepository.addPropertyOption(
+			portalTopLevelBuildData.getPortalUpstreamBranchName());
+
 		workspaceGitRepository.setGitHubURL(
 			portalTopLevelBuildData.getPortalGitHubURL());
 

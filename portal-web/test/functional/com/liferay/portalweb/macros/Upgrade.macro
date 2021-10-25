@@ -3551,8 +3551,8 @@ definition {
 
 			PageEditor.viewFragmentEditableText(
 				contributed = "false",
-				fragmentName = "Card",
-				text = "Test Title");
+				editableText = "Test Title",
+				fragmentName = "Card");
 		}
 
 		task ("Edit the inline text of the Card fragment") {

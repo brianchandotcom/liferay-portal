@@ -34,21 +34,26 @@ import java.util.List;
 
 import javax.portlet.PortletException;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = {})
 public class ViewSXPBlueprintsDisplayContext
 	extends BaseDisplayContext<SXPBlueprint> {
 
 	public ViewSXPBlueprintsDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse, Queries queries,
+		Searcher searcher,
+		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
+		SXPBlueprintService sxpBlueprintService) {
 
 		super(liferayPortletRequest, liferayPortletResponse);
+
+		_queries = queries;
+		_searcher = searcher;
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
+		_sorts = sorts;
+		_sxpBlueprintService = sxpBlueprintService;
 	}
 
 	public List<String> getAvailableActions(SXPBlueprint sxpBlueprint)
@@ -79,39 +84,10 @@ public class ViewSXPBlueprintsDisplayContext
 		return searchContainer;
 	}
 
-	@Reference(unbind = "-")
-	protected void setQueries(Queries queries) {
-		_queries = queries;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearcher(Searcher searcher) {
-		_searcher = searcher;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchRequestBuilderFactory(
-		SearchRequestBuilderFactory searchRequestBuilderFactory) {
-
-		_searchRequestBuilderFactory = searchRequestBuilderFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSorts(Sorts sorts) {
-		_sorts = sorts;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSXPBlueprintService(
-		SXPBlueprintService sxpBlueprintService) {
-
-		_sxpBlueprintService = sxpBlueprintService;
-	}
-
-	private Queries _queries;
-	private Searcher _searcher;
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-	private Sorts _sorts;
-	private SXPBlueprintService _sxpBlueprintService;
+	private final Queries _queries;
+	private final Searcher _searcher;
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private final Sorts _sorts;
+	private final SXPBlueprintService _sxpBlueprintService;
 
 }

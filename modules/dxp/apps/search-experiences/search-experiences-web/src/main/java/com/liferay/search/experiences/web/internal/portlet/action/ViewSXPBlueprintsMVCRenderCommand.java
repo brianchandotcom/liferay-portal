@@ -16,7 +16,12 @@ package com.liferay.search.experiences.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
+import com.liferay.search.experiences.service.SXPBlueprintService;
 import com.liferay.search.experiences.web.internal.constants.SXPBlueprintWebKeys;
 import com.liferay.search.experiences.web.internal.display.context.ViewSXPBlueprintsDisplayContext;
 
@@ -56,15 +61,52 @@ public class ViewSXPBlueprintsMVCRenderCommand implements MVCRenderCommand {
 		return "/sxp_blueprint_admin/view.jsp";
 	}
 
+	@Reference(unbind = "-")
+	protected void setQueries(Queries queries) {
+		_queries = queries;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSearcher(Searcher searcher) {
+		_searcher = searcher;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSearchRequestBuilderFactory(
+		SearchRequestBuilderFactory searchRequestBuilderFactory) {
+
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSorts(Sorts sorts) {
+		_sorts = sorts;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSXPBlueprintService(
+		SXPBlueprintService sxpBlueprintService) {
+
+		_sxpBlueprintService = sxpBlueprintService;
+	}
+
 	private ViewSXPBlueprintsDisplayContext _getViewBlueprintsDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		return new ViewSXPBlueprintsDisplayContext(
 			_portal.getLiferayPortletRequest(renderRequest),
-			_portal.getLiferayPortletResponse(renderResponse));
+			_portal.getLiferayPortletResponse(renderResponse), _queries,
+			_searcher, _searchRequestBuilderFactory, _sorts,
+			_sxpBlueprintService);
 	}
 
 	@Reference
 	private Portal _portal;
+
+	private Queries _queries;
+	private Searcher _searcher;
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private Sorts _sorts;
+	private SXPBlueprintService _sxpBlueprintService;
 
 }

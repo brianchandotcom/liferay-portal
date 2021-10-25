@@ -623,29 +623,17 @@ definition {
 		}
 
 		task ("Map multiple fields to editable fields") {
-			PageEditorMapping.mapEditableTextToField(
-				contributed = "false",
-				field = "Title",
-				fragmentName = "Multiple Editables",
-				id = "test1");
+			var n = "1";
 
-			PageEditorMapping.mapEditableTextToField(
-				contributed = "false",
-				field = "Content",
-				fragmentName = "Multiple Editables",
-				id = "test2");
+			for (var fieldName : list "Title,Content,Tags,Publish Date") {
+				PageEditorMapping.mapEditableTextToField(
+					contributed = "false",
+					field = "${fieldName}",
+					fragmentName = "Multiple Editables",
+					index = "${n}");
 
-			PageEditorMapping.mapEditableTextToField(
-				contributed = "false",
-				field = "Tags",
-				fragmentName = "Multiple Editables",
-				id = "test3");
-
-			PageEditorMapping.mapEditableTextToField(
-				contributed = "false",
-				field = "Publish Date",
-				fragmentName = "Multiple Editables",
-				id = "test4");
+				var n = ${n} + 1;
+			}
 
 			PageEditor.clickPublish();
 		}
@@ -667,10 +655,16 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
+			var n = "1";
+
 			for (var content : list "Webcontent Title,Webcontent Content,tag1,tag2,tag3") {
-				AssertVisible(
-					key_text = "${content}",
-					locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
+				ContentPages.viewFragmentText(
+					contributed = "false",
+					fragmentName = "multiple-editables",
+					position = "${n}",
+					text = "${content}");
+
+				var n = ${n} + 1;
 			}
 		}
 	}

@@ -19,7 +19,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {FETCH_STATUS} from '../constants';
 
@@ -104,6 +104,14 @@ const TranslateFieldEditor = ({
 	onChange = noop,
 }) => {
 	const [content, setContent] = useState(targetContent);
+	const editorRef = useRef();
+
+	useEffect(() => {
+		if (editorRef.current.editor) {
+			editorRef.current.editor.setData(targetContent);
+			setContent(targetContent);
+		}
+	}, [targetContent]);
 
 	return (
 		<ClayLayout.Row>
@@ -139,6 +147,7 @@ const TranslateFieldEditor = ({
 								noSnapshot: true,
 							});
 						}}
+						ref={editorRef}
 					/>
 
 					<input defaultValue={content} name={id} type="hidden" />

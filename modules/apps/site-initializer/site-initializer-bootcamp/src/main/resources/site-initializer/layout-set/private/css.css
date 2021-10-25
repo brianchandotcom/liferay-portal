@@ -80,6 +80,10 @@ a:hover {
 	transition: all 0.15s ease-in-out;
 }
 
+.portlet-boundary .btn  {
+	border-radius: 0;
+}
+
 /*Form Controls*/
 
 .form-control {

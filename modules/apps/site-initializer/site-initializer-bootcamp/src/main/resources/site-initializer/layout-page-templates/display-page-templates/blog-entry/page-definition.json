@@ -639,6 +639,41 @@
 					}
 				],
 				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"fontFamily": "fontFamilySansSerif",
+						"marginBottom": "8",
+						"maxWidth": "100%",
+						"width": "960px"
+					},
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 10,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+								},
+								"widgetName": "com_liferay_comment_page_comments_web_portlet_PageCommentsPortlet"
+							}
+						},
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
 			}
 		],
 		"type": "Root"

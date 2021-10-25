@@ -1904,9 +1904,9 @@ definition {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
-			panelCategoryKey = "Site Administration > Content & Data",
+			panelCategoryKey = "site_administration.content",
 			pluralLabelName = "Custom Objects",
-			scope = "Site");
+			scope = "site");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
@@ -2040,9 +2040,9 @@ definition {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
-			panelCategoryKey = "Site Administration > Content & Data",
+			panelCategoryKey = "site_administration.content",
 			pluralLabelName = "Custom Objects",
-			scope = "Site");
+			scope = "site");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 

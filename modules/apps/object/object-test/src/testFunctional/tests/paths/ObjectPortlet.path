@@ -132,7 +132,7 @@
 	</tr>
 	<tr>
 		<td>ADD_OBJECT_ENTRY</td>
-		<td>//input[@class='form-control']|//input[@class='form-control input-group-inset input-group-inset-after']</td>
+		<td>//input[@type = 'text']</td>
 		<td></td>
 	</tr>
 </tbody>

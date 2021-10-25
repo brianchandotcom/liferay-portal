@@ -1,13 +1,17 @@
 definition {
 
-	macro addEntryViaUI {
+	macro addSingleFieldEntryViaUI {
 		LexiconEntry.gotoAdd();
 
-		Type(
+		Type.type(
 			locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
 			value1 = "${entry}");
 
 		Button.clickSave();
+
+		WaitForElementNotPresent(
+			key_text = "Save",
+			locator1 = "Button#ANY");
 	}
 
 	macro assertDuplicatedEntryNotPresent {

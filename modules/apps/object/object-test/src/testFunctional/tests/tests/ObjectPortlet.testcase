@@ -104,9 +104,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.addEntryViaUI(entry = "123.123456");
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "123.123456");
 
-		Refresh();
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "123.123456");
 	}
@@ -132,6 +132,8 @@ definition {
 			objectName = "CustomObject",
 			value = "true");
 
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
 		ObjectPortlet.viewEntry(entry = "Yes");
 	}
 
@@ -154,9 +156,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.addEntryViaUI(entry = "01-01-2001");
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "01-01-2001");
 
-		Refresh();
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "2001-01-01");
 	}
@@ -180,9 +182,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.addEntryViaUI(entry = "1.23");
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "1.23");
 
-		Refresh();
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "1.23");
 	}
@@ -254,7 +256,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Custom Objects");
 
-		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "String Entry");
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "String Entry");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
@@ -280,9 +282,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.addEntryViaUI(entry = "123456789");
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "123456789");
 
-		Refresh();
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "123456789");
 	}
@@ -306,9 +308,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.addEntryViaUI(entry = "12345678912345678");
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "12345678912345678");
 
-		Refresh();
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "12345678912345678");
 	}
@@ -401,7 +403,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "@~!& ˆ%$&_-");
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "@~!& ˆ%$&_-");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "@~!& ˆ%$&_-");
 	}
@@ -427,9 +431,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.addEntryViaUI(entry = "Test text");
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Test text");
 
-		Refresh();
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "Test text");
 	}
@@ -1044,7 +1048,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Test Entry");
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Test Entry");
 
 		Refresh();
 

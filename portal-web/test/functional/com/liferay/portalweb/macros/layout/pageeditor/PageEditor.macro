@@ -1030,8 +1030,12 @@ definition {
 		}
 
 		if ("${contributed}" == "false") {
+			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+
 			Click(locator1 = "Fragment#EDITABLE_FIELD_ANY");
 		}
+
 		else {
 			if (contains("${fragmentName}", "(Copy)")) {
 				var fragmentName = StringUtil.extractFirst("${fragmentName}", "(Copy)");
@@ -2787,8 +2791,12 @@ definition {
 			index = "${index}");
 
 		if ("${contributed}" == "false") {
+			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+
 			DoubleClick(locator1 = "Fragment#EDITABLE_FIELD_ANY");
 		}
+
 		else {
 			if (contains("${fragmentName}", "(Copy)")) {
 				var fragmentName = StringUtil.extractFirst("${fragmentName}", "(Copy)");
@@ -3624,10 +3632,12 @@ definition {
 			index = "${position}");
 
 		if ("${contributed}" == "false") {
+			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+
 			AssertTextEquals(
-				id = "${id}",
+				fragmentName = "${fragmentName}",
 				index = "${position}",
-				key_fragmentName = "${fragmentName}",
 				locator1 = "Fragment#EDITABLE_FIELD_ANY",
 				value1 = "${editableText}");
 

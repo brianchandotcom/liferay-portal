@@ -162,7 +162,7 @@ public class UpstreamPortalTopLevelBuild
 			portalGitCommit = controllerBuild.getParameterValue(
 				"PORTAL_GIT_COMMIT");
 
-			if (!JenkinsResultsParserUtil.isSHA(portalGitCommit)) {
+			if (JenkinsResultsParserUtil.isSHA(portalGitCommit)) {
 				return portalGitCommit;
 			}
 		}

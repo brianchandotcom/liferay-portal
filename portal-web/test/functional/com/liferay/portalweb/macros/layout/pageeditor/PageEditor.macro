@@ -3984,6 +3984,13 @@ definition {
 		}
 	}
 
+	macro viewItemSelectorText {
+		AssertTextEquals(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+			value1 = "${text}");
+	}
+
 	macro viewMentionsDisplayOption {
 		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS");
 

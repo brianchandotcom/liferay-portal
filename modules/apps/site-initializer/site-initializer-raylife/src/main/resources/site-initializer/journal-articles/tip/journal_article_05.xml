@@ -11,7 +11,7 @@
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="iesijpqx" name="description" type="text_area">
-		<dynamic-content language-id="en_US"><![CDATA[<p>We are exicted to get you a quote today!<br /> <br /> If you have questions or need help along the way click the chat button in the bottom right to chat with an Agent.</p>]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[<p>We are excited to get you a quote today!<br /> <br /> If you have questions or need help along the way click the chat button in the bottom right to chat with an Agent.</p>]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="tjcakpfv" name="titleIcon" type="image">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>

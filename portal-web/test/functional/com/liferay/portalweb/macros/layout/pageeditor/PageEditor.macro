@@ -2030,7 +2030,7 @@ definition {
 			locator1 = "Fragment#EDITABLE_HTML_FRAGMENT_FIELD",
 			value1 = "${content}");
 
-		Click.pauseClickAt(locator1 = "//button[normalize-space(text())='Save']");
+		Click(locator1 = "Modal#SAVE_BUTTON");
 
 		PageEditor.waitForAutoSave();
 	}

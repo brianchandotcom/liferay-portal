@@ -902,17 +902,16 @@ definition {
 		}
 
 		task ("Assert Heading Example 1 is not shown") {
-			AssertTextNotPresent(
-				key_fragmentName = "heading",
-				key_index = "1",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
-				value1 = "Heading Example 1");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example 2");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				key_index = "2",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
-				value1 = "Heading Example 2");
+			AssertElementNotPresent(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "2",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 
 		task ("Show Heading Example 1") {
@@ -929,11 +928,11 @@ definition {
 
 		task ("Assert both Heading Example 1 and Heading Example 2 are shown") {
 			for (var n : list "1,2") {
-				AssertTextEquals(
-					key_fragmentName = "heading",
-					key_index = "${n}",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
-					value1 = "Heading Example ${n}");
+				ContentPages.viewFragmentText(
+					fragmentName = "heading",
+					id = "element-text",
+					position = "${n}",
+					text = "Heading Example ${n}");
 			}
 		}
 	}

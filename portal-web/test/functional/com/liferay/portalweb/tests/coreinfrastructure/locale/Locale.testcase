@@ -396,18 +396,17 @@ definition {
 		}
 
 		task ("View the inline text is localized on Home page") {
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Bienvenido a Liferay");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Bienvenido a Liferay");
 		}
 
 		task ("View the tree page is shown on Home page") {
-			AssertVisible(
+			ContentPages.viewFragmentImage(
+				fragmentName = "image",
 				id = "image-square",
-				key_image = "tree.png",
-				key_imageDescription = "Responsive Image",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+				image = "tree.png");
 		}
 
 		task ("View the default instance language is Spanish") {

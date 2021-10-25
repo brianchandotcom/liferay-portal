@@ -3540,20 +3540,19 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "card",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Test Title");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "card",
+				text = "Test Title");
 		}
 
 		task ("View the inline text of the card fragment at edit mode after Upgrade") {
 			ContentPages.gotoPageEditor();
 
-			AssertTextEquals(
-				id = "02-title",
-				key_fragmentName = "Card",
-				locator1 = "Fragment#EDITABLE_FIELD",
-				value1 = "Test Title");
+			PageEditor.viewFragmentEditableText(
+				contributed = "false",
+				fragmentName = "Card",
+				text = "Test Title");
 		}
 
 		task ("Edit the inline text of the Card fragment") {
@@ -3567,11 +3566,10 @@ definition {
 		}
 
 		task ("View the updated inline text of the card fragment") {
-			AssertTextEquals(
-				id = "02-title",
-				key_fragmentName = "Card",
-				locator1 = "Fragment#EDITABLE_FIELD",
-				value1 = "Editable Title");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "card",
+				text = "Editable Title");
 		}
 
 		task ("Publish the content page") {
@@ -3583,10 +3581,10 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "card",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Editable Title");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "card",
+				text = "Editable Title");
 		}
 	}
 

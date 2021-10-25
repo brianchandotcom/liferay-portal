@@ -181,18 +181,17 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("View the inline text on Home page is in English as default") {
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Welcome to Liferay");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Welcome to Liferay");
 		}
 
 		task ("View the tree page is shown on Home page") {
-			AssertVisible(
+			ContentPages.viewFragmentImage(
+				fragmentName = "image",
 				id = "image-square",
-				key_image = "tree.png",
-				key_imageDescription = "Responsive Image",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+				image = "tree.png");
 		}
 
 		task ("Change the locale to Chinese") {
@@ -200,18 +199,17 @@ definition {
 		}
 
 		task ("View the inline text on Home page is in Chinese") {
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "欢迎来到Liferay");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "欢迎来到Liferay");
 		}
 
 		task ("View the tree page is shown on Home page") {
-			AssertVisible(
+			ContentPages.viewFragmentImage(
+				fragmentName = "image",
 				id = "image-square",
-				key_image = "tree.png",
-				key_imageDescription = "Responsive Image",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+				image = "tree.png");
 		}
 
 		task ("Change the locale to Portuguese") {
@@ -219,18 +217,17 @@ definition {
 		}
 
 		task ("View the inline text on Home page is in Portuguese") {
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Bem Vindo ao Liferay");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Bem Vindo ao Liferay");
 		}
 
 		task ("View the tree page is shown on Home page") {
-			AssertVisible(
+			ContentPages.viewFragmentImage(
+				fragmentName = "image",
 				id = "image-square",
-				key_image = "tree.png",
-				key_imageDescription = "Responsive Image",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+				image = "tree.png");
 		}
 
 		task ("Change the locale to French") {
@@ -238,18 +235,17 @@ definition {
 		}
 
 		task ("View the inline text on Home page is in French") {
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Bienvenue à Liferay");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Bienvenue à Liferay");
 		}
 
 		task ("View the tree page is shown on Home page") {
-			AssertVisible(
+			ContentPages.viewFragmentImage(
+				fragmentName = "image",
 				id = "image-square",
-				key_image = "tree.png",
-				key_imageDescription = "Responsive Image",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+				image = "tree.png");
 		}
 
 		task ("Change the locale to English") {

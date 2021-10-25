@@ -871,11 +871,34 @@ definition {
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view an Integer entry and label on layout"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewIntegerEntryOnLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-140550 CanViewIntegerEntryOnLayout pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "Integer",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "12345");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "12345");
+
+		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
+
+		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "12345");
 
 	}
 

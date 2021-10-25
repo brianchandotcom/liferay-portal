@@ -247,6 +247,75 @@
 										"definition": {
 											"fragmentSettings": {
 												"unallowedFragments": [
+													{
+														"key": "BASIC_COMPONENT-button"
+													},
+													{
+														"key": "BASIC_COMPONENT-card"
+													},
+													{
+														"key": "BASIC_COMPONENT-dropdown"
+													},
+													{
+														"key": "BASIC_COMPONENT-external-video"
+													},
+													{
+														"key": "BASIC_COMPONENT-html"
+													},
+													{
+														"key": "BASIC_COMPONENT-heading"
+													},
+													{
+														"key": "BASIC_COMPONENT-image"
+													},
+													{
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													{
+														"key": "BASIC_COMPONENT-separator"
+													},
+													{
+														"key": "BASIC_COMPONENT-slider"
+													},
+													{
+														"key": "BASIC_COMPONENT-social"
+													},
+													{
+														"key": "BASIC_COMPONENT-spacer"
+													},
+													{
+														"key": "BASIC_COMPONENT-tabs"
+													},
+													{
+														"key": "BASIC_COMPONENT-video"
+													},
+													{
+														"key": "COOKIE_BANNER-cookie-banner-simple"
+													},
+													{
+														"key": "DIALECT-dialect-button"
+													},
+													{
+														"key": "DIALECT-dialect-nav"
+													},
+													{
+														"key": "FEATURED_CONTENT-banner-slider"
+													},
+													{
+														"key": "FOOTERS-footer-nav-dark"
+													},
+													{
+														"key": "FOOTERS-footer-nav-light"
+													},
+													{
+														"key": "NAVIGATION_BARS-header-dark"
+													},
+													{
+														"key": "NAVIGATION_BARS-header-light"
+													},
+													{
+														"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
+													}
 												]
 											}
 										},

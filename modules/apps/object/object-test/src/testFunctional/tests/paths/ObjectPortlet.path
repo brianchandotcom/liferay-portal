@@ -122,7 +122,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_ENTRY_DETAILS_LABEL</td>
-		<td>//label[contains(@class,'ddm-label') and contains(text(),'${key_entryLabel}')]</td>
+		<td>//span[(@class='custom-control-label-text') and contains(.,'${key_entryLabel}')] |//label[contains(@class,'ddm-label') and contains(text(),'${key_entryLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>

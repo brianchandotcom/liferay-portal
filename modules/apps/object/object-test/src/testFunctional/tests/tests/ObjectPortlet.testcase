@@ -863,16 +863,37 @@ definition {
 		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
 
 		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "123.123456");
-
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view a Boolean entry and label on layout"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewBooleanEntryOnLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-140541 CanViewBooleanEntryOnLayout pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "Boolean",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "true");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "Yes");
+
+		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
+
+		ObjectPortlet.assertEntryDetailsCheckedPresent();
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view a Date entry and label on layout"
@@ -904,7 +925,6 @@ definition {
 		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
 
 		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "01-01-2001");
-
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view a Double entry and label on layout"
@@ -936,7 +956,6 @@ definition {
 		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
 
 		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "1.54");
-
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view an Integer entry and label on layout"
@@ -968,7 +987,6 @@ definition {
 		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
 
 		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "12345");
-
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view a Long entry and label on layout"
@@ -1051,7 +1069,6 @@ definition {
 		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
 
 		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "Text Test");
-
 	}
 
 	@description = "LPS-135393 - Verify that the columns ID, Field(s) and Workflow Status are displayed"

@@ -56,41 +56,44 @@ export const ChartStateContextProvider = ({
 };
 
 export function useDateTitle() {
-	const {dataSet, timeRange} = useContext(ChartStateContext);
+	const {timeRange, timeSpanKey, timeSpanOffset} = useContext(ChartStateContext);
 
-	const {histogram} = dataSet;
+	let firstDate = new Date(timeRange.startDate);
+	let lastDate = new Date(timeRange.endDate);
 
-	if (histogram.length) {
-		const firstDateLabel = histogram[0].label;
-		const lastDateLabel = histogram[histogram.length - 1].label;
+	const increment = timeSpanKey === 'last-7-days' ? 7 
+		:timeSpanKey === 'last-30-days' ? 30 
+		: 0;
 
+	// Default interval between firstDate and lastDate is 7 days.
+	// First date must be calculated from last date if timespan is 30.
+	if (timeSpanKey === 'last-30-days') {
+		firstDate.setDate(lastDate.getDate() - (increment - 1));
+	}
+
+	if (timeSpanOffset > 0) {
+		lastDate.setDate(lastDate.getDate() - (increment * timeSpanOffset));
+		firstDate.setDate(firstDate.getDate() - (increment * timeSpanOffset));
 		return {
-			firstDate: new Date(firstDateLabel),
-			lastDate: new Date(lastDateLabel),
+			firstDate,
+			lastDate,
 		};
 	} else {
 		return {
-			firstDate: new Date(timeRange.startDate),
-			lastDate: new Date(timeRange.endDate),
+			firstDate,
+			lastDate,
 		};
 	}
 }
 
 export function useIsPreviousPeriodButtonDisabled() {
-	const {dataSet, publishDate} = useContext(ChartStateContext);
+	const {publishDate} = useContext(ChartStateContext);
 
-	const {histogram} = dataSet;
+	const {firstDate} = useDateTitle();
 
-	if (histogram.length) {
-		const firstDateLabel = histogram[0].label;
+	const publishedDate = new Date(publishDate);
 
-		const firstDate = new Date(firstDateLabel);
-		const publishedDate = new Date(publishDate);
-
-		return firstDate < publishedDate;
-	}
-
-	return true;
+	return firstDate < publishedDate;
 }
 
 /**

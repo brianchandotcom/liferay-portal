@@ -18,37 +18,38 @@ definition {
 			category = "Content & Data",
 			portlet = "Kaleo Forms Admin");
 
-		// KaleoFormsAdmin.addProcess();
+		//KaleoFormsAdmin.addProcess();
 
-		// KaleoFormsAdmin.addProcessDetails(
-		// 	kfProcessDescription = "Kaleo Forms Process Description",
-		// 	kfProcessName = "Kaleo Forms Process");
+		//KaleoFormsAdmin.addProcessDetails(
+		//	kfProcessDescription = "Kaleo Forms Process Description",
+		//	kfProcessName = "Kaleo Forms Process");
 
-		// KaleoFormsAdmin.next();
+		//KaleoFormsAdmin.next();
 
-		// KaleoFormsAdmin.chooseFieldSet(
-		// 	kfFieldSetName = "${kfFieldSetName}",
-		// 	kfProcessName = "Kaleo Forms Process");
+		//KaleoFormsAdmin.chooseFieldSet(
+		//	kfFieldSetName = "${kfFieldSetName}",
+		//	kfProcessName = "Kaleo Forms Process");
 
-		// KaleoFormsAdmin.next();
+		//KaleoFormsAdmin.next();
 
-		// KaleoFormsAdmin.chooseWorkflow(
-		// 	kfProcessName = "Kaleo Forms Process",
-		// 	workflowDefinitionTitle = "Single Approver");
+		//KaleoFormsAdmin.chooseWorkflow(
+		//	kfProcessName = "Kaleo Forms Process",
+		//	workflowDefinitionTitle = "Single Approver");
 
-		// KaleoFormsAdmin.next();
+		//KaleoFormsAdmin.next();
 
-		// KaleoFormsAdmin.assignForm(
-		// 	kfProcessName = "Kaleo Forms Process",
-		// 	workflowTask = "create");
+		//KaleoFormsAdmin.assignForm(
+		//	kfProcessName = "Kaleo Forms Process",
+		//	workflowTask = "create");
 
-		// KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
+		//KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
 
-		// KaleoFormsAdmin.saveForm();
+		//KaleoFormsAdmin.saveForm();
 
-		// KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form");
+		//KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form");
 
-		// KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
+		//KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
+
 	}
 
 	tearDown {
@@ -152,9 +153,6 @@ definition {
 		AssertElementPresent(
 			key_status = "Pending",
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
-			
-
 	}
 
 	@description = "Verify that the basic structure of workflow track approval is available."

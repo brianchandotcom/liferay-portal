@@ -291,7 +291,7 @@ definition {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
 				groupName = "Test Site Name",
-				name = "Fragment Name");
+				name = "Title");
 		}
 
 		task ("Edit content of new fragment") {
@@ -339,8 +339,7 @@ definition {
 			PageEditor.viewFragmentEditableText(
 				contributed = "false",
 				editableText = "Lorem ipsum dolor sit amet",
-				fragmentName = "Fragment Name",
-				id = "title");
+				fragmentName = "Title");
 
 			PageEditor.clickPublish();
 		}
@@ -378,7 +377,7 @@ definition {
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
-			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name");
+			FragmentsAdmin.viewEntryPresent(entry = "Title");
 		}
 
 		task ("Import content page template to the new site") {
@@ -397,8 +396,7 @@ definition {
 			PageEditor.viewFragmentEditableText(
 				contributed = "false",
 				editableText = "Lorem ipsum dolor sit amet",
-				fragmentName = "Fragment Name",
-				id = "title");
+				fragmentName = "Title");
 		}
 	}
 
@@ -736,7 +734,7 @@ definition {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
 				groupName = "Test Site Name",
-				name = "Fragment Name");
+				name = "Title");
 		}
 
 		task ("Edit content of new fragment") {
@@ -745,7 +743,7 @@ definition {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
 			FragmentsAdminNavigator.gotoEntryEllipsisItem(
-				entry = "Fragment Name",
+				entry = "Title",
 				item = "Edit");
 
 			FragmentsEditor.typeFileContent(fileName = "fragment_title.html");
@@ -779,13 +777,12 @@ definition {
 		task ("Add the new fragment to content page template") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Fragment Name");
+				fragmentName = "Title");
 
 			PageEditor.viewFragmentEditableText(
 				contributed = "false",
 				editableText = "Lorem ipsum dolor sit amet",
-				fragmentName = "Fragment Name",
-				id = "title");
+				fragmentName = "Title");
 
 			PageEditor.clickPublish();
 		}
@@ -852,7 +849,7 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 
 			AssertElementNotPresent(
-				key_fragmentName = "Fragment Name",
+				key_fragmentName = "Title",
 				locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
@@ -865,7 +862,7 @@ definition {
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
-			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name");
+			FragmentsAdmin.viewEntryPresent(entry = "Title");
 		}
 
 		task ("Assert new fragment is not shown in content page template") {
@@ -876,7 +873,7 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 
 			AssertElementNotPresent(
-				key_fragmentName = "Fragment Name",
+				key_fragmentName = "Title",
 				locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 	}

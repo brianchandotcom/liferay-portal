@@ -360,7 +360,7 @@ definition {
 			FragmentsEditor.typeFileContent(fileName = "fragment_title.css");
 
 			FragmentsEditor.assertFragmentPreview(
-				fragmentLocator = "//div[@class='fragment-header']/h1[@class='title']",
+				fragmentLocator = "//div[@class='fragment-title']/h1[@class='title']",
 				text = "LOREM IPSUM DOLOR SIT AMET");
 
 			FragmentsEditor.waitForAutoSave();
@@ -374,7 +374,7 @@ definition {
 
 		task ("View the edited inline text shown in Preview window") {
 			FragmentsEditor.assertFragmentPreview(
-				fragmentLocator = "//div[@class='fragment-header']/h1[@class='title']",
+				fragmentLocator = "//div[@class='fragment-title']/h1[@class='title']",
 				text = "LOREM IPSUM DOLOR SIT AMET");
 		}
 	}

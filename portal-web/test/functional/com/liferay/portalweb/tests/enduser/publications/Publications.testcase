@@ -42,7 +42,7 @@ definition {
 			title = "WC WebContent Title");
 
 		Publications.gotoReviewChanges(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
 		PublicationsChanges.openCommentsSidebar();
@@ -123,13 +123,13 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 
 		Publications.gotoPublish(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
 		Publications.publishPublication(publicationName = "Publication Name");
 
 		Publications.createNewPublication(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name 2");
 
 		AssertTextPresent(
@@ -536,7 +536,7 @@ definition {
 		Publications.viewPublicationPublished(publicationName = "Publication 2 Name");
 
 		Publications.gotoPublish(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
 		Publications.viewAutomaticallyResolved(
@@ -687,7 +687,7 @@ definition {
 		}
 
 		Publications.gotoReviewChanges(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
 		Search.searchCP(searchTerm = "1");
@@ -741,7 +741,7 @@ definition {
 			groupName = "Guest");
 
 		Publications.createNewPublication(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
 		Navigator.openURL();
@@ -783,7 +783,7 @@ definition {
 		PortletEntry.publish();
 
 		Publications.gotoPublish(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication 2 Name");
 
 		Publications.publishPublication(publicationName = "Publication 2 Name");
@@ -818,7 +818,7 @@ definition {
 		property portal.acceptance = "true";
 
 		Publications.createNewPublication(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
 		JSONWebcontent.addWebContent(
@@ -827,7 +827,7 @@ definition {
 			title = "WC WebContent Title");
 
 		Publications.schedulePublication(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
 		Publications.schedulePublication(
@@ -884,7 +884,7 @@ definition {
 			webContentTitleEdit = "WC WebContent Title 2 Edit");
 
 		Publications.gotoReviewChanges(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication 1 Name");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
@@ -1064,7 +1064,7 @@ definition {
 		property portal.acceptance = "true";
 
 		Publications.createNewPublication(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
 		Navigator.openURL();
@@ -1127,7 +1127,7 @@ definition {
 	@priority = "5"
 	test SchedulePublication {
 		Publications.createNewPublication(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name 1");
 
 		Navigator.openURL();
@@ -1167,7 +1167,7 @@ definition {
 		PortletEntry.publish();
 
 		Publications.schedulePublication(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name 2");
 
 		Pause(locator1 = "240000");
@@ -1200,7 +1200,7 @@ definition {
 	@priority = "5"
 	test SearchPublishedPublications {
 		Publications.createNewPublication(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Apple");
 
 		Publications.createNewPublication(publicationName = "Banana");

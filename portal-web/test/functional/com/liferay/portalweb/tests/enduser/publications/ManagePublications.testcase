@@ -46,7 +46,7 @@ definition {
 	@priority = "3"
 	test CreateNewPublicationWithLongName {
 		Publications.createNewPublication(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon");
 
 		Alert.viewLengthValidationField();
@@ -54,7 +54,7 @@ definition {
 
 	@priority = "3"
 	test CreateNewPublicationWithoutName {
-		Publications.createNewPublication(gotoManagePublications = "true");
+		Publications.createNewPublication(gotoPublicationsAdmin = "true");
 
 		Alert.viewRequiredField();
 	}
@@ -64,7 +64,7 @@ definition {
 		property portal.acceptance = "true";
 
 		Publications.createNewPublication(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationDescription = "Publication Description",
 			publicationName = "Publication Name");
 
@@ -99,7 +99,7 @@ definition {
 		PortletEntry.publish();
 
 		Publications.createNewPublication(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication 2 Name");
 
 		Navigator.openURL();
@@ -127,7 +127,7 @@ definition {
 			locator1 = "WC#ENTRY_LIST_TITLE");
 
 		Publications.selectPublication(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication 2 Name");
 
 		Navigator.openURL();

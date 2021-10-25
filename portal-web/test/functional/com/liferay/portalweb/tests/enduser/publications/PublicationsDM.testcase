@@ -105,7 +105,7 @@ definition {
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.pdf,Document_3.png");
 
 		Publications.gotoReviewChanges(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
@@ -420,7 +420,7 @@ definition {
 		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
 
 		Publications.gotoPublish(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
 		Publications.viewNeedsManualResolution(

@@ -303,7 +303,7 @@ definition {
 		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
 
 		Publications.gotoPublish(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name 1");
 
 		Publications.discardChanges(

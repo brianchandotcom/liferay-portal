@@ -50,7 +50,7 @@ definition {
 			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 
 		Publications.gotoReviewChanges(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "New ${publicationName}");
 
 		PublicationsChanges.openCommentsSidebar();
@@ -89,7 +89,7 @@ definition {
 			userInvite = "userea2@liferay.com");
 
 		Publications.gotoReviewChanges(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "New ${publicationName}");
 
 		PublicationsChanges.openCommentsSidebar();
@@ -104,7 +104,7 @@ definition {
 		PublicationsChanges.deleteComment(commentValue = "It is not ready to Publish");
 
 		Publications.gotoPublish(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "New ${publicationName}");
 
 		Publications.publishPublication(publicationName = "New ${publicationName}");
@@ -148,7 +148,7 @@ definition {
 			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 
 		Publications.gotoReviewChanges(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "${publicationName}");
 
 		PublicationsChanges.openCommentsSidebar();
@@ -163,7 +163,7 @@ definition {
 		PublicationsChanges.deleteComment(commentValue = "It is not ready to Publish");
 
 		Publications.gotoPublish(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "New ${publicationName}");
 
 		Publications.publishPublication(publicationName = "New ${publicationName}");
@@ -203,7 +203,7 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 
 		Publications.gotoReviewChanges(
-			gotoManagePublications = "true",
+			gotoPublicationsAdmin = "true",
 			publicationName = "${publicationName}");
 
 		PublicationsChanges.openCommentsSidebar();
@@ -219,10 +219,7 @@ definition {
 	}
 
 	macro cancelPublicationCreation {
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -240,11 +237,8 @@ definition {
 	}
 
 	macro createNewPublication {
-		if ("${gotoManagePublications}" == "true") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Publications",
-				panel = "Applications",
-				portlet = "Publications");
+		if ("${gotoPublicationsAdmin}" == "true") {
+			PublicationsNavigator.openPublicationsAdmin();
 
 			Click(locator1 = "Button#PLUS");
 		}
@@ -354,11 +348,8 @@ definition {
 	}
 
 	macro gotoPublish {
-		if ("${gotoManagePublications}" == "true") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Publications",
-				panel = "Applications",
-				portlet = "Publications");
+		if ("${gotoPublicationsAdmin}" == "true") {
+			PublicationsNavigator.openPublicationsAdmin();
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -376,11 +367,8 @@ definition {
 	}
 
 	macro gotoReviewChanges {
-		if ("${gotoManagePublications}" == "true") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Publications",
-				panel = "Applications",
-				portlet = "Publications");
+		if ("${gotoPublicationsAdmin}" == "true") {
+			PublicationsNavigator.openPublicationsAdmin();
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -547,11 +535,8 @@ definition {
 	}
 
 	macro schedulePublication {
-		if ("${gotoManagePublications}" == "true") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Publications",
-				panel = "Applications",
-				portlet = "Publications");
+		if ("${gotoPublicationsAdmin}" == "true") {
+			PublicationsNavigator.openPublicationsAdmin();
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -647,11 +632,8 @@ definition {
 	}
 
 	macro selectPublication {
-		if ("${gotoManagePublications}" == "true") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Publications",
-				panel = "Applications",
-				portlet = "Publications");
+		if ("${gotoPublicationsAdmin}" == "true") {
+			PublicationsNavigator.openPublicationsAdmin();
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

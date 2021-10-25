@@ -1095,7 +1095,7 @@ definition {
 	}
 
 	test AssertPriceEntriesAreProductsInTheSameCatalogAsPriceList {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(
@@ -1187,7 +1187,7 @@ definition {
 	}
 
 	test AssertPriceListCanBeAssociatedWithAccountAndAccountGroup {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property portal.upstream = "true";
 
 		for (var entryNumber : list "1,2") {
@@ -1255,7 +1255,7 @@ definition {
 	}
 
 	test AssertPriceListCannotBeMovedToADifferentCatalog {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(
@@ -1298,7 +1298,7 @@ definition {
 	}
 
 	test AssertPriceListHaveRequiredNameAndCurrency {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(
@@ -1363,7 +1363,7 @@ definition {
 	}
 
 	test AssertPriceListIsAppliedToAllAssociatedAccounts {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property portal.upstream = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1615,7 +1615,7 @@ definition {
 	}
 
 	test PriceListExistsOnlyInOneCatalog {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(

@@ -27,7 +27,7 @@ definition {
 
 	test CreateNewSpecificationOptions {
 		property environment.acceptance = "true";
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -58,7 +58,7 @@ definition {
 
 	test PublishSimpleProduct {
 		property environment.acceptance = "true";
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

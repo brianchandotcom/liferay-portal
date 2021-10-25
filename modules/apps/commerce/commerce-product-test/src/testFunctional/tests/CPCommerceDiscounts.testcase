@@ -168,7 +168,7 @@ definition {
 	}
 
 	test AssertDiscountIsAppliedToChannel {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property portal.upstream = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -239,7 +239,7 @@ definition {
 	}
 
 	test CreateNewDiscount {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(

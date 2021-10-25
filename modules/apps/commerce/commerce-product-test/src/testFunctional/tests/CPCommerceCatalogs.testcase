@@ -85,7 +85,7 @@ definition {
 	}
 
 	test CreateNewCatalog {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

@@ -26,7 +26,7 @@ definition {
 	}
 
 	test CreateAnOption {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

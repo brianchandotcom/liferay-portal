@@ -554,7 +554,7 @@ definition {
 	}
 
 	test CreateNewChannel {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

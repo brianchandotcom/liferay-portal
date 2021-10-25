@@ -127,7 +127,7 @@ definition {
 
 	test ViewInstanceCurrenciesAvailable {
 		property environment.acceptance = "true";
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(

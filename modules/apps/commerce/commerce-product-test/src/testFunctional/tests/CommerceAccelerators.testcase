@@ -150,7 +150,7 @@ definition {
 	@description = "This is a test for COMMERCE-5530. AssertPromoProductPriceTotalIsDifferent"
 	@priority = "3"
 	test AssertPromoProductPriceTotalIsDifferent {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		// TODO Review
 

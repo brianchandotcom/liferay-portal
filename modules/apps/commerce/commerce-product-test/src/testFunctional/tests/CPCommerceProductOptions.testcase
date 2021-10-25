@@ -102,7 +102,7 @@ definition {
 	@description = "This is a test for COMMERCE-6019. EditAndRemoveAnOptionWithValues"
 	@priority = "3"
 	test EditAndRemoveAnOptionWithValues {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		// TODO Review
 

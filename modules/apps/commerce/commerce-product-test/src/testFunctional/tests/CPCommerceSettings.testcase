@@ -24,7 +24,7 @@ definition {
 	}
 
 	test CreateNewAvailabilityEstimate {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Settings",
@@ -77,7 +77,7 @@ definition {
 	}
 
 	test CreateNewMeasurementUnits {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Settings",
@@ -104,7 +104,7 @@ definition {
 
 	test ViewInstanceCurrenciesAvailable {
 		property environment.acceptance = "true";
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

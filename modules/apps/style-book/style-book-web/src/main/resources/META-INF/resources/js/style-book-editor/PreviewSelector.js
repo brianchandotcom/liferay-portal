@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
+import {openSelectionModal} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {StyleBookContext} from './StyleBookContext';
@@ -121,12 +122,29 @@ function LayoutSelector({layoutType}) {
 		previewData.recentLayouts
 	);
 
-	const {totalLayouts} = previewData;
+	const {itemSelectorURL, totalLayouts} = previewData;
 
 	useEffect(() => {
 		setRecentLayouts(previewData.recentLayouts);
 		setPreviewLayout(previewData.recentLayouts[0]);
 	}, [layoutType, previewData, setPreviewLayout]);
+
+	const handleMoreButtonClick = () => {
+		openItemSelector({
+			callback: (item) => {
+				const data = JSON.parse(item.value);
+
+				const layout = {
+					name: data.name,
+					url: urlWithPreviewParameter(data.url),
+				};
+
+				setPreviewLayout(layout);
+				setRecentLayouts(getNextRecentLayouts(recentLayouts, layout));
+			},
+			itemSelectorURL,
+		});
+	};
 
 	return (
 		<ClayDropDown
@@ -167,13 +185,29 @@ function LayoutSelector({layoutType}) {
 						</ClayDropDown.Item>
 					))}
 				</ClayDropDown.Group>
-				<ClayDropDown.Caption>
-					{Liferay.Util.sub(
-						Liferay.Language.get('showing-x-of-x-items'),
-						recentLayouts.length,
-						totalLayouts
-					)}
-				</ClayDropDown.Caption>
+				{totalLayouts > recentLayouts.length && (
+					<>
+						<ClayDropDown.Caption>
+							{Liferay.Util.sub(
+								Liferay.Language.get('showing-x-of-x-items'),
+								recentLayouts.length,
+								totalLayouts
+							)}
+						</ClayDropDown.Caption>
+						<ClayDropDown.Section>
+							<ClayButton
+								displayType="secondary w-100"
+								onClick={() => {
+									setActive(false);
+
+									handleMoreButtonClick();
+								}}
+							>
+								{Liferay.Language.get('more')}
+							</ClayButton>
+						</ClayDropDown.Section>
+					</>
+				)}
 			</ClayDropDown.ItemList>
 		</ClayDropDown>
 	);
@@ -206,4 +240,29 @@ function getNextRecentLayouts(recentLayouts, selectedLayout) {
 	];
 
 	return nextRecentLayouts;
+}
+
+function openItemSelector({
+	callback,
+	destroyedCallback = null,
+	itemSelectorURL,
+}) {
+	openSelectionModal({
+		onClose: destroyedCallback,
+		onSelect: (selectedItem) => {
+			callback(selectedItem);
+		},
+		selectEventName: `${config.namespace}selectPreviewItem`,
+		title: Liferay.Language.get('select'),
+		url: itemSelectorURL,
+	});
+}
+
+function urlWithPreviewParameter(url) {
+	const nextURL = new URL(url);
+
+	nextURL.searchParams.set('p_l_mode', 'preview');
+	nextURL.searchParams.set('styleBookEntryPreview', true);
+
+	return nextURL.href;
 }

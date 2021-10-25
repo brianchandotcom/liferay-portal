@@ -140,7 +140,7 @@ definition {
 
 			var htmlSnippet = '''
 <div class="fragment-name">
-	<lfr-editable class="component-html" id="element-html" type="html">
+	<lfr-editable id="element-html" type="html">
 
 		<h1>HTML Example</h1>
 
@@ -199,11 +199,10 @@ definition {
 		}
 
 		task ("View edited inline content in edit mode") {
-			AssertTextEquals.assertPartialText(
-				id = "element-html",
-				key_fragmentName = "Fragment Name",
-				locator1 = "Fragment#EDITABLE_FIELD",
-				value1 = "Edit HTML Title");
+			PageEditor.viewFragmentEditableText(
+				contributed = "false",
+				editableText = "Edit HTML Title A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
+				fragmentName = "Fragment Name");
 
 			PageEditor.clickPublish();
 		}
@@ -213,10 +212,10 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "html",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Edit HTML Title");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "fragment-name",
+				text = "Edit HTML Title");
 		}
 	}
 

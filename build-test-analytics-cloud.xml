@@ -36,12 +36,6 @@
 
 			<replaceregexp
 				file="${analytics.cloud.docker.test.yaml}"
-				match="http://\{service\}:8080"
-				replace="http://{service}:${analytics.cloud.faro.dxp.port}"
-			/>
-
-			<replaceregexp
-				file="${analytics.cloud.docker.test.yaml}"
 				match="\&quot;9090:8080\&quot;"
 				replace="&quot;${analytics.cloud.asah.trino.port}:8080&quot;"
 			/>

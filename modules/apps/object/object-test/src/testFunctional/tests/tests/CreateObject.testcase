@@ -1155,14 +1155,9 @@ definition {
 			locator1 = "Button#MAIN_CONTENT_SUBMIT",
 			value1 = "Submit");
 
-		Alert.viewSuccessMessage();
-
 		Navigator.openURL();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Custom Objects");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "Entry 1");
 	}

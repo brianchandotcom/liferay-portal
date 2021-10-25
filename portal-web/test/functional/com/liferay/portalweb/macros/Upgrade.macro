@@ -224,7 +224,6 @@ definition {
 			PageEditor.editFragmentText(
 				contributed = "false",
 				fragmentName = "Title",
-				id = "title",
 				text = "New editable fragment text");
 		}
 

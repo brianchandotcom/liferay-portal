@@ -1,0 +1,104 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Display Pages";
+
+	setUp {
+		task("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+					userEmailAddress = "userea@liferay.com",
+					userFirstName = "Userfn",
+					userLastName = "Userln",
+					userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "userea@liferay.com");
+		}
+
+		task("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+					contentType = "Web Content Article",
+					displayPageTemplateEntryName = "Display Page Name",
+					groupName = "Test Site Name",
+					subType = "Basic Web Content");
+		}
+
+		task ("Add a Heading fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading");
+		}
+
+		task ("Map the Title field to editable field") {
+			PageEditorMapping.mapEditableTextToField(
+					field = "Title",
+					fragmentName = "Heading",
+					id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content article") {
+			JSONWebcontent.addWebContent(
+					content = "Webcontent Content",
+					groupName = "Test Site Name",
+					title = "Webcontent Title");
+		}
+
+		task ("Select the display page template in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.editDisplayPage(
+					pageName = "Display Page Name",
+					pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-136421. Unlogged users cannot view the content of a Display Page, and after login, they are redirected to the content page."
+	@priority = "5"
+	test UnloggedUsersAreRedirecteedToWebContentAfterLoging {
+
+	}
+
+	@description = "This is a test for LPS-136421. Logged users without permission cannot view the content of a Display Page\t"
+	@priority = "5"
+	test loggedUsersWithoutPermissionsCanNotSeeContentOfDisplayPageTemplate {
+
+	}
+
+}

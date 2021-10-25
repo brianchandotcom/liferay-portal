@@ -1,13 +1,5 @@
 definition {
 
-	macro addBasicWebContent {
-		ManagementBar.clickAddMenuItem(menuItem = "Basic Web Content");
-	}
-
-	macro addFolder {
-		ManagementBar.clickAddMenuItem(menuItem = "Folder");
-	}
-
 	macro changeDisplayStyle {
 		ManagementBar.changeDisplayStyle(displayStyle = "${displayStyle}");
 	}

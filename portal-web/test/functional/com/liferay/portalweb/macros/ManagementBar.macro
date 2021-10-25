@@ -10,18 +10,6 @@ definition {
 		ManagementBar.viewDisplayStyle(displayStyle = "${displayStyle}");
 	}
 
-	macro clickAdd {
-		WaitForPageLoad();
-
-		Click(locator1 = "Button#PLUS");
-	}
-
-	macro clickAddMenuItem {
-		ManagementBar.clickAdd();
-
-		MenuItem.click(menuItem = "${menuItem}");
-	}
-
 	macro clickInfo {
 		Click.clickNoMouseOver(locator1 = "Icon#INFO");
 	}

@@ -39,9 +39,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Petteri Karttunen
  */
-public abstract class ViewEntriesDisplayContext<R> {
+public abstract class BaseDisplayContext<R> {
 
-	public ViewEntriesDisplayContext(
+	public BaseDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 

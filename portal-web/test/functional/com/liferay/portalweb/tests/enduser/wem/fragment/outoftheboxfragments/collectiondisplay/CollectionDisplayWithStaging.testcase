@@ -17,9 +17,7 @@ definition {
 		}
 
 		task ("Activate local live staging") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name");
-
-			Staging.activateStagingCP(siteName = "Test Site Name");
+			JSONStaging.enableLocalStaging(groupName = "Test Site Name");
 		}
 	}
 
@@ -37,264 +35,282 @@ definition {
 	@description = "This is a test for LPS-112249. The Content Flags, Content Ratings and Content Display are displayed normally when enable local staging."
 	@priority = "4"
 	test AddAllThreeContentFragmentsInCollectionDisplayOneCellWithLocalLiveStaging {
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name (Staging)",
-			layoutName = "Test Content Page Name 2",
-			site = "false",
-			type = "content");
+		task ("Add three web contents") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+			for (var i : list "1,2,3") {
+				WebContentNavigator.gotoAddCP();
 
-		for (var i : list "1,2,3") {
-			WebContentNavigator.gotoAddCP();
+				WebContent.addCP(
+					webContentContent = "Web Content Content ${i}",
+					webContentTitle = "Web Content Title ${i}");
 
-			WebContent.addCP(
-				webContentContent = "Web Content Content ${i}",
-				webContentTitle = "Web Content Title ${i}");
-
-			PortletEntry.publish();
+				PortletEntry.publish();
+			}
 		}
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
-
-		AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
-
-		AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
-
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
-
-		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
-
-		AssetListsAdmin.configureItemTypeInDynamicCollection(
-			itemSubtype = "All Subtypes",
-			itemType = "Web Content Article");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name 2",
-			siteName = "Test Site Name Staging");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Collection Display");
-
-		PageEditor.editCollectionDisplay(
-			assetListName = "Dynamic Asset List Test",
-			fragmentName = "Collection Display");
-
-		var n = "1";
-
-		for (var title : list "Web Content Title 3,Web Content Title 2,Web Content Title 1") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "${title}",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "${n}",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-
-			var n = ${n} + 1;
+		task ("Add a dynamic collection for Web Content Article and All Subtypes") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name (Staging)",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection");
 		}
 
-		PageEditor.addFragmentToCollectionDisplay(
-			collectionName = "Content Display",
-			entryTitle = "Web Content Title 3",
-			fragmentName = "Content Flags");
+		task ("Add a Collection Display to a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
 
-		PageEditor.addFragmentToCollectionDisplay(
-			collectionName = "Content Display",
-			fragmentName = "Content Ratings",
-			targetFragmentName = "Content Flags");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
 
-		PageEditor.addFragmentToCollectionDisplay(
-			collectionName = "Content Display",
-			fragmentName = "Content Display",
-			targetFragmentName = "Content Ratings");
-
-		for (var i : list "1,2,3") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_rowPosition = "${i}",
-				locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_DISABLE");
-
-			AssertVisible(
-				key_colPosition = "1",
-				key_rowPosition = "${i}",
-				locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
-
-			AssertTextEquals(
-				index = "${i}",
-				key_fragmentName = "Content Flags",
-				locator1 = "Fragment#FRAGMENT_CONTENT",
-				value1 = "Report");
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
 		}
 
-		var n = "1";
+		task ("Select the dynamic collection in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
 
-		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "${content}",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "${n}",
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			var n = "1";
 
-			var n = ${n} + 1;
+			for (var i : list "3,2,1") {
+				PageEditor.viewCollectionItem(
+					assetTitle = "Web Content Title ${i}",
+					row = "${n}");
+
+				var n = ${n} + 1;
+			}
 		}
 
-		PageEditor.clickPublish();
+		task ("Add a Content Flags, Content Ratings and Content Display into the same cell of Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Web Content Title 3",
+				fragmentName = "Content Flags");
 
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Test Content Page Name 2",
-			siteName = "Test Site Name Staging");
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				fragmentName = "Content Ratings",
+				targetFragmentName = "Content Flags");
 
-		for (var i : list "1,2,3") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_rowPosition = "${i}",
-				locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_DISABLE");
-
-			AssertVisible(
-				key_colPosition = "1",
-				key_rowPosition = "${i}",
-				locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
-
-			AssertVisible(
-				locator1 = "Button#REPORT",
-				value1 = "Report");
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				fragmentName = "Content Display",
+				targetFragmentName = "Content Ratings");
 		}
 
-		var n = "1";
+		task ("View displayed contents in Content Flags, Content Ratings and Content Display in page editor") {
+			for (var i : list "1,2,3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_DISABLE");
 
-		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "${content}",
-				key_rowPosition = "${n}",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				AssertVisible(
+					key_colPosition = "1",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
 
-			var n = ${n} + 1;
+				AssertTextEquals(
+					index = "${i}",
+					key_fragmentName = "Content Flags",
+					locator1 = "Fragment#FRAGMENT_CONTENT",
+					value1 = "Report");
+			}
+
+			var n = "1";
+
+			for (var i : list "3,2,1") {
+				ContentPages.viewFragmentText(
+					assetType = "web-content",
+					fragmentName = "Content Display",
+					position = "${n}",
+					text = "Web Content Content ${i}");
+
+				var n = ${n} + 1;
+			}
+
+			PageEditor.clickPublish();
 		}
 
-		Staging.gotoPublishToLive();
+		task ("View displayed contents in Content Flags, Content Ratings and Content Display at view mode in Staging site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
 
-		Staging.publishToLive();
+			for (var i : list "1,2,3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_DISABLE");
 
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Test Content Page Name 2",
-			siteName = "Test Site Name");
+				AssertVisible(
+					key_colPosition = "1",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
 
-		for (var i : list "1,2,3") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_rowPosition = "${i}",
-				locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_EMPTY");
+				AssertVisible(
+					locator1 = "Button#REPORT",
+					value1 = "Report");
+			}
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_rowPosition = "${i}",
-				locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
+			var n = "1";
 
-			AssertVisible(
-				locator1 = "Button#REPORT",
-				value1 = "Report");
+			for (var i : list "3,2,1") {
+				ContentPages.viewFragmentText(
+					assetType = "web-content",
+					fragmentName = "Content Display",
+					position = "${n}",
+					text = "Web Content Content ${i}");
+
+				var n = ${n} + 1;
+			}
 		}
 
-		var n = "1";
+		task ("Publish to live") {
+			Staging.gotoPublishToLive();
 
-		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "${content}",
-				key_rowPosition = "${n}",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+			Staging.publishToLive();
+		}
 
-			var n = ${n} + 1;
+		task ("View displayed contents in Content Flags, Content Ratings and Content Display at view mode in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			for (var i : list "1,2,3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_EMPTY");
+
+				AssertVisible(
+					key_colPosition = "1",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
+
+				AssertVisible(
+					locator1 = "Button#REPORT",
+					value1 = "Report");
+			}
+
+			var n = "1";
+
+			for (var i : list "3,2,1") {
+				ContentPages.viewFragmentText(
+					assetType = "web-content",
+					fragmentName = "Content Display",
+					position = "${n}",
+					text = "Web Content Content ${i}");
+
+				var n = ${n} + 1;
+			}
 		}
 	}
 
 	@description = "This is a test for LPS-114174. Can create a Collection Page based on Collections or Collection Providers in Staging site."
 	@priority = "4"
 	test AddCollectionPage {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
-
-		for (var i : list "3,2,1") {
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Web Content Content ${i}",
-				webContentTitle = "Web Content Title ${i}");
-
-			PortletEntry.publish();
+		task ("Add three web contents") {
+			for (var i : list "3,2,1") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content ${i}",
+					groupName = "Test Site Name (Staging)",
+					site = "false",
+					title = "Web Content Title ${i}");
+			}
 		}
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
-
-		AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
-
-		AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
-
-		ContentPages.addPublicCollectionPage(
-			collectionName = "Dynamic Asset List Test",
-			pageName = "Content Collection Page Name",
-			tabName = "Collections");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "ControlMenu#PAGE_TYPE",
-			value1 = "Collection Page");
-
-		AssertVisible(
-			key_elementHeader = "//div[contains(.,'Dynamic Asset List Test') and contains(@id,'fragment-')]",
-			key_position = "1",
-			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
-
-		for (var i : list "1,2,3") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Web Content Title ${i}",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "${i}",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		task ("Add a dynamic collection for All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name (Staging)",
+				itemType = "All Types",
+				site = "false",
+				title = "Dynamic Collection");
 		}
 
-		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+		task ("Add the first collection page based on dynamic collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-		AssertTextEquals(
-			key_fieldLabel = "Collection",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Dynamic Asset List Test");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
-
-		ContentPages.addPublicCollectionPage(
-			collectionName = "Most Viewed Assets",
-			pageName = "Content Collection Page Name 2",
-			tabName = "Collection Providers");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "ControlMenu#PAGE_TYPE",
-			value1 = "Collection Page");
-
-		AssertVisible(
-			key_elementHeader = "//div[contains(.,'Most Viewed Assets') and contains(@id,'fragment-')]",
-			key_position = "1",
-			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
-
-		for (var i : list "1,2,3") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Web Content Title ${i}",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "${i}",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Dynamic Collection",
+				pageName = "Collection Page Name 1",
+				tabName = "Collections");
 		}
 
-		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+		task ("View the type of collection page") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ControlMenu#PAGE_TYPE",
+				value1 = "Collection Page");
+		}
 
-		AssertTextEquals(
-			key_fieldLabel = "Collection",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Most Viewed Assets");
+		task ("View the dynamic collection name shown in Heading fragment") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Dynamic Collection",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("View collection items shown in Collection Display") {
+			for (var i : list "1,2,3") {
+				PageEditor.viewCollectionItem(
+					assetTitle = "Web Content Title ${i}",
+					row = "${i}");
+			}
+		}
+
+		task ("View the dynamic collection name shown in item selector") {
+			PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+
+			PageEditor.viewItemSelectorText(
+				fieldLabel = "Collection",
+				text = "Dynamic Collection");
+		}
+
+		task ("Add the second collection page based on Most Viewed Assets collection provider") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Most Viewed Assets",
+				pageName = "Collection Page Name 2",
+				tabName = "Collection Providers");
+		}
+
+		task ("View the type of collection page") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ControlMenu#PAGE_TYPE",
+				value1 = "Collection Page");
+		}
+
+		task ("View the Most Viewed Assets shown in Heading fragment") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Most Viewed Assets",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("View collection items shown in Collection Display") {
+			for (var i : list "1,2,3") {
+				PageEditor.viewCollectionItem(
+					assetTitle = "Web Content Title ${i}",
+					row = "${i}");
+			}
+		}
+
+		task ("View the Most Viewed Assets shown in item selector") {
+			PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+
+			PageEditor.viewItemSelectorText(
+				fieldLabel = "Collection",
+				text = "Most Viewed Assets");
+		}
 	}
 
 	@description = "This is a use case for LPS-86193. Can export display page template and import to Staging site via UI."
@@ -364,126 +380,129 @@ definition {
 	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed normally when enable local staging."
 	@priority = "4"
 	test ViewWebContentInContentDisplay {
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name (Staging)",
-			layoutName = "Test Content Page Name 2",
-			site = "false",
-			type = "content");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
-
-		for (var i : list "1,2,3") {
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Web Content Content ${i}",
-				webContentTitle = "Web Content Title ${i}");
-
-			PortletEntry.publish();
+		task ("Add three web contents") {
+			for (var i : list "3,2,1") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content ${i}",
+					groupName = "Test Site Name (Staging)",
+					site = "false",
+					title = "Web Content Title ${i}");
+			}
 		}
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
-
-		AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
-
-		AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
-
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
-
-		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
-
-		AssetListsAdmin.configureItemTypeInDynamicCollection(
-			itemSubtype = "All Subtypes",
-			itemType = "Web Content Article");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name 2",
-			siteName = "Test Site Name Staging");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Collection Display");
-
-		PageEditor.editCollectionDisplay(
-			assetListName = "Dynamic Asset List Test",
-			fragmentName = "Collection Display");
-
-		var n = "1";
-
-		for (var title : list "Web Content Title 3,Web Content Title 2,Web Content Title 1") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "${title}",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "${n}",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-
-			var n = ${n} + 1;
+		task ("Add a dynamic collection for Web Content Article and All Subtypes") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name (Staging)",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				site = "false",
+				title = "Dynamic Collection");
 		}
 
-		PageEditor.addFragmentToCollectionDisplay(
-			collectionName = "Content Display",
-			entryTitle = "Web Content Title 3",
-			fragmentName = "Content Display");
+		task ("Add a Collection Display to a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
 
-		var n = "1";
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
 
-		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "${content}",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "${n}",
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-
-			var n = ${n} + 1;
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
 		}
 
-		PageEditor.waitForAutoSave();
+		task ("Select the dynamic collection in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
 
-		PageEditor.gotoConfiguration(fragmentName = "Content Display");
+			var n = "1";
 
-		AssertSelectedLabel(
-			key_fieldLabel = "Template",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "Default Template");
+			for (var i : list "3,2,1") {
+				PageEditor.viewCollectionItem(
+					assetTitle = "Web Content Title ${i}",
+					row = "${n}");
 
-		PageEditor.clickPublish();
-
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Test Content Page Name 2",
-			siteName = "Test Site Name Staging");
-
-		var n = "1";
-
-		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "${content}",
-				key_rowPosition = "${n}",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
-
-			var n = ${n} + 1;
+				var n = ${n} + 1;
+			}
 		}
 
-		Staging.gotoPublishToLive();
+		task ("Add a Content Display to Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Web Content Title 3",
+				fragmentName = "Content Display");
+		}
 
-		Staging.publishToLive();
+		task ("View content of web contents shown in Content Display") {
+			var n = "1";
 
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Test Content Page Name 2",
-			siteName = "Test Site Name");
+			for (var i : list "3,2,1") {
+				ContentPages.viewFragmentText(
+					assetType = "web-content",
+					fragmentName = "Content Display",
+					position = "${n}",
+					text = "Web Content Content ${i}");
 
-		var n = "1";
+				var n = ${n} + 1;
+			}
+		}
 
-		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "${content}",
-				key_rowPosition = "${n}",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+		task ("View the Default Template is applied to Content Display") {
+			PageEditor.gotoConfiguration(fragmentName = "Content Display");
 
-			var n = ${n} + 1;
+			AssertSelectedLabel(
+				key_fieldLabel = "Template",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Default Template");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View contents of web contents at view mode in staging site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name 2",
+				siteName = "Test Site Name Staging");
+
+			var n = "1";
+
+			for (var i : list "3,2,1") {
+				ContentPages.viewFragmentText(
+					assetType = "web-content",
+					fragmentName = "Content Display",
+					position = "${n}",
+					text = "Web Content Content ${i}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Publish to live") {
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("View contents of web contents at view mode in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name 2",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var i : list "3,2,1") {
+				ContentPages.viewFragmentText(
+					assetType = "web-content",
+					fragmentName = "Content Display",
+					position = "${n}",
+					text = "Web Content Content ${i}");
+
+				var n = ${n} + 1;
+			}
 		}
 	}
 

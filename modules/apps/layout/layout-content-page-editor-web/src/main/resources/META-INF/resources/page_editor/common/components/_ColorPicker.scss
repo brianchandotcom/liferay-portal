@@ -12,6 +12,7 @@ html#{$cadmin-selector} {
 		.page-editor__ColorPicker {
 			&__color-palette .sheet-subtitle {
 				border-color: $cadmin-secondary-l3;
+				border-width: 1px 0 0;
 				font-size: 0.75rem;
 			}
 

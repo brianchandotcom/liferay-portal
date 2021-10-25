@@ -216,7 +216,7 @@ const Splotch = React.forwardRef(
 const ColorPalette = ({colors, onSetActive, onValueChange, splotchRef}) =>
 	Object.keys(colors).map((category) => (
 		<div className="page-editor__ColorPicker__color-palette" key={category}>
-			<span className="mb-3 px-3 sheet-subtitle">{category}</span>
+			<span className="mb-0 p-3 sheet-subtitle">{category}</span>
 			{Object.keys(colors[category]).map((tokenSet) => (
 				<div className="px-3" key={tokenSet}>
 					<span className="text-secondary">{tokenSet}</span>

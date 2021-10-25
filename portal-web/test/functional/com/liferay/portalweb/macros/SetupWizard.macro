@@ -93,6 +93,8 @@ definition {
 
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
+		Click(locator1 = "Button#DONE");
+
 		User.viewLoggedInPG();
 	}
 
@@ -149,6 +151,8 @@ definition {
 		User.answerPasswordReminder();
 
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		Click(locator1 = "Button#DONE");
 
 		User.viewLoggedInPG();
 	}

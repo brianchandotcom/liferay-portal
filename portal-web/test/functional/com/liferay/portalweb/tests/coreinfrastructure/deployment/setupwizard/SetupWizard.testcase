@@ -150,6 +150,8 @@ definition {
 			password = "test",
 			userEmailAddress = "user@liferay.com");
 
+		Click(locator1 = "Button#DONE");
+
 		AssertTextEquals(
 			locator1 = "Home#SITE_NAME",
 			value1 = "Custom");

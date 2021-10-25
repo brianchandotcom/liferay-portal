@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.layout.item.selector.LayoutItemSelectorReturnType;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.item.selector.LayoutPageTemplateEntryItemSelectorReturnType;
@@ -295,13 +296,19 @@ public class EditStyleBookEntryDisplayContext {
 		return JSONUtil.put(
 			"itemSelectorURL",
 			() -> {
+				LayoutItemSelectorCriterion layoutItemSelectorCriterion =
+					new LayoutItemSelectorCriterion();
+
+				layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+					new LayoutItemSelectorReturnType());
+
 				PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 					RequestBackedPortletURLFactoryUtil.create(
 						_httpServletRequest),
 					_themeDisplay.getScopeGroup(),
 					_themeDisplay.getScopeGroupId(),
 					_renderResponse.getNamespace() + "selectPreviewItem",
-					new LayoutItemSelectorCriterion());
+					layoutItemSelectorCriterion);
 
 				return itemSelectorURL.toString();
 			}

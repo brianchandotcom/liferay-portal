@@ -572,6 +572,53 @@ definition {
 			userName = "Test Test");
 	}
 
+	@description = "This is a use case for LPS-65368."
+	@priority = "5"
+	@refactordone
+	test CanViewBBCodeNoXSSWithRemoteServices {
+		property custom.properties = "message.boards.message.formats.default=bbcode";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "Message Boards Thread Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONMBMessage.addMessageReply(
+			anonymous = "true",
+			groupName = "Guest",
+			replyBody = '''<script>alert(123);</script>''',
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.viewBBCodeNoXSS(
+			threadBody = '''<script>alert(123);</script>''',
+			threadSubject = "RE: MB Thread Message Subject",
+			userName = "Anonymous");
+
+		var actualScript = '''<script>alert(123);</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+	}
+
 	@priority = "4"
 	@refactordone
 	test JavascriptIsNotExecutedInBBCodeBody {

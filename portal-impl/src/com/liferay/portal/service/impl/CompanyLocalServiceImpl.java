@@ -1601,36 +1601,48 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	protected void validateVirtualHost(String webId, String virtualHostname)
 		throws PortalException {
 
-		if (Validator.isNull(virtualHostname)) {
-			throw new CompanyVirtualHostException("Virtual hostname is null");
-		}
-		else if (virtualHostname.equals(_DEFAULT_VIRTUAL_HOST) &&
-				 !webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-
-			throw new CompanyVirtualHostException(
-				"localhost can only be used with the default web ID " + webId);
-		}
-		else if (!Validator.isDomain(virtualHostname) &&
-				 !Validator.isIPAddress(virtualHostname)) {
-
-			throw new CompanyVirtualHostException(
-				"Virtual hostname is invalid");
-		}
-		else {
-			VirtualHost virtualHost = _virtualHostLocalService.fetchVirtualHost(
-				virtualHostname);
-
-			if (virtualHost == null) {
-				return;
-			}
-
-			Company virtualHostnameCompany =
-				companyPersistence.findByPrimaryKey(virtualHost.getCompanyId());
-
-			if (!webId.equals(virtualHostnameCompany.getWebId())) {
+		try {
+			if (Validator.isNull(virtualHostname)) {
 				throw new CompanyVirtualHostException(
-					"Duplicate virtual hostname " + virtualHostname);
+					"Virtual hostname is null");
 			}
+			else if (virtualHostname.equals(_DEFAULT_VIRTUAL_HOST) &&
+					 !webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+
+				throw new CompanyVirtualHostException(
+					"localhost can only be used with the default web ID " +
+						webId);
+			}
+			else if (!Validator.isDomain(virtualHostname) &&
+					 !Validator.isIPAddress(virtualHostname)) {
+
+				throw new CompanyVirtualHostException(
+					"Virtual hostname is invalid");
+			}
+			else {
+				VirtualHost virtualHost =
+					_virtualHostLocalService.fetchVirtualHost(virtualHostname);
+
+				if (virtualHost == null) {
+					return;
+				}
+
+				Company virtualHostnameCompany =
+					companyPersistence.findByPrimaryKey(
+						virtualHost.getCompanyId());
+
+				if (!webId.equals(virtualHostnameCompany.getWebId())) {
+					throw new CompanyVirtualHostException(
+						"Duplicate virtual hostname " + virtualHostname);
+				}
+			}
+		}
+		catch (CompanyVirtualHostException companyVirtualHostException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(companyVirtualHostException.getMessage());
+			}
+
+			throw companyVirtualHostException;
 		}
 	}
 

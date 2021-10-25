@@ -21,10 +21,6 @@ definition {
 			ACUtils.addSiteAndPage();
 		}
 
-		ACUtils.navigateToSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Add a new user") {
@@ -278,11 +274,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8625 | Test Summary: Search the Segment Profile Distribution"
 	@priority = "3"
 	test CanSearchTheSegmentProfileDistribution {
-		var userList = "ac,liferay";
+		var userList = "ac,dxp";
 
-		var emailList = "ac@liferay.com,liferay@liferay.com";
+		var emailList = "ac@liferay.com,dxp@liferay.com,userea@liferay.com";
 
-		var nameList = "ac ac,liferay liferay";
+		var nameList = "ac ac,dxp dxp,userfn userln";
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
@@ -355,7 +351,7 @@ definition {
 		}
 
 		task ("Assert that a wrong word will be not found") {
-			ACSegments.searchTheSegmentProfile(searchTerm = "wrong");
+			ACSegments.searchTheSegmentProfile(searchTerm = "userfn");
 
 			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
 		}

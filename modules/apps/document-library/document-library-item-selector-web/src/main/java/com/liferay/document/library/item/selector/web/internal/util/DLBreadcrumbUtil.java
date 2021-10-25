@@ -15,12 +15,9 @@
 package com.liferay.document.library.item.selector.web.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.GroupServiceUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,20 +38,9 @@ public class DLBreadcrumbUtil {
 
 		portletURL.setParameter("displayStyle", displayStyle);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getScopeGroup();
-
-		if (folder != null) {
-			group = GroupServiceUtil.getGroup(folder.getGroupId());
-		}
-
 		_addPortletBreadcrumbEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, httpServletRequest,
-			group.getDescriptiveName(httpServletRequest.getLocale()),
-			portletURL);
+			LanguageUtil.get(httpServletRequest, "home"), portletURL);
 
 		if (folder != null) {
 			List<Folder> ancestorFolders = folder.getAncestors();

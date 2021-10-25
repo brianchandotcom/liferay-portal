@@ -16,7 +16,7 @@ package com.liferay.blogs.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.model.BlogsStatsUser;
+import com.liferay.blogs.model.BlogsStatsUserDAO;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.service.BlogsStatsUserLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -70,7 +70,7 @@ public class BlogsStatsUserLocalServiceTest {
 			_user1.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
-		BlogsStatsUser blogsStatsUser =
+		BlogsStatsUserDAO blogsStatsUser =
 			BlogsStatsUserLocalServiceUtil.getStatsUser(
 				blogsEntry.getGroupId(), blogsEntry.getUserId());
 
@@ -96,7 +96,7 @@ public class BlogsStatsUserLocalServiceTest {
 			_user1.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
-		BlogsStatsUser blogsStatsUser =
+		BlogsStatsUserDAO blogsStatsUser =
 			BlogsStatsUserLocalServiceUtil.getStatsUser(
 				blogsEntry.getGroupId(), blogsEntry.getUserId());
 
@@ -122,7 +122,7 @@ public class BlogsStatsUserLocalServiceTest {
 			_user2.getUserId(), BlogsEntry.class.getName(),
 			blogsEntry.getEntryId(), 1, null);
 
-		BlogsStatsUser blogsStatsUser =
+		BlogsStatsUserDAO blogsStatsUser =
 			BlogsStatsUserLocalServiceUtil.getStatsUser(
 				blogsEntry.getGroupId(), blogsEntry.getUserId());
 
@@ -166,7 +166,7 @@ public class BlogsStatsUserLocalServiceTest {
 			_user2.getUserId(), BlogsEntry.class.getName(),
 			blogsEntry.getEntryId());
 
-		BlogsStatsUser blogsStatsUser =
+		BlogsStatsUserDAO blogsStatsUser =
 			BlogsStatsUserLocalServiceUtil.getStatsUser(
 				blogsEntry.getGroupId(), blogsEntry.getUserId());
 
@@ -206,7 +206,7 @@ public class BlogsStatsUserLocalServiceTest {
 			_user2.getUserId(), BlogsEntry.class.getName(),
 			blogsEntry.getEntryId());
 
-		BlogsStatsUser blogsStatsUser =
+		BlogsStatsUserDAO blogsStatsUser =
 			BlogsStatsUserLocalServiceUtil.getStatsUser(
 				blogsEntry.getGroupId(), blogsEntry.getUserId());
 
@@ -248,7 +248,7 @@ public class BlogsStatsUserLocalServiceTest {
 			_user2.getUserId(), BlogsEntry.class.getName(),
 			blogsEntry.getEntryId(), 0.2, null);
 
-		BlogsStatsUser blogsStatsUser =
+		BlogsStatsUserDAO blogsStatsUser =
 			BlogsStatsUserLocalServiceUtil.getStatsUser(
 				blogsEntry.getGroupId(), blogsEntry.getUserId());
 
@@ -279,7 +279,7 @@ public class BlogsStatsUserLocalServiceTest {
 			_user2.getUserId(), BlogsEntry.class.getName(),
 			blogsEntry.getEntryId(), 0.2, null);
 
-		BlogsStatsUser blogsStatsUser =
+		BlogsStatsUserDAO blogsStatsUser =
 			BlogsStatsUserLocalServiceUtil.getStatsUser(
 				blogsEntry.getGroupId(), blogsEntry.getUserId());
 

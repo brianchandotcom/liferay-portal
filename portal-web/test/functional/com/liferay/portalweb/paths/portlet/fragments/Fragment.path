@@ -307,7 +307,7 @@
 </tr>
 <tr>
 	<td>EDITABLE_FIELD_ANY</td>
-	<td>xpath=(//div[contains(@class,'page-editor')]//div[contains(.,'${key_fragmentName}')])[${index}]//lfr-editable[contains(@id,'${id}')]</td>
+	<td>xpath=(//div[contains(@id,'fragment-')][not(descendant::lfr-editable)][.//div[contains(@class,'${fragmentName}')]]//*[normalize-space(text())] | //div[contains(@id,'fragment-')][.//div[contains(@class,'${fragmentName}')]]//lfr-editable)[${index}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -268,95 +268,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-139064. Users cannot see the preview draft option for a content page when the page has not draft."
-	@priority = "5"
-	test CannotPreviewDraftContentPageWhenDraftNonExistent {
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
-		task ("Access to the Page Tree") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
-
-			PagesFinder.goToPagesFinder();
-		}
-
-		task ("View the page name doesn't have asterisk icon in Page Tree") {
-			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Page Name");
-		}
-
-		task ("View the Preview Draft action not shown") {
-			Click.mouseOverClick(
-				key_pageName = "Test Page Name",
-				locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
-
-			MenuItem.viewNotVisible(menuItem = "Preview Draft");
-		}
-
-		task ("Add a Button fragment to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
-		}
-
-		task ("Discard the draft in Pages admin") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			PageEditor.clickDiscardDraft(pageName = "Test Page Name");
-		}
-
-		task ("Access to the Page Tree") {
-			ProductMenu.gotoHomePage();
-		}
-
-		task ("View the page name doesn't have asterisk icon in Page Tree") {
-			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Page Name");
-		}
-
-		task ("View the Preview Draft action not shown") {
-			Click.mouseOverClick(
-				key_pageName = "Test Page Name",
-				locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
-
-			MenuItem.viewNotVisible(menuItem = "Preview Draft");
-		}
-
-		task ("Add a Heading fragment to page then pubilsh") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
-
-			PageEditor.clickPublish();
-		}
-
-		task ("Access to the Page Tree") {
-			PagesFinder.goToPagesFinder();
-		}
-
-		task ("View the page name doesn't have asterisk icon in Page Tree") {
-			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Page Name");
-		}
-
-		task ("View the Preview Draft action not shown") {
-			Click.mouseOverClick(
-				key_pageName = "Test Page Name",
-				locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
-
-			MenuItem.viewNotVisible(menuItem = "Preview Draft");
-		}
-	}
-
 	@description = "This is a test for LPS-116618. Configure page via Page Tree panel."
 	@priority = "4"
 	test ConfigurePage {
@@ -654,10 +565,6 @@ definition {
 			PagesFinder.goToPagesFinder();
 		}
 
-		task ("View the page name has asterisk icon in Page Tree") {
-			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Page Name*");
-		}
-
 		task ("Preview the draft content page in a new tab") {
 			PagesFinder.gotoPageEllipsisItem(
 				item = "Preview Draft",
@@ -671,6 +578,99 @@ definition {
 				key_fragmentName = "button",
 				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
 				value1 = "Go Somewhere");
+		}
+	}
+
+	@description = "This is a test for LPS-139064. Users can see the preview draft when the content page at draft status."
+	@priority = "5"
+	test PreviewDraftWhenContentPageAtDraftStatus {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Access to the Page Tree") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			PagesFinder.goToPagesFinder();
+		}
+
+		task ("Preview draft via Page Tree") {
+			SitePages.gotoPageMenuItem(
+				menuItem = "Preview Draft",
+				pageName = "Test Page Name*");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+		}
+
+		task ("Close the new tab and select the original tab") {
+			Navigator.closeWindow();
+		}
+
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Discard the draft in Pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PageEditor.clickDiscardDraft(pageName = "Test Page Name");
+		}
+
+		task ("Access to the Page Tree") {
+			ProductMenu.gotoHomePage();
+		}
+
+		task ("Preview draft via Page Tree") {
+			SitePages.gotoPageMenuItem(
+				menuItem = "Preview Draft",
+				pageName = "Test Page Name*");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+		}
+
+		task ("Close the new tab and select the original tab") {
+			Navigator.closeWindow();
+		}
+
+		task ("Add a Heading fragment to page then pubilsh") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Access to the Page Tree") {
+			PagesFinder.goToPagesFinder();
+		}
+
+		task ("View the page name doesn't have asterisk icon in Page Tree") {
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Page Name");
+		}
+
+		task ("View the Preview Draft action not shown") {
+			Click.mouseOverClick(
+				key_pageName = "Test Page Name",
+				locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
+
+			MenuItem.viewNotVisible(menuItem = "Preview Draft");
 		}
 	}
 

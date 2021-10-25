@@ -397,14 +397,14 @@ definition {
 	test SingleDocumentSelectionDoesNotCheckAllEntries {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.jpg",
+			dmDocumentTitle = "DM Document1 Title",
 			groupName = "Guest",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2.jpg",
+			dmDocumentTitle = "DM Document2 Title",
 			groupName = "Guest",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");

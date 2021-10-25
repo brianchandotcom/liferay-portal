@@ -6,26 +6,6 @@ definition {
 			editor = "content");
 	}
 
-	macro addDescription {
-		AlloyEditor.typeEditor(
-			content = "${description}",
-			editor = "description");
-	}
-
-	macro addEntryExternalURL {
-		SelectFieldText(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR");
-
-		Click(locator1 = "AlloyEditor#TEXT_FORMATTING_LINK");
-
-		Type(
-			locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT",
-			value1 = "${entryExternalURL}");
-
-		Click(locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT_CONFIRM");
-	}
-
 	macro addSourceContent {
 		AlloyEditor.clickContentField();
 
@@ -36,40 +16,10 @@ definition {
 			value1 = "${content}");
 	}
 
-	macro addTitle {
-		AlloyEditor.typeEditor(
-			content = "${title}",
-			editor = "title");
-	}
-
-	macro addTitleAndContent {
-		AlloyEditor.addTitle(title = "${title}");
-
-		AlloyEditor.addContent(content = "${content}");
-	}
-
 	macro clickContentField {
 		Click(
 			key_editor = "content",
 			locator1 = "AlloyEditor#EDITOR");
-	}
-
-	macro toggleStylingInAlloyEditor {
-		SelectFieldText(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR");
-
-		if (isSet(boldContent)) {
-			Click(locator1 = "AlloyEditor#TEXT_FORMATTING_BOLD");
-		}
-
-		if (isSet(italicContent)) {
-			Click(locator1 = "AlloyEditor#TEXT_FORMATTING_ITALIC");
-		}
-
-		if (isSet(underlineContent)) {
-			Click(locator1 = "AlloyEditor#TEXT_FORMATTING_UNDERLINE");
-		}
 	}
 
 	macro typeEditor {
@@ -77,50 +27,6 @@ definition {
 			key_editor = "${editor}",
 			locator1 = "AlloyEditor#EDITOR",
 			value1 = "${content}");
-	}
-
-	macro viewNoStylingInAlloyEditor {
-		AlloyEditor.clickContentField();
-
-		if (isSet(boldContent)) {
-			AssertElementNotPresent(
-				key_boldContent = "${boldContent}",
-				locator1 = "AlloyEditor#CONTENT_FIELD_BOLD");
-		}
-
-		if (isSet(italicContent)) {
-			AssertElementNotPresent(
-				key_italicContent = "${italicContent}",
-				locator1 = "AlloyEditor#CONTENT_FIELD_ITALIC");
-		}
-
-		if (isSet(underlineContent)) {
-			AssertElementNotPresent(
-				key_underlineContent = "${underlineContent}",
-				locator1 = "AlloyEditor#CONTENT_FIELD_UNDERLINE");
-		}
-	}
-
-	macro viewStylingInAlloyEditor {
-		AlloyEditor.clickContentField();
-
-		if (isSet(boldContent)) {
-			AssertElementPresent(
-				key_boldContent = "${boldContent}",
-				locator1 = "AlloyEditor#CONTENT_FIELD_BOLD");
-		}
-
-		if (isSet(italicContent)) {
-			AssertElementPresent(
-				key_italicContent = "${italicContent}",
-				locator1 = "AlloyEditor#CONTENT_FIELD_ITALIC");
-		}
-
-		if (isSet(underlineContent)) {
-			AssertElementPresent(
-				key_underlineContent = "${underlineContent}",
-				locator1 = "AlloyEditor#CONTENT_FIELD_UNDERLINE");
-		}
 	}
 
 }

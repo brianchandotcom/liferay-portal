@@ -48,12 +48,13 @@ definition {
 	@description = "LPS-140736. Ensures there is no accessibility side panel on a page with no violations."
 	@priority = "5"
 	test CanDetectNoViolations {
-		property osgi.module.configurations = "enable=B&quot;true&quot;";
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
 
 		Navigator.gotoPage(pageName = "Blank Test Page");
 
 		// Workaround for side panel sometimes displaying previous violations inccorectly LPS-138624
+
 		if (IsElementPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
 			Refresh();
 		}
@@ -72,10 +73,11 @@ definition {
 	@description = "Verifies a11y tool can be deployed and detect an a11y violation"
 	@priority = "5"
 	test CanDetectViolation {
-		property osgi.module.configurations = "enable=B&quot;true&quot;";
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
 
 		// Workaround for side panel sometimes not displaying LPS-141442
+
 		if (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
 			Refresh();
 		}
@@ -90,4 +92,5 @@ definition {
 
 		takeScreenshot();
 	}
+
 }

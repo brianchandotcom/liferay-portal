@@ -658,13 +658,6 @@ definition {
 	@refactorneeded
 	@uitest
 	test DisplayWebContentWithTagInAP {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document Title",
-			groupName = "Test Depot Name",
-			mimeType = "application/msword",
-			sourceFileName = "Document_2.doc");
-
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoAddCP();

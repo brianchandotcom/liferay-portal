@@ -465,10 +465,6 @@ definition {
 			layoutName = "Blogs Aggregator Page",
 			widgetName = "Blogs Aggregator");
 
-		BlogsNavigator.openToAddEntry(
-			layoutName = "Blogs Aggregator Page",
-			siteURLKey = "guest");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");

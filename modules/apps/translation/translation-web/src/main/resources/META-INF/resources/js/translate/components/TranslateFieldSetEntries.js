@@ -50,7 +50,6 @@ const TranslateAutoTranslateRow = ({
 			</ClayLayout.ContentCol>
 			<ClayLayout.ContentCol className="align-self-top col-autotranslate-button">
 				<ClayButton
-					className="lfr-portal-tooltip"
 					disabled={isLoading || !sourceContent}
 					displayType="secondary"
 					monospaced

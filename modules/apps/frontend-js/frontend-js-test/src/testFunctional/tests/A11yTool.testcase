@@ -53,11 +53,14 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blank Test Page");
 
+		// Workaround for side panel sometimes displaying previous violations inccorectly LPS-138624
 		if (IsElementPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
 			Refresh();
 		}
 
-		AssertElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER");
+		if (IsElementPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+			AssertElementPresent(locator1 = "A11yTool#VIOLATION_PANEL_NO_VIOLATIONS");
+		}
 
 		AssertElementNotPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
 

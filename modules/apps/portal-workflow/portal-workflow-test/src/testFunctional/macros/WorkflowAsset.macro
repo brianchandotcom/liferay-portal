@@ -6,6 +6,14 @@ definition {
 			locator1 = "AssetWorkflow#DUE_DATE");
 	}
 
+	macro createNewBasicWebContent {
+		Portlet.clickPortletPlusIconPG(portletName = "Asset Publisher");
+
+		MenuItem.click(menuItem = "Basic Web Content");
+
+		WebContent.addCP(webContentTitle = "Web Content Title");
+	}
+
 	macro createNewUserAccount {
 		SignInNavigator.gotoCreateAccount();
 
@@ -167,14 +175,6 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "WorkflowSubmissionsTask#PREVIEW_USER",
 			value1 = "${userEmailAddress}");
-	}
-
-	macro createNewBasicWebContent {
-		Portlet.clickPortletPlusIconPG(portletName = "Asset Publisher");
-
-		MenuItem.click(menuItem = "Basic Web Content");
-
-		WebContent.addCP(webContentTitle = "Web Content Title");
 	}
 
 }

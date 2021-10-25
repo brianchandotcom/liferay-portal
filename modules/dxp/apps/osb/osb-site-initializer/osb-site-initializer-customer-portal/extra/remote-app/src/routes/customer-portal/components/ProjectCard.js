@@ -3,7 +3,16 @@ import classNames from 'classnames';
 import BaseButton from '~/common/components/BaseButton';
 import StatusTag from './StatusTag';
 
-const ProjectCard = ({ endDate, onClick, region, small, status, title }) => {
+const getCurrentEndDate = (currentEndDate) => {
+	const date = new Date(currentEndDate);
+	const month = date.toLocaleDateString('default', { month: 'short' });
+	const day = date.getDate();
+	const year = date.getFullYear();
+
+	return `${month} ${day}, ${year}`;
+}
+
+const ProjectCard = ({ onClick, region, sla, small, status, title }) => {
 
   return (
     <ClayCard className={classNames('m-0',
@@ -11,7 +20,7 @@ const ProjectCard = ({ endDate, onClick, region, small, status, title }) => {
         'project-card': !small,
         'project-card-sm': small
       }
-    )} onClick={() => onClick}>
+    )} onClick={() => onClick()}>
       <ClayCard.Body className={classNames("d-flex", "h-100", "justify-content-between", {
         'flex-column': !small,
         'flex-row': small
@@ -28,7 +37,7 @@ const ProjectCard = ({ endDate, onClick, region, small, status, title }) => {
               'my-1': !small,
               'sm-mb': small
             })}>
-              Ends on <span className="font-weight-bold text-paragraph">{endDate}</span>
+              Ends on <span className="font-weight-bold text-paragraph">{getCurrentEndDate(sla.currentEndDate)}</span>
             </div>
 
             <div className="text-neutral-5 text-paragraph-sm">

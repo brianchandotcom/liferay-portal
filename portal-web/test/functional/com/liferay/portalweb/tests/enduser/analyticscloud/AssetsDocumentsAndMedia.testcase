@@ -633,7 +633,7 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.navigateToSitePageWithUser(
-			actionType = "View DM",
+			actionType = "Download DM",
 			documentTitleList = "DM AC Title",
 			emailList = "${emailList}",
 			pageName = "AC Page",
@@ -646,7 +646,7 @@ definition {
 			userScreenName = "userac");
 
 		ACUtils.navigateToSitePageWithUser(
-			actionType = "View DM",
+			actionType = "Download DM",
 			documentTitleList = "DM AC Title",
 			emailList = "userac@liferay.com",
 			pageName = "AC Page",

@@ -115,10 +115,6 @@ definition {
 		Click(locator1 = "CKEditor#OK_BUTTON");
 	}
 
-	macro assertEditorPresent {
-		AssertElementPresent(locator1 = "CKEditor#BODY_FIELD");
-	}
-
 	macro assertSourceValue {
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 

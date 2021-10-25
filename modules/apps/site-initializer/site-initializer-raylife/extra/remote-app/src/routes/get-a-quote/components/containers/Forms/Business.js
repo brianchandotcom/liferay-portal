@@ -69,7 +69,7 @@ export const FormBusiness = ({form}) => {
 					name={setFormPath('yearsOfExperience')}
 					rules={{
 						min: {
-							message: 'Must be equal or grater than 0.',
+							message: 'Must be equal or greater than 0.',
 							value: 0,
 						},
 						required: 'This field is required',

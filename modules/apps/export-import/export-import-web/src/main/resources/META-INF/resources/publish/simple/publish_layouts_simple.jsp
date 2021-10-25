@@ -181,6 +181,8 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 
 									<%
 									}
+
+									settingsMap.remove("portletId");
 									%>
 
 									<c:if test="<%= !displayingChanges %>">

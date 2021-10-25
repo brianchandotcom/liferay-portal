@@ -108,3 +108,27 @@
 	margin-top: -$spacer-3;
 	width: fit-content;
 }
+
+.question-circle {
+	border-radius: 50%;
+    align-items: center;
+    border: solid 1px;
+    display: flex;
+    flex-shrink: 0;
+    height: 12px;
+    justify-content: center;
+    width: 12px;
+
+	&.selected {
+		background: #fff;
+		border-color: #fff;
+
+		span {
+			color: #295ccc;
+		}
+	}
+
+	span {
+		font-size: 11px;
+	}
+}

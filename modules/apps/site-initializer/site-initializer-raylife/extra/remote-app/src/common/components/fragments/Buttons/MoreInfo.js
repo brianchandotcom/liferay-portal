@@ -1,4 +1,3 @@
-import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React from 'react';
 import {useCustomEvent} from '~/common/hooks/useCustomEvent';
@@ -24,7 +23,13 @@ export const MoreInfoButton = ({callback, event, selected, value}) => {
 			type="button"
 		>
 			More Info
-			<ClayIcon symbol="question-circle-full" />
+			<div
+				className={classNames('question-circle', {
+					selected,
+				})}
+			>
+				<span>&#63;</span>
+			</div>
 		</button>
 	);
 };

@@ -7,6 +7,8 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
+		var usernameList = "user1,user2,user3";
+
 		task ("Copy the token from AC") {
 			ACUtils.launchAC();
 
@@ -21,41 +23,27 @@ definition {
 
 		task ("Add a new site with a public widget page") {
 			ACUtils.addSiteAndPage();
+
+			ACUtils.createBlogsAndAddToPage();
 		}
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Blogs Page");
-
-		ACUtils.createBlogsAndAddToPage(layoutName = "Blogs Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Documents Page");
-
-		ACUtils.createDMAndAddToPage(layoutName = "Documents Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Web Content Page");
-
-		ACUtils.createWCAndAddToPage(layoutName = "Web Content Page");
 
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+		task ("Add 3 more new users") {
+			for (var name : list "${usernameList}") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
 
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "${name}@liferay.com");
+			}
 		}
 
 		task ("Sync the Contact Data") {

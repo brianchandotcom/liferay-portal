@@ -90,9 +90,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 			String userDisplayText = LanguageUtil.format(request, "x-replying", new Object[] {HtmlUtil.escape(userName)});
 			%>
 
-			<h5 class="message-user-display text-default" title="<%= userDisplayText %>">
+			<span class="message-user-display text-default" title="<%= userDisplayText %>">
 				<%= userDisplayText %>
-			</h5>
+			</span>
 
 			<h4 title="<%= HtmlUtil.escape(message.getSubject()) %>">
 				<c:choose>

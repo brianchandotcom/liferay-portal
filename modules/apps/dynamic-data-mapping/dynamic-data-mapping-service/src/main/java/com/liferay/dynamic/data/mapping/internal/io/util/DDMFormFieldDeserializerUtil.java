@@ -35,7 +35,9 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Gabriel Albuquerque
@@ -111,15 +113,19 @@ public class DDMFormFieldDeserializerUtil {
 		else if (Objects.equals(
 					ddmFormFieldTypeSetting.getType(), "validation")) {
 
+			DDMForm ddmForm = ddmFormFieldTypeSetting.getDDMForm();
+
 			return _deserializeDDMFormFieldValidation(
-				jsonFactory, serializedDDMFormFieldProperty);
+				jsonFactory, serializedDDMFormFieldProperty,
+				ddmForm.getAvailableLocales());
 		}
 
 		return serializedDDMFormFieldProperty;
 	}
 
 	private static DDMFormFieldValidation _deserializeDDMFormFieldValidation(
-			JSONFactory jsonFactory, String serializedDDMFormFieldProperty)
+			JSONFactory jsonFactory, String serializedDDMFormFieldProperty,
+			Set<Locale> availableLocales)
 		throws PortalException {
 
 		DDMFormFieldValidation ddmFormFieldValidation =
@@ -152,9 +158,26 @@ public class DDMFormFieldDeserializerUtil {
 		ddmFormFieldValidation.setDDMFormFieldValidationExpression(
 			ddmFormFieldValidationExpression);
 
-		ddmFormFieldValidation.setErrorMessageLocalizedValue(
-			_deserializeLocalizedValue(
-				jsonFactory, jsonObject.getString("errorMessage")));
+		JSONObject errorMessageJSONObject = jsonObject.getJSONObject(
+			"errorMessage");
+
+		if (errorMessageJSONObject == null) {
+			LocalizedValue errorMessageLocalizedValue = new LocalizedValue();
+
+			for (Locale locale : availableLocales) {
+				errorMessageLocalizedValue.addString(
+					locale, jsonObject.getString("errorMessage"));
+			}
+
+			ddmFormFieldValidation.setErrorMessageLocalizedValue(
+				errorMessageLocalizedValue);
+		}
+		else {
+			ddmFormFieldValidation.setErrorMessageLocalizedValue(
+				_deserializeLocalizedValue(
+					jsonFactory, jsonObject.getString("errorMessage")));
+		}
+
 		ddmFormFieldValidation.setParameterLocalizedValue(
 			_deserializeLocalizedValue(
 				jsonFactory, jsonObject.getString("parameter")));

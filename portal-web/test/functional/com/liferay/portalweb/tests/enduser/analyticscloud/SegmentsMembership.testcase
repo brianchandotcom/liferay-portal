@@ -187,7 +187,7 @@ definition {
 	test NoChangeOnSegmentProfileSelectedPoint {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9260
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
@@ -403,7 +403,7 @@ definition {
 	test SegmentMembershipGraphExistAndShowsMembers {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9258
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
@@ -475,7 +475,7 @@ definition {
 	test SelectedSegmentMembershipPointCanClearDateSelection {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9257
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
@@ -552,7 +552,7 @@ definition {
 	test SelectPointOnMembershipShowsIndividualsAddedOrRemoved {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9261
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
@@ -629,7 +629,7 @@ definition {
 	test ViewMembershipGraphShowsIncreaseOrDecreaseMembers {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9252
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
@@ -708,7 +708,7 @@ definition {
 	test ViewMembershipShowsKnownAnonymousTotalMembers {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9251
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",

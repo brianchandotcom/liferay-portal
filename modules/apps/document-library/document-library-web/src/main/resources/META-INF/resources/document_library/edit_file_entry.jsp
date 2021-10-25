@@ -291,7 +291,7 @@ renderResponse.setTitle(headerTitle);
 								if (selectFolderButton) {
 									selectFolderButton.addEventListener('click', (event) => {
 										Liferay.Util.openSelectionModal({
-											eventName: 'itemSelected',
+											eventName: '<portlet:namespace />folderSelected',
 											multiple: false,
 											onSelect: function (selectedItem) {
 												if (!selectedItem) {
@@ -317,7 +317,7 @@ renderResponse.setTitle(headerTitle);
 											folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new FolderItemSelectorReturnType());
 											folderItemSelectorCriterion.setFolderId(folderId);
 
-											PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), "itemSelected", folderItemSelectorCriterion);
+											PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), portletDisplay.getNamespace() + "folderSelected", folderItemSelectorCriterion);
 											%>
 
 											url: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>',

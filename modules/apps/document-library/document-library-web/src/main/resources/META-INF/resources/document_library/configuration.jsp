@@ -147,7 +147,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				if (selectFolderButton) {
 					selectFolderButton.addEventListener('click', (event) => {
 						Liferay.Util.openSelectionModal({
-							selectEventName: 'itemSelected',
+							selectEventName: '<portlet:namespace />folderSelected',
 							multiple: false,
 							onSelect: function (selectedItem) {
 								if (!selectedItem) {
@@ -188,7 +188,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 							folderItemSelectorCriterion.setSelectedFolderId(dlAdminDisplayContext.getRootFolderId());
 							folderItemSelectorCriterion.setShowMountFolder(false);
 
-							PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), "itemSelected", folderItemSelectorCriterion);
+							PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), portletDisplay.getNamespace() + "folderSelected", folderItemSelectorCriterion);
 							%>
 
 							url: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>',

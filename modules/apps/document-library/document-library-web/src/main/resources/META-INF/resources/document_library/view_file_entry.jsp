@@ -181,7 +181,7 @@ folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new FolderItemSele
 folderItemSelectorCriterion.setFolderId(fileEntry.getFolderId());
 folderItemSelectorCriterion.setSelectedFolderId(fileEntry.getFolderId());
 
-PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), "itemSelected", folderItemSelectorCriterion);
+PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), portletDisplay.getNamespace() + "folderSelected", folderItemSelectorCriterion);
 %>
 
 <portlet:actionURL name="/document_library/edit_entry" var="editEntryURL" />
@@ -195,7 +195,7 @@ PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortle
 		var namespace = '<portlet:namespace />';
 
 		Liferay.Util.openSelectionModal({
-			selectEventName: 'itemSelected',
+			selectEventName: '<portlet:namespace />folderSelected',
 			multiple: false,
 			onSelect: function (selectedItem) {
 				if (!selectedItem) {

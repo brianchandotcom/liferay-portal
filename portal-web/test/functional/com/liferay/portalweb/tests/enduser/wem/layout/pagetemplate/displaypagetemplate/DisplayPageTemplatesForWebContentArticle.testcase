@@ -102,7 +102,7 @@ definition {
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
-				text = "Webcontent Title Edit");
+				text = "Webcontent Title");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "button",

@@ -134,7 +134,6 @@ definition {
 				contributed = "false",
 				field = "Title",
 				fragmentName = "Title",
-				id = "title",
 				source = "Basic Web Content (Default)");
 		}
 
@@ -143,7 +142,6 @@ definition {
 				contributed = "false",
 				field = "Content",
 				fragmentName = "Rich Text",
-				id = "rich-text",
 				source = "Basic Web Content (Default)");
 		}
 

@@ -325,14 +325,12 @@ definition {
 		PageEditor.editFragmentText(
 			contributed = "false",
 			fragmentName = "Content",
-			id = "content",
 			text = "Editing Finished");
 
 		PageEditor.viewFragmentEditableText(
 			contributed = "false",
 			editableText = "Editing Finished",
-			fragmentName = "Content",
-			id = "content");
+			fragmentName = "Content");
 
 		SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
@@ -369,8 +367,7 @@ definition {
 		PageEditor.viewFragmentEditableText(
 			contributed = "false",
 			editableText = "Editing Finished",
-			fragmentName = "Content",
-			id = "content");
+			fragmentName = "Content");
 
 		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException:");
 

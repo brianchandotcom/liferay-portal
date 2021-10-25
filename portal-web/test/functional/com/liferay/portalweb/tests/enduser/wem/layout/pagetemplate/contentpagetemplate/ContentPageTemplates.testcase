@@ -71,8 +71,7 @@ definition {
 			PageEditor.editFragmentImage(
 				contributed = "false",
 				fileName = "Document_1.png",
-				fragmentName = "Image",
-				id = "image");
+				fragmentName = "Image");
 		}
 
 		task ("Assert the Image fragment's image was changed") {
@@ -119,7 +118,6 @@ definition {
 			PageEditor.editFragmentText(
 				contributed = "false",
 				fragmentName = "Content",
-				id = "content",
 				text = "Editing Finished");
 		}
 
@@ -127,8 +125,7 @@ definition {
 			PageEditor.viewFragmentEditableText(
 				contributed = "false",
 				editableText = "Editing Finished",
-				fragmentName = "Content",
-				id = "content");
+				fragmentName = "Content");
 		}
 	}
 

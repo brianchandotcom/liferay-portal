@@ -584,6 +584,8 @@ definition {
 	@description = "This is a test for LPS-139064. Users can see the preview draft when the content page at draft status."
 	@priority = "5"
 	test PreviewDraftWhenContentPageAtDraftStatus {
+		property portal.acceptance = "true";
+
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

@@ -1126,6 +1126,8 @@ definition {
 	@description = "Users can preview draft for a content page from Pages admin when they exist."
 	@priority = "5"
 	test PreviewDraftContentPage {
+		property portal.acceptance = "true";
+
 		task ("Add a public content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

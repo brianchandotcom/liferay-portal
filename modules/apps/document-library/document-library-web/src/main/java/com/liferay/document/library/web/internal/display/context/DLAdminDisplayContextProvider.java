@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.trash.TrashHelper;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,9 @@ public class DLAdminDisplayContextProvider {
 	public DLAdminDisplayContext getDLAdminDisplayContext(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
+
+		httpServletRequest.setAttribute(
+			ItemSelector.class.getName(), _itemSelector);
 
 		DLRequestHelper dlRequestHelper = new DLRequestHelper(
 			httpServletRequest);
@@ -63,6 +67,9 @@ public class DLAdminDisplayContextProvider {
 
 	@Reference
 	private DLTrashHelper _dlTrashHelper;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private TrashHelper _trashHelper;

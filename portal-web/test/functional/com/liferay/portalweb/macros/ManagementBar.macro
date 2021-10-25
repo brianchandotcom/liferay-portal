@@ -5,6 +5,12 @@ definition {
 
 		Click(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 
+		if (IsElementNotPresent(locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			Refresh();
+
+			Click(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
+		}
+
 		MenuItem.click(menuItem = "${displayStyle}");
 
 		ManagementBar.viewDisplayStyle(displayStyle = "${displayStyle}");

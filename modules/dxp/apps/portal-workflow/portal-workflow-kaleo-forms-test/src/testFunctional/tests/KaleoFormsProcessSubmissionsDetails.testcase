@@ -18,37 +18,37 @@ definition {
 			category = "Content & Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
+		// KaleoFormsAdmin.addProcess();
 
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
+		// KaleoFormsAdmin.addProcessDetails(
+		// 	kfProcessDescription = "Kaleo Forms Process Description",
+		// 	kfProcessName = "Kaleo Forms Process");
 
-		KaleoFormsAdmin.next();
+		// KaleoFormsAdmin.next();
 
-		KaleoFormsAdmin.chooseFieldSet(
-			kfFieldSetName = "${kfFieldSetName}",
-			kfProcessName = "Kaleo Forms Process");
+		// KaleoFormsAdmin.chooseFieldSet(
+		// 	kfFieldSetName = "${kfFieldSetName}",
+		// 	kfProcessName = "Kaleo Forms Process");
 
-		KaleoFormsAdmin.next();
+		// KaleoFormsAdmin.next();
 
-		KaleoFormsAdmin.chooseWorkflow(
-			kfProcessName = "Kaleo Forms Process",
-			workflowDefinitionTitle = "Single Approver");
+		// KaleoFormsAdmin.chooseWorkflow(
+		// 	kfProcessName = "Kaleo Forms Process",
+		// 	workflowDefinitionTitle = "Single Approver");
 
-		KaleoFormsAdmin.next();
+		// KaleoFormsAdmin.next();
 
-		KaleoFormsAdmin.assignForm(
-			kfProcessName = "Kaleo Forms Process",
-			workflowTask = "create");
+		// KaleoFormsAdmin.assignForm(
+		// 	kfProcessName = "Kaleo Forms Process",
+		// 	workflowTask = "create");
 
-		KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
+		// KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
 
-		KaleoFormsAdmin.saveForm();
+		// KaleoFormsAdmin.saveForm();
 
-		KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form");
+		// KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form");
 
-		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
+		// KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
 	}
 
 	tearDown {
@@ -91,11 +91,69 @@ definition {
 	}
 
 	@description = "Verify that the details page shows the process Status is Pending before the user approve."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewProcessStatusPending {
+		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
-		// TODO LRQA-70703 CanViewProcessStatusPending pending implementation
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Liferay",
+			fieldFieldLabel = "Company",
+			fieldName = "company");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "test@liferay.com",
+			fieldFieldLabel = "Email",
+			fieldName = "email");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Test",
+			fieldFieldLabel = "First Name",
+			fieldName = "firstName");
+
+		DDLRecord.populateFieldSelect(
+			ddlRecordFieldData = "Google Hangouts",
+			fieldFieldLabel = "Instant Messenger Service",
+			fieldName = "imService");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "testliferay",
+			fieldFieldLabel = "Instant Messenger",
+			fieldName = "imUserName");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "QA Engineer",
+			fieldFieldLabel = "Job Title",
+			fieldName = "jobTitle");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Test",
+			fieldFieldLabel = "Last Name",
+			fieldName = "lastName");
+
+		DDLRecord.populateFieldTextBox(
+			ddlRecordFieldData = "Notes",
+			fieldFieldLabel = "Notes",
+			fieldName = "notes");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "(123) 456-7890",
+			fieldFieldLabel = "Phone (Mobile)",
+			fieldName = "phoneMobile");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "(123) 111-2222",
+			fieldFieldLabel = "Phone (Office)",
+			fieldName = "phoneOffice");
+
+		KaleoFormsAdmin.saveProcessRecord();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "View");
+
+		AssertElementPresent(
+			key_status = "Pending",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+			
 
 	}
 

@@ -115,7 +115,9 @@ const ColorPicker = ({
 					<DropDown.Menu
 						active={active}
 						alignElementRef={triggerElementRef}
-						className="clay-color-dropdown-menu px-0"
+						className={classNames('clay-color-dropdown-menu', {
+							'px-0': config.tokenOptimizationEnabled,
+						})}
 						containerProps={{
 							className: 'cadmin',
 						}}
@@ -152,7 +154,7 @@ const ColorPicker = ({
 								</>
 							) : null
 						) : (
-							<div className="clay-color-swatch">
+							<div className="clay-color-swatch mt-0">
 								{colors.map(({label, name, value}, i) => (
 									<div
 										className="clay-color-swatch-item"

@@ -54,128 +54,101 @@ import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = {})
 public class SXPBlueprintUtil {
 
 	public static void populateSXPBlueprintSearchContainer(
-		PortletRequest portletRequest, long groupId, int status,
-		SearchContainer<SXPBlueprint> searchContainer, String orderByCol,
-		String orderByType) {
+		long groupId, String orderByCol, String orderByType,
+		PortletRequest portletRequest, Queries queries, Searcher searcher,
+		SearchContainer<SXPBlueprint> searchContainer,
+		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
+		int status, SXPBlueprintService sxpBlueprintService) {
 
 		_populateSXPBlueprintSearchContainer(
-			portletRequest, groupId, status, searchContainer, orderByCol,
-			orderByType);
+			groupId, orderByCol, orderByType, portletRequest, queries, searcher,
+			searchContainer, searchRequestBuilderFactory, sorts, status,
+			sxpBlueprintService);
 	}
 
 	public static void populateSXPElementSearchContainer(
-		PortletRequest portletRequest, long groupId, int status,
-		SearchContainer<SXPElement> searchContainer, String orderByCol,
-		String orderByType) {
+		long groupId, String orderByCol, String orderByType,
+		PortletRequest portletRequest, Queries queries, Searcher searcher,
+		SearchContainer<SXPElement> searchContainer,
+		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
+		int status, SXPElementService sxpElementService) {
 
 		_populateSXPElementSearchContainer(
-			portletRequest, groupId, status, searchContainer, orderByCol,
-			orderByType);
-	}
-
-	@Reference(unbind = "-")
-	protected void setQueries(Queries queries) {
-		_queries = queries;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearcher(Searcher searcher) {
-		_searcher = searcher;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchRequestBuilderFactory(
-		SearchRequestBuilderFactory searchRequestBuilderFactory) {
-
-		_searchRequestBuilderFactory = searchRequestBuilderFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSorts(Sorts sorts) {
-		_sorts = sorts;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSXPBlueprintService(
-		SXPBlueprintService sxpBlueprintService) {
-
-		_sxpSXPBlueprintService = sxpBlueprintService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSXPElementService(SXPElementService sxpElementService) {
-		_sxpElementService = sxpElementService;
+			groupId, orderByCol, orderByType, portletRequest, queries, searcher,
+			searchContainer, searchRequestBuilderFactory, sorts, status,
+			sxpElementService);
 	}
 
 	private static void _addGroupFilterClause(
-		BooleanQuery booleanQuery, long groupId) {
+		BooleanQuery booleanQuery, long groupId, Queries queries) {
 
-		TermQuery groupQuery = _queries.term(Field.GROUP_ID, groupId);
+		TermQuery groupQuery = queries.term(Field.GROUP_ID, groupId);
 
 		booleanQuery.addFilterQueryClauses(groupQuery);
 	}
 
 	private static void _addReadOnlyFilterClause(
-		BooleanQuery booleanQuery, PortletRequest portletRequest) {
+		BooleanQuery booleanQuery, PortletRequest portletRequest,
+		Queries queries) {
 
 		if (!Validator.isBlank(
 				ParamUtil.getString(portletRequest, "readOnly"))) {
 
 			booleanQuery.addFilterQueryClauses(
-				_queries.term(
+				queries.term(
 					"readOnly",
 					ParamUtil.getBoolean(portletRequest, "readOnly")));
 		}
 	}
 
 	private static void _addSearchClauses(
-		BooleanQuery booleanQuery, String keywords, String languageId) {
+		BooleanQuery booleanQuery, String keywords, String languageId,
+		Queries queries) {
 
 		if (Validator.isBlank(keywords)) {
-			booleanQuery.addMustQueryClauses(_queries.matchAll());
+			booleanQuery.addMustQueryClauses(queries.matchAll());
 		}
 		else {
 			booleanQuery.addMustQueryClauses(
-				_queries.multiMatch(keywords, _getSearchFields(languageId)));
+				queries.multiMatch(keywords, _getSearchFields(languageId)));
 		}
 	}
 
 	private static void _addStatusFilterClause(
-		BooleanQuery booleanQuery, int status) {
+		BooleanQuery booleanQuery, Queries queries, int status) {
 
-		booleanQuery.addFilterQueryClauses(_queries.term(Field.STATUS, status));
+		booleanQuery.addFilterQueryClauses(queries.term(Field.STATUS, status));
 	}
 
 	private static void _addVisibilityFilterClause(
-		BooleanQuery booleanQuery, PortletRequest portletRequest) {
+		BooleanQuery booleanQuery, PortletRequest portletRequest,
+		Queries queries) {
 
 		if (ParamUtil.getString(portletRequest, "hidden") != null) {
 			booleanQuery.addFilterQueryClauses(
-				_queries.term(
+				queries.term(
 					"hidden", ParamUtil.getBoolean(portletRequest, "hidden")));
 		}
 	}
 
 	private static SearchRequest _createElementSearchRequest(
-		PortletRequest portletRequest, long groupId, int status, int type,
-		int start, int size, String orderByCol, String orderByType) {
+		PortletRequest portletRequest, long groupId, Queries queries,
+		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
+		int status, int type, int start, int size, String orderByCol,
+		String orderByType) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		String languageId = themeDisplay.getLanguageId();
 
-		return _searchRequestBuilderFactory.builder(
+		return searchRequestBuilderFactory.builder(
 		).companyId(
 			themeDisplay.getCompanyId()
 		).from(
@@ -184,24 +157,26 @@ public class SXPBlueprintUtil {
 			SXPElement.class
 		).query(
 			_getSXPElementSearchQuery(
-				portletRequest, type, groupId, status, languageId)
+				portletRequest, type, groupId, queries, status, languageId)
 		).size(
 			size
 		).addSort(
-			_getSort(orderByCol, orderByType, languageId)
+			_getSort(orderByCol, orderByType, languageId, sorts)
 		).build();
 	}
 
 	private static SearchRequest _createSXPBlueprintSearchRequest(
-		PortletRequest portletRequest, long groupId, int status, int start,
-		int size, String orderByCol, String orderByType) {
+		PortletRequest portletRequest, long groupId, Queries queries,
+		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
+		int status, int start, int size, String orderByCol,
+		String orderByType) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		String languageId = themeDisplay.getLanguageId();
 
-		return _searchRequestBuilderFactory.builder(
+		return searchRequestBuilderFactory.builder(
 		).companyId(
 			themeDisplay.getCompanyId()
 		).from(
@@ -211,11 +186,11 @@ public class SXPBlueprintUtil {
 		).query(
 			_getSXPBlueprintSearchQuery(
 				ParamUtil.getString(portletRequest, "keywords"), groupId,
-				status, languageId)
+				queries, status, languageId)
 		).size(
 			size
 		).addSort(
-			_getSort(orderByCol, orderByType, languageId)
+			_getSort(orderByCol, orderByType, languageId, sorts)
 		).build();
 	}
 
@@ -236,7 +211,7 @@ public class SXPBlueprintUtil {
 	}
 
 	private static Sort _getSort(
-		String orderByCol, String orderByType, String languageId) {
+		String orderByCol, String orderByType, String languageId, Sorts sorts) {
 
 		SortOrder sortOrder = SortOrder.ASC;
 
@@ -245,50 +220,51 @@ public class SXPBlueprintUtil {
 		}
 
 		if (Objects.equals(orderByCol, Field.TITLE)) {
-			return _sorts.field(
+			return sorts.field(
 				_getTitleField(languageId) + "_String_sortable", sortOrder);
 		}
 
-		return _sorts.field(orderByCol, sortOrder);
+		return sorts.field(orderByCol, sortOrder);
 	}
 
 	private static Query _getSXPBlueprintSearchQuery(
-		String keywords, long groupId, int status, String languageId) {
+		String keywords, long groupId, Queries queries, int status,
+		String languageId) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = queries.booleanQuery();
 
-		_addGroupFilterClause(booleanQuery, groupId);
+		_addGroupFilterClause(booleanQuery, groupId, queries);
 
-		_addStatusFilterClause(booleanQuery, status);
+		_addStatusFilterClause(booleanQuery, queries, status);
 
-		_addSearchClauses(booleanQuery, keywords, languageId);
+		_addSearchClauses(booleanQuery, keywords, languageId, queries);
 
 		return booleanQuery;
 	}
 
 	private static Query _getSXPElementSearchQuery(
-		PortletRequest portletRequest, long type, long groupId, int status,
-		String languageId) {
+		PortletRequest portletRequest, long type, long groupId, Queries queries,
+		int status, String languageId) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = queries.booleanQuery();
 
-		_addGroupFilterClause(booleanQuery, groupId);
+		_addGroupFilterClause(booleanQuery, groupId, queries);
 
 		if (type > 0) {
-			booleanQuery.addFilterQueryClauses(_queries.term(Field.TYPE, type));
+			booleanQuery.addFilterQueryClauses(queries.term(Field.TYPE, type));
 		}
 
 		if (status != WorkflowConstants.STATUS_ANY) {
-			_addStatusFilterClause(booleanQuery, status);
+			_addStatusFilterClause(booleanQuery, queries, status);
 		}
 
-		_addVisibilityFilterClause(booleanQuery, portletRequest);
+		_addVisibilityFilterClause(booleanQuery, portletRequest, queries);
 
-		_addReadOnlyFilterClause(booleanQuery, portletRequest);
+		_addReadOnlyFilterClause(booleanQuery, portletRequest, queries);
 
 		_addSearchClauses(
 			booleanQuery, ParamUtil.getString(portletRequest, "keywords"),
-			languageId);
+			languageId, queries);
 
 		return booleanQuery;
 	}
@@ -299,15 +275,18 @@ public class SXPBlueprintUtil {
 	}
 
 	private static void _populateSXPBlueprintSearchContainer(
-		PortletRequest portletRequest, long groupId, int status,
-		SearchContainer<SXPBlueprint> searchContainer, String orderByCol,
-		String orderByType) {
+		long groupId, String orderByCol, String orderByType,
+		PortletRequest portletRequest, Queries queries, Searcher searcher,
+		SearchContainer<SXPBlueprint> searchContainer,
+		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
+		int status, SXPBlueprintService sxpBlueprintService) {
 
 		SearchRequest searchRequest = _createSXPBlueprintSearchRequest(
-			portletRequest, groupId, status, searchContainer.getStart(),
+			portletRequest, groupId, queries, searchRequestBuilderFactory,
+			sorts, status, searchContainer.getStart(),
 			searchContainer.getDelta(), orderByCol, orderByType);
 
-		SearchResponse searchResponse = _searcher.search(searchRequest);
+		SearchResponse searchResponse = searcher.search(searchRequest);
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
@@ -320,7 +299,8 @@ public class SXPBlueprintUtil {
 
 		searchContainer.setResults(
 			stream.map(
-				searchHit -> _toSXPBlueprintOptional(searchHit)
+				searchHit -> _toSXPBlueprintOptional(
+					searchHit, sxpBlueprintService)
 			).filter(
 				Optional::isPresent
 			).map(
@@ -331,17 +311,20 @@ public class SXPBlueprintUtil {
 	}
 
 	private static void _populateSXPElementSearchContainer(
-		PortletRequest portletRequest, long groupId, int status,
-		SearchContainer<SXPElement> searchContainer, String orderByCol,
-		String orderByType) {
+		long groupId, String orderByCol, String orderByType,
+		PortletRequest portletRequest, Queries queries, Searcher searcher,
+		SearchContainer<SXPElement> searchContainer,
+		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
+		int status, SXPElementService sxpElementService) {
 
 		SearchRequest searchRequest = _createElementSearchRequest(
-			portletRequest, groupId, status,
+			portletRequest, groupId, queries, searchRequestBuilderFactory,
+			sorts, status,
 			ParamUtil.getInteger(portletRequest, "sxpElementType"),
 			searchContainer.getStart(), searchContainer.getDelta(), orderByCol,
 			orderByType);
 
-		SearchResponse searchResponse = _searcher.search(searchRequest);
+		SearchResponse searchResponse = searcher.search(searchRequest);
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
@@ -354,7 +337,7 @@ public class SXPBlueprintUtil {
 
 		searchContainer.setResults(
 			stream.map(
-				searchHit -> _toSXPElementOptional(searchHit)
+				searchHit -> _toSXPElementOptional(searchHit, sxpElementService)
 			).filter(
 				Optional::isPresent
 			).map(
@@ -365,13 +348,13 @@ public class SXPBlueprintUtil {
 	}
 
 	private static Optional<SXPBlueprint> _toSXPBlueprintOptional(
-		SearchHit searchHit) {
+		SearchHit searchHit, SXPBlueprintService sxpBlueprintService) {
 
 		long entryClassPK = _getEntryClassPK(searchHit);
 
 		try {
 			return Optional.of(
-				_sxpSXPBlueprintService.getSXPBlueprint(entryClassPK));
+				sxpBlueprintService.getSXPBlueprint(entryClassPK));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -385,12 +368,12 @@ public class SXPBlueprintUtil {
 	}
 
 	private static Optional<SXPElement> _toSXPElementOptional(
-		SearchHit searchHit) {
+		SearchHit searchHit, SXPElementService sxpElementService) {
 
 		long entryClassPK = _getEntryClassPK(searchHit);
 
 		try {
-			return Optional.of(_sxpElementService.getSXPElement(entryClassPK));
+			return Optional.of(sxpElementService.getSXPElement(entryClassPK));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -405,12 +388,5 @@ public class SXPBlueprintUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SXPBlueprintUtil.class);
-
-	private static Queries _queries;
-	private static Searcher _searcher;
-	private static SearchRequestBuilderFactory _searchRequestBuilderFactory;
-	private static Sorts _sorts;
-	private static SXPElementService _sxpElementService;
-	private static SXPBlueprintService _sxpSXPBlueprintService;
 
 }

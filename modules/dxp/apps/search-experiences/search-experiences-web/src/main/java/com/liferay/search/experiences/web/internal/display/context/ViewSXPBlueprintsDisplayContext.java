@@ -20,7 +20,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.model.SXPBlueprint;
+import com.liferay.search.experiences.service.SXPBlueprintService;
 import com.liferay.search.experiences.web.internal.security.permission.resource.SXPBlueprintEntryPermission;
 import com.liferay.search.experiences.web.internal.util.SXPBlueprintUtil;
 
@@ -29,9 +34,13 @@ import java.util.List;
 
 import javax.portlet.PortletException;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Petteri Karttunen
  */
+@Component(immediate = true, service = {})
 public class ViewSXPBlueprintsDisplayContext
 	extends BaseDisplayContext<SXPBlueprint> {
 
@@ -62,11 +71,47 @@ public class ViewSXPBlueprintsDisplayContext
 			super.getSearchContainer();
 
 		SXPBlueprintUtil.populateSXPBlueprintSearchContainer(
-			liferayPortletRequest, themeDisplay.getCompanyGroupId(),
-			WorkflowConstants.STATUS_APPROVED, searchContainer, getOrderByCol(),
-			getOrderByType());
+			themeDisplay.getCompanyGroupId(), getOrderByCol(), getOrderByType(),
+			liferayPortletRequest, _queries, _searcher, searchContainer,
+			_searchRequestBuilderFactory, _sorts,
+			WorkflowConstants.STATUS_APPROVED, _sxpBlueprintService);
 
 		return searchContainer;
 	}
+
+	@Reference(unbind = "-")
+	protected void setQueries(Queries queries) {
+		_queries = queries;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSearcher(Searcher searcher) {
+		_searcher = searcher;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSearchRequestBuilderFactory(
+		SearchRequestBuilderFactory searchRequestBuilderFactory) {
+
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSorts(Sorts sorts) {
+		_sorts = sorts;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSXPBlueprintService(
+		SXPBlueprintService sxpBlueprintService) {
+
+		_sxpBlueprintService = sxpBlueprintService;
+	}
+
+	private Queries _queries;
+	private Searcher _searcher;
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private Sorts _sorts;
+	private SXPBlueprintService _sxpBlueprintService;
 
 }

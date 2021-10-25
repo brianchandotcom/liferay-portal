@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>API_FIELD</td>
-	<td>//textarea[contains(@id, 'apiKey')]</td>
+	<td>//textarea[contains(@name, 'apiKey')]</td>
 	<td></td>
 </tr>
 <tr>

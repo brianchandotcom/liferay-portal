@@ -1088,8 +1088,6 @@ definition {
 	@description = "LPS-139005 - Verify that is possible to submit entries in a form with an Object that was reactivated"
 	@priority = "4"
 	test CanSubmitEntriesOnFormWhenReactivated {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -1167,7 +1165,6 @@ definition {
 			portlet = "Custom Objects");
 
 		ObjectPortlet.viewEntry(entry = "Entry 1");
-
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Label of a Field after the Object is published"

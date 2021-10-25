@@ -15,13 +15,17 @@
 package com.liferay.search.experiences.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
+import com.liferay.search.experiences.web.internal.constants.SXPBlueprintWebKeys;
+import com.liferay.search.experiences.web.internal.display.context.ViewSXPElementsDisplayContext;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
@@ -41,7 +45,25 @@ public class ViewSXPElementsMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		ViewSXPElementsDisplayContext viewSXPElementsDisplayContext =
+			_getViewElementsDisplayContext(renderRequest, renderResponse);
+
+		renderRequest.setAttribute(
+			SXPBlueprintWebKeys.VIEW_SXP_ELEMENTS_DISPLAY_CONTEXT,
+			viewSXPElementsDisplayContext);
+
 		return "/sxp_blueprint_admin/view.jsp";
 	}
+
+	private ViewSXPElementsDisplayContext _getViewElementsDisplayContext(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		return new ViewSXPElementsDisplayContext(
+			_portal.getLiferayPortletRequest(renderRequest),
+			_portal.getLiferayPortletResponse(renderResponse));
+	}
+
+	@Reference
+	private Portal _portal;
 
 }

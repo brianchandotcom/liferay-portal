@@ -23,23 +23,17 @@ definition {
 			ACUtils.addSiteAndPage();
 		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Blogs Page");
+		task ("Add specific pages and web contents to Site as interest topics") {
+			var pageNameList = "sports,technology,science";
 
-		ACUtils.createBlogsAndAddToPage(layoutName = "Blogs Page");
+			for (var layoutName : list "${pageNameList}") {
+				ACUtils.addPage(layoutName = "${layoutName}");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Documents Page");
-
-		ACUtils.createDMAndAddToPage(layoutName = "Documents Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Web Content Page");
-
-		ACUtils.createWCAndAddToPage(layoutName = "Web Content Page");
+				ACUtils.createWCAndAddToPage(
+					layoutName = "${layoutName}",
+					webContentTitle = "Web Content AC Title ${layoutName}");
+			}
+		}
 
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -47,15 +41,15 @@ definition {
 
 		task ("Add a new user") {
 			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = "ac@liferay.com");
 		}
 
 		task ("Sync the Contact Data") {

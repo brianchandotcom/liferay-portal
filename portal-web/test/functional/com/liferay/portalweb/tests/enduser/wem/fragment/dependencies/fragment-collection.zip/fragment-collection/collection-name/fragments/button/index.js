@@ -1,5 +1,5 @@
 {
-	const form = document.querySelector('.fragment-footer:not(.parsed)');
+	const form = document.querySelector('.fragment-button:not(.parsed)');
 
 	form.classList.add('parsed');
 

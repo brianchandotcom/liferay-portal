@@ -6,35 +6,35 @@ definition {
 	property testray.main.component.name = "Display Pages";
 
 	setUp {
-		task("Set up instance and sign in") {
+		task ("Set up instance and sign in") {
 			TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
 		}
 
-		task("Add a site via JSON") {
+		task ("Add a site via JSON") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
 		task ("Add a new user") {
 			JSONUser.addUser(
-					userEmailAddress = "userea@liferay.com",
-					userFirstName = "Userfn",
-					userLastName = "Userln",
-					userScreenName = "usersn");
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "Userfn",
+				userLastName = "Userln",
+				userScreenName = "usersn");
 
 			JSONUser.setFirstPassword(
-					agreeToTermsAndAnswerReminderQuery = "true",
-					requireReset = "false",
-					userEmailAddress = "userea@liferay.com");
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 		}
 
-		task("Add a display page template for Web Content Article and Basic Web Content") {
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-					contentType = "Web Content Article",
-					displayPageTemplateEntryName = "Display Page Name",
-					groupName = "Test Site Name",
-					subType = "Basic Web Content");
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
 		}
 
 		task ("Add a Heading fragment to display page template") {
@@ -43,24 +43,24 @@ definition {
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
-					collectionName = "Basic Components",
-					fragmentName = "Heading");
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 		}
 
 		task ("Map the Title field to editable field") {
 			PageEditorMapping.mapEditableTextToField(
-					field = "Title",
-					fragmentName = "Heading",
-					id = "element-text");
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
 
 			PageEditor.clickPublish();
 		}
 
 		task ("Add a web content article") {
 			JSONWebcontent.addWebContent(
-					content = "Webcontent Content",
-					groupName = "Test Site Name",
-					title = "Webcontent Title");
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
 		}
 
 		task ("Select the display page template in web content") {
@@ -69,21 +69,19 @@ definition {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
 			WebContent.editDisplayPage(
-					pageName = "Display Page Name",
-					pageType = "Display Page Templates");
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
 
 			PortletEntry.publish();
 		}
 
 		task ("Remove permissions for guest users") {
-			PermissionsInline.gotoWCArticle(
-					webContentTitle = "Webcontent Title");
+			PermissionsInline.gotoWCArticle(webContentTitle = "Webcontent Title");
 
 			Role.removePermissionPG(
-					permissionDefinitionKey =
-							"CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-					roleTitle = "Guest");
-
+				permissionDefinitionKey =
+				"CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Guest");
 		}
 	}
 
@@ -100,10 +98,27 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-136421. Logged users without permission cannot view the content of a Display Page\t"
+	@priority = "3"
+	test LoggedUsersWithoutPermissionsCanNotSeeContentOfDisplayPageTemplate {
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Navigate to the display page template at view mode") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
+		}
+
+		task ("Assert error message is shown") {
+			AssertTextPresent(value1 = "You do not have the required permissions to view the content of this page.");
+		}
+	}
+
 	@description = "This is a test for LPS-136421. Unlogged users cannot view the content of a Display Page, and after login, they are redirected to the content page."
 	@priority = "4"
 	test UnloggedUsersAreRedirecteedToWebContentAfterLoging {
-
 		task ("Logout") {
 			User.logoutPG();
 		}
@@ -119,42 +134,22 @@ definition {
 
 		task ("Login") {
 			Type(
-					locator1 = "TextInput#EMAIL_ADDRESS",
-					value1 = "test@liferay.com");
+				locator1 = "TextInput#EMAIL_ADDRESS",
+				value1 = "test@liferay.com");
 
 			Type(
-					locator1 = "TextInput#PASSWORD",
-					value1 = "test");
+				locator1 = "TextInput#PASSWORD",
+				value1 = "test");
 
 			Button.click(button = "Sign In");
 		}
 
 		task ("Assert we are redirected to web content display") {
 			AssertTextEquals(
-					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Webcontent Title");
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Webcontent Title");
 		}
-
-	}
-
-	@description = "This is a test for LPS-136421. Logged users without permission cannot view the content of a Display Page\t"
-	@priority = "3"
-	test LoggedUsersWithoutPermissionsCanNotSeeContentOfDisplayPageTemplate {
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-					userLoginEmailAddress = "userea@liferay.com",
-					userLoginFullName = "userfn userln");
-		}
-
-		task ("Navigate to the display page template at view mode") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
-		}
-
-		task ("Assert error message is shown") {
-			AssertTextPresent(value1 = "You do not have the required permissions to view the content of this page.");
-		}
-
 	}
 
 }

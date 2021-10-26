@@ -62,7 +62,7 @@ const Invites = () => {
 		>
 			<div className="invites-form overflow-auto px-3">
 				<ClayForm.Group className="m-0">
-					{values.invites.map((invite, index) => (
+					{values.invites.map((_invite, index) => (
 						<HorizontalInputs id={index} key={index} />
 					))}
 				</ClayForm.Group>

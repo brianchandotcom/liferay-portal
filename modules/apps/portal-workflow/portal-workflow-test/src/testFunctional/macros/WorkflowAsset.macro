@@ -11,7 +11,7 @@ definition {
 
 		MenuItem.click(menuItem = "Basic Web Content");
 
-		WebContent.addCP(webContentTitle = "Web Content Title");
+		WebContent.addCP(webContentTitle = "${wcTitle}");
 	}
 
 	macro createNewUserAccount {

@@ -114,11 +114,56 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-70157. Verify that an approved web content is displayed on Asset Publisher."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ApprovedWebContentIsDisplayed {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-70157 ApprovedWebContentIsDisplayed pending implementation
+		Navigator.gotoNavTab(navTab = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages",
+			site = "Liferay DXP");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WorkflowAsset.createNewBasicWebContent(
+			wcTitle = "Web Content Title");
+
+		Button.clickSubmitForPublication();
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewManualNoAssetsMessagePG();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Web Content Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Web Content Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Web Content Content",
+			assetTitle = "Web Content Title");
+
+			
 
 	}
 
@@ -300,7 +345,8 @@ definition {
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
-		WorkflowAsset.createNewBasicWebContent();
+		WorkflowAsset.createNewBasicWebContent(
+			wcTitle = "Web Content Title");
 
 		Button.clickSubmitForPublication();
 

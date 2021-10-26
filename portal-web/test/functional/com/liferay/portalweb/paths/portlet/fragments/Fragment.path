@@ -37,6 +37,27 @@
 	<td>xpath=(//div[contains(@data-analytics-asset-type,'${assetType}')])[${index}]//img[contains(@src,'${image}')]</td>
 	<td></td>
 </tr>
+<!--CONTENT_RATINGS_FRAGMENT-->
+<tr>
+	<td>CONTENT_RATINGS_AVERAGE_STAR</td>
+	<td>xpath=(//div[contains(@class,'ratings-stars')]//span[contains(@class,'ratings-stars-average')][.//*[name()='svg'][contains(@class,'ratings-stars-average-icon')]])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_RATINGS_AVERAGE_STAR_RESULT</td>
+	<td>xpath=(//div[contains(@class,'ratings-stars')]//span[contains(@class,'ratings-stars-average-text')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_RATINGS_YOUR_RATING_STAR</td>
+	<td>xpath=(//div[contains(@class,'ratings-stars')]//button[.//*[name()='svg'][contains(@class,'lexicon-icon-star')]])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_RATINGS_YOUR_RATING_STAR_RESULT</td>
+	<td>xpath=(//div[contains(@class,'ratings-stars')]//span[contains(@class,'ratings-stars-button-text')])[${index}]</td>
+	<td></td>
+</tr>
 <!--FRAGMENT-->
 <tr>
 	<td>FRAGMENT</td>

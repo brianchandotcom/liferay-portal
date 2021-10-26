@@ -32,7 +32,7 @@ long sxpBlueprintId = sxpBlueprint.getSXPBlueprintId();
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= SXPBlueprintEntryPermission.contains(permissionChecker, sxpBlueprint, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editEntryURL">
+		<portlet:renderURL var="editSXPBlueprintURL">
 			<portlet:param name="mvcRenderCommandName" value="/sxp_blueprint_admin/edit_sxp_blueprint" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sxpBlueprintId" value="<%= String.valueOf(sxpBlueprintId) %>" />
@@ -40,30 +40,30 @@ long sxpBlueprintId = sxpBlueprint.getSXPBlueprintId();
 
 		<liferay-ui:icon
 			message="edit"
-			url="<%= editEntryURL %>"
+			url="<%= editSXPBlueprintURL %>"
 		/>
 	</c:if>
 
 	<c:if test="<%= SXPBlueprintEntryPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), SXPActionKeys.ADD_SXP_BLUEPRINT) %>">
-		<portlet:actionURL name="/sxp_blueprint_admin/copy_sxp_blueprint" var="copyEntryURL">
+		<portlet:actionURL name="/sxp_blueprint_admin/copy_sxp_blueprint" var="copySXPBlueprintURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sxpBlueprintId" value="<%= String.valueOf(sxpBlueprintId) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon
 			message="copy"
-			url="<%= copyEntryURL %>"
+			url="<%= copySXPBlueprintURL %>"
 		/>
 	</c:if>
 
-	<portlet:resourceURL id="/sxp_blueprint_admin/export_sxp_blueprint" var="exportEntryURL">
+	<portlet:resourceURL id="/sxp_blueprint_admin/export_sxp_blueprint" var="exportSXPBlueprintURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="sxpBlueprintId" value="<%= String.valueOf(sxpBlueprintId) %>" />
 	</portlet:resourceURL>
 
 	<liferay-ui:icon
 		message="export"
-		url="<%= exportEntryURL %>"
+		url="<%= exportSXPBlueprintURL %>"
 	/>
 
 	<c:if test="<%= SXPBlueprintEntryPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), ActionKeys.PERMISSIONS) %>">
@@ -85,13 +85,13 @@ long sxpBlueprintId = sxpBlueprint.getSXPBlueprintId();
 	</c:if>
 
 	<c:if test="<%= SXPBlueprintEntryPermission.contains(permissionChecker, sxpBlueprint, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="/sxp_blueprint_admin/delete_sxp_blueprint" var="deleteEntryURL">
+		<portlet:actionURL name="/sxp_blueprint_admin/delete_sxp_blueprint" var="deleteSXPBlueprintURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sxpBlueprintId" value="<%= String.valueOf(sxpBlueprintId) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			url="<%= deleteEntryURL %>"
+			url="<%= deleteSXPBlueprintURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

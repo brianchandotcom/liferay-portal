@@ -14,21 +14,21 @@
  */
 --%>
 
-<portlet:renderURL var="editEntryURL">
+<portlet:renderURL var="editSXPBlueprintURL">
 	<portlet:param name="mvcRenderCommandName" value="/sxp_blueprint_admin/edit_sxp_blueprints" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="sxpBlueprintId" value="<%= String.valueOf(sxpBlueprint.getSXPBlueprintId()) %>" />
 </portlet:renderURL>
 
 <%
-String sxpBlueprintTitle = sxpBlueprint.getTitle(locale);
-String sxpBlueprintDescription = sxpBlueprint.getDescription(locale);
+String title = sxpBlueprint.getTitle(locale);
+String description = sxpBlueprint.getDescription(locale);
 
 String[] languageIds = sxpBlueprint.getAvailableLanguageIds();
 
-for (int i = 0; Validator.isNull(sxpBlueprintTitle) && (i < languageIds.length); i++) {
-	sxpBlueprintTitle = sxpBlueprint.getTitle(languageIds[i]);
-	sxpBlueprintDescription = sxpBlueprint.getDescription(languageIds[i]);
+for (int i = 0; Validator.isNull(title) && (i < languageIds.length); i++) {
+	title = sxpBlueprint.getTitle(languageIds[i]);
+	description = sxpBlueprint.getDescription(languageIds[i]);
 }
 %>
 
@@ -45,20 +45,20 @@ for (int i = 0; Validator.isNull(sxpBlueprintTitle) && (i < languageIds.length);
 			<c:choose>
 				<c:when test="<%= SXPBlueprintEntryPermission.contains(permissionChecker, sxpBlueprint, ActionKeys.UPDATE) %>">
 					<h4>
-						<aui:a href="<%= editEntryURL %>">
-							<%= HtmlUtil.escape(sxpBlueprintTitle) %>
+						<aui:a href="<%= editSXPBlueprintURL %>">
+							<%= HtmlUtil.escape(title) %>
 						</aui:a>
 					</h4>
 				</c:when>
 				<c:otherwise>
 					<h4>
-						<%= HtmlUtil.escape(sxpBlueprintTitle) %>
+						<%= HtmlUtil.escape(title) %>
 					</h4>
 				</c:otherwise>
 			</c:choose>
 
-			<h5 class="text-default text-truncate-inline" title="<%= HtmlUtil.escape(sxpBlueprintDescription) %>">
-				<%= (sxpBlueprintDescription.length() > 300) ? HtmlUtil.escape(sxpBlueprintDescription.substring(0, 300).concat("...")) : HtmlUtil.escape(sxpBlueprintDescription) %>
+			<h5 class="text-default text-truncate-inline" title="<%= HtmlUtil.escape(description) %>">
+				<%= (description.length() > 300) ? HtmlUtil.escape(description.substring(0, 300).concat("...")) : HtmlUtil.escape(description) %>
 			</h5>
 
 			<%
@@ -87,19 +87,19 @@ for (int i = 0; Validator.isNull(sxpBlueprintTitle) && (i < languageIds.length);
 			<c:when test="<%= SXPBlueprintEntryPermission.contains(permissionChecker, sxpBlueprint, ActionKeys.UPDATE) %>">
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-cell-minw-200 table-title"
-					href="<%= editEntryURL %>"
+					href="<%= editSXPBlueprintURL %>"
 					name="title"
-					value="<%= HtmlUtil.escape(sxpBlueprintTitle) %>"
+					value="<%= HtmlUtil.escape(title) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-cell-minw-200"
 					name="description"
-					value="<%= HtmlUtil.escape(sxpBlueprintDescription) %>"
+					value="<%= HtmlUtil.escape(description) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					href="<%= editEntryURL %>"
+					href="<%= editSXPBlueprintURL %>"
 					name="id"
 					value="<%= String.valueOf(sxpBlueprint.getSXPBlueprintId()) %>"
 				/>
@@ -108,13 +108,13 @@ for (int i = 0; Validator.isNull(sxpBlueprintTitle) && (i < languageIds.length);
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-cell-minw-200 table-title"
 					name="title"
-					value="<%= HtmlUtil.escape(sxpBlueprintTitle) %>"
+					value="<%= HtmlUtil.escape(title) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-cell-minw-200"
 					name="description"
-					value="<%= HtmlUtil.escape(sxpBlueprintDescription) %>"
+					value="<%= HtmlUtil.escape(description) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

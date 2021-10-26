@@ -671,12 +671,46 @@ definition {
 	}
 
 	@description = "Verify that when there are no results for the search, it displays the message -No process were found-."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test NoResultMessageInSearch {
+		KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70676 NoResultMessageInSearch pending implementation
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "Contacts",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Single Approver");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.assignForm(
+			kfProcessName = "Kaleo Forms Process",
+			workflowTask = "create");
+
+		KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveForm();
+
+		KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
+
+		Search.searchCP(searchTerm = "daCwZ12");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+			value1 = "0 Results for daCwZ12");
+
 
 	}
-
 }

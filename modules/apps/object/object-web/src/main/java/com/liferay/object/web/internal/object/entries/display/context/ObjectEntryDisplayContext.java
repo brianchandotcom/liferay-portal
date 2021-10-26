@@ -169,21 +169,7 @@ public class ObjectEntryDisplayContext {
 						objectLayoutTab.getObjectLayoutTabId()
 					).buildString()
 				).setLabel(
-					() -> {
-						if (objectLayoutTab.getObjectRelationshipId() > 0) {
-							ObjectRelationship objectRelationship =
-								_objectRelationshipLocalService.
-									fetchObjectRelationship(
-										objectLayoutTab.
-											getObjectRelationshipId());
-
-							return objectRelationship.getLabel(
-								_objectRequestHelper.getLocale());
-						}
-
-						return objectLayoutTab.getName(
-							_objectRequestHelper.getLocale());
-					}
+					objectLayoutTab.getName(_objectRequestHelper.getLocale())
 				).build());
 		}
 

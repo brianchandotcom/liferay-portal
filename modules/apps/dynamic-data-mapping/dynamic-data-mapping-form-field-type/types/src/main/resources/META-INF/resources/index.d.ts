@@ -37,6 +37,7 @@ declare global {
 		| 'zh_CN';
 	type LocalizedTextKey =
 		| 'choose-an-option'
+		| 'decimal-places'
 		| 'decimal-separator'
 		| 'input-mask-append-placeholder'
 		| 'prefix'

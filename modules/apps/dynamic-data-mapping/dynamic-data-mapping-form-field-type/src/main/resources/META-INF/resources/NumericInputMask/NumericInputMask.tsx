@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayInput} from '@clayui/form';
 import React, {FocusEventHandler, useEffect, useMemo, useState} from 'react';
 
 // @ts-ignore
@@ -25,9 +26,14 @@ import Select from '../Select/Select.es';
 // @ts-ignore
 
 import Text from '../Text/Text.es';
+import {limitValue} from '../util/limitValue';
 
 type DecimalSymbol = ',' | '.';
 type ThousandsSeparator = DecimalSymbol | ' ' | "'" | 'none';
+
+const DEFAULT_DECIMAL_PLACES = 2;
+const MAX_DECIMAL_PLACES = 10;
+const MIN_DECIMAL_PLACES = 1;
 
 interface INumericInputMaskValue {
 	append?: string;
@@ -39,6 +45,7 @@ interface INumericInputMaskValue {
 interface IProps {
 	append?: string;
 	appendType?: 'prefix' | 'suffix';
+	decimalPlaces: number;
 	decimalSymbol: DecimalSymbol[];
 	decimalSymbols: ISelectProps<DecimalSymbol>[];
 	defaultLanguageId: Locale;
@@ -68,6 +75,7 @@ interface ISelectProps<T> {
 const NumericInputMask: React.FC<IProps> = ({
 	append: appendInitial,
 	appendType: appendTypeInitial,
+	decimalPlaces: decimalPlacesInitial,
 	decimalSymbol: decimalSymbolInitial,
 	decimalSymbols: decimalSymbolsProp,
 	editingLanguageId,
@@ -83,6 +91,7 @@ const NumericInputMask: React.FC<IProps> = ({
 	const [thousandsSeparator, setThousandsSeparator] = useState(
 		thousandsSeparatorInitial
 	);
+	const [decimalPlaces, setDecimalPlaces] = useState(decimalPlacesInitial);
 	const [decimalSymbol, setDecimalSymbol] = useState(decimalSymbolInitial);
 	const [append, setAppend] = useState(appendInitial);
 	const [appendType, setAppendType] = useState(appendTypeInitial);
@@ -114,6 +123,8 @@ const NumericInputMask: React.FC<IProps> = ({
 
 		setAppendType(newValue.appendType ?? appendType);
 
+		setDecimalPlaces(newValue.decimalPlaces ?? decimalPlaces);
+
 		const symbols = newValue.symbols;
 
 		setDecimalSymbol(symbols?.decimalSymbol ?? decimalSymbol);
@@ -124,23 +135,26 @@ const NumericInputMask: React.FC<IProps> = ({
 	}, [
 		append,
 		appendType,
+		decimalPlaces,
 		decimalSymbol,
 		editingLanguageId,
 		thousandsSeparator,
 		value,
 	]);
 
-	const handleChange = (key: string, value: string | ISymbols) => {
+	const handleChange = (key: string, value: string | number | ISymbols) => {
 		onChange({
 			target: {
 				value: {
 					append,
 					appendType,
+					decimalPlaces,
 					// eslint-disable-next-line sort-keys
 					symbols: {
 						decimalSymbol,
 						thousandsSeparator,
 					},
+
 					// eslint-disable-next-line sort-keys
 					[key]: value,
 				},
@@ -200,6 +214,53 @@ const NumericInputMask: React.FC<IProps> = ({
 					/>
 				</div>
 			</div>
+			{visible && (
+				<div>
+					<div className="form-group">
+						<label htmlFor="decimal_places ">
+							{Liferay.Language.get('decimal-places')}
+						</label>
+						<ClayInput
+							className="ddm-field-text"
+							disabled={readOnly}
+							id="decimal_places"
+							max={MAX_DECIMAL_PLACES}
+							min={MIN_DECIMAL_PLACES}
+							name="decimal_places"
+							onBlur={(event: any) => {
+								let {value: newValue} = event.target;
+
+								newValue = limitValue({
+									defaultValue: DEFAULT_DECIMAL_PLACES,
+									max: MAX_DECIMAL_PLACES,
+									min: MIN_DECIMAL_PLACES,
+									value: newValue,
+								});
+
+								setDecimalPlaces(newValue);
+								handleChange(
+									'decimalPlaces',
+									parseInt(newValue, 10)
+								);
+							}}
+							onChange={(event: any) => {
+								let {value} = event.target;
+								value = value.includes('-')
+									? value.replace('-', '')
+									: value;
+
+								setDecimalPlaces(value);
+								handleChange(
+									'decimalPlaces',
+									parseInt(value, 10)
+								);
+							}}
+							type="number"
+							value={decimalPlaces}
+						/>
+					</div>
+				</div>
+			)}
 			<Text
 				label={Liferay.Language.get('prefix-or-suffix')}
 				maxLength={10}

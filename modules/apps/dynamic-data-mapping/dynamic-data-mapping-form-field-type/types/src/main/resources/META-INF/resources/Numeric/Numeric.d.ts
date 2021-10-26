@@ -23,6 +23,7 @@ interface IProps {
 	append: string;
 	appendType: 'prefix' | 'suffix';
 	dataType: NumericDataType;
+	decimalPlaces: number;
 	defaultLanguageId: Locale;
 	id: string;
 	inputMask?: boolean;

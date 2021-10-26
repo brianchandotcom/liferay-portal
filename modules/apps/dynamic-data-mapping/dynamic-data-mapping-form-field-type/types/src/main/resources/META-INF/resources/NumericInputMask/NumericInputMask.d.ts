@@ -25,6 +25,7 @@ interface INumericInputMaskValue {
 interface IProps {
 	append?: string;
 	appendType?: 'prefix' | 'suffix';
+	decimalPlaces: number;
 	decimalSymbol: DecimalSymbol[];
 	decimalSymbols: ISelectProps<DecimalSymbol>[];
 	defaultLanguageId: Locale;

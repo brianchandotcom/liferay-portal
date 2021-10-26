@@ -110,21 +110,22 @@
 }
 
 .question-circle {
+	align-items: center;
+	border: solid 1px;
 	border-radius: 50%;
-    align-items: center;
-    border: solid 1px;
-    display: flex;
-    flex-shrink: 0;
-    height: 12px;
-    justify-content: center;
-    width: 12px;
+	display: flex;
+	flex-shrink: 0;
+	height: 12px;
+	justify-content: center;
+	padding: 0 0 1px 0.5px;
+	width: 12px;
 
 	&.selected {
-		background: #fff;
-		border-color: #fff;
+		background: $color-neutral-white;
+		border-color: $color-neutral-white;
 
 		span {
-			color: #295ccc;
+			color: $color-action-primary-hover;
 		}
 	}
 

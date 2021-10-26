@@ -86,8 +86,8 @@ public class AssetDisplayLayoutFriendlyURLPrivateLayoutUpgradeProcess
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-						"update LayoutFriendlyURL set privateLayout = ?," +
-							"friendlyURL = ? where plid = ?")) {
+					"update LayoutFriendlyURL set privateLayout = ?," +
+						"friendlyURL = ? where plid = ?")) {
 
 			preparedStatement1.setString(1, LayoutConstants.TYPE_ASSET_DISPLAY);
 			preparedStatement1.setBoolean(2, true);

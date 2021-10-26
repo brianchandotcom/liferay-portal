@@ -485,6 +485,11 @@
 	<td>//li[contains(@class,'upload-file')]//input[@type='checkbox' and contains(@data-title,'${key_fileName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SPECIFIC_CHECKBOX_IN_TABLE</td>
+	<td>//tr[contains(.,'${key_filename}')]//input</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

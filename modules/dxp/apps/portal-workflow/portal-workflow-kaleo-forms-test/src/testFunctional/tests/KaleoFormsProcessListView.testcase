@@ -89,11 +89,52 @@ definition {
 	}
 
 	@description = "Verify that the user can delete multiple process."
-	@ignore = "Test Stub"
 	@priority = "5"
-	test CanDeleteMutipleProcesses {
+	test CanDeleteMultipleProcesses {
+		for (var newProcess : list "1,2,3") {
+			KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70675 CanDeleteMutipleProcesses pending implementation
+			KaleoFormsAdmin.addProcessDetails(
+				kfProcessDescription = "Kaleo Forms Process Description ${newProcess}",
+				kfProcessName = "Kaleo Forms Process ${newProcess}");
+
+			KaleoFormsAdmin.next();
+
+			KaleoFormsAdmin.chooseFieldSet(
+				kfFieldSetName = "Contacts",
+		 		kfProcessName = "Kaleo Forms Process ${newProcess}");
+
+			KaleoFormsAdmin.next();
+
+			KaleoFormsAdmin.chooseWorkflow(
+				kfProcessName = "Kaleo Forms Process ${newProcess}",
+				workflowDefinitionTitle = "Single Approver");
+
+			KaleoFormsAdmin.next();
+
+			KaleoFormsAdmin.assignForm(
+				kfProcessName = "Kaleo Forms Process ${newProcess}",
+				workflowTask = "create");
+
+			KaleoFormsAdmin.addForm(kfFormName = "Created Task Form ${newProcess}");
+
+			KaleoFormsAdmin.saveForm();
+
+			KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form ${newProcess}");
+
+			KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process ${newProcess}");
+		}
+
+		for (var checkboxes : list "1,2") {
+			Check(
+				key_filename = "Kaleo Forms Process ${checkboxes}",
+				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+		}
+
+		KaleoFormsAdmin.deleteViaDeleteIcon();
+
+		KaleoFormsAdmin.viewTaskPresent(workflowTask = "Kaleo Forms Process 3");
+
 
 	}
 

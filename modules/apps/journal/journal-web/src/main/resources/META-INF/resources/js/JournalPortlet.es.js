@@ -305,7 +305,6 @@ export default function _JournalPortlet({
 						(node) =>
 							node.name &&
 							node.name.startsWith(namespace) &&
-							!node.name.endsWith('_edited') &&
 							node.name !== `${namespace}languageId`
 					);
 				},

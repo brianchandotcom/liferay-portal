@@ -526,7 +526,7 @@ definition {
 	@description = "This is a test for COMMERCE-6262. Test address restriction on tax calculation"
 	@priority = "3"
 	test AssertAddressRestrictiedTaxIsCorrectlyCalculated {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		// TODO Review
 

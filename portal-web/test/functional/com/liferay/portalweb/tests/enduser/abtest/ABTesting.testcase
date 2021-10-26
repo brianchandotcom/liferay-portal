@@ -217,7 +217,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Button");
-		
+
 			Button.clickPublish();
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
@@ -707,7 +707,7 @@ definition {
 			AssertTextEquals(
 				key_id = "",
 				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
-				value1 = ""); 
+				value1 = "");
 		}
 
 		task ("Delete AB Test") {
@@ -1193,7 +1193,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Button");
-		
+
 			Button.clickPublish();
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
@@ -1222,7 +1222,7 @@ definition {
 				value1 = "\ENTER");
 		}
 
-		task("Assert that selected button is target") {
+		task ("Assert that selected button is target") {
 			AssertElementPresent(
 				key_idElement = "${idbutton}",
 				locator1 = "ABTest#TARGET_ELEMENT",
@@ -1238,7 +1238,7 @@ definition {
 				value1 = "${idbutton}");
 		}
 
-		task ("Click on the eye button"){
+		task ("Click on the eye button") {
 			Click(locator1 = "ABTest#EYE_BUTTON_SHOW_ELEMENT");
 		}
 
@@ -1690,7 +1690,7 @@ definition {
 				fragmentName = "Button");
 
 			PageEditor.gotoDuplicate(fragmentName = "Button");
-		
+
 			Button.clickPublish();
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
@@ -1715,7 +1715,7 @@ definition {
 
 			Type(
 				locator1 = "ABTest#ID_BOX",
-				value1 = "${idbutton}"); 
+				value1 = "${idbutton}");
 
 			KeyPress(
 				key_id = "${idbutton}",
@@ -1723,7 +1723,7 @@ definition {
 				value1 = "\ENTER");
 		}
 
-		task("Assert the button gets selected") {
+		task ("Assert the button gets selected") {
 			AssertElementPresent(
 				key_id = "${idbutton}",
 				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
@@ -1744,7 +1744,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Button");
-		
+
 			Button.clickPublish();
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
@@ -1773,7 +1773,7 @@ definition {
 				value1 = "\ENTER");
 		}
 
-		task("Assert the button gets selected") {
+		task ("Assert the button gets selected") {
 			AssertElementPresent(
 				key_id = "${idbutton}",
 				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
@@ -1833,11 +1833,12 @@ definition {
 			AssertTextEquals(
 				key_id = "",
 				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
-				value1 = ""); 
+				value1 = "");
 		}
 
 		task ("Delete AB Test") {
 			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
+
 }

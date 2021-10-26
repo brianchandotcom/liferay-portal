@@ -288,9 +288,12 @@ public class PaginationBarTag extends BaseContainerTag {
 
 			int leftIndex = activeIndex - _ellipsisBuffer;
 
-			try {
+			int leftItemsStartIndex = 1;
+			int leftItemsEndIndex = Math.max(leftIndex, 1);
+
+			if (leftItemsStartIndex < leftItemsEndIndex) {
 				int[] leftItems = Arrays.copyOfRange(
-					pageNumberItems, 1, Math.max(leftIndex, 1));
+					pageNumberItems, leftItemsStartIndex, leftItemsEndIndex);
 
 				if (leftItems.length > 1) {
 					_processEllipsis(pageContext);
@@ -301,33 +304,35 @@ public class PaginationBarTag extends BaseContainerTag {
 					_processItem(pageContext, leftItem);
 				}
 			}
-			catch (Exception exception) {
-			}
 
 			int lastIndex = pageNumberItems.length - 1;
 
-			try {
+			int centerItemsStartIndex = Math.max(
+				activeIndex - _ellipsisBuffer, 1);
+			int centerItemsEndIndex = Math.min(
+				activeIndex + _ellipsisBuffer + 1, lastIndex);
+
+			if (centerItemsStartIndex < centerItemsEndIndex) {
 				int[] centerItems = Arrays.copyOfRange(
-					pageNumberItems, Math.max(activeIndex - _ellipsisBuffer, 1),
-					Math.min(activeIndex + _ellipsisBuffer + 1, lastIndex));
+					pageNumberItems, centerItemsStartIndex,
+					centerItemsEndIndex);
 
 				for (int centerItem : centerItems) {
 					_processItem(pageContext, centerItem);
 				}
 			}
-			catch (Exception exception) {
+
+			int rightItemsStartIndex = activeIndex + _ellipsisBuffer + 1;
+
+			if (rightItemsStartIndex > lastIndex) {
+				rightItemsStartIndex = lastIndex;
 			}
 
-			int rightIndex = activeIndex + _ellipsisBuffer + 1;
+			int rightItemsEndIndex = Math.max(lastIndex, rightItemsStartIndex);
 
-			if (rightIndex > lastIndex) {
-				rightIndex = lastIndex;
-			}
-
-			try {
+			if (rightItemsStartIndex < rightItemsEndIndex) {
 				int[] rightItems = Arrays.copyOfRange(
-					pageNumberItems, rightIndex,
-					Math.max(lastIndex, rightIndex));
+					pageNumberItems, rightItemsStartIndex, rightItemsEndIndex);
 
 				if (rightItems.length > 1) {
 					_processEllipsis(pageContext);
@@ -337,8 +342,6 @@ public class PaginationBarTag extends BaseContainerTag {
 
 					_processItem(pageContext, rightItem);
 				}
-			}
-			catch (Exception exception) {
 			}
 
 			if (totalPages > 1) {

@@ -520,6 +520,76 @@ definition {
 			value1 = "There are no documents or media files in this folder.");
 	}
 
+	@description = "LPS-90557 - Publishing deletion of shortcut target results in PortletDataException."
+	@priority = "5"
+	test PublishDeletionOfShortcutTarget {
+		DMNavigator.gotoAddDocumentTypeCP();
+
+		DMDocument.editDocument(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title");
+
+		Button.clickPublish();
+
+		DMDocument.addDMShortcutCPWithStaging(
+			dmDocumentTitle = "DM Document Title",
+			siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoLiveSite();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		AssertElementPresent(
+			key_card = "DM Document Title",
+			locator1 = "Card#CARD_SHORTCUT");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		AssertElementNotPresent(
+			key_card = "DM Document Title",
+			locator1 = "Card#CARD_SHORTCUT");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoLiveSite();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		AssertElementNotPresent(
+			key_card = "DM Document Title",
+			locator1 = "Card#CARD_SHORTCUT");
+	}
+
 	@description = "This is a use case for LPS-79925."
 	@priority = "5"
 	@refactorneeded

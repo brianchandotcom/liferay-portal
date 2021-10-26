@@ -97,24 +97,24 @@ definition {
 	}
 
 	macro rateStarCollectionItem {
-		Click(
-			key_colPosition = "${colPosition}",
-			key_rowPosition = "${rowPosition}",
-			locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR");
-
-		if (isSet(checkDeleteButton)) {
-			AssertElementPresent(locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR_DELETE_DISABLE");
+		if (!(isSet(position))) {
+			var position = "1";
 		}
 
-		Click.clickNoMouseOver(
-			key_ratingStarCount = "${ratingStarCount}",
-			locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR_COUNT");
+		Click(
+			index = "${position}",
+			locator1 = "Fragment#CONTENT_RATINGS_YOUR_RATING_STAR");
 
-		AssertElementPresent(
-			key_colPosition = "${colPosition}",
-			key_ratingStarCount = "${ratingStarCount}",
-			key_rowPosition = "${rowPosition}",
-			locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR_RESULT");
+		if (isSet(checkDeleteButton)) {
+			MenuItem.viewDisabled(menuItem = "Delete");
+		}
+
+		MenuItem.click(menuItem = "${ratingStarCount}");
+
+		AssertTextEquals(
+			index = "${position}",
+			locator1 = "Fragment#CONTENT_RATINGS_YOUR_RATING_STAR_RESULT",
+			value1 = "${ratingStarCount}");
 	}
 
 	macro rateStarSpecificAsset {

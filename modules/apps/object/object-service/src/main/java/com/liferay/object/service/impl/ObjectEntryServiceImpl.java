@@ -17,6 +17,7 @@ package com.liferay.object.service.impl;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.security.permission.resource.ObjectEntryModelResourcePermissionTracker;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.base.ObjectEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -78,8 +79,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		}
 		else {
 			_checkModelResourcePermission(
-				objectDefinitionId, objectEntry.getObjectEntryId(),
-				ActionKeys.UPDATE);
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionId),
+				objectEntry.getObjectEntryId(), ActionKeys.UPDATE);
 		}
 
 		return objectEntryLocalService.addOrUpdateObjectEntry(
@@ -95,8 +97,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			objectEntryId);
 
 		_checkModelResourcePermission(
-			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
-			ActionKeys.DELETE);
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId()),
+			objectEntry.getObjectEntryId(), ActionKeys.DELETE);
 
 		return objectEntryLocalService.deleteObjectEntry(objectEntryId);
 	}
@@ -110,8 +113,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			externalReferenceCode, companyId, groupId);
 
 		_checkModelResourcePermission(
-			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
-			ActionKeys.DELETE);
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId()),
+			objectEntry.getObjectEntryId(), ActionKeys.DELETE);
 
 		return objectEntryLocalService.deleteObjectEntry(objectEntry);
 	}
@@ -125,7 +129,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		if (objectEntry != null) {
 			_checkModelResourcePermission(
-				objectEntry.getObjectDefinitionId(),
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectEntry.getObjectDefinitionId()),
 				objectEntry.getObjectEntryId(), ActionKeys.VIEW);
 		}
 
@@ -140,8 +145,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			objectEntryId);
 
 		_checkModelResourcePermission(
-			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
-			ActionKeys.VIEW);
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId()),
+			objectEntry.getObjectEntryId(), ActionKeys.VIEW);
 
 		return objectEntry;
 	}
@@ -155,8 +161,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			externalReferenceCode, companyId, groupId);
 
 		_checkModelResourcePermission(
-			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
-			ActionKeys.VIEW);
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId()),
+			objectEntry.getObjectEntryId(), ActionKeys.VIEW);
 
 		return objectEntry;
 	}
@@ -171,26 +178,12 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			objectEntryId);
 
 		_checkModelResourcePermission(
-			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
-			ActionKeys.UPDATE);
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId()),
+			objectEntry.getObjectEntryId(), ActionKeys.UPDATE);
 
 		return objectEntryLocalService.updateObjectEntry(
 			getUserId(), objectEntryId, values, serviceContext);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(&(com.liferay.object=true)(model.class.name=*))"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<ObjectEntry> modelResourcePermission,
-		Map<String, Object> properties) {
-
-		String className = (String)properties.get("model.class.name");
-
-		_modelResourcePermissions.put(className, modelResourcePermission);
 	}
 
 	@Reference(
@@ -209,15 +202,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			resourceName, portletResourcePermission);
 	}
 
-	protected void unsetModelResourcePermission(
-		ModelResourcePermission<ObjectEntry> modelResourcePermission,
-		Map<String, Object> properties) {
-
-		String className = (String)properties.get("model.class.name");
-
-		_modelResourcePermissions.remove(className);
-	}
-
 	protected void unsetPortletResourcePermission(
 		PortletResourcePermission portletResourcePermission,
 		Map<String, Object> properties) {
@@ -228,15 +212,14 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	private void _checkModelResourcePermission(
-			long objectDefinitionId, long objectEntryId, String actionId)
+			ObjectDefinition objectDefinition, long objectEntryId,
+			String actionId)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
-
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
-			_modelResourcePermissions.get(objectDefinition.getClassName());
+			_objectEntryModelResourcePermissionTracker.
+				getObjectEntryModelResourcePermission(
+					objectDefinition.getClassName());
 
 		modelResourcePermission.check(
 			getPermissionChecker(), objectEntryId, actionId);
@@ -257,11 +240,12 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			getPermissionChecker(), groupId, actionId);
 	}
 
-	private final Map<String, ModelResourcePermission<ObjectEntry>>
-		_modelResourcePermissions = new ConcurrentHashMap<>();
-
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryModelResourcePermissionTracker
+		_objectEntryModelResourcePermissionTracker;
 
 	private final Map<String, PortletResourcePermission>
 		_portletResourcePermissions = new ConcurrentHashMap<>();

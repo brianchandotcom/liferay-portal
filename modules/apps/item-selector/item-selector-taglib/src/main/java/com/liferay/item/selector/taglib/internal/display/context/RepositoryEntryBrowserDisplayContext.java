@@ -16,12 +16,15 @@ package com.liferay.item.selector.taglib.internal.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -51,6 +54,16 @@ public class RepositoryEntryBrowserDisplayContext {
 		Group group = _getGroup(groupId);
 
 		return group.getDescriptiveName(locale);
+	}
+
+	public boolean isEditable(FileVersion fileVersion) {
+		if (fileVersion == null) {
+			return false;
+		}
+
+		return ArrayUtil.contains(
+			PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
+			fileVersion.getMimeType());
 	}
 
 	public boolean isSearchEverywhere() {

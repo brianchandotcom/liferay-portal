@@ -25,8 +25,10 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPAdminUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
+import com.liferay.search.experiences.rest.resource.v1_0.SXPAdminUtilResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
 
@@ -49,6 +51,14 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
+	public static void setSXPAdminUtilResourceComponentServiceObjects(
+		ComponentServiceObjects<SXPAdminUtilResource>
+			sxpAdminUtilResourceComponentServiceObjects) {
+
+		_sxpAdminUtilResourceComponentServiceObjects =
+			sxpAdminUtilResourceComponentServiceObjects;
+	}
+
 	public static void setSXPBlueprintResourceComponentServiceObjects(
 		ComponentServiceObjects<SXPBlueprintResource>
 			sxpBlueprintResourceComponentServiceObjects) {
@@ -63,6 +73,88 @@ public class Query {
 
 		_sxpElementResourceComponentServiceObjects =
 			sxpElementResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPAdminUtilKeywordQueryContributors{}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public String sXPAdminUtilKeywordQueryContributors() throws Exception {
+		return _applyComponentServiceObjects(
+			_sxpAdminUtilResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpAdminUtilResource ->
+				sxpAdminUtilResource.getSXPAdminUtilKeywordQueryContributors());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPAdminUtilModelPrefilterContributors{}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public String sXPAdminUtilModelPrefilterContributors() throws Exception {
+		return _applyComponentServiceObjects(
+			_sxpAdminUtilResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpAdminUtilResource ->
+				sxpAdminUtilResource.
+					getSXPAdminUtilModelPrefilterContributors());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPAdminUtilQueryPrefilterContributors{}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public String sXPAdminUtilQueryPrefilterContributors() throws Exception {
+		return _applyComponentServiceObjects(
+			_sxpAdminUtilResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpAdminUtilResource ->
+				sxpAdminUtilResource.
+					getSXPAdminUtilQueryPrefilterContributors());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPAdminUtilSearchableAssetNameCompany(companyId: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public String sXPAdminUtilSearchableAssetNameCompany(
+			@GraphQLName("companyId") Long companyId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpAdminUtilResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpAdminUtilResource ->
+				sxpAdminUtilResource.getSXPAdminUtilSearchableAssetNameCompany(
+					companyId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPAdminUtilSearchableAssetNameCompanyLanguage(companyId: ___, languageId: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public String sXPAdminUtilSearchableAssetNameCompanyLanguage(
+			@GraphQLName("companyId") Long companyId,
+			@GraphQLName("languageId") String languageId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpAdminUtilResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpAdminUtilResource ->
+				sxpAdminUtilResource.
+					getSXPAdminUtilSearchableAssetNameCompanyLanguage(
+						companyId, languageId));
 	}
 
 	/**
@@ -136,6 +228,39 @@ public class Query {
 			this::_populateResourceContext,
 			sxpElementResource -> sxpElementResource.getSXPElement(
 				sxpElementId));
+	}
+
+	@GraphQLName("SXPAdminUtilPage")
+	public class SXPAdminUtilPage {
+
+		public SXPAdminUtilPage(Page sxpAdminUtilPage) {
+			actions = sxpAdminUtilPage.getActions();
+
+			items = sxpAdminUtilPage.getItems();
+			lastPage = sxpAdminUtilPage.getLastPage();
+			page = sxpAdminUtilPage.getPage();
+			pageSize = sxpAdminUtilPage.getPageSize();
+			totalCount = sxpAdminUtilPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<SXPAdminUtil> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
 	}
 
 	@GraphQLName("SXPBlueprintPage")
@@ -224,6 +349,21 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			SXPAdminUtilResource sxpAdminUtilResource)
+		throws Exception {
+
+		sxpAdminUtilResource.setContextAcceptLanguage(_acceptLanguage);
+		sxpAdminUtilResource.setContextCompany(_company);
+		sxpAdminUtilResource.setContextHttpServletRequest(_httpServletRequest);
+		sxpAdminUtilResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		sxpAdminUtilResource.setContextUriInfo(_uriInfo);
+		sxpAdminUtilResource.setContextUser(_user);
+		sxpAdminUtilResource.setGroupLocalService(_groupLocalService);
+		sxpAdminUtilResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			SXPBlueprintResource sxpBlueprintResource)
 		throws Exception {
 
@@ -251,6 +391,8 @@ public class Query {
 		sxpElementResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects<SXPAdminUtilResource>
+		_sxpAdminUtilResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SXPBlueprintResource>
 		_sxpBlueprintResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SXPElementResource>

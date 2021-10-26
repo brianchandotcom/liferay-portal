@@ -80,6 +80,8 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(SXPAdminUtilResourceImpl.class);
+
 			add(SXPBlueprintResourceImpl.class);
 
 			add(SXPElementResourceImpl.class);

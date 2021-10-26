@@ -476,7 +476,7 @@ definition {
 	test CanShareWithSpecialCharacter {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = '''DM Document's Title''',
+			dmDocumentTitle = "DM Document&apos;s Title",
 			groupName = "Guest",
 			guestPermissions = "false",
 			mimeType = "application/msword",

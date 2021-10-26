@@ -829,7 +829,7 @@
 </tr>
 <tr>
 	<td>OPTION_SELECTED</td>
-	<td>//div[contains(@class,'ddm-radio')]//..//input[contains(@class,'form-control') and contains(@value,'${key_optionSelected}')]</td>
+	<td>//input[contains(@class,'custom-control-input') and contains(@value,'${key_optionSelected}')]</td>
 	<td></td>
 </tr>
 <tr>

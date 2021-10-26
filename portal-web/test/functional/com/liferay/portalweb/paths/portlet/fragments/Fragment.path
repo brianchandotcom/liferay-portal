@@ -44,11 +44,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_BASIC_COMPONENT</td>
-	<td>//div[contains(@class,'layout-content')]//*[contains(@class,'component-${key_fragmentName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAGMENT_BODY</td>
 	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]</td>
 	<td></td>

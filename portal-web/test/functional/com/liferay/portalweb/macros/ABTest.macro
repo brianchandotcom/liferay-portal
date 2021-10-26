@@ -216,8 +216,8 @@ definition {
 
 			AssertElementPresent(
 				key_index = "${index}",
-				locator1 = "ABTest#VARIANT_NAME",
-				name = "${variantNames}");
+				locator1 = "ABTest#VALUES_IN_LIST",
+				key_name = "${variantNames}");
 		}
 	}
 

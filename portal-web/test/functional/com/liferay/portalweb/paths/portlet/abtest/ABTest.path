@@ -131,6 +131,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HISTORY_AB_TEST_BUTTON</td>
+	<td>//button[@class="nav-link btn btn-unstyled"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_HISTORY_AB_TEST_BUTTON</td>
+	<td>//button[contains(@class,'component-action quick-action-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NO_HAVE_HISTORY_AB_TEST_MESSAGE</td>
+	<td>//div[@class="text-center"]//h4[text()="There is no test history for this experience."]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REVIEW_NO_HAVE_VARIANTS</td>
 	<td>//p[contains(@class,'mb-2') and contains(text(),'Create at least one variant to run the test.')]</td>
 	<td></td>
@@ -226,8 +241,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VARIANT_NAME</td>
-	<td>//ul[contains(@class,'list-group show-quick-actions-on-hover')]//li[${key_index}]//*[text()='${name}']</td>
+	<td>VALUES_IN_LIST</td>
+	<td>//ul[contains(@class,'list-group show-quick-actions-on-hover')]//li[${key_index}]//*[text()='${key_name}']</td>
 	<td></td>
 </tr>
 </tbody>

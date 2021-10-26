@@ -802,12 +802,40 @@ definition {
 	}
 
 	@description = "LPS-98829: Validate if the ab test in History tab can be deleted"
-	@ignore = "true"
 	@priority = "3"
 	test DeleteHistoryTab {
+		task ("Create AB test, create variant, run test and terminate test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137495 DeleteHistoryTab pending implementation
+			ABTest.createVariant(variantName = "Variant name");
 
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
+
+		task ("Click history AB Test") {
+			Click(locator1="ABTest#HISTORY_AB_TEST_BUTTON");
+		}
+
+		task ("Delete the History Tab and Assert is empty") {
+			Click(
+				key_index = "1",
+				locator1 = "ABTest#VALUES_IN_LIST",
+				key_name = "AB test title");
+
+			ClickNoError(locator1="ABTest#DELETE_HISTORY_AB_TEST_BUTTON");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+			Alert.viewSuccessMessage();
+
+			AssertTextEquals(
+				locator1 = "ABTest#NO_HAVE_HISTORY_AB_TEST_MESSAGE",
+				value1 = "There is no test history for this experience.");
+		}
 	}
 
 	@description = "LPS-99225: Validate if the admin can delete a page with an A/B test in terminated status"
@@ -1110,12 +1138,46 @@ definition {
 	}
 
 	@description = "LPS-98829: Validate if the History tab appears with the list ordered by modified date DESC"
-	@ignore = "true"
 	@priority = "3"
 	test HistoryTabListedDescModifiedDate {
+		task ("Create AB test with a variant, run test and terminate test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137495 HistoryTabListedDescModifiedDate pending implementation
+			ABTest.createVariant(variantName = "Variant name");
 
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
+
+		task ("Create AB test with two variants, run test and terminate test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title 2");
+
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.createVariant(variantName = "Variant name 2");
+
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
+
+		task ("Click history AB Test") {
+			Click(locator1="ABTest#HISTORY_AB_TEST_BUTTON");
+		}
+
+		task ("Assert the second AB test appears first in the History Tab") {
+			Click(locator1="ABTest#HISTORY_AB_TEST_BUTTON");
+
+			AssertElementPresent(
+				key_index = "1",
+				locator1 = "ABTest#VALUES_IN_LIST",
+				key_name = "AB test title 2");
+		}
 	}
 
 	@description = "LPS-119475: When a user selects any highlighted element in the page, the ID of the selected element shows in the ID box"

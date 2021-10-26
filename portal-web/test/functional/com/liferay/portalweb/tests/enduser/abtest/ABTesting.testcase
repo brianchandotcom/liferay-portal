@@ -817,16 +817,16 @@ definition {
 		}
 
 		task ("Click history AB Test") {
-			Click(locator1="ABTest#HISTORY_AB_TEST_BUTTON");
+			Click(locator1 = "ABTest#HISTORY_AB_TEST_BUTTON");
 		}
 
 		task ("Delete the History Tab and Assert is empty") {
 			Click(
 				key_index = "1",
-				locator1 = "ABTest#VALUES_IN_LIST",
-				key_name = "AB test title");
+				key_name = "AB test title",
+				locator1 = "ABTest#VALUES_IN_LIST");
 
-			ClickNoError(locator1="ABTest#DELETE_HISTORY_AB_TEST_BUTTON");
+			ClickNoError(locator1 = "ABTest#DELETE_HISTORY_AB_TEST_BUTTON");
 
 			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
@@ -1167,16 +1167,16 @@ definition {
 		}
 
 		task ("Click history AB Test") {
-			Click(locator1="ABTest#HISTORY_AB_TEST_BUTTON");
+			Click(locator1 = "ABTest#HISTORY_AB_TEST_BUTTON");
 		}
 
 		task ("Assert the second AB test appears first in the History Tab") {
-			Click(locator1="ABTest#HISTORY_AB_TEST_BUTTON");
+			Click(locator1 = "ABTest#HISTORY_AB_TEST_BUTTON");
 
 			AssertElementPresent(
 				key_index = "1",
-				locator1 = "ABTest#VALUES_IN_LIST",
-				key_name = "AB test title 2");
+				key_name = "AB test title 2",
+				locator1 = "ABTest#VALUES_IN_LIST");
 		}
 	}
 

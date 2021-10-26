@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.37.0",
-		"@clayui/drop-down": "3.37.0",
-		"@clayui/icon": "3.37.0",
-		"@clayui/layout": "3.37.0",
+		"@clayui/button": "3.38.0",
+		"@clayui/drop-down": "3.38.0",
+		"@clayui/icon": "3.38.0",
+		"@clayui/layout": "3.38.0",
 		"frontend-js-web": "*",
 		"metal-state": "2.16.8",
 		"prop-types": "15.7.2",

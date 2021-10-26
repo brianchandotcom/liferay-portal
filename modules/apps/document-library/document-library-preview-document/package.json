@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.37.0",
-		"@clayui/icon": "3.37.0",
-		"@clayui/loading-indicator": "3.37.0",
+		"@clayui/button": "3.38.0",
+		"@clayui/icon": "3.38.0",
+		"@clayui/loading-indicator": "3.38.0",
 		"@liferay/document-library-preview-css": "*",
 		"frontend-js-web": "*",
 		"image-promise": "^5.0.1",

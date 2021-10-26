@@ -1,10 +1,10 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.37.0",
-		"@clayui/button": "3.37.0",
-		"@clayui/form": "3.37.0",
-		"@clayui/icon": "3.37.0",
-		"@clayui/progress-bar": "3.37.0",
+		"@clayui/alert": "3.38.0",
+		"@clayui/button": "3.38.0",
+		"@clayui/form": "3.38.0",
+		"@clayui/icon": "3.38.0",
+		"@clayui/progress-bar": "3.38.0",
 		"@liferay/frontend-js-react-web": "*",
 		"formik": "2.1.4",
 		"frontend-js-web": "*",

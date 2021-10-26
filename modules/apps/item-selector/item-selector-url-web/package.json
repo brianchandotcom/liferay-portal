@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.37.0",
-		"@clayui/form": "3.37.0",
-		"@clayui/loading-indicator": "3.37.0",
+		"@clayui/button": "3.38.0",
+		"@clayui/form": "3.38.0",
+		"@clayui/loading-indicator": "3.38.0",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"

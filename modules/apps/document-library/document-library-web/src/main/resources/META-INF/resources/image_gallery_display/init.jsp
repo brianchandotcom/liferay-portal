@@ -22,46 +22,6 @@
 if (layout.isTypeControlPanel()) {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, DLPortletKeys.DOCUMENT_LIBRARY, null);
 }
-
-IGRequestHelper igRequestHelper = new IGRequestHelper(request);
-
-DLPortletInstanceSettings dlPortletInstanceSettings = igRequestHelper.getDLPortletInstanceSettings();
-
-long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
-
-String rootFolderName = StringPool.BLANK;
-
-boolean rootFolderInTrash = false;
-boolean rootFolderNotFound = false;
-
-if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-	try {
-		Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
-
-		rootFolderName = rootFolder.getName();
-
-		if (rootFolder.getGroupId() != scopeGroupId) {
-			rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-			rootFolderName = StringPool.BLANK;
-		}
-
-		if (rootFolder.isRepositoryCapabilityProvided(TrashCapability.class)) {
-			TrashCapability trashCapability = rootFolder.getRepositoryCapability(TrashCapability.class);
-
-			rootFolderInTrash = trashCapability.isInTrash(rootFolder);
-
-			if (rootFolderInTrash) {
-				rootFolderName = trashHelper.getOriginalTitle(rootFolder.getName());
-			}
-		}
-	}
-	catch (NoSuchFolderException nsfe) {
-		rootFolderNotFound = true;
-	}
-}
-
-String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLANK);
-long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
 %>
 
 <%@ include file="/image_gallery_display/init-ext.jsp" %>

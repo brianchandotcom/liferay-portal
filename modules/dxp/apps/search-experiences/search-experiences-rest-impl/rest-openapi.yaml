@@ -157,6 +157,10 @@ components:
                 parameterType:
                     enum: [Date, Double, Float, Integer, IntegerArray, Long, LongArray, String, StringArray, TimeRange]
                     type: string
+        SXPAdminUtil:
+            properties:
+                value:
+                    type: string
         SXPBlueprint:
             properties:
                 configuration:
@@ -379,6 +383,90 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SearchResponse"
             tags: ["SearchResponse"]
+    /sxp-admin-util/keyword-query-contributors:
+        get:
+            operationId: getSXPAdminUtilKeywordQueryContributors
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                        application/xml:
+                            schema:
+                                type: string
+            tags: ["SXPAdminUtil"]
+    /sxp-admin-util/model-prefilter-contributors:
+        get:
+            operationId: getSXPAdminUtilModelPrefilterContributors
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                        application/xml:
+                            schema:
+                                type: string
+            tags: ["SXPAdminUtil"]
+    /sxp-admin-util/query-prefilter-contributors:
+        get:
+            operationId: getSXPAdminUtilQueryPrefilterContributors
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                        application/xml:
+                            schema:
+                                type: string
+            tags: ["SXPAdminUtil"]
+    /sxp-admin-util/searchable-asset-names/{companyId}:
+        get:
+            operationId: getSXPAdminUtilSearchableAssetNameCompany
+            parameters:
+                - in: path
+                  name: companyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                        application/xml:
+                            schema:
+                                type: string
+            tags: ["SXPAdminUtil"]
+    /sxp-admin-util/searchable-asset-names/{companyId}/{languageId}:
+        get:
+            operationId: getSXPAdminUtilSearchableAssetNameCompanyLanguage
+            parameters:
+                - in: path
+                  name: companyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: languageId
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                        application/xml:
+                            schema:
+                                type: string
+            tags: ["SXPAdminUtil"]
     /sxp-blueprints:
         get:
             operationId: getSXPBlueprintsPage

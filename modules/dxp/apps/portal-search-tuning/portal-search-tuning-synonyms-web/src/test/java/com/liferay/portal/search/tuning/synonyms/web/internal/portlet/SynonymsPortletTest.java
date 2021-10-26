@@ -58,6 +58,8 @@ public class SynonymsPortletTest extends BaseSynonymsWebTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		setUpPortletPreferencesFactoryUtil();
+
 		_synonymsPortlet = new SynonymsPortlet();
 
 		ReflectionTestUtil.setFieldValue(

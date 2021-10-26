@@ -32,7 +32,7 @@ ViewSXPBlueprintsDisplayContext viewSXPBlueprintsDisplayContext = (ViewSXPBluepr
 			<liferay-ui:search-container-row
 				className="com.liferay.search.experiences.model.SXPBlueprint"
 				keyProperty="sxpBlueprintId"
-				modelVar="entry"
+				modelVar="sxpBlueprint"
 			>
 				<%@ include file="/sxp_blueprint_admin/sxp_blueprint_search_columns.jspf" %>
 			</liferay-ui:search-container-row>

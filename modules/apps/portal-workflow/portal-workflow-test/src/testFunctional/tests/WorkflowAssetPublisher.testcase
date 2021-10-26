@@ -134,8 +134,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
-		WorkflowAsset.createNewBasicWebContent(
-			wcTitle = "Web Content Title");
+		WorkflowAsset.createNewBasicWebContent(wcTitle = "Web Content Title");
 
 		Button.clickSubmitForPublication();
 
@@ -162,9 +161,6 @@ definition {
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "Web Content Content",
 			assetTitle = "Web Content Title");
-
-			
-
 	}
 
 	@description = "This is a use case for LPS-72846."
@@ -345,8 +341,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
-		WorkflowAsset.createNewBasicWebContent(
-			wcTitle = "Web Content Title");
+		WorkflowAsset.createNewBasicWebContent(wcTitle = "Web Content Title");
 
 		Button.clickSubmitForPublication();
 

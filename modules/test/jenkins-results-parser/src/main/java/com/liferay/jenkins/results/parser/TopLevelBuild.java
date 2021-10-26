@@ -263,48 +263,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return buildResultsJSONObject;
 	}
 
-	public String getCompanionBranchName() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		Map<String, String> gitRepositoryGitDetailsTempMap =
-			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
-
-		return gitRepositoryGitDetailsTempMap.get("github.sender.branch.name");
-	}
-
-	public Map<String, String> getCompanionGitRepositoryDetailsTempMap() {
-		String branchName = getBranchName();
-		String branchType = "ee";
-		String gitRepositoryType = getBaseGitRepositoryType();
-
-		if (branchName.endsWith("-private")) {
-			branchType = "base";
-		}
-
-		String tempMapName = JenkinsResultsParserUtil.combine(
-			"git.", gitRepositoryType, ".", branchType, ".properties");
-
-		return getTempMap(tempMapName);
-	}
-
-	public String getCompanionGitRepositorySHA() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		Map<String, String> gitRepositoryGitDetailsTempMap =
-			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
-
-		return gitRepositoryGitDetailsTempMap.get("github.sender.branch.sha");
-	}
-
-	public String getCompanionUsername() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		Map<String, String> gitRepositoryGitDetailsTempMap =
-			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
-
-		return gitRepositoryGitDetailsTempMap.get("github.sender.username");
-	}
-
 	public Build getControllerBuild() {
 		if (_controllerBuild != null) {
 			return _controllerBuild;

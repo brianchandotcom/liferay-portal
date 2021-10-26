@@ -3666,6 +3666,17 @@ definition {
 		}
 	}
 
+	macro viewFragmentHeaderNotVisible {
+		if (!(isSet(position))) {
+			var position = "1";
+		}
+
+		AssertNotVisible(
+			key_fragmentName = "${fragmentName}",
+			key_index = "${position}",
+			locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+	}
+
 	macro viewFragmentMessageInfo {
 		if ("${fragmentName}" == "Collection Display") {
 			if (!(isSet(messageInfo))) {

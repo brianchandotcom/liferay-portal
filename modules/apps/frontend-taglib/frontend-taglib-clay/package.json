@@ -42,6 +42,7 @@
 		"@clayui/toolbar": "3.39.0",
 		"@clayui/tooltip": "3.39.0",
 		"@clayui/upper-toolbar": "3.39.0",
+		"@liferay/data-set-web": "*",
 		"@liferay/frontend-js-react-web": "*",
 		"classnames": "2.3.1",
 		"clay-alert": "2.22.4",

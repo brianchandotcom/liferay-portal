@@ -18,78 +18,85 @@
 
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_step_tracker") + StringPool.UNDERLINE;
-
-String containerId = randomNamespace + "table-id";
-
-JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>
 
-<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/frontend-taglib-clay/data_set_display/styles/main.css") %>" rel="stylesheet" />
-
-<div class="table-root" id="<%= containerId %>">
+<div class="table-root" id="<%= randomNamespace + "table-id" %>">
 	<span aria-hidden="true" class="loading-animation my-7"></span>
+
+	<%
+	Map<String, Object> props = HashMapBuilder.<String, Object>put(
+		"actionParameterName", GetterUtil.getString(actionParameterName)
+	).put(
+		"activeViewSettings", activeViewSettingsJSON
+	).put(
+		"apiURL", apiURL
+	).put(
+		"appURL", appURL
+	).put(
+		"bulkActions", bulkActionDropdownItems
+	).put(
+		"creationMenu", creationMenu
+	).put(
+		"currentURL", PortalUtil.getCurrentURL(request)
+	).put(
+		"filters", clayDataSetFiltersContext
+	).build();
+
+	if (Validator.isNotNull(formName)) {
+		props.put("formName", formName);
+	}
+
+	if (Validator.isNotNull(formId)) {
+		props.put("formId", formId);
+	}
+
+	props.put("id", id);
+	props.put("itemsActions", clayDataSetActionDropdownItems);
+	props.put("namespace", namespace);
+
+	if (Validator.isNotNull(nestedItemsKey)) {
+		props.put("nestedItemsKey", nestedItemsKey);
+	}
+
+	if (Validator.isNotNull(nestedItemsReferenceKey)) {
+		props.put("nestedItemsReferenceKey", nestedItemsReferenceKey);
+	}
+
+	props.put(
+		"pagination",
+		HashMapBuilder.<String, Object>put(
+			"deltas", clayPaginationEntries
+		).put(
+			"initialDelta", itemsPerPage
+		).put(
+			"initialPageNumber", pageNumber
+		).build());
+	props.put("portletId", portletDisplay.getRootPortletId());
+	props.put("portletURL", portletURL.toString());
+	props.put("selectedItems", selectedItems);
+
+	if (Validator.isNotNull(selectedItemsKey)) {
+		props.put("selectedItemsKey", selectedItemsKey);
+	}
+
+	if (Validator.isNotNull(selectionType)) {
+		props.put("selectionType", selectionType);
+	}
+
+	props.put("showManagementBar", showManagementBar);
+	props.put("showPagination", showPagination);
+	props.put("showSearch", showSearch);
+	props.put("sorting", sortItemList);
+
+	if (Validator.isNotNull(style)) {
+		props.put("style", style);
+	}
+
+	props.put("views", clayDataSetDisplayViewsContext);
+	%>
+
+	<react:component
+		module="data_set_display/js/DataSetDisplayTag"
+		props="<%= props %>"
+	/>
 </div>
-
-<aui:script require='<%= module + " as dataSetDisplay" %>'>
-	dataSetDisplay.default(
-		{
-			actionParameterName: '<%= GetterUtil.getString(actionParameterName) %>',
-			activeViewSettings: <%= activeViewSettingsJSON %>,
-			apiURL: '<%= apiURL %>',
-			appURL: '<%= appURL %>',
-			bulkActions: <%= jsonSerializer.serializeDeep(bulkActionDropdownItems) %>,
-			creationMenu: <%= jsonSerializer.serializeDeep(creationMenu) %>,
-			currentURL: '<%= PortalUtil.getCurrentURL(request) %>',
-			filters: <%= jsonSerializer.serializeDeep(clayDataSetFiltersContext) %>,
-
-			<c:if test="<%= Validator.isNotNull(formId) %>">
-				formId: '<%= formId %>',
-			</c:if>
-
-			<c:if test="<%= Validator.isNotNull(formName) %>">
-				formName: '<%= formName %>',
-			</c:if>
-
-			id: '<%= id %>',
-			itemsActions: <%= jsonSerializer.serializeDeep(clayDataSetActionDropdownItems) %>,
-			namespace: '<%= namespace %>',
-
-			<c:if test="<%= Validator.isNotNull(nestedItemsKey) %>">
-				nestedItemsKey: '<%= nestedItemsKey %>',
-			</c:if>
-
-			<c:if test="<%= Validator.isNotNull(nestedItemsReferenceKey) %>">
-				nestedItemsReferenceKey: '<%= nestedItemsReferenceKey %>',
-			</c:if>
-
-			pagination: {
-				deltas: <%= jsonSerializer.serializeDeep(clayPaginationEntries) %>,
-				initialDelta: <%= itemsPerPage %>,
-				initialPageNumber: <%= pageNumber %>,
-			},
-			portletId: '<%= portletDisplay.getRootPortletId() %>',
-			portletURL: '<%= portletURL %>',
-			selectedItems: <%= jsonSerializer.serializeDeep(selectedItems) %>,
-
-			<c:if test="<%= Validator.isNotNull(selectedItemsKey) %>">
-				selectedItemsKey: '<%= selectedItemsKey %>',
-			</c:if>
-
-			<c:if test="<%= Validator.isNotNull(selectionType) %>">
-				selectionType: '<%= selectionType %>',
-			</c:if>
-
-			showManagementBar: <%= showManagementBar %>,
-			showPagination: <%= showPagination %>,
-			showSearch: <%= showSearch %>,
-			sorting: <%= jsonSerializer.serializeDeep(sortItemList) %>,
-
-			<c:if test="<%= Validator.isNotNull(style) %>">
-				style: '<%= style %>',
-			</c:if>
-
-			views: <%= jsonSerializer.serializeDeep(clayDataSetDisplayViewsContext) %>,
-		},
-		document.getElementById('<%= containerId %>')
-	);
-</aui:script>

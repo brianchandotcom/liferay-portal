@@ -14,9 +14,7 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.frontend.taglib.clay.data.set.model.ClayPaginationEntry" %><%@
@@ -24,14 +22,13 @@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu" 
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemList" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
@@ -50,7 +47,6 @@ String formId = (String)request.getAttribute("clay:data-set-display:formId");
 String formName = (String)request.getAttribute("clay:data-set-display:formName");
 String id = (String)request.getAttribute("clay:data-set-display:id");
 int itemsPerPage = (int)request.getAttribute("clay:data-set-display:itemsPerPage");
-String module = (String)request.getAttribute("clay:data-set-display:module");
 String namespace = (String)request.getAttribute("clay:data-set-display:namespace");
 String nestedItemsKey = (String)request.getAttribute("clay:data-set-display:nestedItemsKey");
 String nestedItemsReferenceKey = (String)request.getAttribute("clay:data-set-display:nestedItemsReferenceKey");
@@ -65,8 +61,6 @@ boolean showPagination = (boolean)request.getAttribute("clay:data-set-display:sh
 boolean showSearch = (boolean)request.getAttribute("clay:data-set-display:showSearch");
 SortItemList sortItemList = (SortItemList)request.getAttribute("clay:headless-data-set-display:sortItemList");
 String style = (String)request.getAttribute("clay:data-set-display:style");
-
-JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_step_tracker") + StringPool.UNDERLINE;
 

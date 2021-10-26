@@ -629,11 +629,34 @@ definition {
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a Integer entry on layout"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditIntegerEntryOnLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-140551 CanEditIntegerEntryOnLayout pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "Integer",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "123");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "123");
+
+		ObjectPortlet.updateEntry(updateEntry = "123456");
+
+		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "123456");
 
 	}
 

@@ -1924,11 +1924,44 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Page Item Selector when inactivated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectDisappearsPageItemSelectWhenInactivated {
 
-		// TODO LPS-140862 ObjectDisappearsPageItemSelectWhenInactivated pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		Click.javaScriptClick(locator1 = "VisualizeObjectDisplayPage#SELECT_ITEM");
+
+		SelectFrame(
+			key_title = "Select",
+			locator1 = "IFrame#MODAL_ANY");
+
+		AssertElementNotPresent(
+			key_pluralLabelName = "Custom Objects",
+			locator1 = "VisualizeObjectDisplayPage#SELECT_OBJECT");
 
 	}
 

@@ -1,6 +1,7 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -71,7 +72,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8523 | Test Summary: Assert segment membership list shows all known individuals"
 	@priority = "4"
 	test AssertSegmentMembershipListShowsAllKnownIndividuals {
-		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
@@ -126,7 +127,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8512 | Test Summary: Segment membership list is searchable"
 	@priority = "5"
 	test CanSearchMembershipList {
-		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
@@ -190,7 +191,7 @@ definition {
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9260
 
-		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
@@ -257,7 +258,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8513 | Test Summary: Order the Segment Profile Membership List"
 	@priority = "3"
 	test OrderSegmentProfileMembershipList {
-		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
@@ -342,7 +343,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8519 | Test Summary: Search a Dynamic Segment's Membership Preview Modal"
 	@priority = "3"
 	test SearchDynamicSegmentsMembershipPreviewModal {
-		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
@@ -406,7 +407,7 @@ definition {
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9258
 
-		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
@@ -478,7 +479,7 @@ definition {
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9257
 
-		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
@@ -555,7 +556,7 @@ definition {
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9261
 
-		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
@@ -632,7 +633,7 @@ definition {
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9252
 
-		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
@@ -711,7 +712,7 @@ definition {
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9251
 
-		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
 		var nameList = "user1 user1,user2 user2,user3 user3";
 

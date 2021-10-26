@@ -980,6 +980,11 @@ definition {
 	test ViewWebContentWithRepublishedImage {
 		property test.name.skip.portal.instance = "RemoteStagingDM#ViewWebContentWithRepublishedImage";
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging DM Page",
+			widgetName = "Web Content Display");
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.jpg",
@@ -1022,11 +1027,11 @@ definition {
 			pageName = "Staging DM Page",
 			siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Web Content Display");
-
-		Portlet.viewSpecificPG(portletName = "Web Content Display");
-
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
 
 		Staging.gotoPublishToLive();
 

@@ -77,9 +77,43 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanInsertEspecialCaracter {
+		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
-		// TODO LRQA-70702 CanInsertEspecialCaracter pending implementation
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "ライフレイ",
+			fieldFieldLabel = "Company",
+			fieldName = "company");
 
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "ライフレイ@liferay.com",
+			fieldFieldLabel = "Email",
+			fieldName = "email");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "ライフレイ",
+			fieldFieldLabel = "First Name",
+			fieldName = "firstName");
+
+		KaleoFormsAdmin.saveProcessRecord();
+
+		Alert.viewSuccessMessage();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "View");
+
+		AssertTextEquals.assertPartialText(
+			key_ddlRecordFieldData = "Company",
+			locator1 = "DDLRecord#FIELD",
+			value1 = "ライフレイ");
+
+		AssertTextEquals.assertPartialText(
+			key_ddlRecordFieldData = "Email",
+			locator1 = "DDLRecord#FIELD",
+			value1 = "ライフレイ@liferay.com");
+
+		AssertTextEquals.assertPartialText(
+			key_ddlRecordFieldData = "First Name",
+			locator1 = "DDLRecord#FIELD",
+			value1 = "ライフレイ");
 	}
 
 	@description = "Verify that the details page shows the process Status is Approved after the user approve."

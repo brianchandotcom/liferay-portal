@@ -67,7 +67,7 @@ public class TableClayDataSetContentRendererContextContributor
 		JSONArray fieldsJSONArray = _jsonFactory.createJSONArray();
 
 		ClayTableSchema clayTableSchema =
-			baseTableClayDataSetDisplayView.getClayTableSchema();
+			baseTableClayDataSetDisplayView.getClayTableSchema(locale);
 
 		Map<String, ClayTableSchemaField> fieldsMap =
 			clayTableSchema.getClayTableSchemaFieldsMap();

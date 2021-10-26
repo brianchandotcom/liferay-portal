@@ -27,8 +27,6 @@ import java.util.ResourceBundle;
 public abstract class BaseTableClayDataSetDisplayView
 	implements ClayDataSetDisplayView {
 
-	public abstract ClayTableSchema getClayTableSchema();
-
 	@Override
 	public String getContentRenderer() {
 		return ClayDataSetConstants.TABLE;

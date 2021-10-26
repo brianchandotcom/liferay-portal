@@ -18,7 +18,7 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 	}
 
-	@description = "This is a use case for LRQA-61573."
+	@description = "This is a use case for LRQA-61573. Edit Portal CORS configuration and check if CORS keep working after an upgrade."
 	@priority = "5"
 	@uitest
 	test ViewPortalCORSAfterUpgrade72101 {
@@ -43,7 +43,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61573."
+	@description = "This is a use case for LRQA-61573. Add and Edit Web Contexts CORS configuration and check if CORS keep working after an upgrade."
 	@priority = "5"
 	@uitest
 	test ViewWebContextsCORSAfterUpgrade72101 {

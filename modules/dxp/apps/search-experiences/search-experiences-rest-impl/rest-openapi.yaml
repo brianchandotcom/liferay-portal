@@ -102,6 +102,14 @@ components:
                     type: integer
                 number_of_fragments:
                     type: integer
+        KeywordQueryContributor:
+            properties:
+                className:
+                    type: string
+        ModelPrefilterContributor:
+            properties:
+                className:
+                    type: string
         Parameter:
             properties:
                 dateFormat:
@@ -156,6 +164,10 @@ components:
                     type: integer
                 parameterType:
                     enum: [Date, Double, Float, Integer, IntegerArray, Long, LongArray, String, StringArray, TimeRange]
+                    type: string
+        QueryPrefilterContributor:
+            properties:
+                className:
                     type: string
         SXPBlueprint:
             properties:
@@ -334,6 +346,16 @@ components:
                 totalHits:
                     type: integer
             type: object
+        SearchableAssetName:
+            properties:
+                className:
+                    type: string
+        SearchableAssetNameDisplay:
+            properties:
+                className:
+                    type: string
+                displayName:
+                    type: string
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
@@ -379,6 +401,97 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SearchResponse"
             tags: ["SearchResponse"]
+    /keyword-query-contributors:
+        get:
+            operationId: getKeywordQueryContributors
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KeywordQueryContributor"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KeywordQueryContributor"
+                                type: array
+            tags: ["KeywordQueryContributor"]
+    /model-prefilter-contributors:
+        get:
+            operationId: getModelPrefilterContributors
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ModelPrefilterContributor"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ModelPrefilterContributor"
+                                type: array
+            tags: ["ModelPrefilterContributor"]
+    /query-prefilter-contributors:
+        get:
+            operationId: getQueryPrefilterContributors
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/QueryPrefilterContributor"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/QueryPrefilterContributor"
+                                type: array
+            tags: ["QueryPrefilterContributor"]
+    /searchable-asset-names:
+        get:
+            operationId: getSearchableAssetNames
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SearchableAssetName"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SearchableAssetName"
+                                type: array
+            tags: ["SearchableAssetName"]
+    /searchable-asset-names/{languageId}:
+        get:
+            operationId: getSearchableAssetNameLanguage
+            parameters:
+                - in: path
+                  name: languageId
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SearchableAssetNameDisplay"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SearchableAssetNameDisplay"
+                                type: array
+            tags: ["SearchableAssetNameDisplay"]
     /sxp-blueprints:
         get:
             operationId: getSXPBlueprintsPage

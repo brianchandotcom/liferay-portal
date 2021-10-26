@@ -102,7 +102,7 @@ definition {
 
 			KaleoFormsAdmin.chooseFieldSet(
 				kfFieldSetName = "Contacts",
-		 		kfProcessName = "Kaleo Forms Process ${newProcess}");
+				kfProcessName = "Kaleo Forms Process ${newProcess}");
 
 			KaleoFormsAdmin.next();
 
@@ -134,8 +134,6 @@ definition {
 		KaleoFormsAdmin.deleteViaDeleteIcon();
 
 		KaleoFormsAdmin.viewTaskPresent(workflowTask = "Kaleo Forms Process 3");
-
-
 	}
 
 	@description = "Verify that the user can export a process."

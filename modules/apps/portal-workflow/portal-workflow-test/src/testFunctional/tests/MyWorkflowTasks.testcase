@@ -1558,8 +1558,6 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewDefaultMyWorkflowTasksCP();
-
-		
 	}
 
 	@priority = "5"

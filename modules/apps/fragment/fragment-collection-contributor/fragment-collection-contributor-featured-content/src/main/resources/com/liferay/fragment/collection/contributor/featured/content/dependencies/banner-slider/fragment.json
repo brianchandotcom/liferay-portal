@@ -1,5 +1,6 @@
 {
 	"fragmentEntryKey": "banner-slider",
+	"icon": "slideshow",
 	"name": "banner-slider",
 	"thumbnail": "banner_slider.png",
 	"type": "section"

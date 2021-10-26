@@ -14,21 +14,21 @@
  */
 --%>
 
-<portlet:renderURL var="editEntryURL">
+<portlet:renderURL var="editSXPElementURL">
 	<portlet:param name="mvcRenderCommandName" value="/sxp_blueprint_admin/edit_sxp_element" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="sxpElementId" value="<%= String.valueOf(sxpElement.getSXPElementId()) %>" />
 </portlet:renderURL>
 
 <%
-String sxpElementTitle = sxpElement.getTitle(locale);
-String sxpElementDescription = sxpElement.getDescription(locale);
+String title = sxpElement.getTitle(locale);
+String description = sxpElement.getDescription(locale);
 
 String[] languageIds = sxpElement.getAvailableLanguageIds();
 
-for (int i = 0; Validator.isNull(sxpElementTitle) && (i < languageIds.length); i++) {
-	sxpElementTitle = sxpElement.getTitle(languageIds[i]);
-	sxpElementDescription = sxpElement.getDescription(languageIds[i]);
+for (int i = 0; Validator.isNull(title) && (i < languageIds.length); i++) {
+	title = sxpElement.getTitle(languageIds[i]);
+	description = sxpElement.getDescription(languageIds[i]);
 }
 %>
 
@@ -40,12 +40,12 @@ for (int i = 0; Validator.isNull(sxpElementTitle) && (i < languageIds.length); i
 			<h4>
 				<c:choose>
 					<c:when test="<%= SXPElementEntryPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
-						<aui:a href="<%= editEntryURL %>">
-							<%= HtmlUtil.escape(sxpElementTitle) %>
+						<aui:a href="<%= editSXPElementURL %>">
+							<%= HtmlUtil.escape(title) %>
 						</aui:a>
 					</c:when>
 					<c:otherwise>
-						<%= HtmlUtil.escape(sxpElementTitle) %>
+						<%= HtmlUtil.escape(title) %>
 					</c:otherwise>
 				</c:choose>
 
@@ -59,8 +59,8 @@ for (int i = 0; Validator.isNull(sxpElementTitle) && (i < languageIds.length); i
 				</c:if>
 			</h4>
 
-			<h5 class="text-default text-truncate" title="<%= HtmlUtil.escape(sxpElementDescription) %>">
-				<%= HtmlUtil.escape(sxpElementDescription) %>
+			<h5 class="text-default text-truncate" title="<%= HtmlUtil.escape(description) %>">
+				<%= HtmlUtil.escape(description) %>
 			</h5>
 
 			<h5 class="text-default text-truncate">
@@ -79,8 +79,8 @@ for (int i = 0; Validator.isNull(sxpElementTitle) && (i < languageIds.length); i
 		>
 			<c:choose>
 				<c:when test="<%= SXPElementEntryPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
-					<aui:a href="<%= editEntryURL %>">
-						<%= HtmlUtil.escape(sxpElementTitle) %>
+					<aui:a href="<%= editSXPElementURL %>">
+						<%= HtmlUtil.escape(title) %>
 
 						<c:if test="<%= sxpElement.getReadOnly() %>">
 							<liferay-ui:icon
@@ -93,7 +93,7 @@ for (int i = 0; Validator.isNull(sxpElementTitle) && (i < languageIds.length); i
 					</aui:a>
 				</c:when>
 				<c:otherwise>
-					<%= HtmlUtil.escape(sxpElementTitle) %>
+					<%= HtmlUtil.escape(title) %>
 
 					<c:if test="<%= sxpElement.getReadOnly() %>">
 						<liferay-ui:icon
@@ -110,7 +110,7 @@ for (int i = 0; Validator.isNull(sxpElementTitle) && (i < languageIds.length); i
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand table-cell-minw-200"
 			name="description"
-			value="<%= HtmlUtil.escape(sxpElementDescription) %>"
+			value="<%= HtmlUtil.escape(description) %>"
 		/>
 
 		<liferay-ui:search-container-column-user

@@ -3,7 +3,7 @@ definition {
 	macro changeDisplayStyle {
 		WaitForPageLoad();
 
-		Click(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 
 		MenuItem.click(menuItem = "${displayStyle}");
 

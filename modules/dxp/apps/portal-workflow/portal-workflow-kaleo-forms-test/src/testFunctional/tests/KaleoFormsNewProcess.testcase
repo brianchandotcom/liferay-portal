@@ -161,7 +161,7 @@ definition {
 		KaleoFormsAdmin.addProcessDetails(
 			kfProcessDescription = "Kaleo Forms Process Description",
 			kfProcessName = "Kaleo Forms Process");
-		
+
 		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
@@ -177,12 +177,10 @@ definition {
 		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.viewFieldRequired(
-			progressTitle = "Forms",
+			kfFormName = "Created Task Form",
 			kfProcessName = "Kaleo Forms Process",
-			workflowTask = "created",
-			kfFormName = "Created Task Form");
-
-
+			progressTitle = "Forms",
+			workflowTask = "created");
 	}
 
 	@description = "Verify that the translation icon next to the -Name- and -Description- field is in English by default."

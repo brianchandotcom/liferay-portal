@@ -13,18 +13,6 @@ definition {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		Navigator.openURL();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 	}
 
 	tearDown {
@@ -49,6 +37,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "WC Content");
 		}
+
 		task ("Navigate to the content Dashboard, click edit web content and save as draft") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Content",
@@ -57,6 +46,7 @@ definition {
 
 			WebContent.saveAsDraft();
 		}
+
 		task ("go back to web content and check for approved and draft versions") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Content",
@@ -78,59 +68,50 @@ definition {
 	test AssigningSomeAudienceCategoriesAndCheckingTheOrder {
 		property portal.acceptance = "true";
 
-		task ("Create a list of Audiences") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "S ${count}",
-					vocabularyName = "Audience");
-			}
+		task ("Create a list of Audience Categories") {
+			var audienceId1	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_1",
+				vocabularyName = "Audience");
+
+			var audienceId2	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_2",
+				vocabularyName = "Audience");
+			
+			var audienceId3	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_3",
+				vocabularyName = "Audience");
 		}
 
-		task ("Create a list of Stages") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "test ${count}",
-					vocabularyName = "Stage");
-			}
+		task ("Create a list of Stage Categories") {
+			var stageId1 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_1",
+				vocabularyName = "Stage");
+
+			var stageId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_2",
+				vocabularyName = "Stage");
+			
+			var stageId3 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_3",
+				vocabularyName = "Stage");
 		}
 
-		task ("Create a list of Web Content") {
-			for (var count : list "1,2,3") {
-				JSONWebcontent.addWebContent(
-					content = "Webcontent Content",
-					groupName = "Test Site Name",
-					title = "Webcontent Title ${count}");
-			}
+		task ("Create a Web Content with the categories") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1},${audienceId2},${audienceId3},${stageId1},${stageId2},${stageId3}",
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
 		}
 
-		task ("Select of categories 1 and 3 of Audience, and all categories of Stage") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			for (var count : list "1,2,3") {
-				WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${count}");
-
-				for (var count : list "1,3") {
-					WebContent.selectCategory(
-						categoryName = "S ${count}",
-						vocabularyName = "Audience");
-				}
-
-				for (var count : list "1,2,3") {
-					WebContent.selectCategory(
-						categoryName = "test ${count}",
-						vocabularyName = "Stage");
-				}
-
-				PortletEntry.publish();
-			}
-		}
 		task ("Navigate to content Dashboard and View the order of categories") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			task ("blue - first position") {
 				AssertElementPresent(
@@ -198,41 +179,62 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create a list of Audiences") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "S ${count}",
-					vocabularyName = "Audience");
-			}
-		}
+			var categoryId1	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "C_Subaudience_1",
+				vocabularyName = "Audience");
 
-		task ("Create a list of Stages") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "test ${count}",
-					vocabularyName = "Stage");
-			}
+			var categoryId2	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "B_Subaudience_2",
+				vocabularyName = "Audience");
+			
+			var categoryId3	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "A_Subaudience_3",
+				vocabularyName = "Audience");
 		}
 
 		task ("Create a Web Content") {
-			for (var count : list "1,2,3") {
-				JSONWebcontent.addWebContent(
-					content = "Webcontent Content",
-					groupName = "Test Site Name",
-					title = "Webcontent Title ${count}");
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1},${categoryId2},${categoryId3}",
+				content = "test content",
+				groupName = "Test Site Name",
+				title = "Web Content Title 1");
+			
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1},${categoryId2},${categoryId3}",
+				content = "test content",
+				groupName = "Test Site Name",
+				title = "Web Content Title 2");
+		}
+
+		task ("Validade if the categories are shown in order of creation") {
+			ContentDashboard.goToContentDashboard();
+
+			AssertTextPresent(
+				categoryIndex = "1",
+				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
+				value1 = "C_Subaudience_1");
+			
+			AssertTextPresent(
+				categoryIndex = "2",
+				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
+				value1 = "B_Subaudience_2");
+			
+			AssertTextPresent(
+				categoryIndex = "3",
+				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
+				value1 = "A_Subaudience_3");
+		}
+
+		task ("Delete the global audience categories") {
+			for (var categories : list "C_Subaudience_1,B_Subaudience_2,A_Subaudience_3") {
+				JSONCategory.deleteCategory(
+					categoryName = "${categories}",
+					groupName = "Global",
+					vocabularyName = "Audience");
 			}
-		}
-
-		task ("Select list of categories") {
-			ContentDashboard.selectListofCategoriesForAudienceAndStage();
-		}
-
-		task ("Navigate to content Dashboard and View the order of categories") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
 		}
 	}
 
@@ -371,44 +373,45 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create a list of Audiences") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "test ${count}",
-					vocabularyName = "Audience");
-			}
+			var categoryId1	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_1",
+				vocabularyName = "Audience");
+
+			var categoryId2	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_2",
+				vocabularyName = "Audience");
+			
+			var categoryId3	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_3",
+				vocabularyName = "Audience");
 		}
 
 		task ("Create a Web Content") {
 			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1},${categoryId2},${categoryId3}",
 				content = "test content",
 				groupName = "Test Site Name",
 				title = "WC");
 		}
 
-		task ("select of audiences ") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "WC");
-
-			for (var count : list "1,2,3") {
-				WebContent.selectCategory(
-					categoryName = "test ${count}",
-					vocabularyName = "Audience");
-			}
-
-			PortletEntry.publish();
-		}
-
 		task ("Nagigate to Content Dashboard and check if there's a label with '...' indicating 'more categories' ") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#AUDIENCE_LIST_DASHBOARD",
 				value = "...");
+		}
+
+		task ("Delete the global audience categories") {
+			for (var categories : list "Subaudience_1,Subaudience_2,Subaudience_3") {
+				JSONCategory.deleteCategory(
+					categoryName = "${categories}",
+					groupName = "Global",
+					vocabularyName = "Audience");
+			}
 		}
 	}
 
@@ -417,77 +420,60 @@ definition {
 	test CheckOrderEvenWithSomeUnassignedCategories {
 		property portal.acceptance = "true";
 
-		task ("Create a list of Audiences") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "S ${count}",
-					vocabularyName = "Audience");
-			}
+		task ("Create a list of Audience Categories") {
+			var audienceId1	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_1",
+				vocabularyName = "Audience");
+
+			var audienceId2	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_2",
+				vocabularyName = "Audience");
+			
+			var audienceId3	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_3",
+				vocabularyName = "Audience");
 		}
 
-		task ("Create a list of Stages") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "test ${count}",
-					vocabularyName = "Stage");
-			}
+		task ("Create a list of Stage Categories") {
+			var stageId1 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_1",
+				vocabularyName = "Stage");
+
+			var stageId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_2",
+				vocabularyName = "Stage");
+			
+			var stageId3 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_3",
+				vocabularyName = "Stage");
 		}
 
-		task ("Create a Web Content") {
-			for (var count : list "1,2,3") {
+		task ("Create 1st Web Content with all categories but the 2nd category of Audience") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1},${audienceId3},${stageId1},${stageId2},${stageId3}",
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title 1");
+		}
+
+		task ("Create 2nd and 3rd Web Contents with all categories from Audience and Stage") {
+			for (var count : list "2,3") {
 				JSONWebcontent.addWebContent(
+					assetCategoryIds = "${audienceId1},${audienceId2},${audienceId3},${stageId1},${stageId2},${stageId3}",
 					content = "Webcontent Content",
 					groupName = "Test Site Name",
 					title = "Webcontent Title ${count}");
 			}
 		}
 
-		task ("Selecting the categories, one of the contents will not have category 2 of vocabulary 1") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title 1");
-
-			for (var count : list "1,3") {
-				WebContent.selectCategory(
-					categoryName = "S ${count}",
-					vocabularyName = "Audience");
-			}
-
-			for (var count : list "1,2,3") {
-				WebContent.selectCategory(
-					categoryName = "test ${count}",
-					vocabularyName = "Stage");
-			}
-
-			PortletEntry.publish();
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			for (var count : list "2,3") {
-				WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${count}");
-
-				for (var count : list "1,2,3") {
-					WebContent.selectCategory(
-						categoryName = "S ${count}",
-						vocabularyName = "Audience");
-				}
-
-				for (var count : list "1,2,3") {
-					WebContent.selectCategory(
-						categoryName = "test ${count}",
-						vocabularyName = "Stage");
-				}
-
-				PortletEntry.publish();
-			}
-		}
 		task ("Navigate to content Dashboard and View the order of categories") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			task ("blue - first position") {
 				AssertElementPresent(
@@ -505,6 +491,22 @@ definition {
 				AssertElementPresent(
 					fillColor = "FF5F5F",
 					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+		}
+
+		task ("Delete the global audience categories") {
+			for (var categories : list "Subaudience_1,Subaudience_2,Subaudience_3") {
+				JSONCategory.deleteCategory(
+					categoryName = "${categories}",
+					groupName = "Global",
+					vocabularyName = "Audience");
+			}
+
+			for (var categories : list "Substage_1,Substage_2,Substage_3") {
+				JSONCategory.deleteCategory(
+					categoryName = "${categories}",
+					groupName = "Global",
+					vocabularyName = "Stage");
 			}
 		}
 	}
@@ -575,42 +577,50 @@ definition {
 	test CheckTheOrderWithANewCategory {
 		property portal.acceptance = "true";
 
-		task ("Create a list of Audiences") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "S ${count}",
-					vocabularyName = "Audience");
-			}
+		task ("Create a list of Audience Categories") {
+			var audienceId1	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_1",
+				vocabularyName = "Audience");
+
+			var audienceId2	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_2",
+				vocabularyName = "Audience");
+			
+			var audienceId3	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_3",
+				vocabularyName = "Audience");
 		}
 
-		task ("Create a list of Stages") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "test ${count}",
-					vocabularyName = "Stage");
-			}
+		task ("Create a list of Stage Categories") {
+			var stageId1 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_1",
+				vocabularyName = "Stage");
+
+			var stageId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_2",
+				vocabularyName = "Stage");
+			
+			var stageId3 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_3",
+				vocabularyName = "Stage");
 		}
 
-		task ("Create a list of Web Content") {
-			for (var count : list "1,2,3") {
-				JSONWebcontent.addWebContent(
-					content = "Webcontent Content",
-					groupName = "Test Site Name",
-					title = "Webcontent Title ${count}");
-			}
-		}
-
-		task ("Select list of categories") {
-			ContentDashboard.selectListofCategoriesForAudienceAndStage();
+		task ("Create a Web Content with the categories") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1},${audienceId2},${audienceId3},${stageId1},${stageId2},${stageId3}",
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
 		}
 
 		task ("Navigate to content Dashboard and View the order of categories") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			task ("blue - first position") {
 				AssertElementPresent(
@@ -640,24 +650,22 @@ definition {
 		task ("Create a new category and assign one of the contents") {
 			JSONCategory.addCategory(
 				groupName = "Global",
-				title = "test 4",
+				title = "Substage_4",
 				vocabularyName = "Stage");
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title 1");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
 			WebContent.selectCategory(
-				categoryName = "test 4",
+				categoryName = "Substage_4",
 				vocabularyName = "Stage");
 
 			PortletEntry.publish();
 		}
+
 		task ("Navigate to the content panel and see if, in the new category order, the new category receives a new color, placed in the last position") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			task ("blue - first position") {
 				AssertElementPresent(
@@ -683,6 +691,22 @@ definition {
 					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 			}
 		}
+
+		task ("Delete the global audience categories") {
+			for (var categories : list "Subaudience_1,Subaudience_2,Subaudience_3") {
+				JSONCategory.deleteCategory(
+					categoryName = "${categories}",
+					groupName = "Global",
+					vocabularyName = "Audience");
+			}
+
+			for (var categories : list "Substage_1,Substage_2,Substage_3,Substage_4") {
+				JSONCategory.deleteCategory(
+					categoryName = "${categories}",
+					groupName = "Global",
+					vocabularyName = "Stage");
+			}
+		}
 	}
 
 	@description = "When click on the 'Other options' icon of Approved WC and has NOT a display page associated, View option NOT displayed"
@@ -701,7 +725,7 @@ definition {
 				panel = "Applications",
 				portlet = "Content Dashboard");
 
-			Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
+			Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
 
 			AssertElementNotPresent(locator1 = "ContentDashboard#VIEW_OPTION");
 		}
@@ -751,7 +775,7 @@ definition {
 				panel = "Applications",
 				portlet = "Content Dashboard");
 
-			Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
+			Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
 
 			AssertElementNotPresent(locator1 = "ContentDashboard#VIEW_OPTION");
 		}
@@ -763,6 +787,20 @@ definition {
 	test ClickTitleApprovedDPTWithNoPermissions {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleApprovedDPTWithNoPermissions";
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
 
 		task ("Create a DPT and set as Default") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -861,6 +899,20 @@ definition {
 	test ClickTitleApprovedDPTWithPermissions {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleApprovedDPTWithPermissions";
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
 
 		task ("Create a DPT and set as Default") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -1000,7 +1052,7 @@ definition {
 		}
 	}
 
-	@description = "Given a user with NO permissions to edit documents
+	@description = "LPS-119966 Given a user with NO permissions to edit documents
 	When the user clicks on the title link in the content dashboard
 	than the user cannot click on the title"
 	@priority = "4"
@@ -1009,6 +1061,20 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property portal.acceptance = "true";
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
 
 		task ("Add Display Page and mark it as default") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -1029,35 +1095,28 @@ definition {
 		}
 
 		task ("Add a document") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			DMDocument.addCP(
-				dmDocumentFile = "Document_1.txt",
-				dmDocumentTitle = "DM Document Title");
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name",
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
 		}
 
-		task ("Add a role and user with NO permissions") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.addCP(
+		task ("Create an User") {
+			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-			User.editPasswordCP(
-				requirePasswordReset = "true",
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
-
+		task ("Add a role with NO permissions") {
 			JSONRole.addRegularRole(
 				roleKey = "WC Creator Edit Permissions",
 				roleTitle = "WC Creator Edit Permissions");
@@ -1081,18 +1140,13 @@ definition {
 				roleTitle = "WC Creator Edit Permissions",
 				userEmailAddress = "userea@liferay.com");
 
-			User.logoutPG();
-
-			User.loginUserPG(
-				password = "test",
-				userEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 		}
 
 		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Click on the title") {
@@ -1105,12 +1159,10 @@ definition {
 				value1 = "DM Document Title");
 		}
 
-		task ("Login again with the Test user") {
-			User.logoutPG();
+		task ("Delete Role and User created") {
+			JSONRole.deleteRole(roleTitle = "WC Creator Edit Permissions");
 
-			User.loginUserPG(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
 		}
 	}
 
@@ -1143,18 +1195,15 @@ definition {
 		}
 
 		task ("Add a document") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			DMDocument.addCP(
-				dmDocumentFile = "Document_1.txt",
-				dmDocumentTitle = "DM Document Title");
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name",
+				mimeType = "text/txt",
+				sourceFileName = "Document_1.txt");
 		}
 
 		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Click on the title") {
@@ -1176,24 +1225,15 @@ definition {
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleDraftNoDPT";
 
 		task ("Add web content Draft") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addDraft(
-				webContentContent = "WC Content",
-				webContentTitle = "WC Title");
-
-			VerifyElementPresent(locator1 = "Message#SUCCESS");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title",
+				workflowAction = "DRAFT");
 		}
 
 		task ("Go to Content Dashboard and click on the title") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			LexiconTable.clickTableEntryColumnLink(
 				columnName = "title",
@@ -1268,14 +1308,17 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleScheduledNoDPT";
 
-		task ("Add web content Scheduled") {
+		task ("Create a Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
+
+		task ("Change display date of Web Content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "WC Content",
-				webContentTitle = "WC Title");
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
 
 			WebContent.editDisplayDate(displayDate = "01/01/2100");
 
@@ -1283,10 +1326,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and click on the title") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			LexiconTable.clickTableEntryColumnLink(
 				columnName = "title",
@@ -1370,18 +1410,15 @@ definition {
 		}
 
 		task ("Add a document") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			DMDocument.addCP(
-				dmDocumentFile = "Document_1.txt",
-				dmDocumentTitle = "DM Document Title");
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name",
+				mimeType = "text/txt",
+				sourceFileName = "Document_1.txt");
 		}
 
 		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Click on the View icon and check the user is lead to the Display Page") {
@@ -1407,24 +1444,21 @@ definition {
 		}
 
 		task ("Add a document for each site") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-1");
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Site 1",
+				groupName = "Site Name 1",
+				mimeType = "text/txt",
+				sourceFileName = "Document_1.txt");
 
-			DMDocument.addCP(
-				dmDocumentFile = "Document_1.txt",
-				dmDocumentTitle = "DM Document Site 1");
-
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-2");
-
-			DMDocument.addCP(
-				dmDocumentFile = "Document_2.txt",
-				dmDocumentTitle = "DM Document Site 2");
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Site 2",
+				groupName = "Site Name 2",
+				mimeType = "text/txt",
+				sourceFileName = "Document_2.txt");
 		}
 
 		task ("Go to the Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Assert that both documents appear in the table") {
@@ -1439,6 +1473,12 @@ definition {
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "DM Document Site 2");
+		}
+
+		task ("Delete sites created") {
+			JSONGroup.deleteGroupByName(groupName = "Site Name 1");
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name 2");
 		}
 	}
 
@@ -1484,18 +1524,15 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a document") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			DMDocument.addCP(
-				dmDocumentFile = "Document_1.txt",
-				dmDocumentTitle = "DM Document Title");
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name",
+				mimeType = "text/txt",
+				sourceFileName = "Document_1.txt");
 		}
 
 		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Edit the document") {
@@ -1651,70 +1688,39 @@ definition {
 	test FilterByMultipleTags {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Create a Web Content with 2 tags") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "tagnumber1,tagnumber2",
+				content = "Web Content With Tag1 and Tag2",
+				groupName = "Test Site Name",
+				title = "WC Title 1");
+		}
 
-		WebContentNavigator.gotoAddCP();
+		task ("Create a Web Content with 1 tag") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "tagnumber1",
+				content = "Web Content With Tag1",
+				groupName = "Test Site Name",
+				title = "WC Title 2");
+		}
 
-		WebContent.addWithTagCP(
-			tagNameList = "tagnumber1,tagnumber2",
-			webContentContent = "Web Content With Tag1 and Tag2",
-			webContentTitle = "WC Title 1");
+		task ("Filter asset by tag in Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
 
-		WebContentNavigator.gotoAddCP();
+			ContentDashboard.filterByTag(
+				filterOption = "Tags",
+				tagName = "tagnumber1");
 
-		WebContent.addWithTagCP(
-			tagNameList = "tagnumber1",
-			webContentContent = "Web Content With Tag1",
-			webContentTitle = "WC Title 2");
+			ContentDashboard.filterByTag(
+				filterOption = "Tags",
+				tagName = "tagnumber2");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+			Pause(locator1 = "3000");
 
-		Pause(locator1 = "3000");
-
-		ContentDashboard.filterByTag(
-			filterOption = "Tags",
-			tagName = "tagnumber1");
-
-		ContentDashboard.filterByTag(
-			filterOption = "Tags",
-			tagName = "tagnumber2");
-
-		Pause(locator1 = "3000");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title 1");
-
-		Tag.openTagsAdmin(siteURLKey = "test-site-name");
-
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Tags");
-
-		Tag.viewCP(tagName = "tagnumber1");
-
-		PortletEntry.deleteViaToolbar(rowEntries = "tagnumber1");
-
-		Alert.viewSuccessMessage();
-
-		Tag.viewCP(tagName = "tagnumber2");
-
-		PortletEntry.deleteViaToolbar(rowEntries = "tagnumber2");
-
-		Alert.viewSuccessMessage();
-
-		Portlet.viewEmptyMessage(message = "There are no tags.");
-
-		JSONWebcontent.deleteWebContent(
-			groupName = "Test Site Name",
-			title = "WC Title 1");
-
-		JSONWebcontent.deleteWebContent(
-			groupName = "Test Site Name",
-			title = "WC Title 2");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title 1");
+		}
 	}
 
 	@description = "Validate if the user can filter by Site"
@@ -1722,27 +1728,22 @@ definition {
 	test FilterBySite {
 		property portal.acceptance = "true";
 
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Global",
-			title = "WC Title Global");
+		task ("Add a Web Contentto Global Site") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Global",
+				title = "WC Title Global");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task ("Filter asset by Global Site status in Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
 
-		Pause(locator1 = "3000");
+			ContentDashboard.filterBySiteGlobal(filterOption = "Site or Asset Library");
 
-		ContentDashboard.filterBySiteGlobal(filterOption = "Site or Asset Library");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title Global");
-
-		JSONWebcontent.deleteWebContent(
-			groupName = "Test Site Name",
-			title = "WC Title Global");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title Global");
+		}
 	}
 
 	@description = "Validate if the user can filter by Status: Any"
@@ -1750,49 +1751,36 @@ definition {
 	test FilterByStatusAny {
 		property portal.acceptance = "true";
 
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Test Site Name",
-			title = "WC Title Approved");
+		task ("Add approved and draft Web Contents") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title Approved");
 
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC Title Draft",
-			workflowAction = "DRAFT");
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC Title Draft",
+				workflowAction = "DRAFT");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task ("Filter asset by Any status in Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
 
-		Pause(locator1 = "3000");
+			ContentDashboard.filterByStatusAny(filterOption = "Any");
 
-		ContentDashboard.filterByStatusAny(filterOption = "Any");
+			ContentDashboard.searchValue(webContentTitle = "WC Title Approved");
 
-		ContentDashboard.searchValue(webContentTitle = "WC Title Approved");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title Approved");
 
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title Approved");
+			ContentDashboard.searchValue(webContentTitle = "WC Title Draft");
 
-		ContentDashboard.searchValue(webContentTitle = "WC Title Draft");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title Draft");
-
-		JSONWebcontent.deleteWebContent(
-			groupName = "Test Site Name",
-			title = "WC Title Approved");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title Draft");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title Draft");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title Draft");
+		}
 	}
 
 	@description = "Validate if the user can filter by Status: Approved"
@@ -1800,27 +1788,22 @@ definition {
 	test FilterByStatusApproved {
 		property portal.acceptance = "true";
 
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Test Site Name",
-			title = "WC Title Approved");
+		task ("Create a Approved Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title Approved");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task ("Filter asset by Aproved status in Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
 
-		Pause(locator1 = "3000");
+			ContentDashboard.filterByStatusApproved(filterOption = "Approved");
 
-		ContentDashboard.filterByStatusApproved(filterOption = "Approved");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title Approved");
-
-		JSONWebcontent.deleteWebContent(
-			groupName = "Test Site Name",
-			title = "WC Title Approved");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title Approved");
+		}
 	}
 
 	@description = "Validate if the user can filter by Status: Draft"
@@ -1828,32 +1811,23 @@ definition {
 	test FilterByStatusDraft {
 		property portal.acceptance = "true";
 
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC Title Draft",
-			workflowAction = "DRAFT");
+		task ("Create a Draft Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC Title Draft",
+				workflowAction = "DRAFT");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task ("Filter asset by Draft status in Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
 
-		Pause(locator1 = "3000");
+			ContentDashboard.filterByStatusDraft(filterOption = "Draft");
 
-		ContentDashboard.filterByStatusDraft(filterOption = "Draft");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title Draft");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title Draft");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title Draft");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title Draft");
+		}
 	}
 
 	@description = "Validate if the user can filter by Status: Scheduled"
@@ -1861,40 +1835,32 @@ definition {
 	test FilterByStatusScheduled {
 		property portal.acceptance = "true";
 
-		task ("Add a web content article with a future display date") {
+		task ("Create a Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC Title Scheduled");
+		}
+
+		task ("Change display date of Web Content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "WC Title Scheduled");
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title Scheduled");
 
 			WebContent.editDisplayDate(displayDate = "01/01/2100");
 
 			PortletEntry.publish();
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task ("Filter asset at Content Dashboard using status") {
+			ContentDashboard.goToContentDashboard();
 
-		Pause(locator1 = "3000");
+			ContentDashboard.filterByStatusScheduled(filterOption = "Scheduled");
 
-		ContentDashboard.filterByStatusScheduled(filterOption = "Scheduled");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title Scheduled");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title Scheduled");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title Scheduled");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title Scheduled");
+		}
 	}
 
 	@description = "LPS-132411 Given The Type filter modal
@@ -1940,53 +1906,25 @@ definition {
 	test FilterByTag {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add web content with tag to the first site") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "test_tag",
+				content = "Web Content With Tag",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
 
-		WebContentNavigator.gotoAddCP();
+		task ("Filter by tag at Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
 
-		WebContent.addWithTagCP(
-			tagNameList = "tag1",
-			webContentContent = "Web Content With Tag1 and Tag2",
-			webContentTitle = "Web Content Title");
+			ContentDashboard.filterByTag(
+				filterOption = "Tags",
+				tagName = "test_tag");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
-
-		ContentDashboard.filterByTag(
-			filterOption = "Tags",
-			tagName = "tag1");
-
-		Pause(locator1 = "3000");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "Web Content Title");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "Web Content Title");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "Web Content Title");
-
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Tags");
-
-		Tag.viewCP(tagName = "tag1");
-
-		PortletEntry.deleteViaToolbar(rowEntries = "tag1");
-
-		Alert.viewSuccessMessage();
-
-		Portlet.viewEmptyMessage(message = "There are no tags.");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Web Content Title");
+		}
 	}
 
 	@description = "LPS-133354: Given The Extension filter modal
@@ -2005,39 +1943,50 @@ definition {
 	test FilterTheListOfContentsByTag {
 		property portal.acceptance = "true";
 
-		task ("Adding the tag to the web content of the first site") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addWithTagCP(
-				tagNameList = "test",
-				webContentContent = "Web Content Tag1 ",
-				webContentTitle = "Web Content Title");
+		task ("Add web content with tag to the first site") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "test_tag",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title 1");
 		}
 
-		task ("Adding the tag the web content of the second site") {
+		task ("Create the second site") {
 			JSONGroup.addGroup(groupName = "Test Site Name 2");
+		}
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name 2");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addWithTagCP(
-				tagNameList = "test",
-				webContentContent = "Web Content Tag1",
-				webContentTitle = "Web Content Title");
+		task ("Add web content with tag to the second site") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "test_tag",
+				content = "Web Content Content",
+				groupName = "Test Site Name 2",
+				title = "Web Content Title 2");
 		}
 
 		task ("navigate to the content dashboard, filter by tags and make sure there is only one tag") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			ContentDashboard.filterByTag(
 				filterOption = "Tags",
-				tagName = "test");
+				tagName = "test_tag");
+		}
+
+		task ("Assert if both Web Contents are displayed") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Tag:test_tag");
+
+			ContentDashboard.searchValue(webContentTitle = "Web Content Title 1");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Web Content Title 1");
+
+			ContentDashboard.searchValue(webContentTitle = "Web Content Title 2");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Web Content Title 2");
 		}
 	}
 
@@ -2108,68 +2057,83 @@ definition {
 	test JustAddingAVocabularyThroughTheFilters {
 		property portal.acceptance = "true";
 
-		task ("Create a list of Audiences") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "S ${count}",
-					vocabularyName = "Audience");
-			}
+		task ("Create a list of Audience Categories") {
+			var audienceId1	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_1",
+				vocabularyName = "Audience");
+
+			var audienceId2	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_2",
+				vocabularyName = "Audience");
+			
+			var audienceId3	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_3",
+				vocabularyName = "Audience");
 		}
 
-		task ("Create a list of Stages") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "test ${count}",
-					vocabularyName = "Stage");
-			}
+		task ("Create a list of Stage Categories") {
+			var stageId1 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_1",
+				vocabularyName = "Stage");
+
+			var stageId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_2",
+				vocabularyName = "Stage");
+			
+			var stageId3 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_3",
+				vocabularyName = "Stage");
 		}
 
-		task ("Create a Web Content") {
+		task ("Create Web Contents with Stage categories only") {
 			for (var count : list "1,2,3") {
 				JSONWebcontent.addWebContent(
+					assetCategoryIds = "${stageId1},${stageId2},${stageId3}",
 					content = "Webcontent Content",
 					groupName = "Test Site Name",
 					title = "Webcontent Title ${count}");
 			}
 		}
 
-		task ("Selecting only the Stage vocabulary") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			for (var count : list "1,2,3") {
-				WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${count}");
-
-				for (var count : list "1,2,3") {
-					WebContent.selectCategory(
-						categoryName = "test ${count}",
-						vocabularyName = "Stage");
-				}
-
-				PortletEntry.publish();
-			}
-		}
 		task ("Go to content Dashboard and View the relative ordering of the categories remain the same") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "test 1",
+				value1 = "Substage_1",
 				xAxisCategoryName = "stage");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "test 2",
+				value1 = "Substage_2",
 				xAxisCategoryName = "stage");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "test 3",
+				value1 = "Substage_3",
 				xAxisCategoryName = "stage");
+		}
+
+		task ("Delete the global audience categories") {
+			for (var categories : list "Subaudience_1,Subaudience_2,Subaudience_3") {
+				JSONCategory.deleteCategory(
+					categoryName = "${categories}",
+					groupName = "Global",
+					vocabularyName = "Audience");
+			}
+
+			for (var categories : list "Substage_1,Substage_2,Substage_3") {
+				JSONCategory.deleteCategory(
+					categoryName = "${categories}",
+					groupName = "Global",
+					vocabularyName = "Stage");
+			}
 		}
 	}
 
@@ -2357,63 +2321,104 @@ definition {
 
 	@description = "LPS-122873 When the user configure the audit graph to have just one vocabulary, the relative ordering of the categories remain the same"
 	@priority = "3"
-	test NumberOfVcabulariesAccordingToTheAuditGraph {
+	test NumberOfVocabulariesAccordingToTheAuditGraph {
 		property portal.acceptance = "true";
 
 		task ("Create a list of Audiences") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
+			var categoryId1	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "C_Subaudience_1",
+				vocabularyName = "Audience");
+
+			var categoryId2	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "B_Subaudience_2",
+				vocabularyName = "Audience");
+			
+			var categoryId3	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "A_Subaudience_3",
+				vocabularyName = "Audience");
+		}
+
+		task ("Create a list of Stage Categories") {
+			var stageId1 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_1",
+				vocabularyName = "Stage");
+
+			var stageId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_2",
+				vocabularyName = "Stage");
+			
+			var stageId3 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_3",
+				vocabularyName = "Stage");
+		}
+
+		task ("Create a Web Content with the categories") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1},${categoryId2},${categoryId3},${stageId1},${stageId2},${stageId3}",
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("Go to Content Dashboard and set graph to only one vocabulary") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Stage");
+		}
+
+		task ("Assert the categories of the vocabulary removed is not present") {
+			AssertTextNotPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "Substage_1",
+				xAxisCategoryName = "stage");
+
+			AssertTextNotPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "Substage_2",
+				xAxisCategoryName = "stage");
+
+			AssertTextNotPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "Substage_3",
+				xAxisCategoryName = "stage");
+		}
+
+		task ("Validate if the remaining categories are shown in order of creating") {
+			AssertTextPresent(
+				categoryIndex = "1",
+				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
+				value1 = "C_Subaudience_1");
+			
+			AssertTextPresent(
+				categoryIndex = "2",
+				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
+				value1 = "B_Subaudience_2");
+			
+			AssertTextPresent(
+				categoryIndex = "3",
+				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
+				value1 = "A_Subaudience_3");
+		}
+		
+		task ("Delete the global audience categories") {
+			for (var categories : list "C_Subaudience_1,B_Subaudience_2,A_Subaudience_3") {
+				JSONCategory.deleteCategory(
+					categoryName = "${categories}",
 					groupName = "Global",
-					title = "S ${count}",
 					vocabularyName = "Audience");
 			}
-		}
 
-		task ("Create a list of Stages") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
+			for (var categories : list "Substage_1,Substage_2,Substage_3") {
+				JSONCategory.deleteCategory(
+					categoryName = "${categories}",
 					groupName = "Global",
-					title = "test ${count}",
 					vocabularyName = "Stage");
-			}
-		}
-
-		task ("Create a Web Content") {
-			for (var count : list "1,2,3") {
-				JSONWebcontent.addWebContent(
-					content = "Webcontent Content",
-					groupName = "Test Site Name",
-					title = "Webcontent Title ${count}");
-			}
-		}
-
-		task ("Select list of categories") {
-			ContentDashboard.selectListofCategoriesForAudienceAndStage();
-		}
-
-		task ("Go to content Dashboard > Audit Graph configuration > and see the order when only one of the categories is selected in the audit Grafich") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-
-			task ("removing the stage and leaving only the audience") {
-				ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Stage");
-
-				AssertTextNotPresent(
-					locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-					value1 = "test 1",
-					xAxisCategoryName = "stage");
-
-				AssertTextNotPresent(
-					locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-					value1 = "test 2",
-					xAxisCategoryName = "stage");
-
-				AssertTextNotPresent(
-					locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-					value1 = "test 3",
-					xAxisCategoryName = "stage");
 			}
 		}
 	}
@@ -2421,88 +2426,62 @@ definition {
 	@description = "Validate if the user can order by Modification Date"
 	@priority = "5"
 	test OrderByModificationDate {
-		for (var count : list "1,2,3,4,5") {
-			JSONWebcontent.addWebContent(
-				content = "WC Content ${count}",
-				groupName = "Test Site Name",
-				title = "WC Title ${count}");
+		task ("Create 5 Web Contents") {
+			for (var count : list "1,2,3,4,5") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content ${count}",
+					groupName = "Test Site Name",
+					title = "WC Title ${count}");
+			}
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		ContentDashboard.goToContentDashboard();
 
-		Pause(locator1 = "3000");
+		task ("Order assets by modification data in Content Dashboard") {
+			ContentDashboard.orderByModificationDate(filterOption = "Modified Date");
 
-		ContentDashboard.orderByModificationDate(filterOption = "Modified Date");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title 5");
+		}
 
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title 5");
+		task ("Change the order of assets") {
+			Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
 
-		Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
-
-		Pause(locator1 = "3000");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title 1");
-
-		for (var count : list "1,2,3,4,5") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContent.viewTitle(webContentTitle = "WC Title ${count}");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContent.deleteCP(
-				siteURLKey = "test-site-name",
-				webContentTitle = "WC Title ${count}");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title 1");
 		}
 	}
 
 	@description = "Validate if the user can order by title"
 	@priority = "5"
 	test OrderByTitle {
-		for (var count : list "1,2,3,4,5") {
-			JSONWebcontent.addWebContent(
-				content = "WC Content ${count}",
-				groupName = "Test Site Name",
-				title = "WC Title ${count}");
+		task ("Create 5 Web Contents") {
+			for (var count : list "1,2,3,4,5") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content ${count}",
+					groupName = "Test Site Name",
+					title = "WC Title ${count}");
+			}
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task ("Order assets by title in Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
 
-		Pause(locator1 = "3000");
+			ContentDashboard.orderByTitle(filterOption = "Title");
 
-		ContentDashboard.orderByTitle(filterOption = "Title");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title 5");
+		}
 
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title 5");
+		task ("Change de order of assets") {
+			Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
 
-		Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
-
-		Pause(locator1 = "3000");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title 1");
-
-		for (var count : list "1,2,3,4,5") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContent.viewTitle(webContentTitle = "WC Title ${count}");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContent.deleteCP(
-				siteURLKey = "test-site-name",
-				webContentTitle = "WC Title ${count}");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title 1");
 		}
 	}
 
@@ -2598,73 +2577,61 @@ definition {
 		}
 	}
 
-	@description = "LPS-113832 So access to content dashboard will be a combination of permissions for accessing the Global App Menu and to view or edit web content."
+	@description = "LPS-113832 When the option 'Access in Control Panel' is checked for permissions for Content Dashboard section, users with this role assigned can see and access the Content Dashboard in the Global App Menu."
 	@priority = "5"
 	test PermissionsForContentDashboard {
 		property portal.acceptance = "true";
 
-		task ("Adding vocabulary and category") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Vocabulary Name");
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
 
-			var categoryId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Test",
-				vocabularyName = "Vocabulary Name");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 		}
 
-		task ("Adding Web Content") {
-			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
-				content = "WC WebContent Content",
-				groupName = "Test Site Name",
-				title = "WC WebContent Title");
-		}
-
-		task ("Create a new user and add access permission to content Dasboard") {
+		task ("Create a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-			User.editPasswordCP(
-				requirePasswordReset = "true",
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
-
+		task ("Create a new role and its permissions") {
 			JSONRole.addRegularRole(
-				roleKey = "WC Creator Edit Permissions",
-				roleTitle = "WC Creator Edit Permissions");
+				roleKey = "Content Dashboard User",
+				roleTitle = "Content Dashboard User");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_SITE_ADMINISTRATION",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "WC Creator Edit Permissions");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ACCESS_IN_CONTROL_PANEL",
-				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "Content Dashboard User");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "Content Dashboard User");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = "90",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "Content Dashboard User");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "WC Creator Edit Permissions",
+				roleTitle = "Content Dashboard User",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -2678,6 +2645,12 @@ definition {
 				panel = "Applications",
 				portlet = "Content Dashboard");
 		}
+
+		task ("Delete user and role created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
+
+			JSONRole.deleteRole(roleTitle = "Content Dashboard User");
+		}
 	}
 
 	@description = "Validate if the user can open de Info side panel of a web content"
@@ -2685,33 +2658,24 @@ definition {
 	test SaveFiltersAfterEditing {
 		property portal.acceptance = "true";
 
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Test Site Name",
-			title = "WC Title");
+		task ("Create a Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task ("Edit Web Content") {
+			ContentDashboard.goToContentDashboard();
 
-		Pause(locator1 = "3000");
+			ContentDashboard.filterByAuthorTable(filterOption = "Author");
 
-		ContentDashboard.filterByAuthorTable(filterOption = "Author");
+			ContentDashboard.editAsset(assetTitle = "WC Title Edited");
 
-		ContentDashboard.editAsset(assetTitle = "WC Title Edited");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FILTER_TEXT",
-			value1 = "Author:Test Test");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title Edited");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title Edited");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Author:Test Test");
+		}
 	}
 
 	@description = "LPS-133354: Given The Extension filter modal
@@ -2833,6 +2797,20 @@ definition {
 	@description = "LPS-133181 When Filter by Author 'All', displays content from all users featured in the user's content dashboard view."
 	@priority = "5"
 	test ShowAllContentCreatorUsers {
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
 		task ("Create and configure second user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -2861,18 +2839,20 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
+		
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			JSONWebcontent.addWebContent(
-				content = "WC Content 2",
-				groupName = "Test Site Name",
-				title = "WC Title 2");
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC Content 2",
+				webContentTitle = "WC Title 2");
+
+			PortletEntry.publish();
 		}
 
 		task ("Go to Content Dashboard and aplly All filter") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			ContentDashboard.filterByAuthorAll(filterOption = "All");
 		}
@@ -2895,6 +2875,20 @@ definition {
 	@description = "LPS-133181 When Filter by Author 'Me', displays content where the current user is the last editor of the approved version."
 	@priority = "5"
 	test ShowOnlyContentCreatedByUser {
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+		
 		task ("Create and configure second user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -2914,42 +2908,33 @@ definition {
 
 		task ("Create First WC via JSON") {
 			JSONWebcontent.addWebContent(
-				content = "WC Content 1",
+				content = "WC Content",
 				groupName = "Test Site Name",
-				title = "WC Title 1");
+				title = "WC Title");
 		}
 
-		task ("Change to second user and create second WC") {
+		task ("Change to second user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "WC Content 2",
-				webContentTitle = "WC Title 2");
-
-			PortletEntry.publish();
 		}
 
-		task ("Go to Content Dashboard and aplly All filter") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+		task ("Go to Content Dashboard and Edit web content") {
+			ContentDashboard.goToContentDashboard();
 
+			ContentDashboard.editAsset(assetTitle = "WC Title Edit");
+		}
+
+		task ("Filter by author Me and assert asset displayed") {
 			ContentDashboard.filterByAuthorMe(filterOption = "Me");
-		}
-
-		task ("Check if all contents created by user are being displayed") {
-			ContentDashboard.orderByTitle(filterOption = "Title");
-
+			
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-				value1 = "WC Title 2");
+				value1 = "WC Title Edit");
+		}
+
+		task ("Delete user created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
 		}
 	}
 
@@ -3016,45 +3001,53 @@ definition {
 	test UncheckACategoryInTheContentPanel {
 		property portal.acceptance = "true";
 
-		task ("Create a list of Audiences") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "S ${count}",
-					vocabularyName = "Audience");
-			}
+		task ("Create a list of Audience Categories") {
+			var audienceId1	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_1",
+				vocabularyName = "Audience");
+
+			var audienceId2	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_2",
+				vocabularyName = "Audience");
+			
+			var audienceId3	 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_3",
+				vocabularyName = "Audience");
 		}
 
-		task ("Create a list of Stages") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "test ${count}",
-					vocabularyName = "Stage");
-			}
+		task ("Create a list of Stage Categories") {
+			var stageId1 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_1",
+				vocabularyName = "Stage");
+
+			var stageId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_2",
+				vocabularyName = "Stage");
+			
+			var stageId3 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_3",
+				vocabularyName = "Stage");
 		}
 
-		task ("Create a Web Content") {
-			for (var count : list "1,2,3") {
-				JSONWebcontent.addWebContent(
-					content = "Webcontent Content",
-					groupName = "Test Site Name",
-					title = "Webcontent Title ${count}");
-			}
-		}
-
-		task ("Select list of categories") {
-			ContentDashboard.selectListofCategoriesForAudienceAndStage();
+		task ("Create a Web Content with the categories") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1},${audienceId2},${audienceId3},${stageId1},${stageId2},${stageId3}",
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
 		}
 
 		task ("Navigate to content Dashboard, uncheck a vocabulary category 2 and see the order of categories") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			Click.javaScriptClick(
-				checkboxName = "test 2",
+				checkboxName = "Substage_2",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
 			task ("blue - first position") {
@@ -3073,6 +3066,22 @@ definition {
 				AssertElementPresent(
 					fillColor = "FF5F5F",
 					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+		}
+
+		task ("Delete the global audience categories") {
+			for (var categories : list "Subaudience_1,Subaudience_2,Subaudience_3") {
+				JSONCategory.deleteCategory(
+					categoryName = "${categories}",
+					groupName = "Global",
+					vocabularyName = "Audience");
+			}
+
+			for (var categories : list "Substage_1,Substage_2,Substage_3") {
+				JSONCategory.deleteCategory(
+					categoryName = "${categories}",
+					groupName = "Global",
+					vocabularyName = "Stage");
 			}
 		}
 	}

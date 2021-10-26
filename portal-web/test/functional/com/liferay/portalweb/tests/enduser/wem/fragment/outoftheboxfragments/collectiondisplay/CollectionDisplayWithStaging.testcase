@@ -54,6 +54,7 @@ definition {
 				groupName = "Test Site Name (Staging)",
 				itemSubtype = "All Subtypes",
 				itemType = "Web Content Article",
+				site = "false",
 				title = "Dynamic Collection");
 		}
 

@@ -1935,7 +1935,6 @@ definition {
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Page Template (subtype) when inactivated"
 	@priority = "4"
 	test ObjectDisappearsPageTemplateWhenInactivated {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -1958,11 +1957,9 @@ definition {
 		Click(locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE");
 
 		AssertElementNotPresent(
-			locator1 = "VisualizeObjectDisplayPage#CONTENT_TYPE_OPTION",
 			key_type = "Custom Object",
+			locator1 = "VisualizeObjectDisplayPage#CONTENT_TYPE_OPTION",
 			value1 = "Custom Object");
-
-
 	}
 
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Workflow Process Builder page when inactivated"

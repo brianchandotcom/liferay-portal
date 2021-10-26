@@ -202,11 +202,9 @@ definition {
 		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.viewFieldRequired(
-			progressTitle = "Workflow",
 			kfProcessName = "Kaleo Forms Process",
+			progressTitle = "Workflow",
 			workflowDefinitionTitle = "Single Approver");
-
-			
 	}
 
 }

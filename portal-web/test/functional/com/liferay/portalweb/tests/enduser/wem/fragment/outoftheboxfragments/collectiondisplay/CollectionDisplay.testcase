@@ -94,15 +94,14 @@ definition {
 
 		task ("View above fragments also shown in other cells of Collection Display") {
 			for (var i : list "1,2,3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_EMPTY");
+				AssertTextEquals(
+					index = "${i}",
+					locator1 = "Fragment#CONTENT_RATINGS_YOUR_RATING_STAR_RESULT",
+					value1 = "-");
 
 				AssertVisible(
-					key_colPosition = "1",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
+					index = "${i}",
+					locator1 = "Fragment#CONTENT_RATINGS_AVERAGE_STAR");
 
 				AssertTextEquals(
 					index = "${i}",
@@ -2561,15 +2560,14 @@ definition {
 			fragmentName = "Content Ratings");
 
 		for (var i : list "1,2,3") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_rowPosition = "${i}",
-				locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_EMPTY");
+			AssertTextEquals(
+				index = "${i}",
+				locator1 = "Fragment#CONTENT_RATINGS_YOUR_RATING_STAR_RESULT",
+				value1 = "-");
 
 			AssertVisible(
-				key_colPosition = "1",
-				key_rowPosition = "${i}",
-				locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
+				index = "${i}",
+				locator1 = "Fragment#CONTENT_RATINGS_AVERAGE_STAR");
 		}
 
 		PageEditor.waitForAutoSave();

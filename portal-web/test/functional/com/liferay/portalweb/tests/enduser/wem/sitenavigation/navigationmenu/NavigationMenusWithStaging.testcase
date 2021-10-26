@@ -284,7 +284,6 @@ definition {
 			ControlMenu.viewHeaderTitle(headerTitle = "Category DPT");
 
 			ContentPages.viewFragmentText(
-				assetType = "category",
 				fragmentName = "Content Display",
 				text = "Category Name");
 		}
@@ -353,7 +352,6 @@ definition {
 				locator1 = "NavTab#ACTIVE_TAB_LINK");
 
 			ContentPages.viewFragmentText(
-				assetType = "category",
 				fragmentName = "Content Display",
 				text = "Category Name");
 		}

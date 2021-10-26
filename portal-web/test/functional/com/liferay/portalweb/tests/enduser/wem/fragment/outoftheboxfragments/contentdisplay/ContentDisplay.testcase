@@ -756,7 +756,6 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			ContentPages.viewFragmentText(
-				assetType = "category",
 				fragmentName = "Content Display",
 				text = "Category Name");
 		}

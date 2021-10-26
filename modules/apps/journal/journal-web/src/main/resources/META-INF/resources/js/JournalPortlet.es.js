@@ -20,6 +20,7 @@ const AUTO_SAVE_DELAY = 1500;
 
 export default function _JournalPortlet({
 	articleId: initialArticleId,
+	autoSaveDraftEnabled,
 	availableLocales: initialAvailableLocales,
 	classNameId,
 	contentTitle,
@@ -44,6 +45,7 @@ export default function _JournalPortlet({
 	const resetValuesButton = document.getElementById(
 		`${namespace}resetValuesButton`
 	);
+	const saveButton = document.getElementById(`${namespace}saveButton`);
 
 	const availableLocales = [...initialAvailableLocales];
 
@@ -112,7 +114,7 @@ export default function _JournalPortlet({
 		}
 	};
 
-	const handlePublishButtonClick = () => {
+	const handlePublishButtonClick = (event) => {
 		publishingLock.lock();
 
 		document
@@ -125,7 +127,9 @@ export default function _JournalPortlet({
 			`${namespace}workflowAction`
 		);
 
-		workflowActionInput.value = Liferay.Workflow.ACTION_PUBLISH;
+		if (event.currentTarget.dataset.actionname === 'publish') {
+			workflowActionInput.value = Liferay.Workflow.ACTION_PUBLISH;
+		}
 
 		if (classNameId && classNameId !== '0') {
 			actionInput.value = articleId
@@ -203,7 +207,9 @@ export default function _JournalPortlet({
 		formElement,
 		{redirectOnSave} = {redirectOnSave: false}
 	) => {
-		formDateInput.value = Date.now().toString();
+		if (autoSaveDraftEnabled) {
+			formDateInput.value = Date.now().toString();
+		}
 
 		return fetch(formElement.action, {
 			body: new FormData(formElement),
@@ -243,6 +249,7 @@ export default function _JournalPortlet({
 			handleContextualSidebarButtonClick
 		),
 		attachListener(publishButton, 'click', handlePublishButtonClick),
+		attachListener(saveButton, 'click', handlePublishButtonClick),
 		attachListener(
 			resetValuesButton,
 			'click',
@@ -274,7 +281,11 @@ export default function _JournalPortlet({
 		),
 	];
 
-	if (hasSavePermission && (!classNameId || classNameId === '0')) {
+	if (
+		autoSaveDraftEnabled &&
+		hasSavePermission &&
+		(!classNameId || classNameId === '0')
+	) {
 		eventHandlers.push(
 			attachFormChangeListener(
 				form,

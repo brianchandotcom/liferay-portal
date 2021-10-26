@@ -969,7 +969,7 @@ definition {
 	@description = "This is a test for COMMERCE-6205. Get warehouse names given a SKU"
 	@priority = "3"
 	test GetWarehouseNameGivenChannel {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		// TODO Review
 

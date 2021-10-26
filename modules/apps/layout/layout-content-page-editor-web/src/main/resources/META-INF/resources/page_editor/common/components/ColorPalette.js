@@ -14,7 +14,6 @@
 
 import ClayButton from '@clayui/button';
 import classNames from 'classnames';
-import {capitalize} from 'data-engine-js-components-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -54,7 +53,7 @@ export default function ColorPalette({
 								displayType="unstyled"
 								onClick={(event) => onColorSelect(color, event)}
 								small
-								title={capitalize(color)}
+								title={color}
 							/>
 						</li>
 					))}

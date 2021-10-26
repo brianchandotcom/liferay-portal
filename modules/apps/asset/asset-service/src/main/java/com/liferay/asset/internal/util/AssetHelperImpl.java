@@ -440,8 +440,9 @@ public class AssetHelperImpl implements AssetHelper {
 			int start, int end)
 		throws Exception {
 
-		AssetSearcher assetSearcher = _getAssetSearcher(
-			searchContext, assetEntryQuery, start, end);
+		_prepareSearchContext(searchContext, assetEntryQuery, start, end);
+
+		AssetSearcher assetSearcher = _getAssetSearcher(assetEntryQuery);
 
 		return assetSearcher.search(searchContext);
 	}
@@ -480,8 +481,9 @@ public class AssetHelperImpl implements AssetHelper {
 			int start, int end)
 		throws Exception {
 
-		AssetSearcher assetSearcher = _getAssetSearcher(
-			searchContext, assetEntryQuery, start, end);
+		_prepareSearchContext(searchContext, assetEntryQuery, start, end);
+
+		AssetSearcher assetSearcher = _getAssetSearcher(assetEntryQuery);
 
 		Hits hits = assetSearcher.search(searchContext);
 
@@ -494,75 +496,21 @@ public class AssetHelperImpl implements AssetHelper {
 			SearchContext searchContext, AssetEntryQuery assetEntryQuery)
 		throws Exception {
 
-		AssetSearcher assetSearcher = _getAssetSearcher(
+		_prepareSearchContext(
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
+
+		AssetSearcher assetSearcher = _getAssetSearcher(assetEntryQuery);
 
 		return assetSearcher.searchCount(searchContext);
 	}
 
-	private AssetSearcher _getAssetSearcher(
-			SearchContext searchContext, AssetEntryQuery assetEntryQuery,
-			int start, int end)
-		throws Exception {
-
+	private AssetSearcher _getAssetSearcher(AssetEntryQuery assetEntryQuery) {
 		Indexer<?> searcher = AssetSearcher.getInstance();
 
 		AssetSearcher assetSearcher = (AssetSearcher)searcher;
 
 		assetSearcher.setAssetEntryQuery(assetEntryQuery);
-
-		Layout layout = assetEntryQuery.getLayout();
-
-		if (layout != null) {
-			searchContext.setAttribute(Field.LAYOUT_UUID, layout.getUuid());
-		}
-
-		String ddmStructureFieldName = (String)assetEntryQuery.getAttribute(
-			"ddmStructureFieldName");
-		Serializable ddmStructureFieldValue = assetEntryQuery.getAttribute(
-			"ddmStructureFieldValue");
-
-		if (Validator.isNotNull(ddmStructureFieldName) &&
-			Validator.isNotNull(ddmStructureFieldValue)) {
-
-			searchContext.setAttribute(
-				"ddmStructureFieldName", ddmStructureFieldName);
-			searchContext.setAttribute(
-				"ddmStructureFieldValue", ddmStructureFieldValue);
-		}
-
-		String paginationType = GetterUtil.getString(
-			assetEntryQuery.getPaginationType(), "more");
-
-		if (!paginationType.equals("none") &&
-			!paginationType.equals("simple")) {
-
-			searchContext.setAttribute("paginationType", paginationType);
-		}
-
-		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
-		searchContext.setEnd(end);
-		searchContext.setGroupIds(
-			ArrayUtil.clone(assetEntryQuery.getGroupIds()));
-		searchContext.setIncludeInternalAssetCategories(true);
-
-		if (Validator.isNull(assetEntryQuery.getKeywords())) {
-			QueryConfig queryConfig = searchContext.getQueryConfig();
-
-			queryConfig.setScoreEnabled(false);
-		}
-		else {
-			searchContext.setLike(true);
-		}
-
-		_searchRequestBuilderFactory.builder(
-			searchContext
-		).sorts(
-			_getSearchSorts(assetEntryQuery, searchContext.getLocale())
-		);
-
-		searchContext.setStart(start);
 
 		return assetSearcher;
 	}
@@ -641,6 +589,64 @@ public class AssetHelperImpl implements AssetHelper {
 		}
 
 		return sortType;
+	}
+
+	private void _prepareSearchContext(
+			SearchContext searchContext, AssetEntryQuery assetEntryQuery,
+			int start, int end)
+		throws Exception {
+
+		Layout layout = assetEntryQuery.getLayout();
+
+		if (layout != null) {
+			searchContext.setAttribute(Field.LAYOUT_UUID, layout.getUuid());
+		}
+
+		String ddmStructureFieldName = (String)assetEntryQuery.getAttribute(
+			"ddmStructureFieldName");
+		Serializable ddmStructureFieldValue = assetEntryQuery.getAttribute(
+			"ddmStructureFieldValue");
+
+		if (Validator.isNotNull(ddmStructureFieldName) &&
+			Validator.isNotNull(ddmStructureFieldValue)) {
+
+			searchContext.setAttribute(
+				"ddmStructureFieldName", ddmStructureFieldName);
+			searchContext.setAttribute(
+				"ddmStructureFieldValue", ddmStructureFieldValue);
+		}
+
+		String paginationType = GetterUtil.getString(
+			assetEntryQuery.getPaginationType(), "more");
+
+		if (!paginationType.equals("none") &&
+			!paginationType.equals("simple")) {
+
+			searchContext.setAttribute("paginationType", paginationType);
+		}
+
+		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(
+			ArrayUtil.clone(assetEntryQuery.getGroupIds()));
+		searchContext.setIncludeInternalAssetCategories(true);
+
+		if (Validator.isNull(assetEntryQuery.getKeywords())) {
+			QueryConfig queryConfig = searchContext.getQueryConfig();
+
+			queryConfig.setScoreEnabled(false);
+		}
+		else {
+			searchContext.setLike(true);
+		}
+
+		_searchRequestBuilderFactory.builder(
+			searchContext
+		).sorts(
+			_getSearchSorts(assetEntryQuery, searchContext.getLocale())
+		);
+
+		searchContext.setStart(start);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -51,8 +51,13 @@ export default function _JournalPortlet({
 
 	let articleId = initialArticleId;
 	let defaultLanguageId = initialDefaultLanguageId;
-	const publishingLock = getLock('publishing');
 	let selectedLanguageId = initialDefaultLanguageId;
+
+	const publishingLock = getLock('publishing', [
+		publishButton,
+		resetValuesButton,
+		saveButton,
+	]);
 
 	const handleContextualSidebarButtonClick = () => {
 		contextualSidebarContainer?.classList.toggle(
@@ -409,7 +414,7 @@ function attachListener(element, eventType, callback) {
 	};
 }
 
-function getLock(name) {
+function getLock(name, triggerElements) {
 	let locked = false;
 
 	const toggle = (nextValue) => {
@@ -420,6 +425,14 @@ function getLock(name) {
 		}
 
 		locked = nextValue;
+
+		requestAnimationFrame(() => {
+			triggerElements.forEach((triggerElement) => {
+				if (triggerElement) {
+					triggerElement.disabled = locked;
+				}
+			});
+		});
 	};
 
 	return {

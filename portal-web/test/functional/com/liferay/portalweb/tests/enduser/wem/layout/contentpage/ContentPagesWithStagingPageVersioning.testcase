@@ -135,11 +135,6 @@ definition {
 
 		task ("Assert the Paragraph fragment is shown") {
 			ContentPages.viewFragmentText(
-				fragmentName = "button",
-				id = "link",
-				text = "Go Somewhere");
-
-			ContentPages.viewFragmentText(
 				fragmentName = "paragraph",
 				id = "element-text",
 				text = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");

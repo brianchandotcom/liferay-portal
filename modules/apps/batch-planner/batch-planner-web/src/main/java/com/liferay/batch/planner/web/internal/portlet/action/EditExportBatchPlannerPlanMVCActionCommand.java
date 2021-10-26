@@ -25,6 +25,7 @@ import com.liferay.batch.planner.service.persistence.BatchPlannerMappingUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
@@ -56,6 +57,25 @@ public class EditExportBatchPlannerPlanMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		if (cmd.equals(Constants.EXPORT)) {
+			BatchPlannerPlan batchPlannerPlan = _addBatchPlannerPlan(
+				actionRequest);
+
+			if (!batchPlannerPlan.isTemplate()) {
+				_batchEngineBroker.submit(
+					batchPlannerPlan.getBatchPlannerPlanId());
+			}
+		}
+		else if (cmd.equals(Constants.SAVE)) {
+			_addBatchPlannerPlan(actionRequest);
+		}
+	}
+
+	private BatchPlannerPlan _addBatchPlannerPlan(ActionRequest actionRequest)
+		throws Exception {
+
 		String externalType = ParamUtil.getString(
 			actionRequest, "externalType");
 		String internalClassName = ParamUtil.getString(
@@ -65,10 +85,12 @@ public class EditExportBatchPlannerPlanMVCActionCommand
 		String taskItemDelegateName = ParamUtil.getString(
 			actionRequest, "taskItemDelegateName");
 
+		boolean template = ParamUtil.getBoolean(actionRequest, "template");
+
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				true, externalType, StringPool.SLASH, internalClassName, name,
-				taskItemDelegateName, false);
+				taskItemDelegateName, template);
 
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",
@@ -89,7 +111,7 @@ public class EditExportBatchPlannerPlanMVCActionCommand
 				StringPool.BLANK);
 		}
 
-		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+		return batchPlannerPlan;
 	}
 
 	private List<BatchPlannerMapping> _getBatchPlannerMappings(

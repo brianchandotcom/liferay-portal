@@ -185,12 +185,28 @@ definition {
 	}
 
 	@description = "Verify that the workflow is required."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test WorkflowIsRequired {
+		KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70684 WorkflowIsRequired pending implementation
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
 
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "Contacts",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.viewFieldRequired(
+			progressTitle = "Workflow",
+			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Single Approver");
+
+			
 	}
 
 }

@@ -1,5 +1,5 @@
 @mixin card {
-    border: 2px solid #E0EBFA;
+    border: 2px solid $color-brand-primary-lighten-7;
     box-shadow: none;
     transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     cursor: pointer;

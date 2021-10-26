@@ -1116,10 +1116,10 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Highest Rated Assets");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Highest Rated Assets");
 		}
 	}
 
@@ -1176,10 +1176,10 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Page Name");
 
-			AssertTextEquals(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Go Somewhere");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
 		}
 
 		task ("Close the new tab and select the original tab") {
@@ -1197,10 +1197,10 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Page Name");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Heading Example");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
 		}
 	}
 

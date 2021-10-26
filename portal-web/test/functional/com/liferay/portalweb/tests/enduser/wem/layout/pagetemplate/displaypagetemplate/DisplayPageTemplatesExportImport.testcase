@@ -224,9 +224,7 @@ definition {
 		task ("Assert the Collection Display containing mapping content is imported") {
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			Click.clickNoWaitForVisible(
-				key_fragmentName = "Collection Display",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
 			var n = "1";
 

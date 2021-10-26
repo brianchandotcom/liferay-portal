@@ -45,9 +45,7 @@ definition {
 		task ("Assert header of Drop Zone is inside body by default") {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
-			Click.clickNoWaitForVisible(
-				key_fragmentName = "Drop Zone",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.clickConfigurableField(fragmentName = "Drop Zone");
 
 			AssertElementPresent(
 				key_fragmentName = "Drop Zone",

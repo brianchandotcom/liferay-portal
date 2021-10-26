@@ -327,9 +327,7 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertElementNotPresent(
-				key_fragmentName = "Heading",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
 		}
 
 		task ("Assert the Discard Draft button is not shown but Publish button still is enabled") {
@@ -494,9 +492,7 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertElementNotPresent(
-				key_fragmentName = "Paragraph",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Paragraph");
 		}
 
 		task ("Assert the Discard Draft button is not shown but Publish button still is enabled") {
@@ -565,20 +561,22 @@ definition {
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No entries were found.");
 
-			AssertTextNotPresent(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Heading Example");
+			AssertNotVisible(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
-			AssertTextNotPresent(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Go Somewhere");
+			AssertNotVisible(
+				fragmentName = "button",
+				id = "link",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "html",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "HTML Example");
+			ContentPages.viewFragmentText(
+				fragmentName = "html",
+				id = "element-html",
+				text = "HTML Example A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
 		}
 
 		task ("Publish and enter view mode") {
@@ -598,20 +596,22 @@ definition {
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No entries were found.");
 
-			AssertTextNotPresent(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Heading Example");
+			AssertNotVisible(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
-			AssertTextNotPresent(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Go Somewhere");
+			AssertNotVisible(
+				fragmentName = "button",
+				id = "link",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "html",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "HTML Example");
+			ContentPages.viewFragmentText(
+				fragmentName = "html",
+				id = "element-html",
+				text = "HTML Example A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
 		}
 
 		task ("Edit the page") {
@@ -619,12 +619,15 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 		}
+
 		task ("Unhide Blogs from the sidebar fragment tree") {
 			PageEditor.unhideFragmentViaPageStructure(fragmentName = "Blogs");
 		}
+
 		task ("Unhide Heading from fragment options") {
 			PageEditor.unhideFragmentViaPageStyles(fragmentName = "Heading");
 		}
+
 		task ("Unhide Button from sidebar fragment tree") {
 			PageEditor.unhideFragmentViaPageStructure(fragmentName = "Button");
 		}
@@ -646,20 +649,20 @@ definition {
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No entries were found.");
 
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Heading Example");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
 
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Go Somewhere");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
 
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "html",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "HTML Example");
+			ContentPages.viewFragmentText(
+				fragmentName = "html",
+				id = "element-html",
+				text = "HTML Example A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
 		}
 	}
 
@@ -735,20 +738,21 @@ definition {
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No entries were found.");
 
-			AssertTextNotPresent(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Go Somewhere");
+			AssertNotVisible(
+				fragmentName = "button",
+				id = "link",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Heading Example");
+			PageEditor.viewFragmentEditableText(
+				editableText = "Heading Example",
+				fragmentName = "Heading",
+				id = "element-text");
 
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "html",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "HTML Example");
+			PageEditor.viewFragmentEditableText(
+				editableText = "HTML Example A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
+				fragmentName = "HTML",
+				id = "element-html");
 		}
 
 		task ("Add fragment and check it's shown") {
@@ -759,10 +763,10 @@ definition {
 				navTab = "Fragments",
 				targetElementName = "Blogs");
 
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "paragraph",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "A paragraph is a self-contained unit of a discourse");
+			PageEditor.viewFragmentEditableText(
+				editableText = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
+				fragmentName = "Paragraph",
+				id = "element-text");
 		}
 	}
 
@@ -787,49 +791,35 @@ definition {
 		}
 
 		task ("Assert only header of Heading shown when Heading selected") {
-			if (IsNotVisible(key_fragmentName = "Heading", locator1 = "Fragment#FRAGMENT_HEADER")) {
-				Click.clickNoWaitForVisible(
-					key_fragmentName = "Heading",
-					locator1 = "Fragment#FRAGMENT_HEADER");
-			}
+			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Heading");
 
-			AssertVisible(
-				key_fragmentName = "Heading",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.clickConfigurableField(fragmentName = "Heading");
 
-			AssertNotVisible(
-				key_fragmentName = "Asset Publisher",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragmentHeaderVisible(fragmentName = "Heading");
+
+			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Asset Publisher");
 
 			MouseOver.mouseOverInvisible(
 				key_fragmentName = "Asset Publisher",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+				key_index = "1",
+				locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 
-			AssertNotVisible(
-				key_fragmentName = "Asset Publisher",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Asset Publisher");
 		}
 
 		task ("Assert only header of Asset Publisher shown when Asset Publisher selected") {
-			Click.clickNoWaitForVisible(
-				key_fragmentName = "Asset Publisher",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.clickConfigurableField(fragmentName = "Asset Publisher");
 
-			AssertVisible(
-				key_fragmentName = "Asset Publisher",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragmentHeaderVisible(fragmentName = "Asset Publisher");
 
-			AssertNotVisible(
-				key_fragmentName = "Heading",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Heading");
 
 			MouseOver.mouseOverInvisible(
 				key_fragmentName = "Heading",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+				key_index = "1",
+				locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 
-			AssertNotVisible(
-				key_fragmentName = "Heading",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Heading");
 		}
 	}
 
@@ -1257,11 +1247,10 @@ definition {
 		task ("Assert Header of Card is shown over body when doesn't reach the management toolbar") {
 			ScrollWebElementIntoView(
 				key_fragmentName = "Card",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+				key_index = "1",
+				locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 
-			Click.clickNoWaitForVisible(
-				key_fragmentName = "Card",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.clickConfigurableField(fragmentName = "Card");
 
 			AssertElementNotPresent(
 				key_fragmentName = "Card",
@@ -1271,7 +1260,8 @@ definition {
 		task ("Assert Header of Card moves inside body when reach the management toolbar") {
 			ScrollWebElementIntoView(
 				key_fragmentName = "Image",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+				key_index = "1",
+				locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 
 			AssertElementPresent(
 				key_fragmentName = "Card",
@@ -1306,11 +1296,10 @@ definition {
 		task ("Assert Header of Blogs is shown over body when doesn't reach the management toolbar") {
 			ScrollWebElementIntoView(
 				key_fragmentName = "Blogs",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+				key_index = "1",
+				locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 
-			Click.clickNoWaitForVisible(
-				key_fragmentName = "Blogs",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.clickConfigurableField(fragmentName = "Blogs");
 
 			AssertElementNotPresent(
 				key_fragmentName = "Blogs",
@@ -1320,7 +1309,8 @@ definition {
 		task ("Assert Header of Blogs moves inside body when reach the management toolbar") {
 			ScrollWebElementIntoView(
 				key_fragmentName = "My Sites",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+				key_index = "1",
+				locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 
 			AssertElementPresent(
 				key_fragmentName = "Blogs",

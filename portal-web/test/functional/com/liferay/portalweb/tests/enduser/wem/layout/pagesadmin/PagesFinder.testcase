@@ -574,10 +574,10 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
 
-			AssertTextEquals(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Go Somewhere");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
 		}
 	}
 

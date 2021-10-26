@@ -443,9 +443,7 @@ definition {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
 			for (var fragmentName : list "Heading,HTML,Image") {
-				AssertElementPresent(
-					key_fragmentName = "${fragmentName}",
-					locator1 = "Fragment#FRAGMENT_HEADER");
+				PageEditor.viewFragment(fragmentName = "${fragmentName}");
 			}
 
 			PageEditor.viewFragmentEditableText(
@@ -557,9 +555,7 @@ definition {
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
-			AssertElementPresent(
-				key_fragmentName = "Categories Navigation",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragment(fragmentName = "Categories Navigation");
 
 			MouseOver.mouseOverNotVisible(
 				key_portletName = "Categories Navigation",

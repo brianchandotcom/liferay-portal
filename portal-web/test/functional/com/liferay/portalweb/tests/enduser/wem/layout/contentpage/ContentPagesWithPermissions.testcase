@@ -295,14 +295,16 @@ definition {
 		task ("View only the Button fragment shown in page") {
 			MenuItem.click(menuItem = "View");
 
-			AssertTextEquals(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Go Somewhere");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
 
 			AssertElementNotPresent(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT");
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 
 		task ("View the Preview Draft action is invisible in Page Tree") {
@@ -814,9 +816,7 @@ definition {
 		}
 
 		task ("Assert the Paragraph is invisible to new user") {
-			AssertElementNotPresent(
-				key_fragmentName = "Paragraph",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Paragraph");
 		}
 	}
 
@@ -873,9 +873,7 @@ definition {
 
 			ContentPages.gotoPageEditor();
 
-			AssertElementNotPresent(
-				key_fragmentName = "Paragraph",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Paragraph");
 
 			Click(
 				fragmentName = "paragraph",
@@ -901,10 +899,10 @@ definition {
 		}
 
 		task ("View the edited inline content in view mode") {
-			AssertTextEquals(
-				key_fragmentName = "paragraph",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "New editable fragment text");
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "New editable fragment text");
 		}
 	}
 
@@ -1036,9 +1034,7 @@ definition {
 
 			ContentPages.gotoPageEditor();
 
-			AssertElementNotPresent(
-				key_fragmentName = "Paragraph",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Paragraph");
 
 			Click(
 				fragmentName = "paragraph",

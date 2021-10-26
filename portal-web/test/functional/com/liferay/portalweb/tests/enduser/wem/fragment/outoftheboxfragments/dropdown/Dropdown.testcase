@@ -269,9 +269,7 @@ definition {
 
 			PageEditor.clickManagementBar();
 
-			AssertNotVisible(
-				key_fragmentName = "Dropdown",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Dropdown");
 
 			AssertAttributeValue(
 				attribute1 = "aria-expanded",
@@ -305,9 +303,7 @@ definition {
 
 			PageEditor.clickManagementBar();
 
-			AssertNotVisible(
-				key_fragmentName = "Dropdown",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Dropdown");
 
 			AssertAttributeValue(
 				attribute1 = "aria-expanded",

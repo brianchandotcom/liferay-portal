@@ -145,9 +145,7 @@ definition {
 		}
 
 		task ("Assert the react fragment is rendered correctly in page editor") {
-			AssertElementPresent(
-				key_fragmentName = "React Fragment Example",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragment(fragmentName = "React Fragment Example");
 
 			AssertVisible(locator1 = "//h1[normalize-space(text())='Hello World']");
 

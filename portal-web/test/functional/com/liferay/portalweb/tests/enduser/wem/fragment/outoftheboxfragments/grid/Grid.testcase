@@ -120,9 +120,7 @@ definition {
 		}
 
 		task ("Move the third module to the second row") {
-			Click.clickNoWaitForVisible(
-				key_fragmentName = "Grid",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.clickConfigurableField(fragmentName = "Grid");
 
 			var n = "0";
 
@@ -505,9 +503,7 @@ definition {
 		}
 
 		task ("Resize the modules") {
-			Click.clickNoWaitForVisible(
-				key_fragmentName = "Grid",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.clickConfigurableField(fragmentName = "Grid");
 
 			DragAndDrop.dragAndDrop(
 				key_position = "3",

@@ -89,10 +89,10 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Category Name");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Category Name");
 		}
 	}
 
@@ -278,10 +278,10 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name 2");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Grand Subcategory Name");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Grand Subcategory Name");
 		}
 	}
 
@@ -529,10 +529,10 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
 
-			AssertTextEquals(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Subcategory Name");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Subcategory Name");
 		}
 	}
 

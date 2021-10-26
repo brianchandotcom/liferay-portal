@@ -59,9 +59,7 @@ definition {
 		task ("Assert the fragment name is localized") {
 			PageEditor.clickConfigurableField(fragmentName = "Título");
 
-			AssertVisible(
-				key_fragmentName = "Título",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragmentHeaderVisible(fragmentName = "Título");
 		}
 
 		task ("Assert the field labels are localized") {

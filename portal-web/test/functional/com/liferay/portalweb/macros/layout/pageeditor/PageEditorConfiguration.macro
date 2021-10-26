@@ -3,9 +3,7 @@ definition {
 	macro changeConfigColor {
 		var key_fragmentName = "${fragmentName}";
 
-		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
-		}
+		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -23,9 +21,7 @@ definition {
 	macro changeConfigSelection {
 		var key_fragmentName = "${fragmentName}";
 
-		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
-		}
+		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -45,9 +41,7 @@ definition {
 	macro changeConfigText {
 		var key_fragmentName = "${fragmentName}";
 
-		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
-		}
+		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -73,7 +67,7 @@ definition {
 
 		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
 
-		Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
+		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",

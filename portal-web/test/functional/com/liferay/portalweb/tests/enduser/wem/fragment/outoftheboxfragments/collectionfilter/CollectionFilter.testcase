@@ -721,10 +721,10 @@ definition {
 				entry = "Web Content Title 1",
 				menuItem = "View Content");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Web Content Title 1");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Web Content Title 1");
 
 			var n = "1";
 
@@ -744,10 +744,10 @@ definition {
 				selectedName = "Instock",
 				title = "Availability");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Web Content Title 1");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Web Content Title 1");
 
 			AssertVisible(
 				key_entryContent = "[normalize-space(text())='Web Content Title 3']",

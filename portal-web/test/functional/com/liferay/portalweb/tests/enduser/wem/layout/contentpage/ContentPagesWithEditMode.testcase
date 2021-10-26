@@ -170,9 +170,7 @@ definition {
 
 		task ("Assert topper of elements are hidden") {
 			for (var elementName : list "Heading,Paragraph,Image,Asset Publisher") {
-				AssertElementNotPresent(
-					key_fragmentName = "${elementName}",
-					locator1 = "Fragment#FRAGMENT_HEADER");
+				PageEditor.viewFragmentNotPresent(fragmentName = "${elementName}");
 			}
 		}
 

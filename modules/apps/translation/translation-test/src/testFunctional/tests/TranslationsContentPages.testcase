@@ -164,10 +164,10 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		AssertTextEquals(
-			key_fragmentName = "heading",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "これは見出しです");
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "これは見出しです");
 	}
 
 	@description = "This ensures that a button on a content page can be translated and published properly."
@@ -212,10 +212,10 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		AssertTextEquals(
-			key_fragmentName = "button",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "これはボタンリンクです");
+		ContentPages.viewFragmentText(
+			fragmentName = "button",
+			id = "link",
+			text = "これはボタンリンクです");
 	}
 
 	@description = "This ensures that an HTML fragment on a content page can be translated and published properly."
@@ -263,10 +263,10 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		AssertTextEquals(
-			key_fragmentName = "html",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "este es un campo html");
+		ContentPages.viewFragmentText(
+			fragmentName = "html",
+			id = "element-html",
+			text = "este es un campo html");
 	}
 
 }

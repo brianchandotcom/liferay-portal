@@ -61,10 +61,10 @@ definition {
 		}
 
 		task ("Assert the Card fragment is shown") {
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "card",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Card Title Example");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "card",
+				text = "Card Title Example");
 		}
 
 		task ("Assert the Main Variation is selected in Site Pages Variation field") {
@@ -84,10 +84,10 @@ definition {
 		}
 
 		task ("Assert the Card fragment is shown") {
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "card",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Card Title Example");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "card",
+				text = "Card Title Example");
 		}
 
 		task ("Change to Main Variation") {
@@ -101,10 +101,10 @@ definition {
 		}
 
 		task ("Assert the Card fragment is shown") {
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "card",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Card Title Example");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "card",
+				text = "Card Title Example");
 		}
 	}
 
@@ -134,10 +134,15 @@ definition {
 		}
 
 		task ("Assert the Paragraph fragment is shown") {
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "paragraph",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea.");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
 		}
 
 		task ("Assert the Main Variation is selected in Site Pages Variation field") {
@@ -215,10 +220,10 @@ definition {
 		}
 
 		task ("Assert the Paragraph fragment is shown") {
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "paragraph",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea.");
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
 		}
 	}
 
@@ -248,10 +253,10 @@ definition {
 		}
 
 		task ("Assert the Heading fragment is shown") {
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Heading Example");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
 		}
 
 		task ("Assert Live item is not shown on navbar") {
@@ -283,10 +288,10 @@ definition {
 		}
 
 		task ("Assert the Heading fragment is shown") {
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Heading Example");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
 		}
 
 		task ("Add a private content page") {
@@ -311,10 +316,10 @@ definition {
 		}
 
 		task ("Assert the Button fragment is shown") {
-			AssertTextEquals(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Go Somewhere");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
 		}
 
 		task ("Assert Live item is not shown on navbar") {
@@ -347,10 +352,10 @@ definition {
 		}
 
 		task ("Assert the Button fragment is shown") {
-			AssertTextEquals(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Go Somewhere");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
 		}
 	}
 
@@ -402,10 +407,10 @@ definition {
 		}
 
 		task ("Assert the HTML fragment is shown") {
-			AssertTextEquals.assertPartialText(
-				key_fragmentName = "html",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "HTML Example");
+			ContentPages.viewFragmentText(
+				fragmentName = "html",
+				id = "element-html",
+				text = "HTML Example A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
 		}
 
 		task ("Access to content page in edit mode") {

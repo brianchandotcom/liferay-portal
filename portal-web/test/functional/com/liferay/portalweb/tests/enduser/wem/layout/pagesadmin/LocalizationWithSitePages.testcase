@@ -136,10 +136,10 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
 
-			AssertTextEquals(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Aneu a algun lloc");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Aneu a algun lloc");
 		}
 	}
 

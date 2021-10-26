@@ -123,19 +123,19 @@ definition {
 			pageName = "TranslationContentPage",
 			siteName = "Guest");
 
-		AssertTextEquals(
-			key_fragmentName = "heading",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "Heading");
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Heading");
 
 		Navigator.ensureLocaleURL(locale = "es");
 
 		Page.viewCurrentPage(pageName = "TranslatedContentPage");
 
-		AssertTextEquals(
-			key_fragmentName = "heading",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "Titulo");
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Titulo");
 	}
 
 	@description = "This ensures that an imported translation can be resubmitted after being rejected."
@@ -249,19 +249,19 @@ definition {
 			pageName = "TranslationContentPage",
 			siteName = "Guest");
 
-		AssertTextEquals(
-			key_fragmentName = "heading",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "Heading");
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Heading");
 
 		Navigator.ensureLocaleURL(locale = "es");
 
 		Page.viewCurrentPage(pageName = "TranslatedContentPage");
 
-		AssertTextEquals(
-			key_fragmentName = "heading",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "Titulo");
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Titulo");
 	}
 
 }

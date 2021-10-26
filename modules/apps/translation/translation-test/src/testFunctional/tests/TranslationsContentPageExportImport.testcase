@@ -155,19 +155,19 @@ definition {
 			pageName = "TranslationContentPage",
 			siteName = "Guest");
 
-		AssertTextEquals(
-			key_fragmentName = "heading",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "Heading");
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Heading");
 
 		Navigator.ensureLocaleURL(locale = "ja");
 
 		Page.viewCurrentPage(pageName = "翻訳ページ");
 
-		AssertTextEquals(
-			key_fragmentName = "heading",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "タイトル");
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "タイトル");
 	}
 
 	@description = "This ensures that the user can import the exported content page xliff file with default version."
@@ -235,19 +235,19 @@ definition {
 			pageName = "TranslationContentPage",
 			siteName = "Guest");
 
-		AssertTextEquals(
-			key_fragmentName = "heading",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "Heading");
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Heading");
 
 		Navigator.ensureLocaleURL(locale = "es");
 
 		Page.viewCurrentPage(pageName = "TranslatedContentPage");
 
-		AssertTextEquals(
-			key_fragmentName = "heading",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "Titulo");
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Titulo");
 	}
 
 	@description = "This ensures that the user can not import an invalid translation file."
@@ -369,19 +369,19 @@ definition {
 			pageName = "TranslationContentPage",
 			siteName = "Guest");
 
-		AssertTextEquals(
-			key_fragmentName = "button",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "Title");
+		ContentPages.viewFragmentText(
+			fragmentName = "button",
+			id = "link",
+			text = "Title");
 
 		Navigator.ensureLocaleURL(locale = "es");
 
 		Page.viewCurrentPage(pageName = "TranslatedContentPage");
 
-		AssertTextEquals(
-			key_fragmentName = "button",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "Titulo");
+		ContentPages.viewFragmentText(
+			fragmentName = "button",
+			id = "link",
+			text = "Titulo");
 	}
 
 	@description = "This ensures that the user can import the translated content page file with HTML fragment."
@@ -451,19 +451,19 @@ definition {
 			pageName = "TranslationContentPage",
 			siteName = "Guest");
 
-		AssertTextEquals(
-			key_fragmentName = "html",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "HTMLTitle");
+		ContentPages.viewFragmentText(
+			fragmentName = "html",
+			id = "element-html",
+			text = "HTMLTitle");
 
 		Navigator.ensureLocaleURL(locale = "es");
 
 		Page.viewCurrentPage(pageName = "TranslatedContentPage");
 
-		AssertTextEquals(
-			key_fragmentName = "html",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "HTMLTitulo");
+		ContentPages.viewFragmentText(
+			fragmentName = "html",
+			id = "element-html",
+			text = "HTMLTitulo");
 	}
 
 }

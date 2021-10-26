@@ -497,9 +497,7 @@ definition {
 			for (var navItem : list "Tab 2,Tab 3,Tab 4") {
 				PageEditor.gotoTabsFragmentNavItem(navItem = "${navItem}");
 
-				AssertVisible(
-					key_fragmentName = "Tabs",
-					locator1 = "Fragment#FRAGMENT_HEADER");
+				PageEditor.viewFragmentHeaderVisible(fragmentName = "Tabs");
 			}
 		}
 	}

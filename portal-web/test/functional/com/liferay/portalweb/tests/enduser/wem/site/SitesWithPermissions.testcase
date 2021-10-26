@@ -117,9 +117,7 @@ definition {
 
 			ContentPages.gotoPageEditor();
 
-			AssertElementNotPresent(
-				key_fragmentName = "Asset Publisher",
-				locator1 = "Fragment#FRAGMENT_HEADER");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Asset Publisher");
 		}
 
 		task ("Assert permissions of each widgets in Home page") {

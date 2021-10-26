@@ -709,12 +709,10 @@ definition {
 		}
 
 		task ("View the title and content of web content are shown") {
-			for (var text : list "Title,Content") {
-				AssertTextEquals.assertPartialText(
-					key_fragmentName = "button",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Web Content ${text}");
-			}
+			PageEditor.viewFragmentEditableText(
+				editableText = "Web Content Title Web Content Content",
+				fragmentName = "Button",
+				id = "link");
 		}
 
 		task ("Select the manual collection in Collection Display") {
@@ -731,10 +729,10 @@ definition {
 		}
 
 		task ("View the title and description of blogs entry are shown") {
-			AssertTextEquals(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Blogs Entry Title Blogs Entry Description");
+			PageEditor.viewFragmentEditableText(
+				editableText = "Blogs Entry Title Blogs Entry Description",
+				fragmentName = "Button",
+				id = "link");
 		}
 	}
 

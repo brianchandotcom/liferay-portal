@@ -34,6 +34,8 @@ public interface DestinationStatisticsManagerMBean {
 
 	public long getPendingMessageCount();
 
+	public long getRejectedMessageCount();
+
 	public long getSentMessageCount();
 
 	public boolean isAutoRefresh();

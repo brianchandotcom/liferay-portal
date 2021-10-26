@@ -36,6 +36,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author Michael C. Han
@@ -76,6 +77,8 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 			_noticeableThreadPoolExecutor.getCorePoolSize());
 		destinationStatistics.setPendingMessageCount(
 			_noticeableThreadPoolExecutor.getPendingTaskCount());
+		destinationStatistics.setRejectedMessageCount(
+			_rejectedTaskCounter.get());
 		destinationStatistics.setSentMessageCount(
 			_noticeableThreadPoolExecutor.getCompletedTaskCount());
 
@@ -113,7 +116,12 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 				new NamedThreadFactory(
 					getName(), Thread.NORM_PRIORITY,
 					PortalClassLoaderUtil.getClassLoader()),
-				_rejectedExecutionHandler, new ThreadPoolHandlerAdapter());
+				(r, executor) -> {
+					_rejectedTaskCounter.incrementAndGet();
+
+					_rejectedExecutionHandler.rejectedExecution(r, executor);
+				},
+				new ThreadPoolHandlerAdapter());
 
 		NoticeableExecutorService oldNoticeableExecutorService =
 			_portalExecutorManager.registerPortalExecutor(
@@ -283,6 +291,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	private NoticeableThreadPoolExecutor _noticeableThreadPoolExecutor;
 	private PortalExecutorManager _portalExecutorManager;
 	private RejectedExecutionHandler _rejectedExecutionHandler;
+	private final AtomicLong _rejectedTaskCounter = new AtomicLong();
 	private int _workersCoreSize = _WORKERS_CORE_SIZE;
 	private int _workersMaxSize = _WORKERS_MAX_SIZE;
 

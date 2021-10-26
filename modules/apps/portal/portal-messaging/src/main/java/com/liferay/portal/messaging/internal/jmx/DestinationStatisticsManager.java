@@ -103,6 +103,15 @@ public class DestinationStatisticsManager
 	}
 
 	@Override
+	public long getRejectedMessageCount() {
+		if (_autoRefresh || (_destinationStatistics == null)) {
+			refresh();
+		}
+
+		return _destinationStatistics.getRejectedMessageCount();
+	}
+
+	@Override
 	public long getSentMessageCount() {
 		if (_autoRefresh || (_destinationStatistics == null)) {
 			refresh();

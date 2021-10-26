@@ -44,6 +44,10 @@ public class DestinationStatistics {
 		return _pendingMessageCount;
 	}
 
+	public long getRejectedMessageCount() {
+		return _rejectedMessageCount;
+	}
+
 	public long getSentMessageCount() {
 		return _sentMessageCount;
 	}
@@ -72,6 +76,10 @@ public class DestinationStatistics {
 		_pendingMessageCount = pendingMessageCount;
 	}
 
+	public void setRejectedMessageCount(long rejectedMessageCount) {
+		_rejectedMessageCount = rejectedMessageCount;
+	}
+
 	public void setSentMessageCount(long sentMessageCount) {
 		_sentMessageCount = sentMessageCount;
 	}
@@ -82,6 +90,7 @@ public class DestinationStatistics {
 	private int _maxThreadPoolSize;
 	private int _minThreadPoolSize;
 	private long _pendingMessageCount;
+	private long _rejectedMessageCount;
 	private long _sentMessageCount;
 
 }

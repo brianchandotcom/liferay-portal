@@ -149,8 +149,7 @@ public class FormNavigatorOSGiCommands {
 
 	private final Collector<CharSequence, ?, String> _collectorCSV =
 		Collectors.joining(StringPool.COMMA);
-	private ServiceTrackerList<FormNavigatorEntry<?>, FormNavigatorEntry<?>>
-		_formNavigatorEntries;
+	private ServiceTrackerList<FormNavigatorEntry<?>> _formNavigatorEntries;
 	private ServiceTrackerMap<String, List<FormNavigatorEntry<?>>>
 		_formNavigatorEntriesMap;
 

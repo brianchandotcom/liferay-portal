@@ -179,9 +179,8 @@ public class DefaultDLPortletToolbarContributor
 		return false;
 	}
 
-	private ServiceTrackerList
-		<DLPortletToolbarContributorContext, DLPortletToolbarContributorContext>
-			_dlPortletToolbarContributorContexts;
+	private ServiceTrackerList<DLPortletToolbarContributorContext>
+		_dlPortletToolbarContributorContexts;
 
 	@Reference
 	private DLPortletToolbarContributorHelper

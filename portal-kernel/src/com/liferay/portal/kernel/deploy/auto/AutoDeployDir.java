@@ -369,10 +369,9 @@ public class AutoDeployDir {
 	private static final Log _log = LogFactoryUtil.getLog(AutoDeployDir.class);
 
 	private static AutoDeployScanner _autoDeployScanner;
-	private static final ServiceTrackerList
-		<AutoDeployListener, AutoDeployListener> _serviceTrackerList =
-			ServiceTrackerListFactory.open(
-				SystemBundleUtil.getBundleContext(), AutoDeployListener.class);
+	private static final ServiceTrackerList<AutoDeployListener>
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), AutoDeployListener.class);
 	private static final Pattern _versionPattern = Pattern.compile(
 		"-[\\d]+((\\.[\\d]+)+(-.+)*)\\.war$");
 

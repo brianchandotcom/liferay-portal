@@ -115,8 +115,7 @@ public class LogContextLogWrapper extends LogWrapper {
 	}
 
 	private Object _getLogContextMessage(Object message) {
-		ServiceTrackerList<LogContext, LogContext> serviceTrackerList =
-			_serviceTrackerList;
+		ServiceTrackerList<LogContext> serviceTrackerList = _serviceTrackerList;
 
 		if (serviceTrackerList == null) {
 			return message;
@@ -166,8 +165,7 @@ public class LogContextLogWrapper extends LogWrapper {
 		return sb.toString();
 	}
 
-	private static volatile ServiceTrackerList<LogContext, LogContext>
-		_serviceTrackerList;
+	private static volatile ServiceTrackerList<LogContext> _serviceTrackerList;
 
 	static {
 		PortalLifecycleUtil.register(
@@ -175,8 +173,8 @@ public class LogContextLogWrapper extends LogWrapper {
 
 				@Override
 				protected void doPortalDestroy() {
-					ServiceTrackerList<LogContext, LogContext>
-						serviceTrackerList = _serviceTrackerList;
+					ServiceTrackerList<LogContext> serviceTrackerList =
+						_serviceTrackerList;
 
 					_serviceTrackerList = null;
 

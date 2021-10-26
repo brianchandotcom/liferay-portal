@@ -56,8 +56,7 @@ public class DLExportableRepositoryPublisherHelper {
 		_dlExportableRepositoryPublishers.close();
 	}
 
-	private ServiceTrackerList
-		<DLExportableRepositoryPublisher, DLExportableRepositoryPublisher>
-			_dlExportableRepositoryPublishers;
+	private ServiceTrackerList<DLExportableRepositoryPublisher>
+		_dlExportableRepositoryPublishers;
 
 }

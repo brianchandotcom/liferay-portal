@@ -41,10 +41,9 @@ public class BreadcrumbEntryContributorUtil {
 		return breadcrumbEntries;
 	}
 
-	private static final ServiceTrackerList
-		<BreadcrumbEntryContributor, BreadcrumbEntryContributor>
-			_breadcrumbEntryContributors = ServiceTrackerListFactory.open(
-				SystemBundleUtil.getBundleContext(),
-				BreadcrumbEntryContributor.class);
+	private static final ServiceTrackerList<BreadcrumbEntryContributor>
+		_breadcrumbEntryContributors = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(),
+			BreadcrumbEntryContributor.class);
 
 }

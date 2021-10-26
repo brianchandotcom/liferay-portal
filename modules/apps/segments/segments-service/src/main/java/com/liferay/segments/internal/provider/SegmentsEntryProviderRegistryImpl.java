@@ -165,8 +165,7 @@ public class SegmentsEntryProviderRegistryImpl
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
-	private ServiceTrackerList<SegmentsEntryProvider, SegmentsEntryProvider>
-		_serviceTrackerList;
+	private ServiceTrackerList<SegmentsEntryProvider> _serviceTrackerList;
 	private ServiceTrackerMap<String, SegmentsEntryProvider> _serviceTrackerMap;
 
 }

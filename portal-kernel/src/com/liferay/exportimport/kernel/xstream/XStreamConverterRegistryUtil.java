@@ -37,7 +37,7 @@ public class XStreamConverterRegistryUtil {
 	private XStreamConverterRegistryUtil() {
 	}
 
-	private static final ServiceTrackerList<XStreamConverter, XStreamConverter>
+	private static final ServiceTrackerList<XStreamConverter>
 		_xStreamConverters = ServiceTrackerListFactory.open(
 			SystemBundleUtil.getBundleContext(), XStreamConverter.class);
 

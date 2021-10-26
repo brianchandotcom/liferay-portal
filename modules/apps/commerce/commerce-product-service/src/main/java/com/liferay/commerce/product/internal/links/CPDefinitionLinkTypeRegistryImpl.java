@@ -59,7 +59,6 @@ public class CPDefinitionLinkTypeRegistryImpl
 		_serviceTrackerList.close();
 	}
 
-	private ServiceTrackerList<CPDefinitionLinkType, CPDefinitionLinkType>
-		_serviceTrackerList;
+	private ServiceTrackerList<CPDefinitionLinkType> _serviceTrackerList;
 
 }

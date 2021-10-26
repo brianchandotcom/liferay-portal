@@ -74,9 +74,8 @@ public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccessControlAdvisorImpl.class.getName());
 
-	private static final ServiceTrackerList
-		<AccessControlPolicy, AccessControlPolicy> _accessControlPolicies =
-			ServiceTrackerListFactory.open(
-				SystemBundleUtil.getBundleContext(), AccessControlPolicy.class);
+	private static final ServiceTrackerList<AccessControlPolicy>
+		_accessControlPolicies = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), AccessControlPolicy.class);
 
 }

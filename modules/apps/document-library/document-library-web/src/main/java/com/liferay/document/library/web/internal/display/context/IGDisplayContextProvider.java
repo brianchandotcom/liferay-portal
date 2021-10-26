@@ -144,7 +144,7 @@ public class IGDisplayContextProvider {
 	@Reference
 	private DLURLHelper _dlURLHelper;
 
-	private ServiceTrackerList<IGDisplayContextFactory, IGDisplayContextFactory>
+	private ServiceTrackerList<IGDisplayContextFactory>
 		_igDisplayContextFactories;
 
 	@Reference(

@@ -152,8 +152,8 @@ public class SessionFactoryImpl implements SessionFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SessionFactoryImpl.class);
 
-	private final ServiceTrackerList<SessionCustomizer, SessionCustomizer>
-		_sessionCustomizers = ServiceTrackerListFactory.open(
+	private final ServiceTrackerList<SessionCustomizer> _sessionCustomizers =
+		ServiceTrackerListFactory.open(
 			SystemBundleUtil.getBundleContext(), SessionCustomizer.class);
 	private ClassLoader _sessionFactoryClassLoader;
 	private SessionFactoryImplementor _sessionFactoryImplementor;

@@ -62,7 +62,7 @@ public class SanitizerUtil {
 		return content;
 	}
 
-	private static final ServiceTrackerList<Sanitizer, Sanitizer> _sanitizers =
+	private static final ServiceTrackerList<Sanitizer> _sanitizers =
 		ServiceTrackerListFactory.open(
 			SystemBundleUtil.getBundleContext(), Sanitizer.class);
 

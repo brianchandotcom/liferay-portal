@@ -113,8 +113,7 @@ public class SegmentsExperienceRequestProcessorRegistryImpl
 		_serviceTrackerList.close();
 	}
 
-	private ServiceTrackerList
-		<SegmentsExperienceRequestProcessor, SegmentsExperienceRequestProcessor>
-			_serviceTrackerList;
+	private ServiceTrackerList<SegmentsExperienceRequestProcessor>
+		_serviceTrackerList;
 
 }

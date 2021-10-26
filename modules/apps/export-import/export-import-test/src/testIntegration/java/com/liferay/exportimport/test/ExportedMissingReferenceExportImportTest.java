@@ -246,8 +246,8 @@ public class ExportedMissingReferenceExportImportTest
 		Bundle bundle = FrameworkUtil.getBundle(
 			ExportedMissingReferenceExportImportTest.class);
 
-		ServiceTrackerList<PortletDataHandler, PortletDataHandler>
-			portletDataHandlerInstances = ServiceTrackerListFactory.open(
+		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
+			ServiceTrackerListFactory.open(
 				bundle.getBundleContext(),
 				(Class<PortletDataHandler>)portletDataHandlerClass);
 
@@ -270,8 +270,8 @@ public class ExportedMissingReferenceExportImportTest
 		Bundle bundle = FrameworkUtil.getBundle(
 			ExportedMissingReferenceExportImportTest.class);
 
-		ServiceTrackerList<PortletDataHandler, PortletDataHandler>
-			portletDataHandlerInstances = ServiceTrackerListFactory.open(
+		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
+			ServiceTrackerListFactory.open(
 				bundle.getBundleContext(),
 				(Class<PortletDataHandler>)portletDataHandlerClass);
 
@@ -297,7 +297,7 @@ public class ExportedMissingReferenceExportImportTest
 
 		ReflectionTestUtil.setFieldValue(
 			portletBag, "_portletDataHandlerInstances",
-			new ServiceTrackerList<PortletDataHandler, PortletDataHandler>() {
+			new ServiceTrackerList<PortletDataHandler>() {
 
 				@Override
 				public void close() {
@@ -324,8 +324,8 @@ public class ExportedMissingReferenceExportImportTest
 		Bundle bundle = FrameworkUtil.getBundle(
 			ExportedMissingReferenceExportImportTest.class);
 
-		ServiceTrackerList<PortletDataHandler, PortletDataHandler>
-			portletDataHandlerInstances = ServiceTrackerListFactory.open(
+		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
+			ServiceTrackerListFactory.open(
 				bundle.getBundleContext(),
 				(Class<PortletDataHandler>)portletDataHandlerClass);
 

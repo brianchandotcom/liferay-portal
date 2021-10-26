@@ -1186,9 +1186,8 @@ public class FileEntryStagedModelDataHandler
 	@Reference
 	private RepositoryLocalService _repositoryLocalService;
 
-	private ServiceTrackerList
-		<DLPluggableContentDataHandler<?>, DLPluggableContentDataHandler<?>>
-			_serviceTrackerList;
+	private ServiceTrackerList<DLPluggableContentDataHandler<?>>
+		_serviceTrackerList;
 
 	@Reference
 	private StorageEngine _storageEngine;

@@ -44,10 +44,8 @@ public class NavigationPageIncludeUtil {
 		}
 	}
 
-	private static final ServiceTrackerList<PageInclude, PageInclude>
-		_postPageIncludes;
-	private static final ServiceTrackerList<PageInclude, PageInclude>
-		_prePageIncludes;
+	private static final ServiceTrackerList<PageInclude> _postPageIncludes;
+	private static final ServiceTrackerList<PageInclude> _prePageIncludes;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(

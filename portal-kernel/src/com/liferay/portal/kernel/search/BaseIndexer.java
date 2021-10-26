@@ -1513,7 +1513,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			queryBooleanFilter, entryClassNameIndexerMap, searchContext);
 	}
 
-	private ServiceTrackerList<DocumentContributor<?>, DocumentContributor<?>>
+	private ServiceTrackerList<DocumentContributor<?>>
 		_getDocumentContributors() {
 
 		if (_documentContributors == null) {
@@ -1625,8 +1625,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	private String[] _defaultSelectedFieldNames;
 	private String[] _defaultSelectedLocalizedFieldNames;
 	private final Document _document = new DocumentImpl();
-	private volatile ServiceTrackerList
-		<DocumentContributor<?>, DocumentContributor<?>> _documentContributors;
+	private volatile ServiceTrackerList<DocumentContributor<?>>
+		_documentContributors;
 	private boolean _filterSearch;
 	private Boolean _indexerEnabled;
 	private IndexerPostProcessor[] _indexerPostProcessors =

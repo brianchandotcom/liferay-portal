@@ -224,9 +224,8 @@ public class LiferayVersioningCapability
 	@Reference
 	private DLConfiguration _dlConfiguration;
 
-	private ServiceTrackerList
-		<VersionPurger.VersionPurgedListener,
-		 VersionPurger.VersionPurgedListener> _versionPurgedListeners;
+	private ServiceTrackerList<VersionPurger.VersionPurgedListener>
+		_versionPurgedListeners;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

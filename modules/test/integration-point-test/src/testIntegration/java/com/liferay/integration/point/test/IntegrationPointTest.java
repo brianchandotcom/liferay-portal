@@ -117,7 +117,7 @@ public class IntegrationPointTest {
 
 		List<Sanitizer> sanitizers = new ArrayList<>();
 
-		ServiceTrackerList<Sanitizer, Sanitizer> serviceTrackerList =
+		ServiceTrackerList<Sanitizer> serviceTrackerList =
 			ReflectionTestUtil.getFieldValue(
 				SanitizerUtil.class, "_sanitizers");
 

@@ -45,8 +45,8 @@ public class OSGiHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
-	private final ServiceTrackerList<HotDeployListener, HotDeployListener>
-		_serviceTrackerList = ServiceTrackerListFactory.open(
+	private final ServiceTrackerList<HotDeployListener> _serviceTrackerList =
+		ServiceTrackerListFactory.open(
 			SystemBundleUtil.getBundleContext(), HotDeployListener.class);
 
 }

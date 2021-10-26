@@ -126,8 +126,7 @@ public class ScopedCSSVariablesTopHeadDynamicInclude
 	}
 
 	private Iterable<ScopedCSSVariablesProvider> _scopedCSSVariablesProviders;
-	private ServiceTrackerList
-		<ScopedCSSVariablesProvider, ScopedCSSVariablesProvider>
-			_scopedCssVariablesProviderServiceTrackerList;
+	private ServiceTrackerList<ScopedCSSVariablesProvider>
+		_scopedCssVariablesProviderServiceTrackerList;
 
 }

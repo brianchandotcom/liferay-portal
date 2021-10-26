@@ -73,9 +73,8 @@ public class JavaScriptAwarePortalWebResourcesCleaner {
 	}
 
 	private ServiceListener _serviceListener;
-	private ServiceTrackerList
-		<JavaScriptAwarePortalWebResources, JavaScriptAwarePortalWebResources>
-			_serviceTrackerList;
+	private ServiceTrackerList<JavaScriptAwarePortalWebResources>
+		_serviceTrackerList;
 
 	@Reference(
 		target = "(&(original.bean=true)(bean.id=javax.servlet.ServletContext))"

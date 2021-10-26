@@ -197,10 +197,9 @@ public class PortletConfigurationIconTracker {
 		SystemBundleUtil.getBundleContext();
 	private static final Set<String> _defaultPaths = Collections.singleton(
 		StringPool.DASH);
-	private static final ServiceTrackerList
-		<PortletConfigurationIconLocator, PortletConfigurationIconLocator>
-			_serviceTrackerList = ServiceTrackerListFactory.open(
-				_bundleContext, PortletConfigurationIconLocator.class);
+	private static final ServiceTrackerList<PortletConfigurationIconLocator>
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			_bundleContext, PortletConfigurationIconLocator.class);
 	private static final ServiceTrackerMap
 		<String, List<PortletConfigurationIcon>> _serviceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(

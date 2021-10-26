@@ -214,7 +214,6 @@ public class FragmentEntryProcessorRegistryImpl
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	private ServiceTrackerList<FragmentEntryProcessor, FragmentEntryProcessor>
-		_serviceTrackerList;
+	private ServiceTrackerList<FragmentEntryProcessor> _serviceTrackerList;
 
 }

@@ -72,7 +72,6 @@ public class SharedAssetsFilterItemTracker {
 		_serviceTrackerList.close();
 	}
 
-	private ServiceTrackerList<SharedAssetsFilterItem, SharedAssetsFilterItem>
-		_serviceTrackerList;
+	private ServiceTrackerList<SharedAssetsFilterItem> _serviceTrackerList;
 
 }

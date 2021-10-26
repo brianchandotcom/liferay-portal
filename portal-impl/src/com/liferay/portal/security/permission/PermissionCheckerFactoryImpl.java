@@ -83,10 +83,8 @@ public class PermissionCheckerFactoryImpl implements PermissionCheckerFactory {
 	}
 
 	private final PermissionChecker _permissionChecker;
-	private ServiceTrackerList
-		<PermissionCheckerWrapperFactory, PermissionCheckerWrapperFactory>
-			_permissionCheckerWrapperFactories;
-	private ServiceTrackerList<RoleContributor, RoleContributor>
-		_roleContributors;
+	private ServiceTrackerList<PermissionCheckerWrapperFactory>
+		_permissionCheckerWrapperFactories;
+	private ServiceTrackerList<RoleContributor> _roleContributors;
 
 }

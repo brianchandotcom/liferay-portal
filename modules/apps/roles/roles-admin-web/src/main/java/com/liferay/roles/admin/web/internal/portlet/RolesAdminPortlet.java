@@ -861,10 +861,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
-	private ServiceTrackerList
-		<PanelCategoryRoleTypeMapper, PanelCategoryRoleTypeMapper>
-			_panelCategoryRoleTypeMapperServiceTrackerList;
-	private ServiceTrackerList<PersonalMenuEntry, PersonalMenuEntry>
+	private ServiceTrackerList<PanelCategoryRoleTypeMapper>
+		_panelCategoryRoleTypeMapperServiceTrackerList;
+	private ServiceTrackerList<PersonalMenuEntry>
 		_personalMenuEntryServiceTrackerList;
 
 	@Reference

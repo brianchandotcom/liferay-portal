@@ -269,7 +269,7 @@ public class AutoLoginFilter extends BasePortalFilter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AutoLoginFilter.class);
 
-	private static final ServiceTrackerList<AutoLogin, AutoLogin> _autoLogins =
+	private static final ServiceTrackerList<AutoLogin> _autoLogins =
 		ServiceTrackerListFactory.open(
 			SystemBundleUtil.getBundleContext(), AutoLogin.class,
 			"(!(private.auto.login=*))");

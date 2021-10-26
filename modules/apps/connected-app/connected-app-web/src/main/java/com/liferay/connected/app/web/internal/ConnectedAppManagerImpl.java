@@ -78,7 +78,6 @@ public class ConnectedAppManagerImpl implements ConnectedAppManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConnectedAppManagerImpl.class);
 
-	private ServiceTrackerList<ConnectedAppProvider, ConnectedAppProvider>
-		_serviceTrackerList;
+	private ServiceTrackerList<ConnectedAppProvider> _serviceTrackerList;
 
 }

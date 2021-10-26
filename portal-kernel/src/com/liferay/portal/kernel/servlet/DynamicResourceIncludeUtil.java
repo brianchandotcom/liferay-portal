@@ -96,8 +96,8 @@ public class DynamicResourceIncludeUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicResourceIncludeUtil.class);
 
-	private static final ServiceTrackerList<ServletContext, ServletContext>
-		_servletContexts = ServiceTrackerListFactory.open(
+	private static final ServiceTrackerList<ServletContext> _servletContexts =
+		ServiceTrackerListFactory.open(
 			SystemBundleUtil.getBundleContext(), ServletContext.class);
 
 }

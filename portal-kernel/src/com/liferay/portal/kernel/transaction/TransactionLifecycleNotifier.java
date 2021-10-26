@@ -94,10 +94,9 @@ public class TransactionLifecycleNotifier {
 	private TransactionLifecycleNotifier() {
 	}
 
-	private static final ServiceTrackerList
-		<TransactionLifecycleListener, TransactionLifecycleListener>
-			_transactionLifecycleListeners = ServiceTrackerListFactory.open(
-				SystemBundleUtil.getBundleContext(),
-				TransactionLifecycleListener.class);
+	private static final ServiceTrackerList<TransactionLifecycleListener>
+		_transactionLifecycleListeners = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(),
+			TransactionLifecycleListener.class);
 
 }

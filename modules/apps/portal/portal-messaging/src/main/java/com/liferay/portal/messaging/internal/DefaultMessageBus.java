@@ -618,7 +618,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 			_messageListenerServiceTracker;
 	private final Map<String, List<MessageListener>> _queuedMessageListeners =
 		new HashMap<>();
-	private ServiceTrackerList<MessageBusInterceptor, MessageBusInterceptor>
-		_serviceTrackerList;
+	private ServiceTrackerList<MessageBusInterceptor> _serviceTrackerList;
 
 }

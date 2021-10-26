@@ -208,7 +208,7 @@ public class SearchEngineInitializer implements Runnable {
 	private final BundleContext _bundleContext;
 	private final long _companyId;
 	private boolean _finished;
-	private ServiceTrackerList<Indexer<?>, Indexer<?>> _indexers;
+	private ServiceTrackerList<Indexer<?>> _indexers;
 	private final PortalExecutorManager _portalExecutorManager;
 	private final Set<String> _usedSearchEngineIds = new HashSet<>();
 

@@ -91,6 +91,6 @@ public class CPDataSourceRegistryImpl implements CPDataSourceRegistry {
 	@Reference
 	private Portal _portal;
 
-	private ServiceTrackerList<CPDataSource, CPDataSource> _serviceTrackerList;
+	private ServiceTrackerList<CPDataSource> _serviceTrackerList;
 
 }

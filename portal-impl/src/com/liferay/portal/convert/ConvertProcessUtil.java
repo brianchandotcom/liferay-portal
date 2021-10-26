@@ -53,8 +53,8 @@ public class ConvertProcessUtil {
 		return convertProcesses;
 	}
 
-	private static final ServiceTrackerList<ConvertProcess, ConvertProcess>
-		_convertProcesses = ServiceTrackerListFactory.open(
+	private static final ServiceTrackerList<ConvertProcess> _convertProcesses =
+		ServiceTrackerListFactory.open(
 			SystemBundleUtil.getBundleContext(), ConvertProcess.class);
 
 }

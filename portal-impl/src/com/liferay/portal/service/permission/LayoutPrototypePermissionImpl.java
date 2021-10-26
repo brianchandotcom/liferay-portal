@@ -66,10 +66,9 @@ public class LayoutPrototypePermissionImpl
 		return false;
 	}
 
-	private final ServiceTrackerList
-		<LayoutPrototypePermission, LayoutPrototypePermission>
-			_layoutPrototypePermissions = ServiceTrackerListFactory.open(
-				SystemBundleUtil.getBundleContext(),
-				LayoutPrototypePermission.class, "(extended=true)");
+	private final ServiceTrackerList<LayoutPrototypePermission>
+		_layoutPrototypePermissions = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(),
+			LayoutPrototypePermission.class, "(extended=true)");
 
 }

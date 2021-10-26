@@ -165,6 +165,6 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 	private SearchEngineHelper _searchEngineHelper;
 
 	@Mock
-	private ServiceTrackerList<Indexer<?>, Indexer<?>> _systemIndexers;
+	private ServiceTrackerList<Indexer<?>> _systemIndexers;
 
 }

@@ -244,7 +244,7 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 		_dlPreviewRendererProviders.close();
 	}
 
-	private ServiceTrackerList<DLDisplayContextFactory, DLDisplayContextFactory>
+	private ServiceTrackerList<DLDisplayContextFactory>
 		_dlDisplayContextFactories;
 
 	@Reference(

@@ -312,8 +312,7 @@ public class SegmentsEntryProviderRegistryTest {
 		new SegmentsEntryProviderRegistryImpl();
 
 	@Mock
-	private ServiceTrackerList<SegmentsEntryProvider, SegmentsEntryProvider>
-		_serviceTrackerList;
+	private ServiceTrackerList<SegmentsEntryProvider> _serviceTrackerList;
 
 	@Mock
 	private ServiceTrackerMap<String, SegmentsEntryProvider> _serviceTrackerMap;

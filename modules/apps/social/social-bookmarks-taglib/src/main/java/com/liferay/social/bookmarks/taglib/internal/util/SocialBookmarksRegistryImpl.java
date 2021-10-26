@@ -151,7 +151,7 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SocialBookmarksRegistryImpl.class);
 
-	private ServiceTrackerList<SocialBookmark, String> _serviceTrackerList;
+	private ServiceTrackerList<String> _serviceTrackerList;
 	private ServiceTrackerMap<String, SocialBookmark> _serviceTrackerMap;
 
 	private static class SocialBookmarkTypeServiceTrackerCustomizer

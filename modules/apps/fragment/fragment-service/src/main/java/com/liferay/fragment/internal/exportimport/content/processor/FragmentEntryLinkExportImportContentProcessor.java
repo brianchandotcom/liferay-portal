@@ -141,10 +141,8 @@ public class FragmentEntryLinkExportImportContentProcessor
 	private ExportImportContentProcessor<String>
 		_dlReferencesExportImportContentProcessor;
 
-	private ServiceTrackerList
-		<ExportImportContentProcessor<JSONObject>,
-		 ExportImportContentProcessor<JSONObject>>
-			_fragmentEntryLinkEditableValuesExportImportProcessors;
+	private ServiceTrackerList<ExportImportContentProcessor<JSONObject>>
+		_fragmentEntryLinkEditableValuesExportImportProcessors;
 
 	@Reference(target = "(content.processor.type=LayoutReferences)")
 	private ExportImportContentProcessor<String>

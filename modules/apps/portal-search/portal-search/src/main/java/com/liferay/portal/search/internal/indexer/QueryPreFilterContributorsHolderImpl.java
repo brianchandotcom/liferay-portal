@@ -63,8 +63,6 @@ public class QueryPreFilterContributorsHolderImpl
 		return clazz.getName();
 	}
 
-	private ServiceTrackerList
-		<QueryPreFilterContributor, QueryPreFilterContributor>
-			_serviceTrackerList;
+	private ServiceTrackerList<QueryPreFilterContributor> _serviceTrackerList;
 
 }

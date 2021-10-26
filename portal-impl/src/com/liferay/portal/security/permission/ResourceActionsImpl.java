@@ -1506,11 +1506,10 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	private static class ResourceBundleLoaderListHolder {
 
-		private static final ServiceTrackerList
-			<ResourceBundleLoader, ResourceBundleLoader>
-				_resourceBundleLoaders = ServiceTrackerListFactory.open(
-					SystemBundleUtil.getBundleContext(),
-					ResourceBundleLoader.class);
+		private static final ServiceTrackerList<ResourceBundleLoader>
+			_resourceBundleLoaders = ServiceTrackerListFactory.open(
+				SystemBundleUtil.getBundleContext(),
+				ResourceBundleLoader.class);
 
 	}
 

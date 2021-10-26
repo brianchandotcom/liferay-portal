@@ -168,7 +168,7 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 	@Reference
 	protected SearchEngineHelper searchEngineHelper;
 
-	protected ServiceTrackerList<Indexer<?>, Indexer<?>> systemIndexers;
+	protected ServiceTrackerList<Indexer<?>> systemIndexers;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReindexSingleIndexerBackgroundTaskExecutor.class);

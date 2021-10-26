@@ -1349,8 +1349,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private final Map<File, Artifact> _currentManagedArtifacts =
 		new HashMap<>();
 	private final Set<Bundle> _delayedStart = new HashSet<>();
-	private final ServiceTrackerList<FileInstaller, FileInstaller>
-		_fileInstallers;
+	private final ServiceTrackerList<FileInstaller> _fileInstallers;
 	private final String _filter;
 	private int _frameworkStartLevel;
 	private final Map<File, Artifact> _installationFailures = new HashMap<>();

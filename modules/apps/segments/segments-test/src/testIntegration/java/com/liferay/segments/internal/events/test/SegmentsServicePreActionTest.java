@@ -161,7 +161,7 @@ public class SegmentsServicePreActionTest {
 		Bundle bundle = FrameworkUtil.getBundle(
 			SegmentsServicePreActionTest.class);
 
-		ServiceTrackerList<LifecycleAction, LifecycleAction> lifecycleActions =
+		ServiceTrackerList<LifecycleAction> lifecycleActions =
 			ServiceTrackerListFactory.open(
 				bundle.getBundleContext(), LifecycleAction.class,
 				"(key=servlet.service.events.pre)");

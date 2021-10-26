@@ -69,10 +69,9 @@ public class GroupCapabilityUtil {
 		return groupCapabilities;
 	}
 
-	private static final ServiceTrackerList
-		<GroupCapabilityContributor, GroupCapabilityContributor>
-			_groupCapabilityContributors = ServiceTrackerListFactory.open(
-				SystemBundleUtil.getBundleContext(),
-				GroupCapabilityContributor.class);
+	private static final ServiceTrackerList<GroupCapabilityContributor>
+		_groupCapabilityContributors = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(),
+			GroupCapabilityContributor.class);
 
 }

@@ -85,10 +85,9 @@ public class CacheFileNameGenerator {
 			});
 	}
 
-	private static final ServiceTrackerList
-		<CacheFileNameContributor, CacheFileNameContributor>
-			_cacheFileNameContributors = ServiceTrackerListFactory.open(
-				SystemBundleUtil.getBundleContext(),
-				CacheFileNameContributor.class);
+	private static final ServiceTrackerList<CacheFileNameContributor>
+		_cacheFileNameContributors = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(),
+			CacheFileNameContributor.class);
 
 }

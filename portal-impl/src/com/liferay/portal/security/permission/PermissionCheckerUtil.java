@@ -71,8 +71,8 @@ public class PermissionCheckerUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PermissionCheckerUtil.class);
 
-	private static final ServiceTrackerList<RoleContributor, RoleContributor>
-		_roleContributors = ServiceTrackerListFactory.open(
+	private static final ServiceTrackerList<RoleContributor> _roleContributors =
+		ServiceTrackerListFactory.open(
 			SystemBundleUtil.getBundleContext(), RoleContributor.class);
 
 }

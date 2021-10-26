@@ -91,7 +91,6 @@ public class EditorEmbedProviderDLVideoExternalShortcutProvider
 	@Reference
 	private Http _http;
 
-	private ServiceTrackerList<EditorEmbedProvider, EditorEmbedProvider>
-		_videoEditorEmbedProviders;
+	private ServiceTrackerList<EditorEmbedProvider> _videoEditorEmbedProviders;
 
 }

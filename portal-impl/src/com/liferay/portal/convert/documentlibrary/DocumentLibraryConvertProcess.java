@@ -165,10 +165,8 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 		return dlStoreConvertProcesses;
 	}
 
-	private static final ServiceTrackerList
-		<DLStoreConvertProcess, DLStoreConvertProcess>
-			_dlStoreConvertProcesses = ServiceTrackerListFactory.open(
-				SystemBundleUtil.getBundleContext(),
-				DLStoreConvertProcess.class);
+	private static final ServiceTrackerList<DLStoreConvertProcess>
+		_dlStoreConvertProcesses = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), DLStoreConvertProcess.class);
 
 }

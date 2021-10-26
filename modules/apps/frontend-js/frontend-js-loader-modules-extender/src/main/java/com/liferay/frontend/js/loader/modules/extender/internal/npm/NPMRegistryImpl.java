@@ -544,9 +544,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 		new ConcurrentHashMap<>();
 	private Map<String, String> _exactMatchMap;
 	private final Map<String, String> _globalAliases = new HashMap<>();
-	private ServiceTrackerList
-		<JavaScriptAwarePortalWebResources, JavaScriptAwarePortalWebResources>
-			_javaScriptAwarePortalWebResources;
+	private ServiceTrackerList<JavaScriptAwarePortalWebResources>
+		_javaScriptAwarePortalWebResources;
 
 	@Reference
 	private JSBundleProcessor _jsBundleProcessor;
@@ -558,9 +557,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	private Map<String, JSPackage> _jsPackages = new HashMap<>();
 	private List<JSPackageVersion> _jsPackageVersions = new ArrayList<>();
-	private ServiceTrackerList
-		<NPMRegistryUpdatesListener, NPMRegistryUpdatesListener>
-			_npmRegistryUpdatesListeners;
+	private ServiceTrackerList<NPMRegistryUpdatesListener>
+		_npmRegistryUpdatesListeners;
 	private final Map<String, String> _partialMatchMap =
 		new ConcurrentHashMap<>();
 	private Map<String, JSModule> _resolvedJSModules = new HashMap<>();

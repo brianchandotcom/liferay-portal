@@ -231,11 +231,10 @@ public class ThemeUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(ThemeUtil.class);
 
-	private static final ServiceTrackerList
-		<TemplateContextContributor, TemplateContextContributor>
-			_templateContextContributors = ServiceTrackerListFactory.open(
-				SystemBundleUtil.getBundleContext(),
-				TemplateContextContributor.class,
-				"(type=" + TemplateContextContributor.TYPE_THEME + ")");
+	private static final ServiceTrackerList<TemplateContextContributor>
+		_templateContextContributors = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(),
+			TemplateContextContributor.class,
+			"(type=" + TemplateContextContributor.TYPE_THEME + ")");
 
 }

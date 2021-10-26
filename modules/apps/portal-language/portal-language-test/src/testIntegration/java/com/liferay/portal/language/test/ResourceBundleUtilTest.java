@@ -61,8 +61,8 @@ public class ResourceBundleUtilTest {
 
 		Bundle bundle = FrameworkUtil.getBundle(ResourceBundleUtilTest.class);
 
-		try (ServiceTrackerList<ResourceBundleLoader, ResourceBundleLoader>
-				serviceTrackerList = ServiceTrackerListFactory.open(
+		try (ServiceTrackerList<ResourceBundleLoader> serviceTrackerList =
+				ServiceTrackerListFactory.open(
 					bundle.getBundleContext(), ResourceBundleLoader.class)) {
 
 			Set<String> portalKeys = portalResourceBundle.keySet();

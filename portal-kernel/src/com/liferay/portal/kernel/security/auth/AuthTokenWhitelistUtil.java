@@ -106,9 +106,8 @@ public class AuthTokenWhitelistUtil {
 		return false;
 	}
 
-	private static final ServiceTrackerList
-		<AuthTokenWhitelist, AuthTokenWhitelist> _authTokenWhitelists =
-			ServiceTrackerListFactory.open(
-				SystemBundleUtil.getBundleContext(), AuthTokenWhitelist.class);
+	private static final ServiceTrackerList<AuthTokenWhitelist>
+		_authTokenWhitelists = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), AuthTokenWhitelist.class);
 
 }

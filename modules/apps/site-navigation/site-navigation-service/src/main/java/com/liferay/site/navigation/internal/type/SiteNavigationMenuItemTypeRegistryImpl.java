@@ -97,9 +97,7 @@ public class SiteNavigationMenuItemTypeRegistryImpl
 		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerList
-		<SiteNavigationMenuItemType, SiteNavigationMenuItemType>
-			_serviceTrackerList;
+	private ServiceTrackerList<SiteNavigationMenuItemType> _serviceTrackerList;
 	private volatile ServiceTrackerMap<String, SiteNavigationMenuItemType>
 		_serviceTrackerMap;
 

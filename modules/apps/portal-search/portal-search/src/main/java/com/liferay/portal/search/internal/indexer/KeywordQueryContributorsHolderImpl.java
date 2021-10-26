@@ -64,7 +64,6 @@ public class KeywordQueryContributorsHolderImpl
 		return clazz.getName();
 	}
 
-	private ServiceTrackerList<KeywordQueryContributor, KeywordQueryContributor>
-		_serviceTrackerList;
+	private ServiceTrackerList<KeywordQueryContributor> _serviceTrackerList;
 
 }

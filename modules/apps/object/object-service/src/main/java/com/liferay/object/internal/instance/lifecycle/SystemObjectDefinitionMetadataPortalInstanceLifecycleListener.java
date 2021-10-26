@@ -203,8 +203,7 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	private PersistedModelLocalServiceRegistry
 		_persistedModelLocalServiceRegistry;
 
-	private ServiceTrackerList
-		<SystemObjectDefinitionMetadata, SystemObjectDefinitionMetadata>
-			_serviceTrackerList;
+	private ServiceTrackerList<SystemObjectDefinitionMetadata>
+		_serviceTrackerList;
 
 }

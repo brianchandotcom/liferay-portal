@@ -378,6 +378,12 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 			if (Objects.equals(objectField.getType(), "Date")) {
 				values.put(name, _toDate(locale, String.valueOf(object)));
 			}
+
+			if (objectField.getListTypeDefinitionId() != 0) {
+				Map<String, String> map = (HashMap<String, String>)object;
+
+				values.put(name, map.get("key"));
+			}
 			else {
 				values.put(name, (Serializable)object);
 			}

@@ -14,25 +14,34 @@
 
 package com.liferay.object.rest.internal.dto.v1_0.converter;
 
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -62,6 +71,8 @@ public class ObjectEntryDTOConverter
 		ObjectDefinition objectDefinition = _getObjectDefinition(
 			dtoConverterContext, objectEntry);
 
+		Locale locale = dtoConverterContext.getLocale();
+
 		return new ObjectEntry() {
 			{
 				actions = dtoConverterContext.getActions();
@@ -72,7 +83,9 @@ public class ObjectEntryDTOConverter
 				dateModified = objectEntry.getModifiedDate();
 				externalReferenceCode = objectEntry.getExternalReferenceCode();
 				id = objectEntry.getObjectEntryId();
-				properties = _filterMap(objectDefinition, objectEntry);
+				properties = _toProperties(
+					dtoConverterContext.isAcceptAllLanguages(), locale,
+					objectDefinition, objectEntry);
 				scopeKey = _getScopeKey(objectDefinition, objectEntry);
 				status = new Status() {
 					{
@@ -80,25 +93,13 @@ public class ObjectEntryDTOConverter
 						label = WorkflowConstants.getStatusLabel(
 							objectEntry.getStatus());
 						label_i18n = LanguageUtil.get(
-							LanguageResources.getResourceBundle(
-								dtoConverterContext.getLocale()),
+							LanguageResources.getResourceBundle(locale),
 							WorkflowConstants.getStatusLabel(
 								objectEntry.getStatus()));
 					}
 				};
 			}
 		};
-	}
-
-	private Map<String, Object> _filterMap(
-		ObjectDefinition objectDefinition,
-		com.liferay.object.model.ObjectEntry objectEntry) {
-
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		values.remove(objectDefinition.getPKObjectFieldName());
-
-		return (Map)values;
 	}
 
 	private ObjectDefinition _getObjectDefinition(
@@ -141,11 +142,66 @@ public class ObjectEntryDTOConverter
 		return null;
 	}
 
+	private Map<String, Object> _toProperties(
+		boolean acceptAllLanguages, Locale locale,
+		ObjectDefinition objectDefinition,
+		com.liferay.object.model.ObjectEntry objectEntry) {
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId());
+
+		Map<String, Object> map = new HashMap<>();
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		for (ObjectField objectField : objectFields) {
+			long listTypeDefinitionId = objectField.getListTypeDefinitionId();
+
+			Serializable serializable = values.get(objectField.getName());
+
+			if (listTypeDefinitionId != 0) {
+				ListTypeEntry listTypeEntry =
+					_listTypeEntryLocalService.fetchListTypeEntry(
+						listTypeDefinitionId, (String)serializable);
+
+				if (listTypeEntry == null) {
+					continue;
+				}
+
+				map.put(
+					objectField.getName(),
+					HashMapBuilder.<String, Object>put(
+						"key", listTypeEntry.getKey()
+					).put(
+						"name", listTypeEntry.getName(locale)
+					).put(
+						"name_i18n",
+						LocalizedMapUtil.getI18nMap(
+							acceptAllLanguages, listTypeEntry.getNameMap())
+					).build());
+			}
+			else {
+				map.put(objectField.getName(), serializable);
+			}
+		}
+
+		values.remove(objectDefinition.getPKObjectFieldName());
+
+		return map;
+	}
+
 	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;

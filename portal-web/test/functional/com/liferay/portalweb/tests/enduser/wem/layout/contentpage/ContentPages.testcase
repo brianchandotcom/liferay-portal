@@ -709,11 +709,9 @@ definition {
 		}
 
 		task ("Assert no fragment or widget is shown") {
-			PageEditor.viewFragmentNotPresent(fragmentName = "Container");
-			PageEditor.viewFragmentNotPresent(fragmentName = "Blogs");
-			PageEditor.viewFragmentNotPresent(fragmentName = "HTML");
-			PageEditor.viewFragmentNotPresent(fragmentName = "Button");
-			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
+			for (var fragmentName : list "Container,Blogs,HTML,Button,Heading") {
+				PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
+			}
 		}
 
 		task ("From the sidebar fragment tree, show HTML and Button") {
@@ -723,11 +721,9 @@ definition {
 		}
 
 		task ("Assert no fragment or widget is shown") {
-			PageEditor.viewFragmentNotPresent(fragmentName = "Container");
-			PageEditor.viewFragmentNotPresent(fragmentName = "Blogs");
-			PageEditor.viewFragmentNotPresent(fragmentName = "HTML");
-			PageEditor.viewFragmentNotPresent(fragmentName = "Button");
-			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
+			for (var fragmentName : list "Container,Blogs,HTML,Button,Heading") {
+				PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
+			}
 		}
 
 		task ("Unhide the container") {

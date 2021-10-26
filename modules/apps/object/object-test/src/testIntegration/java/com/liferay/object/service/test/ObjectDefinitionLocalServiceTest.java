@@ -16,7 +16,9 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
+import com.liferay.object.exception.InvalidObjectFieldException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
@@ -26,8 +28,10 @@ import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
@@ -976,6 +980,9 @@ public class ObjectDefinitionLocalServiceTest {
 			Assert.assertNotNull(noSuchObjectFieldException);
 		}
 
+		_testUpdateObjectDefinitionWithRelationshipFieldAsTitleField(
+			objectDefinition);
+
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(), false, false, null,
@@ -1150,6 +1157,56 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 	}
 
+	private void _testUpdateObjectDefinitionWithRelationshipFieldAsTitleField(
+			ObjectDefinition objectDefinition1)
+		throws Exception {
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				Collections.<ObjectField>emptyList());
+
+		objectDefinition2 =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition2.getObjectDefinitionId());
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				objectDefinition1.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		try {
+			objectDefinition2 =
+				_objectDefinitionLocalService.updateCustomObjectDefinition(
+					objectDefinition2.getObjectDefinitionId(),
+					objectRelationship.getObjectFieldId2(), 0,
+					objectDefinition2.isActive(),
+					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
+					null, LocalizedMapUtil.getLocalizedMap("Ables"),
+					objectDefinition2.getScope());
+
+			Assert.fail();
+		}
+		catch (InvalidObjectFieldException invalidObjectFieldException) {
+			Assert.assertNotNull(invalidObjectFieldException);
+		}
+		finally {
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship);
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition2);
+		}
+	}
+
 	/*private static final String[] _DESTINATION_WEBHOOK_EVENT_KEYS = {
 		"onAfterCreate", "onAfterRemove", "onAfterUpdate", "onBeforeCreate",
 		"onBeforeRemove", "onBeforeUpdate"
@@ -1163,6 +1220,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Inject
 	private ResourceActionLocalService _resourceActionLocalService;

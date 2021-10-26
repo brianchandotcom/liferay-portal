@@ -754,7 +754,7 @@
 <!--SELECT-->
 <tr>
 	<td>SELECT_ASSERT_RADIO_OPTION_ORDER</td>
-	<td>//div[@class='ddm-radio']//div[contains(concat(' ',normalize-space(@class),' '),'custom-radio')][${key_position}]//span[contains(text(),'${key_optionLabel}')]</td>
+	<td>//div[${key_position}]//span[contains(text(),'${key_optionLabel}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -794,7 +794,7 @@
 </tr>
 <tr>
 	<td>SELECT_OPTIONS_INLINE_IDENTIFIER</td>
-	<td>//div[@class='ddm-radio']//div[@class='custom-control custom-radio custom-control-inline']</td>
+	<td>//div[@class='custom-control custom-radio custom-control-inline']</td>
 	<td></td>
 </tr>
 <tr>

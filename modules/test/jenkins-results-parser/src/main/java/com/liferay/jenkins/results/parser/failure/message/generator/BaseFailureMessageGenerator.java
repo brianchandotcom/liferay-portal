@@ -20,15 +20,15 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.SourceFormatBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.Workspace;
+import com.liferay.jenkins.results.parser.WorkspaceBuild;
+import com.liferay.jenkins.results.parser.WorkspaceGitRepository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.liferay.jenkins.results.parser.Workspace;
-import com.liferay.jenkins.results.parser.WorkspaceBuild;
-import com.liferay.jenkins.results.parser.WorkspaceGitRepository;
 import org.dom4j.Element;
 
 /**
@@ -57,13 +57,10 @@ public abstract class BaseFailureMessageGenerator
 
 		sb.append("https://github.com/");
 
-		Map<String, String> pullRequestDetailsMap = null;
-
 		if (!topLevelBuild.isFromArchive() &&
 			(topLevelBuild instanceof WorkspaceBuild)) {
 
-			WorkspaceBuild workspaceBuild =
-				(WorkspaceBuild)topLevelBuild;
+			WorkspaceBuild workspaceBuild = (WorkspaceBuild)topLevelBuild;
 
 			Workspace workspace = workspaceBuild.getWorkspace();
 
@@ -76,6 +73,8 @@ public abstract class BaseFailureMessageGenerator
 					workspaceGitRepository.getSenderBranchUsername(), "/",
 					workspaceGitRepository.getSenderBranchName()));
 		}
+
+		Map<String, String> pullRequestDetailsMap = null;
 
 		if (topLevelBuild instanceof SourceFormatBuild) {
 			SourceFormatBuild sourceFormatBuild =
@@ -181,8 +180,7 @@ public abstract class BaseFailureMessageGenerator
 		if (!topLevelBuild.isFromArchive() &&
 			(topLevelBuild instanceof WorkspaceBuild)) {
 
-			WorkspaceBuild workspaceBuild =
-					(WorkspaceBuild)topLevelBuild;
+			WorkspaceBuild workspaceBuild = (WorkspaceBuild)topLevelBuild;
 
 			Workspace workspace = workspaceBuild.getWorkspace();
 
@@ -200,9 +198,8 @@ public abstract class BaseFailureMessageGenerator
 
 			portalSenderBranchUsername =
 				portalGitRepositoryGitDetailsTempMap.get("github.origin.name");
-			portalSenderBranchName =
-				portalGitRepositoryGitDetailsTempMap.get(
-					"github.sender.branch.name");
+			portalSenderBranchName = portalGitRepositoryGitDetailsTempMap.get(
+				"github.sender.branch.name");
 		}
 
 		Element gitCommitPluginsAnchorElement = Dom4JUtil.getNewElement("a");

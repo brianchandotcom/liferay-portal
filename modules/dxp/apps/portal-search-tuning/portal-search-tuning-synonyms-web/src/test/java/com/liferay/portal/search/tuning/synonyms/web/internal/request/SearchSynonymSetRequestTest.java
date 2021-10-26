@@ -47,6 +47,8 @@ public class SearchSynonymSetRequestTest extends BaseSynonymsWebTestCase {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
+
+		setUpPortletPreferencesFactoryUtil();
 	}
 
 	@Test

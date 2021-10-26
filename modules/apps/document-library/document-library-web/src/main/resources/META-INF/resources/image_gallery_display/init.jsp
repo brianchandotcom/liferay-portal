@@ -16,10 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.item.selector.ItemSelector" %><%@
-page import="com.liferay.item.selector.criteria.FolderItemSelectorReturnType" %><%@
-page import="com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion" %><%@
-page import="com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil" %>
+<%@ page import="com.liferay.document.library.web.internal.display.context.IGConfigurationDisplayContext" %>
 
 <%
 if (layout.isTypeControlPanel()) {

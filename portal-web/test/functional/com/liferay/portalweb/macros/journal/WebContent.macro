@@ -1724,7 +1724,7 @@ definition {
 	}
 
 	macro saveAsDraft {
-		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
+		Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
 
 		Click(locator1 = "ContentDashboard#EDIT_OPTION");
 

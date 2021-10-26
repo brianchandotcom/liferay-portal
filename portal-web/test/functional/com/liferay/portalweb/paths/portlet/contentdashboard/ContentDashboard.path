@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ASSET_MENU_DROPDOWN_BUTTON</td>
+	<td>//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-unstyled') and contains(@class, 'btn-monospaced') and contains(@class, 'component-action')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AUDIENCE_LIST_DASHBOARD</td>
 	<td>//span[contains(@class,'label-secondary') and contains (.,'${value}')]</td>
 	<td></td>
@@ -310,8 +315,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WEB_CONTENT_MENU_DROPDOWN_BUTTON</td>
-	<td>//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-unstyled') and contains(@class, 'btn-monospaced') and contains(@class, 'component-action')]</td>
+	<td>X_AXIS_CATEGORIES_NAME</td>
+	<td>(//*[contains(@class, 'xAxis')] //*[contains(@class,'recharts-text')]/*)[${categoryIndex}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -18,15 +18,18 @@ import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.taglib.internal.security.permission.resource.DDMTemplatePermission;
 import com.liferay.template.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.template.taglib.internal.util.PortletDisplayTemplateUtil;
@@ -201,15 +204,8 @@ public class TemplateSelectorTag extends IncludeTag {
 		try {
 			List<DDMTemplate> ddmTemplates =
 				DDMTemplateLocalServiceUtil.getTemplates(
-					themeDisplay.getCompanyId(),
-					PortalUtil.getCurrentAndAncestorSiteGroupIds(
-						PortletDisplayTemplateUtil.getDDMTemplateGroupId(
-							themeDisplay.getScopeGroupId())),
-					new long[] {PortalUtil.getClassNameId(getClassName())},
-					new long[] {0L},
-					PortalUtil.getClassNameId(
-						PortletDisplayTemplate.class.getName()),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+					_getGroupIds(themeDisplay.getScopeGroup()),
+					PortalUtil.getClassNameId(getClassName()), 0L);
 
 			return ListUtil.filter(
 				ddmTemplates,
@@ -236,10 +232,40 @@ public class TemplateSelectorTag extends IncludeTag {
 		}
 	}
 
+	private long[] _getGroupIds(Group group) {
+		if (group.isLayout()) {
+			group = group.getParentGroup();
+		}
+
+		long groupId = group.getGroupId();
+
+		if (group.isStagingGroup()) {
+			Group liveGroup = group.getLiveGroup();
+
+			if (!liveGroup.isStagedPortlet(TemplatePortletKeys.TEMPLATE)) {
+				groupId = liveGroup.getGroupId();
+			}
+		}
+
+		try {
+			return PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException, portalException);
+			}
+		}
+
+		return new long[] {groupId};
+	}
+
 	private static final String _ATTRIBUTE_NAMESPACE =
 		"liferay-template:template-selector:";
 
 	private static final String _PAGE = "/template_selector/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TemplateSelectorTag.class);
 
 	private String _className;
 	private String _defaultDisplayStyle = StringPool.BLANK;

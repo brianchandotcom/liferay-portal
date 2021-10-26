@@ -22,6 +22,25 @@ definition {
 		}
 	}
 
+	@description = "LPS-135397 - Verify if it's possible to add a Block"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddBlock {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141504 CanAddBlock pending implementation
+
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to add Entries with Custom Layout Created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddEntriesWithCustomLayout {
+
+		// TODO LPS-141515 CanAddEntriesWithCustomLayout pending implementation
+
+	}
+
 	@description = "LPS-135635 - Verify it is possible to add a field after the Object is published and submit entries to it"
 	@ignore = "Test Stub"
 	@priority = "5"
@@ -29,6 +48,43 @@ definition {
 		property portal.acceptance = "true";
 
 		// TODO LPS-138853 CanAddFieldAndViewEntriesAfterPublished pending implementation
+
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with one column"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddFieldForBlockOneColumn {
+
+		// TODO LPS-141506 CanAddFieldForBlockOneColumn pending implementation
+
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with three columns"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddFieldForBlockThreeColumns {
+
+		// TODO LPS-141508 CanAddFieldForBlockThreeColumns pending implementation
+
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with two columns"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddFieldForBlockTwoColumns {
+
+		// TODO LPS-141507 CanAddFieldForBlockTwoColumns pending implementation
+
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to add a Tab with Fields Type"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddFieldTab {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141502 CanAddFieldTab pending implementation
 
 	}
 
@@ -115,6 +171,24 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No items were found.");
+	}
+
+	@description = "LPS-135397 - Verify it is possible to Cancel the update of a Layout"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCancelUpdateLayout {
+
+		// TODO LPS-141519 CanCancelUpdateLayout pending implementation
+
+	}
+
+	@description = "LPS-135397 - Verify it is possible to collapse and expand a block of fields"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCollapseAndExpandBlock {
+
+		// TODO LPS-141525 CanCollapseAndExpandBlock pending implementation
+
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a BigDecimal field"
@@ -258,6 +332,16 @@ definition {
 			fieldType = "Integer");
 	}
 
+	@description = "LPS-135397 - Verify if it's possible to create a Layout for an Object"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanCreateLayout {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141500 CanCreateLayout pending implementation
+
+	}
+
 	@description = "LPS-135549 - Verify it is possible to create a Long field"
 	@priority = "4"
 	test CanCreateLongField {
@@ -370,6 +454,26 @@ definition {
 			fieldType = "String");
 	}
 
+	@description = "LPS-135397 - Verify if it's possible to delete a Field"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDeleteFieldOnLayout {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141510 CanDeleteFieldOnLayout pending implementation
+
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to delete a Layout for an Object"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDeleteLayout {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141501 CanDeleteLayout pending implementation
+
+	}
+
 	@description = "LPS-135400 - Verify it is possible to delete a Relationship"
 	@priority = "5"
 	test CanDeleteRelationship {
@@ -396,6 +500,24 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No items were found.");
+	}
+
+	@description = "LPS-135397 - Verify if it's not possible to add a Tab with Relationship Type in an Object without Relashionsip"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotAddRelationshibTabWithoutRelationship {
+
+		// TODO LPS-141503 CannotAddRelationshibTabWithoutRelationship pending implementation
+
+	}
+
+	@description = "LPS-135397 - Verify that the Relationship tab cannot be added first"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotAddRelationshipTabFirst {
+
+		// TODO LPS-141521 CannotAddRelationshipTabFirst pending implementation
+
 	}
 
 	@description = "LPS-135549 - Verify that it is not possible to create a Field with a duplicated Field Name"
@@ -773,6 +895,15 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "Name must only contain letters and digits");
 	}
 
+	@description = "LPS-135397 - Verify it is not possible to set a layout as default without all the required fields on the first tab"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotSetLayoutDefaultWithoutAllRequiredFieldsOnFirstTab {
+
+		// TODO LPS-141520 CannotSetLayoutDefaultWithoutAllRequiredFieldsOnFirstTab pending implementation
+
+	}
+
 	@description = "LPS-139005 - Verify that is not possible to submit entries in a form with an Object that was inactivated"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -953,6 +1084,15 @@ definition {
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.assertObjectStatus(status = "Approved");
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to set the block as Collapsible"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSetBlockCollapsible {
+
+		// TODO LPS-141505 CanSetBlockCollapsible pending implementation
+
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for a Field Label"
@@ -1160,6 +1300,15 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "Entry 1");
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to update a Custom Layout Created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateCustomLayout {
+
+		// TODO LPS-141517 CanUpdateCustomLayout pending implementation
+
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Label of a Field after the Object is published"
@@ -1607,6 +1756,43 @@ definition {
 			value1 = "Relationship Updated");
 	}
 
+	@description = "LPS-135397 - Verify if it's possible to view Entries with Custom Layout Created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewEntriesWithCustomLayout {
+
+		// TODO LPS-141516 CanViewEntriesWithCustomLayout pending implementation
+
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to view the Entry with one column"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewEntryWithOneColumn {
+
+		// TODO LPS-141511 CanViewEntryWithOneColumn pending implementation
+
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to view the Entry with three columns"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewEntryWithThreeColumns {
+
+		// TODO LPS-141513 CanViewEntryWithThreeColumns pending implementation
+
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to view the Entry with two columns"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewEntryWithTwoColumns {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141512 CanViewEntryWithTwoColumns pending implementation
+
+	}
+
 	@description = "LPS-135400 - There is an explanation about each Relationship type"
 	@priority = "3"
 	test CanViewExplanationRelationshipTypes {
@@ -1748,6 +1934,16 @@ definition {
 		ObjectAdmin.viewFieldDetails();
 	}
 
+	@description = "LPS-135397 - Verify if it's possible to view a tab of relationship with entries"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewRelationshipTab {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141514 CanViewRelationshipTab pending implementation
+
+	}
+
 	@description = "LPS-135549 - Verify that the columns Name and Type are displayed for the Fields table"
 	@priority = "4"
 	test ColumnsAreDisplayedFieldsTable {
@@ -1820,6 +2016,15 @@ definition {
 		CreateObject.assertObjectFieldNameIsAutofilled(
 			fieldLabel = "Custom Field",
 			fieldName = "customField");
+	}
+
+	@description = "LPS-135397 - Verify if it's not possible to add a Field without Choose an Option Field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FieldOptionRequired {
+
+		// TODO LPS-141509 FieldOptionRequired pending implementation
+
 	}
 
 	@description = "LPS-135635 - Verify that the options Keyword and Text appears under the Searchable section when updating the field type to String"

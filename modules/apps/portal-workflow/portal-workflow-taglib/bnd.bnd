@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Portal Workflow Taglib
 Bundle-SymbolicName: com.liferay.portal.workflow.taglib
 Bundle-Version: 1.0.2
+Export-Package: com.liferay.portal.workflow.taglib.servlet.taglib
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

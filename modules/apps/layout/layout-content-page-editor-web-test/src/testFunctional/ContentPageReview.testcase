@@ -753,7 +753,9 @@ definition {
 			fragmentName = "Static Text",
 			openComment = "true");
 
-		PageEditor.viewComment(fragmentComment = "Static Text fragment comment ${commentNumber}");
+		for (var commentNumber : list "1,2,3") {
+			PageEditor.viewComment(fragmentComment = "Static Text fragment comment ${commentNumber}");
+		}
 	}
 
 	@description = "This case ensures that multiple replies can be added and viewed in a comment."

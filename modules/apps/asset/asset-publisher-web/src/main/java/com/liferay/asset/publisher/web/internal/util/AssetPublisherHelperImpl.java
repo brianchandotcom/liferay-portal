@@ -454,6 +454,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 		assetEntryQuery.setOrderByType2(orderByType2);
 
+		assetEntryQuery.setAttribute("showNonindexable", Boolean.TRUE);
+
 		return assetEntryQuery;
 	}
 

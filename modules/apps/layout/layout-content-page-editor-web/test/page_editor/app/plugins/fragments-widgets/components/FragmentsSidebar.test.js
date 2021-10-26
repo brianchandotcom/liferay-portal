@@ -598,4 +598,24 @@ describe('FragmentsSidebar', () => {
 			{}
 		);
 	});
+
+	describe('Button to switch the display style', () => {
+		Liferay.Util.sub.mockImplementation((langKey, args) =>
+			langKey.replace('x', args)
+		);
+
+		it('shows the card view when the display style is list', () => {
+			const {getByTitle} = renderComponent(STATE);
+
+			expect(getByTitle('switch-to-card-view')).toBeInTheDocument();
+		});
+
+		it('shows the list view when the display style is card', () => {
+			const {getByTitle} = renderComponent(STATE);
+
+			fireEvent.click(getByTitle('switch-to-card-view'));
+
+			expect(getByTitle('switch-to-list-view')).toBeInTheDocument();
+		});
+	});
 });

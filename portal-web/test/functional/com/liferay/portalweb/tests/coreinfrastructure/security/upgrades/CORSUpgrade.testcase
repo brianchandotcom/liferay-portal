@@ -20,6 +20,7 @@ definition {
 
 	@description = "This is a use case for LRQA-61573."
 	@priority = "5"
+	@uitest
 	test ViewPortalCORSAfterUpgrade72101 {
 		property data.archive.type = "data-archive-portal-cors";
 		property portal.version = "7.2.10.1";
@@ -44,6 +45,7 @@ definition {
 
 	@description = "This is a use case for LRQA-61573."
 	@priority = "5"
+	@uitest
 	test ViewWebContextsCORSAfterUpgrade72101 {
 		property data.archive.type = "data-archive-web-contexts-cors";
 		property portal.version = "7.2.10.1";

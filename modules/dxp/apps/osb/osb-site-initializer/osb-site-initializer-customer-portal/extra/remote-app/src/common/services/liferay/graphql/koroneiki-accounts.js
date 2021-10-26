@@ -1,20 +1,22 @@
 const getKoroneikiAccountsByFilter = (filter) => {
-  if (filter) {
-    let filters = "";
+	if (filter) {
+		let filters = '';
 
-    if (filter.accountKeys) {
-      const totalKeys = filter.accountKeys.length;
+		if (filter.accountKeys) {
+			const totalKeys = filter.accountKeys.length;
 
-      if (totalKeys) {
-        filter.accountKeys.forEach((key, index) => {
-          filters += `accountKey eq '${key}'${index + 1 < totalKeys ? " or " : ""}`;
-        });
-      }
-    }
+			if (totalKeys) {
+				filter.accountKeys.forEach((key, index) => {
+					filters += `accountKey eq '${key}'${
+						index + 1 < totalKeys ? ' or ' : ''
+					}`;
+				});
+			}
+		}
 
-    if (filters.length > 0) {
-      return {
-        query: `{
+		if (filters.length > 0) {
+			return {
+				query: `{
             c {
                 koroneikiAccounts(filter: "${filters}") {
                   items {
@@ -28,9 +30,10 @@ const getKoroneikiAccountsByFilter = (filter) => {
                   }
                 }
               }
-        }`}
-    }
-  }
-}
+        }`,
+			};
+		}
+	}
+};
 
-export { getKoroneikiAccountsByFilter };
+export {getKoroneikiAccountsByFilter};

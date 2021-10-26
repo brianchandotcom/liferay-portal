@@ -1,7 +1,6 @@
-
 const getDXPRegions = () => {
-  return {
-    query: `{
+	return {
+		query: `{
           c {
             dXPCDataCenterRegions {
               items {
@@ -10,8 +9,8 @@ const getDXPRegions = () => {
               }
             }
           }
-        }`
-  };
+        }`,
+	};
 };
 
-export { getDXPRegions };
+export {getDXPRegions};

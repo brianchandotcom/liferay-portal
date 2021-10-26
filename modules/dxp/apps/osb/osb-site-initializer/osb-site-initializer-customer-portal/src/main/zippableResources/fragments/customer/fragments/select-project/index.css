@@ -17,14 +17,13 @@
 
 #selectedProject {
 	white-space: nowrap;
-
 	overflow: hidden; /* "overflow" value must be different from "visible" */
 	text-overflow: ellipsis;
 	width:100px;
 }
 .active {
-	background: rgba(0, 74, 215, 0.1);
-	color: #004ad7;
+	background: var(--bg-brand-primary-lighten-5);
+	color: var(--bg-brand-primary);
 }
 
 .left {

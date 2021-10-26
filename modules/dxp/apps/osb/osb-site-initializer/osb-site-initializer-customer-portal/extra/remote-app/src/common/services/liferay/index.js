@@ -7,11 +7,12 @@ const getUserId = () => {
 
 		// eslint-disable-next-line no-undef
 		return themeDisplay.getUserId();
-	} catch (error) {
+	}
+	catch (error) {
 		console.warn(error.message);
 	}
 };
 
 export const LiferayTheme = {
-    getUserId
+	getUserId,
 };

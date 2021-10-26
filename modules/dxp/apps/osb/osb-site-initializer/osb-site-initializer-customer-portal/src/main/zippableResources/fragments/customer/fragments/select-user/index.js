@@ -10,17 +10,17 @@
  * distribution rights of the Software.
  */
 
-
-
 const userApplicationIdKey = 'customer-portal-user-application';
 const userApplication = sessionStorage.getItem(userApplicationIdKey);
 
 if (userApplication) {
-    var user = JSON.parse(userApplication);
+	var user = JSON.parse(userApplication);
 
-    fragmentElement.querySelector('#select-user-application').textContent = user.name;
+	fragmentElement.querySelector('#select-user-application').textContent =
+		user.name;
 
-    if (user.image) {
-        fragmentElement.querySelector('#user-icon-application').src = user.image;
-    }
-} 
+	if (user.image) {
+		fragmentElement.querySelector('#user-icon-application').src =
+			user.image;
+	}
+}

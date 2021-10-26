@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react';
-import { REACT_APP_LIFERAY_API } from '../utils';
+import {useEffect, useState} from 'react';
+import {REACT_APP_LIFERAY_API} from '../utils';
 
 const getData = (data) => {
 	let currentData = data;
 
 	if (currentData) {
-		if (Object.keys(currentData)[0] === "c") {
+		if (Object.keys(currentData)[0] === 'c') {
 			currentData = currentData.c;
 		}
 
 		currentData = currentData[Object.keys(currentData)[0]];
 
-		if (Object.keys(currentData)[0] === "items") {
+		if (Object.keys(currentData)[0] === 'items') {
 			currentData = currentData.items;
 		}
 	}
 
 	return currentData;
-}
+};
 
 const useGraphQL = (query) => {
 	const [isLoading, setLoading] = useState(true);
@@ -40,14 +40,15 @@ const useGraphQL = (query) => {
 				method: 'POST',
 			});
 
-			const { data } = await response.json();
+			const {data} = await response.json();
 
 			setData(getData(data));
 			setLoading(false);
-		} catch (error) {
+		}
+		catch (error) {
 			setError(error.message);
 		}
-	}
+	};
 
 	useEffect(() => {
 		if (queryString) {
@@ -60,8 +61,8 @@ const useGraphQL = (query) => {
 	return {
 		data,
 		error,
-		isLoading
+		isLoading,
 	};
-}
+};
 
 export default useGraphQL;

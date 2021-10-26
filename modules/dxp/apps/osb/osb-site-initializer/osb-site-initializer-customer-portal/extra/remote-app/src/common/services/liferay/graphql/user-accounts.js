@@ -1,6 +1,6 @@
 const getUserAccountById = (id) => {
-  return {
-    query: `{
+	return {
+		query: `{
             userAccount(userAccountId: ${id}) {
                 id
                 name
@@ -11,8 +11,8 @@ const getUserAccountById = (id) => {
                   externalReferenceCode
                 }
               }
-        }`
-  };
-}
+        }`,
+	};
+};
 
-export { getUserAccountById };
+export {getUserAccountById};

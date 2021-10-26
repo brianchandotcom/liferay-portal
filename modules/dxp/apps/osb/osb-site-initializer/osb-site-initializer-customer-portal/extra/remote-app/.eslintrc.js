@@ -19,7 +19,7 @@ try {
 }
 catch (error) {
 	throw new Error(
-		'@liferay/npm-scripts is not installed; please run "ant setup-sdk"',
+		'@liferay/npm-scripts is not installed; please run "ant setup-sdk"'
 	);
 }
 
@@ -30,7 +30,7 @@ module.exports = {
 		'@liferay/portal/no-loader-import-specifier': 'off',
 		'@liferay/portal/no-react-dom-render': 'off',
 		'no-case-declarations': 'off',
-		'no-empty': ['error', { allowEmptyCatch: true }],
+		'no-empty': ['error', {allowEmptyCatch: true}],
 		'no-prototype-builtins': 'off',
 	},
 };

@@ -14,6 +14,26 @@ function getActiveIndicator() {
 	return fragmentElement.querySelector('.carousel-navigation .active');
 }
 
+function activateIndicator(activeItem, nextItem, movement) {
+	if (movement) {
+		activeItem.classList.add(movement);
+		nextItem.classList.add(movement);
+	}
+
+	getActiveIndicator().classList.remove('active');
+	indicators[this.nextItemIndex].classList.add('active');
+}
+
+function activateItem(activeItem, nextItem, movement) {
+	activeItem.classList.remove('active');
+	nextItem.classList.add('active');
+
+	if (movement) {
+		activeItem.classList.remove(movement);
+		nextItem.classList.remove(movement);
+	}
+}
+
 function move(movement, index = null) {
 	if (moving) {
 		return;
@@ -23,25 +43,20 @@ function move(movement, index = null) {
 
 	const activeItem = fragmentElement.querySelector('.carousel-item.active');
 	const indexActiveItem = items.indexOf(activeItem);
-	const activeIndicator = getActiveIndicator();
 
-	let nextItemIndex = index;
+	this.nextItemIndex = index;
 
 	if (index === null) {
-		nextItemIndex = indexActiveItem >= 2 ? 0 : indexActiveItem + 1;
+		this.nextItemIndex =
+			indexActiveItem >= items.length - 1 ? 0 : indexActiveItem + 1;
 	}
 
-	const nextItem = items[nextItemIndex];
+	const nextItem = items[this.nextItemIndex];
 
-	activeItem.classList.add(movement);
-	nextItem.classList.add(movement);
-	activeIndicator.classList.remove('active');
-	indicators[nextItemIndex].classList.add('active');
+	activateIndicator(activeItem, nextItem, movement);
 
 	setTimeout(function () {
-		activeItem.classList.remove('active', movement);
-		nextItem.classList.add('active');
-		nextItem.classList.remove(movement);
+		activateItem(activeItem, nextItem, movement);
 
 		moving = false;
 	}, 600);
@@ -66,6 +81,16 @@ function createInterval() {
 
 (function main() {
 	let intervalId = createInterval();
+
+	if (this.nextItemIndex && this.nextItemIndex < items.length) {
+		const activeItem = fragmentElement.querySelector(
+			'.carousel-item.active'
+		);
+		const nextItem = items[this.nextItemIndex];
+
+		activateIndicator(activeItem, nextItem);
+		activateItem(activeItem, nextItem);
+	}
 
 	indicators.forEach(function (indicator, index) {
 		indicator.addEventListener('click', function () {

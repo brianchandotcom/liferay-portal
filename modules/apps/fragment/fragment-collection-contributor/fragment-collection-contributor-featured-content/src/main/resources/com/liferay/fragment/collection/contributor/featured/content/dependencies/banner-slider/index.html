@@ -1,113 +1,49 @@
 <div class="section-slider">
 	<div class="carousel">
 		<ol class="carousel-navigation">
-			<li>
-				<button aria-controls="${fragmentEntryLinkNamespace}-carouselInner" class="active" type="button">
-					<span class="sr-only">
-						Focus first slide
-					</span>
-				</button>
-			</li>
-			<li>
-				<button aria-controls="${fragmentEntryLinkNamespace}-carouselInner" type="button">
-					<span class="sr-only">
-						Focus second slide
-					</span>
-				</button>
-			</li>
-			<li>
-				<button aria-controls="${fragmentEntryLinkNamespace}-carouselInner" type="button">
-					<span class="sr-only">
-						Focus third slide
-					</span>
-				</button>
-			</li>
+			[#list 0..configuration.numberOfSlides-1 as i]
+				<li>
+					<button aria-controls="${fragmentEntryLinkNamespace}-carousel-item-${i+1}" aria-label="Focus slide ${i+1}" class="[#if i == 0]active[/#if]" type="button"></button>
+				</li>
+			[/#list]
 		</ol>
 
 		<div class="carousel-inner text-break" id="${fragmentEntryLinkNamespace}-carouselInner" role="group">
-			<div class="active carousel-item">
-				<img alt="First Responsive Image" class="w-100" data-lfr-editable-id="01-01-image" data-lfr-editable-type="image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=" />
+			[#list 0..configuration.numberOfSlides-1 as i]
+				[#assign index = "${i+1}" /]
 
-				<div class="carousel-caption d-md-block d-none">
-					<div class="container">
-						<div class="row">
-							<div class="col-12 col-md-8 col-xl-6 mx-auto text-center">
-								<h1 data-lfr-editable-id="01-02-title" data-lfr-editable-type="rich-text">
-									First Slide Title
-								</h1>
+				[#if i lt 9]
+					[#assign index = "0${i+1}" /]
+				[/#if]
 
-								<div class="lead mb-4" data-lfr-editable-id="01-03-subtitle" data-lfr-editable-type="rich-text">
-									<p>
-										This is an slider component that you can
-										use when you need extra attention to
-										featured content or information.
-									</p>
+				<div class="[#if i == 0]active[/#if] carousel-item" id="${fragmentEntryLinkNamespace}-carousel-item-${i+1}">
+					<img alt="Responsive Image ${i+1}" class="w-100" data-lfr-editable-id="${index}-01-image" data-lfr-editable-type="image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=" />
+
+					<div class="carousel-caption d-md-block d-none">
+						<div class="container">
+							<div class="row">
+								<div class="col-12 col-md-8 col-xl-6 mx-auto text-center">
+									<h1 data-lfr-editable-id="${index}-02-title" data-lfr-editable-type="rich-text">
+										Slide ${i+1} Title
+									</h1>
 								</div>
-
-								<a class="btn btn-primary" data-lfr-editable-id="01-04-link" data-lfr-editable-type="link" href="" id="fragment-${fragmentEntryLinkNamespace}-01-04-link">
-									Go Somewhere
-								</a>
 							</div>
 						</div>
-					</div>
-				</div>
-			</div>
 
-			<div class="carousel-item">
-				<img alt="Second Responsive Image" class="w-100" data-lfr-editable-id="02-01-image" data-lfr-editable-type="image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=" />
-
-				<div class="carousel-caption d-md-block d-none">
-					<div class="container">
-						<div class="row">
-							<div class="col-12 col-md-8 col-xl-6 mx-auto text-center">
-								<h1 data-lfr-editable-id="02-02-title" data-lfr-editable-type="rich-text">
-									Second Slide Title
-								</h1>
-
-								<div class="lead mb-4" data-lfr-editable-id="02-03-subtitle" data-lfr-editable-type="rich-text">
-									<p>
-										This is an slider component that you can
-										use when you need extra attention to
-										featured content or information.
-									</p>
-								</div>
-
-								<a class="btn btn-primary" data-lfr-editable-id="02-04-link" data-lfr-editable-type="link" href="" id="fragment-${fragmentEntryLinkNamespace}-02-04-link">
-									Go Somewhere
-								</a>
-							</div>
+						<div class="lead mb-4" data-lfr-editable-id="${index}-03-subtitle" data-lfr-editable-type="rich-text">
+							<p>
+								This is an slider component that you can
+								use when you need extra attention to
+								featured content or information.
+							</p>
 						</div>
+
+						<a class="btn btn-primary" data-lfr-editable-id="${index}-04-link" data-lfr-editable-type="link" href="" id="fragment-${fragmentEntryLinkNamespace}-01-04-link">
+							Go Somewhere
+						</a>
 					</div>
 				</div>
-			</div>
-
-			<div class="carousel-item">
-				<img alt="Third Responsive Image" class="w-100" data-lfr-editable-id="03-01-image" data-lfr-editable-type="image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=" />
-
-				<div class="carousel-caption d-md-block d-none">
-					<div class="container">
-						<div class="row">
-							<div class="col-12 col-md-8 col-xl-6 mx-auto text-center">
-								<h1 data-lfr-editable-id="03-02-title" data-lfr-editable-type="rich-text">
-									Third Slide Title
-								</h1>
-
-								<div class="lead mb-4" data-lfr-editable-id="03-03-subtitle" data-lfr-editable-type="rich-text">
-									<p>
-										This is an slider component that you can
-										use when you need extra attention to
-										featured content or information.
-									</p>
-								</div>
-
-								<a class="btn btn-primary" data-lfr-editable-id="03-04-link" data-lfr-editable-type="link" href="" id="fragment-${fragmentEntryLinkNamespace}-03-04-link">
-									Go Somewhere
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			[/#list]
 		</div>
 	</div>
 </div>

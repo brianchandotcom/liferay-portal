@@ -323,9 +323,17 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"marginBottom": "6",
+														"marginBottom": "7",
 														"marginTop": "5"
 													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "5"
+															},
+															"id": "tablet"
+														}
+													],
 													"gutters": true,
 													"modulesPerRow": 3,
 													"numberOfColumns": 3,
@@ -853,11 +861,153 @@
 													}
 												},
 												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"collectionConfig": {
+														"collectionReference": {
+															"className": "com.liferay.asset.list.model.AssetListEntry",
+															"classPK": "[$ASSET_LIST_ENTRY_ID:TEACHERS$]"
+														},
+														"collectionType": "Collection"
+													},
+													"listItemStyle": "",
+													"listStyle": "",
+													"numberOfColumns": 4,
+													"numberOfItems": 4,
+													"numberOfItemsPerPage": 5,
+													"templateKey": ""
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"collectionItemConfig": {
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "bootcamp-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-100"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "Image",
+																							"itemReference": {
+																								"contextSource": "CollectionItem"
+																							}
+																						}
+																					}
+																				},
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "4"
+																	}
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "bootcamp-heading"
+																	},
+																	"fragmentConfig": {
+																		"displayLevel": "0",
+																		"headingLevel": "h4"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				},
+																				"text": {
+																					"mapping": {
+																						"fieldKey": "Name",
+																						"itemReference": {
+																							"contextSource": "CollectionItem"
+																						}
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "2"
+																	}
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "bootcamp-text-block"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				},
+																				"text": {
+																					"mapping": {
+																						"fieldKey": "Info",
+																						"itemReference": {
+																							"contextSource": "CollectionItem"
+																						}
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "5"
+																	}
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "CollectionItem"
+													}
+												],
+												"type": "Collection"
 											}
 										],
 										"type": "FragmentDropZone"
 									},
 									{
+										"pageElements": [
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+														},
+														"widgetName": "com_liferay_comment_page_comments_web_portlet_PageCommentsPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
 										"type": "FragmentDropZone"
 									},
 									{

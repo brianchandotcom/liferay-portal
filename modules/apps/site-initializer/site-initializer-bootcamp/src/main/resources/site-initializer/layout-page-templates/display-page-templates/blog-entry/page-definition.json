@@ -535,11 +535,19 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
-						"marginBottom": "6"
+						"marginBottom": "8"
 					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"marginBottom": "6"
+							},
+							"id": "tablet"
+						}
+					],
 					"layout": {
 						"borderWidth": 0,
-						"marginBottom": 6,
+						"marginBottom": 10,
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
@@ -808,7 +816,10 @@
 														}
 													}
 												}
-											]
+											],
+											"fragmentStyle": {
+												"marginBottom": "5"
+											}
 										},
 										"type": "Fragment"
 									}
@@ -829,6 +840,14 @@
 						"maxWidth": "100%",
 						"width": "960px"
 					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"marginBottom": "6"
+							},
+							"id": "tablet"
+						}
+					],
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 10,

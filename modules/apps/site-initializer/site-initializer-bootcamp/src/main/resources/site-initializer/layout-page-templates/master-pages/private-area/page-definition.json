@@ -62,9 +62,17 @@
 										"borderWidth": "0",
 										"height": "100vh",
 										"paddingBottom": "6",
-										"paddingLeft": "5",
+										"paddingLeft": "6",
 										"paddingTop": "5"
 									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"hidden": true
+											},
+											"id": "tablet"
+										}
+									],
 									"layout": {
 										"borderWidth": 0,
 										"marginBottom": 0,
@@ -72,7 +80,7 @@
 										"marginRight": 0,
 										"marginTop": 0,
 										"paddingBottom": 6,
-										"paddingLeft": 4,
+										"paddingLeft": 6,
 										"paddingRight": 0,
 										"paddingTop": 4,
 										"widthType": "Fluid"
@@ -82,33 +90,46 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "bootcamp-heading"
+												"key": "bootcamp-image"
 											},
 											"fragmentConfig": {
-												"displayLevel": "0",
-												"headingLevel": "h5"
+												"imageSize": "w-100"
 											},
 											"fragmentFields": [
 												{
-													"id": "element-text",
+													"id": "image-square",
 													"value": {
-														"fragmentLink": {
-															"value_i18n": {
+														"fragmentImage": {
+															"description": {
+																"value_i18n": {
+																	"en_US": ""
+																}
+															},
+															"fragmentImageClassPKReference": {
+																"classPKReferences": {
+																	"en_US": {
+																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/bootcamp_logo.svg$]"
+																	}
+																},
+																"fragmentImageConfiguration": {
+																	"landscapeMobile": "auto",
+																	"portraitMobile": "auto",
+																	"tablet": "auto"
+																}
 															}
 														},
-														"text": {
+														"fragmentLink": {
 															"value_i18n": {
-																"en_US": "Bootcamp"
 															}
 														}
 													}
 												}
 											],
 											"fragmentStyle": {
-												"fontFamily": "fontFamilySansSerif",
-												"fontWeight": "fontWeightBold",
 												"marginBottom": "7",
-												"marginTop": "1"
+												"maxWidth": "100%",
+												"width": "148px"
 											}
 										},
 										"type": "Fragment"

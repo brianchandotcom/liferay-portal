@@ -284,7 +284,7 @@ definition {
 		}
 
 		else if ("${fragmentName}" == "Content Display") {
-			if ("${assetType}" == "category") {
+			if (!(isSet(assetType))) {
 				AssertTextEquals(
 					index = "${position}",
 					locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY",

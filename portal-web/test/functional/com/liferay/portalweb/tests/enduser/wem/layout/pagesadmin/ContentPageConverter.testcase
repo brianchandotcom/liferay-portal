@@ -1348,7 +1348,7 @@ definition {
 
 		PageEditor.viewFragment(fragmentName = "Web Content Display");
 
-		PageEditor.viewNoFragment(fragmentName = "Asset Publisher");
+		PageEditor.viewFragmentNotPresent(fragmentName = "Asset Publisher");
 	}
 
 }

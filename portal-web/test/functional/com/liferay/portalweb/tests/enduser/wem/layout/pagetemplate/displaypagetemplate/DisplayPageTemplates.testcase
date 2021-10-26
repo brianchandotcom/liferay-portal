@@ -496,7 +496,7 @@ definition {
 		}
 
 		task ("View the Button is not shown") {
-			PageEditor.viewNoFragment(fragmentName = "Button");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Button");
 		}
 
 		task ("View the Heading and HTML fragments are shown") {

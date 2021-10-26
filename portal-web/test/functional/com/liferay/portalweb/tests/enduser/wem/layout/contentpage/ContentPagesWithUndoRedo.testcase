@@ -183,7 +183,7 @@ definition {
 		}
 
 		task ("View the Tabs fragment not shown in page") {
-			PageEditor.viewNoFragment(fragmentName = "Tabs");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Tabs");
 		}
 
 		task ("View the Redo button is enabled but the Undo button is disabled") {
@@ -315,7 +315,7 @@ definition {
 				key_text = "undo",
 				locator1 = "Icon#ANY");
 
-			PageEditor.viewNoFragment(fragmentName = "Grid");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Grid");
 		}
 
 		task ("View the Undo button is disabled") {
@@ -486,7 +486,7 @@ definition {
 			PageEditor.removeFragmentViaPageStructure(fragmentName = "Container");
 
 			for (var fragmentName : list "Container,Grid") {
-				PageEditor.viewNoFragment(fragmentName = "${fragmentName}");
+				PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
 			}
 		}
 

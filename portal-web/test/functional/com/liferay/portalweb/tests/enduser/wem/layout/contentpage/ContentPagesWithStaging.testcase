@@ -1391,7 +1391,7 @@ definition {
 		}
 
 		task ("Assert the Heading fragment is removed") {
-			PageEditor.viewNoFragment(fragmentName = "Heading");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
 		}
 
 		task ("Click Undo to revert change") {

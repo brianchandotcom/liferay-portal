@@ -226,7 +226,7 @@ definition {
 				key_text = "undo",
 				locator1 = "Icon#ANY");
 
-			PageEditor.viewNoFragment(fragmentName = "Button");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Button");
 		}
 
 		task ("View Undo button is disabled when back to original state") {

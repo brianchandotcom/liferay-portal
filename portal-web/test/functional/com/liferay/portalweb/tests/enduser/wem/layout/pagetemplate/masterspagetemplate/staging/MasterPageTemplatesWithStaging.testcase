@@ -203,7 +203,7 @@ definition {
 				locator1 = "Icon#ANY");
 		}
 
-		PageEditor.viewNoFragment(fragmentName = "Container");
+		PageEditor.viewFragmentNotPresent(fragmentName = "Container");
 
 		AssertVisible(
 			key_text = "redo",

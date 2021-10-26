@@ -258,7 +258,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
-			PageEditor.viewNoFragment(fragmentName = "Heading");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
 
 			SelectFrame(value1 = "relative=top");
 		}

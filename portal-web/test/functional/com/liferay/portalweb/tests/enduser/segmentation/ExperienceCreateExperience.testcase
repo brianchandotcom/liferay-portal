@@ -3211,7 +3211,7 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		PageEditor.viewNoFragment(fragmentName = "Heading");
+		PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
 	}
 
 }

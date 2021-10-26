@@ -3708,6 +3708,12 @@ definition {
 		}
 	}
 
+	macro viewFragmentNotPresent {
+		AssertElementNotPresent(
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+	}
+
 	macro viewFragmentOrder {
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",
@@ -4000,12 +4006,6 @@ definition {
 		Click.clickNoMouseOver(
 			key_mentionsUserScreenName = "${mentionsUserScreenName}",
 			locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
-	}
-
-	macro viewNoFragment {
-		AssertElementNotPresent(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER");
 	}
 
 	macro viewNotPresentInPermissionsIframeBody {

@@ -709,11 +709,11 @@ definition {
 		}
 
 		task ("Assert no fragment or widget is shown") {
-			PageEditor.viewNoFragment(fragmentName = "Container");
-			PageEditor.viewNoFragment(fragmentName = "Blogs");
-			PageEditor.viewNoFragment(fragmentName = "HTML");
-			PageEditor.viewNoFragment(fragmentName = "Button");
-			PageEditor.viewNoFragment(fragmentName = "Heading");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Container");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Blogs");
+			PageEditor.viewFragmentNotPresent(fragmentName = "HTML");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Button");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
 		}
 
 		task ("From the sidebar fragment tree, show HTML and Button") {
@@ -723,11 +723,11 @@ definition {
 		}
 
 		task ("Assert no fragment or widget is shown") {
-			PageEditor.viewNoFragment(fragmentName = "Container");
-			PageEditor.viewNoFragment(fragmentName = "Blogs");
-			PageEditor.viewNoFragment(fragmentName = "HTML");
-			PageEditor.viewNoFragment(fragmentName = "Button");
-			PageEditor.viewNoFragment(fragmentName = "Heading");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Container");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Blogs");
+			PageEditor.viewFragmentNotPresent(fragmentName = "HTML");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Button");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
 		}
 
 		task ("Unhide the container") {

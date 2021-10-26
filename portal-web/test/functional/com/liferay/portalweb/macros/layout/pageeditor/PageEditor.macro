@@ -3709,9 +3709,14 @@ definition {
 	}
 
 	macro viewFragmentNotPresent {
+		if (!(isSet(position))) {
+			var position = "1";
+		}
+
 		AssertElementNotPresent(
 			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER");
+			key_index = "${position}",
+			locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 	}
 
 	macro viewFragmentOrder {

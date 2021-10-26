@@ -9,4 +9,63 @@
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-portal-workflow</short-name>
 	<uri>http://liferay.com/tld/portal-workflow</uri>
+	<tag>
+		<description><![CDATA[Creates a UI component that displays the current status of its associated workflow.]]></description>
+		<name>status</name>
+		<tag-class>com.liferay.portal.workflow.taglib.servlet.taglib.WorkflowStatusTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description><![CDATA[A bean associated with the workflow status component.]]></description>
+			<name>bean</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[An ID for the component instance.]]></description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[A class for the bean object.]]></description>
+			<name>model</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Class</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Whether to enable instance tracker on click. The default value is <code>false</code>.]]></description>
+			<name>showInstanceTracker</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Whether to show the status label. The default value is <code>true</code>.]]></description>
+			<name>showStatusLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[A workflow status. Possible values are <code>0</code> (Approved), <code>1</code> (Pending), <code>2</code> (Draft), <code>3</code> (Expired), <code>4</code> (Denied), <code>5</code> (Inactive), <code>6</code> (Incomplete), <code>7</code> (Scheduled), and <code>8</code> (In-Trash). Any other value defaults to status (Any).]]></description>
+			<name>status</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[A workflow status message that overrides the existing one.]]></description>
+			<name>statusMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[A version for the workflow status that is displayed in a label next to the workflow status.]]></description>
+			<name>version</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

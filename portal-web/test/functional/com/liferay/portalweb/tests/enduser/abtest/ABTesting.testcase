@@ -198,10 +198,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-132406: Given the AB Testing Panel
-	When the users leave the page because the session expires or s/he does log out
-	Then they find the panel closed"
-
+	@description = "LPS-132406: Given the AB Testing Panel When the users leave the page because the session expires or s/he does log out Then they find the panel closed"
 	@ignore = "true"
 	@priority = "3"
 	test ABTestingClosed {
@@ -214,9 +211,57 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test AssertChangeClickableIDBoxNotEnabled {
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137500 AssertChangeClickableIDBoxNotEnabled pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		
+			Button.clickPublish();
 
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Take the ID Element") {
+			var idbutton = ABTest.takeElementID();
+		}
+
+		task ("Take ID Element and assert the element ID appears in the ID box") {
+			var idbutton = ABTest.takeElementID();
+
+			ABTest.selectElementID();
+
+			AssertElementPresent(
+				key_id = "${idbutton}",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = "${idbutton}");
+		}
+
+		task ("Create variable and run test") {
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+		}
+
+		task ("Assert that Change clickable element button don't show and the ID element box isn't enabled for edition") {
+			AssertElementNotPresent(
+				key_value = "Change Clickable Element",
+				locator1 = "ABTest#SECONDARY_BUTTON",
+				value1 = "Change Clickable Element");
+
+			AssertElementPresent(locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX_READONLY");
+		}
+
+		task ("Terminate the AB test") {
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-97195: Validate if, in the list of the variant for A/B Test, the user have the options to edit the name and delete"
@@ -623,12 +668,51 @@ definition {
 	}
 
 	@description = "LPS-119475: When a user has selected an element and clicks on the x icon within the ID box, the ID box gets empty and the Change clickable element button changes into Select clickable element"
-	@ignore = "true"
 	@priority = "3"
 	test ClearIDBox {
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137500 ClearIDBox pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
 
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Take ID Element and assert the element ID appears in the ID box") {
+			var idbutton = ABTest.takeElementID();
+
+			ABTest.selectElementID();
+
+			AssertElementPresent(
+				key_id = "${idbutton}",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = "${idbutton}");
+		}
+
+		task ("Clear ID Box") {
+			Click(locator1 = "ABTest#X_BUTTON_ID_BOX");
+		}
+
+		task ("Assert the ID box is empty") {
+			AssertTextEquals(
+				key_id = "",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = ""); 
+		}
+
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "Validate if the user can create an A/B Test by Bounce rate"
@@ -1101,12 +1185,73 @@ definition {
 	}
 
 	@description = "LPS-119475: When a user clicks on the "eye" button, by click or by ID, the page scrolls if needed and shows the selected element highlighted"
-	@ignore = "true"
 	@priority = "3"
 	test EyeButton {
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137500 EyeButton pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		
+			Button.clickPublish();
 
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Take the ID Element") {
+			var idbutton = ABTest.takeElementID();
+		}
+
+		task ("Select element by id ") {
+			Click(locator1 = "ABTest#ID_BOX");
+
+			Type(
+				locator1 = "ABTest#ID_BOX",
+				value1 = "${idbutton}");
+
+			KeyPress(
+				key_id = "${idbutton}",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = "\ENTER");
+		}
+
+		task("Assert that selected button is target") {
+			AssertElementPresent(
+				key_idElement = "${idbutton}",
+				locator1 = "ABTest#TARGET_ELEMENT",
+				value1 = "${idbutton}");
+		}
+
+		task ("Click wherever so the button highlight is taken out") {
+			Click(locator1 = "ABTest#REVIEW_NO_HAVE_VARIANTS");
+
+			AssertElementNotPresent(
+				key_idElement = "${idbutton}",
+				locator1 = "ABTest#TARGET_ELEMENT",
+				value1 = "${idbutton}");
+		}
+
+		task ("Click on the eye button"){
+			Click(locator1 = "ABTest#EYE_BUTTON_SHOW_ELEMENT");
+		}
+
+		task ("Assert that selected button is target") {
+			AssertElementPresent(
+				key_idElement = "${idbutton}",
+				locator1 = "ABTest#TARGET_ELEMENT",
+				value1 = "${idbutton}");
+		}
+
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-98829: Validate if the History tab appears with the list ordered by modified date DESC"
@@ -1119,12 +1264,40 @@ definition {
 	}
 
 	@description = "LPS-119475: When a user selects any highlighted element in the page, the ID of the selected element shows in the ID box"
-	@ignore = "true"
 	@priority = "3"
 	test IDShownInTheBox {
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137500 IDShownInTheBox pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
 
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Take ID Element and assert the element ID appears in the ID box") {
+			var idbutton = ABTest.takeElementID();
+
+			ABTest.selectElementID();
+
+			AssertElementPresent(
+				key_id = "${idbutton}",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = "${idbutton}");
+		}
+
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-96787: Validate if the Liferay NOT receives the notification when the test status is changed by the same user that created the test"
@@ -1363,12 +1536,40 @@ definition {
 	}
 
 	@description = "LPS-119475: When a user has selected an element, the Select clickable element button changes into Change clickable element, and the elements are highlighted"
-	@ignore = "true"
 	@priority = "3"
 	test SelectButtonToChangeClickableElement {
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137500 SelectButtonToChangeClickableElement pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
 
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Select the button as click element") {
+			ABTest.selectElementID();
+		}
+
+		task ("Assert the button switches to Change clickable element button") {
+			AssertTextEquals(
+				key_value = "Change Clickable Element",
+				locator1 = "ABTest#SECONDARY_BUTTON",
+				value1 = "Change Clickable Element");
+		}
+
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-119476: When the ID of a submit element accomplishes all the conditions, the element will be rightly measured in AC"
@@ -1479,21 +1680,109 @@ definition {
 	}
 
 	@description = "LPS-119475: When a user has selected an element, s/he can enter a different ID in the Element ID box and press enter again, so the element is highlighted and gets selected"
-	@ignore = "true"
 	@priority = "3"
 	test TypeDifferentID {
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137500 TypeDifferentID pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
 
+			PageEditor.gotoDuplicate(fragmentName = "Button");
+		
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Get the element ID from button 2") {
+			var idbutton = ABTest.takeElementID(key_index = "2");
+		}
+
+		task ("Select the  first button as click element") {
+			ABTest.selectElementID();
+		}
+
+		task ("Change the ID Element") {
+			Click(locator1 = "ABTest#X_BUTTON_ID_BOX");
+
+			Type(
+				locator1 = "ABTest#ID_BOX",
+				value1 = "${idbutton}"); 
+
+			KeyPress(
+				key_id = "${idbutton}",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = "\ENTER");
+		}
+
+		task("Assert the button gets selected") {
+			AssertElementPresent(
+				key_id = "${idbutton}",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = "${idbutton}");
+		}
+
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-119475: When a user enters a valid ID and presses Enter or clicks anywhere outside the box, the element with that ID get highlighted and the element with the ID is selected"
-	@ignore = "true"
 	@priority = "3"
 	test TypeElementID {
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137500 TypeElementID pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		
+			Button.clickPublish();
 
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Take the ID Element") {
+			var idbutton = ABTest.takeElementID();
+		}
+
+		task ("Select element by id ") {
+			Click(locator1 = "ABTest#ID_BOX");
+
+			Type(
+				locator1 = "ABTest#ID_BOX",
+				value1 = "${idbutton}");
+
+			KeyPress(
+				key_id = "${idbutton}",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = "\ENTER");
+		}
+
+		task("Assert the button gets selected") {
+			AssertElementPresent(
+				key_id = "${idbutton}",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = "${idbutton}");
+		}
+
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-119476: When the user enters the ID of a submit element in the ID Element box and hits enter, the matching element gets highlighted and selected"
@@ -1506,12 +1795,49 @@ definition {
 	}
 
 	@description = "LPS-119475: When a user clicks on the x icon of the selected element, the element gets unselected"
-	@ignore = "true"
 	@priority = "3"
 	test UnselectSelectedElement {
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137500 UnselectSelectedElement pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
 
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Select the button as click element") {
+			Click(
+				key_value = "Select Clickable Element",
+				locator1 = "ABTest#SECONDARY_BUTTON");
+
+			Click(
+				key_index = "1",
+				locator1 = "ABTest#SELECT_CLICKABLE_ELEMENT");
+		}
+
+		task ("Click on the X icon within the selected element") {
+			Click(locator1 = "ABTest#X_BUTTON_TARGET_ID_ELEMENT");
+		}
+
+		task ("Assert the ID box is empty") {
+			AssertTextEquals(
+				key_id = "",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = ""); 
+		}
+
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
-
 }

@@ -101,6 +101,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ELEMENT_ID_VALUE_ID_BOX</td>
+	<td>//div[@class ="input-group-item input-group-append"]//input[@title='${key_id}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ID_BOX</td>
+	<td>//div[@class ="input-group-item input-group-append"]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ELEMENT_ID_VALUE_ID_BOX_READONLY</td>
+	<td>//div[@class ="input-group-item input-group-append"]//input[@readonly='']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EYE_BUTTON_SHOW_ELEMENT</td>
+	<td>//button[contains(@class,"btn btn-monospaced btn-secondary")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INVALID_ID_MESSAGE</td>
 	<td>//*[contains(@class,'form-feedback-item')]</td>
 	<td></td>
@@ -162,12 +182,12 @@
 </tr>
 <tr>
 	<td>SELECT_CLICKABLE_ELEMENT</td>
-	<td>//*[contains(@class,'lfr-segments-experiment-click-goal-target-overlay')]</td>
+	<td>xpath=(//div[@class= 'lfr-segments-experiment-click-goal-target-overlay'])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_CLICKABLE_ELEMENT_BUTTON</td>
-	<td>//button[contains(@class,'btn-secondary')and contains(text(),'Select Clickable Element')]</td>
+	<td>SECONDARY_BUTTON</td>
+	<td>//button[contains(@class,'btn-secondary')and contains(text(),'${key_value}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -178,6 +198,16 @@
 <tr>
 	<td>SET_ELEMENT_AS_CLICK_TARGET_BUTTON</td>
 	<td>//button[contains(@class,'btn-primary')and contains(text(),'Set Element as Click Target')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TARGET_ELEMENT</td>
+	<td>//div[contains(@class,"lfr-segments-experiment-click-goal-target-overlay-selected") and contains(@data-target-selector, "${key_idElement}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TARGET_CLOSE_BUTTON</td>
+	<td>//button[contains(@class,"lfr-segments-experiment-click-goal-target-delete small text-white btn btn-unstyled")]</td>
 	<td></td>
 </tr>
 <tr>
@@ -228,6 +258,16 @@
 <tr>
 	<td>VARIANT_NAME</td>
 	<td>//ul[contains(@class,'list-group show-quick-actions-on-hover')]//li[${key_index}]//*[text()='${name}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>X_BUTTON_ID_BOX</td>
+	<td>//div[contains(@class,'input-group-inset-item')]//button[@class='btn btn-unstyled']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>X_BUTTON_TARGET_ID_ELEMENT</td>
+	<td>//button[contains(@class, 'lfr-segments-experiment-click-goal-target-delete')]</td>
 	<td></td>
 </tr>
 </tbody>

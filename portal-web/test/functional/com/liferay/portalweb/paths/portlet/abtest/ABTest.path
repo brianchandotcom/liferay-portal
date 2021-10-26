@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>ELEMENT_ID_VALUE_ID_BOX</td>
-	<td>//div[@class ="input-group-item input-group-append"]//input[@title='${key_id}']</td>
+	<td>//div[@class ="input-group-item input-group-append"]//input[@value='${key_id}']</td>
 	<td></td>
 </tr>
 <tr>

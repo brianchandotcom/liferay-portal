@@ -54,6 +54,8 @@ public class RankingPortletDisplayBuilderTest extends BaseRankingsWebTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		setUpPortletPreferencesFactoryUtil();
+
 		_rankingPortletDisplayBuilder = new RankingPortletDisplayBuilder(
 			_documentToRankingTranslator, _httpServletRequest, language, portal,
 			queries, rankingIndexNameBuilder, _sorts, _renderRequest,
@@ -70,8 +72,8 @@ public class RankingPortletDisplayBuilderTest extends BaseRankingsWebTestCase {
 
 		setUpLanguageUtil("");
 		setUpPortal();
-		setUpPortletRequestParamValue(
-			_renderRequest, "displayStyle", "displayStyle");
+		setUpHttpServletRequestParamValue(
+			_httpServletRequest, "displayStyle", "displayStyle");
 		setUpPortalUtil();
 		setUpRankingIndexNameBuilder();
 		setUpRenderResponse(_renderResponse);

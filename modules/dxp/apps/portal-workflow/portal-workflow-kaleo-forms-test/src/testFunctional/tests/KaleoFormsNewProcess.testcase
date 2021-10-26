@@ -94,12 +94,20 @@ definition {
 	}
 
 	@description = "Verify that the field set is required."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test FieldSetIsRequired {
+		KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70683 FieldSetIsRequired pending implementation
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
 
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.viewFieldRequired(
+			kfFieldSetName = "Contacts",
+			kfProcessName = "Kaleo Forms Process",
+			progressTitle = "Fields");
 	}
 
 	@description = "Verify that assign a form to the created task is required."

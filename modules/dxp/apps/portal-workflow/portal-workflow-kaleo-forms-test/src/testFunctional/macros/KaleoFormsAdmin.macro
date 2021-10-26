@@ -973,4 +973,75 @@ definition {
 			value1 = "Unpublished");
 	}
 
+	macro viewFieldRequired {
+		if ("${progressTitle}" == "Details") {	
+			KaleoFormsAdmin.viewNewProcessProgressBar(
+				kfProgressName = "${progressTitle}",
+				kfProgressStep = "1");
+
+			AssertElementPresent(locator1 = "KaleoFormsAdminEditProcess#FIELD_NAME_REQUIRED");
+
+			AssertElementPresent(locator1 = "KaleoFormsAdminEditProcess#NEXT_BUTTON_INACTIVE");
+
+			Type(
+				key_fieldName = "name",
+				locator1 = "FormFields#TEXT_FIELD",
+				value1 = "${kfProcessName}");
+
+			AssertElementPresent(locator1 = "Button#NEXT");
+		}
+
+		else if ("${progressTitle}" == "Fields") {
+			KaleoFormsAdmin.viewNewProcessProgressBar(
+				kfProgressName = "${progressTitle}",
+				kfProgressStep = "2");
+
+			AssertElementPresent(locator1 = "KaleoFormsAdminEditProcess#NEXT_BUTTON_INACTIVE");
+
+			KaleoFormsAdmin.chooseFieldSet(
+				kfFieldSetName = "${kfFieldSetName}",
+				kfProcessName = "${kfProcessName}");
+
+			AssertElementPresent(locator1 = "Button#NEXT");
+		}
+
+		else if ("${progressTitle}" == "Workflow") {
+			KaleoFormsAdmin.viewNewProcessProgressBar(
+				kfProgressName = "${progressTitle}",
+				kfProgressStep = "3");
+
+			AssertElementPresent(locator1 = "KaleoFormsAdminEditProcess#NEXT_BUTTON_INACTIVE");
+
+			KaleoFormsAdmin.chooseWorkflow(
+				kfProcessName = "${kfProcessName}",
+				workflowDefinitionTitle = "${workflowDefinitionTitle}");
+
+			AssertElementPresent(locator1 = "Button#NEXT");
+		}
+
+		else {
+			KaleoFormsAdmin.viewNewProcessProgressBar(
+				kfProgressName = "${progressTitle}",
+				kfProgressStep = "4");			
+
+			AssertElementPresent(locator1 = "KaleoFormsAdminEditProcess#SAVE_BUTTON_INACTIVE");	
+
+			KaleoFormsAdmin.assignForm(
+				kfProcessName = "${kfProcessName}",
+				workflowTask = "${workflowTask}");
+
+			KaleoFormsAdmin.addForm(kfFormName = "${kfFormName}");
+
+			KaleoFormsAdmin.saveForm();
+
+			KaleoFormsAdmin.chooseForm(kfFormName = "${kfFormName}");
+
+			AssertElementPresent(locator1 = "Button#SAVE");
+			
+			KaleoFormsAdmin.saveProcess(kfProcessName = "${kfProcessName}");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 }

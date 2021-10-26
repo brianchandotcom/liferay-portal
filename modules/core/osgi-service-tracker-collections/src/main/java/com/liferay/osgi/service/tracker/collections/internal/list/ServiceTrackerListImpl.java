@@ -34,7 +34,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Adolfo Pérez
  */
-public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
+public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 
 	public ServiceTrackerListImpl(
 		BundleContext bundleContext, Class<S> clazz, String filterString,

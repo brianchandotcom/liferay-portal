@@ -21,7 +21,7 @@ import java.util.Iterator;
 /**
  * @author Adolfo Pérez
  */
-public interface ServiceTrackerList<S, T> extends Closeable, Iterable<T> {
+public interface ServiceTrackerList<T> extends Closeable, Iterable<T> {
 
 	@Override
 	public void close();

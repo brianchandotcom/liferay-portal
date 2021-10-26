@@ -28,7 +28,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class ServiceTrackerListFactory {
 
-	public static <S, T> ServiceTrackerList<S, T> open(
+	public static <S, T> ServiceTrackerList<T> open(
 		BundleContext bundleContext, Class<S> clazz, String filterString,
 		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
 
@@ -36,7 +36,7 @@ public class ServiceTrackerListFactory {
 			bundleContext, clazz, filterString, serviceTrackerCustomizer, null);
 	}
 
-	public static <S, T> ServiceTrackerList<S, T> open(
+	public static <S, T> ServiceTrackerList<T> open(
 		BundleContext bundleContext, Class<S> clazz, String filterString,
 		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer,
 		Comparator<ServiceReference<S>> comparator) {
@@ -46,7 +46,7 @@ public class ServiceTrackerListFactory {
 			comparator);
 	}
 
-	public static <T> ServiceTrackerList<T, T> open(
+	public static <T> ServiceTrackerList<T> open(
 		BundleContext bundleContext, Class<T> clazz) {
 
 		ServiceTrackerCustomizer<T, T> serviceTrackerCustomizer =
@@ -56,7 +56,7 @@ public class ServiceTrackerListFactory {
 			bundleContext, clazz, null, serviceTrackerCustomizer, null);
 	}
 
-	public static <T> ServiceTrackerList<T, T> open(
+	public static <T> ServiceTrackerList<T> open(
 		BundleContext bundleContext, Class<T> clazz,
 		Comparator<ServiceReference<T>> comparator) {
 
@@ -67,7 +67,7 @@ public class ServiceTrackerListFactory {
 			bundleContext, clazz, null, serviceTrackerCustomizer, comparator);
 	}
 
-	public static <T> ServiceTrackerList<T, T> open(
+	public static <T> ServiceTrackerList<T> open(
 		BundleContext bundleContext, Class<T> clazz, String filterString) {
 
 		ServiceTrackerCustomizer<T, T> serviceTrackerCustomizer =
@@ -77,7 +77,7 @@ public class ServiceTrackerListFactory {
 			bundleContext, clazz, filterString, serviceTrackerCustomizer, null);
 	}
 
-	public static <T> ServiceTrackerList<T, T> open(
+	public static <T> ServiceTrackerList<T> open(
 		BundleContext bundleContext, Class<T> clazz, String filterString,
 		Comparator<ServiceReference<T>> comparator) {
 

@@ -32,7 +32,7 @@ ViewSXPElementsDisplayContext viewSXPElementsDisplayContext = (ViewSXPElementsDi
 			<liferay-ui:search-container-row
 				className="com.liferay.search.experiences.model.SXPElement"
 				keyProperty="sxpElementId"
-				modelVar="entry"
+				modelVar="sxpElement"
 			>
 				<%@ include file="/sxp_blueprint_admin/sxp_element_search_columns.jspf" %>
 			</liferay-ui:search-container-row>

@@ -17,18 +17,18 @@
 <portlet:renderURL var="editEntryURL">
 	<portlet:param name="mvcRenderCommandName" value="/sxp_blueprint_admin/edit_sxp_element" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="sxpElementId" value="<%= String.valueOf(entry.getSXPElementId()) %>" />
+	<portlet:param name="sxpElementId" value="<%= String.valueOf(sxpElement.getSXPElementId()) %>" />
 </portlet:renderURL>
 
 <%
-String entryTitle = entry.getTitle(locale);
-String entryDescription = entry.getDescription(locale);
+String sxpElementTitle = sxpElement.getTitle(locale);
+String sxpElementDescription = sxpElement.getDescription(locale);
 
-String[] languageIds = entry.getAvailableLanguageIds();
+String[] languageIds = sxpElement.getAvailableLanguageIds();
 
-for (int i = 0; Validator.isNull(entryTitle) && (i < languageIds.length); i++) {
-	entryTitle = entry.getTitle(languageIds[i]);
-	entryDescription = entry.getDescription(languageIds[i]);
+for (int i = 0; Validator.isNull(sxpElementTitle) && (i < languageIds.length); i++) {
+	sxpElementTitle = sxpElement.getTitle(languageIds[i]);
+	sxpElementDescription = sxpElement.getDescription(languageIds[i]);
 }
 %>
 
@@ -39,17 +39,17 @@ for (int i = 0; Validator.isNull(entryTitle) && (i < languageIds.length); i++) {
 		>
 			<h4>
 				<c:choose>
-					<c:when test="<%= SXPElementEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+					<c:when test="<%= SXPElementEntryPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
 						<aui:a href="<%= editEntryURL %>">
-							<%= HtmlUtil.escape(entryTitle) %>
+							<%= HtmlUtil.escape(sxpElementTitle) %>
 						</aui:a>
 					</c:when>
 					<c:otherwise>
-						<%= HtmlUtil.escape(entryTitle) %>
+						<%= HtmlUtil.escape(sxpElementTitle) %>
 					</c:otherwise>
 				</c:choose>
 
-				<c:if test="<%= entry.getReadOnly() %>">
+				<c:if test="<%= sxpElement.getReadOnly() %>">
 					<liferay-ui:icon
 						icon="lock"
 						iconCssClass="ml-1 text-muted"
@@ -59,12 +59,12 @@ for (int i = 0; Validator.isNull(entryTitle) && (i < languageIds.length); i++) {
 				</c:if>
 			</h4>
 
-			<h5 class="text-default text-truncate" title="<%= HtmlUtil.escape(entryDescription) %>">
-				<%= HtmlUtil.escape(entryDescription) %>
+			<h5 class="text-default text-truncate" title="<%= HtmlUtil.escape(sxpElementDescription) %>">
+				<%= HtmlUtil.escape(sxpElementDescription) %>
 			</h5>
 
 			<h5 class="text-default text-truncate">
-				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getModifiedDate().getTime(), true) %>" key="modified-x-ago" />
+				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - sxpElement.getModifiedDate().getTime(), true) %>" key="modified-x-ago" />
 			</h5>
 		</liferay-ui:search-container-column-text>
 
@@ -78,11 +78,11 @@ for (int i = 0; Validator.isNull(entryTitle) && (i < languageIds.length); i++) {
 			name="title"
 		>
 			<c:choose>
-				<c:when test="<%= SXPElementEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+				<c:when test="<%= SXPElementEntryPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
 					<aui:a href="<%= editEntryURL %>">
-						<%= HtmlUtil.escape(entryTitle) %>
+						<%= HtmlUtil.escape(sxpElementTitle) %>
 
-						<c:if test="<%= entry.getReadOnly() %>">
+						<c:if test="<%= sxpElement.getReadOnly() %>">
 							<liferay-ui:icon
 								icon="lock"
 								iconCssClass="ml-1 text-muted"
@@ -93,9 +93,9 @@ for (int i = 0; Validator.isNull(entryTitle) && (i < languageIds.length); i++) {
 					</aui:a>
 				</c:when>
 				<c:otherwise>
-					<%= HtmlUtil.escape(entryTitle) %>
+					<%= HtmlUtil.escape(sxpElementTitle) %>
 
-					<c:if test="<%= entry.getReadOnly() %>">
+					<c:if test="<%= sxpElement.getReadOnly() %>">
 						<liferay-ui:icon
 							icon="lock"
 							iconCssClass="ml-1 text-muted"
@@ -110,13 +110,13 @@ for (int i = 0; Validator.isNull(entryTitle) && (i < languageIds.length); i++) {
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand table-cell-minw-200"
 			name="description"
-			value="<%= HtmlUtil.escape(entryDescription) %>"
+			value="<%= HtmlUtil.escape(sxpElementDescription) %>"
 		/>
 
 		<liferay-ui:search-container-column-user
 			name="author"
 			showDetails="<%= false %>"
-			userId="<%= entry.getUserId() %>"
+			userId="<%= sxpElement.getUserId() %>"
 		/>
 
 		<liferay-ui:search-container-column-date

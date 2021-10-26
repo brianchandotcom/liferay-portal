@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PortalService;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -131,15 +133,29 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 						"cache");
 			}
 
-			ClassName newClassName = className;
-
 			String newValue = "testAutoSyncHibernateSessionStateOnTxCreation2";
-
-			newClassName.setValue(newValue);
 
 			// Update in new transaction
 
-			_classNameLocalService.updateClassName(newClassName);
+			long classNameId = className.getClassNameId();
+
+			try {
+				TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					() -> {
+						ClassName localClassName =
+							_classNamePersistence.findByPrimaryKey(classNameId);
+
+						localClassName.setValue(newValue);
+
+						_classNameLocalService.updateClassName(localClassName);
+
+						return null;
+					});
+			}
+			catch (Throwable throwable) {
+				throw new RuntimeException(throwable);
+			}
 
 			if (currentSession.contains(className)) {
 				throw new IllegalStateException(
@@ -245,6 +261,9 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 			ServiceProxyFactory.newServiceTrackedInstance(
 				SynchronousMessageSender.class, PortalServiceImpl.class,
 				"_directSynchronousMessageSender", "(mode=DIRECT)", true);
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW, new Class<?>[0]);
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;

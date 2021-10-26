@@ -34,7 +34,7 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= SXPElementEntryPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editEntryURL">
+		<portlet:renderURL var="editSXPElementURL">
 			<portlet:param name="mvcRenderCommandName" value="/sxp_blueprint_admin/edit_sxp_element" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sxpElementId" value="<%= String.valueOf(sxpElementId) %>" />
@@ -42,30 +42,30 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 
 		<liferay-ui:icon
 			message='<%= sxpElement.getReadOnly() ? "view" : "edit" %>'
-			url="<%= editEntryURL %>"
+			url="<%= editSXPElementURL %>"
 		/>
 	</c:if>
 
 	<c:if test="<%= SXPElementEntryPermission.contains(permissionChecker, companyGroupId, SXPActionKeys.ADD_SXP_ELEMENT) %>">
-		<portlet:actionURL name="/sxp_blueprint_admin/copy_sxp_element" var="copyEntryURL">
+		<portlet:actionURL name="/sxp_blueprint_admin/copy_sxp_element" var="copySXPElementURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sxpElementId" value="<%= String.valueOf(sxpElementId) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon
 			message="copy"
-			url="<%= copyEntryURL %>"
+			url="<%= copySXPElementURL %>"
 		/>
 	</c:if>
 
-	<portlet:resourceURL id="/sxp_blueprint_admin/export_sxp_element" var="exportEntryURL">
+	<portlet:resourceURL id="/sxp_blueprint_admin/export_sxp_element" var="exportSXPElementURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="sxpElementId" value="<%= String.valueOf(sxpElementId) %>" />
 	</portlet:resourceURL>
 
 	<liferay-ui:icon
 		message="export"
-		url="<%= exportEntryURL %>"
+		url="<%= exportSXPElementURL %>"
 	/>
 
 	<c:if test="<%= SXPElementEntryPermission.contains(permissionChecker, companyGroupId, ActionKeys.PERMISSIONS) %>">
@@ -87,7 +87,7 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 	</c:if>
 
 	<c:if test="<%= SXPElementEntryPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
-		<portlet:actionURL name="/sxp_blueprint_admin/edit_sxp_element" var="hideEntryURL">
+		<portlet:actionURL name="/sxp_blueprint_admin/edit_sxp_element" var="hideSXPElementURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sxpElementId" value="<%= String.valueOf(sxpElementId) %>" />
 			<portlet:param name="<%= Constants.CMD %>" value="hide" />
@@ -96,18 +96,18 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 
 		<liferay-ui:icon
 			message='<%= sxpElement.getHidden() ? "show" : "hide" %>'
-			url="<%= hideEntryURL %>"
+			url="<%= hideSXPElementURL %>"
 		/>
 	</c:if>
 
 	<c:if test="<%= SXPElementEntryPermission.contains(permissionChecker, sxpElement, ActionKeys.DELETE) && !sxpElement.getReadOnly() %>">
-		<portlet:actionURL name="/sxp_blueprint_admin/element_sxp_element" var="deleteEntryURL">
+		<portlet:actionURL name="/sxp_blueprint_admin/element_sxp_element" var="deleteSXPElementURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sxpElementId" value="<%= String.valueOf(sxpElementId) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			url="<%= deleteEntryURL %>"
+			url="<%= deleteSXPElementURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

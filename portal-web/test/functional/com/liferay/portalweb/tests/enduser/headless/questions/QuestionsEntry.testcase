@@ -40,25 +40,6 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can create a question category"
-	@priority = "5"
-	@refactordone
-	@uitest
-	test CanAddQuestionCategory {
-		property portal.acceptance = "true";
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "Question Description",
-			categoryName = "question AddQuestionCategory",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "question AddQuestionCategory");
-
-		Questions.viewTopicDefault();
-	}
-
 	@description = "Validate if the user can create a question with an AL image."
 	@priority = "4"
 	@refactordone
@@ -1692,6 +1673,25 @@ definition {
 		Questions.replyToComment(commentReply = "This is my reply text");
 
 		Questions.answerQuestion(contentField = "This is my second answer");
+	}
+
+	@description = "Validate if the user can view a topic."
+	@priority = "5"
+	@refactordone
+	@uitest
+	test CanViewTopic {
+		property portal.acceptance = "true";
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Question Description",
+			categoryName = "question AddQuestionCategory",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "question AddQuestionCategory");
+
+		Questions.viewTopicDefault();
 	}
 
 	@description = "Validate if the user can view the voting style from the answers list."

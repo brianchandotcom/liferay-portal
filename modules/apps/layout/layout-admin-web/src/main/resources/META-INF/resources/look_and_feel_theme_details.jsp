@@ -157,8 +157,10 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 
 	ResourceBundle selThemeResourceBundle = ResourceBundleUtil.getBundle("content.Language", servletContext.getClassLoader());
 
+	ResourceBundle aggregateResourceBundle = new AggregateResourceBundle(resourceBundle, selThemeResourceBundle);
+
 	for (Map.Entry<String, ThemeSetting> entry : configurableSettings.entrySet()) {
-		String name = LanguageUtil.get(selThemeResourceBundle, entry.getKey());
+		String name = LanguageUtil.get(aggregateResourceBundle, entry.getKey());
 
 		ThemeSetting themeSetting = entry.getValue();
 

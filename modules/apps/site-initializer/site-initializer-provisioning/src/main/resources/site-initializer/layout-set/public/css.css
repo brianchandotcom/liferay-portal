@@ -1,0 +1,18 @@
+.portlet-search-options {
+    display: none;
+}
+
+.commerce-orders-container .data-set-display-management-bar-wrapper,
+.commerce-orders-container .data-set-display-pagination-wrapper {
+    display: none;
+}
+
+.commerce-orders-container .dnd-table,
+.commerce-orders-container .dnd-td,
+.commerce-orders-container .dnd-th {
+    border: none;
+}
+
+.commerce-orders-container .dnd-tr.with-bg {
+    background-color: transparent;
+}

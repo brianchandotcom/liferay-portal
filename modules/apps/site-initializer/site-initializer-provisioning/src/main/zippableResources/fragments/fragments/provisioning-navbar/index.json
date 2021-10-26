@@ -1,0 +1,25 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "static",
+					"label": "Position",
+					"name": "position",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "static"
+							},
+							{
+								"value": "absolute"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

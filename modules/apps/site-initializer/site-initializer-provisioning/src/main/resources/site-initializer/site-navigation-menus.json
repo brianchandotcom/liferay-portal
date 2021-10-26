@@ -1,0 +1,36 @@
+[
+	{
+		"name": "Main Navigation",
+		"pages": [
+			{
+				"friendlyURL": "/my-site",
+				"privateLayout": false
+			},
+			{
+				"friendlyURL": "/my-subscription",
+				"privateLayout": false
+			},
+			{
+				"friendlyURL": "/contact-us",
+				"privateLayout": false
+			}
+		]
+	},
+	{
+		"name": "Footer Navigation",
+		"pages": [
+			{
+				"friendlyURL": "/privacy-policy",
+				"privateLayout": false
+			},
+			{
+				"friendlyURL": "/documentation",
+				"privateLayout": false
+			},
+			{
+				"friendlyURL": "/community",
+				"privateLayout": false
+			}
+		]
+	}
+]

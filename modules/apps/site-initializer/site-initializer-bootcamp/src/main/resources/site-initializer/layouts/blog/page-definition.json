@@ -16,7 +16,7 @@
 							"fragmentViewportStyle": {
 								"marginBottom": "0",
 								"marginTop": "0",
-								"paddingBottom": "0",
+								"paddingBottom": "5",
 								"paddingLeft": "0",
 								"paddingRight": "0",
 								"paddingTop": "0"

@@ -1146,6 +1146,14 @@
 								"zIndex": 0
 							},
 							"fragmentFields": [
+							],
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"hidden": true
+									},
+									"id": "tablet"
+								}
 							]
 						},
 						"pageElements": [
@@ -1516,6 +1524,14 @@
 								"zIndex": 0
 							},
 							"fragmentFields": [
+							],
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"hidden": true
+									},
+									"id": "tablet"
+								}
 							]
 						},
 						"pageElements": [
@@ -1887,6 +1903,14 @@
 								"zIndex": 0
 							},
 							"fragmentFields": [
+							],
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"hidden": true
+									},
+									"id": "tablet"
+								}
 							]
 						},
 						"pageElements": [

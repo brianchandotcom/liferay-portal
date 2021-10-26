@@ -470,7 +470,7 @@ definition {
 		ACCards.viewMetricValue(
 			cardTitle = "Visitors Behavior",
 			metricName = "Abandonment",
-			metricValue = "66.7%");
+			metricValue = "66.7");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8426 | Test Summary: Forms submissions by location card shows expected views by location"

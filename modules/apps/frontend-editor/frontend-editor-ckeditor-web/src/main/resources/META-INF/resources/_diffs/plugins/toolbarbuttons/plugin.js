@@ -259,6 +259,12 @@
 				icon: 'align-image-right',
 				title: editor.lang.common.alignRight,
 			});
+
+			editor.ui.addBalloonToolbarButton('SourceEditor', {
+				command: 'codemirrordialog',
+				icon: 'source',
+				title: editor.lang.codemirror.source,
+			});
 		},
 
 		requires: ['uibutton', 'uiselect', 'uitextinput'],

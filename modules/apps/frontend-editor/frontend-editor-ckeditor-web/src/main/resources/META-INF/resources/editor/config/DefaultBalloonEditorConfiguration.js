@@ -17,7 +17,7 @@ const sub = Liferay.Util.sub;
 const DEFAULT_BALLOON_EDITOR_CONFIG = {
 	extraAllowedContent: '*',
 	extraPlugins:
-		'itemselector,stylescombo,ballooneditor,videoembed,insertbutton',
+		'itemselector,stylescombo,ballooneditor,videoembed,insertbutton,codemirror',
 	removePlugins: 'contextmenu,link,liststyle,tabletools',
 	stylesSet: [
 		{
@@ -51,7 +51,7 @@ const DEFAULT_BALLOON_EDITOR_CONFIG = {
 	toolbarLink: 'LinkRemove,LinkTarget,LinkInput,LinkConfirm,LinkBrowse',
 	toolbarTable: 'TableHeaders,TableRow,TableColumn,TableCell,TableDelete',
 	toolbarText:
-		'Styles,Bold,Italic,Underline,BulletedList,NumberedList,TextLink,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,LineHeight,BGColor,RemoveFormat',
+		'Styles,Bold,Italic,Underline,BulletedList,NumberedList,TextLink,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,LineHeight,BGColor,RemoveFormat,SourceEditor',
 	toolbarVideo: 'VideoAlignLeft,VideoAlignCenter,VideoAlignRight',
 };
 

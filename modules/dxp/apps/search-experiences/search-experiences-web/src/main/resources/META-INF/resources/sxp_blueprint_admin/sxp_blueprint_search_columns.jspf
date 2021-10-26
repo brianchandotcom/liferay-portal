@@ -62,7 +62,7 @@ for (int i = 0; Validator.isNull(title) && (i < languageIds.length); i++) {
 			</h5>
 
 			<%
-			Date modified = sxpBlueprint.getModifiedDate();
+			Date modifiedDate = sxpBlueprint.getModifiedDate();
 			%>
 
 			<h5 class="text-default text-truncate">
@@ -73,7 +73,7 @@ for (int i = 0; Validator.isNull(title) && (i < languageIds.length); i++) {
 					<liferay-ui:message arguments='<%= (themeDisplay.getDefaultUserId() == sxpBlueprint.getUserId()) ? "system" : sxpBlueprint.getUserName() %>' key="created-by-x" />
 				</span>
 				<span class="id-text">
-					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modified.getTime(), true) %>" key="modified-x-ago" />
+					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true) %>" key="modified-x-ago" />
 				</span>
 			</h5>
 		</liferay-ui:search-container-column-text>

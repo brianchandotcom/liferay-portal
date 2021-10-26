@@ -105,8 +105,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ClayDataSetDisplayView.class,
 				new ObjectEntriesTableClayDataSetDisplayView(
 					_clayTableSchemaBuilderFactory, objectDefinition,
-					_objectFieldLocalService.getObjectFields(
-						objectDefinition.getObjectDefinitionId())),
+					_objectFieldLocalService),
 				HashMapDictionaryBuilder.put(
 					"clay.data.set.display.name",
 					objectDefinition.getPortletId()

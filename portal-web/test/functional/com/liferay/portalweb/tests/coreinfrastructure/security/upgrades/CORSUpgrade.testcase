@@ -10,10 +10,7 @@ definition {
 	setUp {
 		SignIn.signIn();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
+		Search.openSearchAdmin();
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 	}
@@ -26,10 +23,7 @@ definition {
 		property portal.version = "7.2.10.1";
 
 		task ("Go to configuration and view portal CORS") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Security Tools",
@@ -51,10 +45,7 @@ definition {
 		property portal.version = "7.2.10.1";
 
 		task ("Go to configuration and view web content CORS") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Security Tools",

@@ -9,10 +9,7 @@ definition {
 	setUp {
 		SignIn.signIn();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
+		Search.openSearchAdmin();
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 	}

@@ -661,11 +661,6 @@
 	<td>//div[contains(@class,'page-editor__col')][${key_position}]//button[contains(@class,'page-editor__col__resizer')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>LAYOUT_ELEMENTS_HEADER</td>
-	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_elementType}')]//li[contains(@class,'title')])[${key_position}]</td>
-	<td></td>
-</tr>
 <!--LAYOUT_ELEMENTS_CONFIGURATION-->
 <tr>
 	<td>CONTAINER_CONFIGURATION_BACKGROUND_COLOR</td>

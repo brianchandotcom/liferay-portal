@@ -36,14 +36,7 @@ if (ddmStructure != null) {
 	<aui:input disabled="<%= ddmStructure != null %>" name="structureKey" />
 </c:if>
 
-<c:choose>
-	<c:when test="<%= journalEditDDMStructuresDisplayContext.isFFTranslationManagerAdminModeEnabled() %>">
-		<aui:input activeLanguageIds="<%= journalEditDDMStructuresDisplayContext.getAvailableLanguageIds() %>" adminMode="<%= true %>" defaultLanguageId="<%= (ddmForm == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()) %>" localized="<%= true %>" name="description" type="text" />
-	</c:when>
-	<c:otherwise>
-		<aui:input defaultLanguageId="<%= (ddmForm == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()) %>" name="description" />
-	</c:otherwise>
-</c:choose>
+<aui:input activeLanguageIds="<%= journalEditDDMStructuresDisplayContext.getAvailableLanguageIds() %>" adminMode="<%= true %>" defaultLanguageId="<%= (ddmForm == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()) %>" localized="<%= true %>" name="description" type="text" />
 
 <c:if test="<%= ddmStructure != null %>">
 	<portlet:resourceURL id="/journal/get_ddm_structure" var="getDDMStructureURL">

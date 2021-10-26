@@ -58,7 +58,6 @@ import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.exception.NoSuchFolderException;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.journal.web.internal.configuration.FFTranslationManagerAdminMode;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.helper.JournalDDMTemplateHelper;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
@@ -102,7 +101,6 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = {
 		"com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration",
 		"com.liferay.journal.configuration.JournalFileUploadsConfiguration",
-		"com.liferay.journal.web.internal.configuration.FFTranslationManagerAdminMode",
 		"com.liferay.journal.web.internal.configuration.JournalWebConfiguration"
 	},
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
@@ -169,9 +167,6 @@ public class JournalPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			DDMWebConfiguration.class.getName(), _ddmWebConfiguration);
 		renderRequest.setAttribute(
-			FFTranslationManagerAdminMode.class.getName(),
-			_ffTranslationManagerAdminMode);
-		renderRequest.setAttribute(
 			FieldsToDDMFormValuesConverter.class.getName(),
 			_fieldsToDDMFormValuesConverter);
 		renderRequest.setAttribute(
@@ -217,8 +212,6 @@ public class JournalPortlet extends MVCPortlet {
 	protected void activate(Map<String, Object> properties) {
 		_ddmWebConfiguration = ConfigurableUtil.createConfigurable(
 			DDMWebConfiguration.class, properties);
-		_ffTranslationManagerAdminMode = ConfigurableUtil.createConfigurable(
-			FFTranslationManagerAdminMode.class, properties);
 		_journalFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
 			JournalFileUploadsConfiguration.class, properties);
 		_journalWebConfiguration = ConfigurableUtil.createConfigurable(
@@ -341,8 +334,6 @@ public class JournalPortlet extends MVCPortlet {
 	private DDMTemplateHelper _ddmTemplateHelper;
 
 	private volatile DDMWebConfiguration _ddmWebConfiguration;
-	private volatile FFTranslationManagerAdminMode
-		_ffTranslationManagerAdminMode;
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;

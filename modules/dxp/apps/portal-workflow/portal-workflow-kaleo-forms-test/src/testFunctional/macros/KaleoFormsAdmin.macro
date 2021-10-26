@@ -973,4 +973,11 @@ definition {
 			value1 = "Unpublished");
 	}
 
+	macro workflowCannotBeUnpublish {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Unpublish",
+			rowEntry = "${workflowDefinitionTitle}");
+
+		Alert.viewErrorMessage(errorMessage = "Unable to delete the workflow definition that is in use.");
+	}
 }

@@ -23,43 +23,29 @@ definition {
 			ACUtils.addSiteAndPage();
 		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Blogs Page");
-
-		ACUtils.createBlogsAndAddToPage(layoutName = "Blogs Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Documents Page");
-
-		ACUtils.createDMAndAddToPage(layoutName = "Documents Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Web Content Page");
-
-		ACUtils.createWCAndAddToPage(layoutName = "Web Content Page");
-
-		task ("Connect the DXP to AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Add a new user") {
+		task("Add a new user") {
 			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = "ac@liferay.com");
 		}
 
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
+		task("Create new pages as interest topics and add documents in each page") {
+			var pageNameList = "vehicles,science,agriculture,delivery,information,technology";
+
+			for (var pageName : list "${pageNameList}") {
+				ACUtils.addPage(layoutName = "${pageName}");
+
+				ACUtils.createDMAndAddToPage(
+					layoutName = "${pageName}",
+					dmDocumentTitle = "DM AC Title ${pageName}");
+			}
 		}
 	}
 

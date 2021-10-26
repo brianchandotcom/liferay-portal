@@ -18,8 +18,7 @@
   margin: 0px;
   padding: 0px;
 }
-.principal-menu{
-}
+
 .principal-menu-item {
   list-style: none;
   padding: 0px 17.5px;
@@ -42,8 +41,8 @@
 }
 
 .menu-item-content:hover {
-  background: rgba(0, 74, 215, 0.1);
-  color: var(--primary, #004ad7);
+  background: var(--bg-brand-primary-lighten-5);
+  color: var(--bg-brand-primary, #004ad7);
   border-radius: 8px;
   padding: 8px 16px;
   transition-duration: 0.3s;
@@ -51,7 +50,7 @@
 }
 
 .active {
-  color: var(--primary, #004ad7);
+  color: var(--bg-brand-primary, #004ad7);
   border-radius: 8px;
   padding: 8px 16px;
   transition-duration: 0.5s;
@@ -99,8 +98,8 @@
 }
 
 .sub-menu-item:hover {
-  background: rgba(0, 74, 215, 0.1);
-  color: var(--primary, #004ad7);
+  background: var(--bg-brand-primary-lighten-5);
+  color: var(--bg-brand-primary, #004ad7);
   border-radius: 8px;
   padding: 8px 16px;
   transition-duration: 0.3s;

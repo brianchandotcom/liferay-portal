@@ -640,6 +640,12 @@ public class AssetHelperImpl implements AssetHelper {
 			searchContext.setLike(true);
 		}
 
+		if (GetterUtil.getBoolean(
+				assetEntryQuery.getAttribute("showNonindexable"))) {
+
+			searchContext.setAttribute("showNonindexable", Boolean.TRUE);
+		}
+
 		_searchRequestBuilderFactory.builder(
 			searchContext
 		).sorts(

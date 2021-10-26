@@ -33,6 +33,7 @@ definition {
 		}
 	}
 
+	@description = "Assert could add site with Add Site	regular role and could not after removing."
 	@priority = "4"
 	test AddSiteRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -99,8 +100,9 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
+	@description = "Assert could find site by site name and view Site Administrator role permissions."
 	@priority = "5"
-	test SearchPermissions {
+	test SearchParenetAndChildSiteAndViewPermissions {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -191,6 +193,7 @@ definition {
 		Site.viewSiteAdminPermissionsCP(siteName = "Child SiteName");
 	}
 
+	@description = "Assert could manage child site with Manage Subsites	site role and could not after removing."
 	@priority = "4"
 	test ViewSiteManageChildSiteSiteRole {
 		Permissions.setUpSiteRoleLoginUserCP(
@@ -376,6 +379,7 @@ definition {
 			value1 = "Child SiteName2");
 	}
 
+	@description = "Assert could manage pages with Manage Pages	regular role and could not after removing."
 	@priority = "4"
 	test ViewSiteManagePagesRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

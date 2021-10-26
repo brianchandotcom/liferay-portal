@@ -6,13 +6,13 @@
 			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/main.js$]",
 			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/runtime-main.js$]"
 		],
-		"htmlElementName": "liferay-customer-portal",
+		"htmlElementName": "liferay-remote-app-customer-portal",
 		"name_i18n": {
 			"en_US": "Customer Portal"
 		},
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
-			"APPLICATION": "portal"
+			"route": "portal"
 		},
 		"remoteAppEntryKey": "CUSTOMER-PORTAL-ONBOARDING",
 		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL-ONBOARDING$]"

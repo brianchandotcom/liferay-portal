@@ -136,21 +136,23 @@ public class NestedPortletsConfigurationAction
 
 		Theme theme = themeDisplay.getTheme();
 
-		LayoutTemplate newLayoutTemplate =
-			_layoutTemplateLocalService.getLayoutTemplate(
-				newLayoutTemplateId, false, theme.getThemeId());
-
-		List<String> newColumns = getColumnNames(
-			newLayoutTemplate.getContent(), portletResource);
-
 		LayoutTemplate oldLayoutTemplate =
 			_layoutTemplateLocalService.getLayoutTemplate(
 				oldLayoutTemplateId, false, theme.getThemeId());
 
-		List<String> oldColumns = getColumnNames(
-			oldLayoutTemplate.getContent(), portletResource);
+		if (oldLayoutTemplate != null) {
+			LayoutTemplate newLayoutTemplate =
+				_layoutTemplateLocalService.getLayoutTemplate(
+					newLayoutTemplateId, false, theme.getThemeId());
 
-		layoutTypePortlet.reorganizePortlets(newColumns, oldColumns);
+			List<String> newColumns = getColumnNames(
+				newLayoutTemplate.getContent(), portletResource);
+
+			List<String> oldColumns = getColumnNames(
+				oldLayoutTemplate.getContent(), portletResource);
+
+			layoutTypePortlet.reorganizePortlets(newColumns, oldColumns);
+		}
 
 		layoutTypePortlet.setStateMax(StringPool.BLANK);
 

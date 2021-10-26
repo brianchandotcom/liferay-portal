@@ -120,35 +120,38 @@ public class NestedPortletsPortlet extends MVCPortlet {
 				_layoutTemplateLocalService.getLayoutTemplate(
 					layoutTemplateId, false, theme.getThemeId());
 
-			String content = layoutTemplate.getContent();
+			if (layoutTemplate != null) {
+				String content = layoutTemplate.getContent();
 
-			Matcher processColumnMatcher = _processColumnPattern.matcher(
-				content);
+				Matcher processColumnMatcher = _processColumnPattern.matcher(
+					content);
 
-			while (processColumnMatcher.find()) {
-				String columnId = processColumnMatcher.group(2);
+				while (processColumnMatcher.find()) {
+					String columnId = processColumnMatcher.group(2);
 
-				if (Validator.isNotNull(columnId)) {
-					columnIds.put(
-						columnId,
-						renderResponse.getNamespace() + StringPool.UNDERLINE +
-							columnId);
+					if (Validator.isNotNull(columnId)) {
+						columnIds.put(
+							columnId,
+							renderResponse.getNamespace() +
+								StringPool.UNDERLINE + columnId);
+					}
 				}
+
+				processColumnMatcher.reset();
+
+				templateId = StringBundler.concat(
+					theme.getThemeId(),
+					LayoutTemplateConstants.CUSTOM_SEPARATOR,
+					renderResponse.getNamespace(), layoutTemplateId);
+
+				content = processColumnMatcher.replaceAll(
+					"$1" + renderResponse.getNamespace() + "_$2$3");
+
+				Matcher columnIdMatcher = _columnIdPattern.matcher(content);
+
+				templateContent = columnIdMatcher.replaceAll(
+					"$1" + renderResponse.getNamespace() + "_$2$3");
 			}
-
-			processColumnMatcher.reset();
-
-			templateId = StringBundler.concat(
-				theme.getThemeId(), LayoutTemplateConstants.CUSTOM_SEPARATOR,
-				renderResponse.getNamespace(), layoutTemplateId);
-
-			content = processColumnMatcher.replaceAll(
-				"$1" + renderResponse.getNamespace() + "_$2$3");
-
-			Matcher columnIdMatcher = _columnIdPattern.matcher(content);
-
-			templateContent = columnIdMatcher.replaceAll(
-				"$1" + renderResponse.getNamespace() + "_$2$3");
 		}
 
 		checkLayout(themeDisplay.getLayout(), columnIds.values());

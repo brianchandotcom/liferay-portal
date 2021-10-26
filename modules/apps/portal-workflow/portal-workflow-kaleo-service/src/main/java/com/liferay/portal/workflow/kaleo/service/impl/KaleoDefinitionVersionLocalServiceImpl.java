@@ -365,6 +365,7 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		Junction junction = RestrictionsFactoryUtil.disjunction();
 
 		for (String keyword : _customSQL.keywords(keywords)) {
+			junction.add(RestrictionsFactoryUtil.ilike("description", keyword));
 			junction.add(RestrictionsFactoryUtil.ilike("name", keyword));
 			junction.add(RestrictionsFactoryUtil.ilike("title", keyword));
 		}

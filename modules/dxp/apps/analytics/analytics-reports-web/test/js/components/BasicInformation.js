@@ -29,7 +29,7 @@ describe('BasicInformation', () => {
 			canonicalURL:
 				'http://localhost:8080/en/web/guest/-/basic-web-content',
 			onSelectedLanguageClick: () => {},
-			publishDate: 'Thu Feb 17 08:17:57 GMT 2020',
+			publishDate: 'Thu Sep 20 08:17:57 GMT 2021',
 			title: 'A testing page',
 			viewURLs: [
 				{
@@ -57,7 +57,7 @@ describe('BasicInformation', () => {
 
 		expect(getByText(testProps.canonicalURL)).toBeInTheDocument();
 
-		const formattedPublishDate = 'February 17, 2020';
+		const formattedPublishDate = '2021 M09 20';
 		expect(
 			getByText('published-on-' + formattedPublishDate)
 		).toBeInTheDocument();

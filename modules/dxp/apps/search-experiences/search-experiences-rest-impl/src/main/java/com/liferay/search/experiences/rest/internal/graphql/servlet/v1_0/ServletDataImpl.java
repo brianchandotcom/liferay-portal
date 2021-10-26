@@ -17,9 +17,14 @@ package com.liferay.search.experiences.rest.internal.graphql.servlet.v1_0;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.search.experiences.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.search.experiences.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.search.experiences.rest.resource.v1_0.KeywordQueryContributorsResource;
+import com.liferay.search.experiences.rest.resource.v1_0.ModelPrefilterContributorsResource;
+import com.liferay.search.experiences.rest.resource.v1_0.QueryPrefilterContributorsResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
+import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNamesDisplayResource;
+import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNamesResource;
 
 import javax.annotation.Generated;
 
@@ -47,10 +52,20 @@ public class ServletDataImpl implements ServletData {
 		Mutation.setSearchResponseResourceComponentServiceObjects(
 			_searchResponseResourceComponentServiceObjects);
 
+		Query.setKeywordQueryContributorsResourceComponentServiceObjects(
+			_keywordQueryContributorsResourceComponentServiceObjects);
+		Query.setModelPrefilterContributorsResourceComponentServiceObjects(
+			_modelPrefilterContributorsResourceComponentServiceObjects);
+		Query.setQueryPrefilterContributorsResourceComponentServiceObjects(
+			_queryPrefilterContributorsResourceComponentServiceObjects);
 		Query.setSXPBlueprintResourceComponentServiceObjects(
 			_sxpBlueprintResourceComponentServiceObjects);
 		Query.setSXPElementResourceComponentServiceObjects(
 			_sxpElementResourceComponentServiceObjects);
+		Query.setSearchableAssetNamesResourceComponentServiceObjects(
+			_searchableAssetNamesResourceComponentServiceObjects);
+		Query.setSearchableAssetNamesDisplayResourceComponentServiceObjects(
+			_searchableAssetNamesDisplayResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -79,5 +94,25 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SearchResponseResource>
 		_searchResponseResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<KeywordQueryContributorsResource>
+		_keywordQueryContributorsResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ModelPrefilterContributorsResource>
+		_modelPrefilterContributorsResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<QueryPrefilterContributorsResource>
+		_queryPrefilterContributorsResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SearchableAssetNamesResource>
+		_searchableAssetNamesResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SearchableAssetNamesDisplayResource>
+		_searchableAssetNamesDisplayResourceComponentServiceObjects;
 
 }

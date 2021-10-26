@@ -80,11 +80,21 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(KeywordQueryContributorsResourceImpl.class);
+
+			add(ModelPrefilterContributorsResourceImpl.class);
+
+			add(QueryPrefilterContributorsResourceImpl.class);
+
 			add(SXPBlueprintResourceImpl.class);
 
 			add(SXPElementResourceImpl.class);
 
 			add(SearchResponseResourceImpl.class);
+
+			add(SearchableAssetNamesResourceImpl.class);
+
+			add(SearchableAssetNamesDisplayResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
 		}

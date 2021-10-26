@@ -1,0 +1,85 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "h1",
+					"label": "text-type",
+					"name": "textType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "display-1"
+							},
+							{
+								"value": "display-2"
+							},
+							{
+								"value": "display-3"
+							},
+							{
+								"value": "display-4"
+							},
+							{
+								"value": "h1"
+							},
+							{
+								"value": "h2"
+							},
+							{
+								"value": "h3"
+							},
+							{
+								"value": "h4"
+							},
+							{
+								"value": "h5"
+							},
+							{
+								"value": "h6"
+							},
+							{
+								"label": "paragraph-large",
+								"value": "text-paragraph-lg"
+							},
+							{
+								"label": "paragraph-medium",
+								"value": "text-paragraph"
+							},
+							{
+								"label": "paragraph-small",
+								"value": "text-paragraph-sm"
+							},
+							{
+								"label": "paragraph-xsmall",
+								"value": "text-paragraph-xs"
+							},
+							{
+								"label": "paragraph-xxsmall",
+								"value": "text-paragraph-xxs"
+							},
+							{
+								"label": "small-caps",
+								"value": "text-small-caps"
+							},
+							{
+								"label": "link-large",
+								"value": "text-link-lg"
+							},
+							{
+								"label": "link-medium",
+								"value": "text-link-md"
+							},
+							{
+								"label": "link-small",
+								"value": "text-link-sm"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

@@ -249,8 +249,8 @@ describe('Detail', () => {
 
 	it('displays 10 urls when clicking on the view more button', async () => {
 		const testProps = {
-			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
-			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
+			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2019',
+			timeRange: {endDate: '2020-02-02', startDate: '2020-01-27'},
 			timeSpanKey: 'last-7-days',
 		};
 
@@ -490,8 +490,8 @@ describe('Detail', () => {
 	describe('Referral Detail', () => {
 		it('displays the referral detail according to API', async () => {
 			const testProps = {
-				pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
-				timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
+				pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2019',
+				timeRange: {endDate: '2020-02-02', startDate: '2020-01-27'},
 				timeSpanKey: 'last-7-days',
 			};
 
@@ -557,14 +557,17 @@ describe('Detail', () => {
 
 			expect(mockTrafficShareDataProvider).toHaveBeenCalledTimes(1);
 			expect(mockTrafficVolumeDataProvider).toHaveBeenCalledTimes(1);
+
+			expect(getByText('Last 7 Days')).toBeInTheDocument();
+			expect(getByText('Jan 27 - Feb 2, 2020')).toBeInTheDocument();
 		});
 	});
 
 	describe('Social Detail', () => {
 		it('displays the social detail according to API', async () => {
 			const testProps = {
-				pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
-				timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
+				pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2019',
+				timeRange: {endDate: '2020-02-02', startDate: '2020-01-27'},
 				timeSpanKey: 'last-7-days',
 			};
 
@@ -615,6 +618,9 @@ describe('Detail', () => {
 
 			expect(mockTrafficShareDataProvider).toHaveBeenCalledTimes(1);
 			expect(mockTrafficVolumeDataProvider).toHaveBeenCalledTimes(1);
+
+			expect(getByText('Last 7 Days')).toBeInTheDocument();
+			expect(getByText('Jan 27 - Feb 2, 2020')).toBeInTheDocument();
 		});
 	});
 });

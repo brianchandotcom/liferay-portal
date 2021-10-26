@@ -670,6 +670,8 @@ definition {
 		for (var name : list "${nameList}") {
 			var key_nameList = "${name}";
 
+			WaitForPageLoad();
+
 			while (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST") && (maxIterations = "50")) {
 				ACSegments.searchSegment(findSegment = "${name}");
 
@@ -687,6 +689,8 @@ definition {
 
 		var index = "${index}";
 
+		WaitForPageLoad();
+
 		while (IsElementNotPresent(locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE") && (maxIterations = "50")) {
 			Refresh();
 		}
@@ -698,6 +702,8 @@ definition {
 
 	macro viewNoResultsMessage {
 		var key_noResultMessage = "${noResultMessage}";
+
+		WaitForPageLoad();
 
 		while (IsElementNotPresent(locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE") && (maxIterations = "50")) {
 			TestUtils.hardRefresh();

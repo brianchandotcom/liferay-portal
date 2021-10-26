@@ -51,6 +51,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>CONTENT_TYPE_OPTION</td>
+		<td>//select[@class = 'form-control']//option[contains(text(),'${key_type}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>DISPLAY_PAGE</td>
 		<td>//a[@class = 'text-truncate' and contains(text(),'${key_pageName}')]</td>
 		<td></td>

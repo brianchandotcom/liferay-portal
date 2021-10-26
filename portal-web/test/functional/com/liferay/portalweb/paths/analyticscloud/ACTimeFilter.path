@@ -58,7 +58,7 @@
 </tr>
 <tr>
 	<td>DATE_PICKER_DAY</td>
-	<td>//table[@class='calendar-root']//button[contains(@class,'day-root') and text()='${key_day}' and not(@disabled)]</td>
+	<td>//table[@class='calendar-root']//button[contains(@class,'day-root') and text()='${key_day}' and not(contains(@class,'outside-month'))]</td>
 	<td></td>
 </tr>
 <tr>

@@ -457,8 +457,19 @@ definition {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			ACDXPSettings.syncNewContactData();
+		}
+
 		task ("Visits the site with known user") {
-			ACUtils.navigateToSitePage(
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "ac@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -484,7 +495,9 @@ definition {
 		}
 
 		task ("Go to Sites overview") {
-			ACUtils.assertActiveIndividualChat(timeFilter = "Last 24 hours");
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
 		}
 
 		task ("Verify if anonymous and known users legends are shown") {

@@ -281,14 +281,6 @@ public abstract class BaseBuild implements Build {
 	public String getBaseGitRepositorySHA(String gitRepositoryName) {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		if (gitRepositoryName.equals("liferay-jenkins-ee")) {
-			Map<String, String> topLevelBuildStartPropertiesTempMap =
-				topLevelBuild.getStartPropertiesTempMap();
-
-			return topLevelBuildStartPropertiesTempMap.get(
-				"JENKINS_GITHUB_UPSTREAM_BRANCH_SHA");
-		}
-
 		if ((topLevelBuild instanceof WorkspaceBuild) && !fromArchive) {
 			WorkspaceBuild workspaceBuild = (WorkspaceBuild)topLevelBuild;
 
@@ -298,6 +290,14 @@ public abstract class BaseBuild implements Build {
 				workspace.getPrimaryWorkspaceGitRepository();
 
 			return workspaceGitRepository.getBaseBranchSHA();
+		}
+
+		if (gitRepositoryName.equals("liferay-jenkins-ee")) {
+			Map<String, String> topLevelBuildStartPropertiesTempMap =
+				topLevelBuild.getStartPropertiesTempMap();
+
+			return topLevelBuildStartPropertiesTempMap.get(
+				"JENKINS_GITHUB_UPSTREAM_BRANCH_SHA");
 		}
 
 		Map<String, String> gitRepositoryGitDetailsTempMap =

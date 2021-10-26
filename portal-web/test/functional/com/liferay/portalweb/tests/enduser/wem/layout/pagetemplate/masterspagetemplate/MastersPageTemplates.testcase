@@ -1714,7 +1714,7 @@ definition {
 		task ("Open the Preview modal") {
 			PageEditor.openPreviewMode();
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 		}
 
 		task ("Assert only Heading Example 2 is shown") {

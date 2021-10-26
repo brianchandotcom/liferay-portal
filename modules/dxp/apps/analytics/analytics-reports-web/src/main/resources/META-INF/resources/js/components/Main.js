@@ -12,20 +12,18 @@
 import PropTypes from 'prop-types';
 import React, {useContext, useMemo} from 'react';
 
-import BasicInformation from './BasicInformation';
-import Chart from './Chart';
-import TimeSpanSelector from './TimeSpanSelector';
-import TotalCount from './TotalCount';
-import TrafficSources from './TrafficSources';
-
 import {
 	ChartStateContext,
 	useDateTitle,
 	useIsPreviousPeriodButtonDisabled,
 } from '../context/ChartStateContext';
 import {StoreStateContext} from '../context/StoreContext';
-
 import {generateDateFormatters as dateFormat} from '../utils/dateFormat';
+import BasicInformation from './BasicInformation';
+import Chart from './Chart';
+import TimeSpanSelector from './TimeSpanSelector';
+import TotalCount from './TotalCount';
+import TrafficSources from './TrafficSources';
 
 export default function Main({
 	author,
@@ -48,10 +46,9 @@ export default function Main({
 
 	const {firstDate, lastDate} = useDateTitle();
 
-	const dateFormatters = useMemo(
-		() => dateFormat(languageTag),
-		[languageTag]
-	);
+	const dateFormatters = useMemo(() => dateFormat(languageTag), [
+		languageTag,
+	]);
 
 	const title = dateFormatters.formatChartTitle([firstDate, lastDate]);
 

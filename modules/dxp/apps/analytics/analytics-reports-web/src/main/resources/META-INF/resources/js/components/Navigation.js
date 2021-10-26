@@ -31,8 +31,9 @@ export default function Navigation({
 	timeSpanOptions,
 	viewURLs,
 }) {
-	const {endpoints, namespace, page, publishedToday, warning} =
-		useContext(StoreStateContext);
+	const {endpoints, namespace, page, publishedToday, warning} = useContext(
+		StoreStateContext
+	);
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
@@ -101,22 +102,22 @@ export default function Navigation({
 		timeSpanOffset,
 	]);
 
-	const updateTrafficSourcesAndCurrentPage = (
-		trafficSources,
-		trafficSourceName
-	) => {
-		setTrafficSources(trafficSources);
-		setTrafficSourceName(trafficSourceName);
+	const updateTrafficSourcesAndCurrentPage = useCallback(
+		(trafficSources, trafficSourceName) => {
+			setTrafficSources(trafficSources);
+			setTrafficSourceName(trafficSourceName);
 
-		const trafficSource = trafficSources.find((trafficSource) => {
-			return trafficSource.name === trafficSourceName;
-		});
+			const trafficSource = trafficSources.find((trafficSource) => {
+				return trafficSource.name === trafficSourceName;
+			});
 
-		setCurrentPage({
-			data: trafficSource,
-			view: trafficSource.name,
-		});
-	};
+			setCurrentPage({
+				data: trafficSource,
+				view: trafficSource.name,
+			});
+		},
+		[]
+	);
 
 	const handleTrafficSourceName = (trafficSourceName) =>
 		setTrafficSourceName(trafficSourceName);

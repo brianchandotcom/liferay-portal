@@ -56,29 +56,37 @@ export const ChartStateContextProvider = ({
 };
 
 export function useDateTitle() {
-	const {timeRange, timeSpanKey, timeSpanOffset} = useContext(ChartStateContext);
+	const {timeRange, timeSpanKey, timeSpanOffset} = useContext(
+		ChartStateContext
+	);
 
-	let firstDate = new Date(timeRange.startDate);
-	let lastDate = new Date(timeRange.endDate);
+	const firstDate = new Date(timeRange.startDate);
+	const lastDate = new Date(timeRange.endDate);
 
-	const increment = timeSpanKey === 'last-7-days' ? 7 
-		:timeSpanKey === 'last-30-days' ? 30 
-		: 0;
+	const increment =
+		timeSpanKey === 'last-7-days'
+			? 7
+			: timeSpanKey === 'last-30-days'
+			? 30
+			: 0;
 
 	// Default interval between firstDate and lastDate is 7 days.
 	// First date must be calculated from last date if timespan is 30.
+
 	if (timeSpanKey === 'last-30-days') {
 		firstDate.setDate(lastDate.getDate() - (increment - 1));
 	}
 
 	if (timeSpanOffset > 0) {
-		lastDate.setDate(lastDate.getDate() - (increment * timeSpanOffset));
-		firstDate.setDate(firstDate.getDate() - (increment * timeSpanOffset));
+		lastDate.setDate(lastDate.getDate() - increment * timeSpanOffset);
+		firstDate.setDate(firstDate.getDate() - increment * timeSpanOffset);
+
 		return {
 			firstDate,
 			lastDate,
 		};
-	} else {
+	}
+	else {
 		return {
 			firstDate,
 			lastDate,
@@ -188,6 +196,7 @@ function reducer(state, action) {
  * Declares the state as loading and resets the dataSet histogram values
  */
 function setLineChartLoadingState(state) {
+
 	/**
 	 * The dataSet does not need to be reset
 	 */
@@ -205,7 +214,8 @@ function setLineChartLoadingState(state) {
 
 			if (key === 'label') {
 				newSet[key] = value;
-			} else {
+			}
+			else {
 				newSet[key] = null;
 			}
 		}
@@ -289,7 +299,8 @@ function mergeDataSets({
 			mergeHistogram.push({
 				...newFormattedHistogram[start],
 			});
-		} else if (
+		}
+		else if (
 			newFormattedHistogram[start].label ===
 			previousDataSet.histogram[start].label
 		) {
@@ -323,6 +334,7 @@ function mergeDataSets({
  * }
  */
 function addDataSetItem(state, payload, validAnalyticsConnection) {
+
 	/**
 	 * The dataSetItem is recognized as substitutive when the
 	 * previous state was in loading state.

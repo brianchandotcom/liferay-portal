@@ -69,14 +69,13 @@ public class AnalyticsReportsDataProvider {
 			String response = _asahFaroBackendClient.doGet(
 				companyId,
 				String.format(
-					"api/1.0/pages/acquisition-channels?canonicalURL=%s&endDate=%s&" +
-						"interval=D&startDate=%s",
+					"api/1.0/pages/acquisition-channels?canonicalURL=" +
+						"%s&endDate=%s&interval=D&startDate=%s",
 					HtmlUtil.escapeURL(url),
 					DateTimeFormatter.ISO_DATE.format(
 						timeRange.getEndLocalDate()),
 					DateTimeFormatter.ISO_DATE.format(
-						timeRange.getStartLocalDate()))
-			);
+						timeRange.getStartLocalDate())));
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
@@ -113,21 +112,21 @@ public class AnalyticsReportsDataProvider {
 		}
 	}
 
-	public List<ReferringURL> getDomainReferringURLs(long companyId, String url, TimeRange timeRange)
+	public List<ReferringURL> getDomainReferringURLs(
+			long companyId, String url, TimeRange timeRange)
 		throws PortalException {
 
 		try {
 			String response = _asahFaroBackendClient.doGet(
 				companyId,
 				String.format(
-					"api/1.0/pages/page-referrer-hosts?canonicalURL=%s&endDate=%s&" +
-						"interval=D&startDate=%s",
+					"api/1.0/pages/page-referrer-hosts?canonicalURL=" +
+						"%s&endDate=%s&interval=D&startDate=%s",
 					HtmlUtil.escapeURL(url),
 					DateTimeFormatter.ISO_DATE.format(
 						timeRange.getEndLocalDate()),
 					DateTimeFormatter.ISO_DATE.format(
-						timeRange.getStartLocalDate()))		
-			);
+						timeRange.getStartLocalDate())));
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
@@ -192,8 +191,7 @@ public class AnalyticsReportsDataProvider {
 					DateTimeFormatter.ISO_DATE.format(
 						timeRange.getEndLocalDate()),
 					DateTimeFormatter.ISO_DATE.format(
-						timeRange.getStartLocalDate()))
-				);
+						timeRange.getStartLocalDate())));
 
 			return _objectMapper.readValue(response, HistoricalMetric.class);
 		}
@@ -203,7 +201,8 @@ public class AnalyticsReportsDataProvider {
 		}
 	}
 
-	public List<ReferringURL> getPageReferringURLs(long companyId, String url, TimeRange timeRange)
+	public List<ReferringURL> getPageReferringURLs(
+			long companyId, String url, TimeRange timeRange)
 		throws PortalException {
 
 		try {
@@ -216,8 +215,7 @@ public class AnalyticsReportsDataProvider {
 					DateTimeFormatter.ISO_DATE.format(
 						timeRange.getEndLocalDate()),
 					DateTimeFormatter.ISO_DATE.format(
-						timeRange.getStartLocalDate()))	
-				);
+						timeRange.getStartLocalDate())));
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
@@ -252,15 +250,13 @@ public class AnalyticsReportsDataProvider {
 			String response = _asahFaroBackendClient.doGet(
 				companyId,
 				String.format(
-					"api/1.0/pages/social-page-referrers?canonicalURL=%s&endDate=%s&" +
-						"interval=D&startDate=%s",
+					"api/1.0/pages/social-page-referrers?canonicalURL=" +
+						"%s&endDate=%s&interval=D&startDate=%s",
 					HtmlUtil.escapeURL(url),
 					DateTimeFormatter.ISO_DATE.format(
 						timeRange.getEndLocalDate()),
 					DateTimeFormatter.ISO_DATE.format(
-						timeRange.getStartLocalDate()))	
-				);
-					
+						timeRange.getStartLocalDate())));
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 

@@ -138,15 +138,19 @@ export default function Chart({dataProviders = [], publishDate}) {
 
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
-	const {dataSet, lineChartLoading, timeRange, timeSpanKey, timeSpanOffset} =
-		useContext(ChartStateContext);
+	const {
+		dataSet,
+		lineChartLoading,
+		timeRange,
+		timeSpanKey,
+		timeSpanOffset,
+	} = useContext(ChartStateContext);
 
 	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
 
-	const dateFormatters = useMemo(
-		() => dateFormat(languageTag),
-		[languageTag]
-	);
+	const dateFormatters = useMemo(() => dateFormat(languageTag), [
+		languageTag,
+	]);
 
 	const isMounted = useIsMounted();
 
@@ -182,7 +186,8 @@ export default function Chart({dataProviders = [], publishDate}) {
 							...dataSetItems,
 							...data[i].value,
 						};
-					} else {
+					}
+					else {
 						storeDispatch({type: 'ADD_WARNING'});
 					}
 				}
@@ -197,7 +202,8 @@ export default function Chart({dataProviders = [], publishDate}) {
 					validAnalyticsConnection,
 				});
 			});
-		} else {
+		}
+		else {
 			chartDispatch({
 				payload: {
 					keys,

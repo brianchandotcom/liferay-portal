@@ -55,10 +55,9 @@ export default function SocialDetail({
 
 	const {referringSocialMedia} = currentPage.data;
 
-	const dateFormatters = useMemo(
-		() => dateFormat(languageTag),
-		[languageTag]
-	);
+	const dateFormatters = useMemo(() => dateFormat(languageTag), [
+		languageTag,
+	]);
 
 	const {firstDate, lastDate} = useDateTitle();
 
@@ -68,8 +67,9 @@ export default function SocialDetail({
 
 	const chartDispatch = useContext(ChartDispatchContext);
 
-	const {pieChartLoading, timeSpanKey, timeSpanOffset} =
-		useContext(ChartStateContext);
+	const {pieChartLoading, timeSpanKey, timeSpanOffset} = useContext(
+		ChartStateContext
+	);
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
@@ -112,6 +112,7 @@ export default function SocialDetail({
 	useEffect(() => {
 		if (firstUpdate.current) {
 			firstUpdate.current = false;
+
 			return;
 		}
 
@@ -139,7 +140,15 @@ export default function SocialDetail({
 					});
 				});
 		}
-	}, [timeSpanKey, timeSpanOffset]);
+	}, [
+		chartDispatch,
+		dispatch,
+		handleDetailPeriodChange,
+		timeSpanKey,
+		timeSpanOffset,
+		trafficSourcesDataProvider,
+		validAnalyticsConnection,
+	]);
 
 	return (
 		<div className={trafficSourceDetailClasses}>
@@ -228,8 +237,9 @@ export default function SocialDetail({
 								>
 									<div
 										style={{
-											backgroundColor:
-												keyToHexColor(name),
+											backgroundColor: keyToHexColor(
+												name
+											),
 											height: '16px',
 											width: keyToWidth(index),
 										}}

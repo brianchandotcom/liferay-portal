@@ -83,7 +83,7 @@ public class TimeRange {
 			return _timeSpanOffset;
 		}
 
-		return (_timeSpan.getDays() * _timeSpanOffset);
+		return _timeSpan.getDays() * _timeSpanOffset;
 	}
 
 	private final Clock _clock;

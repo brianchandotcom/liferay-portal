@@ -99,8 +99,9 @@ public class GetTrafficSourcesMVCResourceCommand
 			JSONObject jsonObject = JSONUtil.put(
 				"trafficSources",
 				_getTrafficSourcesJSONArray(
-					analyticsReportsDataProvider, themeDisplay.getCompanyId(), timeSpan.toTimeRange(timeSpanOffset),
-					canonicalURL, themeDisplay.getLocale(), resourceBundle));
+					analyticsReportsDataProvider, themeDisplay.getCompanyId(),
+					timeSpan.toTimeRange(timeSpanOffset), canonicalURL,
+					themeDisplay.getLocale(), resourceBundle));
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse, jsonObject);

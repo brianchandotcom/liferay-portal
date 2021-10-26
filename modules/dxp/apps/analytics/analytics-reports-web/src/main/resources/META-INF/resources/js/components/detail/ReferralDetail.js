@@ -22,11 +22,11 @@ import {
 	useDateTitle,
 	useIsPreviousPeriodButtonDisabled,
 } from '../../context/ChartStateContext';
+import ConnectionContext from '../../context/ConnectionContext';
 import {
 	StoreDispatchContext,
 	StoreStateContext,
 } from '../../context/StoreContext';
-import ConnectionContext from '../../context/ConnectionContext';
 import {generateDateFormatters as dateFormat} from '../../utils/dateFormat';
 import {numberFormat} from '../../utils/numberFormat';
 import Hint from '../Hint';
@@ -45,18 +45,20 @@ export default function ReferralDetail({
 }) {
 	const {languageTag} = useContext(StoreStateContext);
 
-	const [isReferringPagesExpanded, setIsReferringPagesExpanded] =
-		useState(false);
+	const [isReferringPagesExpanded, setIsReferringPagesExpanded] = useState(
+		false
+	);
 
-	const [isReferringDomainsExpanded, setIsReferringDomainsExpanded] =
-		useState(false);
+	const [
+		isReferringDomainsExpanded,
+		setIsReferringDomainsExpanded,
+	] = useState(false);
 
 	const {referringDomains, referringPages} = currentPage.data;
 
-	const dateFormatters = useMemo(
-		() => dateFormat(languageTag),
-		[languageTag]
-	);
+	const dateFormatters = useMemo(() => dateFormat(languageTag), [
+		languageTag,
+	]);
 
 	const {firstDate, lastDate} = useDateTitle();
 
@@ -68,8 +70,9 @@ export default function ReferralDetail({
 
 	const chartDispatch = useContext(ChartDispatchContext);
 
-	const {pieChartLoading, timeSpanKey, timeSpanOffset} =
-		useContext(ChartStateContext);
+	const {pieChartLoading, timeSpanKey, timeSpanOffset} = useContext(
+		ChartStateContext
+	);
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
@@ -87,6 +90,7 @@ export default function ReferralDetail({
 	useEffect(() => {
 		if (firstUpdate.current) {
 			firstUpdate.current = false;
+
 			return;
 		}
 
@@ -114,7 +118,15 @@ export default function ReferralDetail({
 					});
 				});
 		}
-	}, [timeSpanKey, timeSpanOffset]);
+	}, [
+		chartDispatch,
+		dispatch,
+		handleDetailPeriodChange,
+		timeSpanKey,
+		timeSpanOffset,
+		trafficSourcesDataProvider,
+		validAnalyticsConnection,
+	]);
 
 	return (
 		<div className={trafficSourceDetailClasses}>

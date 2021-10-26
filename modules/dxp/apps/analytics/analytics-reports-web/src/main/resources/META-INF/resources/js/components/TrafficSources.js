@@ -17,12 +17,12 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {Cell, Pie, PieChart, Tooltip} from 'recharts';
 
-import ConnectionContext from '../context/ConnectionContext';
-import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import {
 	ChartDispatchContext,
 	ChartStateContext,
 } from '../context/ChartStateContext';
+import ConnectionContext from '../context/ConnectionContext';
+import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import {numberFormat} from '../utils/numberFormat';
 import EmptyPieChart from './EmptyPieChart';
 import Hint from './Hint';
@@ -61,8 +61,9 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
-	const {pieChartLoading, timeSpanKey, timeSpanOffset} =
-		useContext(ChartStateContext);
+	const {pieChartLoading, timeSpanKey, timeSpanOffset} = useContext(
+		ChartStateContext
+	);
 
 	const [trafficSources, setTrafficSources] = useStateSafe([]);
 
@@ -96,6 +97,7 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 				});
 		}
 	}, [
+		chartDispatch,
 		dispatch,
 		dataProvider,
 		setTrafficSources,
@@ -180,10 +182,9 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 											<span
 												className="pie-chart-wrapper--legend--dot"
 												style={{
-													backgroundColor:
-														getColorByName(
-															entry.name
-														),
+													backgroundColor: getColorByName(
+														entry.name
+													),
 												}}
 											></span>
 										</td>

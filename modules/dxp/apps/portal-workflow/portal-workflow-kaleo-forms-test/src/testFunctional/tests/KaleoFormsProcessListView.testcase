@@ -710,7 +710,6 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
 			value1 = "0 Results for daCwZ12");
-
-
 	}
+
 }

@@ -32,7 +32,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 	<liferay-frontend:edit-form
 		action="<%= editBatchPlannerPlanURL %>"
 	>
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (batchPlannerPlanId == 0) ? Constants.ADD : Constants.UPDATE %>" />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (batchPlannerPlanId == 0) ? Constants.IMPORT : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
 		<aui:input name="batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
 		<aui:input name="taskItemDelegateName" type="hidden" value="DEFAULT" />
@@ -42,7 +42,11 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 
 			<div class="card-body">
 				<liferay-frontend:edit-form-body>
-					<aui:input bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="name" />
+					<div class="form-group">
+						<label for="<portlet:namespace />name"><%= LanguageUtil.get(request, "template-name") %></label>
+
+						<input class="form-control" id="<portlet:namespace />name" type="text" />
+					</div>
 
 					<aui:select bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="externalType">
 						<aui:option label="CSV" value="CSV" />
@@ -141,6 +145,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				/>
 
 				<clay:button
+					disabled="disabled"
 					displayType="secondary"
 					id='<%= liferayPortletResponse.getNamespace() + "saveTemplate" %>'
 					label="save-as-template"
@@ -165,12 +170,6 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 		);
 
 		cmdAttribute.val('saveTemplate');
-
-		window.cmdAttribute = cmdAttribute;
-
-		debugger;
-
-		alert('Hey Im In!');
 
 		submitForm(document.querySelector('#<portlet:namespace />fm'));
 	}
@@ -331,9 +330,6 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				var saveTemplateButton = A.one(
 					'#<portlet:namespace />saveTemplate'
 				);
-
-				debugger;
-				window.saveTemplateButton = saveTemplateButton;
 
 				saveTemplateButton.removeAttribute('disabled');
 				saveTemplateButton.removeClass('disabled');

@@ -24,21 +24,23 @@ long batchPlannerPlanId = ParamUtil.getLong(renderRequest, "batchPlannerPlanId")
 renderResponse.setTitle(LanguageUtil.get(request, "export"));
 %>
 
-<portlet:actionURL name="/batch_planner/edit_export_batch_planner_plan" var="exportBatchPlannerPlanURL" />
+<portlet:actionURL name="/batch_planner/edit_export_batch_planner_plan" var="exportBatchPlannerPlanURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+</portlet:actionURL>
 
 <div class="container pt-4">
-	<form action="<%= exportBatchPlannerPlanURL %>" method="POST" name="<portlet:namespace />fm">
+	<form action="<%= exportBatchPlannerPlanURL %>" id="<portlet:namespace />fm" method="POST" name="<portlet:namespace />fm">
 		<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
 		<aui:input name="batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
 		<aui:input name="export" type="hidden" value="<%= true %>" />
 		<aui:input name="taskItemDelegateName" type="hidden" value="DEFAULT" />
+		<aui:input name="name" type="hidden" />
 
 		<div class="card">
 			<h4 class="card-header"><%= LanguageUtil.get(request, "export-settings") %></h4>
 
 			<div class="card-body">
 				<liferay-frontend:edit-form-body>
-					<aui:input name="name" />
 
 					<%
 					EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBatchPlannerPlanDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
@@ -142,13 +144,28 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 			</div>
 		</liferay-frontend:edit-form-body>
 
-		<div class="mt-4">
+		<div class="mt-4" id="<portlet:namespace />formButtons">
 			<liferay-frontend:edit-form-footer>
-				<aui:button name="export" type="submit" value="export" />
+				<clay:button
+					displayType="primary"
+					label="export"
+					type="submit"
+				/>
 
-				<aui:button disabled="disabled" name="saveTemplate" type="submit" value="save-as-template" />
+				<clay:button
+					disabled="disabled"
+					displayType="secondary"
+					id='<%= liferayPortletResponse.getNamespace() + "saveTemplate" %>'
+					label="save-as-template"
+					type="button"
+				/>
 
-				<aui:button href="<%= backURL %>" type="cancel" />
+				<clay:link
+					displayType="secondary"
+					href="<%= backURL %>"
+					label="cancel"
+					type="button"
+				/>
 			</liferay-frontend:edit-form-footer>
 		</div>
 	</form>
@@ -156,4 +173,24 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 
 <liferay-frontend:component
 	module="js/export_edit_batch_planner_plan"
+/>
+
+<portlet:actionURL name="/batch_planner/edit_export_batch_planner_plan" var="saveBatchPlannerPlanURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SAVE %>" />
+	<portlet:param name="template" value="<%= String.valueOf(Boolean.TRUE) %>" />
+</portlet:actionURL>
+
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"buttonContainerId", liferayPortletResponse.getNamespace() + "formButtons"
+		).put(
+			"formSaveAsTemplateDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
+		).put(
+			"formSaveAsTemplateURL", saveBatchPlannerPlanURL
+		).put(
+			"portletNamespace", liferayPortletResponse.getNamespace()
+		).build()
+	%>'
+	module="js/save_template_modal"
 />

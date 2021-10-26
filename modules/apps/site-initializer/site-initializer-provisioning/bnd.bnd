@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Site Initializer Provisioning
-Bundle-SymbolicName: com.liferay.site.initializer.Provisioning
+Bundle-SymbolicName: com.liferay.site.initializer.provisioning
 Bundle-Version: 1.0.0
 Liferay-Site-Initializer-Name: Provisioning
 Provide-Capability: liferay.site.initializer
-Web-ContextPath: /site-initializer-Provisioning
+Web-ContextPath: /site-initializer-provisioning

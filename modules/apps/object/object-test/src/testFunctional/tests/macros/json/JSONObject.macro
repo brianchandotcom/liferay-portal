@@ -95,6 +95,38 @@ definition {
 		JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to add a layout in an object"
+	macro addObjectLayout {
+		var portalURL = JSONCompany.getPortalURL();
+		var objectID = JSONObject.getObjectId(
+			objectName = "${objectName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectID}/object-layouts \
+			-H 'Content-Type: application/json' \
+			-u ${userEmailAddress}:${userPassword} \
+			-d '{
+			"defaultObjectLayout": false,
+			"name": {
+				"en_US": "${layoutName}"
+			},
+			"objectDefinitionId": ${objectID}
+			}'
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to add a relationship in an object"
 	macro addObjectRelationship {
 		var portalURL = JSONCompany.getPortalURL();

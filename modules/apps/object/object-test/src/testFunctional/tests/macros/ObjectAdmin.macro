@@ -87,6 +87,14 @@ definition {
 		Button.clickSave();
 	}
 
+	macro addObjectLayoutViaAPI {
+		JSONObject.addObjectLayout(
+			layoutName = "${layoutName}",
+			objectName = "${objectName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+	}
+
 	macro addObjectPicklistFieldEntryViaUI {
 		LexiconEntry.gotoAdd();
 

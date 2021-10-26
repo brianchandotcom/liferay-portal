@@ -154,11 +154,34 @@ definition {
 	}
 
 	@description = "Verify that assign a form to the created task is required."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test FormAssignedToCreatedTaskIsRequired {
+		KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70686 FormAssignedToCreatedTaskIsRequired pending implementation
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+		
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "Contacts",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Single Approver");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.viewFieldRequired(
+			progressTitle = "Forms",
+			kfProcessName = "Kaleo Forms Process",
+			workflowTask = "created",
+			kfFormName = "Created Task Form");
+
 
 	}
 

@@ -638,11 +638,34 @@ definition {
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a Long entry on layout"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditLongEntryOnLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-140554 CanEditLongEntryOnLayout pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "Long",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "123456789");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "123456789");
+
+		ObjectPortlet.updateEntry(updateEntry = "12345678912345678");
+
+		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "12345678912345678");
 
 	}
 

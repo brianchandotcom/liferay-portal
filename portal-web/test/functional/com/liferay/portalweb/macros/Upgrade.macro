@@ -970,15 +970,9 @@ definition {
 
 			ContentPages.gotoPageEditor();
 
-			AssertElementPresent(
-				key_elementType = "Container",
-				key_position = "1",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
-
-			AssertElementPresent(
-				key_elementType = "Grid",
-				key_position = "1",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+			for (var fragmentName : list "Container,Grid") {
+				PageEditor.viewFragment(fragmentName = "${fragmentName}");
+			}
 		}
 
 		task ("Assert translation is working after migration") {

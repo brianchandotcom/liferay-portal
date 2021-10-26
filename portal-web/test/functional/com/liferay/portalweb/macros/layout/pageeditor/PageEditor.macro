@@ -707,10 +707,9 @@ definition {
 		}
 
 		if (("${fragmentName}" == "Grid") || ("${fragmentName}" == "Container")) {
-			AssertElementPresent(
-				key_elementType = "${fragmentName}",
-				key_position = "${position}",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+			PageEditor.viewFragment(
+				fragmentName = "${fragmentName}",
+				position = "${position}");
 		}
 
 		if (("${fragmentName}" == "Content Display") || ("${fragmentName}" == "Collection Display") || ("${fragmentName}" == "Display Page Content")) {
@@ -2176,17 +2175,18 @@ definition {
 	}
 
 	macro editLayoutContainer {
-		var key_elementType = "Container";
+		var key_fragmentName = "Container";
 
-		if (!(isSet(position))) {
-			var key_position = "1";
+		if (isSet(position)) {
+			var key_index = "${position}";
 		}
+
 		else {
-			var key_position = "${position}";
+			var key_index = "1";
 		}
 
-		if (IsNotVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER")) {
-			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY")) {
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 		}
 
 		AssertVisible(
@@ -2483,18 +2483,18 @@ definition {
 	}
 
 	macro editLayoutGrid {
-		var key_elementType = "Grid";
+		var key_fragmentName = "Grid";
 
 		if (isSet(position)) {
-			var key_position = "${position}";
+			var key_index = "${position}";
 		}
 
 		else {
-			var key_position = "1";
+			var key_index = "1";
 		}
 
-		if (IsNotVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER")) {
-			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY")) {
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 		}
 
 		AssertVisible(

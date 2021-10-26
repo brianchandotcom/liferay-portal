@@ -400,10 +400,7 @@ definition {
 		}
 
 		task ("View the background image of Container") {
-			AssertElementPresent(
-				key_elementType = "Container",
-				key_position = "1",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+			PageEditor.viewFragment(fragmentName = "Container");
 
 			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
 		}

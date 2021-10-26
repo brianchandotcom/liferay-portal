@@ -386,9 +386,9 @@ definition {
 				locator1 = "Select#GROUPED_SELECT_VALUE");
 
 			Click.clickNoWaitForVisible(
-				key_elementType = "Container",
-				key_position = "1",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+				key_fragmentName = "Container",
+				key_index = "1",
+				locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 
 			Click(
 				key_navItem = "Styles",
@@ -440,9 +440,9 @@ definition {
 				targetFragmentName = "Image");
 
 			Click.clickNoWaitForVisible(
-				key_elementType = "Container",
-				key_position = "3",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+				key_fragmentName = "Container",
+				key_index = "3",
+				locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 
 			Click(
 				key_navItem = "Styles",

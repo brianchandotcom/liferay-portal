@@ -43,10 +43,7 @@ definition {
 				collectionName = "Layout Elements",
 				fragmentName = "Grid");
 
-			AssertElementNotPresent(
-				key_elementType = "Container",
-				key_position = "1",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Container");
 		}
 
 		task ("Assert add the second Grid in module 1 of the first Grid") {
@@ -204,10 +201,7 @@ definition {
 		}
 
 		task ("View no Container is outside of Grid") {
-			AssertElementNotPresent(
-				key_elementType = "Container",
-				key_position = "1",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Container");
 		}
 	}
 
@@ -235,10 +229,7 @@ definition {
 		}
 
 		task ("View no Container is outside of Grid") {
-			AssertElementNotPresent(
-				key_elementType = "Container",
-				key_position = "1",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Container");
 		}
 	}
 

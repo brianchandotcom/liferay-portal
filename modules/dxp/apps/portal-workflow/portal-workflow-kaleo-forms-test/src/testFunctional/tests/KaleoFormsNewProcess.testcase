@@ -84,11 +84,14 @@ definition {
 	}
 
 	@description = "Verify that the name field is required."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test FieldNameIsRequired {
+		KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70682 FieldNameIsRequired pending implementation
+		KaleoFormsAdmin.viewFieldRequired(
+			progressTitle = "Details",
+			kfProcessName = "Kaleo Forms Process");
+			
 
 	}
 

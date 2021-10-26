@@ -1650,7 +1650,7 @@
 		</attributes>
 	</component>
 	<component dynamicAttributes="false" name="WorkflowStatus">
-		<description>Creates a UI component that displays the current status of its associated workflow.</description>
+		<description>Creates a UI component that displays the current status of its associated workflow. Deprecated as of Cavanaugh (7.4.x), replaced by <code>liferay-portal-workflow:status</code></description>
 		<attributes>
 			<attribute>
 				<description>A bean associated with the workflow status component.</description>

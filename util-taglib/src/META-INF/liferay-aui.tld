@@ -1668,7 +1668,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a UI component that displays the current status of its associated workflow.]]></description>
+		<description><![CDATA[Deprecated as of Cavanaugh (7.4.x), replaced by liferay-portal-workflow:status.]]></description>
 		<name>workflow-status</name>
 		<tag-class>com.liferay.taglib.aui.WorkflowStatusTag</tag-class>
 		<body-content>JSP</body-content>

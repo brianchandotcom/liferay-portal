@@ -437,6 +437,8 @@ definition {
 	test PaginateListOfMembersToBeAddedToTheSegment {
 		var users = "ac1,ac2,ac3,ac4,ac5,ac6,ac7";
 
+		var nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6,ac7 ac7";
+
 		task ("Conect DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -492,6 +494,10 @@ definition {
 			ACSegments.editSegment(searchTerm = "Static Segment Test");
 
 			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+		}
+
+		task ("View all users are shown in current page") {
+			ACUtils.viewNameList(nameList = "${nameList}");
 		}
 
 		task ("Select the 5 Items in Pagination") {

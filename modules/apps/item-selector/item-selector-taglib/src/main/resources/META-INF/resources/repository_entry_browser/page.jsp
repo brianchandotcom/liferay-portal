@@ -395,7 +395,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 										<c:choose>
 											<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
 												<liferay-frontend:icon-vertical-card
-													actionJsp="/repository_entry_browser/action_button_preview.jsp"
+													actionJsp='<%= repositoryEntryBrowserDisplayContext.isEditable(latestFileVersion) ? "/repository_entry_browser/action_button_preview.jsp" : StringPool.BLANK %>'
 													actionJspServletContext="<%= application %>"
 													cardCssClass="card-interactive"
 													cssClass="file-card form-check form-check-card item-preview"
@@ -425,7 +425,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 											</c:when>
 											<c:otherwise>
 												<liferay-frontend:vertical-card
-													actionJsp="/repository_entry_browser/action_button_preview.jsp"
+													actionJsp='<%= repositoryEntryBrowserDisplayContext.isEditable(latestFileVersion) ? "/repository_entry_browser/action_button_preview.jsp" : StringPool.BLANK %>'
 													actionJspServletContext="<%= application %>"
 													cardCssClass="card-interactive"
 													cssClass="form-check form-check-card image-card item-preview"

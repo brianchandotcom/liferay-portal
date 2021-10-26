@@ -12,7 +12,7 @@
  * details.
  */
 
-import {render, useThunk} from '@liferay/frontend-js-react-web';
+import {useThunk} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useReducer} from 'react';
 
@@ -70,4 +70,14 @@ App.proptypes = {
 	).isRequired,
 };
 
-export default (...data) => render(App, ...data);
+export {App as DataSetDisplay};
+
+// Renderers API
+
+export {default as DataRenderers} from './data_renderers/index';
+export {default as DateRenderer} from './data_renderers/DateRenderer';
+export {default as StatusRenderer} from './data_renderers/StatusRenderer';
+
+// Data Set Events API
+
+export {default as DATA_SET_EVENT} from './utils/eventsDefinitions';

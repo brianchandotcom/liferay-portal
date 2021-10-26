@@ -24,6 +24,7 @@ import React, {
 	useState,
 } from 'react';
 
+import './styles/main.scss';
 import {AppContext} from './AppContext';
 import DataSetDisplayContext from './DataSetDisplayContext';
 import EmptyResultMessage from './EmptyResultMessage';

@@ -1268,6 +1268,10 @@ definition {
 			ACNavigation.switchTab(tabName = "Membership");
 		}
 
+		task ("View all users are shown in current page") {
+			ACUtils.viewNameList(nameList = "${nameList},user5 user5");
+		}
+
 		task ("Select the 5 Items in Pagination") {
 			ACUtils.changePagination(itemsPerPage = "5");
 		}

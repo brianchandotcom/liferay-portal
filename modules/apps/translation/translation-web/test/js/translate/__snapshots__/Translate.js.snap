@@ -170,7 +170,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
         class="sheet translation-edit-body-form"
       >
         <div
-          class="row row-autotranslate-title"
+          class="row"
         >
           <div
             class="col-md-6"
@@ -732,7 +732,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
             class="align-self-top col-autotranslate-button autofit-col"
           >
             <button
-              class="lfr-portal-tooltip btn btn-monospaced btn-secondary"
+              class="btn btn-monospaced btn-secondary"
               title="auto-translate-x-field-Title"
               type="button"
             >
@@ -814,7 +814,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
             class="align-self-top col-autotranslate-button autofit-col"
           >
             <button
-              class="lfr-portal-tooltip btn btn-monospaced btn-secondary"
+              class="btn btn-monospaced btn-secondary"
               title="auto-translate-x-field-Description"
               type="button"
             >
@@ -918,7 +918,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
             class="align-self-top col-autotranslate-button autofit-col"
           >
             <button
-              class="lfr-portal-tooltip btn btn-monospaced btn-secondary"
+              class="btn btn-monospaced btn-secondary"
               title="auto-translate-x-field-Content"
               type="button"
             >
@@ -1294,7 +1294,7 @@ exports[`Translate renders with experiences selector 1`] = `
             class="align-self-top col-autotranslate-button autofit-col"
           >
             <button
-              class="lfr-portal-tooltip btn btn-monospaced btn-secondary"
+              class="btn btn-monospaced btn-secondary"
               title="auto-translate-x-field-Title"
               type="button"
             >
@@ -1376,7 +1376,7 @@ exports[`Translate renders with experiences selector 1`] = `
             class="align-self-top col-autotranslate-button autofit-col"
           >
             <button
-              class="lfr-portal-tooltip btn btn-monospaced btn-secondary"
+              class="btn btn-monospaced btn-secondary"
               title="auto-translate-x-field-Description"
               type="button"
             >
@@ -1480,7 +1480,7 @@ exports[`Translate renders with experiences selector 1`] = `
             class="align-self-top col-autotranslate-button autofit-col"
           >
             <button
-              class="lfr-portal-tooltip btn btn-monospaced btn-secondary"
+              class="btn btn-monospaced btn-secondary"
               title="auto-translate-x-field-Content"
               type="button"
             >

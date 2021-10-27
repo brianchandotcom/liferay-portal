@@ -53,6 +53,7 @@ definition {
 
 	@description = "This is a test for LPS-114283. Can select an image resolution manually in the desktop viewport."
 	@priority = "5"
+	@uitest
 	test SelectImageResolutionManuallyInTheDesktopViewport {
 		property portal.acceptance = "true";
 
@@ -187,6 +188,7 @@ definition {
 
 	@description = "This is a test for LPS-123101. The image resolution is applied to direct background image of elements."
 	@priority = "5"
+	@uitest
 	test ViewAutoImageResolutionForBackgroundImageDirectlySelected {
 		property portal.acceptance = "true";
 
@@ -320,6 +322,7 @@ definition {
 
 	@description = "This is a test for LPS-122822. View auto image resolution for image mapped to web content."
 	@priority = "5"
+	@uitest
 	test ViewAutoImageResolutionForImageMappedToWebContent {
 		property portal.acceptance = "true";
 
@@ -418,6 +421,7 @@ definition {
 
 	@description = "This is a test for LPS-125189. The image resolution is applied to mapping background image of a fragment with editable field."
 	@priority = "5"
+	@uitest
 	test ViewAutoImageResolutionForMappingBackgroundImageInBannerCenter {
 		property portal.acceptance = "true";
 
@@ -593,6 +597,7 @@ definition {
 
 	@description = "This is a test for LPS-125189. The image resolution is applied to mapping background image of the Container with padding settings."
 	@priority = "5"
+	@uitest
 	test ViewAutoImageResolutionForMappingBackgroundImageInContainer {
 		property portal.acceptance = "true";
 
@@ -899,6 +904,7 @@ definition {
 
 	@description = "This is a test for LPS-113806. View auto image resolution when orignal image is greater than image resolution and image resolution is greater than viewport."
 	@priority = "5"
+	@uitest
 	test ViewAutoImageResolutionWhenOriginalImageIsGreaterThanImageResolutionAndImageResolutionIsGreaterThanViewport {
 		property portal.acceptance = "true";
 

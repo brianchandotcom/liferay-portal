@@ -196,6 +196,7 @@ definition {
 
 	@description = "This is a test for LPS-114145. The changes are saved automatically in fragment editor before publishing."
 	@priority = "5"
+	@uitest
 	test ViewDraftAutoSaved {
 		property portal.acceptance = "true";
 

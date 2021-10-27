@@ -131,6 +131,7 @@ definition {
 
 	@description = "This is a test for LPS-100540. The changes of global fragments can be propagated to all pages of a site or sites that use the fragments"
 	@priority = "5"
+	@uitest
 	test PropagateGlobalFragmentChanges {
 		property portal.acceptance = "true";
 
@@ -370,6 +371,7 @@ definition {
 
 	@description = "This is a test for LPS-101230 and LPS-100540. Global fragments are visible in Fragments admin. The View Site Usages action is unavailable if fragment is unused."
 	@priority = "5"
+	@uitest
 	test ViewGlobalFragments {
 		property portal.acceptance = "true";
 
@@ -426,6 +428,7 @@ definition {
 
 	@description = "This is a test for LPS-100540. The View Site Usages action of global fragments shows all the usage"
 	@priority = "5"
+	@uitest
 	test ViewGlobalFragmentsSiteUsages {
 		property portal.acceptance = "true";
 

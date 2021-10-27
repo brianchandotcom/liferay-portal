@@ -544,6 +544,7 @@ definition {
 
 	@description = "This is a test for LPS-89115. Can see contributed fragment collections in fragment administration"
 	@priority = "5"
+	@uitest
 	test ViewContributedFragmentCollections {
 		property portal.acceptance = "true";
 

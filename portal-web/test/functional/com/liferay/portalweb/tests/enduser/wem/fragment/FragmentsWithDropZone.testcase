@@ -49,6 +49,7 @@ definition {
 
 	@description = "This is a test for LPS-101258. Add a fragment into fragment with dropzone."
 	@priority = "5"
+	@uitest
 	test AddButtonFragmentToFragmentWithDropZone {
 		property portal.acceptance = "true";
 

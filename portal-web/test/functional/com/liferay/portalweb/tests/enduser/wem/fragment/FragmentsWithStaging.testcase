@@ -42,6 +42,7 @@ definition {
 
 	@description = "Fragments are published automatically on any publishing process."
 	@priority = "5"
+	@uitest
 	test AssertFragmentsAlwaysPublished {
 		property portal.acceptance = "true";
 
@@ -89,6 +90,7 @@ definition {
 
 	@description = "Page Fragments administration is only be accessible in staging view."
 	@priority = "5"
+	@uitest
 	test AssertFragmentsAreOnlyEditableInStagingView {
 		property portal.acceptance = "true";
 

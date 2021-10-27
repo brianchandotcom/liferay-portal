@@ -142,6 +142,7 @@ definition {
 
 	@description = "This is a use case for LPS-86141 and for LPS-107665. The fragment should be added to all cells of the Collection Display when add it to one cell."
 	@priority = "5"
+	@uitest
 	test AddFragmentToOneCell {
 		property portal.acceptance = "true";
 
@@ -637,6 +638,7 @@ definition {
 
 	@description = "This is a use case for LPS-123825. The user could navigate through pages in Collection Display with the Numeric pagination."
 	@priority = "5"
+	@uitest
 	test NavigateToPagesInCollectionDisplayWithNumericPagination {
 		property portal.acceptance = "true";
 
@@ -1027,6 +1029,7 @@ definition {
 
 	@description = "This is a use case for LPS-123825. The user could navigate through pages in Collection Display with the Simple pagination."
 	@priority = "5"
+	@uitest
 	test NavigateToPagesInCollectionDisplayWithSimplePagination {
 		property portal.acceptance = "true";
 
@@ -1549,6 +1552,7 @@ definition {
 
 	@description = "This is a test for LPS-112093. The documents of collection are displayed using Abstract when add a Content Display to Collection Display."
 	@priority = "5"
+	@uitest
 	test ViewDocumentInContentDisplay {
 		property portal.acceptance = "true";
 
@@ -1630,6 +1634,7 @@ definition {
 
 	@description = "This is a use case for LPS-114770. The Collection Display can select a dynamic collection with Any asset types."
 	@priority = "5"
+	@uitest
 	test ViewDynamicCollectionWithAnyAssetType {
 		property portal.acceptance = "true";
 
@@ -1753,6 +1758,7 @@ definition {
 
 	@description = "This is a test for LPS-112249. The flags of each collection item are shown when add a Content Flags fragment to Collection Display."
 	@priority = "5"
+	@uitest
 	test ViewFlagsInContentFlags {
 		property portal.acceptance = "true";
 
@@ -2219,6 +2225,7 @@ definition {
 
 	@description = "This is a use case for LPS-114770. The Collection Display can select a manual collection with multiple asset types."
 	@priority = "5"
+	@uitest
 	test ViewManualCollectionWithAssetTypes {
 		property portal.acceptance = "true";
 
@@ -2581,6 +2588,7 @@ definition {
 
 	@description = "This is a test for LPS-112249. The ratings of each collection item are shown when add a Content Ratings fragment to Collection Display."
 	@priority = "5"
+	@uitest
 	test ViewRatingsInContentRatings {
 		property portal.acceptance = "true";
 
@@ -2668,6 +2676,7 @@ definition {
 
 	@description = "This is a test for LPS-112094. The title of asset entries should be shown when select Title as List Item Style for different List styles."
 	@priority = "5"
+	@uitest
 	test ViewTitleListItemStyleInDifferentListStyles {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
@@ -2913,6 +2922,7 @@ definition {
 
 	@description = "This is a use case for LPS-86141 and for LPS-107665. The title of asset entries in selected collection should be shown as a list in the Collection Display."
 	@priority = "5"
+	@uitest
 	test ViewTitleOfCollectionItems {
 		property portal.acceptance = "true";
 
@@ -3005,6 +3015,7 @@ definition {
 
 	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed using Default Template when add a Content Display to Collection Display."
 	@priority = "5"
+	@uitest
 	test ViewWebContentInContentDisplay {
 		property portal.acceptance = "true";
 
@@ -3086,6 +3097,7 @@ definition {
 
 	@description = "This is a test for LPS-112093. Can display Web Content Articles of collection using custom template when add a Content Display to Collection Display."
 	@priority = "5"
+	@uitest
 	test ViewWebContentWithCustomTemplateInContentDisplay {
 		property portal.acceptance = "true";
 

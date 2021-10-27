@@ -38,6 +38,7 @@ definition {
 
 	@description = "This is a test case for LPS-80625. The fragment importer should not allow non-zip files to be imported."
 	@priority = "5"
+	@uitest
 	test CannotImportNonZip {
 		property portal.acceptance = "true";
 
@@ -240,6 +241,7 @@ definition {
 
 	@description = "Fragment collections can be exported and imported."
 	@priority = "5"
+	@uitest
 	test ExportImportCollectionViewFragment {
 		property portal.acceptance = "true";
 
@@ -307,6 +309,7 @@ definition {
 
 	@description = "This is a test case for LPS-101255. The composition of fragments can be saved in an existing collection."
 	@priority = "5"
+	@uitest
 	test ExportImportFragmentCompositionWithCustomConfigurations {
 		property portal.acceptance = "true";
 
@@ -536,6 +539,7 @@ definition {
 
 	@description = "This is a test for LPS-101255. The edited inline contents will be reset to default value when save a composition of fragments without Save Inline Content."
 	@priority = "5"
+	@uitest
 	test ExportImportFragmentCompositionWithInlineContent {
 		property portal.acceptance = "true";
 
@@ -905,6 +909,7 @@ definition {
 
 	@description = "This is a test for LPS-101255. The edited inline contents will be reset to default value when save a composition of fragments without Save Inline Content."
 	@priority = "5"
+	@uitest
 	test ExportImportFragmentCompositionWithoutInlineContent {
 		property portal.acceptance = "true";
 
@@ -1475,6 +1480,7 @@ definition {
 
 	@description = "This is a testcase for LPS-96113. All fragments in dependencies should validate successfully."
 	@priority = "5"
+	@uitest
 	test ValidateDependenciesFragments {
 		property portal.acceptance = "true";
 

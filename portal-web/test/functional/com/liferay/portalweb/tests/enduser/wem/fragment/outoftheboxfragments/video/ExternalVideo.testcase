@@ -37,6 +37,7 @@ definition {
 
 	@description = "This is a test for LPS-130453. Display video from Documents and Media in External Video fragment."
 	@priority = "5"
+	@uitest
 	test DisplayVideoFromDocumentsAndMediaInExternalVideo {
 		property portal.acceptance = "true";
 
@@ -111,6 +112,7 @@ definition {
 
 	@description = "This is a test for LPS-130453. Display video from URL in External Video fragment."
 	@priority = "5"
+	@uitest
 	test DisplayVideoFromURLInExternalVideo {
 		property portal.acceptance = "true";
 

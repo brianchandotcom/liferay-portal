@@ -49,6 +49,7 @@ definition {
 
 	@description = "This is a test for LPS-97177. User can change checkbox fragment configuration."
 	@priority = "5"
+	@uitest
 	test ConfigureCheckboxConfigurationInContentPage {
 		property portal.acceptance = "true";
 
@@ -100,6 +101,7 @@ definition {
 
 	@description = "This is a test for LPS-97177. User can change checkbox fragment configuration in content page template."
 	@priority = "5"
+	@uitest
 	test ConfigureCheckboxConfigurationInContentPageTemplate {
 		property portal.acceptance = "true";
 
@@ -174,6 +176,7 @@ definition {
 
 	@description = "This is a test for LPS-97177. User can change checkbox fragment configuration in display page template."
 	@priority = "5"
+	@uitest
 	test ConfigureCheckboxConfigurationInDisplayPageTemplate {
 		property portal.acceptance = "true";
 
@@ -233,6 +236,7 @@ definition {
 
 	@description = "This is a test for LPS-97179. User can change colorPalette fragment configuration."
 	@priority = "5"
+	@uitest
 	test ConfigureColorPaletteInContentPage {
 		property portal.acceptance = "true";
 
@@ -448,6 +452,7 @@ main();
 
 	@description = "This is a test for LPS-96685. User can change select fragment configuration."
 	@priority = "5"
+	@uitest
 	test ConfigureSelectConfigurationInContentPage {
 		property portal.acceptance = "true";
 
@@ -493,6 +498,7 @@ main();
 
 	@description = "This is a test for LPS-96685. User can change select fragment configuration in content page template."
 	@priority = "5"
+	@uitest
 	test ConfigureSelectConfigurationInContentPageTemplate {
 		property portal.acceptance = "true";
 
@@ -561,6 +567,7 @@ main();
 
 	@description = "This is a test for LPS-96685. User can change select fragment configuration in display page template."
 	@priority = "5"
+	@uitest
 	test ConfigureSelectConfigurationInDisplayPageTemplate {
 		property portal.acceptance = "true";
 
@@ -614,6 +621,7 @@ main();
 
 	@description = "This is a test for LPS-97192. User can change text fragment configuration."
 	@priority = "5"
+	@uitest
 	test ConfigureTextConfigurationInContentPage {
 		property portal.acceptance = "true";
 
@@ -673,6 +681,7 @@ main();
 
 	@description = "This is a test for LPS-97192. User can change text fragment configuration in content page template."
 	@priority = "5"
+	@uitest
 	test ConfigureTextConfigurationInContentPageTemplate {
 		property portal.acceptance = "true";
 
@@ -755,6 +764,7 @@ main();
 
 	@description = "This is a test for LPS-97192. User can change text fragment configuration in display page template."
 	@priority = "5"
+	@uitest
 	test ConfigureTextConfigurationInDisplayPageTemplate {
 		property portal.acceptance = "true";
 
@@ -822,6 +832,7 @@ main();
 
 	@description = "This is a test for LPS-100751. View placeholder in fragment configuration without default value."
 	@priority = "5"
+	@uitest
 	test ViewPlaceholderInConfigurationWithoutDefaultValue {
 		property portal.acceptance = "true";
 

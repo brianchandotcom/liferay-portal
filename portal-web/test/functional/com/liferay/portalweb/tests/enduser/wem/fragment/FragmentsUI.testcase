@@ -30,6 +30,7 @@ definition {
 
 	@description = "This is a test for LPS-101255. View the actions of saved composition in Page Fragments admin."
 	@priority = "5"
+	@uitest
 	test ViewActionsOfFragmentComposition {
 		property portal.acceptance = "true";
 

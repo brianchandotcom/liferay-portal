@@ -47,6 +47,7 @@ definition {
 
 	@description = "This is a test for LPS-108376. Can check Cacheable for fragments when create them in portal and they are non-Cachable by default."
 	@priority = "5"
+	@uitest
 	test MarkFragmentCreatedInPortalAsCacheable {
 		property portal.acceptance = "true";
 
@@ -105,6 +106,7 @@ definition {
 
 	@description = "This is a test for LPS-111657. Can save Container and nested elements as a new composition when the Container is inside a column of Row."
 	@priority = "5"
+	@uitest
 	test SaveContainerAsCompositionInModuleOfGrid {
 		property portal.acceptance = "true";
 

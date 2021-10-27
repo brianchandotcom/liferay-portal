@@ -30,6 +30,7 @@ definition {
 
 	@description = "This is a test for LPS-120091. Can define displayed sublevels in Menu Display."
 	@priority = "5"
+	@uitest
 	test DefineDisplayedSublevels {
 		property portal.acceptance = "true";
 
@@ -184,6 +185,7 @@ definition {
 
 	@description = "This is a test for LPS-120091. Can define Display Style of Menu Display."
 	@priority = "5"
+	@uitest
 	test DefineDisplayStyle {
 		property portal.acceptance = "true";
 
@@ -290,6 +292,7 @@ definition {
 
 	@description = "This is a test for LPS-120091. Can define the item color styles in Menu Display."
 	@priority = "5"
+	@uitest
 	test DefineItemColorStyles {
 		property portal.acceptance = "true";
 
@@ -393,6 +396,7 @@ definition {
 
 	@description = "This is a test for LPS-120091. Can select a navigation menu from existing ones in Menu Display fragment."
 	@priority = "5"
+	@uitest
 	test SelectNavigationMenuFromExistingOnes {
 		property portal.acceptance = "true";
 

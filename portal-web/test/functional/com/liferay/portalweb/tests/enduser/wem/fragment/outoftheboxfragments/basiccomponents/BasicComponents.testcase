@@ -172,6 +172,7 @@ definition {
 
 	@description = "This is a test for LPS-98241 and LPS-99749. The user could configure the Card fragment in page editor."
 	@priority = "5"
+	@uitest
 	test ConfigureBasicComponentCard {
 		property portal.acceptance = "true";
 
@@ -300,6 +301,7 @@ definition {
 
 	@description = "This is a test for LPS-98241 and LPS-128667. The user could configure the Image fragment in page editor."
 	@priority = "5"
+	@uitest
 	test ConfigureBasicComponentImage {
 		property portal.acceptance = "true";
 
@@ -400,6 +402,7 @@ definition {
 
 	@description = "This is a test for LPS-98241 and LPS-128667. The user could configure the Paragraph fragment in page editor."
 	@priority = "5"
+	@uitest
 	test ConfigureBasicComponentParagraph {
 		property portal.acceptance = "true";
 

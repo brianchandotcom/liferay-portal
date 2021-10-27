@@ -30,6 +30,7 @@ definition {
 
 	@description = "This is a test for LPS-113929. The page creator could use Clear Filters to reset the filters."
 	@priority = "5"
+	@uitest
 	test ResetAppliedFilters {
 		property portal.acceptance = "true";
 
@@ -251,6 +252,7 @@ definition {
 
 	@description = "This is a test for LPS-113929. The page creator could see the alert info in the General panel of Applied Filters fragment. The Applied Filters fragment could show applied category and keywords filters in Preview and View mode."
 	@priority = "5"
+	@uitest
 	test ViewAppliedCategoryAndKeywordsFilters {
 		property portal.acceptance = "true";
 

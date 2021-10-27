@@ -37,6 +37,7 @@ definition {
 
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with a manual collection into another Collection Display with Recent Content."
 	@priority = "5"
+	@uitest
 	test AddCollectionDisplayWithManualCollectionToAnotherCollectionDisplayWithRecentContent {
 		property portal.acceptance = "true";
 
@@ -948,6 +949,7 @@ definition {
 
 	@description = "This is a use case for LPS-114727. The Content Display fragment can display abstract of asset entries in Collection Display."
 	@priority = "5"
+	@uitest
 	test ViewAbstractInContentDisplay {
 		property portal.acceptance = "true";
 
@@ -1033,6 +1035,7 @@ definition {
 
 	@description = "This is a test for LPS-112094. TThe abstract of asset entries should be shown when select Abstract as List Item Style for different List styles."
 	@priority = "5"
+	@uitest
 	test ViewAbstractListItemStyleInDifferentListStyles {
 		property portal.acceptance = "true";
 
@@ -1405,6 +1408,7 @@ definition {
 
 	@description = "This is a use case for LPS-114727. The Content Display fragment can display title of asset entries in Collection Provider."
 	@priority = "5"
+	@uitest
 	test ViewAssetTitleInContentDisplay {
 		property portal.acceptance = "true";
 
@@ -1481,6 +1485,7 @@ definition {
 
 	@description = "This is a use case for LPS-114727. The Content Display fragment can display full content of asset entries in Collection Display."
 	@priority = "5"
+	@uitest
 	test ViewFullContentInContentDisplay {
 		property portal.acceptance = "true";
 
@@ -1568,6 +1573,7 @@ definition {
 
 	@description = "This is a test for LPS-112094. The full content of asset entries should be shown when select Full Content as List Item Style for different List styles."
 	@priority = "5"
+	@uitest
 	test ViewFullContentListItemStyleInDifferentListStyles {
 		property portal.acceptance = "true";
 
@@ -1932,6 +1938,7 @@ definition {
 
 	@description = "This is a use case for LPS-112360. The asset entries should be ordered by ratings from high to low in Collection Display when select Highest Rated Assets as Collection Provider."
 	@priority = "5"
+	@uitest
 	test ViewHighestRatedAssets {
 		property portal.acceptance = "true";
 
@@ -2070,6 +2077,7 @@ definition {
 
 	@description = "This is a use case for LPS-112360. The asset entries should be ordered by view count from high to low in Collection Display when select Most Viewed Assets as Collection Provider."
 	@priority = "5"
+	@uitest
 	test ViewMostViewedAssets {
 		property portal.acceptance = "true";
 
@@ -2285,6 +2293,7 @@ definition {
 
 	@description = "This is a use case for LPS-112360. The asset entries should be ordered by modified time from recent to past in Collection Display when select Recent Content as Collection Provider."
 	@priority = "5"
+	@uitest
 	test ViewRecentContent {
 		property portal.acceptance = "true";
 

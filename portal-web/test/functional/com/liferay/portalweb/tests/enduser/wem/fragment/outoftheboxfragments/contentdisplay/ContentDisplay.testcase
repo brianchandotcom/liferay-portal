@@ -337,6 +337,7 @@ definition {
 
 	@description = "This is a test for LPS-101249. Can only select web content articles when set itemType to JournalArticle"
 	@priority = "5"
+	@uitest
 	test ViewOnlyWebContentAvailableWhenItemTypeIsJournalArticle {
 		property portal.acceptance = "true";
 
@@ -661,6 +662,7 @@ definition {
 
 	@description = "This is a test for LPS-97182. This case ensures that a user can map a blogs content field to a fragment via the content display."
 	@priority = "5"
+	@uitest
 	test ViewSelectedBlog {
 		property portal.acceptance = "true";
 
@@ -773,6 +775,7 @@ definition {
 
 	@description = "This is a test for LPS-97182. This case ensures that a user can map an image to a fragment via the content display."
 	@priority = "5"
+	@uitest
 	test ViewSelectedDocument {
 		property portal.acceptance = "true";
 
@@ -816,6 +819,7 @@ definition {
 
 	@description = "This is a test for LPS-100545. The user can map the content field from web content to a fragment via the content display."
 	@priority = "5"
+	@uitest
 	test ViewSelectedWebContentInContentPage {
 		property portal.acceptance = "true";
 

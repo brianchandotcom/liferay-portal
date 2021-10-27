@@ -835,7 +835,7 @@ definition {
 			Alert.viewWarningSpecific(warningMessage = "Some page templates were imported with warnings.");
 
 			AssertElementPresent(
-				key_warningInfo = "Fragment with key fragment-name was ignored because it does not exist.",
+				key_warningInfo = "Fragment with key Title was ignored because it does not exist.",
 				locator1 = "Message#WARNING_INFO");
 		}
 

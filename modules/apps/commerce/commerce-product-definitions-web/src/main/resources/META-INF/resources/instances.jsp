@@ -18,24 +18,28 @@
 
 <%
 CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+PortletURL portletURL = cpInstanceDisplayContext.getPortletURL();
 %>
 
 <c:if test="<%= CommerceCatalogPermission.contains(permissionChecker, cpInstanceDisplayContext.getCPDefinition(), ActionKeys.VIEW) %>">
 	<div class="pt-4" id="<portlet:namespace />productInstancesContainer">
-		<clay:data-set-display
-			contextParams='<%=
-				HashMapBuilder.<String, String>put(
-					"cpDefinitionId", String.valueOf(cpInstanceDisplayContext.getCPDefinitionId())
-				).build()
-			%>'
-			creationMenu="<%= cpInstanceDisplayContext.getCreationMenu() %>"
-			dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_INSTANCES %>"
-			id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_INSTANCES %>"
-			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= currentURLObj %>"
-			style="stacked"
-		/>
+		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+			<clay:data-set-display
+				contextParams='<%=
+					HashMapBuilder.<String, String>put(
+						"cpDefinitionId", String.valueOf(cpInstanceDisplayContext.getCPDefinitionId())
+					).build()
+				%>'
+				creationMenu="<%= cpInstanceDisplayContext.getCreationMenu() %>"
+				dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_INSTANCES %>"
+				id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_INSTANCES %>"
+				itemsPerPage="<%= 10 %>"
+				namespace="<%= liferayPortletResponse.getNamespace() %>"
+				pageNumber="<%= 1 %>"
+				portletURL="<%= currentURLObj %>"
+				style="stacked"
+			/>
+		</aui:form>
 	</div>
 </c:if>

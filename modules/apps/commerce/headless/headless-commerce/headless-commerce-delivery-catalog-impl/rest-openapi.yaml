@@ -205,6 +205,9 @@ components:
                     type: integer
                 name:
                     type: string
+                productConfiguration:
+                    $ref: "#/components/schemas/ProductConfiguration"
+                    readOnly: true
                 productId:
                     format: int64
                     readOnly: true
@@ -242,6 +245,48 @@ components:
                     type: array
                 urlImage:
                     type: string
+            type: object
+        ProductConfiguration:
+            properties:
+                allowBackOrder:
+                    example: true
+                    type: boolean
+                allowedOrderQuantities:
+                    example:
+                        - 10
+                        - 20
+                        - 30
+                        - 40
+                    items:
+                        format: int32
+                        type: integer
+                    type: array
+                displayAvailability:
+                    example: true
+                    type: boolean
+                displayStockQuantity:
+                    example: true
+                    type: boolean
+                inventoryEngine:
+                    description:
+                        The inventory engine that will be used to manage the product inventory
+                    type: string
+                lowStockAction:
+                    description:
+                        The low stock action that will be performed when a product is out of stock
+                    type: string
+                maxOrderQuantity:
+                    format: int32
+                    type: integer
+                minOrderQuantity:
+                    format: int32
+                    type: integer
+                minStockQuantity:
+                    format: int32
+                    type: integer
+                multipleOrderQuantity:
+                    format: int32
+                    type: integer
             type: object
         ProductOption:
             properties:

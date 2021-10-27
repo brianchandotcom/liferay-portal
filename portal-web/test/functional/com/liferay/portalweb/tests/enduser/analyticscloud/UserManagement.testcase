@@ -351,7 +351,7 @@ definition {
 		task ("Assert the error message") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "ACWorkspace#WORKSPACE_ERROR_DESCRIPTION",
-				value1 = "Either this workspace doesn't exist or you don't have access to it.");
+				value1 = "Either this workspace does not exist or you do not have access to it.");
 		}
 	}
 

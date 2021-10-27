@@ -4749,6 +4749,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						@{image} \
 						\
 						@{options}
+
+					docker ps --filter "name=@{name}" --format "Started container [ID: '{{.ID}}', name: '{{.Names}}'] from image '{{.Image}}'"
 				]]>
 			</echo>
 
@@ -4761,11 +4763,13 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				/>
 			</chmod>
 
-			<exec executable="/bin/bash" os="${os.apple},${os.unix}">
+			<local name="docker.start.error" />
+
+			<exec errorproperty="docker.start.error" executable="/bin/bash" os="${os.apple},${os.unix}">
 				<arg value="${docker.start.script}" />
 			</exec>
 
-			<exec executable="cmd.exe" os="${os.windows}">
+			<exec errorproperty="docker.start.error" executable="cmd.exe" os="${os.windows}">
 				<arg value="${docker.start.script}" />
 			</exec>
 

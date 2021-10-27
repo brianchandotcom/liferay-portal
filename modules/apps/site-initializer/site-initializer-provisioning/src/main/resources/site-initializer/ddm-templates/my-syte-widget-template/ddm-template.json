@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.commerce.order.content.web.internal.portlet,CommerceOrderContentPortlet",
+	"ddmTemplateKey": "my-site",
+	"name": "My site",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

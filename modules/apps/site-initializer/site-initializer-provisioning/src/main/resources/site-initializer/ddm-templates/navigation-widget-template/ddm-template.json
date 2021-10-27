@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.kernel.theme.NavItem",
+	"ddmTemplateKey": "provisioning-navigation",
+	"name": "Provisioning navigation",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

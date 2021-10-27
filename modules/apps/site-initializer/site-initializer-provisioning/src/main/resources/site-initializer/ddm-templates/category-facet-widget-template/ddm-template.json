@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetTermDisplayContext",
+	"ddmTemplateKey": "starterkit-category-facet",
+	"name": "Starterkit category facet",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

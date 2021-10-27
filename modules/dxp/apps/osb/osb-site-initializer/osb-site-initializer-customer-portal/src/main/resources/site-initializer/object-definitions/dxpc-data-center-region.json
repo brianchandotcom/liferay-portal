@@ -1,37 +1,37 @@
 {
-    "label": {
-      "en-US": "DXPC Data Center Region"
-    },
-    "name": "DXPCDataCenterRegion",
-    "objectFields": [
-      {
-        "indexed": true,
-        "indexedAsKeyword": false,
-        "indexedLanguageId": "",
-        "label": {
-          "en-US": "Name"
-        },
-        "listTypeDefinitionId": 0,
-        "name": "name",
-        "required": false,
-        "type": "String"
-      },
-      {
-        "indexed": true,
-        "indexedAsKeyword": false,
-        "indexedLanguageId": "",
-        "label": {
-          "en-US": "Value"
-        },
-        "listTypeDefinitionId": 0,
-        "name": "value",
-        "required": false,
-        "type": "String"
-      }
-    ],
-    "pluralLabel": {
-      "en_US": "DXPC Data Center Regions"
-    },
-    "scope": "company",
-    "system": false
-  }
+	"label": {
+		"en-US": "DXPC Data Center Region"
+	},
+	"name": "DXPCDataCenterRegion",
+	"objectFields": [
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Name"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "name",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Value"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "value",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "DXPC Data Center Regions"
+	},
+	"scope": "company",
+	"system": false
+}

@@ -16,9 +16,9 @@
  * SPDX-License-Identifier: LicenseRef-MIT-Bootstrap
  */
 
-/* Change Manrope to Source Sans Pro */
+/* ---------- Change manrope to source sans pro ---------- */
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;500;600;700;800&display=swap");
-/* :root { */
+/* ---------- :root { ---------- */
 :host {
   --blue: #4b9fff;
   --indigo: #7785ff;
@@ -50,8 +50,8 @@
   --font-family-monospace: sfmono-regular, menlo, monaco, consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-/* Dialect Style Guide */
-/* :root { */
+/* ---------- Dialect style guide ---------- */
+/* ---------- :root { ---------- */
 :host {
   --color-action-secondary-inverted-disabled: #ffffff80;
   --color-action-neutral-default: #2b3a4b;
@@ -210,7 +210,7 @@
   --spacer-8: 7.5rem;
   --spacer-7: 6rem;
   --aspect-ratio-8-to-3: 37.5%;
-  /* Change Manrope to Source Sans Pro */
+  /* ---------- Change manrope to source sans pro ---------- */
   --font-family-sans-serif: Source Sans Pro, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --custom-control-disabled-border-color: var(--color-action-primary-disabled);
   --font-weight-bolder: 800;
@@ -349,7 +349,7 @@
   --text-paragraph-lg-line-height: 24px;
   --form-input-border-radius: var(--border-radius);
   --btn-primary-border-color: #0b5fff;
-  /* Change Manrope to Source Sans Pro */
+  /* ---------- Change manrope to source sans pro ---------- */
   --font-family-base: Source Sans Pro, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --color-action-neutral-inverted-disabled: #ffffff80;
@@ -401,7 +401,7 @@ main {
   display: block;
 }
 
-/* body { */
+/* ---------- body { ---------- */
 component {
   background-color: var(--body-bg, #fff);
   color: var(--body-color, #272833);
@@ -660,7 +660,7 @@ h6,
   margin-bottom: 0.5rem;
 }
 
-/* Removed fallback var value */
+/* ---------- Removed fallback var value ---------- */
 
 h1,
 .h1 {
@@ -686,7 +686,7 @@ h6,
 .h6 {
   font-size: var(--h6-font-size);
 }
-/* Removed fallback var value */
+/* ---------- Removed fallback var value ---------- */
 
 .lead {
   font-size: var(--lead-font-size, 1.25rem);
@@ -788,7 +788,7 @@ mark:before,
   font-size: var(--blockquote-small-font-size, 0.875rem);
 }
 .blockquote-footer::before {
-  content: "— ";
+  content: "— ";
 }
 
 b {

@@ -104,8 +104,7 @@ public class BundleSiteInitializerTest {
 	@After
 	public void tearDown() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_user.getGroupId(), _user.getUserId());
+			ServiceContextThreadLocal.popServiceContext();
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -113,8 +112,6 @@ public class BundleSiteInitializerTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
-
-		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test

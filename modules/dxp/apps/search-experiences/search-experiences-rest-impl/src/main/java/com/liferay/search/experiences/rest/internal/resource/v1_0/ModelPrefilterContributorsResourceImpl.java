@@ -14,8 +14,21 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
+import com.liferay.search.experiences.rest.dto.v1_0.ModelPrefilterContributors;
 import com.liferay.search.experiences.rest.resource.v1_0.ModelPrefilterContributorsResource;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
 
@@ -29,4 +42,50 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class ModelPrefilterContributorsResourceImpl
 	extends BaseModelPrefilterContributorsResourceImpl {
+
+	@Override
+	public ModelPrefilterContributors getModelPrefilterContributors()
+		throws Exception {
+
+		return _getContributors(ModelPreFilterContributor.class.getName());
+	}
+
+	private BundleContext _getBundleContext() {
+		Bundle bundle = FrameworkUtil.getBundle(
+			ModelPrefilterContributorsResourceImpl.class);
+
+		return bundle.getBundleContext();
+	}
+
+	private ModelPrefilterContributors _getContributors(String className) {
+		ModelPrefilterContributors modelPrefilterContributors =
+			new ModelPrefilterContributors();
+
+		List<String> classNames = new ArrayList<>();
+
+		BundleContext bundleContext = _getBundleContext();
+
+		try {
+			ServiceReference<?>[] references =
+				bundleContext.getAllServiceReferences(className, null);
+
+			for (ServiceReference<?> serviceReference : references) {
+				classNames.add(
+					(String)serviceReference.getProperty("component.name"));
+			}
+		}
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			_log.error(
+				invalidSyntaxException.getMessage(), invalidSyntaxException);
+		}
+
+		modelPrefilterContributors.setClassNames(
+			ArrayUtil.toStringArray(classNames));
+
+		return modelPrefilterContributors;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ModelPrefilterContributorsResourceImpl.class);
+
 }

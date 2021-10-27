@@ -27,7 +27,7 @@ export default function propsTransformer({
 		});
 	};
 
-	var deleteEntries = function () {
+	const deleteSXPBlueprints = function () {
 		if (
 			confirm(
 				Liferay.Language.get(
@@ -60,8 +60,8 @@ export default function propsTransformer({
 		onActionButtonClick: (event, {item}) => {
 			const action = item?.data?.action;
 
-			if (action === 'deleteEntries') {
-				deleteEntries();
+			if (action === 'deleteSXPBlueprints') {
+				deleteSXPBlueprints();
 			}
 		},
 		onCreateButtonClick: (event, {item}) => {

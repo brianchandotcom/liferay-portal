@@ -58,7 +58,7 @@ const ImportSXPBlueprintModal = () => {
 				return response.json();
 			})
 			.then((responseContent) => {
-				var redirectURL = new URL(
+				const redirectURL = new URL(
 					responseContent.redirectURL,
 					window.location.origin
 				);

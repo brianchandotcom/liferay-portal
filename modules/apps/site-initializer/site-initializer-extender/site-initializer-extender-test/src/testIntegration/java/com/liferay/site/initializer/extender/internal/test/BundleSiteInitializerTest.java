@@ -31,6 +31,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
@@ -242,7 +243,8 @@ public class BundleSiteInitializerTest {
 	private void _assertLayoutPageTemplates(Group group) throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				group.getGroupId(), "Test", 3);
+				group.getGroupId(), "Test",
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
 
 		Assert.assertNotNull(layoutPageTemplateEntry);
 		Assert.assertEquals("Test", layoutPageTemplateEntry.getName());

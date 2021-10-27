@@ -879,25 +879,25 @@ The Web Content field Document Type was an accidental feature included in Docume
 
 ---------------------------------------
 
-### OpenId Connect provider signing algorithm must be configured if different to RS256
+### OpenID Connect Provider Signing Algorithm Must Be Configured If Different From RS256
 
 - **Date:** 2021-Sep-30
-- **JIRA Ticket:** LPS-138756
+- **JIRA Ticket:** [LPS-138756](https://issues.liferay.com/browse/LPS-138756)
 
 #### What changed?
 
-The portal's OpenId Connect client now requires admins to explicitly state the ID Token signing algorithm agreed with the provider.
+The portal's OpenID Connect client now requires explicitly stating the ID Token signing algorithm agreed with the provider.
 
 #### Who is affected?
 
-Anyone integrating OpenId Connect providers that sign ID Tokens using a different signing algorithm to the **first** algorithm listed as their supported signing algorithms. The list is served by the provider's Discovery Endpoint, or configured offline in portal.
+This affects anyone integrating OpenID Connect providers that sign ID Tokens using a signing algorithm other than the **first** supported signing algorithm listed in the UI. The list is served by the provider's Discovery Endpoint, or configured offline in the UI.
 
 #### How should I update my code?
 
-Review the "OpenId Connect Provider Connection" configuration(s). Specify the agreed algorithm in "Registered ID Token Signing Algorithm".
+In the UI, review the OpenID Connect Provider Connection configuration(s). Specify the agreed algorithm as the Registered ID Token Signing Algorithm.
 
 #### Why was this change made?
 
-In order to better support all signing algorithms supported by OpenId Connect providers.
+This improves using all signing algorithms supported by OpenID Connect providers.
 
 ---------------------------------------

@@ -4773,6 +4773,13 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				<arg value="${docker.start.script}" />
 			</exec>
 
+			<if>
+				<contains string="${docker.start.error}" substring="repository does not exist or may require 'docker login': denied: requested access to the resource is denied." />
+				<then>
+					<fail>Unable to start docker container: ${docker.start.error}</fail>
+				</then>
+			</if>
+
 			<delete file="${docker.start.script}" />
 		</sequential>
 	</macrodef>

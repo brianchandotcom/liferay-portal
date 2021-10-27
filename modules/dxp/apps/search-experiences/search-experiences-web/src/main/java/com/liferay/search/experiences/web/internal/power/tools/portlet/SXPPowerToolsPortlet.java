@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.web.internal.powertoys.portlet;
+package com.liferay.search.experiences.web.internal.power.tools.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
@@ -31,11 +31,11 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.display-category=category.hidden",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/sxp_blueprint_admin/view.jsp",
-		"javax.portlet.name=" + SXPPortletKeys.SXP_POWERTOYS,
+		"javax.portlet.name=" + SXPPortletKeys.SXP_POWER_TOOLS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator"
 	},
 	service = Portlet.class
 )
-public class SXPPowerToysPortlet extends MVCPortlet {
+public class SXPPowerToolsPortlet extends MVCPortlet {
 }

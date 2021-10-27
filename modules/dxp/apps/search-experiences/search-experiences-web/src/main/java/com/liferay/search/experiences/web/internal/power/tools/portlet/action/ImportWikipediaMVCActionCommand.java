@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.web.internal.powertoys.portlet.action;
+package com.liferay.search.experiences.web.internal.power.tools.portlet.action;
 
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + SXPPortletKeys.SXP_POWERTOYS,
-		"mvc.command.name=/sxp_powertoys/import_wikipedia"
+		"javax.portlet.name=" + SXPPortletKeys.SXP_POWER_TOOLS,
+		"mvc.command.name=/sxp_power_tools/import_wikipedia"
 	},
 	service = MVCActionCommand.class
 )

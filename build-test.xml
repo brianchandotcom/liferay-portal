@@ -5257,17 +5257,32 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<sequential>
 			<get-browser-property property.name="browser.host" />
 
+			<stop-docker-container name="${browser.host}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-docker-container">
+		<attribute name="name" />
+
+		<sequential>
+			<local name="docker.network.name" />
 			<local name="docker.stop.script" />
+
+			<condition else="" property="docker.network.name" value="${env.DOCKER_NETWORK_NAME}">
+				<isset property="env.DOCKER_NETWORK_NAME" />
+			</condition>
 
 			<property name="docker.stop.script" value="docker_stop.sh" />
 
 			<echo file="${docker.stop.script}">
 				<![CDATA[
-					docker kill ${browser.host}
+					docker ps --filter "name=@{name}" --format "Stopping container [ID: '{{.ID}}', name: '{{.Names}}']'"
 
-					docker rm -f ${browser.host}
+					docker kill @{name}
 
-					docker network disconnect -f ${env.DOCKER_NETWORK_NAME} ${browser.host} 2>/dev/null
+					docker rm -f @{name}
+
+					docker network disconnect -f ${docker.network.name} @{name} 2>/dev/null || true
 				]]>
 			</echo>
 
@@ -5280,11 +5295,13 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				/>
 			</chmod>
 
-			<exec executable="/bin/bash" failonerror="false" os="${os.apple},${os.unix}">
+			<local name="docker.stop.error" />
+
+			<exec errorproperty="docker.stop.error" executable="/bin/bash" failonerror="false" os="${os.apple},${os.unix}">
 				<arg value="${docker.stop.script}" />
 			</exec>
 
-			<exec executable="cmd.exe" failonerror="false" os="${os.windows}">
+			<exec errorproperty="docker.stop.error" executable="cmd.exe" failonerror="false" os="${os.windows}">
 				<arg value="${docker.stop.script}" />
 			</exec>
 
@@ -5296,43 +5313,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<sequential>
 			<get-database-property property.name="database.host" />
 
-			<local name="docker.stop.script" />
-
-			<property name="docker.stop.script" value="docker_stop.sh" />
-
-			<echo file="${docker.stop.script}">
-				<![CDATA[
-					docker_rm_list=$(docker ps -a -q --filter="name=${env.HOSTNAME}_")
-
-					if [[ "${docker_rm_list}" != "" ]]
-					then
-						docker kill ${docker_rm_list}
-
-						docker rm -f ${docker_rm_list}
-					fi
-
-					docker network disconnect -f ${env.DOCKER_NETWORK_NAME} ${database.host} 2>/dev/null
-				]]>
-			</echo>
-
-			<chmod
-				perm="a+x"
-			>
-				<fileset
-					dir="."
-					includes="${docker.stop.script}"
-				/>
-			</chmod>
-
-			<exec executable="/bin/bash" failonerror="false" os="${os.apple},${os.unix}">
-				<arg value="${docker.stop.script}" />
-			</exec>
-
-			<exec executable="cmd.exe" failonerror="false" os="${os.windows}">
-				<arg value="${docker.stop.script}" />
-			</exec>
-
-			<delete file="${docker.stop.script}" />
+			<stop-docker-container name="${database.host}" />
 		</sequential>
 	</macrodef>
 
@@ -5340,38 +5321,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<sequential>
 			<get-operating-system-property property.name="operating.system.host" />
 
-			<local name="docker.stop.script" />
-
-			<property name="docker.stop.script" value="docker_stop.sh" />
-
-			<echo file="${docker.stop.script}">
-				<![CDATA[
-					docker kill ${operating.system.host}
-
-					docker rm -f ${operating.system.host}
-
-					docker network disconnect -f ${env.DOCKER_NETWORK_NAME} ${operating.system.host} 2>/dev/null
-				]]>
-			</echo>
-
-			<chmod
-				perm="a+x"
-			>
-				<fileset
-					dir="."
-					includes="${docker.stop.script}"
-				/>
-			</chmod>
-
-			<exec executable="/bin/bash" failonerror="false" os="${os.apple},${os.unix}">
-				<arg value="${docker.stop.script}" />
-			</exec>
-
-			<exec executable="cmd.exe" failonerror="false" os="${os.windows}">
-				<arg value="${docker.stop.script}" />
-			</exec>
-
-			<delete file="${docker.stop.script}" />
+			<stop-docker-container name="${operating.system.host}" />
 		</sequential>
 	</macrodef>
 

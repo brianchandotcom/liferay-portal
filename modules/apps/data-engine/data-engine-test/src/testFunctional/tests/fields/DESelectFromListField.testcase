@@ -473,7 +473,7 @@ definition {
 
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Select from List");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Select from List");
 
 		WebContentStructures.saveCP();
 

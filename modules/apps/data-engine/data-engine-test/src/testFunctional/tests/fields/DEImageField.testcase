@@ -401,7 +401,7 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(fieldLabel = "Image");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Image");
 
 		WebContentStructures.saveCP();
 

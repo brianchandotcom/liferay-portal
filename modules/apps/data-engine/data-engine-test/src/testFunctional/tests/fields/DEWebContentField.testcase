@@ -428,7 +428,7 @@ definition {
 
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Web Content");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Web Content");
 
 		WebContentStructures.saveCP();
 

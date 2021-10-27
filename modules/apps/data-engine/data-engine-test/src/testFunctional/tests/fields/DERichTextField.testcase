@@ -229,7 +229,7 @@ definition {
 
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Rich Text");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Rich Text");
 
 		WebContentStructures.saveCP();
 

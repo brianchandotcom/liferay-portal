@@ -296,7 +296,7 @@ definition {
 
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Grid");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Grid");
 
 		WebContentStructures.saveCP();
 

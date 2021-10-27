@@ -200,7 +200,7 @@ definition {
 			key_fieldsetLabel = "ShowAndHideTest",
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Text");
 
 		AssertElementPresent(
 			key_fieldsetLabel = "ShowAndHideTest",

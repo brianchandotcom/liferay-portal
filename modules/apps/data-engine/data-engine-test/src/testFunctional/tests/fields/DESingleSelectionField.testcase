@@ -461,7 +461,7 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(fieldLabel = "Single Selection");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Single Selection");
 
 		WebContentStructures.saveCP();
 

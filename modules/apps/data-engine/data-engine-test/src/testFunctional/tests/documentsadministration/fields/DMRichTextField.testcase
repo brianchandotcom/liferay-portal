@@ -227,7 +227,7 @@ definition {
 			key_fieldFieldLabel = "Rich Text",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Rich Text");
 
 		DDLDataDefinition.save();
 

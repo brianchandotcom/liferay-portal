@@ -190,7 +190,7 @@ definition {
 
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "${key_fieldFieldLabel}");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "${key_fieldFieldLabel}");
 
 		DDLDataDefinition.save();
 

@@ -307,7 +307,7 @@ definition {
 
 		DataEngine.assertFieldNotPresent(fieldsetLabel = "New Fieldset");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "New Fieldset");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 

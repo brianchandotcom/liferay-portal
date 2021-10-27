@@ -1491,11 +1491,37 @@ definition {
 			Uncheck.uncheckToggleSwitch(
 				checkboxName = "Show Label",
 				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			if (IsElementPresent(locator1 = "Modal#MODAL")) {
+				WaitForElementNotPresent(
+					index = "${index}",
+					key_fieldLabel = "${fieldLabel}",
+					locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED");
+			}
+			else {
+				WaitForElementNotPresent(
+					index = "${index}",
+					key_fieldLabel = "${fieldLabel}",
+					locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED");
+			}
 		}
 		else {
 			Check.checkToggleSwitch(
 				checkboxName = "Show Label",
 				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			if (IsElementPresent(locator1 = "Modal#MODAL")) {
+				WaitForElementPresent(
+					index = "${index}",
+					key_fieldLabel = "${hiddenFieldLabel}",
+					locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED");
+			}
+			else {
+				WaitForElementPresent(
+					index = "${index}",
+					key_fieldLabel = "${hiddenFieldLabel}",
+					locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED");
+			}
 		}
 
 		Click(locator1 = "Sidebar#BACK");

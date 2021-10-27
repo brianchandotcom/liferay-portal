@@ -415,7 +415,7 @@ definition {
 
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Upload");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Upload");
 
 		WebContentStructures.saveCP();
 

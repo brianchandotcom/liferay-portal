@@ -488,7 +488,7 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(fieldLabel = "Date");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Date");
 
 		WebContentStructures.saveCP();
 

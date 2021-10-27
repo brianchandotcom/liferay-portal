@@ -469,7 +469,7 @@ definition {
 
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Multiple Selection");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Multiple Selection");
 
 		WebContentStructures.saveCP();
 

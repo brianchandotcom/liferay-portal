@@ -448,7 +448,7 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(fieldLabel = "Color");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Color");
 
 		WebContentStructures.saveCP();
 

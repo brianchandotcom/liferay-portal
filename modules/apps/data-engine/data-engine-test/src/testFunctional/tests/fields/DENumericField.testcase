@@ -566,7 +566,7 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(fieldLabel = "Numeric");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Numeric");
 
 		WebContentStructures.saveCP();
 

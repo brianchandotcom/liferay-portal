@@ -494,7 +494,7 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(fieldLabel = "Text");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Text");
 
 		WebContentStructures.saveCP();
 

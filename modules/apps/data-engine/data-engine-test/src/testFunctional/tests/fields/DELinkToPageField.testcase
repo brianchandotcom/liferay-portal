@@ -229,7 +229,7 @@ definition {
 
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Link to Page");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Link to Page");
 
 		WebContentStructures.saveCP();
 

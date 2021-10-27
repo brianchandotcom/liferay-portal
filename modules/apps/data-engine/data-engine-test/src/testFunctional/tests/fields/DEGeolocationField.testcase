@@ -229,7 +229,7 @@ definition {
 
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Geolocation");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Geolocation");
 
 		WebContentStructures.saveCP();
 

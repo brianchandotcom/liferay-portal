@@ -245,7 +245,7 @@ definition {
 
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Separator");
 
-		DataEngine.toggleShowLabel();
+		DataEngine.toggleShowLabel(hiddenFieldLabel = "Separator");
 
 		WebContentStructures.saveCP();
 

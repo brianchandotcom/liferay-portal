@@ -41,7 +41,7 @@ export default function ({
 	const clickDelegate = delegate(
 		buttonContainer,
 		'click',
-		'.btn-secondary',
+		'button.btn-secondary',
 		onClick
 	);
 

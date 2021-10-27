@@ -29,9 +29,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 <portlet:actionURL name="/batch_planner/edit_import_batch_planner_plan" var="editBatchPlannerPlanURL" />
 
 <div class="container pt-4">
-	<liferay-frontend:edit-form
-		action="<%= editBatchPlannerPlanURL %>"
-	>
+	<form action="<%= editBatchPlannerPlanURL %>" id="<portlet:namespace />fm" method="POST" name="<portlet:namespace />fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (batchPlannerPlanId == 0) ? Constants.IMPORT : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
 		<aui:input name="batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
@@ -138,10 +136,11 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 
 		<div class="mt-4">
 			<liferay-frontend:edit-form-footer>
-				<clay:button
-					displayType="primary"
-					label="import"
-					type="submit"
+				<clay:link
+					displayType="secondary"
+					href="<%= backURL %>"
+					label="cancel"
+					type="button"
 				/>
 
 				<clay:button
@@ -152,15 +151,14 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 					type="button"
 				/>
 
-				<clay:link
-					displayType="secondary"
-					href="<%= backURL %>"
-					label="cancel"
-					type="button"
+				<clay:button
+					displayType="primary"
+					label="import"
+					type="submit"
 				/>
 			</liferay-frontend:edit-form-footer>
 		</div>
-	</liferay-frontend:edit-form>
+	</form>
 </div>
 
 <aui:script use="aui-io-request,aui-parse-content">

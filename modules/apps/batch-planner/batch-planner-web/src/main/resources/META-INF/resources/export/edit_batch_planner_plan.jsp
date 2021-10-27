@@ -146,25 +146,26 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 
 		<div class="mt-4" id="<portlet:namespace />formButtons">
 			<liferay-frontend:edit-form-footer>
-				<clay:button
-					displayType="primary"
-					label="export"
-					type="submit"
+				<clay:link
+					displayType="secondary"
+					href="<%= backURL %>"
+					label="cancel"
+					type="button"
 				/>
 
 				<clay:button
-					disabled="disabled"
+					disabled="true"
 					displayType="secondary"
 					id='<%= liferayPortletResponse.getNamespace() + "saveTemplate" %>'
 					label="save-as-template"
 					type="button"
 				/>
 
-				<clay:link
-					displayType="secondary"
-					href="<%= backURL %>"
-					label="cancel"
-					type="button"
+				<clay:button
+					disabled="true"
+					displayType="primary"
+					label="export"
+					type="submit"
 				/>
 			</liferay-frontend:edit-form-footer>
 		</div>

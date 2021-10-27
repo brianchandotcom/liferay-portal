@@ -129,14 +129,13 @@ definition {
 			}
 		}
 
-		task ("View the title of collection item shown in item selector") {
+		task ("View the title of collection item shown in Item field") {
 			for (var fragmentName : list "Content Flags,Content Ratings,Content Display") {
 				PageEditor.gotoConfiguration(fragmentName = "${fragmentName}");
 
-				AssertTextEquals(
-					key_text = "Item",
-					locator1 = "TextInput#ANY",
-					value1 = "WC WebContent Title 3");
+				InputField.viewText(
+					fieldLabel = "Item",
+					text = "WC WebContent Title 3");
 			}
 		}
 	}
@@ -1819,7 +1818,7 @@ definition {
 			}
 		}
 
-		task ("View the web content title shown in item selector") {
+		task ("View the web content title shown in Item field") {
 			var n = "1";
 
 			for (var i : list "3,2,1") {
@@ -1827,7 +1826,7 @@ definition {
 					fragmentName = "Content Flags",
 					index = "${n}");
 
-				PageEditor.viewItemSelectorText(
+				InputField.viewText(
 					fieldLabel = "Item",
 					text = "WC WebContent Title ${i}");
 
@@ -2650,7 +2649,7 @@ definition {
 			}
 		}
 
-		task ("View the web content title shown in item selector") {
+		task ("View the web content title shown in Item field") {
 			var n = "1";
 
 			for (var i : list "3,2,1") {
@@ -2658,7 +2657,7 @@ definition {
 					fragmentName = "Content Ratings",
 					index = "${n}");
 
-				PageEditor.viewItemSelectorText(
+				InputField.viewText(
 					fieldLabel = "Item",
 					text = "WC WebContent Title ${i}");
 

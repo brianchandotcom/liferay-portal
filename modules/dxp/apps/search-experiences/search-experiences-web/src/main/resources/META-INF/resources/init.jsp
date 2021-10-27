@@ -40,9 +40,9 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.search.experiences.constants.SXPActionKeys" %><%@
 page import="com.liferay.search.experiences.model.SXPBlueprint" %><%@
 page import="com.liferay.search.experiences.model.SXPElement" %><%@
+page import="com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPBlueprintsDisplayContext" %><%@
+page import="com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPElementsDisplayContext" %><%@
 page import="com.liferay.search.experiences.web.internal.constants.SXPBlueprintWebKeys" %><%@
-page import="com.liferay.search.experiences.web.internal.display.context.ViewSXPBlueprintsDisplayContext" %><%@
-page import="com.liferay.search.experiences.web.internal.display.context.ViewSXPElementsDisplayContext" %><%@
 page import="com.liferay.search.experiences.web.internal.security.permission.resource.SXPBlueprintEntryPermission" %><%@
 page import="com.liferay.search.experiences.web.internal.security.permission.resource.SXPElementEntryPermission" %>
 

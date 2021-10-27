@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.web.internal.portlet.action;
+package com.liferay.search.experiences.web.internal.blueprint.admin.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
@@ -21,9 +21,9 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
-import com.liferay.search.experiences.service.SXPBlueprintService;
+import com.liferay.search.experiences.service.SXPElementService;
+import com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPElementsDisplayContext;
 import com.liferay.search.experiences.web.internal.constants.SXPBlueprintWebKeys;
-import com.liferay.search.experiences.web.internal.display.context.ViewSXPBlueprintsDisplayContext;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -39,36 +39,35 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINT_ADMIN,
-		"mvc.command.name=/",
-		"mvc.command.name=/sxp_blueprint_admin/view_sxp_blueprints"
+		"mvc.command.name=/sxp_blueprint_admin/view_sxp_elements"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewSXPBlueprintsMVCRenderCommand implements MVCRenderCommand {
+public class ViewSXPElementsMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		ViewSXPBlueprintsDisplayContext viewSXPBlueprintsDisplayContext =
-			_getViewBlueprintsDisplayContext(renderRequest, renderResponse);
+		ViewSXPElementsDisplayContext viewSXPElementsDisplayContext =
+			_getViewElementsDisplayContext(renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
-			SXPBlueprintWebKeys.VIEW_SXP_BLUEPRINTS_DISPLAY_CONTEXT,
-			viewSXPBlueprintsDisplayContext);
+			SXPBlueprintWebKeys.VIEW_SXP_ELEMENTS_DISPLAY_CONTEXT,
+			viewSXPElementsDisplayContext);
 
 		return "/sxp_blueprint_admin/view.jsp";
 	}
 
-	private ViewSXPBlueprintsDisplayContext _getViewBlueprintsDisplayContext(
+	private ViewSXPElementsDisplayContext _getViewElementsDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return new ViewSXPBlueprintsDisplayContext(
+		return new ViewSXPElementsDisplayContext(
 			_portal.getLiferayPortletRequest(renderRequest),
 			_portal.getLiferayPortletResponse(renderResponse), _queries,
 			_searcher, _searchRequestBuilderFactory, _sorts,
-			_sxpBlueprintService);
+			_sxpElementService);
 	}
 
 	@Reference
@@ -87,6 +86,6 @@ public class ViewSXPBlueprintsMVCRenderCommand implements MVCRenderCommand {
 	private Sorts _sorts;
 
 	@Reference
-	private SXPBlueprintService _sxpBlueprintService;
+	private SXPElementService _sxpElementService;
 
 }

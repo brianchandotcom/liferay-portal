@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.web.internal.application.list;
+package com.liferay.search.experiences.web.internal.blueprint.admin.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;

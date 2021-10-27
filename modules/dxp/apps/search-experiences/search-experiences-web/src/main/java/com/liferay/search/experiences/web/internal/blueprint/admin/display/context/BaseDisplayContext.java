@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.web.internal.display.context;
+package com.liferay.search.experiences.web.internal.blueprint.admin.display.context;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;

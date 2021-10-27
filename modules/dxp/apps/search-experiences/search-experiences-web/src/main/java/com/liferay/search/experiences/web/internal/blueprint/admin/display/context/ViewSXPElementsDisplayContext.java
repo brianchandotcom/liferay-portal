@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.web.internal.display.context;
+package com.liferay.search.experiences.web.internal.blueprint.admin.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -20,15 +20,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sorts;
-import com.liferay.search.experiences.model.SXPBlueprint;
-import com.liferay.search.experiences.service.SXPBlueprintService;
-import com.liferay.search.experiences.web.internal.security.permission.resource.SXPBlueprintEntryPermission;
+import com.liferay.search.experiences.model.SXPElement;
+import com.liferay.search.experiences.service.SXPElementService;
+import com.liferay.search.experiences.web.internal.security.permission.resource.SXPElementEntryPermission;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,67 +39,87 @@ import java.util.List;
 /**
  * @author Petteri Karttunen
  */
-public class ViewSXPBlueprintsDisplayContext
-	extends BaseDisplayContext<SXPBlueprint> {
+public class ViewSXPElementsDisplayContext
+	extends BaseDisplayContext<SXPElement> {
 
-	public ViewSXPBlueprintsDisplayContext(
+	public ViewSXPElementsDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, Queries queries,
 		Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
-		SXPBlueprintService sxpBlueprintService) {
+		SXPElementService sxpElementService) {
 
 		super(
 			liferayPortletRequest, liferayPortletResponse, queries, searcher,
 			searchRequestBuilderFactory, sorts);
 
-		_sxpBlueprintService = sxpBlueprintService;
+		_sxpElementService = sxpElementService;
 	}
 
-	public List<String> getAvailableActions(SXPBlueprint sxpBlueprint)
+	public List<String> getAvailableActions(SXPElement sxpElement)
 		throws PortalException {
 
-		if (SXPBlueprintEntryPermission.contains(
-				themeDisplay.getPermissionChecker(), sxpBlueprint,
+		if (SXPElementEntryPermission.contains(
+				themeDisplay.getPermissionChecker(), sxpElement,
 				ActionKeys.DELETE)) {
 
-			return Collections.singletonList("deleteSXPBlueprints");
+			return Collections.singletonList("deleteSXPElements");
 		}
 
 		return Collections.emptyList();
 	}
 
-	public SearchContainer<SXPBlueprint> getSearchContainer()
+	public SearchContainer<SXPElement> getSearchContainer()
 		throws PortalException {
 
-		return getSearchContainer(
-			"no-blueprints-were-found", SXPBlueprint.class);
+		return getSearchContainer("no-elements-were-found", SXPElement.class);
 	}
 
 	@Override
 	protected String getDisplayStylePreferenceName() {
-		return "sxp-blueprints-display-style";
+		return "sxp-elements-display-style";
 	}
 
 	@Override
 	protected String getMVCRenderCommandName() {
-		return "/sxp_blueprint_admin/view_sxp_blueprints";
+		return "/sxp_blueprint_admin/view_sxp_elements";
 	}
 
 	@Override
 	protected void processBooleanQuery(BooleanQuery booleanQuery) {
+		int type = ParamUtil.getInteger(
+			liferayPortletRequest, "sxpElementType");
+
+		if (type > 0) {
+			booleanQuery.addFilterQueryClauses(queries.term(Field.TYPE, type));
+		}
+
+		if (ParamUtil.getString(liferayPortletRequest, "hidden") != null) {
+			booleanQuery.addFilterQueryClauses(
+				queries.term(
+					"hidden",
+					ParamUtil.getBoolean(liferayPortletRequest, "hidden")));
+		}
+
+		if (!Validator.isBlank(
+				ParamUtil.getString(liferayPortletRequest, "readOnly"))) {
+
+			booleanQuery.addFilterQueryClauses(
+				queries.term(
+					"readOnly",
+					ParamUtil.getBoolean(liferayPortletRequest, "readOnly")));
+		}
 	}
 
 	@Override
-	protected SXPBlueprint toBaseModel(long entryClassPK) {
+	protected SXPElement toBaseModel(long entryClassPK) {
 		try {
-			return _sxpBlueprintService.getSXPBlueprint(entryClassPK);
+			return _sxpElementService.getSXPElement(entryClassPK);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get search experiences blueprint " +
-						entryClassPK);
+					"Unable to get search experiences element " + entryClassPK);
 			}
 		}
 
@@ -104,8 +127,8 @@ public class ViewSXPBlueprintsDisplayContext
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ViewSXPBlueprintsDisplayContext.class);
+		ViewSXPElementsDisplayContext.class);
 
-	private final SXPBlueprintService _sxpBlueprintService;
+	private final SXPElementService _sxpElementService;
 
 }

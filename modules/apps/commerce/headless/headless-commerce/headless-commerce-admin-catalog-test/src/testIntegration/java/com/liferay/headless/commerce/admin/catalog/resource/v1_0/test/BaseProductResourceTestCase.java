@@ -1071,6 +1071,16 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"productConfiguration", additionalAssertFieldName)) {
+
+				if (product.getProductConfiguration() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("productId", additionalAssertFieldName)) {
 				if (product.getProductId() == null) {
 					valid = false;
@@ -1626,6 +1636,19 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"productConfiguration", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						product1.getProductConfiguration(),
+						product2.getProductConfiguration())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("productId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						product1.getProductId(), product2.getProductId())) {
@@ -2166,6 +2189,11 @@ public abstract class BaseProductResourceTestCase {
 		}
 
 		if (entityFieldName.equals("productChannels")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("productConfiguration")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

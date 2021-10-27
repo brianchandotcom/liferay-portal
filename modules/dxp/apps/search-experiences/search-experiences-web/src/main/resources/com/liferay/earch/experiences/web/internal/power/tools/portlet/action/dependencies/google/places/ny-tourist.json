@@ -1,0 +1,1003 @@
+{
+	"html_attributions": [
+	],
+	"next_page_token": "CrQCKgEAAAqlZ12auy7YOCLVnIANL8nep7q0LLfNowQmVVTkpMWn0aWEr9WgjhJqZm3tOQW2To0i5dV838N_qcpJqgDPifcJ09sU79ao5dqwINRMFBcPzgDExXxjBfzOe0MYNUh4uCPv75sEW1e1SmZJmx4ix0sX33x3T3A6hdgEd88xgFbNa1lGLDUk70crx_HCRsWR6knuJ2Ed-gQSBLvUMe2R-s4h5tPmnMhM5m2fvi6STn9y0l4VL7YMCA_A6CbMdJT7-9gddv4pupg5BRiPAu1bxGrl87TPw0zGVhfb6tV_ud5rCF9HKPrHRwMoXSAS9iT3ppdLLlBu_T_sYZu-G_iONJwUCQV-B40yeYuob9pBexyesuHX3bwcp2uwOU9X902wz5KjkgUiZqp20VJPNUEz-GUSENyLxa_bmF8ZV5dnVCIW-oEaFNC7iZ2iKLXKB9PgEADilZ5OJbUQ",
+	"results": [
+		{
+			"geometry": {
+				"location": {
+					"lat": 40.75176400000001,
+					"lng": -73.9755228
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.75286468029149,
+						"lng": -73.9742262697085
+					},
+					"southwest": {
+						"lat": 40.7501667197085,
+						"lng": -73.9769242302915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "Chrysler Building",
+			"photos": [
+				{
+					"height": 1306,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/103467670810902238617\">Mirosław Siemieniuk</a>"
+					],
+					"photo_reference": "CkQzAAAA78t11vew5PPlIZmLOSfC-ht5jZgDbrOnMcTDssOAXkv2hEUUKUlqIR1e-HQ7p39xVdNbi91AwqVFGvT4ykFaORIQOQbkXSEUQQwtaYdTUX7uVRoUUJX-klHdJ4KMDQQ68_uN7K3wffY",
+					"width": 1959
+				}
+			],
+			"place_id": "ChIJN0qhSgJZwokRmQJ-MIEQq08",
+			"reference": "ChIJN0qhSgJZwokRmQJ-MIEQq08",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"premise",
+				"point_of_interest",
+				"establishment"
+			],
+			"vicinity": "Manhattan"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.7579747,
+					"lng": -73.9855426
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.76098665,
+						"lng": -73.9834256
+					},
+					"southwest": {
+						"lat": 40.75504125,
+						"lng": -73.98768480000001
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "Times Square",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 3265,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/114628423925322485866\">Gurpreet Singh</a>"
+					],
+					"photo_reference": "CkQ0AAAAjy_AmuiM_q8HJDFb3YdIzvYavbSyL_6gA35wafJMMoofJ3_stlJ5ZiBMEnpadMK9UMyVr9rR7nJsQAhQzXaYfRIQtrooqxjlcxHC7Nao3pkOMxoUMZfv1SgQ06bEmngt4DDA2Ht5n64",
+					"width": 4898
+				}
+			],
+			"place_id": "ChIJmQJIxlVYwokRLgeuocVOGVU",
+			"plus_code": {
+				"compound_code": "Q257+5Q Manhattan, New York, NY, USA",
+				"global_code": "87G8Q257+5Q"
+			},
+			"rating": 4.7,
+			"reference": "ChIJmQJIxlVYwokRLgeuocVOGVU",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 153542,
+			"vicinity": "Manhattan"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.7587402,
+					"lng": -73.9786736
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.75981973029149,
+						"lng": -73.97721755
+					},
+					"southwest": {
+						"lat": 40.75712176970849,
+						"lng": -73.98132935000001
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "Rockefeller Center",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 3120,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/115546870204776920747\">Boris Viveros Sainz</a>"
+					],
+					"photo_reference": "CkQ0AAAAbcMp1rEMbTBPnRlYIhlWGRs4N7HxnoVf82yMMwzZrRsL_3JVgPR9Nw_Z9lue8ugWN717PWcEvX4NADgzu1kkBhIQ2wXXoztewYA2v9JKl0w61hoUAWVs-AYG9Y4mBi6zGdghENDsSA4",
+					"width": 4160
+				}
+			],
+			"place_id": "ChIJ9U1mz_5YwokRosza1aAk0jM",
+			"plus_code": {
+				"compound_code": "Q25C+FG New York, NY, USA",
+				"global_code": "87G8Q25C+FG"
+			},
+			"rating": 4.7,
+			"reference": "ChIJ9U1mz_5YwokRosza1aAk0jM",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 124374,
+			"vicinity": "45 Rockefeller Plaza, New York"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.7614327,
+					"lng": -73.97762159999999
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.7630014302915,
+						"lng": -73.9761320697085
+					},
+					"southwest": {
+						"lat": 40.7603034697085,
+						"lng": -73.9788300302915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png",
+			"name": "The Museum of Modern Art",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 1600,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/108952592396835498631\">Luis Marcoleta</a>"
+					],
+					"photo_reference": "CkQ0AAAAFaBWzBkZeKZJ-VTLJKTFup0M34Y-PK9qSviucADAQzkbOf5qqkyHkNKq1XrdhS3wVbkRvL5oAl_H2Q-V-JMAbRIQ2av_3ZKgjZyHOcq2nTuN-BoUUPoz38O767T_IH-wSWTse-cUR-8",
+					"width": 1200
+				}
+			],
+			"place_id": "ChIJKxDbe_lYwokRVf__s8CPn-o",
+			"plus_code": {
+				"compound_code": "Q26C+HX New York, NY, USA",
+				"global_code": "87G8Q26C+HX"
+			},
+			"rating": 4.6,
+			"reference": "ChIJKxDbe_lYwokRVf__s8CPn-o",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"museum",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 32757,
+			"vicinity": "11 West 53rd Street, New York"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.7484405,
+					"lng": -73.98566439999999
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.7497114802915,
+						"lng": -73.98392536970849
+					},
+					"southwest": {
+						"lat": 40.7470135197085,
+						"lng": -73.98662333029151
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "Empire State Building",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 639,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/116059107421893636390\">marco cuzcano fernandez</a>"
+					],
+					"photo_reference": "CkQ0AAAAVcNvxptgzDpKgW6Y4tE7kz--4T9rUg1j2gkHtnZ44Tp6h-Fhd_MUxmVvneyf4Or3xFq8pL4w0jRDM4qS8m09XRIQHTaO3SwciGqHfDJ_LQc_7RoU9jDPqBt6Wc1DRJSxdx64X3MJ0lM",
+					"width": 960
+				}
+			],
+			"place_id": "ChIJaXQRs6lZwokRY6EFpJnhNNE",
+			"plus_code": {
+				"compound_code": "P2X7+9P New York, NY, USA",
+				"global_code": "87G8P2X7+9P"
+			},
+			"rating": 4.7,
+			"reference": "ChIJaXQRs6lZwokRY6EFpJnhNNE",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"museum",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 74838,
+			"vicinity": "20 West 34th Street, New York"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.8777134,
+					"lng": -73.9224308
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.8793938802915,
+						"lng": -73.9205575197085
+					},
+					"southwest": {
+						"lat": 40.8766959197085,
+						"lng": -73.9232554802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "Henry Hudson Bridge",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 1080,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/113339542698676683933\">Kasei Jac Chen by 紐育の「いえ」</a>"
+					],
+					"photo_reference": "CkQ0AAAAwhreAoTJwuMNHOLA1MiGoULidje2JRr3IWWFM840cCkC0aiwVBEQjd6_jFdPUAbXrg_8zla4lCzzkMUz1AG5hBIQheQmlSPOxs8tEtNJGW-yzhoUzo_ak4eaybP5wiPyQ-skqiwsvYI",
+					"width": 1616
+				}
+			],
+			"place_id": "ChIJtT1iDe_zwokRdUvlbh_VU3Y",
+			"plus_code": {
+				"compound_code": "V3HH+32 The Bronx, NY, USA",
+				"global_code": "87G8V3HH+32"
+			},
+			"rating": 3.9,
+			"reference": "ChIJtT1iDe_zwokRdUvlbh_VU3Y",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 68,
+			"vicinity": "2152 Henry Hudson Parkway, The Bronx"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.7586117,
+					"lng": -73.9761953
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.7598680302915,
+						"lng": -73.97458054999998
+					},
+					"southwest": {
+						"lat": 40.7571700697085,
+						"lng": -73.97775315
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/worship_general-71.png",
+			"name": "St. Patrick's Cathedral",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 4367,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/101535429940730545884\">Rudolf Carson</a>"
+					],
+					"photo_reference": "CkQ0AAAAwMF7DvZFOrn5sMl_rehjxCGdgCgH7z06KRGbaCEVXX97AWWHmz49y6aDnsmwBxCz6B9Fc2NhVUYdH-2h7iO4cBIQ-3UXLM6TIx5ZkJmQO1ofRxoUay5G6o4eksGHZUmJNGnR929QeZA",
+					"width": 3663
+				}
+			],
+			"place_id": "ChIJUW4vEPxYwokRW6o24DU0YIg",
+			"plus_code": {
+				"compound_code": "Q25F+CG New York, NY, USA",
+				"global_code": "87G8Q25F+CG"
+			},
+			"price_level": 0,
+			"rating": 4.8,
+			"reference": "ChIJUW4vEPxYwokRW6o24DU0YIg",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"church",
+				"place_of_worship",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 26722,
+			"vicinity": "5th Avenue, New York"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.703141,
+					"lng": -74.0159996
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.7065562,
+						"lng": -74.01239500000001
+					},
+					"southwest": {
+						"lat": 40.6995454,
+						"lng": -74.0186978
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_recreational-71.png",
+			"name": "The Battery",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 4032,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/107948688854207688854\">Rob Meeuwsen</a>"
+					],
+					"photo_reference": "CkQ0AAAAgOH54WJFH7ePWcQ3WMy3duDeVL2C7yAVMWxOqP_bAB7dICT1S61AZFT3BmElKqSSNuc3rVXwlh02B4IuBzaC1BIQ2UR6egRjqtWslkfR2b0cSRoUuO6pm2HJ1Lj_veWWHpT7E0bOYYs",
+					"width": 3024
+				}
+			],
+			"place_id": "ChIJraKL-BJawokREpxDmF5GcL4",
+			"plus_code": {
+				"compound_code": "PX3M+7J New York, NY, USA",
+				"global_code": "87G7PX3M+7J"
+			},
+			"price_level": 0,
+			"rating": 4.6,
+			"reference": "ChIJraKL-BJawokREpxDmF5GcL4",
+			"scope": "GOOGLE",
+			"types": [
+				"park",
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 46941,
+			"vicinity": "New York"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.767778,
+					"lng": -73.9718335
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.7689385802915,
+						"lng": -73.96989795
+					},
+					"southwest": {
+						"lat": 40.7662406197085,
+						"lng": -73.97281374999999
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "Central Park Zoo",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 2191,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/111040576513072567875\">Pablo Gudino</a>"
+					],
+					"photo_reference": "CkQ0AAAA8QczE1SrBkSQ3RGklqdtDX9TbgXzS1SLg-rHBEidUz74FK9J25Pnd6dGWz-8AnyjqkZ2Nege6cagxeaYqAltkxIQArgJjh5a3ZYO35AQlhHGpBoU_kSPMjzS7HUXTEgkTb7rUGi6zZs",
+					"width": 3571
+				}
+			],
+			"place_id": "ChIJaWjW_PFYwokRFD8a2YQu12U",
+			"plus_code": {
+				"compound_code": "Q29H+47 New York, NY, USA",
+				"global_code": "87G8Q29H+47"
+			},
+			"rating": 4.4,
+			"reference": "ChIJaWjW_PFYwokRFD8a2YQu12U",
+			"scope": "GOOGLE",
+			"types": [
+				"zoo",
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 16136,
+			"vicinity": "East 64th Street, New York"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.74410640000001,
+					"lng": -73.98741129999999
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.7454641802915,
+						"lng": -73.98603716970848
+					},
+					"southwest": {
+						"lat": 40.7427662197085,
+						"lng": -73.98873513029149
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png",
+			"name": "Museum of Sex",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 3036,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/116167950242278097848\">Liat Singer</a>"
+					],
+					"photo_reference": "CkQ0AAAAZrkpCjrSm5Ri8pX1LawA4WHZegQ-1MamjL8LxBlgH3BOEIv5T-PUBkyGRFvraC3T-HT6mSilScjlsW9Y4A6PJBIQHk-1SU0JoRx94BvuaNCsfxoUJaTUeqw2bA-UAX13KJ69s2nsyMg",
+					"width": 4048
+				}
+			],
+			"place_id": "ChIJR026QqZZwokRgLuHSIZNIKM",
+			"plus_code": {
+				"compound_code": "P2V7+J2 New York, NY, USA",
+				"global_code": "87G8P2V7+J2"
+			},
+			"price_level": 2,
+			"rating": 3.2,
+			"reference": "ChIJR026QqZZwokRgLuHSIZNIKM",
+			"scope": "GOOGLE",
+			"types": [
+				"museum",
+				"tourist_attraction",
+				"bar",
+				"point_of_interest",
+				"store",
+				"establishment"
+			],
+			"user_ratings_total": 1211,
+			"vicinity": "233 5th Avenue, New York"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.6953752,
+					"lng": -73.99968439999999
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.6965337802915,
+						"lng": -73.99803151970849
+					},
+					"southwest": {
+						"lat": 40.6938358197085,
+						"lng": -74.0007294802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_recreational-71.png",
+			"name": "Brooklyn Bridge Park",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 4687,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/108914755526509854543\">周晨曦</a>"
+					],
+					"photo_reference": "CkQ0AAAA_iZNp7m5UrSYf00pe-_ADWls9kUU-gPyAt5eebd_OEgNkzj4TwfZEbPJSZr6fQr6dGp7kkJN5dOgWAf8W8zjNRIQncTnpd4mEhcb5Am5i6vcixoU5Xl-wl1OAzWnTXcLPidWXKeE944",
+					"width": 7030
+				}
+			],
+			"place_id": "ChIJjaFpo0ZawokRBcOFUZ13CaE",
+			"plus_code": {
+				"compound_code": "M2W2+54 Brooklyn, NY, USA",
+				"global_code": "87G8M2W2+54"
+			},
+			"rating": 4.8,
+			"reference": "ChIJjaFpo0ZawokRBcOFUZ13CaE",
+			"scope": "GOOGLE",
+			"types": [
+				"park",
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 28680,
+			"vicinity": "334 Furman Street, Brooklyn"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.7564269,
+					"lng": -73.9888338
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.7578567802915,
+						"lng": -73.98718441970848
+					},
+					"southwest": {
+						"lat": 40.7551588197085,
+						"lng": -73.9898823802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png",
+			"name": "Madame Tussauds New York",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 3024,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/105159791583914277566\">Ira</a>"
+					],
+					"photo_reference": "CkQ0AAAA2VhZ-d_cDHLyFzgXJVUK_V22OF4cXSWSxOz760qC4F2VeuZO4ggVrXdM3lzYnqFN4YHWAdkSF-FDHPHNldn3kBIQHHNDfPCauitNWT_HeglSohoUS-TZ4or4lwCggSbLKc2Rj8bCmHA",
+					"width": 4032
+				}
+			],
+			"place_id": "ChIJ8VOfr1RYwokRhil9_pcMKuc",
+			"plus_code": {
+				"compound_code": "Q246+HF New York, NY, USA",
+				"global_code": "87G8Q246+HF"
+			},
+			"price_level": 3,
+			"rating": 4.4,
+			"reference": "ChIJ8VOfr1RYwokRhil9_pcMKuc",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"museum",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 17661,
+			"vicinity": "234 West 42nd Street, New York"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.7825959,
+					"lng": -73.9219127
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.78394488029149,
+						"lng": -73.9205637197085
+					},
+					"southwest": {
+						"lat": 40.78124691970849,
+						"lng": -73.9232616802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "Hell Gate Bridge",
+			"photos": [
+				{
+					"height": 3024,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/112432843163775938479\">Alvin Chee</a>"
+					],
+					"photo_reference": "CkQ0AAAAZlZa6cDdqtxA-m5OvVJR66k4xtEacGEssUN77vtc82OsuApEpW3WOjsPCjV2hxWkxLFm4v7EMKRBNZxm__4bHxIQK3aNuW6m3LO-28SONjZJbhoURpwEvuHykRAe2kVAWM_T1SJVJ6k",
+					"width": 4032
+				}
+			],
+			"place_id": "ChIJ85xGu1lfwokRVClYsUw2OlE",
+			"plus_code": {
+				"compound_code": "Q3MH+26 New York, NY, USA",
+				"global_code": "87G8Q3MH+26"
+			},
+			"rating": 4.5,
+			"reference": "ChIJ85xGu1lfwokRVClYsUw2OlE",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 103,
+			"vicinity": "New York"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.76009080000001,
+					"lng": -73.9844983
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.7614967802915,
+						"lng": -73.98332136970849
+					},
+					"southwest": {
+						"lat": 40.7587988197085,
+						"lng": -73.98601933029151
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+			"name": "M&M'S World",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 2976,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/101952294201728034967\">LEDOUX Guillaume</a>"
+					],
+					"photo_reference": "CkQ0AAAABpjB-T0uVjfy8Z2gJOTK08nHtRIIX2slz680NzhMND-zGD5tpElTnwY0bRl4dWNnkgrFQQgRDXuIndpl36VxWRIQvO1EWgA1wdoLZlh5Ul3K9BoUepELncIEDKjOqhaXATrOq7HphOU",
+					"width": 3968
+				}
+			],
+			"place_id": "ChIJHfPuClZYwokRP2wzLQjhuEI",
+			"plus_code": {
+				"compound_code": "Q268+26 New York, NY, USA",
+				"global_code": "87G8Q268+26"
+			},
+			"price_level": 2,
+			"rating": 4.4,
+			"reference": "ChIJHfPuClZYwokRP2wzLQjhuEI",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"food",
+				"point_of_interest",
+				"clothing_store",
+				"store",
+				"establishment"
+			],
+			"user_ratings_total": 23751,
+			"vicinity": "1600 Broadway, New York"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.6602037,
+					"lng": -73.9689558
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.68330030000001,
+						"lng": -73.95329260000001
+					},
+					"southwest": {
+						"lat": 40.64052509999999,
+						"lng": -73.98829219999999
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_recreational-71.png",
+			"name": "Prospect Park",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 3024,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/104740871862862423672\">Mark Yablochnikov</a>"
+					],
+					"photo_reference": "CkQ0AAAAGgXReWSItv4DCVITp3FnRf37t_yym-T_R-BkQhiHx8dNpsDBpPPFQUj2svmA0SIiZBLsQI42-nmvhqeYGyGUFhIQIb2SJUIPz9aLQt8YiaLYfRoUESMaBgM7QiKhzPsS5qsnnIk4_N0",
+					"width": 4032
+				}
+			],
+			"place_id": "ChIJQwRohxBbwokRmHrfAMb3ixc",
+			"plus_code": {
+				"compound_code": "M26J+3C Brooklyn, NY, USA",
+				"global_code": "87G8M26J+3C"
+			},
+			"price_level": 0,
+			"rating": 4.7,
+			"reference": "ChIJQwRohxBbwokRmHrfAMb3ixc",
+			"scope": "GOOGLE",
+			"types": [
+				"park",
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 16153,
+			"vicinity": "Brooklyn"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.7812199,
+					"lng": -73.9665138
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.7825688802915,
+						"lng": -73.96516481970849
+					},
+					"southwest": {
+						"lat": 40.7798709197085,
+						"lng": -73.96786278029151
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_recreational-71.png",
+			"name": "Central Park",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 1200,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/115373074969431735223\">Asbjörn Friederich</a>"
+					],
+					"photo_reference": "CkQ0AAAAyZifaJZ6N1d2W8IhJm5fOfMViWgUme-OyV06Ync_nFsRdtXgMam2iQkSxYzh2mhO4fMFUrao-cuSJw3WZMoLURIQpqVqxtOxfBslhZVaOHImyBoUkSWjsMhNPHND96Ad52_rwAZlCp4",
+					"width": 1600
+				}
+			],
+			"place_id": "ChIJ4zGFAZpYwokRGUGph3Mf37k",
+			"plus_code": {
+				"compound_code": "Q2JM+F9 New York, NY, USA",
+				"global_code": "87G8Q2JM+F9"
+			},
+			"rating": 4.8,
+			"reference": "ChIJ4zGFAZpYwokRGUGph3Mf37k",
+			"scope": "GOOGLE",
+			"types": [
+				"park",
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 207356,
+			"vicinity": "New York"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.7516208,
+					"lng": -73.97550199999999
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.75289618029149,
+						"lng": -73.9743004197085
+					},
+					"southwest": {
+						"lat": 40.75019821970849,
+						"lng": -73.9769983802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
+			"name": "Chrysler Building",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 599,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/115904384366277866757\">Rhodia Corby</a>"
+					],
+					"photo_reference": "CkQ0AAAAiCR4d6UUGp5kOl8mJSItko1xN7KagRBFeDaj7z5EC_1XW_-Oba-g2U2OcX23T_ToH_YKO59ZPb-OOx7wfJBenhIQek-LJKIidjabur6BCGoQ_xoUP1e8Zx0LdXS8eY17zQb6zT-AwZQ",
+					"width": 960
+				}
+			],
+			"place_id": "ChIJeWPFRwJZwokRGD60OOo74RU",
+			"plus_code": {
+				"compound_code": "Q22F+JQ New York, NY, USA",
+				"global_code": "87G8Q22F+JQ"
+			},
+			"rating": 4.6,
+			"reference": "ChIJeWPFRwJZwokRGD60OOo74RU",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"premise",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 4036,
+			"vicinity": "405 Lexington Avenue, New York"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.726232,
+					"lng": -74.0060077
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.72756903029149,
+						"lng": -74.00452746970849
+					},
+					"southwest": {
+						"lat": 40.72487106970849,
+						"lng": -74.0072254302915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+			"name": "City Winery",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 2988,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/103215357521570599159\">Alexander Rapaport</a>"
+					],
+					"photo_reference": "CkQ0AAAA9Au3y-sSlmbnqtYdSxp3lyScS5lBPtZPLQP_qzlVVHPzv_EofLDEEJwHfvFMvLq5zGNHHRfuK_SgYnWiKXIdlRIQxAJLJLC1FWA-qEDgtDc0LRoUtRh9QNn9DPLuOBnAZHGTdselo_w",
+					"width": 5312
+				}
+			],
+			"place_id": "ChIJiextKI1ZwokRKTNKS2BGVRs",
+			"plus_code": {
+				"compound_code": "PXGV+FH New York, NY, USA",
+				"global_code": "87G7PXGV+FH"
+			},
+			"price_level": 3,
+			"rating": 4.3,
+			"reference": "ChIJiextKI1ZwokRKTNKS2BGVRs",
+			"scope": "GOOGLE",
+			"types": [
+				"restaurant",
+				"tourist_attraction",
+				"bar",
+				"liquor_store",
+				"food",
+				"point_of_interest",
+				"store",
+				"establishment"
+			],
+			"user_ratings_total": 840,
+			"vicinity": "155 Varick Street, New York"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.73082279999999,
+					"lng": -73.997332
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.7333674,
+						"lng": -73.99379465
+					},
+					"southwest": {
+						"lat": 40.72847220000001,
+						"lng": -74.00132525
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_recreational-71.png",
+			"name": "Washington Square Park",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 4032,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/117711315387718571917\">David valencia soto</a>"
+					],
+					"photo_reference": "CkQ0AAAAlZHHBSfTYwwtZtqoLZH5LazQW1EKw0ZsdHANCNoSkaHa-LEJxRFQFBIFLD5Izl7SjuQbEF7oSCQS9jICEpFRIBIQqny9kMmysPNnVZ8tJZNGOBoU0YI13tNfsMRJ-60vx7X5253UVeM",
+					"width": 3024
+				}
+			],
+			"place_id": "ChIJjX494pBZwokRGH620d9eYfo",
+			"plus_code": {
+				"compound_code": "P2J3+83 New York, NY, USA",
+				"global_code": "87G8P2J3+83"
+			},
+			"rating": 4.7,
+			"reference": "ChIJjX494pBZwokRGH620d9eYfo",
+			"scope": "GOOGLE",
+			"types": [
+				"park",
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 19890,
+			"vicinity": "New York"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 40.7060855,
+					"lng": -73.9968643
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 40.7084499,
+						"lng": -73.9920949
+					},
+					"southwest": {
+						"lat": 40.7031689,
+						"lng": -73.99985219999999
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "Brooklyn Bridge",
+			"photos": [
+				{
+					"height": 3024,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/114906797385173533990\">joe carr</a>"
+					],
+					"photo_reference": "CkQ0AAAAcM_COj6ef_cQjiWx2jkj2fWhc_NyvV_QcTVGw8vy0Geh9JdEck8NVewQtzT7odZO5wMb_VGCJfEWj4Zz3ss8axIQ9V6CI9d9nNmDz-mDcWcWNhoUhI4e_f4KIamjKRpIwCASLO9CD64",
+					"width": 4032
+				}
+			],
+			"place_id": "ChIJK3vOQyNawokRXEa9errdJiU",
+			"plus_code": {
+				"compound_code": "P243+C7 New York, NY, USA",
+				"global_code": "87G8P243+C7"
+			},
+			"rating": 4.8,
+			"reference": "ChIJK3vOQyNawokRXEa9errdJiU",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 47879,
+			"vicinity": "Brooklyn Bridge, New York"
+		}
+	],
+	"status": "OK"
+}

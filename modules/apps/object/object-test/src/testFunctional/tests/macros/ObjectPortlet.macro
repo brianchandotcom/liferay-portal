@@ -171,6 +171,14 @@ definition {
 			value1 = "${sortFieldName}");
 	}
 
+	macro updateEntry {
+		Type(
+			locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
+			value1 = "${updateEntry}");
+
+		Button.clickSave();
+	}
+
 	macro viewEntry {
 		AssertElementPresent(
 			key_entry = "${entry}",

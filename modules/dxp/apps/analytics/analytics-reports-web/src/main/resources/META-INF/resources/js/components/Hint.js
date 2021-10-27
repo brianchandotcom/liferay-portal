@@ -26,7 +26,7 @@ export default function Hint({message, position = 'top', secondary, title}) {
 			show={showPopover}
 			trigger={
 				<span
-					className={className('p-1 small', {
+					className={className('p-1', {
 						'text-secondary': secondary,
 					})}
 					onMouseEnter={() => setShowPopover(true)}

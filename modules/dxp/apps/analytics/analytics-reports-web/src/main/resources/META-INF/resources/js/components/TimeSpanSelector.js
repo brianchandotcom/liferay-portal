@@ -54,7 +54,7 @@ export default function TimeSpanSelector({
 				})}
 			</ClaySelect>
 
-			<div className="d-flex ml-2">
+			<div className="d-flex flex-shrink-0 ml-2">
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('previous-period')}
 					className="mr-1"

@@ -47,6 +47,7 @@ import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementCSSURLsException;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementHTMLElementNameException;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementURLsException;
+import com.liferay.remote.app.exception.RemoteAppEntryFriendlyURLMappingException;
 import com.liferay.remote.app.exception.RemoteAppEntryIFrameURLException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.base.RemoteAppEntryLocalServiceBaseImpl;
@@ -59,6 +60,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -81,8 +84,9 @@ public class RemoteAppEntryLocalServiceImpl
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			long userId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			boolean instanceable, Map<Locale, String> nameMap,
-			String portletCategoryName, String properties)
+			String friendlyURLMapping, boolean instanceable,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties)
 		throws PortalException {
 
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
@@ -93,6 +97,7 @@ public class RemoteAppEntryLocalServiceImpl
 		_validateCustomElement(
 			customElementCSSURLs, customElementHTMLElementName,
 			customElementURLs);
+		_validateFriendlyURLMapping(friendlyURLMapping);
 
 		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
 			counterLocalService.increment());
@@ -107,6 +112,7 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setCustomElementHTMLElementName(
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
+		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setInstanceable(instanceable);
 		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setPortletCategoryName(portletCategoryName);
@@ -125,10 +131,12 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry addIFrameRemoteAppEntry(
-			long userId, String iFrameURL, boolean instanceable,
-			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			long userId, String friendlyURLMapping, String iFrameURL,
+			boolean instanceable, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties)
 		throws PortalException {
+
+		_validateFriendlyURLMapping(friendlyURLMapping);
 
 		iFrameURL = StringUtil.trim(iFrameURL);
 
@@ -143,6 +151,7 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setUserId(user.getUserId());
 		remoteAppEntry.setUserName(user.getFullName());
 
+		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setInstanceable(instanceable);
 		remoteAppEntry.setNameMap(nameMap);
@@ -267,8 +276,8 @@ public class RemoteAppEntryLocalServiceImpl
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			String friendlyURLMapping, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties)
 		throws PortalException {
 
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
@@ -279,6 +288,7 @@ public class RemoteAppEntryLocalServiceImpl
 		_validateCustomElement(
 			customElementCSSURLs, customElementHTMLElementName,
 			customElementURLs);
+		_validateFriendlyURLMapping(friendlyURLMapping);
 
 		RemoteAppEntry remoteAppEntry =
 			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
@@ -287,6 +297,7 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setCustomElementHTMLElementName(
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
+		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setProperties(properties);
@@ -301,10 +312,12 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
-			long remoteAppEntryId, String iFrameURL,
+			long remoteAppEntryId, String friendlyURLMapping, String iFrameURL,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties)
 		throws PortalException {
+
+		_validateFriendlyURLMapping(friendlyURLMapping);
 
 		iFrameURL = StringUtil.trim(iFrameURL);
 
@@ -313,6 +326,7 @@ public class RemoteAppEntryLocalServiceImpl
 		RemoteAppEntry remoteAppEntry =
 			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
 
+		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setPortletCategoryName(portletCategoryName);
@@ -482,12 +496,27 @@ public class RemoteAppEntryLocalServiceImpl
 		}
 	}
 
+	private void _validateFriendlyURLMapping(String friendlyURLMapping)
+		throws PortalException {
+
+		Matcher matcher =
+			_friendlyURLMappingPattern.matcher(friendlyURLMapping);
+
+		if (!matcher.matches()) {
+			throw new RemoteAppEntryFriendlyURLMappingException(
+				"Invalid friendly URL mapping " + friendlyURLMapping);
+		}
+	}
+
 	private void _validateIFrameURL(String iFrameURL) throws PortalException {
 		if (!Validator.isUrl(iFrameURL)) {
 			throw new RemoteAppEntryIFrameURLException(
 				"Invalid IFrame URL " + iFrameURL);
 		}
 	}
+
+	private static final Pattern _friendlyURLMappingPattern = Pattern.compile(
+		"[A-Za-z0-9-_]*");
 
 	private BundleContext _bundleContext;
 

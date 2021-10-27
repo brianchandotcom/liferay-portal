@@ -2354,10 +2354,6 @@ definition {
 			pageName = "Test Content Page Name");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Test 1");
-		
-
-
-
 	}
 
 	@description = "LPS-139005 - Verify that the Object entries with workflow are displayed again on the Workflow Metrics page when reactivated"

@@ -413,7 +413,7 @@ public class ObjectEntryDisplayContext {
 
 		ddmForm.addAvailableLocale(_objectRequestHelper.getLocale());
 
-		boolean readOnly = true;
+		boolean readOnly = false;
 
 		ObjectEntry objectEntry = getObjectEntry();
 

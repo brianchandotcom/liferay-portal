@@ -340,8 +340,6 @@ definition {
 			layoutName = "Message Boards Page",
 			widgetName = "Message Boards");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
 		JSONUser.addUser(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",

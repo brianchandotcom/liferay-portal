@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + SXPPortletKeys.SXP_POWER_TOYS,
-		"mvc.command.name=/sxp_power_toys/import_wikipedia"
+		"javax.portlet.name=" + SXPPortletKeys.SXP_POWERTOYS,
+		"mvc.command.name=/sxp_powertoys/import_wikipedia"
 	},
 	service = MVCActionCommand.class
 )

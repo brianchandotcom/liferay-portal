@@ -12,7 +12,7 @@ Here are some of the types of changes documented in this file:
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain feature or API will be dropped in an upcoming version.
 
-*This document has been reviewed through the breaking change entry at commit `6e818a6b84c5`.*
+*This document has been reviewed through the breaking change entry at commit `384fefe7facc`.*
 
 Each change must have a brief descriptive title and contain the following information:
 
@@ -857,7 +857,7 @@ The native OSGi API makes the bridged API unnecessary.
 
 ---------------------------------------
 
-## Remove support for Web Content in Document Types
+## Removed Support for Web Content in Document Types
 - ** Date:** 2021-Sep-30
 - ** JIRA Ticket:** [LPS-139710](https://issues.liferay.com/browse/LPS-139710)
 
@@ -867,15 +867,15 @@ Support for Web Content fields in Document Types has been removed.
 
 ### Who is affected?
 
-Anyone with Document Types that contain Web Content field types.
+This affects anyone using a Web Content field Document Type.
 
 ### How should I update my code?
 
-Remove all references to this field type to avoid issues.
+Remove all references to Web Content field Document Types.
 
 ### Why was this change made?
 
-This is an accidental feature, included in Documents and Media with no clear use case behind it. Additionally, it is causing circularity problems when linking together Web Contents and Documents when staging is enabled.
+The Web Content field Document Type was an accidental feature included in Documents and Media. Its use case was unclear. When staging was enabled, the feature was causing circularity problems between Web Content articles linked to Documents and Media documents.
 
 ---------------------------------------
 

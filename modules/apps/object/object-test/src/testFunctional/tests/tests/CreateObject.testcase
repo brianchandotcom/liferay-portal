@@ -2128,6 +2128,41 @@ definition {
 			locator1 = "VisualizeObjectCollectionDisplay#VIEW_OBJECT_COLLECTION_DISPLAY");
 	}
 
+	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Form's storage type when inactivated"
+	@priority = "4"
+	test ObjectDisappearsFormStorageSettingsWhenInactivated {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_SELECT_OBJECT");
+
+		AssertElementNotPresent(
+			key_label = "Custom Object",
+			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+
+
+	}
+
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Page Item Selector when inactivated"
 	@priority = "4"
 	test ObjectDisappearsPageItemSelectWhenInactivated {
@@ -2251,15 +2286,6 @@ definition {
 		AssertElementNotPresent(
 			key_workflowResourceValue = "Custom Object",
 			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
-	}
-
-	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Form's storage type when inactivated"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test ObjectDisapperasFormStorageSettingsWhenInactivated {
-
-		// TODO LPS-140863 ObjectDisapperasFormStorageSettingsWhenInactivated pending implementation
-
 	}
 
 	@description = "LPS-139005 - Verify that the Object entries are not displayed on Page fragments from an Object that was inactivated"

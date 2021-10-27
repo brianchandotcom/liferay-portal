@@ -32,6 +32,7 @@ import {
 	ITEMS_LIST_ACTIONS,
 	OPENER,
 	ORDER_BUTTON,
+	ORDER_DETAILS_ENDPOINT,
 	ORDER_IS_EMPTY,
 	REMOVE_ALL_ITEMS,
 	REVIEW_ORDER,
@@ -91,14 +92,19 @@ function MiniCart({
 					let latestActionURLs, latestCartState;
 
 					setActionURLs((currentURLs) => {
+						const orderDetailURL = currentURLs.orderDetailURL;
 						const {orderUUID} = model;
 
 						latestActionURLs = {
 							...currentURLs,
-							orderDetailURL: regenerateOrderDetailURL(
-								orderUUID,
-								currentURLs.siteDefaultURL
-							),
+							orderDetailURL:
+								orderDetailURL == null ||
+								orderDetailURL.includes(ORDER_DETAILS_ENDPOINT)
+									? regenerateOrderDetailURL(
+											orderUUID,
+											currentURLs.siteDefaultURL
+									  )
+									: new URL(orderDetailURL),
 						};
 
 						return latestActionURLs;

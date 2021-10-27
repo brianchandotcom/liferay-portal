@@ -1727,6 +1727,35 @@ definition {
 		Questions.viewTopicDefault();
 	}
 
+	@description = "Validate if the user can view a topic on home page after navigation via home icon."
+	@priority = "4"
+	test CanViewTopicOnHomePage {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Question Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.viewTopicOnHomePage(topicNameList = "Questions Test Category");
+
+		JSONQuestions.addQuestion(
+			bodyField = "Body AddQuestionWithTheTestBody",
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			titleField = "Title AddQuestion");
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.viewTopicOnHomePage(topicNameList = "Questions Test Category");
+	}
+
 	@description = "Validate if the user can view the voting style from the answers list."
 	@priority = "4"
 	@refactordone

@@ -33,6 +33,10 @@ public class FolderItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _ignoreRootFolder;
 	}
 
+	public boolean isShowGroupSelector() {
+		return _showGroupSelector;
+	}
+
 	public boolean isShowMountFolder() {
 		return _showMountFolder;
 	}
@@ -49,6 +53,10 @@ public class FolderItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_selectedFolderId = selectedFolderId;
 	}
 
+	public void setShowGroupSelector(boolean showGroupSelector) {
+		_showGroupSelector = showGroupSelector;
+	}
+
 	public void setShowMountFolder(boolean showMountFolder) {
 		_showMountFolder = showMountFolder;
 	}
@@ -56,6 +64,7 @@ public class FolderItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private long _folderId;
 	private boolean _ignoreRootFolder;
 	private long _selectedFolderId;
+	private boolean _showGroupSelector;
 	private boolean _showMountFolder;
 
 }

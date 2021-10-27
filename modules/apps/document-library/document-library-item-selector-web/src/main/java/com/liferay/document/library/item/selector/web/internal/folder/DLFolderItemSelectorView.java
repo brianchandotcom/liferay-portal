@@ -112,7 +112,8 @@ public class DLFolderItemSelectorView
 				(HttpServletRequest)servletRequest, portletURL,
 				BeanParamUtil.getLong(
 					itemSelectorCriterion, (HttpServletRequest)servletRequest,
-					"selectedFolderId", folderId)));
+					"selectedFolderId", folderId),
+				itemSelectorCriterion.isShowGroupSelector()));
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}

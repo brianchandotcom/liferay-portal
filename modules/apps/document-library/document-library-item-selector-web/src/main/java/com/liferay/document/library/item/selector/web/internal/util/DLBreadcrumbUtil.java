@@ -38,11 +38,13 @@ public class DLBreadcrumbUtil {
 			Folder folder, String displayStyle,
 			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			PortletURL portletURL)
+			PortletURL portletURL, boolean showGroupSelector)
 		throws Exception {
 
-		_addGroupSelectorBreadcrumbEntry(
-			httpServletRequest, liferayPortletResponse, portletURL);
+		if (showGroupSelector) {
+			_addGroupSelectorBreadcrumbEntry(
+				httpServletRequest, liferayPortletResponse, portletURL);
+		}
 
 		portletURL.setParameter("displayStyle", displayStyle);
 

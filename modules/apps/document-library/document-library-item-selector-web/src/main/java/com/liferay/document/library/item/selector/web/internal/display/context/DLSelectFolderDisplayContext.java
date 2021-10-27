@@ -59,13 +59,14 @@ public class DLSelectFolderDisplayContext {
 	public DLSelectFolderDisplayContext(
 		DLAppService dlAppService, Folder folder,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
-		long selectedFolderId) {
+		long selectedFolderId, boolean showGroupSelector) {
 
 		_dlAppService = dlAppService;
 		_folder = folder;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_selectedFolderId = selectedFolderId;
+		_showGroupSelector = showGroupSelector;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -250,6 +251,10 @@ public class DLSelectFolderDisplayContext {
 		return false;
 	}
 
+	public boolean isShowGroupSelector() {
+		return _showGroupSelector;
+	}
+
 	private PortletURL _getFolderPortletURL(
 			long folderId, LiferayPortletResponse liferayPortletResponse)
 		throws PortletException {
@@ -294,6 +299,7 @@ public class DLSelectFolderDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final PortletURL _portletURL;
 	private final long _selectedFolderId;
+	private final boolean _showGroupSelector;
 	private final ThemeDisplay _themeDisplay;
 
 }

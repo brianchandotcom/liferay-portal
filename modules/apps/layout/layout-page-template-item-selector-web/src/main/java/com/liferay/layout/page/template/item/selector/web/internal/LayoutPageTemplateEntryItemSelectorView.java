@@ -26,7 +26,9 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.item.selector.LayoutPageTemplateEntryItemSelectorReturnType;
 import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateEntryItemSelectorCriterion;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryNameComparator;
 import com.liferay.petra.string.StringPool;
@@ -133,6 +135,10 @@ public class LayoutPageTemplateEntryItemSelectorView
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
+
+	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
@@ -205,8 +211,17 @@ public class LayoutPageTemplateEntryItemSelectorView
 					_layoutPageTemplateEntry.getType(),
 					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
 
-				return LanguageUtil.get(
-					_httpServletRequest, "content-page-template");
+				LayoutPageTemplateCollection layoutPageTemplateCollection =
+					_layoutPageTemplateCollectionLocalService.
+						fetchLayoutPageTemplateCollection(
+							_layoutPageTemplateEntry.
+								getLayoutPageTemplateCollectionId());
+
+				if (layoutPageTemplateCollection == null) {
+					return StringPool.BLANK;
+				}
+
+				return layoutPageTemplateCollection.getName();
 			}
 			else if (Objects.equals(
 						_layoutPageTemplateEntry.getType(),

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -231,6 +233,17 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 			for (UserGroupRole userGroupRole : userGroupRoles) {
 				recipients.add(userGroupRole.getUser());
 			}
+
+			List<UserGroupGroupRole> userGroupGroupRoles =
+				_userGroupGroupRoleLocalService.
+					getUserGroupGroupRolesByGroupAndRole(
+						groupId, role.getRoleId());
+
+			for (UserGroupGroupRole userGroupGroupRole : userGroupGroupRoles) {
+				recipients.addAll(
+					_userLocalService.getUserGroupUsers(
+						userGroupGroupRole.getUserGroupId()));
+			}
 		}
 
 		if (recipients.isEmpty()) {
@@ -308,6 +321,13 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 	}
 
 	@Reference(unbind = "-")
+	protected void setUserGroupGroupRoleLocalService(
+		UserGroupGroupRoleLocalService userGroupGroupRoleLocalService) {
+
+		_userGroupGroupRoleLocalService = userGroupGroupRoleLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserGroupRoleLocalService(
 		UserGroupRoleLocalService userGroupRoleLocalService) {
 
@@ -341,6 +361,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private RoleLocalService _roleLocalService;
+	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
 	private UserLocalService _userLocalService;
 

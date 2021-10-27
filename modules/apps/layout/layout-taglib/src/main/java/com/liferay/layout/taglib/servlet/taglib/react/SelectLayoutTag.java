@@ -389,6 +389,8 @@ public class SelectLayoutTag extends IncludeTag {
 			).put(
 				"plid", layout.getPlid()
 			).put(
+				"private", layout.isPrivateLayout()
+			).put(
 				"url", PortalUtil.getLayoutFullURL(layout, themeDisplay)
 			).put(
 				"uuid", layout.getUuid()

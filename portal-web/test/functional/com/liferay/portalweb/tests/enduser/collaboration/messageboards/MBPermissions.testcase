@@ -366,11 +366,9 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "userea1@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -378,11 +376,9 @@ definition {
 			threadReplyBody = "MB Thread1 Reply Body",
 			threadSubject = "MB Thread Message Subject");
 
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "userea2@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea2@liferay.com",
+			userLoginFullName = "userfn2 userln2");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -390,9 +386,9 @@ definition {
 			threadReplyBody = "MB Thread2 Reply Body",
 			threadSubject = "MB Thread Message Subject");
 
-		User.logoutPG();
-
-		User.loginPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 

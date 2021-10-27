@@ -1184,6 +1184,39 @@ definition {
 			title = "question-");
 	}
 
+	@description = "Validate if the user can view the select filter and search field after adding a question."
+	@priority = "4"
+	test CanViewFilterAndSearchFieldAfterAddingQuestion {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.viewSearchField(noQuestion = "true");
+
+		Questions.viewSelectFilter(noQuestion = "true");
+
+		JSONQuestions.addQuestion(
+			bodyField = "Body AddQuestionWithTheTestBody",
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			titleField = "Title AddQuestion");
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.viewSearchField();
+
+		Questions.viewSelectFilter();
+	}
+
 	@description = "Validate if the user can view the my activity default after delete all the responses."
 	@priority = "4"
 	@refactordone

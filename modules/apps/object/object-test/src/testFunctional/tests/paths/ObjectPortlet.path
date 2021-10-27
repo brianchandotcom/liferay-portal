@@ -127,7 +127,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_ENTRY_DETAILS_VALUE</td>
-		<td>//input[contains(@value, '${key_entryValue}')] | //div[contains(text(), '${key_entryValue}')]</td>
+		<td>//input[contains(@value, '${key_entryValue}')]</td>
 		<td></td>
 	</tr>
 	<tr>

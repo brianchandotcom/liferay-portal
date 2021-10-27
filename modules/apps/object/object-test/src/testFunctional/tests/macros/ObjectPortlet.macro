@@ -172,11 +172,15 @@ definition {
 	}
 
 	macro updateEntry {
-		Type(
+		Type.type(
 			locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
 			value1 = "${updateEntry}");
 
 		Button.clickSave();
+
+		WaitForElementNotPresent(
+			key_text = "Save",
+			locator1 = "Button#ANY");
 	}
 
 	macro viewEntry {

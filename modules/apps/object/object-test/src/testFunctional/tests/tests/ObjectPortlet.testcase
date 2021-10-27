@@ -616,13 +616,11 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntryDetails(entry = "123.123456");
-
 		ObjectPortlet.updateEntry(updateEntry = "1.12345678");
 
-		Refresh();
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "1.12345678");
+		ObjectPortlet.viewEntry(entry = "1.12345678");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a Boolean entry on layout"
@@ -667,13 +665,11 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntryDetails(entry = "1.23");
-
 		ObjectPortlet.updateEntry(updateEntry = "4.56");
 
-		Refresh();
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "4.56");
+		ObjectPortlet.viewEntry(entry = "4.56");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a Integer entry on layout"
@@ -700,13 +696,11 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntryDetails(entry = "123");
-
 		ObjectPortlet.updateEntry(updateEntry = "123456");
 
-		Refresh();
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "123456");
+		ObjectPortlet.viewEntry(entry = "123456");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a Long entry on layout"
@@ -733,13 +727,11 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntryDetails(entry = "123456789");
-
 		ObjectPortlet.updateEntry(updateEntry = "12345678912345678");
 
-		Refresh();
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "12345678912345678");
+		ObjectPortlet.viewEntry(entry = "12345678912345678");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a Picklist entry on layout"
@@ -777,13 +769,11 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntryDetails(entry = "Text test");
-
 		ObjectPortlet.updateEntry(updateEntry = "Update Text test");
 
-		Refresh();
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "Update Text test");
+		ObjectPortlet.viewEntry(entry = "Update Text test");
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to view and access the Custom Object portlet without the Access in Control Panel permission"

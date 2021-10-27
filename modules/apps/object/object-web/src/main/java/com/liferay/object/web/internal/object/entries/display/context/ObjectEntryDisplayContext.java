@@ -413,7 +413,7 @@ public class ObjectEntryDisplayContext {
 
 		ddmForm.addAvailableLocale(_objectRequestHelper.getLocale());
 
-		boolean readOnly = _objectEntryService.hasModelResourcePermission(
+		boolean readOnly = !_objectEntryService.hasModelResourcePermission(
 			getObjectEntry(), ActionKeys.UPDATE);
 
 		ObjectDefinition objectDefinition = getObjectDefinition();

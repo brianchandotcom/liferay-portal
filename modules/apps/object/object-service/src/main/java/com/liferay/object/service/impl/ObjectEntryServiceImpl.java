@@ -177,7 +177,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
 			_modelResourcePermissions.get(objectDefinition.getClassName());
 
-		return modelResourcePermission.contains(
+		return !modelResourcePermission.contains(
 			getPermissionChecker(), objectEntry, actionId);
 	}
 

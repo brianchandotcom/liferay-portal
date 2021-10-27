@@ -23,7 +23,7 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
 import com.liferay.search.experiences.service.SXPBlueprintService;
 import com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPBlueprintsDisplayContext;
-import com.liferay.search.experiences.web.internal.constants.SXPBlueprintWebKeys;
+import com.liferay.search.experiences.web.internal.constants.SXPWebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -55,7 +55,7 @@ public class ViewSXPBlueprintsMVCRenderCommand implements MVCRenderCommand {
 			_getViewBlueprintsDisplayContext(renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
-			SXPBlueprintWebKeys.VIEW_SXP_BLUEPRINTS_DISPLAY_CONTEXT,
+			SXPWebKeys.VIEW_SXP_BLUEPRINTS_DISPLAY_CONTEXT,
 			viewSXPBlueprintsDisplayContext);
 
 		return "/sxp_blueprint_admin/view.jsp";

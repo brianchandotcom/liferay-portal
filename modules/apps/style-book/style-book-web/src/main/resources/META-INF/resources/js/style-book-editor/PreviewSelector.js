@@ -41,7 +41,13 @@ const LAYOUT_TYPES_OPTIONS = [
 ];
 
 export default function PreviewSelector() {
-	const [layoutType, setLayoutType] = useState(LAYOUT_TYPES.page);
+	const {previewLayout} = useContext(StyleBookContext);
+
+	const previewLayoutType = config.previewOptions.find((type) =>
+		type.data.recentLayouts.find((layout) => layout === previewLayout)
+	)?.type;
+
+	const [layoutType, setLayoutType] = useState(previewLayoutType);
 
 	return (
 		<>

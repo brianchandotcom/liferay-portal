@@ -34,7 +34,7 @@ const StyleBookEditor = ({
 	);
 	const [draftStatus, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
 	const [previewLayout, setPreviewLayout] = useState(
-		getMostRecentPage(config.previewOptions)
+		getMostRecentLayout(config.previewOptions)
 	);
 
 	useEffect(() => {
@@ -144,10 +144,23 @@ function saveDraft(frontendTokensValues, styleBookEntryId) {
 		});
 }
 
-function getMostRecentPage(previewOptions) {
-	const pages = previewOptions.find(
-		(option) => option.type === LAYOUT_TYPES.page
-	).data.recentLayouts;
+function getMostRecentLayout(previewOptions) {
+	const types = [
+		LAYOUT_TYPES.page,
+		LAYOUT_TYPES.master,
+		LAYOUT_TYPES.pageTemplate,
+		LAYOUT_TYPES.displayPageTemplate,
+	];
 
-	return pages[0];
+	for (let i = 0; i < types.length; i++) {
+		const layouts = previewOptions.find(
+			(option) => option.type === types[i]
+		).data.recentLayouts;
+
+		if (layouts.length) {
+			return layouts[0];
+		}
+	}
+
+	return null;
 }

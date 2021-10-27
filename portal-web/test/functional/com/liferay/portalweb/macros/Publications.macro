@@ -123,6 +123,31 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
+	macro assertNoPermissionToPublishPublication {
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Click(
+			key_publicationName = "${publicationName}",
+			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
+
+		AssertElementNotPresent(
+			key_menuItem = "Publish",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		Publications.selectPublication(publicationName = "${publicationName}");
+
+		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
+
+		AssertElementNotPresent(
+			key_menuItem = "Publish",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+	}
+
 	macro assertPublisherPermissions {
 		PublicationsNavigator._gotoPublicationEllipsisItem(
 			menuItem = "Invite Users",

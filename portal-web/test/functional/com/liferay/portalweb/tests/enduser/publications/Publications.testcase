@@ -179,28 +179,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		Click(
-			key_publicationName = "Publication Name 3",
-			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
-
-		AssertElementNotPresent(
-			key_menuItem = "Publish",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
-
-		Publications.selectPublication(publicationName = "Publication Name 3");
-
-		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
-
-		AssertElementNotPresent(
-			key_menuItem = "Publish",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
+		Publications.assertNoPermissionToPublishPublication(publicationName = "Publication Name 3");
 	}
 
 	@description = "Assert modification conflict displays when modify the same document in two Publications"

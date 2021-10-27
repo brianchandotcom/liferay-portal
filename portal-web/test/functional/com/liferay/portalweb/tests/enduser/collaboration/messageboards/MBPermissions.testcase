@@ -402,28 +402,22 @@ definition {
 			threadReplyBody = "MB Thread1 Reply Body",
 			userName = "userfn1 userln1");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "userfn2 userln2",
-			replyCount = "2",
-			threadBody = "MB Thread Message Body",
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.banUser(
 			threadReplyBody = "MB Thread2 Reply Body",
 			userName = "userfn2 userln2");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
 		MessageboardsPortlet.viewBannedUserCP(
-			site = "Guest",
+			siteURLKey = "Guest",
 			userScreenName = "userfn1 userln1");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
 		MessageboardsPortlet.viewBannedUserCP(
-			site = "Guest",
+			siteURLKey = "Guest",
 			userScreenName = "userfn2 userln2");
 	}
 

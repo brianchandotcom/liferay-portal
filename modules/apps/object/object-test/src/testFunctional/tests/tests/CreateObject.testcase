@@ -905,11 +905,77 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that is not possible to submit entries in a form with an Object that was inactivated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotSubmitEntriesInFormAfterObjectInactivated {
 
-		// TODO LPS-140864 CannotSubmitEntriesInFormAfterObjectInactivated pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
+
+		Form.publishForm();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		AssertElementPresent(
+			key_text = "exclamation-full",
+			locator1 = "Icon#ANY");
+
+		MouseOver(
+			key_text = "exclamation-full",
+			locator1 = "Icon#ANY");
+
+		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#ALERT_ICON_MESSAGE");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+
+		FormsAdminNavigator.openPublishURL();
+
+		FormFields.editText(
+			fieldLabel = "Text",
+			fieldName = "Text",
+			fieldValue = "Entry 1");
+
+		AssertClick(
+			locator1 = "Button#MAIN_CONTENT_SUBMIT",
+			value1 = "Submit");
+
+		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 
 	}
 

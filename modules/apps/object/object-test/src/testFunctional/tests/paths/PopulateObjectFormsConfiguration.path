@@ -11,6 +11,11 @@
 
 <tbody>
 	<tr>
+		<td>ALERT_ICON_MESSAGE</td>
+		<td>//span[contains(text(),'This form was created using an inactive object as storage type. Activate "Custom Object" object to make it available for editing.')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ANY_SEARCHABLE_SECTION_TITLE</td>
 		<td>//*[contains (text(), 'Searchable')]</td>
 		<td></td>

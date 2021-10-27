@@ -601,9 +601,10 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "Web Content Content");
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = "Web Content Content");
 		}
 
 		task ("Delete the web content") {
@@ -642,16 +643,19 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "Web Content Content");
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = "Web Content Content");
 
 			ContentPages.gotoPageEditor();
 
-			AssertTextEquals(
-				key_fragmentName = "Content Display",
-				locator1 = "Fragment#FRAGMENT_BODY",
-				value1 = "Web Content Content");
+			PageEditor.viewFragment(fragmentName = "Content Display");
+
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = "Web Content Content");
 		}
 	}
 

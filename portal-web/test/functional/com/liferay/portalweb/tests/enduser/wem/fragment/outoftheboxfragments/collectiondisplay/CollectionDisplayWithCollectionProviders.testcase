@@ -1528,23 +1528,19 @@ definition {
 				inCollectionDisplay = "true",
 				template = "Full Content");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_element = "//img[contains(@src,'Document_1.jpg')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+			ContentPages.viewFragmentImage(
+				fragmentName = "Content Display",
+				image = "Document_1.jpg");
 
-			var n = "2";
+			ContentPages.viewFragmentText(
+				assetType = "blog",
+				fragmentName = "Content Display",
+				text = "Blogs Entry Content");
 
-			for (var content : list "Blogs Entry Content,Web Content Content") {
-				ContentPages.viewFragmentText(
-					fragmentName = "Content Display",
-					position = "${n}",
-					text = "${content}");
-
-				var n = ${n} + 1;
-			}
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = "Web Content Content");
 
 			PageEditor.clickPublish();
 		}
@@ -1554,22 +1550,19 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_image = "Document_1.jpg",
-				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_IMAGE");
+			ContentPages.viewFragmentImage(
+				fragmentName = "Content Display",
+				image = "Document_1.jpg");
 
-			var n = "2";
+			ContentPages.viewFragmentText(
+				assetType = "blog",
+				fragmentName = "Content Display",
+				text = "Blogs Entry Content");
 
-			for (var content : list "Blogs Entry Content,Web Content Content") {
-					ContentPages.viewFragmentText(
-						fragmentName = "Content Display",
-						position = "${n}",
-						text = "${content}");
-
-				var n = ${n} + 1;
-			}
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Content Display",
+				text = "Web Content Content");
 		}
 	}
 

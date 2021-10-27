@@ -532,12 +532,11 @@ definition {
 		}
 
 		task ("View the title and content of web content are shown") {
-			for (var text : list "Title,Content") {
-				AssertTextEquals.assertPartialText(
-					key_fragmentName = "Content Display",
-					locator1 = "Fragment#FRAGMENT_BODY",
-					value1 = "Web Content ${text}");
-			}
+			AssertTextEquals(
+				index = "1",
+				key_fragmentName = "Content Display",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
+				value1 = "Web Content Title Web Content Content");
 		}
 
 		task ("Select the blogs entry and information template in Content Display") {
@@ -550,8 +549,9 @@ definition {
 
 		task ("View the title and description of blogs are shown") {
 			AssertTextEquals(
+				index = "1",
 				key_fragmentName = "Content Display",
-				locator1 = "Fragment#FRAGMENT_BODY",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
 				value1 = "Blogs Entry Title Blogs Entry Description");
 		}
 
@@ -565,8 +565,9 @@ definition {
 
 		task ("View the title and author name of documents are shown") {
 			AssertTextEquals(
+				index = "1",
 				key_fragmentName = "Content Display",
-				locator1 = "Fragment#FRAGMENT_BODY",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
 				value1 = "Document Title Test Test");
 		}
 
@@ -580,8 +581,9 @@ definition {
 
 		task ("View the category and vocabulary names are shown") {
 			AssertTextEquals(
+				index = "1",
 				key_fragmentName = "Content Display",
-				locator1 = "Fragment#FRAGMENT_BODY",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
 				value1 = "Category Name Vocabulary Name");
 		}
 	}

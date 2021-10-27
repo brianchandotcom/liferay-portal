@@ -257,9 +257,7 @@ definition {
 		}
 
 		task ("Move master page template drop zone to Tab1 of Tab Fragment") {
-			Click(
-				key_fragmentName = "Drop Zone",
-				locator1 = "Fragment#FRAGMENT_BODY");
+			PageEditor.clickConfigurableField(fragmentName = "Drop Zone");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_dragFragmentName = "Drop Zone",

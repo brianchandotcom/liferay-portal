@@ -551,9 +551,10 @@ definition {
 
 			SelectFrameTop();
 
-			AssertVisible(
-				key_content = "WC WebContent Content ${i}",
-				locator1 = "Fragment#FRAGMENT_SECTION_CONTENT");
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Display Page Content",
+				text = "WC WebContent Content ${i}");
 
 			Navigator.gotoBack();
 		}
@@ -583,9 +584,10 @@ definition {
 
 			SelectFrameTop();
 
-			AssertVisible(
-				key_content = "WC WebContent Content ${i}",
-				locator1 = "Fragment#FRAGMENT_SECTION_CONTENT");
+			ContentPages.viewFragmentText(
+				assetType = "web-content",
+				fragmentName = "Display Page Content",
+				text = "WC WebContent Content ${i}");
 
 			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 

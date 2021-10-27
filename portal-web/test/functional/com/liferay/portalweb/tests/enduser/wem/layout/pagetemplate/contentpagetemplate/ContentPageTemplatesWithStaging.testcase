@@ -217,8 +217,10 @@ definition {
 				locator1 = "Icon#ANY");
 
 			AssertCssValue(
-				key_fragmentName = "Button",
-				locator1 = "Fragment#FRAGMENT_BODY",
+				fragmentName = "button",
+				id = "link",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "text-align",
 				value1 = "start");
 

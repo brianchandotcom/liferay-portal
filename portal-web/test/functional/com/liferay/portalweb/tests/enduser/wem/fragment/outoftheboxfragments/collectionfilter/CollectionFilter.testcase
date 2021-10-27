@@ -1567,8 +1567,9 @@ definition {
 
 		task ("View the category name is shown in Collection Filter") {
 			AssertTextEquals.assertPartialText(
+				index = "1",
 				key_fragmentName = "Collection Filter",
-				locator1 = "Fragment#FRAGMENT_BODY",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
 				value1 = "Category Name");
 		}
 
@@ -1879,8 +1880,9 @@ definition {
 
 		task ("View the vocabulary name shown in Collection Filter") {
 			AssertTextEquals.assertPartialText(
+				index = "1",
 				key_fragmentName = "Collection Filter",
-				locator1 = "Fragment#FRAGMENT_BODY",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
 				value1 = "Vocabulary Name");
 		}
 
@@ -2456,8 +2458,9 @@ definition {
 
 		task ("Assert Vocabulary Name is shown in Collection Filter") {
 			AssertTextEquals.assertPartialText(
+				index = "1",
 				key_fragmentName = "Collection Filter",
-				locator1 = "Fragment#FRAGMENT_BODY",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
 				value1 = "Vocabulary Name");
 		}
 
@@ -2784,8 +2787,9 @@ definition {
 
 		task ("Assert Vocabulary Name is shown in Collection Filter") {
 			AssertTextEquals.assertPartialText(
+				index = "1",
 				key_fragmentName = "Collection Filter",
-				locator1 = "Fragment#FRAGMENT_BODY",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
 				value1 = "Vocabulary Name");
 		}
 
@@ -3031,8 +3035,9 @@ definition {
 
 		task ("Assert Category Name is shown in Collection Filter") {
 			AssertTextEquals.assertPartialText(
+				index = "1",
 				key_fragmentName = "Collection Filter",
-				locator1 = "Fragment#FRAGMENT_BODY",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
 				value1 = "Category Name");
 		}
 

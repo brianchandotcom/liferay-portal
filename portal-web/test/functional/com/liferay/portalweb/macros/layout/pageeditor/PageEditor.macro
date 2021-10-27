@@ -6,9 +6,7 @@ definition {
 		PageEditor.gotoTab(tabName = "Comments");
 
 		if (IsElementNotPresent(key_fragmentName = "${fragmentName}", locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME")) {
-			Click(
-				key_fragmentName = "${fragmentName}",
-				locator1 = "Fragment#FRAGMENT_BODY");
+			PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 		}
 
 		AssertElementPresent(
@@ -1858,9 +1856,10 @@ definition {
 					text = "${entryTitle}");
 
 				if (isSet(entryContent)) {
-					AssertTextEquals(
-						locator1 = "Fragment#FRAGMENT_BODY",
-						value1 = "${entryContent}");
+					ContentPages.viewFragmentText(
+						assetType = "blog",
+						fragmentName = "Content Display",
+						text = "${entryContent}");
 				}
 			}
 
@@ -1913,9 +1912,10 @@ definition {
 					text = "${webContentTitle}");
 
 				if (isSet(webContentContent)) {
-					AssertTextEquals(
-						locator1 = "Fragment#FRAGMENT_BODY",
-						value1 = "${webContentContent}");
+					ContentPages.viewFragmentText(
+						assetType = "web-content",
+						fragmentName = "Content Display",
+						text = "${webContentContent}");
 				}
 			}
 

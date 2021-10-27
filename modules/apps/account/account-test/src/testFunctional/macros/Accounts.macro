@@ -453,7 +453,12 @@ definition {
 			locator1 = "Button#SAVE",
 			value1 = "Save");
 
-		Alert.viewSuccessMessage();
+		if (IsElementPresent(locator1 = "Message#ERROR_REQUEST_FAILED")) {
+			Button.clickCancel();
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro addNewUserWithInvalidDomain {

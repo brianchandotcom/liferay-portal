@@ -14,11 +14,12 @@
 
 import React from 'react';
 
-import datasetDisplayLauncher from '../../../../frontend-taglib/frontend-taglib-clay/src/main/resources/META-INF/resources/data_set_display/entry';
+import {DataSetDisplay} from '@liferay/data-set-web';
+import {render} from '@liferay/frontend-js-react-web';
 
 import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
-import '../../../../frontend-taglib/frontend-taglib-clay/src/main/resources/META-INF/resources/data_set_display/styles/main.scss';
+const datasetDisplayLauncher = (...data) => render(DataSetDisplay, ...data);
 
 const fluidDataSetDisplayProps = {
 	activeViewSettings: {},

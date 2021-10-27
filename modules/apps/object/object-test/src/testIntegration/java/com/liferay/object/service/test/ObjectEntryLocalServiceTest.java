@@ -405,6 +405,24 @@ public class ObjectEntryLocalServiceTest {
 					"\"listTypeEntryKeyRequired\"",
 				objectEntryValuesException.getMessage());
 		}
+
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddress", "redwacky@liferay.com"
+				).put(
+					"firstName", RandomTestUtil.randomString(281)
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException objectEntryValuesException) {
+			Assert.assertEquals(
+				"Object field \"firstName\" value exceeds 280 characters.",
+				objectEntryValuesException.getMessage());
+		}
 	}
 
 	@Test
@@ -1258,6 +1276,22 @@ public class ObjectEntryLocalServiceTest {
 				"invalidName", ""
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
+
+		try {
+			_objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", RandomTestUtil.randomString(281)
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException objectEntryValuesException) {
+			Assert.assertEquals(
+				"Object field \"firstName\" value exceeds 280 characters.",
+				objectEntryValuesException.getMessage());
+		}
 	}
 
 	@Test

@@ -169,17 +169,17 @@ definition {
 			userLoginEmailAddress = "usereapu@liferay.com",
 			userLoginFullName = "userfnpu userlnpu");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Blogs Test Page",
+			site = "false");
 
-		SitePages.addPublicPage(pageName = "Blogs Test Page");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Blogs Test Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(
-			pageName = "Blogs Test Page",
-			portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Blogs Test Page",
+			site = "false",
+			widgetName = "Blogs");
 
 		User.logoutPG();
 

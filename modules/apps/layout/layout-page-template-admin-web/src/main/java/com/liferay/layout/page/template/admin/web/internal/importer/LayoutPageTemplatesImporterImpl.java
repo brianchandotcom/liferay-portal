@@ -108,6 +108,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.function.Consumer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -164,29 +165,47 @@ public class LayoutPageTemplatesImporterImpl
 			String pageElementJSON, int position)
 		throws Exception {
 
-		PageElement pageElement = _objectMapper.readValue(
-			pageElementJSON, PageElement.class);
+		Consumer<LayoutStructure> consumer = processedLayoutStructure -> {
+			try {
+				_updateLayoutPageTemplateStructure(
+					layout, processedLayoutStructure);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception, exception);
+				}
+			}
+		};
 
-		Set<String> warningMessages = new HashSet<>();
+		return _importPageElement(
+			consumer, layout, layoutStructure, parentItemId, pageElementJSON,
+			position);
+	}
 
-		_processPageElement(
-			layout, layoutStructure,
-			LayoutStructureConstants.LATEST_PAGE_DEFINITION_VERSION,
-			pageElement, parentItemId, position, warningMessages);
+	@Override
+	public List<FragmentEntryLink> importPageElement(
+			Layout layout, LayoutStructure layoutStructure, String parentItemId,
+			String pageElementJSON, int position, long segmentsExperienceId)
+		throws Exception {
 
-		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
+		Consumer<LayoutStructure> consumer = processedLayoutStructure -> {
+			try {
+				_layoutPageTemplateStructureLocalService.
+					updateLayoutPageTemplateStructureData(
+						layout.getGroupId(), layout.getPlid(),
+						segmentsExperienceId,
+						processedLayoutStructure.toString());
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception, exception);
+				}
+			}
+		};
 
-		LayoutStructureItem parentLayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(parentItemId);
-
-		fragmentEntryLinks.addAll(
-			_getFragmentEntryLinks(
-				layoutStructure,
-				parentLayoutStructureItem.getChildrenItemIds()));
-
-		_updateLayoutPageTemplateStructure(layout, layoutStructure);
-
-		return fragmentEntryLinks;
+		return _importPageElement(
+			consumer, layout, layoutStructure, parentItemId, pageElementJSON,
+			position);
 	}
 
 	private void _deleteExistingPortletPreferences(long plid) {
@@ -782,6 +801,37 @@ public class LayoutPageTemplatesImporterImpl
 		}
 
 		return null;
+	}
+
+	private List<FragmentEntryLink> _importPageElement(
+			Consumer<LayoutStructure> consumer, Layout layout,
+			LayoutStructure layoutStructure, String parentItemId,
+			String pageElementJSON, int position)
+		throws Exception {
+
+		PageElement pageElement = _objectMapper.readValue(
+			pageElementJSON, PageElement.class);
+
+		Set<String> warningMessages = new HashSet<>();
+
+		_processPageElement(
+			layout, layoutStructure,
+			LayoutStructureConstants.LATEST_PAGE_DEFINITION_VERSION,
+			pageElement, parentItemId, position, warningMessages);
+
+		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
+
+		LayoutStructureItem parentLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(parentItemId);
+
+		fragmentEntryLinks.addAll(
+			_getFragmentEntryLinks(
+				layoutStructure,
+				parentLayoutStructureItem.getChildrenItemIds()));
+
+		consumer.accept(layoutStructure);
+
+		return fragmentEntryLinks;
 	}
 
 	private boolean _isDisplayPageTemplateFile(String fileName) {

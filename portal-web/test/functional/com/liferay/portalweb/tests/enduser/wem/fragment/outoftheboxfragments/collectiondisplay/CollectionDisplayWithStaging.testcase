@@ -377,7 +377,7 @@ definition {
 	@priority = "4"
 	test ViewWebContentInContentDisplay {
 		task ("Add three web contents") {
-			for (var i : list "3,2,1") {
+			for (var i : list "1,2,3") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content ${i}",
 					groupName = "Test Site Name (Staging)",

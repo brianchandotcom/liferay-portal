@@ -267,28 +267,24 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test ViewCorrectViewPermissionsInMessageBoardsQuickReplyInPrivateSite {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(
+			groupName = "Blank Site Name",
+			type = "Private");
 
-		Site.addBlankCP(
-			membershipType = "Private",
-			siteName = "Blank Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Blank Site Name",
+			layoutName = "Site Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Blank Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "Message Boards");
 
-		SitePages.addPublicPage(
-			pageName = "Site Page Name",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Blank Site Name");
-
-		Portlet.addPG(portletName = "Message Boards");
+		MessageboardsThread.openToAddThread(
+			groupName = "Blank Site Name",
+			layoutName = "site-page-name",
+			siteURLKey = "blank-site-name");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
@@ -303,8 +299,9 @@ definition {
 			pageName = "Site Page Name",
 			siteName = "Blank Site Name");
 
-		MessageboardsThread.replyPG(
-			threadReplyBody = "MB Thread Message Subject Reply",
+		JSONMBMessage.addMessageReply(
+			groupName = "Blank Site Name",
+			replyBody = "MB Thread Message Subject Reply",
 			threadSubject = "MB Thread Message Subject");
 
 		PermissionsInline.gotoMessageBoardsThreadReplyPG(
@@ -370,9 +367,9 @@ definition {
 				roleTitle = "User");
 		}
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
+		JSONMBMessage.addMessage(
+			addGuestPermissions = "true",
+			groupName = "Guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 

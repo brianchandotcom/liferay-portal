@@ -90,7 +90,7 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanAddLinkToDocument {
 		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
@@ -102,72 +102,36 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "Thread");
-
-		Type(
-			locator1 = "TextInput#SUBJECT",
-			value1 = "MB Thread Message Subject");
-
-		CKEditor.addTextWithLink(
+		MessageboardsThread.addCP(
 			displayText = "Link to Document",
+			displayTextWithLink = "true",
 			dmDocumentTitle = "Document_1.jpg",
-			fieldLabel = "Body");
+			fieldLabel = "Body",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject");
 
-		PortletEntry.publish();
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoEntry(rowEntry = "MB Thread Message Subject");
-
-		Click(
-			key_text = "Link to Document",
-			locator1 = "Link#ANY");
-
-		AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.jpg')]");
+		MessageboardsThread.viewLinkedEntry(
+			imageFileName = "Document_1.jpg",
+			linkedEntry = "Link to Document");
 	}
 
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanAddLinkToPage {
 		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Message Boards Page");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "Thread");
-
-		Type(
-			locator1 = "TextInput#SUBJECT",
-			value1 = "MB Thread Message Subject");
-
-		CKEditor.addTextWithLink(
+		MessageboardsThread.addCP(
 			displayText = "Link to Page",
+			displayTextWithLink = "true",
 			fieldLabel = "Body",
+			pageName = "Message Boards Page",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.viewLinkedEntry(
+			linkedEntry = "Link to Page",
 			pageName = "Message Boards Page");
-
-		PortletEntry.publish();
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoEntry(rowEntry = "MB Thread Message Subject");
-
-		Click(
-			key_text = "Link to Page",
-			locator1 = "Link#ANY");
-
-		AssertVisible(
-			key_pageName = "Message Boards Page",
-			locator1 = "Home#PAGE_ACTIVE");
 	}
 
 	@priority = "5"

@@ -63,8 +63,8 @@ public class RankingPortletDisplayBuilderTest extends BaseRankingsWebTestCase {
 
 	@Test
 	public void testBuild() throws Exception {
-		setUpHttpServletRequestAttribute(
-			_httpServletRequest, "orderByType", "asc");
+		setUpHttpServletRequestParamValue(
+			_httpServletRequest, "orderByType", "desc");
 		setUpHttpServletRequestAttribute(
 			_httpServletRequest, WebKeys.THEME_DISPLAY,
 			Mockito.mock(ThemeDisplay.class));
@@ -87,7 +87,7 @@ public class RankingPortletDisplayBuilderTest extends BaseRankingsWebTestCase {
 		Assert.assertEquals(
 			"displayStyle", rankingPortletDisplayContext.getDisplayStyle());
 		Assert.assertEquals(
-			"asc", rankingPortletDisplayContext.getOrderByType());
+			"desc", rankingPortletDisplayContext.getOrderByType());
 		Assert.assertEquals(
 			"", rankingPortletDisplayContext.getSearchActionURL());
 		Assert.assertNotNull(rankingPortletDisplayContext.getSearchContainer());

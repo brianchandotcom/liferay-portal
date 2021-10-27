@@ -29,6 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-sxp-blueprint-admin",
 		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.header-portlet-css=/sxp_blueprint_admin/css/main.css",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/sxp_blueprint_admin/view.jsp",
 		"javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINT_ADMIN,

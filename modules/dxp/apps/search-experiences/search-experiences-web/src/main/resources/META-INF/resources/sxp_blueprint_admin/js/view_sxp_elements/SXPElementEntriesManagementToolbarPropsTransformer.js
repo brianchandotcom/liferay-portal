@@ -31,7 +31,7 @@ export default function propsTransformer({
 		});
 	};
 
-	var deleteEntries = function () {
+	const deleteSXPElements = function () {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-elements')
@@ -57,7 +57,7 @@ export default function propsTransformer({
 		}
 	};
 
-	var showHideEntries = function (url) {
+	const hideSXPElements = function () {
 		const form = document.getElementById(`${portletNamespace}fm`);
 
 		const searchContainer = document.getElementById(
@@ -72,7 +72,27 @@ export default function propsTransformer({
 						`${portletNamespace}allRowIds`
 					),
 				},
-				url,
+				hideSXPElementURL,
+			});
+		}
+	};
+
+	const showSXPElements = function () {
+		const form = document.getElementById(`${portletNamespace}fm`);
+
+		const searchContainer = document.getElementById(
+			`${portletNamespace}sxpElementEntries`
+		);
+
+		if (form && searchContainer) {
+			postForm(form, {
+				data: {
+					actionFormInstanceIds: Liferay.Util.listCheckedExcept(
+						searchContainer,
+						`${portletNamespace}allRowIds`
+					),
+				},
+				showSXPElementURL,
 			});
 		}
 	};
@@ -82,16 +102,16 @@ export default function propsTransformer({
 		onActionButtonClick: (event, {item}) => {
 			const action = item?.data?.action;
 
-			if (action === 'deleteEntries') {
-				deleteEntries();
+			if (action === 'deleteSXPElements') {
+				deleteSXPElements();
 			}
 
-			if (action === 'hideEntries') {
-				showHideEntries(hideSXPElementURL);
+			if (action === 'hideSXPElements') {
+				hideSXPElements();
 			}
 
-			if (action === 'showEntries') {
-				showHideEntries(showSXPElementURL);
+			if (action === 'showSXPElements') {
+				showSXPElements();
 			}
 		},
 		onCreateButtonClick: (event, {item}) => {

@@ -37,13 +37,25 @@ public interface AnalyticsConfiguration {
 	public String hostsAllowed();
 
 	@Meta.AD(required = false)
+	public String liferayAnalyticsConnectionType();
+
+	@Meta.AD(required = false)
 	public String liferayAnalyticsDataSourceId();
+
+	@Meta.AD(required = false)
+	public boolean liferayAnalyticsEnableAllGroupIds();
 
 	@Meta.AD(required = false)
 	public String liferayAnalyticsEndpointURL();
 
 	@Meta.AD(required = false)
 	public String liferayAnalyticsFaroBackendSecuritySignature();
+
+	@Meta.AD(required = false)
+	public String liferayAnalyticsFaroBackendURL();
+
+	@Meta.AD(required = false)
+	public String[] liferayAnalyticsGroupIds();
 
 	@Meta.AD(required = false)
 	public String liferayAnalyticsProjectId();

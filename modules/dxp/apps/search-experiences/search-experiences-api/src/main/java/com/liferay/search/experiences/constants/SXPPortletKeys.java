@@ -23,4 +23,8 @@ public class SXPPortletKeys {
 		"com_liferay_search_experiences_web_internal_portlet" +
 			"_SXPBlueprintAdminPortlet";
 
+	public static final String SXP_POWER_TOYS =
+		"com_liferay_search_experiences_web_internal_portlet" +
+			"_SXPPowerToysPortlet";
+
 }

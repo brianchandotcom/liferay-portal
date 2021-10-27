@@ -27,15 +27,15 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.css-class-wrapper=portlet-sxp-blueprint-admin",
+		"com.liferay.portlet.css-class-wrapper=portlet-sxp-power-toys",
 		"com.liferay.portlet.display-category=category.hidden",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/sxp_blueprint_admin/view.jsp",
-		"javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINT_ADMIN,
+		"javax.portlet.name=" + SXPPortletKeys.SXP_POWER_TOYS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator"
 	},
 	service = Portlet.class
 )
-public class SXPBlueprintAdminPortlet extends MVCPortlet {
+public class SXPPowerToysPortlet extends MVCPortlet {
 }

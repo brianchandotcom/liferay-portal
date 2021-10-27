@@ -127,11 +127,6 @@ definition {
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name 2");
 
-		AssertTextPresent(
-			key_publicationName = "Publication Name 2",
-			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
-			value1 = "Publication Name 2");
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
@@ -156,18 +151,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
-
-		AssertElementNotPresent(
-			key_menuItem = "Create New Publication",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		AssertElementNotPresent(locator1 = "Button#PLUS");
+		Publications.assertNoPermissionToCreatePublication();
 
 		User.logoutPG();
 

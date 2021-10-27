@@ -108,6 +108,21 @@ definition {
 		Publications.viewPublicationPublished(publicationName = "New ${publicationName}");
 	}
 
+	macro assertNoPermissionToCreatePublication {
+		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
+
+		AssertElementNotPresent(
+			key_menuItem = "Create New Publication",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		AssertElementNotPresent(locator1 = "Button#PLUS");
+	}
+
 	macro assertPublisherPermissions {
 		PublicationsNavigator._gotoPublicationEllipsisItem(
 			menuItem = "Invite Users",

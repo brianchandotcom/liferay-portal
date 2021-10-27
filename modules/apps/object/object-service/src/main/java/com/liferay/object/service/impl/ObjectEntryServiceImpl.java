@@ -167,7 +167,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		throws PortalException {
 
 		if (objectEntry == null) {
-			return false;
+			return true;
 		}
 
 		ObjectDefinition objectDefinition =

@@ -168,7 +168,8 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		_dlAppLocalService.deleteAll(portletDataContext.getScopeGroupId());
+		_dlAppLocalService.deleteAllRepositories(
+			portletDataContext.getScopeGroupId());
 		_dlFileEntryTypeLocalService.deleteFileEntryTypes(
 			portletDataContext.getScopeGroupId());
 

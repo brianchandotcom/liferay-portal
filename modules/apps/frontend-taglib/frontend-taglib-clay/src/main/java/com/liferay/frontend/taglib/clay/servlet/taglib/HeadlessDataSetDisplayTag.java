@@ -107,6 +107,10 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 		return _formId;
 	}
 
+	public String getFormName() {
+		return _formName;
+	}
+
 	public String getId() {
 		return _id;
 	}
@@ -195,6 +199,10 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 
 	public void setFormId(String formId) {
 		_formId = formId;
+	}
+
+	public void setFormName(String formName) {
+		_formName = formName;
 	}
 
 	public void setId(String id) {
@@ -287,6 +295,7 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 		_clayPaginationEntries = null;
 		_creationMenu = new CreationMenu();
 		_formId = null;
+		_formName = null;
 		_id = null;
 		_itemsPerPage = 0;
 		_module = null;
@@ -344,6 +353,8 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 			"clay:headless-data-set-display:creationMenu", _creationMenu);
 		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:formId", _formId);
+		httpServletRequest.setAttribute(
+			"clay:headless-data-set-display:formName", _formName);
 		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:id", _id);
 		httpServletRequest.setAttribute(
@@ -459,6 +470,7 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 	private List<ClayPaginationEntry> _clayPaginationEntries;
 	private CreationMenu _creationMenu = new CreationMenu();
 	private String _formId;
+	private String _formName;
 	private String _id;
 	private int _itemsPerPage;
 	private String _module;

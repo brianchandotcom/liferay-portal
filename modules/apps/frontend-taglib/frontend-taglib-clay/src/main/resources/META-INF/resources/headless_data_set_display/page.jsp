@@ -46,6 +46,10 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 				formId: '<%= formId %>',
 			</c:if>
 
+			<c:if test="<%= Validator.isNotNull(formName) %>">
+				formName: '<%= formName %>',
+			</c:if>
+
 			id: '<%= id %>',
 			itemsActions: <%= jsonSerializer.serializeDeep(clayDataSetActionDropdownItems) %>,
 			namespace: '<%= namespace %>',

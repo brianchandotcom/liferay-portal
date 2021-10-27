@@ -49,6 +49,7 @@ List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems = (List<ClayD
 List<ClayPaginationEntry> clayPaginationEntries = (List<ClayPaginationEntry>)request.getAttribute("clay:headless-data-set-display:clayPaginationEntries");
 CreationMenu creationMenu = (CreationMenu)request.getAttribute("clay:headless-data-set-display:creationMenu");
 String formId = (String)request.getAttribute("clay:headless-data-set-display:formId");
+String formName = (String)request.getAttribute("clay:headless-data-set-display:formName");
 String id = (String)request.getAttribute("clay:headless-data-set-display:id");
 int itemsPerPage = (int)request.getAttribute("clay:headless-data-set-display:itemsPerPage");
 String module = (String)request.getAttribute("clay:headless-data-set-display:module");

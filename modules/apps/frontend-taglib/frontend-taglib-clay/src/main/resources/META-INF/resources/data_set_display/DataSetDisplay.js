@@ -59,6 +59,7 @@ function DataSetDisplay({
 	currentURL,
 	filters: filtersProp,
 	formId,
+	formName,
 	id,
 	inlineAddingSettings,
 	inlineEditingSettings,
@@ -380,7 +381,8 @@ function DataSetDisplay({
 
 	const formRef = useRef(null);
 
-	const wrappedView = formId ? view : <form ref={formRef}>{view}</form>;
+	const wrappedView =
+		formId || formName ? view : <form ref={formRef}>{view}</form>;
 
 	const paginationComponent =
 		showPagination && pagination && items?.length ? (
@@ -577,6 +579,7 @@ function DataSetDisplay({
 				createInlineItem,
 				executeAsyncItemAction,
 				formId,
+				formName,
 				formRef,
 				highlightItems,
 				highlightedItemsValue,
@@ -659,6 +662,7 @@ DataSetDisplay.propTypes = {
 	}),
 	filters: PropTypes.array,
 	formId: PropTypes.string,
+	formName: PropTypes.string,
 	id: PropTypes.string.isRequired,
 	inlineAddingSettings: PropTypes.shape({
 		apiURL: PropTypes.string.isRequired,

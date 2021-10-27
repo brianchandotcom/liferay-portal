@@ -148,6 +148,10 @@ public class DataSetDisplayTag extends IncludeTag {
 		return _formId;
 	}
 
+	public String getFormName() {
+		return _formName;
+	}
+
 	public String getId() {
 		return _id;
 	}
@@ -242,6 +246,10 @@ public class DataSetDisplayTag extends IncludeTag {
 		_formId = formId;
 	}
 
+	public void setFormName(String formName) {
+		_formName = formName;
+	}
+
 	public void setId(String id) {
 		_id = id;
 	}
@@ -329,6 +337,7 @@ public class DataSetDisplayTag extends IncludeTag {
 		_dataProviderKey = null;
 		_deltaParam = null;
 		_formId = null;
+		_formName = null;
 		_id = null;
 		_itemsPerPage = 0;
 		_module = null;
@@ -383,6 +392,8 @@ public class DataSetDisplayTag extends IncludeTag {
 			"clay:data-set-display:deltaParam", _deltaParam);
 		httpServletRequest.setAttribute(
 			"clay:data-set-display:formId", _formId);
+		httpServletRequest.setAttribute(
+			"clay:data-set-display:formName", _formName);
 		httpServletRequest.setAttribute("clay:data-set-display:id", _id);
 		httpServletRequest.setAttribute(
 			"clay:data-set-display:itemsPerPage", _itemsPerPage);
@@ -488,6 +499,7 @@ public class DataSetDisplayTag extends IncludeTag {
 	private String _dataProviderKey;
 	private String _deltaParam;
 	private String _formId;
+	private String _formName;
 	private String _id;
 	private int _itemsPerPage;
 	private String _module;

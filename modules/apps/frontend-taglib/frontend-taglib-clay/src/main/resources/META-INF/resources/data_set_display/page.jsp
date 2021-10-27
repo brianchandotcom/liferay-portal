@@ -42,6 +42,10 @@
 				formId: '<%= HtmlUtil.escapeJS(formId) %>',
 			</c:if>
 
+			<c:if test="<%= Validator.isNotNull(formName) %>">
+				formName: '<%= HtmlUtil.escapeJS(formName) %>',
+			</c:if>
+
 			id: '<%= id %>',
 			namespace: '<%= namespace %>',
 

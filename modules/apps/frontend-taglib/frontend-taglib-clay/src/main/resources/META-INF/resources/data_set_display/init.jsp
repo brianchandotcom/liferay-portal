@@ -47,6 +47,7 @@ Object clayDataSetDisplayViewsContext = request.getAttribute("clay:data-set-disp
 CreationMenu creationMenu = (CreationMenu)request.getAttribute("clay:data-set-display:creationMenu");
 String dataProviderKey = (String)request.getAttribute("clay:data-set-display:dataProviderKey");
 String formId = (String)request.getAttribute("clay:data-set-display:formId");
+String formName = (String)request.getAttribute("clay:data-set-display:formName");
 String id = (String)request.getAttribute("clay:data-set-display:id");
 int itemsPerPage = (int)request.getAttribute("clay:data-set-display:itemsPerPage");
 String module = (String)request.getAttribute("clay:data-set-display:module");

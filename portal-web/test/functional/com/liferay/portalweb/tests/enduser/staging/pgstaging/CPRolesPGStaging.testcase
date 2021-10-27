@@ -47,21 +47,11 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		JSONRole.addRegularRole(
+			roleKey = "Regrole Name",
+			roleTitle = "Regrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.add(roleTitle = "Regrole Name");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_VIEW_STAGING_CHECKBOX",
@@ -101,8 +91,6 @@ definition {
 			userLastName = "userlnpu",
 			userScreenName = "usersnpu");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
 		JSONRole.addSiteRole(
 			roleKey = "Power User Name",
 			roleTitle = "Power User Name");
@@ -135,30 +123,16 @@ definition {
 			groupName = "Site Name",
 			userEmailAddress = "usereapu@liferay.com");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignSiteRoleCP(
-			resourceName = "userfnpu userlnpu",
-			roleTitle = "Power User Name");
-
-		Navigator.openSiteURL(siteName = "Site Name");
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Site Name",
+			roleTitle = "Power User Name",
+			userEmailAddress = "usereapu@liferay.com");
 
 		JSONUser.addUser(
 			userEmailAddress = "usereacr@liferay.com",
 			userFirstName = "userfncr",
 			userLastName = "userlncr",
 			userScreenName = "usersncr");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Portal Content Reviewer",
@@ -168,20 +142,11 @@ definition {
 			groupName = "Site Name",
 			userEmailAddress = "usereacr@liferay.com");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
 		JSONUser.addUser(
 			userEmailAddress = "usereaa@liferay.com",
 			userFirstName = "userfna",
 			userLastName = "userlna",
 			userScreenName = "usersna");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
@@ -193,11 +158,7 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Workflow");
+		Workflow.openWorkflowAdmin(siteURLKey = "site-name-staging");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -208,13 +169,7 @@ definition {
 			userLoginEmailAddress = "usereapu@liferay.com",
 			userLoginFullName = "userfnpu userlnpu");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Navigator.gotoStagedView();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		SitePages.addPublicPage(pageName = "Blogs Test Page");
 

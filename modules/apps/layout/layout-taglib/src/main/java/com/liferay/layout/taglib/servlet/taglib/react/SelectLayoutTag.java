@@ -293,8 +293,7 @@ public class SelectLayoutTag extends IncludeTag {
 
 		for (Layout layout : layouts) {
 			if ((layout.isHidden() && !_showHiddenLayouts) ||
-				_isContentLayoutDraft(layout) ||
-				StagingUtil.isIncomplete(layout)) {
+				_isExcludedLayout(layout) || StagingUtil.isIncomplete(layout)) {
 
 				continue;
 			}
@@ -420,7 +419,7 @@ public class SelectLayoutTag extends IncludeTag {
 			getRequest(), "selPlid", LayoutConstants.DEFAULT_PLID);
 	}
 
-	private boolean _isContentLayoutDraft(Layout layout) {
+	private boolean _isExcludedLayout(Layout layout) {
 		if (!layout.isTypeContent()) {
 			return false;
 		}
@@ -428,6 +427,10 @@ public class SelectLayoutTag extends IncludeTag {
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (draftLayout != null) {
+			if (_showDraftLayouts) {
+				return false;
+			}
+
 			boolean published = GetterUtil.getBoolean(
 				draftLayout.getTypeSettingsProperty("published"));
 

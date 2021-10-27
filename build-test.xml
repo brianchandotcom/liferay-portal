@@ -4706,52 +4706,9 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<get-browser-property property.name="browser.docker.run.options" />
 			<get-browser-property property.name="browser.host" />
 
-			<local name="browser.docker.network.run.option" />
-
-			<condition else="" property="browser.docker.network.run.option" value="--network=${env.DOCKER_NETWORK_NAME}">
-				<isset property="env.DOCKER_NETWORK_NAME" />
-			</condition>
-
-			<local name="docker.browser.start.script" />
-
-			<property name="docker.browser.start.script" value="docker_browser_start.sh" />
-
-			<echo file="${docker.browser.start.script}">
-				<![CDATA[
-					docker run \
-						--detach \
-						--hostname=${browser.host} \
-						--interactive \
-						--name=${browser.host} \
-						--tty \
-						\
-						${browser.docker.network.run.option} \
-						${browser.docker.run.options} \
-						\
-						${browser.docker.image} \
-						\
-						${browser.docker.browser.options}
-				]]>
-			</echo>
-
-			<chmod
-				perm="a+x"
-			>
-				<fileset
-					dir="."
-					includes="${docker.browser.start.script}"
-				/>
-			</chmod>
-
-			<exec executable="/bin/bash" os="${os.apple},${os.unix}">
-				<arg value="${docker.browser.start.script}" />
-			</exec>
-
-			<exec executable="cmd.exe" os="${os.windows}">
-				<arg value="${docker.browser.start.script}" />
-			</exec>
-
-			<delete file="${docker.browser.start.script}" />
+			<start-docker-container image="${browser.docker.image}" name="${browser.host}" options="${browser.docker.browser.options}">\
+				${browser.docker.run.options} \
+			</start-docker-container>
 
 			<echo>Waiting for ${browser.host}:4444 to load</echo>
 
@@ -4761,23 +4718,20 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="start-docker-database">
+	<macrodef name="start-docker-container">
+		<attribute name="image" />
+		<attribute default="" name="name" />
+		<attribute default="" name="options" />
+
+		<text name="run.options" optional="true" />
+
 		<sequential>
-			<get-database-property property.name="database.host" />
-			<get-database-property property.name="database.docker.database.options" />
-			<get-database-property property.name="database.docker.image" />
-			<get-database-property property.name="database.docker.run.options" />
+			<local name="docker.network.run.option" />
+			<local name="docker.start.script" />
 
-			<property name="database.docker.database.options" value="" />
-			<property name="database.docker.run.options" value="" />
-
-			<local name="database.docker.network.run.option" />
-
-			<condition else="" property="database.docker.network.run.option" value="--network=${env.DOCKER_NETWORK_NAME}">
+			<condition else="" property="docker.network.run.option" value="--network=${env.DOCKER_NETWORK_NAME}">
 				<isset property="env.DOCKER_NETWORK_NAME" />
 			</condition>
-
-			<local name="docker.start.script" />
 
 			<property name="docker.start.script" value="docker_start.sh" />
 
@@ -4785,17 +4739,16 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				<![CDATA[
 					docker run \
 						--detach \
-						--hostname=${database.host} \
+						--hostname=@{name} \
 						--interactive \
-						--name=${database.host} \
+						--name=@{name} \
 						--tty \
+						${docker.network.run.option} \
+						@{run.options} \
 						\
-						${database.docker.network.run.option} \
-						${database.docker.run.options} \
+						@{image} \
 						\
-						${database.docker.image} \
-						\
-						${database.docker.database.options}
+						@{options}
 				]]>
 			</echo>
 
@@ -4817,6 +4770,22 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			</exec>
 
 			<delete file="${docker.start.script}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="start-docker-database">
+		<sequential>
+			<get-database-property property.name="database.host" />
+			<get-database-property property.name="database.docker.database.options" />
+			<get-database-property property.name="database.docker.image" />
+			<get-database-property property.name="database.docker.run.options" />
+
+			<property name="database.docker.database.options" value="" />
+			<property name="database.docker.run.options" value="" />
+
+			<start-docker-container image="${database.docker.image}" name="${database.host}" options="${database.docker.database.options}">\
+				${database.docker.run.options} \
+			</start-docker-container>
 
 			<if>
 				<or>
@@ -5019,16 +4988,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<get-operating-system-property property.name="operating.system.host" />
 			<get-operating-system-property property.name="operating.system.host.alias" />
 
-			<local name="operating.system.docker.network.run.option" />
-
-			<condition else="" property="operating.system.docker.network.run.option" value="--network=${env.DOCKER_NETWORK_NAME} --network-alias=${operating.system.host.alias}">
-				<isset property="env.DOCKER_NETWORK_NAME" />
-			</condition>
-
-			<local name="docker.os.start.script" />
-
-			<property name="docker.os.start.script" value="docker_os_start.sh" />
-
 			<propertyregex
 				input="${portal.dir}"
 				property="portal.dir.name"
@@ -5047,43 +5006,11 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				</then>
 			</if>
 
-			<echo file="${docker.os.start.script}">
-				<![CDATA[
-					docker run \
-						--detach \
-						--hostname=${operating.system.host} \
-						--interactive \
-						--mount type=bind,source=${host.git.dir}/${portal.dir.name},target=${portal.dir} \
-						--name=${operating.system.host} \
-						--tty \
-						\
-						${operating.system.docker.network.run.option} \
-						${operating.system.docker.run.options} \
-						\
-						${operating.system.docker.image} \
-						\
-						${operating.system.docker.os.options}
-				]]>
-			</echo>
-
-			<chmod
-				perm="a+x"
-			>
-				<fileset
-					dir="."
-					includes="${docker.os.start.script}"
-				/>
-			</chmod>
-
-			<exec executable="/bin/bash" os="${os.apple},${os.unix}">
-				<arg value="${docker.os.start.script}" />
-			</exec>
-
-			<exec executable="cmd.exe" os="${os.windows}">
-				<arg value="${docker.os.start.script}" />
-			</exec>
-
-			<delete file="${docker.os.start.script}" />
+			<start-docker-container image="${operating.system.docker.image}" name="${operating.system.host}" options="${operating.system.docker.os.options}">\
+				--mount type=bind,source=${host.git.dir}/${portal.dir.name},target=${portal.dir} \
+				--network-alias=${operating.system.host.alias} \
+				${operating.system.docker.run.options} \
+			</start-docker-container>
 		</sequential>
 	</macrodef>
 

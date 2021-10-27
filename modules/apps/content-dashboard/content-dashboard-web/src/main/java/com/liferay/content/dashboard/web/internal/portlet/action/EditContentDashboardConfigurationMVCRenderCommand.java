@@ -14,24 +14,25 @@
 
 package com.liferay.content.dashboard.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardWebKeys;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminConfigurationDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
+import com.liferay.portal.kernel.util.WebKeys;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  + * @author David Arques
@@ -57,6 +58,10 @@ public class EditContentDashboardConfigurationMVCRenderCommand
 		String[] assetVocabularyIdsString = portletPreferences.getValues(
 			"assetVocabularyIds", new String[0]);
 
+		if (assetVocabularyIdsString.length == 0) {
+			assetVocabularyIdsString = _defaultValues(renderRequest);
+		}
+
 		Stream<String> streamAssetVocabularyIdsString = Arrays.stream(
 			assetVocabularyIdsString);
 
@@ -73,6 +78,24 @@ public class EditContentDashboardConfigurationMVCRenderCommand
 				_portal.getHttpServletRequest(renderRequest), renderResponse));
 
 		return "/edit_content_dashboard_configuration.jsp";
+	}
+
+	private String[] _defaultValues(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		AssetVocabulary audience =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				themeDisplay.getCompanyGroupId(), "audience");
+
+		AssetVocabulary stage =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				themeDisplay.getCompanyGroupId(), "stage");
+
+		return new String[] {
+			String.valueOf(audience.getVocabularyId()),
+			String.valueOf(stage.getVocabularyId())
+		};
 	}
 
 	@Reference

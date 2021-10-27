@@ -56,7 +56,7 @@
 						leftReorder="<%= Boolean.TRUE.toString() %>"
 						leftTitle="current"
 						rightBoxName="availableAssetVocabularyIds"
-						rightList="<%= assetCategoriesNavigationDisplayContext.getAvailableVocabularyNames() %>"
+						rightList="<%= assetCategoriesNavigationDisplayContext.getAvailableVocabularyIds() %>"
 						rightTitle="available"
 					/>
 				</div>

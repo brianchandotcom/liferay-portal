@@ -14,27 +14,22 @@
 
 package com.liferay.content.dashboard.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 import javax.portlet.ValidatorException;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Arques
@@ -61,28 +56,7 @@ public class UpdateContentDashboardConfigurationMVCActionCommand
 		String[] assetVocabularyIds = StringUtil.split(
 			assetVocabularyIdsFromParams);
 
-		if (!StringUtil.equalsIgnoreCase(
-				assetVocabularyIdsFromParams, "empty") &&
-			ArrayUtil.isEmpty(assetVocabularyIds)) {
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			AssetVocabulary audience =
-				_assetVocabularyLocalService.fetchGroupVocabulary(
-					themeDisplay.getCompanyGroupId(), "audience");
-
-			AssetVocabulary stage =
-				_assetVocabularyLocalService.fetchGroupVocabulary(
-					themeDisplay.getCompanyGroupId(), "stage");
-
-			assetVocabularyIds = new String[] {
-				String.valueOf(audience.getVocabularyId()),
-				String.valueOf(stage.getVocabularyId())
-			};
-		}
-
-		if (ArrayUtil.isEmpty(assetVocabularyIds)) {
+		if (assetVocabularyIds.length == 0) {
 			hideDefaultSuccessMessage(actionRequest);
 			SessionMessages.add(actionRequest, "emptyAssetVocabularyIds", true);
 		}

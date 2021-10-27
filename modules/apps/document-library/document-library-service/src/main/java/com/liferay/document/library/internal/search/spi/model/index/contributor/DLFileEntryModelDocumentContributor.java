@@ -99,14 +99,14 @@ public class DLFileEntryModelDocumentContributor
 		}
 
 		try {
+			Locale defaultLocale = _portal.getSiteDefaultLocale(
+				dlFileEntry.getGroupId());
+
 			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 			if (indexContent) {
 				if (inputStream != null) {
 					try {
-						Locale defaultLocale = _portal.getSiteDefaultLocale(
-							dlFileEntry.getGroupId());
-
 						String localizedField = Field.getLocalizedName(
 							defaultLocale.toString(), Field.CONTENT);
 
@@ -141,7 +141,9 @@ public class DLFileEntryModelDocumentContributor
 				title = _trashHelper.getOriginalTitle(title);
 			}
 
-			document.addText(Field.TITLE, title);
+			document.addText(
+				Field.getLocalizedName(defaultLocale.toString(), Field.TITLE),
+				title);
 
 			document.addKeyword(
 				Field.TREE_PATH,

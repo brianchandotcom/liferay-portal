@@ -14,7 +14,6 @@
 
 package com.liferay.search.experiences.web.internal.power.tools.portlet.action;
 
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
@@ -23,7 +22,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
@@ -34,18 +32,15 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SXPPortletKeys.SXP_POWER_TOOLS,
-		"mvc.command.name=/sxp_power_tools/import_wikipedia"
+		"mvc.command.name=/sxp_power_tools/import_google_places"
 	},
 	service = MVCActionCommand.class
 )
-public class ImportWikipediaMVCActionCommand extends BaseMVCActionCommand {
+public class ImportGooglePlacesMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 	}
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
 
 }

@@ -39,9 +39,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -142,44 +139,32 @@ public class AttachmentResourceImpl
 			Pagination pagination)
 		throws Exception {
 
-		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
-			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-				_classNameLocalService.getClassNameId(
-					cpDefinition.getModelClass()),
-				cpDefinition.getCPDefinitionId(), type,
-				WorkflowConstants.STATUS_APPROVED,
-				pagination.getStartPosition(), pagination.getEndPosition());
-
-		int totalItems =
+		return Page.of(
+			transform(
+				_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
+					_classNameLocalService.getClassNameId(
+						cpDefinition.getModelClass()),
+					cpDefinition.getCPDefinitionId(), type,
+					WorkflowConstants.STATUS_APPROVED,
+					pagination.getStartPosition(), pagination.getEndPosition()),
+				cpAttachmentFileEntry -> _toAttachment(
+					cpAttachmentFileEntry, accountId)),
+			pagination,
 			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntriesCount(
 				_classNameLocalService.getClassNameId(
 					cpDefinition.getModelClass()),
 				cpDefinition.getCPDefinitionId(), type,
-				WorkflowConstants.STATUS_APPROVED);
-
-		return Page.of(
-			_toAttachments(cpAttachmentFileEntries, accountId), pagination,
-			totalItems);
+				WorkflowConstants.STATUS_APPROVED));
 	}
 
-	private List<Attachment> _toAttachments(
-			List<CPAttachmentFileEntry> cpAttachmentFileEntries, long accountId)
+	private Attachment _toAttachment(
+			CPAttachmentFileEntry cpAttachmentFileEntry, long accountId)
 		throws Exception {
 
-		List<Attachment> attachments = new ArrayList<>();
-
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				cpAttachmentFileEntries) {
-
-			attachments.add(
-				_attachmentDTOConverter.toDTO(
-					new AttachmentDTOConverterContext(
-						cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
-						contextAcceptLanguage.getPreferredLocale(),
-						accountId)));
-		}
-
-		return attachments;
+		return _attachmentDTOConverter.toDTO(
+			new AttachmentDTOConverterContext(
+				cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
+				contextAcceptLanguage.getPreferredLocale(), accountId));
 	}
 
 	@Reference

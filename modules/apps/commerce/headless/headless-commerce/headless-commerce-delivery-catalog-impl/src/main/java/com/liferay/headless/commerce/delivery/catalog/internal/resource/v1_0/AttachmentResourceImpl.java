@@ -74,9 +74,11 @@ public class AttachmentResourceImpl
 		}
 
 		return _getAttachmentPage(
-			_commerceChannelLocalService.getCommerceChannel(channelId),
-			cpDefinition, accountId, CPAttachmentFileEntryConstants.TYPE_OTHER,
-			pagination);
+			cpDefinition,
+			_getAccountId(
+				accountId,
+				_commerceChannelLocalService.getCommerceChannel(channelId)),
+			CPAttachmentFileEntryConstants.TYPE_OTHER, pagination);
 	}
 
 	@NestedField(parentClass = Product.class, value = "images")
@@ -95,19 +97,19 @@ public class AttachmentResourceImpl
 		}
 
 		return _getAttachmentPage(
-			_commerceChannelLocalService.getCommerceChannel(channelId),
-			cpDefinition, accountId, CPAttachmentFileEntryConstants.TYPE_IMAGE,
-			pagination);
+			cpDefinition,
+			_getAccountId(
+				accountId,
+				_commerceChannelLocalService.getCommerceChannel(channelId)),
+			CPAttachmentFileEntryConstants.TYPE_IMAGE, pagination);
 	}
 
-	private Long _getAccountId(
-			Long accountId, long commerceChannelGroupId,
-			CPAttachmentFileEntry cpAttachmentFileEntry)
+	private Long _getAccountId(Long accountId, CommerceChannel commerceChannel)
 		throws Exception {
 
 		int countUserCommerceAccounts =
 			_commerceAccountHelper.countUserCommerceAccounts(
-				cpAttachmentFileEntry.getUserId(), commerceChannelGroupId);
+				contextUser.getUserId(), commerceChannel.getGroupId());
 
 		if (countUserCommerceAccounts > 1) {
 			if (accountId == null) {
@@ -117,12 +119,12 @@ public class AttachmentResourceImpl
 		else {
 			long[] commerceAccountIds =
 				_commerceAccountHelper.getUserCommerceAccountIds(
-					cpAttachmentFileEntry.getUserId(), commerceChannelGroupId);
+					contextUser.getUserId(), commerceChannel.getGroupId());
 
 			if (commerceAccountIds.length == 0) {
 				CommerceAccount commerceAccount =
 					_commerceAccountLocalService.getGuestCommerceAccount(
-						cpAttachmentFileEntry.getCompanyId());
+						contextCompany.getCompanyId());
 
 				commerceAccountIds = new long[] {
 					commerceAccount.getCommerceAccountId()
@@ -136,8 +138,8 @@ public class AttachmentResourceImpl
 	}
 
 	private Page<Attachment> _getAttachmentPage(
-			CommerceChannel commerceChannel, CPDefinition cpDefinition,
-			long accountId, int type, Pagination pagination)
+			CPDefinition cpDefinition, long accountId, int type,
+			Pagination pagination)
 		throws Exception {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
@@ -156,13 +158,12 @@ public class AttachmentResourceImpl
 				WorkflowConstants.STATUS_APPROVED);
 
 		return Page.of(
-			_toAttachments(cpAttachmentFileEntries, commerceChannel, accountId),
-			pagination, totalItems);
+			_toAttachments(cpAttachmentFileEntries, accountId), pagination,
+			totalItems);
 	}
 
 	private List<Attachment> _toAttachments(
-			List<CPAttachmentFileEntry> cpAttachmentFileEntries,
-			CommerceChannel commerceChannel, Long accountId)
+			List<CPAttachmentFileEntry> cpAttachmentFileEntries, long accountId)
 		throws Exception {
 
 		List<Attachment> attachments = new ArrayList<>();
@@ -175,9 +176,7 @@ public class AttachmentResourceImpl
 					new AttachmentDTOConverterContext(
 						cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
 						contextAcceptLanguage.getPreferredLocale(),
-						_getAccountId(
-							accountId, commerceChannel.getGroupId(),
-							cpAttachmentFileEntry))));
+						accountId)));
 		}
 
 		return attachments;

@@ -89,6 +89,8 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _add(ActionRequest actionRequest) throws PortalException {
+		String friendlyURLMapping = ParamUtil.getString(
+			actionRequest, "friendlyURLMapping");
 		boolean instanceable = ParamUtil.getBoolean(
 			actionRequest, "instanceable");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
@@ -110,10 +112,12 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 					ParamUtil.getStringValues(
 						actionRequest, "customElementURLs"),
 					StringPool.NEW_LINE),
-				instanceable, nameMap, portletCategoryName, properties);
+				friendlyURLMapping, instanceable, nameMap, portletCategoryName,
+				properties);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			_remoteAppEntryService.addIFrameRemoteAppEntry(
+				friendlyURLMapping,
 				ParamUtil.getString(actionRequest, "iFrameURL"), instanceable,
 				nameMap, portletCategoryName, properties);
 		}
@@ -135,6 +139,8 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 	private void _update(ActionRequest actionRequest) throws PortalException {
 		RemoteAppEntry remoteAppEntry = _getRemoteAppEntry(actionRequest);
 
+		String friendlyURLMapping = ParamUtil.getString(
+			actionRequest, "friendlyURLMapping");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		String portletCategoryName = ParamUtil.getString(
@@ -157,13 +163,13 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 					ParamUtil.getStringValues(
 						actionRequest, "customElementURLs"),
 					StringPool.NEW_LINE),
-				nameMap, portletCategoryName, properties);
+				friendlyURLMapping, nameMap, portletCategoryName, properties);
 		}
 		else if (Objects.equals(
 					remoteAppEntry.getType(), RemoteAppConstants.TYPE_IFRAME)) {
 
 			_remoteAppEntryService.updateIFrameRemoteAppEntry(
-				remoteAppEntry.getRemoteAppEntryId(),
+				remoteAppEntry.getRemoteAppEntryId(), friendlyURLMapping,
 				ParamUtil.getString(actionRequest, "iFrameURL"), nameMap,
 				portletCategoryName, properties);
 		}

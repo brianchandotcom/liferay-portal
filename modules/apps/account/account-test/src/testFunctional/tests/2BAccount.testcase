@@ -333,6 +333,51 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that an Account Admin cannot add a user wtih an email domain that is blocked."
+	@priority = "4"
+	test AccountAdminCannotAddUserWithBlockedDomain {
+		task ("Login as Super User and block the gmail.com email domain") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			AccountConfiguration.enableAccountEmailDomain();
+
+			AccountConfiguration.addBlockedEmailDomain(settingValues = "gmail.com");
+		}
+
+		task ("Login as Account Admin and go to Users tab in the Account Management Widget") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
+		}
+
+		task ("Attempt to add user using the email domain blocked previously and assert that the new user is not added into the account") {
+			Accounts.addNewUserWithBlockedDomain(
+				accountName = "Account Name",
+				assigneeName = "gmailUser",
+				emailDomainName = "gmail.com",
+				userEmailAddress = "userea@gmail.com",
+				userFirstName = "gmailUser",
+				userLastName = "gmailUser",
+				userScreenName = "blockedUser");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
+
+			LexiconEntry.viewNoEntry(rowEntry = "gmailUser gmailUser");
+		}
+	}
+
 	@description = "This test asserts that an Account Admin can set a billing address to an Account."
 	@priority = "5"
 	test AccountAdminCanSetDefaultBillingAddress {

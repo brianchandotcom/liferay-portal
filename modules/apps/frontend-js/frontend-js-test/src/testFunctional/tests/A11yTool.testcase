@@ -78,7 +78,7 @@ definition {
 
 		// Workaround for side panel sometimes not displaying LPS-141442
 
-		if (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+		while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
 			Refresh();
 		}
 
@@ -89,6 +89,25 @@ definition {
 		AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
 
 		AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+
+		takeScreenshot();
+	}
+
+	@description = "LPS-141455. Verifies the side panel appears with violation(s)."
+	@priority = "5"
+	test ShowsSidePanelWithViolation {
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
+
+		// Workaround for side panel sometimes not displaying LPS-141442
+
+		while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+			Refresh();
+		}
+
+		AssertElementPresent(
+			key_text = "",
+			locator1 = "A11yTool#VIOLATION_PANEL_RULE_LIST_ITEM");
 
 		takeScreenshot();
 	}

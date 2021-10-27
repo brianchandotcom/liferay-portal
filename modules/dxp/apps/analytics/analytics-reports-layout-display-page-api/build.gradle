@@ -1,4 +1,5 @@
 dependencies {
+	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:layout:layout-display-page-api")
 	compileOnly project(":dxp:apps:analytics:analytics-reports-api")
 }

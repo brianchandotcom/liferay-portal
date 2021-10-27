@@ -284,11 +284,14 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}message.boards.email.bulk=false";
 		property test.smtp.server.enabled = "true";
 
-		MessageboardsPortlet.viewDefaultEmailFromCP(emailFromAddress = "testadmin@liferay.com");
+		MessageboardsPortlet.viewDefaultEmailFromCP(
+			emailFromAddress = "testadmin@liferay.com",
+			siteURLKey = "guest");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name",
+			userEmailAddress = "test@liferay.com");
 
 		User.logoutPG();
 

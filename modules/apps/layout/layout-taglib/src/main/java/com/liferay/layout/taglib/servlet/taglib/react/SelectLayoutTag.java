@@ -108,6 +108,10 @@ public class SelectLayoutTag extends IncludeTag {
 		return _privateLayout;
 	}
 
+	public boolean isShowDraftLayouts() {
+		return _showDraftLayouts;
+	}
+
 	public boolean isShowHiddenLayouts() {
 		return _showHiddenLayouts;
 	}
@@ -163,6 +167,10 @@ public class SelectLayoutTag extends IncludeTag {
 		_privateLayout = privateLayout;
 	}
 
+	public void setShowDraftLayouts(boolean showDraftLayouts) {
+		_showDraftLayouts = showDraftLayouts;
+	}
+
 	public void setShowHiddenLayouts(boolean showHiddenLayouts) {
 		_showHiddenLayouts = showHiddenLayouts;
 	}
@@ -189,6 +197,7 @@ public class SelectLayoutTag extends IncludeTag {
 		_namespace = null;
 		_pathThemeImages = null;
 		_privateLayout = false;
+		_showDraftLayouts = false;
 		_showHiddenLayouts = false;
 		_viewType = null;
 	}
@@ -447,6 +456,7 @@ public class SelectLayoutTag extends IncludeTag {
 	private String _namespace;
 	private String _pathThemeImages;
 	private boolean _privateLayout;
+	private boolean _showDraftLayouts;
 	private boolean _showHiddenLayouts;
 	private String _viewType;
 

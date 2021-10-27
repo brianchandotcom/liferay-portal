@@ -297,9 +297,11 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+		MessageboardsCategory.openToCategory(
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest");
 
 		MessageboardsPortlet.subscribePG();
 

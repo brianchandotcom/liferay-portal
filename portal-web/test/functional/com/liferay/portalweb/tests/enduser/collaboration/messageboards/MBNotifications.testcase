@@ -284,35 +284,6 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}message.boards.email.bulk=false";
 		property test.smtp.server.enabled = "true";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editUserSiteCP(
-			siteName = "${siteName}",
-			userScreenName = "usersn");
-
 		MessageboardsPortlet.viewDefaultEmailFromCP(emailFromAddress = "testadmin@liferay.com");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");

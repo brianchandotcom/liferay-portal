@@ -32,18 +32,21 @@ const STATUS_TO_LABEL = {
 };
 
 export default function Toolbar() {
+	const {previewLayout} = useContext(StyleBookContext);
+
 	return (
 		<div className="management-bar navbar style-book-editor__toolbar">
 			<ClayLayout.ContainerFluid>
 				<ul className="navbar-nav start">
-					<li className="nav-item">
-						<span className="style-book-editor__page-preview-text">
-							{`${Liferay.Language.get('preview')}:`}
-						</span>
-						<PreviewSelector />
-					</li>
+					{previewLayout?.url && (
+						<li className="nav-item">
+							<span className="style-book-editor__page-preview-text">
+								{`${Liferay.Language.get('preview')}:`}
+							</span>
+							<PreviewSelector />
+						</li>
+					)}
 				</ul>
-
 				<ul className="end navbar-nav">
 					<li className="mr-3 nav-item">
 						<DraftStatus />

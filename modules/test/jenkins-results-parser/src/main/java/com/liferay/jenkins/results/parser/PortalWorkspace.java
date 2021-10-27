@@ -45,6 +45,10 @@ public class PortalWorkspace extends BaseWorkspace {
 		jsonObject.put("build_profile", buildProfile.toString());
 	}
 
+	public void setCommitOSBAsahModule(boolean commitOSBAsahModule) {
+		_commitOSBAsahModule = commitOSBAsahModule;
+	}
+
 	public void setOSBAsahGitHubURL(String osbAsahGitHubURL) {
 		_osbAsahGitHubURL = osbAsahGitHubURL;
 	}
@@ -186,7 +190,13 @@ public class PortalWorkspace extends BaseWorkspace {
 		GitWorkingDirectory gitWorkingDirectory =
 			portalWorkspaceGitRepository.getGitWorkingDirectory();
 
-		System.out.println(gitWorkingDirectory.status());
+		String gitStatus = gitWorkingDirectory.status();
+
+		System.out.println(gitStatus);
+
+		if (!_commitOSBAsahModule || gitStatus.contains("nothing to commit")) {
+			return;
+		}
 
 		gitWorkingDirectory.commitFileToCurrentBranch(
 			"modules/dxp/apps/osb/osb-asah",
@@ -488,6 +498,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		return true;
 	}
 
+	private boolean _commitOSBAsahModule;
 	private String _osbAsahGitHubURL;
 	private String _osbFaroGitHubURL;
 	private String _portalPrivateGitHubURL;

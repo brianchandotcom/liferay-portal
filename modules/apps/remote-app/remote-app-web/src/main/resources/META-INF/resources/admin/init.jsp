@@ -22,6 +22,7 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.remote.app.exception.RemoteAppEntryCustomElementCSSURLsException" %><%@
 page import="com.liferay.remote.app.exception.RemoteAppEntryCustomElementHTMLElementNameException" %><%@
 page import="com.liferay.remote.app.exception.RemoteAppEntryCustomElementURLsException" %><%@
+page import="com.liferay.remote.app.exception.RemoteAppEntryFriendlyURLMappingException" %><%@
 page import="com.liferay.remote.app.exception.RemoteAppEntryIFrameURLException" %><%@
 page import="com.liferay.remote.app.web.internal.constants.RemoteAppAdminConstants" %><%@
 page import="com.liferay.remote.app.web.internal.constants.RemoteAppAdminWebKeys" %><%@

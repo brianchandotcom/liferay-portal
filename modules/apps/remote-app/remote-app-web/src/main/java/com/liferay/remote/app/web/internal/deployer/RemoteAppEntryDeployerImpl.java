@@ -17,6 +17,7 @@ package com.liferay.remote.app.web.internal.deployer;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -25,8 +26,9 @@ import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.web.internal.portlet.RemoteAppEntryPortlet;
 import com.liferay.remote.app.web.internal.portlet.action.RemoteAppEntryConfigurationAction;
+import com.liferay.remote.app.web.internal.route.RemoteAppEntryFriendlyURLMapper;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Objects;
@@ -47,9 +49,20 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 
 	@Override
 	public List<ServiceRegistration<?>> deploy(RemoteAppEntry remoteAppEntry) {
-		return Arrays.asList(
-			_registerConfigurationAction(remoteAppEntry),
-			_registerPortlet(remoteAppEntry));
+		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
+
+		serviceRegistrations.add(_registerPortlet(remoteAppEntry));
+
+		serviceRegistrations.add(_registerConfigurationAction(remoteAppEntry));
+
+		if (!remoteAppEntry.isInstanceable() &&
+			Validator.isNotNull(remoteAppEntry.getFriendlyURLMapping())) {
+
+			serviceRegistrations.add(
+				_registerFriendlyURLMapper(remoteAppEntry));
+		}
+
+		return serviceRegistrations;
 	}
 
 	@Activate
@@ -79,6 +92,19 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 			ConfigurationAction.class, new RemoteAppEntryConfigurationAction(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"javax.portlet.name", _getPortletId(remoteAppEntry)
+			).build());
+	}
+
+	private ServiceRegistration<FriendlyURLMapper> _registerFriendlyURLMapper(
+		RemoteAppEntry remoteAppEntry) {
+
+		String portletName = _getPortletId(remoteAppEntry);
+
+		return _bundleContext.registerService(
+			FriendlyURLMapper.class,
+			new RemoteAppEntryFriendlyURLMapper(remoteAppEntry),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"javax.portlet.name", portletName
 			).build());
 	}
 

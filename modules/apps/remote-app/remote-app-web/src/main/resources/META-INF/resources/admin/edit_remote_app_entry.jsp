@@ -38,6 +38,7 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 	<liferay-ui:error exception="<%= RemoteAppEntryCustomElementCSSURLsException.class %>" message="please-enter-valid-css-urls" />
 	<liferay-ui:error exception="<%= RemoteAppEntryCustomElementHTMLElementNameException.class %>" message="please-enter-a-valid-html-element-name" />
 	<liferay-ui:error exception="<%= RemoteAppEntryCustomElementURLsException.class %>" message="please-enter-valid-remote-app-urls" />
+	<liferay-ui:error exception="<%= RemoteAppEntryFriendlyURLMappingException.class %>" message="please-enter-a-valid-friendly-url-mapping" />
 	<liferay-ui:error exception="<%= RemoteAppEntryIFrameURLException.class %>" message="please-enter-a-unique-remote-app-url" />
 
 	<aui:model-context bean="<%= editRemoteAppEntryDisplayContext.getRemoteAppEntry() %>" model="<%= RemoteAppEntry.class %>" />
@@ -127,6 +128,10 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 					editRemoteAppEntryDisplayContext.getPortletCategoryNameSelectOptions()
 				%>"
 			/>
+
+			<aui:input label="friendly-url-mapping" name="friendlyURLMapping">
+				<aui:validator name="friendlyURLMapping" />
+			</aui:input>
 
 			<aui:input label="properties" name="properties" type="textarea" />
 		</liferay-frontend:fieldset-group>

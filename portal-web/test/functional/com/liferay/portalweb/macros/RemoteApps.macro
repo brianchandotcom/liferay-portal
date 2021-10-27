@@ -20,6 +20,15 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro addCustomElement {
+		RemoteAppsEntry.addCustomElement(
+			entryHTMLName = "${entryHTMLName}",
+			entryName = "${entryName}",
+			entryURL = "${entryURL}");
+
+		PortletEntry.save();
+	}
+
 	macro deleteRemoteApp {
 		Click(locator1 = "RemoteApps#REMOTE_TABLE_ELLIPSIS");
 
@@ -79,6 +88,13 @@ definition {
 			key_tableEntryName = "${entryName}",
 			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE",
 			value1 = "${entryName}");
+	}
+
+	macro viewTableEntryType {
+		AssertTextEquals(
+			key_tableEntryType = "${entryType}",
+			locator1 = "RemoteApps#TABLE_ENTRY_TYPE_REMOTE_TABLE",
+			value1 = "${entryType}");
 	}
 
 	macro viewTableEntryURL {

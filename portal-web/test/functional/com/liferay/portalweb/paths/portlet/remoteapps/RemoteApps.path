@@ -10,6 +10,17 @@
 </thead>
 
 <tbody>
+
+<tr>
+	<td>NEW_REMOTE_APPS_TYPE</td>
+	<td>//*[@id="_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_type"]</td>
+	// <td></td>
+</tr>
+<tr>
+	<td>NEW_REMOTE_APPS_TYPE_CUSTOM_ELEMENT</td>
+	<td>//*[contains(@class,'form-control')]//span[contains(@value,'customElement')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>REMOTE_APPS_HEADER</td>
 	<td>//span[contains(@data-qa-id,'headerTitle') and contains(@value,'Remote Apps')]</td>
@@ -18,6 +29,16 @@
 <tr>
 	<td>EMPTY_REMOTE_TABLE_MESSAGE</td>
 	<td>//div[contains(@class,'sheet-text') and contains(.,'No items were found.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOTE_APPS_CUSTOM_ELEMENT_HTML</td>
+	<td>//*[@id="_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_customElementHTMLElementName"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOTE_APPS_CUSTOM_ELEMENT_URL</td>
+	<td>//*[@id="_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_customElementURLs"]</td>
 	<td></td>
 </tr>
 <tr>
@@ -38,6 +59,11 @@
 <tr>
 	<td>TABLE_ENTRY_NAME_REMOTE_TABLE</td>
 	<td>//div[contains(@class,'dnd-td')]//div[contains(@class,'table-list-title')]//*[text() = '${key_tableEntryName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_TYPE_REMOTE_TABLE</td>
+	<td>//div[contains(@class,'dnd-td') and contains(text(), '${key_tableEntryType}')]</td>
 	<td></td>
 </tr>
 <tr>

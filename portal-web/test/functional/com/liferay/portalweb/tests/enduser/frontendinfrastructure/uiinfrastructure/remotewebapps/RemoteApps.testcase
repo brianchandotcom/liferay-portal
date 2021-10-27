@@ -57,4 +57,31 @@ definition {
 		RemoteApps.viewTableEntryNameNotPresent(entryName = "${remoteAppName}");
 	}
 
+	@description = "Verify that remote app of type Custom Element can be created"
+	@priority = "5"
+	test CustomElementCanBeCreated {
+		property portal.acceptance = "true";
+
+		var customElementName = "Vanilla Counter";
+		var customElementType = "Custom Element";
+		var customElementHTMLName = "vanilla-counter";
+		var customElementURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js";
+
+		RemoteApps.goToRemoteAppsPortlet();
+
+		LexiconEntry.gotoAdd();
+
+		Select(
+			locator1 = "RemoteApps#NEW_REMOTE_APPS_TYPE",
+			value1 = "${customElementType}");
+
+		RemoteApps.addCustomElement(
+			entryHTMLName = "${customElementHTMLName}",
+			entryName = "${customElementName}",
+			entryURL = "${customElementURL}");
+
+		RemoteApps.viewTableEntryName(entryName = "${customElementName}");
+		RemoteApps.viewTableEntryType(entryType = "${customElementType}");
+	}
+
 }

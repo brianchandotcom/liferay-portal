@@ -157,22 +157,22 @@
 </tr>
 <tr>
 	<td>SESSION_PROPERTY_SESSION_LINK_PROPERTY</td>
-	<td>//div[contains(@class, 'form-group-inline')] //label[contains(text(), 'Session Property Name')]/../select</td>
+	<td>//label[text()='Session Property Name']/following-sibling::div[contains(@class, 'input-group-container')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SESSION_PROPERTY_SESSION_LINK_PROPERTY_OPTION</td>
-	<td>//label[contains(text(), 'Session Property Name')]/..//option[contains(text(), '${propertyName}')]</td>
+	<td>//div[contains(@class, 'dropdown-menu ddm-btn-full ddm-select-dropdown show')] //button[text()='${propertyName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SESSION_PROPERTY_SESSION_LINK_VOCABULARY</td>
-	<td>//div[contains(@class, 'form-group-inline')] //label[contains(text(), 'Vocabulary Name')]/../select</td>
+	<td>//label[text()='Vocabulary Name']/following-sibling::div[contains(@class, 'input-group-container')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION</td>
-	<td>//label[contains(text(), 'Vocabulary Name')]/..//option[contains(text(), '${vocabularyName}')]</td>
+	<td>//div[contains(@class, 'dropdown-menu ddm-btn-full ddm-select-dropdown show')] //button[text()='${vocabularyName}']</td>
 	<td></td>
 </tr>
 <tr>

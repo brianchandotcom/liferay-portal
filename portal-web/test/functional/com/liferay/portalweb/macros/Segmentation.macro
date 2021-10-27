@@ -304,13 +304,13 @@ definition {
 	}
 
 	macro setVocabularySessionPropertyDropdown {
-		Select(
-			locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_PROPERTY",
-			value1 = "${propertyName}");
+		Click(locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_PROPERTY");
 
-		Select(
-			locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_VOCABULARY",
-			value1 = "${vocabularyName}");
+		Click(locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_PROPERTY_OPTION");
+
+		Click(locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_VOCABULARY");
+
+		Click(locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION");
 
 		Button.click(button = "Save");
 	}

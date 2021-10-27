@@ -82,7 +82,7 @@ definition {
 		task ("Assert the actions order of a page template") {
 			LexiconEntry.openEntryMenu(rowEntry = "Page Template Name");
 
-			MenuItem.viewOrder(menuItemList = "Edit,-,Change Thumbnail,Remove thumbnail,Discard draft,Rename,-,Export,-,Configure,Permissions,-,Delete");
+			MenuItem.viewOrder(menuItemList = "Edit,-,Move To,Change Thumbnail,Remove Thumbnail,Discard Draft,Rename,-,Export,-,Configure,Permissions,-,Delete");
 
 			LexiconEntry.openEntryMenu(rowEntry = "Page Template Name");
 		}

@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>BREADCRUMB_FOLDER</td>
-	<td>//div[contains(@class,'portlet-body')]//form//ol[contains(@class,'breadcrumb')]//a[contains(.,'${key_breadcrumbName}')]</td>
+	<td>//div[contains(@class,'portlet-layout')]//form//ol[contains(@class,'breadcrumb')]//a[contains(.,'${key_breadcrumbName}')]</td>
 	<td></td>
 </tr>
 <tr>

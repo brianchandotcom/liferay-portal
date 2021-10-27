@@ -1424,6 +1424,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 								jsonObject.getJSONArray("elementURLs")),
 							StringPool.NEW_LINE),
 						"[$", "$]", documentsStringUtilReplaceValues),
+					StringPool.BLANK,
 					jsonObject.getBoolean("instanceable"),
 					_toMap(
 						group.getName(LocaleUtil.getSiteDefault()) + ": ",

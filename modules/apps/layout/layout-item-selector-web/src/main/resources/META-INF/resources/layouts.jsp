@@ -37,5 +37,6 @@ LayoutItemSelectorViewDisplayContext layoutItemSelectorViewDisplayContext = (Lay
 	multiSelection="<%= layoutItemSelectorViewDisplayContext.isMultiSelection() %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	privateLayout="<%= layoutItemSelectorViewDisplayContext.isPrivateLayout() %>"
+	showDraftLayouts="<%= layoutItemSelectorViewDisplayContext.isShowDraftPages() %>"
 	showHiddenLayouts="<%= layoutItemSelectorViewDisplayContext.isShowHiddenPages() %>"
 />

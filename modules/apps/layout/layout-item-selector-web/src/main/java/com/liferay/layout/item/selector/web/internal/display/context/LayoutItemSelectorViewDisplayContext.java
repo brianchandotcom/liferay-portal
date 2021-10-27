@@ -126,6 +126,10 @@ public class LayoutItemSelectorViewDisplayContext {
 		return _layoutItemSelectorCriterion.isShowBreadcrumb();
 	}
 
+	public boolean isShowDraftPages() {
+		return _layoutItemSelectorCriterion.isShowDraftPages();
+	}
+
 	public boolean isShowHiddenPages() {
 		return _layoutItemSelectorCriterion.isShowHiddenPages();
 	}

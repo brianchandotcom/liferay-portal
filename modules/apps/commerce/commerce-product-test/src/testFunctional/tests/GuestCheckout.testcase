@@ -261,7 +261,7 @@ definition {
 	}
 
 	test AssertGuestCartItemIsTransferredToExistingCart {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 

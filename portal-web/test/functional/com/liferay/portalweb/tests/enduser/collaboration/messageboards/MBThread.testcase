@@ -508,13 +508,14 @@ definition {
 
 	@description = "This is a use case for LPS-65365."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test JavascriptIsNotExecutedInHTMLBody {
 		property custom.properties = "message.boards.message.formats.default=html";
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
 		MessageboardsThread.addPG(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
 			threadBody = '''<script>alert(123);</script>''',
 			threadSubject = '''<script>alert(123);</script>''');
 

@@ -461,7 +461,7 @@ definition {
 
 		task ("View contents of web contents at view mode in staging site") {
 			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name 2",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name Staging");
 
 			var n = "1";
@@ -485,7 +485,7 @@ definition {
 
 		task ("View contents of web contents at view mode in live site") {
 			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name 2",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			var n = "1";

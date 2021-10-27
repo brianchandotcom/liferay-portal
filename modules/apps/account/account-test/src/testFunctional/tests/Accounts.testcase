@@ -67,6 +67,31 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that an account cannot be created if its name exceeds 100 characters and will provide an error message"
+	@priority = "5"
+	test AccountNameCannotExceed100Characters {
+		task ("Try to add account where name character count is over 100") {
+			var accountName = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet";
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.inputName(name = "${accountName}");
+
+			Button.clickSave();
+		}
+		task ("Assert error is displayed and that account is not saved in Accounts") {
+			AssertTextEquals(
+				key_alertMessage = "Please enter no more than 100 characters.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "${key_alertMessage}");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
+		}
+	}
+
 	@description = "This is a use case for LPS-101893. It asserts all accounts display properly across pages."
 	@priority = "4"
 	test AccountsDisplayWhenChangingPagination {

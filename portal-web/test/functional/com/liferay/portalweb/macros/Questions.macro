@@ -1050,6 +1050,21 @@ definition {
 			locator1 = "Questions#EMPTY_STATE_MESSAGE");
 	}
 
+	macro viewTopicOnHomePage {
+		if (IsElementNotPresent(locator1 = "Card#CARD", key_card = "New Topic")) {
+			Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
+		}
+
+		for (var topicName : list "${topicNameList}") {
+			AssertTextEquals(
+				key_card = "${topicName}",
+				locator1 = "Card#CARD_TITLE",
+				value1 = "${topicName}");
+		}
+
+		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_HOME_ICON");
+	}
+
 	macro viewUnlockedQuestion {
 		AssertElementNotPresent(
 			key_questionTitle = "${questionTitle}",

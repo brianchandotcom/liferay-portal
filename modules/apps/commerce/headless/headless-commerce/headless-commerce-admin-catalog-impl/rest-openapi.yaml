@@ -848,6 +848,8 @@ components:
                     items:
                         $ref: "#/components/schemas/ProductChannel"
                     type: array
+                productConfiguration:
+                    $ref: "#/components/schemas/ProductConfiguration"
                 productId:
                     format: int64
                     readOnly: true

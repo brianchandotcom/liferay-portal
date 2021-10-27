@@ -15,7 +15,10 @@
 package com.liferay.document.library.item.selector.web.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -33,8 +36,13 @@ public class DLBreadcrumbUtil {
 
 	public static void addPortletBreadcrumbEntries(
 			Folder folder, String displayStyle,
-			HttpServletRequest httpServletRequest, PortletURL portletURL)
+			HttpServletRequest httpServletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			PortletURL portletURL)
 		throws Exception {
+
+		_addGroupSelectorBreadcrumbEntry(
+			httpServletRequest, liferayPortletResponse, portletURL);
 
 		portletURL.setParameter("displayStyle", displayStyle);
 
@@ -57,6 +65,24 @@ public class DLBreadcrumbUtil {
 				folder.getFolderId(), httpServletRequest, folder.getName(),
 				portletURL);
 		}
+	}
+
+	private static void _addGroupSelectorBreadcrumbEntry(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			PortletURL portletURL)
+		throws Exception {
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			httpServletRequest,
+			LanguageUtil.get(httpServletRequest, "sites-and-libraries"),
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(portletURL, liferayPortletResponse)
+			).setParameter(
+				"groupType", "site"
+			).setParameter(
+				"showGroupSelector", true
+			).buildString());
 	}
 
 	private static void _addPortletBreadcrumbEntry(

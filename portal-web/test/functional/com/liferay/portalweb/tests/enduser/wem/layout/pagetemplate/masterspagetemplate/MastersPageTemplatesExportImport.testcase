@@ -383,7 +383,6 @@ definition {
 
 			PageEditor.editFragmentHTML(
 				fileName = "fragment_static_text.html",
-				filePath = "enduser/wem/layout/pagetemplate/masterspagetemplate",
 				fragmentName = "HTML",
 				id = "element-html");
 
@@ -719,9 +718,7 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			UploadFileWithCustomPath.uploadArchiveFile(
-				fileName = "master-page-invalid-value.zip",
-				filePath = "enduser/wem/layout/pagetemplate/masterspagetemplate");
+			UploadDependencyFile.uploadArchiveFile(fileName = "master-page-invalid-value.zip");
 
 			Button.clickImport();
 		}

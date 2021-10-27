@@ -119,13 +119,15 @@ definition {
 		}
 
 		var baseDir = PropsUtil.get("test.base.dir.name");
-		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
+		var globalDependenciesDir = PropsUtil.get("test.dependencies.dir.name");
+		var dependenciesDirPath = TestCase.getDependenciesDirPath();
+		var fileExists = FileUtil.exists("${dependenciesDirPath}/${sourceFileName}");
 
-		if (isSet(dmDocumentFilePath)) {
-			var filePath = "${baseDir}tests/${dmDocumentFilePath}/${dependenciesDir}/${sourceFileName}";
+		if ("${fileExists}" == "true") {
+			var filePath = "${dependenciesDirPath}/${sourceFileName}";
 		}
 		else {
-			var filePath = "${baseDir}${dependenciesDir}/${sourceFileName}";
+			var filePath = "${baseDir}${globalDependenciesDir}/${sourceFileName}";
 		}
 
 		if (isSet(dmDocumentDescription)) {

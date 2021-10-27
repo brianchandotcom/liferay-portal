@@ -669,7 +669,6 @@ definition {
 		property testray.component.names = "Site Pages Administration,Training,Web Content Administration";
 
 		LAR.importSiteCP(
-			filePath = "enduser/staging/usecase",
 			larFileName = "HR_Home_Page_Content_master.lar",
 			mirrorWithOverwriting = "true",
 			siteName = "Site Name Staging",
@@ -710,7 +709,6 @@ definition {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		LAR.importPortlet(
-			filePath = "enduser/staging/usecase",
 			larFileName = "HR_WebContent_master.lar",
 			uploadFrom = "dependencies");
 

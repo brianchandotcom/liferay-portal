@@ -20,7 +20,6 @@ definition {
 
 		FileInstall.deployFileOnServer(
 			bundleIndex = "${bundleIndex}",
-			filePath = "coreinfrastructureee/clustering/clusteringframework",
 			liferayDependencyJars = "${liferayDependencyJars}");
 	}
 
@@ -134,9 +133,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Server Administration");
 
-		var script = TestCase.getFileContent(
-			fileName = "${scriptFile}",
-			filePath = "coreinfrastructureee/clustering/clusteringframework");
+		var script = TestCase.getFileContent(fileName = "${scriptFile}");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",

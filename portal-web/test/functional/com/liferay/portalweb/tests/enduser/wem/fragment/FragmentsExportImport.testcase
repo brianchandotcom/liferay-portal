@@ -1487,9 +1487,7 @@ definition {
 		task ("Import a fragment collection") {
 			FragmentsAdminNavigator.gotoImportCollection();
 
-			UploadFileWithCustomPath.uploadArchiveFile(
-				fileName = "fragment-collection.zip",
-				filePath = "enduser/wem/fragment");
+			UploadDependencyFile.uploadArchiveFile(fileName = "fragment-collection.zip");
 
 			SelectFrameTop();
 

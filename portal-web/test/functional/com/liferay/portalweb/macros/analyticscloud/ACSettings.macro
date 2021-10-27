@@ -11,9 +11,7 @@ definition {
 			key_sourceType = "CSV File",
 			locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
 
-		UploadFileWithCustomPath.uploadFile(
-			fileName = "${sourceFileName}",
-			filePath = "enduser/analyticscloud");
+		UploadDependencyFile.uploadFile(fileName = "${sourceFileName}");
 
 		WaitForVisible(locator1 = "ACSettings#FILE_UPLOAD_SUCCESS_ICON");
 

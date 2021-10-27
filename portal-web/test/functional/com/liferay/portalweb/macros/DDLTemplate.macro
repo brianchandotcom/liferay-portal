@@ -60,9 +60,8 @@ definition {
 		}
 
 		if (isSet(ddlDisplayTemplateScriptFile)) {
-			var testBaseDirName = PropsUtil.get("test.base.dir.name");
-			var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
-			var filePath = "${testBaseDirName}tests/enduser/webformsanddatalists/dynamicdatalists/pgdynamicdatalists/${testDependenciesDirName}/${ddlDisplayTemplateScriptFile}";
+			var dependenciesDir = TestCase.getDependenciesDirPath();
+			var filePath = "${dependenciesDir}/${ddlDisplayTemplateScriptFile}";
 
 			UploadFile(
 				locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",

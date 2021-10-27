@@ -510,7 +510,6 @@ definition {
 
 		MockLDAP.selectJsonFile(
 			fileName = "space-groups.json",
-			filePath = "coreinfrastructure/administration/users/cpusersandorganizations",
 			tabName = "User Groups");
 
 		ApplicationsMenu.gotoPortlet(
@@ -531,7 +530,6 @@ definition {
 
 		LAR.importPortlet(
 			compressedFile = "true",
-			filePath = "coreinfrastructure/administration/users/cpusersandorganizations",
 			larFileName = "organizations-7.0.lar",
 			uploadFrom = "dependencies");
 

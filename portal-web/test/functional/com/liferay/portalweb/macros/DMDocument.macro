@@ -35,16 +35,7 @@ definition {
 		}
 		else {
 			if (isSet(dmDocumentFile)) {
-				if (isSet(dmDocumentFilePath)) {
-					UploadFileWithCustomPath.uploadFile(
-						fileName = "${dmDocumentFile}",
-						filePath = "${dmDocumentFilePath}");
-				}
-				else {
-					UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-						locator1 = "TextInput#FILE",
-						value1 = "${dmDocumentFile}");
-				}
+				UploadDependencyFile.uploadFile(fileName = "${dmDocumentFile}");
 			}
 		}
 
@@ -495,16 +486,7 @@ definition {
 						value1 = "${dmDocumentFile}");
 				}
 				else {
-					if (isSet(dmDocumentFilePath)) {
-						UploadFileWithCustomPath.uploadFile(
-							fileName = "${dmDocumentFile}",
-							filePath = "${dmDocumentFilePath}");
-					}
-					else {
-						UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-							locator1 = "TextInput#FILE",
-							value1 = "${dmDocumentFile}");
-					}
+					UploadDependencyFile.uploadFile(fileName = "${dmDocumentFile}");
 				}
 
 				AssertChecked(locator1 = "DynamicUploader#SELECT_ALL_CHECKBOX");

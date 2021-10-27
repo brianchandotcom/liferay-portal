@@ -11,8 +11,8 @@ definition {
 			locator1 = "ReportsAdminEditReportDefinition#DATA_SOURCE_NAME_SELECT",
 			value1 = "${dataSource}");
 
-		var projectDir = PropsUtil.get("project.dir");
-		var filePath = "${projectDir}/modules/dxp/apps/portal-reports-engine-console/portal-reports-engine-console-test/src/testFunctional/tests/dependencies/${templateFile}";
+		var dependenciesDir = TestCase.getDependenciesDirPath();
+		var filePath = "${dependenciesDir}/${templateFile}";
 
 		UploadFile(
 			locator1 = "ReportsAdminEditReportDefinition#TEMPLATE_FILE_UPLOAD",

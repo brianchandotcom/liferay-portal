@@ -168,8 +168,7 @@ definition {
 		ServerAdministration.openServerAdmin();
 
 		var script = TestCase.getFileContent(
-			fileName = "convertWidgetPages.groovy",
-			filePath = "enduser/wem/layout/pagesadmin");
+			fileName = "convertWidgetPages.groovy");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
@@ -362,8 +361,7 @@ definition {
 			ServerAdministration.openServerAdmin();
 
 			var script = TestCase.getFileContent(
-				fileName = "convertWidgetPages.groovy",
-				filePath = "enduser/wem/layout/pagesadmin");
+				fileName = "convertWidgetPages.groovy");
 
 			ServerAdministration.executeScript(
 				language = "Groovy",
@@ -521,8 +519,7 @@ definition {
 		ServerAdministration.openServerAdmin();
 
 		var script = TestCase.getFileContent(
-			fileName = "convertWidgetPages.groovy",
-			filePath = "enduser/wem/layout/pagesadmin");
+			fileName = "convertWidgetPages.groovy");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
@@ -700,8 +697,7 @@ definition {
 
 		AppManager.uploadApp(
 			appName = "custom-layout-layouttpl",
-			warFileName = "custom-layout-layouttpl.war",
-			warFilePath = "enduser/wem/layout/pagesadmin");
+			warFileName = "custom-layout-layouttpl.war");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -796,8 +792,7 @@ definition {
 
 		AppManager.uploadApp(
 			appName = "custom-layout-layouttpl",
-			warFileName = "custom-layout-layouttpl.war",
-			warFilePath = "enduser/wem/layout/pagesadmin");
+			warFileName = "custom-layout-layouttpl.war");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -903,8 +898,7 @@ definition {
 
 		AppManager.uploadApp(
 			appName = "custom-layout-layouttpl",
-			warFileName = "custom-layout-layouttpl.war",
-			warFilePath = "enduser/wem/layout/pagesadmin");
+			warFileName = "custom-layout-layouttpl.war");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

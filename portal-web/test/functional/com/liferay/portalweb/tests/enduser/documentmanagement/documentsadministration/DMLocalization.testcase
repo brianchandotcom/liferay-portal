@@ -31,7 +31,6 @@ definition {
 	test CanDownloadJapaneseFile {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM文書記述",
-			dmDocumentFilePath = "enduser/documentmanagement/documentsadministration",
 			dmDocumentTitle = "これは文書です",
 			groupName = "Guest",
 			mimeType = "image/jpeg",
@@ -56,7 +55,6 @@ definition {
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM文書記述",
-			dmDocumentFilePath = "enduser/documentmanagement/documentsadministration",
 			dmDocumentTitle = "これは文書です",
 			groupName = "Guest",
 			mimeType = "image/jpeg",
@@ -81,7 +79,6 @@ definition {
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM文書記述",
-			dmDocumentFilePath = "enduser/documentmanagement/documentsadministration",
 			dmDocumentTitle = "これは文書です",
 			groupName = "Guest",
 			mimeType = "image/jpeg",
@@ -166,7 +163,6 @@ definition {
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM文書記述",
-			dmDocumentFilePath = "enduser/documentmanagement/documentsadministration",
 			dmDocumentTitle = "これは文書です",
 			groupName = "Site_1",
 			mimeType = "image/jpeg",
@@ -174,7 +170,6 @@ definition {
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM文書記述",
-			dmDocumentFilePath = "enduser/documentmanagement/documentsadministration",
 			dmDocumentTitle = "これは写真です",
 			groupName = "Site_1",
 			mimeType = "image/jpeg",
@@ -195,8 +190,7 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addMultipleCP(
-			dmDocumentFileList = "これは写真です.jpg,これは文書です.txt",
-			dmDocumentFilePath = "enduser/documentmanagement/documentsadministration");
+			dmDocumentFileList = "これは写真です.jpg,これは文書です.txt");
 
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "これは写真です",

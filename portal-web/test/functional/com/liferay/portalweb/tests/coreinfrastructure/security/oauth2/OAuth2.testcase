@@ -376,9 +376,7 @@ definition {
 				applicationName = "Analytics Cloud",
 				checkGlobalScope = "Everything");
 
-			FileInstall.deployFileOnServer(
-				filePath = "coreinfrastructure/security/oauth2",
-				liferayDependencyJars = "com.liferay.oauth2.provider.sample.jar");
+			FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.oauth2.provider.sample.jar");
 		}
 
 		task ("Assert everything.read is checked in sample-app resource panel") {
@@ -1419,9 +1417,7 @@ definition {
 	test ScopeBundlePrefixesCanBeUpdated {
 		property test.name.skip.portal.instance = "OAuth2#ScopeBundlePrefixesCanBeUpdated";
 
-		FileInstall.deployFileOnServer(
-			filePath = "coreinfrastructure/security/oauth2",
-			liferayDependencyJars = "com.liferay.oauth2.provider.scope.sample.qa.jar");
+		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.oauth2.provider.scope.sample.qa.jar");
 
 		task ("Add OAuth Application") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -1497,9 +1493,7 @@ definition {
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything.read,everything.write&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;false&quot;";
 		property test.name.skip.portal.instance = "OAuth2#ScopeMappingsCanBeUpdated";
 
-		FileInstall.deployFileOnServer(
-			filePath = "coreinfrastructure/security/oauth2",
-			liferayDependencyJars = "com.liferay.oauth2.provider.scope.sample.qa.jar");
+		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.oauth2.provider.scope.sample.qa.jar");
 
 		task ("Delete OSGi JAX-RS Default configuration") {
 			var baseURL = PropsUtil.get("portal.url");

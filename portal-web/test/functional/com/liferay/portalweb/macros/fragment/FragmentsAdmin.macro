@@ -77,9 +77,7 @@ definition {
 	macro importCollectionFromDependenciesFolder {
 		FragmentsAdminNavigator.gotoImportCollection();
 
-		UploadFileWithCustomPath.uploadArchiveFile(
-			fileName = "${collectionZipFile}",
-			filePath = "enduser/wem/fragment");
+		UploadDependencyFile.uploadArchiveFile(fileName = "${collectionZipFile}");
 
 		SelectFrameTop();
 

@@ -2190,9 +2190,7 @@ definition {
 
 		ServerAdministration.openServerAdmin();
 
-		var script = TestCase.getFileContent(
-			fileName = "updateUser.groovy",
-			filePath = "coreinfrastructure/administration/users/cpusersandorganizations");
+		var script = TestCase.getFileContent(fileName = "updateUser.groovy");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",

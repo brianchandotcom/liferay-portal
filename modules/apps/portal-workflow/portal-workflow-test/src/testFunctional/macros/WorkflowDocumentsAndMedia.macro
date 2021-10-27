@@ -90,9 +90,7 @@ definition {
 	macro editImageFileDocument {
 		var projectDir = PropsUtil.get("project.dir");
 
-		UploadFile(
-			locator1 = "TextInput#FILE",
-			value1 = "${projectDir}/modules/apps/portal-workflow/portal-workflow-test/src/testFunctional/tests/dependencies/${workflowPNGFile}");
+		UploadDependencyFile.uploadFile(fileName = "${workflowPNGFile}");
 
 		if (isSet(useCurrentTitle)) {
 			echo("Use the title automatically added after uploading a file.");

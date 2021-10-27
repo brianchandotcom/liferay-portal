@@ -584,9 +584,7 @@ definition {
 
 		AssertElementPresent(locator1 = "TextInput#FILE");
 
-		UploadFileWithCustomPath.uploadArchiveFile(
-			fileName = "title.zip",
-			filePath = "enduser/wem/fragment");
+		UploadDependencyFile.uploadArchiveFile(fileName = "title.zip");
 
 		Button.clickInstall();
 

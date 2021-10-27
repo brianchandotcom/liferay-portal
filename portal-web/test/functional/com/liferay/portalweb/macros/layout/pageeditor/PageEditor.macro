@@ -2025,9 +2025,7 @@ definition {
 			id = "${id}");
 
 		if (isSet(fileName)) {
-			var content = TestCase.getFileContent(
-				fileName = "${fileName}",
-				filePath = "${filePath}");
+			var content = TestCase.getFileContent(fileName = "${fileName}");
 		}
 
 		Type.typeAceEditorNoError(

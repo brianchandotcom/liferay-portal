@@ -678,9 +678,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Server Administration");
 
-		var projectDir = PropsUtil.get("project.dir");
-
-		var scriptContent = FileUtil.read("${projectDir}/modules/dxp/apps/portal-workflow/portal-workflow-metrics-test/src/testFunctional/tests/dependencies/addUsersWithRoles.groovy");
+		var scriptContent = TestCase.getFileContent(fileName = "addUsersWithRoles.groovy");
 
 		var scriptContent = StringUtil.regexReplaceFirst("${scriptContent}","numberOfUsers = 0","numberOfUsers = ${numberOfUsers}");
 
@@ -738,7 +736,7 @@ definition {
 
 		var projectDir = PropsUtil.get("project.dir");
 
-		var scriptContent = FileUtil.read("${projectDir}/modules/dxp/apps/portal-workflow/portal-workflow-metrics-test/src/testFunctional/tests/dependencies/${key_scriptName}");
+		var scriptContent = TestCase.getFileContent(fileName = "${key_scriptName}");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",

@@ -309,7 +309,6 @@ definition {
 		WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
 
 		LAR.importPortlet(
-			filePath = "enduser/collaboration/wiki",
 			initializeLiferayEvent = "true",
 			larFileName = "space-history-wiki.lar",
 			uploadFrom = "dependencies");

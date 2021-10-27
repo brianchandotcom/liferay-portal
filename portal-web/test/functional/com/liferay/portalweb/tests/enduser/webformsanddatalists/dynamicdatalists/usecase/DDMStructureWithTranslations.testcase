@@ -18,9 +18,7 @@ definition {
 
 		DDLDataDefinition.addCP();
 
-		var sourceJSON = TestCase.getFileContent(
-			fileName = "complexDDMStructure.json",
-			filePath = "enduser/webformsanddatalists/dynamicdatalists/usecase");
+		var sourceJSON = TestCase.getFileContent(fileName = "complexDDMStructure.json");
 
 		DynamicDataMapping.addFieldViaJSON(sourceJSON = "${sourceJSON}");
 

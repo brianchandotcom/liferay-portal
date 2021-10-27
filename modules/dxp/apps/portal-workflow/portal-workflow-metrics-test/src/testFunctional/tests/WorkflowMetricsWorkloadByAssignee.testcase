@@ -88,9 +88,7 @@ definition {
 
 		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#UPLOAD_IMAGE_SELECT");
 
-		UploadFileWithCustomPath.uploadFile(
-			fileName = "これは写真です.jpg",
-			filePath = "enduser/documentmanagement/documentsadministration");
+		UploadDependencyFile.uploadFile(fileName = "これは写真です.jpg");
 
 		Pause(locator1 = "3000");
 

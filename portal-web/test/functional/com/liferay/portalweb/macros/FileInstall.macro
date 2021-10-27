@@ -32,8 +32,12 @@ definition {
 			var deployDir = "${liferayHome}-${bundleIndex}/deploy";
 		}
 
-		if (isSet(filePath)) {
-			ArchiveUtil.archive("${testBaseDirName}tests/${filePath}/${testDependenciesDirName}/${liferayDependencyJars}", "${deployDir}/${liferayDependencyJars}");
+		var dependenciesDir = TestCase.getDependenciesDirPath();
+		var filePath = "${dependenciesDir}/${fileName}";
+		var fileExists = FileUtil.exists("${filePath}");
+
+		if ("${fileExists}" == "true") {
+			ArchiveUtil.archive("${filePath}/${liferayDependencyJars}", "${deployDir}/${liferayDependencyJars}");
 		}
 		else {
 			ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/${liferayDependencyJars}", "${deployDir}/${liferayDependencyJars}");

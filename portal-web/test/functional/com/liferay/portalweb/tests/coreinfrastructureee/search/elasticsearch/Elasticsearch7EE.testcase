@@ -46,8 +46,7 @@ definition {
 			portlet = "Server Administration");
 
 		var script = TestCase.getFileContent(
-			fileName = "blogs-ltr-subset.groovy",
-			filePath = "coreinfrastructureee/search/elasticsearch");
+			fileName = "blogs-ltr-subset.groovy");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",

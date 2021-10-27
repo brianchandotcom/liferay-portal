@@ -14,9 +14,16 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.search.experiences.rest.dto.v1_0.SearchableAssetName;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameResource;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -28,4 +35,29 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class SearchableAssetNameResourceImpl
 	extends BaseSearchableAssetNameResourceImpl {
+
+	@Override
+	public Page<SearchableAssetName> getSearchableAssetNamesPage()
+		throws Exception {
+
+		List<SearchableAssetName> searchableAssetNames = new ArrayList<>();
+
+		String[] classNames = _searchableAssetClassNamesProvider.getClassNames(
+			contextCompany.getCompanyId());
+
+		for (String className : classNames) {
+			SearchableAssetName searchableAssetName = new SearchableAssetName();
+
+			searchableAssetName.setClassName(className);
+
+			searchableAssetNames.add(searchableAssetName);
+		}
+
+		return Page.of(searchableAssetNames);
+	}
+
+	@Reference
+	private SearchableAssetClassNamesProvider
+		_searchableAssetClassNamesProvider;
+
 }

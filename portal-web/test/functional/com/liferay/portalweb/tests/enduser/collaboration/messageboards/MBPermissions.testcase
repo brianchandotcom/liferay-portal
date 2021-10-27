@@ -286,18 +286,11 @@ definition {
 			layoutName = "site-page-name",
 			siteURLKey = "blank-site-name");
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Blank Site Name");
-
 		MessageboardsThread.addPGWithPermissions(
+			skipNavigation = "true",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject",
 			viewableBySelection = "Owner");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Blank Site Name");
 
 		JSONMBMessage.addMessageReply(
 			groupName = "Blank Site Name",

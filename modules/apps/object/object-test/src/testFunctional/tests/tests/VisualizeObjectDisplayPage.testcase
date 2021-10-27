@@ -702,20 +702,9 @@ definition {
 			collectionName = "Basic Components",
 			fragmentName = "Image");
 
-		DoubleClick(
-			key_fragmentName = "Image",
-			locator1 = "Fragment#FRAGMENT_BODY");
-
-		Navigator.gotoNavTab(navTab = "Page Elements");
-
 		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = "Image",
 			id = "image-square");
-
-		Select(
-			key_fieldLabel = "Source Selection",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "Mapping");
 
 		VisualizeObjectDisplayPage.addItem(
 			frameTitle = "Select",

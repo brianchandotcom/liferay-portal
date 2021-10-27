@@ -23,7 +23,8 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Hashimoto
  */
-public class PortalReleasePortalTopLevelBuild extends PortalTopLevelBuild {
+public class PortalReleasePortalTopLevelBuild
+	extends PortalTopLevelBuild implements PortalWorkspaceBuild {
 
 	public PortalReleasePortalTopLevelBuild(
 		String url, TopLevelBuild topLevelBuild) {
@@ -33,6 +34,12 @@ public class PortalReleasePortalTopLevelBuild extends PortalTopLevelBuild {
 
 	@Override
 	public String getBaseGitRepositoryName() {
+		String branchName = getBranchName();
+
+		if (branchName.equals("master")) {
+			return "liferay-portal";
+		}
+
 		return "liferay-portal-ee";
 	}
 
@@ -123,6 +130,80 @@ public class PortalReleasePortalTopLevelBuild extends PortalTopLevelBuild {
 		}
 
 		return _portalRelease;
+	}
+
+	@Override
+	public PortalWorkspace getPortalWorkspace() {
+		Workspace workspace = getWorkspace();
+
+		if (!(workspace instanceof PortalWorkspace)) {
+			return null;
+		}
+
+		return (PortalWorkspace)workspace;
+	}
+
+	@Override
+	public Workspace getWorkspace() {
+		Workspace workspace = WorkspaceFactory.newWorkspace(
+			getBaseGitRepositoryName(), getBranchName(), getJobName());
+
+		if (workspace instanceof PortalWorkspace) {
+			PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
+
+			portalWorkspace.setBuildProfile(getBuildProfile());
+		}
+
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		String portalGitHubURL = _getPortalGitHubURL();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalGitHubURL)) {
+			workspaceGitRepository.setGitHubURL(portalGitHubURL);
+		}
+
+		String portalGitCommit = _getPortalGitCommit();
+
+		if (JenkinsResultsParserUtil.isSHA(portalGitCommit)) {
+			workspaceGitRepository.setSenderBranchSHA(portalGitCommit);
+		}
+
+		return workspace;
+	}
+
+	private String _getPortalGitCommit() {
+		return getParameterValue("TEST_PORTAL_RELEASE_GIT_ID");
+	}
+
+	private String _getPortalGitHubURL() {
+		String portalBranchName = getParameterValue(
+			"TEST_PORTAL_USER_BRANCH_NAME");
+		String portalBranchUsername = getParameterValue(
+			"TEST_PORTAL_USER_NAME");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBranchName) ||
+			JenkinsResultsParserUtil.isNullOrEmpty(portalBranchUsername)) {
+
+			return null;
+		}
+
+		String branchName = getBranchName();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("https://github.com/");
+		sb.append(portalBranchUsername);
+		sb.append("/liferay-portal");
+
+		if (!branchName.equals("master")) {
+			sb.append("-ee");
+		}
+
+		sb.append("/tree/");
+		sb.append(portalBranchName);
+
+		return sb.toString();
 	}
 
 	private boolean _isURL(String urlString) {

@@ -1502,17 +1502,28 @@ definition {
 	}
 
 	macro viewField {
-		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
+		if (!(isSet(index))) {
+			var index = "1";
+		}
 
-		Click(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		if (IsElementPresent(locator1 = "Modal#MODAL")) {
+			AssertClick.assertPartialTextClickAt(
+				index = "${index}",
+				key_fieldLabel = "${fieldFieldLabel}",
+				locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED",
+				value1 = "${fieldFieldLabel}");
+		}
+		else {
+			AssertClick.assertPartialTextClickAt(
+				index = "${index}",
+				key_fieldLabel = "${fieldFieldLabel}",
+				locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
+				value1 = "${fieldFieldLabel}");
+		}
 
-		Navigator.gotoSidebarTab(tabName = "Builder");
-
-		AssertTextEquals(
-			locator1 = "Sidebar#TITLE",
-			value1 = "${fieldName}");
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			locator1 = "DataEngineBuilder#FIELD_NAME_INDEXED");
 
 		AssertTextEquals.assertValue(
 			locator1 = "Sidebar#DDM_LABEL",

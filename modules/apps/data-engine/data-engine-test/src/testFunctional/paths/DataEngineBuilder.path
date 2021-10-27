@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_NAME_INDEXED</td>
+	<td>xpath=(//span[contains(@class,'actions-label') and contains (text(),'${key_fieldName}')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_REFERENCE_ERROR</td>
 	<td>//div[@data-field-name='fieldReference']//div[contains(@class,'form-feedback-item')]</td>
 	<td></td>

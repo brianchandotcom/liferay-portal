@@ -44,4 +44,9 @@ public interface LayoutPageTemplatesImporter {
 			String pageElementJSON, int position)
 		throws Exception;
 
+	public List<FragmentEntryLink> importPageElement(
+			Layout layout, LayoutStructure layoutStructure, String parentItemId,
+			String pageElementJSON, int position, long segmentsExperienceId)
+		throws Exception;
+
 }

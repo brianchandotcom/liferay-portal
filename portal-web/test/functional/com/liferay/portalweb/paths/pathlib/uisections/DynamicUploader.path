@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>SELECT_ALL_CHECKBOX</td>
-	<td>//input[@class='select-all-files']</td>
+	<td>//input[contains(@class,'select-all-files')]</td>
 	<td></td>
 </tr>
 <tr>

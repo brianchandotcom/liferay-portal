@@ -141,7 +141,7 @@ public class AddFragmentEntryLinksMVCActionCommand
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_layoutPageTemplatesImporter.importPageElement(
 				themeDisplay.getLayout(), layoutStructure, parentItemId,
-				fragmentComposition.getData(), position);
+				fragmentComposition.getData(), position, segmentsExperienceId);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			JSONObject editableValuesJSONObject =

@@ -391,17 +391,16 @@ AUI.add(
 						document.body.appendChild(modalContainer);
 					}
 
-					var availableLocales = Object.entries(
-						instance.get('availableLocales')
-					).map((entry) => {
-						var key = entry[0];
-						var value = entry[1];
+					var availableLocales = instance.get('availableLocales');
 
-						var label = key.replace(/_/, '-');
+					var locales = instance.get('items').map((languageId) => {
+						var displayName = availableLocales[languageId];
+
+						var label = languageId.replace(/_/, '-');
 
 						return {
-							displayName: value,
-							id: key,
+							displayName,
+							id: languageId,
 							label,
 							symbol: label.toLowerCase(),
 						};
@@ -422,7 +421,7 @@ AUI.add(
 
 					var props = {
 						activeLanguageIds: instance.get('activeLanguageIds'),
-						availableLocales,
+						availableLocales: locales,
 						defaultLanguageId: instance.get('defaultLanguageId'),
 						onClose(newActiveLanguageIds) {
 							instance._State.writeAtom(

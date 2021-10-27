@@ -52,18 +52,6 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			password = "password",
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
 			portlet = "Roles");
 
 		Role.add(roleTitle = "Regrole Name");
@@ -111,16 +99,6 @@ definition {
 			userEmailAddress = "usereapu@liferay.com",
 			userFirstName = "userfnpu",
 			userLastName = "userlnpu",
-			userScreenName = "usersnpu");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			password = "password",
-			userEmailAddress = "usereapu@liferay.com",
 			userScreenName = "usersnpu");
 
 		Navigator.openSiteURL(siteName = "Site Name");
@@ -180,18 +158,6 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			password = "password",
-			userEmailAddress = "usereacr@liferay.com",
-			userScreenName = "usersncr");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
 			portlet = "Roles");
 
 		JSONRole.assignRoleToUser(
@@ -208,18 +174,6 @@ definition {
 			userEmailAddress = "usereaa@liferay.com",
 			userFirstName = "userfna",
 			userLastName = "userlna",
-			userScreenName = "usersna");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			password = "password",
-			userEmailAddress = "usereaa@liferay.com",
 			userScreenName = "usersna");
 
 		Navigator.openSiteURL(siteName = "Site Name");

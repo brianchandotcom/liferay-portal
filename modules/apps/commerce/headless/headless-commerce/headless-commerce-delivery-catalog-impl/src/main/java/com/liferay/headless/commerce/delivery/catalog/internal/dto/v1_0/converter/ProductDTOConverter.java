@@ -16,13 +16,17 @@ package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.convert
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductConfiguration;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -51,14 +55,11 @@ public class ProductDTOConverter
 	public Product toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		ProductDTOConverterContext cpCatalogEntryDTOConverterConvertContext =
-			(ProductDTOConverterContext)dtoConverterContext;
-
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
-			(Long)cpCatalogEntryDTOConverterConvertContext.getId());
+			(Long)dtoConverterContext.getId());
 
 		String languageId = LanguageUtil.getLanguageId(
-			cpCatalogEntryDTOConverterConvertContext.getLocale());
+			dtoConverterContext.getLocale());
 
 		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
 
@@ -67,7 +68,7 @@ public class ProductDTOConverter
 
 		String portalURL = company.getPortalURL(0);
 
-		return new Product() {
+		Product product = new Product() {
 			{
 				createDate = cpDefinition.getCreateDate();
 				description = cpDefinition.getDescription();
@@ -86,6 +87,36 @@ public class ProductDTOConverter
 				urlImage = portalURL + cpDefinition.getDefaultImageFileURL();
 			}
 		};
+
+		CPDefinitionInventory cpDefinitionInventory =
+			_cpDefinitionInventoryLocalService.
+				fetchCPDefinitionInventoryByCPDefinitionId(
+					(Long)dtoConverterContext.getId());
+
+		if (cpDefinitionInventory != null) {
+			ProductConfiguration productConfiguration =
+				new ProductConfiguration() {
+					{
+						allowBackOrder = cpDefinitionInventory.isBackOrders();
+						allowedOrderQuantities = ArrayUtil.toArray(
+							cpDefinitionInventory.
+								getAllowedOrderQuantitiesArray());
+						inventoryEngine =
+							cpDefinitionInventory.
+								getCPDefinitionInventoryEngine();
+						maxOrderQuantity =
+							cpDefinitionInventory.getMaxOrderQuantity();
+						minOrderQuantity =
+							cpDefinitionInventory.getMinOrderQuantity();
+						multipleOrderQuantity =
+							cpDefinitionInventory.getMultipleOrderQuantity();
+					}
+				};
+
+			product.setProductConfiguration(productConfiguration);
+		}
+
+		return product;
 	}
 
 	private String[] _getTags(CPDefinition cpDefinition) {
@@ -106,6 +137,10 @@ public class ProductDTOConverter
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

@@ -38,27 +38,28 @@ public class RemoteAppEntryLocalServiceWrapper
 			addCustomElementRemoteAppEntry(
 				long userId, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
-				boolean instanceable,
+				String friendlyURLMapping, boolean instanceable,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
 			userId, customElementCSSURLs, customElementHTMLElementName,
-			customElementURLs, instanceable, nameMap, portletCategoryName,
-			properties);
+			customElementURLs, friendlyURLMapping, instanceable, nameMap,
+			portletCategoryName, properties);
 	}
 
 	@Override
 	public com.liferay.remote.app.model.RemoteAppEntry addIFrameRemoteAppEntry(
-			long userId, String iFrameURL, boolean instanceable,
+			long userId, String friendlyURLMapping, String iFrameURL,
+			boolean instanceable,
 			java.util.Map<java.util.Locale, String> nameMap,
 			String portletCategoryName, String properties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryLocalService.addIFrameRemoteAppEntry(
-			userId, iFrameURL, instanceable, nameMap, portletCategoryName,
-			properties);
+			userId, friendlyURLMapping, iFrameURL, instanceable, nameMap,
+			portletCategoryName, properties);
 	}
 
 	/**
@@ -420,27 +421,29 @@ public class RemoteAppEntryLocalServiceWrapper
 			updateCustomElementRemoteAppEntry(
 				long remoteAppEntryId, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
+				String friendlyURLMapping,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
 			remoteAppEntryId, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, nameMap,
-			portletCategoryName, properties);
+			customElementHTMLElementName, customElementURLs, friendlyURLMapping,
+			nameMap, portletCategoryName, properties);
 	}
 
 	@Override
 	public com.liferay.remote.app.model.RemoteAppEntry
 			updateIFrameRemoteAppEntry(
-				long remoteAppEntryId, String iFrameURL,
+				long remoteAppEntryId, String friendlyURLMapping,
+				String iFrameURL,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryLocalService.updateIFrameRemoteAppEntry(
-			remoteAppEntryId, iFrameURL, nameMap, portletCategoryName,
-			properties);
+			remoteAppEntryId, friendlyURLMapping, iFrameURL, nameMap,
+			portletCategoryName, properties);
 	}
 
 	/**

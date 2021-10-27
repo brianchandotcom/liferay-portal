@@ -54,14 +54,15 @@ public interface RemoteAppEntryService extends BaseService {
 	 */
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, boolean instanceable,
-			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			String customElementURLs, String friendlyURLMapping,
+			boolean instanceable, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties)
 		throws PortalException;
 
 	public RemoteAppEntry addIFrameRemoteAppEntry(
-			String iFrameURL, boolean instanceable, Map<Locale, String> nameMap,
-			String portletCategoryName, String properties)
+			String friendlyURLMapping, String iFrameURL, boolean instanceable,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties)
 		throws PortalException;
 
 	public RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
@@ -81,12 +82,12 @@ public interface RemoteAppEntryService extends BaseService {
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			String friendlyURLMapping, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties)
 		throws PortalException;
 
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
-			long remoteAppEntryId, String iFrameURL,
+			long remoteAppEntryId, String friendlyURLMapping, String iFrameURL,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties)
 		throws PortalException;

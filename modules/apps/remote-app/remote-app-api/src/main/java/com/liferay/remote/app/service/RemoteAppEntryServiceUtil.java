@@ -40,25 +40,26 @@ public class RemoteAppEntryServiceUtil {
 	 */
 	public static RemoteAppEntry addCustomElementRemoteAppEntry(
 			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, boolean instanceable,
-			Map<java.util.Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			String customElementURLs, String friendlyURLMapping,
+			boolean instanceable, Map<java.util.Locale, String> nameMap,
+			String portletCategoryName, String properties)
 		throws PortalException {
 
 		return getService().addCustomElementRemoteAppEntry(
 			customElementCSSURLs, customElementHTMLElementName,
-			customElementURLs, instanceable, nameMap, portletCategoryName,
-			properties);
+			customElementURLs, friendlyURLMapping, instanceable, nameMap,
+			portletCategoryName, properties);
 	}
 
 	public static RemoteAppEntry addIFrameRemoteAppEntry(
-			String iFrameURL, boolean instanceable,
+			String friendlyURLMapping, String iFrameURL, boolean instanceable,
 			Map<java.util.Locale, String> nameMap, String portletCategoryName,
 			String properties)
 		throws PortalException {
 
 		return getService().addIFrameRemoteAppEntry(
-			iFrameURL, instanceable, nameMap, portletCategoryName, properties);
+			friendlyURLMapping, iFrameURL, instanceable, nameMap,
+			portletCategoryName, properties);
 	}
 
 	public static RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
@@ -85,25 +86,25 @@ public class RemoteAppEntryServiceUtil {
 	public static RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			Map<java.util.Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			String friendlyURLMapping, Map<java.util.Locale, String> nameMap,
+			String portletCategoryName, String properties)
 		throws PortalException {
 
 		return getService().updateCustomElementRemoteAppEntry(
 			remoteAppEntryId, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, nameMap,
-			portletCategoryName, properties);
+			customElementHTMLElementName, customElementURLs, friendlyURLMapping,
+			nameMap, portletCategoryName, properties);
 	}
 
 	public static RemoteAppEntry updateIFrameRemoteAppEntry(
-			long remoteAppEntryId, String iFrameURL,
+			long remoteAppEntryId, String friendlyURLMapping, String iFrameURL,
 			Map<java.util.Locale, String> nameMap, String portletCategoryName,
 			String properties)
 		throws PortalException {
 
 		return getService().updateIFrameRemoteAppEntry(
-			remoteAppEntryId, iFrameURL, nameMap, portletCategoryName,
-			properties);
+			remoteAppEntryId, friendlyURLMapping, iFrameURL, nameMap,
+			portletCategoryName, properties);
 	}
 
 	public static RemoteAppEntryService getService() {

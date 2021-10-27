@@ -55,6 +55,7 @@ public class RemoteAppEntryWrapper
 		attributes.put(
 			"customElementHTMLElementName", getCustomElementHTMLElementName());
 		attributes.put("customElementURLs", getCustomElementURLs());
+		attributes.put("friendlyURLMapping", getFriendlyURLMapping());
 		attributes.put("iFrameURL", getIFrameURL());
 		attributes.put("instanceable", isInstanceable());
 		attributes.put("name", getName());
@@ -133,6 +134,13 @@ public class RemoteAppEntryWrapper
 
 		if (customElementURLs != null) {
 			setCustomElementURLs(customElementURLs);
+		}
+
+		String friendlyURLMapping = (String)attributes.get(
+			"friendlyURLMapping");
+
+		if (friendlyURLMapping != null) {
+			setFriendlyURLMapping(friendlyURLMapping);
 		}
 
 		String iFrameURL = (String)attributes.get("iFrameURL");
@@ -256,6 +264,16 @@ public class RemoteAppEntryWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the friendly url mapping of this remote app entry.
+	 *
+	 * @return the friendly url mapping of this remote app entry
+	 */
+	@Override
+	public String getFriendlyURLMapping() {
+		return model.getFriendlyURLMapping();
 	}
 
 	/**
@@ -564,6 +582,16 @@ public class RemoteAppEntryWrapper
 	@Override
 	public void setCustomElementURLs(String customElementURLs) {
 		model.setCustomElementURLs(customElementURLs);
+	}
+
+	/**
+	 * Sets the friendly url mapping of this remote app entry.
+	 *
+	 * @param friendlyURLMapping the friendly url mapping of this remote app entry
+	 */
+	@Override
+	public void setFriendlyURLMapping(String friendlyURLMapping) {
+		model.setFriendlyURLMapping(friendlyURLMapping);
 	}
 
 	/**

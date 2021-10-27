@@ -90,7 +90,8 @@ public class RemoteAppEntryModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"customElementCSSURLs", Types.CLOB},
 		{"customElementHTMLElementName", Types.VARCHAR},
-		{"customElementURLs", Types.CLOB}, {"iFrameURL", Types.VARCHAR},
+		{"customElementURLs", Types.CLOB},
+		{"friendlyURLMapping", Types.VARCHAR}, {"iFrameURL", Types.VARCHAR},
 		{"instanceable", Types.BOOLEAN}, {"name", Types.VARCHAR},
 		{"portletCategoryName", Types.VARCHAR}, {"properties", Types.CLOB},
 		{"type_", Types.VARCHAR}
@@ -111,6 +112,7 @@ public class RemoteAppEntryModelImpl
 		TABLE_COLUMNS_MAP.put("customElementCSSURLs", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("customElementHTMLElementName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("customElementURLs", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("friendlyURLMapping", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("iFrameURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("instanceable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
@@ -120,7 +122,7 @@ public class RemoteAppEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RemoteAppEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,remoteAppEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,customElementCSSURLs TEXT null,customElementHTMLElementName VARCHAR(255) null,customElementURLs TEXT null,iFrameURL STRING null,instanceable BOOLEAN,name STRING null,portletCategoryName VARCHAR(75) null,properties TEXT null,type_ VARCHAR(75) null)";
+		"create table RemoteAppEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,remoteAppEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,customElementCSSURLs TEXT null,customElementHTMLElementName VARCHAR(255) null,customElementURLs TEXT null,friendlyURLMapping VARCHAR(75) null,iFrameURL STRING null,instanceable BOOLEAN,name STRING null,portletCategoryName VARCHAR(75) null,properties TEXT null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table RemoteAppEntry";
 
@@ -196,6 +198,7 @@ public class RemoteAppEntryModelImpl
 		model.setCustomElementHTMLElementName(
 			soapModel.getCustomElementHTMLElementName());
 		model.setCustomElementURLs(soapModel.getCustomElementURLs());
+		model.setFriendlyURLMapping(soapModel.getFriendlyURLMapping());
 		model.setIFrameURL(soapModel.getIFrameURL());
 		model.setInstanceable(soapModel.isInstanceable());
 		model.setName(soapModel.getName());
@@ -411,6 +414,12 @@ public class RemoteAppEntryModelImpl
 			"customElementURLs",
 			(BiConsumer<RemoteAppEntry, String>)
 				RemoteAppEntry::setCustomElementURLs);
+		attributeGetterFunctions.put(
+			"friendlyURLMapping", RemoteAppEntry::getFriendlyURLMapping);
+		attributeSetterBiConsumers.put(
+			"friendlyURLMapping",
+			(BiConsumer<RemoteAppEntry, String>)
+				RemoteAppEntry::setFriendlyURLMapping);
 		attributeGetterFunctions.put("iFrameURL", RemoteAppEntry::getIFrameURL);
 		attributeSetterBiConsumers.put(
 			"iFrameURL",
@@ -678,6 +687,26 @@ public class RemoteAppEntryModelImpl
 		}
 
 		_customElementURLs = customElementURLs;
+	}
+
+	@JSON
+	@Override
+	public String getFriendlyURLMapping() {
+		if (_friendlyURLMapping == null) {
+			return "";
+		}
+		else {
+			return _friendlyURLMapping;
+		}
+	}
+
+	@Override
+	public void setFriendlyURLMapping(String friendlyURLMapping) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_friendlyURLMapping = friendlyURLMapping;
 	}
 
 	@JSON
@@ -1052,6 +1081,7 @@ public class RemoteAppEntryModelImpl
 		remoteAppEntryImpl.setCustomElementHTMLElementName(
 			getCustomElementHTMLElementName());
 		remoteAppEntryImpl.setCustomElementURLs(getCustomElementURLs());
+		remoteAppEntryImpl.setFriendlyURLMapping(getFriendlyURLMapping());
 		remoteAppEntryImpl.setIFrameURL(getIFrameURL());
 		remoteAppEntryImpl.setInstanceable(isInstanceable());
 		remoteAppEntryImpl.setName(getName());
@@ -1091,6 +1121,8 @@ public class RemoteAppEntryModelImpl
 				"customElementHTMLElementName"));
 		remoteAppEntryImpl.setCustomElementURLs(
 			this.<String>getColumnOriginalValue("customElementURLs"));
+		remoteAppEntryImpl.setFriendlyURLMapping(
+			this.<String>getColumnOriginalValue("friendlyURLMapping"));
 		remoteAppEntryImpl.setIFrameURL(
 			this.<String>getColumnOriginalValue("iFrameURL"));
 		remoteAppEntryImpl.setInstanceable(
@@ -1254,6 +1286,16 @@ public class RemoteAppEntryModelImpl
 			remoteAppEntryCacheModel.customElementURLs = null;
 		}
 
+		remoteAppEntryCacheModel.friendlyURLMapping = getFriendlyURLMapping();
+
+		String friendlyURLMapping = remoteAppEntryCacheModel.friendlyURLMapping;
+
+		if ((friendlyURLMapping != null) &&
+			(friendlyURLMapping.length() == 0)) {
+
+			remoteAppEntryCacheModel.friendlyURLMapping = null;
+		}
+
 		remoteAppEntryCacheModel.iFrameURL = getIFrameURL();
 
 		String iFrameURL = remoteAppEntryCacheModel.iFrameURL;
@@ -1401,6 +1443,7 @@ public class RemoteAppEntryModelImpl
 	private String _customElementCSSURLs;
 	private String _customElementHTMLElementName;
 	private String _customElementURLs;
+	private String _friendlyURLMapping;
 	private String _iFrameURL;
 	private boolean _instanceable;
 	private String _name;
@@ -1451,6 +1494,7 @@ public class RemoteAppEntryModelImpl
 		_columnOriginalValues.put(
 			"customElementHTMLElementName", _customElementHTMLElementName);
 		_columnOriginalValues.put("customElementURLs", _customElementURLs);
+		_columnOriginalValues.put("friendlyURLMapping", _friendlyURLMapping);
 		_columnOriginalValues.put("iFrameURL", _iFrameURL);
 		_columnOriginalValues.put("instanceable", _instanceable);
 		_columnOriginalValues.put("name", _name);
@@ -1503,17 +1547,19 @@ public class RemoteAppEntryModelImpl
 
 		columnBitmasks.put("customElementURLs", 1024L);
 
-		columnBitmasks.put("iFrameURL", 2048L);
+		columnBitmasks.put("friendlyURLMapping", 2048L);
 
-		columnBitmasks.put("instanceable", 4096L);
+		columnBitmasks.put("iFrameURL", 4096L);
 
-		columnBitmasks.put("name", 8192L);
+		columnBitmasks.put("instanceable", 8192L);
 
-		columnBitmasks.put("portletCategoryName", 16384L);
+		columnBitmasks.put("name", 16384L);
 
-		columnBitmasks.put("properties", 32768L);
+		columnBitmasks.put("portletCategoryName", 32768L);
 
-		columnBitmasks.put("type_", 65536L);
+		columnBitmasks.put("properties", 65536L);
+
+		columnBitmasks.put("type_", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

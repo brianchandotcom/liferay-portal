@@ -129,6 +129,163 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "You do not have the roles required to access this portlet.");
 	}
 
+	@priority = "3"
+	@refactordone
+	test CanViewCorrectViewPermissionsInMessageBoardsQuickReplyInPrivateSite {
+		JSONGroup.addGroup(
+			groupName = "Blank Site Name",
+			type = "Private");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Blank Site Name",
+			layoutName = "Site Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Blank Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "Message Boards");
+
+		MessageboardsThread.openToAddThread(
+			groupName = "Blank Site Name",
+			layoutName = "site-page-name",
+			siteURLKey = "blank-site-name");
+
+		MessageboardsThread.addPGWithPermissions(
+			skipNavigation = "true",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject",
+			viewableBySelection = "Owner");
+
+		JSONMBMessage.addMessageReply(
+			groupName = "Blank Site Name",
+			replyBody = "MB Thread Message Subject Reply",
+			threadSubject = "MB Thread Message Subject");
+
+		PermissionsInline.gotoMessageBoardsThreadReplyPG(
+			pageName = "Site Page Name",
+			siteName = "Blank Site Name",
+			siteURL = "true",
+			threadReplyBody = "MB Thread Message Subject Reply",
+			threadSubject = "MB Thread Message Subject");
+
+		for (var roleTitle : list "Power User,User") {
+			PermissionsInline.viewPermissionsRemoved(
+				permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "${roleTitle}");
+		}
+
+		PermissionsInline.viewPermissionsChecked(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Owner");
+	}
+
+	@priority = "3"
+	@refactordone
+	test CanViewMessageBoardsBannedUsers {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea1@liferay.com");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea2@liferay.com");
+
+		PermissionsInline.gotoMessageBoardsPG(pageName = "Message Boards Page");
+
+		for (var permissionDefinitionKey : list "INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX") {
+			Role.definePermissionPG(
+				permissionDefinitionKey = "${permissionDefinitionKey}",
+				roleTitle = "User");
+		}
+
+		JSONMBMessage.addMessage(
+			addGuestPermissions = "true",
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.replyPG(
+			threadReplyBody = "MB Thread1 Reply Body",
+			threadSubject = "MB Thread Message Subject");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea2@liferay.com",
+			userLoginFullName = "userfn2 userln2");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.replyPG(
+			threadReplyBody = "MB Thread2 Reply Body",
+			threadSubject = "MB Thread Message Subject");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "userfn2 userln2",
+			replyCount = "2",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.banUser(
+			threadReplyBody = "MB Thread1 Reply Body",
+			userName = "userfn1 userln1");
+
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.banUser(
+			threadReplyBody = "MB Thread2 Reply Body",
+			userName = "userfn2 userln2");
+
+		MessageboardsPortlet.viewBannedUserCP(
+			siteURLKey = "Guest",
+			userScreenName = "userfn1 userln1");
+
+		MessageboardsPortlet.viewBannedUserCP(
+			siteURLKey = "Guest",
+			userScreenName = "userfn2 userln2");
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanViewMessageBoardsPortletRegRole {
@@ -262,163 +419,6 @@ definition {
 
 		// TODO LPS-136936 SiteMemberCannotUpdateThread pending implementation
 
-	}
-
-	@priority = "3"
-	@refactorneeded
-	test ViewCorrectViewPermissionsInMessageBoardsQuickReplyInPrivateSite {
-		JSONGroup.addGroup(
-			groupName = "Blank Site Name",
-			type = "Private");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Blank Site Name",
-			layoutName = "Site Page Name");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Blank Site Name",
-			layoutName = "Site Page Name",
-			widgetName = "Message Boards");
-
-		MessageboardsThread.openToAddThread(
-			groupName = "Blank Site Name",
-			layoutName = "site-page-name",
-			siteURLKey = "blank-site-name");
-
-		MessageboardsThread.addPGWithPermissions(
-			skipNavigation = "true",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject",
-			viewableBySelection = "Owner");
-
-		JSONMBMessage.addMessageReply(
-			groupName = "Blank Site Name",
-			replyBody = "MB Thread Message Subject Reply",
-			threadSubject = "MB Thread Message Subject");
-
-		PermissionsInline.gotoMessageBoardsThreadReplyPG(
-			pageName = "Site Page Name",
-			siteName = "Blank Site Name",
-			siteURL = "true",
-			threadReplyBody = "MB Thread Message Subject Reply",
-			threadSubject = "MB Thread Message Subject");
-
-		for (var roleTitle : list "Power User,User") {
-			PermissionsInline.viewPermissionsRemoved(
-				permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "${roleTitle}");
-		}
-
-		PermissionsInline.viewPermissionsChecked(
-			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Owner");
-	}
-
-	@priority = "3"
-	@refactorneeded
-	test ViewMessageBoardsBannedUsers {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Message Boards Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Message Boards Page",
-			widgetName = "Message Boards");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea1@liferay.com",
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea1@liferay.com");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea2@liferay.com",
-			userFirstName = "userfn2",
-			userLastName = "userln2",
-			userScreenName = "usersn2");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea2@liferay.com");
-
-		PermissionsInline.gotoMessageBoardsPG(pageName = "Message Boards Page");
-
-		for (var permissionDefinitionKey : list "INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX") {
-			Role.definePermissionPG(
-				permissionDefinitionKey = "${permissionDefinitionKey}",
-				roleTitle = "User");
-		}
-
-		JSONMBMessage.addMessage(
-			addGuestPermissions = "true",
-			groupName = "Guest",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea1@liferay.com",
-			userLoginFullName = "userfn1 userln1");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.replyPG(
-			threadReplyBody = "MB Thread1 Reply Body",
-			threadSubject = "MB Thread Message Subject");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.replyPG(
-			threadReplyBody = "MB Thread2 Reply Body",
-			threadSubject = "MB Thread Message Subject");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "userfn2 userln2",
-			replyCount = "2",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.banUser(
-			threadReplyBody = "MB Thread1 Reply Body",
-			userName = "userfn1 userln1");
-
-		MessageboardsThread.openToThread(
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.banUser(
-			threadReplyBody = "MB Thread2 Reply Body",
-			userName = "userfn2 userln2");
-
-		MessageboardsPortlet.viewBannedUserCP(
-			siteURLKey = "Guest",
-			userScreenName = "userfn1 userln1");
-
-		MessageboardsPortlet.viewBannedUserCP(
-			siteURLKey = "Guest",
-			userScreenName = "userfn2 userln2");
 	}
 
 }

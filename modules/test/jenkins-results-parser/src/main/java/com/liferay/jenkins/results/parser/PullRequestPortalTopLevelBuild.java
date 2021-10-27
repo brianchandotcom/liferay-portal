@@ -30,7 +30,8 @@ import org.dom4j.Element;
  * @author Peter Yoo
  */
 public class PullRequestPortalTopLevelBuild
-	extends PortalTopLevelBuild implements PullRequestBuild, WorkspaceBuild {
+	extends PortalTopLevelBuild
+	implements PortalWorkspaceBuild, PullRequestBuild {
 
 	public PullRequestPortalTopLevelBuild(
 		String url, TopLevelBuild topLevelBuild) {
@@ -76,49 +77,14 @@ public class PullRequestPortalTopLevelBuild
 	}
 
 	@Override
-	public BranchInformation getOSBAsahBranchInformation() {
-		Workspace workspace = getWorkspace();
-
-		return new WorkspaceBranchInformation(
-			workspace.getWorkspaceGitRepository(
-				"com-liferay-osb-asah-private"));
-	}
-
-	@Override
-	public BranchInformation getOSBFaroBranchInformation() {
-		Workspace workspace = getWorkspace();
-
-		return new WorkspaceBranchInformation(
-			workspace.getWorkspaceGitRepository(
-				"com-liferay-osb-faro-private"));
-	}
-
-	@Override
-	public BranchInformation getPluginsBranchInformation() {
+	public PortalWorkspace getPortalWorkspace() {
 		Workspace workspace = getWorkspace();
 
 		if (!(workspace instanceof PortalWorkspace)) {
 			return null;
 		}
 
-		PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
-
-		return new WorkspaceBranchInformation(
-			portalWorkspace.getPluginsWorkspaceGitRepository());
-	}
-
-	@Override
-	public BranchInformation getPortalBranchInformation() {
-		Workspace workspace = getWorkspace();
-
-		if (!(workspace instanceof PortalWorkspace)) {
-			return null;
-		}
-
-		PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
-
-		return new WorkspaceBranchInformation(
-			portalWorkspace.getPortalWorkspaceGitRepository());
+		return (PortalWorkspace)workspace;
 	}
 
 	@Override

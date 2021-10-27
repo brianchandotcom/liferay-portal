@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * @author Michael Hashimoto
  */
 public class UpstreamPortalTopLevelBuild
-	extends PortalTopLevelBuild implements WorkspaceBuild {
+	extends PortalTopLevelBuild implements PortalWorkspaceBuild {
 
 	public UpstreamPortalTopLevelBuild(
 		String url, TopLevelBuild topLevelBuild) {
@@ -34,54 +34,14 @@ public class UpstreamPortalTopLevelBuild
 	}
 
 	@Override
-	public BranchInformation getOSBAsahBranchInformation() {
-		Workspace workspace = getWorkspace();
-
-		return new WorkspaceBranchInformation(
-			workspace.getWorkspaceGitRepository(
-				"com-liferay-osb-asah-private"));
-	}
-
-	@Override
-	public BranchInformation getOSBFaroBranchInformation() {
-		Workspace workspace = getWorkspace();
-
-		return new WorkspaceBranchInformation(
-			workspace.getWorkspaceGitRepository(
-				"com-liferay-osb-faro-private"));
-	}
-
-	@Override
-	public BranchInformation getPluginsBranchInformation() {
+	public PortalWorkspace getPortalWorkspace() {
 		Workspace workspace = getWorkspace();
 
 		if (!(workspace instanceof PortalWorkspace)) {
 			return null;
 		}
 
-		PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
-
-		return new WorkspaceBranchInformation(
-			portalWorkspace.getPluginsWorkspaceGitRepository());
-	}
-
-	@Override
-	public BranchInformation getPortalBaseBranchInformation() {
-		return null;
-	}
-
-	@Override
-	public BranchInformation getPortalBranchInformation() {
-		Workspace workspace = getWorkspace();
-
-		if (!(workspace instanceof PortalWorkspace)) {
-			return null;
-		}
-
-		PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
-
-		return new WorkspaceBranchInformation(
-			portalWorkspace.getPortalWorkspaceGitRepository());
+		return (PortalWorkspace)workspace;
 	}
 
 	@Override

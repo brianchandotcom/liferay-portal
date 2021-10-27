@@ -196,6 +196,14 @@ public class PortalWorkspace extends BaseWorkspace {
 				" for testing on CI"));
 	}
 
+	protected WorkspaceGitRepository getOSBAsahWorkspaceGitRepository() {
+		return getWorkspaceGitRepository("com-liferay-osb-asah-private");
+	}
+
+	protected WorkspaceGitRepository getOSBFaroWorkspaceGitRepository() {
+		return getWorkspaceGitRepository("com-liferay-osb-faro-private");
+	}
+
 	protected PluginsWorkspaceGitRepository getPluginsWorkspaceGitRepository() {
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			getPortalWorkspaceGitRepository();

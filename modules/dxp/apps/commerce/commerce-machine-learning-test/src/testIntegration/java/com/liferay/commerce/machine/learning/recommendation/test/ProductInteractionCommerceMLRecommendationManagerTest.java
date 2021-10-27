@@ -17,11 +17,9 @@ package com.liferay.commerce.machine.learning.recommendation.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.machine.learning.recommendation.ProductInteractionCommerceMLRecommendation;
 import com.liferay.commerce.machine.learning.recommendation.ProductInteractionCommerceMLRecommendationManager;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -54,14 +52,21 @@ public class ProductInteractionCommerceMLRecommendationManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_productInteractionCommerceMLRecommendations = _populateEntries(4, 11);
+		_productInteractionCommerceMLRecommendations =
+			_addProductInteractionCommerceMLRecommendations();
 	}
 
 	@Test
 	public void testGetProductInteractionCommerceMLRecommendations()
 		throws Exception {
+
+		ProductInteractionCommerceMLRecommendation
+			productInteractionCommerceMLRecommendation =
+				_productInteractionCommerceMLRecommendations.get(
+					RandomTestUtil.randomInt(
+						0,
+						_productInteractionCommerceMLRecommendations.size() -
+							1));
 
 		Stream<ProductInteractionCommerceMLRecommendation>
 			productInteractionCommerceMLRecommendationStream =
@@ -70,7 +75,10 @@ public class ProductInteractionCommerceMLRecommendationManagerTest {
 		List<ProductInteractionCommerceMLRecommendation>
 			expectedProductInteractionCommerceMLRecommendations =
 				productInteractionCommerceMLRecommendationStream.filter(
-					recommendation -> recommendation.getEntryClassPK() == 2
+					recommendation ->
+						recommendation.getEntryClassPK() ==
+							productInteractionCommerceMLRecommendation.
+								getEntryClassPK()
 				).sorted(
 					Comparator.comparingInt(
 						ProductInteractionCommerceMLRecommendation::getRank)
@@ -82,10 +90,45 @@ public class ProductInteractionCommerceMLRecommendationManagerTest {
 			3, TimeUnit.SECONDS,
 			() -> {
 				_assetResultEquals(
-					2, expectedProductInteractionCommerceMLRecommendations);
+					productInteractionCommerceMLRecommendation.
+						getEntryClassPK(),
+					expectedProductInteractionCommerceMLRecommendations);
 
 				return null;
 			});
+	}
+
+	private List<ProductInteractionCommerceMLRecommendation>
+			_addProductInteractionCommerceMLRecommendations()
+		throws Exception {
+
+		List<ProductInteractionCommerceMLRecommendation>
+			productInteractionCommerceMLRecommendations = new ArrayList<>();
+
+		for (int i = 0; i < _PRODUCT_COUNT; i++) {
+			long entryClassPK = RandomTestUtil.randomLong();
+
+			for (int rank = 0; rank < _RECOMMENDATION_COUNT; rank++) {
+				float score = 1.0F - (rank / 10.0F);
+
+				productInteractionCommerceMLRecommendations.add(
+					_createProductInteractionCommerceMLRecommendation(
+						entryClassPK, rank, score));
+			}
+		}
+
+		Collections.shuffle(productInteractionCommerceMLRecommendations);
+
+		for (ProductInteractionCommerceMLRecommendation
+				productInteractionCommerceMLRecommendation :
+					productInteractionCommerceMLRecommendations) {
+
+			_productInteractionCommerceMLRecommendationManager.
+				addProductInteractionCommerceMLRecommendation(
+					productInteractionCommerceMLRecommendation);
+		}
+
+		return productInteractionCommerceMLRecommendations;
 	}
 
 	private void _assetResultEquals(
@@ -98,7 +141,7 @@ public class ProductInteractionCommerceMLRecommendationManagerTest {
 			productInteractionCommerceMLRecommendations =
 				_productInteractionCommerceMLRecommendationManager.
 					getProductInteractionCommerceMLRecommendations(
-						_company.getCompanyId(), entryClassPK);
+						TestPropsValues.getCompanyId(), entryClassPK);
 
 		int expectedRecommendationsSize = Math.min(
 			10, expectedProductInteractionCommerceMLRecommendations.size());
@@ -128,8 +171,9 @@ public class ProductInteractionCommerceMLRecommendationManagerTest {
 	}
 
 	private ProductInteractionCommerceMLRecommendation
-		_createProductInteractionCommerceMLRecommendation(
-			long entryClassPK, int rank, float score) {
+			_createProductInteractionCommerceMLRecommendation(
+				long entryClassPK, int rank, float score)
+		throws Exception {
 
 		ProductInteractionCommerceMLRecommendation
 			productInteractionCommerceMLRecommendation =
@@ -139,47 +183,17 @@ public class ProductInteractionCommerceMLRecommendationManagerTest {
 			entryClassPK);
 		productInteractionCommerceMLRecommendation.setRank(rank);
 		productInteractionCommerceMLRecommendation.setCompanyId(
-			_company.getCompanyId());
+			TestPropsValues.getCompanyId());
 		productInteractionCommerceMLRecommendation.setRecommendedEntryClassPK(
-			RandomTestUtil.nextLong());
+			RandomTestUtil.randomLong());
 		productInteractionCommerceMLRecommendation.setScore(score);
 
 		return productInteractionCommerceMLRecommendation;
 	}
 
-	private List<ProductInteractionCommerceMLRecommendation> _populateEntries(
-			int productCount, int recommendationCount)
-		throws Exception {
+	private static final int _PRODUCT_COUNT = 4;
 
-		List<ProductInteractionCommerceMLRecommendation>
-			productInteractionCommerceMLRecommendations = new ArrayList<>();
-
-		for (int i = 0; i < productCount; i++) {
-			for (int rank = 0; rank < recommendationCount; rank++) {
-				float score = 1.0F - (rank / 10.0F);
-
-				productInteractionCommerceMLRecommendations.add(
-					_createProductInteractionCommerceMLRecommendation(
-						i, rank, score));
-			}
-		}
-
-		Collections.shuffle(productInteractionCommerceMLRecommendations);
-
-		for (ProductInteractionCommerceMLRecommendation
-				productInteractionCommerceMLRecommendation :
-					productInteractionCommerceMLRecommendations) {
-
-			_productInteractionCommerceMLRecommendationManager.
-				addProductInteractionCommerceMLRecommendation(
-					productInteractionCommerceMLRecommendation);
-		}
-
-		return productInteractionCommerceMLRecommendations;
-	}
-
-	@DeleteAfterTestRun
-	private Company _company;
+	private static final int _RECOMMENDATION_COUNT = 11;
 
 	@Inject
 	private ProductInteractionCommerceMLRecommendationManager

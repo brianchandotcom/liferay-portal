@@ -17,11 +17,9 @@ package com.liferay.commerce.machine.learning.recommendation.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.machine.learning.recommendation.ProductContentCommerceMLRecommendation;
 import com.liferay.commerce.machine.learning.recommendation.ProductContentCommerceMLRecommendationManager;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -54,14 +52,20 @@ public class ProductContentCommerceMLRecommendationManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_productContentCommerceMLRecommendations = _populateEntries(4, 11);
+		_productContentCommerceMLRecommendations =
+			_addProductContentCommerceMLRecommendations();
 	}
 
 	@Test
 	public void testGetProductContentCommerceMLRecommendations()
 		throws Exception {
+
+		ProductContentCommerceMLRecommendation
+			productContentCommerceMLRecommendation =
+				_productContentCommerceMLRecommendations.get(
+					RandomTestUtil.randomInt(
+						0,
+						_productContentCommerceMLRecommendations.size() - 1));
 
 		Stream<ProductContentCommerceMLRecommendation>
 			productContentCommerceMLRecommendationStream =
@@ -70,7 +74,10 @@ public class ProductContentCommerceMLRecommendationManagerTest {
 		List<ProductContentCommerceMLRecommendation>
 			expectedProductContentCommerceMLRecommendations =
 				productContentCommerceMLRecommendationStream.filter(
-					recommendation -> recommendation.getEntryClassPK() == 2
+					recommendation ->
+						recommendation.getEntryClassPK() ==
+							productContentCommerceMLRecommendation.
+								getEntryClassPK()
 				).sorted(
 					Comparator.comparingInt(
 						ProductContentCommerceMLRecommendation::getRank)
@@ -82,10 +89,46 @@ public class ProductContentCommerceMLRecommendationManagerTest {
 			3, TimeUnit.SECONDS,
 			() -> {
 				_assetResultEquals(
-					2, expectedProductContentCommerceMLRecommendations);
+					productContentCommerceMLRecommendation.getEntryClassPK(),
+					expectedProductContentCommerceMLRecommendations);
 
 				return null;
 			});
+	}
+
+	private List<ProductContentCommerceMLRecommendation>
+			_addProductContentCommerceMLRecommendations()
+		throws Exception {
+
+		List<ProductContentCommerceMLRecommendation>
+			productContentCommerceMLRecommendations = new ArrayList<>();
+
+		for (int i = 0; i < _PRODUCT_COUNT; i++) {
+			long entryClassPK = RandomTestUtil.randomLong();
+
+			for (int j = 0; j < _RECOMMENDATION_COUNT; j++) {
+				int rank = RandomTestUtil.randomInt(1, 10);
+
+				float score = 1.0F - (rank / 10.0F);
+
+				productContentCommerceMLRecommendations.add(
+					_createProductContentCommerceMLRecommendation(
+						entryClassPK, rank, score));
+			}
+		}
+
+		Collections.shuffle(productContentCommerceMLRecommendations);
+
+		for (ProductContentCommerceMLRecommendation
+				productContentCommerceMLRecommendation :
+					productContentCommerceMLRecommendations) {
+
+			_productContentCommerceMLRecommendationManager.
+				addProductContentCommerceMLRecommendation(
+					productContentCommerceMLRecommendation);
+		}
+
+		return productContentCommerceMLRecommendations;
 	}
 
 	private void _assetResultEquals(
@@ -98,7 +141,7 @@ public class ProductContentCommerceMLRecommendationManagerTest {
 			productContentCommerceMLRecommendations =
 				_productContentCommerceMLRecommendationManager.
 					getProductContentCommerceMLRecommendations(
-						_company.getCompanyId(), entryClassPK);
+						TestPropsValues.getCompanyId(), entryClassPK);
 
 		int expectedRecommendationsSize = Math.min(
 			10, expectedProductContentCommerceMLRecommendations.size());
@@ -128,8 +171,9 @@ public class ProductContentCommerceMLRecommendationManagerTest {
 	}
 
 	private ProductContentCommerceMLRecommendation
-		_createProductContentCommerceMLRecommendation(
-			long entryClassPK, int rank, float score) {
+			_createProductContentCommerceMLRecommendation(
+				long entryClassPK, int rank, float score)
+		throws Exception {
 
 		ProductContentCommerceMLRecommendation
 			productContentCommerceMLRecommendation =
@@ -138,49 +182,17 @@ public class ProductContentCommerceMLRecommendationManagerTest {
 		productContentCommerceMLRecommendation.setEntryClassPK(entryClassPK);
 		productContentCommerceMLRecommendation.setRank(rank);
 		productContentCommerceMLRecommendation.setCompanyId(
-			_company.getCompanyId());
+			TestPropsValues.getCompanyId());
 		productContentCommerceMLRecommendation.setRecommendedEntryClassPK(
-			RandomTestUtil.nextLong());
+			RandomTestUtil.randomLong());
 		productContentCommerceMLRecommendation.setScore(score);
 
 		return productContentCommerceMLRecommendation;
 	}
 
-	private List<ProductContentCommerceMLRecommendation> _populateEntries(
-			int productCount, int recommendationCount)
-		throws Exception {
+	private static final int _PRODUCT_COUNT = 4;
 
-		List<ProductContentCommerceMLRecommendation>
-			productContentCommerceMLRecommendations = new ArrayList<>();
-
-		for (int i = 0; i < productCount; i++) {
-			for (int j = 0; j < recommendationCount; j++) {
-				int rank = RandomTestUtil.randomInt(1, 10);
-
-				float score = 1.0F - (rank / 10.0F);
-
-				productContentCommerceMLRecommendations.add(
-					_createProductContentCommerceMLRecommendation(
-						i, rank, score));
-			}
-		}
-
-		Collections.shuffle(productContentCommerceMLRecommendations);
-
-		for (ProductContentCommerceMLRecommendation
-				productContentCommerceMLRecommendation :
-					productContentCommerceMLRecommendations) {
-
-			_productContentCommerceMLRecommendationManager.
-				addProductContentCommerceMLRecommendation(
-					productContentCommerceMLRecommendation);
-		}
-
-		return productContentCommerceMLRecommendations;
-	}
-
-	@DeleteAfterTestRun
-	private Company _company;
+	private static final int _RECOMMENDATION_COUNT = 11;
 
 	@Inject
 	private ProductContentCommerceMLRecommendationManager

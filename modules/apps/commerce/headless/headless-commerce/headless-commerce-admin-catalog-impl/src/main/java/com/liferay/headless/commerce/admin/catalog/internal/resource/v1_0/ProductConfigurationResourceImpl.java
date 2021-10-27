@@ -23,6 +23,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductConfigurationDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductConfigurationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationResource;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -65,7 +66,7 @@ public class ProductConfigurationResourceImpl
 		return _toProductConfiguration(cpDefinition.getCPDefinitionId());
 	}
 
-	@NestedField(parentClass = Product.class, value = "configuration")
+	@NestedField(parentClass = Product.class, value = "productConfiguration")
 	@Override
 	public ProductConfiguration getProductIdConfiguration(
 			@NestedFieldId(value = "productId") Long id)
@@ -135,7 +136,8 @@ public class ProductConfigurationResourceImpl
 
 		return _productConfigurationDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				cpDefinitionId, contextAcceptLanguage.getPreferredLocale()));
+				_dtoConverterRegistry, cpDefinitionId,
+				contextAcceptLanguage.getPreferredLocale(), null, null));
 	}
 
 	@Reference
@@ -143,6 +145,9 @@ public class ProductConfigurationResourceImpl
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ProductConfigurationDTOConverter _productConfigurationDTOConverter;

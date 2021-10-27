@@ -27,8 +27,7 @@ function submit({action, data, formId, formName, formRef, namespace}) {
 	let form = formRef.current;
 
 	if (!form && (formId || (formName && namespace))) {
-		const namespacedId =
-			formName && namespace ? `${namespace}${formName}` : formId;
+		const namespacedId = formId || `${namespace}${formName}`;
 		form = document.getElementById(namespacedId);
 	}
 

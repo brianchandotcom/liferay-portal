@@ -12,6 +12,8 @@
  * details.
  */
 
+import '../../utils/polyfills';
+
 import '@testing-library/jest-dom/extend-expect';
 import {act, cleanup, fireEvent, render, wait} from '@testing-library/react';
 import React from 'react';
@@ -26,9 +28,6 @@ import {
 import * as MiniCartUtils from '../../../src/main/resources/META-INF/resources/components/mini_cart/util/index';
 import {UPDATE_AFTER} from '../../../src/main/resources/META-INF/resources/components/quantity_selector/utils';
 import {PRODUCT_REMOVED_FROM_CART} from '../../../src/main/resources/META-INF/resources/utilities/eventsDefinitions';
-import {mockDefaultLanguageId} from '../../utils';
-
-mockDefaultLanguageId();
 
 describe('MiniCart Item', () => {
 	const BASE_CONTEXT_MOCK = {

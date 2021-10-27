@@ -72,15 +72,17 @@ function CartItem({item: cartItem}) {
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const showErrors = () => {
-		setItemState({
-			...INITIAL_ITEM_STATE,
-			isShowingErrors: true,
-			removalTimeoutRef: setTimeout(() => {
-				if (isMounted()) {
-					setItemState(INITIAL_ITEM_STATE);
-				}
-			}, REMOVAL_ERRORS_TIMEOUT),
-		});
+		if (isMounted()) {
+			setItemState({
+				...INITIAL_ITEM_STATE,
+				isShowingErrors: true,
+				removalTimeoutRef: setTimeout(() => {
+					if (isMounted()) {
+						setItemState(INITIAL_ITEM_STATE);
+					}
+				}, REMOVAL_ERRORS_TIMEOUT),
+			});
+		}
 	};
 
 	const cancelRemoveItem = (event) => {

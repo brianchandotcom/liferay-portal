@@ -12,6 +12,8 @@
  * details.
  */
 
+import '../../utils/polyfills';
+
 import '@testing-library/jest-dom/extend-expect';
 import {
 	act,
@@ -34,11 +36,9 @@ import {
 	CURRENT_ORDER_UPDATED,
 } from '../../../src/main/resources/META-INF/resources/utilities/eventsDefinitions';
 import * as NotificationUtils from '../../../src/main/resources/META-INF/resources/utilities/notifications';
-import {mockDefaultLanguageId} from '../../utils';
 import {getMockedCart} from '../../utils/fake_data/carts';
 
 jest.mock('../../../src/main/resources/META-INF/resources/ServiceProvider');
-mockDefaultLanguageId();
 
 describe('MiniCart', () => {
 	const BASE_PROPS = {

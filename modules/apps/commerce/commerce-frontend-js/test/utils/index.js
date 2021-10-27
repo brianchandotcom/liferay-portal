@@ -46,9 +46,3 @@ export function processFakeRequestData(url, items, queriedItems) {
 		totalCount: query ? queriedItems.length : items.length,
 	};
 }
-
-export function mockDefaultLanguageId(language) {
-	window.themeDisplay.getDefaultLanguageId = jest
-		.fn()
-		.mockReturnValue(language || 'en_US');
-}

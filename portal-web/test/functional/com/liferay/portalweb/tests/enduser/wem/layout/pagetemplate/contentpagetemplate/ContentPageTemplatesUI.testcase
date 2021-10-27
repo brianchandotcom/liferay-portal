@@ -43,6 +43,7 @@ definition {
 				layoutPageTemplateStatus = "Approved",
 				layoutPageTemplateType = "Content Page Template");
 		}
+
 		task ("Change template to draft") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 

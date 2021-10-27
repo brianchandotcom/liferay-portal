@@ -23,7 +23,7 @@ SchedulerResponse schedulerResponse = (SchedulerResponse)row.getObject();
 %>
 
 <portlet:actionURL name="/dispatch/edit_scheduler_response" var="editSchedulerResponseURL">
-	<portlet:param name="<%= Constants.CMD %>" value="runScheduledTask" />
+	<portlet:param name="<%= Constants.CMD %>" value="runScheduledJob" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="jobName" value="<%= schedulerResponse.getJobName() %>" />
 	<portlet:param name="groupName" value="<%= schedulerResponse.getGroupName() %>" />

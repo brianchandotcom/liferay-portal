@@ -14,9 +14,12 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
+import com.liferay.search.experiences.rest.dto.v1_0.SearchableAssetNames;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNamesResource;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -28,4 +31,20 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class SearchableAssetNamesResourceImpl
 	extends BaseSearchableAssetNamesResourceImpl {
+
+	@Override
+	public SearchableAssetNames getSearchableAssetNames() throws Exception {
+		SearchableAssetNames searchableAssetNames = new SearchableAssetNames();
+
+		searchableAssetNames.setClassNames(
+			_searchableAssetClassNamesProvider.getClassNames(
+				contextCompany.getCompanyId()));
+
+		return searchableAssetNames;
+	}
+
+	@Reference
+	private SearchableAssetClassNamesProvider
+		_searchableAssetClassNamesProvider;
+
 }

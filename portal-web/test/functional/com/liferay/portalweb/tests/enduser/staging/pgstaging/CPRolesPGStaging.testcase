@@ -80,27 +80,13 @@ definition {
 			permissionDefinitionValue = "View Staging",
 			roleTitle = "Regrole Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
 		JSONRole.assignRoleToUser(
 			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		JSONGroup.assignUserToGroup(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
 			password = "test",
@@ -167,16 +153,9 @@ definition {
 			roleTitle = "Power User Name",
 			roleType = "site");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfnpu",
-			userLastName = "userlnpu",
-			userScreenName = "usersnpu");
+		JSONGroup.assignUserToGroup(
+			groupName = "Site Name",
+			userEmailAddress = "usereapu@liferay.com");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -219,16 +198,9 @@ definition {
 			roleTitle = "Portal Content Reviewer",
 			userEmailAddress = "usereacr@liferay.com");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfncr",
-			userLastName = "userlncr",
-			userScreenName = "usersncr");
+		JSONGroup.assignUserToGroup(
+			groupName = "Site Name",
+			userEmailAddress = "usereacr@liferay.com");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -261,16 +233,9 @@ definition {
 			roleTitle = "Administrator",
 			userEmailAddress = "usereaa@liferay.com");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfna",
-			userLastName = "userlna",
-			userScreenName = "usersna");
+		JSONGroup.assignUserToGroup(
+			groupName = "Site Name",
+			userEmailAddress = "usereaa@liferay.com");
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 

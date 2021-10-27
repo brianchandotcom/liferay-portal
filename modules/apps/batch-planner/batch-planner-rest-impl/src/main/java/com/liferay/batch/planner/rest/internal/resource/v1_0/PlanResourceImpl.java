@@ -26,6 +26,7 @@ import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.service.BatchPlannerPolicyService;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 
@@ -133,7 +134,8 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 			_batchPlannerMappingService.getBatchPlannerMappings(
 				batchPlannerPlan.getBatchPlannerPlanId());
 
-		return batchPlannerMappings.toArray(new Mapping[0]);
+		return TransformUtil.transformToArray(
+			batchPlannerMappings, this::_toMapping, Mapping.class);
 	}
 
 	private Policy[] _getPolicies(BatchPlannerPlan batchPlannerPlan)
@@ -143,7 +145,22 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 			_batchPlannerPolicyService.getBatchPlannerPolicies(
 				batchPlannerPlan.getBatchPlannerPlanId());
 
-		return batchPlannerPolicies.toArray(new Policy[0]);
+		return TransformUtil.transformToArray(
+			batchPlannerPolicies, this::_toPolicy, Policy.class);
+	}
+
+	private Mapping _toMapping(BatchPlannerMapping batchPlannerMapping) {
+		return new Mapping() {
+			{
+				externalFieldName = batchPlannerMapping.getExternalFieldName();
+				externalFieldType = batchPlannerMapping.getExternalFieldType();
+				id = batchPlannerMapping.getBatchPlannerMappingId();
+				internalFieldName = batchPlannerMapping.getInternalFieldName();
+				internalFieldType = batchPlannerMapping.getInternalFieldType();
+				planId = batchPlannerMapping.getBatchPlannerPlanId();
+				script = batchPlannerMapping.getScript();
+			}
+		};
 	}
 
 	private Plan _toPlan(BatchPlannerPlan batchPlannerPlan) throws Exception {
@@ -160,6 +177,17 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 				policies = _getPolicies(batchPlannerPlan);
 				taskItemDelegateName =
 					batchPlannerPlan.getTaskItemDelegateName();
+			}
+		};
+	}
+
+	private Policy _toPolicy(BatchPlannerPolicy batchPlannerPolicy) {
+		return new Policy() {
+			{
+				id = batchPlannerPolicy.getBatchPlannerPolicyId();
+				name = batchPlannerPolicy.getName();
+				planId = batchPlannerPolicy.getBatchPlannerPlanId();
+				value = batchPlannerPolicy.getName();
 			}
 		};
 	}

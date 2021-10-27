@@ -98,8 +98,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 
 		expectedExcelByteArrayOutputStream.write(expectedFile);
 
-		_assertEqualsToExpectedFileCellByCell(
-			generatedByteArrayOutputStream, expectedFile);
+		Assert.assertTrue(
+			_assertEqualsToExpectedFileCellByCell(
+				generatedByteArrayOutputStream, expectedFile));
 	}
 
 	private void _addFileEntry() throws Exception {
@@ -112,7 +113,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
-	private void _assertEqualsToExpectedFileCellByCell(
+	private boolean _assertEqualsToExpectedFileCellByCell(
 			ByteArrayOutputStream byteArrayOutputStream, byte[] expectedFile)
 		throws Exception {
 
@@ -166,13 +167,15 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 			if (cellExpectedIterator.hasNext() ||
 				cellGeneratedIterator.hasNext()) {
 
-				Assert.fail();
+				return false;
 			}
 		}
 
 		if (rowExpectedIterator.hasNext() || rowGeneratedIterator.hasNext()) {
-			Assert.fail();
+			return false;
 		}
+
+		return true;
 	}
 
 	private ByteArrayOutputStream _serveResource(String className, long groupId)

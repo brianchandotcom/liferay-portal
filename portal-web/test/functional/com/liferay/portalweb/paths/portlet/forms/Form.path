@@ -551,12 +551,12 @@
 <!--DATA_PROVIDER_OUTPUT_PARAMETER-->
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD_2</td>
-	<td>xpath=(//input[contains(@class,'ddm-field-text') and contains(@id,'outputParameterPath')])[2]</td>
+	<td>//div[@data-field-name='outputParameters'][2]//div[@data-field-name='outputParameterPath']//input[contains(@class,'ddm-field-text')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD_2</td>
-	<td>xpath=(//input[contains(@class,'ddm-field-text') and contains(@id,'outputParameterName')])[2]</td>
+	<td>//div[@data-field-name='outputParameters'][2]//div[@data-field-name='outputParameterName']//input[contains(@class,'ddm-field-text')]</td>
 	<td></td>
 </tr>
 <tr>

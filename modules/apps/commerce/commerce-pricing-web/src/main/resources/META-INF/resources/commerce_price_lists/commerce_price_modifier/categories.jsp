@@ -99,7 +99,7 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 				<clay:headless-data-set-display
 					apiURL="<%= commercePriceListDisplayContext.getPriceModifierCategoriesApiUrl() %>"
 					clayDataSetActionDropdownItems="<%= commercePriceListDisplayContext.getPriceModifierCategoryClayDataSetActionDropdownItems() %>"
-					formId="fm"
+					formName="fm"
 					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_CATEGORIES %>"
 					itemsPerPage="<%= 10 %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"

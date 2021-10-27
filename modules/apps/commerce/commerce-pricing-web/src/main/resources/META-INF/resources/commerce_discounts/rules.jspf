@@ -38,7 +38,7 @@
 					apiURL="<%= commerceDiscountDisplayContext.getDiscountRulesApiURL() %>"
 					clayDataSetActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountRulesClayDataSetActionDropdownItem() %>"
 					creationMenu="<%= commerceDiscountDisplayContext.getDiscountRuleCreationMenu() %>"
-					formId="fm"
+					formName="fm"
 					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULES %>"
 					itemsPerPage="<%= 10 %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"

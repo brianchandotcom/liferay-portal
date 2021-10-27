@@ -92,7 +92,7 @@
 				<clay:headless-data-set-display
 					apiURL="<%= commerceDiscountDisplayContext.getDiscountCPDefinitionApiURL() %>"
 					clayDataSetActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountCPDefinitionClayDataSetActionDropdownItems() %>"
-					formId="fm"
+					formName="fm"
 					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRODUCT_DEFINITIONS %>"
 					itemsPerPage="<%= 10 %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"

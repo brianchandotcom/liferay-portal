@@ -41,7 +41,7 @@
 		<clay:headless-data-set-display
 			apiURL="<%= corEntryQualifiersDisplayContext.getAccountGroupCOREntriesAPIURL() %>"
 			clayDataSetActionDropdownItems="<%= corEntryQualifiersDisplayContext.getAccountGroupClayDataSetActionDropdownItems() %>"
-			formId="fm"
+			formName="fm"
 			id="<%= COREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_ACCOUNT_GROUPS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"

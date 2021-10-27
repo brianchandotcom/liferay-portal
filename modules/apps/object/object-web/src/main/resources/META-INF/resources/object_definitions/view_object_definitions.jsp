@@ -24,7 +24,7 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 	apiURL="<%= viewObjectDefinitionsDisplayContext.getAPIURL() %>"
 	clayDataSetActionDropdownItems="<%= viewObjectDefinitionsDisplayContext.getClayDataSetActionDropdownItems() %>"
 	creationMenu="<%= viewObjectDefinitionsDisplayContext.getCreationMenu() %>"
-	formId="fm"
+	formName="fm"
 	id="<%= ObjectDefinitionsClayDataSetDisplayNames.OBJECT_DEFINITIONS %>"
 	itemsPerPage="<%= 20 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"

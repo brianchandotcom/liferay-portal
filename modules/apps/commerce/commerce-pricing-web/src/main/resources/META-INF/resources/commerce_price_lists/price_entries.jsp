@@ -104,7 +104,7 @@ if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayCo
 				<clay:headless-data-set-display
 					apiURL="<%= commercePriceEntryDisplayContext.getPriceEntryApiURL() %>"
 					clayDataSetActionDropdownItems="<%= commercePriceEntryDisplayContext.getPriceEntriesClayDataSetActionDropdownItems() %>"
-					formId="fm"
+					formName="fm"
 					id="<%= datasetId %>"
 					itemsPerPage="<%= 10 %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"

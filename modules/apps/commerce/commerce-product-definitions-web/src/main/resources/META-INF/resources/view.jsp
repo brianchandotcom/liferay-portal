@@ -39,7 +39,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			bulkActionDropdownItems="<%= cpDefinitionsDisplayContext.getBulkActionDropdownItems() %>"
 			clayDataSetActionDropdownItems="<%= cpDefinitionsDisplayContext.getClayDataSetActionDropdownItems() %>"
 			creationMenu="<%= cpDefinitionsDisplayContext.getCreationMenu() %>"
-			formId="fm"
+			formName="fm"
 			id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITIONS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"

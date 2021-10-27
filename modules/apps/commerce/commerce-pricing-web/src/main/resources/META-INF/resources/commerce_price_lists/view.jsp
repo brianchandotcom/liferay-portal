@@ -30,7 +30,7 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 			apiURL="<%= commercePriceListDisplayContext.getPriceListsApiUrl(portletName) %>"
 			clayDataSetActionDropdownItems="<%= commercePriceListDisplayContext.getPriceListClayDataSetActionDropdownItems() %>"
 			creationMenu="<%= commercePriceListDisplayContext.getPriceListCreationMenu() %>"
-			formId="fm"
+			formName="fm"
 			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LISTS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"

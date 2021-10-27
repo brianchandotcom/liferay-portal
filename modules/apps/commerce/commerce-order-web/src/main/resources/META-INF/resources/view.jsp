@@ -34,7 +34,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			apiURL="/o/headless-commerce-admin-order/v1.0/orders?nestedFields=account,channel"
 			bulkActionDropdownItems="<%= commerceOrderListDisplayContext.getBulkActionDropdownItems() %>"
 			clayDataSetActionDropdownItems="<%= commerceOrderListDisplayContext.getClayDataSetActionDropdownItems() %>"
-			formId="fm"
+			formName="fm"
 			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_ORDERS %>"
 			itemsPerPage="<%= 20 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"

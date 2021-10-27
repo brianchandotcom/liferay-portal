@@ -32,7 +32,7 @@ PortletURL portletURL = commerceDiscountDisplayContext.getPortletURL();
 			apiURL="/o/headless-commerce-admin-pricing/v2.0/discounts"
 			clayDataSetActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountClayDataSetActionDropdownItems() %>"
 			creationMenu="<%= commerceDiscountDisplayContext.getDiscountCreationMenu() %>"
-			formId="fm"
+			formName="fm"
 			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNTS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"

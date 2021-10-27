@@ -33,7 +33,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 	apiURL="<%= objectDefinitionsLayoutsDisplayContext.getAPIURL() %>"
 	clayDataSetActionDropdownItems="<%= objectDefinitionsLayoutsDisplayContext.getClayDataSetActionDropdownItems() %>"
 	creationMenu="<%= objectDefinitionsLayoutsDisplayContext.getCreationMenu() %>"
-	formId="fm"
+	formName="fm"
 	id="<%= ObjectDefinitionsClayDataSetDisplayNames.OBJECT_LAYOUTS %>"
 	itemsPerPage="<%= 20 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"

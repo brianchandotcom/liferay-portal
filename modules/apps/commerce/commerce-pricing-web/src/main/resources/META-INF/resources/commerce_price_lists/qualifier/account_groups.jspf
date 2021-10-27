@@ -91,7 +91,7 @@
 				<clay:headless-data-set-display
 					apiURL="<%= commercePriceListQualifiersDisplayContext.getPriceListAccountGroupsApiURL() %>"
 					clayDataSetActionDropdownItems="<%= commercePriceListQualifiersDisplayContext.getPriceListAccountGroupClayDataSetActionDropdownItems() %>"
-					formId="fm"
+					formName="fm"
 					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS %>"
 					itemsPerPage="<%= 10 %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"

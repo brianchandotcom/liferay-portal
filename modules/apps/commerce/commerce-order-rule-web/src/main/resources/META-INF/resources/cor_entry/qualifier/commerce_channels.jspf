@@ -41,7 +41,7 @@
 		<clay:headless-data-set-display
 			apiURL="<%= corEntryQualifiersDisplayContext.getCommerceChannelCOREntriesApiURL() %>"
 			clayDataSetActionDropdownItems="<%= corEntryQualifiersDisplayContext.getCommerceChannelCOREntryClayDataSetActionDropdownItems() %>"
-			formId="fm"
+			formName="fm"
 			id="<%= COREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_COMMERCE_CHANNELS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"

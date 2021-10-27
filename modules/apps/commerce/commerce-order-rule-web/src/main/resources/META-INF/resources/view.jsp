@@ -32,7 +32,7 @@ PortletURL portletURL = corEntryDisplayContext.getPortletURL();
 			apiURL="/o/headless-commerce-admin-order/v1.0/order-rules"
 			clayDataSetActionDropdownItems="<%= corEntryDisplayContext.getCOREntryClayDataSetActionDropdownItems() %>"
 			creationMenu="<%= corEntryDisplayContext.getCreationMenu() %>"
-			formId="fm"
+			formName="fm"
 			id="<%= COREntryClayDataSetDisplayNames.COR_ENTRIES %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"

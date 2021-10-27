@@ -32,7 +32,7 @@ PortletURL portletURL = commerceOrderTypeDisplayContext.getPortletURL();
 			apiURL="/o/headless-commerce-admin-order/v1.0/order-types"
 			clayDataSetActionDropdownItems="<%= commerceOrderTypeDisplayContext.getCommerceOrderTypeClayDataSetActionDropdownItems() %>"
 			creationMenu="<%= commerceOrderTypeDisplayContext.getCreationMenu() %>"
-			formId="fm"
+			formName="fm"
 			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_TYPES %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"

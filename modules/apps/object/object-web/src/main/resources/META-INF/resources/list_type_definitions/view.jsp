@@ -24,7 +24,7 @@ ViewListTypeDefinitionsDisplayContext viewListTypeDefinitionsDisplayContext = (V
 	apiURL="<%= viewListTypeDefinitionsDisplayContext.getAPIURL() %>"
 	clayDataSetActionDropdownItems="<%= viewListTypeDefinitionsDisplayContext.getClayDataSetActionDropdownItems() %>"
 	creationMenu="<%= viewListTypeDefinitionsDisplayContext.getCreationMenu() %>"
-	formId="fm"
+	formName="fm"
 	id="<%= ListTypeClayDataSetDisplayNames.LIST_TYPE_DEFINITIONS %>"
 	itemsPerPage="<%= 20 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"

@@ -1732,7 +1732,7 @@ definition {
 		SelectFrame(locator1 = "DocumentsAndMediaSelectFolder#SELECT_FOLDER_IFRAME");
 
 		if ("${dmFolderName}" == "Home") {
-			if (IsElementPresent(locator1 = "//div[contains(@class,'portlet-body')]//form//ol[contains(@class,'breadcrumb')]//a[contains(.,'Home')]")) {
+			if (IsElementPresent(locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER", key_breadcrumbName = "Home")) {
 				AssertClick(
 					key_breadcrumbName = "Home",
 					locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
@@ -1747,7 +1747,7 @@ definition {
 		}
 
 		else {
-			if (IsElementPresent(locator1 = "//div[contains(@class,'portlet-body')]//form//ol[contains(@class,'breadcrumb')]//a[contains(.,'Home')]")) {
+			if (IsElementPresent(locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER", key_breadcrumbName = "Home")) {
 				AssertClick(
 					key_breadcrumbName = "Home",
 					locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
@@ -1788,7 +1788,7 @@ definition {
 
 		var key_dmFolderName = "${dmFolderName}";
 
-		if (IsElementPresent(locator1 = "//div[contains(@class,'portlet-body')]//form//ol[contains(@class,'breadcrumb')]//a[contains(.,'Home')]")) {
+		if (IsElementPresent(locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER", key_breadcrumbName = "Home")) {
 			AssertClick(
 				key_breadcrumbName = "Home",
 				locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",

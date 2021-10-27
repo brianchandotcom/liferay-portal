@@ -679,7 +679,7 @@ public interface BaseProjectTemplatesTestCase {
 			else if (liferayVersion.startsWith("7.4")) {
 				writeGradlePropertiesInWorkspace(
 					workspaceDir,
-					"liferay.workspace.target.platform.version=7.4.1-1");
+					"liferay.workspace.target.platform.version=7.4.3.4");
 			}
 		}
 		else {
@@ -1311,7 +1311,7 @@ public interface BaseProjectTemplatesTestCase {
 		else {
 			writeGradlePropertiesInWorkspace(
 				gradleWorkspaceDir,
-				"liferay.workspace.target.platform.version=7.4.1-1");
+				"liferay.workspace.target.platform.version=7.4.3.4");
 		}
 
 		File modulesDir = new File(gradleWorkspaceDir, "modules");
@@ -1497,7 +1497,7 @@ public interface BaseProjectTemplatesTestCase {
 
 			writeGradlePropertiesInWorkspace(
 				workspaceDir,
-				"liferay.workspace.target.platform.version=7.4.1-1");
+				"liferay.workspace.target.platform.version=7.4.3.4");
 		}
 
 		File modulesDir = new File(workspaceDir, "modules");

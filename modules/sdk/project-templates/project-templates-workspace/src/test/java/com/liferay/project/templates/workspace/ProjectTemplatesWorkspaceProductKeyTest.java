@@ -49,7 +49,7 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"7.0.6-2"}, {"7.1.3-1"}, {"7.2.1-1"}, {"7.3.7"}, {"7.4.1-1"}
+				{"7.0.6-2"}, {"7.1.3-1"}, {"7.2.1-1"}, {"7.3.7"}, {"7.4.3.4"}
 			});
 	}
 
@@ -101,7 +101,7 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 		else {
 			writeGradlePropertiesInWorkspace(
 				workspaceProjectDir,
-				"liferay.workspace.product=portal-7.4-ga2");
+				"liferay.workspace.product=portal-7.4-ga4");
 		}
 
 		if (isBuildProjects()) {

@@ -62,6 +62,10 @@ public class RemoteAppEntryTable extends BaseTable<RemoteAppEntryTable> {
 	public final Column<RemoteAppEntryTable, Clob> customElementURLs =
 		createColumn(
 			"customElementURLs", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<RemoteAppEntryTable, String> friendlyURLMapping =
+		createColumn(
+			"friendlyURLMapping", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<RemoteAppEntryTable, String> iFrameURL = createColumn(
 		"iFrameURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<RemoteAppEntryTable, Boolean> instanceable =

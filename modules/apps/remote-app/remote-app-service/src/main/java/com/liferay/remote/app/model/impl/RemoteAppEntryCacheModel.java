@@ -77,7 +77,7 @@ public class RemoteAppEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,6 +101,8 @@ public class RemoteAppEntryCacheModel
 		sb.append(customElementHTMLElementName);
 		sb.append(", customElementURLs=");
 		sb.append(customElementURLs);
+		sb.append(", friendlyURLMapping=");
+		sb.append(friendlyURLMapping);
 		sb.append(", iFrameURL=");
 		sb.append(iFrameURL);
 		sb.append(", instanceable=");
@@ -178,6 +180,13 @@ public class RemoteAppEntryCacheModel
 			remoteAppEntryImpl.setCustomElementURLs(customElementURLs);
 		}
 
+		if (friendlyURLMapping == null) {
+			remoteAppEntryImpl.setFriendlyURLMapping("");
+		}
+		else {
+			remoteAppEntryImpl.setFriendlyURLMapping(friendlyURLMapping);
+		}
+
 		if (iFrameURL == null) {
 			remoteAppEntryImpl.setIFrameURL("");
 		}
@@ -238,6 +247,7 @@ public class RemoteAppEntryCacheModel
 		customElementCSSURLs = (String)objectInput.readObject();
 		customElementHTMLElementName = objectInput.readUTF();
 		customElementURLs = (String)objectInput.readObject();
+		friendlyURLMapping = objectInput.readUTF();
 		iFrameURL = objectInput.readUTF();
 
 		instanceable = objectInput.readBoolean();
@@ -295,6 +305,13 @@ public class RemoteAppEntryCacheModel
 			objectOutput.writeObject(customElementURLs);
 		}
 
+		if (friendlyURLMapping == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(friendlyURLMapping);
+		}
+
 		if (iFrameURL == null) {
 			objectOutput.writeUTF("");
 		}
@@ -344,6 +361,7 @@ public class RemoteAppEntryCacheModel
 	public String customElementCSSURLs;
 	public String customElementHTMLElementName;
 	public String customElementURLs;
+	public String friendlyURLMapping;
 	public String iFrameURL;
 	public boolean instanceable;
 	public String name;

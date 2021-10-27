@@ -144,6 +144,8 @@ public class RemoteAppEntryPersistenceTest {
 
 		newRemoteAppEntry.setCustomElementURLs(RandomTestUtil.randomString());
 
+		newRemoteAppEntry.setFriendlyURLMapping(RandomTestUtil.randomString());
+
 		newRemoteAppEntry.setIFrameURL(RandomTestUtil.randomString());
 
 		newRemoteAppEntry.setInstanceable(RandomTestUtil.randomBoolean());
@@ -192,6 +194,9 @@ public class RemoteAppEntryPersistenceTest {
 		Assert.assertEquals(
 			existingRemoteAppEntry.getCustomElementURLs(),
 			newRemoteAppEntry.getCustomElementURLs());
+		Assert.assertEquals(
+			existingRemoteAppEntry.getFriendlyURLMapping(),
+			newRemoteAppEntry.getFriendlyURLMapping());
 		Assert.assertEquals(
 			existingRemoteAppEntry.getIFrameURL(),
 			newRemoteAppEntry.getIFrameURL());
@@ -256,9 +261,9 @@ public class RemoteAppEntryPersistenceTest {
 			"RemoteAppEntry", "mvccVersion", true, "uuid", true,
 			"remoteAppEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"customElementHTMLElementName", true, "iFrameURL", true,
-			"instanceable", true, "name", true, "portletCategoryName", true,
-			"type", true);
+			"customElementHTMLElementName", true, "friendlyURLMapping", true,
+			"iFrameURL", true, "instanceable", true, "name", true,
+			"portletCategoryName", true, "type", true);
 	}
 
 	@Test
@@ -500,6 +505,8 @@ public class RemoteAppEntryPersistenceTest {
 			RandomTestUtil.randomString());
 
 		remoteAppEntry.setCustomElementURLs(RandomTestUtil.randomString());
+
+		remoteAppEntry.setFriendlyURLMapping(RandomTestUtil.randomString());
 
 		remoteAppEntry.setIFrameURL(RandomTestUtil.randomString());
 

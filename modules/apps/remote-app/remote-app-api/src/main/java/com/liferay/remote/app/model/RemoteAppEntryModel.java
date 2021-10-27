@@ -256,6 +256,21 @@ public interface RemoteAppEntryModel
 	public void setCustomElementURLs(String customElementURLs);
 
 	/**
+	 * Returns the friendly url mapping of this remote app entry.
+	 *
+	 * @return the friendly url mapping of this remote app entry
+	 */
+	@AutoEscape
+	public String getFriendlyURLMapping();
+
+	/**
+	 * Sets the friendly url mapping of this remote app entry.
+	 *
+	 * @param friendlyURLMapping the friendly url mapping of this remote app entry
+	 */
+	public void setFriendlyURLMapping(String friendlyURLMapping);
+
+	/**
 	 * Returns the i frame url of this remote app entry.
 	 *
 	 * @return the i frame url of this remote app entry

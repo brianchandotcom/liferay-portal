@@ -29,6 +29,8 @@ AUI.add(
 
 		var REGEX_EMAIL = /^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:\w(?:[\w-]*\w)?\.)+(\w(?:[\w-]*\w))$/;
 
+		var REGEX_FRIENDLY_URL_MAPPING = /[A-Za-z0-9-_]*/;
+
 		var REGEX_NUMBER = /^[+-]?(\d+)([.|,]\d+)*([eE][+-]?\d+)?$/;
 
 		var REGEX_URL = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
@@ -65,6 +67,10 @@ AUI.add(
 			return REGEX_EMAIL.test(val);
 		};
 
+		var friendlyURLMapping = function (val, _node, _ruleValue) {
+			return REGEX_FRIENDLY_URL_MAPPING.test(val);
+		};
+
 		var maxFileSize = function (_val, node, ruleValue) {
 			var nodeType = node.get('type').toLowerCase();
 
@@ -95,6 +101,7 @@ AUI.add(
 				acceptFiles,
 				customElementName,
 				email,
+				friendlyURLMapping,
 				maxFileSize,
 				number,
 				url,
@@ -126,6 +133,9 @@ AUI.add(
 				),
 				equalTo: Liferay.Language.get(
 					'please-enter-the-same-value-again'
+				),
+				friendlyURLMapping: Liferay.Language.get(
+					'please-enter-a-valid-friendly-url-mapping'
 				),
 				max: Liferay.Language.get(
 					'please-enter-a-value-less-than-or-equal-to-x'

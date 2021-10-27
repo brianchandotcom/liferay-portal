@@ -162,7 +162,8 @@ definition {
 		PageEditorMapping.gotoEditableFieldMapping(
 			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
-			id = "${id}");
+			id = "${id}",
+			index = "${index}");
 
 		if (isSet(source)) {
 			Select(

@@ -490,9 +490,55 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test CheckClickElementTooltip {
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137486 CheckClickElementTooltip pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
 
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Take the ID Element") {
+			var idbutton = ABTest.takeElementID();
+		}
+
+		task ("Select element by click in on Select Clickable Element") {
+			Click(
+				key_value = "Select Clickable Element",
+				locator1 = "ABTest#SECONDARY_BUTTON");
+
+			Click(
+				key_index = "1",
+				locator1 = "ABTest#SELECT_CLICKABLE_ELEMENT");
+		}
+
+		task ("Assert that selected button is target") {
+			AssertElementPresent(
+				key_idElement = "${idbutton}",
+				locator1 = "ABTest#TARGET_ELEMENT_EDIT",
+				value1 = "${idbutton}");
+
+			AssertElementPresent(
+				key_value = "Select Clickable Element",
+				locator1 = "ABTest#SECONDARY_BUTTON",
+				value1 = "Select Clickable Element");
+		}
+
+		task ("Delete AB Test") {
+			Click(locator1 = "ABTest#X_BUTTON_TARGET_ID_ELEMENT");
+
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-101167: Validate if the image for the empty state appears"
@@ -1033,9 +1079,61 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test EditClickElementTarget {
+		task ("Edit the Content page to add a button fragment and duplicate button") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137486 EditClickElementTarget pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
 
+			PageEditor.gotoDuplicate(fragmentName = "Button");
+
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Select the  first button as click element") {
+			ABTest.selectElementID();
+		}
+
+		task ("Select the  second button as click element") {
+			Click(
+				key_value = "Change Clickable Element",
+				locator1 = "ABTest#SECONDARY_BUTTON");
+
+			Click(
+				key_index = "1",
+				locator1 = "ABTest#SELECT_CLICKABLE_ELEMENT");
+			
+			var idelement = selenium.getAttribute(locator1 = "//div//div[contains(@class,'text-truncate')]@title");
+			var idelement = StringUtil.substring("${idelement}","1","19");
+
+			Click(locator1 = "ABTest#SET_ELEMENT_AS_CLICK_TARGET_BUTTON");
+
+			Alert.viewSuccessMessage();
+
+			AssertTextEquals(
+				locator1 = "ABTest#TARGET_LABEL",
+				value1 = "Target");
+		}
+
+		task ("Assert the button gets selected") {
+			AssertElementPresent(
+				key_id = "${idelement}",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = "${idelement}");
+		}
+
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-101341: Validate if when the user will edit some Experience with an AB Test in a Terminated status, the system not will show any information about AB Test"
@@ -1448,9 +1546,57 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test RemoveClickElementTarget {
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137486 RemoveClickElementTarget pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
 
+			PageEditor.gotoDuplicate(fragmentName = "Button");
+
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Get the element ID from button 2") {
+			var idbutton = ABTest.takeElementID(key_index = "2");
+		}
+
+		task ("Select the  first button as click element") {
+			ABTest.selectElementID();
+		}
+
+		task ("Change the ID Element") {
+			Click(locator1 = "ABTest#X_BUTTON_ID_BOX");
+
+			Type(
+				locator1 = "ABTest#ID_BOX",
+				value1 = "${idbutton}");
+
+			KeyPress(
+				key_id = "${idbutton}",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = "\ENTER");
+		}
+
+		task ("Assert the button gets selected") {
+			AssertElementPresent(
+				key_id = "${idbutton}",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = "${idbutton}");
+		}
+
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-99225: Validate if the admin cannot rename a segment in an experience with an A/B test in running status"

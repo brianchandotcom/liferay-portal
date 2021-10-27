@@ -197,7 +197,7 @@
 </tr>
 <tr>
 	<td>SELECT_CLICKABLE_ELEMENT</td>
-	<td>xpath=(//div[@class= 'lfr-segments-experiment-click-goal-target-overlay'])[${key_index}]</td>
+	<td>xpath=(//div[contains(@class,'lfr-segments-experiment-click-goal-target-overlay')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -218,6 +218,11 @@
 <tr>
 	<td>TARGET_ELEMENT</td>
 	<td>//div[contains(@class,"lfr-segments-experiment-click-goal-target-overlay-selected") and contains(@data-target-selector, "${key_idElement}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TARGET_ELEMENT_EDIT</td>
+	<td>//div[contains(@class,"lfr-segments-experiment-click-goal-target-topper-editing ")]//span[contains(text(), "${key_idElement}")]</td>
 	<td></td>
 </tr>
 <tr>

@@ -27,13 +27,16 @@ import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.ratings.kernel.model.RatingsEntryTable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.LongStream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -164,8 +167,59 @@ public class BlogsStatsUserLocalServiceImpl
 		long organizationId, int start, int end,
 		OrderByComparator<BlogsStatsUser> orderByComparator) {
 
-		return blogsStatsUserFinder.findByOrganizationId(
-			organizationId, start, end, orderByComparator);
+		LongStream longStream = Arrays.stream(
+			_userLocalService.getOrganizationUserIds(organizationId));
+
+		Long[] organizationUserIds = longStream.boxed(
+		).toArray(
+			Long[]::new
+		);
+
+		List<Object[]> results = _blogsEntryPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				BlogsEntryTable.INSTANCE.userId, _lastPostDateExpression,
+				_entryCountExpression, _ratingsTotalEntriesExpression,
+				_ratingsAverageScoreExpression, _ratingsTotalScoreExpression
+			).from(
+				BlogsEntryTable.INSTANCE
+			).leftJoinOn(
+				RatingsEntryTable.INSTANCE,
+				BlogsEntryTable.INSTANCE.entryId.eq(
+					RatingsEntryTable.INSTANCE.classPK
+				).and(
+					RatingsEntryTable.INSTANCE.classNameId.eq(
+						_classNameLocalService.getClassNameId(
+							BlogsEntry.class.getName()))
+				)
+			).where(
+				BlogsEntryTable.INSTANCE.userId.in(organizationUserIds)
+			).groupBy(
+				BlogsEntryTable.INSTANCE.userId
+			).orderBy(
+				_lastPostDateExpression.descending()
+			).limit(
+				start, end
+			));
+
+		List<BlogsStatsUserDAO> blogsStatsUsers = new ArrayList<>(
+			results.size());
+
+		for (Object[] columns : results) {
+			Long userId = (Long)columns[0];
+			Long entryCount = (Long)columns[1];
+			Date lastPostDate = (Date)columns[2];
+			Integer ratingsTotalEntries = (Integer)columns[3];
+			Double ratingsAverageScore = (Double)columns[4];
+			Double ratingsTotalScore = (Double)columns[5];
+
+			blogsStatsUsers.add(
+				new BlogsStatsUserDAOImpl(
+					groupId, userId, lastPostDate, entryCount,
+					ratingsTotalEntries, ratingsAverageScore,
+					ratingsTotalScore));
+		}
+
+		return blogsStatsUsers;
 	}
 
 	@Override
@@ -249,5 +303,8 @@ public class BlogsStatsUserLocalServiceImpl
 		).as(
 			"totalScore"
 		);
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

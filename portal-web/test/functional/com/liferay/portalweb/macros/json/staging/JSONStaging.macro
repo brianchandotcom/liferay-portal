@@ -1,5 +1,18 @@
 definition {
 
+	@summary = "Assign user to staging site"
+	macro assignUserToStagingGroup {
+		Variables.assertDefined(parameterList = "${groupKey},${userEmailAddress}");
+
+		var groupId = JSONStagingSetter.setGroupId(groupKey = "${groupKey}", site = "${site}");
+
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+
+		JSONGroupAPI._assignUserToGroup(
+			groupId = "${groupId}",
+			userId = "${userId}");
+	}
+
 	@summary = "Activate local staging with or without page versioning with all content or unchecked content"
 	macro enableLocalStaging {
 		Variables.assertDefined(parameterList = "${groupName}");

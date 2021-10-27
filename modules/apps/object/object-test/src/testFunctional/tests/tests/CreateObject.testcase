@@ -907,12 +907,10 @@ definition {
 	@description = "LPS-139005 - Verify that is not possible to submit entries in a form with an Object that was inactivated"
 	@priority = "4"
 	test CannotSubmitEntriesInFormAfterObjectInactivated {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
-
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
@@ -920,7 +918,6 @@ definition {
 			fieldType = "String",
 			isRequired = "false",
 			objectName = "CustomObject");
-
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
@@ -976,7 +973,6 @@ definition {
 			value1 = "Submit");
 
 		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
-
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Mandatory of a Field after the Object is published"

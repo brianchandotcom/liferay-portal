@@ -319,7 +319,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 							).build()
 						%>'
 						dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITION_SPECIFICATIONS %>"
-						formId="fm"
+						formName="fm"
 						id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITION_SPECIFICATIONS %>"
 						itemsPerPage="<%= 10 %>"
 						namespace="<%= liferayPortletResponse.getNamespace() %>"

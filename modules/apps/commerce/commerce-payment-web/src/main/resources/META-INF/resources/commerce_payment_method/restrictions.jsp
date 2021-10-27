@@ -35,7 +35,7 @@ long commerceChannelId = commercePaymentMethodGroupRelsDisplayContext.getCommerc
 			).build()
 		%>'
 		dataProviderKey="<%= CommercePaymentRestrictionsPageClayTable.NAME %>"
-		formId="fm"
+		formName="fm"
 		id="<%= CommercePaymentRestrictionsPageClayTable.NAME %>"
 		itemsPerPage="<%= commercePaymentMethodGroupRelsDisplayContext.getCountriesCount() %>"
 		namespace="<%= liferayPortletResponse.getNamespace() %>"

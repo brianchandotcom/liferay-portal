@@ -76,7 +76,7 @@ if ((commercePriceEntry != null) && (commercePriceEntry.getExpirationDate() != n
 						%>'
 						creationMenu="<%= commercePriceEntryDisplayContext.getCreationMenu() %>"
 						dataProviderKey="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_TIER_PRICE_ENTRIES %>"
-						formId="fm"
+						formName="fm"
 						id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_TIER_PRICE_ENTRIES %>"
 						itemsPerPage="<%= 10 %>"
 						namespace="<%= liferayPortletResponse.getNamespace() %>"

@@ -42,7 +42,7 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 				).build()
 			%>'
 			dataProviderKey="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPABLE_ORDER_ITEMS %>"
-			formId='<%= liferayPortletResponse.getNamespace() + "fm" %>'
+			formName="fm"
 			id="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPABLE_ORDER_ITEMS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"

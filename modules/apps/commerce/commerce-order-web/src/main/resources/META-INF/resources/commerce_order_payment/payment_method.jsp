@@ -43,7 +43,7 @@ long commerceOrderId = commerceOrder.getCommerceOrderId();
 				).build()
 			%>'
 			dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PAYMENT_METHODS %>"
-			formId="fm"
+			formName="fm"
 			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PAYMENT_METHODS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"

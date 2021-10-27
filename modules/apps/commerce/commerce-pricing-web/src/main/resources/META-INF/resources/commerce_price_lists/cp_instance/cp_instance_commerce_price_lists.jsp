@@ -49,7 +49,7 @@ PortletURL portletURL = cpInstanceCommercePriceEntryDisplayContext.getPortletURL
 			%>'
 			creationMenu="<%= cpInstanceCommercePriceEntryDisplayContext.getCreationMenu() %>"
 			dataProviderKey="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_PRICE_ENTRIES %>"
-			formId="fm"
+			formName="fm"
 			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_PRICE_ENTRIES %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"

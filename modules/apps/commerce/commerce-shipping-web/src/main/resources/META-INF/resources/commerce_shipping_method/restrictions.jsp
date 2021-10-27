@@ -35,7 +35,7 @@ long commerceChannelId = commerceShippingMethodsDisplayContext.getCommerceChanne
 			).build()
 		%>'
 		dataProviderKey="<%= CommerceShippingRestrictionsPageClayTable.NAME %>"
-		formId="fm"
+		formName="fm"
 		id="<%= CommerceShippingRestrictionsPageClayTable.NAME %>"
 		itemsPerPage="<%= commerceShippingMethodsDisplayContext.getCountriesCount() %>"
 		namespace="<%= liferayPortletResponse.getNamespace() %>"

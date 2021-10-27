@@ -32,7 +32,7 @@ long commercePriceListId = commercePriceListDisplayContext.getCommercePriceListI
 			%>'
 			creationMenu="<%= commercePriceListDisplayContext.getPriceModifiersCreationMenu() %>"
 			dataProviderKey="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIERS %>"
-			formId="fm"
+			formName="fm"
 			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIERS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"

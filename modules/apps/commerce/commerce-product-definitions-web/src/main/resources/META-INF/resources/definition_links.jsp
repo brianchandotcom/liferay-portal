@@ -48,7 +48,7 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 				%>'
 				creationMenu="<%= cpDefinitionLinkDisplayContext.getCreationMenu() %>"
 				dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_LINKS %>"
-				formId="fm"
+				formName="fm"
 				id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_LINKS %>"
 				itemsPerPage="<%= 10 %>"
 				namespace="<%= liferayPortletResponse.getNamespace() %>"

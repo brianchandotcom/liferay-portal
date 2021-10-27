@@ -1716,33 +1716,17 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		Role.openRolesAdmin();
-
 		JSONRole.assignRoleToUser(
 			roleTitle = "Web Content Subscriber Role",
 			userEmailAddress = "userea@liferay.com");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site");
+		JSONGroup.assignUserToGroup(
+			groupName = "Test Site",
+			userEmailAddress = "userea@liferay.com");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		JSONStaging.assignUserToStagingGroup(
+			groupKey = "Site Name-staging",
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutPG();
 

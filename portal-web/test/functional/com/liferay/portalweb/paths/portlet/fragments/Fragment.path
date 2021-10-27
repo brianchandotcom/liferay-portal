@@ -70,11 +70,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_BODY</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAGMENT_BODY_IN_FRAGMENT</td>
 	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]/div[contains(@class,'page-editor__topper__content')]//preceding-sibling::div[contains(.,'${key_inFragmentName}')]</td>
 	<td></td>
@@ -87,11 +82,6 @@
 <tr>
 	<td>FRAGMENT_LINK</td>
 	<td>//a[contains(@href,'${key_URL}')]${key_append}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SECTION_CONTENT</td>
-	<td>//section[contains(@id,'content')]//p[contains(.,'${key_content}')]</td>
 	<td></td>
 </tr>
 <tr>

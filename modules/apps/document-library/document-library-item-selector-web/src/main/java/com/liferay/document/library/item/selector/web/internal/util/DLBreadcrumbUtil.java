@@ -17,10 +17,14 @@ package com.liferay.document.library.item.selector.web.internal.util;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
@@ -50,7 +54,8 @@ public class DLBreadcrumbUtil {
 
 		_addPortletBreadcrumbEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, httpServletRequest,
-			LanguageUtil.get(httpServletRequest, "home"), portletURL);
+			_getRootFolderName(folder, httpServletRequest, showGroupSelector),
+			portletURL);
 
 		if (folder != null) {
 			List<Folder> ancestorFolders = folder.getAncestors();
@@ -95,6 +100,28 @@ public class DLBreadcrumbUtil {
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest, title, portletURL.toString());
+	}
+
+	private static String _getRootFolderName(
+			Folder folder, HttpServletRequest httpServletRequest,
+			boolean showGroupSelector)
+		throws Exception {
+
+		if (!showGroupSelector) {
+			return LanguageUtil.get(httpServletRequest, "home");
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (folder != null) {
+			group = GroupServiceUtil.getGroup(folder.getGroupId());
+		}
+
+		return group.getDescriptiveName(themeDisplay.getLocale());
 	}
 
 }

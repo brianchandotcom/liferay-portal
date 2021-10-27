@@ -211,7 +211,9 @@ public class IndexResourceFactoryImpl implements IndexResource.Factory {
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
 
-	@Reference
+	@Reference(
+		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
+	)
 	private ExpressionConvert<Filter> _expressionConvert;
 
 	@Reference

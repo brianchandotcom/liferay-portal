@@ -253,11 +253,20 @@ definition {
 		}
 
 		if ("${fragmentName}" == "Content Display") {
-			AssertVisible(
-				assetType = "${assetType}",
-				image = "${image}",
-				index = "${position}",
-				locator1 = "Fragment#CONTENT_DISPLAY_IMAGE");
+			if (!(isSet(assetType))) {
+				AssertVisible(
+					image = "${image}",
+					index = "${position}",
+					locator1 = "Fragment#CONTENT_DISPLAY_PREVIEW_IMAGE");
+			}
+
+			else {
+				AssertVisible(
+					assetType = "${assetType}",
+					image = "${image}",
+					index = "${position}",
+					locator1 = "Fragment#CONTENT_DISPLAY_IMAGE");
+			}
 		}
 
 		else {

@@ -111,7 +111,8 @@ public class DLFileEntryModelDocumentContributor
 							defaultLocale.toString(), Field.CONTENT);
 
 						document.addFile(
-							localizedField, inputStream, dlFileEntry.getTitle(),
+							localizedField, inputStream,
+							dlFileEntry.getFileName(),
 							PropsValues.DL_FILE_INDEXING_MAX_SIZE);
 					}
 					catch (IOException ioException) {

@@ -485,13 +485,42 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136811. It checks that a blog can be viewed through the Navigations Portlet."
-	@ignore = "true"
 	@priority = "3"
 	test CanViewEntryViaNavigationsPortlet {
-		property portal.acceptance = "false";
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Vocabulary Name");
 
-		// TODO LPS-136811 CanViewEntryViaNavigationsPortlet pending implementation
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name");
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Categories Navigation");
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content 1",
+			entryTitle = "Blogs Entry Title 1");
+
+		JSONBlog.addEntry(
+			assetCategoryIds = "${categoryId}",
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2",
+			groupName = "Guest");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		CategoriesNavigationPortlet.selectCategoryPG(categoryName = "Category Name");
+
+		Blogs.viewEntryNotPresent(entryTitle = "Blogs Entry Content 1");
 	}
 
 	@description = "This is a test for LPS-136812. It checks that a blog can be viewed through the Recent Bloggers Portlet."

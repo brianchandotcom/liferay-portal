@@ -908,12 +908,30 @@ definition {
 		AssertElementNotPresent(locator1 = "Questions#RELATED_QUESTIONS_EMPTY_TEXT");
 	}
 
+	macro viewSearchField {
+		if (isSet(noQuestion)) {
+			AssertElementNotPresent(locator1 = "Questions#SEARCH_QUESTION_FIELD");
+		}
+		else {
+			AssertElementPresent(locator1 = "Questions#SEARCH_QUESTION_FIELD");
+		}
+	}
+
 	macro viewSearchResults {
 		for (var questionTitle : list "${questionsList}") {
 			AssertTextEquals(
 				key_questionTitle = "${questionTitle}",
 				locator1 = "Questions#QUESTIONS_TITLE",
 				value1 = "${questionTitle}");
+		}
+	}
+
+	macro viewSelectFilter {
+		if (isSet(noQuestion)) {
+			AssertElementNotPresent(locator1 = "Questions#QUESTIONS_SELECT_FILTER");
+		}
+		else {
+			AssertElementPresent(locator1 = "Questions#QUESTIONS_SELECT_FILTER");
 		}
 	}
 

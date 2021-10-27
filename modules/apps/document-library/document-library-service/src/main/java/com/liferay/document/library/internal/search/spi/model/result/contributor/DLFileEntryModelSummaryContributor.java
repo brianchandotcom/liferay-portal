@@ -49,7 +49,7 @@ public class DLFileEntryModelSummaryContributor
 				prefix + Field.DESCRIPTION, Field.DESCRIPTION);
 		}
 
-		String title = document.get(prefix + Field.TITLE, Field.TITLE);
+		String title = document.get(locale, prefix + Field.TITLE, Field.TITLE);
 
 		Summary summary = new Summary(title, content);
 

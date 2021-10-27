@@ -292,7 +292,7 @@ definition {
 				value1 = "${text}");
 		}
 
-		else if ("${fragmentName}" == "Content Display") {
+		else if (("${fragmentName}" == "Content Display") || ("${fragmentName}" == "Display Page Content")) {
 			if (!(isSet(assetType))) {
 				AssertTextEquals(
 					index = "${position}",

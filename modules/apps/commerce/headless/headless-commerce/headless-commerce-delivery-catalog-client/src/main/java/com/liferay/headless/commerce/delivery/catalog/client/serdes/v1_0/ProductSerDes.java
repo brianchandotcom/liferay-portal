@@ -255,6 +255,16 @@ public class ProductSerDes {
 			sb.append("\"");
 		}
 
+		if (product.getProductConfiguration() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productConfiguration\": ");
+
+			sb.append(String.valueOf(product.getProductConfiguration()));
+		}
+
 		if (product.getProductId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -548,6 +558,15 @@ public class ProductSerDes {
 			map.put("name", String.valueOf(product.getName()));
 		}
 
+		if (product.getProductConfiguration() == null) {
+			map.put("productConfiguration", null);
+		}
+		else {
+			map.put(
+				"productConfiguration",
+				String.valueOf(product.getProductConfiguration()));
+		}
+
 		if (product.getProductId() == null) {
 			map.put("productId", null);
 		}
@@ -734,6 +753,15 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					product.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "productConfiguration")) {
+
+				if (jsonParserFieldValue != null) {
+					product.setProductConfiguration(
+						ProductConfigurationSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "productId")) {

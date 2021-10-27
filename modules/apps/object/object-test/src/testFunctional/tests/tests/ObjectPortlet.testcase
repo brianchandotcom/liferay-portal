@@ -593,11 +593,36 @@ definition {
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a BigDecimal entry on layout"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditBigDecimalEntryOnLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-140539 CanEditBigDecimalEntryOnLayout pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "BigDecimal",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "123.123456");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "123.123456");
+
+		ObjectPortlet.updateEntry(updateEntry = "1.12345678");
+
+		Refresh();
+
+		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "1.12345678");
 
 	}
 
@@ -647,6 +672,8 @@ definition {
 
 		ObjectPortlet.updateEntry(updateEntry = "4.56");
 
+		Refresh();
+
 		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "4.56");
 
 	}
@@ -679,6 +706,8 @@ definition {
 
 		ObjectPortlet.updateEntry(updateEntry = "123456");
 
+		Refresh();
+
 		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "123456");
 
 	}
@@ -710,6 +739,8 @@ definition {
 		ObjectPortlet.viewEntryDetails(entry = "123456789");
 
 		ObjectPortlet.updateEntry(updateEntry = "12345678912345678");
+
+		Refresh();
 
 		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "12345678912345678");
 
@@ -753,6 +784,8 @@ definition {
 		ObjectPortlet.viewEntryDetails(entry = "Text test");
 
 		ObjectPortlet.updateEntry(updateEntry = "Update Text test");
+
+		Refresh();
 
 		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "Update Text test");
 

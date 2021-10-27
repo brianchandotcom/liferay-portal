@@ -14,7 +14,11 @@
 
 package com.liferay.search.experiences.web.internal.blueprint.admin.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -23,6 +27,7 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
 import com.liferay.search.experiences.service.SXPBlueprintService;
 import com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPBlueprintsDisplayContext;
+import com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPBlueprintsManagementToolbarDisplayContext;
 import com.liferay.search.experiences.web.internal.constants.SXPWebKeys;
 
 import javax.portlet.PortletException;
@@ -58,6 +63,9 @@ public class ViewSXPBlueprintsMVCRenderCommand implements MVCRenderCommand {
 			SXPWebKeys.VIEW_SXP_BLUEPRINTS_DISPLAY_CONTEXT,
 			viewSXPBlueprintsDisplayContext);
 
+		_setSXPBlueprintsManagementToolbar(
+			renderRequest, renderResponse, viewSXPBlueprintsDisplayContext);
+
 		return "/sxp_blueprint_admin/view.jsp";
 	}
 
@@ -70,6 +78,34 @@ public class ViewSXPBlueprintsMVCRenderCommand implements MVCRenderCommand {
 			_searcher, _searchRequestBuilderFactory, _sorts,
 			_sxpBlueprintService);
 	}
+
+	private void _setSXPBlueprintsManagementToolbar(
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		ViewSXPBlueprintsDisplayContext viewSXPBlueprintsDisplayContext) {
+
+		try {
+			ViewSXPBlueprintsManagementToolbarDisplayContext
+				viewSXPBlueprintsManagementToolbarDisplayContext =
+					new ViewSXPBlueprintsManagementToolbarDisplayContext(
+						_portal.getLiferayPortletRequest(renderRequest),
+						_portal.getLiferayPortletResponse(renderResponse),
+						viewSXPBlueprintsDisplayContext.getSearchContainer(),
+						viewSXPBlueprintsDisplayContext.getDisplayStyle());
+
+			renderRequest.setAttribute(
+				SXPWebKeys.
+					VIEW_SXP_BLUEPRINTS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT,
+				viewSXPBlueprintsManagementToolbarDisplayContext);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException.getMessage(), portalException);
+
+			SessionErrors.add(renderRequest, portalException.getClass());
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewSXPBlueprintsMVCRenderCommand.class);
 
 	@Reference
 	private Portal _portal;

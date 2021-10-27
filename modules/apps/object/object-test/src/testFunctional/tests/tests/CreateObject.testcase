@@ -2718,4 +2718,869 @@ definition {
 		ObjectAdmin.viewSystemObject(name = "User");
 	}
 
+	@description = "LPS-136595 - Verify it is not possible to leave the Picklist field empty when creating an Object Picklist field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotLeavePicklistFieldEmpty {
+
+		// TODO LPS-141595 CannotLeavePicklistFieldEmpty pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is possible to add a field after the Object is published and submit entries to it"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddFieldAndViewEntriesAfterPublished {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141596 CanAddFieldAndViewEntriesAfterPublished pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is not possible to view and access the Object Admin portlet without the Access in Control Panel permission"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CannotAccessObjectAdminWithoutAccessPermission {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141597 CannotAccessObjectAdminWithoutAccessPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is possible to view and access the Object Admin portlet with the Access in Control Panel permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAccessObjectAdminWithAccessPermission {
+
+		// TODO LPS-141598 CanAccessObjectAdminWithAccessPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is not possible to add an Object without the Add Object Definition permission"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CannotAddObjectWithoutAddPermission {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141599 CannotAddObjectWithoutAddPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is possible to add an Object with the Add Object Definition permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddObjectWithAddPermission {
+
+		// TODO LPS-141600 CanAddObjectWithAddPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is not possible to publish an Object without the Publish Object Definition permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotPublishObjectWithouPublishPermission {
+
+		// TODO LPS-141601 CannotPublishObjectWithouPublishPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is possible to publish an Object with the Publish Object Definition permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanPublishObjectWithPublishPermission {
+
+		// TODO LPS-141602 CanPublishObjectWithPublishPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is not possible to delete an Object without the Delete permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotDeleteObjectWithoutDeletePermission {
+
+		// TODO LPS-141603 CannotDeleteObjectWithoutDeletePermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is possible to delete an Object with the Delete permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteObjectWithDeletePermission {
+
+		// TODO LPS-141604 CanDeleteObjectWithDeletePermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is not possible to update an Object without the Update permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotUpdateObjectWithUpdatePermission {
+
+		// TODO LPS-141605 CannotUpdateObjectWithUpdatePermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is possible to update an Object with the Update permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateObjectWithUpdatePermission {
+
+		// TODO LPS-141606 CanUpdateObjectWithUpdatePermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is not possible to view an Object without the View permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotViewObjectWithoutViewPermission {
+
+		// TODO LPS-141607 CannotViewObjectWithoutViewPermission pending implementation
+
+	}
+
+	@description = "LPS-135390 - Verify it is possible to view an Object with the View permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectWithViewPermission {
+
+		// TODO LPS-141608 CanViewObjectWithViewPermission pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify it is possible to add a Object Entry Title Field"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddObjectEntryTitleField {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141609 CanAddObjectEntryTitleField pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify it the Object Entry Title of a String type is displayed on the Relationship field when adding an entry"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewObjectEntryTitleStringOnRelationshipField {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141610 CanViewObjectEntryTitleStringOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify it the Object Entry Title of a BigDecimal type is displayed on the Relationship field when adding an entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectEntryTitleBigDecimalOnRelationshipField {
+
+		// TODO LPS-141611 CanViewObjectEntryTitleBigDecimalOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify it the Object Entry Title of a Boolean type is displayed on the Relationship field when adding an entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectEntryTitleBooleanOnRelationshipField {
+
+		// TODO LPS-141612 CanViewObjectEntryTitleBooleanOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify it the Object Entry Title of a Date type is displayed on the Relationship field when adding an entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectEntryTitleDateOnRelationshipField {
+
+		// TODO LPS-141613 CanViewObjectEntryTitleDateOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify it the Object Entry Title of a Double type is displayed on the Relationship field when adding an entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectEntryTitleDoubleOnRelationshipField {
+
+		// TODO LPS-141614 CanViewObjectEntryTitleDoubleOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify it the Object Entry Title of a Integer type is displayed on the Relationship field when adding an entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectEntryTitleIntegerOnRelationshipField {
+
+		// TODO LPS-141615 CanViewObjectEntryTitleIntegerOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify it the Object Entry Title of a Long type is displayed on the Relationship field when adding an entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectEntryTitleLongOnRelationshipField {
+
+		// TODO LPS-141616 CanViewObjectEntryTitleLongOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify it the Object Entry Title of a Picklist type is displayed on the Relationship field when adding an entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectEntryTitlePicklistOnRelationshipField {
+
+		// TODO LPS-141617 CanViewObjectEntryTitlePicklistOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify it is possible to search for the Object Entry Title on the Relationship field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchObjectEntryTitleOnRelationshipField {
+
+		// TODO LPS-141618 CanSearchObjectEntryTitleOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Relationship field when viewing an entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectEntryTitleOnRelationshipField {
+
+		// TODO LPS-141619 CanViewObjectEntryTitleOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Relationship tab"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectEntryTitleOnRelationshipTab {
+
+		// TODO LPS-141620 CanViewObjectEntryTitleOnRelationshipTab pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Item Selector of a fragment on a Display Page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectEntryTitleOnItemSelectorFragment {
+
+		// TODO LPS-141621 CanViewObjectEntryTitleOnItemSelectorFragment pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify if the Object Entry Title is displayed on a Display Page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectEntryTitleOnDisplayPage {
+
+		// TODO LPS-141622 CanViewObjectEntryTitleOnDisplayPage pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify if the Object Entry Title is displayed when selecting to preview an object entry on a Page Template"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectEntryTitlePreviewOnPageTemplate {
+
+		// TODO LPS-141623 CanViewObjectEntryTitlePreviewOnPageTemplate pending implementation
+
+	}
+
+	@description = "LPS-139803 - Verify if the Object Entry Title is displayed for Object entries on workflow pages (My Workflow Tasks, My Submissions, and Submissions)"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectEntryTitleOnWorkflowPages {
+
+		// TODO LPS-141624 CanViewObjectEntryTitleOnWorkflowPages pending implementation
+
+	}
+
+	@description = "LPS-135649 - Verify that the Object is not displayed on Process Builder settings before Published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotViewObjectOnProcessBuilderBeforePublished {
+
+		// TODO LPS-141625 CannotViewObjectOnProcessBuilderBeforePublished pending implementation
+
+	}
+
+	@description = "LPS-135649 - Verify that the Object is not not displayed on Workflow settings from Site Menu before Published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotViewObjectOnWorkflowSettingsSiteMenuBeforePublished {
+
+		// TODO LPS-141626 CannotViewObjectOnWorkflowSettingsSiteMenuBeforePublished pending implementation
+
+	}
+
+	@description = "LPS-135649 - Verify that the workflow is triggered when submitting an entry through Forms"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test WorkflowTriggeredWhenSubmitingEntryThroughForms {
+
+		// TODO LPS-141627 WorkflowTriggeredWhenSubmitingEntryThroughForms pending implementation
+
+	}
+
+	@description = "LPS-135649 - Verify that the workflow is triggered when submitting an entry through Custom Object portlet"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test WorkflowTriggeredWhenSubmitingEntryThroughObjectPortlet {
+
+		// TODO LPS-141628 WorkflowTriggeredWhenSubmitingEntryThroughObjectPortlet pending implementation
+
+	}
+
+	@description = "LPS-135649 - Verify that a completed entry is displayed with an Approved status"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CompletedEntryDisplaysApprovedStatus {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141629 CompletedEntryDisplaysApprovedStatus pending implementation
+
+	}
+
+	@description = "LPS-135649 - Verify that a withdrawn pending entry is displayed with a Draft status"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test WithdrawnEntryDisplaysDraftStatus {
+
+		// TODO LPS-141630 WithdrawnEntryDisplaysDraftStatus pending implementation
+
+	}
+
+	@description = "LPS-135649 - Verify the Asset Title, Asset Type and Item Subject of a Object's entry on the Workflow Metrics page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ObjectInfoDisplayedOnWorkflowMetrics {
+
+		// TODO LPS-141631 ObjectInfoDisplayedOnWorkflowMetrics pending implementation
+
+	}
+
+	@description = "LPS-135649 - Verify that the workflow is triggered when submitting an entry when Object is scoped by Site and the workflow was assigned on the Workflow settings from the Site Menu"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test WorkflowTriggeredWhenSubmitingEntryThroughObjectPortletFromSiteMenu {
+
+		// TODO LPS-141632 WorkflowTriggeredWhenSubmitingEntryThroughObjectPortletFromSiteMenu pending implementation
+
+	}
+
+	@description = "LPS-135649 - Verify that when Objects are not scoped by Site it should not be displayed on the Workflow settings from the Site Menu"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ObjectNotScopedBySiteNotDisplayedOnSiteMenu {
+
+		// TODO LPS-141633 ObjectNotScopedBySiteNotDisplayedOnSiteMenu pending implementation
+
+	}
+
+	@description = "LPS-135649 - Verify it is possible to distinguish between Custom Object entries on My Workflow Tasks"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDistinguishBetweenObjectEntriesOnMyWorkflowTasks {
+
+		// TODO LPS-141634 CanDistinguishBetweenObjectEntriesOnMyWorkflowTasks pending implementation
+
+	}
+
+	@description = "LPS-135649 - Verify that pending and completed Object entries disappears from Workflow pages (My Workflow Tasks, Submissions, and My Submissions) when they are deleted"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ObjectEntriesDisappearsWorkflowPagesWhenDeleted {
+
+		// TODO LPS-141635 ObjectEntriesDisappearsWorkflowPagesWhenDeleted pending implementation
+
+	}
+
+	@description = "LPS-135649 - Verify that pending and completed Object entries disappears from Workflow Metrics page when they are deleted"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ObjectEntriesDisappearsWorkflowMetricsWhenDeleted {
+
+		// TODO LPS-141636 ObjectEntriesDisappearsWorkflowMetricsWhenDeleted pending implementation
+
+	}
+
+	@description = "LPS-135547 - Verify the empty state when searching for an Object returns nothing"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EmptyStateNoResultObject {
+
+		// TODO LPS-141637 EmptyStateNoResultObject pending implementation
+
+	}
+
+	@description = "LPS-135547 - Verify it is possible to search for a Custom Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchForCustomObject {
+
+		// TODO LPS-141638 CanSearchForCustomObject pending implementation
+
+	}
+
+	@description = "LPS-135547 - Verify it is possible to search for a System Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchForSystemObject {
+
+		// TODO LPS-141639 CanSearchForSystemObject pending implementation
+
+	}
+
+	@description = "LPS-135547 - Verify the empty state when searching for an Object field returns nothing"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EmptyStateNoResultObjectField {
+
+		// TODO LPS-141640 EmptyStateNoResultObjectField pending implementation
+
+	}
+
+	@description = "LPS-135547 - Verify it is possible to search for a field from a Custom Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchForFieldCustomObject {
+
+		// TODO LPS-141641 CanSearchForFieldCustomObject pending implementation
+
+	}
+
+	@description = "LPS-135547 - Verify it is possible to search for a field from a System Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchForFieldSystemObject {
+
+		// TODO LPS-141642 CanSearchForFieldSystemObject pending implementation
+
+	}
+
+	@description = "LPS-137879 - Verify it is possible to delete a Custom Object field before the Object is published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteCustomObjectFieldBeforePublished {
+
+		// TODO LPS-141643 CanDeleteCustomObjectFieldBeforePublished pending implementation
+
+	}
+
+	@description = "LPS-137879 - Verify it is not possible to delete a Custom Object field after the Object is published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteCustomObjectFieldAfterPublished {
+
+		// TODO LPS-141644 CanDeleteCustomObjectFieldAfterPublished pending implementation
+
+	}
+
+	@description = "LPS-135551 - Verify it is possible to scope the Object by Company"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanScopeObjectByCompany {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141645 CanScopeObjectByCompany pending implementation
+
+	}
+
+	@description = "LPS-135551 - Verify it is possible to scope the Object by Site"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanScopeObjectBySite {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141646 CanScopeObjectBySite pending implementation
+
+	}
+
+	@description = "LPS-135551 - Verify that the Object's plural label is displayed on the chosen panel"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ObjectLabelDisplayedOnPanel {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141647 ObjectLabelDisplayedOnPanel pending implementation
+
+	}
+
+	@description = "LPS-135551 - Verify it is possible to change the Panel Category Key after publishing the Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanChangePanelCategoryKeyAfterPublished {
+
+		// TODO LPS-141648 CanChangePanelCategoryKeyAfterPublished pending implementation
+
+	}
+
+	@description = "LPS-135551 - Verify that when the Object is scoped by Site each site will have its own entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ObjectScopedBySiteEntries {
+
+		// TODO LPS-141649 ObjectScopedBySiteEntries pending implementation
+
+	}
+
+	@description = "LPS-135400 - Entries are listed when clicking on the Relationship field"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test EntriesListedOnRelationshipField {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141650 EntriesListedOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-135400 - It is possible to search for an entry on the Relationship field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchEntryOnRelationshipField {
+
+		// TODO LPS-141651 CanSearchEntryOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-135400 - Verify it is possible to add a relation with an entry through the Relationship field"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddRelationOnRelationshipField {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141652 CanAddRelationOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-135400 - Verify it is possible to add many relations through the Relationship tab"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddRelationOnRelationshipTab {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141653 CanAddRelationOnRelationshipTab pending implementation
+
+	}
+
+	@description = "LPS-135400 - Verify it is not possible to submit an entry with a invalid value on the Relationship field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotSubmitEntryWithInvalidValueOnRelationshipField {
+
+		// TODO LPS-141654 CannotSubmitEntryWithInvalidValueOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-135402 - Verify it is possible to create a One to Many Relationship with itself"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCreateSelfOneToManyRelationship {
+
+		// TODO LPS-141655 CanCreateSelfOneToManyRelationship pending implementation
+
+	}
+
+	@description = "LPS-135402 - Verify that it is possible to relate to another entry on the Relationship field for a self-referencing relation"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSelfRelateAnotherEntryOnRelationshipField {
+
+		// TODO LPS-141656 CanSelfRelateAnotherEntryOnRelationshipField pending implementation
+
+	}
+
+	@description = "LPS-135402 - Verify that it is possible to relate to another entry on the Relationship tab for a self-referencing relation"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSelfRelateAnotherEntryOnRelationshipTab {
+
+		// TODO LPS-141657 CanSelfRelateAnotherEntryOnRelationshipTab pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify it is possible to create a Many to Many Relationship"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanCreateManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141658 CanCreateManyToManyRelationship pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify that the Relationship field is not created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test RelationshipFieldNotCreatedOnManyToMany {
+
+		// TODO LPS-141659 RelationshipFieldNotCreatedOnManyToMany pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify that it is possible to add Relationship tab on both objects"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddRelationshipTabBothObjectsManyToMany {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141660 CanAddRelationshipTabBothObjectsManyToMany pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify that it is possible to delete a relation with an entry on the Relationship tab"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDeleteRelationOnRelationshipTab {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141661 CanDeleteRelationOnRelationshipTab pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify that it is possible to relate to many other entries on both objects"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanRelateManyOtherEntriesBothObjects {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141662 CanRelateManyOtherEntriesBothObjects pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify that when adding an entry that was already related to another it will keep related to both entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ChoosingAlreadyRelatedEntryWillKeepOnBothEntries {
+
+		// TODO LPS-141663 ChoosingAlreadyRelatedEntryWillKeepOnBothEntries pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify that by default the Prevent deletion type of Relationship is selected"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PreventDeletionIsDefault {
+
+		// TODO LPS-141664 PreventDeletionIsDefault pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship Many to Many won't allow the user to delete an entry with relation"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PreventDeletionManyToManyWontAllowDelete {
+
+		// TODO LPS-141665 PreventDeletionManyToManyWontAllowDelete pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many won't allow the user to delete an entry with relation from the parent Object"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test PreventDeletionOneToManyWontAllowDelete {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141666 PreventDeletionOneToManyWontAllowDelete pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many will allow the user to delete an entry with relation from the child Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PreventDeletionOneToManyWillAllowDelete {
+
+		// TODO LPS-141667 PreventDeletionOneToManyWillAllowDelete pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many (self-reference) won't allow the user to delete a parent entry with relation"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PreventDeletionSelfOneToManyWontAllowDelete {
+
+		// TODO LPS-141668 PreventDeletionSelfOneToManyWontAllowDelete pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many (self-reference) will allow the user to delete a child entry with relation"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PreventDeletionSelfOneToManyWillAllowDelete {
+
+		// TODO LPS-141669 PreventDeletionSelfOneToManyWillAllowDelete pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship Many to Many will allow to delete only the entry with relation but not its relations"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CascadeDeletionManyToManyWillAllowDelete {
+
+		// TODO LPS-141670 CascadeDeletionManyToManyWillAllowDelete pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship One to Many will allow the entry with relation (from the parent Object) and its relations to be deleted"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CascadeDeletionOneToManyWillAllowDeleteParent {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141671 CascadeDeletionOneToManyWillAllowDeleteParent pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship One to Many will allow the entry with relation (from the child Object) to be deleted but not its relation"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CascadeDeletionOneToManyWillAllowDeleteChild {
+
+		// TODO LPS-141672 CascadeDeletionOneToManyWillAllowDeleteChild pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship One to Many (self-reference) will allow the parent entry with relation and its relations to be deleted"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CascadeDeletionSelfOneToManyWillAllowDeleteParent {
+
+		// TODO LPS-141673 CascadeDeletionSelfOneToManyWillAllowDeleteParent pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship One to Many (self-reference) will allow the child entry with relation to be teleted but not its relation"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CascadeDeletionSelfOneToManyWillAllowDeleteChild {
+
+		// TODO LPS-141674 CascadeDeletionSelfOneToManyWillAllowDeleteChild pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship Many to Many will allow the entry with relation to be deleted and its relations to be disassociated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisassociateDeletionManyToManyWillAllowDelete {
+
+		// TODO LPS-141675 DisassociateDeletionManyToManyWillAllowDelete pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many will allow the entry with relation (from the parent Object) to be deleted and its relations to be disassociated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test DisassociateDeletionOneToManyWillAllowDeleteParent {
+		property portal.acceptance = "true";
+
+		// TODO LPS-141676 DisassociateDeletionOneToManyWillAllowDeleteParent pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many will allow the entry with relation (from the child Object) to be deleted and its relation to be disassociated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisassociateDeletionOneToManyWillAllowDeleteChild {
+
+		// TODO LPS-141677 DisassociateDeletionOneToManyWillAllowDeleteChild pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many (self-reference) will allow the parent entry with relation to be deleted and its relations to be disassociated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisassociateDeletionSelfOneToManyWillAllowDeleteParent {
+
+		// TODO LPS-141678 DisassociateDeletionSelfOneToManyWillAllowDeleteParent pending implementation
+
+	}
+
+	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many (self-reference) will allow the child entry with relation to be deleted and its relation to be disassociated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisassociateDeletionSelfOneToManyWillAllowDeleteChild {
+
+		// TODO LPS-141679 DisassociateDeletionSelfOneToManyWillAllowDeleteChild pending implementation
+
+	}
+
+	@description = "LPS-139160 - Verify it is not possible to delete an Object via API after it was published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotDeletePublishedObjectViaApi {
+
+		// TODO LPS-141680 CannotDeletePublishedObjectViaApi pending implementation
+
+	}
+
+	@description = "LPS-139603 - Verify that the Object Label is displayed on the Relationship tab when a Relationship is created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ObjectLabelDisplayedOnTheRelationshipTab {
+
+		// TODO LPS-141681 ObjectLabelDisplayedOnTheRelationshipTab pending implementation
+
+	}
+
+	@description = "LPS-137741 - Verify that Objects created on a Virtual Instance are not displayed on the Object Admin of the Main Instance and vice versa"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ObjectAdminDisplaysOnlyItsInstanceObjects {
+
+		// TODO LPS-141682 ObjectAdminDisplaysOnlyItsInstanceObjects pending implementation
+
+	}
+
+	@description = "LPS-137741 - Verify that Objects created on a Virtual Instance are not displayed on the Panel of the Main Instance and vice versa"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PanelDisplaysOnlyItsInstanceObjects {
+
+		// TODO LPS-141683 PanelDisplaysOnlyItsInstanceObjects pending implementation
+
+	}
+
+	@description = "LPS-137874 - Verify that Objects created on a Virtual Instance are not displayed on the Forms Settings, Collection Providers and Display Page Template of the Main Instance and vice versa"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FormCollectionProvidersDisplayPageDisplayOnlyItsInstanceObjects {
+
+		// TODO LPS-141684 FormCollectionProvidersDisplayPageDisplayOnlyItsInstanceObjects pending implementation
+
+	}
+
+	@description = "LPS-138213 - Verify that updated data is kept when clicking on the Publish button"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UpdatedDataIsKeptWhenPublishing {
+
+		// TODO LPS-141685 UpdatedDataIsKeptWhenPublishing pending implementation
+
+	}
+
+	@description = "LPS-139418 - Verify that previous filled data is not kept when cancelling the creation of an Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PreviousFilledDataIsNotKeptAfterCancel {
+
+		// TODO LPS-141686 PreviousFilledDataIsNotKeptAfterCancel pending implementation
+
+	}
+
+	@description = "LPS-140097 - Verify that other fields are not deleted when a Relationship field is deleted after a Relationship is deleted"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FieldsAreNotDeletedWhenRelationshipDeleted {
+
+		// TODO LPS-141687 FieldsAreNotDeletedWhenRelationshipDeleted pending implementation
+
+	}
+
+	@description = "LPS-140342 - Verify it is possible to view and edit its own Object with only the Add Object Definition permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAndEditObjectWithAddObjectPermission {
+
+		// TODO LPS-141688 CanViewAndEditObjectWithAddObjectPermission pending implementation
+
+	}
+
 }

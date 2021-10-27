@@ -125,9 +125,21 @@ export function LayoutSelector({layoutType}) {
 	const {itemSelectorURL, totalLayouts} = previewData;
 
 	useEffect(() => {
-		setRecentLayouts(previewData.recentLayouts);
 		setPreviewLayout(previewData.recentLayouts[0]);
-	}, [layoutType, previewData, setPreviewLayout]);
+		setRecentLayouts(previewData.recentLayouts);
+	}, [setPreviewLayout, previewData]);
+
+	const selectPreviewLayout = (layout) => {
+		if (
+			layout.name === previewLayout.name &&
+			layout.url === previewLayout.url
+		) {
+			return;
+		}
+
+		setPreviewLayout(layout);
+		setRecentLayouts(getNextRecentLayouts(recentLayouts, layout));
+	};
 
 	const handleMoreButtonClick = () => {
 		openItemSelector({
@@ -139,8 +151,7 @@ export function LayoutSelector({layoutType}) {
 					url: urlWithPreviewParameter(data.url),
 				};
 
-				setPreviewLayout(layout);
-				setRecentLayouts(getNextRecentLayouts(recentLayouts, layout));
+				selectPreviewLayout(layout);
 			},
 			itemSelectorURL,
 		});
@@ -175,10 +186,7 @@ export function LayoutSelector({layoutType}) {
 							onClick={() => {
 								setActive(false);
 
-								setPreviewLayout(layout);
-								setRecentLayouts(
-									getNextRecentLayouts(recentLayouts, layout)
-								);
+								selectPreviewLayout(layout);
 							}}
 						>
 							{layout.name}

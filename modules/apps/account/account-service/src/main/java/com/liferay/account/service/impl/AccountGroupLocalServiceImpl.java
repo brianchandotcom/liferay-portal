@@ -106,7 +106,7 @@ public class AccountGroupLocalServiceImpl
 			"This account group is used for guest users.");
 		accountGroup.setName(AccountConstants.ACCOUNT_GROUP_NAME_GUEST);
 
-		return addAccountGroup(accountGroup);
+		return accountGroupLocalService.addAccountGroup(accountGroup);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

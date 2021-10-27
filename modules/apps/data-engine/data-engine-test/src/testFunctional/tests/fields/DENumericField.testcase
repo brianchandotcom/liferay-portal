@@ -437,7 +437,7 @@ definition {
 
 		DataEngine.viewNumericType(
 			fieldLabel = "Numeric",
-			fieldNumericType = "Decimal");
+			fieldNumericType = "double");
 
 		DataEngine.editNumericType(
 			fieldLabel = "Numeric",
@@ -449,7 +449,7 @@ definition {
 
 		DataEngine.viewNumericType(
 			fieldLabel = "Numeric",
-			fieldNumericType = "Integer");
+			fieldNumericType = "integer");
 	}
 
 	@description = "This is a test for LRQA-68600. This test verifies that Default Searchable property is Disable when System Setting is left unchecked"

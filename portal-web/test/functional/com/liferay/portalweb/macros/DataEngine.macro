@@ -1216,6 +1216,17 @@ definition {
 			key_optionValue = "${fieldNumericType}",
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
 
+		if ("${fieldNumericType}" == "Integer") {
+			var numericType = "integer";
+		}
+		else {
+			var numericType = "double";
+		}
+
+		WaitForElementPresent(
+			key_optionValue = "${numericType}",
+			locator1 = "DataEngineBuilder#OPTION_SELECTED");
+
 		Click(locator1 = "Sidebar#BACK");
 	}
 
@@ -1630,10 +1641,9 @@ definition {
 				value1 = "${fieldLabel}");
 		}
 
-		AssertChecked.assertCheckedNotVisible(
-			key_fieldFieldLabel = "My numeric type is:",
+		AssertElementPresent(
 			key_optionValue = "${fieldNumericType}",
-			locator1 = "WCEditWebContent#SELECTION_OPTION");
+			locator1 = "DataEngineBuilder#OPTION_SELECTED");
 
 		Click(locator1 = "Sidebar#BACK");
 	}

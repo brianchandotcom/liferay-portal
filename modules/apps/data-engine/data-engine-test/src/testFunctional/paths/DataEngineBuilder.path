@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTION_SELECTED</td>
+	<td>//input[contains(@class,'form-control') and contains(@value,'${key_optionValue}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_SWITCH_INDEXED</td>
 	<td>xpath=(((//label[normalize-space(text())='${key_fieldLabel}'] | //legend[normalize-space(text())='${key_fieldLabel}'])[${fieldIndex}])//following-sibling::div//div[contains(@class,'lfr-ddm-form-field-checkbox-switch')]//label[.='${key_optionLabel}'])[${optionIndex}]</td>
 	<td></td>

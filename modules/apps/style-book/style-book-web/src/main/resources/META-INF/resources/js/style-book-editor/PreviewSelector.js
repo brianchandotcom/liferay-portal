@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {StyleBookContext} from './StyleBookContext';
@@ -154,6 +155,7 @@ export function LayoutSelector({layoutType}) {
 
 				const layout = {
 					name: data.name,
+					private: data.private,
 					url: urlWithPreviewParameter(data.url),
 				};
 
@@ -196,6 +198,12 @@ export function LayoutSelector({layoutType}) {
 							}}
 						>
 							{layout.name}
+							{layout.private && (
+								<ClayIcon
+									className="ml-3"
+									symbol="low-vision"
+								/>
+							)}
 						</ClayDropDown.Item>
 					))}
 				</ClayDropDown.Group>

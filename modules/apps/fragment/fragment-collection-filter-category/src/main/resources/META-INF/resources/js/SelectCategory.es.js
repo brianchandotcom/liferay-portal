@@ -145,13 +145,9 @@ export default function SelectCategory({
 			searchValue={searchValue}
 			searchable={showSearch}
 			trigger={
-				<ClayButton
-					className="bg-light font-weight-normal form-control-select form-control-sm text-left w-100"
-					displayType="secondary"
-					small
-				>
+				<button className="form-control form-control-select form-control-sm text-left w-100">
 					{label}
-				</ClayButton>
+				</button>
 			}
 		/>
 	);

@@ -1,0 +1,19 @@
+.information-card a{
+	color: var(--body-color);
+	align-items: center;
+	box-shadow: var(--box-shadow-lg);
+	display: flex;
+	font-size: var(--font-size-lg);
+	font-weight: var(--font-weight-bold);
+	height:4.688em;
+}
+
+.information-card .product-action-link{
+	padding:1em;
+	text-decoration: none;
+}
+
+.information-card a img{
+	width:20px;
+	height:20px;
+}

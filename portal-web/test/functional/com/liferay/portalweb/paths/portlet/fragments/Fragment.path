@@ -37,6 +37,11 @@
 	<td>xpath=(//div[contains(@data-analytics-asset-type,'${assetType}')])[${index}]//img[contains(@src,'${image}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CONTENT_DISPLAY_PREVIEW_IMAGE</td>
+	<td>xpath=(//div[contains(@class,'preview-file-container')])[${index}]//img[contains(@src,'${image}')]</td>
+	<td></td>
+</tr>
 <!--CONTENT_RATINGS_FRAGMENT-->
 <tr>
 	<td>CONTENT_RATINGS_AVERAGE_STAR</td>

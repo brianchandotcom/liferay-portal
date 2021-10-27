@@ -99,7 +99,7 @@ public class AnalyticsMessageSenderClientImpl
 			analyticsConfiguration.
 				liferayAnalyticsFaroBackendSecuritySignature(),
 			HttpMethods.GET, analyticsConfiguration.liferayAnalyticsProjectId(),
-			analyticsConfiguration.liferayAnalyticsEndpointURL() +
+			analyticsConfiguration.liferayAnalyticsFaroBackendURL() +
 				"/api/1.0/data-sources/" +
 					analyticsConfiguration.liferayAnalyticsDataSourceId());
 

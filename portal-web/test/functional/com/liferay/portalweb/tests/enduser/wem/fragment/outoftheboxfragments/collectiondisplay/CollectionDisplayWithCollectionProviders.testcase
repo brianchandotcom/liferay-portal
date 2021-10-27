@@ -6,16 +6,22 @@ definition {
 	property testray.main.component.name = "Fragments";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page Name",
-			type = "content");
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+		}
 	}
 
 	tearDown {
@@ -1431,7 +1437,7 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Assert assets' title are displayed in Collection Display with Content Display") {
+		task ("View asset titles are displayed in Content Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				infoListProviderName = "Highest Rated Assets");
@@ -1444,33 +1450,32 @@ definition {
 			var n = "1";
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${title}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+				ContentPages.viewFragmentText(
+					fragmentName = "Content Display",
+					position = "${n}",
+					text = "${title}");
 
 				var n = ${n} + 1;
 			}
+
+			PageEditor.clickPublish();
 		}
 
-		PageEditor.clickPublish();
+		task ("View the title of assets shown in Content Display at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
+			var n = "1";
 
-		var n = "1";
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				ContentPages.viewFragmentText(
+					fragmentName = "Content Display",
+					position = "${n}",
+					text = "${title}");
 
-		for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "${title}",
-				key_rowPosition = "${n}",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
-
-			var n = ${n} + 1;
+				var n = ${n} + 1;
+			}
 		}
 	}
 
@@ -1508,7 +1513,7 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Assert assets' title are displayed in Collection Display with Content Display") {
+		task ("View full content are displayed in Content Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				infoListProviderName = "Most Viewed Assets");
@@ -1533,39 +1538,38 @@ definition {
 			var n = "2";
 
 			for (var content : list "Blogs Entry Content,Web Content Content") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${content}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+				ContentPages.viewFragmentText(
+					fragmentName = "Content Display",
+					position = "${n}",
+					text = "${content}");
 
 				var n = ${n} + 1;
 			}
+
+			PageEditor.clickPublish();
 		}
 
-		PageEditor.clickPublish();
+		task ("View full content are shown in Content Display at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
-
-		AssertVisible(
-			key_colPosition = "1",
-			key_image = "Document_1.jpg",
-			key_rowPosition = "1",
-			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_IMAGE");
-
-		var n = "2";
-
-		for (var content : list "Blogs Entry Content,Web Content Content") {
 			AssertVisible(
 				key_colPosition = "1",
-				key_entryContent = "${content}",
-				key_rowPosition = "${n}",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				key_image = "Document_1.jpg",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_IMAGE");
 
-			var n = ${n} + 1;
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+					ContentPages.viewFragmentText(
+						fragmentName = "Content Display",
+						position = "${n}",
+						text = "${content}");
+
+				var n = ${n} + 1;
+			}
 		}
 	}
 

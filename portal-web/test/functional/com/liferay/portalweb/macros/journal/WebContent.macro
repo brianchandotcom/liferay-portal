@@ -985,6 +985,8 @@ definition {
 	macro checkLanguage {
 		Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
+		WaitForElementPresent(locator1 = "ContentDashboard#ICON_INFO_LISTED_MODIFIED_DATE");
+
 		Click(locator1 = "ContentDashboard#ICON_INFO_LISTED_MODIFIED_DATE");
 
 		Click(locator1 = "ContentDashboard#PANEL_INFO_VIEW");

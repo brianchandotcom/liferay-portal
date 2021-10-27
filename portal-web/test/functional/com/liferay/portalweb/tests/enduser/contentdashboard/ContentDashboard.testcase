@@ -2178,10 +2178,7 @@ definition {
 			Button.clickPublish();
 		}
 		task ("Navigate to the content Dashboard and go to the page view in the corresponding language") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			WebContent.checkLanguage();
 		}
@@ -3115,12 +3112,11 @@ definition {
 				groupName = "Test Site Name",
 				title = "WC");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+			WaitForElementPresent(locator1 = "ContentDashboard#ICON_VIEW_LISTED_MODIFIED_DATE");
 
 			Click(locator1 = "ContentDashboard#ICON_VIEW_LISTED_MODIFIED_DATE");
 		}

@@ -51,6 +51,13 @@ definition {
 			value1 = "${propertyName}");
 	}
 
+	@summary = "Asserts that active property not present in sidebar menu"
+	macro assertCurrentActivePropertyNotPresent {
+		AssertTextNotEquals(
+			locator1 = "ACSidebar#CURRENT_PROPERTY",
+			value1 = "${propertyName}");
+	}
+
 	@summary = "Asserts the property saved in settings"
 	macro assertNewCreatedProperty {
 		AssertTextEquals(

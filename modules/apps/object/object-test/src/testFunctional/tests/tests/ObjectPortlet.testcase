@@ -616,7 +616,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.updateEntry(updateEntry = "1.12345678");
+		ObjectPortlet.updateEntry(
+			entry = "123.123456",
+			updateEntry = "1.12345678");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
@@ -665,7 +667,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.updateEntry(updateEntry = "4.56");
+		ObjectPortlet.updateEntry(
+			entry = "1.23",
+			updateEntry = "4.56");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
@@ -696,7 +700,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.updateEntry(updateEntry = "123456");
+		ObjectPortlet.updateEntry(
+			entry = "123",
+			updateEntry = "123456");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
@@ -727,7 +733,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.updateEntry(updateEntry = "12345678912345678");
+		ObjectPortlet.updateEntry(
+			entry = "123456789",
+			updateEntry = "12345678912345678");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
@@ -769,7 +777,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.updateEntry(updateEntry = "Update Text test");
+		ObjectPortlet.updateEntry(
+			entry = "Text test",
+			updateEntry = "Update Text test");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 

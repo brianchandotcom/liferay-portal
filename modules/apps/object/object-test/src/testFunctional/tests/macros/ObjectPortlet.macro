@@ -172,6 +172,8 @@ definition {
 	}
 
 	macro updateEntry {
+		ObjectPortlet.viewEntryDetails(entry = "${entry}");
+
 		Type.type(
 			locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
 			value1 = "${updateEntry}");

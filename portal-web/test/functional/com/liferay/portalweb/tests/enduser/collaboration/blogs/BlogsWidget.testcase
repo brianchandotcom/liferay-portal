@@ -83,13 +83,43 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136767. It checks that related assets can be disabled from the widget."
-	@ignore = "true"
 	@priority = "3"
 	test CanDisableRelatedAssets {
-		property portal.acceptance = "false";
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title");
 
-		// TODO LPS-136767 CanDisableRelatedAssets pending implementation
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title");
+
+		RelatedAssets.selectAsset(
+			assetTitle = "Blogs Entry1 Title",
+			assetType = "Blogs Entry");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		BlogsConfiguration.uncheckRelatedAssets();
+
+		IFrame.saveConfiguration();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title");
+
+		AssertElementNotPresent(locator1 = "AssetRelatedAssets#HEADER");
 	}
 
 	@description = "This checks that an entry can be edited in card view"

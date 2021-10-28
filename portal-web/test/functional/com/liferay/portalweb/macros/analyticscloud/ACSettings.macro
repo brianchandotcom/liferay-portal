@@ -1,6 +1,8 @@
 definition {
 
 	macro addCSVDataSource {
+		var n = "1";
+
 		ACSettings.goToDataSources();
 
 		Button.click(button = "Add Data Source");
@@ -9,16 +11,25 @@ definition {
 			key_sourceType = "CSV File",
 			locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
 
-		Type(
-			key_text = "Name Data Source",
-			locator1 = "TextInput#ANY",
-			value1 = "${dataSourceName}");
-
 		UploadFileWithCustomPath.uploadFile(
 			fileName = "${sourceFileName}",
 			filePath = "enduser/analyticscloud");
 
 		WaitForVisible(locator1 = "ACSettings#FILE_UPLOAD_SUCCESS_ICON");
+
+		Type(
+			key_text = "Name Data Source",
+			locator1 = "TextInput#ANY",
+			value1 = "${dataSourceName}");
+
+		while (IsElementPresent(key_text = "Next", locator1 = "Button#ANY_DISABLED")) {
+			Type(
+				key_text = "Name Data Source",
+				locator1 = "TextInput#ANY",
+				value1 = "${dataSourceName} ${n}");
+
+			var n = ${n} + 1;
+		}
 
 		WaitForElementPresent(
 			key_text = "Next",

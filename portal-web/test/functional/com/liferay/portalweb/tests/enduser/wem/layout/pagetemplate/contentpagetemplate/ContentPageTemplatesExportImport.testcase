@@ -300,7 +300,7 @@ definition {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
 			FragmentsAdminNavigator.gotoEntryEllipsisItem(
-				entry = "Fragment Name",
+				entry = "Title",
 				item = "Edit");
 
 			FragmentsEditor.typeFileContent(fileName = "fragment_title.html");
@@ -334,7 +334,7 @@ definition {
 		task ("Add the new fragment to content page template") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Fragment Name");
+				fragmentName = "Title");
 
 			PageEditor.viewFragmentEditableText(
 				contributed = "false",

@@ -70,7 +70,9 @@ public class OrPoshiElement extends PoshiElement {
 	public String toPoshiScript() {
 		StringBuilder sb = new StringBuilder();
 
-		for (PoshiElement poshiElement : toPoshiElements(elements())) {
+		List<PoshiElement> poshiElements = toPoshiElements(elements());
+
+		for (PoshiElement poshiElement : poshiElements) {
 			String poshiScript = poshiElement.toPoshiScript();
 
 			if (poshiScript.startsWith("(")) {
@@ -86,6 +88,11 @@ public class OrPoshiElement extends PoshiElement {
 		}
 
 		sb.setLength(sb.length() - 4);
+
+		if (poshiElements.size() > 1) {
+			sb.insert(0, "(");
+			sb.append(")");
+		}
 
 		return sb.toString();
 	}

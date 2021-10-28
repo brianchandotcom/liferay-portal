@@ -155,9 +155,14 @@ public class IfPoshiElement extends PoshiElement {
 
 				sb.append(" ");
 
-				sb.append("(");
-				sb.append(poshiScript);
-				sb.append(")");
+				if (!poshiScript.startsWith("(")) {
+					sb.append("(");
+					sb.append(poshiScript);
+					sb.append(")");
+				}
+				else {
+					sb.append(poshiScript);
+				}
 
 				break;
 			}

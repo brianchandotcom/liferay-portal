@@ -1,30 +1,18 @@
-[#assign
-	navUserClass = ""
-	privateUserFriendlyURL = themeDisplay.getPathFriendlyURLPrivateUser() + "/" + themeDisplay.getUser().getFirstName()
-	publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
-	publicSiteNavbarClass =""
-	userName = themeDisplay.getUser().getFirstName()
-/]
-
-[#if !themeDisplay.isSignedIn()]
-	[#assign publicSiteNavbarClass = "logged-in" /]
-[/#if]
-
 <div class="sign-in vh-100">
 	<div class="form-box">
-		<a href="${publicFriendlyURL}">
+		<a href="${themeDisplay.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()}">
 			<img alt="" class="sign-in-logo" src="[resources:masterclass_logo.svg]" />
 		</a>
 
-		<form class="sign-in-form">
+		<div class="sign-in-form">
 			<h1 class="font-weight-normal sign-in-text">
 				Take charge of your future with Masterclass online.
 			</h1>
 
-	[@liferay_portlet.runtime
-					portletName="com_liferay_login_web_portlet_LoginPortlet"
-				/]
+			[@liferay_portlet.runtime
+				portletName="com_liferay_login_web_portlet_LoginPortlet"
+			/]
 
-		</form>
+		</div>
 	</div>
 </div>

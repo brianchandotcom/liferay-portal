@@ -9,8 +9,8 @@ exports[`MiniCart by data flow if the order ID is defined and > 0 if the request
       class="mini-cart-overlay"
     />
     <button
-      class="has-badge mini-cart-opener"
-      data-badge-count="2"
+      class="mini-cart-opener"
+      data-badge-count="0"
     >
       <svg
         class="lexicon-icon lexicon-icon-shopping-cart"

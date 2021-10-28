@@ -23,8 +23,7 @@ export function parseOptions(jsonString) {
 
 	try {
 		options = JSON.parse(jsonString) || '';
-	}
-	catch (ignore) {
+	} catch (ignore) {
 		options = '';
 	}
 

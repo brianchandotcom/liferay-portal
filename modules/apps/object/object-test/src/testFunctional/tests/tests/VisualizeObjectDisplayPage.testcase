@@ -85,7 +85,7 @@ definition {
 			fragmentName = "Heading",
 			label = "Expand Collection Display");
 
-		PageEditor.clickCollectionDisplay();
+		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
 		PageEditor.selectGerenicField(
 			fieldLabel = "List Style",
@@ -167,7 +167,7 @@ definition {
 			fragmentName = "Heading",
 			label = "Expand Collection Display");
 
-		PageEditor.clickCollectionDisplay();
+		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
 		PageEditor.selectGerenicField(
 			fieldLabel = "Pagination",
@@ -234,7 +234,7 @@ definition {
 			fragmentName = "Heading",
 			label = "Expand Collection Display");
 
-		PageEditor.clickCollectionDisplay();
+		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
 		PageEditor.selectGerenicField(
 			fieldLabel = "Pagination",

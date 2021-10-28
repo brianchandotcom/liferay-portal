@@ -43,13 +43,11 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
-import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.Highlight;
 import com.liferay.search.experiences.rest.dto.v1_0.HighlightField;
 import com.liferay.search.experiences.rest.dto.v1_0.Parameter;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
-import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
 
@@ -77,16 +75,8 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 	public void testAggregationConfiguration() throws Exception {
 		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
 
-		Configuration configuration = sxpBlueprint.getConfiguration();
-
-		String json = _read();
-
-		configuration.setAggregationConfiguration(
-			new AggregationConfiguration() {
-				{
-					aggs = JSONFactoryUtil.createJSONObject(json);
-				}
-			});
+		sxpBlueprint.setConfiguration(
+			ConfigurationUtil.toConfiguration(_read()));
 
 		SearchRequest searchRequest = _toSearchRequest(sxpBlueprint);
 
@@ -237,16 +227,8 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 	public void testSortConfiguration() throws Exception {
 		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
 
-		Configuration configuration = sxpBlueprint.getConfiguration();
-
-		String json = _read();
-
-		configuration.setSortConfiguration(
-			new SortConfiguration() {
-				{
-					sorts = JSONFactoryUtil.createJSONArray(json);
-				}
-			});
+		sxpBlueprint.setConfiguration(
+			ConfigurationUtil.toConfiguration(_read()));
 
 		SearchRequest searchRequest = _toSearchRequest(sxpBlueprint);
 

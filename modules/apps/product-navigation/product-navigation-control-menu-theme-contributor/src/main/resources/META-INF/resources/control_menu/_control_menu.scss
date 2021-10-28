@@ -274,11 +274,11 @@ html#{$cadmin-selector} {
 
 		.tools-control-group {
 			flex: 1;
-			flex-wrap: wrap;
+			flex-wrap: nowrap;
 
 			> .control-menu-nav {
 				flex-wrap: nowrap;
-				justify-content: center;
+				justify-content: flex-start;
 
 				@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
 					flex-wrap: wrap;

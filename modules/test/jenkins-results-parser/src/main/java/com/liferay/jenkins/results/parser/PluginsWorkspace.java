@@ -21,6 +21,36 @@ import org.json.JSONObject;
  */
 public class PluginsWorkspace extends PortalWorkspace {
 
+	@Override
+	public PortalWorkspaceGitRepository getPortalWorkspaceGitRepository() {
+		WorkspaceGitRepository workspaceGitRepository =
+			getPrimaryWorkspaceGitRepository();
+
+		String upstreamBranchName =
+			workspaceGitRepository.getUpstreamBranchName();
+
+		String repositoryName = "liferay-portal";
+
+		if (!upstreamBranchName.equals("master")) {
+			repositoryName += "-ee";
+		}
+
+		String directoryName = JenkinsResultsParserUtil.getGitDirectoryName(
+			repositoryName, upstreamBranchName);
+
+		WorkspaceGitRepository portalWorkspaceGitRepository =
+			getWorkspaceGitRepository(directoryName);
+
+		if (!(portalWorkspaceGitRepository instanceof
+				PortalWorkspaceGitRepository)) {
+
+			throw new RuntimeException(
+				"The portal workspace Git repository is not set");
+		}
+
+		return (PortalWorkspaceGitRepository)portalWorkspaceGitRepository;
+	}
+
 	protected PluginsWorkspace(JSONObject jsonObject) {
 		super(jsonObject);
 	}
@@ -50,36 +80,6 @@ public class PluginsWorkspace extends PortalWorkspace {
 		}
 
 		return (PluginsWorkspaceGitRepository)workspaceGitRepository;
-	}
-
-	@Override
-	protected PortalWorkspaceGitRepository getPortalWorkspaceGitRepository() {
-		WorkspaceGitRepository workspaceGitRepository =
-			getPrimaryWorkspaceGitRepository();
-
-		String upstreamBranchName =
-			workspaceGitRepository.getUpstreamBranchName();
-
-		String repositoryName = "liferay-portal";
-
-		if (!upstreamBranchName.equals("master")) {
-			repositoryName += "-ee";
-		}
-
-		String directoryName = JenkinsResultsParserUtil.getGitDirectoryName(
-			repositoryName, upstreamBranchName);
-
-		WorkspaceGitRepository portalWorkspaceGitRepository =
-			getWorkspaceGitRepository(directoryName);
-
-		if (!(portalWorkspaceGitRepository instanceof
-				PortalWorkspaceGitRepository)) {
-
-			throw new RuntimeException(
-				"The portal workspace Git repository is not set");
-		}
-
-		return (PortalWorkspaceGitRepository)portalWorkspaceGitRepository;
 	}
 
 }

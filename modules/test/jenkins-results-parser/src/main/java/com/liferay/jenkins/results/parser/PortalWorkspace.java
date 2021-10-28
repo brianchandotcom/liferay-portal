@@ -37,6 +37,18 @@ public class PortalWorkspace extends BaseWorkspace {
 		return Job.BuildProfile.getByString(buildProfileString);
 	}
 
+	public PortalWorkspaceGitRepository getPortalWorkspaceGitRepository() {
+		WorkspaceGitRepository workspaceGitRepository =
+			getPrimaryWorkspaceGitRepository();
+
+		if (!(workspaceGitRepository instanceof PortalWorkspaceGitRepository)) {
+			throw new RuntimeException(
+				"The portal workspace Git repository is not set");
+		}
+
+		return (PortalWorkspaceGitRepository)workspaceGitRepository;
+	}
+
 	public void setBuildProfile(Job.BuildProfile buildProfile) {
 		if (buildProfile == null) {
 			throw new RuntimeException("Invalid build profile " + buildProfile);
@@ -229,18 +241,6 @@ public class PortalWorkspace extends BaseWorkspace {
 		}
 
 		return (PluginsWorkspaceGitRepository)workspaceGitRepository;
-	}
-
-	protected PortalWorkspaceGitRepository getPortalWorkspaceGitRepository() {
-		WorkspaceGitRepository workspaceGitRepository =
-			getPrimaryWorkspaceGitRepository();
-
-		if (!(workspaceGitRepository instanceof PortalWorkspaceGitRepository)) {
-			throw new RuntimeException(
-				"The portal workspace Git repository is not set");
-		}
-
-		return (PortalWorkspaceGitRepository)workspaceGitRepository;
 	}
 
 	protected void updateOSBAsahModule() {

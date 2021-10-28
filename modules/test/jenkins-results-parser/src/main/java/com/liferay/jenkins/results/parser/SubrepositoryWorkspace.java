@@ -21,25 +21,8 @@ import org.json.JSONObject;
  */
 public class SubrepositoryWorkspace extends PortalWorkspace {
 
-	protected SubrepositoryWorkspace(JSONObject jsonObject) {
-		super(jsonObject);
-	}
-
-	protected SubrepositoryWorkspace(
-		String primaryRepositoryName, String upstreamBranchName) {
-
-		super(primaryRepositoryName, upstreamBranchName);
-	}
-
-	protected SubrepositoryWorkspace(
-		String primaryRepositoryName, String upstreamBranchName,
-		String jobName) {
-
-		super(primaryRepositoryName, upstreamBranchName, jobName);
-	}
-
 	@Override
-	protected PortalWorkspaceGitRepository getPortalWorkspaceGitRepository() {
+	public PortalWorkspaceGitRepository getPortalWorkspaceGitRepository() {
 		WorkspaceGitRepository workspaceGitRepository =
 			getPrimaryWorkspaceGitRepository();
 
@@ -66,6 +49,23 @@ public class SubrepositoryWorkspace extends PortalWorkspace {
 		}
 
 		return (PortalWorkspaceGitRepository)portalWorkspaceGitRepository;
+	}
+
+	protected SubrepositoryWorkspace(JSONObject jsonObject) {
+		super(jsonObject);
+	}
+
+	protected SubrepositoryWorkspace(
+		String primaryRepositoryName, String upstreamBranchName) {
+
+		super(primaryRepositoryName, upstreamBranchName);
+	}
+
+	protected SubrepositoryWorkspace(
+		String primaryRepositoryName, String upstreamBranchName,
+		String jobName) {
+
+		super(primaryRepositoryName, upstreamBranchName, jobName);
 	}
 
 	@Override

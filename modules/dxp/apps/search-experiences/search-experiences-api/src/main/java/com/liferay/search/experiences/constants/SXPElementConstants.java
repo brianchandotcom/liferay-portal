@@ -17,8 +17,14 @@ package com.liferay.search.experiences.constants;
 /**
  * @author Petteri Karttunen
  */
-public class SXPElementTypes {
+public class SXPElementConstants {
 
-	public static final int QUERY_SXP_ELEMENT = 10;
+	public static final int TYPE_AGGREGATION = 1;
+
+	public static final int TYPE_FACET = 5;
+
+	public static final int TYPE_QUERY = 10;
+
+	public static final int TYPE_SUGGESTER = 15;
 
 }

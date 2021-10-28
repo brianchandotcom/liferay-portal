@@ -969,10 +969,6 @@ definition {
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 	}
 
-	macro clickCollectionDisplay {
-		Click(locator1 = "PageEditor#CLICK_COLLECTION_DISPLAY");
-	}
-
 	macro clickConfigurableField {
 		if (!(isSet(index))) {
 			var index = "1";

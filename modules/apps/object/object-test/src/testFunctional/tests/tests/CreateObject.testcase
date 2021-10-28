@@ -2965,7 +2965,6 @@ definition {
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are not displayed on the workflow pages (My Workflow Tasks, My Submissions, and Submissions) when inactivated"
 	@priority = "4"
 	test ObjectEntriesDisappearsWorkflowPagesWhenInactivated {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -3019,14 +3018,14 @@ definition {
 		ObjectAdmin.openMyWorkflowTasks();
 
 		AssertElementNotPresent(
-			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",
-			key_workflowAssetTitle = "Custom Object");
+			key_workflowAssetTitle = "Custom Object",
+			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE");
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		AssertElementNotPresent(
-			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",
-			key_workflowAssetTitle = "Custom Object");
+			key_workflowAssetTitle = "Custom Object",
+			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE");
 
 		ObjectAdmin.openMySubmissions();
 
@@ -3039,8 +3038,6 @@ definition {
 		AssertElementNotPresent(
 			key_submissionName = "Custom Object",
 			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
-
-
 	}
 
 	@description = "LPS-139005 - Verify that the Object entries are displayed again on Page fragments from an Object that was reactivated"

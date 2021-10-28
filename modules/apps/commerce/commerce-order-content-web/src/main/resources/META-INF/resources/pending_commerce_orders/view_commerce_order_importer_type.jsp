@@ -17,20 +17,22 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String commerceOrderImporterTypeKey = ParamUtil.getString(request, "commerceOrderImporterTypeKey");
+CommerceOrderImporterType commerceOrderImporterType = commerceOrderContentDisplayContext.getCommerceOrderImporterType(ParamUtil.getString(request, "commerceOrderImporterTypeKey"));
 %>
 
 <c:choose>
-	<c:when test="<%= Validator.isNull(commerceOrderImporterTypeKey) %>">
-
-	</c:when>
-	<c:otherwise>
+	<c:when test="<%= request.getAttribute(CommerceWebKeys.COMMERCE_ORDER_IMPORTER_ITEM) != null %>">
 
 		<%
-		CommerceOrderImporterType commerceOrderImporterType = commerceOrderContentDisplayContext.getCommerceOrderImporterType(commerceOrderImporterTypeKey);
+		commerceOrderImporterType.renderCommerceOrderPreview(commerceOrderContentDisplayContext.getCommerceOrder(), request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
+		%>
 
+	</c:when>
+	<c:when test="<%= commerceOrderImporterType != null %>">
+
+		<%
 		commerceOrderImporterType.render(commerceOrderContentDisplayContext.getCommerceOrder(), request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 		%>
 
-	</c:otherwise>
+	</c:when>
 </c:choose>

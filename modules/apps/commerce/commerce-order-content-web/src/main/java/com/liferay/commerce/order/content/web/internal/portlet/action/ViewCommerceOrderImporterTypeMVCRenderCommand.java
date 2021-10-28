@@ -15,8 +15,15 @@
 package com.liferay.commerce.order.content.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.order.CommerceOrderHttpHelper;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.exception.CommerceOrderImporterTypeException;
+import com.liferay.commerce.order.importer.type.CommerceOrderImporterType;
+import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
+import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.wish.list.service.CommerceWishListService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletException;
@@ -45,11 +52,39 @@ public class ViewCommerceOrderImporterTypeMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		try {
+			CommerceOrderImporterType commerceOrderImporterType =
+				_commerceOrderImporterTypeRegistry.getCommerceOrderImporterType(
+					ParamUtil.getString(
+						renderRequest, "commerceOrderImporterTypeKey"));
+
+			if (commerceOrderImporterType == null) {
+				throw new CommerceOrderImporterTypeException();
+			}
+
+			renderRequest.setAttribute(
+				CommerceWebKeys.COMMERCE_ORDER_IMPORTER_ITEM,
+				commerceOrderImporterType.getCommerceOrderImporterItem(
+					_portal.getHttpServletRequest(renderRequest)));
+		}
+		catch (Exception exception) {
+			SessionErrors.add(renderRequest, exception.getClass());
+
+			return "/error.jsp";
+		}
+
 		return "/pending_commerce_orders/view_commerce_order_importer_type.jsp";
 	}
 
 	@Reference
-	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
+	private CommerceOrderImporterTypeRegistry
+		_commerceOrderImporterTypeRegistry;
+
+	@Reference
+	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceWishListService _commerceWishListService;
 
 	@Reference
 	private Portal _portal;

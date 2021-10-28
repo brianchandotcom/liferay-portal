@@ -35,6 +35,27 @@
 	<td>//*[contains(@class,'a11y-overlay')]//*[*[name()='svg'][contains(@class,'info-circle')]]</td>
 	<td></td>
 </tr>
+<!--FILTER-->
+<tr>
+	<td>FILTER_ELEMENT_ICON</td>
+	<td>//*[contains(@class,'a11y-panel') and contains(@class,'violations-header')]//*[*[name()='svg'][contains(@class,'lexicon-icon-filter')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BY_IMPACT_HEADER</td>
+	<td>//*[contains(@class,'a11y-dropdown show')]//*[contains(@class, 'dropdown-subheader') and contains(., 'Filter by Impact')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BY_CATEGORY_HEADER</td>
+	<td>//*[contains(@class,'a11y-dropdown show')]//*[contains(@class, 'dropdown-subheader') and contains(., 'Filter by Category')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_LIST_ITEM</td>
+	<td>//*[contains(@class,'a11y-dropdown show')]//li//*[contains(@class,'dropdown-section') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

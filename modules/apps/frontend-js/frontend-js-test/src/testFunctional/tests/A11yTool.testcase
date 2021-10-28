@@ -93,6 +93,31 @@ definition {
 		takeScreenshot();
 	}
 
+	@description = "LPS-141734. Verifies impact and category filters are available."
+	@priority = "5"
+	test CanFilterViolationsByImpactAndCategory {
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
+
+		// Workaround for side panel sometimes not displaying LPS-141442
+
+		while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+			Refresh();
+		}
+
+		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
+
+		AssertElementPresent(locator1 = "A11yTool#FILTER_BY_IMPACT_HEADER");
+
+		AssertElementPresent(locator1 = "A11yTool#FILTER_BY_CATEGORY_HEADER");
+
+		AssertElementPresent(
+			key_text = "",
+			locator1 = "A11yTool#FILTER_LIST_ITEM");
+
+		takeScreenshot();
+	}
+
 	@description = "LPS-141455. Verifies the side panel appears with violation(s)."
 	@priority = "5"
 	test ShowsSidePanelWithViolation {

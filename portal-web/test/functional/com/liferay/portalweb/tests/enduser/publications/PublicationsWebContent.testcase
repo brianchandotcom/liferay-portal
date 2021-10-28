@@ -58,7 +58,7 @@ definition {
 
 		PortletEntry.save();
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Web Content Folder",
@@ -83,7 +83,7 @@ definition {
 			assetName = "WC Folder Name",
 			assetType = "Web Content Folder");
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Web Content Folder",
@@ -106,9 +106,9 @@ definition {
 			locator1 = "WC#ENTRY_LIST_TITLE",
 			value1 = "Web Content Folder");
 
-		Publications.gotoPublish(publicationName = "Publication 1 Name");
+		PublicationsNavigator.gotoPublish(publicationName = "Publication 1 Name");
 
-		Publications.discardChanges(
+		PublicationsChanges.discardChanges(
 			changeCategory = "WC Folder Name",
 			changeTitle = "WC Folder Name Edited",
 			conflictingChanges = "true",
@@ -198,7 +198,7 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Category Vocabulary",
@@ -320,7 +320,7 @@ definition {
 			key_webContentTitle = "WC WebContent Title",
 			locator1 = "WC#ENTRY_LIST_TITLE");
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Mapping Structure",
@@ -414,7 +414,7 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "WC WebContent Title");
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Widget",

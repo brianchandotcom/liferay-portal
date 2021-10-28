@@ -36,7 +36,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		Publications.gotoReviewChanges(
+		PublicationsNavigator.gotoReviewChanges(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
@@ -117,7 +117,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Publications.gotoPublish(
+		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
@@ -274,9 +274,9 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title Edit 2");
 
-		Publications.gotoReviewChanges(publicationName = "Publication 2 Name");
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication 2 Name");
 
-		Publications.gotoPublish(publicationName = "Publication 2 Name");
+		PublicationsNavigator.gotoPublish(publicationName = "Publication 2 Name");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Document Title Edit 2",
@@ -340,7 +340,7 @@ definition {
 
 		DMDocument.viewDefault();
 
-		Publications.gotoPublish(publicationName = "Publication Name 2");
+		PublicationsNavigator.gotoPublish(publicationName = "Publication Name 2");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "Asset",
@@ -401,7 +401,7 @@ definition {
 
 		DMDocument.viewDefault();
 
-		Publications.gotoPublish(publicationName = "Publication Name 2");
+		PublicationsNavigator.gotoPublish(publicationName = "Publication Name 2");
 
 		AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
 
@@ -525,7 +525,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication 2 Name");
 
-		Publications.gotoPublish(
+		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
@@ -607,9 +607,9 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
-		Publications.discardChanges(
+		PublicationsChanges.discardChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
 			changeTitle = "WC Structure Name");
 
@@ -676,7 +676,7 @@ definition {
 				title = "WC Title ${count}");
 		}
 
-		Publications.gotoReviewChanges(
+		PublicationsNavigator.gotoReviewChanges(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
@@ -772,7 +772,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.gotoPublish(
+		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication 2 Name");
 
@@ -780,7 +780,7 @@ definition {
 
 		Publications.selectPublication(publicationName = "Publication Name");
 
-		Publications.gotoPublish(publicationName = "Publication Name");
+		PublicationsNavigator.gotoPublish(publicationName = "Publication Name");
 
 		Publications.publishPublication(publicationName = "Publication Name");
 
@@ -873,7 +873,7 @@ definition {
 			webContentTitle = "WC WebContent Title",
 			webContentTitleEdit = "WC WebContent Title 2 Edit");
 
-		Publications.gotoReviewChanges(
+		PublicationsNavigator.gotoReviewChanges(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication 1 Name");
 
@@ -916,7 +916,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title 2 Edit");*/
 
-		Publications.gotoReviewChanges(publicationName = "Publication 2 Name");
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication 2 Name");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Web Content Article",
@@ -930,15 +930,15 @@ definition {
 			changeDescription = "Test Test added a Web Content Article in Guest",
 			changeTitle = "WC WebContent Title 2 Edit");
 
-		Publications.gotoPublish(publicationName = "Publication 2 Name");
+		PublicationsNavigator.gotoPublish(publicationName = "Publication 2 Name");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "WC WebContent Title 2 Edit",
 			warningMessage = "Deletion Modification Conflict: Modification conflicts with a deletion.");
 
-		Publications.gotoViewChangeDiffInConflictingPublications(entryTitle = "WC WebContent Title 2 Edit");
+		PublicationsNavigator.gotoViewChangeDiffInConflictingPublications(entryTitle = "WC WebContent Title 2 Edit");
 
-		Publications.viewChangeDiff(
+		PublicationsChanges.viewChangeDiff(
 			columnName = "Title",
 			columnValueInPublication = "WC WebContent Title 2 Edit",
 			entryDeletedInProduction = "true",
@@ -948,7 +948,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		Publications.discardChanges(
+		PublicationsChanges.discardChanges(
 			changeCategory = "Asset",
 			changeTitle = "WC WebContent Title 2 Edit",
 			conflictingChanges = "true",
@@ -1026,7 +1026,7 @@ definition {
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name");
 
-		Publications.gotoPublish(publicationName = "Publication Name 2");
+		PublicationsNavigator.gotoPublish(publicationName = "Publication Name 2");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Folder Name",
@@ -1071,7 +1071,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.gotoPublish(publicationName = "Publication Name");
+		PublicationsNavigator.gotoPublish(publicationName = "Publication Name");
 
 		Publications.publishPublication(publicationName = "Publication Name");
 
@@ -1206,7 +1206,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Cherry");
 
-		Publications.gotoPublish(publicationName = "Cherry");
+		PublicationsNavigator.gotoPublish(publicationName = "Cherry");
 
 		Publications.publishPublication(publicationName = "Cherry");
 
@@ -1220,7 +1220,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Banana");
 
-		Publications.gotoPublish(publicationName = "Banana");
+		PublicationsNavigator.gotoPublish(publicationName = "Banana");
 
 		Publications.publishPublication(publicationName = "Banana");
 
@@ -1234,7 +1234,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Apple");
 
-		Publications.gotoPublish(publicationName = "Apple");
+		PublicationsNavigator.gotoPublish(publicationName = "Apple");
 
 		Publications.publishPublication(publicationName = "Apple");
 

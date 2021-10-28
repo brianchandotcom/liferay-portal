@@ -1,5 +1,69 @@
 definition {
 
+	macro gotoPublish {
+		if ("${gotoPublicationsAdmin}" == "true") {
+			PublicationsNavigator.openPublicationsAdmin();
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			Click(
+				key_publicationName = "${publicationName}",
+				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Publish");
+		}
+		else {
+			PublicationsNavigator.gotoReviewChanges();
+
+			Click(locator1 = "Publications#PUBLISH_NAV_BAR");
+		}
+	}
+
+	macro gotoReviewChanges {
+		if ("${gotoPublicationsAdmin}" == "true") {
+			PublicationsNavigator.openPublicationsAdmin();
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			Click(
+				key_publicationName = "${publicationName}",
+				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
+		}
+		else {
+			Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
+		}
+
+		MenuItem.click(menuItem = "Review Changes");
+	}
+
+	macro gotoViewChangeDiff {
+		var key_changeCategory = "${changeCategory}";
+		var key_changeTitle = "${changeTitle}";
+
+		if (isSet(changeOrder)) {
+			var changeOrder = "${changeOrder}";
+		}
+		else {
+			var changeOrder = "1";
+		}
+
+		Click(
+			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
+			value1 = "${changeTitle}");
+	}
+
+	macro gotoViewChangeDiffInConflictingPublications {
+		Click(
+			key_entryTitle = "${entryTitle}",
+			locator1 = "Publications#CONFLICTING_CHANGES_CONTENT_LINK");
+
+		SelectFrameTop(value1 = "relative=top");
+
+		AssertElementPresent(
+			key_iframeTitle = "${entryTitle}",
+			locator1 = "Publications#CONFLICTING_CHANGES_DIFF_IFRAME_TITLE");
+	}
+
 	macro openPublicationsAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

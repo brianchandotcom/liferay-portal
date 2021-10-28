@@ -44,7 +44,7 @@ definition {
 
 		PortletEntry.save();
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Tag",
@@ -65,7 +65,7 @@ definition {
 
 		Page.viewNoPG(pageName = "Test Page");
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Page",
@@ -228,17 +228,17 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
 
-		Publications.gotoPublish(
+		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name 1");
 
-		Publications.discardChanges(
+		PublicationsChanges.discardChanges(
 			changeCategory = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
 			changeTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
 			conflictingChanges = "true",
 			entryTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure");
 
-		Publications.discardChanges(
+		PublicationsChanges.discardChanges(
 			changeCategory = "com.liferay.portal.kernel.model.PortletPreferenceValue",
 			changeTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue",
 			conflictingChanges = "true",

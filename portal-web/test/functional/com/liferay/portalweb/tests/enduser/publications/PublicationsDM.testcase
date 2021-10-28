@@ -99,7 +99,7 @@ definition {
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.pdf,Document_3.png");
 
-		Publications.gotoReviewChanges(
+		PublicationsNavigator.gotoReviewChanges(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
@@ -116,7 +116,7 @@ definition {
 			assetType = "Documents Folder",
 			dmFolderName = "DM Folder 1 Name");
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Documents Folder",
@@ -133,7 +133,7 @@ definition {
 
 		RecycleBin.emptyCP();
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Documents Folder",
@@ -183,7 +183,7 @@ definition {
 			dmDocumentTitle = "DM Document Title Edit",
 			dmFolderName = "DM Folder Name");
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Document",
@@ -262,7 +262,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Document",
@@ -338,7 +338,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Document",
@@ -414,7 +414,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
 
-		Publications.gotoPublish(
+		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
@@ -422,9 +422,9 @@ definition {
 			entryTitle = "DM Document Title Edit",
 			warningMessage = "The conflict cannot be automatically resolved.");
 
-		Publications.gotoViewChangeDiffInConflictingPublications(entryTitle = "DM Document Title Edit");
+		PublicationsNavigator.gotoViewChangeDiffInConflictingPublications(entryTitle = "DM Document Title Edit");
 
-		Publications.viewChangeDiff(
+		PublicationsChanges.viewChangeDiff(
 			columnName = "Title",
 			columnValueInProduction = "DM Document 2 Title Edit",
 			columnValueInPublication = "DM Document Title Edit",
@@ -435,7 +435,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		Publications.discardChanges(
+		PublicationsChanges.discardChanges(
 			changeCategory = "Asset",
 			changeTitle = "DM Document Title Edit",
 			conflictingChanges = "true",

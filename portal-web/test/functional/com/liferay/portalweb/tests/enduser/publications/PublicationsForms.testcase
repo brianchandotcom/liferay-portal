@@ -188,7 +188,7 @@ definition {
 
 		Form.saveElementSet();
 
-		Publications.gotoReviewChanges(publicationName = "Publication Name 2");
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name 2");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Mapping Structure",
@@ -263,7 +263,7 @@ definition {
 
 		Form.save();
 
-		Publications.gotoReviewChanges(publicationName = "Publication Name 1");
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name 1");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Mapping Structure",
@@ -284,7 +284,7 @@ definition {
 
 		Form.deleteCP(formName = "Created Form Name");
 
-		Publications.gotoReviewChanges(publicationName = "Publication Name 2");
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name 2");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Mapping Structure",
@@ -297,11 +297,11 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
 
-		Publications.gotoPublish(
+		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name 1");
 
-		Publications.discardChanges(
+		PublicationsChanges.discardChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
 			changeTitle = "Created Form Name",
 			conflictingChanges = "true",
@@ -471,7 +471,7 @@ definition {
 			formName = "Created Form Name",
 			groupName = "Guest");
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Form Instance",

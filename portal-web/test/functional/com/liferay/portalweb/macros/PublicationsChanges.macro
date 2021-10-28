@@ -37,6 +37,48 @@ definition {
 		AssertTextNotPresent(value1 = "${commentValue}");
 	}
 
+	macro discardChanges {
+		if (isSet(changeOrder)) {
+			var changeOrder = "${changeOrder}";
+		}
+		else {
+			var changeOrder = "1";
+		}
+
+		if ("${conflictingChanges}" == "true") {
+			Click(
+				key_entryTitle = "${entryTitle}",
+				locator1 = "Publications#CONFLICTING_CHANGES_DISCARD_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Discard Change");
+		}
+		else {
+			var key_changeCategory = "${changeCategory}";
+			var key_changeTitle = "${changeTitle}";
+
+			Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE");
+
+			Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Discard");
+		}
+
+		AssertElementPresent(locator1 = "Publications#DISCARDED_CHANGES_TITLE");
+
+		var key_changeCategory = "${changeCategory}";
+		var key_changeTitle = "${changeTitle}";
+
+		while (IsElementNotPresent(locator1 = "PublicationsChanges#CONTEXT_CHANGE_TITLE")) {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
+
+		Click(
+			key_text = "Discard",
+			locator1 = "Button#ANY");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro editComment {
 		Click.mouseOverClick(
 			key_commentValue = "${commentValue}",
@@ -105,6 +147,65 @@ definition {
 			if (IsElementPresent(locator1 = "PublicationsChanges#SORTED_DESCENDING_ICON")) {
 				Click(locator1 = "PublicationsChanges#SORTED_DESCENDING_ICON");
 			}
+		}
+	}
+
+	macro viewChangeDiff {
+		if ("${entryDeletedInProduction}" == "true") {
+			AssertTextEquals(
+				key_displayItem = "Split View",
+				locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+				value1 = "Split View");
+		}
+		else {
+			AssertTextEquals(
+				key_displayItem = "Unified View",
+				locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+				value1 = "Unified View");
+		}
+
+		var key_columnName = "${columnName}";
+
+		if (isSet(diffAddedValue)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Publications#DIFF_ADDED_VALUE",
+				value1 = "${diffAddedValue}");
+		}
+
+		if (isSet(diffRemovedValue)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Publications#DIFF_REMOVED_VALUE",
+				value1 = "${diffRemovedValue}");
+		}
+
+		Publications.changeDiffDisplayItem(displayItem = "Production");
+
+		if ("${entryDeletedInProduction}" == "true") {
+			Alert.viewErrorMessage(errorMessage = "This item is missing or is deleted.");
+		}
+		else {
+			AssertTextEquals(
+				key_displayItem = "Production",
+				locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+				value1 = "Production");
+
+			if (isSet(columnValueInProduction)) {
+				key_columnValueInProduction = "${columnValueInProduction}";
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "Publications#COLUMN_VALUE_IN_PRODUCTION",
+					value1 = "${columnValueInProduction}");
+			}
+		}
+
+		Publications.changeDiffDisplayItem(displayItem = "Publication");
+
+		if (isSet(columnValueInPublication)) {
+			key_columnValueInPublication = "${columnValueInPublication}";
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Publications#COLUMN_VALUE_IN_PUBLICATION",
+				value1 = "${columnValueInPublication}");
 		}
 	}
 

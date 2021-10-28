@@ -60,7 +60,7 @@ definition {
 
 		CalendarEvent.view(eventTitle = "Publication Calendar Event Title");
 
-		Publications.gotoReviewChanges(publicationName = "Publication Name");
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Calendar",
@@ -129,7 +129,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		Publications.gotoReviewChanges(publicationName = "Publication Name");
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Calendar Event",
@@ -152,7 +152,7 @@ definition {
 			assetName = "Publication Calendar Event Title",
 			assetType = "Calendar Event");
 
-		Publications.gotoReviewChanges(publicationName = "Publication Name 2");
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name 2");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Calendar Event",
@@ -165,7 +165,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
 
-		Publications.gotoPublish(
+		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
@@ -173,9 +173,9 @@ definition {
 			entryTitle = "Publication Calendar Event Title Edit",
 			warningMessage = "Deletion Modification Conflict: Modification conflicts with a deletion.");
 
-		Publications.gotoViewChangeDiffInConflictingPublications(entryTitle = "Publication Calendar Event Title Edit");
+		PublicationsNavigator.gotoViewChangeDiffInConflictingPublications(entryTitle = "Publication Calendar Event Title Edit");
 
-		Publications.viewChangeDiff(
+		PublicationsChanges.viewChangeDiff(
 			columnName = "Title",
 			columnValueInPublication = "Publication Calendar Event Title Edit",
 			entryDeletedInProduction = "true",
@@ -185,7 +185,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		Publications.discardChanges(
+		PublicationsChanges.discardChanges(
 			changeCategory = "Asset",
 			changeTitle = "Publication Calendar Event Title Edit",
 			conflictingChanges = "true",

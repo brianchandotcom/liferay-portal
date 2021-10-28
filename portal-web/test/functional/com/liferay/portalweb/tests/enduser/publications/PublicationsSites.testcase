@@ -56,7 +56,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Child Site Page");
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Site",
@@ -92,7 +92,7 @@ definition {
 
 		Site.viewCP(siteName = "Site Name");
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Site",

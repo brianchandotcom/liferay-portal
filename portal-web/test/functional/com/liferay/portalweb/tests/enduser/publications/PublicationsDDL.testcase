@@ -106,7 +106,7 @@ definition {
 
 		DDLDataDefinition.deleteCP(ddlDataDefinitionName = "Data Definition");
 
-		Publications.gotoReviewChanges(publicationName = "Publication Name");
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Mapping Structure",
@@ -245,7 +245,7 @@ definition {
 			locator1 = "//div[@class='portlet-body']",
 			value1 = "Text");
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Mapping Template",
@@ -367,7 +367,7 @@ definition {
 			ddlListName = "List Name",
 			ddlListNameEdit = "List Name Edit");
 
-		Publications.gotoReviewChanges(publicationName = "Publication Name");
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Mapping Structure",
@@ -392,7 +392,7 @@ definition {
 			changeType = "Modified",
 			changeUser = "Test Test");
 
-		Publications.gotoViewChangeDiff(
+		PublicationsNavigator.gotoViewChangeDiff(
 			changeCategory = "Dynamic Data Lists Record",
 			changeTitle = "${changeTitle}");
 
@@ -525,7 +525,7 @@ definition {
 
 		DDLRecord.viewFieldFormTemplateSpecific(field = "Separator");
 
-		Publications.gotoReviewChanges();
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Mapping Template",
@@ -597,7 +597,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.gotoReviewChanges(
+		PublicationsNavigator.gotoReviewChanges(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
@@ -757,7 +757,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
 
-		Publications.gotoPublish(
+		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name 1");
 
@@ -765,7 +765,7 @@ definition {
 			ddlListName = "List Name",
 			groupName = "Guest");
 
-		Publications.discardChanges(
+		PublicationsChanges.discardChanges(
 			changeCategory = "Dynamic Data Lists Record",
 			changeTitle = "${changeTitle}",
 			conflictingChanges = "true",

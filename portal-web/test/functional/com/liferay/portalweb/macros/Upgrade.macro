@@ -4099,7 +4099,7 @@ definition {
 			locator1 = "Publications#LIST_OUT_OF_DATE_STATUS",
 			value1 = "Out of Date");
 
-		Publications.gotoReviewChanges(
+		PublicationsNavigator.gotoReviewChanges(
 			gotoPublicationsAdmin = "true",
 			key_publicationName = "Publication 2 Name");
 

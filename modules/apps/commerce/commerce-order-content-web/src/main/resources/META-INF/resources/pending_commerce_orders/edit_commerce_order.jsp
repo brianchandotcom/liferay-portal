@@ -79,6 +79,17 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceOrderId" type="hidden" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
 
+	<liferay-ui:error exception="<%= CommerceOrderImporterTypeException.class %>" key="commerceOrderImporterTypeKey">
+		<c:choose>
+			<c:when test='<%= Validator.isNull((String)SessionMessages.get(renderRequest, "commerceOrderImporterTypeKey")) %>'>
+				<liferay-ui:message key="the-import-process-failed" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message arguments='<%= (String)SessionMessages.get(renderRequest, "commerceOrderImporterTypeKey") %>' key="the-x-could-not-be-imported" />
+			</c:otherwise>
+		</c:choose>
+	</liferay-ui:error>
+
 	<liferay-ui:error exception="<%= CommerceOrderValidatorException.class %>">
 
 		<%
@@ -100,6 +111,14 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 		%>
 
 	</liferay-ui:error>
+
+	<liferay-ui:success key="failureRowsCount">
+		<liferay-ui:message arguments='<%= (int)SessionMessages.get(renderRequest, "failureRowsCount") %>' key="x-rows-not-imported" translateArguments="<%= false %>" />
+	</liferay-ui:success>
+
+	<liferay-ui:success key="importedRowsCount">
+		<liferay-ui:message arguments='<%= (int)SessionMessages.get(renderRequest, "importedRowsCount") %>' key="x-rows-imported-successfully" translateArguments="<%= false %>" />
+	</liferay-ui:success>
 
 	<aui:model-context bean="<%= commerceOrder %>" model="<%= CommerceOrder.class %>" />
 
@@ -313,13 +332,31 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 		).buildPortletURL();
 
 		for (CommerceOrderImporterType commerceOrderImporterType : commerceOrderContentDisplayContext.getCommerceImporterTypes(commerceOrder)) {
-			viewCommerceOrderImporterTypeURL.setParameter("commerceOrderImporterTypeKey", commerceOrderImporterType.getKey());
+			String commerceOrderImporterTypeKey = commerceOrderImporterType.getKey();
+			String commerceOrderImporterTypeLabel = commerceOrderImporterType.getLabel(locale);
+
+			viewCommerceOrderImporterTypeURL.setParameter("commerceOrderImporterTypeKey", commerceOrderImporterTypeKey);
+
+			String viewCommerceOrderImporterTypeURLString = viewCommerceOrderImporterTypeURL.toString();
 		%>
 
 			<liferay-ui:icon
-				message="<%= commerceOrderImporterType.getLabel(locale) %>"
-				url="<%= viewCommerceOrderImporterTypeURL.toString() %>"
-				useDialog="<%= true %>"
+				cssClass="<%= commerceOrderImporterTypeKey %>"
+				message="<%= commerceOrderImporterTypeLabel %>"
+				url="<%= viewCommerceOrderImporterTypeURLString %>"
+			/>
+
+			<liferay-frontend:component
+				context='<%=
+					HashMapBuilder.<String, Object>put(
+						"commerceOrderImporterTypeKey", commerceOrderImporterTypeKey
+					).put(
+						"title", commerceOrderImporterTypeLabel
+					).put(
+						"url", viewCommerceOrderImporterTypeURLString
+					).build()
+				%>'
+				module="js/edit_commerce_order"
 			/>
 
 		<%

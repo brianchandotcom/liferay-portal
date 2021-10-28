@@ -16,7 +16,6 @@ package com.liferay.blogs.service.impl;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryTable;
-import com.liferay.blogs.model.BlogsStatsUser;
 import com.liferay.blogs.model.BlogsStatsUserDAO;
 import com.liferay.blogs.model.impl.BlogsStatsUserDAOImpl;
 import com.liferay.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl;
@@ -26,10 +25,11 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.UserTable;
+import com.liferay.portal.kernel.model.Users_OrgsTable;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.ratings.kernel.model.RatingsEntryTable;
 
 import java.util.ArrayList;
@@ -163,9 +163,8 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public List<BlogsStatsUser> getOrganizationStatsUsers(
-		long organizationId, int start, int end,
-		OrderByComparator<BlogsStatsUser> orderByComparator) {
+	public List<BlogsStatsUserDAO> getOrganizationStatsUsers(
+		long organizationId, int start, int end) {
 
 		LongStream longStream = Arrays.stream(
 			_userLocalService.getOrganizationUserIds(organizationId));
@@ -177,11 +176,18 @@ public class BlogsStatsUserLocalServiceImpl
 
 		List<Object[]> results = _blogsEntryPersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
+				BlogsEntryTable.INSTANCE.groupId,
 				BlogsEntryTable.INSTANCE.userId, _lastPostDateExpression,
 				_entryCountExpression, _ratingsTotalEntriesExpression,
 				_ratingsAverageScoreExpression, _ratingsTotalScoreExpression
 			).from(
 				BlogsEntryTable.INSTANCE
+			).innerJoinON(
+				UserTable.INSTANCE,
+				UserTable.INSTANCE.userId.eq(BlogsEntryTable.INSTANCE.userId)
+			).innerJoinON(
+				Users_OrgsTable.INSTANCE,
+				Users_OrgsTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId)
 			).leftJoinOn(
 				RatingsEntryTable.INSTANCE,
 				BlogsEntryTable.INSTANCE.entryId.eq(
@@ -192,7 +198,7 @@ public class BlogsStatsUserLocalServiceImpl
 							BlogsEntry.class.getName()))
 				)
 			).where(
-				BlogsEntryTable.INSTANCE.userId.in(organizationUserIds)
+				Users_OrgsTable.INSTANCE.organizationId.in(organizationUserIds)
 			).groupBy(
 				BlogsEntryTable.INSTANCE.userId
 			).orderBy(
@@ -205,12 +211,13 @@ public class BlogsStatsUserLocalServiceImpl
 			results.size());
 
 		for (Object[] columns : results) {
-			Long userId = (Long)columns[0];
-			Long entryCount = (Long)columns[1];
-			Date lastPostDate = (Date)columns[2];
-			Integer ratingsTotalEntries = (Integer)columns[3];
-			Double ratingsAverageScore = (Double)columns[4];
-			Double ratingsTotalScore = (Double)columns[5];
+			Long groupId = (Long)columns[0];
+			Long userId = (Long)columns[1];
+			Long entryCount = (Long)columns[2];
+			Date lastPostDate = (Date)columns[3];
+			Integer ratingsTotalEntries = (Integer)columns[4];
+			Double ratingsAverageScore = (Double)columns[5];
+			Double ratingsTotalScore = (Double)columns[6];
 
 			blogsStatsUsers.add(
 				new BlogsStatsUserDAOImpl(

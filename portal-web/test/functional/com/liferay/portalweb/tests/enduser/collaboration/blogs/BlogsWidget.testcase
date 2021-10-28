@@ -504,6 +504,54 @@ definition {
 
 	}
 
+	@description = "This is a test for LPS-141740. It checks that a user can view the details of latest blogs entry via recent bloggers."
+	@priority = "4"
+	test CanViewLatestEntryViaRecentBloggers {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Recent Bloggers Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Recent Bloggers Page",
+			widgetName = "Blogs");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Recent Bloggers Page",
+			widgetName = "Recent Bloggers");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content Latest",
+			entryTitle = "Blogs Entry Title Latest");
+
+		Navigator.gotoPage(pageName = "Recent Bloggers Page");
+
+		BlogsRecentBloggersPortlet.gotoEntryDetails(userName = "Test Test");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content Latest",
+			entryTitle = "Blogs Entry Title Latest");
+
+		JSONBlog.moveEntryToTrash(
+			entryTitle = "Blogs Entry Title Latest",
+			groupName = "Guest");
+
+		Navigator.gotoPage(pageName = "Recent Bloggers Page");
+
+		BlogsRecentBloggersPortlet.gotoEntryDetails(userName = "Test Test");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
 	@description = "This checks that Blogs widgets are independently configured."
 	@priority = "4"
 	@refactordone

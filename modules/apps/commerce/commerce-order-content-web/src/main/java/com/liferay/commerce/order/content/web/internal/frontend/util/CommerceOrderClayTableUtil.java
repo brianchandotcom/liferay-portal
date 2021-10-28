@@ -18,7 +18,11 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
+import com.liferay.commerce.order.content.web.internal.importer.type.CSVCommerceOrderImporterTypeImpl;
+import com.liferay.commerce.order.content.web.internal.importer.type.CommerceOrdersCommerceOrderImporterTypeImpl;
+import com.liferay.commerce.order.content.web.internal.importer.type.CommerceWishListsCommerceOrderImporterTypeImpl;
 import com.liferay.commerce.order.content.web.internal.model.Order;
+import com.liferay.commerce.order.content.web.internal.model.WishList;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
@@ -57,6 +61,36 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class CommerceOrderClayTableUtil {
 
+	public static String getCSVCommerceOrderPreviewURL(
+		long fileEntryId, HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(httpServletRequest);
+
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				originalHttpServletRequest, portletDisplay.getId(),
+				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_open_order_content/view_commerce_order_importer_type"
+		).setParameter(
+			"commerceOrderId",
+			ParamUtil.getLong(httpServletRequest, "commerceOrderId")
+		).setParameter(
+			"commerceOrderImporterTypeKey", CSVCommerceOrderImporterTypeImpl.KEY
+		).setParameter(
+			"fileEntryId", fileEntryId
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
+	}
+
 	public static String getEditOrderURL(
 			long commerceOrderId, HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -84,6 +118,37 @@ public class CommerceOrderClayTableUtil {
 				PortalUtil.getCurrentURL(httpServletRequest))
 		).setParameter(
 			"commerceOrderId", commerceOrderId
+		).buildString();
+	}
+
+	public static String getOrderCommerceOrderPreviewURL(
+		Order order, HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(httpServletRequest);
+
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				originalHttpServletRequest, portletDisplay.getId(),
+				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_open_order_content/view_commerce_order_importer_type"
+		).setParameter(
+			"commerceOrderId",
+			ParamUtil.getLong(httpServletRequest, "commerceOrderId")
+		).setParameter(
+			"commerceOrderImporterTypeKey",
+			CommerceOrdersCommerceOrderImporterTypeImpl.KEY
+		).setParameter(
+			"selectedCommerceOrderId", order.getOrderId()
+		).setWindowState(
+			LiferayWindowState.POP_UP
 		).buildString();
 	}
 
@@ -203,6 +268,37 @@ public class CommerceOrderClayTableUtil {
 		portletURL.setParameter("backURL", portletURL.toString());
 
 		return portletURL.toString();
+	}
+
+	public static String getWishListCommerceOrderPreviewURL(
+		WishList wishList, HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(httpServletRequest);
+
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				originalHttpServletRequest, portletDisplay.getId(),
+				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_open_order_content/view_commerce_order_importer_type"
+		).setParameter(
+			"commerceOrderId",
+			ParamUtil.getLong(httpServletRequest, "commerceOrderId")
+		).setParameter(
+			"commerceOrderImporterTypeKey",
+			CommerceWishListsCommerceOrderImporterTypeImpl.KEY
+		).setParameter(
+			"commerceWishListId", wishList.getWishListId()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

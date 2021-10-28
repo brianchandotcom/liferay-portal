@@ -74,7 +74,8 @@ const SaveTemplateModal = ({
 					setLoadingResponse(false);
 
 					handleFormError(responseJson);
-				} else {
+				}
+				else {
 					setVisible(false);
 
 					closeModal();
@@ -84,9 +85,11 @@ const SaveTemplateModal = ({
 					}
 				}
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			handleFormError();
-		} finally {
+		}
+		finally {
 			setLoadingResponse(true);
 		}
 	};

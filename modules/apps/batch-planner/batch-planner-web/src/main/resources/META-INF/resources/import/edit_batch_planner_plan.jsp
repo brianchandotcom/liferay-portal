@@ -162,7 +162,6 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 	</form>
 </div>
 
-
 <liferay-frontend:component
 	module="js/edit_batch_planner_plan"
 />

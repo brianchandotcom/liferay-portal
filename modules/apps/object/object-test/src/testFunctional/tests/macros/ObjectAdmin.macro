@@ -422,8 +422,24 @@ definition {
 		Click(locator1 = "ObjectAdmin#OBJECT_RELATIONSHIPS_TAB");
 	}
 
+	macro openMySubmissions {
+		Navigator.openURL();
+
+		Navigator.openSpecificURL(url = "/group/control_panel/manage?p_p_id=com_liferay_portal_workflow_web_internal_portlet_UserWorkflowPortlet&p_p_lifecycle=0");
+	}
+
+	macro openMyWorkflowTasks {
+		Navigator.openURL();
+
+		Navigator.openSpecificURL(url = "/web/guest/manage?p_p_id=com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet&p_p_lifecycle=0");
+	}
+
 	macro openObjectAdmin {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet");
+	}
+
+	macro openSubmissions {
+		Navigator.openSpecificURL(url = "/group/control_panel/manage?p_p_id=com_liferay_portal_workflow_web_internal_portlet_ControlPanelWorkflowInstancePortlet&p_p_lifecycle=0&p_p_state=maximized");
 	}
 
 	macro openWorkflowProcessBuilderConfiguration {

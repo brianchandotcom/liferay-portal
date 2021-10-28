@@ -132,10 +132,8 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 		public void modifiedService(
 			ServiceReference<S> serviceReference, T service) {
 
-			if (_serviceTrackerCustomizer != null) {
-				_serviceTrackerCustomizer.modifiedService(
-					serviceReference, service);
-			}
+			_serviceTrackerCustomizer.modifiedService(
+				serviceReference, service);
 
 			_update(serviceReference, service, false);
 		}
@@ -144,10 +142,7 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 		public void removedService(
 			ServiceReference<S> serviceReference, T service) {
 
-			if (_serviceTrackerCustomizer != null) {
-				_serviceTrackerCustomizer.removedService(
-					serviceReference, service);
-			}
+			_serviceTrackerCustomizer.removedService(serviceReference, service);
 
 			_update(serviceReference, service, true);
 

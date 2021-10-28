@@ -286,6 +286,11 @@ definition {
 	}
 
 	macro disablePublications {
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
 		Click.waitForMenuToggleJSClick(locator1 = "Publications#PUBLICATIONS_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Settings");
@@ -340,7 +345,10 @@ definition {
 	}
 
 	macro enablePublications {
-		Pause(locator1 = "2000");
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
 
 		Check.checkToggleSwitch(locator1 = "Publications#PUBLICATIONS_TOGGLE_SWITCH");
 

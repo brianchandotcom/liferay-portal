@@ -20,11 +20,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			ApplicationsMenu.gotoPortlet(
-				category = "Publications",
-				panel = "Applications",
-				portlet = "Publications");
-
 			Publications.disablePublications();
 		}
 	}

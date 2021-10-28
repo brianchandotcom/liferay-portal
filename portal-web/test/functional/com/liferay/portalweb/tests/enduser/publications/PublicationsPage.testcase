@@ -297,12 +297,7 @@ definition {
 			key_friendlyURL = "/test-page-edited",
 			locator1 = "SitePages#FRIENDLY_URL");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		Navigator.gotoNavTab(navTab = "History");
+		PublicationsNavigator.openPublicationsHistory();
 
 		Publications.revertPublication(publicationName = "Publication Name");
 

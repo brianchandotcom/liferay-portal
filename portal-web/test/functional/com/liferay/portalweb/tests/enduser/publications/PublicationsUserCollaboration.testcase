@@ -60,10 +60,7 @@ definition {
 
 		JSONPublications.addPublication(publicationName = "Publication Name 1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		Publications.inviteUsers(
 			publicationName = "Publication Name 1",
@@ -118,10 +115,7 @@ definition {
 			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 			value1 = "Test Test has invited you to work on Publication Name 2 as a Editor.");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		AssertElementPresent(
 			key_publicationName = "Publication Name 1",
@@ -129,10 +123,7 @@ definition {
 
 		Publications.assertViewerPermissions(publicationName = "Publication Name 1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		AssertElementPresent(
 			key_publicationName = "Publication Name 2",
@@ -171,10 +162,7 @@ definition {
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		Publications.inviteUsers(
 			publicationName = "Publication Name",
@@ -206,10 +194,7 @@ definition {
 			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 			value1 = "Test Test has invited you to work on Publication Name as a Editor.");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		AssertElementPresent(
 			key_publicationName = "Publication Name",
@@ -255,10 +240,7 @@ definition {
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		Publications.inviteUsers(
 			publicationName = "Publication Name",
@@ -290,10 +272,7 @@ definition {
 			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 			value1 = "Test Test has invited you to work on Publication Name as a Inviter.");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		AssertElementPresent(
 			key_publicationName = "Publication Name",
@@ -337,10 +316,7 @@ definition {
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		Publications.inviteUsers(
 			publicationName = "Publication Name",
@@ -372,10 +348,7 @@ definition {
 			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 			value1 = "Test Test has invited you to work on Publication Name as a Publisher.");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		AssertElementPresent(
 			key_publicationName = "Publication Name",
@@ -410,10 +383,7 @@ definition {
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		Publications.inviteUsers(
 			publicationName = "Publication Name",
@@ -445,10 +415,7 @@ definition {
 			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 			value1 = "Test Test has invited you to work on Publication Name as a Viewer.");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		AssertElementPresent(
 			key_publicationName = "Publication Name",

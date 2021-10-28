@@ -4089,12 +4089,7 @@ definition {
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
 			value1 = "Production");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		Navigator.gotoNavTab(navTab = "Ongoing");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -4116,19 +4111,11 @@ definition {
 
 		AssertVisible(locator1 = "Publications#SCHEDULE_DISABLED_NAV_BAR");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		Publications.deletePublication(publicationName = "Publication 2 Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		Navigator.gotoNavTab(navTab = "History");
+		PublicationsNavigator.openPublicationsHistory();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

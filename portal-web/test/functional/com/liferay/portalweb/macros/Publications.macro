@@ -385,17 +385,6 @@ definition {
 		Pause(locator1 = "3000");
 	}
 
-	macro gotoScheduledPublications {
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		Click(
-			key_navBarTitle = "Scheduled",
-			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE");
-	}
-
 	macro gotoViewChangeDiff {
 		var key_changeCategory = "${changeCategory}";
 		var key_changeTitle = "${changeTitle}";
@@ -471,11 +460,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		var key_navBarTitle = "History";
-
-		AssertTextEquals(
-			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE",
-			value1 = "History");
+		PublicationsNavigator.openPublicationsHistory();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -547,7 +532,7 @@ definition {
 			MenuItem.click(menuItem = "Schedule");
 		}
 		else if ("${reschedule}" == "true") {
-			Publications.gotoScheduledPublications();
+			PublicationsNavigator.openPublicationsScheduled();
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -663,7 +648,7 @@ definition {
 	}
 
 	macro unschedulePublication {
-		Publications.gotoScheduledPublications();
+		PublicationsNavigator.openPublicationsScheduled();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -754,16 +739,7 @@ definition {
 	}
 
 	macro viewPublicationOrderInHistory {
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		var key_navBarTitle = "History";
-
-		Click(
-			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE",
-			value1 = "History");
+		PublicationsNavigator.openPublicationsHistory();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -780,16 +756,7 @@ definition {
 	}
 
 	macro viewPublicationPublished {
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		var key_navBarTitle = "History";
-
-		Click(
-			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE",
-			value1 = "History");
+		PublicationsNavigator.openPublicationsHistory();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

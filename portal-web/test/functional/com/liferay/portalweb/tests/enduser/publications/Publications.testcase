@@ -519,12 +519,7 @@ definition {
 			webContentTitle = "WC WebContent Title",
 			webContentTitleEdit = "WC WebContent Title");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		Navigator.gotoNavTab(navTab = "Ongoing");
+		PublicationsNavigator.openPublicationsHistory();
 
 		Publications.assertDiscardIsUnavailableForInactivePublication(
 			changeCategory = "Web Content Article",
@@ -1100,12 +1095,7 @@ definition {
 			key_webContentTitle = "Web Content Title",
 			locator1 = "WC#ENTRY_LIST_TITLE");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		Navigator.gotoNavTab(navTab = "History");
+		PublicationsNavigator.openPublicationsHistory();
 
 		Publications.revertPublication(
 			publicationName = "Publication Name",
@@ -1207,12 +1197,7 @@ definition {
 
 		Publications.createNewPublication(publicationName = "Cherry");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		Navigator.gotoNavTab(navTab = "Ongoing");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		for (var publicationName : list "Apple,Banana,Cherry") {
 			Publications.search(publicationName = "${publicationName}");

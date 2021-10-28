@@ -124,8 +124,11 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 
 		@Override
 		public T addingService(ServiceReference<S> serviceReference) {
-			return _update(
-				serviceReference, getService(serviceReference), false);
+			T service = getService(serviceReference);
+
+			_update(serviceReference, service, false);
+
+			return service;
 		}
 
 		@Override
@@ -153,11 +156,11 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 			return _serviceTrackerCustomizer.addingService(serviceReference);
 		}
 
-		private T _update(
+		private void _update(
 			ServiceReference<S> serviceReference, T service, boolean remove) {
 
 			if (service == null) {
-				return service;
+				return;
 			}
 
 			ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple =
@@ -176,8 +179,6 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 					_services.add(-index - 1, serviceReferenceServiceTuple);
 				}
 			}
-
-			return service;
 		}
 
 	}

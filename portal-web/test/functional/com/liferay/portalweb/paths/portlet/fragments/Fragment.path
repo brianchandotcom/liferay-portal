@@ -12,8 +12,8 @@
 <tbody>
 <!--COLLECTION_DISPLAY_CELL-->
 <tr>
-	<td>CONTENT_DISPLAY_FRAGMENT_CONTENT</td>
-	<td>//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}][contains(.,'${key_entryContent}')]</td>
+	<td>FRAGMENT_TEXT_IN_COLLECTION_DISPLAY</td>
+	<td>//section[contains(@id,'content')]//div[@class='row'][${row}]/div[contains(@class,'col')][${column}]//*[not(contains(@class,'tbar'))][normalize-space(text())]</td>
 	<td></td>
 </tr>
 <tr>

@@ -17,8 +17,8 @@ package com.liferay.commerce.order.content.web.internal.frontend.taglib.clay.dat
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.order.content.web.internal.frontend.taglib.clay.data.OrderFilterImpl;
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
+import com.liferay.commerce.order.content.web.internal.frontend.taglib.clay.data.OrderFilterImpl;
 import com.liferay.commerce.order.content.web.internal.model.OrderItem;
 import com.liferay.commerce.price.CommerceOrderItemPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;

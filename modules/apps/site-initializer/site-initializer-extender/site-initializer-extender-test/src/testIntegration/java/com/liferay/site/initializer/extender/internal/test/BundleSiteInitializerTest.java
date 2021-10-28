@@ -109,7 +109,7 @@ public class BundleSiteInitializerTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				serviceContext.getCompanyId(), "C_BundleSiteInitializerTest");
+				serviceContext.getCompanyId(), "C_TestBundleSiteInitializer");
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
@@ -158,7 +158,7 @@ public class BundleSiteInitializerTest {
 					group.getCompanyId(), "TESTCATG0001");
 
 		Assert.assertNotNull(commerceCatalog);
-		Assert.assertEquals("Catalog Test 01", commerceCatalog.getName());
+		Assert.assertEquals("Test Catalog 01", commerceCatalog.getName());
 
 		commerceCatalog =
 			_commerceCatalogLocalService.
@@ -166,7 +166,7 @@ public class BundleSiteInitializerTest {
 					group.getCompanyId(), "TESTCATG0002");
 
 		Assert.assertNotNull(commerceCatalog);
-		Assert.assertEquals("Catalog Test 02", commerceCatalog.getName());
+		Assert.assertEquals("Test Catalog 02", commerceCatalog.getName());
 	}
 
 	private void _assertCommerceChannel(Group group) throws Exception {
@@ -184,11 +184,11 @@ public class BundleSiteInitializerTest {
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseLocalService.
 				fetchCommerceInventoryWarehouseByExternalReferenceCode(
-					group.getCompanyId(), "WTEST0001");
+					group.getCompanyId(), "TESTWARE0001");
 
 		Assert.assertNotNull(commerceInventoryWarehouse);
 		Assert.assertEquals(
-			"Warehouse Test", commerceInventoryWarehouse.getName());
+			"Test Warehouse", commerceInventoryWarehouse.getName());
 	}
 
 	private void _assertDDMStructure(Group group) {
@@ -260,7 +260,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertTrue(layout.isHidden());
 		Assert.assertEquals(
-			"Private Layout", layout.getName(LocaleUtil.getSiteDefault()));
+			"Test Private Layout", layout.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("content", layout.getType());
 
 		layouts = _layoutLocalService.getLayouts(group.getGroupId(), false);
@@ -271,14 +271,14 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertFalse(layout.isHidden());
 		Assert.assertEquals(
-			"Public Layout", layout.getName(LocaleUtil.getSiteDefault()));
+			"Test Public Layout", layout.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("content", layout.getType());
 	}
 
 	private void _assertObjectDefinitions(Group group) throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				group.getCompanyId(), "C_BundleSiteInitializerTest");
+				group.getCompanyId(), "C_TestBundleSiteInitializer");
 
 		Assert.assertEquals(
 			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);

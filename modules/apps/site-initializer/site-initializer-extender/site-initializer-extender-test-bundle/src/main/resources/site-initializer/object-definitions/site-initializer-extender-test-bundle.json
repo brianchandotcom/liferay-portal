@@ -1,10 +1,10 @@
 {
 	"label": {
-		"en_US": "BundleSiteInitializerTest"
+		"en_US": "TestBundleSiteInitializer"
 	},
-	"name": "BundleSiteInitializerTest",
+	"name": "TestBundleSiteInitializer",
 	"pluralLabel": {
-		"en_US": "BundleSiteInitializerTest"
+		"en_US": "TestBundleSiteInitializer"
 	},
 	"scope": "site"
 }

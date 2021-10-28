@@ -130,12 +130,11 @@ definition {
 	}
 
 	@description = "Verify that the user can search for a field set on manage field set page."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchFieldSet {
+		KaleoFormsManageFieldSets.searchFieldSet(fieldSetName = "Inventory");
 
-		// TODO LRQA-70706 CanSearchFieldSet pending implementation
-
+		
 	}
 
 	@description = "Verify that user can view of values on columns -ID-, -Name-,  -Description-, -Scope-, -Modified Date-."

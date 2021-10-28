@@ -1,0 +1,11 @@
+definition {
+
+    macro searchFieldSet {
+		Search.searchCP(searchTerm = "${fieldSetName}");
+
+		AssertElementPresent(
+			key_submissionName = "${fieldSetName}",
+			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
+	}
+
+}

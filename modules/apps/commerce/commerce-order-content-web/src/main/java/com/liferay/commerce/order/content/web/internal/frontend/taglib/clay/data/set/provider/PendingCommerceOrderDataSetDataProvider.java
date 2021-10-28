@@ -12,26 +12,24 @@
  * details.
  */
 
-package com.liferay.commerce.order.content.web.internal.frontend;
+package com.liferay.commerce.order.content.web.internal.frontend.taglib.clay.data.set.provider;
 
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
-import com.liferay.commerce.order.content.web.internal.model.WishList;
-import com.liferay.commerce.wish.list.model.CommerceWishList;
-import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
-import com.liferay.commerce.wish.list.service.CommerceWishListService;
+import com.liferay.commerce.order.content.web.internal.frontend.util.CommerceOrderClayTableUtil;
+import com.liferay.commerce.order.content.web.internal.model.Order;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.text.DateFormat;
-import java.text.Format;
-
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,46 +42,39 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_COMMERCE_WISH_LISTS,
+	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS,
 	service = ClayDataSetDataProvider.class
 )
-public class CommerceWishListDataSetDataProvider
-	implements ClayDataSetDataProvider<WishList> {
+public class PendingCommerceOrderDataSetDataProvider
+	implements ClayDataSetDataProvider<Order> {
 
 	@Override
-	public List<WishList> getItems(
+	public List<Order> getItems(
 			HttpServletRequest httpServletRequest, Filter filter,
 			Pagination pagination, Sort sort)
 		throws PortalException {
-
-		List<WishList> wishLists = new ArrayList<>();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Format dateFormat = FastDateFormatFactoryUtil.getDate(
-			DateFormat.MEDIUM, themeDisplay.getLocale(),
-			themeDisplay.getTimeZone());
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+				themeDisplay.getScopeGroupId());
 
-		List<CommerceWishList> commerceWishLists =
-			_commerceWishListService.getCommerceWishLists(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				null);
-
-		for (CommerceWishList commerceWishList : commerceWishLists) {
-			wishLists.add(
-				new WishList(
-					commerceWishList.getUserName(),
-					dateFormat.format(commerceWishList.getCreateDate()),
-					_commerceWishListItemService.getCommerceWishListItemsCount(
-						commerceWishList.getCommerceWishListId()),
-					commerceWishList.getName(),
-					commerceWishList.getCommerceWishListId()));
+		if (commerceChannel == null) {
+			return Collections.emptyList();
 		}
 
-		return wishLists;
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderService.getUserPendingCommerceOrders(
+				commerceChannel.getCompanyId(), commerceChannel.getGroupId(),
+				filter.getKeywords(), pagination.getStartPosition(),
+				pagination.getEndPosition());
+
+		return CommerceOrderClayTableUtil.getOrders(
+			commerceOrders, themeDisplay,
+			commerceChannel.getPriceDisplayType());
 	}
 
 	@Override
@@ -95,14 +86,23 @@ public class CommerceWishListDataSetDataProvider
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return _commerceWishListService.getCommerceWishListsCount(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId());
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+				themeDisplay.getScopeGroupId());
+
+		if (commerceChannel == null) {
+			return 0;
+		}
+
+		return (int)_commerceOrderService.getUserPendingCommerceOrdersCount(
+			commerceChannel.getCompanyId(), commerceChannel.getGroupId(),
+			filter.getKeywords());
 	}
 
 	@Reference
-	private CommerceWishListItemService _commerceWishListItemService;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
-	private CommerceWishListService _commerceWishListService;
+	private CommerceOrderService _commerceOrderService;
 
 }

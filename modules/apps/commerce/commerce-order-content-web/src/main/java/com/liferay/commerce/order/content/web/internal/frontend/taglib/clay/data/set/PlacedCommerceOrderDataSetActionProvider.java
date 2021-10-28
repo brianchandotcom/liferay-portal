@@ -12,22 +12,23 @@
  * details.
  */
 
-package com.liferay.commerce.order.content.web.internal.frontend;
+package com.liferay.commerce.order.content.web.internal.frontend.taglib.clay.data.set;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
-import com.liferay.commerce.order.content.web.internal.model.OrderItem;
-import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.order.content.web.internal.frontend.util.CommerceOrderClayTableUtil;
+import com.liferay.commerce.order.content.web.internal.model.Order;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,10 +41,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDER_ITEMS,
+	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS,
 	service = ClayDataSetActionProvider.class
 )
-public class PendingCommerceOrderItemDataSetActionProvider
+public class PlacedCommerceOrderDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
@@ -51,39 +52,29 @@ public class PendingCommerceOrderItemDataSetActionProvider
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
 
-		OrderItem orderItem = (OrderItem)model;
+		List<DropdownItem> dropdownItems = new ArrayList<>();
 
-		if (orderItem.getParentOrderItemId() > 0) {
-			return Collections.emptyList();
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Order order = (Order)model;
+
+		if (_modelResourcePermission.contains(
+				themeDisplay.getPermissionChecker(), order.getOrderId(),
+				ActionKeys.VIEW)) {
+
+			dropdownItems.add(
+				DropdownItemBuilder.setHref(
+					CommerceOrderClayTableUtil.getOrderViewDetailURL(
+						order.getOrderId(), themeDisplay)
+				).setLabel(
+					LanguageUtil.get(httpServletRequest, "view")
+				).build());
 		}
 
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			orderItem.getOrderId());
-
-		return DropdownItemListBuilder.add(
-			() ->
-				_modelResourcePermission.contains(
-					PermissionThreadLocal.getPermissionChecker(), commerceOrder,
-					ActionKeys.UPDATE) &&
-				commerceOrder.isOpen(),
-			dropdownItem -> {
-				dropdownItem.putData("method", "delete");
-				dropdownItem.setHref(
-					_getDeleteCommerceOrderItemURL(orderItem.getOrderItemId()));
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setTarget("async");
-			}
-		).build();
+		return dropdownItems;
 	}
-
-	private String _getDeleteCommerceOrderItemURL(long commerceOrderItemId) {
-		return "/o/headless-commerce-delivery-cart/v1.0/cart-items/" +
-			commerceOrderItemId;
-	}
-
-	@Reference
-	private CommerceOrderService _commerceOrderService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"

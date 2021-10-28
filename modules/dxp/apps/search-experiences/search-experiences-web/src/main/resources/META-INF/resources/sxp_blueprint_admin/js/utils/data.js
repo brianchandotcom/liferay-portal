@@ -9,14 +9,14 @@
  * distribution rights of the Software.
  */
 
-import HIDE_COMMENTS from './sxp_elements/hide-comments';
-import HIDE_DEFAULT_USER from './sxp_elements/hide-default-user';
-import HIDE_HIDDEN_CONTENTS from './sxp_elements/hide-hidden-contents';
-import LIMIT_SEARCH_TO_HEAD_VERSION from './sxp_elements/limit-search-to-head-version';
-import LIMIT_SEARCH_TO_PUBLISHED_CONTENTS from './sxp_elements/limit-search-to-published-contents';
-import SCHEDULING_AWARE from './sxp_elements/scheduling-aware';
-import STAGING_AWARE from './sxp_elements/staging-aware';
-import TEXT_MATCH_OVER_MULTIPLE_FIELDS from './sxp_elements/text-match-over-multiple-fields';
+import HIDE_COMMENTS from '../sxp_elements/hideComments';
+import HIDE_DEFAULT_USER from '../sxp_elements/hideDefaultUser';
+import HIDE_HIDDEN_CONTENTS from '../sxp_elements/hideHiddenContents';
+import LIMIT_SEARCH_TO_HEAD_VERSION from '../sxp_elements/limitSearchToHeadVersion';
+import LIMIT_SEARCH_TO_PUBLISHED_CONTENTS from '../sxp_elements/limitSearchToPublishedContents';
+import SCHEDULING_AWARE from '../sxp_elements/schedulingAware';
+import STAGING_AWARE from '../sxp_elements/stagingAware';
+import TEXT_MATCH_OVER_MULTIPLE_FIELDS from '../sxp_elements/textMatchOverMultipleFields';
 
 export const CUSTOM_JSON_SXP_ELEMENT = {
 	sxpElementTemplateJSON: {

@@ -30,6 +30,7 @@
 		' title="{title}"' +
 		'>' +
 		'<span class="cke_button_icon cke_button__{icon}_icon">&nbsp;</span>' +
+		'<span class="cke_button_label cke_button__{label}_label" style="display:inline-block;">{label}</span>' +
 		'</a>';
 
 	const template = CKEDITOR.addTemplate('balloonToolbarButton', templateHTML);
@@ -43,6 +44,7 @@
 				command: definition.command,
 				cssClass: definition.cssClass,
 				icon: definition.icon,
+				label: definition.label,
 				modes: {wysiwyg: 1},
 				title: definition.title,
 			});
@@ -83,6 +85,7 @@
 					cssClass: this.cssClass ? this.cssClass : '',
 					icon: this.icon,
 					id,
+					label: this.label || '',
 					title: this.title || '',
 				};
 

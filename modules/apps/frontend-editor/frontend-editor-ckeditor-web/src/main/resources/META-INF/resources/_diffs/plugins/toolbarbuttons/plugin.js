@@ -263,6 +263,7 @@
 			editor.ui.addBalloonToolbarButton('SourceEditor', {
 				command: 'codemirrordialog',
 				icon: 'source',
+				label: editor.lang.codemirror.source,
 				title: editor.lang.codemirror.source,
 			});
 		},

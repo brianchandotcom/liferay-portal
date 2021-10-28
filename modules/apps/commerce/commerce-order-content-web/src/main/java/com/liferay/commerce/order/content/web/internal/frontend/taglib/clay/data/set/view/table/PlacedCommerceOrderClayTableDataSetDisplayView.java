@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.content.web.internal.frontend;
+package com.liferay.commerce.order.content.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -29,10 +29,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDER_ITEMS,
+	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS,
 	service = ClayDataSetDisplayView.class
 )
-public class PendingCommerceOrderItemClayTableDataSetDisplayView
+public class PlacedCommerceOrderClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -40,22 +40,19 @@ public class PendingCommerceOrderItemClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
+		clayTableSchemaBuilder.addClayTableSchemaField("title", "order-id");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("options", "options");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("price", "list-price");
+		clayTableSchemaBuilder.addClayTableSchemaField("date", "order-date");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"promoPrice", "sale-price");
+			"accountName", "account");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("discount", "discount");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"author", "submitted-by");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("quantity", "quantity");
+		clayTableSchemaBuilder.addClayTableSchemaField("orderStatus", "status");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("total", "total");
+		clayTableSchemaBuilder.addClayTableSchemaField("amount", "amount");
 
 		return clayTableSchemaBuilder.build();
 	}

@@ -37,6 +37,23 @@ public class PortalWorkspace extends BaseWorkspace {
 		return Job.BuildProfile.getByString(buildProfileString);
 	}
 
+	public PluginsWorkspaceGitRepository getPluginsWorkspaceGitRepository() {
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			getPortalWorkspaceGitRepository();
+
+		WorkspaceGitRepository workspaceGitRepository =
+			getWorkspaceGitRepository(
+				portalWorkspaceGitRepository.getPluginsRepositoryDirName());
+
+		if (!(workspaceGitRepository instanceof
+				PluginsWorkspaceGitRepository)) {
+
+			return null;
+		}
+
+		return (PluginsWorkspaceGitRepository)workspaceGitRepository;
+	}
+
 	public PortalWorkspaceGitRepository getPortalWorkspaceGitRepository() {
 		WorkspaceGitRepository workspaceGitRepository =
 			getPrimaryWorkspaceGitRepository();
@@ -224,23 +241,6 @@ public class PortalWorkspace extends BaseWorkspace {
 
 	protected WorkspaceGitRepository getOSBFaroWorkspaceGitRepository() {
 		return getWorkspaceGitRepository("com-liferay-osb-faro-private");
-	}
-
-	protected PluginsWorkspaceGitRepository getPluginsWorkspaceGitRepository() {
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			getPortalWorkspaceGitRepository();
-
-		WorkspaceGitRepository workspaceGitRepository =
-			getWorkspaceGitRepository(
-				portalWorkspaceGitRepository.getPluginsRepositoryDirName());
-
-		if (!(workspaceGitRepository instanceof
-				PluginsWorkspaceGitRepository)) {
-
-			return null;
-		}
-
-		return (PluginsWorkspaceGitRepository)workspaceGitRepository;
 	}
 
 	protected void updateOSBAsahModule() {

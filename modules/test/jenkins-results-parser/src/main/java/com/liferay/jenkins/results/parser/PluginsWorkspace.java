@@ -22,6 +22,20 @@ import org.json.JSONObject;
 public class PluginsWorkspace extends PortalWorkspace {
 
 	@Override
+	public PluginsWorkspaceGitRepository getPluginsWorkspaceGitRepository() {
+		WorkspaceGitRepository workspaceGitRepository =
+			getPrimaryWorkspaceGitRepository();
+
+		if (!(workspaceGitRepository instanceof
+				PluginsWorkspaceGitRepository)) {
+
+			return null;
+		}
+
+		return (PluginsWorkspaceGitRepository)workspaceGitRepository;
+	}
+
+	@Override
 	public PortalWorkspaceGitRepository getPortalWorkspaceGitRepository() {
 		WorkspaceGitRepository workspaceGitRepository =
 			getPrimaryWorkspaceGitRepository();
@@ -66,20 +80,6 @@ public class PluginsWorkspace extends PortalWorkspace {
 		String jobName) {
 
 		super(primaryRepositoryName, upstreamBranchName, jobName);
-	}
-
-	@Override
-	protected PluginsWorkspaceGitRepository getPluginsWorkspaceGitRepository() {
-		WorkspaceGitRepository workspaceGitRepository =
-			getPrimaryWorkspaceGitRepository();
-
-		if (!(workspaceGitRepository instanceof
-				PluginsWorkspaceGitRepository)) {
-
-			return null;
-		}
-
-		return (PluginsWorkspaceGitRepository)workspaceGitRepository;
 	}
 
 }

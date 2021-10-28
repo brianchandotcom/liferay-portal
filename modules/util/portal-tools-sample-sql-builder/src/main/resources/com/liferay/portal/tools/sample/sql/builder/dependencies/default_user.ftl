@@ -43,7 +43,3 @@
 	_roleIds=roleIds
 	_userModel=sampleUserModel
 />
-
-<#list groupIds as groupId>
-	${dataFactory.toInsertSQL(dataFactory.newBlogsStatsUserModel(groupId))}
-</#list>

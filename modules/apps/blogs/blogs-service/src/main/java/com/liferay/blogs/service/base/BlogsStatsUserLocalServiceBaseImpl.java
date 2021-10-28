@@ -16,7 +16,6 @@ package com.liferay.blogs.service.base;
 
 import com.liferay.blogs.service.BlogsStatsUserLocalService;
 import com.liferay.blogs.service.BlogsStatsUserLocalServiceUtil;
-import com.liferay.blogs.service.persistence.BlogsStatsUserFinder;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -125,9 +124,6 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	}
 
 	protected BlogsStatsUserLocalService blogsStatsUserLocalService;
-
-	@Reference
-	protected BlogsStatsUserFinder blogsStatsUserFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

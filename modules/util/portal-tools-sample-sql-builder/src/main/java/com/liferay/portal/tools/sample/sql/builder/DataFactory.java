@@ -29,9 +29,7 @@ import com.liferay.asset.kernel.model.AssetVocabularyModel;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
-import com.liferay.blogs.model.BlogsStatsUserModel;
 import com.liferay.blogs.model.impl.BlogsEntryModelImpl;
-import com.liferay.blogs.model.impl.BlogsStatsUserModelImpl;
 import com.liferay.blogs.social.BlogsActivityKeys;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
@@ -1189,31 +1187,6 @@ public class DataFactory {
 		}
 
 		return blogEntryModels;
-	}
-
-	public BlogsStatsUserModel newBlogsStatsUserModel(long groupId) {
-		BlogsStatsUserModel blogsStatsUserModel = new BlogsStatsUserModelImpl();
-
-		// PK fields
-
-		blogsStatsUserModel.setStatsUserId(_counter.get());
-
-		// Group instance
-
-		blogsStatsUserModel.setGroupId(groupId);
-
-		// Audit fields
-
-		blogsStatsUserModel.setCompanyId(_companyId);
-		blogsStatsUserModel.setUserId(_sampleUserId);
-
-		// Other fields
-
-		blogsStatsUserModel.setEntryCount(
-			BenchmarksPropsValues.MAX_BLOGS_ENTRY_COUNT);
-		blogsStatsUserModel.setLastPostDate(new Date());
-
-		return blogsStatsUserModel;
 	}
 
 	public GroupModel newCommerceAccountEntryGroupModel(

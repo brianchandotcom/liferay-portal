@@ -79,236 +79,334 @@
 									}
 								},
 								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 10,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 5,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-heading"
+									},
+									"fragmentConfig": {
+										"headingLevel": "h6"
+									},
+									"fragmentFields": [{
+										"id": "element-text",
+										"value": {
+											"text": {
+												"value_i18n": {
+													"en_US": "ADDITIONAL BUSINESS OWNER'S POLICY COVERAGE OPTIONS"
+												}
+											}
+										}
+									}],
+									"fragmentStyle": {
+										"marginTop": "4",
+										"marginBottom": "4",
+										"textAlign": "center"
+									}
+								},
+								"type": "Fragment"
 							},
 							{
 								"definition": {
-									"layout": {
-										"borderWidth": 0,
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
-										"widthType": "Fixed"
-									}
+									"gutters": true,
+									"modulesPerRow": 3,
+									"numberOfColumns": 3,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {}
+										}
+									],
+									"verticalAlignment": "top"
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"gutters": true,
-											"modulesPerRow": 3,
-											"numberOfColumns": 3,
-											"reverseOrder": false,
-											"rowViewports": [
+											"columnViewports": [
 												{
-													"id": "landscapeMobile",
-													"rowViewportDefinition": {}
+													"columnViewportDefinition": {},
+													"id": "landscapeMobile"
 												},
 												{
-													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
 												},
 												{
-													"id": "tablet",
-													"rowViewportDefinition": {}
+													"columnViewportDefinition": {},
+													"id": "tablet"
 												}
 											],
-											"verticalAlignment": "top"
+											"size": 4
 										},
 										"pageElements": [
 											{
 												"definition": {
-													"columnViewports": [
+													"fragment": {
+														"key": "info-card"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [
 														{
-															"columnViewportDefinition": {},
-															"id": "landscapeMobile"
-														},
-														{
-															"columnViewportDefinition": {},
-															"id": "portraitMobile"
-														},
-														{
-															"columnViewportDefinition": {},
-															"id": "tablet"
-														}
-													],
-													"size": 4
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "info-card"
-															},
-															"fragmentConfig": {},
-															"fragmentFields": [
-																{
-																	"id": "lfr-text-01",
-																	"value": {
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Professional Liability"
-																			}
-																		}
+															"id": "lfr-text-01",
+															"value": {
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Professional Liability"
 																	}
 																}
-															],
-															"fragmentStyle": {
-																"marginBottom": "4"
 															}
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "info-card"
-															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
-															"fragmentStyle": {
-																"marginBottom": "4"
-															}
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "info-card"
-															},
-															"fragmentConfig": {},
-															"fragmentFields": []
-														},
-														"type": "Fragment"
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "4"
 													}
-												],
-												"type": "Column"
+												},
+												"type": "Fragment"
 											},
 											{
 												"definition": {
-													"columnViewports": [
-														{
-															"columnViewportDefinition": {},
-															"id": "landscapeMobile"
-														},
-														{
-															"columnViewportDefinition": {},
-															"id": "portraitMobile"
-														},
-														{
-															"columnViewportDefinition": {},
-															"id": "tablet"
+													"fragment": {
+														"key": "info-card"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [{
+														"id": "lfr-text-01",
+														"value": {
+															"text": {
+																"value_i18n": {
+																	"en_US": "Hired & Non-Owned Auto"
+																}
+															}
 														}
-													],
-													"size": 4
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "info-card"
-															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
-															"fragmentStyle": {
-																"marginBottom": "4"
-															}
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "info-card"
-															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
-															"fragmentStyle": {
-																"marginBottom": "4"
-															}
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "info-card"
-															},
-															"fragmentConfig": {},
-															"fragmentFields": []
-														},
-														"type": "Fragment"
+													}],
+													"fragmentStyle": {
+														"marginBottom": "4"
 													}
-												],
-												"type": "Column"
+												},
+												"type": "Fragment"
 											},
 											{
 												"definition": {
-													"columnViewports": [
-														{
-															"columnViewportDefinition": {},
-															"id": "landscapeMobile"
-														},
-														{
-															"columnViewportDefinition": {},
-															"id": "portraitMobile"
-														},
-														{
-															"columnViewportDefinition": {},
-															"id": "tablet"
+													"fragment": {
+														"key": "info-card"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [{
+														"id": "lfr-text-01",
+														"value": {
+															"text": {
+																"value_i18n": {
+																	"en_US": "Employment Practices Liability"
+																}
+															}
 														}
-													],
-													"size": 4
+													}]
 												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "info-card"
-															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
-															"fragmentStyle": {
-																"marginBottom": "4"
-															}
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "info-card"
-															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
-															"fragmentStyle": {
-																"marginBottom": "4"
-															}
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "info-card"
-															},
-															"fragmentConfig": {},
-															"fragmentFields": []
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Column"
+												"type": "Fragment"
 											}
 										],
-										"type": "Row"
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "info-card"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [{
+														"id": "lfr-text-01",
+														"value": {
+															"text": {
+																"value_i18n": {
+																	"en_US": "Liquor Liability"
+																}
+															}
+														}
+													}],
+													"fragmentStyle": {
+														"marginBottom": "4"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "info-card"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [{
+														"id": "lfr-text-01",
+														"value": {
+															"text": {
+																"value_i18n": {
+																	"en_US": "Spoilage"
+																}
+															}
+														}
+													}],
+													"fragmentStyle": {
+														"marginBottom": "4"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "info-card"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [{
+														"id": "lfr-text-01",
+														"value": {
+															"text": {
+																"value_i18n": {
+																	"en_US": "Equipment Breakdown"
+																}
+															}
+														}
+													}]
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "info-card"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [{
+														"id": "lfr-text-01",
+														"value": {
+															"text": {
+																"value_i18n": {
+																	"en_US": "Restaurant Endorsement"
+																}
+															}
+														}
+													}],
+													"fragmentStyle": {
+														"marginBottom": "4"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "info-card"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [{
+														"id": "lfr-text-01",
+														"value": {
+															"text": {
+																"value_i18n": {
+																	"en_US": "Employee Dishonesty"
+																}
+															}
+														}
+													}],
+													"fragmentStyle": {
+														"marginBottom": "4"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "info-card"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [{
+														"id": "lfr-text-01",
+														"value": {
+															"text": {
+																"value_i18n": {
+																	"en_US": "Cyber Liability"
+																}
+															}
+														}
+													}]
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
 									}
 								],
-								"type": "Section"
+								"type": "Row"
 							}
 						],
 						"type": "Section"

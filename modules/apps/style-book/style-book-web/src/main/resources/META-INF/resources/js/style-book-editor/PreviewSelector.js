@@ -119,7 +119,9 @@ export function LayoutTypeSelector({layoutType, setLayoutType}) {
 
 export function LayoutSelector({layoutType}) {
 	const [active, setActive] = useState(false);
-	const {previewLayout, setPreviewLayout} = useContext(StyleBookContext);
+	const {previewLayout, setLoading, setPreviewLayout} = useContext(
+		StyleBookContext
+	);
 
 	const previewData = config.previewOptions.find(
 		(option) => option.type === layoutType
@@ -132,9 +134,10 @@ export function LayoutSelector({layoutType}) {
 	const {itemSelectorURL, totalLayouts} = previewData;
 
 	useEffect(() => {
+		setLoading(true);
 		setPreviewLayout(previewData.recentLayouts[0]);
 		setRecentLayouts(previewData.recentLayouts);
-	}, [setPreviewLayout, previewData]);
+	}, [setPreviewLayout, previewData, setLoading]);
 
 	const selectPreviewLayout = (layout) => {
 		if (
@@ -144,6 +147,7 @@ export function LayoutSelector({layoutType}) {
 			return;
 		}
 
+		setLoading(true);
 		setPreviewLayout(layout);
 		setRecentLayouts(getNextRecentLayouts(recentLayouts, layout));
 	};

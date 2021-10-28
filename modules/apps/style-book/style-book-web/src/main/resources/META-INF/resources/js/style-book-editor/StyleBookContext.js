@@ -16,8 +16,10 @@ import React from 'react';
 
 export const StyleBookContext = React.createContext({
 	frontendTokensValues: {},
+	loading: true,
 	previewLayout: {},
 	setFrontendTokensValues: () => {},
+	setLoading: () => {},
 	setPreviewLayout: () => {},
 });
 

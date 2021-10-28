@@ -12,7 +12,15 @@
  * details.
  */
 
-import React, {useCallback, useContext, useEffect, useRef} from 'react';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import classNames from 'classnames';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
 import PreviewInfoBar from './PreviewInfoBar';
 import {StyleBookContext} from './StyleBookContext';
@@ -20,13 +28,17 @@ import {config} from './config';
 
 export default function LayoutPreview() {
 	const iframeRef = useRef();
+	const [iframeLoaded, setIframeLoaded] = useState(false);
 
-	const {frontendTokensValues = {}, previewLayout} = useContext(
-		StyleBookContext
-	);
+	const {
+		frontendTokensValues = {},
+		previewLayout,
+		loading,
+		setLoading,
+	} = useContext(StyleBookContext);
 
 	const loadFrontendTokenValues = useCallback(() => {
-		if (iframeRef.current) {
+		if (iframeLoaded) {
 			const root = iframeRef.current.contentDocument.documentElement;
 
 			if (root) {
@@ -38,9 +50,11 @@ export default function LayoutPreview() {
 						);
 					}
 				);
+
+				setLoading(false);
 			}
 		}
-	}, [frontendTokensValues]);
+	}, [frontendTokensValues, setLoading, iframeLoaded]);
 
 	useEffect(() => {
 		loadFrontendTokenValues();
@@ -55,13 +69,22 @@ export default function LayoutPreview() {
 	return (
 		<>
 			<div className="style-book-editor__page-preview">
+				{loading && previewLayout?.url && (
+					<div className="align-items-center d-flex h-100 justify-content-center">
+						<ClayLoadingIndicator />
+					</div>
+				)}
 				{previewLayout?.url ? (
 					<>
 						{!config.templatesPreviewEnabled && <PreviewInfoBar />}
 						<iframe
-							className="style-book-editor__page-preview-frame"
+							className={classNames(
+								'style-book-editor__page-preview-frame',
+								{'d-none': loading}
+							)}
 							onLoad={() => {
 								loadOverlay(iframeRef);
+								setIframeLoaded(true);
 								loadFrontendTokenValues();
 							}}
 							ref={iframeRef}

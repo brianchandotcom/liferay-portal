@@ -36,6 +36,7 @@ const StyleBookEditor = ({
 	const [previewLayout, setPreviewLayout] = useState(
 		getMostRecentLayout(config.previewOptions)
 	);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		if (frontendTokensValues === initialFrontendTokensValues) {
@@ -67,8 +68,10 @@ const StyleBookEditor = ({
 			value={{
 				draftStatus,
 				frontendTokensValues,
+				loading,
 				previewLayout,
 				setFrontendTokensValues,
+				setLoading,
 				setPreviewLayout,
 			}}
 		>

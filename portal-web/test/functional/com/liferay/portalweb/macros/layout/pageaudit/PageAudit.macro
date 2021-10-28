@@ -90,11 +90,11 @@ definition {
 		PageAudit.goToGooglePageSpeedInsightsSystemSettingConfiguration();
 
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
-            Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
-            
+			Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
+
 			MenuItem.clickNoError(menuItem = "Reset Default Values");
-        }
-    }
+		}
+	}
 
 	macro setAPIViaSiteSettings {
 		ProductMenu.gotoPortlet(

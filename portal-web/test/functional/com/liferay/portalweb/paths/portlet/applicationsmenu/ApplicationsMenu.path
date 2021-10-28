@@ -26,11 +26,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MENU_BUTTON</td>
-	<td>//button[contains(@class,'dropdown-toggle lfr-portal-tooltip btn btn-monospaced btn-sm btn-unstyled')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PANEL</td>
 	<td>//li[contains(@id,'ApplicationsMenuPortlet')]/button[contains(@class,'nav-link') and normalize-space()='${key_panel}']</td>
 	<td></td>

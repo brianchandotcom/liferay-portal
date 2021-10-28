@@ -58,12 +58,26 @@ public class AccountEntryUserRelServiceUtil {
 			userExternalReferenceCode, serviceContext);
 	}
 
+	public static void addAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws PortalException {
+
+		getService().addAccountEntryUserRels(accountEntryId, accountUserIds);
+	}
+
 	public static void deleteAccountEntryUserRelByEmailAddress(
 			long accountEntryId, String emailAddress)
 		throws PortalException {
 
 		getService().deleteAccountEntryUserRelByEmailAddress(
 			accountEntryId, emailAddress);
+	}
+
+	public static void deleteAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws PortalException {
+
+		getService().deleteAccountEntryUserRels(accountEntryId, accountUserIds);
 	}
 
 	/**
@@ -73,6 +87,13 @@ public class AccountEntryUserRelServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static void setPersonTypeAccountEntryUser(
+			long accountEntryId, long userId)
+		throws PortalException {
+
+		getService().setPersonTypeAccountEntryUser(accountEntryId, userId);
 	}
 
 	public static AccountEntryUserRelService getService() {

@@ -59,12 +59,30 @@ public class AccountEntryUserRelServiceWrapper
 	}
 
 	@Override
+	public void addAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountEntryUserRelService.addAccountEntryUserRels(
+			accountEntryId, accountUserIds);
+	}
+
+	@Override
 	public void deleteAccountEntryUserRelByEmailAddress(
 			long accountEntryId, String emailAddress)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_accountEntryUserRelService.deleteAccountEntryUserRelByEmailAddress(
 			accountEntryId, emailAddress);
+	}
+
+	@Override
+	public void deleteAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountEntryUserRelService.deleteAccountEntryUserRels(
+			accountEntryId, accountUserIds);
 	}
 
 	/**
@@ -75,6 +93,14 @@ public class AccountEntryUserRelServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _accountEntryUserRelService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public void setPersonTypeAccountEntryUser(long accountEntryId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountEntryUserRelService.setPersonTypeAccountEntryUser(
+			accountEntryId, userId);
 	}
 
 	@Override

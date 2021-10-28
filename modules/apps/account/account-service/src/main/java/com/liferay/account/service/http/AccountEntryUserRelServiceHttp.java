@@ -143,6 +143,43 @@ public class AccountEntryUserRelServiceHttp {
 		}
 	}
 
+	public static void addAccountEntryUserRels(
+			HttpPrincipal httpPrincipal, long accountEntryId,
+			long[] accountUserIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryUserRelServiceUtil.class, "addAccountEntryUserRels",
+				_addAccountEntryUserRelsParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountEntryId, accountUserIds);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void deleteAccountEntryUserRelByEmailAddress(
 			HttpPrincipal httpPrincipal, long accountEntryId,
 			String emailAddress)
@@ -152,10 +189,85 @@ public class AccountEntryUserRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryUserRelServiceUtil.class,
 				"deleteAccountEntryUserRelByEmailAddress",
-				_deleteAccountEntryUserRelByEmailAddressParameterTypes2);
+				_deleteAccountEntryUserRelByEmailAddressParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, emailAddress);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static void deleteAccountEntryUserRels(
+			HttpPrincipal httpPrincipal, long accountEntryId,
+			long[] accountUserIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryUserRelServiceUtil.class,
+				"deleteAccountEntryUserRels",
+				_deleteAccountEntryUserRelsParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountEntryId, accountUserIds);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static void setPersonTypeAccountEntryUser(
+			HttpPrincipal httpPrincipal, long accountEntryId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryUserRelServiceUtil.class,
+				"setPersonTypeAccountEntryUser",
+				_setPersonTypeAccountEntryUserParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountEntryId, userId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -195,9 +307,17 @@ public class AccountEntryUserRelServiceHttp {
 			long.class, String.class, long[].class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
+	private static final Class<?>[] _addAccountEntryUserRelsParameterTypes2 =
+		new Class[] {long.class, long[].class};
 	private static final Class<?>[]
-		_deleteAccountEntryUserRelByEmailAddressParameterTypes2 = new Class[] {
+		_deleteAccountEntryUserRelByEmailAddressParameterTypes3 = new Class[] {
 			long.class, String.class
+		};
+	private static final Class<?>[] _deleteAccountEntryUserRelsParameterTypes4 =
+		new Class[] {long.class, long[].class};
+	private static final Class<?>[]
+		_setPersonTypeAccountEntryUserParameterTypes5 = new Class[] {
+			long.class, long.class
 		};
 
 }

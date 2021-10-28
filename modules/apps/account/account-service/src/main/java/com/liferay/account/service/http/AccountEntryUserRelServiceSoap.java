@@ -113,6 +113,21 @@ public class AccountEntryUserRelServiceSoap {
 		}
 	}
 
+	public static void addAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws RemoteException {
+
+		try {
+			AccountEntryUserRelServiceUtil.addAccountEntryUserRels(
+				accountEntryId, accountUserIds);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void deleteAccountEntryUserRelByEmailAddress(
 			long accountEntryId, String emailAddress)
 		throws RemoteException {
@@ -121,6 +136,36 @@ public class AccountEntryUserRelServiceSoap {
 			AccountEntryUserRelServiceUtil.
 				deleteAccountEntryUserRelByEmailAddress(
 					accountEntryId, emailAddress);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws RemoteException {
+
+		try {
+			AccountEntryUserRelServiceUtil.deleteAccountEntryUserRels(
+				accountEntryId, accountUserIds);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void setPersonTypeAccountEntryUser(
+			long accountEntryId, long userId)
+		throws RemoteException {
+
+		try {
+			AccountEntryUserRelServiceUtil.setPersonTypeAccountEntryUser(
+				accountEntryId, userId);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

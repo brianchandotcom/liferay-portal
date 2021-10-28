@@ -111,6 +111,22 @@ public abstract class BaseKaleoLocalServiceTestCase {
 		return kaleoDefinition;
 	}
 
+	protected KaleoDefinition addKaleoDefinition(
+			String description, String name, String title)
+		throws IOException, PortalException {
+
+		KaleoDefinition kaleoDefinition =
+			_kaleoDefinitionLocalService.addKaleoDefinition(
+				name, title, description,
+				_read("legal-marketing-workflow-definition.xml"),
+				StringPool.BLANK, 1, serviceContext);
+
+		_kaleoDefinitionLocalService.activateKaleoDefinition(
+			kaleoDefinition.getKaleoDefinitionId(), serviceContext);
+
+		return kaleoDefinition;
+	}
+
 	protected KaleoInstance addKaleoInstance() throws Exception {
 		return _kaleoInstanceLocalService.addKaleoInstance(
 			1, 1, "Test", 1,

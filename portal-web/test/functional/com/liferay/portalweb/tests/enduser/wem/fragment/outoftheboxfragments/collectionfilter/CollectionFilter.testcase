@@ -3570,7 +3570,7 @@ definition {
 		task ("View the source label of second Collection Filter is not shown") {
 			AssertElementPresent(
 				key_columnNumber = "2",
-				key_elementHeader = "//div[.//button[contains(@class,'dropdown-toggle')]]//p[contains(@class,'font-weight-semi-bold')][normalize-space(text())='Pure Color'][contains(@class,'sr-only')]",
+				key_elementHeader = "//div[.//button[contains(@class,'dropdown-toggle')]]//label[normalize-space(text())='Pure Color'][contains(@class,'sr-only')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -3586,7 +3586,7 @@ definition {
 		task ("View the source label of the second Collection Filter is Pure Color") {
 			AssertElementPresent(
 				key_columnNumber = "2",
-				key_elementHeader = "//div[.//button[contains(@class,'dropdown-toggle')]]//p[contains(@class,'font-weight-semi-bold')][normalize-space(text())='Pure Color'][not(contains(@class,'sr-only'))]",
+				key_elementHeader = "//div[.//button[contains(@class,'dropdown-toggle')]]//label[normalize-space(text())='Pure Color'][not(contains(@class,'sr-only'))]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -3602,7 +3602,7 @@ definition {
 		task ("View the source label of the second Collection Filter is T-shirt Color") {
 			AssertElementPresent(
 				key_columnNumber = "2",
-				key_elementHeader = "//div[.//button[contains(@class,'dropdown-toggle')]]//p[contains(@class,'font-weight-semi-bold')][normalize-space(text())='T-shirt Color'][not(contains(@class,'sr-only'))]",
+				key_elementHeader = "//div[.//button[contains(@class,'dropdown-toggle')]]//label[normalize-space(text())='T-shirt Color'][not(contains(@class,'sr-only'))]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}

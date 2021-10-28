@@ -4800,29 +4800,19 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			</start-docker-container>
 
 			<if>
-				<or>
-					<equals arg1="${database.type}" arg2="mariadb" />
-					<equals arg1="${database.type}" arg2="mysql" />
-				</or>
+				<equals arg1="${database.type}" arg2="db2" />
 				<then>
-					<property location="${project.dir}/setup.sh" name="setup.sh.file" />
+					<property location="setup.sh" name="setup.sh.file" />
 
-					<local name="database.name" />
-
-					<condition else="MariaDB" property="database.name" value="MySQL">
-						<equals arg1="${database.type}" arg2="mysql" />
-					</condition>
-
-					<get-database-property property.name="database.host" />
 					<get-database-property property.name="database.version" />
 
 					<echo file="${setup.sh.file}">
 						<![CDATA[
 							#!/bin/bash
 
-							while ! mysqladmin ping --host=${database.host} --silent
+							while [[ ! "$(/bin/su - db2inst1 -c '/opt/ibm/db2/V11.1/bin/db2 db2start')" =~ "SQL1026N" ]]
 							do
-								echo "Waiting for ${database.name} ${database.version} to be ready"
+								echo "Waiting for DB2 ${database.version} to be ready"
 
 								sleep 10
 							done
@@ -4839,6 +4829,47 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						]]>
 					</execute>
 				</then>
+				<elseif>
+					<or>
+						<equals arg1="${database.type}" arg2="mariadb" />
+						<equals arg1="${database.type}" arg2="mysql" />
+					</or>
+					<then>
+						<property location="${project.dir}/setup.sh" name="setup.sh.file" />
+
+						<local name="database.name" />
+
+						<condition else="MariaDB" property="database.name" value="MySQL">
+							<equals arg1="${database.type}" arg2="mysql" />
+						</condition>
+
+						<get-database-property property.name="database.host" />
+						<get-database-property property.name="database.version" />
+
+						<echo file="${setup.sh.file}">
+							<![CDATA[
+								#!/bin/bash
+
+								while ! mysqladmin ping --host=${database.host} --silent
+								do
+									echo "Waiting for ${database.name} ${database.version} to be ready"
+
+									sleep 10
+								done
+							]]>
+						</echo>
+
+						<get-database-property property.name="database.host" />
+
+						<execute>
+							<![CDATA[
+								docker cp ${setup.sh.file} ${database.host}:/tmp/setup.sh
+
+								docker exec ${database.host} /bin/bash /tmp/setup.sh
+							]]>
+						</execute>
+					</then>
+				</elseif>
 				<elseif>
 					<equals arg1="${database.type}" arg2="oracle" />
 					<then>

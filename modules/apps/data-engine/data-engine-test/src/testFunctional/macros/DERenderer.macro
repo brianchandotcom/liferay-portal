@@ -188,16 +188,16 @@ definition {
 			optionIndex = "${optionIndex}");
 	}
 
-	macro assertUploadNotPresent {
-		if (!(isSet(index))) {
-			var index = "1";
-		}
+	macro assertUploadData {
+		AssertElementPresent(
+			key_fileName = "${fileName}",
+			locator1 = "DataEngineRenderer#UPLOAD_FIELD_VALUE");
+	}
 
-		AssertElementNotPresent(
-			key_fieldLabel = "${fieldLabel}",
-			key_index = "${index}",
-			locator1 = "DataEngineRenderer#SELECTOR_INPUT_INDEXED",
-			value1 = "${webContentUpload}");
+	macro assertUploadDataIsEmpty {
+		AssertElementPresent(
+			key_fileName = "",
+			locator1 = "DataEngineRenderer#UPLOAD_FIELD_VALUE");
 	}
 
 	macro assertWebContentNotPresent {

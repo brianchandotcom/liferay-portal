@@ -131,6 +131,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UPLOAD_FIELD_VALUE</td>
+	<td>//input[contains(@aria-label,'File') and contains(@class,'form-control')][@value='${key_fileName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT_DISABLED_FIELD</td>
 	<td>xpath=(//div[contains(@data-field-name, '${key_fieldName}')]//input[@disabled=''])</td>
 	<td></td>

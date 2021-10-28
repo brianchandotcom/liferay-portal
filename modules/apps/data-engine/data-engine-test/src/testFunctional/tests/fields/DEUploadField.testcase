@@ -104,9 +104,13 @@ definition {
 			fieldLabel = "Upload",
 			webContentUpload = "Document_1.jpg");
 
+		SelectFrame.selectFrameTop();
+
 		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertUploadData(fileName = "Document_1.jpg");
 
 		DERenderer.clearDataOnField(fieldLabel = "Upload");
 
@@ -114,9 +118,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		DERenderer.assertUploadNotPresent(
-			fieldLabel = "Upload",
-			webContentUpload = "Document_1.jpg");
+		DERenderer.assertUploadDataIsEmpty();
 	}
 
 	@description = "This is a test for LRQA-68656. This test verifies that Label and Help text can be edited"
@@ -179,6 +181,8 @@ definition {
 			dmNavTab = "User Personal Folder",
 			fieldLabel = "Upload",
 			webContentUpload = "Document_1.jpg");
+
+		SelectFrame.selectFrameTop();
 
 		Button.clickPublish();
 

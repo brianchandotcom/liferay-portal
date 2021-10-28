@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.content.web.internal.frontend;
+package com.liferay.commerce.order.content.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -29,10 +29,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PREVIEW_COMMERCE_ORDER_ITEMS,
+	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS,
 	service = ClayDataSetDisplayView.class
 )
-public class PreviewCommerceOrderItemClayTableDataSetDisplayView
+public class PendingCommerceOrderClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -40,26 +40,18 @@ public class PreviewCommerceOrderItemClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addClayTableSchemaField("rowNumber");
+		clayTableSchemaBuilder.addClayTableSchemaField("date", "create-date");
+
+		clayTableSchemaBuilder.addClayTableSchemaField("orderId", "order-id");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"productName", "product-name");
+			"accountName", "account");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
+		clayTableSchemaBuilder.addClayTableSchemaField("author", "created-by");
 
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"externalReferenceCode", "erc");
+		clayTableSchemaBuilder.addClayTableSchemaField("status", "status");
 
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"unitPrice", "unit-price");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("quantity", "quantity");
-
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"totalPrice", "total-price");
-
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"importStatus", "import-status");
+		clayTableSchemaBuilder.addClayTableSchemaField("amount", "amount");
 
 		return clayTableSchemaBuilder.build();
 	}

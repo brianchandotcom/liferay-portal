@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.content.web.internal.frontend;
+package com.liferay.commerce.order.content.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -20,7 +20,6 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSet
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,10 +29,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_COMMERCE_WISH_LISTS,
+	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDER_ITEMS,
 	service = ClayDataSetDisplayView.class
 )
-public class CommerceWishListClayTableDataSetDisplayView
+public class PlacedCommerceOrderItemClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -41,19 +40,25 @@ public class CommerceWishListClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField clayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("title", "title");
+		clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
-		clayTableSchemaField.setContentRenderer("actionLink");
+		clayTableSchemaBuilder.addClayTableSchemaField("options", "options");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("date", "create-date");
+		clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("author", "created-by");
+		clayTableSchemaBuilder.addClayTableSchemaField("price", "list-price");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"itemsNumber", "number-of-items");
+			"promoPrice", "sale-price");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("amount", "amount");
+		clayTableSchemaBuilder.addClayTableSchemaField("discount", "discount");
+
+		clayTableSchemaBuilder.addClayTableSchemaField("quantity", "quantity");
+
+		clayTableSchemaBuilder.addClayTableSchemaField("total", "total");
+
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"shippedQuantity", "shipped-quantity");
 
 		return clayTableSchemaBuilder.build();
 	}

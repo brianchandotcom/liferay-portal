@@ -73,6 +73,18 @@ public class AccountEntryUserRelServiceImpl
 	}
 
 	@Override
+	public void addAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+
+		accountEntryUserRelLocalService.addAccountEntryUserRels(
+			accountEntryId, accountUserIds);
+	}
+
+	@Override
 	public void deleteAccountEntryUserRelByEmailAddress(
 			long accountEntryId, String emailAddress)
 		throws PortalException {
@@ -82,6 +94,29 @@ public class AccountEntryUserRelServiceImpl
 
 		accountEntryUserRelLocalService.deleteAccountEntryUserRelByEmailAddress(
 			accountEntryId, emailAddress);
+	}
+
+	@Override
+	public void deleteAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+
+		accountEntryUserRelLocalService.deleteAccountEntryUserRels(
+			accountEntryId, accountUserIds);
+	}
+
+	@Override
+	public void setPersonTypeAccountEntryUser(long accountEntryId, long userId)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+
+		accountEntryUserRelLocalService.setPersonTypeAccountEntryUser(
+			accountEntryId, userId);
 	}
 
 	private static volatile ModelResourcePermission<AccountEntry>

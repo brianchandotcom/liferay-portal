@@ -1049,7 +1049,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Server Administration");
 
-			ServerAdministration.executeServerResourcesActions(actionsDescription = "Clean Up Orphaned Theme Portlet Preferences");
+			ServerAdministration.executeServerResourcesActions(actionsDescription = "Clean up orphaned theme portlet preferences.");
 		}
 
 		task ("View web content displayed at Title List in Asset Publisher at view mode") {

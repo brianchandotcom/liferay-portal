@@ -11,9 +11,17 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "General");
 
-		Click(
-			colorPalette = "${colorPalette}",
-			locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_PALETTE_SELECT");
+		if (isSet(colorPicker)) {
+			PageEditor.selectColorSwatchItem(
+				colorSwatchItem = "${colorPicker}",
+				fieldLabel = "${fieldLabel}");
+		}
+
+		else {
+			Click(
+				colorPalette = "${colorPalette}",
+				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_PALETTE_SELECT");
+		}
 
 		PageEditor.waitForAutoSave();
 	}

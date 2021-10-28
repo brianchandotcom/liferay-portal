@@ -69,19 +69,14 @@ definition {
 
 		RemoteApps.goToRemoteAppsPortlet();
 
-		LexiconEntry.gotoAdd();
-
-		Select(
-			locator1 = "RemoteApps#NEW_REMOTE_APPS_TYPE",
-			value1 = "${customElementType}");
-
 		RemoteApps.addCustomElement(
 			entryHTMLName = "${customElementHTMLName}",
 			entryName = "${customElementName}",
 			entryURL = "${customElementURL}");
 
-		RemoteApps.viewTableEntryName(entryName = "${customElementName}");
-		RemoteApps.viewTableEntryType(entryType = "${customElementType}");
+		RemoteApps.viewTableEntries(
+			entryName = "${customElementName}",
+			entryType = "${customElementType}");
 	}
 
 }

@@ -21,6 +21,14 @@ definition {
 	}
 
 	macro addCustomElement {
+		var customElementType = "Custom Element";
+
+		LexiconEntry.gotoAdd();
+
+		Select(
+			locator1 = "RemoteApps#NEW_REMOTE_APPS_TYPE",
+			value1 = "${customElementType}");
+
 		RemoteAppsEntry.addCustomElement(
 			entryHTMLName = "${entryHTMLName}",
 			entryName = "${entryName}",
@@ -74,6 +82,18 @@ definition {
 
 	macro viewEmptyRemoteTable {
 		AssertElementPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE");
+	}
+
+	macro viewTableEntries {
+		AssertTextEquals(
+			key_tableEntryName = "${entryName}",
+			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE",
+			value1 = "${entryName}");
+
+		AssertTextEquals(
+			key_tableEntryType = "${entryType}",
+			locator1 = "RemoteApps#TABLE_ENTRY_TYPE_REMOTE_TABLE",
+			value1 = "${entryType}");
 	}
 
 	macro viewTableEntryName {

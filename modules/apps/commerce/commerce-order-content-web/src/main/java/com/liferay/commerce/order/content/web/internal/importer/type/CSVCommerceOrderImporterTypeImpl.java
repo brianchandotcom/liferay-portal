@@ -24,6 +24,8 @@ import com.liferay.commerce.order.content.web.internal.importer.type.util.Commer
 import com.liferay.commerce.order.importer.item.CommerceOrderImporterItem;
 import com.liferay.commerce.order.importer.item.CommerceOrderImporterItemImpl;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterType;
+import com.liferay.commerce.price.CommerceOrderPriceCalculation;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -45,6 +47,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.IOException;
 
@@ -82,7 +85,20 @@ public class CSVCommerceOrderImporterTypeImpl
 	public static final String KEY = "csv";
 
 	@Override
-	public CommerceOrder getCommerceOrder(
+	public Object getCommerceOrderImporterItem(
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		return null;
+	}
+
+	@Override
+	public String getCommerceOrderImporterItemParamName() {
+		return "fileEntryId";
+	}
+
+	@Override
+	public List<CommerceOrderImporterItem> getCommerceOrderImporterItems(
 			CommerceOrder commerceOrder, Object object)
 		throws Exception {
 
@@ -90,12 +106,12 @@ public class CSVCommerceOrderImporterTypeImpl
 			throw new CommerceOrderImporterTypeException();
 		}
 
-		return CommerceOrderImporterTypeUtil.getCommerceOrder(
+		return CommerceOrderImporterTypeUtil.getCommerceOrderImporterItems(
 			_commerceContextFactory, commerceOrder,
-			_getCommerceOrderImporterItems(
+			_getCommerceOrderImporterItemImpls(
 				commerceOrder.getCompanyId(), (FileEntry)object),
-			_commerceOrderItemService, _commerceOrderService,
-			_userLocalService);
+			_commerceOrderItemService, _commerceOrderPriceCalculation,
+			_commerceOrderService, _userLocalService);
 	}
 
 	@Override
@@ -170,55 +186,16 @@ public class CSVCommerceOrderImporterTypeImpl
 				CommerceOrderImporterTypeConfiguration.class, properties);
 	}
 
-	private CommerceOrderImporterItem[] _getCommerceOrderImporterItems(
+	private CommerceOrderImporterItemImpl[] _getCommerceOrderImporterItemImpls(
 			long companyId, FileEntry fileEntry)
 		throws Exception {
 
 		CSVParser csvParser = _getCSVParser(fileEntry);
 
-		List<CSVRecord> csvRecords = csvParser.getRecords();
-
-		CommerceOrderImporterItem[] commerceOrderImporterItems =
-			new CommerceOrderImporterItem[csvRecords.size()];
-
-		for (int i = 0; i < csvRecords.size(); i++) {
-			CSVRecord csvRecord = csvRecords.get(i);
-
-			String skuExternalReferenceCode = csvRecord.get(
-				"skuExternalReferenceCode");
-			long skuId = GetterUtil.getLong(csvRecord.get("skuId"));
-			int quantity = GetterUtil.getInteger(csvRecord.get("quantity"));
-
-			CPInstance cpInstance = null;
-
-			if (skuId > 0) {
-				cpInstance = _cpInstanceLocalService.fetchCPInstance(skuId);
-			}
-
-			if ((cpInstance == null) &&
-				Validator.isNotNull(skuExternalReferenceCode)) {
-
-				cpInstance =
-					_cpInstanceLocalService.
-						fetchCPInstanceByExternalReferenceCode(
-							companyId, skuExternalReferenceCode);
-			}
-
-			if ((cpInstance == null) || (quantity < 1)) {
-				throw new CommerceOrderImporterTypeException();
-			}
-
-			CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =
-				new CommerceOrderImporterItemImpl();
-
-			commerceOrderImporterItemImpl.setCPInstanceId(
-				cpInstance.getCPInstanceId());
-			commerceOrderImporterItemImpl.setQuantity(quantity);
-
-			commerceOrderImporterItems[i] = commerceOrderImporterItemImpl;
-		}
-
-		return commerceOrderImporterItems;
+		return TransformUtil.transformToArray(
+			csvParser.getRecords(),
+			csvRecord -> _toCommerceOrderImporterItemImpl(companyId, csvRecord),
+			CommerceOrderImporterItemImpl.class);
 	}
 
 	private CSVParser _getCSVParser(FileEntry fileEntry) throws Exception {
@@ -240,6 +217,51 @@ public class CSVCommerceOrderImporterTypeImpl
 		}
 	}
 
+	private CommerceOrderImporterItemImpl _toCommerceOrderImporterItemImpl(
+			long companyId, CSVRecord csvRecord)
+		throws Exception {
+
+		String skuExternalReferenceCode = csvRecord.get(
+			"skuExternalReferenceCode");
+		long skuId = GetterUtil.getLong(csvRecord.get("skuId"));
+		int quantity = GetterUtil.getInteger(csvRecord.get("quantity"));
+
+		CPInstance cpInstance = null;
+
+		if (skuId > 0) {
+			cpInstance = _cpInstanceLocalService.fetchCPInstance(skuId);
+		}
+
+		if ((cpInstance == null) &&
+			Validator.isNotNull(skuExternalReferenceCode)) {
+
+			cpInstance =
+				_cpInstanceLocalService.fetchCPInstanceByExternalReferenceCode(
+					companyId, skuExternalReferenceCode);
+		}
+
+		if ((cpInstance == null) || (quantity < 1)) {
+			throw new CommerceOrderImporterTypeException();
+		}
+
+		CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =
+			new CommerceOrderImporterItemImpl();
+
+		commerceOrderImporterItemImpl.setCPInstanceId(
+			cpInstance.getCPInstanceId());
+		commerceOrderImporterItemImpl.setSku(cpInstance.getSku());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		commerceOrderImporterItemImpl.setCPDefinitionId(
+			cpDefinition.getCPDefinitionId());
+		commerceOrderImporterItemImpl.setNameMap(cpDefinition.getNameMap());
+
+		commerceOrderImporterItemImpl.setQuantity(quantity);
+
+		return commerceOrderImporterItemImpl;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CSVCommerceOrderImporterTypeImpl.class);
 
@@ -254,6 +276,9 @@ public class CSVCommerceOrderImporterTypeImpl
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
+
+	@Reference
+	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

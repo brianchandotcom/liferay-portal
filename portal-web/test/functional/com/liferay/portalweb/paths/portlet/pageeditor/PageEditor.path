@@ -200,6 +200,22 @@
 	<td>//div[.//button[contains(@class,'dropdown-toggle')]]//p[contains(@class,'font-weight-semi-bold')][normalize-space(text())='${sourceLabel}'][not(contains(@class,'sr-only'))]</td>
 	<td></td>
 </tr>
+<!--COLOR_PICKER-->
+<tr>
+	<td>COLOR_SWATCH_CATEGORY</td>
+	<td>xpath=(//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//span[contains(@class,'subtitle')][normalize-space(text())='${panel}']//following-sibling::div//span[contains(@class,'secondary')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLOR_SWATCH_ITEM</td>
+	<td>xpath=(//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//span[contains(@class,'subtitle')][normalize-space(text())='${panel}']//following-sibling::div[.//span[contains(@class,'secondary')][normalize-space(text())='${category}']]//button[contains(@class,'clay-color-btn')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLOR_SWATCH_PANEL</td>
+	<td>xpath=(//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//span[contains(@class,'subtitle')])[${index}]</td>
+	<td></td>
+</tr>
 <!--CONTENT_PAGE-->
 <tr>
 	<td>CONTENT_PAGE_DISABLED_HEADER</td>

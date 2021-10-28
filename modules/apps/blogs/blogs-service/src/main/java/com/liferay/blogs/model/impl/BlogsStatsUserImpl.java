@@ -14,16 +14,16 @@
 
 package com.liferay.blogs.model.impl;
 
-import com.liferay.blogs.model.BlogsStatsUserDAO;
+import com.liferay.blogs.model.BlogsStatsUser;
 
 import java.util.Date;
 
 /**
  * @author Cheryl Tang
  */
-public class BlogsStatsUserDAOImpl implements BlogsStatsUserDAO {
+public class BlogsStatsUserImpl implements BlogsStatsUser {
 
-	public BlogsStatsUserDAOImpl(
+	public BlogsStatsUserImpl(
 		long groupId, long userId, Date lastPostDate, long entryCount,
 		long ratingsTotalEntries, double ratingsAverageScore,
 		double ratingsTotalScore) {
@@ -48,7 +48,7 @@ public class BlogsStatsUserDAOImpl implements BlogsStatsUserDAO {
 	}
 
 	@Override
-	public Date getlastPostDate() {
+	public Date getLastPostDate() {
 		return _lastPostDate;
 	}
 

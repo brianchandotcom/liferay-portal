@@ -22,13 +22,13 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Cheryl Tang
  */
 @ProviderType
-public interface BlogsStatsUserDAO {
+public interface BlogsStatsUser {
 
 	public long getEntryCount();
 
 	public long getGroupId();
 
-	public Date getlastPostDate();
+	public Date getLastPostDate();
 
 	public double getRatingsAverageScore();
 

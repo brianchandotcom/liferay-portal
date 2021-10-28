@@ -16,8 +16,8 @@ package com.liferay.blogs.service.impl;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryTable;
-import com.liferay.blogs.model.BlogsStatsUserDAO;
-import com.liferay.blogs.model.impl.BlogsStatsUserDAOImpl;
+import com.liferay.blogs.model.BlogsStatsUser;
+import com.liferay.blogs.model.impl.BlogsStatsUserImpl;
 import com.liferay.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl;
 import com.liferay.blogs.service.persistence.BlogsEntryPersistence;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
@@ -53,7 +53,7 @@ public class BlogsStatsUserLocalServiceImpl
 	extends BlogsStatsUserLocalServiceBaseImpl {
 
 	@Override
-	public List<BlogsStatsUserDAO> getGroupsStatsUsers(
+	public List<BlogsStatsUser> getGroupsStatsUsers(
 		long companyId, long groupId, int start, int end) {
 
 		List<Object[]> results = _blogsEntryPersistence.dslQuery(
@@ -86,8 +86,7 @@ public class BlogsStatsUserLocalServiceImpl
 				start, end
 			));
 
-		List<BlogsStatsUserDAO> blogsStatsUsers = new ArrayList<>(
-			results.size());
+		List<BlogsStatsUser> blogsStatsUsers = new ArrayList<>(results.size());
 
 		for (Object[] columns : results) {
 			Long userId = (Long)columns[0];
@@ -98,7 +97,7 @@ public class BlogsStatsUserLocalServiceImpl
 			Double ratingsTotalScore = (Double)columns[5];
 
 			blogsStatsUsers.add(
-				new BlogsStatsUserDAOImpl(
+				new BlogsStatsUserImpl(
 					groupId, userId, lastPostDate, entryCount,
 					ratingsTotalEntries, ratingsAverageScore,
 					ratingsTotalScore));
@@ -108,7 +107,7 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public List<BlogsStatsUserDAO> getGroupStatsUsers(
+	public List<BlogsStatsUser> getGroupStatsUsers(
 		long groupId, int start, int end) {
 
 		List<Object[]> results = _blogsEntryPersistence.dslQuery(
@@ -141,8 +140,7 @@ public class BlogsStatsUserLocalServiceImpl
 				start, end
 			));
 
-		List<BlogsStatsUserDAO> blogsStatsUsers = new ArrayList<>(
-			results.size());
+		List<BlogsStatsUser> blogsStatsUsers = new ArrayList<>(results.size());
 
 		for (Object[] columns : results) {
 			Long userId = (Long)columns[0];
@@ -153,7 +151,7 @@ public class BlogsStatsUserLocalServiceImpl
 			Double ratingsTotalScore = (Double)columns[5];
 
 			blogsStatsUsers.add(
-				new BlogsStatsUserDAOImpl(
+				new BlogsStatsUserImpl(
 					groupId, userId, lastPostDate, entryCount,
 					ratingsTotalEntries, ratingsAverageScore,
 					ratingsTotalScore));
@@ -163,7 +161,7 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public List<BlogsStatsUserDAO> getOrganizationStatsUsers(
+	public List<BlogsStatsUser> getOrganizationStatsUsers(
 		long organizationId, int start, int end) {
 
 		LongStream longStream = Arrays.stream(
@@ -207,8 +205,7 @@ public class BlogsStatsUserLocalServiceImpl
 				start, end
 			));
 
-		List<BlogsStatsUserDAO> blogsStatsUsers = new ArrayList<>(
-			results.size());
+		List<BlogsStatsUser> blogsStatsUsers = new ArrayList<>(results.size());
 
 		for (Object[] columns : results) {
 			Long groupId = (Long)columns[0];
@@ -220,7 +217,7 @@ public class BlogsStatsUserLocalServiceImpl
 			Double ratingsTotalScore = (Double)columns[6];
 
 			blogsStatsUsers.add(
-				new BlogsStatsUserDAOImpl(
+				new BlogsStatsUserImpl(
 					groupId, userId, lastPostDate, entryCount,
 					ratingsTotalEntries, ratingsAverageScore,
 					ratingsTotalScore));
@@ -230,7 +227,7 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public BlogsStatsUserDAO getStatsUser(long groupId, long userId)
+	public BlogsStatsUser getStatsUser(long groupId, long userId)
 		throws PortalException {
 
 		List<Object[]> results = _blogsEntryPersistence.dslQuery(
@@ -267,7 +264,7 @@ public class BlogsStatsUserLocalServiceImpl
 		Double ratingsAverageScore = (Double)blogsStatsUser[4];
 		Double ratingsTotalScore = (Double)blogsStatsUser[5];
 
-		return new BlogsStatsUserDAOImpl(
+		return new BlogsStatsUserImpl(
 			groupId, userId, lastPostDate, entryCount,
 			GetterUtil.get(ratingsTotalEntries, 0L),
 			GetterUtil.get(ratingsAverageScore, 0D),

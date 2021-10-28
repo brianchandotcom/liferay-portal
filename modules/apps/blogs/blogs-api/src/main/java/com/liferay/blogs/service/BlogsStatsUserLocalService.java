@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.service;
 
-import com.liferay.blogs.model.BlogsStatsUserDAO;
+import com.liferay.blogs.model.BlogsStatsUser;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -49,15 +49,15 @@ public interface BlogsStatsUserLocalService extends BaseLocalService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.blogs.service.impl.BlogsStatsUserLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the blogs stats user local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link BlogsStatsUserLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsStatsUserDAO> getGroupsStatsUsers(
+	public List<BlogsStatsUser> getGroupsStatsUsers(
 		long companyId, long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsStatsUserDAO> getGroupStatsUsers(
+	public List<BlogsStatsUser> getGroupStatsUsers(
 		long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsStatsUserDAO> getOrganizationStatsUsers(
+	public List<BlogsStatsUser> getOrganizationStatsUsers(
 		long organizationId, int start, int end);
 
 	/**
@@ -68,7 +68,7 @@ public interface BlogsStatsUserLocalService extends BaseLocalService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BlogsStatsUserDAO getStatsUser(long groupId, long userId)
+	public BlogsStatsUser getStatsUser(long groupId, long userId)
 		throws PortalException;
 
 }

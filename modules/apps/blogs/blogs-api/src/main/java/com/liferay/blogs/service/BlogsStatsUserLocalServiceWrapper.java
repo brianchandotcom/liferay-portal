@@ -34,7 +34,7 @@ public class BlogsStatsUserLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsStatsUserDAO>
+	public java.util.List<com.liferay.blogs.model.BlogsStatsUser>
 		getGroupsStatsUsers(long companyId, long groupId, int start, int end) {
 
 		return _blogsStatsUserLocalService.getGroupsStatsUsers(
@@ -42,7 +42,7 @@ public class BlogsStatsUserLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsStatsUserDAO>
+	public java.util.List<com.liferay.blogs.model.BlogsStatsUser>
 		getGroupStatsUsers(long groupId, int start, int end) {
 
 		return _blogsStatsUserLocalService.getGroupStatsUsers(
@@ -50,7 +50,7 @@ public class BlogsStatsUserLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsStatsUserDAO>
+	public java.util.List<com.liferay.blogs.model.BlogsStatsUser>
 		getOrganizationStatsUsers(long organizationId, int start, int end) {
 
 		return _blogsStatsUserLocalService.getOrganizationStatsUsers(
@@ -68,7 +68,7 @@ public class BlogsStatsUserLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.blogs.model.BlogsStatsUserDAO getStatsUser(
+	public com.liferay.blogs.model.BlogsStatsUser getStatsUser(
 			long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

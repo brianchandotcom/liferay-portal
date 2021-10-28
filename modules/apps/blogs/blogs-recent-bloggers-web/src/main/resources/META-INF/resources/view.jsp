@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<BlogsStatsUserDAO> statsUsers = null;
+List<BlogsStatsUser> statsUsers = null;
 
 if (selectionMethod.equals("users")) {
 	if (organizationId > 0) {
@@ -39,7 +39,7 @@ else {
 	<c:otherwise>
 
 		<%
-		SearchContainer<BlogsStatsUserDAO> searchContainer = new SearchContainer();
+		SearchContainer<BlogsStatsUser> searchContainer = new SearchContainer();
 
 		List<String> headerNames = new ArrayList<String>();
 
@@ -56,7 +56,7 @@ else {
 		List<com.liferay.portal.kernel.dao.search.ResultRow> resultRows = searchContainer.getResultRows();
 
 		for (int i = 0; i < statsUsers.size(); i++) {
-			BlogsStatsUserDAO statsUser = statsUsers.get(i);
+			BlogsStatsUser statsUser = statsUsers.get(i);
 
 			try {
 				Group group = GroupLocalServiceUtil.getGroup(statsUser.getGroupId());

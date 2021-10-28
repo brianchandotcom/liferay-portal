@@ -37,19 +37,19 @@ public class BlogsStatsUserLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.blogs.service.impl.BlogsStatsUserLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static List<com.liferay.blogs.model.BlogsStatsUserDAO>
+	public static List<com.liferay.blogs.model.BlogsStatsUser>
 		getGroupsStatsUsers(long companyId, long groupId, int start, int end) {
 
 		return getService().getGroupsStatsUsers(companyId, groupId, start, end);
 	}
 
-	public static List<com.liferay.blogs.model.BlogsStatsUserDAO>
+	public static List<com.liferay.blogs.model.BlogsStatsUser>
 		getGroupStatsUsers(long groupId, int start, int end) {
 
 		return getService().getGroupStatsUsers(groupId, start, end);
 	}
 
-	public static List<com.liferay.blogs.model.BlogsStatsUserDAO>
+	public static List<com.liferay.blogs.model.BlogsStatsUser>
 		getOrganizationStatsUsers(long organizationId, int start, int end) {
 
 		return getService().getOrganizationStatsUsers(
@@ -65,7 +65,7 @@ public class BlogsStatsUserLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.blogs.model.BlogsStatsUserDAO getStatsUser(
+	public static com.liferay.blogs.model.BlogsStatsUser getStatsUser(
 			long groupId, long userId)
 		throws PortalException {
 

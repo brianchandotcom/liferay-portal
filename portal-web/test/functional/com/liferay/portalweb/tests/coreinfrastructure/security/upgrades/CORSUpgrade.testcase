@@ -53,7 +53,7 @@ definition {
 				configurationScope = "System Scope");
 
 			Upgrade.viewWebContextsCORS(
-				filter = "(&((liferay.cors=true))(osgi.jaxrs.name=*))",
+				filter = "(&(!(liferay.cors=false))(osgi.jaxrs.name=test-cors))",
 				urlPattern = "/api/*/test");
 		}
 	}

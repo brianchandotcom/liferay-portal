@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>BlogsRecentBloggers</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">BlogsRecentBloggers</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>USER_NAME_LINK</td>
+	<td>//div[contains(@id,'recent_bloggers')]//a[contains(@href,'/c/blogs/find_entry')]//span[contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -43,10 +43,12 @@ import com.liferay.portal.workflow.kaleo.model.KaleoLogTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoLogImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoLogModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoLogPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoLogUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.KaleoPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -4099,11 +4101,30 @@ public class KaleoLogPersistenceImpl
 				"type_"
 			},
 			false);
+
+		_setKaleoLogUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setKaleoLogUtilPersistence(null);
+
 		entityCache.removeCache(KaleoLogImpl.class.getName());
+	}
+
+	private void _setKaleoLogUtilPersistence(
+		KaleoLogPersistence kaleoLogPersistence) {
+
+		try {
+			Field field = KaleoLogUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, kaleoLogPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

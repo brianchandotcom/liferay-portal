@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPDefinitionLocalizationTable;
 import com.liferay.commerce.product.model.impl.CPDefinitionLocalizationImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionLocalizationModelImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
+import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -47,6 +48,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1499,10 +1501,31 @@ public class CPDefinitionLocalizationPersistenceImpl
 			"countByCPDefinitionId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPDefinitionId", "languageId"}, false);
+
+		_setCPDefinitionLocalizationUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCPDefinitionLocalizationUtilPersistence(null);
+
 		entityCache.removeCache(CPDefinitionLocalizationImpl.class.getName());
+	}
+
+	private void _setCPDefinitionLocalizationUtilPersistence(
+		CPDefinitionLocalizationPersistence
+			cpDefinitionLocalizationPersistence) {
+
+		try {
+			Field field = CPDefinitionLocalizationUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, cpDefinitionLocalizationPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

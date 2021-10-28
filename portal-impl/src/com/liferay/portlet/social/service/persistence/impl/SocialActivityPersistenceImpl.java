@@ -43,9 +43,11 @@ import com.liferay.social.kernel.exception.NoSuchActivityException;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityTable;
 import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
+import com.liferay.social.kernel.service.persistence.SocialActivityUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -6757,10 +6759,30 @@ public class SocialActivityPersistenceImpl
 				"type_", "receiverUserId"
 			},
 			false);
+
+		_setSocialActivityUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setSocialActivityUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(SocialActivityImpl.class.getName());
+	}
+
+	private void _setSocialActivityUtilPersistence(
+		SocialActivityPersistence socialActivityPersistence) {
+
+		try {
+			Field field = SocialActivityUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, socialActivityPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_SOCIALACTIVITY =

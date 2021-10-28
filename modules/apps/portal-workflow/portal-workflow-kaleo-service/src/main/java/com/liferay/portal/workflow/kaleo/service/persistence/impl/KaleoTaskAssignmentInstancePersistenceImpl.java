@@ -42,10 +42,12 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstanceTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentInstanceImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentInstanceModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentInstancePersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentInstanceUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.KaleoPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -5276,12 +5278,34 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByACN_ACPK",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"assigneeClassName", "assigneeClassPK"}, false);
+
+		_setKaleoTaskAssignmentInstanceUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setKaleoTaskAssignmentInstanceUtilPersistence(null);
+
 		entityCache.removeCache(
 			KaleoTaskAssignmentInstanceImpl.class.getName());
+	}
+
+	private void _setKaleoTaskAssignmentInstanceUtilPersistence(
+		KaleoTaskAssignmentInstancePersistence
+			kaleoTaskAssignmentInstancePersistence) {
+
+		try {
+			Field field =
+				KaleoTaskAssignmentInstanceUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, kaleoTaskAssignmentInstancePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

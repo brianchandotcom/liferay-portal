@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the test entity service. This utility wraps <code>com.liferay.external.data.source.test.service.persistence.impl.TestEntityPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -273,25 +269,9 @@ public class TestEntityUtil {
 	}
 
 	public static TestEntityPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker<TestEntityPersistence, TestEntityPersistence>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(TestEntityPersistence.class);
-
-		ServiceTracker<TestEntityPersistence, TestEntityPersistence>
-			serviceTracker =
-				new ServiceTracker
-					<TestEntityPersistence, TestEntityPersistence>(
-						bundle.getBundleContext(), TestEntityPersistence.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile TestEntityPersistence _persistence;
 
 }

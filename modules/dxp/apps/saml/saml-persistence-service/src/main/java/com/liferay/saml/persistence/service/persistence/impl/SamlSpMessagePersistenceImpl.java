@@ -43,10 +43,12 @@ import com.liferay.saml.persistence.model.SamlSpMessageTable;
 import com.liferay.saml.persistence.model.impl.SamlSpMessageImpl;
 import com.liferay.saml.persistence.model.impl.SamlSpMessageModelImpl;
 import com.liferay.saml.persistence.service.persistence.SamlSpMessagePersistence;
+import com.liferay.saml.persistence.service.persistence.SamlSpMessageUtil;
 import com.liferay.saml.persistence.service.persistence.impl.constants.SamlPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -1516,11 +1518,31 @@ public class SamlSpMessagePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySIEI_SIRK",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"samlIdpEntityId", "samlIdpResponseKey"}, false);
+
+		_setSamlSpMessageUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setSamlSpMessageUtilPersistence(null);
+
 		entityCache.removeCache(SamlSpMessageImpl.class.getName());
+	}
+
+	private void _setSamlSpMessageUtilPersistence(
+		SamlSpMessagePersistence samlSpMessagePersistence) {
+
+		try {
+			Field field = SamlSpMessageUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, samlSpMessagePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

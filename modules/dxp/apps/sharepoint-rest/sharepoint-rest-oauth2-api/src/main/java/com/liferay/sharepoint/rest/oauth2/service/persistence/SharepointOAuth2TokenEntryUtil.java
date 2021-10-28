@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the sharepoint o auth2 token entry service. This utility wraps <code>com.liferay.sharepoint.rest.oauth2.service.persistence.impl.SharepointOAuth2TokenEntryPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -535,29 +531,9 @@ public class SharepointOAuth2TokenEntryUtil {
 	}
 
 	public static SharepointOAuth2TokenEntryPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<SharepointOAuth2TokenEntryPersistence,
-		 SharepointOAuth2TokenEntryPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			SharepointOAuth2TokenEntryPersistence.class);
-
-		ServiceTracker
-			<SharepointOAuth2TokenEntryPersistence,
-			 SharepointOAuth2TokenEntryPersistence> serviceTracker =
-				new ServiceTracker
-					<SharepointOAuth2TokenEntryPersistence,
-					 SharepointOAuth2TokenEntryPersistence>(
-						 bundle.getBundleContext(),
-						 SharepointOAuth2TokenEntryPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile SharepointOAuth2TokenEntryPersistence _persistence;
 
 }

@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLinkTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceLinkPersistence;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceLinkUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2281,12 +2283,34 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_S",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"dataProviderInstanceId", "structureId"}, false);
+
+		_setDDMDataProviderInstanceLinkUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDDMDataProviderInstanceLinkUtilPersistence(null);
+
 		entityCache.removeCache(
 			DDMDataProviderInstanceLinkImpl.class.getName());
+	}
+
+	private void _setDDMDataProviderInstanceLinkUtilPersistence(
+		DDMDataProviderInstanceLinkPersistence
+			ddmDataProviderInstanceLinkPersistence) {
+
+		try {
+			Field field =
+				DDMDataProviderInstanceLinkUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ddmDataProviderInstanceLinkPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

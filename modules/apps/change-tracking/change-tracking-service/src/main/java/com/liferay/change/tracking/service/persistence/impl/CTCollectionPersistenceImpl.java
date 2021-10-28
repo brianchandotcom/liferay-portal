@@ -20,6 +20,7 @@ import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.model.impl.CTCollectionImpl;
 import com.liferay.change.tracking.model.impl.CTCollectionModelImpl;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
+import com.liferay.change.tracking.service.persistence.CTCollectionUtil;
 import com.liferay.change.tracking.service.persistence.impl.constants.CTPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3885,11 +3887,31 @@ public class CTCollectionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"companyId", "status"}, false);
+
+		_setCTCollectionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setCTCollectionUtilPersistence(null);
+
 		entityCache.removeCache(CTCollectionImpl.class.getName());
+	}
+
+	private void _setCTCollectionUtilPersistence(
+		CTCollectionPersistence ctCollectionPersistence) {
+
+		try {
+			Field field = CTCollectionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ctCollectionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

@@ -43,10 +43,12 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskFormTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskFormPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskFormUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.KaleoPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -3031,11 +3033,31 @@ public class KaleoTaskFormPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFormUuid_KTI",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"kaleoTaskId", "formUuid"}, false);
+
+		_setKaleoTaskFormUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setKaleoTaskFormUtilPersistence(null);
+
 		entityCache.removeCache(KaleoTaskFormImpl.class.getName());
+	}
+
+	private void _setKaleoTaskFormUtilPersistence(
+		KaleoTaskFormPersistence kaleoTaskFormPersistence) {
+
+		try {
+			Field field = KaleoTaskFormUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, kaleoTaskFormPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

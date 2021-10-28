@@ -43,10 +43,12 @@ import com.liferay.saml.persistence.model.SamlIdpSsoSessionTable;
 import com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionImpl;
 import com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionModelImpl;
 import com.liferay.saml.persistence.service.persistence.SamlIdpSsoSessionPersistence;
+import com.liferay.saml.persistence.service.persistence.SamlIdpSsoSessionUtil;
 import com.liferay.saml.persistence.service.persistence.impl.constants.SamlPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -1488,11 +1490,31 @@ public class SamlIdpSsoSessionPersistenceImpl
 			"countBySamlIdpSsoSessionKey",
 			new String[] {String.class.getName()},
 			new String[] {"samlIdpSsoSessionKey"}, false);
+
+		_setSamlIdpSsoSessionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setSamlIdpSsoSessionUtilPersistence(null);
+
 		entityCache.removeCache(SamlIdpSsoSessionImpl.class.getName());
+	}
+
+	private void _setSamlIdpSsoSessionUtilPersistence(
+		SamlIdpSsoSessionPersistence samlIdpSsoSessionPersistence) {
+
+		try {
+			Field field = SamlIdpSsoSessionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, samlIdpSsoSessionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

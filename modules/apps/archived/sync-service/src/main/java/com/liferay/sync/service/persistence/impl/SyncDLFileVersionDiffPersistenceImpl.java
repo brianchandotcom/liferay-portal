@@ -41,10 +41,12 @@ import com.liferay.sync.model.SyncDLFileVersionDiffTable;
 import com.liferay.sync.model.impl.SyncDLFileVersionDiffImpl;
 import com.liferay.sync.model.impl.SyncDLFileVersionDiffModelImpl;
 import com.liferay.sync.service.persistence.SyncDLFileVersionDiffPersistence;
+import com.liferay.sync.service.persistence.SyncDLFileVersionDiffUtil;
 import com.liferay.sync.service.persistence.impl.constants.SyncPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -2030,11 +2032,31 @@ public class SyncDLFileVersionDiffPersistenceImpl
 				"fileEntryId", "sourceFileVersionId", "targetFileVersionId"
 			},
 			false);
+
+		_setSyncDLFileVersionDiffUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setSyncDLFileVersionDiffUtilPersistence(null);
+
 		entityCache.removeCache(SyncDLFileVersionDiffImpl.class.getName());
+	}
+
+	private void _setSyncDLFileVersionDiffUtilPersistence(
+		SyncDLFileVersionDiffPersistence syncDLFileVersionDiffPersistence) {
+
+		try {
+			Field field = SyncDLFileVersionDiffUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, syncDLFileVersionDiffPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

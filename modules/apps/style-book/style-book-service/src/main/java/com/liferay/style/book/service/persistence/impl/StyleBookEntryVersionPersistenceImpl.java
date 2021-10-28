@@ -45,10 +45,12 @@ import com.liferay.style.book.model.StyleBookEntryVersionTable;
 import com.liferay.style.book.model.impl.StyleBookEntryVersionImpl;
 import com.liferay.style.book.model.impl.StyleBookEntryVersionModelImpl;
 import com.liferay.style.book.service.persistence.StyleBookEntryVersionPersistence;
+import com.liferay.style.book.service.persistence.StyleBookEntryVersionUtil;
 import com.liferay.style.book.service.persistence.impl.constants.StyleBookPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -9751,11 +9753,31 @@ public class StyleBookEntryVersionPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"groupId", "styleBookEntryKey", "version"}, false);
+
+		_setStyleBookEntryVersionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setStyleBookEntryVersionUtilPersistence(null);
+
 		entityCache.removeCache(StyleBookEntryVersionImpl.class.getName());
+	}
+
+	private void _setStyleBookEntryVersionUtilPersistence(
+		StyleBookEntryVersionPersistence styleBookEntryVersionPersistence) {
+
+		try {
+			Field field = StyleBookEntryVersionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, styleBookEntryVersionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

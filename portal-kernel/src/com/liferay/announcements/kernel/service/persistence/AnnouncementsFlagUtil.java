@@ -15,7 +15,6 @@
 package com.liferay.announcements.kernel.service.persistence;
 
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -688,15 +687,9 @@ public class AnnouncementsFlagUtil {
 	}
 
 	public static AnnouncementsFlagPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(AnnouncementsFlagPersistence)PortalBeanLocatorUtil.locate(
-					AnnouncementsFlagPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static AnnouncementsFlagPersistence _persistence;
+	private static volatile AnnouncementsFlagPersistence _persistence;
 
 }

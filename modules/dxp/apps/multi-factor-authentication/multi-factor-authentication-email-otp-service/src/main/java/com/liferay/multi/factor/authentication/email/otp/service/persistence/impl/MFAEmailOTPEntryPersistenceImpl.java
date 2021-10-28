@@ -20,6 +20,7 @@ import com.liferay.multi.factor.authentication.email.otp.model.MFAEmailOTPEntryT
 import com.liferay.multi.factor.authentication.email.otp.model.impl.MFAEmailOTPEntryImpl;
 import com.liferay.multi.factor.authentication.email.otp.model.impl.MFAEmailOTPEntryModelImpl;
 import com.liferay.multi.factor.authentication.email.otp.service.persistence.MFAEmailOTPEntryPersistence;
+import com.liferay.multi.factor.authentication.email.otp.service.persistence.MFAEmailOTPEntryUtil;
 import com.liferay.multi.factor.authentication.email.otp.service.persistence.impl.constants.MFAEmailOTPPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -859,11 +861,31 @@ public class MFAEmailOTPEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
+
+		_setMFAEmailOTPEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setMFAEmailOTPEntryUtilPersistence(null);
+
 		entityCache.removeCache(MFAEmailOTPEntryImpl.class.getName());
+	}
+
+	private void _setMFAEmailOTPEntryUtilPersistence(
+		MFAEmailOTPEntryPersistence mfaEmailOTPEntryPersistence) {
+
+		try {
+			Field field = MFAEmailOTPEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, mfaEmailOTPEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

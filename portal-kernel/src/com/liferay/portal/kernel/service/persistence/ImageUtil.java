@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -425,14 +424,9 @@ public class ImageUtil {
 	}
 
 	public static ImagePersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (ImagePersistence)PortalBeanLocatorUtil.locate(
-				ImagePersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static ImagePersistence _persistence;
+	private static volatile ImagePersistence _persistence;
 
 }

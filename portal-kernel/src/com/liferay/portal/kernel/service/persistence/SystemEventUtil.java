@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1043,14 +1042,9 @@ public class SystemEventUtil {
 	}
 
 	public static SystemEventPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (SystemEventPersistence)PortalBeanLocatorUtil.locate(
-				SystemEventPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static SystemEventPersistence _persistence;
+	private static volatile SystemEventPersistence _persistence;
 
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -492,14 +491,9 @@ public class ListTypeUtil {
 	}
 
 	public static ListTypePersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (ListTypePersistence)PortalBeanLocatorUtil.locate(
-				ListTypePersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static ListTypePersistence _persistence;
+	private static volatile ListTypePersistence _persistence;
 
 }

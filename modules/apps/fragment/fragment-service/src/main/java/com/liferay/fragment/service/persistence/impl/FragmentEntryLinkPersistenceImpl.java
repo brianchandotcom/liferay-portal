@@ -20,6 +20,7 @@ import com.liferay.fragment.model.FragmentEntryLinkTable;
 import com.liferay.fragment.model.impl.FragmentEntryLinkImpl;
 import com.liferay.fragment.model.impl.FragmentEntryLinkModelImpl;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
+import com.liferay.fragment.service.persistence.FragmentEntryLinkUtil;
 import com.liferay.fragment.service.persistence.impl.constants.FragmentPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -9804,11 +9806,31 @@ public class FragmentEntryLinkPersistenceImpl
 				"groupId", "segmentsExperienceId", "plid", "rendererKey"
 			},
 			false);
+
+		_setFragmentEntryLinkUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setFragmentEntryLinkUtilPersistence(null);
+
 		entityCache.removeCache(FragmentEntryLinkImpl.class.getName());
+	}
+
+	private void _setFragmentEntryLinkUtilPersistence(
+		FragmentEntryLinkPersistence fragmentEntryLinkPersistence) {
+
+		try {
+			Field field = FragmentEntryLinkUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, fragmentEntryLinkPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

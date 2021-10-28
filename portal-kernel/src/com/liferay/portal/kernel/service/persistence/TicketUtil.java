@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -938,14 +937,9 @@ public class TicketUtil {
 	}
 
 	public static TicketPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (TicketPersistence)PortalBeanLocatorUtil.locate(
-				TicketPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static TicketPersistence _persistence;
+	private static volatile TicketPersistence _persistence;
 
 }

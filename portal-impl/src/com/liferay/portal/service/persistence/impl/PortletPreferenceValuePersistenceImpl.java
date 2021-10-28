@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.model.PortletPreferenceValueTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.PortletPreferenceValuePersistence;
+import com.liferay.portal.kernel.service.persistence.PortletPreferenceValueUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -45,6 +46,7 @@ import com.liferay.portal.model.impl.PortletPreferenceValueModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3098,10 +3100,30 @@ public class PortletPreferenceValuePersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"portletPreferencesId", "name", "smallValue"}, false);
+
+		_setPortletPreferenceValueUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setPortletPreferenceValueUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(PortletPreferenceValueImpl.class.getName());
+	}
+
+	private void _setPortletPreferenceValueUtilPersistence(
+		PortletPreferenceValuePersistence portletPreferenceValuePersistence) {
+
+		try {
+			Field field = PortletPreferenceValueUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, portletPreferenceValuePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_PORTLETPREFERENCEVALUE =

@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence;
+import com.liferay.document.library.kernel.service.persistence.DLFileEntryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -53,6 +54,7 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -16331,10 +16333,30 @@ public class DLFileEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "externalReferenceCode"}, false);
+
+		_setDLFileEntryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setDLFileEntryUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(DLFileEntryImpl.class.getName());
+	}
+
+	private void _setDLFileEntryUtilPersistence(
+		DLFileEntryPersistence dlFileEntryPersistence) {
+
+		try {
+			Field field = DLFileEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, dlFileEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_DLFILEENTRY =

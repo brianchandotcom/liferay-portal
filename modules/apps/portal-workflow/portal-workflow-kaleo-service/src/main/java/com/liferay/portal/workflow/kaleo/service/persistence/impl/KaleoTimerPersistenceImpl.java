@@ -42,10 +42,12 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTimerTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.KaleoPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1893,11 +1895,30 @@ public class KaleoTimerPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"kaleoClassName", "kaleoClassPK", "blocking"}, false);
+
+		_setKaleoTimerUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setKaleoTimerUtilPersistence(null);
+
 		entityCache.removeCache(KaleoTimerImpl.class.getName());
+	}
+
+	private void _setKaleoTimerUtilPersistence(
+		KaleoTimerPersistence kaleoTimerPersistence) {
+
+		try {
+			Field field = KaleoTimerUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, kaleoTimerPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

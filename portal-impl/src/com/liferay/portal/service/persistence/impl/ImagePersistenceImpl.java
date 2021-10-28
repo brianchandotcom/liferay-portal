@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.ImagePersistence;
+import com.liferay.portal.kernel.service.persistence.ImageUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -47,6 +48,7 @@ import com.liferay.portal.model.impl.ImageModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -1334,10 +1336,27 @@ public class ImagePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtSize",
 			new String[] {Integer.class.getName()}, new String[] {"size_"},
 			false);
+
+		_setImageUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setImageUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(ImageImpl.class.getName());
+	}
+
+	private void _setImageUtilPersistence(ImagePersistence imagePersistence) {
+		try {
+			Field field = ImageUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, imagePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_IMAGE =

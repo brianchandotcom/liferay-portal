@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.LayoutRevisionPersistence;
+import com.liferay.portal.kernel.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -45,6 +46,7 @@ import com.liferay.portal.model.impl.LayoutRevisionModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -8646,10 +8648,30 @@ public class LayoutRevisionPersistenceImpl
 				"layoutSetBranchId", "layoutBranchId", "head", "plid"
 			},
 			false);
+
+		_setLayoutRevisionUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setLayoutRevisionUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(LayoutRevisionImpl.class.getName());
+	}
+
+	private void _setLayoutRevisionUtilPersistence(
+		LayoutRevisionPersistence layoutRevisionPersistence) {
+
+		try {
+			Field field = LayoutRevisionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, layoutRevisionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_LAYOUTREVISION =

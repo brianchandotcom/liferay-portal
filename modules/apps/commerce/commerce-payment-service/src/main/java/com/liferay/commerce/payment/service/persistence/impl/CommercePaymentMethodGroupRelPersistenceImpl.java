@@ -20,6 +20,7 @@ import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelTable;
 import com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelImpl;
 import com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelModelImpl;
 import com.liferay.commerce.payment.service.persistence.CommercePaymentMethodGroupRelPersistence;
+import com.liferay.commerce.payment.service.persistence.CommercePaymentMethodGroupRelUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2072,11 +2074,33 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"groupId", "active_"}, false);
+
+		_setCommercePaymentMethodGroupRelUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCommercePaymentMethodGroupRelUtilPersistence(null);
+
 		entityCache.removeCache(
 			CommercePaymentMethodGroupRelImpl.class.getName());
+	}
+
+	private void _setCommercePaymentMethodGroupRelUtilPersistence(
+		CommercePaymentMethodGroupRelPersistence
+			commercePaymentMethodGroupRelPersistence) {
+
+		try {
+			Field field =
+				CommercePaymentMethodGroupRelUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, commercePaymentMethodGroupRelPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

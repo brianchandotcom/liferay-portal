@@ -20,6 +20,7 @@ import com.liferay.contacts.model.EntryTable;
 import com.liferay.contacts.model.impl.EntryImpl;
 import com.liferay.contacts.model.impl.EntryModelImpl;
 import com.liferay.contacts.service.persistence.EntryPersistence;
+import com.liferay.contacts.service.persistence.EntryUtil;
 import com.liferay.contacts.service.persistence.impl.constants.ContactsPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -1410,11 +1412,28 @@ public class EntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_EA",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "emailAddress"}, false);
+
+		_setEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setEntryUtilPersistence(null);
+
 		entityCache.removeCache(EntryImpl.class.getName());
+	}
+
+	private void _setEntryUtilPersistence(EntryPersistence entryPersistence) {
+		try {
+			Field field = EntryUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, entryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

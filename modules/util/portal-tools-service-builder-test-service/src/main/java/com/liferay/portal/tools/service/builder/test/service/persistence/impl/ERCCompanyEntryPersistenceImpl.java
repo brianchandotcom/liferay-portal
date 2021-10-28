@@ -39,9 +39,11 @@ import com.liferay.portal.tools.service.builder.test.model.ERCCompanyEntryTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.ERCCompanyEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.ERCCompanyEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.ERCCompanyEntryPersistence;
+import com.liferay.portal.tools.service.builder.test.service.persistence.ERCCompanyEntryUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -906,10 +908,30 @@ public class ERCCompanyEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "externalReferenceCode"}, false);
+
+		_setERCCompanyEntryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setERCCompanyEntryUtilPersistence(null);
+
 		entityCache.removeCache(ERCCompanyEntryImpl.class.getName());
+	}
+
+	private void _setERCCompanyEntryUtilPersistence(
+		ERCCompanyEntryPersistence ercCompanyEntryPersistence) {
+
+		try {
+			Field field = ERCCompanyEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ercCompanyEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

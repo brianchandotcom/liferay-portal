@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1175,15 +1174,9 @@ public class PasswordPolicyUtil {
 	}
 
 	public static PasswordPolicyPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(PasswordPolicyPersistence)PortalBeanLocatorUtil.locate(
-					PasswordPolicyPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static PasswordPolicyPersistence _persistence;
+	private static volatile PasswordPolicyPersistence _persistence;
 
 }

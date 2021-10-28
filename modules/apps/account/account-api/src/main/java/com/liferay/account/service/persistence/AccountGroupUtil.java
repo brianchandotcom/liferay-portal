@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the account group service. This utility wraps <code>com.liferay.account.service.persistence.impl.AccountGroupPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -1129,25 +1125,9 @@ public class AccountGroupUtil {
 	}
 
 	public static AccountGroupPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<AccountGroupPersistence, AccountGroupPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AccountGroupPersistence.class);
-
-		ServiceTracker<AccountGroupPersistence, AccountGroupPersistence>
-			serviceTracker =
-				new ServiceTracker
-					<AccountGroupPersistence, AccountGroupPersistence>(
-						bundle.getBundleContext(),
-						AccountGroupPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AccountGroupPersistence _persistence;
 
 }

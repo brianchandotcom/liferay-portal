@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the kaleo transition service. This utility wraps <code>com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoTransitionPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -949,27 +945,9 @@ public class KaleoTransitionUtil {
 	}
 
 	public static KaleoTransitionPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<KaleoTransitionPersistence, KaleoTransitionPersistence>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			KaleoTransitionPersistence.class);
-
-		ServiceTracker<KaleoTransitionPersistence, KaleoTransitionPersistence>
-			serviceTracker =
-				new ServiceTracker
-					<KaleoTransitionPersistence, KaleoTransitionPersistence>(
-						bundle.getBundleContext(),
-						KaleoTransitionPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile KaleoTransitionPersistence _persistence;
 
 }

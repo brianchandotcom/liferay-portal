@@ -20,6 +20,7 @@ import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOpt
 import com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelImpl;
 import com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl;
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelPersistence;
+import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1825,11 +1827,33 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 			"countByCommerceShippingFixedOptionId",
 			new String[] {Long.class.getName()},
 			new String[] {"commerceShippingFixedOptionId"}, false);
+
+		_setCommerceShippingFixedOptionRelUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCommerceShippingFixedOptionRelUtilPersistence(null);
+
 		entityCache.removeCache(
 			CommerceShippingFixedOptionRelImpl.class.getName());
+	}
+
+	private void _setCommerceShippingFixedOptionRelUtilPersistence(
+		CommerceShippingFixedOptionRelPersistence
+			commerceShippingFixedOptionRelPersistence) {
+
+		try {
+			Field field =
+				CommerceShippingFixedOptionRelUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceShippingFixedOptionRelPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

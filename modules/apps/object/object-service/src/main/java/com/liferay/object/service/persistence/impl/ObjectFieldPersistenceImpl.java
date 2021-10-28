@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectFieldTable;
 import com.liferay.object.model.impl.ObjectFieldImpl;
 import com.liferay.object.model.impl.ObjectFieldModelImpl;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
+import com.liferay.object.service.persistence.ObjectFieldUtil;
 import com.liferay.object.service.persistence.impl.constants.ObjectPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -3762,11 +3764,31 @@ public class ObjectFieldPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"objectDefinitionId", "name"}, false);
+
+		_setObjectFieldUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setObjectFieldUtilPersistence(null);
+
 		entityCache.removeCache(ObjectFieldImpl.class.getName());
+	}
+
+	private void _setObjectFieldUtilPersistence(
+		ObjectFieldPersistence objectFieldPersistence) {
+
+		try {
+			Field field = ObjectFieldUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, objectFieldPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

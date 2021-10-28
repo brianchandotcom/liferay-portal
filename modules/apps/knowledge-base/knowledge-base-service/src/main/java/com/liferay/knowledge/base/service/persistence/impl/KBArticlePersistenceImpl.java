@@ -20,6 +20,7 @@ import com.liferay.knowledge.base.model.KBArticleTable;
 import com.liferay.knowledge.base.model.impl.KBArticleImpl;
 import com.liferay.knowledge.base.model.impl.KBArticleModelImpl;
 import com.liferay.knowledge.base.service.persistence.KBArticlePersistence;
+import com.liferay.knowledge.base.service.persistence.KBArticleUtil;
 import com.liferay.knowledge.base.service.persistence.impl.constants.KBPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -59,6 +60,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -36198,11 +36200,30 @@ public class KBArticlePersistenceImpl
 			},
 			new String[] {"groupId", "kbFolderId", "urlTitle", "status"},
 			false);
+
+		_setKBArticleUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setKBArticleUtilPersistence(null);
+
 		entityCache.removeCache(KBArticleImpl.class.getName());
+	}
+
+	private void _setKBArticleUtilPersistence(
+		KBArticlePersistence kbArticlePersistence) {
+
+		try {
+			Field field = KBArticleUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, kbArticlePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

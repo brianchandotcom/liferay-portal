@@ -20,6 +20,7 @@ import com.liferay.batch.engine.model.BatchEngineImportTaskTable;
 import com.liferay.batch.engine.model.impl.BatchEngineImportTaskImpl;
 import com.liferay.batch.engine.model.impl.BatchEngineImportTaskModelImpl;
 import com.liferay.batch.engine.service.persistence.BatchEngineImportTaskPersistence;
+import com.liferay.batch.engine.service.persistence.BatchEngineImportTaskUtil;
 import com.liferay.batch.engine.service.persistence.impl.constants.BatchEnginePersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2953,11 +2955,31 @@ public class BatchEngineImportTaskPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByExecuteStatus",
 			new String[] {String.class.getName()},
 			new String[] {"executeStatus"}, false);
+
+		_setBatchEngineImportTaskUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setBatchEngineImportTaskUtilPersistence(null);
+
 		entityCache.removeCache(BatchEngineImportTaskImpl.class.getName());
+	}
+
+	private void _setBatchEngineImportTaskUtilPersistence(
+		BatchEngineImportTaskPersistence batchEngineImportTaskPersistence) {
+
+		try {
+			Field field = BatchEngineImportTaskUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, batchEngineImportTaskPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

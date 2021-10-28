@@ -20,6 +20,7 @@ import com.liferay.layout.seo.model.LayoutSEOSiteTable;
 import com.liferay.layout.seo.model.impl.LayoutSEOSiteImpl;
 import com.liferay.layout.seo.model.impl.LayoutSEOSiteModelImpl;
 import com.liferay.layout.seo.service.persistence.LayoutSEOSitePersistence;
+import com.liferay.layout.seo.service.persistence.LayoutSEOSiteUtil;
 import com.liferay.layout.seo.service.persistence.impl.constants.LayoutSEOPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2600,11 +2602,31 @@ public class LayoutSEOSitePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
+
+		_setLayoutSEOSiteUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setLayoutSEOSiteUtilPersistence(null);
+
 		entityCache.removeCache(LayoutSEOSiteImpl.class.getName());
+	}
+
+	private void _setLayoutSEOSiteUtilPersistence(
+		LayoutSEOSitePersistence layoutSEOSitePersistence) {
+
+		try {
+			Field field = LayoutSEOSiteUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, layoutSEOSitePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

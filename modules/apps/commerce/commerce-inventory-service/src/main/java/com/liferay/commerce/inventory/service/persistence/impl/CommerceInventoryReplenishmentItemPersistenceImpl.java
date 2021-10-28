@@ -20,6 +20,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItemTa
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryReplenishmentItemImpl;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryReplenishmentItemModelImpl;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryReplenishmentItemPersistence;
+import com.liferay.commerce.inventory.service.persistence.CommerceInventoryReplenishmentItemUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -3737,11 +3739,33 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_AD",
 			new String[] {String.class.getName(), Date.class.getName()},
 			new String[] {"sku", "availabilityDate"}, false);
+
+		_setCommerceInventoryReplenishmentItemUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCommerceInventoryReplenishmentItemUtilPersistence(null);
+
 		entityCache.removeCache(
 			CommerceInventoryReplenishmentItemImpl.class.getName());
+	}
+
+	private void _setCommerceInventoryReplenishmentItemUtilPersistence(
+		CommerceInventoryReplenishmentItemPersistence
+			commerceInventoryReplenishmentItemPersistence) {
+
+		try {
+			Field field =
+				CommerceInventoryReplenishmentItemUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceInventoryReplenishmentItemPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

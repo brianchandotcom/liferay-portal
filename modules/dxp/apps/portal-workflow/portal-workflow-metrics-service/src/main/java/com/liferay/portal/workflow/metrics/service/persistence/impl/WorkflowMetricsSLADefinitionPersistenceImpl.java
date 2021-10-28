@@ -46,10 +46,12 @@ import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionTab
 import com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionImpl;
 import com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionModelImpl;
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionPersistence;
+import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionUtil;
 import com.liferay.portal.workflow.metrics.service.persistence.impl.constants.WorkflowMetricsPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -5742,12 +5744,34 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				"companyId", "active_", "processId", "processVersion", "status"
 			},
 			false);
+
+		_setWorkflowMetricsSLADefinitionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setWorkflowMetricsSLADefinitionUtilPersistence(null);
+
 		entityCache.removeCache(
 			WorkflowMetricsSLADefinitionImpl.class.getName());
+	}
+
+	private void _setWorkflowMetricsSLADefinitionUtilPersistence(
+		WorkflowMetricsSLADefinitionPersistence
+			workflowMetricsSLADefinitionPersistence) {
+
+		try {
+			Field field =
+				WorkflowMetricsSLADefinitionUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, workflowMetricsSLADefinitionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

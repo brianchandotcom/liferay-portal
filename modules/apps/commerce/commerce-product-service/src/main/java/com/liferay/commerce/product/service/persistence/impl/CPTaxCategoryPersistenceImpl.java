@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPTaxCategoryTable;
 import com.liferay.commerce.product.model.impl.CPTaxCategoryImpl;
 import com.liferay.commerce.product.model.impl.CPTaxCategoryModelImpl;
 import com.liferay.commerce.product.service.persistence.CPTaxCategoryPersistence;
+import com.liferay.commerce.product.service.persistence.CPTaxCategoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -1443,10 +1445,30 @@ public class CPTaxCategoryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "externalReferenceCode"}, false);
+
+		_setCPTaxCategoryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCPTaxCategoryUtilPersistence(null);
+
 		entityCache.removeCache(CPTaxCategoryImpl.class.getName());
+	}
+
+	private void _setCPTaxCategoryUtilPersistence(
+		CPTaxCategoryPersistence cpTaxCategoryPersistence) {
+
+		try {
+			Field field = CPTaxCategoryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, cpTaxCategoryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

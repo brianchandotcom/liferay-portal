@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the fragment entry link service. This utility wraps <code>com.liferay.fragment.service.persistence.impl.FragmentEntryLinkPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -3094,29 +3090,9 @@ public class FragmentEntryLinkUtil {
 	}
 
 	public static FragmentEntryLinkPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<FragmentEntryLinkPersistence, FragmentEntryLinkPersistence>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			FragmentEntryLinkPersistence.class);
-
-		ServiceTracker
-			<FragmentEntryLinkPersistence, FragmentEntryLinkPersistence>
-				serviceTracker =
-					new ServiceTracker
-						<FragmentEntryLinkPersistence,
-						 FragmentEntryLinkPersistence>(
-							 bundle.getBundleContext(),
-							 FragmentEntryLinkPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile FragmentEntryLinkPersistence _persistence;
 
 }

@@ -45,10 +45,12 @@ import com.liferay.reading.time.model.ReadingTimeEntryTable;
 import com.liferay.reading.time.model.impl.ReadingTimeEntryImpl;
 import com.liferay.reading.time.model.impl.ReadingTimeEntryModelImpl;
 import com.liferay.reading.time.service.persistence.ReadingTimeEntryPersistence;
+import com.liferay.reading.time.service.persistence.ReadingTimeEntryUtil;
 import com.liferay.reading.time.service.persistence.impl.constants.ReadingTimePersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2374,11 +2376,31 @@ public class ReadingTimeEntryPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"groupId", "classNameId", "classPK"}, false);
+
+		_setReadingTimeEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setReadingTimeEntryUtilPersistence(null);
+
 		entityCache.removeCache(ReadingTimeEntryImpl.class.getName());
+	}
+
+	private void _setReadingTimeEntryUtilPersistence(
+		ReadingTimeEntryPersistence readingTimeEntryPersistence) {
+
+		try {
+			Field field = ReadingTimeEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, readingTimeEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

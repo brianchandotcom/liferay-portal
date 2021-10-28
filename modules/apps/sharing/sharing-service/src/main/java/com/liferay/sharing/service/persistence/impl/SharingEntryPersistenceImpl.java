@@ -45,10 +45,12 @@ import com.liferay.sharing.model.SharingEntryTable;
 import com.liferay.sharing.model.impl.SharingEntryImpl;
 import com.liferay.sharing.model.impl.SharingEntryModelImpl;
 import com.liferay.sharing.service.persistence.SharingEntryPersistence;
+import com.liferay.sharing.service.persistence.SharingEntryUtil;
 import com.liferay.sharing.service.persistence.impl.constants.SharingPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -6108,11 +6110,31 @@ public class SharingEntryPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"toUserId", "classNameId", "classPK"}, false);
+
+		_setSharingEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setSharingEntryUtilPersistence(null);
+
 		entityCache.removeCache(SharingEntryImpl.class.getName());
+	}
+
+	private void _setSharingEntryUtilPersistence(
+		SharingEntryPersistence sharingEntryPersistence) {
+
+		try {
+			Field field = SharingEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, sharingEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

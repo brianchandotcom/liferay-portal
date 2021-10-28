@@ -48,10 +48,12 @@ import com.liferay.redirect.model.RedirectNotFoundEntryTable;
 import com.liferay.redirect.model.impl.RedirectNotFoundEntryImpl;
 import com.liferay.redirect.model.impl.RedirectNotFoundEntryModelImpl;
 import com.liferay.redirect.service.persistence.RedirectNotFoundEntryPersistence;
+import com.liferay.redirect.service.persistence.RedirectNotFoundEntryUtil;
 import com.liferay.redirect.service.persistence.impl.constants.RedirectPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1500,11 +1502,31 @@ public class RedirectNotFoundEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "url"}, false);
+
+		_setRedirectNotFoundEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setRedirectNotFoundEntryUtilPersistence(null);
+
 		entityCache.removeCache(RedirectNotFoundEntryImpl.class.getName());
+	}
+
+	private void _setRedirectNotFoundEntryUtilPersistence(
+		RedirectNotFoundEntryPersistence redirectNotFoundEntryPersistence) {
+
+		try {
+			Field field = RedirectNotFoundEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, redirectNotFoundEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

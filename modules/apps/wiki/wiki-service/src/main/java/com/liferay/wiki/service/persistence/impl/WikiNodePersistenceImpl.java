@@ -48,10 +48,12 @@ import com.liferay.wiki.model.WikiNodeTable;
 import com.liferay.wiki.model.impl.WikiNodeImpl;
 import com.liferay.wiki.model.impl.WikiNodeModelImpl;
 import com.liferay.wiki.service.persistence.WikiNodePersistence;
+import com.liferay.wiki.service.persistence.WikiNodeUtil;
 import com.liferay.wiki.service.persistence.impl.constants.WikiPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -5508,11 +5510,30 @@ public class WikiNodePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "externalReferenceCode"}, false);
+
+		_setWikiNodeUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setWikiNodeUtilPersistence(null);
+
 		entityCache.removeCache(WikiNodeImpl.class.getName());
+	}
+
+	private void _setWikiNodeUtilPersistence(
+		WikiNodePersistence wikiNodePersistence) {
+
+		try {
+			Field field = WikiNodeUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, wikiNodePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

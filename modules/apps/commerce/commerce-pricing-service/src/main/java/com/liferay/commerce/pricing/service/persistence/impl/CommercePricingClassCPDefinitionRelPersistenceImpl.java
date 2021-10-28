@@ -20,6 +20,7 @@ import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRelTab
 import com.liferay.commerce.pricing.model.impl.CommercePricingClassCPDefinitionRelImpl;
 import com.liferay.commerce.pricing.model.impl.CommercePricingClassCPDefinitionRelModelImpl;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelPersistence;
+import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2114,11 +2116,33 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commercePricingClassId", "CPDefinitionId"}, false);
+
+		_setCommercePricingClassCPDefinitionRelUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCommercePricingClassCPDefinitionRelUtilPersistence(null);
+
 		entityCache.removeCache(
 			CommercePricingClassCPDefinitionRelImpl.class.getName());
+	}
+
+	private void _setCommercePricingClassCPDefinitionRelUtilPersistence(
+		CommercePricingClassCPDefinitionRelPersistence
+			commercePricingClassCPDefinitionRelPersistence) {
+
+		try {
+			Field field =
+				CommercePricingClassCPDefinitionRelUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, commercePricingClassCPDefinitionRelPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

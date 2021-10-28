@@ -20,6 +20,7 @@ import com.liferay.batch.planner.model.BatchPlannerPolicyTable;
 import com.liferay.batch.planner.model.impl.BatchPlannerPolicyImpl;
 import com.liferay.batch.planner.model.impl.BatchPlannerPolicyModelImpl;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPolicyPersistence;
+import com.liferay.batch.planner.service.persistence.BatchPlannerPolicyUtil;
 import com.liferay.batch.planner.service.persistence.impl.constants.BatchPlannerPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1468,11 +1470,31 @@ public class BatchPlannerPolicyPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBPPI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"batchPlannerPlanId", "name"}, false);
+
+		_setBatchPlannerPolicyUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setBatchPlannerPolicyUtilPersistence(null);
+
 		entityCache.removeCache(BatchPlannerPolicyImpl.class.getName());
+	}
+
+	private void _setBatchPlannerPolicyUtilPersistence(
+		BatchPlannerPolicyPersistence batchPlannerPolicyPersistence) {
+
+		try {
+			Field field = BatchPlannerPolicyUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, batchPlannerPolicyPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

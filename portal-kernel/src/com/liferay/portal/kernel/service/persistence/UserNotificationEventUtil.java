@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -4240,15 +4239,9 @@ public class UserNotificationEventUtil {
 	}
 
 	public static UserNotificationEventPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(UserNotificationEventPersistence)PortalBeanLocatorUtil.locate(
-					UserNotificationEventPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static UserNotificationEventPersistence _persistence;
+	private static volatile UserNotificationEventPersistence _persistence;
 
 }

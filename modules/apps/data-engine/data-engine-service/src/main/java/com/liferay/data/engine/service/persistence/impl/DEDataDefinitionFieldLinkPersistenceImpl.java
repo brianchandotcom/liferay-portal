@@ -20,6 +20,7 @@ import com.liferay.data.engine.model.DEDataDefinitionFieldLinkTable;
 import com.liferay.data.engine.model.impl.DEDataDefinitionFieldLinkImpl;
 import com.liferay.data.engine.model.impl.DEDataDefinitionFieldLinkModelImpl;
 import com.liferay.data.engine.service.persistence.DEDataDefinitionFieldLinkPersistence;
+import com.liferay.data.engine.service.persistence.DEDataDefinitionFieldLinkUtil;
 import com.liferay.data.engine.service.persistence.impl.constants.DEPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -6677,11 +6679,32 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 				"classNameId", "classPK", "ddmStructureId", "fieldName"
 			},
 			false);
+
+		_setDEDataDefinitionFieldLinkUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDEDataDefinitionFieldLinkUtilPersistence(null);
+
 		entityCache.removeCache(DEDataDefinitionFieldLinkImpl.class.getName());
+	}
+
+	private void _setDEDataDefinitionFieldLinkUtilPersistence(
+		DEDataDefinitionFieldLinkPersistence
+			deDataDefinitionFieldLinkPersistence) {
+
+		try {
+			Field field = DEDataDefinitionFieldLinkUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, deDataDefinitionFieldLinkPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

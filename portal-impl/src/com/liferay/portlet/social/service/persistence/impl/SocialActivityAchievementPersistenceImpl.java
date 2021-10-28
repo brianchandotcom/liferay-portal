@@ -41,9 +41,11 @@ import com.liferay.social.kernel.exception.NoSuchActivityAchievementException;
 import com.liferay.social.kernel.model.SocialActivityAchievement;
 import com.liferay.social.kernel.model.SocialActivityAchievementTable;
 import com.liferay.social.kernel.service.persistence.SocialActivityAchievementPersistence;
+import com.liferay.social.kernel.service.persistence.SocialActivityAchievementUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -4153,11 +4155,32 @@ public class SocialActivityAchievementPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"groupId", "userId", "firstInGroup"}, false);
+
+		_setSocialActivityAchievementUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setSocialActivityAchievementUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(
 			SocialActivityAchievementImpl.class.getName());
+	}
+
+	private void _setSocialActivityAchievementUtilPersistence(
+		SocialActivityAchievementPersistence
+			socialActivityAchievementPersistence) {
+
+		try {
+			Field field = SocialActivityAchievementUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, socialActivityAchievementPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_SOCIALACTIVITYACHIEVEMENT =

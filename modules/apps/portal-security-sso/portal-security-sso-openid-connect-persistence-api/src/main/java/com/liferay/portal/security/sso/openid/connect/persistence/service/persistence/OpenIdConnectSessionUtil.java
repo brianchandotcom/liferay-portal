@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the open ID connect session service. This utility wraps <code>com.liferay.portal.security.sso.openid.connect.persistence.service.persistence.impl.OpenIdConnectSessionPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -285,29 +281,9 @@ public class OpenIdConnectSessionUtil {
 	}
 
 	public static OpenIdConnectSessionPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<OpenIdConnectSessionPersistence, OpenIdConnectSessionPersistence>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			OpenIdConnectSessionPersistence.class);
-
-		ServiceTracker
-			<OpenIdConnectSessionPersistence, OpenIdConnectSessionPersistence>
-				serviceTracker =
-					new ServiceTracker
-						<OpenIdConnectSessionPersistence,
-						 OpenIdConnectSessionPersistence>(
-							 bundle.getBundleContext(),
-							 OpenIdConnectSessionPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile OpenIdConnectSessionPersistence _persistence;
 
 }

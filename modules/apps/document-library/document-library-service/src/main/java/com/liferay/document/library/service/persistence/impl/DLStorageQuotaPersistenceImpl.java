@@ -20,6 +20,7 @@ import com.liferay.document.library.model.DLStorageQuotaTable;
 import com.liferay.document.library.model.impl.DLStorageQuotaImpl;
 import com.liferay.document.library.model.impl.DLStorageQuotaModelImpl;
 import com.liferay.document.library.service.persistence.DLStorageQuotaPersistence;
+import com.liferay.document.library.service.persistence.DLStorageQuotaUtil;
 import com.liferay.document.library.service.persistence.impl.constants.DLPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -831,11 +833,31 @@ public class DLStorageQuotaPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
+
+		_setDLStorageQuotaUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDLStorageQuotaUtilPersistence(null);
+
 		entityCache.removeCache(DLStorageQuotaImpl.class.getName());
+	}
+
+	private void _setDLStorageQuotaUtilPersistence(
+		DLStorageQuotaPersistence dlStorageQuotaPersistence) {
+
+		try {
+			Field field = DLStorageQuotaUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, dlStorageQuotaPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliasesTable;
 import com.liferay.oauth2.provider.model.impl.OAuth2ApplicationScopeAliasesImpl;
 import com.liferay.oauth2.provider.model.impl.OAuth2ApplicationScopeAliasesModelImpl;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationScopeAliasesPersistence;
+import com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationScopeAliasesUtil;
 import com.liferay.oauth2.provider.service.persistence.impl.constants.OAuthTwoPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1766,12 +1768,34 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByOAuth2ApplicationId", new String[] {Long.class.getName()},
 			new String[] {"oAuth2ApplicationId"}, false);
+
+		_setOAuth2ApplicationScopeAliasesUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setOAuth2ApplicationScopeAliasesUtilPersistence(null);
+
 		entityCache.removeCache(
 			OAuth2ApplicationScopeAliasesImpl.class.getName());
+	}
+
+	private void _setOAuth2ApplicationScopeAliasesUtilPersistence(
+		OAuth2ApplicationScopeAliasesPersistence
+			oAuth2ApplicationScopeAliasesPersistence) {
+
+		try {
+			Field field =
+				OAuth2ApplicationScopeAliasesUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, oAuth2ApplicationScopeAliasesPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

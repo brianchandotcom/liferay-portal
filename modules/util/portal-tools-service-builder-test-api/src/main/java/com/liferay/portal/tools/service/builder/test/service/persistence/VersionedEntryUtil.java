@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the versioned entry service. This utility wraps <code>com.liferay.portal.tools.service.builder.test.service.persistence.impl.VersionedEntryPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -692,26 +688,9 @@ public class VersionedEntryUtil {
 	}
 
 	public static VersionedEntryPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<VersionedEntryPersistence, VersionedEntryPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			VersionedEntryPersistence.class);
-
-		ServiceTracker<VersionedEntryPersistence, VersionedEntryPersistence>
-			serviceTracker =
-				new ServiceTracker
-					<VersionedEntryPersistence, VersionedEntryPersistence>(
-						bundle.getBundleContext(),
-						VersionedEntryPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile VersionedEntryPersistence _persistence;
 
 }

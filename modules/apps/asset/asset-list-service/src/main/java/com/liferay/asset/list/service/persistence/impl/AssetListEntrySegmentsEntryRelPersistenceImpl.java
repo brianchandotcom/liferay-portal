@@ -20,6 +20,7 @@ import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRelTable;
 import com.liferay.asset.list.model.impl.AssetListEntrySegmentsEntryRelImpl;
 import com.liferay.asset.list.model.impl.AssetListEntrySegmentsEntryRelModelImpl;
 import com.liferay.asset.list.service.persistence.AssetListEntrySegmentsEntryRelPersistence;
+import com.liferay.asset.list.service.persistence.AssetListEntrySegmentsEntryRelUtil;
 import com.liferay.asset.list.service.persistence.impl.constants.AssetListPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3860,12 +3862,34 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_S",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"assetListEntryId", "segmentsEntryId"}, false);
+
+		_setAssetListEntrySegmentsEntryRelUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setAssetListEntrySegmentsEntryRelUtilPersistence(null);
+
 		entityCache.removeCache(
 			AssetListEntrySegmentsEntryRelImpl.class.getName());
+	}
+
+	private void _setAssetListEntrySegmentsEntryRelUtilPersistence(
+		AssetListEntrySegmentsEntryRelPersistence
+			assetListEntrySegmentsEntryRelPersistence) {
+
+		try {
+			Field field =
+				AssetListEntrySegmentsEntryRelUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, assetListEntrySegmentsEntryRelPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

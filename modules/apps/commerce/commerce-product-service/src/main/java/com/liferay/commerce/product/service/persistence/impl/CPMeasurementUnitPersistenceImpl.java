@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPMeasurementUnitTable;
 import com.liferay.commerce.product.model.impl.CPMeasurementUnitImpl;
 import com.liferay.commerce.product.model.impl.CPMeasurementUnitModelImpl;
 import com.liferay.commerce.product.service.persistence.CPMeasurementUnitPersistence;
+import com.liferay.commerce.product.service.persistence.CPMeasurementUnitUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -47,6 +48,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -4084,10 +4086,30 @@ public class CPMeasurementUnitPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"companyId", "primary_", "type_"}, false);
+
+		_setCPMeasurementUnitUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCPMeasurementUnitUtilPersistence(null);
+
 		entityCache.removeCache(CPMeasurementUnitImpl.class.getName());
+	}
+
+	private void _setCPMeasurementUnitUtilPersistence(
+		CPMeasurementUnitPersistence cpMeasurementUnitPersistence) {
+
+		try {
+			Field field = CPMeasurementUnitUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, cpMeasurementUnitPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

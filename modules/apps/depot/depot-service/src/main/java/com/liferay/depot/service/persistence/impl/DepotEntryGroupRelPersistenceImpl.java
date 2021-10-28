@@ -20,6 +20,7 @@ import com.liferay.depot.model.DepotEntryGroupRelTable;
 import com.liferay.depot.model.impl.DepotEntryGroupRelImpl;
 import com.liferay.depot.model.impl.DepotEntryGroupRelModelImpl;
 import com.liferay.depot.service.persistence.DepotEntryGroupRelPersistence;
+import com.liferay.depot.service.persistence.DepotEntryGroupRelUtil;
 import com.liferay.depot.service.persistence.impl.constants.DepotPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -4545,11 +4547,31 @@ public class DepotEntryGroupRelPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_TGI",
 			new String[] {Boolean.class.getName(), Long.class.getName()},
 			new String[] {"searchable", "toGroupId"}, false);
+
+		_setDepotEntryGroupRelUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDepotEntryGroupRelUtilPersistence(null);
+
 		entityCache.removeCache(DepotEntryGroupRelImpl.class.getName());
+	}
+
+	private void _setDepotEntryGroupRelUtilPersistence(
+		DepotEntryGroupRelPersistence depotEntryGroupRelPersistence) {
+
+		try {
+			Field field = DepotEntryGroupRelUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, depotEntryGroupRelPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

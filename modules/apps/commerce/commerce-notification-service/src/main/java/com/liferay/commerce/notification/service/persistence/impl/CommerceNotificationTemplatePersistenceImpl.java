@@ -20,6 +20,7 @@ import com.liferay.commerce.notification.model.CommerceNotificationTemplateTable
 import com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateImpl;
 import com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateModelImpl;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplatePersistence;
+import com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplateUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -48,6 +49,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -5185,11 +5187,33 @@ public class CommerceNotificationTemplatePersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"groupId", "type_", "enabled"}, false);
+
+		_setCommerceNotificationTemplateUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCommerceNotificationTemplateUtilPersistence(null);
+
 		entityCache.removeCache(
 			CommerceNotificationTemplateImpl.class.getName());
+	}
+
+	private void _setCommerceNotificationTemplateUtilPersistence(
+		CommerceNotificationTemplatePersistence
+			commerceNotificationTemplatePersistence) {
+
+		try {
+			Field field =
+				CommerceNotificationTemplateUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceNotificationTemplatePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

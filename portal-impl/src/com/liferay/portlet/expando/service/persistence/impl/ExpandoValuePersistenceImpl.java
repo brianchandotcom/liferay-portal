@@ -18,6 +18,7 @@ import com.liferay.expando.kernel.exception.NoSuchValueException;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.model.ExpandoValueTable;
 import com.liferay.expando.kernel.service.persistence.ExpandoValuePersistence;
+import com.liferay.expando.kernel.service.persistence.ExpandoValueUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -45,6 +46,7 @@ import com.liferay.portlet.expando.model.impl.ExpandoValueModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -5905,10 +5907,30 @@ public class ExpandoValuePersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"tableId", "columnId", "data_"}, false);
+
+		_setExpandoValueUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setExpandoValueUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(ExpandoValueImpl.class.getName());
+	}
+
+	private void _setExpandoValueUtilPersistence(
+		ExpandoValuePersistence expandoValuePersistence) {
+
+		try {
+			Field field = ExpandoValueUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, expandoValuePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_EXPANDOVALUE =

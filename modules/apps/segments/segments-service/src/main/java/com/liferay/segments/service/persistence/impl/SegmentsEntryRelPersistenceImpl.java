@@ -44,10 +44,12 @@ import com.liferay.segments.model.SegmentsEntryRelTable;
 import com.liferay.segments.model.impl.SegmentsEntryRelImpl;
 import com.liferay.segments.model.impl.SegmentsEntryRelModelImpl;
 import com.liferay.segments.service.persistence.SegmentsEntryRelPersistence;
+import com.liferay.segments.service.persistence.SegmentsEntryRelUtil;
 import com.liferay.segments.service.persistence.impl.constants.SegmentsPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2912,11 +2914,31 @@ public class SegmentsEntryRelPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"segmentsEntryId", "classNameId", "classPK"}, false);
+
+		_setSegmentsEntryRelUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setSegmentsEntryRelUtilPersistence(null);
+
 		entityCache.removeCache(SegmentsEntryRelImpl.class.getName());
+	}
+
+	private void _setSegmentsEntryRelUtilPersistence(
+		SegmentsEntryRelPersistence segmentsEntryRelPersistence) {
+
+		try {
+			Field field = SegmentsEntryRelUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, segmentsEntryRelPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

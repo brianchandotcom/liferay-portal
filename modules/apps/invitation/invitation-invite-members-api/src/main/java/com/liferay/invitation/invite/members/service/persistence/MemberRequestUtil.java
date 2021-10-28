@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the member request service. This utility wraps <code>com.liferay.invitation.invite.members.service.persistence.impl.MemberRequestPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -778,25 +774,9 @@ public class MemberRequestUtil {
 	}
 
 	public static MemberRequestPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<MemberRequestPersistence, MemberRequestPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(MemberRequestPersistence.class);
-
-		ServiceTracker<MemberRequestPersistence, MemberRequestPersistence>
-			serviceTracker =
-				new ServiceTracker
-					<MemberRequestPersistence, MemberRequestPersistence>(
-						bundle.getBundleContext(),
-						MemberRequestPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile MemberRequestPersistence _persistence;
 
 }

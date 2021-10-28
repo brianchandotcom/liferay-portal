@@ -20,6 +20,7 @@ import com.liferay.list.type.model.ListTypeEntryTable;
 import com.liferay.list.type.model.impl.ListTypeEntryImpl;
 import com.liferay.list.type.model.impl.ListTypeEntryModelImpl;
 import com.liferay.list.type.service.persistence.ListTypeEntryPersistence;
+import com.liferay.list.type.service.persistence.ListTypeEntryUtil;
 import com.liferay.list.type.service.persistence.impl.constants.ListTypePersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -2643,11 +2645,31 @@ public class ListTypeEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLTDI_K",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"listTypeDefinitionId", "key_"}, false);
+
+		_setListTypeEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setListTypeEntryUtilPersistence(null);
+
 		entityCache.removeCache(ListTypeEntryImpl.class.getName());
+	}
+
+	private void _setListTypeEntryUtilPersistence(
+		ListTypeEntryPersistence listTypeEntryPersistence) {
+
+		try {
+			Field field = ListTypeEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, listTypeEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

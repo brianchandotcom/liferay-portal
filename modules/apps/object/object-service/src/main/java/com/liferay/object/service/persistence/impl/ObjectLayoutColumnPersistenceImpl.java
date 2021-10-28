@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectLayoutColumnTable;
 import com.liferay.object.model.impl.ObjectLayoutColumnImpl;
 import com.liferay.object.model.impl.ObjectLayoutColumnModelImpl;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
+import com.liferay.object.service.persistence.ObjectLayoutColumnUtil;
 import com.liferay.object.service.persistence.impl.constants.ObjectPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2366,11 +2368,31 @@ public class ObjectLayoutColumnPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByObjectLayoutRowId", new String[] {Long.class.getName()},
 			new String[] {"objectLayoutRowId"}, false);
+
+		_setObjectLayoutColumnUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setObjectLayoutColumnUtilPersistence(null);
+
 		entityCache.removeCache(ObjectLayoutColumnImpl.class.getName());
+	}
+
+	private void _setObjectLayoutColumnUtilPersistence(
+		ObjectLayoutColumnPersistence objectLayoutColumnPersistence) {
+
+		try {
+			Field field = ObjectLayoutColumnUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, objectLayoutColumnPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

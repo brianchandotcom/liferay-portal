@@ -44,10 +44,12 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoDefinitionPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoDefinitionUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.KaleoPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -3914,11 +3916,31 @@ public class KaleoDefinitionPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"companyId", "scope", "active_"}, false);
+
+		_setKaleoDefinitionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setKaleoDefinitionUtilPersistence(null);
+
 		entityCache.removeCache(KaleoDefinitionImpl.class.getName());
+	}
+
+	private void _setKaleoDefinitionUtilPersistence(
+		KaleoDefinitionPersistence kaleoDefinitionPersistence) {
+
+		try {
+			Field field = KaleoDefinitionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, kaleoDefinitionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

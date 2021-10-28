@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.RecentLayoutSetBranch;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -876,15 +875,9 @@ public class RecentLayoutSetBranchUtil {
 	}
 
 	public static RecentLayoutSetBranchPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(RecentLayoutSetBranchPersistence)PortalBeanLocatorUtil.locate(
-					RecentLayoutSetBranchPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static RecentLayoutSetBranchPersistence _persistence;
+	private static volatile RecentLayoutSetBranchPersistence _persistence;
 
 }

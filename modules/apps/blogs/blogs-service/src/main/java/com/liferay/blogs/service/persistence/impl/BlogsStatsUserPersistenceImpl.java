@@ -20,6 +20,7 @@ import com.liferay.blogs.model.BlogsStatsUserTable;
 import com.liferay.blogs.model.impl.BlogsStatsUserImpl;
 import com.liferay.blogs.model.impl.BlogsStatsUserModelImpl;
 import com.liferay.blogs.service.persistence.BlogsStatsUserPersistence;
+import com.liferay.blogs.service.persistence.BlogsStatsUserUtil;
 import com.liferay.blogs.service.persistence.impl.constants.BlogsPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -3564,11 +3566,31 @@ public class BlogsStatsUserPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_L",
 			new String[] {Long.class.getName(), Date.class.getName()},
 			new String[] {"userId", "lastPostDate"}, false);
+
+		_setBlogsStatsUserUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setBlogsStatsUserUtilPersistence(null);
+
 		entityCache.removeCache(BlogsStatsUserImpl.class.getName());
+	}
+
+	private void _setBlogsStatsUserUtilPersistence(
+		BlogsStatsUserPersistence blogsStatsUserPersistence) {
+
+		try {
+			Field field = BlogsStatsUserUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, blogsStatsUserPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

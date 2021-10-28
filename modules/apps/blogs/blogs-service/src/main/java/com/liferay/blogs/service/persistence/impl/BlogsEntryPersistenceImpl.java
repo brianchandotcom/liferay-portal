@@ -20,6 +20,7 @@ import com.liferay.blogs.model.BlogsEntryTable;
 import com.liferay.blogs.model.impl.BlogsEntryImpl;
 import com.liferay.blogs.model.impl.BlogsEntryModelImpl;
 import com.liferay.blogs.service.persistence.BlogsEntryPersistence;
+import com.liferay.blogs.service.persistence.BlogsEntryUtil;
 import com.liferay.blogs.service.persistence.impl.constants.BlogsPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -59,6 +60,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -22352,11 +22354,30 @@ public class BlogsEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "externalReferenceCode"}, false);
+
+		_setBlogsEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setBlogsEntryUtilPersistence(null);
+
 		entityCache.removeCache(BlogsEntryImpl.class.getName());
+	}
+
+	private void _setBlogsEntryUtilPersistence(
+		BlogsEntryPersistence blogsEntryPersistence) {
+
+		try {
+			Field field = BlogsEntryUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, blogsEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import com.liferay.commerce.discount.model.CommerceDiscountAccountRelTable;
 import com.liferay.commerce.discount.model.impl.CommerceDiscountAccountRelImpl;
 import com.liferay.commerce.discount.model.impl.CommerceDiscountAccountRelModelImpl;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountAccountRelPersistence;
+import com.liferay.commerce.discount.service.persistence.CommerceDiscountAccountRelUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3207,10 +3209,31 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCAI_CDI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceAccountId", "commerceDiscountId"}, false);
+
+		_setCommerceDiscountAccountRelUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCommerceDiscountAccountRelUtilPersistence(null);
+
 		entityCache.removeCache(CommerceDiscountAccountRelImpl.class.getName());
+	}
+
+	private void _setCommerceDiscountAccountRelUtilPersistence(
+		CommerceDiscountAccountRelPersistence
+			commerceDiscountAccountRelPersistence) {
+
+		try {
+			Field field = CommerceDiscountAccountRelUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceDiscountAccountRelPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPDefinitionLinkTable;
 import com.liferay.commerce.product.model.impl.CPDefinitionLinkImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionLinkModelImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLinkPersistence;
+import com.liferay.commerce.product.service.persistence.CPDefinitionLinkUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -4652,10 +4654,30 @@ public class CPDefinitionLinkPersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"CPDefinitionId", "CProductId", "type_"}, false);
+
+		_setCPDefinitionLinkUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCPDefinitionLinkUtilPersistence(null);
+
 		entityCache.removeCache(CPDefinitionLinkImpl.class.getName());
+	}
+
+	private void _setCPDefinitionLinkUtilPersistence(
+		CPDefinitionLinkPersistence cpDefinitionLinkPersistence) {
+
+		try {
+			Field field = CPDefinitionLinkUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, cpDefinitionLinkPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

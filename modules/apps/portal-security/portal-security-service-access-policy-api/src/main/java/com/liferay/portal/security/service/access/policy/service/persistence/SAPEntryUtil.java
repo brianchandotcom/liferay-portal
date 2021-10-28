@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the sap entry service. This utility wraps <code>com.liferay.portal.security.service.access.policy.service.persistence.impl.SAPEntryPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -1378,23 +1374,9 @@ public class SAPEntryUtil {
 	}
 
 	public static SAPEntryPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker<SAPEntryPersistence, SAPEntryPersistence>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(SAPEntryPersistence.class);
-
-		ServiceTracker<SAPEntryPersistence, SAPEntryPersistence>
-			serviceTracker =
-				new ServiceTracker<SAPEntryPersistence, SAPEntryPersistence>(
-					bundle.getBundleContext(), SAPEntryPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile SAPEntryPersistence _persistence;
 
 }

@@ -20,6 +20,7 @@ import com.liferay.microblogs.model.MicroblogsEntryTable;
 import com.liferay.microblogs.model.impl.MicroblogsEntryImpl;
 import com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryPersistence;
+import com.liferay.microblogs.service.persistence.MicroblogsEntryUtil;
 import com.liferay.microblogs.service.persistence.impl.constants.MicroblogsPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -14015,11 +14017,31 @@ public class MicroblogsEntryPersistenceImpl
 				"userId", "createDate", "type_", "socialRelationType"
 			},
 			false);
+
+		_setMicroblogsEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setMicroblogsEntryUtilPersistence(null);
+
 		entityCache.removeCache(MicroblogsEntryImpl.class.getName());
+	}
+
+	private void _setMicroblogsEntryUtilPersistence(
+		MicroblogsEntryPersistence microblogsEntryPersistence) {
+
+		try {
+			Field field = MicroblogsEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, microblogsEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

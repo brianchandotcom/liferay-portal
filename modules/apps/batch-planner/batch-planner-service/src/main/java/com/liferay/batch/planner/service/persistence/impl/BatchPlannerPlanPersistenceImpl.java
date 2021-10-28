@@ -20,6 +20,7 @@ import com.liferay.batch.planner.model.BatchPlannerPlanTable;
 import com.liferay.batch.planner.model.impl.BatchPlannerPlanImpl;
 import com.liferay.batch.planner.model.impl.BatchPlannerPlanModelImpl;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPlanPersistence;
+import com.liferay.batch.planner.service.persistence.BatchPlannerPlanUtil;
 import com.liferay.batch.planner.service.persistence.impl.constants.BatchPlannerPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -5760,11 +5762,31 @@ public class BatchPlannerPlanPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"companyId", "export", "template"}, false);
+
+		_setBatchPlannerPlanUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setBatchPlannerPlanUtilPersistence(null);
+
 		entityCache.removeCache(BatchPlannerPlanImpl.class.getName());
+	}
+
+	private void _setBatchPlannerPlanUtilPersistence(
+		BatchPlannerPlanPersistence batchPlannerPlanPersistence) {
+
+		try {
+			Field field = BatchPlannerPlanUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, batchPlannerPlanPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRelTable;
 import com.liferay.commerce.product.model.impl.CPDefinitionOptionValueRelImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionOptionValueRelModelImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
+import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -5768,10 +5770,31 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCDORI_P",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"CPDefinitionOptionRelId", "preselected"}, false);
+
+		_setCPDefinitionOptionValueRelUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCPDefinitionOptionValueRelUtilPersistence(null);
+
 		entityCache.removeCache(CPDefinitionOptionValueRelImpl.class.getName());
+	}
+
+	private void _setCPDefinitionOptionValueRelUtilPersistence(
+		CPDefinitionOptionValueRelPersistence
+			cpDefinitionOptionValueRelPersistence) {
+
+		try {
+			Field field = CPDefinitionOptionValueRelUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, cpDefinitionOptionValueRelPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

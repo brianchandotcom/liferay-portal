@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.impl.ObjectEntryImpl;
 import com.liferay.object.model.impl.ObjectEntryModelImpl;
 import com.liferay.object.service.persistence.ObjectEntryPersistence;
+import com.liferay.object.service.persistence.ObjectEntryUtil;
 import com.liferay.object.service.persistence.impl.constants.ObjectPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -4057,11 +4059,31 @@ public class ObjectEntryPersistenceImpl
 			},
 			new String[] {"groupId", "companyId", "externalReferenceCode"},
 			false);
+
+		_setObjectEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setObjectEntryUtilPersistence(null);
+
 		entityCache.removeCache(ObjectEntryImpl.class.getName());
+	}
+
+	private void _setObjectEntryUtilPersistence(
+		ObjectEntryPersistence objectEntryPersistence) {
+
+		try {
+			Field field = ObjectEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, objectEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

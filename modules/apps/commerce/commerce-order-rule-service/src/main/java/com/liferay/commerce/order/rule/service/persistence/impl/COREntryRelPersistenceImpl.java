@@ -20,6 +20,7 @@ import com.liferay.commerce.order.rule.model.COREntryRelTable;
 import com.liferay.commerce.order.rule.model.impl.COREntryRelImpl;
 import com.liferay.commerce.order.rule.model.impl.COREntryRelModelImpl;
 import com.liferay.commerce.order.rule.service.persistence.COREntryRelPersistence;
+import com.liferay.commerce.order.rule.service.persistence.COREntryRelUtil;
 import com.liferay.commerce.order.rule.service.persistence.impl.constants.CORPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1984,11 +1986,31 @@ public class COREntryRelPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"classNameId", "classPK", "COREntryId"}, false);
+
+		_setCOREntryRelUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setCOREntryRelUtilPersistence(null);
+
 		entityCache.removeCache(COREntryRelImpl.class.getName());
+	}
+
+	private void _setCOREntryRelUtilPersistence(
+		COREntryRelPersistence corEntryRelPersistence) {
+
+		try {
+			Field field = COREntryRelUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, corEntryRelPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

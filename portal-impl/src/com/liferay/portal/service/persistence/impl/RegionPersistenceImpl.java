@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.RegionLocalizationPersistence;
 import com.liferay.portal.kernel.service.persistence.RegionPersistence;
+import com.liferay.portal.kernel.service.persistence.RegionUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -49,6 +50,7 @@ import com.liferay.portal.model.impl.RegionModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3616,10 +3618,29 @@ public class RegionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"countryId", "regionCode"}, false);
+
+		_setRegionUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setRegionUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(RegionImpl.class.getName());
+	}
+
+	private void _setRegionUtilPersistence(
+		RegionPersistence regionPersistence) {
+
+		try {
+			Field field = RegionUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, regionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@BeanReference(type = RegionLocalizationPersistence.class)

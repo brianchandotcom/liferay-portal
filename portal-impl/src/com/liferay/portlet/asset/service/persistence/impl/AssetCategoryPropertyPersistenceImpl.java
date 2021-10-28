@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.exception.NoSuchCategoryPropertyException;
 import com.liferay.asset.kernel.model.AssetCategoryProperty;
 import com.liferay.asset.kernel.model.AssetCategoryPropertyTable;
 import com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyPersistence;
+import com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -47,6 +48,7 @@ import com.liferay.portlet.asset.model.impl.AssetCategoryPropertyModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2901,10 +2903,30 @@ public class AssetCategoryPropertyPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCA_K",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"categoryId", "key_"}, false);
+
+		_setAssetCategoryPropertyUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setAssetCategoryPropertyUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(AssetCategoryPropertyImpl.class.getName());
+	}
+
+	private void _setAssetCategoryPropertyUtilPersistence(
+		AssetCategoryPropertyPersistence assetCategoryPropertyPersistence) {
+
+		try {
+			Field field = AssetCategoryPropertyUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, assetCategoryPropertyPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_ASSETCATEGORYPROPERTY =

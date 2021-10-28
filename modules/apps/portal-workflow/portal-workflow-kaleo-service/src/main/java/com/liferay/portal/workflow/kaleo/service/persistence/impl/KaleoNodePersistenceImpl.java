@@ -43,10 +43,12 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNodeTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNodePersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNodeUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.KaleoPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2260,11 +2262,30 @@ public class KaleoNodePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_KDVI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "kaleoDefinitionVersionId"}, false);
+
+		_setKaleoNodeUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setKaleoNodeUtilPersistence(null);
+
 		entityCache.removeCache(KaleoNodeImpl.class.getName());
+	}
+
+	private void _setKaleoNodeUtilPersistence(
+		KaleoNodePersistence kaleoNodePersistence) {
+
+		try {
+			Field field = KaleoNodeUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, kaleoNodePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

@@ -47,10 +47,12 @@ import com.liferay.remote.app.model.RemoteAppEntryTable;
 import com.liferay.remote.app.model.impl.RemoteAppEntryImpl;
 import com.liferay.remote.app.model.impl.RemoteAppEntryModelImpl;
 import com.liferay.remote.app.service.persistence.RemoteAppEntryPersistence;
+import com.liferay.remote.app.service.persistence.RemoteAppEntryUtil;
 import com.liferay.remote.app.service.persistence.impl.constants.RemoteAppPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2685,11 +2687,31 @@ public class RemoteAppEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
+
+		_setRemoteAppEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setRemoteAppEntryUtilPersistence(null);
+
 		entityCache.removeCache(RemoteAppEntryImpl.class.getName());
+	}
+
+	private void _setRemoteAppEntryUtilPersistence(
+		RemoteAppEntryPersistence remoteAppEntryPersistence) {
+
+		try {
+			Field field = RemoteAppEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, remoteAppEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

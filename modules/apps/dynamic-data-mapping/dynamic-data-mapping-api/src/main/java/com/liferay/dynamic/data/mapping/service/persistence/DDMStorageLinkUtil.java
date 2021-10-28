@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the ddm storage link service. This utility wraps <code>com.liferay.dynamic.data.mapping.service.persistence.impl.DDMStorageLinkPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -1132,26 +1128,9 @@ public class DDMStorageLinkUtil {
 	}
 
 	public static DDMStorageLinkPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<DDMStorageLinkPersistence, DDMStorageLinkPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DDMStorageLinkPersistence.class);
-
-		ServiceTracker<DDMStorageLinkPersistence, DDMStorageLinkPersistence>
-			serviceTracker =
-				new ServiceTracker
-					<DDMStorageLinkPersistence, DDMStorageLinkPersistence>(
-						bundle.getBundleContext(),
-						DDMStorageLinkPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DDMStorageLinkPersistence _persistence;
 
 }

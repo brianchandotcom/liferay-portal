@@ -37,9 +37,11 @@ import com.liferay.portal.tools.service.builder.test.model.FinderWhereClauseEntr
 import com.liferay.portal.tools.service.builder.test.model.impl.FinderWhereClauseEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.FinderWhereClauseEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.FinderWhereClauseEntryPersistence;
+import com.liferay.portal.tools.service.builder.test.service.persistence.FinderWhereClauseEntryUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1182,10 +1184,30 @@ public class FinderWhereClauseEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName_Nickname",
 			new String[] {String.class.getName()}, new String[] {"name"},
 			false);
+
+		_setFinderWhereClauseEntryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setFinderWhereClauseEntryUtilPersistence(null);
+
 		entityCache.removeCache(FinderWhereClauseEntryImpl.class.getName());
+	}
+
+	private void _setFinderWhereClauseEntryUtilPersistence(
+		FinderWhereClauseEntryPersistence finderWhereClauseEntryPersistence) {
+
+		try {
+			Field field = FinderWhereClauseEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, finderWhereClauseEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

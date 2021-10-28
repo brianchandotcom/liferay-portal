@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.exception.NoSuchCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryTable;
 import com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence;
+import com.liferay.asset.kernel.service.persistence.AssetCategoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -53,6 +54,7 @@ import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -13289,10 +13291,30 @@ public class AssetCategoryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "externalReferenceCode"}, false);
+
+		_setAssetCategoryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setAssetCategoryUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(AssetCategoryImpl.class.getName());
+	}
+
+	private void _setAssetCategoryUtilPersistence(
+		AssetCategoryPersistence assetCategoryPersistence) {
+
+		try {
+			Field field = AssetCategoryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, assetCategoryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_ASSETCATEGORY =

@@ -15,7 +15,6 @@
 package com.liferay.document.library.kernel.service.persistence;
 
 import com.liferay.document.library.kernel.model.DLFileShortcut;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -2123,15 +2122,9 @@ public class DLFileShortcutUtil {
 	}
 
 	public static DLFileShortcutPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(DLFileShortcutPersistence)PortalBeanLocatorUtil.locate(
-					DLFileShortcutPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static DLFileShortcutPersistence _persistence;
+	private static volatile DLFileShortcutPersistence _persistence;
 
 }

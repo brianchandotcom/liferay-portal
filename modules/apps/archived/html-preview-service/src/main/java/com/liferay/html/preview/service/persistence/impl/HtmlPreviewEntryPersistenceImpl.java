@@ -20,6 +20,7 @@ import com.liferay.html.preview.model.HtmlPreviewEntryTable;
 import com.liferay.html.preview.model.impl.HtmlPreviewEntryImpl;
 import com.liferay.html.preview.model.impl.HtmlPreviewEntryModelImpl;
 import com.liferay.html.preview.service.persistence.HtmlPreviewEntryPersistence;
+import com.liferay.html.preview.service.persistence.HtmlPreviewEntryUtil;
 import com.liferay.html.preview.service.persistence.impl.constants.PreviewPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -939,11 +941,31 @@ public class HtmlPreviewEntryPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"groupId", "classNameId", "classPK"}, false);
+
+		_setHtmlPreviewEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setHtmlPreviewEntryUtilPersistence(null);
+
 		entityCache.removeCache(HtmlPreviewEntryImpl.class.getName());
+	}
+
+	private void _setHtmlPreviewEntryUtilPersistence(
+		HtmlPreviewEntryPersistence htmlPreviewEntryPersistence) {
+
+		try {
+			Field field = HtmlPreviewEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, htmlPreviewEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

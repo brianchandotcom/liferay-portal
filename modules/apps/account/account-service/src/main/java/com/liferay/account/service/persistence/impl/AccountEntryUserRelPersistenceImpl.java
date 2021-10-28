@@ -20,6 +20,7 @@ import com.liferay.account.model.AccountEntryUserRelTable;
 import com.liferay.account.model.impl.AccountEntryUserRelImpl;
 import com.liferay.account.model.impl.AccountEntryUserRelModelImpl;
 import com.liferay.account.service.persistence.AccountEntryUserRelPersistence;
+import com.liferay.account.service.persistence.AccountEntryUserRelUtil;
 import com.liferay.account.service.persistence.impl.constants.AccountPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -1954,11 +1956,31 @@ public class AccountEntryUserRelPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAEI_AUI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"accountEntryId", "accountUserId"}, false);
+
+		_setAccountEntryUserRelUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setAccountEntryUserRelUtilPersistence(null);
+
 		entityCache.removeCache(AccountEntryUserRelImpl.class.getName());
+	}
+
+	private void _setAccountEntryUserRelUtilPersistence(
+		AccountEntryUserRelPersistence accountEntryUserRelPersistence) {
+
+		try {
+			Field field = AccountEntryUserRelUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, accountEntryUserRelPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

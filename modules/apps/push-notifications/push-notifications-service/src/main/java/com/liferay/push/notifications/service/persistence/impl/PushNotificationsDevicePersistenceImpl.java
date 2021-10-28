@@ -44,10 +44,12 @@ import com.liferay.push.notifications.model.PushNotificationsDeviceTable;
 import com.liferay.push.notifications.model.impl.PushNotificationsDeviceImpl;
 import com.liferay.push.notifications.model.impl.PushNotificationsDeviceModelImpl;
 import com.liferay.push.notifications.service.persistence.PushNotificationsDevicePersistence;
+import com.liferay.push.notifications.service.persistence.PushNotificationsDeviceUtil;
 import com.liferay.push.notifications.service.persistence.impl.constants.PushNotificationsPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1831,11 +1833,31 @@ public class PushNotificationsDevicePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_P",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "platform"}, false);
+
+		_setPushNotificationsDeviceUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setPushNotificationsDeviceUtilPersistence(null);
+
 		entityCache.removeCache(PushNotificationsDeviceImpl.class.getName());
+	}
+
+	private void _setPushNotificationsDeviceUtilPersistence(
+		PushNotificationsDevicePersistence pushNotificationsDevicePersistence) {
+
+		try {
+			Field field = PushNotificationsDeviceUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, pushNotificationsDevicePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

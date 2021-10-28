@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the cp tax category service. This utility wraps <code>com.liferay.commerce.product.service.persistence.impl.CPTaxCategoryPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -518,25 +514,9 @@ public class CPTaxCategoryUtil {
 	}
 
 	public static CPTaxCategoryPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<CPTaxCategoryPersistence, CPTaxCategoryPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CPTaxCategoryPersistence.class);
-
-		ServiceTracker<CPTaxCategoryPersistence, CPTaxCategoryPersistence>
-			serviceTracker =
-				new ServiceTracker
-					<CPTaxCategoryPersistence, CPTaxCategoryPersistence>(
-						bundle.getBundleContext(),
-						CPTaxCategoryPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPTaxCategoryPersistence _persistence;
 
 }

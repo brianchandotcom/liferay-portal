@@ -26,10 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the blogs stats user service. This utility wraps <code>com.liferay.blogs.service.persistence.impl.BlogsStatsUserPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -1227,26 +1223,9 @@ public class BlogsStatsUserUtil {
 	}
 
 	public static BlogsStatsUserPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<BlogsStatsUserPersistence, BlogsStatsUserPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			BlogsStatsUserPersistence.class);
-
-		ServiceTracker<BlogsStatsUserPersistence, BlogsStatsUserPersistence>
-			serviceTracker =
-				new ServiceTracker
-					<BlogsStatsUserPersistence, BlogsStatsUserPersistence>(
-						bundle.getBundleContext(),
-						BlogsStatsUserPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile BlogsStatsUserPersistence _persistence;
 
 }

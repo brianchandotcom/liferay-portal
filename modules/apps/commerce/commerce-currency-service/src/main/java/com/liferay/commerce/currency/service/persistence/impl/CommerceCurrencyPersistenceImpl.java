@@ -20,6 +20,7 @@ import com.liferay.commerce.currency.model.CommerceCurrencyTable;
 import com.liferay.commerce.currency.model.impl.CommerceCurrencyImpl;
 import com.liferay.commerce.currency.model.impl.CommerceCurrencyModelImpl;
 import com.liferay.commerce.currency.service.persistence.CommerceCurrencyPersistence;
+import com.liferay.commerce.currency.service.persistence.CommerceCurrencyUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -4331,10 +4333,30 @@ public class CommerceCurrencyPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"companyId", "primary_", "active_"}, false);
+
+		_setCommerceCurrencyUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCommerceCurrencyUtilPersistence(null);
+
 		entityCache.removeCache(CommerceCurrencyImpl.class.getName());
+	}
+
+	private void _setCommerceCurrencyUtilPersistence(
+		CommerceCurrencyPersistence commerceCurrencyPersistence) {
+
+		try {
+			Field field = CommerceCurrencyUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceCurrencyPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

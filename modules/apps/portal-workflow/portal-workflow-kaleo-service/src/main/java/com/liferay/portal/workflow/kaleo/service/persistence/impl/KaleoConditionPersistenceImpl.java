@@ -43,10 +43,12 @@ import com.liferay.portal.workflow.kaleo.model.KaleoConditionTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoConditionImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoConditionModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoConditionPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoConditionUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.KaleoPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -1935,11 +1937,31 @@ public class KaleoConditionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKaleoNodeId",
 			new String[] {Long.class.getName()}, new String[] {"kaleoNodeId"},
 			false);
+
+		_setKaleoConditionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setKaleoConditionUtilPersistence(null);
+
 		entityCache.removeCache(KaleoConditionImpl.class.getName());
+	}
+
+	private void _setKaleoConditionUtilPersistence(
+		KaleoConditionPersistence kaleoConditionPersistence) {
+
+		try {
+			Field field = KaleoConditionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, kaleoConditionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

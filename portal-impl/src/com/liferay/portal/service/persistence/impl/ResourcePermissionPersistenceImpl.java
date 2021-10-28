@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
+import com.liferay.portal.kernel.service.persistence.ResourcePermissionUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -46,6 +47,7 @@ import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -7657,10 +7659,30 @@ public class ResourcePermissionPersistenceImpl
 				"viewActionId"
 			},
 			false);
+
+		_setResourcePermissionUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setResourcePermissionUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(ResourcePermissionImpl.class.getName());
+	}
+
+	private void _setResourcePermissionUtilPersistence(
+		ResourcePermissionPersistence resourcePermissionPersistence) {
+
+		try {
+			Field field = ResourcePermissionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, resourcePermissionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_RESOURCEPERMISSION =

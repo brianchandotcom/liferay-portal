@@ -37,9 +37,11 @@ import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocaliz
 import com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryLocalizationImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryLocalizationModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryLocalizationPersistence;
+import com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryLocalizationUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1479,10 +1481,31 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			"countByLocalizedEntryId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"localizedEntryId", "languageId"}, false);
+
+		_setLocalizedEntryLocalizationUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setLocalizedEntryLocalizationUtilPersistence(null);
+
 		entityCache.removeCache(LocalizedEntryLocalizationImpl.class.getName());
+	}
+
+	private void _setLocalizedEntryLocalizationUtilPersistence(
+		LocalizedEntryLocalizationPersistence
+			localizedEntryLocalizationPersistence) {
+
+		try {
+			Field field = LocalizedEntryLocalizationUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, localizedEntryLocalizationPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

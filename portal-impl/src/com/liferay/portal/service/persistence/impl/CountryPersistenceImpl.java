@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CountryLocalizationPersistence;
 import com.liferay.portal.kernel.service.persistence.CountryPersistence;
+import com.liferay.portal.kernel.service.persistence.CountryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -49,6 +50,7 @@ import com.liferay.portal.model.impl.CountryModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -5660,10 +5662,29 @@ public class CountryPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"companyId", "active_", "shippingAllowed"}, false);
+
+		_setCountryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCountryUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(CountryImpl.class.getName());
+	}
+
+	private void _setCountryUtilPersistence(
+		CountryPersistence countryPersistence) {
+
+		try {
+			Field field = CountryUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, countryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@BeanReference(type = CountryLocalizationPersistence.class)

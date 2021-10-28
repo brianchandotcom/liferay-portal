@@ -20,6 +20,7 @@ import com.liferay.commerce.order.rule.model.COREntryTable;
 import com.liferay.commerce.order.rule.model.impl.COREntryImpl;
 import com.liferay.commerce.order.rule.model.impl.COREntryModelImpl;
 import com.liferay.commerce.order.rule.service.persistence.COREntryPersistence;
+import com.liferay.commerce.order.rule.service.persistence.COREntryUtil;
 import com.liferay.commerce.order.rule.service.persistence.impl.constants.CORPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -5996,11 +5998,30 @@ public class COREntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "externalReferenceCode"}, false);
+
+		_setCOREntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setCOREntryUtilPersistence(null);
+
 		entityCache.removeCache(COREntryImpl.class.getName());
+	}
+
+	private void _setCOREntryUtilPersistence(
+		COREntryPersistence corEntryPersistence) {
+
+		try {
+			Field field = COREntryUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, corEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

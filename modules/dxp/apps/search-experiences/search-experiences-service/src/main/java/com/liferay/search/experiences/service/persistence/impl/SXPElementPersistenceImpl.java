@@ -53,10 +53,12 @@ import com.liferay.search.experiences.model.SXPElementTable;
 import com.liferay.search.experiences.model.impl.SXPElementImpl;
 import com.liferay.search.experiences.model.impl.SXPElementModelImpl;
 import com.liferay.search.experiences.service.persistence.SXPElementPersistence;
+import com.liferay.search.experiences.service.persistence.SXPElementUtil;
 import com.liferay.search.experiences.service.persistence.impl.constants.SXPPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -4641,11 +4643,30 @@ public class SXPElementPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"companyId", "type_", "status"}, false);
+
+		_setSXPElementUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setSXPElementUtilPersistence(null);
+
 		entityCache.removeCache(SXPElementImpl.class.getName());
+	}
+
+	private void _setSXPElementUtilPersistence(
+		SXPElementPersistence sxpElementPersistence) {
+
+		try {
+			Field field = SXPElementUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, sxpElementPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -2102,15 +2101,9 @@ public class PortletPreferencesUtil {
 	}
 
 	public static PortletPreferencesPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(PortletPreferencesPersistence)PortalBeanLocatorUtil.locate(
-					PortletPreferencesPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static PortletPreferencesPersistence _persistence;
+	private static volatile PortletPreferencesPersistence _persistence;
 
 }

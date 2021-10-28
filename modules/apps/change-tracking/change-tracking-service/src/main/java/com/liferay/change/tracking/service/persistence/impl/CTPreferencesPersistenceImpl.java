@@ -20,6 +20,7 @@ import com.liferay.change.tracking.model.CTPreferencesTable;
 import com.liferay.change.tracking.model.impl.CTPreferencesImpl;
 import com.liferay.change.tracking.model.impl.CTPreferencesModelImpl;
 import com.liferay.change.tracking.service.persistence.CTPreferencesPersistence;
+import com.liferay.change.tracking.service.persistence.CTPreferencesUtil;
 import com.liferay.change.tracking.service.persistence.impl.constants.CTPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1916,11 +1918,31 @@ public class CTPreferencesPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "userId"}, false);
+
+		_setCTPreferencesUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setCTPreferencesUtilPersistence(null);
+
 		entityCache.removeCache(CTPreferencesImpl.class.getName());
+	}
+
+	private void _setCTPreferencesUtilPersistence(
+		CTPreferencesPersistence ctPreferencesPersistence) {
+
+		try {
+			Field field = CTPreferencesUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ctPreferencesPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

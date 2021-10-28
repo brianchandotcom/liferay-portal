@@ -20,6 +20,7 @@ import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntryT
 import com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryImpl;
 import com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl;
 import com.liferay.commerce.product.type.grouped.service.persistence.CPDefinitionGroupedEntryPersistence;
+import com.liferay.commerce.product.type.grouped.service.persistence.CPDefinitionGroupedEntryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2921,10 +2923,31 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_E",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"CPDefinitionId", "entryCProductId"}, false);
+
+		_setCPDefinitionGroupedEntryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCPDefinitionGroupedEntryUtilPersistence(null);
+
 		entityCache.removeCache(CPDefinitionGroupedEntryImpl.class.getName());
+	}
+
+	private void _setCPDefinitionGroupedEntryUtilPersistence(
+		CPDefinitionGroupedEntryPersistence
+			cpDefinitionGroupedEntryPersistence) {
+
+		try {
+			Field field = CPDefinitionGroupedEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, cpDefinitionGroupedEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

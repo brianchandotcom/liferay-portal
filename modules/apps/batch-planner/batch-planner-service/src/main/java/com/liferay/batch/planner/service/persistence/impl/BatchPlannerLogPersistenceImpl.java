@@ -20,6 +20,7 @@ import com.liferay.batch.planner.model.BatchPlannerLogTable;
 import com.liferay.batch.planner.model.impl.BatchPlannerLogImpl;
 import com.liferay.batch.planner.model.impl.BatchPlannerLogModelImpl;
 import com.liferay.batch.planner.service.persistence.BatchPlannerLogPersistence;
+import com.liferay.batch.planner.service.persistence.BatchPlannerLogUtil;
 import com.liferay.batch.planner.service.persistence.impl.constants.BatchPlannerPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -2318,11 +2320,31 @@ public class BatchPlannerLogPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBPPI_DTERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"batchPlannerPlanId", "dispatchTriggerERC"}, false);
+
+		_setBatchPlannerLogUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setBatchPlannerLogUtilPersistence(null);
+
 		entityCache.removeCache(BatchPlannerLogImpl.class.getName());
+	}
+
+	private void _setBatchPlannerLogUtilPersistence(
+		BatchPlannerLogPersistence batchPlannerLogPersistence) {
+
+		try {
+			Field field = BatchPlannerLogUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, batchPlannerLogPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

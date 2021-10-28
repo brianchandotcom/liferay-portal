@@ -20,6 +20,7 @@ import com.liferay.bookmarks.model.BookmarksFolderTable;
 import com.liferay.bookmarks.model.impl.BookmarksFolderImpl;
 import com.liferay.bookmarks.model.impl.BookmarksFolderModelImpl;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence;
+import com.liferay.bookmarks.service.persistence.BookmarksFolderUtil;
 import com.liferay.bookmarks.service.persistence.impl.constants.BookmarksPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -7524,11 +7526,31 @@ public class BookmarksFolderPersistenceImpl
 			},
 			new String[] {"folderId", "companyId", "parentFolderId", "status"},
 			false);
+
+		_setBookmarksFolderUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setBookmarksFolderUtilPersistence(null);
+
 		entityCache.removeCache(BookmarksFolderImpl.class.getName());
+	}
+
+	private void _setBookmarksFolderUtilPersistence(
+		BookmarksFolderPersistence bookmarksFolderPersistence) {
+
+		try {
+			Field field = BookmarksFolderUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, bookmarksFolderPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

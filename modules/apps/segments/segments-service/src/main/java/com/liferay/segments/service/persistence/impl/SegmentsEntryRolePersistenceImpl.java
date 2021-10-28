@@ -44,10 +44,12 @@ import com.liferay.segments.model.SegmentsEntryRoleTable;
 import com.liferay.segments.model.impl.SegmentsEntryRoleImpl;
 import com.liferay.segments.model.impl.SegmentsEntryRoleModelImpl;
 import com.liferay.segments.service.persistence.SegmentsEntryRolePersistence;
+import com.liferay.segments.service.persistence.SegmentsEntryRoleUtil;
 import com.liferay.segments.service.persistence.impl.constants.SegmentsPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2220,11 +2222,31 @@ public class SegmentsEntryRolePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"segmentsEntryId", "roleId"}, false);
+
+		_setSegmentsEntryRoleUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setSegmentsEntryRoleUtilPersistence(null);
+
 		entityCache.removeCache(SegmentsEntryRoleImpl.class.getName());
+	}
+
+	private void _setSegmentsEntryRoleUtilPersistence(
+		SegmentsEntryRolePersistence segmentsEntryRolePersistence) {
+
+		try {
+			Field field = SegmentsEntryRoleUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, segmentsEntryRolePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

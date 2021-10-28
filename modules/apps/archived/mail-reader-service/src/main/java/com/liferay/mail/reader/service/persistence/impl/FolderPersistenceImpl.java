@@ -20,6 +20,7 @@ import com.liferay.mail.reader.model.FolderTable;
 import com.liferay.mail.reader.model.impl.FolderImpl;
 import com.liferay.mail.reader.model.impl.FolderModelImpl;
 import com.liferay.mail.reader.service.persistence.FolderPersistence;
+import com.liferay.mail.reader.service.persistence.FolderUtil;
 import com.liferay.mail.reader.service.persistence.impl.constants.MailPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -1412,11 +1414,30 @@ public class FolderPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_F",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"accountId", "fullName"}, false);
+
+		_setFolderUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setFolderUtilPersistence(null);
+
 		entityCache.removeCache(FolderImpl.class.getName());
+	}
+
+	private void _setFolderUtilPersistence(
+		FolderPersistence folderPersistence) {
+
+		try {
+			Field field = FolderUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, folderPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

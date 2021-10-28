@@ -46,10 +46,12 @@ import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVer
 import com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionImpl;
 import com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionModelImpl;
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionVersionPersistence;
+import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionVersionUtil;
 import com.liferay.portal.workflow.metrics.service.persistence.impl.constants.WorkflowMetricsPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -3161,12 +3163,34 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByV_WMSLAD",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"version", "wmSLADefinitionId"}, false);
+
+		_setWorkflowMetricsSLADefinitionVersionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setWorkflowMetricsSLADefinitionVersionUtilPersistence(null);
+
 		entityCache.removeCache(
 			WorkflowMetricsSLADefinitionVersionImpl.class.getName());
+	}
+
+	private void _setWorkflowMetricsSLADefinitionVersionUtilPersistence(
+		WorkflowMetricsSLADefinitionVersionPersistence
+			workflowMetricsSLADefinitionVersionPersistence) {
+
+		try {
+			Field field =
+				WorkflowMetricsSLADefinitionVersionUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, workflowMetricsSLADefinitionVersionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

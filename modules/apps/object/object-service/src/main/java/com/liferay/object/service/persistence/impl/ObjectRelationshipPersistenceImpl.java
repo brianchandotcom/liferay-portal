@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectRelationshipTable;
 import com.liferay.object.model.impl.ObjectRelationshipImpl;
 import com.liferay.object.model.impl.ObjectRelationshipModelImpl;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
+import com.liferay.object.service.persistence.ObjectRelationshipUtil;
 import com.liferay.object.service.persistence.impl.constants.ObjectPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -4631,11 +4633,31 @@ public class ObjectRelationshipPersistenceImpl
 				"type_"
 			},
 			false);
+
+		_setObjectRelationshipUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setObjectRelationshipUtilPersistence(null);
+
 		entityCache.removeCache(ObjectRelationshipImpl.class.getName());
+	}
+
+	private void _setObjectRelationshipUtilPersistence(
+		ObjectRelationshipPersistence objectRelationshipPersistence) {
+
+		try {
+			Field field = ObjectRelationshipUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, objectRelationshipPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

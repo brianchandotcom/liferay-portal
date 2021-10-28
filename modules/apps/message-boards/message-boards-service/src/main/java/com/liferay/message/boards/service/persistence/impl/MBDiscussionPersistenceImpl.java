@@ -20,6 +20,7 @@ import com.liferay.message.boards.model.MBDiscussionTable;
 import com.liferay.message.boards.model.impl.MBDiscussionImpl;
 import com.liferay.message.boards.model.impl.MBDiscussionModelImpl;
 import com.liferay.message.boards.service.persistence.MBDiscussionPersistence;
+import com.liferay.message.boards.service.persistence.MBDiscussionUtil;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2853,11 +2855,31 @@ public class MBDiscussionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, false);
+
+		_setMBDiscussionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setMBDiscussionUtilPersistence(null);
+
 		entityCache.removeCache(MBDiscussionImpl.class.getName());
+	}
+
+	private void _setMBDiscussionUtilPersistence(
+		MBDiscussionPersistence mbDiscussionPersistence) {
+
+		try {
+			Field field = MBDiscussionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, mbDiscussionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

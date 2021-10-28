@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the ddm data provider instance service. This utility wraps <code>com.liferay.dynamic.data.mapping.service.persistence.impl.DDMDataProviderInstancePersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -1296,29 +1292,9 @@ public class DDMDataProviderInstanceUtil {
 	}
 
 	public static DDMDataProviderInstancePersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<DDMDataProviderInstancePersistence, DDMDataProviderInstancePersistence>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DDMDataProviderInstancePersistence.class);
-
-		ServiceTracker
-			<DDMDataProviderInstancePersistence,
-			 DDMDataProviderInstancePersistence> serviceTracker =
-				new ServiceTracker
-					<DDMDataProviderInstancePersistence,
-					 DDMDataProviderInstancePersistence>(
-						 bundle.getBundleContext(),
-						 DDMDataProviderInstancePersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DDMDataProviderInstancePersistence _persistence;
 
 }

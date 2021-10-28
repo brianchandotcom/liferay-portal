@@ -20,6 +20,7 @@ import com.liferay.multi.factor.authentication.fido2.credential.model.MFAFIDO2Cr
 import com.liferay.multi.factor.authentication.fido2.credential.model.impl.MFAFIDO2CredentialEntryImpl;
 import com.liferay.multi.factor.authentication.fido2.credential.model.impl.MFAFIDO2CredentialEntryModelImpl;
 import com.liferay.multi.factor.authentication.fido2.credential.service.persistence.MFAFIDO2CredentialEntryPersistence;
+import com.liferay.multi.factor.authentication.fido2.credential.service.persistence.MFAFIDO2CredentialEntryUtil;
 import com.liferay.multi.factor.authentication.fido2.credential.service.persistence.impl.constants.MFAFIDOTwoCredentialPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1981,11 +1983,31 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"userId", "credentialKeyHash"}, false);
+
+		_setMFAFIDO2CredentialEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setMFAFIDO2CredentialEntryUtilPersistence(null);
+
 		entityCache.removeCache(MFAFIDO2CredentialEntryImpl.class.getName());
+	}
+
+	private void _setMFAFIDO2CredentialEntryUtilPersistence(
+		MFAFIDO2CredentialEntryPersistence mfaFIDO2CredentialEntryPersistence) {
+
+		try {
+			Field field = MFAFIDO2CredentialEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, mfaFIDO2CredentialEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

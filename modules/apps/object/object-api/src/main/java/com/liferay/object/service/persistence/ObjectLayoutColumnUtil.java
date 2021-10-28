@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the object layout column service. This utility wraps <code>com.liferay.object.service.persistence.impl.ObjectLayoutColumnPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -809,29 +805,9 @@ public class ObjectLayoutColumnUtil {
 	}
 
 	public static ObjectLayoutColumnPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<ObjectLayoutColumnPersistence, ObjectLayoutColumnPersistence>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ObjectLayoutColumnPersistence.class);
-
-		ServiceTracker
-			<ObjectLayoutColumnPersistence, ObjectLayoutColumnPersistence>
-				serviceTracker =
-					new ServiceTracker
-						<ObjectLayoutColumnPersistence,
-						 ObjectLayoutColumnPersistence>(
-							 bundle.getBundleContext(),
-							 ObjectLayoutColumnPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile ObjectLayoutColumnPersistence _persistence;
 
 }

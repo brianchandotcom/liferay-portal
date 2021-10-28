@@ -41,10 +41,12 @@ import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdCo
 import com.liferay.portal.security.sso.openid.connect.persistence.model.impl.OpenIdConnectSessionImpl;
 import com.liferay.portal.security.sso.openid.connect.persistence.model.impl.OpenIdConnectSessionModelImpl;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.persistence.OpenIdConnectSessionPersistence;
+import com.liferay.portal.security.sso.openid.connect.persistence.service.persistence.OpenIdConnectSessionUtil;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.persistence.impl.constants.OpenIdConnectPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -644,11 +646,31 @@ public class OpenIdConnectSessionPersistenceImpl
 		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
+
+		_setOpenIdConnectSessionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setOpenIdConnectSessionUtilPersistence(null);
+
 		entityCache.removeCache(OpenIdConnectSessionImpl.class.getName());
+	}
+
+	private void _setOpenIdConnectSessionUtilPersistence(
+		OpenIdConnectSessionPersistence openIdConnectSessionPersistence) {
+
+		try {
+			Field field = OpenIdConnectSessionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, openIdConnectSessionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

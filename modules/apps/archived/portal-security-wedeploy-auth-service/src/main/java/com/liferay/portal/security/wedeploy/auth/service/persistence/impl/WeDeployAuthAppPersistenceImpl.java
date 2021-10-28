@@ -43,10 +43,12 @@ import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthAppTable;
 import com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthAppImpl;
 import com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthAppModelImpl;
 import com.liferay.portal.security.wedeploy.auth.service.persistence.WeDeployAuthAppPersistence;
+import com.liferay.portal.security.wedeploy.auth.service.persistence.WeDeployAuthAppUtil;
 import com.liferay.portal.security.wedeploy.auth.service.persistence.impl.constants.WeDeployAuthPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -1283,11 +1285,31 @@ public class WeDeployAuthAppPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCI_CS",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"clientId", "clientSecret"}, false);
+
+		_setWeDeployAuthAppUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setWeDeployAuthAppUtilPersistence(null);
+
 		entityCache.removeCache(WeDeployAuthAppImpl.class.getName());
+	}
+
+	private void _setWeDeployAuthAppUtilPersistence(
+		WeDeployAuthAppPersistence weDeployAuthAppPersistence) {
+
+		try {
+			Field field = WeDeployAuthAppUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, weDeployAuthAppPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

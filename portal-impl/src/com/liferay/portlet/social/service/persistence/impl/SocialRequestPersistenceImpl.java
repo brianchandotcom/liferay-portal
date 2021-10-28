@@ -44,9 +44,11 @@ import com.liferay.social.kernel.exception.NoSuchRequestException;
 import com.liferay.social.kernel.model.SocialRequest;
 import com.liferay.social.kernel.model.SocialRequestTable;
 import com.liferay.social.kernel.service.persistence.SocialRequestPersistence;
+import com.liferay.social.kernel.service.persistence.SocialRequestUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -7432,10 +7434,30 @@ public class SocialRequestPersistenceImpl
 				"classNameId", "classPK", "type_", "receiverUserId", "status"
 			},
 			false);
+
+		_setSocialRequestUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setSocialRequestUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(SocialRequestImpl.class.getName());
+	}
+
+	private void _setSocialRequestUtilPersistence(
+		SocialRequestPersistence socialRequestPersistence) {
+
+		try {
+			Field field = SocialRequestUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, socialRequestPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_SOCIALREQUEST =

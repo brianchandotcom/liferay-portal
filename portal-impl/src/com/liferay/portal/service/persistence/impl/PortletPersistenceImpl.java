@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.PortletPersistence;
+import com.liferay.portal.kernel.service.persistence.PortletUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -43,6 +44,7 @@ import com.liferay.portal.model.impl.PortletModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
@@ -1383,10 +1385,29 @@ public class PortletPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "portletId"}, false);
+
+		_setPortletUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setPortletUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(PortletImpl.class.getName());
+	}
+
+	private void _setPortletUtilPersistence(
+		PortletPersistence portletPersistence) {
+
+		try {
+			Field field = PortletUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, portletPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_PORTLET =

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1791,14 +1790,9 @@ public class CountryUtil {
 	}
 
 	public static CountryPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (CountryPersistence)PortalBeanLocatorUtil.locate(
-				CountryPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static CountryPersistence _persistence;
+	private static volatile CountryPersistence _persistence;
 
 }

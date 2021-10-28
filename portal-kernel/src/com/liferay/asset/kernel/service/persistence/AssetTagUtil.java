@@ -15,7 +15,6 @@
 package com.liferay.asset.kernel.service.persistence;
 
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1720,14 +1719,9 @@ public class AssetTagUtil {
 	}
 
 	public static AssetTagPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (AssetTagPersistence)PortalBeanLocatorUtil.locate(
-				AssetTagPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static AssetTagPersistence _persistence;
+	private static volatile AssetTagPersistence _persistence;
 
 }

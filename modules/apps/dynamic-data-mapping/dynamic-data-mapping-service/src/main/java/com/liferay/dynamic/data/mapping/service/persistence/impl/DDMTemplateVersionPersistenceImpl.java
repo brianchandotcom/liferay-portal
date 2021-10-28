@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateVersionTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionPersistence;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2291,11 +2293,31 @@ public class DDMTemplateVersionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"templateId", "status"}, false);
+
+		_setDDMTemplateVersionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDDMTemplateVersionUtilPersistence(null);
+
 		entityCache.removeCache(DDMTemplateVersionImpl.class.getName());
+	}
+
+	private void _setDDMTemplateVersionUtilPersistence(
+		DDMTemplateVersionPersistence ddmTemplateVersionPersistence) {
+
+		try {
+			Field field = DDMTemplateVersionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ddmTemplateVersionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

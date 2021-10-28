@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the kb folder service. This utility wraps <code>com.liferay.knowledge.base.service.persistence.impl.KBFolderPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -1342,23 +1338,9 @@ public class KBFolderUtil {
 	}
 
 	public static KBFolderPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker<KBFolderPersistence, KBFolderPersistence>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(KBFolderPersistence.class);
-
-		ServiceTracker<KBFolderPersistence, KBFolderPersistence>
-			serviceTracker =
-				new ServiceTracker<KBFolderPersistence, KBFolderPersistence>(
-					bundle.getBundleContext(), KBFolderPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile KBFolderPersistence _persistence;
 
 }

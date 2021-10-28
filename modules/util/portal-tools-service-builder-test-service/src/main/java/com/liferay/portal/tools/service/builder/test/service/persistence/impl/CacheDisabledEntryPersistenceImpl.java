@@ -36,9 +36,11 @@ import com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntryTab
 import com.liferay.portal.tools.service.builder.test.model.impl.CacheDisabledEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.CacheDisabledEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.CacheDisabledEntryPersistence;
+import com.liferay.portal.tools.service.builder.test.service.persistence.CacheDisabledEntryUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -855,10 +857,30 @@ public class CacheDisabledEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
 			new String[] {String.class.getName()}, new String[] {"name"},
 			false);
+
+		_setCacheDisabledEntryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCacheDisabledEntryUtilPersistence(null);
+
 		dummyEntityCache.removeCache(CacheDisabledEntryImpl.class.getName());
+	}
+
+	private void _setCacheDisabledEntryUtilPersistence(
+		CacheDisabledEntryPersistence cacheDisabledEntryPersistence) {
+
+		try {
+			Field field = CacheDisabledEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, cacheDisabledEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_CACHEDISABLEDENTRY =

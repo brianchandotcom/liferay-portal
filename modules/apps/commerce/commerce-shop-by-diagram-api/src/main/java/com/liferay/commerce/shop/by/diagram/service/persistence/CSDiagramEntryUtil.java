@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the cs diagram entry service. This utility wraps <code>com.liferay.commerce.shop.by.diagram.service.persistence.impl.CSDiagramEntryPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -523,26 +519,9 @@ public class CSDiagramEntryUtil {
 	}
 
 	public static CSDiagramEntryPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<CSDiagramEntryPersistence, CSDiagramEntryPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CSDiagramEntryPersistence.class);
-
-		ServiceTracker<CSDiagramEntryPersistence, CSDiagramEntryPersistence>
-			serviceTracker =
-				new ServiceTracker
-					<CSDiagramEntryPersistence, CSDiagramEntryPersistence>(
-						bundle.getBundleContext(),
-						CSDiagramEntryPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CSDiagramEntryPersistence _persistence;
 
 }

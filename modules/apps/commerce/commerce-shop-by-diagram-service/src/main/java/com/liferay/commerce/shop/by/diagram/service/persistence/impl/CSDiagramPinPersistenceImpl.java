@@ -20,6 +20,7 @@ import com.liferay.commerce.shop.by.diagram.model.CSDiagramPinTable;
 import com.liferay.commerce.shop.by.diagram.model.impl.CSDiagramPinImpl;
 import com.liferay.commerce.shop.by.diagram.model.impl.CSDiagramPinModelImpl;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramPinPersistence;
+import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramPinUtil;
 import com.liferay.commerce.shop.by.diagram.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1151,11 +1153,31 @@ public class CSDiagramPinPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDefinitionId",
 			new String[] {Long.class.getName()},
 			new String[] {"CPDefinitionId"}, false);
+
+		_setCSDiagramPinUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setCSDiagramPinUtilPersistence(null);
+
 		entityCache.removeCache(CSDiagramPinImpl.class.getName());
+	}
+
+	private void _setCSDiagramPinUtilPersistence(
+		CSDiagramPinPersistence csDiagramPinPersistence) {
+
+		try {
+			Field field = CSDiagramPinUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, csDiagramPinPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

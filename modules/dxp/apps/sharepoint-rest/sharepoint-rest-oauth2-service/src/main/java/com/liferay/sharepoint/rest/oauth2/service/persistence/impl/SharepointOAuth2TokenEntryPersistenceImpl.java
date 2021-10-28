@@ -42,10 +42,12 @@ import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntryTable;
 import com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl;
 import com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl;
 import com.liferay.sharepoint.rest.oauth2.service.persistence.SharepointOAuth2TokenEntryPersistence;
+import com.liferay.sharepoint.rest.oauth2.service.persistence.SharepointOAuth2TokenEntryUtil;
 import com.liferay.sharepoint.rest.oauth2.service.persistence.impl.constants.SharepointOAuthPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1486,11 +1488,32 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "configurationPid"}, false);
+
+		_setSharepointOAuth2TokenEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setSharepointOAuth2TokenEntryUtilPersistence(null);
+
 		entityCache.removeCache(SharepointOAuth2TokenEntryImpl.class.getName());
+	}
+
+	private void _setSharepointOAuth2TokenEntryUtilPersistence(
+		SharepointOAuth2TokenEntryPersistence
+			sharepointOAuth2TokenEntryPersistence) {
+
+		try {
+			Field field = SharepointOAuth2TokenEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, sharepointOAuth2TokenEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

@@ -39,9 +39,11 @@ import com.liferay.portal.tools.service.builder.test.model.ERCGroupEntryTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.ERCGroupEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.ERCGroupEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.ERCGroupEntryPersistence;
+import com.liferay.portal.tools.service.builder.test.service.persistence.ERCGroupEntryUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -900,10 +902,30 @@ public class ERCGroupEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "externalReferenceCode"}, false);
+
+		_setERCGroupEntryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setERCGroupEntryUtilPersistence(null);
+
 		entityCache.removeCache(ERCGroupEntryImpl.class.getName());
+	}
+
+	private void _setERCGroupEntryUtilPersistence(
+		ERCGroupEntryPersistence ercGroupEntryPersistence) {
+
+		try {
+			Field field = ERCGroupEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ercGroupEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

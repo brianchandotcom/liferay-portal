@@ -20,6 +20,7 @@ import com.liferay.message.boards.model.MBThreadFlagTable;
 import com.liferay.message.boards.model.impl.MBThreadFlagImpl;
 import com.liferay.message.boards.model.impl.MBThreadFlagModelImpl;
 import com.liferay.message.boards.service.persistence.MBThreadFlagPersistence;
+import com.liferay.message.boards.service.persistence.MBThreadFlagUtil;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3664,11 +3666,31 @@ public class MBThreadFlagPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"userId", "threadId"}, false);
+
+		_setMBThreadFlagUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setMBThreadFlagUtilPersistence(null);
+
 		entityCache.removeCache(MBThreadFlagImpl.class.getName());
+	}
+
+	private void _setMBThreadFlagUtilPersistence(
+		MBThreadFlagPersistence mbThreadFlagPersistence) {
+
+		try {
+			Field field = MBThreadFlagUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, mbThreadFlagPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

@@ -44,10 +44,12 @@ import com.liferay.portal.tools.service.builder.test.model.BigDecimalEntryTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence;
+import com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryUtil;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryPersistence;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.math.BigDecimal;
@@ -2621,12 +2623,32 @@ public class BigDecimalEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtBigDecimalValue",
 			new String[] {BigDecimal.class.getName()},
 			new String[] {"bigDecimalValue"}, false);
+
+		_setBigDecimalEntryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setBigDecimalEntryUtilPersistence(null);
+
 		entityCache.removeCache(BigDecimalEntryImpl.class.getName());
 
 		TableMapperFactory.removeTableMapper("BigDecimalEntries_LVEntries");
+	}
+
+	private void _setBigDecimalEntryUtilPersistence(
+		BigDecimalEntryPersistence bigDecimalEntryPersistence) {
+
+		try {
+			Field field = BigDecimalEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, bigDecimalEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

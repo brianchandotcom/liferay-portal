@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.TeamPersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
+import com.liferay.portal.kernel.service.persistence.UserGroupUtil;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -60,6 +61,7 @@ import com.liferay.portal.model.impl.UserGroupModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -8009,14 +8011,33 @@ public class UserGroupPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "externalReferenceCode"}, false);
+
+		_setUserGroupUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setUserGroupUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(UserGroupImpl.class.getName());
 
 		TableMapperFactory.removeTableMapper("Groups_UserGroups");
 		TableMapperFactory.removeTableMapper("UserGroups_Teams");
 		TableMapperFactory.removeTableMapper("Users_UserGroups");
+	}
+
+	private void _setUserGroupUtilPersistence(
+		UserGroupPersistence userGroupPersistence) {
+
+		try {
+			Field field = UserGroupUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, userGroupPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@BeanReference(type = GroupPersistence.class)

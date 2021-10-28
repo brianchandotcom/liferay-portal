@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
+import com.liferay.portal.kernel.service.persistence.RoleUtil;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -59,6 +60,7 @@ import com.liferay.portal.model.impl.RoleModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -11620,13 +11622,30 @@ public class RolePersistenceImpl
 			},
 			new String[] {"companyId", "classNameId", "classPK", "type_"},
 			false);
+
+		_setRoleUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setRoleUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(RoleImpl.class.getName());
 
 		TableMapperFactory.removeTableMapper("Groups_Roles");
 		TableMapperFactory.removeTableMapper("Users_Roles");
+	}
+
+	private void _setRoleUtilPersistence(RolePersistence rolePersistence) {
+		try {
+			Field field = RoleUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, rolePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@BeanReference(type = GroupPersistence.class)

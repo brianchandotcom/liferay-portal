@@ -53,10 +53,12 @@ import com.liferay.search.experiences.model.SXPBlueprintTable;
 import com.liferay.search.experiences.model.impl.SXPBlueprintImpl;
 import com.liferay.search.experiences.model.impl.SXPBlueprintModelImpl;
 import com.liferay.search.experiences.service.persistence.SXPBlueprintPersistence;
+import com.liferay.search.experiences.service.persistence.SXPBlueprintUtil;
 import com.liferay.search.experiences.service.persistence.impl.constants.SXPPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3593,11 +3595,31 @@ public class SXPBlueprintPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
+
+		_setSXPBlueprintUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setSXPBlueprintUtilPersistence(null);
+
 		entityCache.removeCache(SXPBlueprintImpl.class.getName());
+	}
+
+	private void _setSXPBlueprintUtilPersistence(
+		SXPBlueprintPersistence sxpBlueprintPersistence) {
+
+		try {
+			Field field = SXPBlueprintUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, sxpBlueprintPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

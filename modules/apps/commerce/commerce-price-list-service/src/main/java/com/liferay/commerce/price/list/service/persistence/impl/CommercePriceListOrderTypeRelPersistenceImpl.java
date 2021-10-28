@@ -20,6 +20,7 @@ import com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRelTable;
 import com.liferay.commerce.price.list.model.impl.CommercePriceListOrderTypeRelImpl;
 import com.liferay.commerce.price.list.model.impl.CommercePriceListOrderTypeRelModelImpl;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListOrderTypeRelPersistence;
+import com.liferay.commerce.price.list.service.persistence.CommercePriceListOrderTypeRelUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2690,11 +2692,33 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPI_COTI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commercePriceListId", "commerceOrderTypeId"}, false);
+
+		_setCommercePriceListOrderTypeRelUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCommercePriceListOrderTypeRelUtilPersistence(null);
+
 		entityCache.removeCache(
 			CommercePriceListOrderTypeRelImpl.class.getName());
+	}
+
+	private void _setCommercePriceListOrderTypeRelUtilPersistence(
+		CommercePriceListOrderTypeRelPersistence
+			commercePriceListOrderTypeRelPersistence) {
+
+		try {
+			Field field =
+				CommercePriceListOrderTypeRelUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, commercePriceListOrderTypeRelPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

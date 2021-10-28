@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateEntryImpl;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateEntryModelImpl;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
+import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryUtil;
 import com.liferay.layout.page.template.service.persistence.impl.constants.LayoutPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -25193,11 +25195,31 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				"status"
 			},
 			false);
+
+		_setLayoutPageTemplateEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setLayoutPageTemplateEntryUtilPersistence(null);
+
 		entityCache.removeCache(LayoutPageTemplateEntryImpl.class.getName());
+	}
+
+	private void _setLayoutPageTemplateEntryUtilPersistence(
+		LayoutPageTemplateEntryPersistence layoutPageTemplateEntryPersistence) {
+
+		try {
+			Field field = LayoutPageTemplateEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, layoutPageTemplateEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the account entry organization rel service. This utility wraps <code>com.liferay.account.service.persistence.impl.AccountEntryOrganizationRelPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -728,29 +724,9 @@ public class AccountEntryOrganizationRelUtil {
 	}
 
 	public static AccountEntryOrganizationRelPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<AccountEntryOrganizationRelPersistence,
-		 AccountEntryOrganizationRelPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			AccountEntryOrganizationRelPersistence.class);
-
-		ServiceTracker
-			<AccountEntryOrganizationRelPersistence,
-			 AccountEntryOrganizationRelPersistence> serviceTracker =
-				new ServiceTracker
-					<AccountEntryOrganizationRelPersistence,
-					 AccountEntryOrganizationRelPersistence>(
-						 bundle.getBundleContext(),
-						 AccountEntryOrganizationRelPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AccountEntryOrganizationRelPersistence _persistence;
 
 }

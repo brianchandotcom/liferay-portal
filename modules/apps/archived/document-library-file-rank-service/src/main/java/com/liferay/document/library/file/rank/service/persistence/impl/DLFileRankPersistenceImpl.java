@@ -20,6 +20,7 @@ import com.liferay.document.library.file.rank.model.DLFileRankTable;
 import com.liferay.document.library.file.rank.model.impl.DLFileRankImpl;
 import com.liferay.document.library.file.rank.model.impl.DLFileRankModelImpl;
 import com.liferay.document.library.file.rank.service.persistence.DLFileRankPersistence;
+import com.liferay.document.library.file.rank.service.persistence.DLFileRankUtil;
 import com.liferay.document.library.file.rank.service.persistence.impl.constants.DLPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -3099,11 +3101,30 @@ public class DLFileRankPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"companyId", "userId", "fileEntryId"}, false);
+
+		_setDLFileRankUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDLFileRankUtilPersistence(null);
+
 		entityCache.removeCache(DLFileRankImpl.class.getName());
+	}
+
+	private void _setDLFileRankUtilPersistence(
+		DLFileRankPersistence dlFileRankPersistence) {
+
+		try {
+			Field field = DLFileRankUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, dlFileRankPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

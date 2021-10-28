@@ -20,6 +20,7 @@ import com.liferay.layout.seo.model.LayoutSEOEntryTable;
 import com.liferay.layout.seo.model.impl.LayoutSEOEntryImpl;
 import com.liferay.layout.seo.model.impl.LayoutSEOEntryModelImpl;
 import com.liferay.layout.seo.service.persistence.LayoutSEOEntryPersistence;
+import com.liferay.layout.seo.service.persistence.LayoutSEOEntryUtil;
 import com.liferay.layout.seo.service.persistence.impl.constants.LayoutSEOPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2681,11 +2683,31 @@ public class LayoutSEOEntryPersistenceImpl
 				Long.class.getName()
 			},
 			new String[] {"groupId", "privateLayout", "layoutId"}, false);
+
+		_setLayoutSEOEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setLayoutSEOEntryUtilPersistence(null);
+
 		entityCache.removeCache(LayoutSEOEntryImpl.class.getName());
+	}
+
+	private void _setLayoutSEOEntryUtilPersistence(
+		LayoutSEOEntryPersistence layoutSEOEntryPersistence) {
+
+		try {
+			Field field = LayoutSEOEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, layoutSEOEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

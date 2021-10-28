@@ -49,10 +49,12 @@ import com.liferay.template.model.TemplateEntryTable;
 import com.liferay.template.model.impl.TemplateEntryImpl;
 import com.liferay.template.model.impl.TemplateEntryModelImpl;
 import com.liferay.template.service.persistence.TemplateEntryPersistence;
+import com.liferay.template.service.persistence.TemplateEntryUtil;
 import com.liferay.template.service.persistence.impl.constants.TemplatePersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -4778,11 +4780,31 @@ public class TemplateEntryPersistenceImpl
 				"groupId", "infoItemClassName", "infoItemFormVariationKey"
 			},
 			false);
+
+		_setTemplateEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setTemplateEntryUtilPersistence(null);
+
 		entityCache.removeCache(TemplateEntryImpl.class.getName());
+	}
+
+	private void _setTemplateEntryUtilPersistence(
+		TemplateEntryPersistence templateEntryPersistence) {
+
+		try {
+			Field field = TemplateEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, templateEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

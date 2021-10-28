@@ -20,6 +20,7 @@ import com.liferay.multi.factor.authentication.timebased.otp.model.MFATimeBasedO
 import com.liferay.multi.factor.authentication.timebased.otp.model.impl.MFATimeBasedOTPEntryImpl;
 import com.liferay.multi.factor.authentication.timebased.otp.model.impl.MFATimeBasedOTPEntryModelImpl;
 import com.liferay.multi.factor.authentication.timebased.otp.service.persistence.MFATimeBasedOTPEntryPersistence;
+import com.liferay.multi.factor.authentication.timebased.otp.service.persistence.MFATimeBasedOTPEntryUtil;
 import com.liferay.multi.factor.authentication.timebased.otp.service.persistence.impl.constants.MFATimeBasedOTPPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -882,11 +884,31 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
+
+		_setMFATimeBasedOTPEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setMFATimeBasedOTPEntryUtilPersistence(null);
+
 		entityCache.removeCache(MFATimeBasedOTPEntryImpl.class.getName());
+	}
+
+	private void _setMFATimeBasedOTPEntryUtilPersistence(
+		MFATimeBasedOTPEntryPersistence mfaTimeBasedOTPEntryPersistence) {
+
+		try {
+			Field field = MFATimeBasedOTPEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, mfaTimeBasedOTPEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

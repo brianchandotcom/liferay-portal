@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.UserIdMapper;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -560,15 +559,9 @@ public class UserIdMapperUtil {
 	}
 
 	public static UserIdMapperPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(UserIdMapperPersistence)PortalBeanLocatorUtil.locate(
-					UserIdMapperPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static UserIdMapperPersistence _persistence;
+	private static volatile UserIdMapperPersistence _persistence;
 
 }

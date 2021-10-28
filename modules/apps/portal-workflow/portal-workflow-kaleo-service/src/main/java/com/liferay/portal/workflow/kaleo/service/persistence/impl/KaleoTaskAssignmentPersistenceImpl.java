@@ -42,10 +42,12 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.KaleoPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3046,11 +3048,31 @@ public class KaleoTaskAssignmentPersistenceImpl
 				"kaleoClassName", "kaleoClassPK", "assigneeClassName"
 			},
 			false);
+
+		_setKaleoTaskAssignmentUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setKaleoTaskAssignmentUtilPersistence(null);
+
 		entityCache.removeCache(KaleoTaskAssignmentImpl.class.getName());
+	}
+
+	private void _setKaleoTaskAssignmentUtilPersistence(
+		KaleoTaskAssignmentPersistence kaleoTaskAssignmentPersistence) {
+
+		try {
+			Field field = KaleoTaskAssignmentUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, kaleoTaskAssignmentPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

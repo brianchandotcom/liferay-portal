@@ -48,10 +48,12 @@ import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessTable;
 import com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl;
 import com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessPersistence;
+import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessUtil;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.impl.constants.KaleoFormsPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -3205,11 +3207,31 @@ public class KaleoProcessPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDDLRecordSetId",
 			new String[] {Long.class.getName()},
 			new String[] {"DDLRecordSetId"}, false);
+
+		_setKaleoProcessUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setKaleoProcessUtilPersistence(null);
+
 		entityCache.removeCache(KaleoProcessImpl.class.getName());
+	}
+
+	private void _setKaleoProcessUtilPersistence(
+		KaleoProcessPersistence kaleoProcessPersistence) {
+
+		try {
+			Field field = KaleoProcessUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, kaleoProcessPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

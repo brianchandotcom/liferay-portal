@@ -15,7 +15,6 @@
 package com.liferay.expando.kernel.service.persistence;
 
 import com.liferay.expando.kernel.model.ExpandoValue;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1840,15 +1839,9 @@ public class ExpandoValueUtil {
 	}
 
 	public static ExpandoValuePersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(ExpandoValuePersistence)PortalBeanLocatorUtil.locate(
-					ExpandoValuePersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static ExpandoValuePersistence _persistence;
+	private static volatile ExpandoValuePersistence _persistence;
 
 }

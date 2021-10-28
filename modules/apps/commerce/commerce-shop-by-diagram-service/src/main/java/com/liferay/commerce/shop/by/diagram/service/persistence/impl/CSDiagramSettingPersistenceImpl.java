@@ -20,6 +20,7 @@ import com.liferay.commerce.shop.by.diagram.model.CSDiagramSettingTable;
 import com.liferay.commerce.shop.by.diagram.model.impl.CSDiagramSettingImpl;
 import com.liferay.commerce.shop.by.diagram.model.impl.CSDiagramSettingModelImpl;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramSettingPersistence;
+import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramSettingUtil;
 import com.liferay.commerce.shop.by.diagram.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2049,11 +2051,31 @@ public class CSDiagramSettingPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDefinitionId",
 			new String[] {Long.class.getName()},
 			new String[] {"CPDefinitionId"}, false);
+
+		_setCSDiagramSettingUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setCSDiagramSettingUtilPersistence(null);
+
 		entityCache.removeCache(CSDiagramSettingImpl.class.getName());
+	}
+
+	private void _setCSDiagramSettingUtilPersistence(
+		CSDiagramSettingPersistence csDiagramSettingPersistence) {
+
+		try {
+			Field field = CSDiagramSettingUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, csDiagramSettingPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

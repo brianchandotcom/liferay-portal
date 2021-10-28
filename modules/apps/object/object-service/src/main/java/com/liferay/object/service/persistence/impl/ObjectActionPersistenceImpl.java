@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectActionTable;
 import com.liferay.object.model.impl.ObjectActionImpl;
 import com.liferay.object.model.impl.ObjectActionModelImpl;
 import com.liferay.object.service.persistence.ObjectActionPersistence;
+import com.liferay.object.service.persistence.ObjectActionUtil;
 import com.liferay.object.service.persistence.impl.constants.ObjectPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2482,11 +2484,31 @@ public class ObjectActionPersistenceImpl
 				"objectDefinitionId", "active_", "objectActionTriggerKey"
 			},
 			false);
+
+		_setObjectActionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setObjectActionUtilPersistence(null);
+
 		entityCache.removeCache(ObjectActionImpl.class.getName());
+	}
+
+	private void _setObjectActionUtilPersistence(
+		ObjectActionPersistence objectActionPersistence) {
+
+		try {
+			Field field = ObjectActionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, objectActionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

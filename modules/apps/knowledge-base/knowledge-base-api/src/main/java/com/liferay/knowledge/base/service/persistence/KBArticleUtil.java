@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the kb article service. This utility wraps <code>com.liferay.knowledge.base.service.persistence.impl.KBArticlePersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -10894,24 +10890,9 @@ public class KBArticleUtil {
 	}
 
 	public static KBArticlePersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker<KBArticlePersistence, KBArticlePersistence>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(KBArticlePersistence.class);
-
-		ServiceTracker<KBArticlePersistence, KBArticlePersistence>
-			serviceTracker =
-				new ServiceTracker<KBArticlePersistence, KBArticlePersistence>(
-					bundle.getBundleContext(), KBArticlePersistence.class,
-					null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile KBArticlePersistence _persistence;
 
 }

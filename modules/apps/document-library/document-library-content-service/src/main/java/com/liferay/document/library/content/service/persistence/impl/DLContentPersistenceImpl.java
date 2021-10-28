@@ -20,6 +20,7 @@ import com.liferay.document.library.content.model.DLContentTable;
 import com.liferay.document.library.content.model.impl.DLContentImpl;
 import com.liferay.document.library.content.model.impl.DLContentModelImpl;
 import com.liferay.document.library.content.service.persistence.DLContentPersistence;
+import com.liferay.document.library.content.service.persistence.DLContentUtil;
 import com.liferay.document.library.content.service.persistence.impl.constants.DLPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3100,11 +3102,30 @@ public class DLContentPersistenceImpl
 			},
 			new String[] {"companyId", "repositoryId", "path_", "version"},
 			false);
+
+		_setDLContentUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDLContentUtilPersistence(null);
+
 		entityCache.removeCache(DLContentImpl.class.getName());
+	}
+
+	private void _setDLContentUtilPersistence(
+		DLContentPersistence dlContentPersistence) {
+
+		try {
+			Field field = DLContentUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, dlContentPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

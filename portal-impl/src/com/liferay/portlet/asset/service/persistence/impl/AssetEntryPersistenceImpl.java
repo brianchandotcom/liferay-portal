@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
+import com.liferay.asset.kernel.service.persistence.AssetEntryUtil;
 import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -54,6 +55,7 @@ import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -6422,12 +6424,31 @@ public class AssetEntryPersistenceImpl
 				"groupId", "classNameId", "publishDate", "expirationDate"
 			},
 			false);
+
+		_setAssetEntryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setAssetEntryUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(AssetEntryImpl.class.getName());
 
 		TableMapperFactory.removeTableMapper("AssetEntries_AssetTags");
+	}
+
+	private void _setAssetEntryUtilPersistence(
+		AssetEntryPersistence assetEntryPersistence) {
+
+		try {
+			Field field = AssetEntryUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, assetEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@BeanReference(type = AssetTagPersistence.class)

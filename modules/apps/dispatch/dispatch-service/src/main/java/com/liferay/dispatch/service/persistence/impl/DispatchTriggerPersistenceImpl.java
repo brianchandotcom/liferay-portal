@@ -20,6 +20,7 @@ import com.liferay.dispatch.model.DispatchTriggerTable;
 import com.liferay.dispatch.model.impl.DispatchTriggerImpl;
 import com.liferay.dispatch.model.impl.DispatchTriggerModelImpl;
 import com.liferay.dispatch.service.persistence.DispatchTriggerPersistence;
+import com.liferay.dispatch.service.persistence.DispatchTriggerUtil;
 import com.liferay.dispatch.service.persistence.impl.constants.DispatchPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -5360,11 +5362,31 @@ public class DispatchTriggerPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_DTCM",
 			new String[] {Boolean.class.getName(), Integer.class.getName()},
 			new String[] {"active_", "dispatchTaskClusterMode"}, false);
+
+		_setDispatchTriggerUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDispatchTriggerUtilPersistence(null);
+
 		entityCache.removeCache(DispatchTriggerImpl.class.getName());
+	}
+
+	private void _setDispatchTriggerUtilPersistence(
+		DispatchTriggerPersistence dispatchTriggerPersistence) {
+
+		try {
+			Field field = DispatchTriggerUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, dispatchTriggerPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

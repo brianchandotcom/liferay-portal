@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.UserIdMapper;
 import com.liferay.portal.kernel.model.UserIdMapperTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.UserIdMapperPersistence;
+import com.liferay.portal.kernel.service.persistence.UserIdMapperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -43,6 +44,7 @@ import com.liferay.portal.model.impl.UserIdMapperModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
@@ -1692,10 +1694,30 @@ public class UserIdMapperPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_E",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"type_", "externalUserId"}, false);
+
+		_setUserIdMapperUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setUserIdMapperUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(UserIdMapperImpl.class.getName());
+	}
+
+	private void _setUserIdMapperUtilPersistence(
+		UserIdMapperPersistence userIdMapperPersistence) {
+
+		try {
+			Field field = UserIdMapperUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, userIdMapperPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_USERIDMAPPER =

@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollectionTable;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionImpl;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionModelImpl;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateCollectionPersistence;
+import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateCollectionUtil;
 import com.liferay.layout.page.template.service.persistence.impl.constants.LayoutPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -5084,12 +5086,34 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "name"}, false);
+
+		_setLayoutPageTemplateCollectionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setLayoutPageTemplateCollectionUtilPersistence(null);
+
 		entityCache.removeCache(
 			LayoutPageTemplateCollectionImpl.class.getName());
+	}
+
+	private void _setLayoutPageTemplateCollectionUtilPersistence(
+		LayoutPageTemplateCollectionPersistence
+			layoutPageTemplateCollectionPersistence) {
+
+		try {
+			Field field =
+				LayoutPageTemplateCollectionUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, layoutPageTemplateCollectionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

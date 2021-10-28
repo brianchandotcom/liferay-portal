@@ -20,6 +20,7 @@ import com.liferay.data.engine.model.DEDataListViewTable;
 import com.liferay.data.engine.model.impl.DEDataListViewImpl;
 import com.liferay.data.engine.model.impl.DEDataListViewModelImpl;
 import com.liferay.data.engine.service.persistence.DEDataListViewPersistence;
+import com.liferay.data.engine.service.persistence.DEDataListViewUtil;
 import com.liferay.data.engine.service.persistence.impl.constants.DEPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3536,11 +3538,31 @@ public class DEDataListViewPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"groupId", "companyId", "ddmStructureId"}, false);
+
+		_setDEDataListViewUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDEDataListViewUtilPersistence(null);
+
 		entityCache.removeCache(DEDataListViewImpl.class.getName());
+	}
+
+	private void _setDEDataListViewUtilPersistence(
+		DEDataListViewPersistence deDataListViewPersistence) {
+
+		try {
+			Field field = DEDataListViewUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, deDataListViewPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

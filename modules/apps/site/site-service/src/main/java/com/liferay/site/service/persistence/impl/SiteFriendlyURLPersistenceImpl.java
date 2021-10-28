@@ -45,10 +45,12 @@ import com.liferay.site.model.SiteFriendlyURLTable;
 import com.liferay.site.model.impl.SiteFriendlyURLImpl;
 import com.liferay.site.model.impl.SiteFriendlyURLModelImpl;
 import com.liferay.site.service.persistence.SiteFriendlyURLPersistence;
+import com.liferay.site.service.persistence.SiteFriendlyURLUtil;
 import com.liferay.site.service.persistence.impl.constants.SitePersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3576,11 +3578,31 @@ public class SiteFriendlyURLPersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"companyId", "friendlyURL", "languageId"}, false);
+
+		_setSiteFriendlyURLUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setSiteFriendlyURLUtilPersistence(null);
+
 		entityCache.removeCache(SiteFriendlyURLImpl.class.getName());
+	}
+
+	private void _setSiteFriendlyURLUtilPersistence(
+		SiteFriendlyURLPersistence siteFriendlyURLPersistence) {
+
+		try {
+			Field field = SiteFriendlyURLUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, siteFriendlyURLPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

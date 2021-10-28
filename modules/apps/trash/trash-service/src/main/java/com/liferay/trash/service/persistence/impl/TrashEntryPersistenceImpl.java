@@ -44,10 +44,12 @@ import com.liferay.trash.model.TrashEntryTable;
 import com.liferay.trash.model.impl.TrashEntryImpl;
 import com.liferay.trash.model.impl.TrashEntryModelImpl;
 import com.liferay.trash.service.persistence.TrashEntryPersistence;
+import com.liferay.trash.service.persistence.TrashEntryUtil;
 import com.liferay.trash.service.persistence.impl.constants.TrashPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -3326,11 +3328,30 @@ public class TrashEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, false);
+
+		_setTrashEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setTrashEntryUtilPersistence(null);
+
 		entityCache.removeCache(TrashEntryImpl.class.getName());
+	}
+
+	private void _setTrashEntryUtilPersistence(
+		TrashEntryPersistence trashEntryPersistence) {
+
+		try {
+			Field field = TrashEntryUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, trashEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -2941,15 +2940,9 @@ public class LayoutRevisionUtil {
 	}
 
 	public static LayoutRevisionPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(LayoutRevisionPersistence)PortalBeanLocatorUtil.locate(
-					LayoutRevisionPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static LayoutRevisionPersistence _persistence;
+	private static volatile LayoutRevisionPersistence _persistence;
 
 }

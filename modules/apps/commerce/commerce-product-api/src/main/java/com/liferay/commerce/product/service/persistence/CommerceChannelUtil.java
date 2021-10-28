@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the commerce channel service. This utility wraps <code>com.liferay.commerce.product.service.persistence.impl.CommerceChannelPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -649,27 +645,9 @@ public class CommerceChannelUtil {
 	}
 
 	public static CommerceChannelPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<CommerceChannelPersistence, CommerceChannelPersistence>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceChannelPersistence.class);
-
-		ServiceTracker<CommerceChannelPersistence, CommerceChannelPersistence>
-			serviceTracker =
-				new ServiceTracker
-					<CommerceChannelPersistence, CommerceChannelPersistence>(
-						bundle.getBundleContext(),
-						CommerceChannelPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceChannelPersistence _persistence;
 
 }

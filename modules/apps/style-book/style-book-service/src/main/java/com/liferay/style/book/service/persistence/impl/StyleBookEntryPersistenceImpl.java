@@ -48,10 +48,12 @@ import com.liferay.style.book.model.StyleBookEntryTable;
 import com.liferay.style.book.model.impl.StyleBookEntryImpl;
 import com.liferay.style.book.model.impl.StyleBookEntryModelImpl;
 import com.liferay.style.book.service.persistence.StyleBookEntryPersistence;
+import com.liferay.style.book.service.persistence.StyleBookEntryUtil;
 import com.liferay.style.book.service.persistence.impl.constants.StyleBookPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -9030,11 +9032,31 @@ public class StyleBookEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByHeadId",
 			new String[] {Long.class.getName()}, new String[] {"headId"},
 			false);
+
+		_setStyleBookEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setStyleBookEntryUtilPersistence(null);
+
 		entityCache.removeCache(StyleBookEntryImpl.class.getName());
+	}
+
+	private void _setStyleBookEntryUtilPersistence(
+		StyleBookEntryPersistence styleBookEntryPersistence) {
+
+		try {
+			Field field = StyleBookEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, styleBookEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

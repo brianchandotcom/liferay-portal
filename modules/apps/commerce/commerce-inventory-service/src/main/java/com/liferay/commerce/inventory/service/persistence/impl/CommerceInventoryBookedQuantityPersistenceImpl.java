@@ -20,6 +20,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantityTable
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityImpl;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityModelImpl;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryBookedQuantityPersistence;
+import com.liferay.commerce.inventory.service.persistence.CommerceInventoryBookedQuantityUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -2438,11 +2440,33 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "sku"}, false);
+
+		_setCommerceInventoryBookedQuantityUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCommerceInventoryBookedQuantityUtilPersistence(null);
+
 		entityCache.removeCache(
 			CommerceInventoryBookedQuantityImpl.class.getName());
+	}
+
+	private void _setCommerceInventoryBookedQuantityUtilPersistence(
+		CommerceInventoryBookedQuantityPersistence
+			commerceInventoryBookedQuantityPersistence) {
+
+		try {
+			Field field =
+				CommerceInventoryBookedQuantityUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceInventoryBookedQuantityPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

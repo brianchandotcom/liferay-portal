@@ -20,6 +20,7 @@ import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntryTable;
 import com.liferay.commerce.shop.by.diagram.model.impl.CSDiagramEntryImpl;
 import com.liferay.commerce.shop.by.diagram.model.impl.CSDiagramEntryModelImpl;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramEntryPersistence;
+import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramEntryUtil;
 import com.liferay.commerce.shop.by.diagram.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1439,11 +1441,31 @@ public class CSDiagramEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDI_S",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPDefinitionId", "sequence"}, false);
+
+		_setCSDiagramEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setCSDiagramEntryUtilPersistence(null);
+
 		entityCache.removeCache(CSDiagramEntryImpl.class.getName());
+	}
+
+	private void _setCSDiagramEntryUtilPersistence(
+		CSDiagramEntryPersistence csDiagramEntryPersistence) {
+
+		try {
+			Field field = CSDiagramEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, csDiagramEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

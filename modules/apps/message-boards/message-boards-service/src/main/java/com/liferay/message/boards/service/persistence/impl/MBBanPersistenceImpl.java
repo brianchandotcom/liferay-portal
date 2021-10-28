@@ -20,6 +20,7 @@ import com.liferay.message.boards.model.MBBanTable;
 import com.liferay.message.boards.model.impl.MBBanImpl;
 import com.liferay.message.boards.model.impl.MBBanModelImpl;
 import com.liferay.message.boards.service.persistence.MBBanPersistence;
+import com.liferay.message.boards.service.persistence.MBBanUtil;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -4136,11 +4138,28 @@ public class MBBanPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_B",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "banUserId"}, false);
+
+		_setMBBanUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setMBBanUtilPersistence(null);
+
 		entityCache.removeCache(MBBanImpl.class.getName());
+	}
+
+	private void _setMBBanUtilPersistence(MBBanPersistence mbBanPersistence) {
+		try {
+			Field field = MBBanUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, mbBanPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordVersionTable;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence;
+import com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionUtil;
 import com.liferay.dynamic.data.lists.service.persistence.impl.constants.DDLPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3608,11 +3610,31 @@ public class DDLRecordVersionPersistenceImpl
 				"userId", "recordSetId", "recordSetVersion", "status"
 			},
 			false);
+
+		_setDDLRecordVersionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDDLRecordVersionUtilPersistence(null);
+
 		entityCache.removeCache(DDLRecordVersionImpl.class.getName());
+	}
+
+	private void _setDDLRecordVersionUtilPersistence(
+		DDLRecordVersionPersistence ddlRecordVersionPersistence) {
+
+		try {
+			Field field = DDLRecordVersionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ddlRecordVersionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

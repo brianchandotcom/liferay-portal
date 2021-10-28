@@ -37,9 +37,11 @@ import com.liferay.portal.tools.service.builder.test.model.VersionedEntryTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.VersionedEntryPersistence;
+import com.liferay.portal.tools.service.builder.test.service.persistence.VersionedEntryUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1885,10 +1887,30 @@ public class VersionedEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByHeadId",
 			new String[] {Long.class.getName()}, new String[] {"headId"},
 			false);
+
+		_setVersionedEntryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setVersionedEntryUtilPersistence(null);
+
 		entityCache.removeCache(VersionedEntryImpl.class.getName());
+	}
+
+	private void _setVersionedEntryUtilPersistence(
+		VersionedEntryPersistence versionedEntryPersistence) {
+
+		try {
+			Field field = VersionedEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, versionedEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

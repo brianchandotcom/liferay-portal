@@ -20,6 +20,7 @@ import com.liferay.chat.model.StatusTable;
 import com.liferay.chat.model.impl.StatusImpl;
 import com.liferay.chat.model.impl.StatusModelImpl;
 import com.liferay.chat.service.persistence.StatusPersistence;
+import com.liferay.chat.service.persistence.StatusUtil;
 import com.liferay.chat.service.persistence.impl.constants.ChatPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
@@ -2384,11 +2386,30 @@ public class StatusPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByM_O",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"modifiedDate", "online_"}, false);
+
+		_setStatusUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setStatusUtilPersistence(null);
+
 		entityCache.removeCache(StatusImpl.class.getName());
+	}
+
+	private void _setStatusUtilPersistence(
+		StatusPersistence statusPersistence) {
+
+		try {
+			Field field = StatusUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, statusPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

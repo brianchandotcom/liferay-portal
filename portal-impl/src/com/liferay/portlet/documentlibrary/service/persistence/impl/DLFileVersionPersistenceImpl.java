@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFileVersionTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
+import com.liferay.document.library.kernel.service.persistence.DLFileVersionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -49,6 +50,7 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -6788,10 +6790,30 @@ public class DLFileVersionPersistenceImpl
 				String.class.getName(), String.class.getName()
 			},
 			new String[] {"groupId", "folderId", "title", "version"}, false);
+
+		_setDLFileVersionUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setDLFileVersionUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(DLFileVersionImpl.class.getName());
+	}
+
+	private void _setDLFileVersionUtilPersistence(
+		DLFileVersionPersistence dlFileVersionPersistence) {
+
+		try {
+			Field field = DLFileVersionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, dlFileVersionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_DLFILEVERSION =

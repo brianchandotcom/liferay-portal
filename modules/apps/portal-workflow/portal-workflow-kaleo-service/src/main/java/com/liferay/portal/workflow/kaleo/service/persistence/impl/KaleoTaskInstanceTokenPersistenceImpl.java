@@ -43,10 +43,12 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceTokenTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.KaleoPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -4319,11 +4321,31 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"companyId", "userId", "completed"}, false);
+
+		_setKaleoTaskInstanceTokenUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setKaleoTaskInstanceTokenUtilPersistence(null);
+
 		entityCache.removeCache(KaleoTaskInstanceTokenImpl.class.getName());
+	}
+
+	private void _setKaleoTaskInstanceTokenUtilPersistence(
+		KaleoTaskInstanceTokenPersistence kaleoTaskInstanceTokenPersistence) {
+
+		try {
+			Field field = KaleoTaskInstanceTokenUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, kaleoTaskInstanceTokenPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

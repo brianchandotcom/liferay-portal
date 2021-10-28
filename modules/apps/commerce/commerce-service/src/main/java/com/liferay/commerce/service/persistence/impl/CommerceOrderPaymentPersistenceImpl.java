@@ -20,6 +20,7 @@ import com.liferay.commerce.model.CommerceOrderPaymentTable;
 import com.liferay.commerce.model.impl.CommerceOrderPaymentImpl;
 import com.liferay.commerce.model.impl.CommerceOrderPaymentModelImpl;
 import com.liferay.commerce.service.persistence.CommerceOrderPaymentPersistence;
+import com.liferay.commerce.service.persistence.CommerceOrderPaymentUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -43,6 +44,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1172,10 +1174,30 @@ public class CommerceOrderPaymentPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCommerceOrderId",
 			new String[] {Long.class.getName()},
 			new String[] {"commerceOrderId"}, false);
+
+		_setCommerceOrderPaymentUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCommerceOrderPaymentUtilPersistence(null);
+
 		entityCache.removeCache(CommerceOrderPaymentImpl.class.getName());
+	}
+
+	private void _setCommerceOrderPaymentUtilPersistence(
+		CommerceOrderPaymentPersistence commerceOrderPaymentPersistence) {
+
+		try {
+			Field field = CommerceOrderPaymentUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceOrderPaymentPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

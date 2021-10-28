@@ -20,6 +20,7 @@ import com.liferay.message.boards.model.MBMailingListTable;
 import com.liferay.message.boards.model.impl.MBMailingListImpl;
 import com.liferay.message.boards.model.impl.MBMailingListModelImpl;
 import com.liferay.message.boards.service.persistence.MBMailingListPersistence;
+import com.liferay.message.boards.service.persistence.MBMailingListUtil;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3170,11 +3172,31 @@ public class MBMailingListPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "categoryId"}, false);
+
+		_setMBMailingListUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setMBMailingListUtilPersistence(null);
+
 		entityCache.removeCache(MBMailingListImpl.class.getName());
+	}
+
+	private void _setMBMailingListUtilPersistence(
+		MBMailingListPersistence mbMailingListPersistence) {
+
+		try {
+			Field field = MBMailingListUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, mbMailingListPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

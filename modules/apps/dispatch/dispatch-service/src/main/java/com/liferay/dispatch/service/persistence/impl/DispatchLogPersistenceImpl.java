@@ -20,6 +20,7 @@ import com.liferay.dispatch.model.DispatchLogTable;
 import com.liferay.dispatch.model.impl.DispatchLogImpl;
 import com.liferay.dispatch.model.impl.DispatchLogModelImpl;
 import com.liferay.dispatch.service.persistence.DispatchLogPersistence;
+import com.liferay.dispatch.service.persistence.DispatchLogUtil;
 import com.liferay.dispatch.service.persistence.impl.constants.DispatchPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1725,11 +1727,31 @@ public class DispatchLogPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDTI_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"dispatchTriggerId", "status"}, false);
+
+		_setDispatchLogUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDispatchLogUtilPersistence(null);
+
 		entityCache.removeCache(DispatchLogImpl.class.getName());
+	}
+
+	private void _setDispatchLogUtilPersistence(
+		DispatchLogPersistence dispatchLogPersistence) {
+
+		try {
+			Field field = DispatchLogUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, dispatchLogPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

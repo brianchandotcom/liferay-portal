@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectLayoutTabTable;
 import com.liferay.object.model.impl.ObjectLayoutTabImpl;
 import com.liferay.object.model.impl.ObjectLayoutTabModelImpl;
 import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
+import com.liferay.object.service.persistence.ObjectLayoutTabUtil;
 import com.liferay.object.service.persistence.impl.constants.ObjectPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2340,11 +2342,31 @@ public class ObjectLayoutTabPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByObjectLayoutId",
 			new String[] {Long.class.getName()},
 			new String[] {"objectLayoutId"}, false);
+
+		_setObjectLayoutTabUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setObjectLayoutTabUtilPersistence(null);
+
 		entityCache.removeCache(ObjectLayoutTabImpl.class.getName());
+	}
+
+	private void _setObjectLayoutTabUtilPersistence(
+		ObjectLayoutTabPersistence objectLayoutTabPersistence) {
+
+		try {
+			Field field = ObjectLayoutTabUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, objectLayoutTabPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

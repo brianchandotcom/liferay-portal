@@ -15,7 +15,6 @@
 package com.liferay.document.library.kernel.service.persistence;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -4884,14 +4883,9 @@ public class DLFileEntryUtil {
 	}
 
 	public static DLFileEntryPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (DLFileEntryPersistence)PortalBeanLocatorUtil.locate(
-				DLFileEntryPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static DLFileEntryPersistence _persistence;
+	private static volatile DLFileEntryPersistence _persistence;
 
 }

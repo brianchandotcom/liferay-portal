@@ -20,6 +20,7 @@ import com.liferay.change.tracking.model.CTMessageTable;
 import com.liferay.change.tracking.model.impl.CTMessageImpl;
 import com.liferay.change.tracking.model.impl.CTMessageModelImpl;
 import com.liferay.change.tracking.service.persistence.CTMessagePersistence;
+import com.liferay.change.tracking.service.persistence.CTMessageUtil;
 import com.liferay.change.tracking.service.persistence.impl.constants.CTPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1113,11 +1115,30 @@ public class CTMessagePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, false);
+
+		_setCTMessageUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setCTMessageUtilPersistence(null);
+
 		entityCache.removeCache(CTMessageImpl.class.getName());
+	}
+
+	private void _setCTMessageUtilPersistence(
+		CTMessagePersistence ctMessagePersistence) {
+
+		try {
+			Field field = CTMessageUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ctMessagePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

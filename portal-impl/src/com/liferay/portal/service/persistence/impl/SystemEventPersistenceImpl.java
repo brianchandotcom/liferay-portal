@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
+import com.liferay.portal.kernel.service.persistence.SystemEventUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -47,6 +48,7 @@ import com.liferay.portal.model.impl.SystemEventModelImpl;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3221,10 +3223,30 @@ public class SystemEventPersistenceImpl
 				Long.class.getName(), Integer.class.getName()
 			},
 			new String[] {"groupId", "classNameId", "classPK", "type_"}, false);
+
+		_setSystemEventUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setSystemEventUtilPersistence(null);
+
 		EntityCacheUtil.removeCache(SystemEventImpl.class.getName());
+	}
+
+	private void _setSystemEventUtilPersistence(
+		SystemEventPersistence systemEventPersistence) {
+
+		try {
+			Field field = SystemEventUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, systemEventPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	private static final String _SQL_SELECT_SYSTEMEVENT =

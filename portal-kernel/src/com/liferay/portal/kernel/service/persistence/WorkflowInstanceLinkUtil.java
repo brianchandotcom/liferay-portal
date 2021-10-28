@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -714,15 +713,9 @@ public class WorkflowInstanceLinkUtil {
 	}
 
 	public static WorkflowInstanceLinkPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(WorkflowInstanceLinkPersistence)PortalBeanLocatorUtil.locate(
-					WorkflowInstanceLinkPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static WorkflowInstanceLinkPersistence _persistence;
+	private static volatile WorkflowInstanceLinkPersistence _persistence;
 
 }

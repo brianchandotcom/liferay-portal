@@ -35,8 +35,11 @@ import com.liferay.portal.tools.service.builder.test.model.UADPartialEntryTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.UADPartialEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.UADPartialEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.UADPartialEntryPersistence;
+import com.liferay.portal.tools.service.builder.test.service.persistence.UADPartialEntryUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.List;
 import java.util.Map;
@@ -572,10 +575,30 @@ public class UADPartialEntryPersistenceImpl
 		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
+
+		_setUADPartialEntryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setUADPartialEntryUtilPersistence(null);
+
 		entityCache.removeCache(UADPartialEntryImpl.class.getName());
+	}
+
+	private void _setUADPartialEntryUtilPersistence(
+		UADPartialEntryPersistence uadPartialEntryPersistence) {
+
+		try {
+			Field field = UADPartialEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, uadPartialEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.PortalPreferenceValue;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1187,15 +1186,9 @@ public class PortalPreferenceValueUtil {
 	}
 
 	public static PortalPreferenceValuePersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(PortalPreferenceValuePersistence)PortalBeanLocatorUtil.locate(
-					PortalPreferenceValuePersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static PortalPreferenceValuePersistence _persistence;
+	private static volatile PortalPreferenceValuePersistence _persistence;
 
 }

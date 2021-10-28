@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -593,14 +592,9 @@ public class VirtualHostUtil {
 	}
 
 	public static VirtualHostPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (VirtualHostPersistence)PortalBeanLocatorUtil.locate(
-				VirtualHostPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static VirtualHostPersistence _persistence;
+	private static volatile VirtualHostPersistence _persistence;
 
 }

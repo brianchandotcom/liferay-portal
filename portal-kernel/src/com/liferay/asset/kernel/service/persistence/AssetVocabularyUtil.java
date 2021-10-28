@@ -15,7 +15,6 @@
 package com.liferay.asset.kernel.service.persistence;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -2076,15 +2075,9 @@ public class AssetVocabularyUtil {
 	}
 
 	public static AssetVocabularyPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(AssetVocabularyPersistence)PortalBeanLocatorUtil.locate(
-					AssetVocabularyPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static AssetVocabularyPersistence _persistence;
+	private static volatile AssetVocabularyPersistence _persistence;
 
 }

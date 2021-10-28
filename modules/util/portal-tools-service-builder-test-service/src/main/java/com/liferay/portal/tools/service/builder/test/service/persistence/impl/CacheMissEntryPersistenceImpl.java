@@ -37,8 +37,11 @@ import com.liferay.portal.tools.service.builder.test.model.CacheMissEntryTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.CacheMissEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.CacheMissEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.CacheMissEntryPersistence;
+import com.liferay.portal.tools.service.builder.test.service.persistence.CacheMissEntryUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -789,10 +792,30 @@ public class CacheMissEntryPersistenceImpl
 		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
+
+		_setCacheMissEntryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCacheMissEntryUtilPersistence(null);
+
 		dummyEntityCache.removeCache(CacheMissEntryImpl.class.getName());
+	}
+
+	private void _setCacheMissEntryUtilPersistence(
+		CacheMissEntryPersistence cacheMissEntryPersistence) {
+
+		try {
+			Field field = CacheMissEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, cacheMissEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = CTPersistenceHelper.class)

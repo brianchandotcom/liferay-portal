@@ -42,10 +42,12 @@ import com.liferay.saml.persistence.model.SamlPeerBindingTable;
 import com.liferay.saml.persistence.model.impl.SamlPeerBindingImpl;
 import com.liferay.saml.persistence.model.impl.SamlPeerBindingModelImpl;
 import com.liferay.saml.persistence.service.persistence.SamlPeerBindingPersistence;
+import com.liferay.saml.persistence.service.persistence.SamlPeerBindingUtil;
 import com.liferay.saml.persistence.service.persistence.impl.constants.SamlPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1603,11 +1605,31 @@ public class SamlPeerBindingPersistenceImpl
 				"samlNameIdNameQualifier", "samlNameIdValue", "samlPeerEntityId"
 			},
 			false);
+
+		_setSamlPeerBindingUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setSamlPeerBindingUtilPersistence(null);
+
 		entityCache.removeCache(SamlPeerBindingImpl.class.getName());
+	}
+
+	private void _setSamlPeerBindingUtilPersistence(
+		SamlPeerBindingPersistence samlPeerBindingPersistence) {
+
+		try {
+			Field field = SamlPeerBindingUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, samlPeerBindingPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

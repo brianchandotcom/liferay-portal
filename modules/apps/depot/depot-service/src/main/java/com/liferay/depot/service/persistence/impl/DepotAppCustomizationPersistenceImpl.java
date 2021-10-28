@@ -20,6 +20,7 @@ import com.liferay.depot.model.DepotAppCustomizationTable;
 import com.liferay.depot.model.impl.DepotAppCustomizationImpl;
 import com.liferay.depot.model.impl.DepotAppCustomizationModelImpl;
 import com.liferay.depot.service.persistence.DepotAppCustomizationPersistence;
+import com.liferay.depot.service.persistence.DepotAppCustomizationUtil;
 import com.liferay.depot.service.persistence.impl.constants.DepotPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -1717,11 +1719,31 @@ public class DepotAppCustomizationPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_P",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"depotEntryId", "portletId"}, false);
+
+		_setDepotAppCustomizationUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDepotAppCustomizationUtilPersistence(null);
+
 		entityCache.removeCache(DepotAppCustomizationImpl.class.getName());
+	}
+
+	private void _setDepotAppCustomizationUtilPersistence(
+		DepotAppCustomizationPersistence depotAppCustomizationPersistence) {
+
+		try {
+			Field field = DepotAppCustomizationUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, depotAppCustomizationPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

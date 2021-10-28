@@ -54,10 +54,12 @@ import com.liferay.wiki.model.WikiPageTable;
 import com.liferay.wiki.model.impl.WikiPageImpl;
 import com.liferay.wiki.model.impl.WikiPageModelImpl;
 import com.liferay.wiki.service.persistence.WikiPagePersistence;
+import com.liferay.wiki.service.persistence.WikiPageUtil;
 import com.liferay.wiki.service.persistence.impl.constants.WikiPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -24901,11 +24903,30 @@ public class WikiPagePersistenceImpl
 			},
 			new String[] {"groupId", "nodeId", "head", "parentTitle", "status"},
 			false);
+
+		_setWikiPageUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setWikiPageUtilPersistence(null);
+
 		entityCache.removeCache(WikiPageImpl.class.getName());
+	}
+
+	private void _setWikiPageUtilPersistence(
+		WikiPagePersistence wikiPagePersistence) {
+
+		try {
+			Field field = WikiPageUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, wikiPagePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the o auth2 authorization service. This utility wraps <code>com.liferay.oauth2.provider.service.persistence.impl.OAuth2AuthorizationPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -1482,29 +1478,9 @@ public class OAuth2AuthorizationUtil {
 	}
 
 	public static OAuth2AuthorizationPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<OAuth2AuthorizationPersistence, OAuth2AuthorizationPersistence>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			OAuth2AuthorizationPersistence.class);
-
-		ServiceTracker
-			<OAuth2AuthorizationPersistence, OAuth2AuthorizationPersistence>
-				serviceTracker =
-					new ServiceTracker
-						<OAuth2AuthorizationPersistence,
-						 OAuth2AuthorizationPersistence>(
-							 bundle.getBundleContext(),
-							 OAuth2AuthorizationPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile OAuth2AuthorizationPersistence _persistence;
 
 }

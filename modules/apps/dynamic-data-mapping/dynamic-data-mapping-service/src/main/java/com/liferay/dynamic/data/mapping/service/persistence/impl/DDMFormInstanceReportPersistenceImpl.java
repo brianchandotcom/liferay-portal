@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReportTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceReportImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceReportModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceReportPersistence;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceReportUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -1168,11 +1170,31 @@ public class DDMFormInstanceReportPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFormInstanceId",
 			new String[] {Long.class.getName()},
 			new String[] {"formInstanceId"}, false);
+
+		_setDDMFormInstanceReportUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDDMFormInstanceReportUtilPersistence(null);
+
 		entityCache.removeCache(DDMFormInstanceReportImpl.class.getName());
+	}
+
+	private void _setDDMFormInstanceReportUtilPersistence(
+		DDMFormInstanceReportPersistence ddmFormInstanceReportPersistence) {
+
+		try {
+			Field field = DDMFormInstanceReportUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ddmFormInstanceReportPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

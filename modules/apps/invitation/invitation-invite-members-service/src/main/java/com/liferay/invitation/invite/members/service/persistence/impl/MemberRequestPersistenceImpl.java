@@ -20,6 +20,7 @@ import com.liferay.invitation.invite.members.model.MemberRequestTable;
 import com.liferay.invitation.invite.members.model.impl.MemberRequestImpl;
 import com.liferay.invitation.invite.members.model.impl.MemberRequestModelImpl;
 import com.liferay.invitation.invite.members.service.persistence.MemberRequestPersistence;
+import com.liferay.invitation.invite.members.service.persistence.MemberRequestUtil;
 import com.liferay.invitation.invite.members.service.persistence.impl.constants.IMPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -2289,11 +2291,31 @@ public class MemberRequestPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"groupId", "receiverUserId", "status"}, false);
+
+		_setMemberRequestUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setMemberRequestUtilPersistence(null);
+
 		entityCache.removeCache(MemberRequestImpl.class.getName());
+	}
+
+	private void _setMemberRequestUtilPersistence(
+		MemberRequestPersistence memberRequestPersistence) {
+
+		try {
+			Field field = MemberRequestUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, memberRequestPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

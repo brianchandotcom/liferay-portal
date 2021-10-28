@@ -20,6 +20,7 @@ import com.liferay.change.tracking.model.CTSchemaVersionTable;
 import com.liferay.change.tracking.model.impl.CTSchemaVersionImpl;
 import com.liferay.change.tracking.model.impl.CTSchemaVersionModelImpl;
 import com.liferay.change.tracking.service.persistence.CTSchemaVersionPersistence;
+import com.liferay.change.tracking.service.persistence.CTSchemaVersionUtil;
 import com.liferay.change.tracking.service.persistence.impl.constants.CTPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1128,11 +1130,31 @@ public class CTSchemaVersionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
+
+		_setCTSchemaVersionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setCTSchemaVersionUtilPersistence(null);
+
 		entityCache.removeCache(CTSchemaVersionImpl.class.getName());
+	}
+
+	private void _setCTSchemaVersionUtilPersistence(
+		CTSchemaVersionPersistence ctSchemaVersionPersistence) {
+
+		try {
+			Field field = CTSchemaVersionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ctSchemaVersionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

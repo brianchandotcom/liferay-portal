@@ -20,6 +20,7 @@ import com.liferay.change.tracking.store.model.CTSContentTable;
 import com.liferay.change.tracking.store.model.impl.CTSContentImpl;
 import com.liferay.change.tracking.store.model.impl.CTSContentModelImpl;
 import com.liferay.change.tracking.store.service.persistence.CTSContentPersistence;
+import com.liferay.change.tracking.store.service.persistence.CTSContentUtil;
 import com.liferay.change.tracking.store.service.persistence.impl.constants.CTSPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3434,11 +3436,30 @@ public class CTSContentPersistenceImpl
 				"companyId", "repositoryId", "path_", "version", "storeType"
 			},
 			false);
+
+		_setCTSContentUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setCTSContentUtilPersistence(null);
+
 		entityCache.removeCache(CTSContentImpl.class.getName());
+	}
+
+	private void _setCTSContentUtilPersistence(
+		CTSContentPersistence ctsContentPersistence) {
+
+		try {
+			Field field = CTSContentUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ctsContentPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

@@ -15,7 +15,6 @@
 package com.liferay.asset.kernel.service.persistence;
 
 import com.liferay.asset.kernel.model.AssetCategoryProperty;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -897,15 +896,9 @@ public class AssetCategoryPropertyUtil {
 	}
 
 	public static AssetCategoryPropertyPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(AssetCategoryPropertyPersistence)PortalBeanLocatorUtil.locate(
-					AssetCategoryPropertyPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static AssetCategoryPropertyPersistence _persistence;
+	private static volatile AssetCategoryPropertyPersistence _persistence;
 
 }

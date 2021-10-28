@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectDefinitionTable;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
 import com.liferay.object.model.impl.ObjectDefinitionModelImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
+import com.liferay.object.service.persistence.ObjectDefinitionUtil;
 import com.liferay.object.service.persistence.impl.constants.ObjectPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -7153,11 +7155,31 @@ public class ObjectDefinitionPersistenceImpl
 				Boolean.class.getName(), Integer.class.getName()
 			},
 			new String[] {"companyId", "active_", "system_", "status"}, false);
+
+		_setObjectDefinitionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setObjectDefinitionUtilPersistence(null);
+
 		entityCache.removeCache(ObjectDefinitionImpl.class.getName());
+	}
+
+	private void _setObjectDefinitionUtilPersistence(
+		ObjectDefinitionPersistence objectDefinitionPersistence) {
+
+		try {
+			Field field = ObjectDefinitionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, objectDefinitionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

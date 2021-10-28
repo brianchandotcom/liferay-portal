@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1202,15 +1201,9 @@ public class SubscriptionUtil {
 	}
 
 	public static SubscriptionPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(SubscriptionPersistence)PortalBeanLocatorUtil.locate(
-					SubscriptionPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static SubscriptionPersistence _persistence;
+	private static volatile SubscriptionPersistence _persistence;
 
 }

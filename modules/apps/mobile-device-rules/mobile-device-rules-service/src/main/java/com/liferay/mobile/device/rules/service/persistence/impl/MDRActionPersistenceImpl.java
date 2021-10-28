@@ -20,6 +20,7 @@ import com.liferay.mobile.device.rules.model.MDRActionTable;
 import com.liferay.mobile.device.rules.model.impl.MDRActionImpl;
 import com.liferay.mobile.device.rules.model.impl.MDRActionModelImpl;
 import com.liferay.mobile.device.rules.service.persistence.MDRActionPersistence;
+import com.liferay.mobile.device.rules.service.persistence.MDRActionUtil;
 import com.liferay.mobile.device.rules.service.persistence.impl.constants.MDRPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2597,11 +2599,30 @@ public class MDRActionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByRuleGroupInstanceId", new String[] {Long.class.getName()},
 			new String[] {"ruleGroupInstanceId"}, false);
+
+		_setMDRActionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setMDRActionUtilPersistence(null);
+
 		entityCache.removeCache(MDRActionImpl.class.getName());
+	}
+
+	private void _setMDRActionUtilPersistence(
+		MDRActionPersistence mdrActionPersistence) {
+
+		try {
+			Field field = MDRActionUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, mdrActionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

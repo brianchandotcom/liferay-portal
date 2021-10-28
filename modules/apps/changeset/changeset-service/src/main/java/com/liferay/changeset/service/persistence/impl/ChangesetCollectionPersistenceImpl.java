@@ -20,6 +20,7 @@ import com.liferay.changeset.model.ChangesetCollectionTable;
 import com.liferay.changeset.model.impl.ChangesetCollectionImpl;
 import com.liferay.changeset.model.impl.ChangesetCollectionModelImpl;
 import com.liferay.changeset.service.persistence.ChangesetCollectionPersistence;
+import com.liferay.changeset.service.persistence.ChangesetCollectionUtil;
 import com.liferay.changeset.service.persistence.impl.constants.ChangesetPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3134,11 +3136,31 @@ public class ChangesetCollectionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, false);
+
+		_setChangesetCollectionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setChangesetCollectionUtilPersistence(null);
+
 		entityCache.removeCache(ChangesetCollectionImpl.class.getName());
+	}
+
+	private void _setChangesetCollectionUtilPersistence(
+		ChangesetCollectionPersistence changesetCollectionPersistence) {
+
+		try {
+			Field field = ChangesetCollectionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, changesetCollectionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

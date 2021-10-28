@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersionTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionPersistence;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2321,11 +2323,31 @@ public class DDMStructureVersionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"structureId", "status"}, false);
+
+		_setDDMStructureVersionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDDMStructureVersionUtilPersistence(null);
+
 		entityCache.removeCache(DDMStructureVersionImpl.class.getName());
+	}
+
+	private void _setDDMStructureVersionUtilPersistence(
+		DDMStructureVersionPersistence ddmStructureVersionPersistence) {
+
+		try {
+			Field field = DDMStructureVersionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ddmStructureVersionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

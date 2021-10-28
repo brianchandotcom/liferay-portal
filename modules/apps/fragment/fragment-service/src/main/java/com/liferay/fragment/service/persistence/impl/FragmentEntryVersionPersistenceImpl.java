@@ -20,6 +20,7 @@ import com.liferay.fragment.model.FragmentEntryVersionTable;
 import com.liferay.fragment.model.impl.FragmentEntryVersionImpl;
 import com.liferay.fragment.model.impl.FragmentEntryVersionModelImpl;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionPersistence;
+import com.liferay.fragment.service.persistence.FragmentEntryVersionUtil;
 import com.liferay.fragment.service.persistence.impl.constants.FragmentPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -16545,11 +16547,31 @@ public class FragmentEntryVersionPersistenceImpl
 				"groupId", "fragmentCollectionId", "type_", "status", "version"
 			},
 			false);
+
+		_setFragmentEntryVersionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setFragmentEntryVersionUtilPersistence(null);
+
 		entityCache.removeCache(FragmentEntryVersionImpl.class.getName());
+	}
+
+	private void _setFragmentEntryVersionUtilPersistence(
+		FragmentEntryVersionPersistence fragmentEntryVersionPersistence) {
+
+		try {
+			Field field = FragmentEntryVersionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, fragmentEntryVersionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

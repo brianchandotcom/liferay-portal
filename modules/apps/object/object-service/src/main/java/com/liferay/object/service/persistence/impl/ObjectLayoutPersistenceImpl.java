@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectLayoutTable;
 import com.liferay.object.model.impl.ObjectLayoutImpl;
 import com.liferay.object.model.impl.ObjectLayoutModelImpl;
 import com.liferay.object.service.persistence.ObjectLayoutPersistence;
+import com.liferay.object.service.persistence.ObjectLayoutUtil;
 import com.liferay.object.service.persistence.impl.constants.ObjectPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2907,11 +2909,31 @@ public class ObjectLayoutPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_DOL",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"objectDefinitionId", "defaultObjectLayout"}, false);
+
+		_setObjectLayoutUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setObjectLayoutUtilPersistence(null);
+
 		entityCache.removeCache(ObjectLayoutImpl.class.getName());
+	}
+
+	private void _setObjectLayoutUtilPersistence(
+		ObjectLayoutPersistence objectLayoutPersistence) {
+
+		try {
+			Field field = ObjectLayoutUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, objectLayoutPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

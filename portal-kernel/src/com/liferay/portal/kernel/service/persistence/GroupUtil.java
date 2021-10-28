@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -5447,14 +5446,9 @@ public class GroupUtil {
 	}
 
 	public static GroupPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (GroupPersistence)PortalBeanLocatorUtil.locate(
-				GroupPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static GroupPersistence _persistence;
+	private static volatile GroupPersistence _persistence;
 
 }

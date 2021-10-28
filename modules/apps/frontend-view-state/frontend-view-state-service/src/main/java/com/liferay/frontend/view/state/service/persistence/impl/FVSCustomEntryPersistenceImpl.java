@@ -20,6 +20,7 @@ import com.liferay.frontend.view.state.model.FVSCustomEntryTable;
 import com.liferay.frontend.view.state.model.impl.FVSCustomEntryImpl;
 import com.liferay.frontend.view.state.model.impl.FVSCustomEntryModelImpl;
 import com.liferay.frontend.view.state.service.persistence.FVSCustomEntryPersistence;
+import com.liferay.frontend.view.state.service.persistence.FVSCustomEntryUtil;
 import com.liferay.frontend.view.state.service.persistence.impl.constants.FVSPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1812,11 +1814,31 @@ public class FVSCustomEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
+
+		_setFVSCustomEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setFVSCustomEntryUtilPersistence(null);
+
 		entityCache.removeCache(FVSCustomEntryImpl.class.getName());
+	}
+
+	private void _setFVSCustomEntryUtilPersistence(
+		FVSCustomEntryPersistence fvsCustomEntryPersistence) {
+
+		try {
+			Field field = FVSCustomEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, fvsCustomEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

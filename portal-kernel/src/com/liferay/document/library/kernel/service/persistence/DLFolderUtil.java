@@ -15,7 +15,6 @@
 package com.liferay.document.library.kernel.service.persistence;
 
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -4862,14 +4861,9 @@ public class DLFolderUtil {
 	}
 
 	public static DLFolderPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (DLFolderPersistence)PortalBeanLocatorUtil.locate(
-				DLFolderPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static DLFolderPersistence _persistence;
+	private static volatile DLFolderPersistence _persistence;
 
 }

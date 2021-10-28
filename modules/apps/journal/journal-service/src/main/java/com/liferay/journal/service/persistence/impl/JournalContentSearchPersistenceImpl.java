@@ -20,6 +20,7 @@ import com.liferay.journal.model.JournalContentSearchTable;
 import com.liferay.journal.model.impl.JournalContentSearchImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.journal.service.persistence.JournalContentSearchPersistence;
+import com.liferay.journal.service.persistence.JournalContentSearchUtil;
 import com.liferay.journal.service.persistence.impl.constants.JournalPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -6209,11 +6211,31 @@ public class JournalContentSearchPersistenceImpl
 				"groupId", "privateLayout", "layoutId", "portletId", "articleId"
 			},
 			false);
+
+		_setJournalContentSearchUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setJournalContentSearchUtilPersistence(null);
+
 		entityCache.removeCache(JournalContentSearchImpl.class.getName());
+	}
+
+	private void _setJournalContentSearchUtilPersistence(
+		JournalContentSearchPersistence journalContentSearchPersistence) {
+
+		try {
+			Field field = JournalContentSearchUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, journalContentSearchPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

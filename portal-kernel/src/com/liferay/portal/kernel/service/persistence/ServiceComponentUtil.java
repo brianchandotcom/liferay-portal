@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -523,15 +522,9 @@ public class ServiceComponentUtil {
 	}
 
 	public static ServiceComponentPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(ServiceComponentPersistence)PortalBeanLocatorUtil.locate(
-					ServiceComponentPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static ServiceComponentPersistence _persistence;
+	private static volatile ServiceComponentPersistence _persistence;
 
 }

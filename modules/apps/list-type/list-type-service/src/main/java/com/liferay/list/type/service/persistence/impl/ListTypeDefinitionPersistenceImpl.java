@@ -20,6 +20,7 @@ import com.liferay.list.type.model.ListTypeDefinitionTable;
 import com.liferay.list.type.model.impl.ListTypeDefinitionImpl;
 import com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl;
 import com.liferay.list.type.service.persistence.ListTypeDefinitionPersistence;
+import com.liferay.list.type.service.persistence.ListTypeDefinitionUtil;
 import com.liferay.list.type.service.persistence.impl.constants.ListTypePersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2712,11 +2714,31 @@ public class ListTypeDefinitionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
+
+		_setListTypeDefinitionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setListTypeDefinitionUtilPersistence(null);
+
 		entityCache.removeCache(ListTypeDefinitionImpl.class.getName());
+	}
+
+	private void _setListTypeDefinitionUtilPersistence(
+		ListTypeDefinitionPersistence listTypeDefinitionPersistence) {
+
+		try {
+			Field field = ListTypeDefinitionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, listTypeDefinitionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

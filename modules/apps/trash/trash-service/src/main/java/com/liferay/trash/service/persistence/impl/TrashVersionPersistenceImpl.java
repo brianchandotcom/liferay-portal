@@ -42,10 +42,12 @@ import com.liferay.trash.model.TrashVersionTable;
 import com.liferay.trash.model.impl.TrashVersionImpl;
 import com.liferay.trash.model.impl.TrashVersionModelImpl;
 import com.liferay.trash.service.persistence.TrashVersionPersistence;
+import com.liferay.trash.service.persistence.TrashVersionUtil;
 import com.liferay.trash.service.persistence.impl.constants.TrashPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2191,11 +2193,31 @@ public class TrashVersionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, false);
+
+		_setTrashVersionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setTrashVersionUtilPersistence(null);
+
 		entityCache.removeCache(TrashVersionImpl.class.getName());
+	}
+
+	private void _setTrashVersionUtilPersistence(
+		TrashVersionPersistence trashVersionPersistence) {
+
+		try {
+			Field field = TrashVersionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, trashVersionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

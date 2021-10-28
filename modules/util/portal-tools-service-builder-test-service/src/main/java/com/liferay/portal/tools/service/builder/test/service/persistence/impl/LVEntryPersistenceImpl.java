@@ -49,9 +49,11 @@ import com.liferay.portal.tools.service.builder.test.model.impl.LVEntryModelImpl
 import com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryLocalizationPersistence;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryPersistence;
+import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -7085,12 +7087,31 @@ public class LVEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByHeadId",
 			new String[] {Long.class.getName()}, new String[] {"headId"},
 			false);
+
+		_setLVEntryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setLVEntryUtilPersistence(null);
+
 		entityCache.removeCache(LVEntryImpl.class.getName());
 
 		TableMapperFactory.removeTableMapper("BigDecimalEntries_LVEntries");
+	}
+
+	private void _setLVEntryUtilPersistence(
+		LVEntryPersistence lvEntryPersistence) {
+
+		try {
+			Field field = LVEntryUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, lvEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

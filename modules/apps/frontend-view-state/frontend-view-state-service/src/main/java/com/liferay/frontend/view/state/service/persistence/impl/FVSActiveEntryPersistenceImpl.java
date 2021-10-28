@@ -20,6 +20,7 @@ import com.liferay.frontend.view.state.model.FVSActiveEntryTable;
 import com.liferay.frontend.view.state.model.impl.FVSActiveEntryImpl;
 import com.liferay.frontend.view.state.model.impl.FVSActiveEntryModelImpl;
 import com.liferay.frontend.view.state.service.persistence.FVSActiveEntryPersistence;
+import com.liferay.frontend.view.state.service.persistence.FVSActiveEntryUtil;
 import com.liferay.frontend.view.state.service.persistence.impl.constants.FVSPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2196,11 +2198,31 @@ public class FVSActiveEntryPersistenceImpl
 				"userId", "clayDataSetDisplayId", "plid", "portletId"
 			},
 			false);
+
+		_setFVSActiveEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setFVSActiveEntryUtilPersistence(null);
+
 		entityCache.removeCache(FVSActiveEntryImpl.class.getName());
+	}
+
+	private void _setFVSActiveEntryUtilPersistence(
+		FVSActiveEntryPersistence fvsActiveEntryPersistence) {
+
+		try {
+			Field field = FVSActiveEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, fvsActiveEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

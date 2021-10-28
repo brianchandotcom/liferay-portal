@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStorageLinkTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkPersistence;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3637,11 +3639,31 @@ public class DDMStorageLinkPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByStructureVersionId",
 			new String[] {Long.class.getName()},
 			new String[] {"structureVersionId"}, false);
+
+		_setDDMStorageLinkUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDDMStorageLinkUtilPersistence(null);
+
 		entityCache.removeCache(DDMStorageLinkImpl.class.getName());
+	}
+
+	private void _setDDMStorageLinkUtilPersistence(
+		DDMStorageLinkPersistence ddmStorageLinkPersistence) {
+
+		try {
+			Field field = DDMStorageLinkUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ddmStorageLinkPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

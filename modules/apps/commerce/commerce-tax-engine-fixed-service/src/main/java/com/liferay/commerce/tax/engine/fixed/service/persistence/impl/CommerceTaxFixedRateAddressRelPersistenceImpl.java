@@ -20,6 +20,7 @@ import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRe
 import com.liferay.commerce.tax.engine.fixed.model.impl.CommerceTaxFixedRateAddressRelImpl;
 import com.liferay.commerce.tax.engine.fixed.model.impl.CommerceTaxFixedRateAddressRelModelImpl;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelPersistence;
+import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2300,11 +2302,33 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCountryId",
 			new String[] {Long.class.getName()}, new String[] {"countryId"},
 			false);
+
+		_setCommerceTaxFixedRateAddressRelUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCommerceTaxFixedRateAddressRelUtilPersistence(null);
+
 		entityCache.removeCache(
 			CommerceTaxFixedRateAddressRelImpl.class.getName());
+	}
+
+	private void _setCommerceTaxFixedRateAddressRelUtilPersistence(
+		CommerceTaxFixedRateAddressRelPersistence
+			commerceTaxFixedRateAddressRelPersistence) {
+
+		try {
+			Field field =
+				CommerceTaxFixedRateAddressRelUtil.class.getDeclaredField(
+					"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceTaxFixedRateAddressRelPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

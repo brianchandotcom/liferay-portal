@@ -14,7 +14,6 @@
 
 package com.liferay.social.kernel.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -2318,15 +2317,9 @@ public class SocialRequestUtil {
 	}
 
 	public static SocialRequestPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence =
-				(SocialRequestPersistence)PortalBeanLocatorUtil.locate(
-					SocialRequestPersistence.class.getName());
-		}
-
 		return _persistence;
 	}
 
-	private static SocialRequestPersistence _persistence;
+	private static volatile SocialRequestPersistence _persistence;
 
 }

@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLinkTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2249,11 +2251,31 @@ public class DDMStructureLinkPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"classNameId", "classPK", "structureId"}, false);
+
+		_setDDMStructureLinkUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDDMStructureLinkUtilPersistence(null);
+
 		entityCache.removeCache(DDMStructureLinkImpl.class.getName());
+	}
+
+	private void _setDDMStructureLinkUtilPersistence(
+		DDMStructureLinkPersistence ddmStructureLinkPersistence) {
+
+		try {
+			Field field = DDMStructureLinkUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ddmStructureLinkPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

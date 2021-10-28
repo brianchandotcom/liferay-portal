@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPInstanceTable;
 import com.liferay.commerce.product.model.impl.CPInstanceImpl;
 import com.liferay.commerce.product.model.impl.CPInstanceModelImpl;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
+import com.liferay.commerce.product.service.persistence.CPInstanceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -47,6 +48,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -7324,10 +7326,29 @@ public class CPInstancePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "externalReferenceCode"}, false);
+
+		_setCPInstanceUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCPInstanceUtilPersistence(null);
+
 		entityCache.removeCache(CPInstanceImpl.class.getName());
+	}
+
+	private void _setCPInstanceUtilPersistence(
+		CPInstancePersistence cpInstancePersistence) {
+
+		try {
+			Field field = CPInstanceUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, cpInstancePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstancePersistence;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -55,6 +56,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3778,11 +3780,31 @@ public class DDMFormInstancePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
+
+		_setDDMFormInstanceUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setDDMFormInstanceUtilPersistence(null);
+
 		entityCache.removeCache(DDMFormInstanceImpl.class.getName());
+	}
+
+	private void _setDDMFormInstanceUtilPersistence(
+		DDMFormInstancePersistence ddmFormInstancePersistence) {
+
+		try {
+			Field field = DDMFormInstanceUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ddmFormInstancePersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

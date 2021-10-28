@@ -20,6 +20,7 @@ import com.liferay.bookmarks.model.BookmarksEntryTable;
 import com.liferay.bookmarks.model.impl.BookmarksEntryImpl;
 import com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl;
 import com.liferay.bookmarks.service.persistence.BookmarksEntryPersistence;
+import com.liferay.bookmarks.service.persistence.BookmarksEntryUtil;
 import com.liferay.bookmarks.service.persistence.impl.constants.BookmarksPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -13301,11 +13303,31 @@ public class BookmarksEntryPersistenceImpl
 				Long.class.getName(), Integer.class.getName()
 			},
 			new String[] {"groupId", "userId", "folderId", "status"}, false);
+
+		_setBookmarksEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setBookmarksEntryUtilPersistence(null);
+
 		entityCache.removeCache(BookmarksEntryImpl.class.getName());
+	}
+
+	private void _setBookmarksEntryUtilPersistence(
+		BookmarksEntryPersistence bookmarksEntryPersistence) {
+
+		try {
+			Field field = BookmarksEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, bookmarksEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

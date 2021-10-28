@@ -46,10 +46,12 @@ import com.liferay.subscription.model.SubscriptionTable;
 import com.liferay.subscription.model.impl.SubscriptionImpl;
 import com.liferay.subscription.model.impl.SubscriptionModelImpl;
 import com.liferay.subscription.service.persistence.SubscriptionPersistence;
+import com.liferay.subscription.service.persistence.SubscriptionUtil;
 import com.liferay.subscription.service.persistence.impl.constants.SubscriptionPersistenceConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -4365,11 +4367,31 @@ public class SubscriptionPersistenceImpl
 			},
 			new String[] {"companyId", "userId", "classNameId", "classPK"},
 			false);
+
+		_setSubscriptionUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setSubscriptionUtilPersistence(null);
+
 		entityCache.removeCache(SubscriptionImpl.class.getName());
+	}
+
+	private void _setSubscriptionUtilPersistence(
+		SubscriptionPersistence subscriptionPersistence) {
+
+		try {
+			Field field = SubscriptionUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, subscriptionPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

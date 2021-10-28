@@ -20,6 +20,7 @@ import com.liferay.change.tracking.model.CTCommentTable;
 import com.liferay.change.tracking.model.impl.CTCommentImpl;
 import com.liferay.change.tracking.model.impl.CTCommentModelImpl;
 import com.liferay.change.tracking.service.persistence.CTCommentPersistence;
+import com.liferay.change.tracking.service.persistence.CTCommentUtil;
 import com.liferay.change.tracking.service.persistence.impl.constants.CTPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1651,11 +1653,30 @@ public class CTCommentPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtEntryId",
 			new String[] {Long.class.getName()}, new String[] {"ctEntryId"},
 			false);
+
+		_setCTCommentUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setCTCommentUtilPersistence(null);
+
 		entityCache.removeCache(CTCommentImpl.class.getName());
+	}
+
+	private void _setCTCommentUtilPersistence(
+		CTCommentPersistence ctCommentPersistence) {
+
+		try {
+			Field field = CTCommentUtil.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ctCommentPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

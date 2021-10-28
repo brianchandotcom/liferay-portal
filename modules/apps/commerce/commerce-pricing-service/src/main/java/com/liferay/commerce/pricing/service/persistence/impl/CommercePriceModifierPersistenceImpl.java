@@ -20,6 +20,7 @@ import com.liferay.commerce.pricing.model.CommercePriceModifierTable;
 import com.liferay.commerce.pricing.model.impl.CommercePriceModifierImpl;
 import com.liferay.commerce.pricing.model.impl.CommercePriceModifierModelImpl;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierPersistence;
+import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -48,6 +49,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -7046,10 +7048,30 @@ public class CommercePriceModifierPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "externalReferenceCode"}, false);
+
+		_setCommercePriceModifierUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setCommercePriceModifierUtilPersistence(null);
+
 		entityCache.removeCache(CommercePriceModifierImpl.class.getName());
+	}
+
+	private void _setCommercePriceModifierUtilPersistence(
+		CommercePriceModifierPersistence commercePriceModifierPersistence) {
+
+		try {
+			Field field = CommercePriceModifierUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, commercePriceModifierPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

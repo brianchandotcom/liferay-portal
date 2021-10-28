@@ -35,8 +35,11 @@ import com.liferay.portal.tools.service.builder.test.model.DSLQueryEntryTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.DSLQueryEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.DSLQueryEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.DSLQueryEntryPersistence;
+import com.liferay.portal.tools.service.builder.test.service.persistence.DSLQueryEntryUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.List;
 import java.util.Map;
@@ -567,10 +570,30 @@ public class DSLQueryEntryPersistenceImpl
 		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
+
+		_setDSLQueryEntryUtilPersistence(this);
 	}
 
 	public void destroy() {
+		_setDSLQueryEntryUtilPersistence(null);
+
 		entityCache.removeCache(DSLQueryEntryImpl.class.getName());
+	}
+
+	private void _setDSLQueryEntryUtilPersistence(
+		DSLQueryEntryPersistence dslQueryEntryPersistence) {
+
+		try {
+			Field field = DSLQueryEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, dslQueryEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

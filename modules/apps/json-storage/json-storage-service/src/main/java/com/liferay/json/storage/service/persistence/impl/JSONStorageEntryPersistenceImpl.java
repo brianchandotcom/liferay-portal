@@ -20,6 +20,7 @@ import com.liferay.json.storage.model.JSONStorageEntryTable;
 import com.liferay.json.storage.model.impl.JSONStorageEntryImpl;
 import com.liferay.json.storage.model.impl.JSONStorageEntryModelImpl;
 import com.liferay.json.storage.service.persistence.JSONStorageEntryPersistence;
+import com.liferay.json.storage.service.persistence.JSONStorageEntryUtil;
 import com.liferay.json.storage.service.persistence.impl.constants.JSONStorePersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3312,11 +3314,31 @@ public class JSONStorageEntryPersistenceImpl
 				"key_"
 			},
 			false);
+
+		_setJSONStorageEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setJSONStorageEntryUtilPersistence(null);
+
 		entityCache.removeCache(JSONStorageEntryImpl.class.getName());
+	}
+
+	private void _setJSONStorageEntryUtilPersistence(
+		JSONStorageEntryPersistence jsonStorageEntryPersistence) {
+
+		try {
+			Field field = JSONStorageEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, jsonStorageEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

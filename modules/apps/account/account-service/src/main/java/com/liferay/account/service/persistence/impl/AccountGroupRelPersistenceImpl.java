@@ -20,6 +20,7 @@ import com.liferay.account.model.AccountGroupRelTable;
 import com.liferay.account.model.impl.AccountGroupRelImpl;
 import com.liferay.account.model.impl.AccountGroupRelModelImpl;
 import com.liferay.account.service.persistence.AccountGroupRelPersistence;
+import com.liferay.account.service.persistence.AccountGroupRelUtil;
 import com.liferay.account.service.persistence.impl.constants.AccountPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -2027,11 +2029,31 @@ public class AccountGroupRelPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"accountGroupId", "classNameId", "classPK"}, false);
+
+		_setAccountGroupRelUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setAccountGroupRelUtilPersistence(null);
+
 		entityCache.removeCache(AccountGroupRelImpl.class.getName());
+	}
+
+	private void _setAccountGroupRelUtilPersistence(
+		AccountGroupRelPersistence accountGroupRelPersistence) {
+
+		try {
+			Field field = AccountGroupRelUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, accountGroupRelPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

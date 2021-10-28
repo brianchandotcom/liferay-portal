@@ -21,6 +21,7 @@ import com.liferay.oauth2.provider.model.OAuth2ScopeGrantTable;
 import com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantImpl;
 import com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantModelImpl;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence;
+import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantUtil;
 import com.liferay.oauth2.provider.service.persistence.impl.constants.OAuthTwoPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -2004,14 +2006,34 @@ public class OAuth2ScopeGrantPersistenceImpl
 				"bundleSymbolicName", "scope"
 			},
 			false);
+
+		_setOAuth2ScopeGrantUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setOAuth2ScopeGrantUtilPersistence(null);
+
 		entityCache.removeCache(OAuth2ScopeGrantImpl.class.getName());
 
 		TableMapperFactory.removeTableMapper(
 			"OA2Auths_OA2ScopeGrants#oAuth2ScopeGrantId");
+	}
+
+	private void _setOAuth2ScopeGrantUtilPersistence(
+		OAuth2ScopeGrantPersistence oAuth2ScopeGrantPersistence) {
+
+		try {
+			Field field = OAuth2ScopeGrantUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, oAuth2ScopeGrantPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override

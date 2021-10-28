@@ -502,10 +502,6 @@ definition {
 			layoutName = "Blogs Page",
 			widgetName = "Categories Navigation");
 
-		BlogsNavigator.openToAddEntry(
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content 1",
 			entryTitle = "Blogs Entry Title 1");
@@ -513,8 +509,7 @@ definition {
 		JSONBlog.addEntry(
 			assetCategoryIds = "${categoryId}",
 			entryContent = "Blogs Entry Content 2",
-			entryTitle = "Blogs Entry Title 2",
-			groupName = "Guest");
+			entryTitle = "Blogs Entry Title 2");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 

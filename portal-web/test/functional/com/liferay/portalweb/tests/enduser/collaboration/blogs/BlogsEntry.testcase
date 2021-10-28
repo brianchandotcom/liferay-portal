@@ -1175,13 +1175,31 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136769. It checks that a friendly URL can be added with escape characters."
-	@ignore = "true"
 	@priority = "3"
 	test URLWithEscapeCharactersWillBeNormalized {
-		property portal.acceptance = "false";
+		var portalURL = PropsUtil.get("portal.url");
 
-		// TODO LPS-136769 CanAddFriendlyURLWithEscapeCharacters pending implementation
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		Blogs.addEntryWithCustomURL(
+			customURL = "blog&entry",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/blog-entry");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 	}
 
 }

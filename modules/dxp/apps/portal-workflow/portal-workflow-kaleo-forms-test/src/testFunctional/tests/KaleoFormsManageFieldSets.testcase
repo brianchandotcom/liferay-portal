@@ -133,8 +133,6 @@ definition {
 	@priority = "4"
 	test CanSearchFieldSet {
 		KaleoFormsManageFieldSets.searchFieldSet(fieldSetName = "Inventory");
-
-		
 	}
 
 	@description = "Verify that user can view of values on columns -ID-, -Name-,  -Description-, -Scope-, -Modified Date-."

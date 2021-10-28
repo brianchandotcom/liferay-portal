@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>Raylife</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Raylife</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>SITE_TITLE</td>
+	<td>//div[contains(@title, '${siteTitle}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

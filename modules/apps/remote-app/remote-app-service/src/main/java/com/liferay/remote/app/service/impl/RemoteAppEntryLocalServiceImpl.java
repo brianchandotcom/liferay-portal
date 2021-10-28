@@ -97,6 +97,7 @@ public class RemoteAppEntryLocalServiceImpl
 		_validateCustomElement(
 			customElementCSSURLs, customElementHTMLElementName,
 			customElementURLs);
+
 		_validateFriendlyURLMapping(friendlyURLMapping);
 
 		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
@@ -288,6 +289,7 @@ public class RemoteAppEntryLocalServiceImpl
 		_validateCustomElement(
 			customElementCSSURLs, customElementHTMLElementName,
 			customElementURLs);
+
 		_validateFriendlyURLMapping(friendlyURLMapping);
 
 		RemoteAppEntry remoteAppEntry =
@@ -499,8 +501,8 @@ public class RemoteAppEntryLocalServiceImpl
 	private void _validateFriendlyURLMapping(String friendlyURLMapping)
 		throws PortalException {
 
-		Matcher matcher =
-			_friendlyURLMappingPattern.matcher(friendlyURLMapping);
+		Matcher matcher = _friendlyURLMappingPattern.matcher(
+			friendlyURLMapping);
 
 		if (!matcher.matches()) {
 			throw new RemoteAppEntryFriendlyURLMappingException(

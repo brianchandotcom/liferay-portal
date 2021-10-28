@@ -15,7 +15,7 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -51,13 +51,12 @@ public class AssignAccountOrganizationsMVCActionCommand
 		long[] accountOrganizationIds = ParamUtil.getLongValues(
 			actionRequest, "accountOrganizationIds");
 
-		_accountEntryOrganizationRelLocalService.
-			addAccountEntryOrganizationRels(
-				accountEntryId, accountOrganizationIds);
+		_accountEntryOrganizationRelService.addAccountEntryOrganizationRels(
+			accountEntryId, accountOrganizationIds);
 	}
 
 	@Reference
-	private AccountEntryOrganizationRelLocalService
-		_accountEntryOrganizationRelLocalService;
+	private AccountEntryOrganizationRelService
+		_accountEntryOrganizationRelService;
 
 }

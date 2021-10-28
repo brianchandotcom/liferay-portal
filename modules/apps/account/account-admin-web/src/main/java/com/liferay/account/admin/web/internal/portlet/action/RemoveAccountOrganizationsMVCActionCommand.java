@@ -16,7 +16,7 @@ package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.exception.NoSuchEntryOrganizationRelException;
-import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -55,7 +55,7 @@ public class RemoveAccountOrganizationsMVCActionCommand
 			long[] accountOrganizationIds = ParamUtil.getLongValues(
 				actionRequest, "accountOrganizationIds");
 
-			_accountEntryOrganizationRelLocalService.
+			_accountEntryOrganizationRelService.
 				deleteAccountEntryOrganizationRels(
 					accountEntryId, accountOrganizationIds);
 
@@ -79,7 +79,7 @@ public class RemoveAccountOrganizationsMVCActionCommand
 	}
 
 	@Reference
-	private AccountEntryOrganizationRelLocalService
-		_accountEntryOrganizationRelLocalService;
+	private AccountEntryOrganizationRelService
+		_accountEntryOrganizationRelService;
 
 }

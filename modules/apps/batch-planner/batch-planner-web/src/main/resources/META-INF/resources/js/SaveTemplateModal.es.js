@@ -43,10 +43,10 @@ const SaveTemplateModal = ({
 	const [inputValue, setInputValue] = useState('');
 
 	const handleFormError = (responseContent) => {
-		setErrorMessage(responseContent.error || '');
+		setErrorMessage(responseContent?.error || '');
 	};
 
-	const _handleSubmit = (event) => {
+	const _handleSubmit = async (event) => {
 		event.preventDefault();
 
 		const mainFormData = document.querySelector(formDataQuerySelector);
@@ -61,44 +61,34 @@ const SaveTemplateModal = ({
 		Liferay.Util.setFormValues(mainFormData, updateData);
 
 		const formData = new FormData(mainFormData);
-
-		fetch(formSubmitURL, {
-			body: formData,
-			method: 'POST',
-		})
-			.then((response) => response.json())
-			.then((responseContent) => {
-				if (isMounted()) {
-					if (responseContent.error) {
-						setLoadingResponse(false);
-
-						handleFormError(responseContent);
-					}
-					else {
-						setVisible(false);
-
-						closeModal();
-
-						if (responseContent.redirectURL) {
-							navigate(responseContent.redirectURL);
-						}
-						else {
-							if (onFormSuccess) {
-								onFormSuccess({
-									...responseContent,
-									redirectURL:
-										responseContent.redirectURL || '',
-								});
-							}
-						}
-					}
-				}
-			})
-			.catch((response) => {
-				handleFormError(response);
+		try {
+			const response = await fetch(formSubmitURL, {
+				body: formData,
+				method: 'POST',
 			});
 
-		setLoadingResponse(true);
+			const responseJson = await response.json();
+
+			if (isMounted()) {
+				if (responseJson.error) {
+					setLoadingResponse(false);
+
+					handleFormError(responseJson);
+				} else {
+					setVisible(false);
+
+					closeModal();
+
+					if (onFormSuccess) {
+						onFormSuccess(responseJson);
+					}
+				}
+			}
+		} catch (error) {
+			handleFormError();
+		} finally {
+			setLoadingResponse(true);
+		}
 	};
 
 	const {observer, onClose} = useModal({

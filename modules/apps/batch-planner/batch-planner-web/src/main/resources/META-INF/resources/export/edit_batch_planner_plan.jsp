@@ -173,7 +173,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 </div>
 
 <liferay-frontend:component
-	module="js/export_edit_batch_planner_plan"
+	module="js/edit_batch_planner_plan"
 />
 
 <portlet:actionURL name="/batch_planner/edit_export_batch_planner_plan" var="saveBatchPlannerPlanURL">

@@ -134,7 +134,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 			</div>
 		</div>
 
-		<div class="mt-4">
+		<div class="mt-4" id="<portlet:namespace />formButtons">
 			<liferay-frontend:edit-form-footer>
 				<clay:link
 					displayType="secondary"
@@ -144,7 +144,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				/>
 
 				<clay:button
-					disabled="disabled"
+					disabled="true"
 					displayType="secondary"
 					id='<%= liferayPortletResponse.getNamespace() + "saveTemplate" %>'
 					label="save-as-template"
@@ -152,6 +152,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				/>
 
 				<clay:button
+					disabled="true"
 					displayType="primary"
 					label="import"
 					type="submit"
@@ -161,179 +162,27 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 	</form>
 </div>
 
-<aui:script use="aui-io-request,aui-parse-content">
-	function <portlet:namespace />saveTemplate() {
-		var cmdAttribute = A.one(
-			'#<%= liferayPortletResponse.getNamespace() + Constants.CMD %>'
-		);
 
-		cmdAttribute.val('saveTemplate');
+<liferay-frontend:component
+	module="js/edit_batch_planner_plan"
+/>
 
-		submitForm(document.querySelector('#<portlet:namespace />fm'));
-	}
+<portlet:actionURL name="/batch_planner/edit_export_batch_planner_plan" var="saveBatchPlannerPlanURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SAVE %>" />
+	<portlet:param name="template" value="<%= String.valueOf(Boolean.TRUE) %>" />
+</portlet:actionURL>
 
-	A.one('#<portlet:namespace />saveTemplate').on('click', function (event) {
-		this.attr('disabled', true);
-
-		<portlet:namespace />saveTemplate();
-
-		this.attr('disabled', false);
-	});
-
-	A.one('#<portlet:namespace />headlessEndpoint').on('change', function (event) {
-		this.attr('disabled', true);
-
-		var openapiDiscoveryURL = A.one(
-			'#<portlet:namespace />headlessEndpoint'
-		).val();
-
-		Liferay.Util.fetch(openapiDiscoveryURL, {
-			method: 'GET',
-			credentials: 'include',
-			headers: [
-				['content-type', 'application/json'],
-				['x-csrf-token', window.Liferay.authToken],
-			],
-		})
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error(`Failed to fetch: '${openapiDiscoveryURL}'`);
-				}
-
-				return response.json();
-			})
-			.then((jsonResponse) => {
-				var internalClassName = A.one(
-					'#<portlet:namespace />internalClassName'
-				);
-
-				internalClassName.empty();
-
-				let schemas = jsonResponse.components.schemas;
-
-				for (key in schemas) {
-					let properties = schemas[key].properties;
-
-					if (!properties || !properties['x-class-name']) {
-						continue;
-					}
-
-					const className = properties['x-class-name'].default;
-
-					const schemaName =
-						(properties['x-schema-name'] &&
-							properties['x-schema-name'].default) ||
-						'';
-
-					internalClassName.appendChild(
-						'<option schemaName="' +
-							schemaName +
-							'" value="' +
-							className +
-							'">' +
-							key +
-							'</option>'
-					);
-				}
-
-				<portlet:namespace />renderMappings();
-
-				internalClassName.attr('disabled', false);
-			})
-			.catch((response) => {
-				alert('FETCH failed ' + response);
-			})
-			.then(() => {
-				A.one('#<portlet:namespace />headlessEndpoint').attr(
-					'disabled',
-					false
-				);
-			});
-	});
-
-	A.one('#<portlet:namespace />internalClassName').on('change', function (event) {
-		this.attr('disabled', true);
-
-		<portlet:namespace />renderMappings();
-
-		this.attr('disabled', false);
-	});
-
-	function <portlet:namespace />renderMappings() {
-		var openAPIURL = A.one('#<portlet:namespace />headlessEndpoint').val();
-
-		const selectedOption = A.one(
-			'#<portlet:namespace />internalClassName option:checked'
-		);
-
-		const schemaName = selectedOption.getAttribute('schemaName');
-
-		A.one('#<portlet:namespace />taskItemDelegateName').val(
-			schemaName || 'DEFAULT'
-		);
-
-		let internalClassNameValue = schemaName || selectedOption.val();
-
-		internalClassNameValue = internalClassNameValue.substr(
-			internalClassNameValue.lastIndexOf('.') + 1
-		);
-
-		Liferay.Util.fetch(openAPIURL, {
-			method: 'GET',
-			credentials: 'include',
-			headers: [
-				['content-type', 'application/json'],
-				['x-csrf-token', window.Liferay.authToken],
-			],
-		})
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error(`Failed to fetch: '${openAPIURL}'`);
-				}
-
-				return response.json();
-			})
-			.then((jsonResponse) => {
-				let schemas = jsonResponse.components.schemas;
-
-				let schemaEntry = schemas[internalClassNameValue];
-
-				var mappingArea = A.one('.plan-mappings');
-				var mappingRowTemplate = A.one(
-					'.plan-mappings-template'
-				).getContent();
-
-				mappingArea.empty();
-
-				let curId = 1;
-
-				for (key in schemaEntry.properties) {
-					const object = schemaEntry.properties[key];
-
-					if (object.readOnly) {
-						continue;
-					}
-
-					let mappingRow = mappingRowTemplate
-						.replaceAll('ID_TEMPLATE', curId)
-						.replace('VALUE_TEMPLATE', key);
-
-					mappingArea.append(mappingRow);
-
-					curId++;
-				}
-
-				mappingArea.ancestor('.card').removeClass('hide');
-
-				var saveTemplateButton = A.one(
-					'#<portlet:namespace />saveTemplate'
-				);
-
-				saveTemplateButton.removeAttribute('disabled');
-				saveTemplateButton.removeClass('disabled');
-			})
-			.catch((response) => {
-				alert('FETCH failed ' + response);
-			});
-	}
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"buttonContainerId", liferayPortletResponse.getNamespace() + "formButtons"
+		).put(
+			"formSaveAsTemplateDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
+		).put(
+			"formSaveAsTemplateURL", saveBatchPlannerPlanURL
+		).put(
+			"portletNamespace", liferayPortletResponse.getNamespace()
+		).build()
+	%>'
+	module="js/save_template_modal"
+/>

@@ -51,7 +51,7 @@ export default function ({namespace}) {
 		`#${namespace}taskItemDelegateName`
 	);
 
-	headlessEnpointSelect.addEventListener('change', (event) => {
+	headlessEnpointSelect.addEventListener('change', async (event) => {
 		event.target.disabled = true;
 
 		const headlessEnpoint = event.target.value;
@@ -62,65 +62,58 @@ export default function ({namespace}) {
 			return;
 		}
 
-		fetch(headlessEnpoint, {
-			credentials: 'include',
-			headers: HEADERS,
-		})
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error(
-						`Failed to fetch: '${headlessEnpointSelect}'`
-					);
+		try {
+			const response = await fetch(headlessEnpoint, {
+				credentials: 'include',
+				headers: HEADERS,
+			});
+
+			if (!response.ok) {
+				throw new Error(`Failed to fetch: '${headlessEnpointSelect}'`);
+			}
+
+			const {components} = await response.json();
+			internalClassNameSelect.innerHTML = '';
+
+			internalClassNameSelect.appendChild(getOptionElement('', '', ''));
+
+			const keys = Object.keys(components.schemas).sort();
+
+			keys.forEach((key) => {
+				const properties = components.schemas[key].properties;
+
+				if (!properties || !properties['x-class-name']) {
+					return;
 				}
 
-				return response.json();
-			})
-			.then(({components}) => {
-				internalClassNameSelect.innerHTML = '';
+				const className = properties['x-class-name'].default;
 
-				internalClassNameSelect.appendChild(
-					getOptionElement('', '', '')
+				const schemaName = properties['x-schema-name']?.default;
+
+				const optionElement = getOptionElement(
+					trimPackage(className),
+					schemaName,
+					className
 				);
 
-				const keys = Object.keys(components.schemas).sort();
-
-				keys.forEach((key) => {
-					const properties = components.schemas[key].properties;
-
-					if (!properties || !properties['x-class-name']) {
-						return;
-					}
-
-					const className = properties['x-class-name'].default;
-
-					const schemaName = properties['x-schema-name']?.default;
-
-					const optionElement = getOptionElement(
-						trimPackage(className),
-						schemaName,
-						className
-					);
-
-					internalClassNameSelect.appendChild(optionElement);
-				});
-
-				Liferay.fire('schema-selected', {
-					schema: null,
-				});
-
-				internalClassNameSelect.disabled = false;
-			})
-			.catch((response) => {
-				openToast({
-					message: Liferay.Language.get('your-request-has-failed'),
-					type: 'danger',
-				});
-
-				console.error('Failed to fetch ' + response);
-			})
-			.finally(() => {
-				event.target.disabled = false;
+				internalClassNameSelect.appendChild(optionElement);
 			});
+
+			Liferay.fire('schema-selected', {
+				schema: null,
+			});
+
+			internalClassNameSelect.disabled = false;
+		} catch (error) {
+			openToast({
+				message: Liferay.Language.get('your-request-has-failed'),
+				type: 'danger',
+			});
+
+			console.error('Failed to fetch ' + error);
+		} finally {
+			event.target.disabled = false;
+		}
 	});
 
 	internalClassNameSelect.addEventListener(
@@ -128,7 +121,7 @@ export default function ({namespace}) {
 		handleClassNameSelectChange
 	);
 
-	function handleClassNameSelectChange() {
+	async function handleClassNameSelectChange() {
 		const headlessEnpointValue = headlessEnpointSelect.value;
 
 		const selectedOption =
@@ -152,36 +145,33 @@ export default function ({namespace}) {
 			return;
 		}
 
-		fetch(headlessEnpointValue, {
-			credentials: 'include',
-			headers: HEADERS,
-		})
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error(
-						`Failed to fetch: '${headlessEnpointValue}'`
-					);
-				}
-
-				return response.json();
-			})
-			.then(({components}) => {
-				const schemaEntry = components.schemas[internalClassNameValue];
-
-				Liferay.fire('schema-selected', {
-					schema: schemaEntry.properties,
-				});
-
-				enableButtons();
-			})
-			.catch((response) => {
-				openToast({
-					message: Liferay.Language.get('your-request-has-failed'),
-					type: 'danger',
-				});
-
-				console.error(`Failed to fetch ${response}`);
+		try {
+			const response = await fetch(headlessEnpointValue, {
+				credentials: 'include',
+				headers: HEADERS,
 			});
+
+			if (!response.ok) {
+				throw new Error(`Failed to fetch: '${headlessEnpointValue}'`);
+			}
+
+			const {components} = await response.json();
+
+			const schemaEntry = components.schemas[internalClassNameValue];
+
+			Liferay.fire('schema-selected', {
+				schema: schemaEntry.properties,
+			});
+
+			enableButtons();
+		} catch (err) {
+			openToast({
+				message: Liferay.Language.get('your-request-has-failed'),
+				type: 'danger',
+			});
+
+			console.error(`Failed to fetch ${err}`);
+		}
 	}
 
 	function trimPackage(name) {

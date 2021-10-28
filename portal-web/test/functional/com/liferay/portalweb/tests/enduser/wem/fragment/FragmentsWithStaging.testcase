@@ -228,6 +228,7 @@ definition {
 		task ("Edit inline text of each tab") {
 			for (var n : list "1,2,3,4") {
 				PageEditor.editFragmentText(
+					className = "tabs",
 					fragmentName = "Tabs (Copy)",
 					id = "title${n}",
 					text = "Test ${n}");

@@ -1594,6 +1594,7 @@ definition {
 
 		task ("Edit inline text of the fifth tabs") {
 			PageEditor.editFragmentText(
+				className = "tabs",
 				fragmentName = "Tabs (Copy)",
 				id = "title5",
 				text = "Test");
@@ -1601,6 +1602,7 @@ definition {
 
 		task ("View the inline text of the fifth tabs") {
 			PageEditor.viewFragmentEditableText(
+				className = "tabs",
 				editableText = "Test",
 				fragmentName = "Tabs (Copy)",
 				id = "title5");
@@ -1624,6 +1626,7 @@ definition {
 
 		task ("View the inline text of the fifth tabs") {
 			PageEditor.viewFragmentEditableText(
+				className = "tabs",
 				editableText = "Test",
 				fragmentName = "Tabs (Copy)",
 				id = "title5");

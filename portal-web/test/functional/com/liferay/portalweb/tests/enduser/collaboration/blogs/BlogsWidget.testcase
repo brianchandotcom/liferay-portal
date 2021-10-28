@@ -53,13 +53,33 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136766. It checks that comments can be disabled from the widget."
-	@ignore = "true"
 	@priority = "3"
 	test CanDisableComments {
-		property portal.acceptance = "false";
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
-		// TODO LPS-136766 CanDisableComments pending implementation
+		Navigator.gotoPage(pageName = "Blogs Page");
 
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		BlogsConfiguration.uncheckComments();
+
+		IFrame.saveConfiguration();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		AssertElementNotPresent(
+			key_text = "comments",
+			locator1 = "Icon#ANY");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		AssertElementNotPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 	}
 
 	@description = "This is a test for LPS-136767. It checks that related assets can be disabled from the widget."

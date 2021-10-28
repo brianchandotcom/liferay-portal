@@ -35,6 +35,78 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140266. The color samples are sorted by the token definition doc order and sections."
+	@priority = "5"
+	@uitest
+	test ViewOrderOfColorSamplesInColorPicker {
+		task ("Add a Button fragment to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("View the order of color samples in color picker") {
+			PageEditor.gotoStyle(fragmentName = "Button");
+
+			Click(
+				key_fieldLabel = "Text Color",
+				locator1 = "Button#COLOR_PICKER");
+
+			var n = "1";
+
+			for (var panel : list "Color System,General,Typography,Buttons") {
+				AssertTextEquals(
+					index = "${n}",
+					locator1 = "PageEditor#COLOR_SWATCH_PANEL",
+					value1 = "${panel}");
+
+				var n = ${n} + 1;
+			}
+
+			var n = "1";
+
+			for (var category : list "Brand Colors,Grays,Theme Colors") {
+				AssertTextEquals(
+					index = "${n}",
+					locator1 = "PageEditor#COLOR_SWATCH_CATEGORY",
+					panel = "Color System",
+					value1 = "${category}");
+
+				var n = ${n} + 1;
+			}
+
+			var n = "1";
+
+			for (var i : list "1,2,3,4") {
+				AssertAttributeValue(
+					attribute1 = "title",
+					category = "Brand Colors",
+					index = "${n}",
+					locator1 = "PageEditor#COLOR_SWATCH_ITEM",
+					panel = "Color System",
+					value1 = "Brand Color ${i}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the token name shown in tooltip when hover on color swatch item") {
+			MouseOver(
+				category = "Grays",
+				index = "1",
+				locator1 = "PageEditor#COLOR_SWATCH_ITEM",
+				panel = "Color System");
+
+			AssertVisible(
+				key_content = "White",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-132422. The list of actions appear in right order for pages."
 	@priority = "3"
 	test ViewOrderOfContentPagesActions {

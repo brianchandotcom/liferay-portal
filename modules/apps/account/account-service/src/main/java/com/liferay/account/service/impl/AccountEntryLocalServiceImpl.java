@@ -123,7 +123,7 @@ public class AccountEntryLocalServiceImpl
 
 	@Override
 	public AccountEntry activateAccountEntry(long accountEntryId)
-		throws Exception {
+		throws PortalException {
 
 		return activateAccountEntry(getAccountEntry(accountEntryId));
 	}
@@ -313,7 +313,7 @@ public class AccountEntryLocalServiceImpl
 
 	@Override
 	public AccountEntry deactivateAccountEntry(long accountEntryId)
-		throws Exception {
+		throws PortalException {
 
 		return deactivateAccountEntry(getAccountEntry(accountEntryId));
 	}

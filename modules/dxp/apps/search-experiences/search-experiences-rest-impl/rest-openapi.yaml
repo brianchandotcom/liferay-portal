@@ -287,6 +287,61 @@ components:
             properties:
                 description:
                     type: string
+                elementDefinition:
+                    properties:
+                        sxpBlueprint:
+                            $ref: "#/components/schemas/SXPBlueprint"
+                        uiConfiguration:
+                            properties:
+                                fieldSets:
+                                    items:
+                                        properties:
+                                            fields:
+                                                items:
+                                                    properties:
+                                                        boost:
+                                                            type: boolean
+                                                        defaultValue:
+                                                            type: object
+                                                        format:
+                                                            type: string
+                                                        helpText:
+                                                            type: string
+                                                        label:
+                                                            type: string
+                                                        maxValue:
+                                                            type: object
+                                                        minValue:
+                                                            type: object
+                                                        name:
+                                                            type: string
+                                                        nullable:
+                                                            type: boolean
+                                                        options:
+                                                            items:
+                                                                properties:
+                                                                    label:
+                                                                        type: string
+                                                                    value:
+                                                                        type: string
+                                                                type: object
+                                                            type: array
+                                                        required:
+                                                            type: boolean
+                                                        stepValue:
+                                                            type: object
+                                                        type:
+                                                            type: string
+                                                        unit:
+                                                            type: string
+                                                        unitSuffix:
+                                                            type: string
+                                                    type: object
+                                                type: array
+                                        type: object
+                                    type: array
+                            type: object
+                    type: object
                 id:
                     format: int64
                     type: integer

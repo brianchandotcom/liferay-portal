@@ -319,4 +319,20 @@ definition {
 		}
 	}
 
+	macro viewFragmentTextInCollectionDisplay {
+		if (!(isSet(row))) {
+			var row = "1";
+		}
+
+		if (!(isSet(column))) {
+			var column = "1";
+		}
+
+		AssertTextEquals(
+			column = "${column}",
+			locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
+			row = "${row}",
+			value1 = "${text}");
+	}
+
 }

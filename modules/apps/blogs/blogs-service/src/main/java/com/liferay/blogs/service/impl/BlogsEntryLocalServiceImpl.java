@@ -30,7 +30,6 @@ import com.liferay.blogs.exception.EntrySmallImageScaleException;
 import com.liferay.blogs.exception.EntryTitleException;
 import com.liferay.blogs.exception.EntryUrlTitleException;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsStatsUserLocalService;
 import com.liferay.blogs.service.base.BlogsEntryLocalServiceBaseImpl;
 import com.liferay.blogs.settings.BlogsGroupServiceSettings;
 import com.liferay.blogs.social.BlogsActivityKeys;
@@ -2400,9 +2399,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	private volatile BlogsFileUploadsConfiguration
 		_blogsFileUploadsConfiguration;
-
-	@Reference
-	private BlogsStatsUserLocalService _blogsStatsUserLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

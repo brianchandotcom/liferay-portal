@@ -237,8 +237,8 @@ function CartItem({item: cartItem}) {
 			)}
 			<div
 				className={classnames({
-					active: isGettingRemoved,
-					canceled: isRemovalCanceled,
+					'active': isGettingRemoved,
+					'canceled': isRemovalCanceled,
 					'mini-cart-item-removing': true,
 				})}
 			>

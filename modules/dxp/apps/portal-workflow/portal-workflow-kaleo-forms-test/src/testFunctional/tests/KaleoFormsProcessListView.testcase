@@ -41,12 +41,52 @@ definition {
 	}
 
 	@description = "Verify that the user can clear the result bar after the user use  the search bar."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanClearSearchBar {
+		for (var newProcess : list "one,two") {
+			KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70665 CanClearSearchBar pending implementation
+			KaleoFormsAdmin.addProcessDetails(
+				kfProcessDescription = "Kaleo Forms Process Description ${newProcess}",
+				kfProcessName = "Kaleo Forms Process ${newProcess}");
 
+			KaleoFormsAdmin.next();
+
+			KaleoFormsAdmin.chooseFieldSet(
+				kfFieldSetName = "Contacts",
+				kfProcessName = "Kaleo Forms Process ${newProcess}");
+
+			KaleoFormsAdmin.next();
+
+			KaleoFormsAdmin.chooseWorkflow(
+				kfProcessName = "Kaleo Forms Process ${newProcess}",
+				workflowDefinitionTitle = "Single Approver");
+
+			KaleoFormsAdmin.next();
+
+			KaleoFormsAdmin.assignForm(
+				kfProcessName = "Kaleo Forms Process ${newProcess}",
+				workflowTask = "create");
+
+			KaleoFormsAdmin.addForm(kfFormName = "Created Task Form ${newProcess}");
+
+			KaleoFormsAdmin.saveForm();
+
+			KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form ${newProcess}");
+
+			KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process ${newProcess}");
+		}
+
+		Search.searchCP(searchTerm = "one");
+
+		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process one");
+
+		Search.clearSearchResult();
+
+		for (var viewProcess : list "one,two") {
+			KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process ${viewProcess}");
+			
+		}
 	}
 
 	@description = "Verify that the user can delete multiple process."

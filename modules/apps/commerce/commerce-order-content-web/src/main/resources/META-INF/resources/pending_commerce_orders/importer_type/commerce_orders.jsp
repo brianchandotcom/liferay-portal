@@ -16,4 +16,17 @@
 
 <%@ include file="/init.jsp" %>
 
-<h1>ORDERS</h1>
+<clay:data-set-display
+	contextParams='<%=
+		HashMapBuilder.<String, String>put(
+			"commerceOrderId", String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId())
+		).build()
+	%>'
+	dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_IMPORT_PLACED_ORDERS %>"
+	id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_IMPORT_PLACED_ORDERS %>"
+	itemsPerPage="<%= 10 %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
+	pageNumber="<%= 1 %>"
+	portletURL="<%= commerceOrderContentDisplayContext.getPortletURL() %>"
+	style="fluid"
+/>

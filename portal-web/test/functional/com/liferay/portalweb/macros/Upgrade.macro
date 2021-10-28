@@ -902,21 +902,19 @@ definition {
 	}
 
 	macro configurePageEditor {
-		task ("View fragment persists and could add anther fragment in react edtor") {
+		task ("View fragment persists and could add another fragment in page editor") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name");
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-fragment-content-page");
-
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Fragment Content Page",
+				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Card",
 				targetFragmentName = "Fragment Name");
-
-			PageEditor.viewFragment(fragmentName = "Card");
 		}
 
 		task ("Assert could edit fragment upgrading from 7.2") {
@@ -929,24 +927,26 @@ definition {
 			FragmentsEditor.typeFileContent(fileName = "fragment_title.css");
 
 			FragmentsEditor.assertFragmentPreview(
-				fragmentLocator = "//div[@class='fragment-header']/h1[@class='title']",
+				fragmentLocator = "//div[@class='fragment-title']/h1[@class='title']",
 				text = "LOREM IPSUM DOLOR SIT AMET");
 
 			PortletEntry.publish();
 		}
 
 		task ("Assert could delete fragment upgrading from 7.2") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-fragment-content-page");
-
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Fragment Content Page",
+				siteName = "Test Site Name");
 
 			PageEditor.removeFragment(fragmentName = "Fragment Name");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Fragment Name");
 		}
 
 		task ("Assert the experience survived and could edit") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-experience-content-page");
-
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Experience Content Page",
+				siteName = "Test Site Name");
 
 			PageEditor.changeExperience(newExperience = "New Experience Name");
 
@@ -971,9 +971,9 @@ definition {
 		}
 
 		task ("Assert layout has been converted to a section with columns inside") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-layout-content-page");
-
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Layout Content Page",
+				siteName = "Test Site Name");
 
 			for (var fragmentName : list "Container,Grid") {
 				PageEditor.viewFragment(fragmentName = "${fragmentName}");
@@ -981,59 +981,55 @@ definition {
 		}
 
 		task ("Assert translation is working after migration") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-translation-content-page");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Translation Content Page",
+				siteName = "Test Site Name");
 
-			ContentPages.gotoPageEditor();
-
-			AssertVisible(
-				key_content = "New editable fragment en-US text",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+			PageEditor.viewFragmentEditableText(
+				contributed = "false",
+				editableText = "New editable fragment en-US text",
+				fragmentName = "Rich Text");
 
 			PageEditor.changeLocale(
 				currentLocale = "en-US",
 				locale = "zh-CN");
 
-			AssertVisible(
-				key_content = "New editable fragment zh-CN text",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+			PageEditor.viewFragmentEditableText(
+				contributed = "false",
+				editableText = "New editable fragment zh-CN text",
+				fragmentName = "Rich Text");
 		}
 
 		task ("Assert mapped content is working after migration") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
 
-			AssertVisible(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "header",
+				text = "Webcontent Title");
 
-			AssertVisible(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "rich-text",
+				text = "Webcontent Content");
 
 			DisplayPageTemplate.clickPencilItem(item = "Edit Webcontent Title");
 
-			Click(locator1 = "TextInput#TITLE");
+			WebContent.addCP(
+				webContentContent = "Webcontent Content Edit",
+				webContentTitle = "Webcontent Title Edit");
 
-			PortletEntry.inputTitle(title = "Webcontent Title Edit");
+			PortletEntry.publish();
 
-			CKEditor.addContentInWebContent(
-				content = "Webcontent Content Edit",
-				fieldLabel = "content");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "header",
+				text = "Webcontent Title Edit");
 
-			Button.clickPublish();
-
-			AssertVisible(
-				key_content = "Webcontent Title Edit",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertVisible(
-				key_content = "Webcontent Content Edit",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "rich-text",
+				text = "Webcontent Content Edit");
 		}
 
 		task ("Assert could add fragment added to display page after upgrading") {

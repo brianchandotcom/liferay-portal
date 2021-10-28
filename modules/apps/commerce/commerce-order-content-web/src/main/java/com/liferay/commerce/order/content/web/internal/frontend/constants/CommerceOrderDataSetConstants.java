@@ -16,8 +16,12 @@ package com.liferay.commerce.order.content.web.internal.frontend.constants;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CommerceOrderDataSetConstants {
+
+	public static final String COMMERCE_DATA_SET_KEY_COMMERCE_WISH_LISTS =
+		"commerceWishLists";
 
 	public static final String COMMERCE_DATA_SET_KEY_PENDING_ORDER_ITEMS =
 		"commercePendingOrderItems";
@@ -30,5 +34,9 @@ public class CommerceOrderDataSetConstants {
 
 	public static final String COMMERCE_DATA_SET_KEY_PLACED_ORDERS =
 		"commercePlacedOrders";
+
+	public static final String
+		COMMERCE_DATA_SET_KEY_PREVIEW_COMMERCE_ORDER_ITEMS =
+			"previewCommerceOrderItems";
 
 }

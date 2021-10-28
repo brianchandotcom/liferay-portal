@@ -19,6 +19,7 @@ import com.liferay.blogs.internal.upgrade.v1_1_2.BlogsImagesUpgradeProcess;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsEntryTable;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsStatsUserTable;
 import com.liferay.blogs.internal.upgrade.v2_2_0.BlogsEntryExternalReferenceCodeUpgradeProcess;
+import com.liferay.blogs.internal.upgrade.v3_0_0.BlogsStatsUserUpgradeProcess;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -109,6 +110,8 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"2.1.2", "2.2.0",
 			new BlogsEntryExternalReferenceCodeUpgradeProcess());
+
+		registry.register("2.2.0", "3.0.0", new BlogsStatsUserUpgradeProcess());
 	}
 
 	private UnsafeBiFunction<String, Connection, Boolean, Exception>

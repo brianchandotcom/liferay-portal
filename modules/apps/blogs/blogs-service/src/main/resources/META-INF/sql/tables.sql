@@ -31,16 +31,3 @@ create table BlogsEntry (
 	statusByUserName VARCHAR(75) null,
 	statusDate DATE null
 );
-
-create table BlogsStatsUser (
-	mvccVersion LONG default 0 not null,
-	statsUserId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	entryCount INTEGER,
-	lastPostDate DATE null,
-	ratingsTotalEntries INTEGER,
-	ratingsTotalScore DOUBLE,
-	ratingsAverageScore DOUBLE
-);

@@ -511,7 +511,7 @@ definition {
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(
 				key_columnNumber = "${columnNumber}",
-				key_elementHeader = "//p[normalize-space(text())='${title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]",
+				key_elementHeader = "//label[normalize-space(text())='${title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -551,7 +551,7 @@ definition {
 		if (isSet(columnNumber)) {
 			AssertTextEquals(
 				key_columnNumber = "${columnNumber}",
-				key_elementHeader = "//p[normalize-space(text())='${title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]",
+				key_elementHeader = "//label[normalize-space(text())='${title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
 				value1 = "${selectedName}");

@@ -515,7 +515,7 @@ definition {
 
 		CategoriesNavigationPortlet.selectCategoryPG(categoryName = "Category Name");
 
-		Blogs.viewEntryNotPresent(entryTitle = "Blogs Entry Content 1");
+		Blogs.viewNoPG(entryTitle = "Blogs Entry Title 1");
 	}
 
 	@description = "This is a test for LPS-136812. It checks that a blog can be viewed through the Recent Bloggers Portlet."

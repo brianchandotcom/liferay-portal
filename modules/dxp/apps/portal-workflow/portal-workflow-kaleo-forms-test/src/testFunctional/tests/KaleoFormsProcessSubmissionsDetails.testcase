@@ -117,11 +117,93 @@ definition {
 	}
 
 	@description = "Verify that the details page shows the process Status is Approved after the user approve."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewProcessStatusApproved {
 
-		// TODO LRQA-70704 CanViewProcessStatusApproved pending implementation
+		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Liferay",
+			fieldFieldLabel = "Company",
+			fieldName = "company");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "test@liferay.com",
+			fieldFieldLabel = "Email",
+			fieldName = "email");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Test",
+			fieldFieldLabel = "First Name",
+			fieldName = "firstName");
+
+		DDLRecord.populateFieldSelect(
+			ddlRecordFieldData = "Google Hangouts",
+			fieldFieldLabel = "Instant Messenger Service",
+			fieldName = "imService");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "testliferay",
+			fieldFieldLabel = "Instant Messenger",
+			fieldName = "imUserName");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "QA Engineer",
+			fieldFieldLabel = "Job Title",
+			fieldName = "jobTitle");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Test",
+			fieldFieldLabel = "Last Name",
+			fieldName = "lastName");
+
+		DDLRecord.populateFieldTextBox(
+			ddlRecordFieldData = "Notes",
+			fieldFieldLabel = "Notes",
+			fieldName = "notes");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "(123) 456-7890",
+			fieldFieldLabel = "Phone (Mobile)",
+			fieldName = "phoneMobile");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "(123) 111-2222",
+			fieldFieldLabel = "Phone (Office)",
+			fieldName = "phoneOffice");
+
+		KaleoFormsAdmin.saveProcessRecord();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "View");
+
+		AssertElementPresent(
+			key_status = "Pending",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Kaleo Forms Process",
+			workflowAssetType = "Process",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Kaleo Forms Process",
+			workflowAssetType = "Process",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Kaleo Forms Admin");
+
+		KaleoFormsAdmin.viewProcessRecord(kfProcessName = "Kaleo Forms Process");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "View");
+
+		AssertElementPresent(
+			key_status = "Approved",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
 
 	}
 

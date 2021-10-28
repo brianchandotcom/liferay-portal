@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.content.web.internal.frontend;
+package com.liferay.commerce.order.content.web.internal.frontend.taglib.clay.data.set.provider;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
@@ -42,10 +42,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS,
+	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS,
 	service = ClayDataSetDataProvider.class
 )
-public class PendingCommerceOrderDataSetDataProvider
+public class PlacedCommerceOrderDataSetDataProvider
 	implements ClayDataSetDataProvider<Order> {
 
 	@Override
@@ -67,7 +67,7 @@ public class PendingCommerceOrderDataSetDataProvider
 		}
 
 		List<CommerceOrder> commerceOrders =
-			_commerceOrderService.getUserPendingCommerceOrders(
+			_commerceOrderService.getUserPlacedCommerceOrders(
 				commerceChannel.getCompanyId(), commerceChannel.getGroupId(),
 				filter.getKeywords(), pagination.getStartPosition(),
 				pagination.getEndPosition());
@@ -94,7 +94,7 @@ public class PendingCommerceOrderDataSetDataProvider
 			return 0;
 		}
 
-		return (int)_commerceOrderService.getUserPendingCommerceOrdersCount(
+		return (int)_commerceOrderService.getUserPlacedCommerceOrdersCount(
 			commerceChannel.getCompanyId(), commerceChannel.getGroupId(),
 			filter.getKeywords());
 	}

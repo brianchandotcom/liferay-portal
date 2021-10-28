@@ -12,39 +12,33 @@
  * details.
  */
 
-package com.liferay.commerce.order.content.web.internal.frontend;
+package com.liferay.commerce.order.content.web.internal.frontend.taglib.clay.data.set;
 
-import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.commerce.order.content.web.internal.frontend.util.CommerceOrderClayTableUtil;
-import com.liferay.commerce.order.content.web.internal.model.Order;
+import com.liferay.commerce.order.content.web.internal.model.WishList;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS,
+	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_COMMERCE_WISH_LISTS,
 	service = ClayDataSetActionProvider.class
 )
-public class PlacedCommerceOrderDataSetActionProvider
+public class CommerceWishListDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
@@ -52,33 +46,13 @@ public class PlacedCommerceOrderDataSetActionProvider
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
 
-		List<DropdownItem> dropdownItems = new ArrayList<>();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Order order = (Order)model;
-
-		if (_modelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), order.getOrderId(),
-				ActionKeys.VIEW)) {
-
-			dropdownItems.add(
-				DropdownItemBuilder.setHref(
-					CommerceOrderClayTableUtil.getOrderViewDetailURL(
-						order.getOrderId(), themeDisplay)
-				).setLabel(
-					LanguageUtil.get(httpServletRequest, "view")
-				).build());
-		}
-
-		return dropdownItems;
+		return Collections.singletonList(
+			DropdownItemBuilder.setHref(
+				CommerceOrderClayTableUtil.getWishListCommerceOrderPreviewURL(
+					(WishList)model, httpServletRequest)
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "select")
+			).build());
 	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
-	)
-	private ModelResourcePermission<CommerceOrder> _modelResourcePermission;
 
 }

@@ -147,8 +147,9 @@ definition {
 			value1 = "Imagen");
 
 		AssertTextEquals(
-			key_text = "Imagen",
-			locator1 = "Button#ANY",
+			index = "1",
+			key_fieldName = "Imagen",
+			locator1 = "DataEngineBuilder#FIELD_NAME_INDEXED",
 			value1 = "Imagen");
 
 		AssertTextEquals(

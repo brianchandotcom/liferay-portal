@@ -124,7 +124,8 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 
 		@Override
 		public T addingService(ServiceReference<S> serviceReference) {
-			T service = getService(serviceReference);
+			T service = _serviceTrackerCustomizer.addingService(
+				serviceReference);
 
 			_update(serviceReference, service, false);
 
@@ -150,10 +151,6 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 			_update(serviceReference, service, true);
 
 			_bundleContext.ungetService(serviceReference);
-		}
-
-		protected T getService(ServiceReference<S> serviceReference) {
-			return _serviceTrackerCustomizer.addingService(serviceReference);
 		}
 
 		private void _update(

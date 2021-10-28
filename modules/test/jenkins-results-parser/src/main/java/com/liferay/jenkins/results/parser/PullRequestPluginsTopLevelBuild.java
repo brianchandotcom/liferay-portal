@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * @author Michael Hashimoto
  */
 public class PullRequestPluginsTopLevelBuild
-	extends PluginsTopLevelBuild implements PullRequestBuild, WorkspaceBuild {
+	extends PluginsTopLevelBuild implements PullRequestBuild {
 
 	public PullRequestPluginsTopLevelBuild(
 		String url, TopLevelBuild topLevelBuild) {

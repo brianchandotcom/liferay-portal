@@ -96,10 +96,11 @@ definition {
 	macro deleteWebContent {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
-		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}", site = "${site}");
 
 		var articleId = JSONWebcontentSetter.setArticleId(
 			groupName = "${groupName}",
+			site = "${site}",
 			title = "${title}");
 
 		JSONWebcontentAPI._deleteWebContent(

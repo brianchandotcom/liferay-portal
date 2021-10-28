@@ -35,6 +35,41 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140266. The user could look for color samples via scroll bar."
+	@priority = "4"
+	@uitest
+	test FindColorSamplesViaScrollBar {
+		task ("Add a Button fragment to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Find color samples via scroll bar") {
+			PageEditor.gotoStyle(fragmentName = "Button");
+
+			Click(
+				key_fieldLabel = "Text Color",
+				locator1 = "Button#COLOR_PICKER");
+
+			ScrollWebElementIntoView(
+				category = "Button Link",
+				index = "1",
+				locator1 = "PageEditor#COLOR_SWATCH_ITEM",
+				panel = "Buttons");
+
+			ScrollWebElementIntoView(
+				category = "Brand Colors",
+				index = "1",
+				locator1 = "PageEditor#COLOR_SWATCH_ITEM",
+				panel = "Color System");
+		}
+	}
+
 	@description = "This is a test for LPS-140266. The color samples are sorted by the token definition doc order and sections."
 	@priority = "5"
 	@uitest

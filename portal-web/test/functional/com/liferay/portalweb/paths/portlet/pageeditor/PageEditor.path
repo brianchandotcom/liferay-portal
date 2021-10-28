@@ -172,7 +172,7 @@
 <!--COLLECTION_FILTER-->
 <tr>
 	<td>COLLECTION_FILTER_DROPDOWN_TOGGLE</td>
-	<td>//p[normalize-space(text())='${key_title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//label[normalize-space(text())='${key_title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -182,12 +182,12 @@
 </tr>
 <tr>
 	<td>COLLECTION_FILTER_SOURCE_LABEL_INVISIBLE</td>
-	<td>//div[.//button[contains(@class,'dropdown-toggle')]]//p[contains(@class,'font-weight-bold')][normalize-space(text())='${sourceLabel}'][contains(@class,'sr-only')]</td>
+	<td>//div[.//button[contains(@class,'dropdown-toggle')]]//label[normalize-space(text())='${sourceLabel}'][contains(@class,'sr-only')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COLLECTION_FILTER_SOURCE_LABEL_VISIBLE</td>
-	<td>//div[.//button[contains(@class,'dropdown-toggle')]]//p[contains(@class,'font-weight-semi-bold')][normalize-space(text())='${sourceLabel}'][not(contains(@class,'sr-only'))]</td>
+	<td>//div[.//button[contains(@class,'dropdown-toggle')]]//label[normalize-space(text())='${sourceLabel}'][not(contains(@class,'sr-only'))]</td>
 	<td></td>
 </tr>
 <!--COLOR_PICKER-->

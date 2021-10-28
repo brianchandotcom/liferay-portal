@@ -878,22 +878,16 @@ definition {
 			var n = "1";
 
 			for (var content : list "AirPods,LeBron VIII,Levis 501") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${content}",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
+					text = "${content}");
 
 				var n = ${n} + 1;
 			}
 
 			Page.searchInCollectionFilter(searchTerm = "Levis");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "Levis 501",
-				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+			ContentPages.viewFragmentTextInCollectionDisplay(text = "Levis 501");
 
 			IFrame.closeFrame();
 
@@ -908,22 +902,16 @@ definition {
 			var n = "1";
 
 			for (var content : list "AirPods,LeBron VIII,Levis 501") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${content}",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
+					text = "${content}");
 
 				var n = ${n} + 1;
 			}
 
 			Page.searchInCollectionFilter(searchTerm = "LeBron");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "LeBron VIII",
-				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+			ContentPages.viewFragmentTextInCollectionDisplay(text = "LeBron VIII");
 		}
 	}
 
@@ -1029,22 +1017,16 @@ definition {
 			var n = "1";
 
 			for (var content : list "AirPods,LeBron VIII,Levis 501") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${content}",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
+					text = "${content}");
 
 				var n = ${n} + 1;
 			}
 
 			Page.searchInCollectionFilter(searchTerm = "Levis");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "Levis 501",
-				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+			ContentPages.viewFragmentTextInCollectionDisplay(text = "Levis 501");
 
 			Page.searchInCollectionFilter(
 				index = "2",
@@ -1053,11 +1035,9 @@ definition {
 			var n = "1";
 
 			for (var content : list "AirPods,Levis 501") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${content}",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
+					text = "${content}");
 
 				var n = ${n} + 1;
 			}
@@ -1080,22 +1060,16 @@ definition {
 			var n = "1";
 
 			for (var content : list "AirPods,LeBron VIII,Levis 501") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${content}",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
+					text = "${content}");
 
 				var n = ${n} + 1;
 			}
 
 			Page.searchInCollectionFilter(searchTerm = "VIII");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "LeBron VIII",
-				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+			ContentPages.viewFragmentTextInCollectionDisplay(text = "LeBron VIII");
 
 			Page.searchInCollectionFilter(
 				index = "2",
@@ -1104,11 +1078,9 @@ definition {
 			var n = "1";
 
 			for (var content : list "LeBron VIII,Levis 501") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${content}",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
+					text = "${content}");
 
 				var n = ${n} + 1;
 			}

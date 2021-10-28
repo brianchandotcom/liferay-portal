@@ -1003,33 +1003,32 @@ definition {
 			var n = "1";
 
 			for (var description : list "Blogs Entry Custom Abstract,DM Document Description,Web Content Discription") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${description}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+				ContentPages.viewFragmentText(
+					fragmentName = "Content Display",
+					position = "${n}",
+					text = "${description}");
 
 				var n = ${n} + 1;
 			}
+
+			PageEditor.clickPublish();
 		}
 
-		PageEditor.clickPublish();
+		task ("View the description of assets shown in Content Display at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
+			var n = "1";
 
-		var n = "1";
+			for (var description : list "Blogs Entry Custom Abstract,DM Document Description,Web Content Discription") {
+				ContentPages.viewFragmentText(
+					fragmentName = "Content Display",
+					position = "${n}",
+					text = "${description}");
 
-		for (var description : list "Blogs Entry Custom Abstract,DM Document Description,Web Content Discription") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "${description}",
-				key_rowPosition = "${n}",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
-
-			var n = ${n} + 1;
+				var n = ${n} + 1;
+			}
 		}
 	}
 
@@ -1454,9 +1453,8 @@ definition {
 			var n = "1";
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				ContentPages.viewFragmentText(
-					fragmentName = "Content Display",
-					position = "${n}",
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
 					text = "${title}");
 
 				var n = ${n} + 1;
@@ -1473,9 +1471,8 @@ definition {
 			var n = "1";
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				ContentPages.viewFragmentText(
-					fragmentName = "Content Display",
-					position = "${n}",
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
 					text = "${title}");
 
 				var n = ${n} + 1;

@@ -1190,12 +1190,9 @@ definition {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "${categoryName}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				PageEditor.viewCollectionItem(
+					assetTitle = "${categoryName}",
+					row = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1212,12 +1209,9 @@ definition {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${categoryName}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
+					text = "${categoryName}");
 
 				var n = ${n} + 1;
 			}
@@ -1250,12 +1244,9 @@ definition {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${categoryName}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
+					text = "${categoryName}");
 
 				var n = ${n} + 1;
 			}
@@ -1271,12 +1262,12 @@ definition {
 		}
 
 		task ("View the Collection Display is not shown in Preview modal") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_entryContent = "Category Name 1",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				column = "1",
+				locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
+				row = "1");
 		}
 
 		task ("Add a display page template for Blogs Entry") {
@@ -1312,12 +1303,9 @@ definition {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "${categoryName}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				PageEditor.viewCollectionItem(
+					assetTitle = "${categoryName}",
+					row = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1334,12 +1322,9 @@ definition {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${categoryName}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
+					text = "${categoryName}");
 
 				var n = ${n} + 1;
 			}
@@ -1372,12 +1357,9 @@ definition {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${categoryName}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
+					text = "${categoryName}");
 
 				var n = ${n} + 1;
 			}
@@ -1393,12 +1375,12 @@ definition {
 		}
 
 		task ("View the Collection Display is not shown in Preview modal") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_entryContent = "Category Name 1",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				column = "1",
+				locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
+				row = "1");
 		}
 
 		task ("Add a display page template for Document") {
@@ -1435,12 +1417,9 @@ definition {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "${categoryName}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				PageEditor.viewCollectionItem(
+					assetTitle = "${categoryName}",
+					row = "${n}");
 
 				var n = ${n} + 1;
 			}
@@ -1457,12 +1436,9 @@ definition {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${categoryName}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
+					text = "${categoryName}");
 
 				var n = ${n} + 1;
 			}
@@ -1495,12 +1471,9 @@ definition {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${categoryName}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
+					text = "${categoryName}");
 
 				var n = ${n} + 1;
 			}
@@ -1516,12 +1489,12 @@ definition {
 		}
 
 		task ("View the Collection Display is not shown in Preview modal") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_entryContent = "Category Name 1",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				column = "1",
+				locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
+				row = "1");
 		}
 	}
 

@@ -158,11 +158,9 @@ definition {
 			var n = "1";
 
 			for (var title : list "Web Content Title 2,Web Content Title 1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "${title}",
-					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = "${n}",
+					text = "${title}");
 
 				var n = ${n} + 1;
 			}
@@ -179,17 +177,12 @@ definition {
 		task ("View only the web content with tag shown in simulation modal when select segment") {
 			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "Web Content Title 2",
-				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+			ContentPages.viewFragmentTextInCollectionDisplay(text = "Web Content Title 2");
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_entryContent = "Web Content Title 1",
-				key_rowPosition = "2",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+				column = "1",
+				locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
+				row = "2");
 		}
 	}
 

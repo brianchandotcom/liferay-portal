@@ -14,15 +14,35 @@
 
 package com.liferay.commerce.order.importer.item;
 
+import com.liferay.commerce.price.CommerceOrderItemPrice;
+
+import java.util.Locale;
+
 /**
  * @author Alessio Antonio Rendina
  */
 public interface CommerceOrderImporterItem {
 
+	public CommerceOrderItemPrice getCommerceOrderItemPrice();
+
+	public long getCPDefinitionId();
+
 	public long getCPInstanceId();
+
+	public String[] getErrorMessages();
 
 	public String getJSON();
 
+	public String getName(Locale locale);
+
+	public long getParentCommerceOrderItemCPDefinitionId();
+
 	public int getQuantity();
+
+	public String getSKU();
+
+	public boolean hasParentCommerceOrderItem();
+
+	public boolean isValid();
 
 }

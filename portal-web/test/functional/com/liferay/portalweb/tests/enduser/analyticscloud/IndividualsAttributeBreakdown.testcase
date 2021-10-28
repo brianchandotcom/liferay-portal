@@ -15,7 +15,8 @@ definition {
 		}
 
 		task ("Set up instance and sign in DXP") {
-			TestCase.setUpPortalInstance();
+
+			//TestCase.setUpPortalInstance();
 
 			ACUtils.launchDXP();
 		}
@@ -123,14 +124,9 @@ definition {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-		}
-
 		task ("View the site page") {
-			ACUtils.navigateToSitePage(
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "ac@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

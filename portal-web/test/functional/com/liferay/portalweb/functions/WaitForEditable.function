@@ -1,0 +1,16 @@
+@default = "waitForEditable"
+definition {
+
+	function waitForEditable {
+		WaitForSPARefresh();
+
+		selenium.waitForVisible();
+
+		selenium.waitForEditable();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
+}

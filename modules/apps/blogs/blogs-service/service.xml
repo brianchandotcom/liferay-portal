@@ -165,58 +165,6 @@
 		</finder>
 	</entity>
 	<entity local-service="true" name="BlogsStatsUser" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="statsUserId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="entryCount" type="int" />
-		<column name="lastPostDate" type="Date" />
-		<column name="ratingsTotalEntries" type="int" />
-		<column name="ratingsTotalScore" type="double" />
-		<column name="ratingsAverageScore" type="double" />
-
-		<!-- Order -->
-
-		<order by="desc">
-			<order-column name="entryCount" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="UserId" return-type="Collection">
-			<finder-column name="userId" />
-		</finder>
-		<finder name="G_U" return-type="BlogsStatsUser" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="userId" />
-		</finder>
-		<finder name="G_NotE" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column comparator="!=" name="entryCount" />
-		</finder>
-		<finder name="C_NotE" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column comparator="!=" name="entryCount" />
-		</finder>
-		<finder name="U_L" return-type="Collection">
-			<finder-column name="userId" />
-			<finder-column name="lastPostDate" />
-		</finder>
 	</entity>
 	<exceptions>
 		<exception>DuplicateEntryExternalReferenceCode</exception>

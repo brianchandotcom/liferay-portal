@@ -20,13 +20,10 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.base.AccountEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -203,10 +200,11 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<AccountEntry> searchAccountEntries(
-		String keywords, LinkedHashMap<String, Object> params, int cur,
-		int delta, String orderByField, boolean reverse) {
+			String keywords, LinkedHashMap<String, Object> params, int cur,
+			int delta, String orderByField, boolean reverse)
+		throws PortalException {
 
-		PermissionChecker permissionChecker = _getPermissionChecker();
+		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (params == null) {
 			params = new LinkedHashMap<>();
@@ -257,22 +255,6 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 		return accountEntryLocalService.updateExternalReferenceCode(
 			accountEntryId, externalReferenceCode);
 	}
-
-	private PermissionChecker _getPermissionChecker() {
-		try {
-			return getPermissionChecker();
-		}
-		catch (PrincipalException principalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
-			}
-
-			return PermissionThreadLocal.getPermissionChecker();
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AccountEntryServiceImpl.class);
 
 	@Reference(
 		target = "(model.class.name=com.liferay.account.model.AccountEntry)"

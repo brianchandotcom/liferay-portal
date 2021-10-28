@@ -1,5 +1,15 @@
 definition {
 
+	macro _gotoPublicationEllipsisItem {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Click(
+			key_publicationName = "${publicationName}",
+			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
+
+		MenuItem.click(menuItem = "${menuItem}");
+	}
+
 	macro gotoPublish {
 		if ("${gotoPublicationsAdmin}" == "true") {
 			PublicationsNavigator.openPublicationsAdmin();

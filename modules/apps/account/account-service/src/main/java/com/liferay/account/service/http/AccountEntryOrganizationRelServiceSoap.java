@@ -14,9 +14,15 @@
 
 package com.liferay.account.service.http;
 
+import com.liferay.account.service.AccountEntryOrganizationRelServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.account.service.AccountEntryOrganizationRelServiceUtil</code> service
+ * <code>AccountEntryOrganizationRelServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,77 @@ package com.liferay.account.service.http;
  */
 @Deprecated
 public class AccountEntryOrganizationRelServiceSoap {
+
+	public static com.liferay.account.model.AccountEntryOrganizationRelSoap
+			addAccountEntryOrganizationRel(
+				long accountEntryId, long organizationId)
+		throws RemoteException {
+
+		try {
+			com.liferay.account.model.AccountEntryOrganizationRel returnValue =
+				AccountEntryOrganizationRelServiceUtil.
+					addAccountEntryOrganizationRel(
+						accountEntryId, organizationId);
+
+			return com.liferay.account.model.AccountEntryOrganizationRelSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void addAccountEntryOrganizationRels(
+			long accountEntryId, long[] organizationIds)
+		throws RemoteException {
+
+		try {
+			AccountEntryOrganizationRelServiceUtil.
+				addAccountEntryOrganizationRels(
+					accountEntryId, organizationIds);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteAccountEntryOrganizationRel(
+			long accountEntryId, long organizationId)
+		throws RemoteException {
+
+		try {
+			AccountEntryOrganizationRelServiceUtil.
+				deleteAccountEntryOrganizationRel(
+					accountEntryId, organizationId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteAccountEntryOrganizationRels(
+			long accountEntryId, long[] organizationIds)
+		throws RemoteException {
+
+		try {
+			AccountEntryOrganizationRelServiceUtil.
+				deleteAccountEntryOrganizationRels(
+					accountEntryId, organizationIds);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AccountEntryOrganizationRelServiceSoap.class);
+
 }

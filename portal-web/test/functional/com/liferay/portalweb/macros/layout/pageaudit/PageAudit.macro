@@ -15,15 +15,7 @@ definition {
 	}
 
 	macro disableGooglePageSpeed {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Google PageSpeed Insights",
-			configurationScope = "Virtual Instance Scope");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 
 		if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable")) {
 			Click.javaScriptClick(
@@ -45,15 +37,7 @@ definition {
 	}
 
 	macro enableGooglePageSpeed {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Google PageSpeed Insights",
-			configurationScope = "Virtual Instance Scope");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 
 		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable")) {
 			Click.javaScriptClick(
@@ -80,6 +64,10 @@ definition {
 		Click(locator1 = "PageAudit#FAILING_CHECK_NAME");
 	}
 
+	macro goToGooglePageSpeedInsightsSystemSettingConfiguration {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedGroupConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
+	}
+
 	macro openPanelAfterConfiguration {
 		if (IsElementNotPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON")) {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
@@ -97,6 +85,16 @@ definition {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 	}
+
+	macro resetDefaultValuesSystemSettings {
+		PageAudit.goToGooglePageSpeedInsightsSystemSettingConfiguration();
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+            Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
+            
+			MenuItem.clickNoError(menuItem = "Reset Default Values");
+        }
+    }
 
 	macro setAPIViaSiteSettings {
 		ProductMenu.gotoPortlet(
@@ -126,15 +124,7 @@ definition {
 	}
 
 	macro setAPIViaSystemSettings {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Google PageSpeed Insights",
-			configurationScope = "Site Scope");
+		PageAudit.goToGooglePageSpeedInsightsSystemSettingConfiguration();
 
 		Click(locator1 = "PageAudit#API_FIELD");
 

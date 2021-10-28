@@ -23,11 +23,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		PageAudit.setAPIViaSystemSettings(apiKey = " ");
-
 		JSONUser.tearDownNonAdminUsers();
-
-		Role.tearDownCP();
 
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
@@ -117,6 +113,10 @@ definition {
 			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
 
 			AssertElementPresent(locator1 = "PageAudit#PROGRESS_BAR");
+		}
+
+		task ("Reset Google PageSpeed API to default at System Settings") {
+			PageAudit.resetDefaultValuesSystemSettings();
 		}
 	}
 
@@ -230,6 +230,10 @@ definition {
 			AssertElementPresent(
 				errorMessage = "API key not valid. Please pass a valid API key.",
 				locator1 = "PageAudit#ERROR_WARNING_MESSAGE");
+		}
+
+		task ("Reset Google PageSpeed API to default at System Settings") {
+			PageAudit.resetDefaultValuesSystemSettings();
 		}
 	}
 
@@ -759,10 +763,8 @@ definition {
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "BlogsEditorRole Name");
 		}
 	}
 
@@ -823,10 +825,8 @@ definition {
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "DocumentEditorRole Name");
 		}
 	}
 
@@ -887,10 +887,8 @@ definition {
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "PagesEditorRole Name");
 		}
 	}
 
@@ -951,10 +949,8 @@ definition {
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
 		}
 	}
 
@@ -1010,10 +1006,8 @@ definition {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "BlogsRole Name");
 		}
 	}
 
@@ -1069,10 +1063,8 @@ definition {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "DocumentRole Name");
 		}
 	}
 
@@ -1128,10 +1120,8 @@ definition {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "PagesRole Name");
 		}
 	}
 
@@ -1187,10 +1177,8 @@ definition {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "WebContentRole Name");
 		}
 	}
 
@@ -1290,10 +1278,8 @@ definition {
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "BlogsEditorRole Name");
 		}
 	}
 
@@ -1394,10 +1380,8 @@ definition {
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "DocumentEditorRole Name");
 		}
 	}
 
@@ -1495,10 +1479,8 @@ definition {
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "DocumentEditorRole Name");
 		}
 	}
 
@@ -1597,10 +1579,8 @@ definition {
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
 		}
 	}
 
@@ -1693,10 +1673,8 @@ definition {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "BlogsRole Name");
 		}
 	}
 
@@ -1795,10 +1773,8 @@ definition {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "DocumentRole Name");
 		}
 	}
 
@@ -1891,10 +1867,8 @@ definition {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "PagesRole Name");
 		}
 	}
 
@@ -1988,10 +1962,8 @@ definition {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "WebContentRole Name");
 		}
 	}
 
@@ -2065,10 +2037,8 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "BlogsEditorRole Name");
 		}
 	}
 
@@ -2142,10 +2112,8 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "DocumentEditorRole Name");
 		}
 	}
 
@@ -2219,10 +2187,8 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "PagesEditorRole Name");
 		}
 	}
 
@@ -2296,10 +2262,8 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
 		}
 	}
 
@@ -2368,10 +2332,8 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "BlogsRole Name");
 		}
 	}
 
@@ -2440,10 +2402,8 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "DocumentRole Name");
 		}
 	}
 
@@ -2510,10 +2470,8 @@ definition {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "PagesRole Name");
 		}
 	}
 
@@ -2582,10 +2540,8 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "WebContentRole Name");
 		}
 	}
 
@@ -3267,6 +3223,10 @@ definition {
 			AssertTextPresent(
 				locator1 = "PageAudit#NO_ISSUES_MESSAGE",
 				value1 = "Your page has no issues.");
+		}
+
+		task ("Reset Google PageSpeed API to default at System Settings") {
+			PageAudit.resetDefaultValuesSystemSettings();
 		}
 	}
 

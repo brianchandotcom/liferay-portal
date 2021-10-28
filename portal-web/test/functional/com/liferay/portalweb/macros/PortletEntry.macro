@@ -145,7 +145,7 @@ definition {
 	}
 
 	macro inputTitle {
-		Click(locator1 = "TextInput#TITLE");
+		WaitForEditable(locator1 = "TextInput#TITLE");
 
 		Type(
 			locator1 = "TextInput#TITLE",

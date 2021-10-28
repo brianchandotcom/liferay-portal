@@ -26,7 +26,8 @@ export function processFakeRequestData(url, items, queriedItems) {
 
 	if (query) {
 		itemsToBeReturned.push(...queriedItems);
-	} else {
+	}
+	else {
 		const startIndex = page * pageSize - pageSize;
 
 		const endIndex =

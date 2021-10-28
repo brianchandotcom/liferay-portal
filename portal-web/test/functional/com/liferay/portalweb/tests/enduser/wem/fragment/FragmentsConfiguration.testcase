@@ -282,6 +282,110 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140717. The user can change fragment text color via color picker configuration."
+	@priority = "5"
+	test ConfigureColorPicker {
+		task ("Add a fragment with colorPicker configuration") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.gotoConfigurationTab();
+
+			var jsonSnippet = '''
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+				 "label": "First Heading Color",
+				 "name": "firstHeadingColor",
+				 "type": "colorPicker"
+				},
+				{
+				 "label": "Second Heading Color",
+				 "name": "secondHeadingColor",
+				 "type": "colorPicker"
+				}
+			]
+		}
+	]
+}				''';
+
+			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.gotoCodeTab();
+
+			var htmlSnippet = '''
+<div class="fragment-name">
+	<h1 style="color: ${configuration.firstHeadingColor}">
+		This is the first header
+	</h1>
+	<h1 style="color: ${configuration.secondHeadingColor}">
+		This is the second header
+	</h1>
+</div>			''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Add a new fragment to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Configure different color for fragment texts via color picker") {
+			PageEditorConfiguration.changeConfigColor(
+				colorPicker = "Brand Color 1",
+				fieldLabel = "First Heading Color",
+				fragmentName = "Fragment Name");
+
+			PageEditorConfiguration.changeConfigColor(
+				colorPicker = "Brand Color 2",
+				fieldLabel = "Second Heading Color",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("View the color of fragment texts") {
+			AssertAttributeValue(
+				attribute1 = "style",
+				locator1 = "//div[contains(@class,'fragment-name')]//h1[contains(.,'This is the first header')]",
+				value1 = "color: var(--brand-color-1);");
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				locator1 = "//div[contains(@class,'fragment-name')]//h1[contains(.,'This is the second header')]",
+				value1 = "color: var(--brand-color-2);");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the color of fragment texts at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				locator1 = "//div[contains(@class,'fragment-name')]//h1[contains(.,'This is the first header')]",
+				value1 = "color: var(--brand-color-1);");
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				locator1 = "//div[contains(@class,'fragment-name')]//h1[contains(.,'This is the second header')]",
+				value1 = "color: var(--brand-color-2);");
+		}
+	}
+
 	@description = "This is a test for LPS-100963. When a fragment that uses JavaScript has a configuration, there is a JavaScript configuration object available which contains the current values of the fragment configuration."
 	@priority = "4"
 	test ConfigureFragmentWithJavaScript {

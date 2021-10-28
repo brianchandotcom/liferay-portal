@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayEmptyState from '@clayui/empty-state';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React, {
@@ -92,11 +93,13 @@ export default function LayoutPreview() {
 						/>
 					</>
 				) : (
-					<div className="style-book-editor__page-preview-no-page-message">
-						{Liferay.Language.get(
-							'you-cannot-preview-the-style-book-because-there-are-no-pages-in-this-site'
+					<ClayEmptyState
+						className="h-100 justify-content-center mt-0 style-book-editor__page-preview-empty-site-message"
+						description={Liferay.Language.get(
+							'you-cannot-preview-the-style-book-because-your-site-is-empty'
 						)}
-					</div>
+						imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+					/>
 				)}
 			</div>
 		</>

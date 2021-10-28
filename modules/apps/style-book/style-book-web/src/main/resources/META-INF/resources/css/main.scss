@@ -47,6 +47,16 @@ html#{$cadmin-selector} {
 				flex-grow: 1;
 				position: relative;
 
+				&-empty-site-message {
+					.c-empty-state-title {
+						display: none;
+					}
+
+					.c-empty-state-text {
+						margin-top: 32px;
+					}
+				}
+
 				&-frame {
 					border: none;
 					height: calc(100% - #{$previewInfoBarHeight});
@@ -73,17 +83,6 @@ html#{$cadmin-selector} {
 							background-color: rgba($cadmin-white, 0.15);
 						}
 					}
-				}
-
-				&-no-page-message {
-					align-items: center;
-					background-color: $cadmin-gray-100;
-					color: $cadmin-gray-500;
-					display: flex;
-					font-size: 14px;
-					font-weight: 600;
-					height: 100%;
-					justify-content: center;
 				}
 
 				&-text {

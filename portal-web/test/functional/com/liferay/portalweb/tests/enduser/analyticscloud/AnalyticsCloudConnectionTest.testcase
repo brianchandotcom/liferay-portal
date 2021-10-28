@@ -99,7 +99,8 @@ definition {
 			ACCards.viewMetricValue(
 				cardTitle = "${propertyName} Activities",
 				metricName = "Unique Visitors",
-				metricValue = "1");
+				metricValue = "1",
+				timeFilter = "Last 24 hours");
 		}
 	}
 

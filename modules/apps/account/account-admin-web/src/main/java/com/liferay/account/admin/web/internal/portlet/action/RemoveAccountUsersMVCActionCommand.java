@@ -16,7 +16,7 @@ package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.exception.NoSuchEntryUserRelException;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -54,7 +54,7 @@ public class RemoveAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 			long[] accountUserIds = ParamUtil.getLongValues(
 				actionRequest, "accountUserIds");
 
-			_accountEntryUserRelLocalService.deleteAccountEntryUserRels(
+			_accountEntryUserRelService.deleteAccountEntryUserRels(
 				accountEntryId, accountUserIds);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -77,6 +77,6 @@ public class RemoveAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+	private AccountEntryUserRelService _accountEntryUserRelService;
 
 }

@@ -19,7 +19,7 @@ import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.exception.DuplicateAccountEntryExternalReferenceCodeException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -196,7 +196,7 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 			long personAccountEntryUserId = ParamUtil.getLong(
 				actionRequest, "personAccountEntryUserId");
 
-			_accountEntryUserRelLocalService.setPersonTypeAccountEntryUser(
+			_accountEntryUserRelService.setPersonTypeAccountEntryUser(
 				accountEntryId, personAccountEntryUserId);
 		}
 		else {
@@ -241,7 +241,7 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+	private AccountEntryUserRelService _accountEntryUserRelService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

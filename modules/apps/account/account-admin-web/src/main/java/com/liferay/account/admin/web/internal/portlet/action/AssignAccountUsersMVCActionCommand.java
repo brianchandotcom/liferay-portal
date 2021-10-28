@@ -15,7 +15,7 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -57,7 +57,7 @@ public class AssignAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 		long[] accountUserIds = ParamUtil.getLongValues(
 			actionRequest, "accountUserIds");
 
-		_accountEntryUserRelLocalService.addAccountEntryUserRels(
+		_accountEntryUserRelService.addAccountEntryUserRels(
 			accountEntryId, accountUserIds);
 
 		String portletId = _portal.getPortletId(actionRequest);
@@ -83,7 +83,7 @@ public class AssignAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+	private AccountEntryUserRelService _accountEntryUserRelService;
 
 	@Reference
 	private Portal _portal;

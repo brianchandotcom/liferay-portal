@@ -17,7 +17,6 @@ package com.liferay.blogs.service.persistence.impl;
 import com.liferay.blogs.model.BlogsStatsUser;
 import com.liferay.blogs.model.impl.BlogsStatsUserImpl;
 import com.liferay.blogs.service.persistence.BlogsStatsUserFinder;
-import com.liferay.blogs.service.persistence.BlogsStatsUserUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;

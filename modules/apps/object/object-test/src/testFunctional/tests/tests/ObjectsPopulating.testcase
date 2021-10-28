@@ -419,6 +419,15 @@ definition {
 		ObjectPortlet.viewEntry(entry = "12345678912345678");
 	}
 
+	@description = "LPS-138495 - Verify it is possible to map a Picklist for a Select From List field and view its entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapPicklistTypeAndViewEntries {
+
+		// TODO LPS-141821 CanMapPicklistTypeAndViewEntries pending implementation
+
+	}
+
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of String type and view its entries"
 	@priority = "5"
 	test CanMapStringTypeAndViewEntries {
@@ -471,6 +480,24 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "Test Text Test Text Test Text Test Text Test Text Test Text Test Text  Test");
+	}
+
+	@description = "LPS-137865 - Verify that it is possible to submit an entry with a Double field blank that is not required"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSubmitEntryWithDoubleFieldBlank {
+
+		// TODO LPS-141823 CanSubmitEntryWithDoubleFieldBlank pending implementation
+
+	}
+
+	@description = "LPS-139902 - Verify that entries Object entries added through forms are not deleted when form is deleted"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test EntriesAreNotDeletedWhenFormIsDeleted {
+
+		// TODO LPS-141822 EntriesAreNotDeletedWhenFormIsDeleted pending implementation
+
 	}
 
 	@description = "LPS-136451 - Verify if it's possible to see the entries of a field with capitalized letters in the name"

@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.item.selector.LayoutItemSelectorReturnType;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -39,6 +40,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -59,6 +62,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -92,6 +96,8 @@ public class EditStyleBookEntryDisplayContext {
 
 	public Map<String, Object> getStyleBookEditorData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"defaultUserId", _themeDisplay.getDefaultUserId()
+		).put(
 			"frontendTokenDefinition", _getFrontendTokenDefinitionJSONObject()
 		).put(
 			"frontendTokensValues",
@@ -358,6 +364,26 @@ public class EditStyleBookEntryDisplayContext {
 		try {
 			Layout layout = LayoutLocalServiceUtil.getLayout(
 				layoutPageTemplateEntry.getPlid());
+
+			if (layoutPageTemplateEntry.getType() ==
+					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+
+				LiferayPortletURL resourceURL = PortletURLFactoryUtil.create(
+					_httpServletRequest,
+					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+					layout, PortletRequest.RESOURCE_PHASE);
+
+				resourceURL.setDoAsUserId(_themeDisplay.getDefaultUserId());
+
+				resourceURL.setResourceID(
+					"/layout_content_page_editor/get_page_preview");
+
+				String url = HttpUtil.addParameter(
+					resourceURL.toString(), "p_l_mode", Constants.PREVIEW);
+
+				return HttpUtil.addParameter(
+					url, "styleBookEntryPreview", true);
+			}
 
 			return _getPreviewURL(layout);
 		}

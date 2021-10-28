@@ -515,7 +515,11 @@ definition {
 
 		CategoriesNavigationPortlet.selectCategoryPG(categoryName = "Category Name");
 
-		Blogs.viewNoPG(entryTitle = "Blogs Entry Title 1");
+		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title 1");
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2");
 	}
 
 	@description = "This is a test for LPS-136812. It checks that a blog can be viewed through the Recent Bloggers Portlet."

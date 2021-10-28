@@ -1019,29 +1019,24 @@ definition {
 			var index = "1";
 		}
 
-		var key_fragmentName = "${fragmentName}";
-		var key_index = "${index}";
+		PageEditor.clickConfigurableField(
+			fragmentName = "${fragmentName}",
+			index = "${index}");
 
-		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY")) {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+		if (isSet(className)) {
+			var fragmentName = "${className}";
+		}
+
+		else {
+			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 		}
 
 		if ("${contributed}" == "false") {
-			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
 			Click(locator1 = "Fragment#EDITABLE_FIELD_ANY");
 		}
 
 		else {
-			if (contains("${fragmentName}", "(Copy)")) {
-				var fragmentName = StringUtil.extractFirst("${fragmentName}", "(Copy)");
-				var fragmentName = StringUtil.trimTrailing("${fragmentName}");
-			}
-
-			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
 			Click(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 	}
@@ -2110,6 +2105,7 @@ definition {
 		}
 
 		PageEditor.gotoEditableFieldEdit(
+			className = "${className}",
 			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
 			id = "${id}",
@@ -2766,31 +2762,27 @@ definition {
 			var index = "1";
 		}
 
-		id = "${id}";
-		key_fragmentName = "${fragmentName}";
-
 		PageEditor.clickEditableField(
+			className = "${className}",
 			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
 			id = "${id}",
 			index = "${index}");
 
-		if ("${contributed}" == "false") {
+		if (isSet(className)) {
+			var fragmentName = "${className}";
+		}
+
+		else {
 			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
 			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+		}
 
+		if ("${contributed}" == "false") {
 			DoubleClick(locator1 = "Fragment#EDITABLE_FIELD_ANY");
 		}
 
 		else {
-			if (contains("${fragmentName}", "(Copy)")) {
-				var fragmentName = StringUtil.extractFirst("${fragmentName}", "(Copy)");
-				var fragmentName = StringUtil.trimTrailing("${fragmentName}");
-			}
-
-			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
 			DoubleClick(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 	}
@@ -3610,15 +3602,21 @@ definition {
 			fragmentName = "${fragmentName}",
 			index = "${position}");
 
-		if ("${contributed}" == "false") {
+		if (isSet(className)) {
+			var fragmentName = "${className}";
+		}
+
+		else {
 			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
 			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+		}
 
-			AssertTextEquals(
+		if ("${contributed}" == "false") {
+			ContentPages.viewFragmentText(
+				contributed = "false",
 				fragmentName = "${fragmentName}",
-				index = "${position}",
-				locator1 = "Fragment#EDITABLE_FIELD_ANY",
-				value1 = "${editableText}");
+				position = "${position}",
+				text = "${editableText}");
 
 			if (isSet(style)) {
 				AssertVisible(
@@ -3631,14 +3629,6 @@ definition {
 		}
 
 		else {
-			if (contains("${fragmentName}", "(Copy)")) {
-				var fragmentName = StringUtil.extractFirst("${fragmentName}", "(Copy)");
-				var fragmentName = StringUtil.trimTrailing("${fragmentName}");
-			}
-
-			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
 			ContentPages.viewFragmentText(
 				fragmentName = "${fragmentName}",
 				id = "${id}",

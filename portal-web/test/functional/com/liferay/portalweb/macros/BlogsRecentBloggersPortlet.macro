@@ -1,0 +1,9 @@
+definition {
+
+	macro gotoEntryDetails {
+		Click(
+			key_userName = "${userName}",
+			locator1 = "BlogsRecentBloggers#USER_NAME_LINK");
+	}
+
+}

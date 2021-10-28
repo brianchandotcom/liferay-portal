@@ -53,15 +53,11 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "guest");
 
 		SitePages.deletePage(pageName = "Test Page");
 
-		Navigator.openURL();
+		SitePages.openPagesAdmin(siteURLKey = "guest");
 
 		Page.viewNoPG(pageName = "Test Page");
 
@@ -83,7 +79,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		Navigator.openURL();
+		Navigator.openSiteURL(siteName = "Guest");
 
 		Page.viewNoPG(pageName = "Test Page");
 	}
@@ -121,11 +117,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "guest");
 
 		ContentPages.addPrivatePage(pageName = "Test Page");
 
@@ -223,8 +215,6 @@ definition {
 		PageEditor.clickPublish();
 
 		JSONPublications.publishPublication(publicationName = "Publication Name 2");
-
-		Navigator.openURL();
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
 

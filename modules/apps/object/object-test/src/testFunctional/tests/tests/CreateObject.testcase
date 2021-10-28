@@ -3201,11 +3201,87 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are displayed again on the workflow pages (My Workflow Tasks, My Submissions, and Submissions) when reactivated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectEntriesReappearsWorkflowPagesWhenReactivated {
 
-		// TODO LPS-140887 ObjectEntriesReappearsWorkflowPagesWhenReactivated pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Custom Object");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Test");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Test 2");
+
+		ObjectAdmin.openMyWorkflowTasks();
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+
+		Workflow.confirmWorkflowAction();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.openMyWorkflowTasks();
+
+		AssertElementPresent(
+			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",
+			key_workflowAssetTitle = "Custom Object");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		AssertElementPresent(
+			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",
+			key_workflowAssetTitle = "Custom Object");
+
+		ObjectAdmin.openMySubmissions();
+
+		AssertElementPresent(
+			key_submissionName = "Custom Object",
+			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
+
+		ObjectAdmin.openSubmissions();
+
+		AssertElementPresent(
+			key_submissionName = "Custom Object",
+			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
+
 
 	}
 

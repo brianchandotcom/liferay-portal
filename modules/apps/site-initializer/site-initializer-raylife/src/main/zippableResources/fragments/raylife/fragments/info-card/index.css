@@ -3,7 +3,7 @@
 	align-items: center;
 	box-shadow: var(--box-shadow-lg);
 	display: flex;
-	font-size: var(--font-size-lg);
+	font-size: 16px;
 	font-weight: var(--font-weight-bold);
 	height:4.688em;
 }

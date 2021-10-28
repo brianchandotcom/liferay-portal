@@ -170,7 +170,9 @@ definition {
 				TestUtils.hardRefresh();
 			}
 
-			AssertElementPresent(locator1 = "ACUtils#METRIC_VALUE_PERCENTAGE");
+			AssertTextEquals(
+				locator1 = "ACUtils#METRIC_VALUE_PERCENTAGE",
+				value1 = "${percentage}");
 		}
 	}
 

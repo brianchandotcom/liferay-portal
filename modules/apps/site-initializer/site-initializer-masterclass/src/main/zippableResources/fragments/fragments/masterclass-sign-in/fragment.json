@@ -3,7 +3,7 @@
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Sign In",
+	"name": "Masterclass Sign In",
 	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

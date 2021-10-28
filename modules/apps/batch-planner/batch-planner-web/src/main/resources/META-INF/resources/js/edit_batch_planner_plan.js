@@ -167,13 +167,13 @@ export default function ({namespace}) {
 
 			enableButtons();
 		}
-		catch (err) {
+		catch (error) {
 			openToast({
 				message: Liferay.Language.get('your-request-has-failed'),
 				type: 'danger',
 			});
 
-			console.error(`Failed to fetch ${err}`);
+			console.error(`Failed to fetch ${error}`);
 		}
 	}
 

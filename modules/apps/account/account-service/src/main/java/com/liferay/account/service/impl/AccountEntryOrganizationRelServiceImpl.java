@@ -14,10 +14,16 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.service.base.AccountEntryOrganizationRelServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -31,4 +37,63 @@ import org.osgi.service.component.annotations.Component;
 )
 public class AccountEntryOrganizationRelServiceImpl
 	extends AccountEntryOrganizationRelServiceBaseImpl {
+
+	@Override
+	public AccountEntryOrganizationRel addAccountEntryOrganizationRel(
+			long accountEntryId, long organizationId)
+		throws PortalException {
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.MANAGE_ORGANIZATIONS);
+
+		return accountEntryOrganizationRelLocalService.
+			addAccountEntryOrganizationRel(accountEntryId, organizationId);
+	}
+
+	@Override
+	public void addAccountEntryOrganizationRels(
+			long accountEntryId, long[] organizationIds)
+		throws PortalException {
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.MANAGE_ORGANIZATIONS);
+
+		accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRels(
+			accountEntryId, organizationIds);
+	}
+
+	@Override
+	public void deleteAccountEntryOrganizationRel(
+			long accountEntryId, long organizationId)
+		throws PortalException {
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.MANAGE_ORGANIZATIONS);
+
+		accountEntryOrganizationRelLocalService.
+			deleteAccountEntryOrganizationRel(accountEntryId, organizationId);
+	}
+
+	@Override
+	public void deleteAccountEntryOrganizationRels(
+			long accountEntryId, long[] organizationIds)
+		throws PortalException {
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.MANAGE_ORGANIZATIONS);
+
+		accountEntryOrganizationRelLocalService.
+			deleteAccountEntryOrganizationRels(accountEntryId, organizationIds);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
+
 }

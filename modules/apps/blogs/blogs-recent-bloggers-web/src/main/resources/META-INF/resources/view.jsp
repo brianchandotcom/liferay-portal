@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<BlogsStatsUser> statsUsers = null;
+List<BlogsStatsUserDAO> statsUsers = null;
 
 if (selectionMethod.equals("users")) {
 	if (organizationId > 0) {
-		statsUsers = BlogsStatsUserLocalServiceUtil.getOrganizationStatsUsers(organizationId, 0, max, new StatsUserLastPostDateComparator());
+		statsUsers = BlogsStatsUserLocalServiceUtil.getOrganizationStatsUsers(organizationId, 0, max);
 	}
 	else {
 		statsUsers = BlogsStatsUserLocalServiceUtil.getGroupsStatsUsers(company.getCompanyId(), scopeGroupId, 0, max);
@@ -39,7 +39,7 @@ else {
 	<c:otherwise>
 
 		<%
-		SearchContainer<BlogsStatsUser> searchContainer = new SearchContainer();
+		SearchContainer<BlogsStatsUserDAO> searchContainer = new SearchContainer();
 
 		List<String> headerNames = new ArrayList<String>();
 
@@ -56,7 +56,7 @@ else {
 		List<com.liferay.portal.kernel.dao.search.ResultRow> resultRows = searchContainer.getResultRows();
 
 		for (int i = 0; i < statsUsers.size(); i++) {
-			BlogsStatsUser statsUser = statsUsers.get(i);
+			BlogsStatsUserDAO statsUser = statsUsers.get(i);
 
 			try {
 				Group group = GroupLocalServiceUtil.getGroup(statsUser.getGroupId());
@@ -95,7 +95,7 @@ else {
 
 				String rowHREF = sb.toString();
 
-				ResultRow row = new ResultRow(new Object[] {statsUser, rowHREF}, statsUser.getStatsUserId(), i);
+				ResultRow row = new ResultRow(new Object[] {statsUser, rowHREF}, statsUser.getUserId(), i);
 
 				if (displayStyle.equals("user-name")) {
 

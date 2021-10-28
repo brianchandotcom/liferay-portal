@@ -25,11 +25,10 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.blogs.model.BlogsEntry" %><%@
-page import="com.liferay.blogs.model.BlogsStatsUser" %><%@
+page import="com.liferay.blogs.model.BlogsStatsUserDAO" %><%@
 page import="com.liferay.blogs.service.BlogsEntryServiceUtil" %><%@
 page import="com.liferay.blogs.service.BlogsStatsUserLocalServiceUtil" %><%@
 page import="com.liferay.blogs.util.comparator.EntryModifiedDateComparator" %><%@
-page import="com.liferay.blogs.util.comparator.StatsUserLastPostDateComparator" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

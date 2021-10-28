@@ -15,10 +15,12 @@
 package com.liferay.commerce.order.importer.type;
 
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.importer.item.CommerceOrderImporterItem;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +31,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface CommerceOrderImporterType {
 
-	public CommerceOrder getCommerceOrder(
+	public Object getCommerceOrderImporterItem(
+			HttpServletRequest httpServletRequest)
+		throws PortalException;
+
+	public String getCommerceOrderImporterItemParamName();
+
+	public List<CommerceOrderImporterItem> getCommerceOrderImporterItems(
 			CommerceOrder commerceOrder, Object object)
 		throws Exception;
 

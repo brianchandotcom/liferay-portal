@@ -19,7 +19,9 @@ import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.exception.CommerceOrderImporterTypeException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.importer.type.util.CommerceOrderImporterTypeUtil;
+import com.liferay.commerce.order.importer.item.CommerceOrderImporterItem;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterType;
+import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -27,10 +29,12 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -58,7 +62,28 @@ public class CommerceOrdersCommerceOrderImporterTypeImpl
 	public static final String KEY = "orders";
 
 	@Override
-	public CommerceOrder getCommerceOrder(
+	public Object getCommerceOrderImporterItem(
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		long selectedCommerceOrderId = ParamUtil.getLong(
+			httpServletRequest, getCommerceOrderImporterItemParamName());
+
+		if (selectedCommerceOrderId > 0) {
+			return _commerceOrderService.getCommerceOrder(
+				selectedCommerceOrderId);
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getCommerceOrderImporterItemParamName() {
+		return "selectedCommerceOrderId";
+	}
+
+	@Override
+	public List<CommerceOrderImporterItem> getCommerceOrderImporterItems(
 			CommerceOrder commerceOrder, Object object)
 		throws Exception {
 
@@ -68,11 +93,11 @@ public class CommerceOrdersCommerceOrderImporterTypeImpl
 
 		CommerceOrder selectedCommerceOrder = (CommerceOrder)object;
 
-		return CommerceOrderImporterTypeUtil.getCommerceOrder(
+		return CommerceOrderImporterTypeUtil.getCommerceOrderImporterItems(
 			_commerceContextFactory, commerceOrder,
 			selectedCommerceOrder.getCommerceOrderItems(),
-			_commerceOrderItemService, _commerceOrderService,
-			_userLocalService);
+			_commerceOrderItemService, _commerceOrderPriceCalculation,
+			_commerceOrderService, _userLocalService);
 	}
 
 	@Override
@@ -133,6 +158,9 @@ public class CommerceOrdersCommerceOrderImporterTypeImpl
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
+
+	@Reference
+	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

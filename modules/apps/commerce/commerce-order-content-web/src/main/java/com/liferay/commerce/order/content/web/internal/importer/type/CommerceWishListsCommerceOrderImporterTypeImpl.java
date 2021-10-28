@@ -22,6 +22,8 @@ import com.liferay.commerce.order.content.web.internal.importer.type.util.Commer
 import com.liferay.commerce.order.importer.item.CommerceOrderImporterItem;
 import com.liferay.commerce.order.importer.item.CommerceOrderImporterItemImpl;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterType;
+import com.liferay.commerce.price.CommerceOrderPriceCalculation;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -29,13 +31,16 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
+import com.liferay.commerce.wish.list.service.CommerceWishListService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.IOException;
 
@@ -67,7 +72,28 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 	public static final String KEY = "wish-lists";
 
 	@Override
-	public CommerceOrder getCommerceOrder(
+	public Object getCommerceOrderImporterItem(
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		long commerceWishListId = ParamUtil.getLong(
+			httpServletRequest, getCommerceOrderImporterItemParamName());
+
+		if (commerceWishListId > 0) {
+			return _commerceWishListService.getCommerceWishList(
+				commerceWishListId);
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getCommerceOrderImporterItemParamName() {
+		return "commerceWishListId";
+	}
+
+	@Override
+	public List<CommerceOrderImporterItem> getCommerceOrderImporterItems(
 			CommerceOrder commerceOrder, Object object)
 		throws Exception {
 
@@ -75,11 +101,11 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 			throw new CommerceOrderImporterTypeException();
 		}
 
-		return CommerceOrderImporterTypeUtil.getCommerceOrder(
+		return CommerceOrderImporterTypeUtil.getCommerceOrderImporterItems(
 			_commerceContextFactory, commerceOrder,
-			_getCommerceOrderImporterItems((CommerceWishList)object),
-			_commerceOrderItemService, _commerceOrderService,
-			_userLocalService);
+			_getCommerceOrderImporterItemImpls((CommerceWishList)object),
+			_commerceOrderItemService, _commerceOrderPriceCalculation,
+			_commerceOrderService, _userLocalService);
 	}
 
 	@Override
@@ -132,41 +158,45 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 				CommerceOrderImporterTypeConfiguration.class, properties);
 	}
 
-	private CommerceOrderImporterItem[] _getCommerceOrderImporterItems(
+	private CommerceOrderImporterItemImpl[] _getCommerceOrderImporterItemImpls(
 			CommerceWishList commerceWishList)
 		throws Exception {
 
-		List<CommerceWishListItem> commerceWishListItems =
+		return TransformUtil.transformToArray(
 			_commerceWishListItemService.getCommerceWishListItems(
 				commerceWishList.getCommerceWishListId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+				QueryUtil.ALL_POS, null),
+			commerceWishListItem -> _toCommerceOrderImporterItemImpl(
+				commerceWishListItem),
+			CommerceOrderImporterItemImpl.class);
+	}
 
-		CommerceOrderImporterItem[] commerceOrderImporterItems =
-			new CommerceOrderImporterItem[commerceWishListItems.size()];
+	private CommerceOrderImporterItemImpl _toCommerceOrderImporterItemImpl(
+			CommerceWishListItem commerceWishListItem)
+		throws Exception {
 
-		for (int i = 0; i < commerceWishListItems.size(); i++) {
-			CommerceWishListItem commerceWishListItem =
-				commerceWishListItems.get(i);
+		CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =
+			new CommerceOrderImporterItemImpl();
 
-			CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =
-				new CommerceOrderImporterItemImpl();
+		CPInstance cpInstance = _cpInstanceLocalService.getCProductInstance(
+			commerceWishListItem.getCProductId(),
+			commerceWishListItem.getCPInstanceUuid());
 
-			CPInstance cpInstance = _cpInstanceLocalService.getCProductInstance(
-				commerceWishListItem.getCProductId(),
-				commerceWishListItem.getCPInstanceUuid());
+		commerceOrderImporterItemImpl.setCPInstanceId(
+			cpInstance.getCPInstanceId());
+		commerceOrderImporterItemImpl.setSku(cpInstance.getSku());
 
-			commerceOrderImporterItemImpl.setCPInstanceId(
-				cpInstance.getCPInstanceId());
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
-			commerceOrderImporterItemImpl.setJSON(
-				commerceWishListItem.getJson());
+		commerceOrderImporterItemImpl.setCPDefinitionId(
+			cpDefinition.getCPDefinitionId());
+		commerceOrderImporterItemImpl.setNameMap(cpDefinition.getNameMap());
 
-			commerceOrderImporterItemImpl.setQuantity(1);
+		commerceOrderImporterItemImpl.setJSON(commerceWishListItem.getJson());
 
-			commerceOrderImporterItems[i] = commerceOrderImporterItemImpl;
-		}
+		commerceOrderImporterItemImpl.setQuantity(1);
 
-		return commerceOrderImporterItems;
+		return commerceOrderImporterItemImpl;
 	}
 
 	@Reference
@@ -179,10 +209,16 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
+	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
+
+	@Reference
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
 	private CommerceWishListItemService _commerceWishListItemService;
+
+	@Reference
+	private CommerceWishListService _commerceWishListService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

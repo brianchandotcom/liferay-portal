@@ -56,6 +56,7 @@ import ${apiPackagePath}.model.${entity.name};
 import ${packagePath}.model.impl.${entity.name}Impl;
 import ${packagePath}.model.impl.${entity.name}ModelImpl;
 import ${apiPackagePath}.service.persistence.${entity.name}Persistence;
+import ${apiPackagePath}.service.persistence.${entity.name}Util;
 
 <#if entity.hasCompoundPK()>
 	import ${apiPackagePath}.service.persistence.${entity.PKClassName};
@@ -2830,6 +2831,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					);
 			</#if>
 		</#list>
+
+		_set${entity.name}UtilPersistence(this);
 	}
 
 	<#if dependencyInjectorDS>
@@ -2838,6 +2841,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	<#else>
 		public void destroy() {
 	</#if>
+
+		_set${entity.name}UtilPersistence(null);
 
 		${entityCache}.removeCache(${entity.name}Impl.class.getName());
 
@@ -2864,6 +2869,19 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				</#if>
 			</#if>
 		</#list>
+	}
+
+	private void _set${entity.name}UtilPersistence(${entity.name}Persistence ${entity.variableName}Persistence) {
+		try {
+			Field field = ${entity.name}Util.class.getDeclaredField("_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, ${entity.variableName}Persistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	<#if dependencyInjectorDS>

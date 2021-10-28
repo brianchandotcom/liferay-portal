@@ -58,6 +58,9 @@ page import="com.liferay.segments.web.internal.display.context.SelectSegmentsEnt
 page import="com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission" %><%@
 page import="com.liferay.segments.web.internal.util.SegmentsSourceDetailsProviderUtil" %>
 
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.List" %>
+
 <%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />

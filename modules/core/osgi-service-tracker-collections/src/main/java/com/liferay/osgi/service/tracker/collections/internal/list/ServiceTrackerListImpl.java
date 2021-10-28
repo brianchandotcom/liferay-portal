@@ -127,6 +127,10 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 			T service = _serviceTrackerCustomizer.addingService(
 				serviceReference);
 
+			if (service == null) {
+				return null;
+			}
+
 			_update(serviceReference, service, false);
 
 			return service;
@@ -155,10 +159,6 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 
 		private void _update(
 			ServiceReference<S> serviceReference, T service, boolean remove) {
-
-			if (service == null) {
-				return;
-			}
 
 			ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple =
 				new ServiceReferenceServiceTuple<>(serviceReference, service);

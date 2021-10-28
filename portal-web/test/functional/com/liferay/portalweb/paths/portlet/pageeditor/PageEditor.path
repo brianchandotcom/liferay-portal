@@ -44,11 +44,6 @@
 </tr>
 <!--COLLECTION_DISPLAY-->
 <tr>
-	<td>CLICK_COLLECTION_DISPLAY</td>
-	<td>//div[@aria-label='Select Collection Display']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>COLLECTION_DISPLAY_EMPTY_STATE</td>
 	<td>xpath=(//div[contains(@class,'block')])[${index}]//div[contains(@class,'empty-state')]</td>
 	<td></td>

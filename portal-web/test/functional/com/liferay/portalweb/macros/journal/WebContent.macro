@@ -14,10 +14,6 @@ definition {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 		if (isSet(webContentTitle)) {
-			Pause(locator1 = "2000");
-
-			Click(locator1 = "TextInput#TITLE");
-
 			PortletEntry.inputTitle(title = "${webContentTitle}");
 		}
 

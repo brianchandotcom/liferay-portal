@@ -15,3 +15,57 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+String commerceOrderImporterTypeKey = ParamUtil.getString(request, "commerceOrderImporterTypeKey");
+
+CommerceOrderImporterType commerceOrderImporterType = commerceOrderContentDisplayContext.getCommerceOrderImporterType(commerceOrderImporterTypeKey);
+%>
+
+<c:if test="<%= commerceOrderImporterType != null %>">
+
+	<%
+	String commerceOrderImporterItemParamName = ParamUtil.getString(request, commerceOrderImporterType.getCommerceOrderImporterItemParamName());
+	%>
+
+	<portlet:actionURL name="/commerce_open_order_content/import_commerce_order_items" var="importCommerceOrderItemsActionURL">
+		<portlet:param name="mvcRenderCommandName" value="/commerce_open_order_content/edit_commerce_order" />
+	</portlet:actionURL>
+
+	<aui:form action="<%= importCommerceOrderItemsActionURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.IMPORT %>" />
+		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrderContentDisplayContext.getCommerceOrderId() %>" />
+		<aui:input name="commerceOrderImporterTypeKey" type="hidden" value="<%= commerceOrderImporterTypeKey %>" />
+		<aui:input name="<%= commerceOrderImporterType.getCommerceOrderImporterItemParamName() %>" type="hidden" value="<%= commerceOrderImporterItemParamName %>" />
+
+		<clay:data-set-display
+			contextParams='<%=
+				HashMapBuilder.<String, String>put(
+					"commerceOrderId", String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId())
+				).put(
+					"commerceOrderImporterTypeKey", commerceOrderImporterTypeKey
+				).put(
+					commerceOrderImporterType.getCommerceOrderImporterItemParamName(), commerceOrderImporterItemParamName
+				).build()
+			%>'
+			dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PREVIEW_COMMERCE_ORDER_ITEMS %>"
+			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PREVIEW_COMMERCE_ORDER_ITEMS %>"
+			itemsPerPage="<%= 10 %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
+			portletURL="<%= commerceOrderContentDisplayContext.getPortletURL() %>"
+			showSearch="<%= false %>"
+			style="fluid"
+		/>
+
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" name="importButton" primary="<%= true %>" type="submit" value='<%= LanguageUtil.get(request, "import") %>' />
+
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+
+	<liferay-frontend:component
+		module="js/preview"
+	/>
+</c:if>

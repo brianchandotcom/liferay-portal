@@ -187,29 +187,31 @@ definition {
 		}
 
 		task ("Assert the Title fragment is present") {
-			AssertVisible(
-				key_content = "Lorem ipsum dolor sit amet",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "header",
+				text = "Lorem ipsum dolor sit amet");
 		}
 
 		task ("Assert the Rich Text fragment is present") {
-			AssertVisible(
-				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "rich-text",
+				text = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 		}
 
 		task ("Assert the Button fragment is present") {
-			AssertVisible(
-				key_content = "Submit",
-				key_fragmentClass = "footer",
-				locator1 = "Fragment#FRAGMENT");
+			var n = "1";
 
-			AssertVisible(
-				key_content = "Cancel",
-				key_fragmentClass = "footer",
-				locator1 = "Fragment#FRAGMENT");
+			for (var text : list "Submit,Cancel") {
+				ContentPages.viewFragmentText(
+					contributed = "false",
+					fragmentName = "footer",
+					position = "${n}",
+					text = "${text}");
+
+				var n = ${n} + 1;
+			}
 		}
 
 		task ("Navigate to regular content page from 7.1") {
@@ -222,6 +224,7 @@ definition {
 
 		task ("Edit the Title fragment's editable text") {
 			PageEditor.editFragmentText(
+				className = "header",
 				contributed = "false",
 				fragmentName = "Title",
 				text = "New editable fragment text");
@@ -232,10 +235,10 @@ definition {
 		}
 
 		task ("Assert the Title fragment is updated") {
-			AssertVisible(
-				key_content = "New editable fragment text",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "header",
+				text = "New editable fragment text");
 		}
 
 		task ("Navigate to content page created from page template from 7.1") {
@@ -258,22 +261,24 @@ definition {
 		}
 
 		task ("Assert the Button fragment is present") {
-			AssertVisible(
-				key_content = "Submit",
-				key_fragmentClass = "footer",
-				locator1 = "Fragment#FRAGMENT");
+			var n = "1";
 
-			AssertVisible(
-				key_content = "Cancel",
-				key_fragmentClass = "footer",
-				locator1 = "Fragment#FRAGMENT");
+			for (var text : list "Submit,Cancel") {
+				ContentPages.viewFragmentText(
+					contributed = "false",
+					fragmentName = "footer",
+					position = "${n}",
+					text = "${text}");
+
+				var n = ${n} + 1;
+			}
 		}
 
 		task ("Assert the Rich Text fragment is present") {
-			AssertVisible(
-				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "rich-text",
+				text = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 		}
 	}
 
@@ -3788,13 +3793,17 @@ definition {
 
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
-			AssertVisible(
-				key_content = "Submit",
-				key_fragmentClass = "footer",
-				locator1 = "Fragment#FRAGMENT");
+			var n = "1";
 
-			for (var button : list "Submit,Cancel") {
-				Button.viewPresent(button = "${button}");
+			for (var text : list "Submit,Cancel") {
+				PageEditor.viewFragmentEditableText(
+					className = "footer",
+					contributed = "false",
+					editableText = "${text}",
+					fragmentName = "Button",
+					position = "${n}");
+
+				var n = ${n} + 1;
 			}
 		}
 
@@ -3805,23 +3814,26 @@ definition {
 				key_pageName = "Test Template Content Page",
 				locator1 = "Home#PAGE");
 
-			AssertVisible(
-				key_content = "Submit",
-				key_fragmentClass = "footer",
-				locator1 = "Fragment#FRAGMENT");
+			var n = "1";
 
-			for (var button : list "Submit,Cancel") {
-				Button.viewPresent(button = "${button}");
+			for (var text : list "Submit,Cancel") {
+				ContentPages.viewFragmentText(
+					contributed = "false",
+					fragmentName = "footer",
+					position = "${n}",
+					text = "${text}");
+
+				var n = ${n} + 1;
 			}
 
 			Click(
 				key_pageName = "Test Regular Content Page",
 				locator1 = "Home#PAGE");
 
-			AssertVisible(
-				key_content = "Lorem ipsum dolor sit amet",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "header",
+				text = "Lorem ipsum dolor sit amet");
 
 			AssertVisible(
 				key_href = "https://www.liferay.com/",
@@ -3848,27 +3860,27 @@ definition {
 		task ("Assert the web content articles that use display pages are viewable through display page template") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title-1");
 
-			AssertVisible(
-				key_content = "Webcontent Title 1",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "header",
+				text = "Webcontent Title 1");
 
-			AssertVisible(
-				key_content = "Webcontent Content 1",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "rich-text",
+				text = "Webcontent Content 1");
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title-2");
 
-			AssertVisible(
-				key_content = "Webcontent Content 2",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "rich-text",
+				text = "Webcontent Content 2");
 
-			AssertVisible(
-				key_content = "Lorem ipsum dolor sit amet",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "header",
+				text = "Lorem ipsum dolor sit amet");
 		}
 
 		task ("Assert the web content article that has no display page is not viewable through display page") {

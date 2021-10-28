@@ -208,7 +208,6 @@ definition {
 	}
 
 	@description = "LPS-119475: When a user accesses the AB testing panel while a click goal test is running, the Change clickable element button don't show and the ID element box isn't enabled for edition, but the eye button will work normally"
-	@ignore = "true"
 	@priority = "3"
 	test AssertChangeClickableIDBoxNotEnabled {
 		task ("Edit the Content page to add a button fragment") {
@@ -478,16 +477,47 @@ definition {
 	}
 
 	@description = "LPS-100945: Validate if the Button components have the ID"
-	@ignore = "true"
 	@priority = "3"
 	test CheckButtonElementId {
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137487 CheckButtonElementId pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
 
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Take the ID Element") {
+			var idbutton = ABTest.takeElementID();
+		}
+
+		task ("Select the button as click element") {
+			ABTest.selectElementID();
+		}
+
+		task ("Assert the element ID appears in the ID box") {
+			Click(
+				key_value = "Change Clickable Element",
+				locator1 = "ABTest#SECONDARY_BUTTON");
+
+			AssertElementPresent(
+				key_id = "${idbutton}",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = "${idbutton}");
+		}
 	}
 
 	@description = "LPS-96791: Validate if A tooltip Click Element to Set as Click Target for your Goal appears when the user clicks on Set Target Button"
-	@ignore = "true"
 	@priority = "3"
 	test CheckClickElementTooltip {
 		task ("Edit the Content page to add a button fragment") {
@@ -1076,7 +1106,6 @@ definition {
 	}
 
 	@description = "LPS-96791: Validate if the user can edit the target"
-	@ignore = "true"
 	@priority = "5"
 	test EditClickElementTarget {
 		task ("Edit the Content page to add a button fragment and duplicate button") {
@@ -1543,7 +1572,6 @@ definition {
 	}
 
 	@description = "LPS-96791: Validate if the user can remove the target"
-	@ignore = "true"
 	@priority = "5"
 	test RemoveClickElementTarget {
 		task ("Edit the Content page to add a button fragment") {
@@ -1910,8 +1938,10 @@ definition {
 				testTitle = "AB test title");
 		}
 
-		task ("Get the element ID from button 2") {
-			var idbutton = ABTest.takeElementID(key_index = "2");
+		task ("Get the element ID from buttons") {
+			var idbutton = ABTest.takeElementID();
+
+			var idbutton2 = ABTest.takeElementID(key_index = "2");
 		}
 
 		task ("Select the  first button as click element") {
@@ -1919,15 +1949,21 @@ definition {
 		}
 
 		task ("Change the ID Element") {
-			Click(locator1 = "ABTest#X_BUTTON_ID_BOX");
-
-			Type(
-				locator1 = "ABTest#ID_BOX",
-				value1 = "${idbutton}");
+			DoubleClick(
+				key_id = "${idbutton}",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX");
 
 			KeyPress(
 				key_id = "${idbutton}",
 				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = "\BACK_SPACE");
+
+			Type(
+				locator1 = "ABTest#ID_BOX",
+				value1 = "${idbutton2}");
+
+			KeyPress(
+				locator1 = "ABTest#ID_BOX",
 				value1 = "\ENTER");
 		}
 

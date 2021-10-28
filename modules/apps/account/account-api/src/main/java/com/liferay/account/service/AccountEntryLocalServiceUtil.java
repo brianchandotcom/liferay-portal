@@ -55,7 +55,7 @@ public class AccountEntryLocalServiceUtil {
 	}
 
 	public static AccountEntry activateAccountEntry(long accountEntryId)
-		throws Exception {
+		throws PortalException {
 
 		return getService().activateAccountEntry(accountEntryId);
 	}
@@ -182,7 +182,7 @@ public class AccountEntryLocalServiceUtil {
 	}
 
 	public static AccountEntry deactivateAccountEntry(long accountEntryId)
-		throws Exception {
+		throws PortalException {
 
 		return getService().deactivateAccountEntry(accountEntryId);
 	}

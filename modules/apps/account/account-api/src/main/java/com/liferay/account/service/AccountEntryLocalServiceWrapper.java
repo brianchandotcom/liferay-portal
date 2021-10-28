@@ -50,7 +50,7 @@ public class AccountEntryLocalServiceWrapper
 	@Override
 	public com.liferay.account.model.AccountEntry activateAccountEntry(
 			long accountEntryId)
-		throws Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.activateAccountEntry(accountEntryId);
 	}
@@ -193,7 +193,7 @@ public class AccountEntryLocalServiceWrapper
 	@Override
 	public com.liferay.account.model.AccountEntry deactivateAccountEntry(
 			long accountEntryId)
-		throws Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.deactivateAccountEntry(accountEntryId);
 	}

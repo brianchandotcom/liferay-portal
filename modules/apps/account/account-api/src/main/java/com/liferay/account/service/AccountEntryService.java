@@ -55,6 +55,11 @@ public interface AccountEntryService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.account.service.impl.AccountEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the account entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AccountEntryServiceUtil} if injection and service tracking are not available.
 	 */
+	public void activateAccountEntries(long[] accountEntryIds)
+		throws PortalException;
+
+	public AccountEntry activateAccountEntry(long accountEntryId)
+		throws PortalException;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
@@ -86,10 +91,29 @@ public interface AccountEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deactivateAccountEntries(long[] accountEntryIds)
+		throws PortalException;
+
+	public AccountEntry deactivateAccountEntry(long accountEntryId)
+		throws PortalException;
+
+	public void deleteAccountEntries(long[] accountEntryIds)
+		throws PortalException;
+
+	public void deleteAccountEntry(long accountEntryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountEntry fetchAccountEntry(long accountEntryId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AccountEntry> getAccountEntries(
 			long companyId, int status, int start, int end,
 			OrderByComparator<AccountEntry> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountEntry getAccountEntry(long accountEntryId)
 		throws PortalException;
 
 	/**
@@ -101,7 +125,22 @@ public interface AccountEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<AccountEntry> searchAccountEntries(
-		String keywords, LinkedHashMap<String, Object> params, int cur,
-		int delta, String orderByField, boolean reverse);
+			String keywords, LinkedHashMap<String, Object> params, int cur,
+			int delta, String orderByField, boolean reverse)
+		throws PortalException;
+
+	public AccountEntry updateAccountEntry(AccountEntry accountEntry)
+		throws PortalException;
+
+	public AccountEntry updateAccountEntry(
+			Long accountEntryId, long parentAccountEntryId, String name,
+			String description, boolean deleteLogo, String[] domains,
+			String emailAddress, byte[] logoBytes, String taxIdNumber,
+			int status, ServiceContext serviceContext)
+		throws PortalException;
+
+	public AccountEntry updateExternalReferenceCode(
+			long accountEntryId, String externalReferenceCode)
+		throws PortalException;
 
 }

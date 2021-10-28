@@ -39,6 +39,17 @@ public class AccountEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.account.service.impl.AccountEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void activateAccountEntries(long[] accountEntryIds)
+		throws PortalException {
+
+		getService().activateAccountEntries(accountEntryIds);
+	}
+
+	public static AccountEntry activateAccountEntry(long accountEntryId)
+		throws PortalException {
+
+		return getService().activateAccountEntry(accountEntryId);
+	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
@@ -85,6 +96,36 @@ public class AccountEntryServiceUtil {
 			logoBytes, taxIdNumber, type, status, serviceContext);
 	}
 
+	public static void deactivateAccountEntries(long[] accountEntryIds)
+		throws PortalException {
+
+		getService().deactivateAccountEntries(accountEntryIds);
+	}
+
+	public static AccountEntry deactivateAccountEntry(long accountEntryId)
+		throws PortalException {
+
+		return getService().deactivateAccountEntry(accountEntryId);
+	}
+
+	public static void deleteAccountEntries(long[] accountEntryIds)
+		throws PortalException {
+
+		getService().deleteAccountEntries(accountEntryIds);
+	}
+
+	public static void deleteAccountEntry(long accountEntryId)
+		throws PortalException {
+
+		getService().deleteAccountEntry(accountEntryId);
+	}
+
+	public static AccountEntry fetchAccountEntry(long accountEntryId)
+		throws PortalException {
+
+		return getService().fetchAccountEntry(accountEntryId);
+	}
+
 	public static List<AccountEntry> getAccountEntries(
 			long companyId, int status, int start, int end,
 			OrderByComparator<AccountEntry> orderByComparator)
@@ -92,6 +133,12 @@ public class AccountEntryServiceUtil {
 
 		return getService().getAccountEntries(
 			companyId, status, start, end, orderByComparator);
+	}
+
+	public static AccountEntry getAccountEntry(long accountEntryId)
+		throws PortalException {
+
+		return getService().getAccountEntry(accountEntryId);
 	}
 
 	/**
@@ -105,11 +152,40 @@ public class AccountEntryServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<AccountEntry> searchAccountEntries(
-			String keywords, java.util.LinkedHashMap<String, Object> params,
-			int cur, int delta, String orderByField, boolean reverse) {
+				String keywords, java.util.LinkedHashMap<String, Object> params,
+				int cur, int delta, String orderByField, boolean reverse)
+			throws PortalException {
 
 		return getService().searchAccountEntries(
 			keywords, params, cur, delta, orderByField, reverse);
+	}
+
+	public static AccountEntry updateAccountEntry(AccountEntry accountEntry)
+		throws PortalException {
+
+		return getService().updateAccountEntry(accountEntry);
+	}
+
+	public static AccountEntry updateAccountEntry(
+			Long accountEntryId, long parentAccountEntryId, String name,
+			String description, boolean deleteLogo, String[] domains,
+			String emailAddress, byte[] logoBytes, String taxIdNumber,
+			int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateAccountEntry(
+			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
+			domains, emailAddress, logoBytes, taxIdNumber, status,
+			serviceContext);
+	}
+
+	public static AccountEntry updateExternalReferenceCode(
+			long accountEntryId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			accountEntryId, externalReferenceCode);
 	}
 
 	public static AccountEntryService getService() {

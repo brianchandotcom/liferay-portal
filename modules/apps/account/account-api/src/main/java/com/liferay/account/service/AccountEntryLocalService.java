@@ -72,7 +72,7 @@ public interface AccountEntryLocalService
 	public AccountEntry activateAccountEntry(AccountEntry accountEntry);
 
 	public AccountEntry activateAccountEntry(long accountEntryId)
-		throws Exception;
+		throws PortalException;
 
 	/**
 	 * Adds the account entry to the database. Also notifies the appropriate model listeners.
@@ -157,7 +157,7 @@ public interface AccountEntryLocalService
 	public AccountEntry deactivateAccountEntry(AccountEntry accountEntry);
 
 	public AccountEntry deactivateAccountEntry(long accountEntryId)
-		throws Exception;
+		throws PortalException;
 
 	public void deleteAccountEntries(long[] accountEntryIds)
 		throws PortalException;

@@ -53,7 +53,7 @@ definition {
 
 			MouseOver(locator1 = "ACIndividualsDashboard#VISITORS_LEGEND");
 
-			while (IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART") && (maxIterations = "50")) {
+			while (IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART") && (maxIterations = "100")) {
 				TestUtils.hardRefresh();
 
 				if ("${timeFilter}" != "Custom Range") {

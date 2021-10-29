@@ -56,7 +56,7 @@ definition {
 
 		Select(
 			locator1 = "Select#REPORT_FORMAT",
-			value1 = "csv");
+			value1 = "CSV");
 
 		Type(
 			locator1 = "TextInput#EMAIL_NOTIFICATIONS",
@@ -159,7 +159,7 @@ definition {
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
-			reportFormat = "csv",
+			reportFormat = "CSV",
 			reportName = "Custom Name",
 			reportsDefinitionName = "Reports Definition Name");
 
@@ -218,7 +218,7 @@ definition {
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
-			reportFormat = "csv",
+			reportFormat = "CSV",
 			reportsDefinitionName = "Reports Definition Name");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
@@ -312,7 +312,7 @@ definition {
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
-			reportFormat = "csv",
+			reportFormat = "CSV",
 			reportsDefinitionName = "Reports Definition Name");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");

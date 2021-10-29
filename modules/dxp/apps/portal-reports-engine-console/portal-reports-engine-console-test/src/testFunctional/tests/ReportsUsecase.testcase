@@ -251,7 +251,7 @@ definition {
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
 			emailRecipientAddress = "test@liferay.com",
-			reportFormat = "csv",
+			reportFormat = "CSV",
 			reportsDefinitionName = "Reports Definition Name");
 
 		ProductMenu.gotoPortlet(

@@ -61,9 +61,6 @@ describe('Field Numeric Input Mask', () => {
 		const appendFieldInput = container.querySelector(
 			'input[name="append"]'
 		);
-		const decimalPlacesFieldInput = container.querySelector(
-			'input[name="decimal_places"]'
-		);
 		const appendTypeField = container.querySelector(
 			'[data-field-name="appendType"]'
 		);
@@ -77,7 +74,6 @@ describe('Field Numeric Input Mask', () => {
 		expect(appendField).toBeInTheDocument();
 		expect(appendFieldInput.maxLength).toBe(10);
 		expect(appendTypeField).not.toBeInTheDocument();
-		expect(decimalPlacesFieldInput).toBeInTheDocument();
 		expect(decimalSymbolField).toBeInTheDocument();
 		expect(thousandsSeparatorField).toBeInTheDocument();
 	});

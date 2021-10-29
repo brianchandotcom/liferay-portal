@@ -36,6 +36,6 @@ public interface BlogsStatsUser {
 
 	public double getRatingsTotalScore();
 
-	public long getUserId();
+	public long getStatsUserId();
 
 }

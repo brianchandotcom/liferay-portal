@@ -68,7 +68,7 @@ public class BlogsStatsUserImpl implements BlogsStatsUser {
 	}
 
 	@Override
-	public long getUserId() {
+	public long getStatsUserId() {
 		return _userId;
 	}
 

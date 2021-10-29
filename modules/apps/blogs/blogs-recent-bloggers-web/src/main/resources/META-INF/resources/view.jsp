@@ -60,7 +60,7 @@ else {
 
 			try {
 				Group group = GroupLocalServiceUtil.getGroup(statsUser.getGroupId());
-				User user2 = UserLocalServiceUtil.getUserById(statsUser.getUserId());
+				User user2 = UserLocalServiceUtil.getUserById(statsUser.getStatsUserId());
 
 				int entriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(group.getGroupId(), user2.getUserId(), WorkflowConstants.STATUS_APPROVED);
 
@@ -95,7 +95,7 @@ else {
 
 				String rowHREF = sb.toString();
 
-				ResultRow row = new ResultRow(new Object[] {statsUser, rowHREF}, statsUser.getUserId(), i);
+				ResultRow row = new ResultRow(new Object[] {statsUser, rowHREF}, statsUser.getStatsUserId(), i);
 
 				if (displayStyle.equals("user-name")) {
 

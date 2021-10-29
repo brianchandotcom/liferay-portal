@@ -54,6 +54,12 @@ public class BatchPlannerPlanLocalServiceImpl
 
 		_validateExternalType(externalType);
 
+		_validateInternalClassName(internalClassName);
+
+		if (Validator.isNull(name)) {
+			name = _generateName(internalClassName);
+		}
+
 		User user = userLocalService.getUser(userId);
 
 		_validateName(0, user.getCompanyId(), name);
@@ -140,6 +146,11 @@ public class BatchPlannerPlanLocalServiceImpl
 		return batchPlannerPlanPersistence.update(batchPlannerPlan);
 	}
 
+	private String _generateName(String value) {
+		return value.substring(value.lastIndexOf(StringPool.PERIOD) + 1) +
+			" Plan Execution " + System.currentTimeMillis();
+	}
+
 	private void _validateExternalType(String externalType)
 		throws PortalException {
 
@@ -155,6 +166,15 @@ public class BatchPlannerPlanLocalServiceImpl
 		throw new BatchPlannerPlanExternalTypeException(
 			"Batch planner plan external type must be one of following: " +
 				merge);
+	}
+
+	private void _validateInternalClassName(String internalClassName)
+		throws PortalException {
+
+		if (Validator.isNull(internalClassName)) {
+			throw new BatchPlannerPlanNameException(
+				"Internal class name is required");
+		}
 	}
 
 	private void _validateName(

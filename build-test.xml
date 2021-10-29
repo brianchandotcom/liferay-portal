@@ -321,17 +321,23 @@ module.framework.properties.osgi.console=11312</echo>
 
 			<get-operating-system-property property.name="operating.system.docker.shell.path" />
 
+			<condition else="/bin/bash" property="docker.shell.path" value="${operating.system.docker.shell.path}">
+				<isset property="operating.system.docker.shell.path" />
+			</condition>
+
 			<execute>
 				<![CDATA[
 					docker exec @{container} mkdir -p /tmp
 
 					docker cp ${script.sh.file} @{container}:/tmp/script.sh
 
-					docker exec @{container} ${operating.system.docker.shell.path} /tmp/script.sh
+					docker exec @{container} ${docker.shell.path} /tmp/script.sh
 
-					docker exec @{container} rm -f /tmp/script.sh
+					docker exec --user root @{container} rm -f /tmp/script.sh
 				]]>
 			</execute>
+
+			<delete file="${script.sh.file}" />
 		</sequential>
 	</macrodef>
 

@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric.input.mask;
 
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.configuration.FFDecimalPlacesSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -54,6 +55,7 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributorTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_setUpFFDecimalPlacesSettings();
 		_setUpJSONFactory();
 		_setUpJSONFactoryUtil();
 		_setUpLanguageUtil();
@@ -176,6 +178,19 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributorTest
 			).toString());
 
 		return ddmFormFieldRenderingContext;
+	}
+
+	private void _setUpFFDecimalPlacesSettings() throws Exception {
+		FFDecimalPlacesSettings ffDecimalPlacesSettings = PowerMockito.mock(
+			FFDecimalPlacesSettings.class);
+
+		PowerMockito.field(
+			NumericInputMaskDDMFormFieldTemplateContextContributor.class,
+			"_ffDecimalPlacesSettings"
+		).set(
+			_numericInputMaskDDMFormFieldTemplateContextContributor,
+			ffDecimalPlacesSettings
+		);
 	}
 
 	private void _setUpJSONFactory() throws Exception {

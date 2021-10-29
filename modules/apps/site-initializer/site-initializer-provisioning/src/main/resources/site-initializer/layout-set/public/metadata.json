@@ -1,6 +1,5 @@
 {
 	"settings": {
-		"javascript":"console.log(\"test\")",
 		"lfr-theme:regular:show-footer": false,
 		"lfr-theme:regular:show-header": false,
 		"lfr-theme:regular:show-header-search": false,

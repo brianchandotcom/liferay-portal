@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>UNTRANSLATED_ICON_COUNTRY</td>
-	<td>//*[contains(@class,'lexicon-icon-${key_icon}')]/../../span//span[contains(text(),'Untranslated')]</td>
+	<td>//*[contains(@class,'lexicon-icon-${key_icon}')]/../../span//span[contains(text(),'Not Translated')]</td>
 	<td></td>
 </tr>
 <tr>

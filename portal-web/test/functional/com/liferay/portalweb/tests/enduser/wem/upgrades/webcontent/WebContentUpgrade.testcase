@@ -349,7 +349,7 @@ definition {
 			AssertTextEquals(
 				key_localizedLanguage = "zh-CN",
 				locator1 = "Translation#TRANSLATION_STATUS_TITLE",
-				value1 = "Untranslated");
+				value1 = "Not Translated");
 		}
 
 		task ("View Translation while Editing article") {
@@ -778,7 +778,7 @@ definition {
 			AssertTextEquals(
 				key_localizedLanguage = "zh-CN",
 				locator1 = "Translation#TRANSLATION_STATUS_TITLE",
-				value1 = "Untranslated");
+				value1 = "Not Translated");
 		}
 
 		task ("View Translation while Editing article") {

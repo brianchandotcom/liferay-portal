@@ -388,7 +388,7 @@ definition {
 		AssertTextEquals(
 			key_localizedLanguage = "es-ES",
 			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
-			value1 = "Untranslated");
+			value1 = "Not Translated");
 	}
 
 	@description = "This ensures that an imported translation can be Rejected and Resubmited through the workflow."

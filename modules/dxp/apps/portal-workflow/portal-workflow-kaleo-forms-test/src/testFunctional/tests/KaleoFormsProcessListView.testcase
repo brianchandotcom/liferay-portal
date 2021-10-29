@@ -440,12 +440,44 @@ definition {
 	}
 
 	@description = "Verify that the user can select view option."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanSelectViewOption {
+		KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70673 CanSelectViewOption pending implementation
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
 
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "Contacts",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Single Approver");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.assignForm(
+			kfProcessName = "Kaleo Forms Process",
+			workflowTask = "create");
+
+		KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveForm();
+
+		KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.viewProcessRecord(kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.viewProcessNoRecords(kfProcessName = "Kaleo Forms Process");
+		
 	}
 
 	@description = "Verify that the user can view the process after it has been created."

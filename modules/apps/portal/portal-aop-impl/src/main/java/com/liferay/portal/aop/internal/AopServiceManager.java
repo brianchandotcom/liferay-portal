@@ -66,7 +66,7 @@ public class AopServiceManager {
 			bundleContext, TransactionHandler.class,
 			new TransactionHandlerServiceTrackerCustomizer());
 
-		_transactionHandlerServiceTracker.open(true);
+		_transactionHandlerServiceTracker.open();
 	}
 
 	@Deactivate

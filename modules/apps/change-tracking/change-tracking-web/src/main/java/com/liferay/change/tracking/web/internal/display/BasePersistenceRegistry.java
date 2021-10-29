@@ -100,7 +100,7 @@ public class BasePersistenceRegistry {
 			bundleContext, TransactionExecutor.class,
 			new TransactionExecutorServiceTrackerCustomizer(bundleContext));
 
-		_transactionExecutorServiceTracker.open(true);
+		_transactionExecutorServiceTracker.open();
 	}
 
 	@Deactivate

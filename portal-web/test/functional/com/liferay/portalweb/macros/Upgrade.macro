@@ -3782,6 +3782,25 @@ definition {
 		FormFields.viewCheckboxChecked(fieldName = "exportEnabled");
 	}
 
+	macro viewMatchingCalendarIndexesInPartitionedDatabase {
+		var baseSchemaIndex = SQL.executeMySQLStatement(
+			mysqlStatement = "SHOW INDEX FROM Calendar;");
+
+		SQL.executeMySQLStatement(mysqlStatement = "USE lpartition_39371;");
+
+		var partitionSchemaIndex = SQL.executeMySQLStatement(
+			mysqlStatement = "SHOW INDEX FROM Calendar;");
+
+		if ("${baseSchemaIndex}" == "${partitionSchemaIndex}") {
+			echo("Calendar Index matches: ${baseSchemaIndex}");
+		}
+		else {
+			echo("Calendar Index does not match between database schemas");
+
+			fail("Base schema index is ${baseSchemaIndex} but partitioned schema index is ${partitionSchemaIndex}");
+		}
+	}
+
 	macro viewMessageBoards {
 		Navigator.gotoPage(pageName = "Message Boards");
 
@@ -4851,23 +4870,6 @@ definition {
 	}
 
 	macro viewUpgradeDBPartition {
-		var indexContent = SQL.executeMySQLStatement(
-			mysqlStatement = "SHOW INDEX FROM Calendar;");
-
-		SQL.executeMySQLStatement(mysqlStatement = "USE lpartition_39371;");
-
-		var expectedIndex = SQL.executeMySQLStatement(
-			mysqlStatement = "SHOW INDEX FROM Calendar;");
-
-		if (contains("${indexContent}", "${expectedIndex}")) {
-			echo("Calendar Index displays: ${expectedIndex}");
-		}
-		else {
-			echo("Calendar Index: ${indexContent}");
-
-			fail("Unable to find expected Calendar Index: ${expectedIndex}");
-		}
-
 		SignOut.signOut();
 
 		User.firstLoginUI(
@@ -4983,6 +4985,8 @@ definition {
 		SignOut.signOut();
 
 		SignIn.signIn();
+
+		Upgrade.viewMatchingCalendarIndexesInPartitionedDatabase();
 	}
 
 	macro ViewWebContentWCStructureWCTemplateWCDandAssetPublisher {

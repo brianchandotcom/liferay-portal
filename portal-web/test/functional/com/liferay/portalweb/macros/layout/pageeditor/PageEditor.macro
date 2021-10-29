@@ -1015,9 +1015,15 @@ definition {
 			var index = "1";
 		}
 
-		PageEditor.clickConfigurableField(
-			fragmentName = "${fragmentName}",
-			index = "${index}");
+		if ("${contributed}" == "false") {
+			PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+		}
+
+		else {
+			PageEditor.clickConfigurableField(
+				fragmentName = "${fragmentName}",
+				index = "${index}");
+		}
 
 		if (isSet(className)) {
 			var fragmentName = "${className}";

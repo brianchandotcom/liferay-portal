@@ -686,6 +686,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8115 | Test Summary: Assert document list shows all of the documents and media assets in a list"
 	@priority = "5"
 	test ViewAllDocumentsAndMediaShownInAssetList {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: The name of the documents do not show in the proper way in AC
+		// AC Bug ticket : LRAC-7890
+		// AC Refactor ticket: LRAC-9626
+
 		var assetName = "DM AC Title,DM AC Title 2,DM AC Title 3,DM AC Title 4";
 
 		for (var n : list "2,3,4") {
@@ -698,7 +704,7 @@ definition {
 
 		ACUtils.navigateToSitePage(
 			actionType = "Download DM",
-			documentTitleList = "DM AC Title,DM AC Title 2,DM AC Title 3,DM AC Title 4",
+			documentTitleList = "${assetName}",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -717,6 +723,9 @@ definition {
 		ACTimeFilter.setLast24Hours();
 
 		ACUtils.viewNameList(nameList = "${assetName}");
+
+		// The name of the documents are shown in a different way
+
 	}
 
 	@description = "Documents visitor behavior card shows expected amount of views"

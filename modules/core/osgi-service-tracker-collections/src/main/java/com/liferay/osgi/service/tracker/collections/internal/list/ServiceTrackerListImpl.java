@@ -143,7 +143,9 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 			_serviceTrackerCustomizer.modifiedService(
 				serviceReference, service);
 
-			_update(serviceReference, service, false);
+			synchronized (_services) {
+				_services.sort(_comparator);
+			}
 		}
 
 		@Override

@@ -1,4 +1,5 @@
 dependencies {
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
 	compileOnly group: "commons-lang", name: "commons-lang", version: "2.6"
@@ -23,6 +24,7 @@ dependencies {
 	compileOnly project(":apps:map:map-api")
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:static:osgi:osgi-util")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:trash:trash-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-function")

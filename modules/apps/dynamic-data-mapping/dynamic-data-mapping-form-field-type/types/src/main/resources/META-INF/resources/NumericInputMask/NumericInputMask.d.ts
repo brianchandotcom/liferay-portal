@@ -30,6 +30,7 @@ interface IProps {
 	decimalSymbols: ISelectProps<DecimalSymbol>[];
 	defaultLanguageId: Locale;
 	editingLanguageId: Locale;
+	ffDecimalPlacesSettingsEnabled: boolean;
 	readOnly: boolean;
 	thousandsSeparator?: ThousandsSeparator[];
 	thousandsSeparators: ISelectProps<ThousandsSeparator>[];

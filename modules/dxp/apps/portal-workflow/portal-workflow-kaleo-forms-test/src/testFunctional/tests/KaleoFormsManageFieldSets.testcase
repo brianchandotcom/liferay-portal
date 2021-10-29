@@ -99,7 +99,6 @@ definition {
 		KaleoFormsManageFieldSets.deleteOneFieldSet(fieldSetName = "Inventory");
 
 		KaleoFormsManageFieldSets.viewFieldSetCannotBeFound(fieldSetName = "Inventory");
-		
 	}
 
 	@description = "Verify that user can filter by modified date and ID."

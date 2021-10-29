@@ -67,11 +67,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8613 | Test Summary: Assert no interest found in segment"
 	@priority = "3"
 	test AssertNoInterestFoundInSegment {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
-		// AC Refactor ticket: LRAC-9164
-
 		task ("Add new user") {
 			JSONUser.addUser(
 				userEmailAddress = "user1@liferay.com",

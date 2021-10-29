@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectEntryConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
@@ -1568,6 +1569,48 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private void _validateObjectFieldIntegerTypeSize(
+			Map.Entry<String, Serializable> entry)
+		throws ObjectEntryValuesException {
+
+		Serializable entryValue = entry.getValue();
+
+		String entryValueString = entryValue.toString();
+
+		if (!entryValueString.isEmpty()) {
+			int value = GetterUtil.getInteger(entryValue);
+
+			if (!StringUtil.equals(String.valueOf(value), entryValueString)) {
+				throw new ObjectEntryValuesException.IntegerSizeExceeded();
+			}
+		}
+	}
+
+	private void _validateObjectFieldLongType(
+			Map.Entry<String, Serializable> entry)
+		throws ObjectEntryValuesException {
+
+		Serializable entryValue = entry.getValue();
+
+		String entryValueString = entryValue.toString();
+
+		if (!entryValueString.isEmpty()) {
+			long value = GetterUtil.getLong(entryValue);
+
+			if (!StringUtil.equals(
+					String.valueOf(value), entryValue.toString())) {
+
+				throw new ObjectEntryValuesException.LongSizeExceeded();
+			}
+			else if (value > ObjectEntryConstants.MAX_SAFE_LONG) {
+				throw new ObjectEntryValuesException.LongMaxSizeExceeded();
+			}
+			else if (value < ObjectEntryConstants.MIN_SAFE_LONG) {
+				throw new ObjectEntryValuesException.LongMinSizeExceeded();
+			}
+		}
+	}
+
 	private void _validateObjectFieldStringTypeLength(
 			Map.Entry<String, Serializable> entry)
 		throws ObjectEntryValuesException {
@@ -1575,9 +1618,7 @@ public class ObjectEntryLocalServiceImpl
 		String value = (String)entry.getValue();
 
 		if ((value != null) && (value.length() > 280)) {
-			throw new ObjectEntryValuesException(
-				"Object field \"" + entry.getKey() +
-					"\" value exceeds 280 characters.");
+			throw new ObjectEntryValuesException.MustBeLessThan280Characters();
 		}
 	}
 
@@ -1680,7 +1721,17 @@ public class ObjectEntryLocalServiceImpl
 				continue;
 			}
 
-			if (StringUtil.equals(objectField.getType(), "String")) {
+			String objectFieldType = objectField.getType();
+
+			if (StringUtil.equals(objectFieldType, "Integer")) {
+				_validateObjectFieldIntegerTypeSize(entry);
+			}
+
+			if (StringUtil.equals(objectFieldType, "Long")) {
+				_validateObjectFieldLongType(entry);
+			}
+
+			if (StringUtil.equals(objectFieldType, "String")) {
 				_validateObjectFieldStringTypeLength(entry);
 			}
 

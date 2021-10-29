@@ -471,13 +471,13 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		throws ParseException {
 
 		if (Objects.equals(objectFieldType, "BigDecimal")) {
-			return GetterUtil.get(value, BigDecimal.ZERO);
-		}
-		else if (Objects.equals(objectFieldType, "Blob")) {
-			return value.getBytes();
-		}
-		else if (Objects.equals(objectFieldType, "Boolean")) {
-			return GetterUtil.getBoolean(value);
+			if (value.isEmpty()) {
+				return GetterUtil.DEFAULT_DOUBLE;
+			}
+
+			NumberFormat numberFormat = NumberFormat.getInstance(locale);
+
+			return GetterUtil.get(numberFormat.parse(value), BigDecimal.ZERO);
 		}
 		else if (Objects.equals(objectFieldType, "Double")) {
 			if (value.isEmpty()) {
@@ -487,12 +487,6 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			NumberFormat numberFormat = NumberFormat.getInstance(locale);
 
 			return GetterUtil.getDouble(numberFormat.parse(value));
-		}
-		else if (Objects.equals(objectFieldType, "Integer")) {
-			return GetterUtil.getInteger(value);
-		}
-		else if (Objects.equals(objectFieldType, "Long")) {
-			return GetterUtil.getLong(value);
 		}
 		else {
 			return value;

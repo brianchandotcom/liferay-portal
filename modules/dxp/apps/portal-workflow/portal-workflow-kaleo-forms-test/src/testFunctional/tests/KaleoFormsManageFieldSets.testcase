@@ -153,11 +153,9 @@ definition {
 	}
 
 	@description = "Verify that when there are no results for the search, it displays the message -No Field Sets were found-."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test NotViewResultTheSearch {
-
-		// TODO LRQA-70708 NotViewResultTheSearch pending implementation
+		KaleoFormsManageFieldSets.viewFieldSetCannotBeFound(fieldSetName = "Acrw23f");
 
 	}
 

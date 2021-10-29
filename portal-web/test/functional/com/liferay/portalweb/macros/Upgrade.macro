@@ -2453,7 +2453,7 @@ definition {
 	}
 
 	macro viewAndEditGoogleDriveDocuments {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		var key_dmDocumentTitle = "Untitled (1)";
 
@@ -2477,7 +2477,7 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Edited Google Sheet");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		GoogleDoc.gotoEdit(
 			dmDocumentTitle = "Untitled (2)",
@@ -2494,7 +2494,7 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Edited Google Slide");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		GoogleDoc.gotoEdit(
 			dmDocumentTitle = "Untitled",

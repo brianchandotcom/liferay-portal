@@ -649,10 +649,10 @@ definition {
 		}
 
 		task ("View the mapped content is shown") {
-			AssertVisible(
-				key_content = "WC WebContent Title",
-				key_fragmentClass = "content",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				fragmentName = "html",
+				id = "element-html",
+				text = "WC WebContent Title");
 		}
 	}
 

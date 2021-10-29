@@ -2711,19 +2711,13 @@ definition {
 		var key_fragmentName = "${fragmentName}";
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_COMMENT_ICON")) {
-			Click(
-				key_content = "${content}",
-				key_fragmentClass = "${fragmentClass}",
-				locator1 = "Fragment#FRAGMENT");
+			PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 		}
 
 		Click(locator1 = "Fragment#FRAGMENT_COMMENT_ICON");
 
 		if (IsElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME")) {
-			Click(
-				key_content = "${content}",
-				key_fragmentClass = "${fragmentClass}",
-				locator1 = "Fragment#FRAGMENT");
+			PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 		}
 	}
 

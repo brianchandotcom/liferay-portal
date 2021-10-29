@@ -222,10 +222,10 @@ definition {
 		}
 
 		task ("Assert localized content is shown in fragment") {
-			AssertVisible(
-				key_content = "Ir a alguna parte",
-				key_fragmentClass = "example",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contribute = "false",
+				fragmentName = "example",
+				text = "Ir a alguna parte");
 		}
 
 		task ("Change to en_US via language selector") {
@@ -241,10 +241,10 @@ definition {
 		}
 
 		task ("Assert Go Somewhere is shown in fragment") {
-			AssertVisible(
-				key_content = "Go Somewhere",
-				key_fragmentClass = "example",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contribute = "false",
+				fragmentName = "example",
+				text = "Go Somewhere");
 		}
 
 		task ("Change to es_ES via language selector") {
@@ -260,10 +260,10 @@ definition {
 		}
 
 		task ("Assert Ir a alguna parte is shown in fragment") {
-			AssertVisible(
-				key_content = "Ir a alguna parte",
-				key_fragmentClass = "example",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contribute = "false",
+				fragmentName = "example",
+				text = "Ir a alguna parte");
 		}
 	}
 

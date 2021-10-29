@@ -248,13 +248,17 @@ definition {
 
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
-			AssertVisible(
-				key_content = "Submit",
-				key_fragmentClass = "button",
-				locator1 = "Fragment#FRAGMENT");
+			var n = "1";
 
-			for (var button : list "Submit,Cancel") {
-				Button.viewPresent(button = "${button}");
+			for (var text : list "Submit,Cancel") {
+				PageEditor.viewFragmentEditableText(
+					className = "footer",
+					contributed = "false",
+					editableText = "${text}",
+					fragmentName = "Button",
+					position = "${n}");
+
+				var n = ${n} + 1;
 			}
 		}
 
@@ -265,13 +269,16 @@ definition {
 				key_pageName = "Test Template Content Page",
 				locator1 = "Home#PAGE");
 
-			AssertVisible(
-				key_content = "Submit",
-				key_fragmentClass = "button",
-				locator1 = "Fragment#FRAGMENT");
+			var n = "1";
 
-			for (var button : list "Submit,Cancel") {
-				Button.viewPresent(button = "${button}");
+			for (var text : list "Submit,Cancel") {
+				ContentPages.viewFragmentText(
+					contributed = "false",
+					fragmentName = "footer",
+					position = "${n}",
+					text = "${text}");
+
+				var n = ${n} + 1;
 			}
 
 			Click(

@@ -776,10 +776,10 @@ main();
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(
-				key_content = "Updated fragment text",
-				key_fragmentClass = "configuration",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contribute = "false",
+				fragmentName = "configuration",
+				text = "Updated fragment text");
 		}
 	}
 
@@ -859,10 +859,10 @@ main();
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			AssertVisible(
-				key_content = "Updated fragment text",
-				key_fragmentClass = "configuration",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contribute = "false",
+				fragmentName = "configuration",
+				text = "Updated fragment text");
 		}
 	}
 
@@ -927,10 +927,10 @@ main();
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			AssertVisible(
-				key_content = "Updated fragment text",
-				key_fragmentClass = "configuration",
-				locator1 = "Fragment#FRAGMENT");
+			ContentPages.viewFragmentText(
+				contribute = "false",
+				fragmentName = "configuration",
+				text = "Updated fragment text");
 		}
 	}
 

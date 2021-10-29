@@ -77,11 +77,12 @@ select {
 
 .business-home-cover .business-home-cover-image {
 	max-width: 100%;
-	width: 900px;
+	width: 791px;
+	height: 521px;
 }
 
 .page-editor__layout-viewport .business-home-cover .business-home-cover-box {
-	top: 144px;
+	top: 88px;
 }
 
 .business-home-cover .business-email-delivered h2 {

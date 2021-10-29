@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.38.0",
-		"@clayui/drop-down": "3.38.0",
-		"@clayui/icon": "3.38.0",
-		"@clayui/loading-indicator": "3.38.0",
+		"@clayui/button": "3.39.0",
+		"@clayui/drop-down": "3.39.0",
+		"@clayui/icon": "3.39.0",
+		"@clayui/loading-indicator": "3.39.0",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"react": "16.12.0",

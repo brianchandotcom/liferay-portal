@@ -1,5 +1,12 @@
 definition {
 
+	macro checkEntryViaUI {
+		Check.checkNotVisible(
+				locator1 = "//input[@type='checkbox']");
+
+		Button.clickSave();
+	}
+
 	macro addSingleFieldEntryViaUI {
 		LexiconEntry.gotoAdd();
 

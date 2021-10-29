@@ -626,11 +626,36 @@ definition {
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a Boolean entry on layout"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditBooleanEntryOnLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-140542 CanEditBooleanEntryOnLayout pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "Boolean",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "false");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "No");
+
+		ObjectPortlet.checkEntryViaUI();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntry(entry = "Yes");
 
 	}
 

@@ -2617,6 +2617,17 @@ definition {
 			pageName = "Test Page",
 			portalURL = "${portalURL}");
 
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		Page.viewPreview(
+			description = "Description",
+			htmlTitle = "Page HTML Title - Liferay DXP",
+			openGraph = "true",
+			pageName = "Test Page",
+			portalURL = "${portalURL}");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
 		PortletEntry.inputText(
 			fieldLabel = "HTML Title",
 			text = "Page HTML Title Edit");

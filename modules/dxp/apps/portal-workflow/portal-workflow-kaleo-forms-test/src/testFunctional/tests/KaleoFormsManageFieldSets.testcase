@@ -156,7 +156,6 @@ definition {
 	@priority = "3"
 	test NotViewResultTheSearch {
 		KaleoFormsManageFieldSets.viewFieldSetCannotBeFound(fieldSetName = "Acrw23f");
-
 	}
 
 }

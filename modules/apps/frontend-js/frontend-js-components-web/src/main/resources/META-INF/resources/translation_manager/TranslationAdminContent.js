@@ -119,13 +119,9 @@ const TranslationAdminContent = ({
 										<ClayDropDown.Item
 											key={availableLocale.label}
 											onClick={() => {
-												onAddLocale(
-													availableLocale.id
-												);
+												onAddLocale(availableLocale.id);
 											}}
-											symbolLeft={
-												availableLocale.symbol
-											}
+											symbolLeft={availableLocale.symbol}
 										>
 											{availableLocale.label}
 										</ClayDropDown.Item>
@@ -201,15 +197,19 @@ const TranslationAdminContent = ({
 
 									<ClayTable.Cell>
 										{!isDefaultLocale && (
-											<ClayIcon
-												className="inline-item"
+											<ClayButton
+												displayType="unstyled"
 												onClick={() =>
 													onRemoveLocale(
 														activeLocale.id
 													)
 												}
-												symbol="trash"
-											/>
+											>
+												<ClayIcon
+													className="inline-item"
+													symbol="trash"
+												/>
+											</ClayButton>
 										)}
 									</ClayTable.Cell>
 								</ClayTable.Row>

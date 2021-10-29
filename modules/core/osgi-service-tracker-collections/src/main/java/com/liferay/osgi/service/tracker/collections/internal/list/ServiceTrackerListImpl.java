@@ -91,12 +91,6 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 	private static class ServiceTrackerListIterator<S, T>
 		implements Iterator<T> {
 
-		public ServiceTrackerListIterator(
-			Iterator<ServiceReferenceServiceTuple<S, T>> iterator) {
-
-			_iterator = iterator;
-		}
-
 		@Override
 		public boolean hasNext() {
 			return _iterator.hasNext();
@@ -113,6 +107,12 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 		@Override
 		public void remove() {
 			throw new UnsupportedOperationException();
+		}
+
+		private ServiceTrackerListIterator(
+			Iterator<ServiceReferenceServiceTuple<S, T>> iterator) {
+
+			_iterator = iterator;
 		}
 
 		private final Iterator<ServiceReferenceServiceTuple<S, T>> _iterator;

@@ -16,19 +16,17 @@ package com.liferay.portal.workflow.kaleo.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionVersionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersionModel;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -70,36 +68,43 @@ public class KaleoDefinitionVersionLocalServiceTest
 	}
 
 	@Test
-	public void testSearchKaleoDefinition() throws Exception {
-		KaleoDefinition kaleoDefinition1 = addKaleoDefinition(
-			"Description 1", "Name 1", "First definition");
+	public void testGetLatestKaleoDefinitionVersions() throws Exception {
+		KaleoDefinitionVersion kaleoDefinitionVersion1 =
+			getLatestKaleoDefinitionVersion(
+				addKaleoDefinition(
+					"Description 1", "Name 1", "First definition"));
 
-		KaleoDefinition kaleoDefinition2 = addKaleoDefinition(
-			RandomTestUtil.randomString(), "Name 2", "My title 2");
+		KaleoDefinitionVersion kaleoDefinitionVersion2 =
+			getLatestKaleoDefinitionVersion(
+				addKaleoDefinition(
+					RandomTestUtil.randomString(), "Name 2", "My title 2"));
 
-		KaleoDefinition kaleoDefinition3 = addKaleoDefinition(
-			"Description 3", RandomTestUtil.randomString(), "My title 3");
+		KaleoDefinitionVersion kaleoDefinitionVersion3 =
+			getLatestKaleoDefinitionVersion(
+				addKaleoDefinition(
+					"Description 3", RandomTestUtil.randomString(),
+					"My title 3"));
 
-		_testGetKaleoDefinitionVersions(
-			kaleoDefinition1.getCompanyId(),
-			Arrays.asList(
-				kaleoDefinition1.getKaleoDefinitionId(),
-				kaleoDefinition3.getKaleoDefinitionId()),
-			"desc");
+		Assert.assertEquals(
+			Arrays.asList(kaleoDefinitionVersion1, kaleoDefinitionVersion3),
+			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersions(
+				kaleoDefinitionVersion1.getCompanyId(), "desc",
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null));
 
-		_testGetKaleoDefinitionVersions(
-			kaleoDefinition1.getCompanyId(),
-			Arrays.asList(
-				kaleoDefinition2.getKaleoDefinitionId(),
-				kaleoDefinition3.getKaleoDefinitionId()),
-			"my");
+		Assert.assertEquals(
+			Arrays.asList(kaleoDefinitionVersion2, kaleoDefinitionVersion3),
+			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersions(
+				kaleoDefinitionVersion1.getCompanyId(), "my",
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null));
 
-		_testGetKaleoDefinitionVersions(
-			kaleoDefinition1.getCompanyId(),
-			Arrays.asList(
-				kaleoDefinition1.getKaleoDefinitionId(),
-				kaleoDefinition2.getKaleoDefinitionId()),
-			"name");
+		Assert.assertEquals(
+			Arrays.asList(kaleoDefinitionVersion1, kaleoDefinitionVersion2),
+			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersions(
+				kaleoDefinitionVersion1.getCompanyId(), "name",
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null));
 	}
 
 	@Test
@@ -124,26 +129,6 @@ public class KaleoDefinitionVersionLocalServiceTest
 
 	private String _getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
-	}
-
-	private void _testGetKaleoDefinitionVersions(
-		long companyId, List<Long> expectedResult, String keywords) {
-
-		List<KaleoDefinitionVersion> kaleoDefinitionVersion =
-			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersions(
-				companyId, keywords, -1, -1, -1, null);
-
-		Assert.assertEquals(
-			expectedResult,
-			Stream.of(
-				kaleoDefinitionVersion
-			).flatMap(
-				List::stream
-			).map(
-				KaleoDefinitionVersionModel::getKaleoDefinitionId
-			).collect(
-				Collectors.toList()
-			));
 	}
 
 }

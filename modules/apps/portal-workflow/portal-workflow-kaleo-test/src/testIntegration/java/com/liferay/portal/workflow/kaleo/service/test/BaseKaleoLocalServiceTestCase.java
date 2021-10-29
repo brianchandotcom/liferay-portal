@@ -33,6 +33,7 @@ import com.liferay.portal.workflow.kaleo.definition.Assignment;
 import com.liferay.portal.workflow.kaleo.definition.Task;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
@@ -44,6 +45,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
@@ -98,17 +100,9 @@ public abstract class BaseKaleoLocalServiceTestCase {
 	protected KaleoDefinition addKaleoDefinition()
 		throws IOException, PortalException {
 
-		KaleoDefinition kaleoDefinition =
-			_kaleoDefinitionLocalService.addKaleoDefinition(
-				StringUtil.randomString(), StringUtil.randomString(),
-				StringUtil.randomString(),
-				_read("legal-marketing-workflow-definition.xml"),
-				StringPool.BLANK, 1, serviceContext);
-
-		_kaleoDefinitionLocalService.activateKaleoDefinition(
-			kaleoDefinition.getKaleoDefinitionId(), serviceContext);
-
-		return kaleoDefinition;
+		return addKaleoDefinition(
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString());
 	}
 
 	protected KaleoDefinition addKaleoDefinition(
@@ -266,6 +260,15 @@ public abstract class BaseKaleoLocalServiceTestCase {
 			kaleoDefinition.getName(), serviceContext);
 	}
 
+	protected KaleoDefinitionVersion getLatestKaleoDefinitionVersion(
+			KaleoDefinition kaleoDefinition)
+		throws IOException, PortalException {
+
+		return _kaleoDefinitionVersionLocalService.
+			getLatestKaleoDefinitionVersion(
+				kaleoDefinition.getCompanyId(), kaleoDefinition.getName());
+	}
+
 	protected KaleoDefinition updateKaleoDefinition(
 			KaleoDefinition kaleoDefinition)
 		throws IOException, PortalException {
@@ -323,6 +326,10 @@ public abstract class BaseKaleoLocalServiceTestCase {
 
 	@Inject
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+
+	@Inject
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
 
 	@Inject
 	private KaleoInstanceLocalService _kaleoInstanceLocalService;

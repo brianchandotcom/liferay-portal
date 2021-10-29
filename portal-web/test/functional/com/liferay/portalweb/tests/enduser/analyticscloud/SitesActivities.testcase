@@ -391,23 +391,16 @@ definition {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 
 			ACNavigation.goToSites();
-
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
 		}
 
 		task ("Hover on the unique visitors graph and assert the elements that are shown on the tooltip") {
-			Click.mouseDownMouseUp(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
-
 			for (var current : list "Known-2,Anonymous-1,Total-3") {
 				var visitorsType = StringUtil.extractFirst("${current}","-");
 				var valueVisitors = StringUtil.extractLast("${current}","-");
 
-				AssertElementPresent(
-					key_value = "${valueVisitors}",
-					key_visitors = "${visitorsType}",
-					locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
+				ACSites.viewVisitorsOnGraph(
+					valueVisitors = "${valueVisitors}",
+					visitorsType = "${visitorsType}");
 			}
 		}
 	}

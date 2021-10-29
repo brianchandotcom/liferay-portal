@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementLocalService;
@@ -51,9 +50,6 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 			boolean readOnly, Map<Locale, String> titleMap, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), null, SXPActionKeys.ADD_SXP_ELEMENT);
 
 		return sxpElementLocalService.addSXPElement(
 			getUserId(), descriptionMap, elementDefinitionJSON, readOnly,

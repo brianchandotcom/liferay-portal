@@ -4968,7 +4968,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							<![CDATA[
 								#!/bin/bash
 
-								until /opt/mssql-tools/bin/sqlcmd -P ${database.password} -U ${database.username} -Q "${test.query}";
+								while ! /opt/mssql-tools/bin/sqlcmd -P ${database.password} -U ${database.username} -Q "${test.query}" 2>/dev/null
 								do
 									echo "Waiting for SQL Server ${database.version} to be ready"
 

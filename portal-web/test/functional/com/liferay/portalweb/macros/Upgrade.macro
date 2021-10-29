@@ -4101,7 +4101,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges(
 			gotoPublicationsAdmin = "true",
-			key_publicationName = "Publication 2 Name");
+			publicationName = "Publication 2 Name");
 
 		AssertVisible(
 			key_warningMessage = "This publication was created on a previous Liferay version. You cannot publish, revert, or make additional changes. You can only view or delete it.",

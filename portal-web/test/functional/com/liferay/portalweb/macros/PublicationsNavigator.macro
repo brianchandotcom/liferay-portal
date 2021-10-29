@@ -7,20 +7,16 @@ definition {
 			key_publicationName = "${publicationName}",
 			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
-		MenuItem.click(menuItem = "${menuItem}");
+		MenuItem.clickNoError(menuItem = "${menuItem}");
 	}
 
 	macro gotoPublish {
 		if ("${gotoPublicationsAdmin}" == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-			Click(
-				key_publicationName = "${publicationName}",
-				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
-
-			MenuItem.click(menuItem = "Publish");
+			PublicationsNavigator._gotoPublicationEllipsisItem(
+				menuItem = "Publish",
+				publicationName = "${publicationName}");
 		}
 		else {
 			PublicationsNavigator.gotoReviewChanges();
@@ -33,17 +29,15 @@ definition {
 		if ("${gotoPublicationsAdmin}" == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-			Click(
-				key_publicationName = "${publicationName}",
-				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
+			PublicationsNavigator._gotoPublicationEllipsisItem(
+				menuItem = "Review Changes",
+				publicationName = "${publicationName}");
 		}
 		else {
 			Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
-		}
 
-		MenuItem.click(menuItem = "Review Changes");
+			MenuItem.click(menuItem = "Review Changes");
+		}
 	}
 
 	macro gotoViewChangeDiff {

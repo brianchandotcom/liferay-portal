@@ -69,4 +69,23 @@ definition {
 			value1 = "${value}");
 	}
 
+	macro viewVisitorsOnGraph {
+		ACTimeFilter.clickTimeFilterButton();
+
+		ACTimeFilter.setLast24Hours();
+
+		Click.mouseDownMouseUp(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
+
+		while (IsElementNotPresent(locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS", key_value = "${valueVisitors}", key_visitors = "${visitorsType}")) {
+			Click.mouseDownMouseUp(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
+
+			TestUtils.hardRefresh();
+		}
+
+		AssertElementPresent(
+			key_value = "${valueVisitors}",
+			key_visitors = "${visitorsType}",
+			locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
+	}
+
 }

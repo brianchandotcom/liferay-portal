@@ -71,6 +71,9 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 					"/account_admin/delete_account_entry_addresses"
 				).setRedirect(
 					currentURLObj
+				).setParameter(
+					"accountEntryId",
+					ParamUtil.getLong(liferayPortletRequest, "accountEntryId")
 				).buildString()
 			).setIcon(
 				"times-circle"

@@ -15,11 +15,16 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -47,6 +52,8 @@ public class DeleteAccountEntryAddressesMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		_checkPermission(actionRequest);
+
 		long[] accountEntryAddressIds = ParamUtil.getLongValues(
 			actionRequest, "accountEntryAddressIds");
 
@@ -60,6 +67,24 @@ public class DeleteAccountEntryAddressesMVCActionCommand
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 	}
+
+	private void _checkPermission(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_accountEntryModelResourcePermission.check(
+			themeDisplay.getPermissionChecker(),
+			ParamUtil.getLong(actionRequest, "accountEntryId"),
+			ActionKeys.UPDATE);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
 
 	@Reference
 	private AddressLocalService _addressLocalService;

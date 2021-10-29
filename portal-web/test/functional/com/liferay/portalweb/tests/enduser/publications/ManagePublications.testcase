@@ -58,6 +58,10 @@ definition {
 			publicationDescription = "Publication Description",
 			publicationName = "Publication Name");
 
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		SitePages.addPublicPage(pageName = "Test Page");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
@@ -68,6 +72,14 @@ definition {
 		AssertElementNotPresent(
 			key_publicationName = "Publication Name",
 			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
+
+		AssertTextPresent(
+			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
+			value1 = "Production");
+
+		Navigator.openURL();
+
+		Page.viewNoPG(pageName = "Test Page");
 	}
 
 	@priority = "4"

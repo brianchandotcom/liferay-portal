@@ -42,9 +42,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
-		DMDocument.assertFileNameFromTempFolder(
-			downloadedFileName = "これは文書です.txt",
-			specialLanguageFileName = "true");
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "これは文書です.txt");
 	}
 
 	@description = "This test ensures that a Japanese file can be downloaded by file name."
@@ -66,9 +64,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
-		DMDocument.assertFileNameFromTempFolder(
-			downloadedFileName = "これは文書です.txt",
-			specialLanguageFileName = "true");
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "これは文書です.txt");
 	}
 
 	@description = "This test ensures that a Japanese file can be downloaded by title."
@@ -90,9 +86,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
-		DMDocument.assertFileNameFromTempFolder(
-			downloadedFileName = "これは文書です.txt",
-			specialLanguageFileName = "true");
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "これは文書です.txt");
 	}
 
 	@description = "This test ensures that a document title and file name can be edited with Japanese."

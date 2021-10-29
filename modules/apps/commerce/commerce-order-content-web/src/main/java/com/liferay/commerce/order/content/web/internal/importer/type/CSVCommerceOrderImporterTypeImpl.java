@@ -257,6 +257,8 @@ public class CSVCommerceOrderImporterTypeImpl
 			cpDefinition.getCPDefinitionId());
 		commerceOrderImporterItemImpl.setNameMap(cpDefinition.getNameMap());
 
+		commerceOrderImporterItemImpl.setJSON("[]");
+
 		commerceOrderImporterItemImpl.setQuantity(quantity);
 
 		return commerceOrderImporterItemImpl;

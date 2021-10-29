@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>CHANGE_HEADER</td>
+	<td>//span[contains(@class,'control-menu-level-1-heading') and contains(.,'Changes')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENT_ACTIONS</td>
 	<td>//div[contains(@class,'autofit-row') and contains(.,'${key_commentValue}')]/preceding-sibling::div//button[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>

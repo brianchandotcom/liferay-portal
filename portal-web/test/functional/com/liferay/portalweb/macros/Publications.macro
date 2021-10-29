@@ -12,7 +12,7 @@ definition {
 			key_publicationName = "${publicationName}",
 			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 
-		Pause(locator1 = "1000");
+		WaitForElementPresent(locator1 = "PublicationsChanges#CHANGE_HEADER");
 
 		var key_changeCategory = "${changeCategory}";
 		var key_changeTitle = "${changeTitle}";
@@ -262,7 +262,7 @@ definition {
 
 		Button.click(button = "Create");
 
-		Pause(locator1 = "5000");
+		Alert.viewSuccessMessage();
 	}
 
 	macro deletePublication {
@@ -326,8 +326,6 @@ definition {
 			MenuItem.click(menuItem = "Discard");
 		}
 
-		Pause(locator1 = "3000");
-
 		AssertElementPresent(locator1 = "Publications#DISCARDED_CHANGES_TITLE");
 
 		var key_changeCategory = "${changeCategory}";
@@ -389,8 +387,6 @@ definition {
 		}
 
 		MenuItem.click(menuItem = "Review Changes");
-
-		Pause(locator1 = "3000");
 	}
 
 	macro gotoViewChangeDiff {
@@ -413,8 +409,6 @@ definition {
 		Click(
 			key_entryTitle = "${entryTitle}",
 			locator1 = "Publications#CONFLICTING_CHANGES_CONTENT_LINK");
-
-		Pause(locator1 = "1000");
 
 		SelectFrameTop(value1 = "relative=top");
 
@@ -551,8 +545,6 @@ definition {
 			MenuItem.click(menuItem = "Reschedule");
 
 			// Workaround LPS-123416
-
-			Pause(locator1 = "1000");
 
 			Click.mouseOverClick(locator1 = "Publications#DELETE_THE_ENTERED_TIME_BUTTON");
 		}

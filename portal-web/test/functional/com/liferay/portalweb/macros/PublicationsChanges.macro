@@ -44,8 +44,6 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		Pause(locator1 = "500");
-
 		Type.clickAtType(
 			key_userName = "${userName}",
 			locator1 = "PublicationsChanges#COMMENT_BODY_SPECIFIC",
@@ -152,11 +150,11 @@ definition {
 			PublicationsChanges.changeDisplayStyle(displayStyle = "Changes");
 		}
 
+		WaitForElementPresent(locator1 = "PublicationsChanges#CHANGE_HEADER");
+
 		if ("${showAllItems}" == "true") {
 			Check.checkToggleSwitch(locator1 = "PublicationsChanges#SHOW_ALL_ITEMS_TOGGLE_SWITCH");
 		}
-
-		Pause(locator1 = "3000");
 
 		var key_changeCategory = "${changeCategory}";
 		var key_changeUser = "${changeUser}";
@@ -190,8 +188,6 @@ definition {
 
 	macro viewChangesViaContextStyle {
 		PublicationsChanges.changeDisplayStyle(displayStyle = "Context");
-
-		Pause(locator1 = "3000");
 
 		if ("${showAllItems}" == "true") {
 			Check.checkToggleSwitch(locator1 = "PublicationsChanges#SHOW_ALL_ITEMS_TOGGLE_SWITCH");

@@ -223,6 +223,8 @@ definition {
 			locator1 = "MessageBoardsBannedUsers#BANNED_USERS_TABLE_BANNED_USER",
 			value1 = "${userScreenName}");
 
+		ProductMenuHelper.openProductMenu();
+
 		var key_siteName = "${userScreenName}";
 
 		AssertTextEquals.assertPartialText(

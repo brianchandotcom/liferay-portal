@@ -2566,6 +2566,40 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="This is a custom title edit","og:description" content="This is a custom description edit","og:image" content="${portalURL}/documents/${siteID}/0/Document_2.jpg''');
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			portlet = "Open Graph",
+			siteURLKey = "test-site-name");
+
+		OpenGraph.clearImage();
+
+		Button.click(button = "Save");
+
+		Site.openToSiteSettingsPages(
+			portlet = "Open Graph",
+			siteURLKey = "test-site-name");
+
+		OpenGraph.configureOpenGraph(
+			customImage = "true",
+			uploadFileName = "Document_3.jpg");
+
+		Site.openToSiteSettingsPages(
+			portlet = "Open Graph",
+			siteURLKey = "test-site-name");
+
+		OpenGraph.viewPreviewImage(imageName = "Document_3.jpg");
+
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteID}/0/Document_3.jpg''');
 	}
 
 	macro viewAndEditSERPPreview {

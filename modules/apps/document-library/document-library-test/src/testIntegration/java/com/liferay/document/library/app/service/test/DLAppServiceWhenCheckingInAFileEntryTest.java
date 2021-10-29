@@ -73,7 +73,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			Assert.assertEquals(
 				1,
 				workflowHandlerInvocationCounter.getCount(
-					"updateStatus", int.class, Map.class));
+					"updateStatus", Object.class, int.class, Map.class));
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -84,7 +84,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			Assert.assertEquals(
 				1,
 				workflowHandlerInvocationCounter.getCount(
-					"updateStatus", int.class, Map.class));
+					"updateStatus", Object.class, int.class, Map.class));
 
 			DLAppServiceTestUtil.updateFileEntry(
 				group.getGroupId(), fileEntry.getFileEntryId(),
@@ -93,7 +93,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			Assert.assertEquals(
 				1,
 				workflowHandlerInvocationCounter.getCount(
-					"updateStatus", int.class, Map.class));
+					"updateStatus", Object.class, int.class, Map.class));
 
 			DLAppServiceUtil.checkInFileEntry(
 				fileEntry.getFileEntryId(), DLVersionNumberIncrease.MINOR,
@@ -102,7 +102,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			Assert.assertEquals(
 				2,
 				workflowHandlerInvocationCounter.getCount(
-					"updateStatus", int.class, Map.class));
+					"updateStatus", Object.class, int.class, Map.class));
 		}
 	}
 

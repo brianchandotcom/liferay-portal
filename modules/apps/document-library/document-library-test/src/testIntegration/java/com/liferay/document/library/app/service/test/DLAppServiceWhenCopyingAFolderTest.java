@@ -70,7 +70,7 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 			Assert.assertEquals(
 				1,
 				workflowHandlerInvocationCounter.getCount(
-					"updateStatus", int.class, Map.class));
+					"updateStatus", Object.class, int.class, Map.class));
 
 			DLAppServiceUtil.copyFolder(
 				folder.getRepositoryId(), folder.getFolderId(),
@@ -80,7 +80,7 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 			Assert.assertEquals(
 				2,
 				workflowHandlerInvocationCounter.getCount(
-					"updateStatus", int.class, Map.class));
+					"updateStatus", Object.class, int.class, Map.class));
 		}
 	}
 

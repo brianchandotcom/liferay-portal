@@ -193,6 +193,10 @@ public class BlogsStatsUserLocalServiceImpl
 		List<BlogsStatsUser> blogsStatsUserList = _getBlogsStatsUsersList(
 			groupId, results);
 
+		if (blogsStatsUserList.isEmpty()) {
+			return new BlogsStatsUserImpl(groupId, userId, null, 0, 0, 0, 0);
+		}
+
 		return blogsStatsUserList.get(0);
 	}
 

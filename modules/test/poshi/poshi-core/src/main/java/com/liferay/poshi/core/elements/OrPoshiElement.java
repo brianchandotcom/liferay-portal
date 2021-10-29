@@ -75,7 +75,10 @@ public class OrPoshiElement extends PoshiElement {
 		for (PoshiElement poshiElement : poshiElements) {
 			String poshiScript = poshiElement.toPoshiScript();
 
-			if (poshiScript.startsWith("(")) {
+			if (poshiScript.startsWith("(") || poshiScript.startsWith("!(") ||
+				(poshiElement instanceof IsSetPoshiElement) ||
+				(poshiElement instanceof ContainsPoshiElement)) {
+
 				sb.append(poshiScript);
 			}
 			else {

@@ -4881,8 +4881,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							<![CDATA[
 								#!/bin/bash
 
-								sqlplus ${oracle.admin.user}/${oracle.admin.password} @/tmp/setup.sql
-
 								while [[ "$(${ORACLE_HOME}/bin/lsnrctl status | grep READY)" == "" ]]
 								do
 									echo "Waiting for Oracle ${database.version} to be ready"
@@ -4894,24 +4892,11 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							]]>
 						</echo>
 
-						<property location="${project.dir}/setup.sql" name="setup.sql.file" />
-
-						<echo file="${setup.sql.file}">
-							<![CDATA[
-								alter system set result_cache_max_size=24M scope=spfile;
-								alter system set sga_target=4928M scope=spfile;
-								alter system set shared_pool_reserved_size=40M scope=spfile;
-
-								quit;
-							]]>
-						</echo>
-
 						<get-database-property property.name="database.host" />
 
 						<execute>
 							<![CDATA[
 								docker cp ${setup.sh.file} ${database.host}:/tmp/setup.sh
-								docker cp ${setup.sql.file} ${database.host}:/tmp/setup.sql
 
 								docker exec ${database.host} /bin/bash /tmp/setup.sh
 							]]>
@@ -5019,6 +5004,31 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						</execute>
 					</then>
 				</elseif>
+			</if>
+
+			<if>
+				<equals arg1="${database.type}" arg2="oracle" />
+				<then>
+					<property location="${project.dir}/setup.sql" name="setup.sql.file" />
+
+					<echo file="${setup.sql.file}">
+						<![CDATA[
+							alter system set result_cache_max_size=24M scope=spfile;
+							alter system set sga_target=4928M scope=spfile;
+							alter system set shared_pool_reserved_size=40M scope=spfile;
+
+							quit;
+						]]>
+					</echo>
+
+					<docker-copy dest.path="${database.host}:/tmp/setup.sql" src.path="${setup.sql.file}" />
+
+					<docker-execute container="${database.host}">
+						sqlplus ${oracle.admin.user}/${oracle.admin.password} @/tmp/setup.sql
+					</docker-execute>
+
+					<delete file="${setup.sql.file}" />
+				</then>
 			</if>
 		</sequential>
 	</macrodef>

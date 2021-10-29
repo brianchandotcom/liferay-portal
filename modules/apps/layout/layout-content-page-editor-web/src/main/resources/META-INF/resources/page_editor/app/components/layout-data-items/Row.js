@@ -21,6 +21,7 @@ import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useGetFieldValue} from '../../contexts/CollectionItemContext';
 import {useSelector} from '../../contexts/StoreContext';
+import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
@@ -114,6 +115,9 @@ const Row = React.forwardRef(
 			}
 		}
 
+		const textAlignDefaultValue = getCommonStyleByName('textAlign')
+			.defaultValue;
+
 		const rowContent = (
 			<ClayLayout.Row
 				className={classNames(className, {
@@ -132,7 +136,7 @@ const Row = React.forwardRef(
 						? textAlign.startsWith('text-')
 							? textAlign
 							: `text-${textAlign}`
-						: '']: textAlign,
+						: `text-${textAlignDefaultValue}`]: textAlignDefaultValue,
 				})}
 				id={elementId}
 				ref={ref}

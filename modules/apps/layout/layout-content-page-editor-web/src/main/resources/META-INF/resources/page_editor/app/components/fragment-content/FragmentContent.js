@@ -34,6 +34,7 @@ import selectLanguageId from '../../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import resolveEditableConfig from '../../utils/editable-value/resolveEditableConfig';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
+import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
@@ -278,6 +279,9 @@ const FragmentContent = ({
 		}
 	}
 
+	const textAlignDefaultValue = getCommonStyleByName('textAlign')
+		.defaultValue;
+
 	return (
 		<>
 			<FragmentContentInteractionsFilter
@@ -319,7 +323,7 @@ const FragmentContent = ({
 								? textAlign.startsWith('text-')
 									? textAlign
 									: `text-${textAlign}`
-								: '']: textAlign,
+								: `text-${textAlignDefaultValue}`]: textAlignDefaultValue,
 						}
 					)}
 					contentRef={elementRef}

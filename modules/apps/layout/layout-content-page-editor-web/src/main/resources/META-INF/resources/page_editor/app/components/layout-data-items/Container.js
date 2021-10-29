@@ -23,6 +23,7 @@ import {useGetFieldValue} from '../../contexts/CollectionItemContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
+import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
 import {getEditableLinkValue} from '../../utils/getEditableLinkValue';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
@@ -148,6 +149,9 @@ const Container = React.forwardRef(
 			}
 		}
 
+		const textAlignDefaultValue = getCommonStyleByName('textAlign')
+			.defaultValue;
+
 		const content = (
 			<div
 				{...(link ? {} : data)}
@@ -189,7 +193,7 @@ const Container = React.forwardRef(
 						? textAlign.startsWith('text-')
 							? textAlign
 							: `text-${textAlign}`
-						: '']: textAlign,
+						: `text-${textAlignDefaultValue}`]: textAlignDefaultValue,
 				})}
 				id={elementId}
 				ref={ref}

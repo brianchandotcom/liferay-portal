@@ -94,12 +94,12 @@ definition {
 	}
 
 	@description = "Verify that the user can delete a field set."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeleteAFieldSet {
+		KaleoFormsManageFieldSets.deleteOneFieldSet(fieldSetName = "Inventory");
 
-		// TODO LRQA-70707 CanDeleteAFieldSet pending implementation
-
+		KaleoFormsManageFieldSets.viewFieldSetCannotBeFound(fieldSetName = "Inventory");
+		
 	}
 
 	@description = "Verify that user can filter by modified date and ID."

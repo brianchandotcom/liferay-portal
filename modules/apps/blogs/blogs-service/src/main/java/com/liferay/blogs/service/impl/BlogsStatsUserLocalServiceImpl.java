@@ -33,10 +33,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.ratings.kernel.model.RatingsEntryTable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.LongStream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,18 +63,18 @@ public class BlogsStatsUserLocalServiceImpl
 				BlogsEntryTable.INSTANCE
 			).leftJoinOn(
 				RatingsEntryTable.INSTANCE,
-				BlogsEntryTable.INSTANCE.entryId.eq(
-					RatingsEntryTable.INSTANCE.classPK
+				RatingsEntryTable.INSTANCE.classNameId.eq(
+					_classNameLocalService.getClassNameId(
+						BlogsEntry.class.getName())
 				).and(
-					RatingsEntryTable.INSTANCE.classNameId.eq(
-						_classNameLocalService.getClassNameId(
-							BlogsEntry.class.getName()))
+					RatingsEntryTable.INSTANCE.classPK.eq(
+						BlogsEntryTable.INSTANCE.entryId)
 				)
 			).where(
-				BlogsEntryTable.INSTANCE.groupId.eq(
-					groupId
+				BlogsEntryTable.INSTANCE.companyId.eq(
+					companyId
 				).and(
-					BlogsEntryTable.INSTANCE.companyId.eq(companyId)
+					BlogsEntryTable.INSTANCE.groupId.eq(groupId)
 				)
 			).groupBy(
 				BlogsEntryTable.INSTANCE.userId
@@ -119,12 +117,12 @@ public class BlogsStatsUserLocalServiceImpl
 				BlogsEntryTable.INSTANCE
 			).leftJoinOn(
 				RatingsEntryTable.INSTANCE,
-				BlogsEntryTable.INSTANCE.entryId.eq(
-					RatingsEntryTable.INSTANCE.classPK
+				RatingsEntryTable.INSTANCE.classNameId.eq(
+					_classNameLocalService.getClassNameId(
+						BlogsEntry.class.getName())
 				).and(
-					RatingsEntryTable.INSTANCE.classNameId.eq(
-						_classNameLocalService.getClassNameId(
-							BlogsEntry.class.getName()))
+					RatingsEntryTable.INSTANCE.classPK.eq(
+						BlogsEntryTable.INSTANCE.entryId)
 				)
 			).where(
 				BlogsEntryTable.INSTANCE.groupId.eq(
@@ -164,14 +162,6 @@ public class BlogsStatsUserLocalServiceImpl
 	public List<BlogsStatsUser> getOrganizationStatsUsers(
 		long organizationId, int start, int end) {
 
-		LongStream longStream = Arrays.stream(
-			_userLocalService.getOrganizationUserIds(organizationId));
-
-		Long[] organizationUserIds = longStream.boxed(
-		).toArray(
-			Long[]::new
-		);
-
 		List<Object[]> results = _blogsEntryPersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
 				BlogsEntryTable.INSTANCE.groupId,
@@ -181,22 +171,19 @@ public class BlogsStatsUserLocalServiceImpl
 			).from(
 				BlogsEntryTable.INSTANCE
 			).innerJoinON(
-				UserTable.INSTANCE,
-				UserTable.INSTANCE.userId.eq(BlogsEntryTable.INSTANCE.userId)
-			).innerJoinON(
 				Users_OrgsTable.INSTANCE,
-				Users_OrgsTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId)
+				Users_OrgsTable.INSTANCE.userId.eq(BlogsEntryTable.INSTANCE.userId)
 			).leftJoinOn(
 				RatingsEntryTable.INSTANCE,
-				BlogsEntryTable.INSTANCE.entryId.eq(
-					RatingsEntryTable.INSTANCE.classPK
+				RatingsEntryTable.INSTANCE.classNameId.eq(
+					_classNameLocalService.getClassNameId(
+						BlogsEntry.class.getName())
 				).and(
-					RatingsEntryTable.INSTANCE.classNameId.eq(
-						_classNameLocalService.getClassNameId(
-							BlogsEntry.class.getName()))
+					RatingsEntryTable.INSTANCE.classPK.eq(
+						BlogsEntryTable.INSTANCE.entryId)
 				)
 			).where(
-				Users_OrgsTable.INSTANCE.organizationId.in(organizationUserIds)
+				Users_OrgsTable.INSTANCE.organizationId.eq(organizationId)
 			).groupBy(
 				BlogsEntryTable.INSTANCE.userId
 			).orderBy(
@@ -239,12 +226,12 @@ public class BlogsStatsUserLocalServiceImpl
 				BlogsEntryTable.INSTANCE
 			).leftJoinOn(
 				RatingsEntryTable.INSTANCE,
-				BlogsEntryTable.INSTANCE.entryId.eq(
-					RatingsEntryTable.INSTANCE.classPK
+				RatingsEntryTable.INSTANCE.classNameId.eq(
+					_classNameLocalService.getClassNameId(
+						BlogsEntry.class.getName())
 				).and(
-					RatingsEntryTable.INSTANCE.classNameId.eq(
-						_classNameLocalService.getClassNameId(
-							BlogsEntry.class.getName()))
+					RatingsEntryTable.INSTANCE.classPK.eq(
+						BlogsEntryTable.INSTANCE.entryId)
 				)
 			).where(
 				BlogsEntryTable.INSTANCE.groupId.eq(

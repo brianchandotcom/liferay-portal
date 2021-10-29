@@ -343,6 +343,40 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-131903 and LPS-132256 - Verified that users can not attempt to edit pages when disable changes."
+	@priority = "3"
+	test CannotEditSiteLinkedToDisabledPageModificationSiteTemplate {
+		property portal.acceptance = "true";
+
+		SiteTemplates.addCP(
+			disableChanges = "true",
+			siteTemplateName = "Site Template Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addCP(
+			siteName = "Site Template Site Name",
+			siteTemplateName = "Site Template Name",
+			siteType = "Site Template");
+
+		Navigator.openSiteURL(siteName = "Site Template Site Name");
+
+		Page.viewPageLockCheck();
+
+		AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
+
+		MouseOver(
+			key_pageName = "Home",
+			locator1 = "Home#PAGE");
+
+		AssertElementNotPresent(locator1 = "Portlet#OPTIONS_ICON");
+
+		MenuItem.viewNotPresent(menuItem = "Permissions");
+	}
+
 	@description = "This is a use case for LPS-84497."
 	@priority = "3"
 	test DeactivateActivateSiteTemplate {

@@ -26,6 +26,25 @@ definition {
 		}
 	}
 
+	macro addWikiPage {
+		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageContent = "${wikiPageContent}";
+
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "${wikiPageTitle}");
+
+		SelectFrame.selectFrameNoLoading(
+			key_title = "Rich Text Editor",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiPageContent}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
+	}
+
 	macro deleteCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 

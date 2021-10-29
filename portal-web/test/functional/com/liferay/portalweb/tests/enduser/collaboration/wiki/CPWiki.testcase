@@ -139,6 +139,8 @@ definition {
 			wikiFrontPageContent = "Wiki FrontPage Content",
 			wikiNodeName = "Main");
 
+		PortletEntry.publish();
+
 		WikiNavigator.openToWikiNode(
 			groupName = "Guest",
 			siteURLKey = "guest",
@@ -209,6 +211,8 @@ definition {
 		WikiPage.addFrontPageCP(
 			wikiFrontPageContent = "Wiki FrontPage Content",
 			wikiNodeName = "Main");
+
+		PortletEntry.publish();
 
 		WikiNavigator.openToWikiPage(
 			siteURLKey = "guest",

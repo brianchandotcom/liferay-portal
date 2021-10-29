@@ -281,8 +281,6 @@ definition {
 			value1 = "${wikiFrontPageContent}");
 
 		SelectFrame(value1 = "relative=top");
-
-		PortletEntry.publish();
 	}
 
 	macro addFrontPagePG {
@@ -590,6 +588,13 @@ definition {
 			value1 = "Change Parent");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro clickWikiPage {
+		AssertClick(
+			key_workflowInstanceName = "${workflowInstanceName}",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "${workflowInstanceName}");
 	}
 
 	macro compareVersionsCP {
@@ -1822,4 +1827,11 @@ definition {
 		}
 	}
 
+	macro addChildPageViaEllipsis {
+		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Add Child Page");
+
+		PortletEntry.inputTitle(title = "${key_wikiChildPageTitle}");
+	}
 }

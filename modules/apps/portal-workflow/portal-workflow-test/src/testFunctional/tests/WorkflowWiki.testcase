@@ -17,26 +17,25 @@ definition {
 
 		Navigator.openURL();
 
-		//ProductMenu.gotoPortlet(
-		//	category = "Configuration",
-		//	panel = "Site Administration",
-		//	portlet = "Workflow");
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
 
-		//Workflow.configureWorkflow(
-		//	workflowDefinition = "Single Approver",
-		//	workflowResourceValue = "Wiki Page");
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Wiki Page");
 
-		//ProductMenu.gotoPortlet(
-		//	category = "Site Builder",
-		//	panel = "Site Administration",
-		//	portlet = "Pages");
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
 
-		//SitePages.addPublicPage(pageName = "Wiki Page");
+		SitePages.addPublicPage(pageName = "Wiki Page");
 
-		//Navigator.gotoPage(pageName = "Wiki Page");
+		Navigator.gotoPage(pageName = "Wiki Page");
 
-		//Portlet.addPG(portletName = "Wiki");
-
+		Portlet.addPG(portletName = "Wiki");
 	}
 
 	tearDown {
@@ -159,147 +158,104 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
-	@description = "This is a test for LRQA-69555. Verify that the user can save as Draft a Wiki Page with assigned Workflow. "
-	@priority = "3"
+	@description = "This is a test for LRQA-69555. Verify that the user can save as Draft a Wiki Page with assigned Workflow."
+	@priority = "5"
 	test CanSaveAsDraftPage {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		Click(locator1 = "Button#PLUS");
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
-		PortletEntry.inputName(name = "Test Name");
+		WikiNode.viewCP(
+			numberOfWikiPages = "0",
+			wikiNodeName = "Wiki Node Name");
 
-		PortletEntry.inputDescription(description = "Test Description");
-
-		Button.clickSave();
-
-		AssertClick(
-			key_workflowInstanceName = "Test Name",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Test Name");
-
-		Click(locator1 = "Button#PLUS");
-
-		PortletEntry.inputTitle(title = "Test Title");
-
-		SelectFrame.selectFrameNoLoading(
-			key_title = "Rich Text Editor",
-			locator1 = "IFrame#MODAL_ANY");
-
-		Type(
-			locator1 = "CKEditor#BODY",
-			value1 = "Test Content");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
+		WikiNode.addWikiPage(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Name");
 
 		PortletEntry.saveAsDraft();
 
-		AssertTextEquals(
-			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "Draft");
+		WorkflowWiki.viewWikiPageStatus(workflowStatus = "Draft");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewDefaultMyWorkflowTasksCP();
 	}
 
-	@description = "This is a test for LRQA-69554. Verify that the user can Submit for Publication a Wiki Page with assigned Workflow. "
-	@priority = "3"
+	@description = "This is a test for LRQA-69554. Verify that the user can Submit for Publication a Wiki Page with assigned Workflow."
+	@priority = "5"
 	test CanSubmitWikiPage {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		Click(locator1 = "Button#PLUS");
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
-		PortletEntry.inputName(name = "Test Name");
+		WikiNode.viewCP(
+			numberOfWikiPages = "0",
+			wikiNodeName = "Wiki Node Name");
 
-		PortletEntry.inputDescription(description = "Test Description");
+		WikiNode.addWikiPage(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Name");
 
-		Button.clickSave();
+		PortletEntry.submitForPublication();
 
-		AssertClick(
-			key_workflowInstanceName = "Test Name",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Test Name");
-
-		Click(locator1 = "Button#PLUS");
-
-		PortletEntry.inputTitle(title = "Test Title");
-
-		SelectFrame.selectFrameNoLoading(
-			key_title = "Rich Text Editor",
-			locator1 = "IFrame#MODAL_ANY");
-
-		Type(
-			locator1 = "CKEditor#BODY",
-			value1 = "Test Content");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
-
-		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
-
-		Alert.viewSuccessMessage();
+		WikiPage.viewNoPagePG(wikiPageTitle = "Wiki Page Name");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Test Title",
+			workflowAssetTitle = "Wiki Page Name",
 			workflowAssetType = "Wiki Page",
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
-			workflowAssetTitle = "Test Title",
+			workflowAssetTitle = "Wiki Page Name",
 			workflowAssetType = "Wiki Page",
 			workflowTask = "Review");
 
 		Alert.viewSuccessMessage();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Wiki");
+
+		WikiNode.viewCP(
+			numberOfWikiPages = "2",
+			wikiNodeName = "Wiki Node Name");
+
+		WorkflowWiki.viewWikiPageStatus(workflowStatus = "Approved");
 	}
 
 	@description = "This is a test for LRQA-69570. Verify that a new page with the same name can't be created while the page is on Review."
-	@priority = "3"
+	@priority = "4"
 	test CantCreatePageWithSameNameOnReview {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		AssertClick(
-			key_workflowInstanceName = "Main",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Main");
+		WikiNode.viewCP(
+			numberOfWikiPages = "1",
+			wikiNodeName = "Main");
 
-		Click(locator1 = "Button#PLUS");
+		WikiNode.addWikiPage(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Name");
 
-		PortletEntry.inputTitle(title = "Other Page Test");
-
-		SelectFrame.selectFrameNoLoading(
-			key_title = "Rich Text Editor",
-			locator1 = "IFrame#MODAL_ANY");
-
-		Type(
-			locator1 = "CKEditor#BODY",
-			value1 = "Test Content");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
-
-		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Other Page Test",
+			workflowAssetTitle = "Wiki Page Name",
 			workflowAssetType = "Wiki Page",
 			workflowTask = "Review");
 
 		Workflow.rejectTaskByActions(
-			workflowAssetTitle = "Other Page Test",
+			workflowAssetTitle = "Wiki Page Name",
 			workflowAssetType = "Wiki Page",
 			workflowTask = "Review");
 
@@ -307,32 +263,23 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		AssertClick(
-			key_workflowInstanceName = "Main",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Main");
+		WikiNode.viewCP(
+			numberOfWikiPages = "1",
+			wikiNodeName = "Main");
 
-		Click(locator1 = "Button#PLUS");
+		WikiNode.addWikiPage(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Name");
 
-		PortletEntry.inputTitle(title = "Other Page Test");
+		Button.clickSubmitForPublication();
 
-		SelectFrame.selectFrameNoLoading(
-			key_title = "Rich Text Editor",
-			locator1 = "IFrame#MODAL_ANY");
+		Alert.viewErrorMessage(errorMessage = "There is already a page with the specified title.");
 
-		Type(
-			locator1 = "CKEditor#BODY",
-			value1 = "Test Content");
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
-
-		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
-
-		AssertElementPresent(
-			key_errorMessage = "There is already a page with the specified title.",
-			locator1 = "WorkflowTransitionModal#TRANSITION_ERROR_MESSAGE");
+		MyWorkflowTasks.viewMyWorkflowTaskItemPosition(
+			rowPosition = "2",
+			title = "Wiki Page Name");
 	}
 
 	@priority = "4"
@@ -476,59 +423,32 @@ definition {
 			wikiPageUsername = "Test Test");
 	}
 
-	@description = "This is a test for LRQA-69553. Verify that the user can assign a Workflow to Wiki Page. "
-	@ignore = "Test Stub"
-	@priority = "3"
-	test UserCanAssignWorkflowToWikiPage {
-
-		// TODO LRQA-69553 UserCanAssignWorkflowToWikiPage pending implementation
-
-	}
-
 	@description = "This is a test for LRQA-69561. Verify that the Child Page status are displayed correctly on approval."
-	@priority = "3"
+	@priority = "2"
 	test WikiChildPageStatusOnApprove {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		AssertClick(
-			key_workflowInstanceName = "Main",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Main");
+		WikiNode.viewCP(
+			numberOfWikiPages = "1",
+			wikiNodeName = "Main");
 
-		AssertClick(
-			key_workflowInstanceName = "FrontPage",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "FrontPage");
+		WikiPage.clickWikiPage(workflowInstanceName = "FrontPage");
 
-		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
+		WikiPage.addFrontPageCP(
+			wikiFrontPageContent = "Wiki FrontPage Content",
+			wikiNodeName = "Main");
 
-		WikiPage.addFrontPageWithWorkflowPG(wikiPageContent = "Front Page Wiki Content");
+		PortletEntry.submitForPublication();
 
 		Navigator.gotoBack();
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Add Child Page");
+		WikiPage.addChildPageViaEllipsis(wikiChildPageTitle = "Child Page Title");
 
-		PortletEntry.inputTitle(title = "Child Page Title");
+		PortletEntry.submitForPublication();
 
-		SelectFrame.selectFrameNoLoading(
-			key_title = "Rich Text Editor",
-			locator1 = "IFrame#MODAL_ANY");
-
-		Type(
-			locator1 = "CKEditor#BODY",
-			value1 = "Child Page Content");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
-
-		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
-
-		AssertElementPresent(
-			key_status = "Pending",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Pending");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -546,142 +466,85 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		AssertClick(
-			key_workflowInstanceName = "Main",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Main");
+		WikiNode.viewCP(
+			numberOfWikiPages = "2",
+			wikiNodeName = "Main");
 
-		AssertElementPresent(
-			key_status = "Approved",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Approved");
 	}
 
-	@description = "This is a test for LRQA-69567. Verify that the a rejected Child Page is not displayed on list. "
-	@priority = "3"
+	@description = "This is a test for LRQA-69567. Verify that the a rejected Child Page is not displayed on list."
+	@priority = "4"
 	test WikiChildPageStatusOnReject {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Wiki Page");
-
 		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Wiki",
-			site = "Liferay DXP");
+			category = "Content &amp; Data",
+			portlet = "Wiki");
 
-		AssertClick(
-			key_workflowInstanceName = "Main",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Main");
+		WikiNode.viewCP(
+			numberOfWikiPages = "1",
+			wikiNodeName = "Main");
 
-		AssertTextEquals(
-			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "Approved");
+		WikiPage.clickWikiPage(workflowInstanceName = "FrontPage");
 
-		AssertClick(
-			key_workflowInstanceName = "FrontPage",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "FrontPage");
+		WikiPage.addFrontPageCP(
+			wikiFrontPageContent = "Wiki FrontPage Content",
+			wikiNodeName = "Main");
 
-		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
-
-		WikiPage.addFrontPageWithWorkflowPG(wikiPageContent = "Front Page Content");
+		PortletEntry.submitForPublication();
 
 		Navigator.gotoBack();
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Add Child Page");
+		WikiPage.addChildPageViaEllipsis(wikiChildPageTitle = "Child Page Title");
 
-		PortletEntry.inputTitle(title = "Child Page Test");
+		PortletEntry.submitForPublication();
 
-		SelectFrame.selectFrameNoLoading(
-			key_title = "Rich Text Editor",
-			locator1 = "IFrame#MODAL_ANY");
-
-		Type(
-			locator1 = "CKEditor#BODY",
-			value1 = "Test Content");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
-
-		WikiPage.submitForPublication();
-
-		Refresh();
-
-		AssertTextEquals(
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_STATUS",
-			value1 = "Pending");
+		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Pending");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
-
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "FrontPage",
-			workflowAssetType = "Wiki Page",
-			workflowTask = "Review");
-
-		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Child Page Test",
+			workflowAssetTitle = "Child Page Title",
 			workflowAssetType = "Wiki Page",
 			workflowTask = "Review");
 
 		Workflow.rejectTaskByActions(
-			workflowAssetTitle = "FrontPage",
-			workflowAssetType = "Wiki Page",
-			workflowTask = "Review");
-
-		Workflow.rejectTaskByActions(
-			workflowAssetTitle = "Child Page Test",
+			workflowAssetTitle = "Child Page Title",
 			workflowAssetType = "Wiki Page",
 			workflowTask = "Review");
 
 		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Wiki",
-			site = "Liferay DXP");
+			category = "Content &amp; Data",
+			portlet = "Wiki");
 
-		AssertClick(
-			key_workflowInstanceName = "Main",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Main");
+		WikiNode.viewCP(
+			numberOfWikiPages = "1",
+			wikiNodeName = "Main");
 
-		AssertElementNotPresent(
-			key_domainName = "Child Page Test",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE");
+		WorkflowWiki.viewWikiPageNotPresent(viewWikiPagePresent = "Child Page Title");
 	}
 
-	@description = "This is a test for LRQA-68568. Verify that the Front Page content doesn't change on reject."
-	@priority = "3"
+	@description = "This is a test for LRQA-69568. Verify that the Front Page content doesn't change on reject."
+	@priority = "4"
 	test WikiFrontPageContentDoesntChangeOnReject {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		AssertClick(
-			key_workflowInstanceName = "Main",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Main");
+		WikiNode.viewCP(
+			numberOfWikiPages = "1",
+			wikiNodeName = "Main");
 
-		AssertClick(
-			key_workflowInstanceName = "FrontPage",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "FrontPage");
+		WikiPage.clickWikiPage(workflowInstanceName = "FrontPage");
 
-		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
+		WikiPage.addFrontPageCP(
+			wikiFrontPageContent = "Wiki FrontPage Content",
+			wikiNodeName = "Main");
 
-		WikiPage.addFrontPageWithWorkflowPG(wikiPageContent = "Front Page Wiki Content");
+		PortletEntry.submitForPublication();
 
 		Navigator.gotoBack();
 
-		AssertElementPresent(
-			key_status = "Pending",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Pending");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -699,44 +562,29 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		AssertClick(
-			key_workflowInstanceName = "Main",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Main");
+		WikiNode.viewCP(
+			numberOfWikiPages = "1",
+			wikiNodeName = "Main");
 
-		AssertElementPresent(
-			key_status = "Pending",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Pending");
 	}
 
-	@description = "This is a test for LRQA-69560. Verify that the Front Page status changes after edit. "
-	@priority = "3"
+	@description = "This is a test for LRQA-69560. Verify that the Front Page status changes after edit."
+	@priority = "2"
 	test WikiFrontPageStatusChangesOnEdit {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		Click(locator1 = "Button#PLUS");
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
-		PortletEntry.inputName(name = "Test Name");
+		WikiNode.viewCP(
+			numberOfWikiPages = "0",
+			wikiNodeName = "Wiki Node Name");
 
-		PortletEntry.inputDescription(description = "Test Description");
+		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Approved");
 
-		Button.clickSave();
-
-		AssertClick(
-			key_workflowInstanceName = "Test Name",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Test Name");
-
-		AssertTextEquals(
-			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "Approved");
-
-		AssertClick(
-			key_workflowInstanceName = "FrontPage",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "FrontPage");
+		WikiPage.clickWikiPage(workflowInstanceName = "FrontPage");
 
 		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
 
@@ -744,35 +592,23 @@ definition {
 
 		Navigator.gotoBack();
 
-		AssertTextEquals(
-			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "Pending");
+		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Pending");
 	}
 
 	@description = "This is a test for LRQA-69557. Verify that the Front Page status are displayed correctly on approve. "
-	@priority = "3"
+	@priority = "2"
 	test WikiPageApprovedStatus {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		Click(locator1 = "Button#PLUS");
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
-		PortletEntry.inputName(name = "Test Name");
+		WikiNode.viewCP(
+			numberOfWikiPages = "0",
+			wikiNodeName = "Wiki Node Name");
 
-		PortletEntry.inputDescription(description = "Test Description");
-
-		Button.clickSave();
-
-		AssertClick(
-			key_workflowInstanceName = "Test Name",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Test Name");
-
-		AssertClick(
-			key_workflowInstanceName = "FrontPage",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "FrontPage");
+		WikiPage.clickWikiPage(workflowInstanceName = "FrontPage");
 
 		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
 
@@ -780,9 +616,7 @@ definition {
 
 		Navigator.gotoBack();
 
-		AssertTextEquals(
-			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "Pending");
+		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Pending");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -800,57 +634,39 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		AssertClick(
-			key_workflowInstanceName = "Test Name",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Test Name");
+		WikiNode.viewCP(
+			numberOfWikiPages = "1",
+			wikiNodeName = "Wiki Node Name");
 
-		AssertTextEquals(
-			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "Approved");
+		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Approved");
 	}
 
 	@description = "This is a test for LRQA-69569. Verify that a page isn't added to the Wiki on Reject."
-	@priority = "3"
+	@priority = "4"
 	test WikiPageNotAddedOnReject {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		AssertClick(
-			key_workflowInstanceName = "Main",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Main");
+		WikiNode.viewCP(
+			numberOfWikiPages = "1",
+			wikiNodeName = "Main");
 
-		Click(locator1 = "Button#PLUS");
+		WikiNode.addWikiPage(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Name");
 
-		PortletEntry.inputTitle(title = "Test Title");
-
-		SelectFrame.selectFrameNoLoading(
-			key_title = "Rich Text Editor",
-			locator1 = "IFrame#MODAL_ANY");
-
-		Type(
-			locator1 = "CKEditor#BODY",
-			value1 = "Test Content");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
-
-		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Test Title",
+			workflowAssetTitle = "Wiki Page Name",
 			workflowAssetType = "Wiki Page",
 			workflowTask = "Review");
 
 		Workflow.rejectTaskByActions(
-			workflowAssetTitle = "Test Title",
+			workflowAssetTitle = "Wiki Page Name",
 			workflowAssetType = "Wiki Page",
 			workflowTask = "Review");
 
@@ -858,41 +674,27 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		AssertClick(
-			key_workflowInstanceName = "Main",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Main");
+		WikiNode.viewCP(
+			numberOfWikiPages = "1",
+			wikiNodeName = "Main");
 
-		AssertElementNotPresent(
-			key_workflowInstanceName = "Test Title",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Test Title");
+		WorkflowWiki.viewWikiPageNotPresent(key_workflowInstanceName = "Wiki Page Name");
 	}
 
 	@description = "This is a test for LRQA-69558. Verify that the Front Page status are displayed correctly on reject process."
-	@priority = "3"
+	@priority = "2"
 	test WikiPageRejectStatus {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		Click(locator1 = "Button#PLUS");
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
-		PortletEntry.inputName(name = "Test Name");
+		WikiNode.viewCP(
+			numberOfWikiPages = "0",
+			wikiNodeName = "Wiki Node Name");
 
-		PortletEntry.inputDescription(description = "Test Description");
-
-		Button.clickSave();
-
-		AssertClick(
-			key_workflowInstanceName = "Test Name",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Test Name");
-
-		AssertClick(
-			key_workflowInstanceName = "FrontPage",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "FrontPage");
+		WikiPage.clickWikiPage(workflowInstanceName = "FrontPage");
 
 		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
 
@@ -900,9 +702,7 @@ definition {
 
 		Navigator.gotoBack();
 
-		AssertTextEquals(
-			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "Pending");
+		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Pending");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -920,14 +720,11 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		AssertClick(
-			key_workflowInstanceName = "Test Name",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "Test Name");
+		WikiNode.viewCP(
+			numberOfWikiPages = "1",
+			wikiNodeName = "Wiki Node Name");
 
-		AssertTextEquals(
-			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "Pending");
+		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Pending");
 	}
 
 }

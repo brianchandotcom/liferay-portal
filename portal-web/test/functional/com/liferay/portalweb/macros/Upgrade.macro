@@ -1046,6 +1046,20 @@ definition {
 		}
 	}
 
+	macro deleteDocumentTypesAndMetadataSets {
+		JSONRecycleBin.emptyRecycleBin();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.delete(dmDocumentTypeName = "DM Document Type Name Edit");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.delete(metadataSetName = "Document Metadata Set Name Edit");
+	}
+
 	macro editAndDeleteBlogEntry {
 		if (isSet(video)) {
 			Navigator.gotoPage(pageName = "Blogs");
@@ -1165,6 +1179,40 @@ definition {
 		WikiNavigator.gotoAllPagesPG();
 
 		WikiPage.deletePG(wikiPageTitle = "FrontPage");
+	}
+
+	macro editDocumentTypesAndMetadataSets {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMDocumentType.edit(
+			dmDocumentTypeName = "Document Metadata Set Name",
+			dmDocumentTypeNameEdit = "Document Metadata Set Name Edit",
+			fieldFieldLabel = "Number",
+			fieldFieldLabelEdit = "Phone Number");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldNameEdit = "Address",
+			dmDocumentTypeName = "DM Document Type Name",
+			dmDocumentTypeNameEdit = "DM Document Type Name Edit",
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Address");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "DM Document Type Title");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Address",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		AssertElementPresent(
+			key_fieldFieldLabel = "Phone Number",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	macro EditWCStructureAndTemplateAndViewInWCDandAssetPublisher {

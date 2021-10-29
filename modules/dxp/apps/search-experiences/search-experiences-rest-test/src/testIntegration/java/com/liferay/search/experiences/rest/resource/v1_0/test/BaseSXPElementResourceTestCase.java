@@ -44,6 +44,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.search.experiences.rest.client.dto.v1_0.Field;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.client.http.HttpInvoker;
 import com.liferay.search.experiences.rest.client.pagination.Page;
@@ -517,6 +518,16 @@ public abstract class BaseSXPElementResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"elementDefinition", additionalAssertFieldName)) {
+
+				if (sxpElement.getElementDefinition() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (sxpElement.getTitle() == null) {
 					valid = false;
@@ -620,6 +631,19 @@ public abstract class BaseSXPElementResourceTestCase {
 				if (!Objects.deepEquals(
 						sxpElement1.getDescription(),
 						sxpElement2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"elementDefinition", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						sxpElement1.getElementDefinition(),
+						sxpElement2.getElementDefinition())) {
 
 					return false;
 				}
@@ -750,6 +774,11 @@ public abstract class BaseSXPElementResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("elementDefinition")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("id")) {

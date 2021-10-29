@@ -44,64 +44,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SXPElement")
+@GraphQLName("UiConfiguration")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SXPElement")
-public class SXPElement implements Serializable {
+@XmlRootElement(name = "UiConfiguration")
+public class UiConfiguration implements Serializable {
 
-	public static SXPElement toDTO(String json) {
-		return ObjectMapperUtil.readValue(SXPElement.class, json);
+	public static UiConfiguration toDTO(String json) {
+		return ObjectMapperUtil.readValue(UiConfiguration.class, json);
 	}
 
-	public static SXPElement unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(SXPElement.class, json);
+	public static UiConfiguration unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(UiConfiguration.class, json);
 	}
-
-	@Schema
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
-
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String description;
 
 	@Schema
 	@Valid
-	public ElementDefinition getElementDefinition() {
-		return elementDefinition;
+	public FieldSet[] getFieldSets() {
+		return fieldSets;
 	}
 
-	public void setElementDefinition(ElementDefinition elementDefinition) {
-		this.elementDefinition = elementDefinition;
+	public void setFieldSets(FieldSet[] fieldSets) {
+		this.fieldSets = fieldSets;
 	}
 
 	@JsonIgnore
-	public void setElementDefinition(
-		UnsafeSupplier<ElementDefinition, Exception>
-			elementDefinitionUnsafeSupplier) {
+	public void setFieldSets(
+		UnsafeSupplier<FieldSet[], Exception> fieldSetsUnsafeSupplier) {
 
 		try {
-			elementDefinition = elementDefinitionUnsafeSupplier.get();
+			fieldSets = fieldSetsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -113,61 +84,7 @@ public class SXPElement implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ElementDefinition elementDefinition;
-
-	@Schema
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long id;
-
-	@Schema
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	@JsonIgnore
-	public void setTitle(
-		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
-
-		try {
-			title = titleUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String title;
+	protected FieldSet[] fieldSets;
 
 	@Override
 	public boolean equals(Object object) {
@@ -175,13 +92,13 @@ public class SXPElement implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SXPElement)) {
+		if (!(object instanceof UiConfiguration)) {
 			return false;
 		}
 
-		SXPElement sxpElement = (SXPElement)object;
+		UiConfiguration uiConfiguration = (UiConfiguration)object;
 
-		return Objects.equals(toString(), sxpElement.toString());
+		return Objects.equals(toString(), uiConfiguration.toString());
 	}
 
 	@Override
@@ -196,52 +113,24 @@ public class SXPElement implements Serializable {
 
 		sb.append("{");
 
-		if (description != null) {
+		if (fieldSets != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"description\": ");
+			sb.append("\"fieldSets\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(_escape(description));
+			for (int i = 0; i < fieldSets.length; i++) {
+				sb.append(String.valueOf(fieldSets[i]));
 
-			sb.append("\"");
-		}
-
-		if (elementDefinition != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+				if ((i + 1) < fieldSets.length) {
+					sb.append(", ");
+				}
 			}
 
-			sb.append("\"elementDefinition\": ");
-
-			sb.append(String.valueOf(elementDefinition));
-		}
-
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(id);
-		}
-
-		if (title != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"title\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(title));
-
-			sb.append("\"");
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -251,7 +140,7 @@ public class SXPElement implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.SXPElement",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.UiConfiguration",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -55,6 +55,28 @@ public class SXPElement implements Cloneable, Serializable {
 
 	protected String description;
 
+	public ElementDefinition getElementDefinition() {
+		return elementDefinition;
+	}
+
+	public void setElementDefinition(ElementDefinition elementDefinition) {
+		this.elementDefinition = elementDefinition;
+	}
+
+	public void setElementDefinition(
+		UnsafeSupplier<ElementDefinition, Exception>
+			elementDefinitionUnsafeSupplier) {
+
+		try {
+			elementDefinition = elementDefinitionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ElementDefinition elementDefinition;
+
 	public Long getId() {
 		return id;
 	}

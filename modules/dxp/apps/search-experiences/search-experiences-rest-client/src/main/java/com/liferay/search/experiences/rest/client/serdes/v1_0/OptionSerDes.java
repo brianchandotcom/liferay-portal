@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.SXPElement;
+import com.liferay.search.experiences.rest.client.dto.v1_0.Option;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,22 +30,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SXPElementSerDes {
+public class OptionSerDes {
 
-	public static SXPElement toDTO(String json) {
-		SXPElementJSONParser sxpElementJSONParser = new SXPElementJSONParser();
+	public static Option toDTO(String json) {
+		OptionJSONParser optionJSONParser = new OptionJSONParser();
 
-		return sxpElementJSONParser.parseToDTO(json);
+		return optionJSONParser.parseToDTO(json);
 	}
 
-	public static SXPElement[] toDTOs(String json) {
-		SXPElementJSONParser sxpElementJSONParser = new SXPElementJSONParser();
+	public static Option[] toDTOs(String json) {
+		OptionJSONParser optionJSONParser = new OptionJSONParser();
 
-		return sxpElementJSONParser.parseToDTOs(json);
+		return optionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(SXPElement sxpElement) {
-		if (sxpElement == null) {
+	public static String toJSON(Option option) {
+		if (option == null) {
 			return "null";
 		}
 
@@ -53,50 +53,30 @@ public class SXPElementSerDes {
 
 		sb.append("{");
 
-		if (sxpElement.getDescription() != null) {
+		if (option.getLabel() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"description\": ");
+			sb.append("\"label\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(sxpElement.getDescription()));
+			sb.append(_escape(option.getLabel()));
 
 			sb.append("\"");
 		}
 
-		if (sxpElement.getElementDefinition() != null) {
+		if (option.getValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"elementDefinition\": ");
-
-			sb.append(String.valueOf(sxpElement.getElementDefinition()));
-		}
-
-		if (sxpElement.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(sxpElement.getId());
-		}
-
-		if (sxpElement.getTitle() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"title\": ");
+			sb.append("\"value\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(sxpElement.getTitle()));
+			sb.append(_escape(option.getValue()));
 
 			sb.append("\"");
 		}
@@ -107,90 +87,60 @@ public class SXPElementSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		SXPElementJSONParser sxpElementJSONParser = new SXPElementJSONParser();
+		OptionJSONParser optionJSONParser = new OptionJSONParser();
 
-		return sxpElementJSONParser.parseToMap(json);
+		return optionJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(SXPElement sxpElement) {
-		if (sxpElement == null) {
+	public static Map<String, String> toMap(Option option) {
+		if (option == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (sxpElement.getDescription() == null) {
-			map.put("description", null);
+		if (option.getLabel() == null) {
+			map.put("label", null);
 		}
 		else {
-			map.put("description", String.valueOf(sxpElement.getDescription()));
+			map.put("label", String.valueOf(option.getLabel()));
 		}
 
-		if (sxpElement.getElementDefinition() == null) {
-			map.put("elementDefinition", null);
+		if (option.getValue() == null) {
+			map.put("value", null);
 		}
 		else {
-			map.put(
-				"elementDefinition",
-				String.valueOf(sxpElement.getElementDefinition()));
-		}
-
-		if (sxpElement.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(sxpElement.getId()));
-		}
-
-		if (sxpElement.getTitle() == null) {
-			map.put("title", null);
-		}
-		else {
-			map.put("title", String.valueOf(sxpElement.getTitle()));
+			map.put("value", String.valueOf(option.getValue()));
 		}
 
 		return map;
 	}
 
-	public static class SXPElementJSONParser
-		extends BaseJSONParser<SXPElement> {
+	public static class OptionJSONParser extends BaseJSONParser<Option> {
 
 		@Override
-		protected SXPElement createDTO() {
-			return new SXPElement();
+		protected Option createDTO() {
+			return new Option();
 		}
 
 		@Override
-		protected SXPElement[] createDTOArray(int size) {
-			return new SXPElement[size];
+		protected Option[] createDTOArray(int size) {
+			return new Option[size];
 		}
 
 		@Override
 		protected void setField(
-			SXPElement sxpElement, String jsonParserFieldName,
+			Option option, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "description")) {
+			if (Objects.equals(jsonParserFieldName, "label")) {
 				if (jsonParserFieldValue != null) {
-					sxpElement.setDescription((String)jsonParserFieldValue);
+					option.setLabel((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "elementDefinition")) {
+			else if (Objects.equals(jsonParserFieldName, "value")) {
 				if (jsonParserFieldValue != null) {
-					sxpElement.setElementDefinition(
-						ElementDefinitionSerDes.toDTO(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					sxpElement.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "title")) {
-				if (jsonParserFieldValue != null) {
-					sxpElement.setTitle((String)jsonParserFieldValue);
+					option.setValue((String)jsonParserFieldValue);
 				}
 			}
 		}

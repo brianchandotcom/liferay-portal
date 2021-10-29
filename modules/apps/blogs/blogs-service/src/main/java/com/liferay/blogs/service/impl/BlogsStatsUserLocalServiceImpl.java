@@ -54,6 +54,7 @@ public class BlogsStatsUserLocalServiceImpl
 
 		List<Object[]> results = _blogsEntryPersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
+				BlogsEntryTable.INSTANCE.groupId,
 				BlogsEntryTable.INSTANCE.userId, _lastPostDateExpression,
 				_entryCountExpression, _ratingsTotalEntriesExpression,
 				_ratingsAverageScoreExpression, _ratingsTotalScoreExpression
@@ -82,7 +83,7 @@ public class BlogsStatsUserLocalServiceImpl
 				start, end
 			));
 
-		return _getBlogsStatsUsersList(groupId, results);
+		return _getBlogsStatsUsersList(results);
 	}
 
 	@Override
@@ -91,6 +92,7 @@ public class BlogsStatsUserLocalServiceImpl
 
 		List<Object[]> results = _blogsEntryPersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
+				BlogsEntryTable.INSTANCE.groupId,
 				BlogsEntryTable.INSTANCE.userId, _lastPostDateExpression,
 				_entryCountExpression, _ratingsTotalEntriesExpression,
 				_ratingsAverageScoreExpression, _ratingsTotalScoreExpression
@@ -119,7 +121,7 @@ public class BlogsStatsUserLocalServiceImpl
 				start, end
 			));
 
-		return _getBlogsStatsUsersList(groupId, results);
+		return _getBlogsStatsUsersList(results);
 	}
 
 	@Override
@@ -166,6 +168,7 @@ public class BlogsStatsUserLocalServiceImpl
 
 		List<Object[]> results = _blogsEntryPersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
+				BlogsEntryTable.INSTANCE.groupId,
 				BlogsEntryTable.INSTANCE.userId, _lastPostDateExpression,
 				_entryCountExpression, _ratingsTotalEntriesExpression,
 				_ratingsAverageScoreExpression, _ratingsTotalScoreExpression
@@ -190,14 +193,13 @@ public class BlogsStatsUserLocalServiceImpl
 				BlogsEntryTable.INSTANCE.userId
 			));
 
-		List<BlogsStatsUser> blogsStatsUserList = _getBlogsStatsUsersList(
-			groupId, results);
+		List<BlogsStatsUser> blogsStatsUsers = _getBlogsStatsUsersList(results);
 
-		if (blogsStatsUserList.isEmpty()) {
+		if (blogsStatsUsers.isEmpty()) {
 			return new BlogsStatsUserImpl(groupId, userId, null, 0, 0, 0, 0);
 		}
 
-		return blogsStatsUserList.get(0);
+		return blogsStatsUsers.get(0);
 	}
 
 	private List<BlogsStatsUser> _getBlogsStatsUsersList(
@@ -213,30 +215,6 @@ public class BlogsStatsUserLocalServiceImpl
 			Long ratingsTotalEntries = (Long)columns[4];
 			Double ratingsAverageScore = (Double)columns[5];
 			Double ratingsTotalScore = (Double)columns[6];
-
-			blogsStatsUsers.add(
-				new BlogsStatsUserImpl(
-					groupId, userId, lastPostDate, entryCount,
-					GetterUtil.get(ratingsTotalEntries, 0L),
-					GetterUtil.get(ratingsAverageScore, 0D),
-					GetterUtil.get(ratingsTotalScore, 0D)));
-		}
-
-		return blogsStatsUsers;
-	}
-
-	private List<BlogsStatsUser> _getBlogsStatsUsersList(
-		long groupId, List<Object[]> results) {
-
-		List<BlogsStatsUser> blogsStatsUsers = new ArrayList<>(results.size());
-
-		for (Object[] columns : results) {
-			Long userId = (Long)columns[0];
-			Date lastPostDate = (Date)columns[1];
-			Long entryCount = (Long)columns[2];
-			Long ratingsTotalEntries = (Long)columns[3];
-			Double ratingsAverageScore = (Double)columns[4];
-			Double ratingsTotalScore = (Double)columns[5];
 
 			blogsStatsUsers.add(
 				new BlogsStatsUserImpl(

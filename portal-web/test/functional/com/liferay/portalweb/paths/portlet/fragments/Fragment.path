@@ -65,8 +65,8 @@
 </tr>
 <!--FRAGMENT-->
 <tr>
-	<td>FRAGMENT</td>
-	<td>//div[contains(@class,'layout-content')]//*[contains(@class,'fragment-${key_fragmentClass}') and contains(.,'${key_content}')]</td>
+	<td>FRAGMENT_BODY</td>
+	<td>xpath=(//div[contains(@id,'fragment-')]//*[contains(@class,'${fragmentName}')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

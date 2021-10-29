@@ -46,9 +46,9 @@ definition {
 
 		task ("Add freemarker codes to inline content of HTML") {
 			PageEditor.editFragmentHTML(
-				editableId = "element-html",
 				fileName = "fragment_freemarker_basic.html",
-				fragmentName = "HTML");
+				fragmentName = "HTML",
+				id = "element-html");
 
 			PageEditor.clickPublish();
 		}
@@ -91,8 +91,8 @@ definition {
 
 			PageEditor.editFragmentHTML(
 				content = "${htmlSnippet}",
-				editableId = "element-html",
-				fragmentName = "HTML");
+				fragmentName = "HTML",
+				id = "element-html");
 		}
 
 		task ("View edited inline content in edit mode") {
@@ -194,8 +194,8 @@ definition {
 			PageEditor.editFragmentHTML(
 				content = "${htmlSnippet}",
 				contributed = "false",
-				editableId = "element-html",
-				fragmentName = "Fragment Name");
+				fragmentName = "Fragment Name",
+				id = "element-html");
 		}
 
 		task ("View edited inline content in edit mode") {

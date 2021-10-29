@@ -382,10 +382,10 @@ definition {
 				scope = "Master");
 
 			PageEditor.editFragmentHTML(
-				editableId = "element-html",
 				fileName = "fragment_static_text.html",
 				filePath = "enduser/wem/layout/pagetemplate/masterspagetemplate",
-				fragmentName = "HTML");
+				fragmentName = "HTML",
+				id = "element-html");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",

@@ -599,9 +599,9 @@ definition {
 
 		task ("Edit the inline text of HTML") {
 			PageEditor.editFragmentHTML(
-				editableId = "element-html",
 				fileName = "fragment_freemarker_basic.html",
-				fragmentName = "HTML");
+				fragmentName = "HTML",
+				id = "element-html");
 		}
 
 		task ("Save the fragment composition as fragment with inline content") {
@@ -969,9 +969,9 @@ definition {
 
 		task ("Edit the inline text of HTML") {
 			PageEditor.editFragmentHTML(
-				editableId = "element-html",
 				fileName = "fragment_freemarker_basic.html",
-				fragmentName = "HTML");
+				fragmentName = "HTML",
+				id = "element-html");
 		}
 
 		task ("Save the fragment composition as fragment without inline content") {

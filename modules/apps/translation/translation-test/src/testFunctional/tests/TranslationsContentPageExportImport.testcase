@@ -402,8 +402,8 @@ definition {
 
 		PageEditor.editFragmentHTML(
 			content = "HTMLTitle",
-			editableId = "element-html",
-			fragmentName = "HTML");
+			fragmentName = "HTML",
+			id = "element-html");
 
 		PageEditor.clickPublish();
 

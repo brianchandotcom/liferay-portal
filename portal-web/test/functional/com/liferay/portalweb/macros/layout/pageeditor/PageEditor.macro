@@ -2006,7 +2006,7 @@ definition {
 		PageEditor.gotoEditableFieldEdit(
 			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
-			id = "${editableId}");
+			id = "${id}");
 
 		if (isSet(fileName)) {
 			var content = TestCase.getFileContent(

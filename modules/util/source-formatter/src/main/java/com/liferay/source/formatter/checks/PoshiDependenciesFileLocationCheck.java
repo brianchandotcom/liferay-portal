@@ -125,7 +125,7 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 			return;
 		}
 
-		for (String dependenciesFileLocation : _TESE_FILE_LOCATIONS) {
+		for (String dependenciesFileLocation : _TEST_FILE_LOCATIONS) {
 			File directory = new File(getPortalDir(), dependenciesFileLocation);
 
 			Path dirPath = directory.toPath();
@@ -203,8 +203,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 			return;
 		}
 
-		for (String testcasesFileLocation : _TESE_FILE_LOCATIONS) {
-			File directory = new File(getPortalDir(), testcasesFileLocation);
+		for (String testCaseFileLocation : _TEST_FILE_LOCATIONS) {
+			File directory = new File(getPortalDir(), testCaseFileLocation);
 
 			Path dirPath = directory.toPath();
 
@@ -277,7 +277,7 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 		"private", "source-formatter"
 	};
 
-	private static final String[] _TESE_FILE_LOCATIONS = {
+	private static final String[] _TEST_FILE_LOCATIONS = {
 		"modules", "portal-web/test/functional/com/liferay/portalweb/tests"
 	};
 

@@ -186,9 +186,12 @@ public class CommerceCurrenciesDisplayContext {
 
 	public String getRoundingModeLabel(String roundingModeName) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", PortalUtil.getLocale(_renderRequest), getClass());
-		return LanguageUtil.get(resourceBundle, StringUtil.replace(
-			roundingModeName, CharPool.UNDERLINE, CharPool.SPACE));
+			"content.Language", PortalUtil.getLocale(_renderRequest),
+			getClass());
+
+		return StringUtil.replace(
+			LanguageUtil.get(resourceBundle, roundingModeName),
+			CharPool.UNDERLINE, CharPool.SPACE);
 	}
 
 	public SearchContainer<CommerceCurrency> getSearchContainer()

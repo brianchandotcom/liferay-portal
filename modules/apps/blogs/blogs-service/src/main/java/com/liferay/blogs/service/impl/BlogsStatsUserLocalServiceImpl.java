@@ -122,8 +122,21 @@ public class BlogsStatsUserLocalServiceImpl
 		JoinStep joinStep = DSLQueryFactoryUtil.select(
 			BlogsEntryTable.INSTANCE.groupId, BlogsEntryTable.INSTANCE.userId,
 			_lastPostDateExpression, _entryCountExpression,
-			_ratingsTotalEntriesExpression, _ratingsAverageScoreExpression,
-			_ratingsTotalScoreExpression
+			DSLFunctionFactoryUtil.countDistinct(
+				RatingsEntryTable.INSTANCE.entryId
+			).as(
+				"totalEntries"
+			),
+			DSLFunctionFactoryUtil.avg(
+				RatingsEntryTable.INSTANCE.score
+			).as(
+				"averageScore"
+			),
+			DSLFunctionFactoryUtil.sum(
+				RatingsEntryTable.INSTANCE.score
+			).as(
+				"totalScore"
+			)
 		).from(
 			BlogsEntryTable.INSTANCE
 		);
@@ -193,24 +206,6 @@ public class BlogsStatsUserLocalServiceImpl
 			BlogsEntryTable.INSTANCE.modifiedDate
 		).as(
 			"lastPostDate"
-		);
-	private final Expression<Number> _ratingsAverageScoreExpression =
-		DSLFunctionFactoryUtil.avg(
-			RatingsEntryTable.INSTANCE.score
-		).as(
-			"averageScore"
-		);
-	private final Expression<Long> _ratingsTotalEntriesExpression =
-		DSLFunctionFactoryUtil.countDistinct(
-			RatingsEntryTable.INSTANCE.entryId
-		).as(
-			"totalEntries"
-		);
-	private final Expression<Number> _ratingsTotalScoreExpression =
-		DSLFunctionFactoryUtil.sum(
-			RatingsEntryTable.INSTANCE.score
-		).as(
-			"totalScore"
 		);
 
 }

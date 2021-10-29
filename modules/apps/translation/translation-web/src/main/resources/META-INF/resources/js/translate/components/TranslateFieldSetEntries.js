@@ -103,13 +103,16 @@ const TranslateFieldEditor = ({
 	onChange = noop,
 }) => {
 	const [content, setContent] = useState(targetContent);
+
 	const editorRef = useRef();
+	const internalUpdateRef = useRef(true);
 
 	useEffect(() => {
-		if (editorRef.current.editor) {
+		if (editorRef.current.editor && !internalUpdateRef.current) {
 			editorRef.current.editor.setData(targetContent);
 			setContent(targetContent);
 		}
+		internalUpdateRef.current = false;
 	}, [targetContent]);
 
 	return (
@@ -136,6 +139,7 @@ const TranslateFieldEditor = ({
 						onChange={(data) => {
 							setContent(data);
 							onChange(data);
+							internalUpdateRef.current = true;
 						}}
 						onInstanceReady={({editor}) => {
 

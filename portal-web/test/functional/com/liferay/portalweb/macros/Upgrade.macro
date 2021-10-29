@@ -3434,6 +3434,9 @@ definition {
 	}
 
 	macro viewDocuments {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
+
 		Navigator.gotoPage(pageName = "Documents");
 
 		DMDocument.viewPG(
@@ -3477,6 +3480,14 @@ definition {
 			dmDocumentFileName = "DM Document Video.mp4",
 			dmDocumentTitle = "DM Document Video");
 
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteID}/0/DM Document Video.mp4");
+
+		DownloadTempFile();
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "DM Document Video.mp4");
+
 		Navigator.gotoPage(pageName = "Documents");
 
 		DMDocument.viewPG(
@@ -3492,6 +3503,14 @@ definition {
 		DMDocument.viewEntryInEdit(
 			dmDocumentFileName = "DM Document JPG.jpg",
 			dmDocumentTitle = "DM Document JPG");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteID}/0/DM Document JPG");
+
+		DownloadTempFile();
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "DM Document JPG");
 
 		Navigator.gotoPage(pageName = "Documents");
 

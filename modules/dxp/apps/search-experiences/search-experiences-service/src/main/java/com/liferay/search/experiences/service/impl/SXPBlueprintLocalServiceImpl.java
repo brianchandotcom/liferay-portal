@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.search.experiences.exception.SXPBlueprintConfigurationJSONException;
 import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
 import com.liferay.search.experiences.model.SXPBlueprint;
@@ -83,8 +82,6 @@ public class SXPBlueprintLocalServiceImpl
 
 		_resourceLocalService.addModelResources(sxpBlueprint, serviceContext);
 
-		_startWorkflowInstance(userId, sxpBlueprint, serviceContext);
-
 		return sxpBlueprint;
 	}
 
@@ -118,6 +115,7 @@ public class SXPBlueprintLocalServiceImpl
 		return sxpBlueprint;
 	}
 
+	@Override
 	public int getSXPBlueprintsCount(long companyId) {
 		return sxpBlueprintPersistence.countByCompanyId(companyId);
 	}
@@ -149,6 +147,7 @@ public class SXPBlueprintLocalServiceImpl
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public SXPBlueprint updateSXPBlueprint(
 			long userId, long sxpBlueprintId, String configurationJSON,
 			Map<Locale, String> descriptionMap, String elementInstancesJSON,
@@ -166,17 +165,6 @@ public class SXPBlueprintLocalServiceImpl
 		sxpBlueprint.setTitleMap(titleMap);
 
 		return updateSXPBlueprint(sxpBlueprint);
-	}
-
-	private void _startWorkflowInstance(
-			long userId, SXPBlueprint sxpBlueprint,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			sxpBlueprint.getCompanyId(), 0, userId,
-			SXPBlueprint.class.getName(), sxpBlueprint.getSXPBlueprintId(),
-			sxpBlueprint, serviceContext);
 	}
 
 	private void _validate(

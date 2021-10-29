@@ -31,25 +31,27 @@ AddressDisplay addressDisplay = (AddressDisplay)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<portlet:renderURL var="editAccountEntryAddressURL">
-		<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_entry_address" />
-		<portlet:param name="backURL" value="<%= currentURL %>" />
-		<portlet:param name="accountEntryAddressId" value="<%= String.valueOf(addressDisplay.getAddressId()) %>" />
-		<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
-	</portlet:renderURL>
+	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="editAccountEntryAddressURL">
+			<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_entry_address" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="accountEntryAddressId" value="<%= String.valueOf(addressDisplay.getAddressId()) %>" />
+			<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+		</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editAccountEntryAddressURL %>"
-	/>
+		<liferay-ui:icon
+			message="edit"
+			url="<%= editAccountEntryAddressURL %>"
+		/>
 
-	<portlet:actionURL name="/account_admin/delete_account_entry_addresses" var="deleteAccounEntryAddressURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="accountEntryAddressIds" value="<%= String.valueOf(addressDisplay.getAddressId()) %>" />
-		<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
-	</portlet:actionURL>
+		<portlet:actionURL name="/account_admin/delete_account_entry_addresses" var="deleteAccounEntryAddressURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="accountEntryAddressIds" value="<%= String.valueOf(addressDisplay.getAddressId()) %>" />
+			<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		url="<%= deleteAccounEntryAddressURL %>"
-	/>
+		<liferay-ui:icon-delete
+			url="<%= deleteAccounEntryAddressURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

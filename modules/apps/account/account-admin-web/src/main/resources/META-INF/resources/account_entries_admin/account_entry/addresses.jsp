@@ -61,6 +61,12 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 					<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
 				</portlet:renderURL>
 
+				<%
+				if (!AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), ActionKeys.UPDATE)) {
+					rowURL = null;
+				}
+				%>
+
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"

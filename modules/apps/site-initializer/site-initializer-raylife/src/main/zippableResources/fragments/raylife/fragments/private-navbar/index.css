@@ -1,5 +1,5 @@
 .insured-portal-navbar {
-	background-color: var(color-brand-primary-darken-5);
+	background-color: var(--color-brand-primary-darken-5);
 	padding-bottom: 0;
 	padding-top: var(--spacer-1);
 }

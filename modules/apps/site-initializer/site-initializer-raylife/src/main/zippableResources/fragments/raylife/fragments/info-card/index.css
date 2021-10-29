@@ -1,7 +1,7 @@
 .information-card a{
-	color: var(--body-color);
 	align-items: center;
 	box-shadow: var(--box-shadow-lg);
+	color: var(--body-color);
 	display: flex;
 	font-size: 16px;
 	font-weight: var(--font-weight-bold);

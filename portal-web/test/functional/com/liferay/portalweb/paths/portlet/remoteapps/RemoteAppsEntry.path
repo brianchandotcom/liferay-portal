@@ -15,6 +15,11 @@
 	<td>//input[@id='_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_name']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CUSTOM_ELEMENT_URL</td>
+	<td>//input[contains(@id,'customElementURLs')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

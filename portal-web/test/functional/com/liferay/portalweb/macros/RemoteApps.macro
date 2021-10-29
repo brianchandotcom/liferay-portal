@@ -21,13 +21,11 @@ definition {
 	}
 
 	macro addCustomElement {
-		var customElementType = "Custom Element";
-
 		LexiconEntry.gotoAdd();
 
 		Select(
-			locator1 = "RemoteApps#NEW_REMOTE_APPS_TYPE",
-			value1 = "${customElementType}");
+			locator1 = "Select#TYPE",
+			value1 = "Custom Element");
 
 		RemoteAppsEntry.addCustomElement(
 			entryHTMLName = "${entryHTMLName}",

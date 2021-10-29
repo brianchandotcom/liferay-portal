@@ -328,10 +328,11 @@ definition {
 		task ("Assert fragment display correctly") {
 			LexiconCard.clickCard(card = "Document Title");
 
-			AssertVisible(
-				key_content = "Document Title",
-				key_fragmentClass = "dm",
-				locator1 = "Fragment#FRAGMENT");
+			AssertTextEquals(
+				fragmentName = "dm",
+				index = "1",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Document Title");
 		}
 	}
 
@@ -409,15 +410,23 @@ definition {
 				locator1 = "LexiconList#LIST_ENTRY_TITLE",
 				value1 = "Web Content Title");
 
-			AssertVisible(
-				key_content = "Web Content Content",
-				key_fragmentClass = "wc",
-				locator1 = "Fragment#FRAGMENT");
+			AssertTextEquals.assertPartialText(
+				fragmentName = "wc",
+				index = "1",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Web Content Title");
 
-			AssertVisible(
-				key_content = "Web Content Description",
-				key_fragmentClass = "wc",
-				locator1 = "Fragment#FRAGMENT");
+			AssertTextEquals.assertPartialText(
+				fragmentName = "wc",
+				index = "1",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Web Content Content");
+
+			AssertTextEquals.assertPartialText(
+				fragmentName = "wc",
+				index = "1",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Web Content Description");
 		}
 	}
 
@@ -537,10 +546,11 @@ definition {
 				value1 = "Web Content With Text Title");
 
 			for (var content : list "Web Content With Text Title,Web Content Description,Web Content Text") {
-				AssertVisible(
-					key_content = "${content}",
-					key_fragmentClass = "wctext",
-					locator1 = "Fragment#FRAGMENT");
+				AssertTextEquals.assertPartialText(
+					fragmentName = "wctext",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY",
+					value1 = "${content}");
 			}
 		}
 
@@ -560,10 +570,11 @@ definition {
 
 		task ("View displayed content") {
 			for (var content : list "Web Content With Text Title,Web Content Description,Web Content Text") {
-				AssertVisible(
-					key_content = "${content}",
-					key_fragmentClass = "wctext",
-					locator1 = "Fragment#FRAGMENT");
+				AssertTextEquals.assertPartialText(
+					fragmentName = "wctext",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY",
+					value1 = "${content}");
 			}
 		}
 	}

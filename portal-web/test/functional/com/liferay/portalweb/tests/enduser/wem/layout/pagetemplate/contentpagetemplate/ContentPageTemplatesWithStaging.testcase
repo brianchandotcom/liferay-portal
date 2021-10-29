@@ -218,9 +218,8 @@ definition {
 
 			AssertCssValue(
 				fragmentName = "button",
-				id = "link",
 				index = "1",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator1 = "Fragment#FRAGMENT_BODY",
 				locator2 = "text-align",
 				value1 = "start");
 

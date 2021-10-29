@@ -1,12 +1,5 @@
 definition {
 
-	macro checkEntryViaUI {
-		Check.checkNotVisible(
-				locator1 = "//input[@type='checkbox']");
-
-		Button.clickSave();
-	}
-
 	macro addSingleFieldEntryViaUI {
 		LexiconEntry.gotoAdd();
 
@@ -115,6 +108,12 @@ definition {
 		var key_pageNumber = "${pageNumber}";
 
 		Click(locator1 = "ObjectPortlet#ANY_PAGE");
+	}
+
+	macro checkEntryViaUI {
+		Check.checkNotVisible(locator1 = "//input[@type='checkbox']");
+
+		Button.clickSave();
 	}
 
 	macro checkUncheckColumnsDisplayed {

@@ -656,7 +656,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "Yes");
-
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a Date entry on layout"

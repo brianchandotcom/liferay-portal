@@ -3711,25 +3711,20 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship field is no longer displayed when the parent object is inactivated (One to Many)"
 	@priority = "4"
 	test RelationshipFieldDisappearsWhenInactivatedOneToMany {
-
 		for (var letter : list "A,B") {
-
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter}",
 				objectName = "CustomObject${letter}",
 				pluralLabelName = "Custom Objects ${letter}");
-
 		}
 
 		for (var letter : list "A,B") {
-
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldLabelName = "Custom Field ${letter}",
 				fieldName = "customObjectField${letter}",
 				fieldType = "String",
 				isRequired = "false",
 				objectName = "CustomObject${letter}");
-
 		}
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
@@ -3766,8 +3761,8 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		AssertElementNotPresent(
-			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			key_fieldLabelName = "Custom Field A",
+			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			value1 = "Custom Field A");
 
 		Navigator.gotoBack();
@@ -3775,11 +3770,9 @@ definition {
 		ObjectPortlet.viewEntryDetails(entry = "Entry 1");
 
 		AssertElementNotPresent(
-			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			key_fieldLabelName = "Custom Field A",
+			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			value1 = "Custom Field A");
-
-
 	}
 
 	@description = "LPS-135401 - Verify that the Relationship field is not created"

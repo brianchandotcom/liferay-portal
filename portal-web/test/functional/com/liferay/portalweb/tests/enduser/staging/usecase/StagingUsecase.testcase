@@ -31,6 +31,7 @@ definition {
 	}
 
 	@priority = "5"
+	@uitest
 	test ActivateStagingForSiteWithTheme {
 		property test.name.skip.portal.instance = "StagingUsecase#ActivateStagingForSiteWithTheme";
 
@@ -356,6 +357,7 @@ definition {
 
 	@description = "This is a use case for LPS-123156."
 	@priority = "3"
+	@uitest
 	test AssertPublishTemplateInfo {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -376,6 +378,7 @@ definition {
 
 	@description = "This is a use case for LPS-123156."
 	@priority = "3"
+	@uitest
 	test AssertScheduledPublicationInfo {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -398,6 +401,7 @@ definition {
 
 	@description = "This is a use case for LPS-123156"
 	@priority = "4"
+	@uitest
 	test AssertStagingPublicationAndProcessesMessage {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -478,6 +482,7 @@ definition {
 	}
 
 	@priority = "5"
+	@uitest
 	test ContentCannotBeCreatedOnLive {
 		property portal.acceptance = "true";
 
@@ -503,6 +508,7 @@ definition {
 	}
 
 	@priority = "5"
+	@uitest
 	test DeleteLivePage {
 		property portal.acceptance = "true";
 
@@ -792,6 +798,7 @@ definition {
 	}
 
 	@priority = "3"
+	@uitest
 	test ModifyInitalPageVariationSetup {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -946,6 +953,7 @@ definition {
 	}
 
 	@priority = "5"
+	@uitest
 	test PublishThemeFromStagedToLive {
 		property test.name.skip.portal.instance = "StagingUsecase#PublishThemeFromStagedToLive";
 
@@ -1446,7 +1454,6 @@ definition {
 	}
 
 	@priority = "4"
-	@uitest
 	test StagingPublishChildSiteWithReference {
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
@@ -1607,7 +1614,6 @@ definition {
 	}
 
 	@priority = "4"
-	@uitest
 	test StagingWithPublishTemplateSmoke {
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",

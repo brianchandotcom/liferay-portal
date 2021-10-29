@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
-
 <root>
 	<structure>
-		<name>Test Structure Name</name>
-		<description></description>
 		<definition>
 			<![CDATA[
 				{
@@ -20,5 +17,7 @@
 				}
 			]]>
 		</definition>
+		<description></description>
+		<name>Test Structure Name</name>
 	</structure>
 </root>

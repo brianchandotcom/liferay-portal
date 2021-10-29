@@ -46,9 +46,6 @@ public class WorkflowStatusDisplayContextTest {
 
 	@Test
 	public void testGetStatus() {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
 		BeanProperties beanProperties = Mockito.mock(BeanProperties.class);
 
 		Mockito.when(
@@ -59,6 +56,9 @@ public class WorkflowStatusDisplayContextTest {
 
 		ReflectionTestUtil.setFieldValue(
 			BeanPropertiesUtil.class, "_beanProperties", beanProperties);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
 		_setAttribute(
 			WorkflowStatusWebKeys.BEAN, mockHttpServletRequest,

@@ -132,12 +132,26 @@ public class WorkflowStatusTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		Object bean = getBean();
+
+		if (bean == null) {
+			bean = pageContext.getAttribute("aui:model-context:bean");
+		}
+
 		setNamespacedAttribute(
-			httpServletRequest, WorkflowStatusWebKeys.BEAN, _bean);
+			httpServletRequest, WorkflowStatusWebKeys.BEAN, bean);
 		setNamespacedAttribute(
 			httpServletRequest, WorkflowStatusWebKeys.ID, _id);
+
+		Class<?> model = getModel();
+
+		if (model == null) {
+			model = (Class<?>)pageContext.getAttribute(
+				"aui:model-context:model");
+		}
+
 		setNamespacedAttribute(
-			httpServletRequest, WorkflowStatusWebKeys.MODEL, _model);
+			httpServletRequest, WorkflowStatusWebKeys.MODEL, model);
 		setNamespacedAttribute(
 			httpServletRequest, WorkflowStatusWebKeys.SHOW_INSTANCE_TRACKER,
 			_showInstanceTracker);
@@ -151,18 +165,6 @@ public class WorkflowStatusTag extends IncludeTag {
 			_statusMessage);
 		setNamespacedAttribute(
 			httpServletRequest, WorkflowStatusWebKeys.VERSION, _version);
-
-		if (getBean() == null) {
-			setNamespacedAttribute(
-				httpServletRequest, WorkflowStatusWebKeys.BEAN,
-				pageContext.getAttribute("aui:model-context:bean"));
-		}
-
-		if (getModel() == null) {
-			setNamespacedAttribute(
-				httpServletRequest, WorkflowStatusWebKeys.MODEL,
-				pageContext.getAttribute("aui:model-context:model"));
-		}
 	}
 
 	private Object _bean;

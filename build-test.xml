@@ -6009,6 +6009,31 @@ war.path=${app.server.portal.dir}/</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="wait-for-docker-database">
+		<attribute name="shell.condition" />
+
+		<sequential>
+			<property location="setup.sh" name="setup.sh.file" />
+
+			<get-database-property property.name="database.host" />
+			<get-database-property property.name="database.name" />
+			<get-database-property property.name="database.version" />
+
+			<docker-execute container="${database.host}">
+				<![CDATA[
+					#!/bin/bash
+
+					until @{shell.condition}
+					do
+						echo "Waiting for ${database.name} ${database.version} to be ready"
+
+						sleep 10
+					done
+				]]>
+			</docker-execute>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="wait-for-license-activation">
 		<sequential>
 			<if>

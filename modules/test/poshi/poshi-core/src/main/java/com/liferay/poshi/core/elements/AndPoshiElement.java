@@ -89,7 +89,11 @@ public class AndPoshiElement extends PoshiElement {
 
 		sb.setLength(sb.length() - 4);
 
-		if (poshiElements.size() > 1) {
+		PoshiElement parentPoshiElement = (PoshiElement)getParent();
+
+		if ((poshiElements.size() > 1) &&
+			!(parentPoshiElement instanceof NotPoshiElement)) {
+
 			sb.insert(0, "(");
 			sb.append(")");
 		}

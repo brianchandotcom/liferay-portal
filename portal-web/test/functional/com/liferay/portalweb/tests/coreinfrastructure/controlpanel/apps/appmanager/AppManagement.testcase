@@ -486,7 +486,7 @@ definition {
 	@priority = "5"
 	test CanDeactivateAndActivateTranslation {
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateTranslation";
-		property testray.main.component.name = "Translation Management";
+		property testray.main.component.name = "Translations Management";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

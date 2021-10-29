@@ -119,8 +119,6 @@ definition {
 			siteName = "Test Site Name");
 
 		PageEditor.gotoCommentViaFragment(
-			content = "Lorem ipsum dolor sit amet",
-			fragmentClass = "title",
 			fragmentName = "Title",
 			position = "1");
 
@@ -170,8 +168,6 @@ definition {
 			siteName = "Test Site Name");
 
 		PageEditor.gotoCommentViaFragment(
-			content = "This is static text.",
-			fragmentClass = "static-text",
 			fragmentName = "Static Text",
 			position = "1");
 
@@ -213,8 +209,6 @@ definition {
 			siteName = "Test Site Name");
 
 		PageEditor.gotoCommentViaFragment(
-			content = "This is static text.",
-			fragmentClass = "static-text",
 			fragmentName = "Static Text",
 			position = "1");
 
@@ -252,8 +246,6 @@ definition {
 			siteName = "Test Site Name");
 
 		PageEditor.gotoCommentViaFragment(
-			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-			fragmentClass = "rich-text",
 			fragmentName = "Rich Text",
 			position = "1");
 
@@ -306,8 +298,6 @@ definition {
 			siteName = "Test Site Name");
 
 		PageEditor.gotoCommentViaFragment(
-			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-			fragmentClass = "rich-text",
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Rich Text",
 			position = "1");
@@ -361,8 +351,6 @@ definition {
 			siteName = "Test Site Name");
 
 		PageEditor.gotoCommentViaFragment(
-			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-			fragmentClass = "rich-text",
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Rich Text",
 			position = "1");
@@ -428,8 +416,6 @@ definition {
 			siteName = "Test Site Name");
 
 		PageEditor.gotoCommentViaFragment(
-			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-			fragmentClass = "rich-text",
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Rich Text",
 			position = "1");
@@ -603,8 +589,6 @@ definition {
 		PageEditor.changeExperience(newExperience = "New Experience Name");
 
 		PageEditor.gotoCommentViaFragment(
-			content = "Lorem ipsum dolor sit amet",
-			fragmentClass = "title",
 			fragmentName = "Title",
 			position = "1");
 
@@ -654,8 +638,6 @@ definition {
 			fragmentName = "Rich Text");
 
 		PageEditor.addCommentViaFragment(
-			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-			fragmentClass = "rich-text",
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Rich Text",
 			position = "1");
@@ -667,8 +649,6 @@ definition {
 			siteName = "Test Site Name");
 
 		PageEditor.gotoCommentViaFragment(
-			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-			fragmentClass = "rich-text",
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Rich Text",
 			position = "1");
@@ -711,8 +691,6 @@ definition {
 			siteName = "Test Site Name");
 
 		PageEditor.gotoCommentViaFragment(
-			content = "This is static text.",
-			fragmentClass = "static-text",
 			fragmentComment = "This is a fragment comment edited.",
 			fragmentName = "Static Text",
 			position = "1");

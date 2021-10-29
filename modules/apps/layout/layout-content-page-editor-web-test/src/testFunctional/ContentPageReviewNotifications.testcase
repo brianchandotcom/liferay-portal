@@ -134,10 +134,7 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.gotoCommentViaFragment(
-			content = "Lorem ipsum dolor sit amet",
-			fragmentClass = "title",
-			fragmentName = "Title");
+		PageEditor.gotoCommentViaFragment(fragmentName = "Title");
 
 		PageEditor.replyToComment(commentReply = "Reply from User 2");
 
@@ -149,10 +146,7 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.gotoCommentViaFragment(
-			content = "Lorem ipsum dolor sit amet",
-			fragmentClass = "title",
-			fragmentName = "Title");
+		PageEditor.gotoCommentViaFragment(fragmentName = "Title");
 
 		PageEditor.replyToComment(commentReply = "Reply from User Test");
 
@@ -207,10 +201,7 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.gotoCommentViaFragment(
-			content = "Lorem ipsum dolor sit amet",
-			fragmentClass = "title",
-			fragmentName = "Title");
+		PageEditor.gotoCommentViaFragment(fragmentName = "Title");
 
 		PageEditor.replyToComment(commentReply = "Reply from User 2");
 

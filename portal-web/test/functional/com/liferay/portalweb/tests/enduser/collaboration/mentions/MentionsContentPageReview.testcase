@@ -108,8 +108,6 @@ definition {
 			fragmentName = "Title");
 
 		PageEditor.gotoCommentViaFragment(
-			content = "Lorem ipsum dolor sit amet",
-			fragmentClass = "title",
 			fragmentName = "Title",
 			position = "1");
 

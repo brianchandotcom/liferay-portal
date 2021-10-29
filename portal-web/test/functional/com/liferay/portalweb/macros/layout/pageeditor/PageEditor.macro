@@ -41,8 +41,6 @@ definition {
 	macro addCommentViaFragment {
 		PageEditor.gotoCommentViaFragment(
 			fragmentName = "${fragmentName}",
-			key_content = "${content}",
-			key_fragmentClass = "${fragmentClass}",
 			key_position = "${position}");
 
 		AssertElementPresent(

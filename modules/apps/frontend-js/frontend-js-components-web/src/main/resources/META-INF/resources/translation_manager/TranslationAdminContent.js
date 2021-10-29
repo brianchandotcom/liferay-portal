@@ -71,72 +71,70 @@ const TranslationAdminContent = ({
 			</ClayModal.Header>
 
 			<ClayModal.Header withTitle={false}>
-				<ClayModal.Title>
-					<ClayInput.Group className="align-items-center">
-						<ClayInput.GroupItem>
-							<ClayInput
+				<ClayInput.Group className="align-items-center">
+					<ClayInput.GroupItem>
+						<ClayInput
+							aria-label={Liferay.Language.get('search')}
+							insetAfter={true}
+							onChange={(event) => {
+								const {value} = event.target;
+
+								setSearchValue(value);
+							}}
+							placeholder={Liferay.Language.get('search')}
+							value={searchValue}
+						/>
+
+						<ClayInput.GroupInsetItem after tag="span">
+							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get('search')}
-								insetAfter={true}
-								onChange={(event) => {
-									const {value} = event.target;
-
-									setSearchValue(value);
+								displayType="unstyled"
+								onClick={() => {
+									setSearchValue('');
 								}}
-								placeholder={Liferay.Language.get('search')}
-								value={searchValue}
+								symbol={searchValue ? 'times' : 'search'}
 							/>
+						</ClayInput.GroupInsetItem>
+					</ClayInput.GroupItem>
 
-							<ClayInput.GroupInsetItem after tag="span">
+					<ClayInput.GroupItem shrink>
+						<ClayDropDown
+							active={
+								creationMenuActive &&
+								availableLocales.length > 0
+							}
+							hasLeftSymbols
+							onActiveChange={setCreationMenuActive}
+							trigger={
 								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get('search')}
-									displayType="unstyled"
-									onClick={() => {
-										setSearchValue('');
-									}}
-									symbol={searchValue ? 'times' : 'search'}
+									disabled={availableLocales.length === 0}
+									small
+									symbol="plus"
 								/>
-							</ClayInput.GroupInsetItem>
-						</ClayInput.GroupItem>
-
-						<ClayInput.GroupItem shrink>
-							<ClayDropDown
-								active={
-									creationMenuActive &&
-									availableLocales.length > 0
-								}
-								hasLeftSymbols
-								onActiveChange={setCreationMenuActive}
-								trigger={
-									<ClayButtonWithIcon
-										disabled={availableLocales.length === 0}
-										small
-										symbol="plus"
-									/>
-								}
-							>
-								<ClayDropDown.ItemList>
-									{availableLocales.map((availableLocale) => {
-										return (
-											<ClayDropDown.Item
-												key={availableLocale.label}
-												onClick={() => {
-													onAddLocale(
-														availableLocale.id
-													);
-												}}
-												symbolLeft={
-													availableLocale.symbol
-												}
-											>
-												{availableLocale.label}
-											</ClayDropDown.Item>
-										);
-									})}
-								</ClayDropDown.ItemList>
-							</ClayDropDown>
-						</ClayInput.GroupItem>
-					</ClayInput.Group>
-				</ClayModal.Title>
+							}
+						>
+							<ClayDropDown.ItemList>
+								{availableLocales.map((availableLocale) => {
+									return (
+										<ClayDropDown.Item
+											key={availableLocale.label}
+											onClick={() => {
+												onAddLocale(
+													availableLocale.id
+												);
+											}}
+											symbolLeft={
+												availableLocale.symbol
+											}
+										>
+											{availableLocale.label}
+										</ClayDropDown.Item>
+									);
+								})}
+							</ClayDropDown.ItemList>
+						</ClayDropDown>
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
 			</ClayModal.Header>
 
 			<ClayModal.Body className="pb-0 pt-3" scrollable>

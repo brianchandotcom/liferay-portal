@@ -477,7 +477,6 @@ definition {
 		KaleoFormsAdmin.viewProcessRecord(kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.viewProcessNoRecords(kfProcessName = "Kaleo Forms Process");
-		
 	}
 
 	@description = "Verify that the user can view the process after it has been created."

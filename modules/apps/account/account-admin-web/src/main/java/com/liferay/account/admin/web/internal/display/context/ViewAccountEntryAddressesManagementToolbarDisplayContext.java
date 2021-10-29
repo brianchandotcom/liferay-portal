@@ -14,7 +14,9 @@
 
 package com.liferay.account.admin.web.internal.display.context;
 
+import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.admin.web.internal.display.AddressDisplay;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -26,14 +28,19 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -82,6 +89,26 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 			).setQuickAction(
 				true
 			).build());
+	}
+
+	public List<String> getAvailableActions(
+			AccountEntryDisplay accountEntryDisplay)
+		throws PortalException {
+
+		List<String> availableActions = new ArrayList<>();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (AccountEntryPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				accountEntryDisplay.getAccountEntryId(), ActionKeys.UPDATE)) {
+
+			availableActions.add("deleteAccountEntryAddresses");
+		}
+
+		return availableActions;
 	}
 
 	@Override
@@ -160,6 +187,30 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isDisabled() {
+		return false;
+	}
+
+	@Override
+	public Boolean isShowCreationMenu() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			if (AccountEntryPermission.contains(
+					themeDisplay.getPermissionChecker(),
+					ParamUtil.getLong(liferayPortletRequest, "accountEntryId"),
+					ActionKeys.UPDATE)) {
+
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
 		return false;
 	}
 

@@ -46,6 +46,14 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 				keyProperty="addressId"
 				modelVar="addressDisplay"
 			>
+
+				<%
+				row.setData(
+					HashMapBuilder.<String, Object>put(
+						"actions", StringUtil.merge(viewAccountEntryAddressesManagementToolbarDisplayContext.getAvailableActions(accountEntryDisplay))
+					).build());
+				%>
+
 				<portlet:renderURL var="rowURL">
 					<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_entry_address" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />

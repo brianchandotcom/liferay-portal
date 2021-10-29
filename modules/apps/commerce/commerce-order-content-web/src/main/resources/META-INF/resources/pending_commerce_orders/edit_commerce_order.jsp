@@ -113,11 +113,11 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 	</liferay-ui:error>
 
 	<liferay-ui:success key="failureRowsCount">
-		<liferay-ui:message arguments='<%= (int)SessionMessages.get(renderRequest, "failureRowsCount") %>' key="x-rows-not-imported" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments='<%= (int)SessionMessages.get(renderRequest, "failureRowsCount") %>' key="x-rows-are-not-imported" translateArguments="<%= false %>" />
 	</liferay-ui:success>
 
 	<liferay-ui:success key="importedRowsCount">
-		<liferay-ui:message arguments='<%= (int)SessionMessages.get(renderRequest, "importedRowsCount") %>' key="x-rows-imported-successfully" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments='<%= (int)SessionMessages.get(renderRequest, "importedRowsCount") %>' key="x-rows-are-imported-successfully" translateArguments="<%= false %>" />
 	</liferay-ui:success>
 
 	<aui:model-context bean="<%= commerceOrder %>" model="<%= CommerceOrder.class %>" />

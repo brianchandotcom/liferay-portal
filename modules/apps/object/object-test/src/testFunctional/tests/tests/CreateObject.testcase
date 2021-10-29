@@ -3709,11 +3709,76 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field is no longer displayed when the parent object is inactivated (One to Many)"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test RelationshipFieldDisappearsWhenInactivatedOneToMany {
 
-		// TODO LPS-140868 RelationshipFieldDisappearsWhenInactivatedOneToMany pending implementation
+		for (var letter : list "A,B") {
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object ${letter}",
+				objectName = "CustomObject${letter}",
+				pluralLabelName = "Custom Objects ${letter}");
+
+		}
+
+		for (var letter : list "A,B") {
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldLabelName = "Custom Field ${letter}",
+				fieldName = "customObjectField${letter}",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject${letter}");
+
+		}
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObjectA",
+			objectName_2 = "CustomObjectB",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectFieldB",
+			objectName = "CustomObjectB",
+			value = "Entry 1");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object A");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Custom Objects B");
+
+		LexiconEntry.gotoAdd();
+
+		AssertElementNotPresent(
+			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
+			key_fieldLabelName = "Custom Field A",
+			value1 = "Custom Field A");
+
+		Navigator.gotoBack();
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry 1");
+
+		AssertElementNotPresent(
+			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
+			key_fieldLabelName = "Custom Field A",
+			value1 = "Custom Field A");
+
 
 	}
 

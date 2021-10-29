@@ -2286,6 +2286,7 @@ definition {
 		DMDocument.viewPG(
 			categoryName = "${categoryName}",
 			dmDocumentDescription = "${dmDocumentDescription}",
+			dmDocumentFileName = "${dmDocumentFileName}",
 			dmDocumentFileType = "${dmDocumentFileType}",
 			dmDocumentTitle = "${dmDocumentTitle}",
 			dmDocumentType = "${dmDocumentType}",

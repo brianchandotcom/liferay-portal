@@ -15,6 +15,7 @@
 package com.liferay.document.library.item.selector.web.internal.folder;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration;
 import com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorViewConstants;
 import com.liferay.document.library.item.selector.web.internal.display.context.DLSelectFolderDisplayContext;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -24,6 +25,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.PortletItemSelectorView;
 import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
@@ -37,6 +39,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
@@ -55,6 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
+	configurationPid = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration",
 	property = {
 		"item.selector.view.key=" + DLItemSelectorViewConstants.DL_FOLDER_ITEM_SELECTOR_VIEW_KEY,
 		"item.selector.view.order:Integer=100"
@@ -113,9 +117,16 @@ public class DLFolderItemSelectorView
 				BeanParamUtil.getLong(
 					itemSelectorCriterion, (HttpServletRequest)servletRequest,
 					"selectedFolderId", folderId),
-				itemSelectorCriterion.isShowGroupSelector()));
+				_isShowGroupSelector(itemSelectorCriterion)));
 
 		requestDispatcher.include(servletRequest, servletResponse);
+	}
+
+	protected void activate(Map<String, Object> properties) {
+		_ffFolderItemSelectorGroupSelectorConfiguration =
+			ConfigurableUtil.createConfigurable(
+				FFFolderItemSelectorGroupSelectorConfiguration.class,
+				properties);
 	}
 
 	private Folder _fetchFolder(long folderId) {
@@ -131,6 +142,16 @@ public class DLFolderItemSelectorView
 		}
 	}
 
+	private boolean _isShowGroupSelector(
+		FolderItemSelectorCriterion itemSelectorCriterion) {
+
+		if (!_ffFolderItemSelectorGroupSelectorConfiguration.enabled()) {
+			return false;
+		}
+
+		return itemSelectorCriterion.isShowGroupSelector();
+	}
+
 	private static final List<String> _portletIds = Arrays.asList(
 		DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, DLPortletKeys.DOCUMENT_LIBRARY);
 	private static final List<ItemSelectorReturnType>
@@ -139,6 +160,9 @@ public class DLFolderItemSelectorView
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	private volatile FFFolderItemSelectorGroupSelectorConfiguration
+		_ffFolderItemSelectorGroupSelectorConfiguration;
 
 	@Reference
 	private Portal _portal;

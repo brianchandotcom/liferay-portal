@@ -1,1 +1,8 @@
-{"configurationPath":"index.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","name":"fragment2","type":"component"}
+{
+    "configurationPath": "index.json",
+    "cssPath": "index.css",
+    "htmlPath": "index.html",
+    "jsPath": "index.js",
+    "name": "fragment2",
+    "type": "component"
+}

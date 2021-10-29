@@ -22,6 +22,11 @@ import {config} from './config';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 import openItemSelector from './openItemSelector';
 
+const DISPLAY_PAGE_PP_ID =
+	'com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet';
+const DISPLAY_PAGE_RESOURCE_ID = '/layout_content_page_editor/get_page_preview';
+const DISPLAY_PAGE_LIFECYCLE = 2;
+
 const LAYOUT_TYPES_OPTIONS = [
 	{
 		label: Liferay.Language.get('masters'),
@@ -160,7 +165,7 @@ export function LayoutSelector({layoutType}) {
 				const layout = {
 					name: data.name,
 					private: data.private,
-					url: urlWithPreviewParameter(data.url),
+					url: urlWithPreviewParameter(data.url, layoutType),
 				};
 
 				selectPreviewLayout(layout);
@@ -268,11 +273,18 @@ function getNextRecentLayouts(recentLayouts, selectedLayout) {
 	return nextRecentLayouts;
 }
 
-function urlWithPreviewParameter(url) {
+function urlWithPreviewParameter(url, layoutType) {
 	const nextURL = new URL(url);
 
 	nextURL.searchParams.set('p_l_mode', 'preview');
 	nextURL.searchParams.set('styleBookEntryPreview', true);
+
+	if (layoutType === LAYOUT_TYPES.displayPageTemplate) {
+		nextURL.searchParams.set('p_p_id', DISPLAY_PAGE_PP_ID);
+		nextURL.searchParams.set('p_p_lifecycle', DISPLAY_PAGE_LIFECYCLE);
+		nextURL.searchParams.set('p_p_resource_id', DISPLAY_PAGE_RESOURCE_ID);
+		nextURL.searchParams.set('doAsUserId', config.defaultUserId);
+	}
 
 	return nextURL.href;
 }

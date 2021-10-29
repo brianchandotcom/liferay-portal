@@ -88,6 +88,7 @@ const StyleBookEditor = ({
 };
 
 export default function ({
+	defaultUserId,
 	frontendTokenDefinition = [],
 	frontendTokensValues = {},
 	layoutsTreeURL,
@@ -101,6 +102,7 @@ export default function ({
 	themeName,
 } = {}) {
 	initializeConfig({
+		defaultUserId,
 		frontendTokenDefinition,
 		layoutsTreeURL,
 		namespace,

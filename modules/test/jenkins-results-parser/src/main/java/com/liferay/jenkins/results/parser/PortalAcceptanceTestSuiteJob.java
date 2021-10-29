@@ -31,15 +31,10 @@ public abstract class PortalAcceptanceTestSuiteJob
 	extends PortalGitRepositoryJob implements BatchDependentJob, TestSuiteJob {
 
 	public PortalAcceptanceTestSuiteJob(
-		String jobName, BuildProfile buildProfile) {
+		String jobName, BuildProfile buildProfile, String testSuiteName,
+		String branchName) {
 
-		this(jobName, buildProfile, null);
-	}
-
-	public PortalAcceptanceTestSuiteJob(
-		String jobName, BuildProfile buildProfile, String testSuiteName) {
-
-		super(jobName, buildProfile);
+		super(jobName, buildProfile, branchName);
 
 		if (testSuiteName == null) {
 			testSuiteName = "default";

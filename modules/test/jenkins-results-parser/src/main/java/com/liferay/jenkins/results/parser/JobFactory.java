@@ -249,13 +249,13 @@ public class JobFactory {
 
 			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
 				new PortalAcceptancePullRequestJob(
-					jobName, buildProfile, testSuiteName);
+					jobName, buildProfile, testSuiteName, branchName);
 
 			if (_isCentralMergePullRequest(
 					portalAcceptancePullRequestJob.getGitWorkingDirectory())) {
 
 				portalAcceptancePullRequestJob = new CentralMergePullRequestJob(
-					jobName, buildProfile);
+					jobName, buildProfile, branchName);
 			}
 
 			_jobs.put(jobKey, portalAcceptancePullRequestJob);
@@ -267,7 +267,7 @@ public class JobFactory {
 			_jobs.put(
 				jobKey,
 				new PortalAcceptanceUpstreamJob(
-					jobName, buildProfile, testSuiteName));
+					jobName, buildProfile, testSuiteName, branchName));
 
 			return _jobs.get(jobKey);
 		}
@@ -344,7 +344,7 @@ public class JobFactory {
 			_jobs.put(
 				jobKey,
 				new PortalTestSuiteUpstreamJob(
-					jobName, buildProfile, testSuiteName));
+					jobName, buildProfile, testSuiteName, branchName));
 
 			return _jobs.get(jobKey);
 		}

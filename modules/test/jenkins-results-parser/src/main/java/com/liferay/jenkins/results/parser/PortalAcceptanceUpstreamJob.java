@@ -20,9 +20,10 @@ package com.liferay.jenkins.results.parser;
 public class PortalAcceptanceUpstreamJob extends PortalAcceptanceTestSuiteJob {
 
 	public PortalAcceptanceUpstreamJob(
-		String jobName, BuildProfile buildProfile, String testSuite) {
+		String jobName, BuildProfile buildProfile, String testSuite,
+		String branchName) {
 
-		super(jobName, buildProfile, testSuite);
+		super(jobName, buildProfile, testSuite, branchName);
 	}
 
 }

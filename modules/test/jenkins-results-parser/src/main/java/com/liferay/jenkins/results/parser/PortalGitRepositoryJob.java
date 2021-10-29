@@ -46,7 +46,13 @@ public abstract class PortalGitRepositoryJob
 	protected PortalGitRepositoryJob(
 		String jobName, BuildProfile buildProfile) {
 
-		super(jobName, buildProfile);
+		this(jobName, buildProfile, null);
+	}
+
+	protected PortalGitRepositoryJob(
+		String jobName, BuildProfile buildProfile, String branchName) {
+
+		super(jobName, buildProfile, branchName);
 
 		init();
 	}

@@ -70,6 +70,14 @@ public abstract class GitRepositoryJob extends BaseJob {
 		super(jobName, buildProfile);
 	}
 
+	protected GitRepositoryJob(
+		String jobName, BuildProfile buildProfile, String branchName) {
+
+		super(jobName, buildProfile);
+
+		_branchName = branchName;
+	}
+
 	protected void checkGitRepositoryDir() {
 		if (gitRepositoryDir == null) {
 			throw new IllegalStateException("Repository directory is not set");

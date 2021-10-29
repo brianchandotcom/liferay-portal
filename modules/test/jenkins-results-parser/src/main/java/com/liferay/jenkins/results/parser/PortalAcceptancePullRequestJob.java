@@ -26,9 +26,10 @@ public class PortalAcceptancePullRequestJob
 	extends PortalAcceptanceTestSuiteJob {
 
 	public PortalAcceptancePullRequestJob(
-		String jobName, BuildProfile buildProfile, String testSuiteName) {
+		String jobName, BuildProfile buildProfile, String testSuiteName,
+		String branchName) {
 
-		super(jobName, buildProfile, testSuiteName);
+		super(jobName, buildProfile, testSuiteName, branchName);
 	}
 
 	@Override

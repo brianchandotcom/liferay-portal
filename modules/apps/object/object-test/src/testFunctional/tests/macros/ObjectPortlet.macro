@@ -110,12 +110,6 @@ definition {
 		Click(locator1 = "ObjectPortlet#ANY_PAGE");
 	}
 
-	macro checkEntryViaUI {
-		Check.checkNotVisible(locator1 = "//input[@type='checkbox']");
-
-		Button.clickSave();
-	}
-
 	macro checkUncheckColumnsDisplayed {
 		Click(locator1 = "ObjectPortlet#ARROW_DOWN_ICON");
 
@@ -175,6 +169,18 @@ definition {
 			key_sortFieldName = "${sortFieldName}",
 			locator1 = "ObjectPortlet#SORT_FIELD",
 			value1 = "${sortFieldName}");
+	}
+
+	macro updateBooleanEntry {
+		ObjectPortlet.viewEntryDetails(entry = "${entry}");
+
+		Check.checkNotVisible(locator1 = "//input[@type='checkbox']");
+
+		Button.clickSave();
+
+		WaitForElementNotPresent(
+			key_text = "Save",
+			locator1 = "Button#ANY");
 	}
 
 	macro updateEntry {

@@ -649,9 +649,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntryDetails(entry = "No");
-
-		ObjectPortlet.checkEntryViaUI();
+		ObjectPortlet.updateBooleanEntry(entry = "No");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 

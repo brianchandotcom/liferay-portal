@@ -80,7 +80,7 @@ function openItem(cpInstanceId, commerceChannelId, commerceAccountId, groupId) {
 		buttons: [
 			{
 				displayType: 'secondary',
-				label: Liferay.Language.get('Cancel'),
+				label: Liferay.Language.get('cancel'),
 				onClick() {
 					Liferay.Util.getOpener().Liferay.fire('closeModal', {
 						id: 'selectStarterkit',

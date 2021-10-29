@@ -35,6 +35,10 @@ public class ConfigurationUtil {
 	}
 
 	protected static Configuration unpack(Configuration configuration) {
+		if (configuration == null) {
+			return null;
+		}
+
 		AggregationConfiguration aggregationConfiguration =
 			configuration.getAggregationConfiguration();
 

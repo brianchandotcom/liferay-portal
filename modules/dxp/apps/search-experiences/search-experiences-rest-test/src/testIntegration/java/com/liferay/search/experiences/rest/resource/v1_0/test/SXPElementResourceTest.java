@@ -15,14 +15,75 @@
 package com.liferay.search.experiences.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.search.experiences.rest.client.dto.v1_0.SXPElement;
 
 import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSXPElement() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSXPElementNotFound() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPatchSXPElement() throws Exception {
+	}
+
+	@Override
+	protected SXPElement testDeleteSXPElement_addSXPElement() throws Exception {
+		return _addSXPElement(randomSXPElement());
+	}
+
+	@Override
+	protected SXPElement testGetSXPElement_addSXPElement() throws Exception {
+		return _addSXPElement(randomSXPElement());
+	}
+
+	@Override
+	protected SXPElement testGetSXPElementsPage_addSXPElement(
+			SXPElement sxpElement)
+		throws Exception {
+
+		return _addSXPElement(sxpElement);
+	}
+
+	@Override
+	protected SXPElement testGraphQLSXPElement_addSXPElement()
+		throws Exception {
+
+		return _addSXPElement(randomSXPElement());
+	}
+
+	@Override
+	protected SXPElement testPatchSXPElement_addSXPElement() throws Exception {
+		return _addSXPElement(randomSXPElement());
+	}
+
+	@Override
+	protected SXPElement testPostSXPElement_addSXPElement(SXPElement sxpElement)
+		throws Exception {
+
+		return _addSXPElement(sxpElement);
+	}
+
+	private SXPElement _addSXPElement(SXPElement sxpElement) throws Exception {
+		return sxpElementResource.postSXPElement(sxpElement);
+	}
+
 }

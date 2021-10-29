@@ -37,8 +37,10 @@ public class SXPBlueprintUtil {
 	}
 
 	public static SXPBlueprint toSXPBlueprint(String json) {
-		SXPBlueprint sxpBlueprint = SXPBlueprint.unsafeToDTO(json);
+		return unpack(SXPBlueprint.unsafeToDTO(json));
+	}
 
+	protected static SXPBlueprint unpack(SXPBlueprint sxpBlueprint) {
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
 		if (configuration != null) {

@@ -1,4 +1,4 @@
-.information-card a{
+.information-card a {
 	align-items: center;
 	box-shadow: var(--box-shadow-lg);
 	color: var(--body-color);
@@ -8,12 +8,12 @@
 	height:4.688em;
 }
 
-.information-card .product-action-link{
+.information-card .product-action-link {
 	padding:1em;
 	text-decoration: none;
 }
 
-.information-card a img{
+.information-card a img {
 	width:20px;
 	height:20px;
 }

@@ -22,8 +22,10 @@
 							"fragment": {
 								"key": "business-home-cover"
 							},
-							"fragmentConfig": {},
-							"fragmentFields": [],
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
 							"fragmentStyle": {
 								"borderWidth": "0",
 								"marginBottom": "",
@@ -64,8 +66,10 @@
 									"fragment": {
 										"key": "our-philosophy"
 									},
-									"fragmentConfig": {},
-									"fragmentFields": [],
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"borderWidth": "0",
 										"marginBottom": "",
@@ -107,19 +111,21 @@
 									"fragmentConfig": {
 										"headingLevel": "h6"
 									},
-									"fragmentFields": [{
-										"id": "element-text",
-										"value": {
-											"text": {
-												"value_i18n": {
-													"en_US": "ADDITIONAL BUSINESS OWNER'S POLICY COVERAGE OPTIONS"
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"text": {
+													"value_i18n": {
+														"en_US": "ADDITIONAL BUSINESS OWNER'S POLICY COVERAGE OPTIONS"
+													}
 												}
 											}
 										}
-									}],
+									],
 									"fragmentStyle": {
-										"marginTop": "4",
 										"marginBottom": "4",
+										"marginTop": "4",
 										"textAlign": "center"
 									}
 								},
@@ -134,15 +140,18 @@
 									"rowViewports": [
 										{
 											"id": "landscapeMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -152,15 +161,18 @@
 										"definition": {
 											"columnViewports": [
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -172,7 +184,8 @@
 													"fragment": {
 														"key": "info-card"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "lfr-text-01",
@@ -208,7 +221,8 @@
 													"fragment": {
 														"key": "info-card"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "lfr-text-01",
@@ -232,7 +246,7 @@
 																}
 															}
 														}
-												],
+													],
 													"fragmentStyle": {
 														"marginBottom": "4"
 													}
@@ -244,7 +258,8 @@
 													"fragment": {
 														"key": "info-card"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "lfr-text-01",
@@ -268,7 +283,7 @@
 																}
 															}
 														}
-												]
+													]
 												},
 												"type": "Fragment"
 											}
@@ -279,15 +294,18 @@
 										"definition": {
 											"columnViewports": [
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -299,7 +317,8 @@
 													"fragment": {
 														"key": "info-card"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "lfr-text-01",
@@ -335,9 +354,9 @@
 													"fragment": {
 														"key": "info-card"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": 
-													[
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
 														{
 															"id": "lfr-text-01",
 															"value": {
@@ -372,9 +391,9 @@
 													"fragment": {
 														"key": "info-card"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": 
-													[
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
 														{
 															"id": "lfr-text-01",
 															"value": {
@@ -408,15 +427,18 @@
 										"definition": {
 											"columnViewports": [
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -428,7 +450,8 @@
 													"fragment": {
 														"key": "info-card"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "lfr-text-01",
@@ -464,7 +487,8 @@
 													"fragment": {
 														"key": "info-card"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "lfr-text-01",
@@ -500,9 +524,9 @@
 													"fragment": {
 														"key": "info-card"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": 
-													[
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
 														{
 															"id": "lfr-text-01",
 															"value": {

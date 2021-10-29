@@ -12,20 +12,20 @@
 
 <nav class="align-items-stretch bg-white provisioning-navbar navbar navbar-expand-lg ${publicSiteNavbarClass} position-${configuration.position}">
 	<div class="container-fluid container-fluid-max-xl">
-		<a class="site-logo d-inline-flex" href="${publicFriendlyURL}">
+		<a class="d-inline-flex site-logo" href="${publicFriendlyURL}">
 			<img alt="" class="navbar-logo" data-lfr-editable-id="imageLogo" data-lfr-editable-type="image" src="[resources:liferay_online_logo.svg]" />
 		</a>
 
-		<button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler border-0 rounded-0 p-2 p-lg-3" data-target="#navbarSupportedContent" type="button">
-			<img alt="" class="btn btn-monospaced btn-menu p-2" src="[resources:icon_menu.svg]" />
+		<button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="border-0 navbar-toggler p-2 p-lg-3 rounded-0" data-target="#navbarSupportedContent" type="button">
+			<img alt="" class="btn btn-menu btn-monospaced p-2" src="[resources:icon_menu.svg]" />
 
-			<img alt="" class="btn btn-monospaced btn-close p-2" src="[resources:icon_close.svg]" />
+			<img alt="" class="btn btn-close btn-monospaced p-2" src="[resources:icon_close.svg]" />
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav ml-auto provisioning-navbar-user">
+			<ul class="ml-auto navbar-nav provisioning-navbar-user">
 				[#if themeDisplay.isSignedIn()]
-					<li class="dropdown px-3 px-lg-0 nav-item">
+					<li class="dropdown nav-item px-3 px-lg-0">
 						<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="liferay-dropdown" id="${fragmentEntryLinkNamespace}_dropdown_menu" type="button">
 							<img alt="" class="btn btn-monospaced" src="[resources:icon_user_logged.svg]" />
 

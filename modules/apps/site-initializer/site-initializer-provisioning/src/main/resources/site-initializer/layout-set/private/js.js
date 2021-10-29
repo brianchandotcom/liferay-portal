@@ -143,7 +143,7 @@ function createOrder(
 			currencyCode: 'USD',
 		}),
 		headers: {
-			Accept: 'application/json',
+			'Accept': 'application/json',
 			'Content-Type': 'application/json',
 		},
 		method: 'POST',
@@ -175,7 +175,7 @@ function createOrder(
 						'"]}]',
 				}),
 				headers: {
-					Accept: 'application/json',
+					'Accept': 'application/json',
 					'Content-Type': 'application/json',
 				},
 				method: 'POST',
@@ -192,7 +192,7 @@ function createOrder(
 
 					return Liferay.Util.fetch(checkoutURL, {
 						headers: {
-							Accept: 'application/json',
+							'Accept': 'application/json',
 							'Content-Type': 'application/json',
 						},
 						method: 'POST',

@@ -179,7 +179,7 @@
 								"value", curLanguageId
 							).build();
 
-							String translationStatus = LanguageUtil.get(request, "untranslated");
+							String translationStatus = LanguageUtil.get(request, "not-translated");
 							String translationStatusCssClass = "warning";
 
 							if (languageIds.contains(curLanguageId)) {

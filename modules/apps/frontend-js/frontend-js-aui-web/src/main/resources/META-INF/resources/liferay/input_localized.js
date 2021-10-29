@@ -609,7 +609,7 @@ AUI.add(
 					);
 
 					var translationStatus = Liferay.Language.get(
-						'untranslated'
+						'not-translated'
 					);
 					var translationStatusCssClass = 'warning';
 

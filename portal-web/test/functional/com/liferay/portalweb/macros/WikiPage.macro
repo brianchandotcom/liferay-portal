@@ -149,6 +149,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro addChildPageViaEllipsis {
+		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Add Child Page");
+
+		PortletEntry.inputTitle(title = "${key_wikiChildPageTitle}");
+	}
+
 	macro addComment {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
@@ -1827,11 +1835,4 @@ definition {
 		}
 	}
 
-	macro addChildPageViaEllipsis {
-		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
-
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Add Child Page");
-
-		PortletEntry.inputTitle(title = "${key_wikiChildPageTitle}");
-	}
 }

@@ -18,6 +18,7 @@ import React, {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
+import {normalizeOptions, normalizeValue} from '../util/options';
 import HiddenSelectInput from './HiddenSelectInput.es';
 import VisibleSelectInput from './VisibleSelectInput.es';
 
@@ -89,92 +90,6 @@ function toArray(value = '') {
 	}
 
 	return newValue;
-}
-
-function normalizeValue({
-	localizedValueEdited,
-	multiple,
-	normalizedOptions,
-	predefinedValueArray,
-	valueArray,
-}) {
-	const assertValue =
-		valueArray.length || (valueArray.length === 0 && localizedValueEdited)
-			? valueArray
-			: predefinedValueArray;
-
-	const valueWithoutMultiple = assertValue.filter((_, index) => {
-		return multiple ? true : index === 0;
-	});
-
-	return valueWithoutMultiple.filter((value) =>
-		normalizedOptions.some((option) => value === option.value)
-	);
-}
-
-/**
- * Some parameters on each option
- * needs to be prepared in case of
- * multiple selected values(when the value state is an array).
- */
-function assertOptionParameters({
-	editingLanguageId,
-	multiple,
-	option,
-	valueArray,
-}) {
-	const included = valueArray.includes(option.value);
-
-	return {
-		...option,
-		active: !multiple && included,
-		checked: multiple && included,
-		label: option.label[editingLanguageId] ?? option.label,
-		type: multiple ? 'checkbox' : 'item',
-	};
-}
-
-function normalizeOptions({
-	editingLanguageId,
-	fixedOptions,
-	multiple,
-	options,
-	showEmptyOption,
-	valueArray,
-}) {
-	const newOptions = [
-		...options.map((option, index) => ({
-			...assertOptionParameters({
-				editingLanguageId,
-				multiple,
-				option,
-				valueArray,
-			}),
-			separator:
-				Array.isArray(fixedOptions) &&
-				fixedOptions.length > 0 &&
-				index === options.length - 1,
-		})),
-		...fixedOptions.map((option) =>
-			assertOptionParameters({
-				editingLanguageId,
-				multiple,
-				option,
-				valueArray,
-			})
-		),
-	].filter(({value}) => value !== '');
-
-	if (!multiple && showEmptyOption) {
-		const emptyOption = {
-			label: Liferay.Language.get('choose-an-option'),
-			value: null,
-		};
-
-		return [emptyOption, ...newOptions];
-	}
-
-	return newOptions;
 }
 
 function handleDropdownItemClick({currentValue, multiple, option}) {

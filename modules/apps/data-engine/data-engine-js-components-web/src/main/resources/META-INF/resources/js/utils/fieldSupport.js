@@ -361,7 +361,6 @@ export const createField = (props, event) => {
 		editingLanguageId,
 		fieldNameGenerator,
 		portletNamespace,
-		spritemap,
 	} = props;
 	const {
 		fieldType,
@@ -437,7 +436,6 @@ export const createField = (props, event) => {
 		instanceId,
 		name,
 		settingsContext,
-		spritemap,
 		type: fieldType.name,
 	};
 };

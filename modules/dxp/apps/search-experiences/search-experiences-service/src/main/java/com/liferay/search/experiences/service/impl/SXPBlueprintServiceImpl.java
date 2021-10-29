@@ -55,9 +55,6 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), null, SXPActionKeys.ADD_SXP_BLUEPRINT);
-
 		return sxpBlueprintLocalService.addSXPBlueprint(
 			getUserId(), configurationJSON, descriptionMap,
 			elementInstancesJSON, titleMap, serviceContext);

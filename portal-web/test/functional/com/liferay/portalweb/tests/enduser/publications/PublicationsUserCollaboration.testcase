@@ -112,19 +112,11 @@ definition {
 
 		PublicationsNavigator.openPublicationsAdmin();
 
-		AssertElementPresent(
-			key_publicationName = "Publication Name 1",
-			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
-
-		Publications.assertViewerPermissions(publicationName = "Publication Name 1");
+		PublicationsPermissions.assertViewerPermissions(publicationName = "Publication Name 1");
 
 		PublicationsNavigator.openPublicationsAdmin();
 
-		AssertElementPresent(
-			key_publicationName = "Publication Name 2",
-			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
-
-		Publications.assertEditorPermissions(publicationName = "Publication Name 2");
+		PublicationsPermissions.assertEditorPermissions(publicationName = "Publication Name 2");
 	}
 
 	@priority = "5"
@@ -191,11 +183,7 @@ definition {
 
 		PublicationsNavigator.openPublicationsAdmin();
 
-		AssertElementPresent(
-			key_publicationName = "Publication Name",
-			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
-
-		Publications.assertEditorPermissions(publicationName = "Publication Name");
+		PublicationsPermissions.assertEditorPermissions(publicationName = "Publication Name");
 	}
 
 	@priority = "5"
@@ -269,11 +257,7 @@ definition {
 
 		PublicationsNavigator.openPublicationsAdmin();
 
-		AssertElementPresent(
-			key_publicationName = "Publication Name",
-			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
-
-		Publications.assertInviterPermissions(publicationName = "Publication Name");
+		PublicationsPermissions.assertInviterPermissions(publicationName = "Publication Name");
 	}
 
 	@priority = "5"
@@ -345,11 +329,7 @@ definition {
 
 		PublicationsNavigator.openPublicationsAdmin();
 
-		AssertElementPresent(
-			key_publicationName = "Publication Name",
-			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
-
-		Publications.assertPublisherPermissions(publicationName = "Publication Name");
+		PublicationsPermissions.assertPublisherPermissions(publicationName = "Publication Name");
 	}
 
 	@priority = "5"
@@ -412,11 +392,7 @@ definition {
 
 		PublicationsNavigator.openPublicationsAdmin();
 
-		AssertElementPresent(
-			key_publicationName = "Publication Name",
-			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
-
-		Publications.assertViewerPermissions(publicationName = "Publication Name");
+		PublicationsPermissions.assertViewerPermissions(publicationName = "Publication Name");
 	}
 
 }

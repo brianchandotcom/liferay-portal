@@ -151,7 +151,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Publications.assertNoPermissionToCreatePublication();
+		PublicationsPermissions.assertNoPermissionToCreatePublication();
 
 		User.logoutPG();
 
@@ -179,7 +179,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Publications.assertNoPermissionToPublishPublication(publicationName = "Publication Name 3");
+		PublicationsPermissions.assertNoPermissionToPublishPublication(publicationName = "Publication Name 3");
 	}
 
 	@description = "Assert Non-privileged user cannot see Publications bar."

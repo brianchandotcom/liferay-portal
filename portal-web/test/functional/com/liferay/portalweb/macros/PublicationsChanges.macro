@@ -14,6 +14,19 @@ definition {
 			locator1 = "PublicationsChanges#COMMENT_ACTIONS");
 	}
 
+	macro assertPublicationsCommentsCRUDPermissions {
+		PublicationsChanges.openCommentsSidebar();
+
+		PublicationsChanges.addComment(commentValue = "Good to Publish");
+
+		PublicationsChanges.editComment(
+			commentValue = "Good to Publish",
+			commentValueEdit = "It is not ready to Publish",
+			userName = "Test Test");
+
+		PublicationsChanges.deleteComment(commentValue = "It is not ready to Publish");
+	}
+
 	macro changeDisplayStyle {
 		Click(locator1 = "PublicationsChanges#CURRENT_DISPLAY_STYLE");
 

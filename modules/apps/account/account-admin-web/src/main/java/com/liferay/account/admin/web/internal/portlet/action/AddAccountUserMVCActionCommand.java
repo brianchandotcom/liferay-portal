@@ -18,7 +18,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
-import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
@@ -84,8 +84,8 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			AccountEntryUserRel accountEntryUserRel = null;
 
-			AccountEntry accountEntry =
-				_accountEntryLocalService.fetchAccountEntry(accountEntryId);
+			AccountEntry accountEntry = _accountEntryService.fetchAccountEntry(
+				accountEntryId);
 
 			if ((accountEntry != null) &&
 				Objects.equals(
@@ -156,7 +156,7 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
+	private AccountEntryService _accountEntryService;
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;

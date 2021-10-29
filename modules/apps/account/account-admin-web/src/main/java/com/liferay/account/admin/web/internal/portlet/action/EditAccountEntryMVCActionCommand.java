@@ -18,7 +18,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.exception.DuplicateAccountEntryExternalReferenceCodeException;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -86,7 +86,7 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 			domains = ParamUtil.getStringValues(actionRequest, "domains");
 		}
 
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+		AccountEntry accountEntry = _accountEntryService.addAccountEntry(
 			themeDisplay.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			name, description, domains, emailAddress,
 			_getLogoBytes(actionRequest), taxIdNumber, type,
@@ -94,8 +94,8 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));
 
-		return _accountEntryLocalService.updateExternalReferenceCode(
-			accountEntry,
+		return _accountEntryService.updateExternalReferenceCode(
+			accountEntry.getAccountEntryId(),
 			ParamUtil.getString(actionRequest, "externalReferenceCode"));
 	}
 
@@ -166,7 +166,7 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 		long accountEntryId = ParamUtil.getLong(
 			actionRequest, "accountEntryId");
 
-		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
+		AccountEntry accountEntry = _accountEntryService.getAccountEntry(
 			accountEntryId);
 
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -177,7 +177,7 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "emailAddress");
 		String taxIdNumber = ParamUtil.getString(actionRequest, "taxIdNumber");
 
-		accountEntry = _accountEntryLocalService.updateAccountEntry(
+		accountEntry = _accountEntryService.updateAccountEntry(
 			accountEntryId, accountEntry.getParentAccountEntryId(), name,
 			description, deleteLogo, domains, emailAddress,
 			_getLogoBytes(actionRequest), taxIdNumber,
@@ -185,8 +185,8 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));
 
-		accountEntry = _accountEntryLocalService.updateExternalReferenceCode(
-			accountEntry,
+		accountEntry = _accountEntryService.updateExternalReferenceCode(
+			accountEntry.getAccountEntryId(),
 			ParamUtil.getString(actionRequest, "externalReferenceCode"));
 
 		if (Objects.equals(
@@ -238,7 +238,7 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
+	private AccountEntryService _accountEntryService;
 
 	@Reference
 	private AccountEntryUserRelService _accountEntryUserRelService;

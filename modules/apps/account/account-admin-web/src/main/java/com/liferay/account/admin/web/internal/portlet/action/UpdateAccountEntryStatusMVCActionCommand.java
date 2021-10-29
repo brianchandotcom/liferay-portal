@@ -15,7 +15,7 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.Constants;
@@ -54,10 +54,10 @@ public class UpdateAccountEntryStatusMVCActionCommand
 			actionRequest, "accountEntryIds");
 
 		if (cmd.equals(Constants.DEACTIVATE)) {
-			_accountEntryLocalService.deactivateAccountEntries(accountEntryIds);
+			_accountEntryService.deactivateAccountEntries(accountEntryIds);
 		}
 		else if (cmd.equals(Constants.RESTORE)) {
-			_accountEntryLocalService.activateAccountEntries(accountEntryIds);
+			_accountEntryService.activateAccountEntries(accountEntryIds);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -68,6 +68,6 @@ public class UpdateAccountEntryStatusMVCActionCommand
 	}
 
 	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
+	private AccountEntryService _accountEntryService;
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -49,7 +49,7 @@ public class DeleteAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 		long[] accountEntryIds = ParamUtil.getLongValues(
 			actionRequest, "accountEntryIds");
 
-		_accountEntryLocalService.deleteAccountEntries(accountEntryIds);
+		_accountEntryService.deleteAccountEntries(accountEntryIds);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -59,6 +59,6 @@ public class DeleteAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
+	private AccountEntryService _accountEntryService;
 
 }

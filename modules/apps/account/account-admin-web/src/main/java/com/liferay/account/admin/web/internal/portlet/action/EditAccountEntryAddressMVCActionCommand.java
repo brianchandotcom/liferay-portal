@@ -16,7 +16,7 @@ package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -109,8 +109,8 @@ public class EditAccountEntryAddressMVCActionCommand
 			long accountEntryId = ParamUtil.getLong(
 				actionRequest, "accountEntryId");
 
-			AccountEntry accountEntry =
-				_accountEntryLocalService.getAccountEntry(accountEntryId);
+			AccountEntry accountEntry = _accountEntryService.getAccountEntry(
+				accountEntryId);
 
 			long addressId = 0;
 
@@ -125,7 +125,7 @@ public class EditAccountEntryAddressMVCActionCommand
 				accountEntry.setDefaultShippingAddressId(addressId);
 			}
 
-			_accountEntryLocalService.updateAccountEntry(accountEntry);
+			_accountEntryService.updateAccountEntry(accountEntry);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -162,7 +162,7 @@ public class EditAccountEntryAddressMVCActionCommand
 	}
 
 	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
+	private AccountEntryService _accountEntryService;
 
 	@Reference
 	private AddressLocalService _addressLocalService;

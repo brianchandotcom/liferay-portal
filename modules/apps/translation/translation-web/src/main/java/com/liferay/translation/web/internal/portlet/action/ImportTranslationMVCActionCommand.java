@@ -170,8 +170,6 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				ImportTranslationResultsDisplayContext.class.getName(),
 				new ImportTranslationResultsDisplayContext(
 					classNameId, classPK, groupId, failureMessages, fileName,
-					httpServletRequest,
-					_portal.getLiferayPortletResponse(actionResponse),
 					successMessages, title));
 		}
 		catch (Exception exception) {

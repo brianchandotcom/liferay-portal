@@ -20,7 +20,7 @@
 ImportTranslationResultsDisplayContext importTranslationResultsDisplayContext = (ImportTranslationResultsDisplayContext)request.getAttribute(ImportTranslationResultsDisplayContext.class.getName());
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(importTranslationResultsDisplayContext.getRedirect());
+portletDisplay.setURLBack(importTranslationResultsDisplayContext.getRedirect(request));
 
 renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 %>
@@ -41,7 +41,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 						<div class="tbar-section text-right">
 							<clay:link
 								displayType="primary"
-								href="<%= importTranslationResultsDisplayContext.getRedirect() %>"
+								href="<%= importTranslationResultsDisplayContext.getRedirect(request) %>"
 								label="done"
 								small="<%= true %>"
 								type="button"
@@ -151,7 +151,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 
 					<clay:link
 						displayType="secondary"
-						href="<%= importTranslationResultsDisplayContext.getImportTranslationURL() %>"
+						href="<%= importTranslationResultsDisplayContext.getImportTranslationURL(request, liferayPortletResponse) %>"
 						label="upload-another-file"
 						small="<%= true %>"
 						type="button"

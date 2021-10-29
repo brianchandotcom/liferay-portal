@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Serializable;
+
 import java.util.List;
 import java.util.Map;
 
@@ -27,13 +29,11 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alicia García
  */
-public class ImportTranslationResultsDisplayContext {
+public class ImportTranslationResultsDisplayContext implements Serializable {
 
 	public ImportTranslationResultsDisplayContext(
 		long classNameId, long classPK, long groupId,
 		Map<String, String> failureMessages, String fileName,
-		HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse,
 		List<String> successMessages, String title) {
 
 		_classNameId = classNameId;
@@ -41,8 +41,6 @@ public class ImportTranslationResultsDisplayContext {
 		_groupId = groupId;
 		_failureMessages = failureMessages;
 		_fileName = fileName;
-		_httpServletRequest = httpServletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
 		_successMessages = successMessages;
 		_title = title;
 	}
@@ -59,13 +57,16 @@ public class ImportTranslationResultsDisplayContext {
 		return _fileName;
 	}
 
-	public String getImportTranslationURL() {
+	public String getImportTranslationURL(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
 		return PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
+			liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/translation/import_translation"
 		).setRedirect(
-			getRedirect()
+			getRedirect(httpServletRequest)
 		).setParameter(
 			"classNameId", _classNameId
 		).setParameter(
@@ -75,12 +76,12 @@ public class ImportTranslationResultsDisplayContext {
 		).buildString();
 	}
 
-	public String getRedirect() {
+	public String getRedirect(HttpServletRequest httpServletRequest) {
 		if (Validator.isNotNull(_redirect)) {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
+		_redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 		return _redirect;
 	}
@@ -102,8 +103,6 @@ public class ImportTranslationResultsDisplayContext {
 	private final Map<String, String> _failureMessages;
 	private final String _fileName;
 	private final long _groupId;
-	private final HttpServletRequest _httpServletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
 	private final List<String> _successMessages;
 	private final String _title;

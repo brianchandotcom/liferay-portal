@@ -158,7 +158,7 @@ public class BundleSiteInitializerTest {
 					group.getCompanyId(), "TESTCATG0001");
 
 		Assert.assertNotNull(commerceCatalog);
-		Assert.assertEquals("Test Catalog 01", commerceCatalog.getName());
+		Assert.assertEquals("Test Commerce Catalog 1", commerceCatalog.getName());
 
 		commerceCatalog =
 			_commerceCatalogLocalService.
@@ -166,7 +166,7 @@ public class BundleSiteInitializerTest {
 					group.getCompanyId(), "TESTCATG0002");
 
 		Assert.assertNotNull(commerceCatalog);
-		Assert.assertEquals("Test Catalog 02", commerceCatalog.getName());
+		Assert.assertEquals("Test Commerce Catalog 2", commerceCatalog.getName());
 	}
 
 	private void _assertCommerceChannel(Group group) throws Exception {
@@ -175,7 +175,7 @@ public class BundleSiteInitializerTest {
 				group.getGroupId());
 
 		Assert.assertNotNull(channel);
-		Assert.assertEquals("Test Channel", channel.getName());
+		Assert.assertEquals("Test Commerce Channel", channel.getName());
 		Assert.assertEquals("site", channel.getType());
 		Assert.assertEquals("TESTVOC0001", channel.getExternalReferenceCode());
 	}
@@ -188,7 +188,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(commerceInventoryWarehouse);
 		Assert.assertEquals(
-			"Test Warehouse", commerceInventoryWarehouse.getName());
+			"Test Commerce Warehouse", commerceInventoryWarehouse.getName());
 	}
 
 	private void _assertDDMStructure(Group group) {
@@ -243,11 +243,11 @@ public class BundleSiteInitializerTest {
 	private void _assertLayoutPageTemplates(Group group) throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				group.getGroupId(), "Test",
+				group.getGroupId(), "Test Master Page",
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
 
 		Assert.assertNotNull(layoutPageTemplateEntry);
-		Assert.assertEquals("Test", layoutPageTemplateEntry.getName());
+		Assert.assertEquals("Test Master Page", layoutPageTemplateEntry.getName());
 	}
 
 	private void _assertLayouts(Group group) throws Exception {
@@ -288,7 +288,7 @@ public class BundleSiteInitializerTest {
 	private void _assertStyleBookEntry(Group group) {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.fetchStyleBookEntry(
-				group.getGroupId(), "Test");
+				group.getGroupId(), "test");
 
 		Assert.assertNotNull(styleBookEntry);
 

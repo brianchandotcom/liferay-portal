@@ -84,7 +84,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "test"
+			"key": "test-master-page"
 		}
 	}
 }

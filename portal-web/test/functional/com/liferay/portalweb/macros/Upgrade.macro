@@ -4851,6 +4851,23 @@ definition {
 	}
 
 	macro viewUpgradeDBPartition {
+		var indexContent = SQL.executeMySQLStatement(
+			mysqlStatement = "SHOW INDEX FROM Calendar;");
+
+		SQL.executeMySQLStatement(mysqlStatement = "USE lpartition_39371;");
+
+		var expectedIndex = SQL.executeMySQLStatement(
+			mysqlStatement = "SHOW INDEX FROM Calendar;");
+
+		if (contains("${indexContent}", "${expectedIndex}")) {
+			echo("Calendar Index displays: ${expectedIndex}");
+		}
+		else {
+			echo("Calendar Index: ${indexContent}");
+
+			fail("Unable to find expected Calendar Index: ${expectedIndex}");
+		}
+
 		SignOut.signOut();
 
 		User.firstLoginUI(

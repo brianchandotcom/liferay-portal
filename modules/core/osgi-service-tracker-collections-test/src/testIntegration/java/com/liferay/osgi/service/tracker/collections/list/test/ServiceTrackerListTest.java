@@ -193,6 +193,29 @@ public class ServiceTrackerListTest {
 				i++;
 			}
 
+			for (ServiceRegistration<TrackedOne> serviceRegistration :
+					serviceRegistrations) {
+
+				ServiceReference<TrackedOne> serviceReference =
+					serviceRegistration.getReference();
+
+				Dictionary<String, Object> properties = new Hashtable<>();
+
+				properties.put(
+					"service.ranking",
+					-(int)serviceReference.getProperty("service.ranking"));
+
+				serviceRegistration.setProperties(properties);
+			}
+
+			i = 1;
+
+			for (TrackedOne service : serviceTrackerList) {
+				Assert.assertSame(services[i], service);
+
+				i--;
+			}
+
 			unregister(serviceRegistrations);
 		}
 	}

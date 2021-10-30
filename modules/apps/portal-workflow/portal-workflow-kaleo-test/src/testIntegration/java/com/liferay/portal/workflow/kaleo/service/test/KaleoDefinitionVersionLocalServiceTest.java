@@ -97,6 +97,7 @@ public class KaleoDefinitionVersionLocalServiceTest
 				kaleoDefinitionVersion1.getCompanyId(), "my",
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null));
+
 		Assert.assertEquals(
 			Arrays.asList(kaleoDefinitionVersion1, kaleoDefinitionVersion2),
 			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersions(

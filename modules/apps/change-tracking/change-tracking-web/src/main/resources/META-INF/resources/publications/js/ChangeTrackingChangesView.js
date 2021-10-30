@@ -1092,33 +1092,6 @@ export default ({
 		return nodes;
 	};
 
-	const getBreadcrumbItems = (node, nodeId) => {
-		if (nodeId === 0) {
-			return [
-				{
-					active: true,
-					label: Liferay.Language.get('home'),
-				},
-			];
-		}
-
-		return [
-			{
-				label: Liferay.Language.get('home'),
-				onClick: () =>
-					handleNavigationUpdate({
-						nodeId: 0,
-					}),
-			},
-			{
-				active: true,
-				label: node.title,
-				modelClassNameId: node.modelClassNameId,
-				modelClassPK: node.modelClassPK,
-			},
-		];
-	};
-
 	const getColumnHeader = (column, title) => {
 		let orderListIcon = 'order-list-up';
 
@@ -2149,15 +2122,27 @@ export default ({
 			);
 		}
 
+		const items = [
+			{
+				label: Liferay.Language.get('all-items'),
+				onClick: () =>
+					handleNavigationUpdate({
+						nodeId: 0,
+					}),
+			},
+			{
+				active: true,
+				label: renderState.node.title,
+			},
+		];
+
 		return (
 			<div className="container-fluid container-fluid-max-xl">
 				{renderExpiredBanner()}
 
-				<ClayBreadcrumb
-					ellipsisBuffer={1}
-					items={getBreadcrumbItems(renderState.node, renderState.id)}
-					spritemap={spritemap}
-				/>
+				{renderState.id > 0 && (
+					<ClayBreadcrumb items={items} spritemap={spritemap} />
+				)}
 
 				<div className="publications-changes-content row">
 					<div className="col-md-12">

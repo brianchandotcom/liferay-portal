@@ -392,8 +392,7 @@ table.publications-render-view {
 
 .publications-view-changes-wrapper {
 	.breadcrumb {
-		padding-bottom: 0;
-		padding-top: 0;
+		margin-bottom: 20px;
 	}
 
 	.management-bar {
@@ -411,8 +410,6 @@ table.publications-render-view {
 	}
 
 	.publications-changes-content {
-		margin-top: 20px;
-
 		.panel-body {
 			margin-top: 1rem;
 			padding-bottom: 0;

@@ -23,7 +23,7 @@ CTCollection ctCollection = viewChangesDisplayContext.getCtCollection();
 
 Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
-renderResponse.setTitle(LanguageUtil.get(request, "changes"));
+renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 
 portletDisplay.setURLBack(viewChangesDisplayContext.getBackURL());
 portletDisplay.setShowBackIcon(true);

@@ -373,16 +373,12 @@ public class ObjectFieldLocalServiceImpl
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
 
 	private final Set<String> _reservedNames = SetUtil.fromArray(
-		new String[] {
-			"companyid", "createdate", "groupid", "id", "lastpublishdate",
-			"modifieddate", "status", "statusbyuserid", "statusbyusername",
-			"statusdate", "userid", "username"
-		});
+		"companyid", "createdate", "groupid", "id", "lastpublishdate",
+		"modifieddate", "status", "statusbyuserid", "statusbyusername",
+		"statusdate", "userid", "username");
 	private final Set<String> _types = SetUtil.fromArray(
-		new String[] {
-			"BigDecimal", "Blob", "Boolean", "Date", "Double", "Integer",
-			"Long", "String"
-		});
+		"BigDecimal", "Blob", "Boolean", "Date", "Double", "Integer", "Long",
+		"String");
 
 	@Reference
 	private UserLocalService _userLocalService;

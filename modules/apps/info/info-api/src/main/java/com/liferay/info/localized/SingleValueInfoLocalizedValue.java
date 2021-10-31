@@ -50,7 +50,7 @@ public class SingleValueInfoLocalizedValue<T> implements InfoLocalizedValue<T> {
 	}
 
 	private final Set<Locale> _availableLocales = SetUtil.fromArray(
-		new Locale[] {LocaleUtil.getDefault()});
+		LocaleUtil.getDefault());
 	private final T _value;
 
 }

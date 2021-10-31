@@ -1463,13 +1463,11 @@ public class PortletTracker
 		Collections.singletonMap(
 			ContentTypes.TEXT_HTML,
 			SetUtil.fromArray(
-				new String[] {
-					String.valueOf(LiferayWindowState.EXCLUSIVE),
-					String.valueOf(LiferayWindowState.POP_UP),
-					String.valueOf(WindowState.MAXIMIZED),
-					String.valueOf(WindowState.MINIMIZED),
-					String.valueOf(WindowState.NORMAL)
-				}));
+				String.valueOf(LiferayWindowState.EXCLUSIVE),
+				String.valueOf(LiferayWindowState.POP_UP),
+				String.valueOf(WindowState.MAXIMIZED),
+				String.valueOf(WindowState.MINIMIZED),
+				String.valueOf(WindowState.NORMAL)));
 
 	private BundleContext _bundleContext;
 

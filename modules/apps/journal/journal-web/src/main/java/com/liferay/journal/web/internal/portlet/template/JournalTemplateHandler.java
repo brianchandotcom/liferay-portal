@@ -246,9 +246,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 			JournalTemplateHandler.class.getClassLoader(),
 			"com/liferay/journal/web/portlet/template/dependencies/",
 			SetUtil.fromArray(
-				new String[] {
-					"boolean", "date", "document-library", "geolocation",
-					"image", "journal-article", "link-to-page"
-				}));
+				"boolean", "date", "document-library", "geolocation", "image",
+				"journal-article", "link-to-page"));
 
 }

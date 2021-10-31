@@ -211,7 +211,7 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	protected PortletDisplayTemplate portletDisplayTemplate;
 
 	private static final Set<String> _viewTemplateExcludedColumnNames =
-		SetUtil.fromArray(new String[] {"language", "mode", "structure"});
+		SetUtil.fromArray("language", "mode", "structure");
 
 	@Reference
 	private Portal _portal;

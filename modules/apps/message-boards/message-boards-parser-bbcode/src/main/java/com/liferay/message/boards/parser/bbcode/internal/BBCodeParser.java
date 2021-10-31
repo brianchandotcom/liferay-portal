@@ -40,17 +40,13 @@ public class BBCodeParser {
 
 	public BBCodeParser() {
 		_blockElements = SetUtil.fromArray(
-			new String[] {
-				"*", "center", "code", "justify", "left", "li", "list", "q",
-				"quote", "right", "table", "td", "th", "tr"
-			});
+			"*", "center", "code", "justify", "left", "li", "list", "q",
+			"quote", "right", "table", "td", "th", "tr");
 
 		_inlineElements = SetUtil.fromArray(
-			new String[] {
-				"b", "color", "font", "i", "img", "s", "size", "u", "url"
-			});
+			"b", "color", "font", "i", "img", "s", "size", "u", "url");
 
-		_selfCloseElements = SetUtil.fromArray(new String[] {"*"});
+		_selfCloseElements = SetUtil.fromArray("*");
 	}
 
 	public List<BBCodeItem> parse(String text) {

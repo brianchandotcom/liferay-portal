@@ -80,10 +80,8 @@ public class DLOpenerOneDriveMimeTypes {
 	}
 
 	private static final Set<String> _office365MimeTypes = SetUtil.fromArray(
-		new String[] {
-			DLOpenerMimeTypes.APPLICATION_VND_DOCX,
-			DLOpenerMimeTypes.APPLICATION_VND_PPTX,
-			DLOpenerMimeTypes.APPLICATION_VND_XLSX
-		});
+		DLOpenerMimeTypes.APPLICATION_VND_DOCX,
+		DLOpenerMimeTypes.APPLICATION_VND_PPTX,
+		DLOpenerMimeTypes.APPLICATION_VND_XLSX);
 
 }

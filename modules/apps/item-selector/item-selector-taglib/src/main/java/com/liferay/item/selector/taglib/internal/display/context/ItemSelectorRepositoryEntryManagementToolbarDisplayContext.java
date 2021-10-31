@@ -303,7 +303,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 		if (allowedCreationMenuUIItemKeys == null) {
 			return SetUtil.fromArray(
-				new String[] {DLUIItemKeys.ADD_FOLDER, DLUIItemKeys.UPLOAD});
+				DLUIItemKeys.ADD_FOLDER, DLUIItemKeys.UPLOAD);
 		}
 
 		return allowedCreationMenuUIItemKeys;

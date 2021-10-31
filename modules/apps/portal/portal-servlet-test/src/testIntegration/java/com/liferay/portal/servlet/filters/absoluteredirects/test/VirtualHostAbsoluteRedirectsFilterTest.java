@@ -190,8 +190,7 @@ public class VirtualHostAbsoluteRedirectsFilterTest {
 
 	@Test
 	public void testSingleVirtualHostWithoutUSLocale() throws Exception {
-		_availableLocales = SetUtil.fromArray(
-			new Locale[] {LocaleUtil.GERMANY});
+		_availableLocales = SetUtil.fromArray(LocaleUtil.GERMANY);
 
 		testSingleVirtualHostWithoutLocale();
 	}

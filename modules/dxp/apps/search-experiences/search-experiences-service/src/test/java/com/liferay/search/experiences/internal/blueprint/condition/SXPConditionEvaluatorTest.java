@@ -686,20 +686,18 @@ public class SXPConditionEvaluatorTest {
 	private SXPParameterData _sxpParameterData = new SXPParameterData(
 		"test",
 		SetUtil.fromArray(
-			new SXPParameter[] {
-				new BooleanSXPParameter("boolean", true, true),
-				new DateSXPParameter("date", true, _date),
-				new DoubleSXPParameter("double", true, 1.0D),
-				new FloatSXPParameter("float", true, 1.0F),
-				new IntegerSXPParameter("integer", true, 1),
-				new IntegerArraySXPParameter(
-					"integer_array", true, new Integer[] {1, 2, 3}),
-				new LongArraySXPParameter(
-					"long_array", true, new Long[] {1L, 2L, 3L}),
-				new LongSXPParameter("long", true, 1L),
-				new StringArraySXPParameter(
-					"string_array", true, new String[] {"one", "two", "three"}),
-				new StringSXPParameter("string", true, "one")
-			}));
+			new BooleanSXPParameter("boolean", true, true),
+			new DateSXPParameter("date", true, _date),
+			new DoubleSXPParameter("double", true, 1.0D),
+			new FloatSXPParameter("float", true, 1.0F),
+			new IntegerSXPParameter("integer", true, 1),
+			new IntegerArraySXPParameter(
+				"integer_array", true, new Integer[] {1, 2, 3}),
+			new LongArraySXPParameter(
+				"long_array", true, new Long[] {1L, 2L, 3L}),
+			new LongSXPParameter("long", true, 1L),
+			new StringArraySXPParameter(
+				"string_array", true, new String[] {"one", "two", "three"}),
+			new StringSXPParameter("string", true, "one")));
 
 }

@@ -194,6 +194,6 @@ public class JSONSchemaValidatorUtil {
 	}
 
 	private static final Set<String> _excludedKeywords = SetUtil.fromArray(
-		new String[] {"allOf", "anyOf", "oneOf", "none"});
+		"allOf", "anyOf", "oneOf", "none");
 
 }

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -70,26 +71,24 @@ public class LayoutItemSelectorViewDisplayContext {
 			return _itemSelectedReturnType;
 		}
 
-		String itemSelectedReturnType =
-			URLItemSelectorReturnType.class.getName();
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			_layoutItemSelectorCriterion.getDesiredItemSelectorReturnTypes();
 
-		for (ItemSelectorReturnType itemSelectorReturnType :
-				_layoutItemSelectorCriterion.
-					getDesiredItemSelectorReturnTypes()) {
+		Stream<ItemSelectorReturnType> desiredItemSelectorReturnTypesStream =
+			desiredItemSelectorReturnTypes.stream();
 
-			Class<?> itemSelectorReturnTypeClass =
-				itemSelectorReturnType.getClass();
-
-			if (_supportedItemSelectorReturnTypesClassNames.contains(
-					itemSelectorReturnTypeClass.getName())) {
-
-				itemSelectedReturnType = itemSelectorReturnTypeClass.getName();
-
-				break;
-			}
-		}
-
-		_itemSelectedReturnType = itemSelectedReturnType;
+		_itemSelectedReturnType = desiredItemSelectorReturnTypesStream.map(
+			itemSelectorReturnType -> itemSelectorReturnType.getClass()
+		).map(
+			itemSelectorReturnTypeClass -> itemSelectorReturnTypeClass.getName()
+		).filter(
+			itemSelectorReturnTypeClassName ->
+				_supportedItemSelectorReturnTypesClassNames.contains(
+					itemSelectorReturnTypeClassName)
+		).findFirst(
+		).orElse(
+			URLItemSelectorReturnType.class.getName()
+		);
 
 		return _itemSelectedReturnType;
 	}

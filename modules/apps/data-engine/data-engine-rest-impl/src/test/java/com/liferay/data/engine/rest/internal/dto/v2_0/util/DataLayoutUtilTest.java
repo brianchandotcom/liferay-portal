@@ -67,7 +67,7 @@ public class DataLayoutUtilTest extends PowerMockito {
 		Locale locale = LocaleUtil.US;
 
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			SetUtil.fromArray(new Locale[] {locale}), locale);
+			SetUtil.fromArray(locale), locale);
 
 		ddmForm.addDDMFormField(
 			new DDMFormField() {

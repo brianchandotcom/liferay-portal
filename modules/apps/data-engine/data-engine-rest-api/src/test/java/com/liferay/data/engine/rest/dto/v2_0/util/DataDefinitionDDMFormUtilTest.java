@@ -63,8 +63,7 @@ public class DataDefinitionDDMFormUtilTest extends PowerMockito {
 	@Test
 	public void testToDDMFormEquals() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			SetUtil.fromArray(new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}),
-			LocaleUtil.US);
+			SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US), LocaleUtil.US);
 
 		Locale defaultLocale = ddmForm.getDefaultLocale();
 

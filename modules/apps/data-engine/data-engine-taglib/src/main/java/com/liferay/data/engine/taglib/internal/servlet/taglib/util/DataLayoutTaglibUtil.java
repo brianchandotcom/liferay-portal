@@ -357,8 +357,7 @@ public class DataLayoutTaglibUtil {
 		if (Validator.isNull(dataDefinitionId) &&
 			Validator.isNull(dataLayoutId)) {
 
-			return SetUtil.fromArray(
-				new Locale[] {LocaleThreadLocal.getSiteDefaultLocale()});
+			return SetUtil.fromArray(LocaleThreadLocal.getSiteDefaultLocale());
 		}
 
 		try {
@@ -390,8 +389,7 @@ public class DataLayoutTaglibUtil {
 			}
 		}
 
-		return SetUtil.fromArray(
-			new Locale[] {LocaleThreadLocal.getSiteDefaultLocale()});
+		return SetUtil.fromArray(LocaleThreadLocal.getSiteDefaultLocale());
 	}
 
 	private DataDefinition _getDataDefinition(

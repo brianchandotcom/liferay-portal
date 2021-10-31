@@ -375,7 +375,7 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.setAvailableLocales(
-			SetUtil.fromArray(new Locale[] {LocaleUtil.US, LocaleUtil.BRAZIL}));
+			SetUtil.fromArray(LocaleUtil.US, LocaleUtil.BRAZIL));
 
 		ddmForm.addDDMFormField(
 			_createDDMFormField("string", true, "field1", "text"));

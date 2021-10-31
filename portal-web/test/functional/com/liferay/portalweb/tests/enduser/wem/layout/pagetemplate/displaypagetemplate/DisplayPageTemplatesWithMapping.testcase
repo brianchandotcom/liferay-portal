@@ -625,7 +625,7 @@ definition {
 		task ("Map multiple fields to editable fields") {
 			var n = "1";
 
-			for (var fieldName : list "Title,Content,Tags,Publish Date") {
+			for (var fieldName : list "Title,Content,Author Name,Display Page URL,Tags") {
 				PageEditorMapping.mapEditableTextToField(
 					contributed = "false",
 					field = "${fieldName}",
@@ -655,9 +655,11 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
+			var portalURL = PropsUtil.get("portal.url");
+
 			var n = "1";
 
-			for (var content : list "Webcontent Title,Webcontent Content,tag1,tag2,tag3") {
+			for (var content : list "Webcontent Title,Webcontent Content,Test Test,${portalURL}/web/test-site-name/w/webcontent-title") {
 				ContentPages.viewFragmentText(
 					contributed = "false",
 					fragmentName = "multiple-editables",
@@ -666,6 +668,12 @@ definition {
 
 				var n = ${n} + 1;
 			}
+
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "multiple-editables",
+				position = "5",
+				text = "tag1, tag2, tag3");
 		}
 	}
 

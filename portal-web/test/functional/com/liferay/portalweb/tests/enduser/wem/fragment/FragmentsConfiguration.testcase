@@ -777,7 +777,7 @@ main();
 				siteName = "Test Site Name");
 
 			ContentPages.viewFragmentText(
-				contribute = "false",
+				contributed = "false",
 				fragmentName = "configuration",
 				text = "Updated fragment text");
 		}
@@ -860,7 +860,7 @@ main();
 			PageEditor.assertFragmentSidebarLoaded();
 
 			ContentPages.viewFragmentText(
-				contribute = "false",
+				contributed = "false",
 				fragmentName = "configuration",
 				text = "Updated fragment text");
 		}
@@ -928,7 +928,7 @@ main();
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			ContentPages.viewFragmentText(
-				contribute = "false",
+				contributed = "false",
 				fragmentName = "configuration",
 				text = "Updated fragment text");
 		}

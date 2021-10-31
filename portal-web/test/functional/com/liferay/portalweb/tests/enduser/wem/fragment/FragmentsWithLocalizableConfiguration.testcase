@@ -223,7 +223,7 @@ definition {
 
 		task ("Assert localized content is shown in fragment") {
 			ContentPages.viewFragmentText(
-				contribute = "false",
+				contributed = "false",
 				fragmentName = "example",
 				text = "Ir a alguna parte");
 		}
@@ -242,7 +242,7 @@ definition {
 
 		task ("Assert Go Somewhere is shown in fragment") {
 			ContentPages.viewFragmentText(
-				contribute = "false",
+				contributed = "false",
 				fragmentName = "example",
 				text = "Go Somewhere");
 		}
@@ -261,7 +261,7 @@ definition {
 
 		task ("Assert Ir a alguna parte is shown in fragment") {
 			ContentPages.viewFragmentText(
-				contribute = "false",
+				contributed = "false",
 				fragmentName = "example",
 				text = "Ir a alguna parte");
 		}

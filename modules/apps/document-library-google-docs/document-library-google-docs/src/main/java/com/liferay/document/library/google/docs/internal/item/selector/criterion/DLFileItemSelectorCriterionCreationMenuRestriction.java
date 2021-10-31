@@ -47,10 +47,8 @@ public class DLFileItemSelectorCriterionCreationMenuRestriction
 
 	private static final Set<String> _allowedCreationMenuUIItemKeys =
 		SetUtil.fromArray(
-			new String[] {
-				DLFileEntryType.class.getSimpleName() +
-					GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY,
-				DLUIItemKeys.ADD_FOLDER, DLUIItemKeys.UPLOAD
-			});
+			DLFileEntryType.class.getSimpleName() +
+				GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY,
+			DLUIItemKeys.ADD_FOLDER, DLUIItemKeys.UPLOAD);
 
 }

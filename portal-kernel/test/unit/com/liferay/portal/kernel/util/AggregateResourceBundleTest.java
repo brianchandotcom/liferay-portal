@@ -61,7 +61,7 @@ public class AggregateResourceBundleTest {
 			new AggregateResourceBundle(resourceBundleA, resourceBundleB);
 
 		Assert.assertEquals(
-			SetUtil.fromArray(new String[] {"keyA", "keyB"}),
+			SetUtil.fromArray("keyA", "keyB"),
 			aggregateResourceBundle.keySet());
 	}
 

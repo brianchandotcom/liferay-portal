@@ -228,7 +228,6 @@ public class JSONWebServiceNaming {
 		PropsKeys.JSONWS_WEB_SERVICE_PATHS_INCLUDES);
 	protected Set<String> invalidHttpMethods = SetUtil.fromArray(
 		PropsUtil.getArray(PropsKeys.JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS));
-	protected Set<String> prefixes = SetUtil.fromArray(
-		new String[] {"get", "has", "is"});
+	protected Set<String> prefixes = SetUtil.fromArray("get", "has", "is");
 
 }

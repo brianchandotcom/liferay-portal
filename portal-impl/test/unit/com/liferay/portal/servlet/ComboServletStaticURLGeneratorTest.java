@@ -103,9 +103,7 @@ public class ComboServletStaticURLGeneratorTest {
 		comboServletStaticURLGenerator.setURLPrefix(_URL_PREFIX);
 		comboServletStaticURLGenerator.setVisitedURLs(
 			SetUtil.fromArray(
-				new String[] {
-					"http://www.test.com/test1.css", "/css/main.css"
-				}));
+				"http://www.test.com/test1.css", "/css/main.css"));
 
 		Portlet portlet = buildPortlet(
 			"/portlet", "/css/main.css", "/css/more.css",
@@ -130,7 +128,7 @@ public class ComboServletStaticURLGeneratorTest {
 			PortletResourceAccessor.HEADER_PORTAL_CSS);
 		comboServletStaticURLGenerator.setURLPrefix(_URL_PREFIX);
 		comboServletStaticURLGenerator.setVisitedURLs(
-			SetUtil.fromArray(new String[] {"/css/main.css"}));
+			SetUtil.fromArray("/css/main.css"));
 
 		Portlet portlet = buildPortlet(
 			"portlet", "/css/main.css", "/css/more.css");

@@ -390,11 +390,9 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 	private synchronized Set<String> _getPrimitiveTagAttributeDataTypes() {
 		if (_primitiveTagAttributeDataTypes == null) {
 			_primitiveTagAttributeDataTypes = SetUtil.fromArray(
-				new String[] {
-					"java.lang.Boolean", "Boolean", "boolean",
-					"java.lang.Double", "Double", "double", "java.lang.Integer",
-					"Integer", "int", "java.lang.Long", "Long", "long"
-				});
+				"java.lang.Boolean", "Boolean", "boolean", "java.lang.Double",
+				"Double", "double", "java.lang.Integer", "Integer", "int",
+				"java.lang.Long", "Long", "long");
 		}
 
 		return _primitiveTagAttributeDataTypes;

@@ -88,8 +88,7 @@ public class JSPCoreTaglibCheck extends BaseJSPTermsCheck {
 
 						Set<String> missingTaglibPrefixes =
 							getMissingTaglibPrefixes(
-								fileName,
-								SetUtil.fromArray(new String[] {"c"}));
+								fileName, SetUtil.fromArray("c"));
 
 						if (missingTaglibPrefixes.isEmpty()) {
 							return newContent;

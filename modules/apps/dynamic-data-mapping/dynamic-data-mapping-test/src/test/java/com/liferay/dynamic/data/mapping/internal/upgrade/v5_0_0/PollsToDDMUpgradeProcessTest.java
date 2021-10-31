@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.Locale;
 import java.util.Set;
 
 import org.hamcrest.CoreMatchers;
@@ -147,7 +146,7 @@ public class PollsToDDMUpgradeProcessTest extends BaseDDMTestCase {
 			new DDMFormField("fieldName", "radio"));
 
 		Assert.assertEquals(
-			SetUtil.fromArray(new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}),
+			SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US),
 			ddmForm.getAvailableLocales());
 		Assert.assertEquals(LocaleUtil.US, ddmForm.getDefaultLocale());
 	}
@@ -260,7 +259,7 @@ public class PollsToDDMUpgradeProcessTest extends BaseDDMTestCase {
 			PollsToDDMUpgradeProcess.class, "_availableLocales"
 		).set(
 			_pollsToDDMUpgradeProcess,
-			SetUtil.fromArray(new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US})
+			SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US)
 		);
 
 		MemberMatcher.field(

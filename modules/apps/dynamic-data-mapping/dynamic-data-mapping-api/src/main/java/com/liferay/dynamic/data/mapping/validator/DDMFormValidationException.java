@@ -61,7 +61,7 @@ public class DDMFormValidationException extends PortalException {
 		 */
 		@Deprecated
 		public MustNotDuplicateFieldName(String fieldName) {
-			this(SetUtil.fromArray(new String[] {fieldName}));
+			this(SetUtil.fromArray(fieldName));
 		}
 
 		public Set<String> getDuplicatedFieldNames() {

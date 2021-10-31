@@ -27,8 +27,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
-import java.util.Locale;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -61,9 +59,8 @@ public class DDMFormContextToDDMFormTest {
 	public void testGetDDMFormFieldValidationDateField() throws Exception {
 		DDMFormFieldValidation ddmFormFieldValidation =
 			_ddmFormContextToDDMForm.getDDMFormFieldValidation(
-				SetUtil.fromArray(
-					new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}),
-				"date", LocaleUtil.US,
+				SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US), "date",
+				LocaleUtil.US,
 				JSONUtil.put(
 					"parameter", JSONUtil.put("en_US", "Test US")
 				).toString());
@@ -81,9 +78,8 @@ public class DDMFormContextToDDMFormTest {
 	public void testGetDDMFormFieldValidationEmptyValue() throws Exception {
 		Assert.assertNull(
 			_ddmFormContextToDDMForm.getDDMFormFieldValidation(
-				SetUtil.fromArray(
-					new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}),
-				"numeric", LocaleUtil.US,
+				SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US), "numeric",
+				LocaleUtil.US,
 				JSONUtil.put(
 					"expression", JSONUtil.put("value", StringPool.BLANK)
 				).put(
@@ -100,9 +96,8 @@ public class DDMFormContextToDDMFormTest {
 				).put(
 					"pt_BR", "Test BR"
 				),
-				SetUtil.fromArray(
-					new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}),
-				"date", LocaleUtil.US);
+				SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US), "date",
+				LocaleUtil.US);
 
 		Assert.assertEquals(
 			"Test US", parameterLocalizedValue.getString(LocaleUtil.BRAZIL));
@@ -119,9 +114,8 @@ public class DDMFormContextToDDMFormTest {
 				).put(
 					"pt_BR", "Test BR"
 				),
-				SetUtil.fromArray(
-					new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}),
-				"numeric", LocaleUtil.US);
+				SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US), "numeric",
+				LocaleUtil.US);
 
 		Assert.assertEquals(
 			"Test BR", parameterLocalizedValue.getString(LocaleUtil.BRAZIL));
@@ -134,9 +128,8 @@ public class DDMFormContextToDDMFormTest {
 		LocalizedValue parameterLocalizedValue =
 			_ddmFormContextToDDMForm.getParameterLocalizedValue(
 				JSONUtil.put("en_US", "Test US"),
-				SetUtil.fromArray(
-					new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}),
-				"text", LocaleUtil.US);
+				SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US), "text",
+				LocaleUtil.US);
 
 		Assert.assertEquals(
 			"Test US", parameterLocalizedValue.getString(LocaleUtil.BRAZIL));

@@ -653,7 +653,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 	protected void setUpLanguageUtil() {
 		Set<Locale> availableLocales = SetUtil.fromArray(
-			new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.SPAIN, LocaleUtil.US});
+			LocaleUtil.BRAZIL, LocaleUtil.SPAIN, LocaleUtil.US);
 
 		whenLanguageGetAvailableLocalesThen(availableLocales);
 

@@ -898,7 +898,7 @@ public class DynamicDataMappingUpgradeProcessTest extends PowerMockito {
 		whenLanguageGetLanguageId(LocaleUtil.BRAZIL, "pt_BR");
 
 		whenLanguageGetAvailableLocalesThen(
-			SetUtil.fromArray(new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}));
+			SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US));
 
 		whenLanguageIsAvailableLocale(LocaleUtil.BRAZIL);
 		whenLanguageIsAvailableLocale(LocaleUtil.US);

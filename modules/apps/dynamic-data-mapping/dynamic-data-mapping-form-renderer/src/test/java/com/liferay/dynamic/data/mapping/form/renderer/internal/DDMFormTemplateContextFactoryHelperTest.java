@@ -96,7 +96,7 @@ public class DDMFormTemplateContextFactoryHelperTest extends PowerMockito {
 		ddmForm.addDDMFormField(ddmFormField5);
 
 		Set<String> expectedEvaluableFieldNames = SetUtil.fromArray(
-			new String[] {"Field0", "Field2", "Field4", "Field5"});
+			"Field0", "Field2", "Field4", "Field5");
 
 		Set<String> actualEvaluableFieldNames =
 			_ddmFormTemplateContextFactoryHelper.getEvaluableDDMFormFieldNames(

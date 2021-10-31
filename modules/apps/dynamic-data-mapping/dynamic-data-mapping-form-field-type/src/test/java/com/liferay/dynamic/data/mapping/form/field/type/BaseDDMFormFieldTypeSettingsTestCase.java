@@ -80,8 +80,7 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase
 	}
 
 	protected void setUpLanguageUtil() {
-		Set<Locale> availableLocales = SetUtil.fromArray(
-			new Locale[] {LocaleUtil.US});
+		Set<Locale> availableLocales = SetUtil.fromArray(LocaleUtil.US);
 
 		when(
 			language.getAvailableLocales()

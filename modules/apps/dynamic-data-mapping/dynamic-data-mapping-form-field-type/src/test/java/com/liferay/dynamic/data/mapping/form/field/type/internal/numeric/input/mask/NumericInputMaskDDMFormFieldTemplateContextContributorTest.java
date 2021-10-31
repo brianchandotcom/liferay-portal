@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -224,7 +223,7 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributorTest
 		when(
 			language.getAvailableLocales()
 		).thenReturn(
-			SetUtil.fromArray(new Locale[] {LocaleUtil.US})
+			SetUtil.fromArray(LocaleUtil.US)
 		);
 
 		when(

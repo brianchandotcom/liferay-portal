@@ -183,7 +183,7 @@ public class
 		PowerMockito.when(
 			LanguageUtil.getAvailableLocales()
 		).thenReturn(
-			SetUtil.fromArray(new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US})
+			SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US)
 		);
 
 		_mockGetLanguageId(LocaleUtil.BRAZIL);

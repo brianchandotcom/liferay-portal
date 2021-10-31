@@ -210,7 +210,6 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 			DDLDisplayTemplateHandler.class.getClassLoader(),
 			"com/liferay/dynamic/data/lists/web/internal/template" +
 				"/dependencies/",
-			SetUtil.fromArray(
-				new String[] {"document-library", "html", "link-to-page"}));
+			SetUtil.fromArray("document-library", "html", "link-to-page"));
 
 }

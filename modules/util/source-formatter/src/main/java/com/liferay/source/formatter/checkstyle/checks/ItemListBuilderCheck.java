@@ -42,7 +42,11 @@ public class ItemListBuilderCheck extends BaseBuilderCheck {
 			new BaseBuilderCheck.BuilderInformation(
 				"LabelItemList", "LabelItemListBuilder", "add"),
 			new BaseBuilderCheck.BuilderInformation(
-				"NavigationItemList", "NavigationItemListBuilder", "add"));
+				"MultiselectItemList", "MultiselectItemListBuilder", "add"),
+			new BaseBuilderCheck.BuilderInformation(
+				"NavigationItemList", "NavigationItemListBuilder", "add"),
+			new BaseBuilderCheck.BuilderInformation(
+				"SortItemList", "SortItemListBuilder", "add"));
 	}
 
 	@Override

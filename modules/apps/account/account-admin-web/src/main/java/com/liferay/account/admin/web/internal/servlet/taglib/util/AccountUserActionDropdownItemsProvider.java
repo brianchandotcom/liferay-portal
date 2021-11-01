@@ -17,6 +17,7 @@ package com.liferay.account.admin.web.internal.servlet.taglib.util;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -72,77 +73,76 @@ public class AccountUserActionDropdownItemsProvider {
 
 				return false;
 			},
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.createRenderURL(
-						_renderResponse
-					).setMVCPath(
-						"/account_users_admin/edit_account_user.jsp"
-					).setBackURL(
-						_themeDisplay.getURLCurrent()
-					).setParameter(
-						"p_u_i_d", _accountUserId
-					).buildString());
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "edit"));
-			}
+			DropdownItemBuilder.setHref(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCPath(
+					"/account_users_admin/edit_account_user.jsp"
+				).setBackURL(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"p_u_i_d", _accountUserId
+				).buildString()
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "edit")
+			).build()
 		).add(
 			() -> AccountEntryPermission.contains(
 				_permissionChecker, _accountEntryId, ActionKeys.MANAGE_USERS),
-			dropdownItem -> {
-				dropdownItem.putData("action", "assignRoleAccountUsers");
-				dropdownItem.putData(
-					"assignRoleAccountUsersURL",
-					PortletURLBuilder.createRenderURL(
-						_renderResponse
-					).setMVCPath(
-						"/account_entries_admin/select_account_roles.jsp"
-					).setRedirect(
-						_themeDisplay.getURLCurrent()
-					).setParameter(
-						"accountEntryId", _accountEntryId
-					).setParameter(
-						"accountUserIds", _accountUserId
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).buildString());
-				dropdownItem.putData(
-					"editRoleAccountUsersURL",
-					PortletURLBuilder.createActionURL(
-						_renderResponse
-					).setActionName(
-						"/account_admin/set_user_account_roles"
-					).setRedirect(
-						_themeDisplay.getURLCurrent()
-					).setParameter(
-						"accountEntryId", _accountEntryId
-					).setParameter(
-						"accountUserId", _accountUserId
-					).buildString());
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "assign-roles"));
-			}
+			DropdownItemBuilder.putData(
+				"action", "assignRoleAccountUsers"
+			).putData(
+				"assignRoleAccountUsersURL",
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCPath(
+					"/account_entries_admin/select_account_roles.jsp"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"accountEntryId", _accountEntryId
+				).setParameter(
+					"accountUserIds", _accountUserId
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString()
+			).putData(
+				"editRoleAccountUsersURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/account_admin/set_user_account_roles"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"accountEntryId", _accountEntryId
+				).setParameter(
+					"accountUserId", _accountUserId
+				).buildString()
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "assign-roles")
+			).build()
 		).add(
 			() -> AccountEntryPermission.contains(
 				_permissionChecker, _accountEntryId, ActionKeys.MANAGE_USERS),
-			dropdownItem -> {
-				dropdownItem.putData("action", "removeAccountUsers");
-				dropdownItem.putData(
-					"removeAccountUsersURL",
-					PortletURLBuilder.createActionURL(
-						_renderResponse
-					).setActionName(
-						"/account_admin/remove_account_users"
-					).setRedirect(
-						_themeDisplay.getURLCurrent()
-					).setParameter(
-						"accountEntryId", _accountEntryId
-					).setParameter(
-						"accountUserIds", _accountUserId
-					).buildString());
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "remove"));
-			}
+			DropdownItemBuilder.putData(
+				"action", "removeAccountUsers"
+			).putData(
+				"removeAccountUsersURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/account_admin/remove_account_users"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"accountEntryId", _accountEntryId
+				).setParameter(
+					"accountUserIds", _accountUserId
+				).buildString()
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "remove")
+			).build()
 		).build();
 	}
 

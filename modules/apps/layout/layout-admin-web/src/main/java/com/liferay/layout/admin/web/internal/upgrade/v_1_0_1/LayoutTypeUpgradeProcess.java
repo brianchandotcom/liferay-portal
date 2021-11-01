@@ -136,9 +136,9 @@ public class LayoutTypeUpgradeProcess extends UpgradeProcess {
 		return UnicodePropertiesBuilder.create(
 			true
 		).put(
-			"column-1", portletId
-		).put(
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column"
+		).put(
+			"column-1", portletId
 		).buildString();
 	}
 

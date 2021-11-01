@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
@@ -117,20 +118,20 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 	public List<LabelItem> getFilterLabelItems() {
 		return LabelItemListBuilder.add(
 			() -> !Objects.equals(getNavigation(), "all"),
-			labelItem -> {
-				labelItem.putData(
-					"removeLabelURL",
-					PortletURLBuilder.create(
-						getPortletURL()
-					).setParameter(
-						"type", (String)null
-					).buildString());
-				labelItem.setDismissible(true);
-				labelItem.setLabel(
-					String.format(
-						"%s: %s", LanguageUtil.get(httpServletRequest, "type"),
-						LanguageUtil.get(httpServletRequest, getNavigation())));
-			}
+			LabelItemBuilder.putData(
+				"removeLabelURL",
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setParameter(
+					"type", (String)null
+				).buildString()
+			).setDismissible(
+				true
+			).setLabel(
+				String.format(
+					"%s: %s", LanguageUtil.get(httpServletRequest, "type"),
+					LanguageUtil.get(httpServletRequest, getNavigation()))
+			).build()
 		).build();
 	}
 

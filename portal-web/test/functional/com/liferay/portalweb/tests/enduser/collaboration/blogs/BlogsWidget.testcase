@@ -75,9 +75,10 @@ definition {
 			key_text = "comments",
 			locator1 = "Icon#ANY");
 
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		AssertElementNotPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 	}

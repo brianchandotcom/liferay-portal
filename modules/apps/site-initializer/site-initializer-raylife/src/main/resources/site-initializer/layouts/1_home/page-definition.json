@@ -91,11 +91,11 @@
 						"definition": {
 							"layout": {
 								"borderWidth": 0,
-								"marginBottom": 10,
+								"marginBottom": 0,
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
-								"paddingBottom": 5,
+								"paddingBottom": 0,
 								"paddingLeft": 0,
 								"paddingRight": 0,
 								"paddingTop": 0,
@@ -106,458 +106,286 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "BASIC_COMPONENT-heading"
+										"key": "colorful-head"
 									},
-									"fragmentConfig": {
-										"headingLevel": "h6"
-									},
+									"fragmentConfig": {},
 									"fragmentFields": [
 										{
-											"id": "element-text",
+											"id": "sub-content",
 											"value": {
-												"text": {
-													"value_i18n": {
-														"en_US": "ADDITIONAL BUSINESS OWNER'S POLICY COVERAGE OPTIONS"
-													}
+												"fragmentLink": {
+													"value_i18n": {}
+												}
+											}
+										},
+										{
+											"id": "main-content",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {}
 												}
 											}
 										}
 									],
 									"fragmentStyle": {
-										"marginBottom": "4",
-										"marginTop": "4",
-										"textAlign": "center"
+										"marginBottom": "6"
 									}
 								},
 								"type": "Fragment"
 							},
 							{
 								"definition": {
-									"gutters": true,
-									"modulesPerRow": 3,
-									"numberOfColumns": 3,
-									"reverseOrder": false,
-									"rowViewports": [
+									"fragment": {
+										"key": "list-item-with-icon"
+									},
+									"fragmentConfig": {},
+									"fragmentFields": [
 										{
-											"id": "landscapeMobile",
-											"rowViewportDefinition": {
+											"id": "main-image",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {}
+												}
 											}
 										},
 										{
-											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
-										},
-										{
-											"id": "tablet",
-											"rowViewportDefinition": {
+											"id": "main-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {}
+												}
 											}
 										}
-									],
-									"verticalAlignment": "top"
+									]
 								},
-								"pageElements": [
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 4
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "info-card"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "lfr-text-01",
-															"value": {
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Professional Liability"
-																	}
-																}
-															}
-														},
-														{
-															"id": "lfr-image-01",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"value_i18n": {
-																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/suitcase.svg$]"
-																		}
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "4"
-													}
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "info-card"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "lfr-text-01",
-															"value": {
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Hired & Non-Owned Auto"
-																	}
-																}
-															}
-														},
-														{
-															"id": "lfr-image-01",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"value_i18n": {
-																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/square_truck.svg$]"
-																		}
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "4"
-													}
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "info-card"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "lfr-text-01",
-															"value": {
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Employment Practices Liability"
-																	}
-																}
-															}
-														},
-														{
-															"id": "lfr-image-01",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"value_i18n": {
-																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/people.svg$]"
-																		}
-																	}
-																}
-															}
-														}
-													]
-												},
-												"type": "Fragment"
-											}
-										],
-										"type": "Column"
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "list-item-with-icon"
 									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "landscapeMobile"
+									"fragmentConfig": {},
+									"fragmentFields": [
+										{
+											"id": "main-image",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {}
+													}
 												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
+												"fragmentLink": {
+													"value_i18n": {}
 												}
-											],
-											"size": 4
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "info-card"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "lfr-text-01",
-															"value": {
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Liquor Liability"
-																	}
-																}
-															}
-														},
-														{
-															"id": "lfr-image-01",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"value_i18n": {
-																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/glass.svg$]"
-																		}
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "4"
-													}
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "info-card"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "lfr-text-01",
-															"value": {
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Spoilage"
-																	}
-																}
-															}
-														},
-														{
-															"id": "lfr-image-01",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"value_i18n": {
-																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/pizza.svg$]"
-																		}
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "4"
-													}
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "info-card"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "lfr-text-01",
-															"value": {
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Equipment Breakdown"
-																	}
-																}
-															}
-														},
-														{
-															"id": "lfr-image-01",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"value_i18n": {
-																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/refrigerator.svg$]"
-																		}
-																	}
-																}
-															}
-														}
-													]
-												},
-												"type": "Fragment"
 											}
-										],
-										"type": "Column"
+										},
+										{
+											"id": "main-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Nibh varius malesuada nisl donec dolor at pellentesque nulla."
+													}
+												}
+											}
+										}
+									]
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "list-item-with-icon"
 									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "landscapeMobile"
+									"fragmentConfig": {},
+									"fragmentFields": [
+										{
+											"id": "main-image",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {}
+													}
 												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
+												"fragmentLink": {
+													"value_i18n": {}
 												}
-											],
-											"size": 4
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "info-card"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "lfr-text-01",
-															"value": {
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Restaurant Endorsement"
-																	}
-																}
-															}
-														},
-														{
-															"id": "lfr-image-01",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"value_i18n": {
-																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/knife_and_spoon.svg$]"
-																		}
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "4"
-													}
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "info-card"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "lfr-text-01",
-															"value": {
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Employee Dishonesty"
-																	}
-																}
-															}
-														},
-														{
-															"id": "lfr-image-01",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"value_i18n": {
-																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/person.svg$]"
-																		}
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "4"
-													}
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "info-card"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "lfr-text-01",
-															"value": {
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Cyber Liability"
-																	}
-																}
-															}
-														},
-														{
-															"id": "lfr-image-01",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"value_i18n": {
-																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/security.svg$]"
-																		}
-																	}
-																}
-															}
-														}
-													]
-												},
-												"type": "Fragment"
 											}
-										],
-										"type": "Column"
-									}
-								],
-								"type": "Row"
+										},
+										{
+											"id": "main-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Consequat urna consectetur scelerisque sollicitudin."
+													}
+												}
+											}
+										}
+									]
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "list-item-with-icon"
+									},
+									"fragmentConfig": {},
+									"fragmentFields": [
+										{
+											"id": "main-image",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {}
+												}
+											}
+										},
+										{
+											"id": "main-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Facilisis mi enim, a vitae ut neque, quisque arcu."
+													}
+												}
+											}
+										}
+									]
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "list-item-with-icon"
+									},
+									"fragmentConfig": {},
+									"fragmentFields": [
+										{
+											"id": "main-image",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {}
+												}
+											}
+										},
+										{
+											"id": "main-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Consequat urna consectetur scelerisque sollicitudin."
+													}
+												}
+											}
+										}
+									]
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "list-item-with-icon"
+									},
+									"fragmentConfig": {},
+									"fragmentFields": [
+										{
+											"id": "main-image",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {}
+												}
+											}
+										},
+										{
+											"id": "main-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Purus pretium dui neque, scelerisque vulputate."
+													}
+												}
+											}
+										}
+									]
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "list-item-with-icon"
+									},
+									"fragmentConfig": {},
+									"fragmentFields": [
+										{
+											"id": "main-image",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {}
+												}
+											}
+										},
+										{
+											"id": "main-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Facilisis mi enim, a vitae ut neque, quisque arcu."
+													}
+												}
+											}
+										}
+									]
+								},
+								"type": "Fragment"
 							}
 						],
 						"type": "Section"

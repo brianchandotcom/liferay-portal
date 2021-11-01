@@ -1,0 +1,19 @@
+.fragment_71 .main-div{
+	width:50.5rem;
+}
+
+.fragment_71 p{
+	font-weight:var(--font-weight-bold);
+	font-size:var(--h4-font-size, 1rem);
+}
+
+.fragment_71 #plus-icon{
+	height:1.5rem;
+	width:1.5rem;
+	cursor:pointer;
+}
+
+.fragment_71 {
+	font-size:var(--text-paragraph-sm, 1rem);
+	color:var(--bg-neutral-8);
+}

@@ -282,17 +282,9 @@ definition {
 			pageName = "TranslationContentPage2",
 			validateInvalidFile = "true");
 
-		Alert.viewErrorMessage(errorMessage = "The translation file does not correspond to this page.");
-
-		SitePages.openPagesAdmin(siteURLKey = "guest");
-
-		Translations.importTranslation(
-			contentPageTranslation = "true",
-			pageName = "TranslationContentPage2",
-			uploadInvalidFile = "Document_1.doc",
-			validateInvalidFile = "true");
-
-		Alert.viewErrorMessage(errorMessage = "The file is an invalid XLIFF file.");
+		Translations.viewErrorMessages(
+			errorMessage = "1 Error: Some files could not be published, check them and upload another file.",
+			errorMessageItem = "The translation file does not correspond to this page.");
 	}
 
 	@description = "This ensures that the user can import the translated content page file with Button fragment."

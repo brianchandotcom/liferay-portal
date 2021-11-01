@@ -91,14 +91,13 @@ definition {
 		KaleoFormsAdmin.saveProcessRecord();
 
 		KaleoFormsAdmin.viewProcessNameByColumns(
+			kfAuthor = "Test Test",
 			kfCompanyName = " ",
 			kfEmailName = " ",
 			kfFirstName = " ",
-			kfInstantMessengerService = "Google Hangouts",
 			kfInstantMessenger = " ",
-			kfStatus = "Pending",
-			kfAuthor = "Test Test");
-
+			kfInstantMessengerService = "Google Hangouts",
+			kfStatus = "Pending");
 	}
 
 	@description = "Verify that user can delete all submissions in the page."

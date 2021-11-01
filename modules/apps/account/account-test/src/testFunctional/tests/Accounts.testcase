@@ -342,6 +342,92 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that a domain blocked in one instance will not be blocked when creating a separate virtual instance."
+	@priority = "4"
+	test BlockedDomainsAreInstanceWide {
+		task ("Block google.com domain and create a new account") {
+			AccountConfiguration.addBlockedEmailDomain(settingValues = "google.com");
+
+			Accounts.openAccountsAdmin();
+
+			Accounts.addBusinessAccount(accountName = "Business Account");
+		}
+
+		task ("Add a user using an email with the domain and assert the warning label appears signaling that the domain is blocked") {
+			Accounts.addNewUserWithBlockedDomain(
+				accountName = "Business Account",
+				assigneeName = "userfn",
+				emailDomainName = "google.com",
+				userEmailAddress = "userea@google.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Set up a new virtual instance and create a new account") {
+			SAML.addVirtualInstances(virtualHosts = "www.able.com");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Control Panel",
+				portlet = "Accounts");
+
+			Accounts.addBusinessAccount(accountName = "New Instance Account");
+		}
+
+		task ("Add a user with the same domain and assert the error message for blocked domains does not display") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+			LexiconEntry.gotoAdd();
+
+			SelectFrame(
+				key_title = "Assign Users to New Instance Account",
+				locator1 = "IFrame#MODAL_ANY");
+
+			LexiconEntry.gotoAdd();
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+				value1 = "googleUser");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+				value1 = "user@google.com");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+				value1 = "googleUser");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+				value1 = "googleUser");
+
+			AssertTextNotPresent(value1 = "google.com is a blocked domain. Account administrators cannot add users with this domain to their accounts. You can still manually assign this email address to this user.");
+
+			AssertClick(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
+
+			Alert.viewSuccessMessage();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Control Panel",
+				portlet = "Account Users");
+
+			AssertTextEquals(
+				key_columnName = "lfr-email-column",
+				key_rowEntry = "googleUser googleUser",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+				value1 = "user@google.com");
+		}
+	}
+
 	@description = "This test adds a new user via the Users tab of an Account"
 	@priority = "4"
 	test CanAddAccountUserViaAssignUser {

@@ -117,7 +117,7 @@ public class PortalClassPathUtil {
 			_buildClassPath(
 				classLoader, CentralizedThreadLocal.class.getName()));
 
-		String globalClassPath = sb.toString();
+		String bootstrapClassPath = sb.toString();
 
 		sb.append(File.pathSeparator);
 		sb.append(
@@ -136,7 +136,7 @@ public class PortalClassPathUtil {
 		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		builder.setArguments(_processArgs);
-		builder.setBootstrapClassPath(globalClassPath);
+		builder.setBootstrapClassPath(bootstrapClassPath);
 		builder.setReactClassLoader(classLoader);
 		builder.setRuntimeClassPath(portalClassPath);
 

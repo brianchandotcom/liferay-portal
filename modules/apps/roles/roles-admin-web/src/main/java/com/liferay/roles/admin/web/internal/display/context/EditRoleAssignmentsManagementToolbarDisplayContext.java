@@ -16,7 +16,7 @@ package com.liferay.roles.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -173,41 +173,30 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 
 	public List<DropdownItem> getFilterDropdownItems() {
 		return DropdownItemList.of(
-			() -> {
-				DropdownGroupItem dropdownGroupItem = new DropdownGroupItem();
-
-				dropdownGroupItem.setDropdownItems(
-					DropdownItemList.of(
-						DropdownItemBuilder.setActive(
-							true
-						).setHref(
-							StringPool.BLANK
-						).setLabel(
-							LanguageUtil.get(_httpServletRequest, "all")
-						).build()));
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(
-						_httpServletRequest, "filter-by-navigation"));
-
-				return dropdownGroupItem;
-			},
-			() -> {
-				DropdownGroupItem dropdownGroupItem = new DropdownGroupItem();
-
-				dropdownGroupItem.setDropdownItems(
-					DropdownItemList.of(
-						DropdownItemBuilder.setActive(
-							Objects.equals(getOrderByCol(), "name")
-						).setHref(
-							getPortletURL(), "orderByCol", "name"
-						).setLabel(
-							LanguageUtil.get(_httpServletRequest, "name")
-						).build()));
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "order-by"));
-
-				return dropdownGroupItem;
-			});
+			DropdownGroupItemBuilder.setDropdownItems(
+				DropdownItemList.of(
+					DropdownItemBuilder.setActive(
+						true
+					).setHref(
+						StringPool.BLANK
+					).setLabel(
+						LanguageUtil.get(_httpServletRequest, "all")
+					).build())
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "filter-by-navigation")
+			).build(),
+			DropdownGroupItemBuilder.setDropdownItems(
+				DropdownItemList.of(
+					DropdownItemBuilder.setActive(
+						Objects.equals(getOrderByCol(), "name")
+					).setHref(
+						getPortletURL(), "orderByCol", "name"
+					).setLabel(
+						LanguageUtil.get(_httpServletRequest, "name")
+					).build())
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "order-by")
+			).build());
 	}
 
 	public SearchContainer<Group> getGroupSearchContainer() {

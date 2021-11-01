@@ -22,7 +22,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -304,16 +304,15 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 	protected void addFilterTypeDropdownItems(
 		List<DropdownItem> filterDropdownItems) {
 
-		DropdownGroupItem filterDropdownItemsGroup = new DropdownGroupItem();
-
-		filterDropdownItemsGroup.setDropdownItems(
-			getDropdownItems(
-				getDefaultEntriesMap(getFilterByTypeKeys()), getPortletURL(),
-				"type", getType()));
-		filterDropdownItemsGroup.setLabel(
-			LanguageUtil.get(httpServletRequest, "filter-by-type"));
-
-		filterDropdownItems.add(1, filterDropdownItemsGroup);
+		filterDropdownItems.add(
+			1,
+			DropdownGroupItemBuilder.setDropdownItems(
+				getDropdownItems(
+					getDefaultEntriesMap(getFilterByTypeKeys()),
+					getPortletURL(), "type", getType())
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "filter-by-type")
+			).build());
 	}
 
 	protected String[] getFilterByTypeKeys() {

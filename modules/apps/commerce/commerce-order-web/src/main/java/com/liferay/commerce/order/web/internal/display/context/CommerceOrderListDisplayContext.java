@@ -21,8 +21,9 @@ import com.liferay.commerce.order.web.internal.security.permission.resource.Comm
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -160,16 +161,13 @@ public class CommerceOrderListDisplayContext {
 	}
 
 	public SortItemList getSortItemList() {
-		SortItemList sortItemList = new SortItemList();
-
-		SortItem sortItem = new SortItem();
-
-		sortItem.setDirection("desc");
-		sortItem.setKey("createDate");
-
-		sortItemList.add(sortItem);
-
-		return sortItemList;
+		return SortItemListBuilder.add(
+			SortItemBuilder.setDirection(
+				"desc"
+			).setKey(
+				"createDate"
+			).build()
+		).build();
 	}
 
 	private final CommerceOrderNoteService _commerceOrderNoteService;

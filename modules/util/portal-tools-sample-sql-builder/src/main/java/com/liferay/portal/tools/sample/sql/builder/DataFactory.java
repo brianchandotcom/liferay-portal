@@ -3609,7 +3609,7 @@ public class DataFactory {
 		dlFileEntryModel.setFileName(name + "." + extension);
 		dlFileEntryModel.setExtension(extension);
 		dlFileEntryModel.setMimeType(mimeType);
-		dlFileEntryModel.setTitle(name + "." + extension);
+		dlFileEntryModel.setTitle(name);
 		dlFileEntryModel.setFileEntryTypeId(
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 		dlFileEntryModel.setVersion(DLFileEntryConstants.VERSION_DEFAULT);

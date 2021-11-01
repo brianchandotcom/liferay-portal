@@ -89,8 +89,6 @@ definition {
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(

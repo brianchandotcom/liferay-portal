@@ -2602,6 +2602,54 @@ definition {
 			fieldValue = "Switch 1");
 	}
 
+	@description = "LPS-84637 - Form title and description get unescaped after unpublish it."
+	@priority = "5"
+	test TitleAndDescriptionXSSUnescapedAfterUnpublish {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Forms#TitleAndDescriptionXSSUnescapedAfterUnpublish";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "<script>alert(123)</script>");
+
+		Form.editDescription(formDescription = "<script>alert(456)</script>");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdmin.viewForm(
+			formDescription = "<script>alert(456)</script>",
+			formName = "<script>alert(123)</script>");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "<script>alert(123)</script>");
+
+		Form.viewFormName(formName = "<script>alert(123)</script>");
+
+		Form.viewFormDescription(formDescription = "<script>alert(456)</script>");
+
+		Form.unpublishForm();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdmin.viewForm(
+			formDescription = "<script>alert(456)</script>",
+			formName = "<script>alert(123)</script>");
+		
+		AssertAlertNotPresent();
+
+		var actualScript = '''<script>alert(123)</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123)&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+	}
+
 	@description = "This is a use case for LPS-64305 and LPS-96253."
 	@priority = "4"
 	test ViewDefaultFieldNamesWithPunctuationCharacters {

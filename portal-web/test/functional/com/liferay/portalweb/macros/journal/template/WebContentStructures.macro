@@ -37,11 +37,39 @@ definition {
 	}
 
 	macro addLocalization {
+		var locale = StringUtil.replace("${locale}", "-", "_");
+
+		Click(locator1 = "Button#LOCALIZATION_GENERIC");
+
+		if (IsElementNotPresent(key_locale = "${locale}", locator1 = "Translation#LOCALIZATION_NAME")) {
+			WebContentStructures.addTranslations(
+				localeList = "${locale}",
+				localizedDone = "${localizedDone}",
+				localizedManageTranslations = "${localizedManageTranslations}");
+		}
+
+		else {
+			Click(locator1 = "Button#LOCALIZATION_GENERIC");
+		}
+
 		PortletEntry.changeLocale(locale = "${locale}");
 
 		WebContentStructures.addName(structureName = "${localization1Name}");
 
 		if (isSet(locale2)) {
+			Click(locator1 = "Button#LOCALIZATION_GENERIC");
+
+			if (IsElementNotPresent(key_locale = "${locale2}", locator1 = "Translation#LOCALIZATION_NAME")) {
+				WebContentStructures.addTranslations(
+					localeList = "${locale2}",
+					localizedDone = "${localizedDone}",
+					localizedManageTranslations = "${localizedManageTranslations}");
+			}
+
+			else {
+				Click(locator1 = "Button#LOCALIZATION_GENERIC");
+			}
+
 			PortletEntry.changeLocale(locale = "${locale2}");
 
 			WebContentStructures.addName(structureName = "${localization2Name}");

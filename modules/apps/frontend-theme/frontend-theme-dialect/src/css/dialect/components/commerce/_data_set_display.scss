@@ -1,0 +1,11 @@
+.data-set-display-wrapper .data-set-display {
+	&.data-set-display-stacked .data-set-display-management-bar-wrapper {
+		border-width: 0;
+		margin-bottom: 0;
+	}
+
+	.navbar-form {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}

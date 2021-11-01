@@ -135,12 +135,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 				new NamedThreadFactory(
 					getName(), Thread.NORM_PRIORITY,
 					PortalClassLoaderUtil.getClassLoader()),
-				(r, executor) -> {
-					_rejectedTaskCounter.incrementAndGet();
-
-					_rejectedExecutionHandler.rejectedExecution(r, executor);
-				},
-				new ThreadPoolHandlerAdapter());
+				_rejectedExecutionHandler, new ThreadPoolHandlerAdapter());
 
 		NoticeableExecutorService oldNoticeableExecutorService =
 			_portalExecutorManager.registerPortalExecutor(
@@ -354,6 +349,8 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 			@Override
 			public void rejectedExecution(
 				Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
+
+				_rejectedTaskCounter.incrementAndGet();
 
 				if (!_log.isWarnEnabled()) {
 					return;

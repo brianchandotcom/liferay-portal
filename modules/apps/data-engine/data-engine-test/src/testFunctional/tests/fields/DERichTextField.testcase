@@ -198,12 +198,33 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "5"
 	test CanInputDataFromSourceOption {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-69427 Refactor of Renderer Rich Text Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DataEngine.addField(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.addSourceContentonRichText(content = "Rich Text");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInRichTextField(
+			content = "Rich Text",
+			fieldLabel = "Rich Text");
 	}
 
 	@description = "This is a test for LRQA-69427. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"

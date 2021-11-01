@@ -78,6 +78,15 @@ public class EqualsPoshiElement extends PoshiElement {
 		sb.append(attributeValue("arg2"));
 		sb.append("\"");
 
+		PoshiElement parentPoshiElement = (PoshiElement)getParent();
+
+		if (parentPoshiElement instanceof AndPoshiElement ||
+			parentPoshiElement instanceof OrPoshiElement) {
+
+			sb.insert(0, "(");
+			sb.append(")");
+		}
+
 		return sb.toString();
 	}
 

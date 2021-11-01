@@ -312,7 +312,7 @@ definition {
 	}
 
 	macro expandTree {
-		WaitForVisible(locator1 = "Treeview#NODE_COLLAPSE_BUTTON");
+		WaitForVisible(locator1 = "Treeview#NODE_LIST");
 
 		while (IsElementPresent(locator1 = "Treeview#NODE_COLLAPSED")) {
 			Click(locator1 = "Treeview#NODE_COLLAPSED");

@@ -124,6 +124,9 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		if (_rejectedExecutionHandler == null) {
 			_rejectedExecutionHandler = _createRejectionExecutionHandler();
 		}
+		else {
+			_rejectedTaskCounter.set(0);
+		}
 
 		NoticeableThreadPoolExecutor noticeableThreadPoolExecutor =
 			new NoticeableThreadPoolExecutor(

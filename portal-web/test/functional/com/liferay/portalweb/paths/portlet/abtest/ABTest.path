@@ -281,6 +281,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMAGE_SOURCE</td>
+	<td>//div[contains(@class,'text-center')]//img[contains(@src,'${key_image}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VALUES_IN_LIST</td>
 	<td>//ul[contains(@class,'list-group show-quick-actions-on-hover')]//li[${key_index}]//*[text()='${key_name}']</td>
 	<td></td>

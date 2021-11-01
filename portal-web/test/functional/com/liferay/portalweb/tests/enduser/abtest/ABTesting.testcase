@@ -572,21 +572,45 @@ definition {
 	}
 
 	@description = "LPS-101167: Validate if the image for the empty state appears"
-	@ignore = "true"
 	@priority = "3"
 	test CheckEmptyStateImage {
+		task ("Click on the A/B Test icon and Assert the A/B Test panel is opened") {
+			ABTest.openABTestPanel();
+		}
 
-		// TODO LPS-137493 CheckEmptyStateImage pending implementation
-
+		task ("Assert 'empty state' image appears") {
+			AssertElementPresent.pauseAssertVisible(
+				key_image = "/o/segments-experiment-web/images/no_experiment.svg",
+				locator1 = "ABTest#IMAGE_SOURCE");
+		}
 	}
 
 	@description = "LPS-101167: Validate if the image for the running state appears"
-	@ignore = "true"
 	@priority = "3"
 	test CheckRunningStateImage {
+		task ("Create AB test and create variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137493 CheckRunningStateImage pending implementation
+			ABTest.createVariant(variantName = "Variant name");
+		}
 
+		task ("Run test and Assert 'running state' image appears") {
+			Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
+
+			ClickNoError(locator1 = "ABTest#RUN_TEST_BUTTON");
+
+			AssertElementPresent.pauseAssertVisible(
+				key_image = "/o/segments-experiment-web/images/success.gif",
+				locator1 = "ABTest#IMAGE_SOURCE");
+
+			Click(locator1 = "ABTest#OK_BUTTON");
+		}
+
+		task ("Terminate the AB test") {
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-96781: Validate if, when the A/B Testing changes in the Liferay DXP, information about the Liferay DXP context, the changes are reflected in the test in Analytics Cloud"

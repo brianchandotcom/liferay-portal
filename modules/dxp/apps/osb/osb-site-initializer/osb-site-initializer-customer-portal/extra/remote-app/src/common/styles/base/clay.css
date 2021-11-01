@@ -16,8 +16,7 @@
  * SPDX-License-Identifier: LicenseRef-MIT-Bootstrap
  */
 
-/* Change Manrope to Source Sans Pro */
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;600;700;800&display=swap");
 /* :root { */
 :host {
   --blue: #4b9fff;
@@ -210,8 +209,7 @@
   --spacer-8: 7.5rem;
   --spacer-7: 6rem;
   --aspect-ratio-8-to-3: 37.5%;
-  /* Change Manrope to Source Sans Pro */
-  --font-family-sans-serif: Source Sans Pro, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --font-family-sans-serif: Manrope, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --custom-control-disabled-border-color: var(--color-action-primary-disabled);
   --font-weight-bolder: 800;
   --btn-outline-secondary-color: #6b6c7e;
@@ -349,8 +347,7 @@
   --text-paragraph-lg-line-height: 24px;
   --form-input-border-radius: var(--border-radius);
   --btn-primary-border-color: #0b5fff;
-  /* Change Manrope to Source Sans Pro */
-  --font-family-base: Source Sans Pro, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --font-family-base: Manrope, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --color-action-neutral-inverted-disabled: #ffffff80;
   --border-radius: 0.5rem;

@@ -14,6 +14,7 @@
 
 package com.liferay.view.count.service.impl;
 
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.view.count.configuration.ViewCountConfiguration;
 import com.liferay.view.count.model.ViewCountEntry;
+import com.liferay.view.count.model.ViewCountEntryTable;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
 import com.liferay.view.count.service.base.ViewCountEntryLocalServiceBaseImpl;
 import com.liferay.view.count.service.persistence.ViewCountEntryPK;
@@ -93,6 +95,11 @@ public class ViewCountEntryLocalServiceImpl
 		}
 
 		return viewCountEntry.getViewCount();
+	}
+
+	@Override
+	public Table<?> getViewCountEntryTable() {
+		return ViewCountEntryTable.INSTANCE;
 	}
 
 	@BufferedIncrement(incrementClass = NumberIncrement.class)

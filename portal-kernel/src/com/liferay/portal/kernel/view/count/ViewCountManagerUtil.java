@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.view.count;
 
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
@@ -33,6 +34,10 @@ public class ViewCountManagerUtil {
 		long companyId, long classNameId, long classPK) {
 
 		return _viewCountManager.getViewCount(companyId, classNameId, classPK);
+	}
+
+	public static Table<?> getViewCountEntryTable() {
+		return _viewCountManager.getViewCountEntryTable();
 	}
 
 	public static void incrementViewCount(

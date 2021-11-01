@@ -58,11 +58,11 @@ public class SetUtilMethodsCheck extends BaseFileCheck {
 
 			String parameter = parameterList.get(0);
 
-			String arraryParameters = parameter.replaceFirst(
+			String arrayParameters = parameter.replaceFirst(
 				".+\\{([\\s\\S]+)\\}", "$1");
 
 			return _fixFromArrayParamters(
-				content, arraryParameters, matcher.start());
+				content, arrayParameters, matcher.start());
 		}
 
 		return content;

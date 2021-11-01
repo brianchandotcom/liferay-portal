@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY</td>
-	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')] | //tr[.//*[normalize-space(text())='${key_tableEntry}']]</td>
 	<td></td>
 </tr>
 <tr>

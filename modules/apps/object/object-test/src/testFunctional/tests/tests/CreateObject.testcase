@@ -3785,11 +3785,79 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field is displayed again when the parent object is reactivated (One to Many)"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test RelationshipFieldReappearsWhenReactivatedOneToMany {
 
-		// TODO LPS-140869 RelationshipFieldReappearsWhenReactivatedOneToMany pending implementation
+		for (var letter : list "A,B") {
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object ${letter}",
+				objectName = "CustomObject${letter}",
+				pluralLabelName = "Custom Objects ${letter}");
+
+		}
+
+		for (var letter : list "A,B") {
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldLabelName = "Custom Field ${letter}",
+				fieldName = "customObjectField${letter}",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject${letter}");
+
+		}
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObjectA",
+			objectName_2 = "CustomObjectB",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectFieldB",
+			objectName = "CustomObjectB",
+			value = "Entry 1");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.saveObject();
+
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Custom Objects B");
+
+		LexiconEntry.gotoAdd();
+
+		AssertElementPresent(
+			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
+			key_fieldLabelName = "Custom Object A",
+			value1 = "Custom Object A");
+
+		Navigator.gotoBack();
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry 1");
+
+		AssertElementPresent(
+			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
+			key_fieldLabelName = "Custom Object A",
+			value1 = "Custom Object A");
+
 
 	}
 

@@ -24,7 +24,6 @@ import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
-import com.liferay.jenkins.results.parser.LocalGitBranch;
 import com.liferay.jenkins.results.parser.NotificationUtil;
 import com.liferay.jenkins.results.parser.ParallelExecutor;
 import com.liferay.jenkins.results.parser.PluginsBranchInformationBuild;
@@ -1228,8 +1227,6 @@ public class TestrayImporter {
 
 		_checkoutPortalBranch();
 
-		_checkoutPortalBaseBranch();
-
 		_setupProfileDXP();
 
 		_setupPortalBundle();
@@ -1355,60 +1352,6 @@ public class TestrayImporter {
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
-		}
-	}
-
-	private void _checkoutPortalBaseBranch() {
-		if (!(_topLevelBuild instanceof PortalBranchInformationBuild)) {
-			return;
-		}
-
-		PortalBranchInformationBuild portalBranchInformationBuild =
-			(PortalBranchInformationBuild)_topLevelBuild;
-
-		Build.BranchInformation branchInformation =
-			portalBranchInformationBuild.getPortalBaseBranchInformation();
-
-		if (branchInformation == null) {
-			return;
-		}
-
-		PortalGitWorkingDirectory portalBaseGitWorkingDirectory =
-			GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-				branchInformation.getUpstreamBranchName());
-
-		portalBaseGitWorkingDirectory.clean();
-
-		LocalGitBranch portalBaseLocalGitBranch =
-			portalBaseGitWorkingDirectory.checkoutLocalGitBranch(
-				branchInformation);
-
-		portalBaseGitWorkingDirectory.displayLog();
-
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			_getPortalGitWorkingDirectory();
-
-		portalGitWorkingDirectory.fetch(
-			portalBaseLocalGitBranch.getName(), portalBaseLocalGitBranch);
-
-		try {
-			JenkinsResultsParserUtil.write(
-				new File(
-					portalGitWorkingDirectory.getWorkingDirectory(),
-					"git-commit-portal"),
-				portalBaseLocalGitBranch.getSHA());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		try {
-			AntUtil.callTarget(
-				portalGitWorkingDirectory.getWorkingDirectory(),
-				"build-working-dir.xml", "prepare-working-dir");
-		}
-		catch (AntException antException) {
-			throw new RuntimeException(antException);
 		}
 	}
 

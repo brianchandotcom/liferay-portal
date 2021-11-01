@@ -12,27 +12,20 @@
  * details.
  */
 
-import './ValidationDate.scss';
-
-import {ClayInput} from '@clayui/form';
-import React, {useState} from 'react';
+import {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import {PagesVisitor, useFormState} from 'data-engine-js-components-web';
+import React, {useMemo, useState} from 'react';
 
 import Select from '../Select/Select.es';
-import {limitValue} from '../util/numericalOperations';
+import StartEndDate from './StartEndDate';
+
+import './ValidationDate.scss';
 import {EVENT_TYPES} from './validationReducer';
 
-const MAX_QUANTITY = 999;
-const MIN_QUANTITY = 1;
-
 const customDateLabel = Liferay.Language.get('custom-date');
-const daysLabel = Liferay.Language.get('days');
 const endsOnLabel = Liferay.Language.get('ends-on');
-const minusLabel = Liferay.Language.get('minus');
-const monthsLabel = Liferay.Language.get('months');
-const plusLabel = Liferay.Language.get('plus');
 const responseDateLabel = Liferay.Language.get('response-date');
 const startsFromLabel = Liferay.Language.get('starts-from');
-const yearsLabel = Liferay.Language.get('years');
 
 const responseDateOption = {
 	checked: false,
@@ -40,42 +33,6 @@ const responseDateOption = {
 	name: 'responseDate',
 	value: 'responseDate',
 };
-
-const operationsOptions = [
-	{
-		checked: false,
-		label: minusLabel,
-		name: 'minus',
-		value: 'minus',
-	},
-	{
-		checked: false,
-		label: plusLabel,
-		name: 'plus',
-		value: 'plus',
-	},
-];
-
-const unitOptions = [
-	{
-		checked: false,
-		label: daysLabel,
-		name: 'days',
-		value: 'days',
-	},
-	{
-		checked: false,
-		label: monthsLabel,
-		name: 'months',
-		value: 'months',
-	},
-	{
-		checked: false,
-		label: yearsLabel,
-		name: 'years',
-		value: 'years',
-	},
-];
 
 const getDateOptionsByType = (label, name) => ({
 	label,
@@ -96,18 +53,17 @@ const getOperation = (quantity) => {
 };
 
 const getSelectedParameter = (
-	localizedValue,
+	value,
 	selectedParameterName,
-	attributeName
 ) => {
-	if (localizedValue && typeof localizedValue === 'string') {
+	if (value && typeof value === 'string') {
 		try {
-			localizedValue = JSON.parse(localizedValue);
+			value = JSON.parse(value);
 		}
 		catch (error) {}
 	}
 
-	return localizedValue?.[selectedParameterName]?.[attributeName];
+	return value?.[selectedParameterName];
 };
 
 const getSignedValue = (operation, value) => {
@@ -132,121 +88,6 @@ const parameters = {
 	pastDates: [getDateOptionsByType(endsOnLabel, 'endsOn')],
 };
 
-const CustomDates = ({
-	date,
-	eventType,
-	handleChangeParameters,
-	localizationMode,
-	name,
-	operation,
-	quantity,
-	readOnly,
-	setDate,
-	setOperation,
-	setQuantity,
-	setUnit,
-	unit,
-	visible,
-}) => {
-	return (
-		<>
-			<Select
-				label={Liferay.Language.get('date')}
-				name={`selectedDate_${eventType}`}
-				onChange={(event, value) => {
-					setDate(value[0]);
-					handleChangeParameters(value[0], eventType, 'date');
-				}}
-				options={[responseDateOption]}
-				readOnly={readOnly || localizationMode}
-				showEmptyOption={false}
-				value={date}
-				visible={visible}
-			/>
-			<div className="align-items-end d-flex position-relative">
-				<div className="ddm-form-field-type__validation-date pr-2">
-					<Select
-						label={Liferay.Language.get('operation')}
-						name={`selectedOperation_${eventType}`}
-						onChange={(event, value) => {
-							setOperation(value[0]);
-							handleChangeParameters(
-								value[0],
-								eventType,
-								'quantity'
-							);
-						}}
-						options={operationsOptions}
-						readOnly={readOnly || localizationMode}
-						showEmptyOption={false}
-						value={operation}
-						visible={visible}
-					/>
-				</div>
-
-				<div className="ddm-form-field-type__validation-date pr-2">
-					<div className="form-group">
-						<label htmlFor={`${name}_validation_date_quantity`}>
-							{Liferay.Language.get('quantity')}
-						</label>
-
-						<ClayInput
-							className="ddm-field-text"
-							disabled={readOnly}
-							id={`${name}_validation_date_quantity`}
-							max={MAX_QUANTITY}
-							name={`inputedQuantity_${eventType}`}
-							onBlur={(event) => {
-								let {value: newValue} = event.target;
-
-								newValue = limitValue({
-									defaultValue: MIN_QUANTITY,
-									max: MAX_QUANTITY,
-									min: MIN_QUANTITY,
-									value: newValue,
-								});
-
-								newValue =
-									operation === 'minus'
-										? (newValue * -1).toString()
-										: newValue;
-
-								setQuantity(newValue);
-								handleChangeParameters(
-									newValue,
-									eventType,
-									'quantity'
-								);
-							}}
-							onChange={({target: {value}}) => {
-								setQuantity(value);
-							}}
-							type="number"
-							value={quantity === '' ? '' : Math.abs(quantity)}
-						/>
-					</div>
-				</div>
-
-				<div className="ddm-form-field-type__validation-date">
-					<Select
-						label={Liferay.Language.get('unit')}
-						name={`selectedUnit_${eventType}`}
-						onChange={(event, value) => {
-							setUnit(value[0]);
-							handleChangeParameters(value[0], eventType, 'unit');
-						}}
-						options={unitOptions}
-						readOnly={readOnly || localizationMode}
-						showEmptyOption={false}
-						value={unit}
-						visible={visible}
-					/>
-				</div>
-			</div>
-		</>
-	);
-};
-
 const ValidationDate = ({
 	dispatch,
 	errorMessage,
@@ -255,114 +96,41 @@ const ValidationDate = ({
 	name,
 	onBlur,
 	parameter,
+	parentFieldName,
 	readOnly,
 	selectedValidation,
 	transformSelectedValidation,
 	validations,
 	visible,
 }) => {
-	const initialStartQuantity = getSelectedParameter(
-		localizedValue(parameter),
-		'startsFrom',
-		'quantity'
-	);
-	const initialEndQuantity = getSelectedParameter(
-		localizedValue(parameter),
-		'endsOn',
-		'quantity'
-	);
-	const initialStartDate = getSelectedParameter(
-		localizedValue(parameter),
-		'startsFrom',
-		'date'
-	);
-	const initialEndDate = getSelectedParameter(
-		localizedValue(parameter),
-		'endsOn',
-		'date'
-	);
 
-	const initialStartType = getSelectedParameter(
+	const startDate = getSelectedParameter(
 		localizedValue(parameter),
 		'startsFrom',
-		'type'
 	);
-	const initialEndType = getSelectedParameter(
+	const endDate = getSelectedParameter(
 		localizedValue(parameter),
 		'endsOn',
-		'type'
-	);
-	const initialStartUnit = getSelectedParameter(
-		localizedValue(parameter),
-		'startsFrom',
-		'unit'
-	);
-	const initialEndUnit = getSelectedParameter(
-		localizedValue(parameter),
-		'endsOn',
-		'unit'
 	);
 
 	const selectedParameter = parameters[selectedValidation.name];
-	const [startDate, setStartDate] = useState(initialStartDate);
-	const [startOperation, setStartOperation] = useState(
-		getOperation(initialStartQuantity)
-	);
-	const [startQuantity, setStartQuantity] = useState(initialStartQuantity);
-	const [startsFrom, setStartsFrom] = useState(initialStartType);
+	
+	const handleChangeParameters = (typeName, parameters) => {
 
-	const [startUnit, setStartUnit] = useState(initialStartUnit);
+		const parameter = {}
 
-	const [endDate, setEndDate] = useState(initialEndDate);
-	const [endOperation, setEndOperation] = useState(
-		getOperation(initialEndQuantity)
-	);
-	const [endQuantity, setEndQuantity] = useState(initialEndQuantity);
-	const [endsOn, setEndsOn] = useState(initialEndType);
-	const [endUnit, setEndUnit] = useState(initialEndUnit);
-
-	const handleChangeParameters = (value, typeName, type) => {
-		const parameter = {};
-
-		let newValue = value;
-
-		if (startsFrom) {
-			parameter['startsFrom'] = {
-				date: startDate,
-				quantity: startQuantity,
-				type: startsFrom,
-				unit: startUnit,
-			};
-		}
-
-		if (endsOn) {
-			parameter['endsOn'] = {
-				date: endDate,
-				quantity: endQuantity,
-				type: endsOn,
-				unit: endUnit,
-			};
-		}
-
-		let operation =
-			typeName === 'startsFrom' ? startOperation : endOperation;
-
-		if (type === 'quantity') {
-			let quantity = value;
-
-			if (isNaN(value)) {
-				operation = value;
-				quantity =
-					typeName === 'startsFrom' ? startQuantity : endQuantity;
+		if (typeName === 'startsFrom') {
+			if(selectedValidation.name === 'dateRange') {
+				parameter.endsOn = endDate;
 			}
-
-			newValue = getSignedValue(operation, quantity);
+			parameter.startsFrom = parameters
+			
+		} else if (typeName === 'endsOn') {
+			if(selectedValidation.name === 'dateRange') {
+				parameter.startsFrom = startDate;
+			}
+			parameter.endsOn = parameters
 		}
-
-		parameter[typeName] = {
-			...parameter[typeName],
-			[type]: newValue,
-		};
 
 		dispatch({payload: {parameter}, type: EVENT_TYPES.SET_PARAMETER});
 	};
@@ -372,123 +140,89 @@ const ValidationDate = ({
 		return name === 'startsFrom' ? startsFrom : endsOn;
 	};
 
+	const {builderPages} = useFormState();
+
+	
+	const fields = useMemo(() => {
+		const fields = [];
+		const visitor = new PagesVisitor(builderPages);
+
+		visitor.visitFields((field) => {
+			if (
+				!field.repeatable &&
+				field.type === 'date' &&
+				field.fieldName !== parentFieldName
+			) {
+				fields.push({
+					checked: false,
+					label: field.label,
+					name: field.fieldName,
+					value: field.fieldName,
+				});
+			}
+		});
+
+		return fields;
+	}, [builderPages]);
+
 	return (
 		<>
-			<Select
-				disableEmptyOption
-				label={Liferay.Language.get('accepted-date')}
-				name="selectedValidation"
-				onChange={(event, value) => {
-					setStartsFrom(initialStartType);
-					setEndsOn(initialEndType);
-					dispatch({
-						payload: {
-							selectedValidation: transformSelectedValidation(
-								value
-							),
-						},
-						type: EVENT_TYPES.CHANGE_SELECTED_VALIDATION,
-					});
-				}}
-				options={validations}
-				placeholder={Liferay.Language.get('choose-an-option')}
-				readOnly={readOnly || localizationMode}
-				showEmptyOption={false}
-				value={[selectedValidation.name]}
-				visible={visible}
-			/>
-			{selectedParameter.map((element, index) => {
-				let label = '';
-				const startSection = element.name === 'startsFrom';
+			<label>
+				{Liferay.Language.get('accepted-date')}
+				<ClaySelectWithOption 
+					disabled={readOnly || localizationMode}
+					name="selectedValidation"
+					onChange={({target: {value}}) => {
+						dispatch({
+							payload: {
+								selectedValidation: transformSelectedValidation(
+									value
+								),
+							},
+							type: EVENT_TYPES.CHANGE_SELECTED_VALIDATION,
+						});
+					}}
+					options={validations}
+					value={selectedValidation.name}		
+				/>
+			</label>
 
-				if (selectedParameter.length > 1) {
-					label = startSection
-						? Liferay.Language.get('start-date')
-						: Liferay.Language.get('end-date');
+			{selectedParameter.map(({label, name: eventType, options}, index) => {
+
+				const {title, tooltip, parameters} = eventType === 'startsFrom' ? {
+					title: Liferay.Language.get('start-date'),
+					tooltip: Liferay.Language.get(
+						'starts-from-tooltip'
+				  ),
+				  	parameters: startDate
+				} : {
+					title: Liferay.Language.get('end-date'),
+					tooltip: Liferay.Language.get('ends-on-tooltip'),
+					parameters: endDate
 				}
 
 				return (
-					<>
-						{label !== '' && (
+					<React.Fragment key={index}>
+						{selectedParameter.length > 1 && (
 							<>
-								<label>{label.toUpperCase()}</label>
+								<label>{title.toUpperCase()}</label>
 								<div className="separator" />
 							</>
 						)}
 
-						<Select
-							disableEmptyOption
-							key={`selectedParameter_${index}`}
-							label={element.label}
-							name="selectedParameter"
-							onChange={(event, value) => {
-								if (startSection) {
-									setStartsFrom(value[0]);
-									setStartOperation(
-										getOperation(initialStartQuantity)
-									);
-									setStartQuantity(initialStartQuantity);
-									setStartDate(initialStartDate);
-								}
-								else {
-									setEndsOn(value[0]);
-									setEndOperation(
-										getOperation(initialEndQuantity)
-									);
-									setEndQuantity(initialEndQuantity);
-									setEndDate(initialEndDate);
-								}
-								handleChangeParameters(
-									value[0],
-									element.name,
-									'type'
-								);
-							}}
-							options={selectedParameter[index].options}
-							placeholder={Liferay.Language.get(
-								'choose-an-option'
-							)}
-							readOnly={localizationMode || readOnly}
-							showEmptyOption={false}
-							value={startSection ? startsFrom : endsOn}
+						<StartEndDate
+							dateFieldOptions={fields}
+							eventType={eventType}
+							label={label}
+							name={name}
+							onChange={handleChangeParameters}
+							options={options}
+							parameters={parameters}
+							readOnly={localizationMode || readOnly }
+							tooltip={tooltip}
 							visible={visible}
 						/>
-
-						{getDateTypeValue(element.name) === 'customDate' && (
-							<CustomDates
-								date={startSection ? startDate : endDate}
-								endDate={endDate}
-								eventType={element.name}
-								handleChangeParameters={handleChangeParameters}
-								name={name}
-								operation={
-									startSection ? startOperation : endOperation
-								}
-								quantity={
-									startSection ? startQuantity : endQuantity
-								}
-								readOnly={localizationMode || readOnly}
-								setDate={
-									startSection ? setStartDate : setEndDate
-								}
-								setOperation={
-									startSection
-										? setStartOperation
-										: setEndOperation
-								}
-								setQuantity={
-									startSection
-										? setStartQuantity
-										: setEndQuantity
-								}
-								setUnit={
-									startSection ? setStartUnit : setEndUnit
-								}
-								unit={startSection ? startUnit : endUnit}
-								visible={visible}
-							/>
-						)}
-					</>
+					</React.Fragment>
 				);
 			})}
 			<label htmlFor={errorMessageName}>

@@ -37,15 +37,25 @@ declare global {
 		| 'zh_CN';
 	type LocalizedTextKey =
 		| 'choose-an-option'
+		| 'days'
+		| 'date'
+		| 'date-fields'
 		| 'decimal-places'
 		| 'decimal-separator'
+		| 'for-security-reasons-upload-field-repeatability-is-limited-the-limit-is-defined-in-x-system-settings-x'
 		| 'input-mask-append-placeholder'
+		| 'minus'
+		| 'months'
+		| 'operation'
+		| 'plus'
 		| 'prefix'
 		| 'prefix-or-suffix'
+		| 'quantity'
 		| 'suffix'
 		| 'the-maximum-length-is-10-characters'
 		| 'thousands-separator'
-		| 'for-security-reasons-upload-field-repeatability-is-limited-the-limit-is-defined-in-x-system-settings-x';
+		| 'unit'
+		| 'years';
 	type LocalizedValue<T> = {
 		[key in Locale]?: T;
 	};

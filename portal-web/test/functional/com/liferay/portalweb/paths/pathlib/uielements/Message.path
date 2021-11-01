@@ -206,6 +206,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_IMPORT_TRANSLATIONS</td>
+	<td>//h4[contains(@class,'text-danger')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_IMPORT_TRANSLATIONS_ITEM</td>
+	<td>//li[contains(@class,'list-group-item')]//div[contains(@class,'text-danger')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_INVALID_FACEBOOK_VIDEO</td>
 	<td>//div[contains(@class,'pluginSkinLight')]//div</td>
 	<td></td>

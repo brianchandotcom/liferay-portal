@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>NODE_LIST</td>
-	<td>//div[contains(@class,'treeview-node-list') and contains(.,'${key_nodeListName}')]/div[contains(@class,'card')]</td>
+	<td>//div[contains(@class,'treeview-node-list')] | //li[contains(@class,'tree-node')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -4783,6 +4783,12 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="jboss" app.server.version="7.4.0" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
+	<target name="functional-smoke-jboss74-mysql57-jdk11_open">
+		<set-app-server-version-number app.server.type="jboss" app.server.version="7.4.0" />
+
+		<run-functional-test app.server.type="jboss" app.server.version="7.4.0" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
+	</target>
+
 	<target name="functional-smoke-tcserver40-mysql57-jdk8">
 		<run-functional-test app.server.type="tcserver" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>

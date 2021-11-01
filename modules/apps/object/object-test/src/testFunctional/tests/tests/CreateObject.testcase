@@ -3702,25 +3702,20 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed to be selected for a Page fragment when the parent object is inactivated"
 	@priority = "4"
 	test RelationshipFieldCannotBeSelectedForPageFragmentWhenInactivated {
-
 		for (var letter : list "A,B") {
-
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter}",
 				objectName = "CustomObject${letter}",
 				pluralLabelName = "Custom Objects ${letter}");
-
 		}
 
 		for (var letter : list "A,B") {
-
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldLabelName = "Custom Field ${letter}",
 				fieldName = "customObjectField${letter}",
 				fieldType = "String",
 				isRequired = "false",
 				objectName = "CustomObject${letter}");
-
 		}
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
@@ -3757,8 +3752,8 @@ definition {
 			entryValue = "Entry 1");
 
 		Type(
-			locator1 = "ObjectPortlet#ADD_ENTRY_FIELD_SPECIFIC",
 			key_fieldLabelName = "Custom Object A",
+			locator1 = "ObjectPortlet#ADD_ENTRY_FIELD_SPECIFIC",
 			value1 = "${objectEntryID}");
 
 		Button.clickSave();
@@ -3771,7 +3766,6 @@ definition {
 
 		CreateObject.saveObject();
 
-		
 		Navigator.openURL();
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -3789,9 +3783,8 @@ definition {
 		Click(locator1 = "VisualizeObjectCollectionDisplay#MAP_FRAGMENT");
 
 		AssertElementNotPresent(
-			locator1 = "VisualizeObjectCollectionDisplay#FIELD_NAME_OPTION",
-			key_option = "Custom Object A");
-			
+			key_option = "Custom Object A",
+			locator1 = "VisualizeObjectCollectionDisplay#FIELD_NAME_OPTION");
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field is no longer displayed when the parent object is inactivated (One to Many)"

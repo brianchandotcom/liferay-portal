@@ -82,11 +82,22 @@ definition {
 	}
 
 	@description = "Verify that the user can create a new submission without filling in the fields."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreateANewSubmissionWithFieldsEmpty {
+		KaleoFormsAdmin.viewProcessRecord(kfProcessName = "Kaleo Forms Process");
 
-		// TODO LRQA-70688 CanCreateANewSubmissionWithFieldsEmpty pending implementation
+		LexiconEntry.gotoAdd();
+
+		KaleoFormsAdmin.saveProcessRecord();
+
+		KaleoFormsAdmin.viewProcessNameByColumns(
+			kfCompanyName = " ",
+			kfEmailName = " ",
+			kfFirstName = " ",
+			kfInstantMessengerService = "Google Hangouts",
+			kfInstantMessenger = " ",
+			kfStatus = "Pending",
+			kfAuthor = "Test Test");
 
 	}
 

@@ -1097,4 +1097,41 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "Unable to delete the workflow definition that is in use.");
 	}
 
+	macro viewProcessNameByColumns {
+		AssertElementPresent(
+			key_kfProcessName = "${kfCompanyName}",
+			key_itemPosition = "2",
+			locator1 = "KaleoFormsAdmin#PROCESS_TABLE_NAME_BY_INDEX");
+
+		AssertElementPresent(
+			key_kfProcessName = "${kfEmailName}",
+			key_itemPosition = "3",
+			locator1 = "KaleoFormsAdmin#PROCESS_TABLE_NAME_BY_INDEX");
+
+		AssertElementPresent(
+			key_kfProcessName = "${kfFirstName}",
+			key_itemPosition = "4",
+			locator1 = "KaleoFormsAdmin#PROCESS_TABLE_NAME_BY_INDEX");
+
+		AssertElementPresent(
+			key_kfProcessName = "${kfInstantMessengerService}",
+			key_itemPosition = "5",
+			locator1 = "KaleoFormsAdmin#PROCESS_TABLE_NAME_BY_INDEX");	
+
+		AssertElementPresent(
+			key_kfProcessName = "${kfInstantMessenger}",
+			key_itemPosition = "6",
+			locator1 = "KaleoFormsAdmin#PROCESS_TABLE_NAME_BY_INDEX");
+
+		AssertElementPresent(
+			key_kfProcessName = "${kfStatus}",
+			key_itemPosition = "7",
+			locator1 = "KaleoFormsAdmin#PROCESS_TABLE_NAME_BY_INDEX");
+
+		AssertElementPresent(
+			key_kfProcessName = "${kfAuthor}",
+			key_itemPosition = "9",
+			locator1 = "KaleoFormsAdmin#PROCESS_TABLE_NAME_BY_INDEX");
+	}
+
 }

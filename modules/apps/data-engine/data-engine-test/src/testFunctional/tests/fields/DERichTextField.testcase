@@ -80,7 +80,7 @@ definition {
 			fieldName = "Rich Text");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69427. This test verifies that is possible to apply styles to the data on the Rich Text field"
 	@priority = "5"
 	test CanBeStyled {
 		NavItem.gotoStructures();
@@ -104,7 +104,7 @@ definition {
 		DERenderer.assertDataInColorField();
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69427. This test verifies that upon clicking on the Preview Icon from the Source option, a modal is displayed"
 	@priority = "4"
 	test CanClickOnPreview {
 		NavItem.gotoStructures();
@@ -197,7 +197,7 @@ definition {
 			fieldLabel = "Rich Text");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69427. This test verifies that data inputted on the RIch Text from the Source option persists"
 	@priority = "5"
 	test CanInputDataFromSourceOption {
 		NavItem.gotoStructures();

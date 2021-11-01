@@ -187,7 +187,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Home#PAGE_2_GUEST_VIEW");
 
-		User.loginUserPG(
+		User.loginPG(
 			password = "test",
 			userEmailAddress = "usereaa@liferay.com");
 
@@ -205,7 +205,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Home#PAGE_2_GUEST_VIEW");
 
-		User.loginUserPG(
+		User.loginPG(
 			password = "test",
 			userEmailAddress = "usereapu@liferay.com");
 
@@ -229,7 +229,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "BlogsEntry#TITLE");
 
-		User.loginUserPG(
+		User.loginPG(
 			password = "test",
 			userEmailAddress = "usereacr@liferay.com");
 
@@ -257,7 +257,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "BlogsEntry#TITLE");
 
-		User.loginUserPG(
+		User.loginPG(
 			password = "test",
 			userEmailAddress = "usereaa@liferay.com");
 
@@ -281,7 +281,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE",
 			value1 = "Blogs Entry Title");
 
-		User.loginUserPG(
+		User.loginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 	}

@@ -2638,7 +2638,7 @@ definition {
 		FormsAdmin.viewForm(
 			formDescription = "<script>alert(456)</script>",
 			formName = "<script>alert(123)</script>");
-		
+
 		AssertAlertNotPresent();
 
 		var actualScript = '''<script>alert(123)</script>''';

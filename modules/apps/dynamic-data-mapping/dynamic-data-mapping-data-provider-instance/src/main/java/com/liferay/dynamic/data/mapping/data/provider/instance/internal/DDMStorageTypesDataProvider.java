@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 
@@ -58,6 +59,10 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 			httpServletRequestOptional.orElse(null);
 
 		for (String storageType : storageTypes) {
+			if (storageType.equals(StorageType.JSON.getValue())) {
+				continue;
+			}
+
 			if (httpServletRequest == null) {
 				keyValuePairs.add(new KeyValuePair(storageType, storageType));
 

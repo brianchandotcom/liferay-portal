@@ -111,11 +111,10 @@ definition {
 
 		IFrame.saveConfiguration();
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry2 Content",
-			entryTitle = "Blogs Entry2 Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry2 Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		AssertElementNotPresent(locator1 = "AssetRelatedAssets#HEADER");
 	}

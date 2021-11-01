@@ -29,7 +29,7 @@ const UploadDocuments = ({setExpanded, setSection, setStepChecked}) => {
 			files: [],
 			required: true,
 			sectionId: null,
-			subtitle: 'Upload a copy of your business license',
+			subtitle: 'Upload a copy of your business license.',
 			title: 'Business License',
 			type: 'document',
 		},
@@ -48,7 +48,7 @@ const UploadDocuments = ({setExpanded, setSection, setStepChecked}) => {
 			files: [],
 			required: true,
 			sectionId: null,
-			subtitle: 'Upload 4 photos of your building interior',
+			subtitle: 'Upload 4 photos of your building interior.',
 			title: 'Building Interior Photos',
 			type: 'image',
 		},
@@ -171,7 +171,9 @@ const UploadDocuments = ({setExpanded, setSection, setStepChecked}) => {
 							{section.required ? (
 								<span className="required">*</span>
 							) : (
-								<span className="optional">(optional)</span>
+								<span className="optional">
+									{` (optional)`}
+								</span>
 							)}
 						</h3>
 

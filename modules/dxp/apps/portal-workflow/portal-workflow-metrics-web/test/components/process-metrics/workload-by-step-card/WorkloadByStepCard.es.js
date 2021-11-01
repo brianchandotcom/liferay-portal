@@ -43,13 +43,13 @@ describe('The WorkloadByStepCard component should', () => {
 		totalCount: 1,
 	};
 
-	const clientMock = {
-		get: jest.fn().mockResolvedValue({data}),
-	};
-
 	beforeAll(async () => {
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve(data),
+		});
+
 		const renderResult = render(
-			<MockRouter client={clientMock} withoutRouterProps>
+			<MockRouter withoutRouterProps>
 				<WorkloadByStepCard {...mockProps} routeParams={mockProps} />
 			</MockRouter>
 		);

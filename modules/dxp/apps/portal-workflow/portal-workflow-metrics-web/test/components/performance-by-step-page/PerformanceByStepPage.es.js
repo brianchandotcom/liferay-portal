@@ -62,17 +62,16 @@ describe('The PerformanceByStepPage component having data should', () => {
 		totalCount: 2,
 	};
 
-	const clientMock = {
-		get: jest.fn().mockResolvedValue({data}),
-		request: jest.fn().mockResolvedValue({data}),
-	};
-
-	const wrapper = ({children}) => (
-		<MockRouter client={clientMock}>{children}</MockRouter>
-	);
+	const wrapper = ({children}) => <MockRouter>{children}</MockRouter>;
 
 	beforeAll(async () => {
 		jsonSessionStorage.set('timeRanges', timeRangeData);
+
+		fetch.mockResolvedValue({
+			json: () => Promise.resolve(data),
+			text: () => Promise.resolve(),
+		});
+
 		const renderResult = render(
 			<PerformanceByStepPage routeParams={{processId: '1234'}} />,
 			{wrapper}

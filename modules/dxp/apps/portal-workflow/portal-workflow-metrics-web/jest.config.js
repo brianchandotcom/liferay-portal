@@ -44,6 +44,7 @@ window.Liferay = {
 		getBCP47LanguageId: () => 'en-US',
 		getLanguageId: () => 'en_US',
 		getPathThemeImages: () => 'http://localhost:8080/o/admin-theme/images',
+		getPortalURL: () => window.location.origin,
 		getUserId: () => '123',
 		getUserName: () => 'Test Test',
 	},

@@ -19,11 +19,11 @@ import {ModalContext} from '../../../../../src/main/resources/META-INF/resources
 import InstanceDetailsModal from '../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/instance-details/InstanceDetailsModal.es';
 import {MockRouter} from '../../../../mock/MockRouter.es';
 
-const ContainerMock = ({children, clientMock}) => {
+const ContainerMock = ({children}) => {
 	const [instanceId, setInstanceId] = useState(37634);
 
 	return (
-		<MockRouter client={clientMock}>
+		<MockRouter>
 			<InstanceListContext.Provider value={{instanceId, setInstanceId}}>
 				<ModalContext.Provider
 					value={{
@@ -75,11 +75,11 @@ const data = {
 describe('The InstanceDetailsModal component should', () => {
 	let getByText, renderResult;
 
-	const renderComponent = (clientMock) => {
+	const renderComponent = () => {
 		cleanup();
 
 		renderResult = render(
-			<ContainerMock clientMock={clientMock}>
+			<ContainerMock>
 				<InstanceDetailsModal />
 			</ContainerMock>
 		);
@@ -89,9 +89,11 @@ describe('The InstanceDetailsModal component should', () => {
 
 	describe('render with a completed Instance', () => {
 		beforeAll(async () => {
-			renderComponent({
-				get: jest.fn().mockResolvedValue({data}),
+			fetch.mockResolvedValueOnce({
+				json: () => Promise.resolve(data),
 			});
+
+			renderComponent();
 
 			await act(async () => {
 				jest.runAllTimers();
@@ -157,9 +159,9 @@ describe('The InstanceDetailsModal component should', () => {
 
 	describe('render with a pending Instance', () => {
 		beforeAll(async () => {
-			renderComponent({
-				get: jest.fn().mockResolvedValue({
-					data: {
+			fetch.mockResolvedValueOnce({
+				json: () =>
+					Promise.resolve({
 						...data,
 						completed: false,
 						slaResults: [
@@ -172,9 +174,10 @@ describe('The InstanceDetailsModal component should', () => {
 						],
 						slaStatus: 'Untracked',
 						taskNames: ['Review'],
-					},
-				}),
+					}),
 			});
+
+			renderComponent();
 
 			await act(async () => {
 				jest.runAllTimers();

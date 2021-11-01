@@ -38,7 +38,6 @@ const withParamsMock = (...components) => ({
 
 const MockRouter = ({
 	children,
-	client,
 	initialPath = '/1/20/title%3Aasc',
 	initialReindexStatuses = [],
 	isAmPm,
@@ -56,11 +55,9 @@ const MockRouter = ({
 
 	const contextState = useMemo(
 		() => ({
-			client,
 			defaultDelta: 20,
 			deltaValues: [5, 10, 20, 30, 50, 75],
 			fetchDateModified,
-			getClient: () => client,
 			isAmPm,
 			maxPages: 3,
 			portletNamespace: 'workflow',

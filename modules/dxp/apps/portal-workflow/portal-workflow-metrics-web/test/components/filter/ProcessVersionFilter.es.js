@@ -20,20 +20,16 @@ const query = '?filters.processVersion%5B0%5D=1.0';
 
 const items = [{name: '1.0'}, {name: '2.0'}];
 
-const clientMock = {
-	request: jest
-		.fn()
-		.mockResolvedValue({data: {items, totalCount: items.length}}),
-};
-
 const wrapper = ({children}) => (
-	<MockRouter client={clientMock} query={query}>
-		{children}
-	</MockRouter>
+	<MockRouter query={query}>{children}</MockRouter>
 );
 
 describe('The process version filter component should', () => {
 	beforeEach(async () => {
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve({items, totalCount: items.length}),
+		});
+
 		render(
 			<ProcessVersionFilter
 				options={{

@@ -22,12 +22,12 @@ describe('MetricsCalculatedInfo', () => {
 			.utc(new Date())
 			.format(Liferay.Language.get('mmm-dd-hh-mm-a'));
 
-		const requestMock = {
-			get: jest.fn().mockResolvedValue(date),
-		};
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve(date),
+		});
 
 		const {findByText} = render(
-			<MockRouter client={requestMock}>
+			<MockRouter>
 				<MetricsCalculatedInfo date={date} />
 			</MockRouter>
 		);

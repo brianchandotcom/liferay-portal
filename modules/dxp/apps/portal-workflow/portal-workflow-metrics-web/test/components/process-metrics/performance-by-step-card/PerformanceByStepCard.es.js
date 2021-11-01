@@ -54,7 +54,6 @@ const items = [
 		},
 	},
 ];
-const data = {items, totalCount: items.length};
 const query = stringify({filters});
 const timeRangeData = {
 	items: [
@@ -86,15 +85,17 @@ describe('The performance by step card component should', () => {
 
 	describe('Be rendered with results', () => {
 		beforeAll(async () => {
-			const clientMock = {
-				get: jest.fn().mockResolvedValue({data}),
-				request: jest.fn().mockResolvedValue({data: processVersions}),
-			};
+			fetch
+				.mockResolvedValueOnce({
+					json: () => Promise.resolve(processVersions),
+				})
+				.mockResolvedValue({
+					json: () =>
+						Promise.resolve({items, totalCount: items.length}),
+				});
 
 			const wrapper = ({children}) => (
-				<MockRouter client={clientMock} query={query}>
-					{children}
-				</MockRouter>
+				<MockRouter query={query}>{children}</MockRouter>
 			);
 
 			const renderResult = render(
@@ -131,17 +132,16 @@ describe('The performance by step card component should', () => {
 		afterEach(cleanup);
 
 		beforeEach(async () => {
-			const clientMock = {
-				get: jest
-					.fn()
-					.mockResolvedValue({data: {items: [], totalCount: 0}}),
-				request: jest.fn().mockResolvedValue({data: processVersions}),
-			};
+			fetch
+				.mockResolvedValueOnce({
+					json: () => Promise.resolve(processVersions),
+				})
+				.mockResolvedValue({
+					json: () => Promise.resolve({items: [], totalCount: 0}),
+				});
 
 			const wrapper = ({children}) => (
-				<MockRouter client={clientMock} query={query}>
-					{children}
-				</MockRouter>
+				<MockRouter query={query}>{children}</MockRouter>
 			);
 
 			const renderResult = render(

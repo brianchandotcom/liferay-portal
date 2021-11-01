@@ -30,13 +30,11 @@ describe('The pending items card component should', () => {
 	afterEach(cleanup);
 
 	beforeEach(async () => {
-		const clientMock = {
-			get: jest.fn().mockResolvedValue({data}),
-		};
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve(data),
+		});
 
-		const wrapper = ({children}) => (
-			<MockRouter client={clientMock}>{children}</MockRouter>
-		);
+		const wrapper = ({children}) => <MockRouter>{children}</MockRouter>;
 
 		const renderResult = render(
 			<PendingItemsCard routeParams={{processId: 12345}} />,

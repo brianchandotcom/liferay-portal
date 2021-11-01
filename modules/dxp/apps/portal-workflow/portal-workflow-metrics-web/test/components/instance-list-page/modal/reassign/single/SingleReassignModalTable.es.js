@@ -18,11 +18,6 @@ import SingleReassignModal from '../../../../../../src/main/resources/META-INF/r
 import {MockRouter} from '../../../../../mock/MockRouter.es';
 
 const ContainerMock = ({children}) => {
-	const clientMock = {
-		get: jest
-			.fn()
-			.mockResolvedValue({data: {items: [{id: 1, name: 'Test'}]}}),
-	};
 	const [selectedItem, setSelectedItem] = useState({
 		assetTitle: 'Blog1',
 		assetType: 'Blogs Entry',
@@ -34,7 +29,7 @@ const ContainerMock = ({children}) => {
 	const [selectedItems, setSelectedItems] = useState([]);
 
 	return (
-		<MockRouter client={clientMock}>
+		<MockRouter>
 			<InstanceListContext.Provider
 				value={{
 					selectedItem,
@@ -82,6 +77,10 @@ describe('The SingleReassignModalTable component should', () => {
 	};
 
 	it('Render with statuses Completed and Overdue', () => {
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+		});
+
 		const {container} = render(
 			<SingleReassignModal.Table
 				data={data}
@@ -177,17 +176,16 @@ describe('The SingleReassignModalTable component should', () => {
 
 describe('The AssigneeInput component should', () => {
 	const setReassignMock = jest.fn();
-	const clientMock = {
-		get: jest
-			.fn()
-			.mockResolvedValue({data: {items: [{id: 1, name: 'Test'}]}}),
-	};
 
 	it('Render change assignee input text to Test', async () => {
 		cleanup();
 
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+		});
+
 		render(
-			<MockRouter client={clientMock}>
+			<MockRouter>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{
 						tasks: [{assigneeId: 20124, id: 39347}],
@@ -213,14 +211,12 @@ describe('The AssigneeInput component should', () => {
 	it('Change its text to "Test"', async () => {
 		cleanup();
 
-		const clientMock = {
-			get: jest
-				.fn()
-				.mockResolvedValue({data: {items: [{id: 1, name: 'Test'}]}}),
-		};
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+		});
 
 		render(
-			<MockRouter client={clientMock}>
+			<MockRouter>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{
 						tasks: [{assigneeId: 20124, id: 39347}],
@@ -235,14 +231,18 @@ describe('The AssigneeInput component should', () => {
 			jest.runAllTimers();
 		});
 
-		expect(clientMock.get).toHaveBeenCalled();
+		expect(fetch).toHaveBeenCalled();
 	});
 
 	it('Select a new assignee', async () => {
 		cleanup();
 
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+		});
+
 		render(
-			<MockRouter client={clientMock}>
+			<MockRouter>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{tasks: []}}
 					setAssigneeId={setAssigneeId}
@@ -270,8 +270,12 @@ describe('The AssigneeInput component should', () => {
 	it('Select a new assignee with input already filled', async () => {
 		cleanup();
 
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+		});
+
 		render(
-			<MockRouter client={clientMock}>
+			<MockRouter>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{tasks: [{assigneeId: 20124, id: 39347}]}}
 					setAssigneeId={setAssigneeId}

@@ -31,18 +31,6 @@ const items = [
 	},
 ];
 
-const jestMock = jest.fn().mockResolvedValue({data: {items, totalCount: 2}});
-
-const clientMock = {
-	get: jestMock,
-	post: jestMock,
-	request: jestMock,
-};
-
-const MockContext = ({children}) => (
-	<MockRouter client={clientMock}>{children}</MockRouter>
-);
-
 describe('The workload by assignee page body should', () => {
 	let getAllByRole;
 
@@ -56,10 +44,15 @@ describe('The workload by assignee page body should', () => {
 			sort: 'overdueTaskCount:desc',
 		};
 
+		fetch.mockResolvedValue({
+			json: () => Promise.resolve({items, totalCount: 2}),
+			text: () => Promise.resolve(),
+		});
+
 		const renderResult = render(
-			<MockContext>
+			<MockRouter>
 				<WorkloadByAssigneePage routeParams={routeParams} />
-			</MockContext>
+			</MockRouter>
 		);
 
 		getAllByRole = renderResult.getAllByRole;

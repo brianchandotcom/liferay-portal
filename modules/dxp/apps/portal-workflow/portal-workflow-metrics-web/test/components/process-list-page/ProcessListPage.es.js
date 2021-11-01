@@ -41,9 +41,9 @@ describe('The process list page component having data should', () => {
 	];
 	const data = {items, totalCount: items.length};
 
-	const clientMock = {
-		get: jest.fn().mockResolvedValue({data}),
-	};
+	fetch.mockResolvedValueOnce({
+		json: () => Promise.resolve(data),
+	});
 
 	const routeParams = {
 		page: 1,
@@ -54,9 +54,7 @@ describe('The process list page component having data should', () => {
 
 	afterEach(cleanup);
 
-	const wrapper = ({children}) => (
-		<MockRouter client={clientMock}>{children}</MockRouter>
-	);
+	const wrapper = ({children}) => <MockRouter>{children}</MockRouter>;
 
 	beforeEach(async () => {
 		const renderResult = render(

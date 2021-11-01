@@ -103,12 +103,12 @@ definition {
 			MenuItem.click(menuItem = "Manage Translations");
 		}
 
+		WaitForElementPresent(locator1 = "Modal#BODY");
+
+		Click(locator1 = "Icon#PLUS");
+
 		for (var locale : list "${localeList}") {
 			var locale = StringUtil.replace("${locale}", "_", "-");
-
-			WaitForElementPresent(locator1 = "Modal#BODY");
-
-			Click(locator1 = "Icon#PLUS");
 
 			MenuItem.click(menuItem = "${locale}");
 
@@ -116,6 +116,8 @@ definition {
 				key_tableEntry = "${locale}",
 				locator1 = "LexiconTable#TABLE_ENTRY");
 		}
+
+		Click(locator1 = "Icon#PLUS");
 
 		if (isSet(localizedDone)) {
 			Click(

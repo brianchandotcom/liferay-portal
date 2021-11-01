@@ -196,7 +196,12 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	public void setRejectedExecutionHandler(
 		RejectedExecutionHandler rejectedExecutionHandler) {
 
-		_rejectedExecutionHandler = rejectedExecutionHandler;
+		_rejectedExecutionHandler = (runnable, threadPoolExecutor) -> {
+			_rejectedTaskCounter.incrementAndGet();
+
+			rejectedExecutionHandler.rejectedExecution(
+				runnable, threadPoolExecutor);
+		};
 	}
 
 	public void setWorkersCoreSize(int workersCoreSize) {

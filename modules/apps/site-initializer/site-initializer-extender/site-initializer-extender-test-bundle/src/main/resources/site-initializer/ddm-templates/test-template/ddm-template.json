@@ -1,5 +1,5 @@
 {
-	"ddmStructureKey": "TEST STRUCTURE NAME",
-	"ddmTemplateKey": "TEST TEMPLATE KEY",
-	"name": "Test Template Name"
+	"ddmStructureKey": "TEST DDM STRUCTURE NAME",
+	"ddmTemplateKey": "TEST DDM TEMPLATE KEY",
+	"name": "Test DDM Template Name"
 }

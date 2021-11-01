@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+
 <root>
 	<structure>
 		<definition>
@@ -18,6 +19,6 @@
 			]]>
 		</definition>
 		<description></description>
-		<name>Test Structure Name</name>
+		<name>Test DDM Structure Name</name>
 	</structure>
 </root>

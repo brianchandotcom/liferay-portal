@@ -158,7 +158,8 @@ public class BundleSiteInitializerTest {
 					group.getCompanyId(), "TESTCATG0001");
 
 		Assert.assertNotNull(commerceCatalog);
-		Assert.assertEquals("Test Commerce Catalog 1", commerceCatalog.getName());
+		Assert.assertEquals(
+			"Test Commerce Catalog 1", commerceCatalog.getName());
 
 		commerceCatalog =
 			_commerceCatalogLocalService.
@@ -166,7 +167,8 @@ public class BundleSiteInitializerTest {
 					group.getCompanyId(), "TESTCATG0002");
 
 		Assert.assertNotNull(commerceCatalog);
-		Assert.assertEquals("Test Commerce Catalog 2", commerceCatalog.getName());
+		Assert.assertEquals(
+			"Test Commerce Catalog 2", commerceCatalog.getName());
 	}
 
 	private void _assertCommerceChannel(Group group) throws Exception {
@@ -195,7 +197,7 @@ public class BundleSiteInitializerTest {
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			group.getGroupId(),
 			_portal.getClassNameId(JournalArticle.class.getName()),
-			"TEST STRUCTURE NAME");
+			"TEST DDM STRUCTURE NAME");
 
 		Assert.assertNotNull(ddmStructure);
 		Assert.assertTrue(ddmStructure.hasField("aField"));
@@ -205,7 +207,7 @@ public class BundleSiteInitializerTest {
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			group.getGroupId(),
 			_portal.getClassNameId(DDMStructure.class.getName()),
-			"TEST TEMPLATE KEY");
+			"TEST DDM TEMPLATE KEY");
 
 		Assert.assertNotNull(ddmTemplate);
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
@@ -228,16 +230,19 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertFragments(Group group) {
-		FragmentEntry fragment1 = _fragmentEntryLocalService.fetchFragmentEntry(
-			group.getGroupId(), "fragment1");
+		FragmentEntry testFragmentEntry1 =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				group.getGroupId(), "test-fragment-entry-1");
+		FragmentEntry testFragmentEntry2 =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				group.getGroupId(), "test-fragment-entry-2");
 
-		FragmentEntry fragment2 = _fragmentEntryLocalService.fetchFragmentEntry(
-			group.getGroupId(), "fragment2");
-
-		Assert.assertNotNull(fragment1);
-		Assert.assertEquals("fragment1", fragment1.getName());
-		Assert.assertNotNull(fragment2);
-		Assert.assertEquals("fragment2", fragment2.getName());
+		Assert.assertNotNull(testFragmentEntry1);
+		Assert.assertEquals(
+			"Test Fragment Entry 1", testFragmentEntry1.getName());
+		Assert.assertNotNull(testFragmentEntry2);
+		Assert.assertEquals(
+			"Test Fragment Entry 2", testFragmentEntry2.getName());
 	}
 
 	private void _assertLayoutPageTemplates(Group group) throws Exception {
@@ -247,7 +252,8 @@ public class BundleSiteInitializerTest {
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
 
 		Assert.assertNotNull(layoutPageTemplateEntry);
-		Assert.assertEquals("Test Master Page", layoutPageTemplateEntry.getName());
+		Assert.assertEquals(
+			"Test Master Page", layoutPageTemplateEntry.getName());
 	}
 
 	private void _assertLayouts(Group group) throws Exception {
@@ -288,7 +294,7 @@ public class BundleSiteInitializerTest {
 	private void _assertStyleBookEntry(Group group) {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.fetchStyleBookEntry(
-				group.getGroupId(), "test");
+				group.getGroupId(), "test-style-book-entry");
 
 		Assert.assertNotNull(styleBookEntry);
 

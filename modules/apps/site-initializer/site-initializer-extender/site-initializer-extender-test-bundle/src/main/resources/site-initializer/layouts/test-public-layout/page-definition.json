@@ -4,7 +4,7 @@
 			{
 				"definition": {
 					"fragment": {
-						"key": "fragment1"
+						"key": "test-fragment-entry-1"
 					},
 					"fragmentConfig": {
 					},
@@ -43,7 +43,7 @@
 			{
 				"definition": {
 					"fragment": {
-						"key": "fragment2"
+						"key": "test-fragment-entry-2"
 					},
 					"fragmentConfig": {
 					},

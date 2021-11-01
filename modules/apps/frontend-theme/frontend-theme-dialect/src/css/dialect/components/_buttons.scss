@@ -1,8 +1,6 @@
 .btn {
 	border-width: 0;
-}
 
-.btn:not(.alert-btn):not(.dropdown-item) {
 	&,
 	&:focus {
 		background-color: var(--btn-default-background-color);
@@ -409,6 +407,12 @@
 	align-items: center;
 	display: flex;
 	justify-content: center;
+}
+
+// Unstyled
+
+.btn-unstyled {
+	--btn-default-border-color: transparent;
 }
 
 // Defaults

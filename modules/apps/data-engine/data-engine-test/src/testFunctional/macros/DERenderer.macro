@@ -1,11 +1,19 @@
 definition {
 
+	macro addBoldContentonRichText {
+		Click(locator1 = "DataEngineRenderer#TOOLBAR_BOLD_BUTTON");
+	}
+
 	macro addSourceContentonRichText {
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
 			value1 = "${content}");
+	}
+
+	macro assertBoldContentonRichText {
+		AssertElementPresent(locator1 = "DataEngineRenderer#TOOLBAR_BOLD_BUTTON_ON");
 	}
 
 	macro assertDataInColorField {

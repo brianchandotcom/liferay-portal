@@ -76,9 +76,9 @@ select {
 }
 
 .business-home-cover .business-home-cover-image {
+	height: 521px;
 	max-width: 100%;
 	width: 791px;
-	height: 521px;
 }
 
 .page-editor__layout-viewport .business-home-cover .business-home-cover-box {

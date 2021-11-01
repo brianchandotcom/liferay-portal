@@ -22,5 +22,4 @@ Import-Package:\
 	org.openxmlformats.schemas.*;resolution:=optional,\
 	\
 	*
-Bundle-Version: 2.0.24
 Web-ContextPath: /content-dashboard-web

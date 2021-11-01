@@ -109,7 +109,7 @@ public class BlogsStatsUserLocalServiceImpl
 			null, 0, 1);
 
 		if (blogsStatsUsers.isEmpty()) {
-			return new BlogsStatsUserImpl(groupId, userId, null, 0, 0, 0, 0);
+			return new BlogsStatsUserImpl(0, groupId, null, 0, 0, 0, userId);
 		}
 
 		return blogsStatsUsers.get(0);
@@ -172,12 +172,12 @@ public class BlogsStatsUserLocalServiceImpl
 		for (Object[] columns : results) {
 			blogsStatsUsers.add(
 				new BlogsStatsUserImpl(
-					GetterUtil.getLong(columns[0]),
-					GetterUtil.getLong(columns[1]), (Date)columns[2],
 					GetterUtil.getLong(columns[3]),
+					GetterUtil.getLong(columns[0]), (Date)columns[2],
 					GetterUtil.getLong(columns[4]),
 					GetterUtil.getDouble(columns[5]),
-					GetterUtil.getDouble(columns[6])));
+					GetterUtil.getDouble(columns[6]),
+					GetterUtil.getLong(columns[1])));
 		}
 
 		return blogsStatsUsers;

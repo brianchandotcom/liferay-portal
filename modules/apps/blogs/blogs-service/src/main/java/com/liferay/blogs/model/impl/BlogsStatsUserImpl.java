@@ -24,17 +24,17 @@ import java.util.Date;
 public class BlogsStatsUserImpl implements BlogsStatsUser {
 
 	public BlogsStatsUserImpl(
-		long groupId, long statsUserId, Date lastPostDate, long entryCount,
+		long entryCount, long groupId, Date lastPostDate,
 		long ratingsTotalEntries, double ratingsAverageScore,
-		double ratingsTotalScore) {
+		double ratingsTotalScore, long statsUserId) {
 
-		_groupId = groupId;
-		_statsUserId = statsUserId;
-		_lastPostDate = lastPostDate;
 		_entryCount = entryCount;
+		_groupId = groupId;
+		_lastPostDate = lastPostDate;
 		_ratingsTotalEntries = ratingsTotalEntries;
 		_ratingsAverageScore = ratingsAverageScore;
 		_ratingsTotalScore = ratingsTotalScore;
+		_statsUserId = statsUserId;
 	}
 
 	@Override

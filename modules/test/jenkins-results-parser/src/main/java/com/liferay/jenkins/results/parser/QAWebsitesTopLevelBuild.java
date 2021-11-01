@@ -98,8 +98,8 @@ public class QAWebsitesTopLevelBuild
 		String qaWebsitesBranchUsername = getParameterValue(
 			"TEST_QA_WEBSITES_BRANCH_USERNAME");
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(qaWebsitesBranchName)) {
-			qaWebsitesBranchName = "liferay";
+		if (JenkinsResultsParserUtil.isNullOrEmpty(qaWebsitesBranchUsername)) {
+			qaWebsitesBranchUsername = "liferay";
 		}
 
 		return JenkinsResultsParserUtil.combine(

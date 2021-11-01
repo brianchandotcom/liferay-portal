@@ -4222,6 +4222,25 @@ definition {
 		Portlet.viewNoPermissionPG();
 	}
 
+	macro viewResultRankingsEntry {
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Result Rankings");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Article");
+
+		AssertElementPresent(
+			key_assetTitle = "Article 4",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
+
+		AssertElementNotPresent(
+			key_assetTitle = "Article 2",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
+	}
+
 	macro viewSAMLGeneralConfiguration {
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",

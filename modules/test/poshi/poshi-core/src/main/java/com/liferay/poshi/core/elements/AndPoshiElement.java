@@ -75,7 +75,10 @@ public class AndPoshiElement extends PoshiElement {
 		for (PoshiElement poshiElement : poshiElements) {
 			String poshiScript = poshiElement.toPoshiScript();
 
-			if (poshiScript.startsWith("(") || poshiScript.startsWith("!(")) {
+			if (poshiScript.startsWith("(") || poshiScript.startsWith("!(") ||
+				poshiScript.startsWith("isSet(") ||
+				poshiScript.startsWith("contains(")) {
+
 				sb.append(poshiScript);
 			}
 			else {

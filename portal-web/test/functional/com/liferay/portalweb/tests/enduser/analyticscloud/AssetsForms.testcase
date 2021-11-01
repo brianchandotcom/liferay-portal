@@ -268,9 +268,10 @@ definition {
 
 		for (var pageName : list "AC Page,AC Page 1") {
 			ACUtils.navigateToSitePage(
-				actionType = "View Form",
+				actionType = "Submit Form",
 				pageName = "${pageName}",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				submitText = "Test Assets");
 		}
 
 		ACUtils.closeAllSessionsAndWait();

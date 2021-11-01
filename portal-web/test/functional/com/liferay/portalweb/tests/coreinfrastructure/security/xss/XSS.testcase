@@ -172,6 +172,71 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-83273. View forms entry with XSS"
+	@priority = "5"
+	test ViewFormsWithXSS {
+		var formDescription = '''<script>alert(222)</script>''';
+		var formName = '''<script>alert(111)</script>''';
+
+		task ("Add a form") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "${formName}");
+
+			Form.editDescription(formDescription = "${formDescription}");
+
+			Form.addTextField(fieldPositionNumber = "0");
+
+			Form.save();
+		}
+
+		task ("Add a Form widget to a page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			SitePages.addPublicPage(pageName = "Form Page");
+
+			Navigator.gotoPage(pageName = "Form Page");
+
+			Portlet.addPG(
+				pageName = "Form Page",
+				portletName = "Form");
+		}
+
+		task ("Configure the Form to display the form created above") {
+			FormPortletNavigator.gotoSelectForm();
+
+			FormPortletConfiguration.selectForm(formName = "${formName}");
+
+			PortletEntry.save();
+		}
+
+		task ("Assert the popup not shown") {
+			Navigator.gotoPage(pageName = "Form Page");
+
+			AssertAlertNotPresent();
+		}
+
+		task ("Assert correct HTML source text") {
+			var actualDescriptionScript = '''<script>alert(222)</script>''';
+
+			var escapedDescriptionScript = '''&lt;script&gt;alert(222)&lt;/script&gt;''';
+
+			AssertHTMLSourceTextNotPresent(value1 = "${actualDescriptionScript}");
+
+			AssertHTMLSourceTextPresent(value1 = "${escapedDescriptionScript}");
+
+			var actualNameScript = '''<script>alert(111)</script>''';
+
+			var escapedNameScript = '''&lt;script&gt;alert(111)&lt;/script&gt;''';
+
+			AssertHTMLSourceTextNotPresent(value1 = "${actualNameScript}");
+
+			AssertHTMLSourceTextPresent(value1 = "${escapedNameScript}");
+		}
+	}
+
 	@description = "This is a use case for LPS-72807. View google analytics ID"
 	@priority = "3"
 	test ViewGoogleAnalyticsID {

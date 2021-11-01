@@ -16,14 +16,27 @@ package com.liferay.fragment.internal.exportimport.staged.model.repository;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
+import com.liferay.fragment.exception.RequiredFragmentEntryException;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.List;
 
@@ -81,6 +94,72 @@ public class FragmentEntryStagedModelRepository
 			uuid, groupId);
 
 		if (fragmentEntry != null) {
+			if (!extraData.isEmpty()) {
+				List<FragmentEntryLink> fragmentEntryLinks =
+					FragmentEntryLinkLocalServiceUtil.
+						getFragmentEntryLinksByFragmentEntryId(
+							fragmentEntry.getFragmentEntryId());
+
+				if (!fragmentEntryLinks.isEmpty()) {
+					Group stagingGroup = _staging.getStagingGroup(groupId);
+
+					JSONObject extraDataJSONObject =
+						JSONFactoryUtil.createJSONObject(extraData);
+
+					boolean privateLayout = GetterUtil.getBoolean(
+						extraDataJSONObject.get("privateLayout"));
+
+					JSONArray jsonArray = (JSONArray)extraDataJSONObject.get(
+						"layoutIds");
+
+					long[] plids = new long[0];
+
+					for (long layoutId : JSONUtil.toLongArray(jsonArray)) {
+						Layout stagingLayout = _layoutService.fetchLayout(
+							stagingGroup.getGroupId(), privateLayout, layoutId);
+
+						if (stagingLayout == null) {
+							continue;
+						}
+
+						Layout liveLayout =
+							_layoutService.getLayoutByUuidAndGroupId(
+								stagingLayout.getUuid(), groupId,
+								privateLayout);
+
+						plids = ArrayUtil.append(plids, liveLayout.getPlid());
+
+						Layout draftLayout = liveLayout.fetchDraftLayout();
+
+						if (draftLayout != null) {
+							plids = ArrayUtil.append(
+								plids, draftLayout.getPlid());
+						}
+					}
+
+					long[] fragmentEntryLinkIds =
+						new long[fragmentEntryLinks.size()];
+
+					for (int i = 0; i < fragmentEntryLinks.size(); i++) {
+						FragmentEntryLink fragmentEntryLink =
+							fragmentEntryLinks.get(i);
+
+						if (ArrayUtil.contains(
+								plids, fragmentEntryLink.getPlid())) {
+
+							fragmentEntryLinkIds[i] =
+								fragmentEntryLink.getFragmentEntryLinkId();
+						}
+						else {
+							throw new RequiredFragmentEntryException();
+						}
+					}
+
+					FragmentEntryLinkLocalServiceUtil.deleteFragmentEntryLinks(
+						fragmentEntryLinkIds);
+				}
+			}
+
 			deleteStagedModel(fragmentEntry);
 		}
 	}
@@ -153,6 +232,12 @@ public class FragmentEntryStagedModelRepository
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
+	private LayoutService _layoutService;
+
+	@Reference
 	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;
+
+	@Reference
+	private Staging _staging;
 
 }

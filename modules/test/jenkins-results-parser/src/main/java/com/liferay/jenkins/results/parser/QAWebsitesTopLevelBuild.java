@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class QAWebsitesTopLevelBuild
 	extends DefaultTopLevelBuild
-	implements PortalBranchInformationBuild, QAWebsitesBranchInformationBuild {
+	implements QAWebsitesBranchInformationBuild, WorkspaceBuild {
 
 	public QAWebsitesTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
@@ -36,16 +36,6 @@ public class QAWebsitesTopLevelBuild
 	}
 
 	@Override
-	public BranchInformation getPortalBaseBranchInformation() {
-		return null;
-	}
-
-	@Override
-	public BranchInformation getPortalBranchInformation() {
-		return _portalMasterBranchInformation;
-	}
-
-	@Override
 	public List<String> getProjectNames() {
 		String projectNames = getParameterValue("PROJECT_NAMES");
 
@@ -54,68 +44,67 @@ public class QAWebsitesTopLevelBuild
 
 	@Override
 	public BranchInformation getQAWebsitesBranchInformation() {
-		return getBranchInformation("qa.websites");
+		Workspace workspace = getWorkspace();
+
+		if (workspace == null) {
+			return null;
+		}
+
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		if (workspaceGitRepository == null) {
+			return null;
+		}
+
+		return new WorkspaceBranchInformation(workspaceGitRepository);
 	}
 
-	public static class PortalMasterBranchInformation
-		extends DefaultBranchInformation {
+	@Override
+	public Workspace getWorkspace() {
+		Workspace workspace = WorkspaceFactory.newWorkspace(
+			getBaseGitRepositoryName(), getBranchName(), getJobName());
 
-		@Override
-		public String getOriginName() {
-			return "liferay";
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		String qaWebsitesGitHubURL = _getQAWebsitesGitHubURL();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(qaWebsitesGitHubURL)) {
+			workspaceGitRepository.setGitHubURL(qaWebsitesGitHubURL);
 		}
 
-		@Override
-		public Integer getPullRequestNumber() {
-			return 0;
+		String qaWebsitesBranchSHA = _getQAWebsitesBranchSHA();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(qaWebsitesBranchSHA)) {
+			workspaceGitRepository.setSenderBranchSHA(qaWebsitesBranchSHA);
 		}
 
-		@Override
-		public String getReceiverUsername() {
-			return "liferay";
-		}
-
-		@Override
-		public String getRepositoryName() {
-			return "liferay-portal";
-		}
-
-		@Override
-		public String getSenderBranchName() {
-			return "master";
-		}
-
-		@Override
-		public String getSenderBranchSHA() {
-			return _remoteGitRef.getSHA();
-		}
-
-		@Override
-		public String getSenderUsername() {
-			return "liferay";
-		}
-
-		@Override
-		public String getUpstreamBranchName() {
-			return "master";
-		}
-
-		@Override
-		public String getUpstreamBranchSHA() {
-			return _remoteGitRef.getSHA();
-		}
-
-		protected PortalMasterBranchInformation(Build build) {
-			super(build, "portal");
-
-			_remoteGitRef = getSenderRemoteGitRef();
-		}
-
-		private final RemoteGitRef _remoteGitRef;
-
+		return workspace;
 	}
 
-	private final PortalMasterBranchInformation _portalMasterBranchInformation =
-		new PortalMasterBranchInformation(this);
+	private String _getQAWebsitesBranchSHA() {
+		return getParameterValue("TEST_QA_WEBSITES_GIT_ID");
+	}
+
+	private String _getQAWebsitesGitHubURL() {
+		String qaWebsitesBranchName = getParameterValue(
+			"TEST_QA_WEBSITES_BRANCH_NAME");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(qaWebsitesBranchName)) {
+			qaWebsitesBranchName = "master";
+		}
+
+		String qaWebsitesBranchUsername = getParameterValue(
+			"TEST_QA_WEBSITES_BRANCH_USERNAME");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(qaWebsitesBranchName)) {
+			qaWebsitesBranchName = "liferay";
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			"https://github.com/", qaWebsitesBranchUsername,
+			"/" + getBaseGitRepositoryName() + "/tree/", qaWebsitesBranchName);
+	}
 
 }

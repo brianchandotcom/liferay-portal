@@ -91,21 +91,10 @@ public class NotPoshiElement extends PoshiElement {
 				}
 			}
 			else {
-				if (parentPoshiElement instanceof AndPoshiElement ||
-					parentPoshiElement instanceof OrPoshiElement) {
-
-					sb.append("(");
-					sb.append("!(");
-
-					sb.append(poshiElement.toPoshiScript());
-					sb.append("))");
-				}
-				else {
 					sb.append("!(");
 
 					sb.append(poshiElement.toPoshiScript());
 					sb.append(")");
-				}
 			}
 		}
 

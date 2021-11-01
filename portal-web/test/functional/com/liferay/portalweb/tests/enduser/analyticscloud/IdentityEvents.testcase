@@ -55,7 +55,7 @@ definition {
 
 		task ("Sign out and Close sessions") {
 			UserBar.signOut();
-			
+
 			ACUtils.closeAllSessions();
 		}
 

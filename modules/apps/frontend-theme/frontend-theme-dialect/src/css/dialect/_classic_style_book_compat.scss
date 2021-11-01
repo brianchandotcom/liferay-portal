@@ -1,0 +1,40 @@
+:root {
+	// Color System: Brand Colors
+
+	--brand-color-1: var(--color-brand-primary);
+	--brand-color-2: var(--color-neutral-6);
+	--brand-color-3: var(--color-brand-primary-darken-2);
+	--brand-color-4: var(--color-neutral-9);
+
+	// Color System: Grays
+
+	--white: var(--color-neutral-0);
+	--gray-100: var(--color-neutral-1);
+	--gray-200: var(--color-neutral-2);
+	--gray-300: var(--color-neutral-3);
+	--gray-400: var(--color-neutral-4);
+	--gray-500: var(--color-neutral-5);
+	--gray-600: var(--color-neutral-6);
+	--gray-700: var(--color-neutral-7);
+	--gray-800: var(--color-neutral-8);
+	--gray-900: var(--color-neutral-9);
+	--black: var(--color-neutral-10);
+
+	// Color System: Theme Colors
+
+	--primary: var(--color-brand-primary);
+	--secondary: var(--color-neutral-6);
+	--success: var(--color-state-success);
+	--info: var(--color-state-info);
+	--warning: var(--color-state-warning);
+	--danger: var(--color-state-error);
+	--gray-dark: var(--color-neutral-8);
+	--dark: var(--color-neutral-9);
+	--light: var(--color-neutral-2);
+	--lighter: var(--color-neutral-1);
+
+	// Typography: Font Size
+
+	--font-size-sm: var(--text-paragraph-sm-font-size);
+	--font-size-lg: var(--text-paragraph-lg-font-size);
+}

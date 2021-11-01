@@ -98,7 +98,9 @@ public class DDMStorageTypesDataProviderTest extends PowerMockito {
 
 		Stream<String> stream = expectedSet.stream();
 
-		stream.map(
+		stream.filter(
+			type -> !type.equals("json")
+		).map(
 			type -> new KeyValuePair(type, type)
 		).forEach(
 			keyValuePairs::add

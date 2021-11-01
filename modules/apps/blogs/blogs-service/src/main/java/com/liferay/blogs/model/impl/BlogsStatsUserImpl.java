@@ -24,12 +24,12 @@ import java.util.Date;
 public class BlogsStatsUserImpl implements BlogsStatsUser {
 
 	public BlogsStatsUserImpl(
-		long groupId, long userId, Date lastPostDate, long entryCount,
+		long groupId, long statsUserId, Date lastPostDate, long entryCount,
 		long ratingsTotalEntries, double ratingsAverageScore,
 		double ratingsTotalScore) {
 
 		_groupId = groupId;
-		_userId = userId;
+		_statsUserId = statsUserId;
 		_lastPostDate = lastPostDate;
 		_entryCount = entryCount;
 		_ratingsTotalEntries = ratingsTotalEntries;
@@ -69,7 +69,7 @@ public class BlogsStatsUserImpl implements BlogsStatsUser {
 
 	@Override
 	public long getStatsUserId() {
-		return _userId;
+		return _statsUserId;
 	}
 
 	private final long _entryCount;
@@ -78,6 +78,6 @@ public class BlogsStatsUserImpl implements BlogsStatsUser {
 	private final double _ratingsAverageScore;
 	private final long _ratingsTotalEntries;
 	private final double _ratingsTotalScore;
-	private final long _userId;
+	private final long _statsUserId;
 
 }

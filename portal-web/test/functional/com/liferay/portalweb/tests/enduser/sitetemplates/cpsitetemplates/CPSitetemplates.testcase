@@ -608,7 +608,7 @@ definition {
 		ProductMenuHelper.closeProductMenu();
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Sitios web",
+			category = "Sitios Web",
 			panel = "Panel de control",
 			portlet = "Plantillas de sitio web");
 

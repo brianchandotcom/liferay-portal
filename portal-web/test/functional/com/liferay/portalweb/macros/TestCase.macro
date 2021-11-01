@@ -50,17 +50,17 @@ definition {
 
 	macro getFileContent {
 		var baseDir = PropsUtil.get("test.base.dir.name");
-		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
+		var testDependenciesDir = PropsUtil.get("test.dependencies.dir.name");
 
 		var dependenciesDir = TestCase.getDependenciesDirPath();
 		var filePath = "${dependenciesDir}/${fileName}";
 		var fileExists = FileUtil.exists("${filePath}");
 
 		if ("${fileExists}" == "true") {
-			var fileContent = FileUtil.read("${filePath}/${fileName}");
+			var fileContent = FileUtil.read("${filePath}");
 		}
 		else {
-			var fileContent = FileUtil.read("${baseDir}${dependenciesDir}/${fileName}");
+			var fileContent = FileUtil.read("${baseDir}${testDependenciesDir}/${fileName}");
 		}
 
 		return "${fileContent}";

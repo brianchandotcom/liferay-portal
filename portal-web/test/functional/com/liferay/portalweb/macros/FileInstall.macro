@@ -33,11 +33,11 @@ definition {
 		}
 
 		var dependenciesDir = TestCase.getDependenciesDirPath();
-		var filePath = "${dependenciesDir}/${fileName}";
+		var filePath = "${dependenciesDir}/${liferayDependencyJars}";
 		var fileExists = FileUtil.exists("${filePath}");
 
 		if ("${fileExists}" == "true") {
-			ArchiveUtil.archive("${filePath}/${liferayDependencyJars}", "${deployDir}/${liferayDependencyJars}");
+			ArchiveUtil.archive("${filePath}", "${deployDir}/${liferayDependencyJars}");
 		}
 		else {
 			ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/${liferayDependencyJars}", "${deployDir}/${liferayDependencyJars}");

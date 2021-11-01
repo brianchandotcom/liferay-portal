@@ -11,7 +11,7 @@ definition {
 		var fileExists = FileUtil.exists("${filePath}");
 
 		if ("${fileExists}" == "true") {
-			ArchiveUtil.archive("${filePath}/${liferayDependencyJars}", "${liferayHome}/deploy/${fragmentsZip}");
+			ArchiveUtil.archive("${filePath}", "${liferayHome}/deploy/${fragmentsZip}");
 		}
 		else {
 			ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/${fragmentsZip}", "${liferayHome}/deploy/${fragmentsZip}");

@@ -189,8 +189,7 @@ definition {
 	test CanViewJapaneseFileAfterMultipleUpload {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMDocument.addMultipleCP(
-			dmDocumentFileList = "これは写真です.jpg,これは文書です.txt");
+		DMDocument.addMultipleCP(dmDocumentFileList = "これは写真です.jpg,これは文書です.txt");
 
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "これは写真です",

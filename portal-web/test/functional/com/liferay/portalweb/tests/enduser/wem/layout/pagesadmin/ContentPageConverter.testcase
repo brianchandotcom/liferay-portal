@@ -167,8 +167,7 @@ definition {
 
 		ServerAdministration.openServerAdmin();
 
-		var script = TestCase.getFileContent(
-			fileName = "convertWidgetPages.groovy");
+		var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
@@ -360,8 +359,7 @@ definition {
 		task ("Execute grooy script to bulk convert all widget pages") {
 			ServerAdministration.openServerAdmin();
 
-			var script = TestCase.getFileContent(
-				fileName = "convertWidgetPages.groovy");
+			var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
 
 			ServerAdministration.executeScript(
 				language = "Groovy",
@@ -518,8 +516,7 @@ definition {
 
 		ServerAdministration.openServerAdmin();
 
-		var script = TestCase.getFileContent(
-			fileName = "convertWidgetPages.groovy");
+		var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",

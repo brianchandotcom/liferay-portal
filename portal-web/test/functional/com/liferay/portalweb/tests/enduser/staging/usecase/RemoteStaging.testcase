@@ -42,8 +42,7 @@ definition {
 
 		ServerAdministration.openServerAdmin();
 
-		var script = TestCase.getFileContent(
-			fileName = "create-300-web-content-articles.groovy");
+		var script = TestCase.getFileContent(fileName = "create-300-web-content-articles.groovy");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",

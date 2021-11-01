@@ -463,6 +463,15 @@ definition {
 		}
 	}
 
+	macro viewErrorMessages {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_IMPORT_TRANSLATIONS",
+			value1 = "${errorMessage}");
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_IMPORT_TRANSLATIONS_ITEM",
+			value1 = "${errorMessageItem}");
+	}
+
 	macro viewTargetFields {
 		if (isSet(webContentTitle)) {
 			AssertElementPresent(

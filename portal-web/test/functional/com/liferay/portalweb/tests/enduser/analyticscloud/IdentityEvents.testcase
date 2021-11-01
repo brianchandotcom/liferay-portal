@@ -53,7 +53,9 @@ definition {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-		task ("Close sessions") {
+		task ("Sign out and Close sessions") {
+			UserBar.signOut();
+			
 			ACUtils.closeAllSessions();
 		}
 

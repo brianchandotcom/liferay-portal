@@ -81,12 +81,27 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "5"
 	test CanBeStyled {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-69427 Refactor of Renderer Rich Text Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DataEngine.addField(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.addBoldContentonRichText();
+
+		DERenderer.assertDataInColorField();
 	}
 
 	@description = "This is a stubbed description"

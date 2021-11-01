@@ -11,6 +11,11 @@
 
 <tbody>
 	<tr>
+		<td>ADD_ENTRY_FIELD_SPECIFIC</td>
+		<td>//label[contains(text(),'${key_fieldLabelName}')]/..//input[@type = 'text']</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ANY_PAGE</td>
 		<td>//ul[contains(@class,'pagination')]//li[contains(@class,'page-item')]//*[contains(@class,'page-link')][normalize-space(text())='${key_pageNumber}']</td>
 		<td></td>

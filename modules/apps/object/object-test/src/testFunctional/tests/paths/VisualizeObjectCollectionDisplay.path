@@ -41,6 +41,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>FIELD_NAME_OPTION</td>
+		<td>//select[@aria-label='Field']//option[contains(text(),'${key_option}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>FRAGMENT_COLLECTION</td>
 		<td>//div[(@class='page-editor__collection__message')] | //div[@class='page-editor__collection-item empty page-editor__topper']</td>
 		<td></td>

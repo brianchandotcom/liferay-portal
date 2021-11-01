@@ -3787,25 +3787,20 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship field is displayed again when the parent object is reactivated (One to Many)"
 	@priority = "4"
 	test RelationshipFieldReappearsWhenReactivatedOneToMany {
-
 		for (var letter : list "A,B") {
-
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter}",
 				objectName = "CustomObject${letter}",
 				pluralLabelName = "Custom Objects ${letter}");
-
 		}
 
 		for (var letter : list "A,B") {
-
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldLabelName = "Custom Field ${letter}",
 				fieldName = "customObjectField${letter}",
 				fieldType = "String",
 				isRequired = "false",
 				objectName = "CustomObject${letter}");
-
 		}
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
@@ -3836,7 +3831,6 @@ definition {
 
 		CreateObject.saveObject();
 
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -3845,8 +3839,8 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		AssertElementPresent(
-			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			key_fieldLabelName = "Custom Object A",
+			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			value1 = "Custom Object A");
 
 		Navigator.gotoBack();
@@ -3854,11 +3848,9 @@ definition {
 		ObjectPortlet.viewEntryDetails(entry = "Entry 1");
 
 		AssertElementPresent(
-			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			key_fieldLabelName = "Custom Object A",
+			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			value1 = "Custom Object A");
-
-
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship tab is no longer displayed when the other object is inactivated (Many to Many)"

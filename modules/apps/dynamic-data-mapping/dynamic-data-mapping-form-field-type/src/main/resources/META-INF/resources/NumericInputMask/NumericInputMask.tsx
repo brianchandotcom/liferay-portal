@@ -246,16 +246,21 @@ const NumericInputMask: React.FC<IProps> = ({
 								);
 							}}
 							onChange={(event: any) => {
-								let {value} = event.target;
-								value = value.includes('-')
-									? value.replace('-', '')
-									: value;
+								let {value: newValue} = event.target;
+								newValue = newValue.includes('-')
+									? newValue.replace('-', '')
+									: newValue;
 
-								setDecimalPlaces(value);
-								handleChange(
-									'decimalPlaces',
-									parseInt(value, 10)
-								);
+								if (newValue <= MAX_DECIMAL_PLACES) {
+									newValue =
+										newValue === 0
+											? ''
+											: parseInt(newValue, 10);
+
+									setDecimalPlaces(newValue);
+
+									handleChange('decimalPlaces', newValue);
+								}
 							}}
 							type="number"
 							value={decimalPlaces}

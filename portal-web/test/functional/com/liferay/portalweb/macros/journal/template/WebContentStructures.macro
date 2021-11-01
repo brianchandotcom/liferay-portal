@@ -66,6 +66,42 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro addTranslations {
+		if (isSet(localizedManageTranslations)) {
+			MenuItem.click(menuItem = "${localizedManageTranslations}");
+		}
+
+		else {
+			MenuItem.click(menuItem = "Manage Translations");
+		}
+
+		for (var locale : list "${localeList}") {
+			var locale = StringUtil.replace("${locale}", "_", "-");
+
+			WaitForElementPresent(locator1 = "Modal#BODY");
+
+			Click(locator1 = "Icon#PLUS");
+
+			MenuItem.click(menuItem = "${locale}");
+
+			AssertElementPresent(
+				key_tableEntry = "${locale}",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+		}
+
+		if (isSet(localizedDone)) {
+			Click(
+				key_text = "${localizedDone}",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
+		else {
+			Click(
+				key_text = "Done",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+	}
+
 	macro copyCP {
 		var key_ddlDataDefinitionName = "${structureName}";
 

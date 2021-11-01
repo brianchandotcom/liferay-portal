@@ -31,7 +31,7 @@ const Welcome = () => {
         className="mb-4 pb-1"
         draggable={false}
         height={300}
-        src={`${state.assetsPath}/assets/intro.svg`}
+        src={`${state.assetsPath}/assets/intro_onboarding.svg`}
         width={391.58}
       />
 

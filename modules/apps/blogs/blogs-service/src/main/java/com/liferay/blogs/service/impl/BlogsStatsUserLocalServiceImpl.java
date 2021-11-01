@@ -120,23 +120,24 @@ public class BlogsStatsUserLocalServiceImpl
 		OrderByExpression orderByExpression, int start, int end) {
 
 		JoinStep joinStep = DSLQueryFactoryUtil.select(
-			BlogsEntryTable.INSTANCE.groupId, BlogsEntryTable.INSTANCE.userId,
-			_lastPostDateExpression, _entryCountExpression,
+			_entryCountExpression, BlogsEntryTable.INSTANCE.groupId,
+			_lastPostDateExpression,
 			DSLFunctionFactoryUtil.countDistinct(
 				RatingsEntryTable.INSTANCE.entryId
 			).as(
-				"totalEntries"
+				"ratingsTotalEntries"
 			),
 			DSLFunctionFactoryUtil.avg(
 				RatingsEntryTable.INSTANCE.score
 			).as(
-				"averageScore"
+				"ratingsAverageScore"
 			),
 			DSLFunctionFactoryUtil.sum(
 				RatingsEntryTable.INSTANCE.score
 			).as(
-				"totalScore"
-			)
+				"ratingsTotalScore"
+			),
+			BlogsEntryTable.INSTANCE.userId
 		).from(
 			BlogsEntryTable.INSTANCE
 		);
@@ -172,12 +173,12 @@ public class BlogsStatsUserLocalServiceImpl
 		for (Object[] columns : results) {
 			blogsStatsUsers.add(
 				new BlogsStatsUserImpl(
+					GetterUtil.getLong(columns[0]),
+					GetterUtil.getLong(columns[1]), (Date)columns[2],
 					GetterUtil.getLong(columns[3]),
-					GetterUtil.getLong(columns[0]), (Date)columns[2],
-					GetterUtil.getLong(columns[4]),
+					GetterUtil.getDouble(columns[4]),
 					GetterUtil.getDouble(columns[5]),
-					GetterUtil.getDouble(columns[6]),
-					GetterUtil.getLong(columns[1])));
+					GetterUtil.getLong(columns[6])));
 		}
 
 		return blogsStatsUsers;

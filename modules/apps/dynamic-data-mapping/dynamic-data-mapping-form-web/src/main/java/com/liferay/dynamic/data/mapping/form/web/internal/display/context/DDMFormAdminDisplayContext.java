@@ -49,6 +49,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
@@ -165,7 +166,8 @@ public class DDMFormAdminDisplayContext {
 		DDMFormWebConfiguration ddmFormWebConfiguration,
 		DDMStorageAdapterTracker ddmStorageAdapterTracker,
 		DDMStructureLocalService ddmStructureLocalService,
-		DDMStructureService ddmStructureService, JSONFactory jsonFactory,
+		DDMStructureService ddmStructureService,
+		boolean ffSubmissionsSettingsEnabled, JSONFactory jsonFactory,
 		NPMResolver npmResolver,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		Portal portal) {
@@ -191,6 +193,7 @@ public class DDMFormAdminDisplayContext {
 		_ddmStorageAdapterTracker = ddmStorageAdapterTracker;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmStructureService = ddmStructureService;
+		_ffSubmissionsSettingsEnabled = ffSubmissionsSettingsEnabled;
 		_npmResolver = npmResolver;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_portal = portal;
@@ -463,6 +466,9 @@ public class DDMFormAdminDisplayContext {
 
 		DDMFormLayout ddmFormLayout = DDMFormLayoutFactory.create(
 			DDMFormInstanceSettings.class);
+
+		_removeSubmissionsSettingsDDMFormLayoutPage(
+			ddmFormLayout.getDDMFormLayoutPages());
 
 		ddmFormLayout.setPaginationMode(DDMFormLayout.TABBED_MODE);
 
@@ -1711,6 +1717,14 @@ public class DDMFormAdminDisplayContext {
 		);
 	}
 
+	private void _removeSubmissionsSettingsDDMFormLayoutPage(
+		List<DDMFormLayoutPage> ddmFormLayoutPages) {
+
+		if (!_ffSubmissionsSettingsEnabled) {
+			ddmFormLayoutPages.remove(3);
+		}
+	}
+
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -1745,6 +1759,7 @@ public class DDMFormAdminDisplayContext {
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMStructureService _ddmStructureService;
 	private String _displayStyle;
+	private final boolean _ffSubmissionsSettingsEnabled;
 	private final FormInstancePermissionCheckerHelper
 		_formInstancePermissionCheckerHelper;
 	private final Map<Long, String> _invalidDDMFormFieldTypes = new HashMap<>();

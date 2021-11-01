@@ -243,8 +243,6 @@ definition {
 
 		AssetCategorization.gotoSelectCategory();
 
-		AssertVisible(locator1 = "Treeview#NODE_COLLAPSE_BUTTON");
-
 		Portlet.selectTreeNode(nodeName = "${categoryName}");
 
 		SelectFrameTop();

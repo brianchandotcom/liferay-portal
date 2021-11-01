@@ -540,10 +540,6 @@ definition {
 		var key_nodeName = "${categoryName}";
 		var key_nodeListName = "${vocabularyName}";
 
-		AssertTextEquals(
-			locator1 = "Treeview#NODE_LIST",
-			value1 = "${vocabularyName}");
-
 		Portlet.expandTree();
 
 		AssertClick(
@@ -583,7 +579,7 @@ definition {
 		var key_categoryName = "${categoryName}";
 		var key_nodeListName = "${vocabularyName}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Treeview#NODE_LIST",
 			value1 = "${vocabularyName}");
 

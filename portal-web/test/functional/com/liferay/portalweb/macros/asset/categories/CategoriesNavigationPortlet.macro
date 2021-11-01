@@ -50,8 +50,6 @@ definition {
 	macro viewDefaultPG {
 		var key_nodeListName = "${vocabularyName}";
 
-		AssertElementPresent(locator1 = "Treeview#NODE_LIST");
-
 		Portlet.expandTree();
 
 		var key_nodeName = "${categoryName}";

@@ -50,11 +50,32 @@ public class PluginsTopLevelBuild
 
 	@Override
 	public BranchInformation getPluginsBranchInformation() {
-		return getBranchInformation("plugins");
+		if (fromArchive) {
+			return getBranchInformation("plugins");
+		}
+
+		PortalWorkspace portalWorkspace = getPortalWorkspace();
+
+		if (portalWorkspace == null) {
+			return null;
+		}
+
+		WorkspaceGitRepository workspaceGitRepository =
+			portalWorkspace.getPluginsWorkspaceGitRepository();
+
+		if (workspaceGitRepository == null) {
+			return null;
+		}
+
+		return new WorkspaceBranchInformation(workspaceGitRepository);
 	}
 
 	@Override
 	public BranchInformation getPortalBaseBranchInformation() {
+		if (!fromArchive) {
+			return null;
+		}
+
 		BranchInformation portalBranchInformation =
 			getPortalBranchInformation();
 
@@ -70,7 +91,24 @@ public class PluginsTopLevelBuild
 
 	@Override
 	public BranchInformation getPortalBranchInformation() {
-		return getBranchInformation("portal");
+		if (fromArchive) {
+			return getBranchInformation("portal");
+		}
+
+		PortalWorkspace portalWorkspace = getPortalWorkspace();
+
+		if (portalWorkspace == null) {
+			return null;
+		}
+
+		WorkspaceGitRepository workspaceGitRepository =
+			portalWorkspace.getPortalWorkspaceGitRepository();
+
+		if (workspaceGitRepository == null) {
+			return null;
+		}
+
+		return new WorkspaceBranchInformation(workspaceGitRepository);
 	}
 
 	@Override

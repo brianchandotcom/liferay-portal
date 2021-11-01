@@ -91,6 +91,18 @@ import org.osgi.annotation.versioning.ProviderType;
 					}
 				)
 			}
+		),
+		@DDMFormLayoutPage(
+			title = "%submissions",
+			value = {
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12, value = "limitToOneSubmissionPerUser"
+						)
+					}
+				)
+			}
 		)
 	}
 )
@@ -122,6 +134,13 @@ public interface DDMFormInstanceSettings {
 		validationExpression = "isEmailAddress(emailToAddress)"
 	)
 	public String emailToAddress();
+
+	@DDMFormField(
+		label = "%limit-to-one-submission-per-user",
+		tip = "%for-more-accurate-data,-require-user-athentication",
+		type = "checkbox"
+	)
+	public boolean limitToOneSubmissionPerUser();
 
 	@DDMFormField(
 		label = "%select-object",

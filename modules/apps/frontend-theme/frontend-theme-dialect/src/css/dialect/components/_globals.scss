@@ -11,3 +11,10 @@
 .rounded-xxl {
 	border-radius: var(--border-radius-xxl) !important;
 }
+
+// Links
+
+a:not(.btn):visited {
+	color: var(--link-visited-color);
+	text-decoration: var(--link-visited-text-decoration);
+}

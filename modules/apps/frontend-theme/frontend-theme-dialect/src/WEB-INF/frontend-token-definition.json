@@ -1410,6 +1410,144 @@
 				{
 					"frontendTokens": [
 						{
+							"defaultValue": "Manrope, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+							"label": "font-family-sans-serif",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-family-sans-serif"
+								}
+							],
+							"name": "fontFamilySansSerif",
+							"type": "String"
+						},
+						{
+							"defaultValue": "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+							"label": "font-family-monospace",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-family-monospace"
+								}
+							],
+							"name": "fontFamilyMonospace",
+							"type": "String"
+						},
+						{
+							"defaultValue": "Manrope, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+							"label": "font-family-base",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-family-base"
+								}
+							],
+							"name": "fontFamilyBase",
+							"type": "String"
+						}
+					],
+					"label": "font-family",
+					"name": "fontFamily"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--text-paragraph-font-size)",
+							"label": "font-size-base",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-size-base"
+								}
+							],
+							"name": "fontSizeBase",
+							"type": "String"
+						}
+					],
+					"label": "font-size",
+					"name": "fontSize"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "lighter",
+							"label": "font-weight-lighter",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-weight-lighter"
+								}
+							],
+							"name": "fontWeightLighter",
+							"type": "String"
+						},
+						{
+							"defaultValue": "300",
+							"label": "font-weight-light",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-weight-light"
+								}
+							],
+							"name": "fontWeightLight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "500",
+							"label": "font-weight-normal",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-weight-normal"
+								}
+							],
+							"name": "fontWeightNormal",
+							"type": "String"
+						},
+						{
+							"defaultValue": "600",
+							"label": "font-weight-semi-bold",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-weight-semi-bold"
+								}
+							],
+							"name": "fontWeightSemiBold",
+							"type": "String"
+						},
+						{
+							"defaultValue": "700",
+							"label": "font-weight-bold",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-weight-bold"
+								}
+							],
+							"name": "fontWeightBold",
+							"type": "String"
+						},
+						{
+							"defaultValue": "800",
+							"label": "font-weight-bolder",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-weight-bolder"
+								}
+							],
+							"name": "fontWeightBolder",
+							"type": "String"
+						}
+					],
+					"label": "font-weight",
+					"name": "fontWeight"
+				},
+				{
+					"frontendTokens": [
+						{
 							"defaultValue": "1.25rem",
 							"label": "text-paragraph-lg-font-size",
 							"mappings": [
@@ -1536,6 +1674,198 @@
 				{
 					"frontendTokens": [
 						{
+							"defaultValue": "2.3125rem",
+							"label": "h1-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "h1-font-size"
+								}
+							],
+							"name": "h1FontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "2rem",
+							"label": "h2-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "h2-font-size"
+								}
+							],
+							"name": "h2FontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1.75rem",
+							"label": "h3-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "h3-font-size"
+								}
+							],
+							"name": "h3FontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1.5rem",
+							"label": "h4-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "h4-font-size"
+								}
+							],
+							"name": "h4FontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1.125rem",
+							"label": "h5-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "h5-font-size"
+								}
+							],
+							"name": "h5FontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.875rem",
+							"label": "h6-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "h6-font-size"
+								}
+							],
+							"name": "h6FontSize",
+							"type": "String"
+						}
+					],
+					"label": "headings",
+					"name": "headings"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "6rem",
+							"label": "display-1-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display1-size"
+								}
+							],
+							"name": "display1Size",
+							"type": "String"
+						},
+						{
+							"defaultValue": "5.5rem",
+							"label": "display-2-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display2-size"
+								}
+							],
+							"name": "display2Size",
+							"type": "String"
+						},
+						{
+							"defaultValue": "3.0625rem",
+							"label": "display-3-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display3-size"
+								}
+							],
+							"name": "display3Size",
+							"type": "String"
+						},
+						{
+							"defaultValue": "2.6875rem",
+							"label": "display-4-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display4-size"
+								}
+							],
+							"name": "display4Size",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-light)",
+							"label": "display-1-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display1-weight"
+								}
+							],
+							"name": "display1Weight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-light)",
+							"label": "display-2-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display2-weight"
+								}
+							],
+							"name": "display2Weight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-light)",
+							"label": "display-3-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display3-weight"
+								}
+							],
+							"name": "display3Weight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-light)",
+							"label": "display-4-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display4-weight"
+								}
+							],
+							"name": "display4Weight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1.2",
+							"label": "display-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display-line-height"
+								}
+							],
+							"name": "displayLineHeight",
+							"type": "String"
+						}
+					],
+					"label": "displays",
+					"name": "displays"
+				},
+				{
+					"frontendTokens": [
+						{
 							"defaultValue": "1.125rem",
 							"label": "text-small-caps-font-size",
 							"mappings": [
@@ -1652,6 +1982,122 @@
 					],
 					"label": "text-links",
 					"name": "textLinks"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "1.25rem",
+							"label": "lead-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "lead-font-size"
+								}
+							],
+							"name": "leadFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-light)",
+							"label": "lead-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "lead-font-weight"
+								}
+							],
+							"name": "leadFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-4)",
+							"editorType": "ColorPicker",
+							"label": "text-muted",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-muted"
+								}
+							],
+							"name": "textMuted",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1.25rem",
+							"label": "blockquote-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "blockquote-font-size"
+								}
+							],
+							"name": "blockquoteFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-6)",
+							"editorType": "ColorPicker",
+							"label": "blockquote-small-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "blockquote-small-color"
+								}
+							],
+							"name": "blockquoteSmallColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "80%",
+							"label": "blockquote-small-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "blockquote-small-font-size"
+								}
+							],
+							"name": "blockquoteSmallFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "rgba(0, 0, 0, .1)",
+							"label": "hr-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "hr-border-color"
+								}
+							],
+							"name": "hrBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1px",
+							"label": "hr-border-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "hr-border-width"
+								}
+							],
+							"name": "hrBorderWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1rem",
+							"label": "hr-border-margin-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "hr-border-margin-y"
+								}
+							],
+							"name": "hrBorderMarginY",
+							"type": "String"
+						}
+					],
+					"label": "other",
+					"name": "other"
 				}
 			],
 			"label": "typography",
@@ -1659,6 +2105,38 @@
 		},
 		{
 			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "body-bg",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "body-bg"
+								}
+							],
+							"name": "bodyBgColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-9)",
+							"editorType": "ColorPicker",
+							"label": "body-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "body-color"
+								}
+							],
+							"name": "bodyColor",
+							"type": "String"
+						}
+					],
+					"label": "body",
+					"name": "body"
+				},
 				{
 					"frontendTokens": [
 						{
@@ -1841,6 +2319,48 @@
 					],
 					"label": "border-radius",
 					"name": "borderRadius"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--elevation-tight-3) rgba(0, 0, 0, .15)",
+							"label": "box-shadow",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "box-shadow"
+								}
+							],
+							"name": "boxShadow",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--elevation-tight-1) rgba(0, 0, 0, .075)",
+							"label": "box-shadow-sm",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "box-shadow-sm"
+								}
+							],
+							"name": "boxShadowSm",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--elevation-fluffy-3) rgba(0, 0, 0, .175)",
+							"label": "box-shadow-lg",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "box-shadow-lg"
+								}
+							],
+							"name": "boxShadowLg",
+							"type": "String"
+						}
+					],
+					"label": "box-shadows",
+					"name": "boxShadows"
 				},
 				{
 					"frontendTokens": [
@@ -2039,6 +2559,90 @@
 					],
 					"label": "elevations",
 					"name": "elevations"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "100%",
+							"label": "aspect-ratio",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "aspect-ratio"
+								}
+							],
+							"name": "aspectRatio",
+							"type": "String"
+						},
+						{
+							"defaultValue": "75%",
+							"label": "aspect-ratio-4-to-3",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "aspect-ratio-4-to-3"
+								}
+							],
+							"name": "aspectRatio4To3",
+							"type": "String"
+						},
+						{
+							"defaultValue": "37.5%",
+							"label": "aspect-ratio-8-to-3",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "aspect-ratio-8-to-3"
+								}
+							],
+							"name": "aspectRatio8To3",
+							"type": "String"
+						},
+						{
+							"defaultValue": "56.25%",
+							"label": "aspect-ratio-16-to-9",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "aspect-ratio-16-to-9"
+								}
+							],
+							"name": "aspectRatio16To9",
+							"type": "String"
+						}
+					],
+					"label": "aspect-ratios",
+					"name": "aspectRatios"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "height .35s ease",
+							"label": "transition-collapse",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "transition-collapse"
+								}
+							],
+							"name": "transitionCollapse",
+							"type": "String"
+						},
+						{
+							"defaultValue": "opacity .15s linear",
+							"label": "transition-fade",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "transition-fade"
+								}
+							],
+							"name": "transitionFade",
+							"type": "String"
+						}
+					],
+					"label": "transitions",
+					"name": "transitions"
 				}
 			],
 			"label": "general",
@@ -3090,170 +3694,6 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "var(--color-neutral-0)",
-							"editorType": "ColorPicker",
-							"label": "body-bg",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "body-bg"
-								}
-							],
-							"name": "bodyBgColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--color-neutral-9)",
-							"editorType": "ColorPicker",
-							"label": "body-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "body-color"
-								}
-							],
-							"name": "bodyColor",
-							"type": "String"
-						}
-					],
-					"label": "body",
-					"name": "body"
-				},
-				{
-					"frontendTokens": [
-						{
-							"defaultValue": "var(--elevation-tight-3) rgba(0, 0, 0, .15)",
-							"label": "box-shadow",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "box-shadow"
-								}
-							],
-							"name": "boxShadow",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--elevation-tight-1) rgba(0, 0, 0, .075)",
-							"label": "box-shadow-sm",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "box-shadow-sm"
-								}
-							],
-							"name": "boxShadowSm",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--elevation-fluffy-3) rgba(0, 0, 0, .175)",
-							"label": "box-shadow-lg",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "box-shadow-lg"
-								}
-							],
-							"name": "boxShadowLg",
-							"type": "String"
-						}
-					],
-					"label": "box-shadows",
-					"name": "boxShadows"
-				},
-				{
-					"frontendTokens": [
-						{
-							"defaultValue": "100%",
-							"label": "aspect-ratio",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "aspect-ratio"
-								}
-							],
-							"name": "aspectRatio",
-							"type": "String"
-						},
-						{
-							"defaultValue": "75%",
-							"label": "aspect-ratio-4-to-3",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "aspect-ratio-4-to-3"
-								}
-							],
-							"name": "aspectRatio4To3",
-							"type": "String"
-						},
-						{
-							"defaultValue": "37.5%",
-							"label": "aspect-ratio-8-to-3",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "aspect-ratio-8-to-3"
-								}
-							],
-							"name": "aspectRatio8To3",
-							"type": "String"
-						},
-						{
-							"defaultValue": "56.25%",
-							"label": "aspect-ratio-16-to-9",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "aspect-ratio-16-to-9"
-								}
-							],
-							"name": "aspectRatio16To9",
-							"type": "String"
-						}
-					],
-					"label": "aspect-ratios",
-					"name": "aspectRatios"
-				},
-				{
-					"frontendTokens": [
-						{
-							"defaultValue": "height .35s ease",
-							"label": "transition-collapse",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "transition-collapse"
-								}
-							],
-							"name": "transitionCollapse",
-							"type": "String"
-						},
-						{
-							"defaultValue": "opacity .15s linear",
-							"label": "transition-fade",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "transition-fade"
-								}
-							],
-							"name": "transitionFade",
-							"type": "String"
-						}
-					],
-					"label": "transitions",
-					"name": "transitions"
-				}
-			],
-			"label": "general",
-			"name": "general"
-		},
-		{
-			"frontendTokenSets": [
-				{
-					"frontendTokens": [
-						{
 							"defaultValue": "540px",
 							"label": "small",
 							"mappings": [
@@ -3308,458 +3748,6 @@
 			],
 			"label": "layout",
 			"name": "layout"
-		},
-		{
-			"frontendTokenSets": [
-				{
-					"frontendTokens": [
-						{
-							"defaultValue": "Manrope, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
-							"label": "font-family-sans-serif",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "font-family-sans-serif"
-								}
-							],
-							"name": "fontFamilySansSerif",
-							"type": "String"
-						},
-						{
-							"defaultValue": "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-							"label": "font-family-monospace",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "font-family-monospace"
-								}
-							],
-							"name": "fontFamilyMonospace",
-							"type": "String"
-						},
-						{
-							"defaultValue": "Manrope, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
-							"label": "font-family-base",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "font-family-base"
-								}
-							],
-							"name": "fontFamilyBase",
-							"type": "String"
-						}
-					],
-					"label": "font-family",
-					"name": "fontFamily"
-				},
-				{
-					"frontendTokens": [
-						{
-							"defaultValue": "var(--text-paragraph-font-size)",
-							"label": "font-size-base",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "font-size-base"
-								}
-							],
-							"name": "fontSizeBase",
-							"type": "String"
-						}
-					],
-					"label": "font-size",
-					"name": "fontSize"
-				},
-				{
-					"frontendTokens": [
-						{
-							"defaultValue": "lighter",
-							"label": "font-weight-lighter",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "font-weight-lighter"
-								}
-							],
-							"name": "fontWeightLighter",
-							"type": "String"
-						},
-						{
-							"defaultValue": "300",
-							"label": "font-weight-light",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "font-weight-light"
-								}
-							],
-							"name": "fontWeightLight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "500",
-							"label": "font-weight-normal",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "font-weight-normal"
-								}
-							],
-							"name": "fontWeightNormal",
-							"type": "String"
-						},
-						{
-							"defaultValue": "600",
-							"label": "font-weight-semi-bold",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "font-weight-semi-bold"
-								}
-							],
-							"name": "fontWeightSemiBold",
-							"type": "String"
-						},
-						{
-							"defaultValue": "700",
-							"label": "font-weight-bold",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "font-weight-bold"
-								}
-							],
-							"name": "fontWeightBold",
-							"type": "String"
-						},
-						{
-							"defaultValue": "800",
-							"label": "font-weight-bolder",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "font-weight-bolder"
-								}
-							],
-							"name": "fontWeightBolder",
-							"type": "String"
-						}
-					],
-					"label": "font-weight",
-					"name": "fontWeight"
-				},
-				{
-					"frontendTokens": [
-						{
-							"defaultValue": "2.3125rem",
-							"label": "h1-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "h1-font-size"
-								}
-							],
-							"name": "h1FontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "2rem",
-							"label": "h2-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "h2-font-size"
-								}
-							],
-							"name": "h2FontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "1.75rem",
-							"label": "h3-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "h3-font-size"
-								}
-							],
-							"name": "h3FontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "1.5rem",
-							"label": "h4-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "h4-font-size"
-								}
-							],
-							"name": "h4FontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "1.125rem",
-							"label": "h5-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "h5-font-size"
-								}
-							],
-							"name": "h5FontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0.875rem",
-							"label": "h6-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "h6-font-size"
-								}
-							],
-							"name": "h6FontSize",
-							"type": "String"
-						}
-					],
-					"label": "headings",
-					"name": "headings"
-				},
-				{
-					"frontendTokens": [
-						{
-							"defaultValue": "6rem",
-							"label": "display-1-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "display1-size"
-								}
-							],
-							"name": "display1Size",
-							"type": "String"
-						},
-						{
-							"defaultValue": "5.5rem",
-							"label": "display-2-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "display2-size"
-								}
-							],
-							"name": "display2Size",
-							"type": "String"
-						},
-						{
-							"defaultValue": "3.0625rem",
-							"label": "display-3-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "display3-size"
-								}
-							],
-							"name": "display3Size",
-							"type": "String"
-						},
-						{
-							"defaultValue": "2.6875rem",
-							"label": "display-4-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "display4-size"
-								}
-							],
-							"name": "display4Size",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--font-weight-light)",
-							"label": "display-1-weight",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "display1-weight"
-								}
-							],
-							"name": "display1Weight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--font-weight-light)",
-							"label": "display-2-weight",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "display2-weight"
-								}
-							],
-							"name": "display2Weight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--font-weight-light)",
-							"label": "display-3-weight",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "display3-weight"
-								}
-							],
-							"name": "display3Weight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--font-weight-light)",
-							"label": "display-4-weight",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "display4-weight"
-								}
-							],
-							"name": "display4Weight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "1.2",
-							"label": "display-line-height",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "display-line-height"
-								}
-							],
-							"name": "displayLineHeight",
-							"type": "String"
-						}
-					],
-					"label": "displays",
-					"name": "displays"
-				},
-				{
-					"frontendTokens": [
-						{
-							"defaultValue": "1.25rem",
-							"label": "lead-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "lead-font-size"
-								}
-							],
-							"name": "leadFontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--font-weight-light)",
-							"label": "lead-font-weight",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "lead-font-weight"
-								}
-							],
-							"name": "leadFontWeight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--color-neutral-4)",
-							"editorType": "ColorPicker",
-							"label": "text-muted",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-muted"
-								}
-							],
-							"name": "textMuted",
-							"type": "String"
-						},
-						{
-							"defaultValue": "1.25rem",
-							"label": "blockquote-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "blockquote-font-size"
-								}
-							],
-							"name": "blockquoteFontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--color-neutral-6)",
-							"editorType": "ColorPicker",
-							"label": "blockquote-small-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "blockquote-small-color"
-								}
-							],
-							"name": "blockquoteSmallColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "80%",
-							"label": "blockquote-small-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "blockquote-small-font-size"
-								}
-							],
-							"name": "blockquoteSmallFontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "rgba(0, 0, 0, .1)",
-							"label": "hr-border-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "hr-border-color"
-								}
-							],
-							"name": "hrBorderColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "1px",
-							"label": "hr-border-width",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "hr-border-width"
-								}
-							],
-							"name": "hrBorderWidth",
-							"type": "String"
-						},
-						{
-							"defaultValue": "1rem",
-							"label": "hr-border-margin-y",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "hr-border-margin-y"
-								}
-							],
-							"name": "hrBorderMarginY",
-							"type": "String"
-						}
-					],
-					"label": "other",
-					"name": "other"
-				}
-			],
-			"label": "typography",
-			"name": "typography"
 		}
 	]
 }

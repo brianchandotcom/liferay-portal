@@ -182,6 +182,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9019 | Test Summary: Search an Individual's Interest List with a query that won't return results"
 	@priority = "3"
 	test AssertNoIndividualsInterestsResults {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: After going to a specific individual details page and switch tab to "Interests" the message "An unexpected error occurred" appears.
+		// AC Refactor ticket: LRAC-9645
+		// AC Bug ticket: LRAC-9646
+
 		task ("Add web contents to Site as interest topics") {
 			ACUtils.createWCAndAddToPage();
 		}
@@ -230,6 +236,9 @@ definition {
 
 		task ("Search non-existent interest") {
 			ACUtils.searchBar(searchItem = "sport");
+
+			// In the interests tab the message "An unexpected error occurred" appears.
+
 		}
 
 		task ("Assert there are no interests found") {

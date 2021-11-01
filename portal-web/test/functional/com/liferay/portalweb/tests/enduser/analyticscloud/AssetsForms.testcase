@@ -184,16 +184,6 @@ definition {
 				submitText = "Test Assets");
 		}
 
-		task ("Download the document with anonymous user") {
-			User.logoutPG();
-
-			ACUtils.navigateToSitePage(
-				actionType = "Submit Form",
-				pageName = "AC Page",
-				siteName = "Site Name",
-				submitText = "Test Assets");
-		}
-
 		task ("Close all sessions") {
 			ACUtils.closeAllSessionsAndWait();
 		}
@@ -217,7 +207,16 @@ definition {
 		task ("Go to form and submit to get data for segmented individuals") {
 			ACUtils.launchDXP();
 
-			ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "Submit Form",
+				emailList = "ac@liferay.com",
+				pageName = "AC Page",
+				siteName = "Site Name",
+				submitText = "Test Assets");
+		}
+
+		task ("Download the document with anonymous user") {
+			User.logoutPG();
 
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",

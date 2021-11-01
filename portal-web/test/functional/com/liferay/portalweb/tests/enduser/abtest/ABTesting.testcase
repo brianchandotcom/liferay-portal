@@ -1316,21 +1316,89 @@ definition {
 	}
 
 	@description = "LPS-99349: Validate if the user can edit the variant for A/B Test content with success"
-	@ignore = "true"
 	@priority = "5"
 	test EditVariantContent {
+		task ("Create AB test and create variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137481 EditVariantContent pending implementation
+			ABTest.createVariant(variantName = "Variant name");
+		}
 
+		task ("Edit variant page and add some fragment to the page") {
+			Click(locator1 = "ABTest#PENCIL_BUTTON");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			Click(locator1 = "ABTest#SAVE_VARIANT_NAME_BUTTON");
+		}
+
+		task ("Select the variant view") {
+			Click(
+				key_index = "2",
+				key_name = "Variant name",
+				locator1 = "ABTest#VALUES_IN_LIST");
+		}
+
+		task ("Assert the modifications are shown when the variant is selected") {
+			AssertElementPresent(
+				key_id = "",
+				locator1 = "ABTest#BUTTON_PAGE",
+				value1 = "");
+		}
+
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-99349: Validate if the user can cancel the edition of one variant for A/B Test, and the data that he inputs during the creation is discarded"
-	@ignore = "true"
 	@priority = "4"
 	test EditVariantContentCancel {
+		task ("Create AB test and create variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137481 EditVariantContentCancel pending implementation
+			ABTest.createVariant(variantName = "Variant name");
+		}
 
+		task ("Edit variant page and add some fragment to the page") {
+			Click(locator1 = "ABTest#PENCIL_BUTTON");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			ClickNoError(
+				key_value = "Discard Variant",
+				locator1 = "ABTest#SECONDARY_BUTTON");
+
+			AssertConfirm(value1 = "Are you sure you want to discard current draft and apply latest published changes?");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Select the variant view") {
+			Click(
+				key_index = "2",
+				key_name = "Variant name",
+				locator1 = "ABTest#VALUES_IN_LIST");
+		}
+
+		task ("Assert the modifications are shown when the variant is selected") {
+			AssertElementNotPresent(
+				key_id = "",
+				locator1 = "ABTest#BUTTON_PAGE",
+				value1 = "");
+		}
+
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-97195: Validate if the user can edit a variant for A/B Test with the same name that already exists with success"
@@ -1680,7 +1748,7 @@ definition {
 	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, all data is discarded after the user clicks on cancel button"
 	@priority = "4"
 	test ReviewAndStartCancel {
-		task ("Create AB test, create variant and delete variant") {
+		task ("Create AB test and create variant") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",
 				testTitle = "AB test title");

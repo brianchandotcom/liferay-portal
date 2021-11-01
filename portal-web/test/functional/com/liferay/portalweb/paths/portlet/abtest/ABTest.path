@@ -171,6 +171,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PENCIL_BUTTON</td>
+	<td>//button[contains(@class,'btn-outline-secondary') and *[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_PAGE</td>
+	<td>//*[contains(@class,'component-button text-break')]//*[contains(@id,'${key_id}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REVIEW_NO_HAVE_VARIANTS</td>
 	<td>//p[contains(@class,'mb-2') and contains(text(),'Create at least one variant to run the test.')]</td>
 	<td></td>
@@ -197,7 +207,7 @@
 </tr>
 <tr>
 	<td>SAVE_VARIANT_NAME_BUTTON</td>
-	<td>//*[contains(@class,'btn btn-primary') and contains(text(),'Save')]</td>
+	<td>//*[contains(@class,'btn-primary') and contains(text(),'Save')]</td>
 	<td></td>
 </tr>
 <tr>

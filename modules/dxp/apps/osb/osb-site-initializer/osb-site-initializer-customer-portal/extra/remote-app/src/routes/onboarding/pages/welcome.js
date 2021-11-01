@@ -1,13 +1,12 @@
 import { useContext } from "react";
 import BaseButton from "~/common/components/BaseButton";
-import Intro from "../assets/intro.svg";
 import { AppContext } from "../context";
 import { changeStep } from "../context/actions";
 import { steps } from "../utils/constants";
 import Layout from "./layout";
 
 const Welcome = () => {
-  const [, dispatch] = useContext(AppContext);
+  const [state, dispatch] = useContext(AppContext);
 
   return (
     <Layout
@@ -32,7 +31,7 @@ const Welcome = () => {
         className="mb-4 pb-1"
         draggable={false}
         height={300}
-        src={Intro}
+        src={`${state.assetsPath}/assets/intro.svg`}
         width={391.58}
       />
 

@@ -8,13 +8,14 @@ import {
 } from '../utils/constants';
 import reducer from './reducer';
 
-const initialApp = {
+const initialApp = (assetsPath) => ({
+	assetsPath,
 	dxp: {
 		organization: 'SuperBank',
 		version: '7.3',
 	},
 	step: steps.welcome,
-};
+});
 
 const initialForm = {
 	dxp: {
@@ -31,8 +32,8 @@ const initialForm = {
 
 const AppContext = createContext();
 
-const AppProvider = ({children}) => {
-	const [state, dispatch] = useReducer(reducer, initialApp);
+const AppProvider = ({assetsPath, children}) => {
+	const [state, dispatch] = useReducer(reducer, initialApp(assetsPath));
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

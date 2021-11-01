@@ -8,7 +8,7 @@ import SharedStyle from "~/common/styles/global.scss";
 import CustomerPortal from "~/routes/customer-portal";
 import Onboarding from "~/routes/onboarding";
 
-const CustomerPortalApplication = ({ route }) => {
+const CustomerPortalApplication = ({ liferaywebdavurl, route }) => {
   const SearchParams = new URLSearchParams(window.location.search);
 
   const routeEntry = SearchParams.get("customer_dev_application") || route;
@@ -18,7 +18,7 @@ const CustomerPortalApplication = ({ route }) => {
   }
 
   if (routeEntry === "onboarding") {
-    return <Onboarding />;
+    return <Onboarding assetsPath={liferaywebdavurl} />;
   }
 };
 
@@ -29,6 +29,7 @@ class DirectToCustomerWebComponent extends WebComponent {
     ReactDOM.render(
       <ClayProvider>
         <CustomerPortalApplication
+          liferaywebdavurl={super.getAttribute("liferaywebdavurl")}
           route={super.getAttribute("route")}
         />
       </ClayProvider>,

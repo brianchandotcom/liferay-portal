@@ -62,7 +62,7 @@ definition {
 				var n = ${n} + 1;
 
 				JSONBlog.addEntry(
-					entryContent = '''When Dorothy Butler Gilliam arrived at a wealthy Washington woman's 100th birthday party the doorman told her she couldn't enter via the front door. "The maid's entrance is around the back," he explained. "I am not a maid, I am a reporter for the Washington Post," she replied. Dorothy was the first African American woman to report for the newspaper. She started there in 1961, and went on to work as an editor and columnist over the next three decades, witnessing seismic changes in US society, and in the media.''',
+					entryContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lacus nunc. Etiam et volutpat est. Quisque quis mi erat. Donec maximus mauris augue, nec convallis metus aliquet vitae. Nullam venenatis a nisl in tincidunt. Aliquam venenatis, enim in venenatis aliquam, mauris erat blandit nulla, sit amet tincidunt elit enim sit amet dolor. Aliquam fringilla condimentum varius. Maecenas tincidunt elit eget lacinia aliquam. Proin congue diam lorem. Vestibulum tristique elit mi, non dapibus erat lobortis.",
 					entryTitle = "Blogs Entry Title ${n}",
 					groupName = "Site Name");
 			}
@@ -144,7 +144,7 @@ definition {
 				var n = ${n} + 1;
 
 				JSONBlog.addEntry(
-					entryContent = '''When Dorothy Butler Gilliam arrived at a wealthy Washington woman's 100th birthday party the doorman told her she couldn't enter via the front door. "The maid's entrance is around the back," he explained. "I am not a maid, I am a reporter for the Washington Post," she replied. Dorothy was the first African American woman to report for the newspaper. She started there in 1961, and went on to work as an editor and columnist over the next three decades, witnessing seismic changes in US society, and in the media.''',
+					entryContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lacus nunc. Etiam et volutpat est. Quisque quis mi erat. Donec maximus mauris augue, nec convallis metus aliquet vitae. Nullam venenatis a nisl in tincidunt. Aliquam venenatis, enim in venenatis aliquam, mauris erat blandit nulla, sit amet tincidunt elit enim sit amet dolor. Aliquam fringilla condimentum varius. Maecenas tincidunt elit eget lacinia aliquam. Proin congue diam lorem. Vestibulum tristique elit mi, non dapibus erat lobortis.",
 					entryTitle = "Blogs Entry Title ${n}",
 					groupName = "Site Name");
 			}

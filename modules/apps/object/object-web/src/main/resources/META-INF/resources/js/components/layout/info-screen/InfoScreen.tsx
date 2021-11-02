@@ -25,7 +25,7 @@ const defaultLanguageId = normalizeLanguageId(
 );
 
 const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const [{objectLayout}, dispatch] = useContext(LayoutContext);
+	const [{isViewOnly, objectLayout}, dispatch] = useContext(LayoutContext);
 
 	return (
 		<Card>
@@ -33,6 +33,7 @@ const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			<Card.Body>
 				<ClayForm.Group>
 					<Input
+						disabled={isViewOnly}
 						id="objectLayoutName"
 						label={Liferay.Language.get('name')}
 						name="name"
@@ -54,6 +55,7 @@ const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				<ClayForm.Group className="mb-0">
 					<ClayCheckbox
 						checked={objectLayout.defaultObjectLayout}
+						disabled={isViewOnly}
 						label={Liferay.Language.get('mark-as-default')}
 						onChange={({target: {checked}}) => {
 							dispatch({

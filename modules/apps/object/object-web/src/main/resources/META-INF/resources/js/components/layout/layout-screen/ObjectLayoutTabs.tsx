@@ -31,7 +31,7 @@ const defaultLanguageId = normalizeLanguageId(
 );
 
 const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const [{objectLayout}, dispatch] = useContext(LayoutContext);
+	const [{isViewOnly, objectLayout}, dispatch] = useContext(LayoutContext);
 	const [visibleModal, setVisibleModal] = useState(false);
 	const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 	const {observer, onClose} = useModal({
@@ -66,6 +66,7 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 									<>
 										{!isRelationshipType && (
 											<ClayButton
+												disabled={isViewOnly}
 												displayType="secondary"
 												onClick={() => {
 													setVisibleModal(true);

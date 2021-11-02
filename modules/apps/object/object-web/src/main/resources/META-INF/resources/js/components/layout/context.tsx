@@ -22,6 +22,7 @@ import {BoxesVisitor, TabsVisitor} from '../../utils/visitor';
 import {TObjectField, TObjectLayout, TObjectRelationship} from './types';
 
 type TState = {
+	isViewOnly: boolean;
 	objectFields: TObjectField[];
 	objectLayout: TObjectLayout;
 	objectLayoutId: string;
@@ -336,6 +337,7 @@ const layoutReducer = (state: TState, action: TAction) => {
 interface ILayoutContextProviderProps
 	extends React.HTMLAttributes<HTMLElement> {
 	value: {
+		isViewOnly: boolean;
 		objectLayoutId: string;
 	};
 }

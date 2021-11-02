@@ -39,7 +39,7 @@ const ObjectLayoutBox: React.FC<IObjectLayoutBoxProps> = ({
 	objectLayoutRows,
 	tabIndex,
 }) => {
-	const [, dispatch] = useContext(LayoutContext);
+	const [{isViewOnly}, dispatch] = useContext(LayoutContext);
 	const [visibleModal, setVisibleModal] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleModal(false),
@@ -53,6 +53,7 @@ const ObjectLayoutBox: React.FC<IObjectLayoutBoxProps> = ({
 						<>
 							<ClayToggle
 								aria-label={Liferay.Language.get('collapsible')}
+								disabled={isViewOnly}
 								label={Liferay.Language.get('collapsible')}
 								onToggle={(value) => {
 									dispatch({
@@ -73,6 +74,7 @@ const ObjectLayoutBox: React.FC<IObjectLayoutBoxProps> = ({
 
 							<ClayButton
 								className="ml-4"
+								disabled={isViewOnly}
 								displayType="secondary"
 								onClick={() => setVisibleModal(true)}
 								small

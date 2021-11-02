@@ -101,9 +101,10 @@ const normalizeObjectRelationships: TNormalizeObjectRelationships = ({
 };
 
 const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const [{objectFields, objectLayout, objectLayoutId}, dispatch] = useContext(
-		LayoutContext
-	);
+	const [
+		{isViewOnly, objectFields, objectLayout, objectLayoutId},
+		dispatch,
+	] = useContext(LayoutContext);
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const [loading, setLoading] = useState<boolean>(true);
 
@@ -280,7 +281,10 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
-							<ClayButton onClick={() => saveObjectLayout()}>
+							<ClayButton
+								disabled={isViewOnly}
+								onClick={() => saveObjectLayout()}
+							>
 								{Liferay.Language.get('save')}
 							</ClayButton>
 						</ClayButton.Group>
@@ -292,12 +296,16 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 };
 
 interface ILayoutWrapperProps extends React.HTMLAttributes<HTMLElement> {
+	isViewOnly: boolean;
 	objectLayoutId: string;
 }
 
-const LayoutWrapper: React.FC<ILayoutWrapperProps> = ({objectLayoutId}) => {
+const LayoutWrapper: React.FC<ILayoutWrapperProps> = ({
+	isViewOnly,
+	objectLayoutId,
+}) => {
 	return (
-		<LayoutContextProvider value={{objectLayoutId}}>
+		<LayoutContextProvider value={{isViewOnly, objectLayoutId}}>
 			<Layout />
 		</LayoutContextProvider>
 	);

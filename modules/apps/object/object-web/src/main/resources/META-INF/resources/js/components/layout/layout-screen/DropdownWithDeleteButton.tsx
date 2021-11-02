@@ -14,12 +14,15 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
+
+import LayoutContext from '../context';
 
 const DropdownWithDeleteButton: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	onClick,
 }) => {
 	const [active, setActive] = useState<boolean>(false);
+	const [{isViewOnly}] = useContext(LayoutContext);
 
 	return (
 		<ClayDropDown
@@ -33,7 +36,7 @@ const DropdownWithDeleteButton: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 			}
 		>
 			<ClayDropDown.ItemList>
-				<ClayDropDown.Item onClick={onClick}>
+				<ClayDropDown.Item disabled={isViewOnly} onClick={onClick}>
 					{Liferay.Language.get('delete')}
 				</ClayDropDown.Item>
 			</ClayDropDown.ItemList>

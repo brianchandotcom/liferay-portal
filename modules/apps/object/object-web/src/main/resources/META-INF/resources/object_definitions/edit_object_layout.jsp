@@ -18,6 +18,8 @@
 
 <%
 ObjectLayout objectLayout = (ObjectLayout)request.getAttribute(ObjectWebKeys.OBJECT_LAYOUT);
+
+ObjectDefinitionsLayoutsDisplayContext objectDefinitionsLayoutsDisplayContext = (ObjectDefinitionsLayoutsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <liferay-frontend:side-panel-content
@@ -27,6 +29,8 @@ ObjectLayout objectLayout = (ObjectLayout)request.getAttribute(ObjectWebKeys.OBJ
 		module="js/components/layout/index"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"isViewOnly", !objectDefinitionsLayoutsDisplayContext.hasUpdateObjectDefinitionPermission()
+			).put(
 				"objectLayoutId", objectLayout.getObjectLayoutId()
 			).build()
 		%>'

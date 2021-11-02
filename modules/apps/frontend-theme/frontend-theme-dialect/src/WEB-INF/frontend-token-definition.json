@@ -755,19 +755,6 @@
 							],
 							"name": "colorActionPrimaryInvertedDisabled",
 							"type": "String"
-						},
-						{
-							"defaultValue": "#5e38ba",
-							"editorType": "ColorPicker",
-							"label": "color-action-primary-visited",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "color-action-primary-visited"
-								}
-							],
-							"name": "colorActionPrimaryVisited",
-							"type": "String"
 						}
 					],
 					"label": "primary-actions",
@@ -891,19 +878,6 @@
 							],
 							"name": "colorActionSecondaryInvertedDisabled",
 							"type": "String"
-						},
-						{
-							"defaultValue": "#5e38ba",
-							"editorType": "ColorPicker",
-							"label": "color-action-secondary-visited",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "color-action-secondary-visited"
-								}
-							],
-							"name": "colorActionSecondaryVisited",
-							"type": "String"
 						}
 					],
 					"label": "secondary-actions",
@@ -1026,19 +1000,6 @@
 								}
 							],
 							"name": "colorActionNeutralInvertedDisabled",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#5e38ba",
-							"editorType": "ColorPicker",
-							"label": "color-action-neutral-visited",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "color-action-neutral-visited"
-								}
-							],
-							"name": "colorActionNeutralVisited",
 							"type": "String"
 						}
 					],
@@ -2166,7 +2127,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-action-primary-visited)",
+							"defaultValue": "#5e38ba",
 							"editorType": "ColorPicker",
 							"label": "link-visited-color",
 							"mappings": [

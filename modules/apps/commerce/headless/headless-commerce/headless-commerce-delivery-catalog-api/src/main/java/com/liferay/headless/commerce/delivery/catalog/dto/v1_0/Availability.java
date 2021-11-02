@@ -84,6 +84,34 @@ public class Availability implements Serializable {
 	protected String label;
 
 	@Schema
+	public String getLabel_i18n() {
+		return label_i18n;
+	}
+
+	public void setLabel_i18n(String label) {
+		this.label_i18n = label;
+	}
+
+	@JsonIgnore
+	public void setLabel_i18n(
+		UnsafeSupplier<String, Exception> label_i18nUnsafeSupplier) {
+
+		try {
+			label_i18n = label_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String label_i18n;
+
+	@Schema
 	public Integer getStockQuantity() {
 		return stockQuantity;
 	}

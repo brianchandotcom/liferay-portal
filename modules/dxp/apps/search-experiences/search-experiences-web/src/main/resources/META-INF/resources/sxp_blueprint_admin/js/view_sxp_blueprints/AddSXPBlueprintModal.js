@@ -29,8 +29,8 @@ import {
 	DEFAULT_PARAMETER_CONFIGURATION,
 	DEFAULT_SORT_CONFIGURATION,
 } from '../utils/data';
+import {fetchData} from '../utils/fetch';
 import {FRAMEWORK_TYPES} from '../utils/frameworkTypes';
-import {openErrorToast} from '../utils/toasts';
 import {getSXPElementOutput, getUIConfigurationValues} from '../utils/utils';
 
 const DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS = DEFAULT_BASELINE_SXP_ELEMENTS.map(
@@ -100,11 +100,12 @@ const AddModal = ({
 	defaultLocale,
 	dialogTitle,
 	initialVisible,
-	keywordQueryContributorsString = '[]',
-	modelPrefilterContributorsString = '[]',
+	keywordQueryContributors = [],
+	modelPrefilterContributors = [],
 	namespace,
-	queryPrefilterContributorsString = '[]',
-	searchableTypesString = '[]',
+	queryPrefilterContributors = [],
+	redirectURL = '',
+	searchableTypes = [],
 	submitButtonLabel = Liferay.Language.get('create'),
 }) => {
 	const isMounted = useIsMounted();
@@ -116,7 +117,7 @@ const AddModal = ({
 	const [descriptionInputValue, setDescriptionInputValue] = useState('');
 
 	const handleFormError = (responseContent) => {
-		setErrorMessage(responseContent.error || '');
+		setErrorMessage(responseContent.error || DEFAULT_ERROR);
 
 		setLoadingResponse(false);
 	};
@@ -140,19 +141,13 @@ const AddModal = ({
 						framework === FRAMEWORK_TYPES.ALL
 							? {
 									includes: [
-										...JSON.parse(
-											keywordQueryContributorsString
-										),
-										...JSON.parse(
-											modelPrefilterContributorsString
-										),
-										...JSON.parse(
-											queryPrefilterContributorsString
-										),
+										...keywordQueryContributors,
+										...modelPrefilterContributors,
+										...queryPrefilterContributors,
 									],
 							  }
 							: BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION,
-					searchable_asset_types: JSON.parse(searchableTypesString),
+					searchable_asset_types: searchableTypes,
 				},
 				highlight_configuration: DEFAULT_HIGHLIGHT_CONFIGURATION,
 				parameter_configuration: DEFAULT_PARAMETER_CONFIGURATION,
@@ -176,13 +171,25 @@ const AddModal = ({
 			})
 		);
 
-		fetch('/o/search-experiences-rest/sxp-blueprints/', {
-			body: formData,
+		fetch('/o/search-experiences-rest/v1.0/sxp-blueprints', {
+
+			// body: formData,
+
+			body: JSON.stringify({
+				configuration: {
+					general: {explain: true, includeResponseString: true},
+				},
+				description: descriptionInputValue,
+				title: inputValue,
+			}),
+			headers: new Headers({
+				'Content-Type': 'application/json',
+			}),
 			method: 'POST',
 		})
 			.then((response) => {
 				if (!response.ok) {
-					handleFormError({error: DEFAULT_ERROR});
+					handleFormError();
 				}
 
 				return response.json();
@@ -197,8 +204,18 @@ const AddModal = ({
 
 						closeModal();
 
-						if (responseContent.redirectURL) {
-							navigate(responseContent.redirectURL);
+						if (responseContent.id) {
+							const newRedirectURL = new URL(redirectURL);
+
+							newRedirectURL.searchParams.set(
+								'sxpBlueprintId',
+								responseContent.id
+							);
+
+							navigate(newRedirectURL);
+						}
+						else {
+							navigate(redirectURL);
 						}
 					}
 				}
@@ -404,35 +421,53 @@ export function AddSXPBlueprintModal({
 	defaultLocale,
 	dialogTitle,
 	namespace,
+	redirectURL,
 }) {
-	const [resource, setResource] = useState(null);
+	const [searchableTypes, setSearchableTypes] = useState(null);
+	const [keywordQuery, setKeywordQuery] = useState(null);
+	const [modelPrefilter, setModelPrefilter] = useState(null);
+	const [queryPrefilter, setQueryPrefilter] = useState(null);
 
 	useEffect(() => {
-		fetch('/o/search-experiences-rest/sxp-blueprints/', {
-			method: 'POST',
-		})
-			.then((response) => {
-				if (!response.ok) {
-					throw DEFAULT_ERROR;
-				}
-
-				return response.json();
-			})
-			.then((responseContent) => {
-				setResource(responseContent);
-			})
-			.catch((error) => {
-				openErrorToast();
-
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
-
-				setResource({});
-			});
+		[
+			{
+				setProperty: setSearchableTypes,
+				url: `/o/search-experiences-rest/v1.0/searchable-asset-names`,
+			},
+			{
+				setProperty: setKeywordQuery,
+				url: `/o/search-experiences-rest/v1.0/keyword-query-contributors`,
+			},
+			{
+				setProperty: setModelPrefilter,
+				url: `/o/search-experiences-rest/v1.0/model-prefilter-contributors`,
+			},
+			{
+				setProperty: setQueryPrefilter,
+				url: `/o/search-experiences-rest/v1.0/query-prefilter-contributors`,
+			},
+		].forEach(({setProperty, url}) =>
+			fetchData(
+				url,
+				{method: 'GET'},
+				(responseContent) =>
+					setProperty(
+						responseContent.items
+							.map(({className}) => className)
+							.filter((item) => item)
+							.sort()
+					),
+				() => setProperty({})
+			)
+		);
 	}, []); //eslint-disable-line
 
-	if (!resource) {
+	if (
+		!keywordQuery ||
+		!modelPrefilter ||
+		!queryPrefilter ||
+		!searchableTypes
+	) {
 		return null;
 	}
 
@@ -443,17 +478,12 @@ export function AddSXPBlueprintModal({
 			defaultLocale={defaultLocale}
 			dialogTitle={dialogTitle}
 			initialVisible
-			keywordQueryContributorsString={
-				resource.keywordQueryContributorsString
-			}
-			modelPrefilterContributorsString={
-				resource.modelPrefilterContributorsString
-			}
+			keywordQueryContributors={keywordQuery}
+			modelPrefilterContributors={modelPrefilter}
 			namespace={namespace}
-			queryPrefilterContributorsString={
-				resource.queryPrefilterContributorsString
-			}
-			searchableTypesString={resource.searchableTypesString}
+			queryPrefilterContributors={queryPrefilter}
+			redirectURL={redirectURL}
+			searchableTypes={searchableTypes}
 		/>
 	);
 }

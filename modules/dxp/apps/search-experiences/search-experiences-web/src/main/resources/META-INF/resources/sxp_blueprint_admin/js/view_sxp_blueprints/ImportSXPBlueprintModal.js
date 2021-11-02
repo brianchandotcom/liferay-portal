@@ -34,7 +34,7 @@ const ImportSXPBlueprintModal = () => {
 	};
 
 	const _handleFormError = (responseContent) => {
-		setErrorMessage(responseContent.error.join(', ') || '');
+		setErrorMessage(responseContent.error.join(', ') || DEFAULT_ERROR);
 
 		setLoadingResponse(false);
 	};
@@ -46,7 +46,7 @@ const ImportSXPBlueprintModal = () => {
 
 		const formData = new FormData(formRef.current);
 
-		fetch('/o/search-experiences-rest/sxp-blueprints/', {
+		fetch('/o/search-experiences-rest/v1.0/sxp-blueprints', {
 			body: formData,
 			method: 'POST',
 		})

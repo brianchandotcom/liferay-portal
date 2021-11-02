@@ -47,6 +47,7 @@ function openAddSXPBlueprintModal({
 	defaultLocale,
 	dialogTitle,
 	namespace,
+	redirectURL,
 }) {
 	dispose();
 
@@ -57,6 +58,7 @@ function openAddSXPBlueprintModal({
 			defaultLocale={defaultLocale}
 			dialogTitle={dialogTitle}
 			namespace={namespace}
+			redirectURL={redirectURL}
 		/>,
 		DEFAULT_RENDER_DATA,
 		getDefaultModalContainer()

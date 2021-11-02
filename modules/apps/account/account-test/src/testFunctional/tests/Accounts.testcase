@@ -348,12 +348,16 @@ definition {
 		task ("Block google.com domain and create a new account") {
 			AccountConfiguration.addBlockedEmailDomain(settingValues = "google.com");
 
-			Accounts.openAccountsAdmin();
-
-			Accounts.addBusinessAccount(accountName = "Business Account");
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Business Account",
+				accountEntryType = "Business");
 		}
 
 		task ("Add a user using an email with the domain and assert the warning label appears signaling that the domain is blocked") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Business Account");
+
 			Accounts.addNewUserWithBlockedDomain(
 				accountName = "Business Account",
 				assigneeName = "userfn",
@@ -372,15 +376,17 @@ definition {
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Accounts",
-				panel = "Control Panel",
-				portlet = "Accounts");
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "New Instance Account",
+				accountEntryType = "Business",
+				creatorEmailAddress = "test@www.able.com");
 
-			Accounts.addBusinessAccount(accountName = "New Instance Account");
+			Navigator.openSpecificURL(url = "http://www.able.com:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet");
 		}
 
 		task ("Add a user with the same domain and assert the error message for blocked domains does not display") {
+			LexiconEntry.gotoEntry(rowEntry = "New Instance Account");
+
 			Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
 			LexiconEntry.gotoAdd();
@@ -415,10 +421,7 @@ definition {
 
 			Alert.viewSuccessMessage();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Accounts",
-				panel = "Control Panel",
-				portlet = "Account Users");
+			Navigator.openSpecificURL(url = "http://www.able.com:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_account_admin_web_internal_portlet_AccountUsersAdminPortlet");
 
 			AssertTextEquals(
 				key_columnName = "lfr-email-column",

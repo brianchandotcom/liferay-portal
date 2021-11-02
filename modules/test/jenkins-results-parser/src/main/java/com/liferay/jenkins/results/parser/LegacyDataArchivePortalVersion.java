@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * @author Michael Hashimoto
@@ -83,19 +82,21 @@ public class LegacyDataArchivePortalVersion {
 		Properties testProperties = JenkinsResultsParserUtil.getProperties(
 			new File(_portalVersionTestDirectory, "test.properties"));
 
-		if (!testProperties.containsKey(
-				"test.case.available.property.values[data.archive.type]")) {
+		String dataArchiveTypesString = JenkinsResultsParserUtil.getProperty(
+			testProperties, "data.archive.types");
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(dataArchiveTypesString)) {
+			dataArchiveTypesString = JenkinsResultsParserUtil.getProperty(
+				testProperties,
+				"test.case.available.property.values[data.archive.type]");
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(dataArchiveTypesString)) {
 			return Collections.emptyList();
 		}
 
-		String dataArchiveTypeString = testProperties.getProperty(
-			"test.case.available.property.values[data.archive.type]");
-
-		Set<String> dataArchiveTypeSet = new HashSet<>(
-			Arrays.asList(dataArchiveTypeString.split(",")));
-
-		List<String> dataArchiveTypes = new ArrayList<>(dataArchiveTypeSet);
+		List<String> dataArchiveTypes = new ArrayList<>(
+			new HashSet<>(Arrays.asList(dataArchiveTypesString.split(","))));
 
 		Collections.sort(dataArchiveTypes);
 

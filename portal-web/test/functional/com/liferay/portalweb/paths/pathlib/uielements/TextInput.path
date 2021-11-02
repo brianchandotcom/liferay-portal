@@ -186,6 +186,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_DATE_TIME_TIMEPICKER</td>
+	<td>//div[contains(@class,'timepicker')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_DATE_YEAR</td>
 	<td>//input[contains(@id,'displayDateYear')]</td>
 	<td></td>

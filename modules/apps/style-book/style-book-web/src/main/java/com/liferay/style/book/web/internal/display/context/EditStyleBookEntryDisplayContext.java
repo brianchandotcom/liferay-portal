@@ -224,13 +224,13 @@ public class EditStyleBookEntryDisplayContext {
 		int total =
 			LayoutPageTemplateEntryServiceUtil.
 				getLayoutPageTemplateEntriesCount(
-					_themeDisplay.getScopeGroupId(), layoutType);
+					_getPreviewItemsGroupId(), layoutType);
 
 		int numItems = Math.min(total, 4);
 
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
-				_themeDisplay.getScopeGroupId(), layoutType, 0, numItems,
+				_getPreviewItemsGroupId(), layoutType, 0, numItems,
 				new LayoutPageTemplateEntryModifiedDateComparator(false));
 
 		return JSONUtil.put(
@@ -283,12 +283,12 @@ public class EditStyleBookEntryDisplayContext {
 
 	private JSONObject _getPageOptionJSONObject() {
 		int total = LayoutLocalServiceUtil.getLayoutsCount(
-			_themeDisplay.getScopeGroupId());
+			_getPreviewItemsGroupId());
 
 		int numItems = Math.min(total, 4);
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			_themeDisplay.getScopeGroupId(), 0, numItems,
+			_getPreviewItemsGroupId(), 0, numItems,
 			new LayoutModifiedDateComparator(false));
 
 		return JSONUtil.put(
@@ -330,6 +330,18 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"totalLayouts", total
 		);
+	}
+
+	private long _getPreviewItemsGroupId() {
+		if (_previewItemsGroupId != null) {
+			return _previewItemsGroupId;
+		}
+
+		Layout layout = _themeDisplay.getLayout();
+
+		_previewItemsGroupId = layout.getGroupId();
+
+		return _previewItemsGroupId;
 	}
 
 	private String _getPreviewURL(Layout layout) {
@@ -457,6 +469,7 @@ public class EditStyleBookEntryDisplayContext {
 		_frontendTokenDefinitionRegistry;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
+	private Long _previewItemsGroupId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private StyleBookEntry _styleBookEntry;

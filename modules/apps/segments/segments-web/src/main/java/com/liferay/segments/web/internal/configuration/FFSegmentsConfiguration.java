@@ -28,6 +28,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface FFSegmentsConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
-	public boolean layoutExperienceSelector();
+	public boolean layoutExperienceSelectorEnabled();
 
 }

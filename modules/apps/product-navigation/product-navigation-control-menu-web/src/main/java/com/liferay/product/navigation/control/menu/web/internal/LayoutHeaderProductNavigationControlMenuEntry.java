@@ -181,8 +181,8 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (_ffProductNavigationControlMenuConfiguration.
-				layoutExperienceSelector() ||
+		if (!_ffProductNavigationControlMenuConfiguration.
+				layoutExperienceSelectorEnabled() ||
 			!layout.isTypeContent()) {
 
 			return false;
@@ -210,8 +210,8 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (_ffProductNavigationControlMenuConfiguration.
-				layoutExperienceSelector() ||
+		if (!_ffProductNavigationControlMenuConfiguration.
+				layoutExperienceSelectorEnabled() ||
 			!layout.isTypeContent()) {
 
 			return false;

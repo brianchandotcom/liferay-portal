@@ -78,7 +78,7 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		if (!_ffSegmentsConfiguration.layoutExperienceSelector()) {
+		if (!_ffSegmentsConfiguration.layoutExperienceSelectorEnabled()) {
 			return false;
 		}
 

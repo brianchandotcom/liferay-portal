@@ -299,8 +299,16 @@ components:
             properties:
                 description:
                     type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 elementDefinition:
                     properties:
+                        category:
+                            type: string
+                        icon:
+                            type: string
                         sxpBlueprint:
                             $ref: "#/components/schemas/SXPBlueprint"
                         uiConfiguration:
@@ -359,6 +367,10 @@ components:
                     type: integer
                 title:
                     type: string
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
             type: object
         SearchRequest:
             properties:

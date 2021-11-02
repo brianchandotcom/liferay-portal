@@ -56,7 +56,7 @@ public class BatchPlannerPlanLocalServiceImpl
 		_validateExternalType(externalType);
 		_validateInternalClassName(internalClassName);
 
-		if (Validator.isNull(name)) {
+		if (Validator.isNull(name) && !template) {
 			name = _generateName(internalClassName);
 		}
 

@@ -32,7 +32,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 			PortletURLBuilder.createActionURL(
 				renderResponse
 			).setActionName(
-				"/batch_planner/edit_batch_planner_plan"
+				"/batch_planner/edit_import_batch_planner_plan"
 			).setCMD(
 				(batchPlannerPlanId == 0) ? Constants.IMPORT : Constants.UPDATE
 			).setRedirect(
@@ -156,6 +156,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 
 				<span>
 					<react:component
+						module="js/SaveTemplate"
 						props='<%=
 							HashMapBuilder.<String, Object>put(
 								"formSaveAsTemplateDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
@@ -168,11 +169,10 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 								).setParameter(
 									"template", true
 								).setResourceID(
-									"/batch_planner/edit_batch_planner_plan"
+									"/batch_planner/edit_import_batch_planner_plan"
 								).buildString()
 							).build()
 						%>'
-						module="js/SaveTemplate"
 					/>
 				</span>
 

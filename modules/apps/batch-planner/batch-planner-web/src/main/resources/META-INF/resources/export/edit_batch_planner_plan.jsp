@@ -30,7 +30,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 			PortletURLBuilder.createActionURL(
 				renderResponse
 			).setActionName(
-				"/batch_planner/edit_batch_planner_plan"
+				"/batch_planner/edit_export_batch_planner_plan"
 			).setCMD(
 				Constants.EXPORT
 			).setRedirect(
@@ -165,6 +165,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 
 				<span>
 					<react:component
+						module="js/SaveTemplate"
 						props='<%=
 							HashMapBuilder.<String, Object>put(
 								"formSaveAsTemplateDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
@@ -177,11 +178,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 								).setParameter(
 									"template", true
 								).setResourceID(
-									"/batch_planner/edit_batch_planner_plan"
+									"/batch_planner/edit_export_batch_planner_plan"
 								).buildString()
 							).build()
 						%>'
-						module="js/SaveTemplate"
 					/>
 				</span>
 

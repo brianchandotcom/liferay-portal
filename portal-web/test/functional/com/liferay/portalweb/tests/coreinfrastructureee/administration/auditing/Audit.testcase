@@ -56,7 +56,7 @@ definition {
 	@description = "LPS-133646 and LPS-133653 TC-2: Asserting that Console output the same X-Request-ID as inputted X-Request-ID."
 	@priority = "5"
 	test AssertInvalidXRequestId {
-		property test.name.skip.portal.instance = "Audit#AssertXRequestId";
+		property test.name.skip.portal.instance = "Audit#AssertInvalidXRequestId";
 
 		var companyId = JSONCompany.getCompanyId();
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
@@ -84,17 +84,17 @@ definition {
 		var invalidXRequestId = "invalidXRID";
 
 		var curl =
-		'''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${inValidXRequestId}' ''';
+		'''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${invalidXRequestId}' ''';
 
 		var userId = JSONCurlUtil.get("${curl}");
 
-		AssertConsoleTextNotPresent(value1 = "${inValidXRequestId}");
+		AssertConsoleTextNotPresent(value1 = "${invalidXRequestId}");
 	}
 
 	@description = "LPS-133646 and LPS-133653 TC-3: Asserting that Console output a different X-Request-ID if an invalid X-Request-ID was inputted."
 	@priority = "5"
 	test AssertValidXRequestId {
-		property test.name.skip.portal.instance = "Audit#AssertXRequestId";
+		property test.name.skip.portal.instance = "Audit#AssertValidXRequestId";
 
 		var companyId = JSONCompany.getCompanyId();
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");

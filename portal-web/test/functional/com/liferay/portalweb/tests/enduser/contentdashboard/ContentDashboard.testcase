@@ -1830,10 +1830,12 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can filter by Status: Scheduled"
+	@description = "Validate if the user can filter by Status: Scheduled. And for LPS-86164 - Assert whether selecting time ends in JS error."
 	@priority = "5"
 	test FilterByStatusScheduled {
 		property portal.acceptance = "true";
+		property test.assert.javascript.errors = "true";
+		property test.assert.warning.exceptions = "true";
 
 		task ("Create a Web Content") {
 			JSONWebcontent.addWebContent(
@@ -1848,6 +1850,20 @@ definition {
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title Scheduled");
 
 			WebContent.editDisplayDate(displayDate = "01/01/2100");
+
+			Click(locator1 = "TextInput#DISPLAY_DATE_TIME");
+
+			AssertVisible(locator1 = "TextInput#DISPLAY_DATE_TIME_TIMEPICKER");
+
+			Click(locator1 = "TextInput#DISPLAY_DATE");
+
+			AssertNotVisible(locator1 = "TextInput#DISPLAY_DATE_TIME_TIMEPICKER");
+
+			Click(locator1 = "TextInput#DISPLAY_DATE_TIME");
+
+			Click(locator1 = "TextInput#DISPLAY_DATE_TIME_TIMEPICKER");
+
+			AssertNotVisible(locator1 = "TextInput#DISPLAY_DATE_TIME_TIMEPICKER");
 
 			PortletEntry.publish();
 		}

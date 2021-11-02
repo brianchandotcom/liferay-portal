@@ -398,7 +398,7 @@ public interface ProductOptionValueResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/productOptions/{id}/productOptionValues/batch");
+						"/o/headless-commerce-admin-catalog/v1.0/productOptions/productOptionValues/batch");
 
 			httpInvoker.path("id", id);
 

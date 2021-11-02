@@ -475,7 +475,7 @@ public interface WarehouseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}/batch");
+						"/o/headless-commerce-admin-site-setting/v1.0/warehouse/batch");
 
 			httpInvoker.path("id", id);
 
@@ -703,7 +703,7 @@ public interface WarehouseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}/batch");
+						"/o/headless-commerce-admin-site-setting/v1.0/warehouse/batch");
 
 			httpInvoker.path("id", id);
 

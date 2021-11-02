@@ -482,7 +482,7 @@ public interface MeasurementUnitResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}/batch");
+						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/batch");
 
 			httpInvoker.path("id", id);
 
@@ -710,7 +710,7 @@ public interface MeasurementUnitResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}/batch");
+						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/batch");
 
 			httpInvoker.path("id", id);
 

@@ -865,7 +865,7 @@ public interface AccountMemberResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountMembers/batch");
+						"/o/headless-commerce-admin-account/v1.0/accounts/accountMembers/batch");
 
 			httpInvoker.path("id", id);
 

@@ -566,7 +566,7 @@ public interface CatalogResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/catalog/{id}/batch");
+						"/o/headless-commerce-admin-catalog/v1.0/catalog/batch");
 
 			httpInvoker.path("id", id);
 

@@ -105,7 +105,7 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v1.0/discountAccountGroups/{id}/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v1.0/discountAccountGroups/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -128,7 +128,7 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	)
 	@javax.ws.rs.Consumes("application/json")
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/discountAccountGroups/{id}/batch")
+	@javax.ws.rs.Path("/discountAccountGroups/batch")
 	@javax.ws.rs.Produces("application/json")
 	@Override
 	public Response deleteDiscountAccountGroupBatch(
@@ -322,7 +322,7 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v1.0/discounts/{id}/discountAccountGroups/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v1.0/discounts/discountAccountGroups/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -344,7 +344,7 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 		}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/discounts/{id}/discountAccountGroups/batch")
+	@javax.ws.rs.Path("/discounts/discountAccountGroups/batch")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override

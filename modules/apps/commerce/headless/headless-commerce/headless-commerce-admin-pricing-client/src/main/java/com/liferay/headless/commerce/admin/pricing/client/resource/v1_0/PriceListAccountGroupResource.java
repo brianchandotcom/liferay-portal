@@ -314,7 +314,7 @@ public interface PriceListAccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v1.0/priceListAccountGroups/{id}/batch");
+						"/o/headless-commerce-admin-pricing/v1.0/priceListAccountGroups/batch");
 
 			httpInvoker.path("id", id);
 
@@ -755,7 +755,7 @@ public interface PriceListAccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v1.0/priceLists/{id}/priceListAccountGroups/batch");
+						"/o/headless-commerce-admin-pricing/v1.0/priceLists/priceListAccountGroups/batch");
 
 			httpInvoker.path("id", id);
 

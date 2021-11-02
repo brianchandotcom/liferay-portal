@@ -306,7 +306,7 @@ public interface DiscountProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v1.0/discountProducts/{id}/batch");
+						"/o/headless-commerce-admin-pricing/v1.0/discountProducts/batch");
 
 			httpInvoker.path("id", id);
 
@@ -742,7 +742,7 @@ public interface DiscountProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v1.0/discounts/{id}/discountProducts/batch");
+						"/o/headless-commerce-admin-pricing/v1.0/discounts/discountProducts/batch");
 
 			httpInvoker.path("id", id);
 

@@ -805,7 +805,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-account/v1.0/accountGroups/{id}/batch");
+						"/o/headless-commerce-admin-account/v1.0/accountGroups/batch");
 
 			httpInvoker.path("id", id);
 

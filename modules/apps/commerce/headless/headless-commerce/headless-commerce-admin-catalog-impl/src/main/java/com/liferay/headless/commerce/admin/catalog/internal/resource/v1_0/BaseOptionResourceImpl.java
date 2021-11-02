@@ -313,7 +313,7 @@ public abstract class BaseOptionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/options/{id}/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/options/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -332,7 +332,7 @@ public abstract class BaseOptionResourceImpl
 	)
 	@javax.ws.rs.Consumes("application/json")
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/options/{id}/batch")
+	@javax.ws.rs.Path("/options/batch")
 	@javax.ws.rs.Produces("application/json")
 	@Override
 	public Response deleteOptionBatch(

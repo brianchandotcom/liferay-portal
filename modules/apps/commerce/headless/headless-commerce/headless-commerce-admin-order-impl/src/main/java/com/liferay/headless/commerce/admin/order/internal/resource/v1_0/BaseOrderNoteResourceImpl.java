@@ -203,7 +203,7 @@ public abstract class BaseOrderNoteResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderNotes/{id}/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderNotes/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -222,7 +222,7 @@ public abstract class BaseOrderNoteResourceImpl
 	)
 	@javax.ws.rs.Consumes("application/json")
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/orderNotes/{id}/batch")
+	@javax.ws.rs.Path("/orderNotes/batch")
 	@javax.ws.rs.Produces("application/json")
 	@Override
 	public Response deleteOrderNoteBatch(
@@ -460,7 +460,7 @@ public abstract class BaseOrderNoteResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/orderNotes/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/orderNotes/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -478,7 +478,7 @@ public abstract class BaseOrderNoteResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderNote")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/orders/{id}/orderNotes/batch")
+	@javax.ws.rs.Path("/orders/orderNotes/batch")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override

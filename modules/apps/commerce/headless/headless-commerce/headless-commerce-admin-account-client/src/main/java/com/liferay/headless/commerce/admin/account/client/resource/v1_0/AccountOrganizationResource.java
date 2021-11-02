@@ -786,7 +786,7 @@ public interface AccountOrganizationResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountOrganizations/batch");
+						"/o/headless-commerce-admin-account/v1.0/accounts/accountOrganizations/batch");
 
 			httpInvoker.path("id", id);
 

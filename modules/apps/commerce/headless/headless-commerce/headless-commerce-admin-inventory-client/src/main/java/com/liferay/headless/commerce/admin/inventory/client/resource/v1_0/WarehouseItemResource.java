@@ -672,7 +672,7 @@ public interface WarehouseItemResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-inventory/v1.0/warehouseItems/{id}/batch");
+						"/o/headless-commerce-admin-inventory/v1.0/warehouseItems/batch");
 
 			httpInvoker.path("id", id);
 

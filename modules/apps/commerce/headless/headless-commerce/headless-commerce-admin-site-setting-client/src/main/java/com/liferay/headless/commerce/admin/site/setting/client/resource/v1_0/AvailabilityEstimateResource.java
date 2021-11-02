@@ -306,7 +306,7 @@ public interface AvailabilityEstimateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}/batch");
+						"/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/batch");
 
 			httpInvoker.path("id", id);
 
@@ -541,7 +541,7 @@ public interface AvailabilityEstimateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}/batch");
+						"/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/batch");
 
 			httpInvoker.path("id", id);
 

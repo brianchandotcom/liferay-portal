@@ -313,7 +313,7 @@ public interface DiscountAccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v1.0/discountAccountGroups/{id}/batch");
+						"/o/headless-commerce-admin-pricing/v1.0/discountAccountGroups/batch");
 
 			httpInvoker.path("id", id);
 
@@ -754,7 +754,7 @@ public interface DiscountAccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v1.0/discounts/{id}/discountAccountGroups/batch");
+						"/o/headless-commerce-admin-pricing/v1.0/discounts/discountAccountGroups/batch");
 
 			httpInvoker.path("id", id);
 

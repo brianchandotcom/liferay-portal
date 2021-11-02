@@ -803,7 +803,7 @@ public interface OptionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/options/{id}/batch");
+						"/o/headless-commerce-admin-catalog/v1.0/options/batch");
 
 			httpInvoker.path("id", id);
 

@@ -554,7 +554,7 @@ public interface SpecificationResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/specifications/{id}/batch");
+						"/o/headless-commerce-admin-catalog/v1.0/specifications/batch");
 
 			httpInvoker.path("id", id);
 

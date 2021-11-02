@@ -474,7 +474,7 @@ public interface TaxCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}/batch");
+						"/o/headless-commerce-admin-site-setting/v1.0/taxCategory/batch");
 
 			httpInvoker.path("id", id);
 
@@ -702,7 +702,7 @@ public interface TaxCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}/batch");
+						"/o/headless-commerce-admin-site-setting/v1.0/taxCategory/batch");
 
 			httpInvoker.path("id", id);
 

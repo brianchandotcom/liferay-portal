@@ -799,7 +799,7 @@ public interface PriceListResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v1.0/priceLists/{id}/batch");
+						"/o/headless-commerce-admin-pricing/v1.0/priceLists/batch");
 
 			httpInvoker.path("id", id);
 

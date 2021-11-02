@@ -569,7 +569,7 @@ public interface OrderItemResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-order/v1.0/orderItems/{id}/batch");
+						"/o/headless-commerce-admin-order/v1.0/orderItems/batch");
 
 			httpInvoker.path("id", id);
 
@@ -1146,7 +1146,7 @@ public interface OrderItemResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-order/v1.0/orders/{id}/orderItems/batch");
+						"/o/headless-commerce-admin-order/v1.0/orders/orderItems/batch");
 
 			httpInvoker.path("id", id);
 

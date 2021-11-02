@@ -609,7 +609,7 @@ public interface RelatedProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/relatedProducts/batch");
+						"/o/headless-commerce-admin-catalog/v1.0/products/relatedProducts/batch");
 
 			httpInvoker.path("id", id);
 
@@ -755,7 +755,7 @@ public interface RelatedProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/relatedProducts/{id}/batch");
+						"/o/headless-commerce-admin-catalog/v1.0/relatedProducts/batch");
 
 			httpInvoker.path("id", id);
 

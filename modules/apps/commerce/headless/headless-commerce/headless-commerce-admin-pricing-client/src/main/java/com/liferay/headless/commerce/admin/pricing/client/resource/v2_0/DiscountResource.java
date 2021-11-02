@@ -839,7 +839,7 @@ public interface DiscountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/batch");
+						"/o/headless-commerce-admin-pricing/v2.0/discounts/batch");
 
 			httpInvoker.path("id", id);
 

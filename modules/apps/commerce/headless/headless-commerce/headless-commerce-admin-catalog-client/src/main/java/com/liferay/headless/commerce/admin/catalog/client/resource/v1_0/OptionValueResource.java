@@ -573,7 +573,7 @@ public interface OptionValueResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/optionValues/{id}/batch");
+						"/o/headless-commerce-admin-catalog/v1.0/optionValues/batch");
 
 			httpInvoker.path("id", id);
 
@@ -1175,7 +1175,7 @@ public interface OptionValueResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/options/{id}/optionValues/batch");
+						"/o/headless-commerce-admin-catalog/v1.0/options/optionValues/batch");
 
 			httpInvoker.path("id", id);
 

@@ -915,7 +915,7 @@ public interface ProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/batch");
+						"/o/headless-commerce-admin-catalog/v1.0/products/batch");
 
 			httpInvoker.path("id", id);
 

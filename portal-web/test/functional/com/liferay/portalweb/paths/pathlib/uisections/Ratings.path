@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>BOTH_THUMBS</td>
+	<td>//div[contains(@class,'ratings-thumbs')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIKE</td>
 	<td>//div[contains(@class,'ratings-like')]//button[contains(@title,'Like This') or contains(@data-title,'Like This')]</td>
 	<td></td>

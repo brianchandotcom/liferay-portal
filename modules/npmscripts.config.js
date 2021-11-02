@@ -29,6 +29,9 @@ module.exports = {
 		bundler: {
 			config: {
 				imports: {
+					'@liferay/data-set-web': {
+						'/': '*',
+					},
 					'@liferay/document-library-preview-css': {
 						'/': '*',
 					},

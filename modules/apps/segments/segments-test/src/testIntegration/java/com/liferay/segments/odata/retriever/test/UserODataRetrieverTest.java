@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
@@ -32,17 +34,19 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ContactLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -62,10 +66,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -87,6 +92,21 @@ public class UserODataRetrieverTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+
+		_companyUser = UserTestUtil.getAdminUser(_company.getCompanyId());
+
+		_companyGuestGroup = _groupLocalService.getGroup(
+			_company.getCompanyId(), GroupConstants.GUEST);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_group1 = _addGroup();
@@ -101,10 +121,13 @@ public class UserODataRetrieverTest {
 		_user2 = _addUser(firstName, _group1);
 
 		Organization parentOrganization =
-			OrganizationTestUtil.addOrganization();
+			_organizationLocalService.addOrganization(
+				_companyUser.getUserId(),
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomBoolean());
 
-		Organization organization = OrganizationTestUtil.addOrganization(
-			parentOrganization.getOrganizationId(),
+		Organization organization = _organizationLocalService.addOrganization(
+			_companyUser.getUserId(), parentOrganization.getOrganizationId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean());
 
 		_organizations.add(organization);
@@ -145,7 +168,7 @@ public class UserODataRetrieverTest {
 		_assetTags.add(tag);
 
 		_userLocalService.updateAsset(
-			TestPropsValues.getUserId(), _user1, new long[0],
+			_companyUser.getUserId(), _user1, new long[0],
 			new String[] {tag.getName()});
 
 		String filterString = String.format(
@@ -829,7 +852,10 @@ public class UserODataRetrieverTest {
 		_user1 = _addUser(firstName, _group1);
 		_user2 = _addUser(firstName, _group1);
 
-		Organization organization = OrganizationTestUtil.addOrganization();
+		Organization organization = _organizationLocalService.addOrganization(
+			_companyUser.getUserId(),
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean());
 
 		_organizations.add(organization);
 
@@ -957,7 +983,8 @@ public class UserODataRetrieverTest {
 		_user1 = _addUser(firstName, _group1);
 		_user2 = _addUser(firstName, _group1);
 
-		_userGroup = UserGroupTestUtil.addUserGroup();
+		_userGroup = UserGroupTestUtil.addUserGroup(
+			_companyGuestGroup.getGroupId());
 
 		_userLocalService.addUserGroupUser(_userGroup.getUserGroupId(), _user1);
 
@@ -1037,12 +1064,14 @@ public class UserODataRetrieverTest {
 	}
 
 	private Group _addGroup() throws Exception {
-		return GroupTestUtil.addGroup();
+		return GroupTestUtil.addGroup(
+			_company.getCompanyId(), _companyUser.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 	}
 
 	private Team _addTeam() throws Exception {
 		return _teamLocalService.addTeam(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			_companyUser.getUserId(), _companyGuestGroup.getGroupId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
 	}
@@ -1057,8 +1086,12 @@ public class UserODataRetrieverTest {
 
 	private User _addUser(String firstName, long... groupIds) throws Exception {
 		return UserTestUtil.addUser(
-			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
-			RandomTestUtil.randomString(), groupIds);
+			_company.getCompanyId(), _companyUser.getUserId(),
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), firstName, RandomTestUtil.randomString(),
+			groupIds, ServiceContextTestUtil.getServiceContext());
 	}
 
 	private String _toISOFormat(Instant instant) {
@@ -1081,11 +1114,19 @@ public class UserODataRetrieverTest {
 		_userLocalService.updateUser(_user2);
 	}
 
-	@DeleteAfterTestRun
-	private final List<AssetTag> _assetTags = new ArrayList<>();
+	private static Company _company;
+	private static Group _companyGuestGroup;
 
 	@Inject
-	private CompanyLocalService _companyLocalService;
+	private static CompanyLocalService _companyLocalService;
+
+	private static User _companyUser;
+
+	@Inject
+	private static GroupLocalService _groupLocalService;
+
+	@DeleteAfterTestRun
+	private final List<AssetTag> _assetTags = new ArrayList<>();
 
 	@Inject
 	private ContactLocalService _contactLocalService;

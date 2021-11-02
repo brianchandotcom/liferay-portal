@@ -214,9 +214,9 @@ public class EditStyleBookEntryDisplayContext {
 			Constants.PREVIEW);
 
 		return JSONUtil.put(
-			"layoutName", layout.getName(_themeDisplay.getLocale())
+			"name", layout.getName(_themeDisplay.getLocale())
 		).put(
-			"layoutURL", layoutURL
+			"url", layoutURL
 		);
 	}
 

@@ -26,6 +26,7 @@ import {useCloseProductMenu} from './useCloseProductMenu';
 
 const StyleBookEditor = ({
 	frontendTokensValues: initialFrontendTokensValues,
+	initialPreviewLayout,
 }) => {
 	useCloseProductMenu();
 
@@ -34,7 +35,9 @@ const StyleBookEditor = ({
 	);
 	const [draftStatus, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
 	const [previewLayout, setPreviewLayout] = useState(
-		getMostRecentLayout(config.previewOptions)
+		config.templatesPreviewEnabled
+			? getMostRecentLayout(config.previewOptions)
+			: initialPreviewLayout
 	);
 	const [loading, setLoading] = useState(true);
 
@@ -91,6 +94,7 @@ export default function ({
 	defaultUserId,
 	frontendTokenDefinition = [],
 	frontendTokensValues = {},
+	initialPreviewLayout,
 	layoutsTreeURL,
 	namespace,
 	previewOptions,
@@ -104,6 +108,7 @@ export default function ({
 	initializeConfig({
 		defaultUserId,
 		frontendTokenDefinition,
+		initialPreviewLayout,
 		layoutsTreeURL,
 		namespace,
 		previewOptions,
@@ -115,7 +120,12 @@ export default function ({
 		themeName,
 	});
 
-	return <StyleBookEditor frontendTokensValues={frontendTokensValues} />;
+	return (
+		<StyleBookEditor
+			frontendTokensValues={frontendTokensValues}
+			initialPreviewLayout={initialPreviewLayout}
+		/>
+	);
 }
 
 function saveDraft(frontendTokensValues, styleBookEntryId) {

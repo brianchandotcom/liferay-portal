@@ -508,41 +508,9 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Site Name");
 
-		Portlet.gotoPortletOptions(
-			portletName = "Asset Publisher",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Navigator.gotoNavTab(navTab = "Asset Selection");
-
-		Panel.expandPanel(panel = "Asset Selection");
-
-		Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
-
-		Panel.expandPanel(panel = "Select Collection");
-
-		Button.clickSelect();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#ASSET_LIST_DIALOG");
-
-		AssertClick(
-			key_breadcrumbName = "Sites and Libraries",
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-			value1 = "Sites and Libraries");
-
-		AssertClick(
-			key_groupTab = "Asset Library",
-			locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-			value1 = "Asset Library");
-
-		Click(
-			key_card = "Test Depot Name",
-			locator1 = "Card#CARD_TITLE_LINK");
-
-		AssertTextEquals(
-			locator1 = "Message#INFO",
-			value1 = "Info:This application is not supported for Asset Libraries. Please, go back to scope selection.");
+		AssetPublisherPortlet.selectAssetList(
+			collectionsDisable = "true",
+			depotName = "Test Depot Name");
 	}
 
 	@description = "This ensures that the image is displayed by AP through Collections in a depot."
@@ -614,14 +582,14 @@ definition {
 	@refactorneeded
 	@uitest
 	test DisplayWebContentWithTagInAP {
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithTagCP(
-			tagNameList = "tag1",
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
+		for (var i : list "1,2") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "tag${i}",
+				content = "Web Content Content",
+				groupName = "Test Depot Name",
+				site = "false",
+				title = "Web Content Title${i}");
+		}
 
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
@@ -673,7 +641,8 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Site Name");
 
-		AssetPublisherPortlet.viewAssetPG(assetTitle = "Web Content Title");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Web Content Title1");
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Web Content Title2");
 	}
 
 	@description = "This ensures that images are excluded with the dynamic selection that does not contain the keyword "Image" in a depot."

@@ -1011,7 +1011,14 @@ definition {
 				key_card = "${depotName}",
 				locator1 = "Card#CARD_TITLE");
 
-			Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE_CARD");
+			if (isSet(collectionsDisable)) {
+				AssertTextEquals(
+					locator1 = "Message#INFO",
+					value1 = "Info:This application is not supported for Asset Libraries. Please, go back to scope selection.");
+			}
+			else {
+				Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE_CARD");
+			}
 		}
 		else {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -1019,17 +1026,19 @@ definition {
 			Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 		}
 
-		SelectFrameTop();
+		if (isSet(assetListName)) {
+			SelectFrameTop();
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		AssertTextEquals(
-			locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST_TITLE",
-			value1 = "${assetListName}");
+			AssertTextEquals(
+				locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST_TITLE",
+				value1 = "${assetListName}");
 
-		PortletEntry.save();
+			PortletEntry.save();
 
-		SelectFrameTop();
+			SelectFrameTop();
+		}
 	}
 
 	macro viewAssetDetailsPG {

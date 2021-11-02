@@ -50,7 +50,7 @@ public class AccountEntryUserRelModelListener
 	public void onAfterCreate(AccountEntryUserRel accountEntryUserRel)
 		throws ModelListenerException {
 
-		_updateDefaultAccountEntry(accountEntryUserRel.getAccountUserId());
+		_updateDefaultAccountEntry(accountEntryUserRel);
 
 		_reindexAccountEntry(accountEntryUserRel.getAccountEntryId());
 		_reindexUser(accountEntryUserRel.getAccountUserId());
@@ -75,7 +75,7 @@ public class AccountEntryUserRelModelListener
 				new long[] {accountEntry.getAccountEntryGroupId()});
 		}
 
-		_updateDefaultAccountEntry(accountEntryUserRel.getAccountUserId());
+		_updateDefaultAccountEntry(accountEntryUserRel);
 
 		_reindexAccountEntry(accountEntryUserRel.getAccountEntryId());
 		_reindexUser(accountEntryUserRel.getAccountUserId());
@@ -139,31 +139,39 @@ public class AccountEntryUserRelModelListener
 		}
 	}
 
-	private void _updateDefaultAccountEntry(long accountUserId)
+	private void _updateDefaultAccountEntry(
+			AccountEntryUserRel accountEntryUserRel)
 		throws ModelListenerException {
+
+		long accountUserId = accountEntryUserRel.getAccountUserId();
 
 		List<AccountEntryUserRel> accountEntryUserRels =
 			_accountEntryUserRelLocalService.
 				getAccountEntryUserRelsByAccountUserId(accountUserId);
 
 		if (ListUtil.isEmpty(accountEntryUserRels)) {
-			try {
-				_accountEntryUserRelLocalService.addAccountEntryUserRel(
-					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, accountUserId);
-			}
-			catch (PortalException portalException) {
-				throw new ModelListenerException(portalException);
+			if (accountEntryUserRel.getAccountEntryId() !=
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) {
+
+				try {
+					_accountEntryUserRelLocalService.addAccountEntryUserRel(
+						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+						accountUserId);
+				}
+				catch (PortalException portalException) {
+					throw new ModelListenerException(portalException);
+				}
 			}
 		}
 		else if (accountEntryUserRels.size() > 1) {
-			for (AccountEntryUserRel accountEntryUserRel :
+			for (AccountEntryUserRel curAccountEntryUserRel :
 					accountEntryUserRels) {
 
-				if (accountEntryUserRel.getAccountEntryId() ==
+				if (curAccountEntryUserRel.getAccountEntryId() ==
 						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) {
 
 					_accountEntryUserRelLocalService.deleteAccountEntryUserRel(
-						accountEntryUserRel);
+						curAccountEntryUserRel);
 				}
 			}
 		}

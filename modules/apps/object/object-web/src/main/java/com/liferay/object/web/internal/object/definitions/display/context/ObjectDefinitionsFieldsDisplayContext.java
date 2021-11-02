@@ -86,7 +86,9 @@ public class ObjectDefinitionsFieldsDisplayContext {
 
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (objectDefinition.isSystem() || !_hasAddObjectFieldPermission()) {
+		if (objectDefinition.isSystem() ||
+			!hasUpdateObjectDefinitionPermission()) {
+
 			return creationMenu;
 		}
 
@@ -121,7 +123,9 @@ public class ObjectDefinitionsFieldsDisplayContext {
 			_objectRequestHelper.getLiferayPortletResponse());
 	}
 
-	private boolean _hasAddObjectFieldPermission() throws PortalException {
+	public boolean hasUpdateObjectDefinitionPermission()
+		throws PortalException {
+
 		return _objectDefinitionModelResourcePermission.contains(
 			_objectRequestHelper.getPermissionChecker(),
 			getObjectDefinitionId(), ActionKeys.UPDATE);

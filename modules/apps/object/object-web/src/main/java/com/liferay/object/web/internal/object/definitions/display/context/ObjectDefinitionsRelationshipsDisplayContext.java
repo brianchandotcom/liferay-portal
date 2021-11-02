@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -83,7 +84,7 @@ public class ObjectDefinitionsRelationshipsDisplayContext {
 	public CreationMenu getCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (!_hasAddObjectRelationshipPermission()) {
+		if (!hasUpdateObjectDefinitionPermission()) {
 			return creationMenu;
 		}
 
@@ -119,7 +120,9 @@ public class ObjectDefinitionsRelationshipsDisplayContext {
 			_objectRequestHelper.getLiferayPortletResponse());
 	}
 
-	private boolean _hasAddObjectRelationshipPermission() throws Exception {
+	public boolean hasUpdateObjectDefinitionPermission()
+		throws PortalException {
+
 		return _objectDefinitionModelResourcePermission.contains(
 			_objectRequestHelper.getPermissionChecker(),
 			getObjectDefinitionId(), ActionKeys.UPDATE);

@@ -83,7 +83,7 @@ public class ObjectDefinitionsLayoutsDisplayContext {
 	public CreationMenu getCreationMenu() throws PortalException {
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (!_hasAddObjectLayoutPermission()) {
+		if (!hasUpdateObjectDefinitionPermission()) {
 			return creationMenu;
 		}
 
@@ -119,7 +119,9 @@ public class ObjectDefinitionsLayoutsDisplayContext {
 			_objectRequestHelper.getLiferayPortletResponse());
 	}
 
-	private boolean _hasAddObjectLayoutPermission() throws PortalException {
+	public boolean hasUpdateObjectDefinitionPermission()
+		throws PortalException {
+
 		return _objectDefinitionModelResourcePermission.contains(
 			_objectRequestHelper.getPermissionChecker(),
 			getObjectDefinitionId(), ActionKeys.UPDATE);

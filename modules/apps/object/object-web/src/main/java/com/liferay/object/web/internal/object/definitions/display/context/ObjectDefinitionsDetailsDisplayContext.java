@@ -23,6 +23,8 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -119,6 +121,16 @@ public class ObjectDefinitionsDetailsDisplayContext {
 		return portletResourcePermission.contains(
 			_objectRequestHelper.getPermissionChecker(), null,
 			ObjectActionKeys.PUBLISH_OBJECT_DEFINITION);
+	}
+
+	public boolean hasUpdateObjectDefinitionPermission()
+		throws PortalException {
+
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
+		return _objectDefinitionModelResourcePermission.contains(
+			_objectRequestHelper.getPermissionChecker(),
+			objectDefinition.getObjectDefinitionId(), ActionKeys.UPDATE);
 	}
 
 	private final ModelResourcePermission<ObjectDefinition>

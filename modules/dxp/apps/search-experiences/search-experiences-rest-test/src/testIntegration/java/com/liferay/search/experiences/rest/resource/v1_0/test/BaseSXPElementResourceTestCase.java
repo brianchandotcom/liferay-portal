@@ -518,6 +518,14 @@ public abstract class BaseSXPElementResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description_i18n", additionalAssertFieldName)) {
+				if (sxpElement.getDescription_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"elementDefinition", additionalAssertFieldName)) {
 
@@ -530,6 +538,14 @@ public abstract class BaseSXPElementResourceTestCase {
 
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (sxpElement.getTitle() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("title_i18n", additionalAssertFieldName)) {
+				if (sxpElement.getTitle_i18n() == null) {
 					valid = false;
 				}
 
@@ -638,6 +654,17 @@ public abstract class BaseSXPElementResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description_i18n", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)sxpElement1.getDescription_i18n(),
+						(Map)sxpElement2.getDescription_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"elementDefinition", additionalAssertFieldName)) {
 
@@ -664,6 +691,17 @@ public abstract class BaseSXPElementResourceTestCase {
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sxpElement1.getTitle(), sxpElement2.getTitle())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("title_i18n", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)sxpElement1.getTitle_i18n(),
+						(Map)sxpElement2.getTitle_i18n())) {
 
 					return false;
 				}
@@ -776,6 +814,11 @@ public abstract class BaseSXPElementResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("description_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("elementDefinition")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -792,6 +835,11 @@ public abstract class BaseSXPElementResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("title_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(

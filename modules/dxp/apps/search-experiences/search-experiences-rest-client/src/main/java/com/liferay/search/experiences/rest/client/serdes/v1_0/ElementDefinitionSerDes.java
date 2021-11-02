@@ -55,6 +55,34 @@ public class ElementDefinitionSerDes {
 
 		sb.append("{");
 
+		if (elementDefinition.getCategory() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"category\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(elementDefinition.getCategory()));
+
+			sb.append("\"");
+		}
+
+		if (elementDefinition.getIcon() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"icon\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(elementDefinition.getIcon()));
+
+			sb.append("\"");
+		}
+
 		if (elementDefinition.getSxpBlueprint() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -96,6 +124,21 @@ public class ElementDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (elementDefinition.getCategory() == null) {
+			map.put("category", null);
+		}
+		else {
+			map.put(
+				"category", String.valueOf(elementDefinition.getCategory()));
+		}
+
+		if (elementDefinition.getIcon() == null) {
+			map.put("icon", null);
+		}
+		else {
+			map.put("icon", String.valueOf(elementDefinition.getIcon()));
+		}
+
 		if (elementDefinition.getSxpBlueprint() == null) {
 			map.put("sxpBlueprint", null);
 		}
@@ -135,7 +178,17 @@ public class ElementDefinitionSerDes {
 			ElementDefinition elementDefinition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "sxpBlueprint")) {
+			if (Objects.equals(jsonParserFieldName, "category")) {
+				if (jsonParserFieldValue != null) {
+					elementDefinition.setCategory((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "icon")) {
+				if (jsonParserFieldValue != null) {
+					elementDefinition.setIcon((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "sxpBlueprint")) {
 				if (jsonParserFieldValue != null) {
 					elementDefinition.setSxpBlueprint(
 						SXPBlueprintSerDes.toDTO((String)jsonParserFieldValue));

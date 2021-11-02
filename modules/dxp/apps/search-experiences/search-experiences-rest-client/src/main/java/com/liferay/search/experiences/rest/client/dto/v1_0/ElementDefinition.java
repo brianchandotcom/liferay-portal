@@ -34,6 +34,46 @@ public class ElementDefinition implements Cloneable, Serializable {
 		return ElementDefinitionSerDes.toDTO(json);
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public void setCategory(
+		UnsafeSupplier<String, Exception> categoryUnsafeSupplier) {
+
+		try {
+			category = categoryUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String category;
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public void setIcon(UnsafeSupplier<String, Exception> iconUnsafeSupplier) {
+		try {
+			icon = iconUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String icon;
+
 	public SXPBlueprint getSxpBlueprint() {
 		return sxpBlueprint;
 	}

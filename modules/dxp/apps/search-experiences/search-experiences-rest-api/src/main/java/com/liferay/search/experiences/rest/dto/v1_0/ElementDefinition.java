@@ -58,6 +58,60 @@ public class ElementDefinition implements Serializable {
 	}
 
 	@Schema
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	@JsonIgnore
+	public void setCategory(
+		UnsafeSupplier<String, Exception> categoryUnsafeSupplier) {
+
+		try {
+			category = categoryUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String category;
+
+	@Schema
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	@JsonIgnore
+	public void setIcon(UnsafeSupplier<String, Exception> iconUnsafeSupplier) {
+		try {
+			icon = iconUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String icon;
+
+	@Schema
 	@Valid
 	public SXPBlueprint getSxpBlueprint() {
 		return sxpBlueprint;
@@ -142,6 +196,34 @@ public class ElementDefinition implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (category != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"category\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(category));
+
+			sb.append("\"");
+		}
+
+		if (icon != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"icon\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(icon));
+
+			sb.append("\"");
+		}
 
 		if (sxpBlueprint != null) {
 			if (sb.length() > 1) {

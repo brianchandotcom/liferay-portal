@@ -67,6 +67,16 @@ public class SXPElementSerDes {
 			sb.append("\"");
 		}
 
+		if (sxpElement.getDescription_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description_i18n\": ");
+
+			sb.append(_toJSON(sxpElement.getDescription_i18n()));
+		}
+
 		if (sxpElement.getElementDefinition() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -101,6 +111,16 @@ public class SXPElementSerDes {
 			sb.append("\"");
 		}
 
+		if (sxpElement.getTitle_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"title_i18n\": ");
+
+			sb.append(_toJSON(sxpElement.getTitle_i18n()));
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -126,6 +146,15 @@ public class SXPElementSerDes {
 			map.put("description", String.valueOf(sxpElement.getDescription()));
 		}
 
+		if (sxpElement.getDescription_i18n() == null) {
+			map.put("description_i18n", null);
+		}
+		else {
+			map.put(
+				"description_i18n",
+				String.valueOf(sxpElement.getDescription_i18n()));
+		}
+
 		if (sxpElement.getElementDefinition() == null) {
 			map.put("elementDefinition", null);
 		}
@@ -147,6 +176,13 @@ public class SXPElementSerDes {
 		}
 		else {
 			map.put("title", String.valueOf(sxpElement.getTitle()));
+		}
+
+		if (sxpElement.getTitle_i18n() == null) {
+			map.put("title_i18n", null);
+		}
+		else {
+			map.put("title_i18n", String.valueOf(sxpElement.getTitle_i18n()));
 		}
 
 		return map;
@@ -175,6 +211,13 @@ public class SXPElementSerDes {
 					sxpElement.setDescription((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
+				if (jsonParserFieldValue != null) {
+					sxpElement.setDescription_i18n(
+						(Map)SXPElementSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "elementDefinition")) {
 				if (jsonParserFieldValue != null) {
 					sxpElement.setElementDefinition(
@@ -191,6 +234,13 @@ public class SXPElementSerDes {
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
 					sxpElement.setTitle((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title_i18n")) {
+				if (jsonParserFieldValue != null) {
+					sxpElement.setTitle_i18n(
+						(Map)SXPElementSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

@@ -52,7 +52,7 @@ public class DLFileEntryKeywordQueryContributor
 			keywordQueryContributorHelper.getSearchContext();
 
 		if (Validator.isNull(keywords)) {
-			queryHelper.addSearchTerm(
+			queryHelper.addSearchLocalizedTerm(
 				booleanQuery, searchContext, Field.DESCRIPTION, false);
 			queryHelper.addSearchTerm(
 				booleanQuery, searchContext, Field.USER_NAME, false);
@@ -66,7 +66,7 @@ public class DLFileEntryKeywordQueryContributor
 			booleanQuery, searchContext, "fileEntryTypeId", false);
 		queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, Field.CONTENT, false);
-		queryHelper.addSearchTerm(
+		queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, Field.TITLE, false);
 
 		if (Validator.isNotNull(keywords)) {

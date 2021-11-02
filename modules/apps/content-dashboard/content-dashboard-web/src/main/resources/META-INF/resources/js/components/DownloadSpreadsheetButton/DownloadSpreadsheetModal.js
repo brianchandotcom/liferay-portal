@@ -67,7 +67,10 @@ const DownloadSpreadsheetModal = ({
 									)}{' '}
 									{secondaryButtonText}
 								</ClayButton>
-								<ClayButton onClick={onClose}>
+								<ClayButton
+									displayType="info"
+									onClick={onClose}
+								>
 									{Liferay.Language.get('wait')}
 								</ClayButton>
 							</ClayButton.Group>

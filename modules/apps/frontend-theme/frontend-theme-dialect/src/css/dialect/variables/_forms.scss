@@ -75,10 +75,6 @@ $form-text-line-height: var(--form-text-line-height);
 
 // The following variables must be reset because they cause errors with CSS custom properties as values.
 
-$input-height-inner: 1;
-$input-height-inner-half: 1;
-$input-height-inner-quarter: 1;
-
 $form-control-tag-group-padding-y: calc(
 	(
 			#{$input-height} - (2 * #{$input-border-width}) - map-get(
@@ -88,14 +84,6 @@ $form-control-tag-group-padding-y: calc(
 		) / 2
 );
 
-$form-control-inset-min-height: 1.5rem;
-
-$form-control-inset-margin-y: calc(
-	(
-			#{$input-height} - (2 * #{$input-border-width}) - (
-					#{$form-control-tag-group-padding-y} * 2
-				) - #{$form-control-inset-min-height}
-		) / 2
+$form-group-item-label-spacer: calc(
+	(#{$input-label-font-size} * #{$line-height-base}) + #{$input-label-margin-bottom}
 );
-
-$form-group-item-label-spacer: 0.3125rem;

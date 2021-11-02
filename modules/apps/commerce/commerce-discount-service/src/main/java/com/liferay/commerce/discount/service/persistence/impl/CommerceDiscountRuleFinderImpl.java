@@ -69,7 +69,7 @@ public class CommerceDiscountRuleFinderImpl
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, CommerceDiscount.class.getName(),
-					"CommerceDiscount.commerceDiscountId", null, null,
+					"CommerceDiscountRule.commerceDiscountId", null, null,
 					new long[] {0}, null);
 			}
 
@@ -146,7 +146,7 @@ public class CommerceDiscountRuleFinderImpl
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, CommerceDiscount.class.getName(),
-					"CommerceDiscount.commerceDiscountId", null, null,
+					"CommerceDiscountRule.commerceDiscountId", null, null,
 					new long[] {0}, null);
 			}
 

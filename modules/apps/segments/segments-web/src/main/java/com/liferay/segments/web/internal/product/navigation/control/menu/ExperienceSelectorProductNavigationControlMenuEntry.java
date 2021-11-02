@@ -250,13 +250,28 @@ public class ExperienceSelectorProductNavigationControlMenuEntry
 				return segmentsExperiencesDropdownItems;
 			}
 
-			segmentsExperiencesDropdownItems.add(
-				_getDefaultSegmentsExperience(httpServletRequest, locale));
+			boolean addedDefault = false;
 
 			for (SegmentsExperience segmentsExperience : segmentsExperiences) {
+				if ((segmentsExperience.getPriority() <
+						SegmentsExperienceConstants.PRIORITY_DEFAULT) &&
+					!addedDefault) {
+
+					segmentsExperiencesDropdownItems.add(
+						_getDefaultSegmentsExperience(
+							httpServletRequest, locale));
+
+					addedDefault = true;
+				}
+
 				segmentsExperiencesDropdownItems.add(
 					_getSegmentsExperience(
 						httpServletRequest, locale, segmentsExperience));
+			}
+
+			if (!addedDefault) {
+				segmentsExperiencesDropdownItems.add(
+					_getDefaultSegmentsExperience(httpServletRequest, locale));
 			}
 		}
 		catch (PortalException portalException) {

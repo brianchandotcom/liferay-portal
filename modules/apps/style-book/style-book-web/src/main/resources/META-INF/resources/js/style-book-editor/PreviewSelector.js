@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {StyleBookContext} from './StyleBookContext';
@@ -121,6 +122,11 @@ export function LayoutTypeSelector({layoutType, setLayoutType}) {
 		</ClayDropDown>
 	);
 }
+
+LayoutTypeSelector.propTypes = {
+	layoutType: PropTypes.string.isRequired,
+	setLayoutType: PropTypes.func.isRequired,
+};
 
 export function LayoutSelector({layoutType}) {
 	const [active, setActive] = useState(false);
@@ -243,6 +249,10 @@ export function LayoutSelector({layoutType}) {
 		</ClayDropDown>
 	);
 }
+
+LayoutSelector.propTypes = {
+	layoutType: PropTypes.string.isRequired,
+};
 
 /**
  * Calculates new recent layouts. Inserts the selected layout in first position.

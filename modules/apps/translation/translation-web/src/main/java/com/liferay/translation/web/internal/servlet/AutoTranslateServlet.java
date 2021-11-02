@@ -73,6 +73,7 @@ public class AutoTranslateServlet extends HttpServlet {
 			Translator translator = _translatorRegistry.getCompanyTranslator(
 				companyId);
 
+			if (translator != null) {
 				TranslatorPacket translatedTranslatorPacket =
 					translator.translate(
 						new JSONTranslatorPacket(
@@ -81,7 +82,15 @@ public class AutoTranslateServlet extends HttpServlet {
 
 				_writeJSON(
 					httpServletResponse, _toJSON(translatedTranslatorPacket));
-			
+			}
+			else {
+				_writeErrorJSON(
+					httpServletResponse,
+					_language.get(
+						_portal.getLocale(httpServletRequest),
+						"there-is-no-translation-service-enabled.-please-" +
+							"contact-your-administrator"));
+			}
 		}
 		catch (TranslatorException translatorException) {
 			_log.error(translatorException, translatorException);

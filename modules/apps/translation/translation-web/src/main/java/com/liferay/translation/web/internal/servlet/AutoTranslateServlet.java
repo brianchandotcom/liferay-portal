@@ -31,6 +31,7 @@ import com.liferay.translation.exception.TranslatorException;
 import com.liferay.translation.translator.JSONTranslatorPacket;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
+import com.liferay.translation.translator.TranslatorRegistry;
 
 import java.io.IOException;
 
@@ -67,13 +68,20 @@ public class AutoTranslateServlet extends HttpServlet {
 			String content = StreamUtil.toString(
 				httpServletRequest.getInputStream());
 
-			TranslatorPacket translatedTranslatorPacket = _translator.translate(
-				new JSONTranslatorPacket(
-					_portal.getCompanyId(httpServletRequest),
-					JSONFactoryUtil.createJSONObject(content)));
+			long companyId = _portal.getCompanyId(httpServletRequest);
 
-			_writeJSON(
-				httpServletResponse, _toJSON(translatedTranslatorPacket));
+			Translator translator = _translatorRegistry.getCompanyTranslator(
+				companyId);
+
+				TranslatorPacket translatedTranslatorPacket =
+					translator.translate(
+						new JSONTranslatorPacket(
+							companyId,
+							JSONFactoryUtil.createJSONObject(content)));
+
+				_writeJSON(
+					httpServletResponse, _toJSON(translatedTranslatorPacket));
+			
 		}
 		catch (TranslatorException translatorException) {
 			_log.error(translatorException, translatorException);
@@ -146,6 +154,6 @@ public class AutoTranslateServlet extends HttpServlet {
 	private Portal _portal;
 
 	@Reference
-	private Translator _translator;
+	private TranslatorRegistry _translatorRegistry;
 
 }

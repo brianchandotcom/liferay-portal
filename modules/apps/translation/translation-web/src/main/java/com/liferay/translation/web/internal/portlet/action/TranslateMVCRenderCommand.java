@@ -48,6 +48,7 @@ import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.translator.Translator;
+import com.liferay.translation.translator.TranslatorRegistry;
 import com.liferay.translation.web.internal.configuration.FFLayoutExperienceSelectorConfiguration;
 import com.liferay.translation.web.internal.display.context.TranslateDisplayContext;
 import com.liferay.translation.web.internal.util.TranslationRequestUtil;
@@ -71,9 +72,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Ambrín Chaudhary
@@ -104,6 +102,12 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			long classPK = TranslationRequestUtil.getClassPK(
 				renderRequest, segmentsExperienceId);
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			_translator = _translatorRegistry.getCompanyTranslator(
+				themeDisplay.getCompanyId());
+
 			Object object = _getInfoItem(className, classPK);
 
 			if (object == null) {
@@ -124,9 +128,6 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			String sourceLanguageId = ParamUtil.getString(
 				renderRequest, "sourceLanguageId",
 				infoItemLanguagesProvider.getDefaultLanguageId(object));
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			List<String> availableTargetLanguageIds =
 				_getAvailableTargetLanguageIds(
@@ -162,9 +163,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				TranslateDisplayContext.class.getName(),
 				new TranslateDisplayContext(
 					availableSourceLanguageIds, availableTargetLanguageIds,
-					() ->
-						(_translator != null) &&
-						_translator.isEnabled(themeDisplay.getCompanyId()),
+					() -> _translator != null,
 					TranslationRequestUtil.getModelClassName(renderRequest),
 					TranslationRequestUtil.getModelClassPK(renderRequest),
 					_ffLayoutExperienceSelectorConfiguration, infoForm,
@@ -235,16 +234,11 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 	private String _getErrorJSP(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		renderRequest.setAttribute(
 			TranslateDisplayContext.class.getName(),
 			new TranslateDisplayContext(
 				Collections.emptyList(), Collections.emptyList(),
-				() ->
-					(_translator != null) &&
-					_translator.isEnabled(themeDisplay.getCompanyId()),
+				() -> _translator != null,
 				TranslationRequestUtil.getModelClassName(renderRequest),
 				TranslationRequestUtil.getModelClassPK(renderRequest),
 				_ffLayoutExperienceSelectorConfiguration, null,
@@ -378,11 +372,9 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private TranslationInfoFieldChecker _translationInfoFieldChecker;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile Translator _translator;
+	private Translator _translator;
+
+	@Reference
+	private TranslatorRegistry _translatorRegistry;
 
 }

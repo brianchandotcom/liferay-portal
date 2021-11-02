@@ -4367,7 +4367,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					if (organization.getOrganizationId() == classPK) {
 						joinedGroups.add(group);
 					}
-					else {
+					else if (!PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
 						String treePath = organization.getTreePath();
 
 						if (treePath.contains(String.valueOf(classPK))) {

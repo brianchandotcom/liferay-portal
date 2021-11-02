@@ -64,6 +64,10 @@ definition {
 		Uncheck(locator1 = "Checkbox#ENABLE_COMMENTS");
 	}
 
+	macro uncheckRatings {
+		Uncheck(locator1 = "Checkbox#ENABLE_RATINGS");
+	}
+
 	macro uncheckRelatedAssets {
 		Uncheck(locator1 = "Checkbox#SHOW_RELATED_ASSETS");
 	}

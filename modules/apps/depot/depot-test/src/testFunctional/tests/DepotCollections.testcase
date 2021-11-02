@@ -395,7 +395,7 @@ definition {
 	@description = "This ensures that the asset types will not be displayed when disabling the applications."
 	@priority = "5"
 	@refactorneeded
-	test DisableAllAssetTypes {
+	test DisableApplications {
 		JSONAssetlist.addDynamicAssetListEntry(
 			groupName = "Test Depot Name",
 			site = "false",
@@ -409,21 +409,68 @@ definition {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
-			applicationList = "Documents and Media,Web Content",
+			applicationList = "Documents and Media",
 			status = "Disabled");
+
+		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.viewAssetTypeList(
+			assetListName = "Depot Manual Asset List",
+			assetType = "Web Content Folder,Basic Web Content,WC Structure Name",
+			itemType = "All Types",
+			manualSelection = "true");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.viewNoAssetType(
+			assetListName = "Depot Manual Asset List",
+			assetType = "Document,Documents Folder",
+			manualSelection = "true");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.viewAssetTypeList(
+			assetListName = "Depot Dynamic Asset List",
+			assetType = "Web Content Folder,Web Content Article",
+			dynamicSelection = "true");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.viewNoAssetType(
+			assetListName = "Depot Dynamic Asset List",
+			assetType = "Document,Documents Folder",
+			dynamicSelection = "true");
+
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
+
+		Depot.configureApplication(
+			applicationList = "Web Content",
+			status = "Disabled");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.viewNoAssetType(
 			allAssetsDisabled = "true",
 			assetListName = "Depot Manual Asset List",
 			manualSelection = "true");
 
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
-		AssetListsAdmin.viewAssetTypeList(
-			allAssetsDisabled = "true",
+		AssetListsAdmin.viewNoAssetType(
 			assetListName = "Depot Dynamic Asset List",
+			assetType = "Document,Documents Folder,Web Content Article,Web Content Folder",
 			dynamicSelection = "true");
 	}
 
@@ -496,97 +543,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#INFO",
 			value1 = "Info:This application is not supported for Asset Libraries. Please, go back to scope selection.");
-	}
-
-	@description = "This ensures that only the asset types related to web content will be displayed after disabling DM."
-	@priority = "5"
-	@refactorneeded
-	test DisableDM {
-		JSONAssetlist.addDynamicAssetListEntry(
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "Depot Dynamic Asset List");
-
-		JSONAssetlist.addManualAssetListEntry(
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "Depot Manual Asset List");
-
-		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
-
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Depot.configureApplication(
-			applicationList = "Documents and Media",
-			status = "Disabled");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewAssetTypeList(
-			assetListName = "Depot Manual Asset List",
-			assetType = "Web Content Folder,Basic Web Content,WC Structure Name",
-			itemType = "All Types",
-			manualSelection = "true");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewAssetTypeList(
-			assetListName = "Depot Dynamic Asset List",
-			assetType = "Web Content Folder,Web Content Article",
-			dynamicSelection = "true");
-	}
-
-	@description = "This ensures that only the asset types related to DM will be displayed after disabling WC."
-	@priority = "5"
-	@refactorneeded
-	test DisableWC {
-		JSONAssetlist.addDynamicAssetListEntry(
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "Depot Dynamic Asset List");
-
-		JSONAssetlist.addManualAssetListEntry(
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "Depot Manual Asset List");
-
-		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Depot.configureApplication(
-			applicationList = "Web Content",
-			status = "Disabled");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewAssetTypeList(
-			assetListName = "Depot Manual Asset List",
-			assetType = "Basic Document,Documents Folder,DM Document Type Name",
-			itemType = "All Types",
-			manualSelection = "true");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewAssetTypeList(
-			assetListName = "Depot Dynamic Asset List",
-			assetType = "Document,Documents Folder",
-			dynamicSelection = "true");
 	}
 
 	@description = "This ensures that the image is displayed by AP through Collections in a depot."

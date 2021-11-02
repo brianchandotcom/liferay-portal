@@ -62,13 +62,16 @@ const SaveTemplateModal = ({
 				if (responseJson.error) {
 					setLoadingResponse(false);
 					setErrorMessage(responseContent?.error);
-				} else {
+				}
+				else {
 					closeModal();
 				}
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			setErrorMessage(Liferay.Language.get('unexpected-error'));
-		} finally {
+		}
+		finally {
 			setLoadingResponse(true);
 		}
 	};

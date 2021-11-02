@@ -2553,6 +2553,32 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 	}
 
+	@description = "This test asserts that only the account name field is required when making an account."
+	@priority = "4"
+	test OnlyAccountNameIsRequired {
+		task ("Add account with account name only.") {
+			Accounts.openAccountsAdmin();
+
+			Accounts.addBusinessAccount(accountName = "Account Name Only");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Name Only");
+		}
+
+		task ("Assert that error message appears when attempting to add an account with description only.") {
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.inputDescription(description = "This is an account description");
+
+			Button.clickSave();
+
+			AssertElementPresent(
+				key_fieldFieldLabel = "Account Name",
+				locator1 = "Message#ERROR_FIELD_REQUIRED");
+		}
+	}
+
 	@description = "This test adds a global tag and adds it to account"
 	@priority = "3"
 	test OnlyGlobalTagCanBeAddedToAccount {

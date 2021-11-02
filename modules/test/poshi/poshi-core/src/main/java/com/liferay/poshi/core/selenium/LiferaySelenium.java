@@ -234,6 +234,8 @@ public interface LiferaySelenium {
 
 	public String getSikuliImagesDirName();
 
+	public String getTestBaseDirName();
+
 	public String getTestDependenciesDirName();
 
 	public String getTestName();
@@ -359,7 +361,8 @@ public interface LiferaySelenium {
 
 	public void mouseUpAt(String locator, String coordString);
 
-	public void ocularAssertElementImage(String locator) throws Exception;
+	public void ocularAssertElementImage(String locator, String filePath)
+		throws Exception;
 
 	public void open(String url) throws Exception;
 

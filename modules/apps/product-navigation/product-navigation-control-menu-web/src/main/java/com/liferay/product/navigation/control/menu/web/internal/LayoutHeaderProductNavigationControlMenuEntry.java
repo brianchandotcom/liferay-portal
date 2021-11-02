@@ -131,15 +131,13 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		String cssClass = "control-menu-nav-item";
-
 		if (!Objects.equals(
 				layout.getType(), LayoutConstants.TYPE_COLLECTION)) {
 
-			cssClass += " control-menu-nav-item-content";
+			return "control-menu-nav-item control-menu-nav-item-content";
 		}
 
-		return cssClass;
+		return "control-menu-nav-item";
 	}
 
 	private String _getHeaderTitle(HttpServletRequest httpServletRequest) {
@@ -147,12 +145,9 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
-
-		String headerTitle = HtmlUtil.escape(
-			layout.getName(themeDisplay.getLocale()));
-
 		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
+
+		Layout layout = themeDisplay.getLayout();
 
 		if (Validator.isNotNull(portletId) && layout.isSystem() &&
 			!layout.isTypeControlPanel() &&
@@ -160,11 +155,10 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 				layout.getFriendlyURL(),
 				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
 
-			headerTitle = _portal.getPortletTitle(
-				portletId, themeDisplay.getLocale());
+			return _portal.getPortletTitle(portletId, themeDisplay.getLocale());
 		}
 
-		return headerTitle;
+		return HtmlUtil.escape(layout.getName(themeDisplay.getLocale()));
 	}
 
 	private boolean _hasDraftLayout(HttpServletRequest httpServletRequest) {
@@ -174,36 +168,23 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) ||
-			 Objects.equals(
-				 layout.getType(), LayoutConstants.TYPE_COLLECTION))) {
-
-			Layout draftLayout = layout.fetchDraftLayout();
-
-			if (draftLayout != null) {
-				boolean published = GetterUtil.getBoolean(
-					draftLayout.getTypeSettingsProperty("published"));
-
-				if ((draftLayout.getStatus() ==
-						WorkflowConstants.STATUS_DRAFT) ||
-					!published) {
-
-					return true;
-				}
-			}
-			else {
-				boolean published = GetterUtil.getBoolean(
-					layout.getTypeSettingsProperty("published"));
-
-				if ((layout.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
-					!published) {
-
-					return true;
-				}
-			}
+		if (!layout.isTypeContent()) {
+			return false;
 		}
 
-		return false;
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout != null) {
+			layout = draftLayout;
+		}
+
+		if ((layout.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
+			_isLayoutPublished(layout)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isDraftLayout(HttpServletRequest httpServletRequest) {
@@ -213,27 +194,34 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) ||
-			 Objects.equals(
-				 layout.getType(), LayoutConstants.TYPE_COLLECTION))) {
+		if (!layout.isTypeContent()) {
+			return false;
+		}
 
-			Layout draftLayout = layout.fetchDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
-			if (draftLayout == null) {
-				boolean published = GetterUtil.getBoolean(
-					layout.getTypeSettingsProperty("published"));
+		if ((draftLayout != null) ||
+			((layout.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
+			 _isLayoutPublished(layout))) {
 
-				if ((layout.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
-					!published) {
+			return false;
+		}
 
-					String mode = ParamUtil.getString(
-						httpServletRequest, "p_l_mode");
+		String mode = ParamUtil.getString(httpServletRequest, "p_l_mode");
 
-					if (!Objects.equals(mode, Constants.EDIT)) {
-						return true;
-					}
-				}
-			}
+		if (Objects.equals(mode, Constants.EDIT)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isLayoutPublished(Layout layout) {
+		boolean published = GetterUtil.getBoolean(
+			layout.getTypeSettingsProperty("published"));
+
+		if (published) {
+			return true;
 		}
 
 		return false;

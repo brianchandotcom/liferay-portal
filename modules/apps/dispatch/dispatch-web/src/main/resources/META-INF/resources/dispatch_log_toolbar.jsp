@@ -22,6 +22,7 @@ SearchContainer<DispatchLog> dispatchLogSearchContainer = DispatchLogSearchConta
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new ViewDispatchLogManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dispatchLogSearchContainer) %>"
+    propsTransformer="js/DispatchLogManagementToolbarPropsTransformer"
 />
 
 <aui:script>

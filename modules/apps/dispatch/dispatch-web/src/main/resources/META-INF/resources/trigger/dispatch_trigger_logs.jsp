@@ -34,12 +34,13 @@ SearchContainer<DispatchLog> dispatchLogSearchContainer = DispatchLogSearchConta
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new ViewDispatchLogManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dispatchLogSearchContainer) %>"
+    propsTransformer="trigger/js/DispatchLogManagementToolbarPropsTransformer"
 />
 
 <div id="<portlet:namespace />triggerLogsContainer">
 	<div class="closed container-fluid container-fluid-max-xl" id="<portlet:namespace />infoPanelId">
 		<aui:form action="<%= portletURL %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" />
+			<aui:input name="<%= Constants.CMD %>" value="/dispatch/edit_dispatch_log" type="hidden" />
 			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 			<aui:input name="deleteDispatchLogIds" type="hidden" />
 

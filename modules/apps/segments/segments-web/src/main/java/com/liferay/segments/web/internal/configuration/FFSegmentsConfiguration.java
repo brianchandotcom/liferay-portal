@@ -12,17 +12,22 @@
  * details.
  */
 
-package com.liferay.product.navigation.control.menu.web.internal.constants;
+package com.liferay.segments.web.internal.configuration;
+
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Julio Camarero
+ * @author Pablo Molina
  */
-public class ProductNavigationControlMenuWebKeys {
+@ExtendedObjectClassDefinition(generateUI = false)
+@Meta.OCD(
+	id = "com.liferay.segments.web.internal.configuration.FFSegmentsConfiguration"
+)
+public interface FFSegmentsConfiguration {
 
-	public static final String
-		FF_PRODUCT_NAVIGATION_CONTROL_MENU_CONFIGURATION =
-			"FF_PRODUCT_NAVIGATION_CONTROL_MENU_CONFIGURATION";
-
-	public static final String PORTLET_TITLE = "PORTLET_TITLE";
+	@Meta.AD(deflt = "false", required = false)
+	public boolean layoutExperienceSelector();
 
 }

@@ -104,7 +104,7 @@ public class BatchPlannerPlanServiceTest {
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 				"/" + RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), "", null, false);
+				RandomTestUtil.randomString(), "", null, true);
 
 			Assert.fail();
 		}

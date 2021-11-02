@@ -1,0 +1,70 @@
+{
+	"description_i18n": {
+		"en_US": "Paste any Elasticsearch query body in the element as is"
+	},
+	"elementDefinition": {
+		"category": "custom",
+		"icon": "custom-field",
+		"sxpBlueprint": {
+			"configuration": {
+				"queryConfiguration": {
+					"queryEntries": [
+						{
+							"clauses": [
+								{
+									"context": "query",
+									"occur": "${configuration.occur}",
+									"query": {
+										"wrapper": {
+											"query": "${configuration.query}"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		},
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"defaultValue": "must",
+							"label": "Occur",
+							"name": "occur",
+							"options": [
+								{
+									"label": "MUST",
+									"value": "must"
+								},
+								{
+									"label": "SHOULD",
+									"value": "should"
+								},
+								{
+									"label": "MUST NOT",
+									"value": "must_not"
+								},
+								{
+									"label": "FILTER",
+									"value": "filter"
+								}
+							],
+							"type": "select"
+						},
+						{
+							"label": "Query",
+							"name": "query",
+							"type": "json"
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Paste any Elasticsearch query"
+	}
+}

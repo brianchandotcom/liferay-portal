@@ -108,7 +108,7 @@ public class DLFileEntryModelDocumentContributor
 				if (inputStream != null) {
 					try {
 						String localizedField = Field.getLocalizedName(
-							defaultLocale.toString(), Field.CONTENT);
+							defaultLocale, Field.CONTENT);
 
 						document.addFile(
 							localizedField, inputStream,
@@ -131,8 +131,7 @@ public class DLFileEntryModelDocumentContributor
 			document.addKeyword(
 				Field.CLASS_TYPE_ID, dlFileEntry.getFileEntryTypeId());
 			document.addText(
-				Field.getLocalizedName(
-					defaultLocale.toString(), Field.DESCRIPTION),
+				Field.getLocalizedName(defaultLocale, Field.DESCRIPTION),
 				dlFileEntry.getDescription());
 			document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
 			document.addKeyword(Field.HIDDEN, dlFileEntry.isInHiddenFolder());
@@ -145,8 +144,7 @@ public class DLFileEntryModelDocumentContributor
 			}
 
 			document.addText(
-				Field.getLocalizedName(defaultLocale.toString(), Field.TITLE),
-				title);
+				Field.getLocalizedName(defaultLocale, Field.TITLE), title);
 
 			document.addKeyword(
 				Field.TREE_PATH,

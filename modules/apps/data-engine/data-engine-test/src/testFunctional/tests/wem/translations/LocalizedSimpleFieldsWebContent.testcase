@@ -50,6 +50,8 @@ definition {
 			}
 		}
 
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContentStructures.addName(structureName = "WC Structure Title - pt-BR");
@@ -327,6 +329,8 @@ definition {
 
 		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
 
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldLabel(
@@ -442,6 +446,8 @@ definition {
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -562,6 +568,8 @@ definition {
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -829,6 +837,8 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldLabel(
@@ -910,6 +920,8 @@ definition {
 				optionFieldLabel = "Columns",
 				optionValue = "Option ${index}");
 		}
+
+		WebContentStructures.addTranslations(localeList = "ca-ES");
 
 		PortletEntry.changeLocale(locale = "ca-ES");
 

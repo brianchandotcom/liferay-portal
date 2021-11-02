@@ -104,6 +104,8 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContentStructures.addName(structureName = "${defaultStructureName_pt}");
@@ -145,6 +147,8 @@ definition {
 		DataEngine.addField(
 			fieldFieldLabel = "Text Test",
 			fieldName = "Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -190,6 +194,8 @@ definition {
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR,ca-ES,zh-CN,fr-FR");
 
 		for (var language : list "pt-BR,ca-ES,zh-CN,fr-FR") {
 			PortletEntry.changeLocale(locale = "${language}");
@@ -349,6 +355,8 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Title");
 
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
@@ -370,6 +378,8 @@ definition {
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Text",
 			fieldHelp = "Text Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -413,6 +423,8 @@ definition {
 			fieldFieldLabel = "Lbltest",
 			fieldHelp = "Help Text test");
 
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldTip(
@@ -452,6 +464,8 @@ definition {
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -517,6 +531,8 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
+		WebContentStructures.addTranslations(localeList = "en-US,ca-ES,zh-CN,fr-FR");
+
 		for (var language : list "en-US,ca-ES,zh-CN,fr-FR") {
 			PortletEntry.changeLocale(locale = "${language}");
 
@@ -566,6 +582,8 @@ definition {
 				fieldFieldLabel = "Numeric - ${language}",
 				fieldName = "Numeric");
 		}
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -699,6 +717,8 @@ definition {
 			var index = ${index} + 1;
 		}
 
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContentStructures.addName(structureName = "WC Título da Estrutura");
@@ -788,6 +808,8 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldLabel(
@@ -822,6 +844,8 @@ definition {
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "${fieldLabelDefault}",
 			fieldHelp = "Help Text test");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR,de-DE");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -902,6 +926,8 @@ definition {
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Text Test",
 			fieldHelp = "Help Text test");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 

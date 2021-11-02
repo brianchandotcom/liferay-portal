@@ -96,12 +96,18 @@ definition {
 
 	macro addTranslations {
 		if (isSet(localizedManageTranslations)) {
-			MenuItem.click(menuItem = "${localizedManageTranslations}");
+			var manageTranslations = "${localizedManageTranslations}";
 		}
 
 		else {
-			MenuItem.click(menuItem = "Manage Translations");
+			var manageTranslations = "Manage Translations";
 		}
+
+		if (IsElementNotPresent(key_menuItem = "${manageTranslations}", locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			Click(locator1 = "Button#LOCALIZATION_GENERIC");
+		}
+
+		MenuItem.click(menuItem = "${manageTranslations}");
 
 		WaitForElementPresent(locator1 = "Modal#BODY");
 

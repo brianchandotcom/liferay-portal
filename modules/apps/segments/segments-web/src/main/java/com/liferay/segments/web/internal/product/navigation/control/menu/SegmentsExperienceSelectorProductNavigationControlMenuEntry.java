@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -88,15 +89,9 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 
 		Locale locale = (Locale)httpServletRequest.getAttribute(WebKeys.LOCALE);
 
-		List<HashMap<String, Object>> segmentsExperiences =
-			_getSegmentsExperiences(httpServletRequest, locale);
-
-		if (segmentsExperiences.isEmpty()) {
-			return false;
-		}
-
 		httpServletRequest.setAttribute(
-			SegmentsWebKeys.LAYOUT_SEGMENTS_EXPERIENCES, segmentsExperiences);
+			SegmentsWebKeys.LAYOUT_SEGMENTS_EXPERIENCES,
+			_getSegmentsExperiences(httpServletRequest, locale));
 
 		httpServletRequest.setAttribute(
 			SegmentsWebKeys.LAYOUT_SELECTED_SEGMENTS_EXPERIENCE,
@@ -106,7 +101,9 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest httpServletRequest) {
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
 		String mode = ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
 
@@ -117,6 +114,16 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		List<SegmentsExperience> segmentsExperiences =
+			_segmentsExperienceLocalService.getSegmentsExperiences(
+				themeDisplay.getScopeGroupId(),
+				_portal.getClassNameId(Layout.class.getName()),
+				themeDisplay.getPlid(), true);
+
+		if (ListUtil.isEmpty(segmentsExperiences)) {
+			return false;
+		}
 
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
@@ -245,10 +252,6 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 					themeDisplay.getScopeGroupId(),
 					_portal.getClassNameId(Layout.class.getName()),
 					themeDisplay.getPlid(), true);
-
-			if (segmentsExperiences.isEmpty()) {
-				return segmentsExperiencesDropdownItems;
-			}
 
 			boolean addedDefault = false;
 

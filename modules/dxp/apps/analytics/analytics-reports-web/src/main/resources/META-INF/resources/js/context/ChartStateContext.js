@@ -28,7 +28,39 @@ const INITIAL_STATE = {
 	timeSpanOffset: 0,
 };
 
+/** 
+ * Example state
+ * {
+		"lineChartloading": false,
+		"pieChartloading": false,
+		"timeSpanOffset": 1,
+		"timeSpanKey": "last-7-days",
+		"dataSet": {
+			"keyList": [
+				"analyticsReportsHistoricalReads",
+				"analyticsReportsHistoricalViews"
+			],
+			"totals": {
+				"analyticsReportsHistoricalReads": 225000,
+				"analyticsReportsHistoricalViews": 144245
+			},
+			"histogram": [
+				{
+					"analyticsReportsHistoricalViews": 5412,
+					"label": "2020-02-02T00:00",
+					"analyticsReportsHistoricalReads": 5000
+				},
+				...
+			]
+		}
+	}
+ *
+ */
+
 const FALLBACK_DATA_SET_ITEM = {histogram: [], value: null};
+
+const LAST_7_DAYS = 'last-7-days';
+const LAST_30_DAYS = 'last-30-days';
 
 export const ChartDispatchContext = createContext(() => {});
 export const ChartStateContext = createContext(INITIAL_STATE);
@@ -64,17 +96,13 @@ export function useDateTitle() {
 	const lastDate = new Date(timeRange.endDate);
 
 	const increment =
-		timeSpanKey === 'last-7-days'
-			? 7
-			: timeSpanKey === 'last-30-days'
-			? 30
-			: 0;
+		timeSpanKey === LAST_7_DAYS ? 7 : timeSpanKey === LAST_30_DAYS ? 30 : 0;
 
 	// Default interval between firstDate and lastDate is 7 days.
 	// First date must be calculated from last date if timespan is 30.
 
-	if (timeSpanKey === 'last-30-days') {
-		firstDate.setDate(lastDate.getDate() - (increment - 1));
+	if (timeSpanKey === LAST_30_DAYS) {
+		firstDate.setDate(firstDate.getDate() + 6 - (increment - 1));
 	}
 
 	if (timeSpanOffset > 0) {
@@ -104,33 +132,6 @@ export function useIsPreviousPeriodButtonDisabled() {
 	return firstDate < publishedDate;
 }
 
-/**
- * {
-		"lineChartloading": false,
-		"pieChartloading": false,
-		"timeSpanOffset": 1,
-		"timeSpanKey": "last-7-days",
-		"dataSet": {
-			"keyList": [
-				"analyticsReportsHistoricalReads",
-				"analyticsReportsHistoricalViews"
-			],
-			"totals": {
-				"analyticsReportsHistoricalReads": 225000,
-				"analyticsReportsHistoricalViews": 144245
-			},
-			"histogram": [
-				{
-					"analyticsReportsHistoricalViews": 5412,
-					"label": "2020-02-02T00:00",
-					"analyticsReportsHistoricalReads": 5000
-				},
-				...
-			]
-		}
-	}
- *
- */
 function reducer(state, action) {
 	let nextState;
 

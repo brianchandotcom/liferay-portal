@@ -37,6 +37,10 @@ public class PortalWorkspace extends BaseWorkspace {
 		return Job.BuildProfile.getByString(buildProfileString);
 	}
 
+	public WorkspaceGitRepository getLegacyWorkspaceGitRepository() {
+		return getWorkspaceGitRepository("liferay-qa-portal-legacy-ee");
+	}
+
 	public PluginsWorkspaceGitRepository getPluginsWorkspaceGitRepository() {
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			getPortalWorkspaceGitRepository();

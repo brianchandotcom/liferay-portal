@@ -90,6 +90,10 @@ public class BuildFactory {
 			}
 		}
 
+		if (jobName.contains("legacy")) {
+			return new LegacyTopLevelBuild(url, (TopLevelBuild)parentBuild);
+		}
+
 		if (jobName.equals("root-cause-analysis-tool")) {
 			return new RootCauseAnalysisToolBuild(
 				url, (TopLevelBuild)parentBuild);

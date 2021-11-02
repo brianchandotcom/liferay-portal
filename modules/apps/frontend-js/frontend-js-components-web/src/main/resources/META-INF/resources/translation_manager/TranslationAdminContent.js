@@ -76,11 +76,9 @@ const TranslationAdminContent = ({
 						<ClayInput
 							aria-label={Liferay.Language.get('search')}
 							insetAfter={true}
-							onChange={(event) => {
-								const {value} = event.target;
-
-								setSearchValue(value);
-							}}
+							onChange={(event) =>
+								setSearchValue(event.target.value)
+							}
 							placeholder={Liferay.Language.get('search')}
 							value={searchValue}
 						/>
@@ -197,19 +195,16 @@ const TranslationAdminContent = ({
 
 									<ClayTable.Cell>
 										{!isDefaultLocale && (
-											<ClayButton
+											<ClayButtonWithIcon
 												displayType="unstyled"
+												monospaced={false}
 												onClick={() =>
 													onRemoveLocale(
 														activeLocale.id
 													)
 												}
-											>
-												<ClayIcon
-													className="inline-item"
-													symbol="trash"
-												/>
-											</ClayButton>
+												symbol="trash"
+											/>
 										)}
 									</ClayTable.Cell>
 								</ClayTable.Row>

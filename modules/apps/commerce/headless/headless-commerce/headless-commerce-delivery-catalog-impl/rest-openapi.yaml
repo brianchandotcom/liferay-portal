@@ -78,6 +78,9 @@ components:
         Availability:
             properties:
                 label:
+                    example: available
+                    type: string
+                label_i18n:
                     example: Available
                     type: string
                 stockQuantity:

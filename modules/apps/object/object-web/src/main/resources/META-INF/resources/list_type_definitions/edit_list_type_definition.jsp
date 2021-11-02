@@ -20,6 +20,8 @@
 ListTypeDefinition listTypeDefinition = (ListTypeDefinition)request.getAttribute(ObjectWebKeys.LIST_TYPE_DEFINITION);
 
 ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListTypeEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+boolean isViewOnly = !viewListTypeEntriesDisplayContext.hasUpdateListTypeDefinitionPermission();
 %>
 
 <liferay-frontend:side-panel-content
@@ -35,7 +37,7 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 
 					<aui:model-context bean="<%= listTypeDefinition %>" model="<%= ListTypeDefinition.class %>" />
 
-					<aui:input name="name" required="<%= true %>" value="<%= listTypeDefinition.getName(themeDisplay.getLocale()) %>" />
+					<aui:input disabled="<%= isViewOnly %>" name="name" required="<%= true %>" value="<%= listTypeDefinition.getName(themeDisplay.getLocale()) %>" />
 				</div>
 
 				<div class="sheet">
@@ -68,7 +70,7 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 			<div class="side-panel-content__footer">
 				<aui:button cssClass="btn-cancel mr-1" name="cancel" value='<%= LanguageUtil.get(request, "cancel") %>' />
 
-				<aui:button name="save" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
+				<aui:button disabled="<%= isViewOnly %>" name="save" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
 			</div>
 		</div>
 	</form>

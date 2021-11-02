@@ -25,6 +25,8 @@ ObjectDefinition objectDefinition = objectDefinitionsDetailsDisplayContext.getOb
 
 List<ObjectField> objectFields = (List<ObjectField>)request.getAttribute(ObjectWebKeys.OBJECT_FIELDS);
 
+boolean isViewOnly = !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission();
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
@@ -67,18 +69,18 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					>
 						<aui:input cssClass="disabled" label="object-definition-id" name="objectDefinitionId" readonly="true" type="text" />
 
-						<aui:input disabled="<%= objectDefinition.isApproved() %>" label="name" name="shortName" required="<%= true %>" type="text" value="<%= objectDefinition.getShortName() %>" />
+						<aui:input disabled="<%= isViewOnly || objectDefinition.isApproved() %>" label="name" name="shortName" required="<%= true %>" type="text" value="<%= objectDefinition.getShortName() %>" />
 
-						<aui:input disabled="<%= objectDefinition.isSystem() %>" name="label" />
+						<aui:input disabled="<%= isViewOnly || objectDefinition.isSystem() %>" name="label" />
 
-						<aui:input disabled="<%= objectDefinition.isSystem() %>" name="pluralLabel" />
+						<aui:input disabled="<%= isViewOnly || objectDefinition.isSystem() %>" name="pluralLabel" />
 
 						<aui:input cssClass="disabled" label="object-definition-table-name" name="DBTableName" readonly="true" type="text" />
 					</clay:col>
 				</clay:row>
 
 				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-					<aui:input disabled="<%= !objectDefinition.isApproved() || objectDefinition.isSystem() %>" label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectDefinition.isActive() %>" />
+					<aui:input disabled="<%= isViewOnly || !objectDefinition.isApproved() || objectDefinition.isSystem() %>" label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectDefinition.isActive() %>" />
 				</aui:field-wrapper>
 			</clay:sheet-section>
 
@@ -91,7 +93,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<clay:col
 						md="11"
 					>
-						<aui:select disabled="<%= objectDefinition.isSystem() %>" name="titleObjectFieldId" showEmptyOption="<%= true %>">
+						<aui:select disabled="<%= isViewOnly || objectDefinition.isSystem() %>" name="titleObjectFieldId" showEmptyOption="<%= true %>">
 
 							<%
 							for (ObjectField objectField : objectFields) {
@@ -113,7 +115,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<clay:col
 						md="11"
 					>
-						<aui:select disabled="<%= objectDefinition.isSystem() %>" name="descriptionObjectFieldId" showEmptyOption="<%= true %>">
+						<aui:select disabled="<%= isViewOnly || objectDefinition.isSystem() %>" name="descriptionObjectFieldId" showEmptyOption="<%= true %>">
 
 							<%
 							for (ObjectField objectField : objectFields) {
@@ -139,7 +141,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<clay:col
 						md="11"
 					>
-						<aui:select disabled="<%= objectDefinition.isApproved() %>" name="scope" onChange='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "selectScope();" %>' showEmptyOption="<%= false %>">
+						<aui:select disabled="<%= isViewOnly || objectDefinition.isApproved() %>" name="scope" onChange='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "selectScope();" %>' showEmptyOption="<%= false %>">
 
 							<%
 							for (ObjectScopeProvider objectScopeProvider : objectDefinitionsDetailsDisplayContext.getObjectScopeProviders()) {
@@ -159,7 +161,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<clay:col
 						md="11"
 					>
-						<aui:select disabled="<%= objectDefinition.isSystem() %>" name="panelCategoryKey" showEmptyOption="<%= true %>">
+						<aui:select disabled="<%= isViewOnly || objectDefinition.isSystem() %>" name="panelCategoryKey" showEmptyOption="<%= true %>">
 
 							<%
 							for (KeyValuePair keyValuePair : objectDefinitionsDetailsDisplayContext.getKeyValuePairs()) {
@@ -179,7 +181,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button name="save" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(true);" %>' value="save" />
+		<aui:button disabled="<%= isViewOnly %>" name="save" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(true);" %>' value="save" />
 
 		<c:if test="<%= !objectDefinition.isApproved() %>">
 			<aui:button disabled="<%= !objectDefinitionsDetailsDisplayContext.hasPublishObjectPermission() %>" name="publish" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(false);" %>' type="submit" value="publish" />

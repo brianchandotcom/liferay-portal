@@ -345,7 +345,7 @@ public abstract class PoshiElement
 					"\n\n", "\n");
 			}
 
-			if (StringUtil.endsWith(sb.toString(), "definition {") &&
+			if (StringUtil.endsWith(sb.toString(), "\ndefinition {") &&
 				!padPoshiScriptSnippet.startsWith("\n\n")) {
 
 				sb.append("\n");

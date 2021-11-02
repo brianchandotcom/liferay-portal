@@ -26,12 +26,6 @@ public class SegmentsWebKeys {
 
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
-	public static final String LAYOUT_SEGMENTS_EXPERIENCES =
-		"LAYOUT_SEGMENTS_EXPERIENCES";
-
-	public static final String LAYOUT_SELECTED_SEGMENTS_EXPERIENCE =
-		"LAYOUT_SELECTED_SEGMENTS_EXPERIENCE";
-
 	public static final String PREVIEW_SEGMENTS_ENTRY_CRITERIA =
 		"PREVIEW_SEGMENTS_ENTRY_CRITERIA";
 

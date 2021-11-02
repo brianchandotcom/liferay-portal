@@ -16,17 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+SegmentsExperienceSelectorDisplayContext segmentsExperienceSelectorDisplayContext = new SegmentsExperienceSelectorDisplayContext(request);
+%>
+
 <li class="border-left border-secondary control-menu-nav-item ml-3 pl-3">
 	<div class="dropdown">
 		<button aria-expanded="false" aria-haspopup="true" class="btn btn-sm btn-unstyled dropdown-toggle" id="<portlet:namespace />dropdownToggle" type="button">
 			<span class="align-items-center c-inner d-flex" tabindex="-1">
-
-				<%
-				HashMap<String, Object> layoutSelectedSegmentsExperience = (HashMap<String, Object>)request.getAttribute(SegmentsWebKeys.LAYOUT_SELECTED_SEGMENTS_EXPERIENCE);
-				%>
-
 				<span class="mr-2 text-truncate">
-					<%= layoutSelectedSegmentsExperience.get("segmentsExperienceName") %>
+					<%= segmentsExperienceSelectorDisplayContext.getSelectedSegmentsExperienceName() %>
 				</span>
 
 				<clay:icon
@@ -38,24 +37,25 @@
 		<ul aria-labelledby="<portlet:namespace />dropdownToggle" class="dropdown-menu" id="<portlet:namespace />dropdown">
 
 			<%
-			List<HashMap<String, Object>> layoutSegmentsExperiences = (List<HashMap<String, Object>>)request.getAttribute(SegmentsWebKeys.LAYOUT_SEGMENTS_EXPERIENCES);
+			JSONArray segmentsExperiencesJSONArray = segmentsExperienceSelectorDisplayContext.getSegmentsExperiencesJSONArray();
 
-			for (HashMap<String, Object> layoutSegmentsExperience : layoutSegmentsExperiences) {
+			for (int i = 0; i < segmentsExperiencesJSONArray.length(); i++) {
+				JSONObject segmentsExperiencesJSONObject = segmentsExperiencesJSONArray.getJSONObject(i);
 			%>
 
 				<li>
-					<a class="border-0 dropdown-item list-group-item list-group-item-flex rounded-0" href="<%= layoutSegmentsExperience.get("url") %>">
+					<a class="border-0 dropdown-item list-group-item list-group-item-flex rounded-0" href="<%= segmentsExperiencesJSONObject.getString("url") %>">
 						<div class="autofit-col autofit-col-expand">
 							<p class="list-group-title text-truncate">
-								<%= layoutSegmentsExperience.get("segmentsExperienceName") %>
+								<%= segmentsExperiencesJSONObject.getString("segmentsExperienceName") %>
 							</p>
 
 							<p class="list-group-text text-secondary text-truncate">
-								<liferay-ui:message arguments='<%= layoutSegmentsExperience.get("segmentsEntryName") %>' key="segment-x" />
+								<liferay-ui:message arguments='<%= segmentsExperiencesJSONObject.getString("segmentsEntryName") %>' key="segment-x" />
 							</p>
 						</div>
 
-						<c:if test='<%= (boolean)layoutSegmentsExperience.get("active") %>'>
+						<c:if test='<%= segmentsExperiencesJSONObject.getBoolean("active") %>'>
 							<div class="autofit-col">
 								<span class="label label-success m-0">
 									<span class="label-item label-item-expand">

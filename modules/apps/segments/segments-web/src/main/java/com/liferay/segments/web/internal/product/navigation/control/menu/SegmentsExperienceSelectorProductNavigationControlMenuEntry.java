@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -37,26 +35,15 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
 
-import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -79,25 +66,6 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 	@Override
 	public String getIconJspPath() {
 		return "/segments_experience_selector.jsp";
-	}
-
-	@Override
-	public boolean includeIcon(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		Locale locale = (Locale)httpServletRequest.getAttribute(WebKeys.LOCALE);
-
-		httpServletRequest.setAttribute(
-			SegmentsWebKeys.LAYOUT_SEGMENTS_EXPERIENCES,
-			_getSegmentsExperiences(httpServletRequest, locale));
-
-		httpServletRequest.setAttribute(
-			SegmentsWebKeys.LAYOUT_SELECTED_SEGMENTS_EXPERIENCE,
-			_getSelectedSegmentsExperience(httpServletRequest, locale));
-
-		return super.includeIcon(httpServletRequest, httpServletResponse);
 	}
 
 	@Override
@@ -186,128 +154,8 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 		super.setServletContext(servletContext);
 	}
 
-	private HashMap<String, Object> _getDefaultSegmentsExperience(
-		HttpServletRequest httpServletRequest, Locale locale) {
-
-		return HashMapBuilder.<String, Object>put(
-			"active", true
-		).put(
-			"segmentsEntryName",
-			SegmentsEntryConstants.getDefaultSegmentsEntryName(locale)
-		).put(
-			"segmentsExperienceName",
-			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(locale)
-		).put(
-			"url",
-			_http.removeParameter(
-				_portal.getCurrentURL(httpServletRequest),
-				"p_l_segments_experience_id")
-		).build();
-	}
-
-	private HashMap<String, Object> _getSegmentsExperience(
-		HttpServletRequest httpServletRequest, Locale locale,
-		SegmentsExperience segmentsExperience) {
-
-		return HashMapBuilder.<String, Object>put(
-			"active", segmentsExperience.isActive()
-		).put(
-			"segmentsEntryName",
-			() -> {
-				SegmentsEntry segmentsEntry =
-					_segmentsEntryLocalService.fetchSegmentsEntry(
-						segmentsExperience.getSegmentsEntryId());
-
-				if (segmentsEntry != null) {
-					return segmentsEntry.getName(locale);
-				}
-
-				return SegmentsEntryConstants.getDefaultSegmentsEntryName(
-					locale);
-			}
-		).put(
-			"segmentsExperienceName", segmentsExperience.getName(locale)
-		).put(
-			"url",
-			_http.setParameter(
-				_portal.getCurrentURL(httpServletRequest),
-				"p_l_segments_experience_id",
-				segmentsExperience.getSegmentsExperienceId())
-		).build();
-	}
-
-	private List<HashMap<String, Object>> _getSegmentsExperiences(
-		HttpServletRequest httpServletRequest, Locale locale) {
-
-		List<HashMap<String, Object>> segmentsExperiencesDropdownItems =
-			new ArrayList<>();
-
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			List<SegmentsExperience> segmentsExperiences =
-				_segmentsExperienceLocalService.getSegmentsExperiences(
-					themeDisplay.getScopeGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					themeDisplay.getPlid(), true);
-
-			boolean addedDefault = false;
-
-			for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-				if ((segmentsExperience.getPriority() <
-						SegmentsExperienceConstants.PRIORITY_DEFAULT) &&
-					!addedDefault) {
-
-					segmentsExperiencesDropdownItems.add(
-						_getDefaultSegmentsExperience(
-							httpServletRequest, locale));
-
-					addedDefault = true;
-				}
-
-				segmentsExperiencesDropdownItems.add(
-					_getSegmentsExperience(
-						httpServletRequest, locale, segmentsExperience));
-			}
-
-			if (!addedDefault) {
-				segmentsExperiencesDropdownItems.add(
-					_getDefaultSegmentsExperience(httpServletRequest, locale));
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-
-		return segmentsExperiencesDropdownItems;
-	}
-
-	private HashMap<String, Object> _getSelectedSegmentsExperience(
-		HttpServletRequest httpServletRequest, Locale locale) {
-
-		long segmentsExperienceId = ParamUtil.getLong(
-			httpServletRequest, "p_l_segments_experience_id",
-			SegmentsExperienceConstants.ID_DEFAULT);
-
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				segmentsExperienceId);
-
-		if (segmentsExperience == null) {
-			return _getDefaultSegmentsExperience(httpServletRequest, locale);
-		}
-
-		return _getSegmentsExperience(
-			httpServletRequest, locale, segmentsExperience);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsExperienceSelectorProductNavigationControlMenuEntry.class);
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
@@ -320,9 +168,6 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

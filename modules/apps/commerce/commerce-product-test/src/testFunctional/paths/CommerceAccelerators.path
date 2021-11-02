@@ -405,12 +405,12 @@
 </tr>
 <tr>
 	<td>MINI_CART_ITEM_QUANTITY</td>
-	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]/../../../div[@class='mini-cart-item-quantity']//input</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]/../../../../div[@class='mini-cart-item-quantity']//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MINI_CART_ITEM_PRICE_VALUE</td>
-	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]/../../..//span[@class='price-value']</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]/../../../..//span[@class='price-value']</td>
 	<td></td>
 </tr>
 <tr>
@@ -455,7 +455,7 @@
 </tr>
 <tr>
 	<td>MINI_CART_REMOVE_ITEM</td>
-	<td>//p[contains(text(),"${key_cartItemSKU}")]//..//..//..//div//*[name()='svg'][contains(@class,'lexicon-icon lexicon-icon-times-circle-full')]</td>
+	<td>//p[contains(text(),"${key_cartItemSKU}")]/../../../../div//*[name()='svg'][contains(@class,'lexicon-icon lexicon-icon-times-circle-full')]</td>
 	<td></td>
 </tr>
 <!--ORDERS-->

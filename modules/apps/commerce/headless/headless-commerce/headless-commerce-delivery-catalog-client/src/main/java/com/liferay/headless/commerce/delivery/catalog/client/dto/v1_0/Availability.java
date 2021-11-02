@@ -55,6 +55,27 @@ public class Availability implements Cloneable, Serializable {
 
 	protected String label;
 
+	public String getLabel_i18n() {
+		return label_i18n;
+	}
+
+	public void setLabel_i18n(String label_i18n) {
+		this.label_i18n = label_i18n;
+	}
+
+	public void setLabel_i18n(
+		UnsafeSupplier<String, Exception> label_i18nUnsafeSupplier) {
+
+		try {
+			label_i18n = label_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String label_i18n;
+
 	public Integer getStockQuantity() {
 		return stockQuantity;
 	}

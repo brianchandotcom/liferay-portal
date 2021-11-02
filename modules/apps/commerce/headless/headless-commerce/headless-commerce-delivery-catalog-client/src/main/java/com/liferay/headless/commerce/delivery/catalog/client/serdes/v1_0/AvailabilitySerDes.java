@@ -69,6 +69,20 @@ public class AvailabilitySerDes {
 			sb.append("\"");
 		}
 
+		if (availability.getLabel_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label_i18n\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(availability.getLabel_i18n()));
+
+			sb.append("\"");
+		}
+
 		if (availability.getStockQuantity() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -105,6 +119,13 @@ public class AvailabilitySerDes {
 			map.put("label", String.valueOf(availability.getLabel()));
 		}
 
+		if (availability.getLabel_i18n() == null) {
+			map.put("label_i18n", null);
+		}
+		else {
+			map.put("label_i18n", String.valueOf(availability.getLabel_i18n()));
+		}
+
 		if (availability.getStockQuantity() == null) {
 			map.put("stockQuantity", null);
 		}
@@ -138,6 +159,11 @@ public class AvailabilitySerDes {
 			if (Objects.equals(jsonParserFieldName, "label")) {
 				if (jsonParserFieldValue != null) {
 					availability.setLabel((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "label_i18n")) {
+				if (jsonParserFieldValue != null) {
+					availability.setLabel_i18n((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "stockQuantity")) {

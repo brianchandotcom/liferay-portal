@@ -88,8 +88,8 @@ public class Availability implements Serializable {
 		return label_i18n;
 	}
 
-	public void setLabel_i18n(String label) {
-		this.label_i18n = label;
+	public void setLabel_i18n(String label_i18n) {
+		this.label_i18n = label_i18n;
 	}
 
 	@JsonIgnore
@@ -176,6 +176,20 @@ public class Availability implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(label));
+
+			sb.append("\"");
+		}
+
+		if (label_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label_i18n\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(label_i18n));
 
 			sb.append("\"");
 		}

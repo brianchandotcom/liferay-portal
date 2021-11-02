@@ -29,6 +29,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUt
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryModifiedDateComparator;
 import com.liferay.layout.util.comparator.LayoutModifiedDateComparator;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -368,17 +368,20 @@ public class EditStyleBookEntryDisplayContext {
 			if (layoutPageTemplateEntry.getType() ==
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
 
-				LiferayPortletURL resourceURL = PortletURLFactoryUtil.create(
-					_httpServletRequest,
-					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-					layout, PortletRequest.RESOURCE_PHASE);
+				String url = ResourceURLBuilder.createResourceURL(
+					PortletURLFactoryUtil.create(
+						_httpServletRequest,
+						ContentPageEditorPortletKeys.
+							CONTENT_PAGE_EDITOR_PORTLET,
+						layout, PortletRequest.RESOURCE_PHASE)
+				).setResourceID(
+					"/layout_content_page_editor/get_page_preview"
+				).buildString();
 
-				resourceURL.setDoAsUserId(_themeDisplay.getDefaultUserId());
-				resourceURL.setResourceID(
-					"/layout_content_page_editor/get_page_preview");
+				url = HttpUtil.addParameter(
+					url, "doAsUserId", _themeDisplay.getDefaultUserId());
 
-				String url = HttpUtil.addParameter(
-					resourceURL.toString(), "p_l_mode", Constants.PREVIEW);
+				url = HttpUtil.addParameter(url, "p_l_mode", Constants.PREVIEW);
 
 				return HttpUtil.addParameter(
 					url, "styleBookEntryPreview", true);

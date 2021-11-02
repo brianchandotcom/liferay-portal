@@ -73,6 +73,10 @@ definition {
 			fieldName = "discoveryEndPoint",
 			fieldValue = "https://accounts.google.com/.well-known/openid-configuration");
 
+		FormFields.editTextMultiline(
+			fieldName = "registeredIdTokenSigningAlg",
+			fieldValue = "RS256");
+
 		PortletEntry.save();
 	}
 

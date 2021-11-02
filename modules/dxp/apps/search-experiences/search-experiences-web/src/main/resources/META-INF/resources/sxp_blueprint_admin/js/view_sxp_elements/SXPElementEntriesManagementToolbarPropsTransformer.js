@@ -27,6 +27,7 @@ export default function propsTransformer({
 			defaultLocale: itemData.defaultLocale,
 			dialogTitle: Liferay.Language.get('new-search-element'),
 			namespace: portletNamespace,
+			redirectURL: itemData.redirectURL,
 			type: itemData.type,
 		});
 	};

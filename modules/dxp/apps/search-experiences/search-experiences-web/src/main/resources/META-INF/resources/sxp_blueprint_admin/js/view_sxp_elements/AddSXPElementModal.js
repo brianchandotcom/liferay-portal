@@ -32,6 +32,7 @@ const AddSXPElementModal = ({
 	namespace,
 	submitButtonLabel = Liferay.Language.get('create'),
 	type,
+	redirectURL = '',
 }) => {
 	const isMounted = useIsMounted();
 	const [errorMessage, setErrorMessage] = useState();
@@ -41,7 +42,9 @@ const AddSXPElementModal = ({
 	const [descriptionInputValue, setDescriptionInputValue] = useState('');
 
 	const handleFormError = (responseContent) => {
-		setErrorMessage(responseContent.error || '');
+		setErrorMessage(responseContent.error || DEFAULT_ERROR);
+
+		setLoadingResponse(false);
 	};
 
 	const _handleSubmit = (event) => {
@@ -56,13 +59,26 @@ const AddSXPElementModal = ({
 			JSON.stringify(DEFAULT_EDIT_SXP_ELEMENT)
 		);
 
-		fetch('/o/search-experiences-rest/sxp-elements/', {
-			body: formData,
+		fetch('/o/search-experiences-rest/v1.0/sxp-elements', {
+
+			// body: formData,
+
+			body: JSON.stringify({
+				description: descriptionInputValue,
+				title: inputValue,
+
+				// type,
+
+			}),
+			headers: new Headers({
+				'Content-Type': 'application/json',
+			}),
+
 			method: 'POST',
 		})
 			.then((response) => {
 				if (!response.ok) {
-					handleFormError({error: DEFAULT_ERROR});
+					handleFormError();
 				}
 
 				return response.json();
@@ -70,8 +86,6 @@ const AddSXPElementModal = ({
 			.then((responseContent) => {
 				if (isMounted()) {
 					if (responseContent.error) {
-						setLoadingResponse(false);
-
 						handleFormError(responseContent);
 					}
 					else {
@@ -79,8 +93,18 @@ const AddSXPElementModal = ({
 
 						closeModal();
 
-						if (responseContent.redirectURL) {
-							navigate(responseContent.redirectURL);
+						if (responseContent.id) {
+							const newRedirectURL = new URL(redirectURL);
+
+							newRedirectURL.searchParams.set(
+								'sxpElementId',
+								responseContent.id
+							);
+
+							navigate(newRedirectURL);
+						}
+						else {
+							navigate(redirectURL);
 						}
 					}
 				}

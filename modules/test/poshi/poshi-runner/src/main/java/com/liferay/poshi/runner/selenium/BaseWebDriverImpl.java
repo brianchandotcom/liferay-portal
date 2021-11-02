@@ -2197,14 +2197,16 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void ocularAssertElementImage(String locator) throws Exception {
+	public void ocularAssertElementImage(String locator, String filePath)
+		throws Exception {
+
 		ocularConfig();
 
 		WebElement webElement = getWebElement(locator);
 
 		SnapshotBuilder snapshotBuilder = Ocular.snapshot();
 
-		snapshotBuilder = snapshotBuilder.from(_webDriver);
+		snapshotBuilder = snapshotBuilder.from(Paths.get(filePath));
 
 		SampleBuilder sampleBuilder = snapshotBuilder.sample();
 
@@ -4540,13 +4542,15 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected void ocularConfig() {
+		String testBaseDirName = PropsValues.TEST_BASE_DIR_NAME;
+
 		OcularConfiguration ocularConfiguration = Ocular.config();
 
 		ocularConfiguration = ocularConfiguration.snapshotPath(
-			Paths.get(".", getOcularSnapImageDirName()));
+				Paths.get(testBaseDirName, getOcularSnapImageDirName()));
 
 		ocularConfiguration.resultPath(
-			Paths.get(".", getOcularResultImageDirName()));
+				Paths.get(testBaseDirName, getOcularResultImageDirName()));
 
 		ocularConfiguration.globalSimilarity(99);
 

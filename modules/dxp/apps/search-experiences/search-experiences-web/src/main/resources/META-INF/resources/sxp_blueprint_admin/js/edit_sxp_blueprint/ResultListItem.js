@@ -21,14 +21,15 @@ import React, {useContext, useState} from 'react';
 import {PreviewModalWithCopyDownload} from '../shared/PreviewModal';
 import ThemeContext from '../shared/ThemeContext';
 
-const SXP_BLUEPRINT_FIELD_PREFIX = '_';
-const RESULTS_DEFAULT_KEYS = [
+const getResultDefaultKeys = (locale) => [
 	'entryClassName',
-	'assetSearchSummary',
+	`content_${locale}`,
 	'createDate',
 	'modified',
 	'userName',
 ];
+
+const SXP_BLUEPRINT_FIELD_PREFIX = '_';
 const RESULTS_SHOW_KEYS = ['assetEntryId'];
 const DATE_KEYS = ['createDate', 'modified'];
 const TRUNCATE_LENGTH = 700;
@@ -37,6 +38,16 @@ const sxpBlueprintFieldPrefixRegex = new RegExp(
 	`^(${SXP_BLUEPRINT_FIELD_PREFIX})`
 );
 const bracketsQuotesRegex = new RegExp(/[[\]"]/, 'g');
+
+function localizeDate(property, value) {
+	if (DATE_KEYS.includes(property)) {
+		return moment(moment(value, 'YYYYMMDDHHmmss'))
+			.locale(Liferay.ThemeDisplay.getBCP47LanguageId() || 'en-US')
+			.format('lll');
+	}
+
+	return value;
+}
 
 function removeSXPBlueprintFieldPrefix(value) {
 	return value.replace(sxpBlueprintFieldPrefixRegex, '');
@@ -50,16 +61,6 @@ function truncateString(value) {
 	return value.length > TRUNCATE_LENGTH
 		? value.substring(0, TRUNCATE_LENGTH).concat('...')
 		: value;
-}
-
-function localizeDate(property, value) {
-	if (DATE_KEYS.includes(property)) {
-		return moment(moment(value, 'YYYYMMDDHHmmss'))
-			.locale(Liferay.ThemeDisplay.getBCP47LanguageId() || 'en-US')
-			.format('lll');
-	}
-
-	return value;
 }
 
 function ResultListItem({item}) {
@@ -128,7 +129,7 @@ function ResultListItem({item}) {
 					)}
 				</ClayList.ItemTitle>
 
-				{RESULTS_DEFAULT_KEYS.map((property) =>
+				{getResultDefaultKeys(locale).map((property) =>
 					_renderListRow(property, item[property])
 				)}
 

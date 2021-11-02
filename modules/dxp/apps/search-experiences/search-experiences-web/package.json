@@ -31,7 +31,8 @@
 	},
 	"jest": {
 		"setupFilesAfterEnv": [
-			"@testing-library/react/cleanup-after-each"
+			"@testing-library/react/cleanup-after-each",
+			"<rootDir>/test/js/mocks/fetch.js"
 		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/js/mocks/*"
@@ -43,8 +44,7 @@
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix",
-		"storybook": "liferay-npm-scripts storybook"
+		"format": "liferay-npm-scripts fix"
 	},
 	"version": "1.0.0"
 }

@@ -49,8 +49,15 @@ import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -64,16 +71,25 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.io.File;
+import java.io.InputStream;
 
 import java.math.BigDecimal;
 
@@ -105,7 +121,8 @@ public class CommerceOrderContentDisplayContext {
 			CommercePaymentMethodGroupRelService
 				commercePaymentMethodGroupRelService,
 			CommerceShipmentItemService commerceShipmentItemService,
-			HttpServletRequest httpServletRequest,
+			DLAppLocalService dlAppLocalService,
+			HttpServletRequest httpServletRequest, ItemSelector itemSelector,
 			ModelResourcePermission<CommerceOrder> modelResourcePermission,
 			PercentageFormatter percentageFormatter,
 			PortletResourcePermission portletResourcePermission)
@@ -121,7 +138,9 @@ public class CommerceOrderContentDisplayContext {
 		_commercePaymentMethodGroupRelService =
 			commercePaymentMethodGroupRelService;
 		_commerceShipmentItemService = commerceShipmentItemService;
+		_dlAppLocalService = dlAppLocalService;
 		_httpServletRequest = httpServletRequest;
+		_itemSelector = itemSelector;
 		_modelResourcePermission = modelResourcePermission;
 		_percentageFormatter = percentageFormatter;
 		_portletResourcePermission = portletResourcePermission;
@@ -399,6 +418,57 @@ public class CommerceOrderContentDisplayContext {
 			CommerceShipmentConstants.getShipmentStatusLabel(status));
 	}
 
+	public String getCSVFileEntryItemSelectorURL() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(
+				_cpRequestHelper.getRenderRequest());
+
+		FileItemSelectorCriterion fileItemSelectorCriterion =
+			new FileItemSelectorCriterion();
+
+		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			Collections.<ItemSelectorReturnType>singletonList(
+				new FileEntryItemSelectorReturnType()));
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, "addFileEntry",
+			fileItemSelectorCriterion);
+
+		return itemSelectorURL.toString();
+	}
+
+	public String getCSVTemplateDownloadURL() throws Exception {
+		FileEntry fileEntry =
+			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+				_cpRequestHelper.getScopeGroupId(), _CSV_TEMPLATE_ERC);
+
+		if (fileEntry == null) {
+			ClassLoader classLoader =
+				CommerceOrderContentDisplayContext.class.getClassLoader();
+
+			InputStream inputStream = classLoader.getResourceAsStream(
+				"com/liferay/commerce/order/content/web/internal/dependencies" +
+					"/documents/csv_template.csv");
+
+			File file = FileUtil.createTempFile(inputStream);
+
+			fileEntry = _dlAppLocalService.addFileEntry(
+				_CSV_TEMPLATE_ERC, _cpRequestHelper.getUserId(),
+				_cpRequestHelper.getScopeGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "csv_template.csv",
+				MimeTypesUtil.getContentType(file), "csv_template",
+				StringPool.BLANK, StringPool.BLANK, file, null, null,
+				ServiceContextFactory.getInstance(
+					_cpRequestHelper.getRequest()));
+
+			FileUtil.delete(file);
+		}
+
+		return DLURLHelperUtil.getDownloadURL(
+			fileEntry, fileEntry.getFileVersion(),
+			_cpRequestHelper.getThemeDisplay(), StringPool.BLANK, false, true);
+	}
+
 	public String getDisplayStyle(String portletId)
 		throws ConfigurationException {
 
@@ -630,6 +700,8 @@ public class CommerceOrderContentDisplayContext {
 		return true;
 	}
 
+	private static final String _CSV_TEMPLATE_ERC = "CSV_TEMPLATE_ERC";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderContentDisplayContext.class);
 
@@ -651,7 +723,9 @@ public class CommerceOrderContentDisplayContext {
 		_commercePaymentMethodGroupRelService;
 	private final CommerceShipmentItemService _commerceShipmentItemService;
 	private final CPRequestHelper _cpRequestHelper;
+	private final DLAppLocalService _dlAppLocalService;
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private final ModelResourcePermission<CommerceOrder>
 		_modelResourcePermission;
 	private final PercentageFormatter _percentageFormatter;

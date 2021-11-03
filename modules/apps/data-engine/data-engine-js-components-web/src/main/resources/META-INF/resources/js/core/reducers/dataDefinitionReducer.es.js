@@ -43,10 +43,12 @@ export default (state, action, config) => {
 
 			const fieldType = fieldTypes.find(({name}) => name === type);
 
-			const field = createField(
-				{defaultLanguageId, editingLanguageId, fieldNameGenerator},
-				{fieldType}
-			);
+			const field = createField({
+				defaultLanguageId,
+				editingLanguageId,
+				fieldNameGenerator,
+				fieldType,
+			});
 
 			const dataDefinitionField = DataConverter.getDataDefinitionField(
 				field

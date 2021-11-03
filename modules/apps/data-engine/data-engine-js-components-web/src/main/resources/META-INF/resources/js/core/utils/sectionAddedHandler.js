@@ -51,7 +51,24 @@ const handleSectionAdded = (props, state, event) => {
 	const {fieldName, parentFieldName} = data;
 	const {pages} = state;
 
-	const newField = event.newField ?? createField(props, event);
+	const {
+		defaultLanguageId,
+		editingLanguageId,
+		fieldNameGenerator,
+		portletNamespace,
+	} = props;
+	const {fieldType, skipFieldNameGeneration, useFieldName} = event;
+	const newField =
+		event.newField ??
+		createField({
+			defaultLanguageId,
+			editingLanguageId,
+			fieldNameGenerator,
+			fieldType,
+			portletNamespace,
+			skipFieldNameGeneration,
+			useFieldName,
+		});
 	const existingField = findFieldByFieldName(pages, fieldName);
 	const fieldSetField = createFieldSet(props, event, [
 		existingField,

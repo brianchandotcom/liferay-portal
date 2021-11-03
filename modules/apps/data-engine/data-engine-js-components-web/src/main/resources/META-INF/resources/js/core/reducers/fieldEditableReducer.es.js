@@ -132,15 +132,13 @@ export default (state, action, config) => {
 
 			const field =
 				action.payload.newField ||
-				createField(
-					{
-						defaultLanguageId,
-						editingLanguageId,
-						fieldNameGenerator,
-						portletNamespace,
-					},
-					{fieldType}
-				);
+				createField({
+					defaultLanguageId,
+					editingLanguageId,
+					fieldNameGenerator,
+					fieldType,
+					portletNamespace,
+				});
 
 			const settingsVisitor = new PagesVisitor(
 				field.settingsContext.pages

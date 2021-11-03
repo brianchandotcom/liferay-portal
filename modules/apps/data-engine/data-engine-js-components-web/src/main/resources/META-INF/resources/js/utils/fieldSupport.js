@@ -355,19 +355,15 @@ export const normalizeSettingsContextPages = (
 	);
 };
 
-export const createField = (props, event) => {
-	const {
-		defaultLanguageId,
-		editingLanguageId,
-		fieldNameGenerator,
-		portletNamespace,
-	} = props;
-	const {
-		fieldType,
-		skipFieldNameGeneration = false,
-		useFieldName = '',
-	} = event;
-
+export const createField = ({
+	defaultLanguageId,
+	editingLanguageId,
+	fieldNameGenerator,
+	fieldType,
+	portletNamespace,
+	skipFieldNameGeneration = false,
+	useFieldName = '',
+}) => {
 	let newFieldName = useFieldName;
 
 	if (!useFieldName) {

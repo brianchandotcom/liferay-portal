@@ -471,7 +471,7 @@ definition {
 			configurationName = "Time Zone",
 			configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.configureTimeZone(timeZone = "(UTC +02:00) Central European Summer Time");
+		PortalSettings.configureTimeZone(timeZone = "(UTC +05:00) Pakistan Time");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -501,7 +501,7 @@ definition {
 		task ("Assert Timezone is included with account lockout message.") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "CEST.");
+				value1 = "PKT.");
 		}
 	}
 

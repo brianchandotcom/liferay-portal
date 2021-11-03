@@ -111,7 +111,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "Modal#BODY");
 
-		Click(locator1 = "Icon#PLUS");
+		Click(locator1 = "Modal#PLUS");
 
 		for (var locale : list "${localeList}") {
 			var locale = StringUtil.replace("${locale}", "_", "-");
@@ -123,7 +123,7 @@ definition {
 				locator1 = "LexiconTable#TABLE_ENTRY");
 		}
 
-		Click(locator1 = "Icon#PLUS");
+		Click(locator1 = "Modal#PLUS");
 
 		if (isSet(localizedDone)) {
 			Click(

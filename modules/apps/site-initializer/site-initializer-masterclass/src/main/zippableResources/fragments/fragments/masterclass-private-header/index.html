@@ -1,14 +1,11 @@
 [#assign
+	layout = themeDisplay.getLayout()
+	layoutName = layout.getName(locale)
 	navUserClass = ""
 	privateUserFriendlyURL = themeDisplay.getPathFriendlyURLPrivateUser() + "/" + themeDisplay.getUser().getFirstName()
 	publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
 	publicSiteNavbarClass =""
 	userName = themeDisplay.getUser().getFirstName()
-	myLearning = publicFriendlyURL + "/my-learning"
-	notifications = publicFriendlyURL + "/notifications"
-	accountSettings = publicFriendlyURL + "/account-settings"
-	layout = themeDisplay.getLayout()
-	layoutName = layout.getName(locale)
 /]
 
 [#if !themeDisplay.isSignedIn()]
@@ -34,17 +31,17 @@
 
 						<ul aria-labelledby="${fragmentEntryLinkNamespace}_dropdown_menu" class="dropdown-menu right">
 							<li>
-								<a class="dropdown-item" href="${myLearning}">
+								<a class="dropdown-item" href="${publicFriendlyURL}/my-learning">
 									My Learning
 								</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="${notifications}">
+								<a class="dropdown-item" href="${publicFriendlyURL}/notifications">
 									Notifications
 								</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="${accountSettings}">
+								<a class="dropdown-item" href="${publicFriendlyURL}/account-settings">
 									Account Settings
 								</a>
 							</li>
@@ -62,7 +59,7 @@
 					</li>
 				[#else]
 					<li class="nav-item">
-						<a class="nav-link" href="/web/masterclass/sign-in">
+						<a class="nav-link" href="${publicFriendlyURL}/sign-in">
 							<img alt="" class="btn btn-monospaced p-1" src="[resources:icon_user_not_logged.svg]" />
 
 							<span class="small text-uppercase">Sign In</span>

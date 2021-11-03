@@ -50,7 +50,6 @@ definition {
 
 	}
 
-
 	@description = "LPS-111465 When a non-default virtual instance/company is synced to AC, all the segments created on AC with more than one member are listed in People > Segments"
 	@ignore = "true"
 	@priority = "5"

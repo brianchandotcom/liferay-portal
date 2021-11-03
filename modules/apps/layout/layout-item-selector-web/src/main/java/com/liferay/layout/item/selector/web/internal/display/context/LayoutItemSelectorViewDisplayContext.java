@@ -78,13 +78,13 @@ public class LayoutItemSelectorViewDisplayContext {
 			desiredItemSelectorReturnTypes.stream();
 
 		_itemSelectedReturnType = desiredItemSelectorReturnTypesStream.map(
-			itemSelectorReturnType -> itemSelectorReturnType.getClass()
-		).map(
-			itemSelectorReturnTypeClass -> itemSelectorReturnTypeClass.getName()
+			itemSelectorReturnType -> {
+				Class<?> clazz = itemSelectorReturnType.getClass();
+
+				return clazz.getName();
+			}
 		).filter(
-			itemSelectorReturnTypeClassName ->
-				_supportedItemSelectorReturnTypesClassNames.contains(
-					itemSelectorReturnTypeClassName)
+			_supportedItemSelectorReturnTypesClassNames::contains
 		).findFirst(
 		).orElse(
 			URLItemSelectorReturnType.class.getName()

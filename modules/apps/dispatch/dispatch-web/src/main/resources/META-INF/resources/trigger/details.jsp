@@ -23,13 +23,20 @@ long dispatchTriggerId = 0;
 
 DispatchTrigger dispatchTrigger = dispatchTriggerDisplayContext.getDispatchTrigger();
 
+String cssClass = StringPool.BLANK;
 String dispatchTaskExecutorType = ParamUtil.getString(request, "dispatchTaskExecutorType");
 String dispatchTaskSettings = StringPool.BLANK;
+String readonly = StringPool.FALSE;
 
 if (dispatchTrigger != null) {
 	dispatchTriggerId = dispatchTrigger.getDispatchTriggerId();
 	dispatchTaskExecutorType = dispatchTrigger.getDispatchTaskExecutorType();
 	dispatchTaskSettings = dispatchTrigger.getDispatchTaskSettings();
+
+	if (dispatchTrigger.isSystem()) {
+		cssClass = "disabled";
+		readonly = StringPool.TRUE;
+	}
 }
 %>
 
@@ -56,7 +63,7 @@ if (dispatchTrigger != null) {
 				<aui:model-context bean="<%= dispatchTrigger %>" model="<%= DispatchTrigger.class %>" />
 
 				<aui:fieldset>
-					<aui:input disabled="<%= (dispatchTrigger != null) && dispatchTrigger.isSystem() %>" name="name" required="<%= true %>" />
+					<aui:input cssClass="<%= cssClass %>" name="name" readonly="<%= readonly %>" required="<%= true %>" type="text" />
 				</aui:fieldset>
 
 				<div id="<portlet:namespace />dispatchTaskSettingsEditor"></div>

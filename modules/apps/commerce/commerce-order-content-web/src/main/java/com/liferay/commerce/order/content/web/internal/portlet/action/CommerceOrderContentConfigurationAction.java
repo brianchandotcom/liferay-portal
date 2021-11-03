@@ -28,6 +28,8 @@ import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -77,7 +79,8 @@ public class CommerceOrderContentConfigurationAction
 						_commerceOrderPriceCalculation, _commerceOrderService,
 						_commerceOrderTypeService,
 						_commercePaymentMethodGroupRelService,
-						_commerceShipmentItemService, httpServletRequest,
+						_commerceShipmentItemService, _dlAppLocalService,
+						httpServletRequest, _itemSelector,
 						_modelResourcePermission, _percentageFormatter,
 						_portletResourcePermission);
 
@@ -132,6 +135,12 @@ public class CommerceOrderContentConfigurationAction
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"

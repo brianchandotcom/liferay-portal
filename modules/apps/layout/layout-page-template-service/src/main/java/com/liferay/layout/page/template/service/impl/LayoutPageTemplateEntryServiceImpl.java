@@ -20,14 +20,17 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryServiceBaseImpl;
+import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -160,6 +163,46 @@ public class LayoutPageTemplateEntryServiceImpl
 		return layoutPageTemplateEntryLocalService.copyLayoutPageTemplateEntry(
 			getUserId(), groupId, layoutPageTemplateCollectionId,
 			layoutPageTemplateEntryId, serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry createLayoutPageTemplateEntryFromLayout(
+			long segmentsExperienceId, Layout sourceLayout, String name,
+			long targetLayoutPageTemplateCollectionId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (!sourceLayout.isTypeContent()) {
+			throw new UnsupportedOperationException();
+		}
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), sourceLayout.getGroupId(),
+			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
+
+		LayoutPageTemplateCollection targetLayoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				getLayoutPageTemplateCollection(
+					targetLayoutPageTemplateCollectionId);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				getUserId(), sourceLayout.getGroupId(),
+				targetLayoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				0, 0, name, LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+				false, 0, 0, sourceLayout.getMasterLayoutPlid(),
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		_layoutCopyHelper.copyLayout(
+			segmentsExperienceId, sourceLayout, draftLayout);
+
+		return layoutPageTemplateEntry;
 	}
 
 	@Override
@@ -812,6 +855,12 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateCollectionLocalService

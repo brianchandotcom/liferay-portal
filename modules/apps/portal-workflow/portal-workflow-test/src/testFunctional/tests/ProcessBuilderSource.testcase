@@ -557,15 +557,9 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Click(
-			key_workflowDefinitionTitle = "Single Approver",
-			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		MenuItem.clickNoError(menuItem = "Edit");
-
-		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
-
-		Click(locator1 = "Button#UPDATE");
+		Workflow.updateDefinition(workflowDefinitionTitle = "Single Approver Updated");
 
 		Click(locator1 = "Icon#INFO");
 

@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td>NO_PAGE_MESSAGE</td>
-	<td>//div[contains(@class,'no-page-message')][normalize-space(text())='You cannot preview the style book because there are no pages in this site.']</td>
+	<td>//div[contains(@class,'empty-state-text')][normalize-space(text())='You cannot preview the style book because your site is empty.']</td>
 	<td></td>
 </tr>
 <tr>

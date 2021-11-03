@@ -9,10 +9,12 @@ const Panel = ({
 	defaultExpanded = false,
 	hasError = false,
 	sections,
+	setDiscardChanges,
 	stepChecked,
 	title = '',
 }) => {
 	const [showContentPanel, setShowContentPanel] = useState(defaultExpanded);
+	const [showDiscardChanges, setShowDiscardChanges] = useState(false);
 
 	useEffect(() => {
 		setShowContentPanel(false);
@@ -21,6 +23,22 @@ const Panel = ({
 			setShowContentPanel(true);
 		}
 	}, [stepChecked, defaultExpanded, hasError]);
+
+	useEffect(() => {
+		var filesChanged = false;
+
+		sections?.map((section) => {
+			const noDocumentId = section.files?.some(
+				(file) => !file.documentId
+			);
+
+			if (noDocumentId) {
+				filesChanged = true;
+			}
+		});
+
+		setShowDiscardChanges(filesChanged);
+	}, [sections]);
 
 	return (
 		<div className="panel-container">
@@ -36,19 +54,32 @@ const Panel = ({
 				<div className="panel-right">
 					{changeable && stepChecked && !hasError && (
 						<div className="change-link">
-							<a
-								onClick={() =>
-									setShowContentPanel(!showContentPanel)
-								}
-							>
-								Change
-							</a>
+							{!showContentPanel ? (
+								<a
+									onClick={() => {
+										setShowContentPanel(true);
+									}}
+								>
+									Change
+								</a>
+							) : (
+								showDiscardChanges && (
+									<a
+										onClick={() => {
+											setDiscardChanges();
+										}}
+									>
+										Discard Changes
+									</a>
+								)
+							)}
 						</div>
 					)}
 
 					<div
 						className={classNames('panel-right-icon', {
-							stepChecked: stepChecked && !hasError,
+							stepChecked:
+								stepChecked && !hasError && !showContentPanel,
 						})}
 					>
 						<ClayIcon symbol="check" />

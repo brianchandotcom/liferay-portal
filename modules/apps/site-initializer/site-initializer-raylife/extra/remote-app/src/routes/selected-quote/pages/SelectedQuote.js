@@ -22,6 +22,7 @@ const SelectedQuote = () => {
 	});
 
 	const [sections, setSections] = useState(null);
+	const [discardChanges, setDiscardChanges] = useState(false);
 
 	const _setPanel = (panelKey, panelKeyProperty, value) => {
 		const newPanel = {...panel};
@@ -67,10 +68,13 @@ const SelectedQuote = () => {
 					defaultExpanded={panel.uploadDocuments.expanded}
 					hasError={hasUploadError()}
 					sections={sections}
+					setDiscardChanges={() => setDiscardChanges(!discardChanges)}
 					stepChecked={panel.uploadDocuments.checked}
 					title="2. Upload Documents"
 				>
 					<UploadDocuments
+						discardChanges={discardChanges}
+						setDiscardChanges={() => setDiscardChanges(false)}
 						setExpanded={setExpanded}
 						setSection={(sections) => setSections(sections)}
 						setStepChecked={setStepChecked}

@@ -18,7 +18,14 @@ const dropAreaProps = {
 	widthContainer: '100%',
 };
 
-const UploadDocuments = ({setExpanded, setSection, setStepChecked}) => {
+const UploadDocuments = ({
+	changeSections,
+	discardChanges,
+	setDiscardChanges,
+	setExpanded,
+	setSection,
+	setStepChecked,
+}) => {
 	const properties = useContext(ApplicationPropertiesContext);
 	const [loading, setLoading] = useState(false);
 
@@ -53,6 +60,25 @@ const UploadDocuments = ({setExpanded, setSection, setStepChecked}) => {
 			type: 'image',
 		},
 	]);
+
+	const onDiscardChanges = () => {
+		try {
+			setSections(
+				sections?.map((section) => {
+					const discardFilesChanged = section?.files.filter(
+						(file) => file.documentId
+					);
+
+					return {
+						...section,
+						files: discardFilesChanged,
+					};
+				})
+			);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	const onSetError = (_section, value) => {
 		setSections((sections) =>
@@ -160,6 +186,19 @@ const UploadDocuments = ({setExpanded, setSection, setStepChecked}) => {
 		setSection(sections);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sections]);
+
+	useEffect(() => {
+		if (changeSections) {
+			setSections(changeSections);
+		}
+	}, [changeSections]);
+
+	useEffect(() => {
+		if (discardChanges) {
+			onDiscardChanges();
+			setDiscardChanges();
+		}
+	}, [discardChanges]);
 
 	return (
 		<div className="upload-container">

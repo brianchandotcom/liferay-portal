@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
@@ -175,6 +176,72 @@ public class EditAssetListDisplayContext {
 					QueryUtil.ALL_POS);
 
 		return _assetListEntrySegmentsEntryRels;
+	}
+
+	public Map<String, Object> getData() throws Exception {
+		AssetListEntry assetListEntry = getAssetListEntry();
+
+		List<SegmentsEntry> availableSegmentsEntries = getAvailableSegmentsEntries();
+
+
+		PortletURL segmentsPortletURL = PortalUtil.getControlPanelPortletURL(
+			_httpServletRequest, _themeDisplay.getScopeGroup(), SegmentsPortletKeys.SEGMENTS, 0,
+			0, PortletRequest.RENDER_PHASE);
+
+		String createNewSegmentURL = PortletURLBuilder.create(segmentsPortletURL)
+			.setMVCRenderCommandName("/segments/edit_segments_entry", false)
+			.setParameter("type", User.class.getName())
+			.buildString();
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(_portletResponse);
+
+
+		return HashMapBuilder.<String, Object>put(
+			"openSelectSegmentsEntryDialogMethod", liferayPortletResponse.getNamespace() + "openSelectSegmentsEntryDialog"
+		).put(
+			"assetEntryListSegmentsEntryRels", _getAssetListEntrySegmentsEntryRelJSONArray()
+		).put(
+			"availableSegmentsEntries", !availableSegmentsEntries.isEmpty()
+		).put(
+			"validAssetListEntry", Validator.isNotNull(assetListEntry.getAssetEntryType())
+		).put(
+			"createNewSegmentURL", createNewSegmentURL
+		)
+		.build();
+	}
+
+	private JSONArray _getAssetListEntrySegmentsEntryRelJSONArray() {
+		List<AssetListEntrySegmentsEntryRel>
+			assetEntryListSegmentsEntryRels = getAssetListEntrySegmentsEntryRels();
+
+		Stream<AssetListEntrySegmentsEntryRel> stream = assetEntryListSegmentsEntryRels.stream();
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(_portletResponse);
+
+		return JSONUtil.putAll(
+			stream.map(
+				assetListEntrySegmentsEntryRel -> JSONUtil.put(
+					"active",
+					getSegmentsEntryId() == assetListEntrySegmentsEntryRel.getSegmentsEntryId()
+				).put(
+					"editAssetListEntryURL", PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCPath(
+						"/edit_asset_list_entry.jsp"
+					).setParameter(
+						"assetListEntryId", assetListEntrySegmentsEntryRel.getAssetListEntryId()
+					).setParameter(
+						"segmentsEntryId", assetListEntrySegmentsEntryRel.getSegmentsEntryId()
+					).buildString()
+				).put(
+					"label",
+					getSegmentsEntryName(
+						assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
+						_themeDisplay.getLocale())
+				)
+			).toArray());
 	}
 
 	public int getAssetListEntryType() {
@@ -1269,5 +1336,4 @@ public class EditAssetListDisplayContext {
 	private Boolean _subtypeFieldsFilterEnabled;
 	private final ThemeDisplay _themeDisplay;
 	private final UnicodeProperties _unicodeProperties;
-
 }

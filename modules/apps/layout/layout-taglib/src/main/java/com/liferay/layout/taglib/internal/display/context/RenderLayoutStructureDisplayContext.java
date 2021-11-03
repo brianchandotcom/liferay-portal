@@ -1119,6 +1119,13 @@ public class RenderLayoutStructureDisplayContext {
 	}
 
 	private long[] _getSegmentsExperienceIds() {
+		long[] selectedSegmentsExperienceIds = ParamUtil.getLongValues(
+			_httpServletRequest, "p_s_e_id");
+
+		if (selectedSegmentsExperienceIds.length > 0) {
+			return selectedSegmentsExperienceIds;
+		}
+
 		if (_segmentsExperienceIds != null) {
 			return _segmentsExperienceIds;
 		}

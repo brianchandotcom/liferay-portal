@@ -176,7 +176,7 @@ definition {
 				locator1 = "Select#WORKFLOW_DEFAULT",
 				value1 = "${workflowDefinition}");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 	}
 

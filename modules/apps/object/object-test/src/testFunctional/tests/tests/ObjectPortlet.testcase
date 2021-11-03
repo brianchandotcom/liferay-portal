@@ -218,8 +218,10 @@ definition {
 	}
 
 	@description = "LPS-140081 - Verify it is possible to add an entry without selecting a value for a Picklist field that is not required"
-	@priority = "4"
+	@priority = "5"
 	test CanAddEntryWithoutSelectingPicklist {
+		property portal.acceptance = "true";
+
 		Picklist.gotoPicklists();
 
 		Picklist.addPicklistViaUI(picklistName = "Custom Picklist");

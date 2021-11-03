@@ -41,6 +41,16 @@ definition {
 
 	}
 
+	@description = "LPS-111465 When a default virtual instance/company is not synced to AC, none of the segments created on AC for other virtual instances are listed in People > Segments"
+	@ignore = "true"
+	@priority = "5"
+	test DefaultInstanceNotSynchronizedWithAC {
+
+		// TODO LPS-111464 DefaultInstanceNotSynchronizedWithAC pending implementation
+
+	}
+
+
 	@description = "LPS-111465 When a non-default virtual instance/company is synced to AC, all the segments created on AC with more than one member are listed in People > Segments"
 	@ignore = "true"
 	@priority = "5"

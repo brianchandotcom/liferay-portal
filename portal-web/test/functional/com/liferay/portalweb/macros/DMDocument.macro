@@ -793,8 +793,6 @@ definition {
 			dmDocumentFile = "${dmDocumentFile}",
 			dmDocumentTitle = "${dmDocumentTitle}");
 
-		ScrollWebElementIntoView(locator1 = "Button#SUBMIT_FOR_PUBLICATION");
-
 		Button.clickSubmitForPublication();
 
 		var key_dmDocumentTitle = "${dmDocumentTitle}";

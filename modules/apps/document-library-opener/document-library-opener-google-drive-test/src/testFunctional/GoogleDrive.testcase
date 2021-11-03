@@ -671,10 +671,6 @@ definition {
 			dmDocumentTitle = "Untitled",
 			dmDocumentTitleEdit = "Edited Google Document With Workflow");
 
-		ScrollWebElementIntoView(
-			key_text = "Submit for Publication",
-			locator1 = "Button#ANY");
-
 		Button.clickSubmitForPublication();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");

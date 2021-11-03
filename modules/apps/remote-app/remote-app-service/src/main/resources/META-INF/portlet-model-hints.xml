@@ -19,6 +19,10 @@
 		<field name="customElementURLs" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field localized="true" name="description" type="String">
+			<hint-collection name="CLOB" />
+			<sanitize content-type="text/html" modes="ALL" />
+		</field>
 		<field name="friendlyURLMapping" type="String" />
 		<field name="iFrameURL" type="String">
 			<hint-collection name="URL" />
@@ -29,6 +33,9 @@
 		<field name="portletCategoryName" type="String" />
 		<field name="properties" type="String">
 			<hint-collection name="CLOB" />
+		</field>
+		<field name="sourceCodeURL" type="String">
+			<hint-collection name="URL" />
 		</field>
 		<field name="type" type="String" />
 	</model>

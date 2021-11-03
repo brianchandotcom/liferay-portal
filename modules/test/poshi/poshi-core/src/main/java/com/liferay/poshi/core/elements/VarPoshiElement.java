@@ -295,7 +295,9 @@ public class VarPoshiElement extends PoshiElement {
 							}
 						}
 
-						if (!mathOperator.equals("")) {
+						if (!mathOperator.equals("") &&
+							!(parentElement instanceof ExecutePoshiElement)) {
+
 							value =
 								matcher.group(2) + mathOperator +
 									matcher.group(3);

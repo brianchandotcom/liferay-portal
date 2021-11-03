@@ -40,7 +40,7 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 <liferay-frontend:edit-form
 	action="<%= editVocabularyURL %>"
 	name="fm"
-	onSubmit='<%= liferayPortletResponse.getNamespace() + "confirmation(event);" %>'
+	onSubmit='<%= liferayPortletResponse.getNamespace() + "confirmation(event); event.preventDefault();" %>'
 >
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="vocabularyId" type="hidden" value="<%= vocabularyId %>" />
@@ -97,29 +97,34 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 
 <aui:script>
 	function <portlet:namespace />confirmation(event) {
-		<c:if test="<%= vocabulary == null %>">
-			var message =
-				'<liferay-ui:message key="are-you-sure-you-want-to-create-this-vocabulary-only-with-internal-visibility" />';
+		<c:choose>
+			<c:when test="<%= vocabulary == null %>">
+				var message =
+					'<liferay-ui:message key="are-you-sure-you-want-to-create-this-vocabulary-only-with-internal-visibility" />';
 
-			var visibilityTypePublic = document.getElementById(
-				'<portlet:namespace />visibilityTypePublic'
-			);
+				var visibilityTypePublic = document.getElementById(
+					'<portlet:namespace />visibilityTypePublic'
+				);
 
-			var visibilityTypePublicChecked = visibilityTypePublic.checked;
+				var visibilityTypePublicChecked = visibilityTypePublic.checked;
 
-			if (visibilityTypePublicChecked) {
-				message =
-					'<liferay-ui:message key="are-you-sure-you-want-to-create-this-vocabulary-with-public-visibility" />';
-			}
+				if (visibilityTypePublicChecked) {
+					message =
+						'<liferay-ui:message key="are-you-sure-you-want-to-create-this-vocabulary-with-public-visibility" />';
+				}
 
-			if (
-				!confirm(
-					message +
-						' \n\n<liferay-ui:message key="the-action-of-setting-a-vocabulary-either-with-internal-or-public-visibility-cannot-be-reversed" />'
-				)
-			) {
-				event.preventDefault();
-			}
-		</c:if>
+				if (
+					confirm(
+						message +
+							' \n\n<liferay-ui:message key="the-action-of-setting-a-vocabulary-either-with-internal-or-public-visibility-cannot-be-reversed" />'
+					)
+				) {
+					submitForm(document.<portlet:namespace />fm);
+				}
+			</c:when>
+			<c:otherwise>
+				submitForm(document.<portlet:namespace />fm);
+			</c:otherwise>
+		</c:choose>
 	}
 </aui:script>

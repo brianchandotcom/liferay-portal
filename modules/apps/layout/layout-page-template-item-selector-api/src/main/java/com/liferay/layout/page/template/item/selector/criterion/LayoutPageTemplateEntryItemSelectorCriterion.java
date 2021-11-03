@@ -22,14 +22,28 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
 public class LayoutPageTemplateEntryItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
 
+	public LayoutPageTemplateEntryItemSelectorCriterion() {
+		_groupId = 0;
+		_layoutType = 0;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
 	public int getLayoutType() {
 		return _layoutType;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	public void setLayoutType(int layoutType) {
 		_layoutType = layoutType;
 	}
 
+	private long _groupId;
 	private int _layoutType;
 
 }

@@ -14,13 +14,14 @@
 
 import React from 'react';
 
-import datasetDisplayLauncher from '../../../../frontend-taglib/frontend-taglib-clay/src/main/resources/META-INF/resources/data_set_display/entry';
+import {DataSet} from '@liferay/frontend-data-set-web';
+import {render} from '@liferay/frontend-js-react-web';
 
 import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
-import '../../../../frontend-taglib/frontend-taglib-clay/src/main/resources/META-INF/resources/data_set_display/styles/main.scss';
+const datasetDisplayLauncher = (...data) => render(DataSet, ...data);
 
-const fluidDataSetDisplayProps = {
+const fluidDataSetProps = {
 	activeViewSettings: {},
 	apiURL: '/dataset-display-nested-items',
 	appURL: '/o/frontend-taglib-clay/app',
@@ -234,7 +235,7 @@ const fluidDataSetDisplayProps = {
 	],
 };
 
-const emailsDataSetDisplayProps = {
+const emailsDataSetProps = {
 	activeViewSettings: {},
 	apiURL: '/dataset-display-email-data',
 	creationMenuItems: [
@@ -336,7 +337,7 @@ const selectableTableProps = {
 
 const today = new Date();
 
-const ordersDataSetDisplayProps = {
+const ordersDataSetProps = {
 	activeViewSettings: {
 		name: 'table',
 	},
@@ -525,7 +526,7 @@ const ordersDataSetDisplayProps = {
 	],
 };
 
-const productsDataSetDisplayProps = {
+const productsDataSetProps = {
 	activeViewSettings: {},
 	apiURL:
 		'/o/headless-commerce-admin-catalog/v1.0/products/?nestedFields=skus%2Ccatalog',
@@ -747,7 +748,7 @@ const productsDataSetDisplayProps = {
 	],
 };
 
-const priceListsDataSetDisplayProps = {
+const priceListsDataSetProps = {
 	activeViewSettings: {},
 	apiURL: '/o/headless-commerce-admin-pricing/v2.0/price-lists',
 	enableInlineEditMode: false,
@@ -865,22 +866,22 @@ const priceListsDataSetDisplayProps = {
 };
 
 datasetDisplayLauncher(
-	ordersDataSetDisplayProps,
+	ordersDataSetProps,
 	document.getElementById('orders-dataset-display-root')
 );
 
 datasetDisplayLauncher(
-	productsDataSetDisplayProps,
+	productsDataSetProps,
 	document.getElementById('products-dataset-display-root')
 );
 
 datasetDisplayLauncher(
-	priceListsDataSetDisplayProps,
+	priceListsDataSetProps,
 	document.getElementById('price-list-dataset-display-root')
 );
 
 datasetDisplayLauncher(
-	fluidDataSetDisplayProps,
+	fluidDataSetProps,
 	document.getElementById('fluid-dataset-display-root')
 );
 
@@ -890,6 +891,6 @@ datasetDisplayLauncher(
 );
 
 datasetDisplayLauncher(
-	emailsDataSetDisplayProps,
+	emailsDataSetProps,
 	document.getElementById('emails-dataset-display-root')
 );

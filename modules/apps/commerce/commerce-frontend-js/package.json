@@ -21,6 +21,7 @@
 		"@clayui/sticker": "3.39.0",
 		"@clayui/table": "3.39.0",
 		"@clayui/tooltip": "3.39.0",
+		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-react-web": "*",
 		"classnames": "2.3.1",
 		"frontend-js-web": "*",
@@ -40,9 +41,6 @@
 			"!<rootDir>/src/**/constants.js",
 			"!<rootDir>/src/**/entry.js"
 		],
-		"moduleNameMapper": {
-			"^frontend-taglib-clay/(.*)": "<rootDir>../../frontend-taglib/frontend-taglib-clay/src/main/resources/META-INF/resources/$1"
-		},
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/utils/"
 		]

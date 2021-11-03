@@ -15,8 +15,8 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {Col, Row} from '@clayui/layout';
+import {StatusRenderer} from '@liferay/frontend-data-set-web';
 import classnames from 'classnames';
-import StatusRenderer from 'frontend-taglib-clay/data_set_display/data_renderers/StatusRenderer';
 import React from 'react';
 
 import Sticker from './Sticker';

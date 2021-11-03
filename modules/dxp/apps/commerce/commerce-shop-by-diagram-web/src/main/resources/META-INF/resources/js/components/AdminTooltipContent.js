@@ -12,9 +12,9 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {DATA_SET_EVENT} from '@liferay/frontend-data-set-web';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
-import {UPDATE_DATASET_DISPLAY} from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -122,7 +122,7 @@ function AdminTooltipContent({
 			})
 			.then(() => {
 				if (datasetDisplayId) {
-					Liferay.fire(UPDATE_DATASET_DISPLAY, {
+					Liferay.fire(DATA_SET_EVENT.UPDATE_DATASET_DISPLAY, {
 						id: datasetDisplayId,
 					});
 				}
@@ -165,7 +165,7 @@ function AdminTooltipContent({
 			})
 			.then(() => {
 				if (datasetDisplayId) {
-					Liferay.fire(UPDATE_DATASET_DISPLAY, {
+					Liferay.fire(DATA_SET_EVENT.UPDATE_DATASET_DISPLAY, {
 						id: datasetDisplayId,
 					});
 				}

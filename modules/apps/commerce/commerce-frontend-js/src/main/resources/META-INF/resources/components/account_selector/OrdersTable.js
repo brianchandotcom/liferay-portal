@@ -13,8 +13,7 @@
  */
 
 import ClayTable from '@clayui/table';
-import DateRenderer from 'frontend-taglib-clay/data_set_display/data_renderers/DateRenderer';
-import StatusRenderer from 'frontend-taglib-clay/data_set_display/data_renderers/StatusRenderer';
+import {DateRenderer, StatusRenderer} from '@liferay/frontend-data-set-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 

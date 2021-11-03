@@ -107,6 +107,10 @@ module.exports = {
 	],
 	resolve: {
 		alias: {
+			'@liferay/frontend-data-set-web': path.resolve(
+				__dirname,
+				'../../../node_modules/@liferay/frontend-data-set-web/src/main/resources/META-INF/resources/index.js'
+			),
 			'@liferay/frontend-js-react-web': path.resolve(
 				__dirname,
 				'../../../node_modules/@liferay/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts'
@@ -118,18 +122,6 @@ module.exports = {
 			'frontend-js-web': path.resolve(
 				__dirname,
 				'../../../node_modules/frontend-js-web/src/main/resources/META-INF/resources/index.es.js'
-			),
-			'frontend-taglib-clay/data_set_display/data_renderers/DateRenderer': path.resolve(
-				__dirname,
-				'../../../node_modules/frontend-taglib-clay/src/main/resources/META-INF/resources/data_set_display/data_renderers/DateRenderer.js'
-			),
-			'frontend-taglib-clay/data_set_display/data_renderers/StatusRenderer': path.resolve(
-				__dirname,
-				'../../../node_modules/frontend-taglib-clay/src/main/resources/META-INF/resources/data_set_display/data_renderers/StatusRenderer.js'
-			),
-			'frontend-taglib-clay/data_set_display/data_renderers/index': path.resolve(
-				__dirname,
-				'../../../node_modules/frontend-taglib-clay/src/main/resources/META-INF/resources/data_set_display/data_renderers/index.js'
 			),
 		},
 		extensions: ['.js', '.jsx', '.ts', '.tsx'],

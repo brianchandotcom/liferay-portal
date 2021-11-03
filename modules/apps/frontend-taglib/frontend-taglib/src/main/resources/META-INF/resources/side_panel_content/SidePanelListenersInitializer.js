@@ -12,15 +12,14 @@
  * details.
  */
 
-import {
-	CLOSE_SIDE_PANEL,
-	OPEN_MODAL,
-	OPEN_MODAL_FROM_IFRAME,
-} from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
+import {DATA_SET_EVENT} from '@liferay/frontend-data-set-web';
 
 class SidePanelListenersInitializer {
 	constructor() {
-		Liferay.on(OPEN_MODAL, this.handleOpenModalFromSidePanel);
+		Liferay.on(
+			DATA_SET_EVENT.OPEN_MODAL,
+			this.handleOpenModalFromSidePanel
+		);
 
 		document.body.classList.remove('open');
 
@@ -32,19 +31,22 @@ class SidePanelListenersInitializer {
 
 					const parentWindow = Liferay.Util.getOpener();
 
-					parentWindow.Liferay.fire(CLOSE_SIDE_PANEL);
+					parentWindow.Liferay.fire(DATA_SET_EVENT.CLOSE_SIDE_PANEL);
 				});
 			});
 	}
 
 	dispose() {
-		Liferay.detach(OPEN_MODAL, this.handleOpenModalFromSidePanel);
+		Liferay.detach(
+			DATA_SET_EVENT.OPEN_MODAL,
+			this.handleOpenModalFromSidePanel
+		);
 	}
 
 	handleOpenModalFromSidePanel(payload) {
 		const topWindow = Liferay.Util.getTop();
 
-		topWindow.Liferay.fire(OPEN_MODAL_FROM_IFRAME, payload);
+		topWindow.Liferay.fire(DATA_SET_EVENT.OPEN_MODAL_FROM_IFRAME, payload);
 	}
 }
 

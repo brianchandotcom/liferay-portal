@@ -1,11 +1,11 @@
-.data-set-display {
-	&-stacked .data-set-display-management-bar-wrapper {
+.data-set {
+	&-stacked .data-set-management-bar-wrapper {
 		border: none !important;
 		border-radius: 8px;
 		overflow: hidden;
 	}
 
-	.data-set-display-management-bar-wrapper .form-control {
+	.data-set-management-bar-wrapper .form-control {
 		border-width: 1px;
 	}
 

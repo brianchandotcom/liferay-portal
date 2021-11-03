@@ -36,6 +36,7 @@ const Flags = ({
 	companyName,
 	disabled = false,
 	forceLogin = false,
+	isViewMode,
 	message = Liferay.Language.get('report'),
 	onlyIcon = false,
 	pathTermsOfUse,
@@ -142,7 +143,7 @@ const Flags = ({
 					onlyIcon ? 'lfr-portal-tooltip' : ''
 				}`}
 				data-title={onlyIcon ? message : undefined}
-				disabled={disabled}
+				disabled={!isViewMode || disabled}
 				displayType="secondary"
 				monospaced={onlyIcon}
 				onClick={handleClickShow}

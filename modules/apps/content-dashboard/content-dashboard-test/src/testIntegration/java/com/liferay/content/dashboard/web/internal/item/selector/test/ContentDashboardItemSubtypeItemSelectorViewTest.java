@@ -356,7 +356,7 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 			JSONArray itemSubtypesJSONArray =
 				contentDashboardItemTypeJSONObject.getJSONArray("itemSubtypes");
 
-			Assert.assertEquals(5, itemSubtypesJSONArray.length());
+			Assert.assertEquals(4, itemSubtypesJSONArray.length());
 
 			JSONObject itemSubtypeJSONObject =
 				itemSubtypesJSONArray.getJSONObject(0);
@@ -381,14 +381,6 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 			Assert.assertEquals(
 				DLFileEntryType.class.getName(),
 				itemSubtypeJSONObject.getString("className"));
-			Assert.assertNotNull(itemSubtypeJSONObject.getString("classPK"));
-			Assert.assertNotNull(itemSubtypeJSONObject.getString("label"));
-
-			itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(3);
-
-			Assert.assertEquals(
-				DLFileEntryType.class.getName(),
-				itemSubtypeJSONObject.getString("className"));
 			Assert.assertEquals(
 				String.valueOf(dlFileEntryType1.getFileEntryTypeId()),
 				itemSubtypeJSONObject.getString("classPK"));
@@ -396,7 +388,7 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 				_getLabel(dlFileEntryType1.getName(LocaleUtil.US), _group),
 				itemSubtypeJSONObject.getString("label"));
 
-			itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(4);
+			itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(3);
 
 			Assert.assertEquals(
 				DLFileEntryType.class.getName(),
@@ -412,6 +404,45 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 		}
 		finally {
 			GroupTestUtil.deleteGroup(group);
+		}
+	}
+
+	@Test
+	public void testGetDataWithoutGoogleDriveShortcuts() throws Exception {
+		DDMStructureTestUtil.getSampleDDMForm(
+			"content", "string", "text", true, "textarea",
+			new Locale[] {LocaleUtil.US}, LocaleUtil.US);
+
+		DDMStructureTestUtil.getSampleDDMForm(
+			"content", "string", "text", true, "textarea",
+			new Locale[] {LocaleUtil.US}, LocaleUtil.US);
+
+		Map<String, Object> data = _getData();
+
+		JSONArray contentDashboardItemTypesJSONArray = (JSONArray)data.get(
+			"contentDashboardItemTypes");
+
+		JSONObject contentDashboardItemTypeJSONObject =
+			contentDashboardItemTypesJSONArray.getJSONObject(1);
+
+		JSONArray itemSubtypesJSONArray =
+			contentDashboardItemTypeJSONObject.getJSONArray("itemSubtypes");
+
+		for (int i = 0; i < itemSubtypesJSONArray.length(); i++) {
+			JSONObject jsonObject = itemSubtypesJSONArray.getJSONObject(i);
+
+			String className = jsonObject.getString("className");
+
+			Assert.assertEquals(DLFileEntryType.class.getName(), className);
+
+			String classPK = jsonObject.getString("classPK");
+
+			Assert.assertNotNull(classPK);
+
+			String label = jsonObject.getString("label");
+
+			Assert.assertNotNull(label);
+			Assert.assertNotEquals("Google Drive Shortcut", label);
 		}
 	}
 

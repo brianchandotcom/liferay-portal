@@ -19,8 +19,12 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
@@ -1028,6 +1032,70 @@ public class ContentDashboardAdminPortletTest {
 				assetCategory1.getCategoryId());
 			_assetCategoryLocalService.deleteAssetCategory(
 				assetCategory2.getCategoryId());
+		}
+	}
+
+	@Test
+	public void testGetSearchContainerWithoutGoogleDriveShortcut()
+		throws Exception {
+
+		User user = UserTestUtil.addGroupAdminUser(_group);
+
+		Group group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(), 0);
+
+		try {
+			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+				_getMockLiferayPortletRenderRequest();
+
+			JournalTestUtil.addArticle(
+				_user.getUserId(), _group.getGroupId(), 0);
+
+			FileEntry gifFileEntry = _addFileEntry("gif");
+			FileEntry jpgFileEntry = _addFileEntry("jpg");
+
+			FileEntry futureGoogleDriveShortCutFileEntry = _addFileEntry("pdf");
+
+			Object futureGoogleDriveShortModel =
+				futureGoogleDriveShortCutFileEntry.getModel();
+
+			DLFileEntry googleDriveShortcutFileEntry =
+				(DLFileEntry)futureGoogleDriveShortModel;
+
+			DLFileEntryType googleDocsDLFileEntryType =
+				DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+					_company.getGroupId(), "GOOGLE_DOCS");
+
+			googleDriveShortcutFileEntry.setFileEntryTypeId(
+				googleDocsDLFileEntryType.getFileEntryTypeId());
+
+			DLFileEntryLocalServiceUtil.updateDLFileEntry(
+				googleDriveShortcutFileEntry);
+
+			SearchContainer<Object> searchContainer = _getSearchContainer(
+				mockLiferayPortletRenderRequest);
+
+			int actualCount = searchContainer.getTotal();
+
+			Assert.assertEquals(3, actualCount);
+
+			List<Object> results = searchContainer.getResults();
+
+			Assert.assertEquals(
+				jpgFileEntry.getFileName(),
+				ReflectionTestUtil.invoke(
+					results.get(0), "getTitle", new Class<?>[] {Locale.class},
+					LocaleUtil.US));
+
+			Assert.assertEquals(
+				gifFileEntry.getFileName(),
+				ReflectionTestUtil.invoke(
+					results.get(1), "getTitle", new Class<?>[] {Locale.class},
+					LocaleUtil.US));
+		}
+		finally {
+			GroupTestUtil.deleteGroup(group);
+			_userLocalService.deleteUser(user);
 		}
 	}
 

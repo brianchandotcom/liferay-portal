@@ -387,6 +387,7 @@ public class DataFactory {
 		_counter = new SimpleCounter(
 			BenchmarksPropsValues.MAX_GROUP_COUNT +
 				BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT + 1);
+		_dLFileEntryIdCounter = new SimpleCounter();
 		_timeCounter = new SimpleCounter();
 		_futureDateCounter = new SimpleCounter();
 		_layoutPlidCounter = new SimpleCounter();
@@ -2283,6 +2284,9 @@ public class DataFactory {
 				DDMFieldAttribute.class.getName(), _counter.get()));
 		counterModels.add(
 			_newCounterModel(
+				DLFileEntry.class.getName(), _dLFileEntryIdCounter.get()));
+		counterModels.add(
+			_newCounterModel(
 				FriendlyURLEntryLocalization.class.getName(), _counter.get()));
 		counterModels.add(
 			_newCounterModel(
@@ -3605,7 +3609,7 @@ public class DataFactory {
 
 		dlFileEntryModel.setRepositoryId(dlFolderModel.getRepositoryId());
 		dlFileEntryModel.setFolderId(dlFolderModel.getFolderId());
-		dlFileEntryModel.setName(name);
+		dlFileEntryModel.setName(String.valueOf(_dLFileEntryIdCounter.get()));
 		dlFileEntryModel.setFileName(name + "." + extension);
 		dlFileEntryModel.setExtension(extension);
 		dlFileEntryModel.setMimeType(mimeType);
@@ -6972,6 +6976,7 @@ public class DataFactory {
 	private long _defaultUserId;
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayoutContent;
+	private final SimpleCounter _dLFileEntryIdCounter;
 	private List<String> _firstNames;
 	private final SimpleCounter _futureDateCounter;
 	private long _globalGroupId;

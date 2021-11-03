@@ -53,6 +53,7 @@ export interface Config {
 
 	changeMasterLayoutURL: string;
 	changeStyleBookEntryURL: string;
+	createLayoutPageTemplateEntryURL: string;
 	collectionSelectorURL: string;
 
 	commonStyles: Array<{
@@ -122,6 +123,7 @@ export interface Config {
 	getInfoItemFieldValueURL: string;
 	getInfoItemMappingFieldsURL: string;
 	getLayoutFriendlyURL: string;
+	getLayoutPageTemplateCollectionsURL: string;
 	getPageContentsURL: string;
 	getWidgetsURL: string;
 	imageSelectorURL: string;

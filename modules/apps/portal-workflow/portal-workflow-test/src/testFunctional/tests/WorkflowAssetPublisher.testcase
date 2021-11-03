@@ -326,7 +326,7 @@ definition {
 	@priority = "3"
 	test PendingWebContentIsNotDisplayed {
 		property portal.upstream = "quarantine";
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

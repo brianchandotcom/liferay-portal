@@ -16,12 +16,10 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.exception.DuplicateObjectFieldException;
 import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldTypeException;
 import com.liferay.object.exception.RequiredObjectFieldException;
-import com.liferay.object.exception.ReservedObjectFieldException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -229,10 +227,10 @@ public class ObjectFieldLocalServiceTest {
 
 				Assert.fail();
 			}
-			catch (ReservedObjectFieldException reservedObjectFieldException) {
+			catch (ObjectFieldNameException objectFieldNameException) {
 				Assert.assertEquals(
 					"Reserved name " + reservedName,
-					reservedObjectFieldException.getMessage());
+					objectFieldNameException.getMessage());
 			}
 		}
 
@@ -248,10 +246,10 @@ public class ObjectFieldLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ReservedObjectFieldException reservedObjectFieldException) {
+		catch (ObjectFieldNameException objectFieldNameException) {
 			Assert.assertEquals(
 				"Reserved name " + pkObjectFieldName,
-				reservedObjectFieldException.getMessage());
+				objectFieldNameException.getMessage());
 		}
 
 		// Duplicate name
@@ -263,10 +261,9 @@ public class ObjectFieldLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (DuplicateObjectFieldException duplicateObjectFieldException) {
+		catch (ObjectFieldNameException objectFieldNameException) {
 			Assert.assertEquals(
-				"Duplicate name able",
-				duplicateObjectFieldException.getMessage());
+				"Duplicate name able", objectFieldNameException.getMessage());
 		}
 
 		// Types

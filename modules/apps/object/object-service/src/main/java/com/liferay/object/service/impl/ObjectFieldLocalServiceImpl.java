@@ -14,13 +14,11 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.object.exception.DuplicateObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldTypeException;
 import com.liferay.object.exception.RequiredObjectFieldException;
-import com.liferay.object.exception.ReservedObjectFieldException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -330,33 +328,31 @@ public class ObjectFieldLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
-			throw new ObjectFieldNameException("Name is null");
+			throw new ObjectFieldNameException.MustNotBeNull();
 		}
 
 		char[] nameCharArray = name.toCharArray();
 
 		for (char c : nameCharArray) {
 			if (!Validator.isChar(c) && !Validator.isDigit(c)) {
-				throw new ObjectFieldNameException(
-					"Name must only contain letters and digits");
+				throw new ObjectFieldNameException.
+					MustOnlyContainLettersAndDigits();
 			}
 		}
 
 		if (!Character.isLowerCase(nameCharArray[0])) {
-			throw new ObjectFieldNameException(
-				"The first character of a name must be a lower case letter");
+			throw new ObjectFieldNameException.MustBeginWithLowerCaseLetter();
 		}
 
 		if (nameCharArray.length > 41) {
-			throw new ObjectFieldNameException(
-				"Names must be less than 41 characters");
+			throw new ObjectFieldNameException.MustBeLessThan41Characters();
 		}
 
 		if (_reservedNames.contains(StringUtil.toLowerCase(name)) ||
 			StringUtil.equalsIgnoreCase(
 				objectDefinition.getPKObjectFieldName(), name)) {
 
-			throw new ReservedObjectFieldException("Reserved name " + name);
+			throw new ObjectFieldNameException.MustNotBeReserved(name);
 		}
 
 		ObjectField objectField = objectFieldPersistence.fetchByODI_N(
@@ -365,7 +361,7 @@ public class ObjectFieldLocalServiceImpl
 		if ((objectField != null) &&
 			(objectField.getObjectFieldId() != objectFieldId)) {
 
-			throw new DuplicateObjectFieldException("Duplicate name " + name);
+			throw new ObjectFieldNameException.MustNotBeDuplicate(name);
 		}
 	}
 

@@ -411,18 +411,12 @@ public class VarPoshiElement extends PoshiElement {
 
 		parametersString = parametersString.trim();
 
-		boolean singleQuote = false;
-
-		if (parametersString.endsWith("'") &&
-			parametersString.startsWith("'")) {
-
-			singleQuote = true;
-		}
-
 		List<String> parameters = getMethodParameters(parametersString);
 
 		for (String parameter : parameters) {
-			if (singleQuote) {
+			parameter = parameter.trim();
+
+			if (parameter.endsWith("'") && parameter.startsWith("'")) {
 				parameter = getSingleQuotedContent(parameter);
 
 				parameter = StringUtil.replace(parameter, "\\\'", "'");
@@ -430,13 +424,16 @@ public class VarPoshiElement extends PoshiElement {
 
 				parameter = doubleQuoteContent(parameter);
 			}
-			else {
+			else if (parameter.endsWith("\"") && parameter.startsWith("\"")) {
 				parameter = getDoubleQuotedContent(parameter);
 
 				parameter = StringUtil.replace(parameter, "'", "\\\'");
 				parameter = StringUtil.replace(parameter, "&quot;", "\"");
 
 				parameter = singleQuoteContent(parameter);
+			}
+			else {
+				parameter = parameter.trim();
 			}
 
 			sb.append(parameter);

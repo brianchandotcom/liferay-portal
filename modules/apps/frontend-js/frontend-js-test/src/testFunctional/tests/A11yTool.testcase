@@ -21,6 +21,11 @@ definition {
 			layoutName = "A11y Test Page",
 			widgetName = "JS A11y Sample Web");
 
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "A11y Test Page",
+			layoutTemplate = "1 Column");
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blank Test Page");
@@ -89,6 +94,81 @@ definition {
 		AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
 
 		AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+
+		takeScreenshot();
+	}
+
+	@description = "LPS-141820. Verifies violations can be filtered by 'Critical' only."
+	@priority = "5"
+	test CanFilterViolationsByCriticalImpactOnly {
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
+
+		// Workaround for side panel sometimes not displaying LPS-141442
+
+		while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+			Refresh();
+		}
+
+		task ("Verify page has Minor, Moderate, Serious, and Critical set of violations") {
+			for (var severity : list "minor,moderate,serious,critical") {
+				AssertElementPresent(
+					key_text = "${severity}",
+					locator1 = "A11yTool#VIOLATION_PANEL_ITEM_SEVERITY");
+			}
+		}
+
+		task ("Filter impact by Critical") {
+			Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
+
+			AssertElementPresent(locator1 = "A11yTool#FILTER_BY_IMPACT_HEADER");
+
+			Click(
+				key_text = "Critical",
+				locator1 = "A11yTool#FILTER_CHECKBOX");
+
+			Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
+		}
+
+		task ("Verify only critical violations are present on the side panel") {
+			AssertElementPresent(
+				key_text = "critical",
+				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_SEVERITY");
+
+			for (var severity : list "minor,moderate,serious") {
+				AssertElementNotPresent(
+					key_text = "${severity}",
+					locator1 = "A11yTool#VIOLATION_PANEL_ITEM_SEVERITY");
+			}
+		}
+
+		task ("Verify only critical elements are highlighted") {
+			var i = "1";
+
+			while (IsElementPresent(key_text = "${i}", locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_COUNT")) {
+				Click(
+					key_text = "${i}",
+					locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_COUNT");
+
+				var i = ${i} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_text = "${i}",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_COUNT");
+
+			AssertElementPresent(
+				key_text = "critical",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_SEVERITY");
+
+			for (var severity : list "minor,moderate,serious") {
+				AssertElementNotPresent(
+					key_text = "${severity}",
+					locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_SEVERITY");
+			}
+
+			AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+		}
 
 		takeScreenshot();
 	}

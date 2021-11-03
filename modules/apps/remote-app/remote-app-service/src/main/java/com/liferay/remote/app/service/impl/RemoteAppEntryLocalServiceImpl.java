@@ -55,6 +55,7 @@ import com.liferay.remote.app.service.base.RemoteAppEntryLocalServiceBaseImpl;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -84,9 +85,9 @@ public class RemoteAppEntryLocalServiceImpl
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			long userId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			String friendlyURLMapping, boolean instanceable,
+			String description, String friendlyURLMapping, boolean instanceable,
 			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
@@ -113,11 +114,13 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setCustomElementHTMLElementName(
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
+		remoteAppEntry.setDescription(description);
 		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setInstanceable(instanceable);
 		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setProperties(properties);
+		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
@@ -132,9 +135,9 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry addIFrameRemoteAppEntry(
-			long userId, String friendlyURLMapping, String iFrameURL,
-			boolean instanceable, Map<Locale, String> nameMap,
-			String portletCategoryName, String properties)
+			long userId, String description, String friendlyURLMapping,
+			String iFrameURL, boolean instanceable, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException {
 
 		_validateFriendlyURLMapping(friendlyURLMapping);
@@ -152,12 +155,14 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setUserId(user.getUserId());
 		remoteAppEntry.setUserName(user.getFullName());
 
+		remoteAppEntry.setDescription(description);
 		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setInstanceable(instanceable);
 		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setProperties(properties);
+		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_IFRAME);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
@@ -278,8 +283,9 @@ public class RemoteAppEntryLocalServiceImpl
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			String friendlyURLMapping, Map<Locale, String> nameMap,
-			String portletCategoryName, String properties)
+			String description, String friendlyURLMapping,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
@@ -300,10 +306,12 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setCustomElementHTMLElementName(
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
+		remoteAppEntry.setDescription(description);
 		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setProperties(properties);
+		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -315,9 +323,10 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
-			long remoteAppEntryId, String friendlyURLMapping, String iFrameURL,
+			long remoteAppEntryId, String description,
+			String friendlyURLMapping, String iFrameURL,
 			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		_validateFriendlyURLMapping(friendlyURLMapping);
@@ -329,17 +338,42 @@ public class RemoteAppEntryLocalServiceImpl
 		RemoteAppEntry remoteAppEntry =
 			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
 
+		remoteAppEntry.setDescription(description);
 		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setProperties(properties);
+		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
 		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
 
 		return remoteAppEntry;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public RemoteAppEntry updateStatus(
+			long userId, long remoteAppEntryId, int status)
+		throws PortalException {
+
+		RemoteAppEntry remoteAppEntry =
+			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
+
+		if (status == remoteAppEntry.getStatus()) {
+			return remoteAppEntry;
+		}
+
+		User user = _userLocalService.getUser(userId);
+
+		remoteAppEntry.setStatus(status);
+		remoteAppEntry.setStatusByUserId(user.getUserId());
+		remoteAppEntry.setStatusByUserName(user.getFullName());
+		remoteAppEntry.setStatusDate(new Date());
+
+		return remoteAppEntryPersistence.update(remoteAppEntry);
 	}
 
 	@Activate

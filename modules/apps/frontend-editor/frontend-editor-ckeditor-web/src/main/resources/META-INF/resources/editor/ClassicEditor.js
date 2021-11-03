@@ -105,7 +105,6 @@ const ClassicEditor = React.forwardRef(
 						toolbar: initialToolbarSet,
 						...editorConfig,
 					}}
-					data={contents}
 					name={name}
 					onBeforeLoad={(CKEDITOR) => {
 						CKEDITOR.disableAutoInline = true;
@@ -136,6 +135,14 @@ const ClassicEditor = React.forwardRef(
 								return editor.pasteFilter.check(name);
 							}
 						}
+					}}
+					onInstanceReady={({editor}) => {
+						editor.setData(contents, {
+							callback: () => {
+								editor.resetUndo();
+							},
+							noSnapshot: true,
+						});
 					}}
 					ref={editorRefsCallback}
 					{...otherProps}

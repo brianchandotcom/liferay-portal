@@ -28,9 +28,24 @@ export default () => {
 			<hr />
 			<div>
 				{/* This is where your code goes... */}
-				<h3>Violation: ID Attribute Values Must Be Unique</h3>
-				<p id="violation"> Text1 </p>
-				<p id="violation"> Text2 </p>
+				<h3>Minor Violation: ID Attribute Values Must Be Unique</h3>
+				<p id="violation"> ID 1 </p>
+				<p id="violation"> ID 2 </p>
+				
+				<h3>Moderate Violation: Landmarks must be unique</h3>
+				<form aria-label="form-label"> Form 1 </form>
+				<form aria-label="form-label"> Form 2 </form>
+				
+				<h3>Critical Violation: Buttons must have discernible text</h3>
+				<p> There are buttons: </p>
+				<button></button> 
+				<button></button>
+				<p></p>
+
+				<h3>Serious Violation: Links must have discernible text</h3>
+				<p> There's a link: </p>
+				<a href="https://www.liferay.com"></a>
+				<p></p>
 			</div>
 			<hr />
 		</div>

@@ -187,7 +187,14 @@ definition {
 	}
 
 	macro configureSearchBarWidget {
-		SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
+		if (isSet(index)) {
+			SearchPortlets.gotoWidgetOptionsSpecific(
+				index = "${index}",
+				portletOption = "Configuration");
+		}
+		else {
+			SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
+		}
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -420,6 +427,22 @@ definition {
 		MouseOver.mouseOverNotVisible(locator1 = "Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON");
 
 		Click(locator1 = "Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON");
+
+		if (isSet(portletOption)) {
+			var key_menuItem = "${portletOption}";
+
+			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+	}
+
+	macro gotoWidgetOptionsSpecific {
+		MouseOver.mouseOverNotVisible(
+			key_index = "${index}",
+			locator1 = "Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON_SPECIFIC");
+
+		Click(
+			key_index = "${index}",
+			locator1 = "Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON_SPECIFIC");
 
 		if (isSet(portletOption)) {
 			var key_menuItem = "${portletOption}";

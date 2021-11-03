@@ -490,6 +490,10 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		String portalLanguagePropertiesFileName = getAttributeValue(
 			_PORTAL_LANGUAGE_PROPERTIES_FILE_NAME, absolutePath);
 
+		if (Validator.isNull(portalLanguagePropertiesFileName)) {
+			return _portalLanguageProperties;
+		}
+
 		String propertiesContent = getPortalContent(
 			portalLanguagePropertiesFileName, absolutePath);
 

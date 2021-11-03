@@ -52,9 +52,6 @@ public interface JournalWebConfiguration {
 	)
 	public String[] displayViews();
 
-	@Meta.AD(deflt = "false", required = false)
-	public boolean journalArticleAutoSaveDraftEnabled();
-
 	@Meta.AD(
 		deflt = "false", name = "journal-article-show-id", required = false
 	)

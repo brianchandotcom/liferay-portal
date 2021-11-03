@@ -32,7 +32,7 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
+import com.liferay.journal.web.internal.configuration.FFJournalAutoSaveDraftConfiguration;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -89,9 +89,10 @@ public class JournalEditArticleDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_article = article;
 
-		_journalWebConfiguration =
-			(JournalWebConfiguration)_httpServletRequest.getAttribute(
-				JournalWebConfiguration.class.getName());
+		_ffJournalAutoSaveDraftConfiguration =
+			(FFJournalAutoSaveDraftConfiguration)
+				_httpServletRequest.getAttribute(
+					FFJournalAutoSaveDraftConfiguration.class.getName());
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -198,7 +199,8 @@ public class JournalEditArticleDisplayContext {
 			"articleId", getArticleId()
 		).put(
 			"autoSaveDraftEnabled",
-			_journalWebConfiguration.journalArticleAutoSaveDraftEnabled()
+			_ffJournalAutoSaveDraftConfiguration.
+				journalArticleAutoSaveDraftEnabled()
 		).put(
 			"availableLocales", _getAvailableLanguageIds()
 		).put(
@@ -742,6 +744,11 @@ public class JournalEditArticleDisplayContext {
 		return _changeStructure;
 	}
 
+	public boolean isJournalArticleAutoSaveDraftEnabled() {
+		return _ffJournalAutoSaveDraftConfiguration.
+			journalArticleAutoSaveDraftEnabled();
+	}
+
 	public boolean isNeverExpire() {
 		if (_neverExpire != null) {
 			return _neverExpire;
@@ -954,12 +961,13 @@ public class JournalEditArticleDisplayContext {
 	private String _ddmTemplateKey;
 	private String _defaultArticleLanguageId;
 	private String _defaultLanguageId;
+	private final FFJournalAutoSaveDraftConfiguration
+		_ffJournalAutoSaveDraftConfiguration;
 	private Long _folderId;
 	private String _folderName;
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private Long _inheritedWorkflowDDMStructuresFolderId;
-	private final JournalWebConfiguration _journalWebConfiguration;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private Boolean _neverExpire;
 	private Boolean _neverReview;

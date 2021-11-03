@@ -24,4 +24,8 @@ public interface LayoutCopyHelper {
 	public Layout copyLayout(Layout sourceLayout, Layout targetLayout)
 		throws Exception;
 
+	public Layout copyLayoutFromSegmentsExperience(
+			long segmentsExperience, Layout sourceLayout, Layout targetLayout)
+		throws Exception;
+
 }

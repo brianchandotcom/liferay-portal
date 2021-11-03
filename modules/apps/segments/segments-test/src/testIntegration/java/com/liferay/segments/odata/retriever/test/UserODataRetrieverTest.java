@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -53,6 +55,7 @@ import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -114,10 +117,17 @@ public class UserODataRetrieverTest {
 			_companyGuestGroup = _groupLocalService.getGroup(
 				_company.getCompanyId(), GroupConstants.GUEST);
 		}
+
+		_safeCloseable = PropsValuesTestUtil.swapWithSafeCloseable(
+			"INDEX_SEARCH_LIMIT", _ELASTICSEARCH_MAX_RESULT_WINDOW);
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
+		if (_safeCloseable != null) {
+			_safeCloseable.close();
+		}
+
 		_companyLocalService.deleteCompany(_company);
 	}
 
@@ -1167,6 +1177,8 @@ public class UserODataRetrieverTest {
 
 	@Inject
 	private static GroupLocalService _groupLocalService;
+
+	private static SafeCloseable _safeCloseable;
 
 	@DeleteAfterTestRun
 	private final List<AssetTag> _assetTags = new ArrayList<>();

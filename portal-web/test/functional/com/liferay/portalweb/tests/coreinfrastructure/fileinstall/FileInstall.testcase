@@ -165,6 +165,8 @@ definition {
 		GogoShell.viewNoOutput(outputContent = "Active");
 	}
 
+	@description = "Failing due to LPS-122119."
+	@ignore = "true"
 	@priority = "4"
 	test UninstallWarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallWarOffline";

@@ -22,11 +22,9 @@ import com.liferay.content.dashboard.web.internal.display.context.ContentDashboa
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -55,34 +53,31 @@ public class EditContentDashboardConfigurationMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		PortletPreferences portletPreferences = renderRequest.getPreferences();
-
-		String[] assetVocabularyIdsString = portletPreferences.getValues(
-			"assetVocabularyIds", new String[0]);
-
-		if (assetVocabularyIdsString.length == 0) {
-			assetVocabularyIdsString = _defaultValues(renderRequest);
-		}
-
-		Stream<String> streamAssetVocabularyIdsString = Arrays.stream(
-			assetVocabularyIdsString);
-
-		long[] assetVocabularyIds = streamAssetVocabularyIdsString.mapToLong(
-			Long::parseLong
-		).toArray();
-
 		renderRequest.setAttribute(
 			ContentDashboardWebKeys.
 				CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT,
 			new ContentDashboardAdminConfigurationDisplayContext(
-				_assetVocabularyLocalService, assetVocabularyIds,
-				_groupLocalService,
+				_assetVocabularyLocalService,
+				_getAssetVocabularyIds(renderRequest), _groupLocalService,
 				_portal.getHttpServletRequest(renderRequest), renderResponse));
 
 		return "/edit_content_dashboard_configuration.jsp";
 	}
 
-	private String[] _defaultValues(RenderRequest renderRequest) {
+	private long[] _getAssetVocabularyIds(RenderRequest renderRequest) {
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		String[] assetVocabularyIds = portletPreferences.getValues(
+			"assetVocabularyIds", new String[0]);
+
+		if (assetVocabularyIds.length == 0) {
+			return _getDefaultAssetVocabularyIds(renderRequest);
+		}
+
+		return GetterUtil.getLongValues(assetVocabularyIds);
+	}
+
+	private long[] _getDefaultAssetVocabularyIds(RenderRequest renderRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -94,10 +89,7 @@ public class EditContentDashboardConfigurationMVCRenderCommand
 			_assetVocabularyLocalService.fetchGroupVocabulary(
 				themeDisplay.getCompanyGroupId(), "stage");
 
-		return new String[] {
-			String.valueOf(audience.getVocabularyId()),
-			String.valueOf(stage.getVocabularyId())
-		};
+		return new long[] {audience.getVocabularyId(), stage.getVocabularyId()};
 	}
 
 	@Reference

@@ -36,8 +36,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import javax.portlet.ActionURL;
@@ -102,16 +100,10 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 	}
 
 	public JSONArray getCurrentVocabularyJSONArray() {
-		LongStream vocabularyIdsLongStream = Arrays.stream(_assetVocabularyIds);
-
-		List<Long> vocabulariesIdsList = vocabularyIdsLongStream.boxed(
-		).collect(
-			Collectors.toList()
-		);
-
-		Stream<Long> streamVocabulariesIds = vocabulariesIdsList.stream();
-
-		return streamVocabulariesIds.map(
+		return Arrays.stream(
+			_assetVocabularyIds
+		).boxed(
+		).map(
 			assetVocabularyId -> {
 				try {
 					return _assetVocabularyLocalService.getAssetVocabulary(

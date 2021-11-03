@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -39,32 +39,28 @@ public class AssetVocabulariesProvider {
 	public List<AssetVocabulary> getAssetVocabularies(
 		String[] assetVocabularyIds) {
 
-		List<AssetVocabulary> result = new ArrayList<>();
-
 		try {
-			result.addAll(
-				Stream.of(
-					assetVocabularyIds
-				).map(
-					assetVocabularyId -> {
-						try {
-							return _assetVocabularyLocalService.
-								getAssetVocabulary(
-									Long.parseLong(assetVocabularyId));
-						}
-						catch (PortalException portalException) {
-							portalException.printStackTrace();
-
-							return null;
-						}
+			return Stream.of(
+				assetVocabularyIds
+			).map(
+				assetVocabularyId -> {
+					try {
+						return _assetVocabularyLocalService.getAssetVocabulary(
+							Long.parseLong(assetVocabularyId));
 					}
-				).filter(
-					Objects::nonNull
-				).filter(
-					assetVocabulary -> assetVocabulary.getCategoriesCount() > 0
-				).collect(
-					Collectors.toList()
-				));
+					catch (PortalException portalException) {
+						portalException.printStackTrace();
+
+						return null;
+					}
+				}
+			).filter(
+				Objects::nonNull
+			).filter(
+				assetVocabulary -> assetVocabulary.getCategoriesCount() > 0
+			).collect(
+				Collectors.toList()
+			);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -72,9 +68,9 @@ public class AssetVocabulariesProvider {
 					"Unable to get content dashboard admin configuration",
 					exception);
 			}
-		}
 
-		return result;
+			return Collections.emptyList();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

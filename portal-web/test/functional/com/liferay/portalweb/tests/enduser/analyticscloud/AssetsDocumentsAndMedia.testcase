@@ -614,8 +614,14 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8118 | Test Summary: Document known individuals list shows the individuals who have viewed the documents"
+	@ignore = "true"
 	@priority = "5"
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedDocuments {
+
+		// AC Remove deactivated: LRAC-9671
+		// AC Deactivated Reason: The name of the document do not show in the proper way in AC
+		// AC Deactivated Ticket: Test blocked by LRAC-7890
+
 		var usernameList = "ac,liferay";
 
 		var emailList = "ac@liferay.com,liferay@liferay.com";

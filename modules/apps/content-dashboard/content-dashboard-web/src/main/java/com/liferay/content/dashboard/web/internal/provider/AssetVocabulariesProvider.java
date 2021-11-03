@@ -19,13 +19,13 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.GroupLocalService;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.LongStream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,16 +37,17 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetVocabulariesProvider {
 
 	public List<AssetVocabulary> getAssetVocabularies(
-		String[] assetVocabularyIds) {
+		long[] assetVocabularyIds) {
 
 		try {
-			return Stream.of(
-				assetVocabularyIds
+			LongStream longStream = Arrays.stream(assetVocabularyIds);
+
+			return longStream.boxed(
 			).map(
 				assetVocabularyId -> {
 					try {
 						return _assetVocabularyLocalService.getAssetVocabulary(
-							Long.parseLong(assetVocabularyId));
+							assetVocabularyId);
 					}
 					catch (PortalException portalException) {
 						portalException.printStackTrace();
@@ -78,8 +79,5 @@ public class AssetVocabulariesProvider {
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 }

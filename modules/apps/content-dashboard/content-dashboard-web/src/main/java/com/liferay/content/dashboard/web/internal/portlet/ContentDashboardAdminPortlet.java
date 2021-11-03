@@ -30,6 +30,7 @@ import com.liferay.content.dashboard.web.internal.provider.AssetVocabulariesProv
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardSearchContextBuilder;
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.content.dashboard.web.internal.servlet.taglib.util.ContentDashboardDropdownItemsProvider;
+import com.liferay.content.dashboard.web.internal.util.ContentDashboardUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
@@ -53,7 +54,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -123,12 +123,9 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 		SearchContainer<ContentDashboardItem<?>> searchContainer =
 			contentDashboardItemSearchContainerFactory.create();
 
-		PortletPreferences portletPreferences = renderRequest.getPreferences();
-
 		List<AssetVocabulary> assetVocabularies =
 			_assetVocabulariesProvider.getAssetVocabularies(
-				portletPreferences.getValues(
-					"assetVocabularyIds", new String[0]));
+				ContentDashboardUtil.getAssetVocabularyIds(renderRequest));
 
 		ContentDashboardAdminDisplayContext
 			contentDashboardAdminDisplayContext =

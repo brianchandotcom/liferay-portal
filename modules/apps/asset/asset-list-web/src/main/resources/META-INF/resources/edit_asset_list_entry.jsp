@@ -44,7 +44,7 @@
 			<div>
 				<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
 				<react:component
-					module="js/components/SortableVariationsList/SortableVariationsList"
+					module="js/components/VariationsNav/VariationsNav"
 					props='<%= editAssetListDisplayContext.getData() %>'
 				/>
 			</div>

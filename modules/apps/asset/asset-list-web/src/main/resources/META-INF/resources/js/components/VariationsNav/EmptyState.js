@@ -22,12 +22,7 @@ const EmptyState = ({
 	availableSegments,
 	disableActionButton,
 	selectSegmentCallback,
-	show,
 }) => {
-	if (!show) {
-		return null;
-	}
-
 	const actionButtonText = availableSegments
 		? 'New Personalized Variation'
 		: 'Add your first segment';
@@ -39,31 +34,24 @@ const EmptyState = ({
 			return;
 		}
 
-		const callback = window[selectSegmentCallback];
-		if (typeof callback === 'function') {
-			callback();
-		}
+		selectSegmentCallback();
 	};
 
 	return (
-		<>
-			{show && (
-				<ClayEmptyState
-					description={Liferay.Language.get(
-						'no-personalized-variations-were-found'
-					)}
-					title="No Personalized Variations yet."
-				>
-					<ClayButton
-						disabled={disableActionButton}
-						displayType="primary"
-						onClick={handleClick}
-					>
-						{actionButtonText}
-					</ClayButton>
-				</ClayEmptyState>
+		<ClayEmptyState
+			description={Liferay.Language.get(
+				'no-personalized-variations-were-found'
 			)}
-		</>
+			title="No Personalized Variations yet."
+		>
+			<ClayButton
+				disabled={disableActionButton}
+				displayType="primary"
+				onClick={handleClick}
+			>
+				{actionButtonText}
+			</ClayButton>
+		</ClayEmptyState>
 	);
 };
 
@@ -76,7 +64,6 @@ EmptyState.propTypes = {
 	availableSegments: PropTypes.bool.isRequired,
 	disableActionButton: PropTypes.bool,
 	selectSegmentCallback: PropTypes.string.isRequired,
-	show: PropTypes.bool.isRequired,
 };
 
 export default EmptyState;

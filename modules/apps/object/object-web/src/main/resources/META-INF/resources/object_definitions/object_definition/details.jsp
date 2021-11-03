@@ -41,7 +41,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:error exception="<%= DuplicateObjectDefinitionException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionActiveException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionLabelException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionNameException.class %>" />

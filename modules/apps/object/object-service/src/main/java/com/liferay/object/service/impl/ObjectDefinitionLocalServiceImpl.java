@@ -16,7 +16,6 @@ package com.liferay.object.service.impl;
 
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
-import com.liferay.object.exception.DuplicateObjectDefinitionException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionActiveException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
@@ -896,16 +895,16 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(name) || (!system && name.equals("C_"))) {
-			throw new ObjectDefinitionNameException("Name is null");
+			throw new ObjectDefinitionNameException.MustNotBeNull();
 		}
 
 		if (system && (name.startsWith("C_") || name.startsWith("c_"))) {
-			throw new ObjectDefinitionNameException(
-				"System object definition names must not start with \"C_\"");
+			throw new ObjectDefinitionNameException.
+				MustNotStartWithCAndUnderscoreForSystemObject();
 		}
 		else if (!system && !name.startsWith("C_")) {
-			throw new ObjectDefinitionNameException(
-				"Custom object definition names must start with \"C_\"");
+			throw new ObjectDefinitionNameException.
+				MustStartWithCAndUnderscoreForCustomObject();
 		}
 
 		char[] nameCharArray = name.toCharArray();
@@ -923,23 +922,23 @@ public class ObjectDefinitionLocalServiceImpl
 			char c = nameCharArray[i];
 
 			if (!Validator.isChar(c) && !Validator.isDigit(c)) {
-				throw new ObjectDefinitionNameException(
-					"Name must only contain letters and digits");
+				throw new ObjectDefinitionNameException.
+					MustOnlyContainLettersAndDigits();
 			}
 		}
 
 		if ((system && !Character.isUpperCase(nameCharArray[0])) ||
 			(!system && !Character.isUpperCase(nameCharArray[2]))) {
 
-			throw new ObjectDefinitionNameException(
-				"The first character of a name must be an upper case letter");
+			throw new ObjectDefinitionNameException.
+				MustBeginWithUpperCaseLetter();
 		}
 
 		if ((system && (nameCharArray.length > 41)) ||
 			(!system && (nameCharArray.length > 43))) {
 
-			throw new ObjectDefinitionNameException(
-				"Names must be less than 41 characters");
+			throw new ObjectDefinitionNameException.
+				MustBeLessThan41Characters();
 		}
 
 		ObjectDefinition objectDefinition =
@@ -948,8 +947,7 @@ public class ObjectDefinitionLocalServiceImpl
 		if ((objectDefinition != null) &&
 			(objectDefinition.getObjectDefinitionId() != objectDefinitionId)) {
 
-			throw new DuplicateObjectDefinitionException(
-				"Duplicate name " + name);
+			throw new ObjectDefinitionNameException.MustNotBeDuplicate(name);
 		}
 	}
 

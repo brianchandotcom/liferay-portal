@@ -17,7 +17,6 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.exception.DuplicateObjectDefinitionException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
@@ -209,12 +208,12 @@ public class ObjectDefinitionLocalServiceTest {
 		try {
 			_testAddCustomObjectDefinition("Test");
 		}
-		catch (DuplicateObjectDefinitionException
-					duplicateObjectDefinitionException) {
+		catch (ObjectDefinitionNameException.MustNotBeDuplicate
+					objectDefinitionNameException) {
 
 			Assert.assertEquals(
 				"Duplicate name C_Test",
-				duplicateObjectDefinitionException.getMessage());
+				objectDefinitionNameException.getMessage());
 		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
@@ -670,12 +669,12 @@ public class ObjectDefinitionLocalServiceTest {
 		try {
 			_testAddSystemObjectDefinition("Test");
 		}
-		catch (DuplicateObjectDefinitionException
-					duplicateObjectDefinitionException) {
+		catch (ObjectDefinitionNameException.MustNotBeDuplicate
+					objectDefinitionNameException) {
 
 			Assert.assertEquals(
 				"Duplicate name Test",
-				duplicateObjectDefinitionException.getMessage());
+				objectDefinitionNameException.getMessage());
 		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);

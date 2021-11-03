@@ -35,6 +35,9 @@ module.exports = {
 					'@liferay/fragment-renderer-collection-filter-impl': {
 						'/': '*',
 					},
+					'@liferay/frontend-data-set-web': {
+						'/': '*',
+					},
 					'@liferay/frontend-js-a11y-web': {
 						'/': '*',
 					},

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Frontend Data Set Web
+Bundle-SymbolicName: com.liferay.frontend.data.set.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /frontend-data-set-web

@@ -171,7 +171,6 @@ EOF
 \$primary-color: #295ccc;
 EOF
 
-
 	#
 	# index.js
 	#

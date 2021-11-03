@@ -158,7 +158,7 @@ public class AssetCategoriesNavigationDisplayContext {
 		return _availableAssetVocabularyIds;
 	}
 
-	public List<KeyValuePair> getAvailableVocabularyIds() {
+	public List<KeyValuePair> getAvailableVocabularyNames() {
 		long[] assetVocabularyIds = getAssetVocabularyIds();
 
 		Arrays.sort(assetVocabularyIds);

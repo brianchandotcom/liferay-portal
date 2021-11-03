@@ -15,6 +15,9 @@
 package com.liferay.site.initializer.extender.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -40,6 +43,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -119,34 +123,61 @@ public class BundleSiteInitializerTest {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
-		_assertCommerceCatalogs(group);
-		_assertCommerceChannel(group);
-		_assertCommerceInventoryWarehouse(group);
-		_assertDDMStructure(group);
-		_assertDDMTemplate(group);
-		_assertDLFileEntry(group);
-		_assertFragmentEntries(group);
-		_assertLayoutPageTemplateEntry(group);
-		_assertLayouts(group);
-		_assertObjectDefinition(group);
-		_assertStyleBookEntry(group);
+		try {
+			_assertAssetVocabularies(group);
+			_assertCommerceCatalogs(group);
+			_assertCommerceChannel(group);
+			_assertCommerceInventoryWarehouse(group);
+			_assertDDMStructure(group);
+			_assertDDMTemplate(group);
+			_assertDLFileEntry(group);
+			_assertFragmentEntries(group);
+			_assertLayoutPageTemplateEntry(group);
+			_assertLayouts(group);
+			_assertObjectDefinition(group);
+			_assertStyleBookEntry(group);
 
-		GroupLocalServiceUtil.deleteGroup(group);
+			GroupLocalServiceUtil.deleteGroup(group);
+		}
+		finally {
 
-		// TODO We should not need to delete the object definition manually
-		// because of DataGuardTestRule. However,
-		// ObjectDefinitionLocalServiceImpl#deleteObjectDefinition checks for
-		// PortalRunMode#isTestMode which is not returning true when the
-		// DataGuardTestRule runs.
+			// TODO We should not need to delete the object definition manually
+			// because of DataGuardTestRule. However,
+			// ObjectDefinitionLocalServiceImpl#deleteObjectDefinition checks
+			// for PortalRunMode#isTestMode which is not returning true when the
+			// DataGuardTestRule runs.
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				serviceContext.getCompanyId(), "C_TestBundleSiteInitializer");
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					serviceContext.getCompanyId(),
+					"C_TestBundleSiteInitializer");
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition.getObjectDefinitionId());
+		}
 
 		bundle.uninstall();
+	}
+
+	private void _assertAssetVocabularies(Group group) throws Exception {
+		Group globalGroup = _groupLocalService.getCompanyGroup(
+			group.getCompanyId());
+
+		AssetVocabulary companyVocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				globalGroup.getGroupId(), "Test Asset Vocabulary 1");
+
+		Assert.assertNotNull(companyVocabulary);
+		Assert.assertEquals(
+			"TESTVOC0001", companyVocabulary.getExternalReferenceCode());
+
+		AssetVocabulary groupVocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				group.getGroupId(), "Test Asset Vocabulary 2");
+
+		Assert.assertNotNull(groupVocabulary);
+		Assert.assertEquals(
+			"TESTVOC0002", groupVocabulary.getExternalReferenceCode());
 	}
 
 	private void _assertCommerceCatalogs(Group group) throws Exception {
@@ -331,6 +362,9 @@ public class BundleSiteInitializerTest {
 	}
 
 	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Inject
@@ -351,6 +385,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

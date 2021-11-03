@@ -179,6 +179,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESULTS_PORTLET_WIDGET_ELLIPSIS_ICON_SPECIFIC</td>
+	<td>xpath=(//header[contains(@class,'portlet-topper') and contains(.,'Search Results')][not(ancestor::header[@id='banner'])]//div[contains(@class,'portlet-options')]/a)[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

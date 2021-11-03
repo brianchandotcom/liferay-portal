@@ -62,7 +62,7 @@ public class AnalyticsReportsDataProvider {
 	}
 
 	public Map<String, AcquisitionChannel> getAcquisitionChannels(
-			long companyId, String url, TimeRange timeRange)
+			long companyId, TimeRange timeRange, String url)
 		throws PortalException {
 
 		try {
@@ -113,7 +113,7 @@ public class AnalyticsReportsDataProvider {
 	}
 
 	public List<ReferringURL> getDomainReferringURLs(
-			long companyId, String url, TimeRange timeRange)
+			long companyId, TimeRange timeRange, String url)
 		throws PortalException {
 
 		try {
@@ -202,7 +202,7 @@ public class AnalyticsReportsDataProvider {
 	}
 
 	public List<ReferringURL> getPageReferringURLs(
-			long companyId, String url, TimeRange timeRange)
+			long companyId, TimeRange timeRange, String url)
 		throws PortalException {
 
 		try {
@@ -243,7 +243,7 @@ public class AnalyticsReportsDataProvider {
 	}
 
 	public List<ReferringSocialMedia> getReferringSocialMediaList(
-			long companyId, String url, TimeRange timeRange)
+			long companyId, TimeRange timeRange, String url)
 		throws PortalException {
 
 		try {
@@ -319,7 +319,7 @@ public class AnalyticsReportsDataProvider {
 	}
 
 	public Map<String, TrafficChannel> getTrafficChannels(
-			long companyId, String url, TimeRange timeRange)
+			long companyId, TimeRange timeRange, String url)
 		throws PortalException {
 
 		try {
@@ -327,16 +327,16 @@ public class AnalyticsReportsDataProvider {
 				companyId, url);
 
 			List<ReferringURL> domainReferringURLs = getDomainReferringURLs(
-				companyId, url, timeRange);
+				companyId, timeRange, url);
 
 			List<ReferringURL> pageReferringURLs = getPageReferringURLs(
-				companyId, url, timeRange);
+				companyId, timeRange, url);
 
 			List<ReferringSocialMedia> referringSocialMediaList =
-				getReferringSocialMediaList(companyId, url, timeRange);
+				getReferringSocialMediaList(companyId, timeRange, url);
 
 			Map<String, AcquisitionChannel> acquisitionChannels =
-				getAcquisitionChannels(companyId, url, timeRange);
+				getAcquisitionChannels(companyId, timeRange, url);
 
 			Collection<AcquisitionChannel> values =
 				acquisitionChannels.values();

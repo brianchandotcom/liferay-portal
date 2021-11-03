@@ -143,7 +143,7 @@ public class GetTrafficSourcesMVCResourceCommand
 		try {
 			Map<String, TrafficChannel> trafficChannels =
 				analyticsReportsDataProvider.getTrafficChannels(
-					companyId, canonicalURL, timeRange);
+					companyId, timeRange, canonicalURL);
 
 			emptyMap.forEach(
 				(name, trafficChannel) -> trafficChannels.merge(

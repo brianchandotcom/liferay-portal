@@ -26,8 +26,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIOLATION_PANEL_ITEM_SEVERITY</td>
+	<td>//*[contains(@class,'a11y-panel')]//*[contains(@class,'list-group-subtext') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HIGHLIGHTED_ELEMENT</td>
 	<td>//*[contains(@class,'a11y-overlay')]//*[contains(@class,'a11y-backdrop')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIGHLIGHTED_ELEMENT_COUNT</td>
+	<td>//*[contains(@id, 'a11yContainer')]//*[contains(@class, 'a11y-overlay')][${key_text}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,6 +64,17 @@
 <tr>
 	<td>FILTER_LIST_ITEM</td>
 	<td>//*[contains(@class,'a11y-dropdown show')]//li//*[contains(@class,'dropdown-section') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_CHECKBOX</td>
+	<td>//*[contains(@class,'a11y-dropdown show')]//*[contains(@data-testid,'')]//following-sibling::span/span[normalize-space()='${key_text}']</td>
+	<td></td>
+</tr>
+<!--POPOVERS-->
+<tr>
+	<td>HIGHLIGHTED_ELEMENT_POPOVER_SEVERITY</td>
+	<td>//*[contains(@class, 'clay-popover-bottom show')]//*[contains(@class,'text-secondary') and contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 </tbody>

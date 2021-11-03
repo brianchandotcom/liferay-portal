@@ -10,6 +10,16 @@ definition {
 			value1 = "Cancel");
 	}
 
+	macro configurationTeardown {
+		PageAudit.goToGooglePageSpeedInsightsSystemSettingConfiguration();
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Reset Default Values");
+		}
+	}
+
 	macro connectToGooglePageAudit {
 		ClickNoError(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
 	}
@@ -107,16 +117,6 @@ definition {
 	macro openPanelBeforeConfiguration {
 		if ((IsElementNotPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON")) && (IsElementNotPresent(locator1 = "PageAudit#ERROR_WARNING_TITLE")) ) {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-	}
-
-	macro configurationTeardown {
-		PageAudit.goToGooglePageSpeedInsightsSystemSettingConfiguration();
-
-		if (IsElementPresent(locator1 = "Button#UPDATE")) {
-			Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
-
-			MenuItem.clickNoError(menuItem = "Reset Default Values");
 		}
 	}
 

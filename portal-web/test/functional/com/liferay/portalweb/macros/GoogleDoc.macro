@@ -97,13 +97,15 @@ definition {
 
 		AssertElementPresent(locator1 = "Button#ANY");
 
-		Pause(locator1 = "3000");
-
 		AssertClick(
 			locator1 = "Button#ANY",
 			value1 = "Save and Return to ${siteName}");
 
-		Pause(locator1 = "5000");
+		Alert.viewSuccessMessage();
+
+		WaitForElementNotPresent(
+			locator1 = "Button#ANY",
+			value1 = "Save and Return to ${siteName}");
 
 		Navigator.openURL();
 	}

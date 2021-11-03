@@ -44,7 +44,7 @@ const UploadDocuments = ({setExpanded, setSection, setStepChecked}) => {
 		},
 		{
 			error: false,
-			errorMessage: 'Please upload 4 photos of your building interior',
+			errorMessage: 'Please upload a photo of your building interior.',
 			files: [],
 			required: true,
 			sectionId: null,

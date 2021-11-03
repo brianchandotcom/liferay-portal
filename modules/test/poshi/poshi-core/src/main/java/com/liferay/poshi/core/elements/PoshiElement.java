@@ -327,7 +327,9 @@ public abstract class PoshiElement
 				  !(previousPoshiNode instanceof PropertyPoshiElement) &&
 				  (poshiNode instanceof VarPoshiElement)) ||
 				 ((previousPoshiNode instanceof PropertyPoshiElement) &&
-				  (poshiNode instanceof PropertyPoshiElement))) &&
+				  (poshiNode instanceof PropertyPoshiElement)) ||
+				 ((previousPoshiNode instanceof InlinePoshiComment) &&
+				  (poshiNode instanceof InlinePoshiComment))) &&
 				poshiScriptSnippet.startsWith("\n\n")) {
 
 				poshiScriptSnippet = poshiScriptSnippet.replaceFirst(

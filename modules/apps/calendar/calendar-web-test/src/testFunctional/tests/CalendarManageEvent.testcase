@@ -138,6 +138,8 @@ definition {
 
 	@priority = "4"
 	test DeleteRepeatingOnlyThisInstance {
+		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Repeating Title");
@@ -262,6 +264,8 @@ definition {
 	@description = "This is a use case for LPS-59097."
 	@priority = "4"
 	test EditAndViewRSVP {
+		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.addRegular(

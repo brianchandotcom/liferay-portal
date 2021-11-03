@@ -10,6 +10,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		WorkflowUser.disableCaptchaToCreateNewUser();
 	}
 
 	tearDown {
@@ -25,13 +27,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LRQA-69712. Verify that the user can approve a new account by Notifications. "
+	@description = "This is a test for LRQA-69712. Verify that the user can approve a new account by Notifications."
 	@priority = "3"
 	test CanApproveByNotifications {
-		Navigator.openURL();
-
-		WorkflowUser.disableCaptchaToCreateNewUser();
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -58,9 +56,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
 
-		AssertClick(
-			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
-			value1 = "sent you a User for review in the workflow.");
+		Notifications.clickOnTheNotificationTitle(key_notificationsTitle = "sent you a User for review in the workflow.");
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
 
@@ -75,13 +71,9 @@ definition {
 			workflowAssetTitle = "userfn userln");
 	}
 
-	@description = "This is a test for LRQA-69708. Verify that the user can delete a new account when there is a Workflow assigned. "
+	@description = "This is a test for LRQA-69708. Verify that the user can delete a new account when there is a Workflow assigned."
 	@priority = "3"
 	test CanDeleteUser {
-		Navigator.openURL();
-
-		WorkflowUser.disableCaptchaToCreateNewUser();
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -114,8 +106,6 @@ definition {
 			workflowAssetTitle = "userfn userln",
 			workflowAssetType = "User",
 			workflowTask = "Review");
-
-		Refresh();
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "userfn userln",
@@ -137,18 +127,12 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		AssertElementNotPresent(
-			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
-			value1 = "Anonymous Anonymous");
+		Workflow.viewDefaultMyWorkflowTasksCP();
 	}
 
-	@description = "This is a test for LRQA-69710. Verify that the user can see the actual state of the user in the workflow process after approve. "
+	@description = "This is a test for LRQA-69710. Verify that the user can see the actual state of the user in the workflow process after approve."
 	@priority = "3"
 	test CanSeeStateAfterApprove {
-		Navigator.openURL();
-
-		WorkflowUser.disableCaptchaToCreateNewUser();
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -181,8 +165,6 @@ definition {
 			workflowAssetTitle = "userfn userln",
 			workflowAssetType = "User",
 			workflowTask = "Review");
-
-		Refresh();
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "userfn userln",
@@ -194,13 +176,9 @@ definition {
 			workflowAssetTitle = "userfn userln");
 	}
 
-	@description = "This is a test for LRQA-69711. Verify that the user can see the actual state of the user in the workflow process after reject. "
+	@description = "This is a test for LRQA-69711. Verify that the user can see the actual state of the user in the workflow process after reject."
 	@priority = "3"
 	test CanSeeStateAfterReject {
-		Navigator.openURL();
-
-		WorkflowUser.disableCaptchaToCreateNewUser();
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -234,8 +212,6 @@ definition {
 			workflowAssetType = "User",
 			workflowTask = "Review");
 
-		Refresh();
-
 		Workflow.rejectTaskByActions(
 			workflowAssetTitle = "userfn userln",
 			workflowAssetType = "User",
@@ -246,18 +222,14 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		AssertElementNotPresent(
-			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
-			value1 = "userfn userln");
+		Search.searchCP(searchTerm = "userfn userln");
+
+		User.viewNoUsersFoundCP();
 	}
 
-	@description = "This is a test for LRQA-69709. Verify that the user can see the actual state of the user in the workflow process before assigning to itself. "
-	@priority = "3"
+	@description = "This is a test for LRQA-69709. Verify that the user can see the actual state of the user in the workflow process before assigning to itself."
+	@priority = "4"
 	test CanSeeStateBeforeAssign {
-		Navigator.openURL();
-
-		WorkflowUser.disableCaptchaToCreateNewUser();
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -284,13 +256,10 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
-
-		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "userfn userln");
-
-		AssertElementPresent(
-			key_state = "Review",
-			locator1 = "AssetWorkflow#ASSET_STATE");
+		Workflow.viewTaskAssignedToMyRoles(
+			workflowAssetTitle = "userfn userln",
+			workflowAssetType = "User",
+			workflowTask = "Review");
 	}
 
 	@priority = "5"

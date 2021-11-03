@@ -289,4 +289,10 @@ definition {
 			value1 = "${contentBody}");
 	}
 
+	macro clickOnTheNotificationTitle {
+		AssertClick(
+			locator1 = "Notifications#NOTIFICATIONS_TITLE_TEXT",
+			value1 = "${key_notificationsTitle}");
+	}
+
 }

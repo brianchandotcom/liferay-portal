@@ -92,6 +92,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATIONS_TITLE_TEXT</td>
+	<td>//a[contains(text(),'${key_notificationsTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

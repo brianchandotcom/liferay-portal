@@ -116,6 +116,8 @@ definition {
 	@description = "This is a test for LRQA-70157. Verify that an approved web content is displayed on Asset Publisher."
 	@priority = "4"
 	test ApprovedWebContentIsDisplayed {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -323,6 +325,8 @@ definition {
 	@description = "This is a test for LRQA-69814. Verify that a Pending Web Content is not displayed on Asset Publisher."
 	@priority = "3"
 	test PendingWebContentIsNotDisplayed {
+		property portal.upstream = "quarantine";
+		
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -404,6 +408,8 @@ definition {
 	@description = "This is a test for LRQA-69815. Verify that a rejected web content is not displayed on Asset Publisher."
 	@priority = "3"
 	test RejectedWebContentIsNotDisplayed {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

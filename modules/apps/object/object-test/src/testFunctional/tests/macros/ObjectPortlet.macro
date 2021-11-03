@@ -14,10 +14,6 @@ definition {
 			locator1 = "Button#ANY");
 	}
 
-	macro assertButtonPlusIsNotPresent {
-		AssertElementNotPresent(locator1 = "Button#PLUS");
-	}
-
 	macro assertDuplicatedEntryNotPresent {
 		AssertElementNotPresent(
 			key_entry = "${entry}",
@@ -94,6 +90,10 @@ definition {
 		AssertTextEquals(
 			locator1 = "ObjectPortlet#NO_FIELDS_WERE_FOUND_MESSAGE",
 			value1 = "No fields were found.");
+	}
+
+	macro assertPlusButtonIsNotPresent {
+		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
 	macro assertRelationshipEntrySearchResultsPresent {

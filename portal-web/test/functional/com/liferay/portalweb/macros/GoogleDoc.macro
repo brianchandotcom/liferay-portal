@@ -25,14 +25,6 @@ definition {
 				value1 = "${linkText}");
 
 			Click(locator1 = "GoogleDoc#INSERT_LINK_APPLY_BUTTON");
-
-			if (IsElementNotPresent(key_text = "${googleDocContent}", locator1 = "Link#ANY")) {
-				Refresh();
-
-				AssertElementPresent(
-					key_text = "${googleDocContent}",
-					locator1 = "Link#ANY");
-			}
 		}
 
 		SelectFrameTop();

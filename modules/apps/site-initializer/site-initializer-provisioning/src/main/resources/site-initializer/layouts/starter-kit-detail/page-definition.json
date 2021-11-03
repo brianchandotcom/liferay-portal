@@ -4,33 +4,12 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"marginBottom": "3",
-						"paddingBottom": "4",
-						"paddingTop": "4"
-					},
-					"widgetInstance": {
-						"widgetConfig": {
-							"displayStyle": "ddmTemplate_STARTERKIT-CATEGORY-FACET",
-							"displayStyleGroupId": "[$GROUP_ID$]",
-							"frequenciesVisible": "true",
-							"frequencyThreshold": "1",
-							"maxTerms": "10",
-							"parameterName": "category"
-						},
-						"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-					}
-				},
-				"type": "Widget"
-			},
-			{
-				"definition": {
-					"fragmentStyle": {
 						"marginBottom": "3"
 					},
 					"widgetInstance": {
 						"widgetConfig": {
 							"cpContentListRendererKey": "list-default",
-							"displayStyle": "ddmTemplate_STARTERKITS-LIST",
+							"displayStyle": "ddmTemplate_STARTERKIT-DETAIL",
 							"displayStyleGroupId": "[$GROUP_ID$]",
 							"grouped--cpTypeListEntryRendererKey": "list-entry-default",
 							"paginate": "true",

@@ -83,22 +83,24 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Writer writer = httpServletResponse.getWriter();
 
-		StringBundler sb = new StringBundler(12);
+		StringBundler sb = new StringBundler(14);
 
 		sb.append("<li class=\"");
 		sb.append(_getCssClass(httpServletRequest));
-		sb.append("\"><span class=\"control-menu-level-1-heading ");
-		sb.append("text-truncate\" data-qa-id=\"headerTitle\">");
+		sb.append("\"><span class=\"align-items-center ");
+		sb.append("control-menu-level-1-heading d-flex mr-1\" ");
+		sb.append("data-qa-id=\"headerTitle\"><span class=\"text-truncate\">");
 		sb.append(_getHeaderTitle(httpServletRequest));
+		sb.append("</span>");
 
 		if (_hasDraftLayout(httpServletRequest)) {
-			sb.append("<sup class=\"small\">*</sup>");
+			sb.append("<sup class=\"flex-shrink-0 small\">*</sup>");
 		}
 
 		sb.append("</span>");
 
 		if (_isDraftLayout(httpServletRequest)) {
-			sb.append("<span class=\"bg-transparent label ");
+			sb.append("<span class=\"bg-transparent flex-shrink-0 label ");
 			sb.append("label-inverse-secondary ml-2 mr-0\">");
 			sb.append("<span class=\"label-item label-item-expand\">");
 			sb.append(LanguageUtil.get(httpServletRequest, "draft"));

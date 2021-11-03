@@ -29,6 +29,7 @@ SegmentsExperienceSelectorDisplayContext segmentsExperienceSelectorDisplayContex
 				</span>
 
 				<clay:icon
+					cssClass="flex-shrink-0"
 					symbol="caret-double"
 				/>
 			</span>

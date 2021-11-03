@@ -279,10 +279,6 @@ html#{$cadmin-selector} {
 			> .control-menu-nav {
 				flex-wrap: nowrap;
 				justify-content: flex-start;
-
-				@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
-					flex-wrap: wrap;
-				}
 			}
 
 			.taglib-icon-help {

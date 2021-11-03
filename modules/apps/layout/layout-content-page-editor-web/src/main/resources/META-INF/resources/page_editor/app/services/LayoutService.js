@@ -92,6 +92,24 @@ export default {
 		);
 	},
 
+	createLayoutPageTemplateEntry(
+		layoutPageTemplateCollectionId,
+		name,
+		segmentsExperienceId
+	) {
+		return layoutServiceFetch(
+			config.createLayoutPageTemplateEntryURL,
+			{
+				body: {
+					layoutPageTemplateCollectionId,
+					name,
+					segmentsExperienceId,
+				},
+			},
+			() => {}
+		);
+	},
+
 	/**
 	 * @param {object} layout
 	 * @returns {Promise<{error: Error, friendlyURL: string}>}
@@ -102,6 +120,14 @@ export default {
 			{
 				body: layout,
 			},
+			() => {}
+		);
+	},
+
+	getLayoutPageTemplateCollections() {
+		return layoutServiceFetch(
+			config.getLayoutPageTemplateCollectionsURL,
+			{},
 			() => {}
 		);
 	},

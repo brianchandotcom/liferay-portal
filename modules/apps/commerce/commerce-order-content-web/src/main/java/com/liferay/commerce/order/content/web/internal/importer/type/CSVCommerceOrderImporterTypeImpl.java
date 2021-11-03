@@ -32,6 +32,7 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -39,12 +40,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -53,6 +57,7 @@ import java.io.IOException;
 
 import java.nio.charset.Charset;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -89,8 +94,18 @@ public class CSVCommerceOrderImporterTypeImpl
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		long fileEntryId = ParamUtil.getLong(
+			httpServletRequest, getCommerceOrderImporterItemParamName());
+
+		if (fileEntryId > 0) {
+			return _dlAppLocalService.getFileEntry(fileEntryId);
+		}
+
 		return null;
 	}
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Override
 	public String getCommerceOrderImporterItemParamName() {
@@ -211,7 +226,9 @@ public class CSVCommerceOrderImporterTypeImpl
 				Charset.defaultCharset(), csvFormat);
 		}
 		catch (IOException ioException) {
-			_log.error(ioException, ioException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException, ioException);
+			}
 
 			throw new CommerceOrderImporterTypeException();
 		}
@@ -240,22 +257,37 @@ public class CSVCommerceOrderImporterTypeImpl
 					companyId, skuExternalReferenceCode);
 		}
 
-		if ((cpInstance == null) || (quantity < 1)) {
-			throw new CommerceOrderImporterTypeException();
-		}
-
 		CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =
 			new CommerceOrderImporterItemImpl();
 
-		commerceOrderImporterItemImpl.setCPInstanceId(
-			cpInstance.getCPInstanceId());
-		commerceOrderImporterItemImpl.setSku(cpInstance.getSku());
+		if (cpInstance == null) {
+			Company company = _companyLocalService.getCompany(companyId);
 
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+			if (Validator.isNotNull(skuExternalReferenceCode)) {
+				commerceOrderImporterItemImpl.setNameMap(
+					Collections.singletonMap(
+						company.getLocale(), skuExternalReferenceCode));
+			}
+			else {
+				commerceOrderImporterItemImpl.setNameMap(
+					Collections.singletonMap(
+						company.getLocale(), String.valueOf(skuId)));
+			}
 
-		commerceOrderImporterItemImpl.setCPDefinitionId(
-			cpDefinition.getCPDefinitionId());
-		commerceOrderImporterItemImpl.setNameMap(cpDefinition.getNameMap());
+			commerceOrderImporterItemImpl.setErrorMessages(
+				new String[] {"the-product-is-no-longer-available"});
+		}
+		else {
+			commerceOrderImporterItemImpl.setCPInstanceId(
+				cpInstance.getCPInstanceId());
+			commerceOrderImporterItemImpl.setSku(cpInstance.getSku());
+
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+			commerceOrderImporterItemImpl.setCPDefinitionId(
+				cpDefinition.getCPDefinitionId());
+			commerceOrderImporterItemImpl.setNameMap(cpDefinition.getNameMap());
+		}
 
 		commerceOrderImporterItemImpl.setJSON("[]");
 
@@ -284,6 +316,9 @@ public class CSVCommerceOrderImporterTypeImpl
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

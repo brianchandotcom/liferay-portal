@@ -24,10 +24,12 @@ import com.liferay.commerce.order.importer.item.CommerceOrderImporterItemImpl;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -60,6 +62,8 @@ public class CommerceOrderImporterTypeUtil {
 			tempCommerceOrder.getCommerceOrderId(),
 			tempCommerceOrder.getCommerceAccountId());
 
+		ServiceContext serviceContext = _getServiceContext(userLocalService);
+
 		for (CommerceOrderImporterItemImpl commerceOrderImporterItemImpl :
 				commerceOrderImporterItemImpls) {
 
@@ -73,23 +77,43 @@ public class CommerceOrderImporterTypeUtil {
 						commerceOrderImporterItemImpl.getCPInstanceId(),
 						commerceOrderImporterItemImpl.getJSON(),
 						commerceOrderImporterItemImpl.getQuantity(), 0,
-						commerceContext, _getServiceContext(userLocalService));
+						commerceContext, serviceContext);
 
 				commerceOrderImporterItemImpl.setCommerceOrderItemPrice(
 					commerceOrderPriceCalculation.getCommerceOrderItemPrice(
 						tempCommerceOrder.getCommerceCurrency(),
 						commerceOrderItem));
 			}
-			catch (CommerceOrderValidatorException
-						commerceOrderValidatorException) {
+			catch (Exception exception) {
+				if (exception instanceof CommerceOrderValidatorException) {
+					CommerceOrderValidatorException
+						commerceOrderValidatorException =
+							(CommerceOrderValidatorException)exception;
 
-				commerceOrderImporterItemImpl.setErrorMessages(
-					TransformUtil.transformToArray(
-						commerceOrderValidatorException.
-							getCommerceOrderValidatorResults(),
-						commerceOrderValidatorResult ->
-							commerceOrderValidatorResult.getLocalizedMessage(),
-						String.class));
+					commerceOrderImporterItemImpl.setErrorMessages(
+						TransformUtil.transformToArray(
+							commerceOrderValidatorException.
+								getCommerceOrderValidatorResults(),
+							commerceOrderValidatorResult ->
+								commerceOrderValidatorResult.
+									getLocalizedMessage(),
+							String.class));
+				}
+				else {
+					String[] errorMessages =
+						commerceOrderImporterItemImpl.getErrorMessages();
+
+					if ((errorMessages == null) ||
+						ArrayUtil.isNotEmpty(errorMessages)) {
+
+						commerceOrderImporterItemImpl.setErrorMessages(
+							TransformUtil.transform(
+								errorMessages,
+								errorMessage -> LanguageUtil.get(
+									serviceContext.getLocale(), errorMessage),
+								String.class));
+					}
+				}
 			}
 		}
 
@@ -127,6 +151,8 @@ public class CommerceOrderImporterTypeUtil {
 			tempCommerceOrder.getCommerceOrderId(),
 			tempCommerceOrder.getCommerceAccountId());
 
+		ServiceContext serviceContext = _getServiceContext(userLocalService);
+
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =
 				new CommerceOrderImporterItemImpl();
@@ -155,7 +181,7 @@ public class CommerceOrderImporterTypeUtil {
 						commerceOrderItem.getCPInstanceId(),
 						commerceOrderItem.getJson(),
 						commerceOrderItem.getQuantity(), 0, commerceContext,
-						_getServiceContext(userLocalService));
+						serviceContext);
 
 				commerceOrderImporterItemImpl.setCommerceOrderItemPrice(
 					commerceOrderPriceCalculation.getCommerceOrderItemPrice(
@@ -173,8 +199,6 @@ public class CommerceOrderImporterTypeUtil {
 							commerceOrderValidatorResult.getLocalizedMessage(),
 						String.class));
 			}
-
-			commerceOrderImporterItems.add(commerceOrderImporterItemImpl);
 		}
 
 		// Delete temporary commerce order

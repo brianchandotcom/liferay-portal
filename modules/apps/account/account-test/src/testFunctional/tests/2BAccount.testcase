@@ -1079,50 +1079,57 @@ definition {
 	test CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness {
 		property test.name.skip.portal.instance = "2BAccount#CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness";
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test");
+		task ("Login as Super User to create Person accounts and assign Account Admin to those accounts") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
 
-		for (var accountNumber : list "1,2") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Person ${accountNumber}",
-				accountEntryType = "Person");
+			for (var accountNumber : list "1,2") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Person ${accountNumber}",
+					accountEntryType = "Person");
 
+				Accounts.openAccountsAdmin();
+
+				Accounts.gotoEdit(accountName = "Person ${accountNumber}");
+
+				Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn");
+			}
+		}
+
+		task ("View that all accounts were created") {
 			Accounts.openAccountsAdmin();
 
-			Accounts.gotoEdit(accountName = "Person ${accountNumber}");
-
-			Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn");
+			for (var accounts : list "Account Name,Person 1,Person 2") {
+				LexiconEntry.viewEntryName(rowEntry = "${accounts}");
+			}
 		}
 
-		Accounts.openAccountsAdmin();
+		task ("Change account type settings to only allow the viewing of Business Type accounts") {
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		for (var accounts : list "Account Name,Person 1,Person 2") {
-			LexiconEntry.viewEntryName(rowEntry = "${accounts}");
+			ApplicationsMenu.gotoSite(site = "${siteName}");
+
+			Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Business");
 		}
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		task ("Log back in as Account Administrator and assert that only the Business account is listed and Person accounts are not") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		ApplicationsMenu.gotoSite(site = "${siteName}");
+			Navigator.gotoPage(pageName = "2B Account Page");
 
-		Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Business");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "2B Account Page");
-
-		AssertElementPresent(
-			key_rowEntry = "Account Name",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-
-		for (var accountNumber : list "1,2") {
-			AssertElementNotPresent(
-				key_rowEntry = "Person ${accountNumber}",
+			AssertElementPresent(
+				key_rowEntry = "Account Name",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-		}
 
+			for (var accountNumber : list "1,2") {
+				AssertElementNotPresent(
+					key_rowEntry = "Person ${accountNumber}",
+					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+			}
+		}
 	}
 
 	@description = "This test sets the Allowed Account Type to only Person and assert that only Person Accounts display in Account Management Widget."
@@ -1130,48 +1137,56 @@ definition {
 	test CanOnlyViewPersonAccountsWhenAllowedAccountTypeIsPerson {
 		property test.name.skip.portal.instance = "2BAccount#CanOnlyViewPersonAccountsWhenAllowedAccountTypeIsPerson";
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test");
+		task ("Login as Super User to create Person accounts and assign Account Admin to those accounts") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
 
-		for (var accountNumber : list "1,2") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Person ${accountNumber}",
-				accountEntryType = "Person");
+			for (var accountNumber : list "1,2") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Person ${accountNumber}",
+					accountEntryType = "Person");
 
-			Accounts.openAccountsAdmin();
+				Accounts.openAccountsAdmin();
 
-			Accounts.gotoEdit(accountName = "Person ${accountNumber}");
+				Accounts.gotoEdit(accountName = "Person ${accountNumber}");
 
-			Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn");
+				Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn");
+			}
 		}
 
-		Accounts.openAccountsAdmin();
+		task ("View that all accounts were created") {
+			Accounts.openAccountsAdmin();
 
-		for (var accounts : list "Account Name,Person 1,Person 2") {
-			LexiconEntry.viewEntryName(rowEntry = "${accounts}");
-		}	
+			for (var accounts : list "Account Name,Person 1,Person 2") {
+				LexiconEntry.viewEntryName(rowEntry = "${accounts}");
+			}
+		}
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		task ("Change account type settings to only allow the viewing of Person Type accounts") {
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		ApplicationsMenu.gotoSite(site = "${siteName}");
+			ApplicationsMenu.gotoSite(site = "${siteName}");
 
-		Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Person");
+			Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Person");
+		}
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		task ("Log back in as Account Administrator and assert that the Business account is not visible and only Person accounts are listed") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		Navigator.gotoPage(pageName = "2B Account Page");
+			Navigator.gotoPage(pageName = "2B Account Page");
 
-		AssertElementNotPresent(
-			key_rowEntry = "Account Name",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-
-		for (var accountNumber : list "1,2") {
-			AssertElementPresent(
-				key_rowEntry = "Person ${accountNumber}",
+			AssertElementNotPresent(
+				key_rowEntry = "Account Name",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+			for (var accountNumber : list "1,2") {
+				AssertElementPresent(
+					key_rowEntry = "Person ${accountNumber}",
+					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+			}
 		}
 	}
 

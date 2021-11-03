@@ -1085,20 +1085,6 @@ definition {
 
 		for (var accountNumber : list "1,2") {
 			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Business ${accountNumber}",
-				accountEntryType = "Business");
-
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Business ${accountNumber}");
-
-			Accounts.assignUsers(
-				accountName = "Business ${accountNumber}",
-				assigneeName = "userfn");
-		}
-
-		for (var accountNumber : list "3,4") {
-			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Person ${accountNumber}",
 				accountEntryType = "Person");
 
@@ -1107,6 +1093,12 @@ definition {
 			Accounts.gotoEdit(accountName = "Person ${accountNumber}");
 
 			Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn");
+		}
+
+		Accounts.openAccountsAdmin();
+
+		for (var accounts : list "Account Name,Person 1,Person 2") {
+			LexiconEntry.viewEntryName(rowEntry = "${accounts}");
 		}
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -1121,13 +1113,16 @@ definition {
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
+		AssertElementPresent(
+			key_rowEntry = "Account Name",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
 		for (var accountNumber : list "1,2") {
-			LexiconEntry.viewEntryName(rowEntry = "Business ${accountNumber}");
+			AssertElementNotPresent(
+				key_rowEntry = "Person ${accountNumber}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 		}
 
-		for (var accountNumber : list "3,4") {
-			LexiconEntry.viewNoEntry(rowEntry = "Person ${accountNumber}");
-		}
 	}
 
 	@description = "This test sets the Allowed Account Type to only Person and assert that only Person Accounts display in Account Management Widget."
@@ -1141,20 +1136,6 @@ definition {
 
 		for (var accountNumber : list "1,2") {
 			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Business ${accountNumber}",
-				accountEntryType = "Business");
-
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Business ${accountNumber}");
-
-			Accounts.assignUsers(
-				accountName = "Business ${accountNumber}",
-				assigneeName = "userfn");
-		}
-
-		for (var accountNumber : list "3,4") {
-			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Person ${accountNumber}",
 				accountEntryType = "Person");
 
@@ -1164,6 +1145,12 @@ definition {
 
 			Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn");
 		}
+
+		Accounts.openAccountsAdmin();
+
+		for (var accounts : list "Account Name,Person 1,Person 2") {
+			LexiconEntry.viewEntryName(rowEntry = "${accounts}");
+		}	
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -1177,12 +1164,14 @@ definition {
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
-		for (var accountNumber : list "3,4") {
-			LexiconEntry.viewEntryName(rowEntry = "Person ${accountNumber}");
-		}
+		AssertElementNotPresent(
+			key_rowEntry = "Account Name",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
 		for (var accountNumber : list "1,2") {
-			LexiconEntry.viewNoEntry(rowEntry = "Business ${accountNumber}");
+			AssertElementPresent(
+				key_rowEntry = "Person ${accountNumber}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 		}
 	}
 

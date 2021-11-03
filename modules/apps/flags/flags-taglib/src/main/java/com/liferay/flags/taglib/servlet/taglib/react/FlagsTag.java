@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,6 +38,7 @@ import com.liferay.taglib.util.IncludeTag;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -220,6 +223,13 @@ public class FlagsTag extends IncludeTag {
 					"signedIn", themeDisplay.isSignedIn()
 				).put(
 					"uri", FlagsTagUtil.getURI(httpServletRequest)
+				).put(
+					"viewMode",
+					Objects.equals(
+						Constants.VIEW,
+						ParamUtil.getString(
+							themeDisplay.getRequest(), "p_l_mode",
+							Constants.VIEW))
 				).build();
 			}
 		).build();

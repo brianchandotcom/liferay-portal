@@ -449,6 +449,53 @@ definition {
 		AssertElementNotPresent(locator1 = "Modal#MODAL");
 	}
 
+	@description = "This is a use case for LPS-140643."
+	@priority = "4"
+	test FederatedSearchPopulatesWidgetsWithRespectiveKey {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Federated Search Page");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/federated-search-page");
+
+		for (var column : list "1,2") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = "${column}",
+				groupName = "Guest",
+				layoutName = "Federated Search Page",
+				widgetName = "Search Bar");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "${column}",
+				groupName = "Guest",
+				layoutName = "Federated Search Page",
+				widgetName = "Search Results");
+
+			Refresh();
+
+			SearchPortlets.configureSearchBarWidget(
+				federatedSearchKey = "federatedSearchKey${column}",
+				index = "${column}",
+				keywordsParameterName = "keywordParameter${column}");
+
+			SearchResultPortlet.configureSearchResults(
+				federatedSearchKey = "federatedSearchKey${column}",
+				index = "${column}");
+		}
+
+		for (var count : list "1,2,3,4,5") {
+			SearchPortlets.searchWidget(searchTerm = "test");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Test Test",
+				searchAssetType = "User");
+
+			AssertElementNotPresent(locator1 = "xpath=(//li[contains(@class,'list-group-item') and contains(.,'Test Test')][.//span[@class='subtext-item' and contains(.,'User')]])[2]");
+		}
+	}
+
 	@description = "This is a use case for LPS-115435."
 	@priority = "3"
 	test ModifyPaginationConfigurationProperties {

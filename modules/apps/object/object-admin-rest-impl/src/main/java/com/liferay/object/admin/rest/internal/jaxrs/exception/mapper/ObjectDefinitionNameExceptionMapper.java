@@ -41,9 +41,12 @@ public class ObjectDefinitionNameExceptionMapper
 	protected Problem getProblem(
 		ObjectDefinitionNameException objectDefinitionNameException) {
 
+		Class<?> clazz = objectDefinitionNameException.getClass();
+
 		return new Problem(
-			Response.Status.BAD_REQUEST,
-			objectDefinitionNameException.getMessage());
+			null, Response.Status.BAD_REQUEST,
+			objectDefinitionNameException.getMessage(),
+			"ObjectDefinitionNameException." + clazz.getSimpleName());
 	}
 
 }

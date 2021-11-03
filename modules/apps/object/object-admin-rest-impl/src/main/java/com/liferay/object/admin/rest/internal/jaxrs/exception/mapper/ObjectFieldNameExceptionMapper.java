@@ -41,8 +41,12 @@ public class ObjectFieldNameExceptionMapper
 	protected Problem getProblem(
 		ObjectFieldNameException objectFieldNameException) {
 
+		Class<?> clazz = objectFieldNameException.getClass();
+
 		return new Problem(
-			Response.Status.BAD_REQUEST, objectFieldNameException.getMessage());
+			null, Response.Status.BAD_REQUEST,
+			objectFieldNameException.getMessage(),
+			"ObjectFieldNameException." + clazz.getSimpleName());
 	}
 
 }

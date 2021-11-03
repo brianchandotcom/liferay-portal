@@ -276,6 +276,11 @@ public class ContentPageEditorDisplayContext {
 					LanguageResources.getResourceBundle(
 						themeDisplay.getLocale()))
 			).put(
+				"createLayoutPageTemplateEntryURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor" +
+						"/create_layout_page_template_entry")
+			).put(
 				"defaultEditorConfigurations", _getDefaultConfigurations()
 			).put(
 				"defaultLanguageId",
@@ -434,6 +439,11 @@ public class ContentPageEditorDisplayContext {
 				"getLayoutFriendlyURL",
 				getResourceURL(
 					"/layout_content_page_editor/get_layout_friendly_url")
+			).put(
+				"getLayoutPageTemplateCollectionsURL",
+				getResourceURL(
+					"/layout_content_page_editor" +
+						"/get_layout_page_template_collections")
 			).put(
 				"getPageContentsURL",
 				getResourceURL("/layout_content_page_editor/get_page_content")

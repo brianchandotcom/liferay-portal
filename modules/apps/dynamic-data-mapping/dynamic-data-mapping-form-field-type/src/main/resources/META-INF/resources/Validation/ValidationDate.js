@@ -18,7 +18,7 @@ import {ClayInput} from '@clayui/form';
 import React, {useState} from 'react';
 
 import Select from '../Select/Select.es';
-import {limitValue} from '../util/limitValue';
+import {limitValue} from '../util/numericalOperations';
 import {EVENT_TYPES} from './validationReducer';
 
 const MAX_QUANTITY = 999;

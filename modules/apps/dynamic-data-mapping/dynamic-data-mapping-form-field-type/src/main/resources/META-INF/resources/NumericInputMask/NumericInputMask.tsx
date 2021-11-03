@@ -26,7 +26,7 @@ import Select from '../Select/Select.es';
 // @ts-ignore
 
 import Text from '../Text/Text.es';
-import {limitValue} from '../util/limitValue';
+import {limitValue} from '../util/numericalOperations';
 
 type DecimalSymbol = ',' | '.';
 type ThousandsSeparator = DecimalSymbol | ' ' | "'" | 'none';

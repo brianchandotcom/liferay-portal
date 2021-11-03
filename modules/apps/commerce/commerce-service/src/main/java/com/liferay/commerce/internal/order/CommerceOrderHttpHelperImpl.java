@@ -228,6 +228,10 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		httpServletRequest.setAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
 
+		if (commerceOrder.isEmpty()) {
+			return portletURL;
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

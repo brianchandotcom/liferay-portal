@@ -92,9 +92,6 @@ public class AddTemplateEntryMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), actionRequest);
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
 		try {
 			DDMTemplate ddmTemplate = _ddmTemplateLocalService.addTemplate(
 				themeDisplay.getUserId(), serviceContext.getScopeGroupId(),

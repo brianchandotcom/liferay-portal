@@ -19,6 +19,9 @@
 		<field name="customElementURLs" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field localized="true" name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="friendlyURLMapping" type="String" />
 		<field name="iFrameURL" type="String">
 			<hint-collection name="URL" />
@@ -30,6 +33,21 @@
 		<field name="properties" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="sourceCodeURL" type="String">
+			<hint-collection name="URL" />
+		</field>
 		<field name="type" type="String" />
+	</model>
+	<model name="com.liferay.remote.app.model.RemoteAppEntryLocalization">
+		<field name="mvccVersion" type="long" />
+		<field name="remoteAppEntryLocalizationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="remoteAppEntryId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="description" type="String">
+			<hint-collection name="CLOB" />
+			<sanitize content-type="text/html" modes="ALL" />
+		</field>
+		<field name="name" type="String" />
 	</model>
 </model-hints>

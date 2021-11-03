@@ -98,9 +98,6 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), uploadPortletRequest);
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
 		DDMTemplate ddmTemplate = _ddmTemplateService.addTemplate(
 			groupId, _portal.getClassNameId(DDMStructure.class), classPK,
 			_portal.getClassNameId(JournalArticle.class), templateKey, nameMap,

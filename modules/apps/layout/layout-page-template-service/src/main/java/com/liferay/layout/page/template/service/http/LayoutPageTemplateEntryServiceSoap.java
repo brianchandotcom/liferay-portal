@@ -246,6 +246,35 @@ public class LayoutPageTemplateEntryServiceSoap {
 		}
 	}
 
+	public static
+		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap
+				createLayoutPageTemplateEntryFromLayout(
+					long segmentsExperienceId,
+					com.liferay.portal.kernel.model.Layout sourceLayout,
+					String name, long targetLayoutPageTemplateCollectionId,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws RemoteException {
+
+		try {
+			com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+				returnValue =
+					LayoutPageTemplateEntryServiceUtil.
+						createLayoutPageTemplateEntryFromLayout(
+							segmentsExperienceId, sourceLayout, name,
+							targetLayoutPageTemplateCollectionId,
+							serviceContext);
+
+			return com.liferay.layout.page.template.model.
+				LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void deleteLayoutPageTemplateEntries(
 			long[] layoutPageTemplateEntryIds)
 		throws RemoteException {

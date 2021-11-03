@@ -125,6 +125,20 @@ public class LayoutPageTemplateEntryServiceWrapper
 	}
 
 	@Override
+	public LayoutPageTemplateEntry createLayoutPageTemplateEntryFromLayout(
+			long segmentsExperienceId,
+			com.liferay.portal.kernel.model.Layout sourceLayout, String name,
+			long targetLayoutPageTemplateCollectionId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws Exception {
+
+		return _layoutPageTemplateEntryService.
+			createLayoutPageTemplateEntryFromLayout(
+				segmentsExperienceId, sourceLayout, name,
+				targetLayoutPageTemplateCollectionId, serviceContext);
+	}
+
+	@Override
 	public void deleteLayoutPageTemplateEntries(
 			long[] layoutPageTemplateEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {

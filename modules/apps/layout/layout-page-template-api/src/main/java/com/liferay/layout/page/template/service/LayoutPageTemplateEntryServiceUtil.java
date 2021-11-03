@@ -124,6 +124,19 @@ public class LayoutPageTemplateEntryServiceUtil {
 			serviceContext);
 	}
 
+	public static LayoutPageTemplateEntry
+			createLayoutPageTemplateEntryFromLayout(
+				long segmentsExperienceId,
+				com.liferay.portal.kernel.model.Layout sourceLayout,
+				String name, long targetLayoutPageTemplateCollectionId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws Exception {
+
+		return getService().createLayoutPageTemplateEntryFromLayout(
+			segmentsExperienceId, sourceLayout, name,
+			targetLayoutPageTemplateCollectionId, serviceContext);
+	}
+
 	public static void deleteLayoutPageTemplateEntries(
 			long[] layoutPageTemplateEntryIds)
 		throws PortalException {

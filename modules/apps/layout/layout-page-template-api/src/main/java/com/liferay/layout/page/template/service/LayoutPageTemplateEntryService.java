@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -107,6 +108,12 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 			long groupId, long layoutPageTemplateCollectionId,
 			long layoutPageTemplateEntryId, ServiceContext serviceContext)
 		throws PortalException;
+
+	public LayoutPageTemplateEntry createLayoutPageTemplateEntryFromLayout(
+			long segmentsExperienceId, Layout sourceLayout, String name,
+			long targetLayoutPageTemplateCollectionId,
+			ServiceContext serviceContext)
+		throws Exception;
 
 	public void deleteLayoutPageTemplateEntries(
 			long[] layoutPageTemplateEntryIds)

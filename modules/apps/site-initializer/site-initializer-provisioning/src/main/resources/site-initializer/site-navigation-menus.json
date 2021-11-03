@@ -19,18 +19,6 @@
 	{
 		"name": "Footer Navigation",
 		"pages": [
-			{
-				"friendlyURL": "/privacy-policy",
-				"privateLayout": false
-			},
-			{
-				"friendlyURL": "/documentation",
-				"privateLayout": false
-			},
-			{
-				"friendlyURL": "/community",
-				"privateLayout": false
-			}
 		]
 	}
 ]

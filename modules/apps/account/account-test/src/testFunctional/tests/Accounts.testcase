@@ -1729,12 +1729,16 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Update Accounts Name for Test");
 	}
 
-	@description = "This test asserts accounts are filtered by All Accounts by default. Changing filter to Business and Person shows accurate results."
+	@description = "This is a use case for LPS-139477. This test asserts accounts are filtered by All Accounts by default. Changing filter to Business, Guest and Person shows accurate results."
 	@priority = "3"
 	test CanFilterAccountsByType {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Business Account",
 			accountEntryType = "Business");
+
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Guest Account",
+			accountEntryType = "Guest");
 
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Person Account",
@@ -1750,6 +1754,16 @@ definition {
 
 		LexiconEntry.viewEntryName(rowEntry = "Business Account");
 
+		LexiconEntry.viewNoEntry(rowEntry = "Guest Account");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Person Account");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Guest");
+
+		LexiconEntry.viewEntryName(rowEntry = "Guest Account");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Business Account");
+
 		LexiconEntry.viewNoEntry(rowEntry = "Person Account");
 
 		ManagementBar.setFilterAndOrder(filterBy = "Person");
@@ -1757,6 +1771,8 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Person Account");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Business Account");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Guest Account");
 	}
 
 	@description = "This asserts that filter in setting default shipping will not change to billing and that billing addresses do not display as options."

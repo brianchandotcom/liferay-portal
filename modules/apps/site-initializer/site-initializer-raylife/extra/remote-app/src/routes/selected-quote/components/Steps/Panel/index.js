@@ -25,14 +25,14 @@ const Panel = ({
 	}, [stepChecked, defaultExpanded, hasError]);
 
 	useEffect(() => {
-		var filesChanged = false;
+		let filesChanged = false;
 
-		sections?.map((section) => {
-			const noDocumentId = section.files?.some(
+		sections?.forEach((section) => {
+			const noFileDocumentsId = section.files?.some(
 				(file) => !file.documentId
 			);
 
-			if (noDocumentId) {
+			if (noFileDocumentsId) {
 				filesChanged = true;
 			}
 		});

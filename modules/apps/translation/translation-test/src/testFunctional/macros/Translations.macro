@@ -160,7 +160,9 @@ definition {
 		}
 
 		else {
-			PortletEntry.publish();
+			Button.clickPublish();
+
+			Click(locator1 = "Button#TRANSLATIONS_DONE");
 		}
 	}
 

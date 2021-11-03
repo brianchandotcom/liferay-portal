@@ -84,6 +84,27 @@ import java.util.Objects;
  */
 public class CPTestUtil {
 
+	public static void addCatalogBaseCommercePriceList(
+			long groupId, String currencyCode, String type,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommercePriceList commerceCatalogBasePriceList =
+			CommercePriceListLocalServiceUtil.
+				fetchCatalogBaseCommercePriceListByType(groupId, type);
+
+		if (commerceCatalogBasePriceList == null) {
+			CommerceCurrency commerceCurrency =
+				CommerceCurrencyLocalServiceUtil.getCommerceCurrency(
+					serviceContext.getCompanyId(), currencyCode);
+
+			CommercePriceListLocalServiceUtil.addCatalogBaseCommercePriceList(
+				groupId, serviceContext.getUserId(),
+				commerceCurrency.getCommerceCurrencyId(), type,
+				RandomTestUtil.randomString(), serviceContext);
+		}
+	}
+
 	public static AssetCategory addCategoryToCPDefinitions(
 			long groupId, long... cpDefinitionIds)
 		throws PortalException {
@@ -438,6 +459,24 @@ public class CPTestUtil {
 			cpDefinition.getCPDefinitionId(), CPInstanceConstants.DEFAULT_SKU);
 	}
 
+	public static CPInstance addCPInstanceFromCatalogWithERC(
+			long groupId, String externalReferenceCode, BigDecimal price,
+			String sku)
+		throws PortalException {
+
+		CPInstance cpInstance = addCPInstanceFromCatalog(groupId);
+
+		cpInstance.setSku(sku);
+		cpInstance.setPrice(price);
+		cpInstance.setExternalReferenceCode(externalReferenceCode);
+
+		cpInstance = CPInstanceLocalServiceUtil.updateCPInstance(cpInstance);
+
+		_addCommercePriceEntry(cpInstance);
+
+		return cpInstance;
+	}
+
 	public static CPInstance addCPInstanceWithRandomSku(long groupId)
 		throws PortalException {
 
@@ -681,27 +720,6 @@ public class CPTestUtil {
 		return bigDecimal.stripTrailingZeros();
 	}
 
-	private static void _addCatalogBaseCommercePriceList(
-			long groupId, String currencyCode, String type,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CommercePriceList commerceCatalogBasePriceList =
-			CommercePriceListLocalServiceUtil.
-				fetchCatalogBaseCommercePriceListByType(groupId, type);
-
-		if (commerceCatalogBasePriceList == null) {
-			CommerceCurrency commerceCurrency =
-				CommerceCurrencyLocalServiceUtil.getCommerceCurrency(
-					serviceContext.getCompanyId(), currencyCode);
-
-			CommercePriceListLocalServiceUtil.addCatalogBaseCommercePriceList(
-				groupId, serviceContext.getUserId(),
-				commerceCurrency.getCommerceCurrencyId(), type,
-				RandomTestUtil.randomString(), serviceContext);
-		}
-	}
-
 	private static void _addCommercePriceEntry(CPInstance cpInstance)
 		throws PortalException {
 
@@ -752,12 +770,12 @@ public class CPTestUtil {
 
 		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
 
-		_addCatalogBaseCommercePriceList(
+		addCatalogBaseCommercePriceList(
 			commerceCatalog.getGroupId(),
 			commerceCatalog.getCommerceCurrencyCode(),
 			CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
 
-		_addCatalogBaseCommercePriceList(
+		addCatalogBaseCommercePriceList(
 			commerceCatalog.getGroupId(),
 			commerceCatalog.getCommerceCurrencyCode(),
 			CommercePriceListConstants.TYPE_PROMOTION, serviceContext);
@@ -880,12 +898,12 @@ public class CPTestUtil {
 
 		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
 
-		_addCatalogBaseCommercePriceList(
+		addCatalogBaseCommercePriceList(
 			commerceCatalog.getGroupId(),
 			commerceCatalog.getCommerceCurrencyCode(),
 			CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
 
-		_addCatalogBaseCommercePriceList(
+		addCatalogBaseCommercePriceList(
 			commerceCatalog.getGroupId(),
 			commerceCatalog.getCommerceCurrencyCode(),
 			CommercePriceListConstants.TYPE_PROMOTION, serviceContext);

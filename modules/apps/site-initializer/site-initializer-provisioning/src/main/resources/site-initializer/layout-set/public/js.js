@@ -16,16 +16,17 @@ var copySaved = '';
 
 var starterkitList = document.getElementsByClassName('provisioning-item');
 
-if (starterkitList) {
-	function addActiveClass(event) {
-		event.target.classList.add('active');
-	}
+function addActiveClass(event) {
+	event.target.classList.add('active');
+}
 
+if (starterkitList) {
 	for (var i = 0, len = starterkitList.length; i < len; i++) {
 		starterkitList[i].addEventListener('focus', addActiveClass);
 	}
 }
 
+/* eslint-disable */
 function copySiteName() {
 	var letterNumber = /^[0-9a-zA-Z]+$/;
 
@@ -58,8 +59,6 @@ function copySiteName() {
 
 function openItem(cpInstanceId, commerceChannelId, commerceAccountId, groupId) {
 	Liferay.Util.openModal({
-		id: 'selectStarterkit',
-		title: 'Select your starterkit',
 		bodyHTML: `<div class="form-group" id="snGroup">
 				 <label for="sn">Site name
 					 <small> (more than 4 characters)</small>
@@ -76,7 +75,6 @@ function openItem(cpInstanceId, commerceChannelId, commerceAccountId, groupId) {
 
 			 <p class="alert alert-feedback alert-info">You can later manage custom domains from site settings.</p>
 		 `,
-		size: 'md',
 		buttons: [
 			{
 				displayType: 'secondary',
@@ -88,8 +86,8 @@ function openItem(cpInstanceId, commerceChannelId, commerceAccountId, groupId) {
 				},
 			},
 			{
-				label: 'Select',
 				id: 'createSite',
+				label: 'Select',
 				onClick() {
 					Liferay.Util.getOpener().Liferay.fire('closeModal', {
 						id: 'selectStarterkit',
@@ -109,9 +107,12 @@ function openItem(cpInstanceId, commerceChannelId, commerceAccountId, groupId) {
 				},
 			},
 		],
+		id: 'selectStarterkit',
 		onOpen() {
 			document.getElementById('createSite').disabled = true;
 		},
+		size: 'md',
+		title: 'Select your starterkit',
 	});
 }
 
@@ -123,13 +124,6 @@ function createOrder(
 	siteName,
 	groupId
 ) {
-
-	// console.log('Account ID: ' + commerceAccountId);
-	// console.log('Channel ID: ' + commerceChannelId);
-	// console.log('Instance ID: ' + cpInstanceId);
-	// console.log('Domain name: ' + domainName);
-	// console.log('Site name: ' + siteName);
-
 	var cartsURL =
 		themeDisplay.getPortalURL() +
 		'/o/headless-commerce-delivery-cart/v1.0/channels/' +
@@ -152,10 +146,6 @@ function createOrder(
 		.then((data) => {
 			var cartId = data.id;
 
-			console.log(data);
-
-			// console.log('Cart ID: ' + cartId);
-
 			var cartURL =
 				themeDisplay.getPortalURL() +
 				'/o/headless-commerce-delivery-cart/v1.0/carts/' +
@@ -164,15 +154,15 @@ function createOrder(
 
 			return Liferay.Util.fetch(cartURL, {
 				body: JSON.stringify({
-					quantity: 1,
-					skuId: cpInstanceId,
-					subscription: true,
 					options:
 						'[{"key":"domain","value":["' +
 						domainName +
 						'"]},{"key":"name","value":["' +
 						siteName +
 						'"]}]',
+					quantity: 1,
+					skuId: cpInstanceId,
+					subscription: true,
 				}),
 				headers: {
 					'Accept': 'application/json',
@@ -181,9 +171,7 @@ function createOrder(
 				method: 'POST',
 			})
 				.then((response) => response.json())
-				.then((data) => {
-					console.log(data);
-
+				.then(() => {
 					var checkoutURL =
 						themeDisplay.getPortalURL() +
 						'/o/headless-commerce-delivery-cart/v1.0/carts/' +
@@ -200,8 +188,6 @@ function createOrder(
 				})
 				.then((response) => response.json())
 				.then((data) => {
-					console.log(data);
-
 					var orderUUID = data.orderUUID;
 
 					var url =

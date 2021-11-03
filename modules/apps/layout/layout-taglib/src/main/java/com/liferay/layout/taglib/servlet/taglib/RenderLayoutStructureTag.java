@@ -561,7 +561,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write("<div class=\"c-empty-state-text\">");
 		jspWriter.write(
 			LanguageUtil.get(getRequest(), "sorry-there-are-no-results-found"));
-		jspWriter.write("</div></div>");
+		jspWriter.write("</div></div></div>");
 	}
 
 	private void _renderFragmentStyledLayoutStructureItem(

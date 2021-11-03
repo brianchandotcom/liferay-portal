@@ -123,16 +123,20 @@ AUI.add(
 				return fields;
 			},
 
-			serializeDefinition(json) {
+			serializeDefinition(draftVersion, json) {
 				var instance = this;
+
+				const metadata = instance.definition.getAttrs([
+					'description',
+					'name',
+				]);
+
+				metadata.version =
+					draftVersion || instance.definition.get('version');
 
 				return serializeDefinition(
 					instance.definition.get('xmlNamespace'),
-					instance.definition.getAttrs([
-						'description',
-						'name',
-						'version',
-					]),
+					metadata,
 					json
 				);
 			},

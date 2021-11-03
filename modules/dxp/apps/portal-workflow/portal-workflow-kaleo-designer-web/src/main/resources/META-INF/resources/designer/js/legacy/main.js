@@ -444,10 +444,13 @@ AUI.add(
 				getContent() {
 					var instance = this;
 
-					var json = instance.toJSON();
+					const draftVersionInput = document.getElementById(
+						instance.get('portletNamespace') + 'draftVersion'
+					);
 
 					return instance.definitionController.serializeDefinition(
-						json
+						draftVersionInput.value,
+						instance.toJSON()
 					);
 				},
 

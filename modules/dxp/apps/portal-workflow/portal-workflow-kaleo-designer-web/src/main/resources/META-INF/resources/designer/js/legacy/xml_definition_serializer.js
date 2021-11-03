@@ -36,7 +36,7 @@ AUI.add(
 		var serializeDefinition = function (xmlNamespace, metadata, json) {
 			var description = metadata.description;
 			var name = metadata.name;
-			var version = metadata.version;
+			var version = parseInt(metadata.version, 10);
 
 			var buffer = [];
 

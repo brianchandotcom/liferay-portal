@@ -12,7 +12,7 @@
  * details.
  */
 
-export const limitValue = ({
+export declare const limitValue: ({
 	defaultValue,
 	max,
 	min,
@@ -22,13 +22,9 @@ export const limitValue = ({
 	max: number;
 	min: number;
 	value: number;
-}) => {
-	if (isNaN(value) || value < min) {
-		return defaultValue;
-	}
-	else if (value > max) {
-		return max;
-	}
-
-	return value;
-};
+}) => number;
+export declare const trimLeftZero: (options: {
+	decimalSymbol: string;
+	thousandsSeparator: string | null | undefined;
+	value: string;
+}) => string;

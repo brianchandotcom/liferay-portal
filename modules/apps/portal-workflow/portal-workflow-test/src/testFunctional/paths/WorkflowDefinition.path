@@ -23,7 +23,7 @@
 <!--DEFINITION-->
 <tr>
 	<td>DEFINITION_TITLE</td>
-	<td>//input[(contains(@name,'KaleoDesignerPortlet_title')) and (contains(@type,'text'))]</td>
+	<td>//input[(contains(@name,'KaleoDesignerPortlet_title')) or (contains(@name,'ControlPanelWorkflowPortlet_title')) and (contains(@type,'text'))]</td>
 	<td></td>
 </tr>
 <!--DEFINITION_TABLE-->

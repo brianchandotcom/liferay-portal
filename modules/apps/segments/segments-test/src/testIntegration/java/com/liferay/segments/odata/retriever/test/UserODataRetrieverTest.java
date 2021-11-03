@@ -79,7 +79,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -92,8 +91,6 @@ import org.osgi.service.cm.ConfigurationAdmin;
  */
 @RunWith(Arquillian.class)
 public class UserODataRetrieverTest {
-
-	public static final int MORE_THAN_10K = 10002;
 
 	@ClassRule
 	@Rule
@@ -1067,14 +1064,17 @@ public class UserODataRetrieverTest {
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
-	@Ignore
 	@Test
-	public void testRetrieveMoreThan10KUsers() throws Exception {
+	public void testRetrieveMoreUsersThanElasticsearchMaxResultWindow()
+		throws Exception {
+
 		_group1 = GroupTestUtil.addGroup();
 
 		long groupId = _group1.getGroupId();
 
-		for (int i = 0; i < MORE_THAN_10K; i++) {
+		for (int i = 0; i < _MORE_USERS_THAN_ELASTICSEARCH_MAX_RESULT_WINDOW;
+			 i++) {
+
 			_addUser("firstName", new long[] {groupId});
 		}
 
@@ -1084,7 +1084,9 @@ public class UserODataRetrieverTest {
 			_group1.getCompanyId(), filterString, LocaleUtil.getDefault(),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertTrue(MORE_THAN_10K == users.size());
+		Assert.assertEquals(
+			users.toString(), _MORE_USERS_THAN_ELASTICSEARCH_MAX_RESULT_WINDOW,
+			users.size());
 	}
 
 	protected static Dictionary<String, Object> setUpElasticsearchProperties()
@@ -1163,6 +1165,9 @@ public class UserODataRetrieverTest {
 			"ElasticsearchConfiguration";
 
 	private static final int _ELASTICSEARCH_MAX_RESULT_WINDOW = 10;
+
+	private static final int _MORE_USERS_THAN_ELASTICSEARCH_MAX_RESULT_WINDOW =
+		_ELASTICSEARCH_MAX_RESULT_WINDOW * 3;
 
 	private static Company _company;
 	private static Group _companyGuestGroup;

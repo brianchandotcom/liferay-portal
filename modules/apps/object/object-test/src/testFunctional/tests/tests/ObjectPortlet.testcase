@@ -118,20 +118,6 @@ definition {
 			roleTitle = "Regular Role",
 			roleType = "Regular");
 
-		ApplicationsMenu.gotoSite(site = "Liferay DXP");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-
 		Navigator.openURL();
 
 		User.logoutAndLoginPG(
@@ -142,7 +128,7 @@ definition {
 
 		ObjectPortlet.goToCustomObjectPortletOnControlPanel();
 
-		AssertAccessible();
+		ObjectPortlet.assertHeader(objectLabel = "Custom Object");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a BigDecimal field on layout"

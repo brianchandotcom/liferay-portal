@@ -81,6 +81,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_PORTLET_HEADER</td>
+		<td>//span[@data-qa-id='headerTitle' and contains (text(),'${key_objectLabel}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>DELETE_ENTRY_BUTTON</td>
 		<td>//div[contains(@class,'show')]//button[contains(.,'Delete')]</td>
 		<td></td>

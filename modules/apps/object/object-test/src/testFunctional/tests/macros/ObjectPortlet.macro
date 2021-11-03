@@ -80,6 +80,12 @@ definition {
 			locator1 = "ObjectPortlet#GENERIC_ENTRY_COLUMN");
 	}
 
+	macro assertHeader {
+		AssertElementPresent(
+			key_objectLabel = "${objectLabel}",
+			locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
+	}
+
 	macro assertMenuItemColumn {
 		AssertElementPresent(
 			key_dropdowntItem = "${dropdowntItem}",

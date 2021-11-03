@@ -2105,10 +2105,15 @@ public class LanguageImpl implements Language, Serializable {
 				User defaultUser = UserLocalServiceUtil.fetchDefaultUser(
 					companyId);
 
-				if (defaultUser.getLocale() != null) {
-					defaultLocale = defaultUser.getLocale();
+				if (defaultUser != null) {
+					Locale defaultUserLocale = defaultUser.getLocale();
 
-					defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+					if (defaultUserLocale != null) {
+						defaultLocale = defaultUserLocale;
+
+						defaultLanguageId = LocaleUtil.toLanguageId(
+							defaultLocale);
+					}
 				}
 			}
 

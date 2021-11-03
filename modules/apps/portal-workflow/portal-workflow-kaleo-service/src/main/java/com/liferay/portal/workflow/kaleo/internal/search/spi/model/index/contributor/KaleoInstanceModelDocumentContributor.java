@@ -14,23 +14,23 @@
 
 package com.liferay.portal.workflow.kaleo.internal.search.spi.model.index.contributor;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
-import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
+import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 
-import java.io.Serializable;
-
-import java.util.Map;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -41,6 +41,7 @@ import org.osgi.service.component.annotations.Component;
 	service = ModelDocumentContributor.class
 )
 public class KaleoInstanceModelDocumentContributor
+	extends BaseKaleoModelDocumentContributor
 	implements ModelDocumentContributor<KaleoInstance> {
 
 	@Override
@@ -50,30 +51,34 @@ public class KaleoInstanceModelDocumentContributor
 		document.addDateSortable(
 			Field.MODIFIED_DATE, kaleoInstance.getModifiedDate());
 		document.addKeyword("className", kaleoInstance.getClassName());
+		document.addKeyword(
+			Field.CLASS_NAME_ID,
+			_portal.getClassNameId(kaleoInstance.getClassName()));
 		document.addKeyword("classPK", kaleoInstance.getClassPK());
 		document.addKeywordSortable("completed", kaleoInstance.isCompleted());
 		document.addDateSortable(
 			"completionDate", kaleoInstance.getCompletionDate());
-
-		try {
-			Map<String, Serializable> workflowContext =
-				WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext());
-
-			ServiceContext serviceContext = (ServiceContext)workflowContext.get(
-				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
-
-			KaleoInstanceToken rootKaleoInstanceToken =
-				kaleoInstance.getRootKaleoInstanceToken(serviceContext);
-
-			document.addKeywordSortable(
-				"currentKaleoNodeName",
-				rootKaleoInstanceToken.getCurrentKaleoNodeName());
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
-			}
-		}
+		document.addKeywordSortable(
+			"currentKaleoNodeName",
+			Stream.of(
+				_kaleoInstanceTokenLocalService.getKaleoInstanceTokens(
+					kaleoInstance.getKaleoInstanceId())
+			).flatMap(
+				List::stream
+			).map(
+				KaleoInstanceToken::getCurrentKaleoNodeId
+			).map(
+				_kaleoNodeLocalService::fetchKaleoNode
+			).filter(
+				Objects::nonNull
+			).filter(
+				kaleoNode -> !Objects.equals(
+					kaleoNode.getType(), NodeType.FORK.name())
+			).map(
+				KaleoNode::getName
+			).toArray(
+				String[]::new
+			));
 
 		document.addKeyword(
 			"kaleoDefinitionName", kaleoInstance.getKaleoDefinitionName());
@@ -88,9 +93,19 @@ public class KaleoInstanceModelDocumentContributor
 		document.addKeyword(
 			"rootKaleoInstanceTokenId",
 			kaleoInstance.getRootKaleoInstanceTokenId());
+
+		addAssetEntryAttributes(
+			kaleoInstance.getClassName(), kaleoInstance.getClassPK(), document,
+			kaleoInstance.getGroupId());
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		KaleoInstanceModelDocumentContributor.class);
+	@Reference
+	private KaleoInstanceTokenLocalService _kaleoInstanceTokenLocalService;
+
+	@Reference
+	private KaleoNodeLocalService _kaleoNodeLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

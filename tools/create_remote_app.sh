@@ -12,10 +12,11 @@ function create_react_app {
 	cd ${temp_dir}
 
 	yarn remove @testing-library/jest-dom @testing-library/react @testing-library/user-event web-vitals
+	yarn add sass
 
 	echo "SKIP_PREFLIGHT_CHECK=true" > ".env"
 
-	sed -i -e "s|<div id=\"root\"></div>|<$CUSTOM_ELEMENT_NAME></$CUSTOM_ELEMENT_NAME>|g" public/index.html
+	sed -i -e "s|<div id=\"root\"></div>|<$CUSTOM_ELEMENT_NAME route=\"hello-world\"></$CUSTOM_ELEMENT_NAME>|g" public/index.html
 
 	rm -f public/favicon.ico public/logo* public/manifest.json public/robots.txt
 
@@ -46,7 +47,7 @@ function create_vue_2_app {
 }
 
 function create_vue_3_app {
-	echo create_vue_3_app
+	echo ""
 }
 
 function date {
@@ -88,8 +89,8 @@ function get_temp_dir {
 function main {
 	check_usage
 
-	#create_react_app
-	create_vue_2_app
+	create_react_app
+	# create_vue_2_app
 }
 
 function write_gitignore {
@@ -185,10 +186,22 @@ import HelloFoo from './routes/hello-foo/pages/HelloFoo';
 import HelloWorld from './routes/hello-world/pages/HelloWorld';
 import './common/styles/index.scss';
 
+const App = ({ route }) => {
+  if (route === "hello-bar") {
+    return <HelloBar />;
+  }
+
+  if (route === "hello-foo") {
+    return <HelloFoo />;
+  }
+
+  return <HelloWorld />;
+};
+
 class WebComponent extends HTMLElement {
 	connectedCallback() {
 		ReactDOM.render(
-			<HelloWorld />,
+			<App route={this.getAttribute("route")} />,
 			this
 		);
 	}

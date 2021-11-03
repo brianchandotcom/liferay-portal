@@ -116,7 +116,7 @@ definition {
 		}
 
 		task ("Reset Google PageSpeed API to default at System Settings") {
-			PageAudit.resetDefaultValuesSystemSettings();
+			PageAudit.configurationTeardown();
 		}
 	}
 
@@ -233,7 +233,7 @@ definition {
 		}
 
 		task ("Reset Google PageSpeed API to default at System Settings") {
-			PageAudit.resetDefaultValuesSystemSettings();
+			PageAudit.configurationTeardown();
 		}
 	}
 
@@ -1480,7 +1480,7 @@ definition {
 		}
 
 		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "DocumentEditorRole Name");
+			JSONRole.deleteRole(roleTitle = "PagesEditorRole Name");
 		}
 	}
 
@@ -3226,7 +3226,7 @@ definition {
 		}
 
 		task ("Reset Google PageSpeed API to default at System Settings") {
-			PageAudit.resetDefaultValuesSystemSettings();
+			PageAudit.configurationTeardown();
 		}
 	}
 

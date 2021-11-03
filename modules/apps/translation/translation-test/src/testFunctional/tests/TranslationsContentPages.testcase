@@ -245,7 +245,7 @@ definition {
 			newTargetLocale = "es-ES");
 
 		Translations.translateFragmentField(
-			fieldName = "element-html",
+			fieldName = "HTML",
 			fragmentText = "este es un campo html");
 
 		PortletEntry.publish();

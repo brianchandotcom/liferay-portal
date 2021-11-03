@@ -342,9 +342,13 @@ definition {
 
 	macro translateFragmentField {
 		if ("${fieldName}" == "HTML") {
+			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+
 			Type.typeCodeMirrorEditorNoError(
 				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
 				value1 = "${fragmentText}");
+
+			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 		}
 
 		else {

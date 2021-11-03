@@ -312,6 +312,12 @@ export const FormBuilder = () => {
 		(event) => {
 			event.preventDefault();
 
+			const publishButton = document.querySelector(
+				'.lfr-ddm-publish-button'
+			);
+
+			publishButton.disabled = true;
+
 			subtmitForm(document.getElementById(`${portletNamespace}editForm`));
 		},
 		[portletNamespace, subtmitForm]

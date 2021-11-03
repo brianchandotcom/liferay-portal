@@ -50,6 +50,12 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.test.MockLiferayPortletContext;
+
+import java.util.Map;
+
+import javax.portlet.Portlet;
+import javax.portlet.PortletPreferences;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -58,10 +64,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import javax.portlet.Portlet;
-import javax.portlet.PortletPreferences;
-import java.util.Map;
 
 /**
  * @author David Arques

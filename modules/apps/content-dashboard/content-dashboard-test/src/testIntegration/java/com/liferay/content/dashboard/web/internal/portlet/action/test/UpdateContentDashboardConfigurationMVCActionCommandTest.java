@@ -24,14 +24,15 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import javax.portlet.PortletException;
-import javax.portlet.PortletPreferences;
 
 /**
  * @author David Arques

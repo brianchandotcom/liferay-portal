@@ -26,6 +26,6 @@ AssetAutoTaggerConfiguration assetAutoTaggerConfiguration = (AssetAutoTaggerConf
 		cssClass="panel-group-flush"
 		label='<%= LanguageUtil.get(request, "asset-auto-tagging") %>'
 	>
-		<aui:input helpMessage="asset-library-asset-auto-tagging-help" inlineLabel="right" label="enable-auto-tagging-of-assets-on-this-asset-library" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--assetAutoTaggingEnabled--" type="toggle-switch" value="<%= assetAutoTaggerConfiguration.isEnabled() %>" />
+		<aui:input helpMessage="asset-library-asset-auto-tagging-help" inlineLabel="right" label="enable-auto-tagging" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--assetAutoTaggingEnabled--" type="toggle-switch" value="<%= assetAutoTaggerConfiguration.isEnabled() %>" />
 	</liferay-frontend:fieldset>
 </c:if>

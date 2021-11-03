@@ -112,24 +112,28 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8282 | Test Summary: Anonymous converts to known"
 	@priority = "4"
 	test CanAnonymousIndividualsConvertsToKnownIndividuals {
+		var nameList = "ac";
+
 		task ("Connect Analytics Cloud to DXP") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Create new user") {
 			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
+				userEmailAddress = "${nameList}@liferay.com",
+				userFirstName = "${nameList}",
+				userLastName = "${nameList}",
+				userScreenName = "${nameList}");
 		}
 
 		task ("Login with new user and see Site") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
+				userLoginEmailAddress = "${nameList}@liferay.com",
+				userLoginFullName = "${nameList} ${nameList}");
 
-			Navigator.openURL();
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close all sessions and switch to new property in AC and go to Individuals") {
@@ -151,7 +155,7 @@ definition {
 		task ("Hover on the Active Individuals graph and assert the elements that are shown on the tooltip") {
 			Click.mouseDownMouseUp(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
 
-			for (var current : list "Known-1,Anonymous-1,Total-2") {
+			for (var current : list "Known-0,Anonymous-1,Total-1") {
 				var visitorsType = StringUtil.extractFirst("${current}","-");
 				var valueVisitors = StringUtil.extractLast("${current}","-");
 
@@ -172,10 +176,12 @@ definition {
 
 		task ("Login with new user and see Site") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
+				userLoginEmailAddress = "${nameList}@liferay.com",
+				userLoginFullName = "${nameList} ${nameList}");
 
-			Navigator.openURL();
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close all sessions and switch to new property in AC and go to Individuals") {
@@ -197,7 +203,7 @@ definition {
 		task ("Hover on the Active Individuals graph and assert the elements that are shown on the tooltip") {
 			Click.mouseDownMouseUp(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
 
-			for (var current : list "Known-2,Anonymous-0,Total-2") {
+			for (var current : list "Known-1,Anonymous-0,Total-1") {
 				var visitorsType = StringUtil.extractFirst("${current}","-");
 				var valueVisitors = StringUtil.extractLast("${current}","-");
 

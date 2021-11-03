@@ -1068,17 +1068,15 @@ public class UserODataRetrieverTest {
 	public void testRetrieveMoreUsersThanElasticsearchMaxResultWindow()
 		throws Exception {
 
-		_group1 = GroupTestUtil.addGroup();
-
-		long groupId = _group1.getGroupId();
+		String firstName = RandomTestUtil.randomString();
 
 		for (int i = 0; i < _MORE_USERS_THAN_ELASTICSEARCH_MAX_RESULT_WINDOW;
 			 i++) {
 
-			_addUser("firstName", new long[] {groupId});
+			_addUser(firstName, _group1);
 		}
 
-		String filterString = String.format("(firstName eq '%s')", "firstName");
+		String filterString = String.format("(firstName eq '%s')", firstName);
 
 		List<User> users = _oDataRetriever.getResults(
 			_group1.getCompanyId(), filterString, LocaleUtil.getDefault(),

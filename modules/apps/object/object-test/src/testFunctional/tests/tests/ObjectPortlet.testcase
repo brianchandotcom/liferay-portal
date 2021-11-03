@@ -395,30 +395,13 @@ definition {
 			roleTitle = "Regular Role",
 			roleType = "Regular");
 
-		ApplicationsMenu.gotoSite(site = "Liferay DXP");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-
 		Navigator.openURL();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Custom Objects");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Test Entry");
 

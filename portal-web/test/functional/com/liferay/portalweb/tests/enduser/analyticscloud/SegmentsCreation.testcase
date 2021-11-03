@@ -1276,8 +1276,6 @@ definition {
 			ACUtils.changePagination(itemsPerPage = "5");
 		}
 
-		ScrollWebElementIntoView(locator1 = "ACSegments#SEGMENT_MEMBERS_TABLE");
-
 		task ("View only 5 users are shown in page 1") {
 			ACUtils.viewNameList(nameList = "${nameList}");
 

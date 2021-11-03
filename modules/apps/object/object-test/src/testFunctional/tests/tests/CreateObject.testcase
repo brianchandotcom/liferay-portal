@@ -3729,35 +3729,6 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
 
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectFieldA",
-			objectName = "CustomObjectA",
-			value = "Entry 1");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectFieldB",
-			objectName = "CustomObjectB",
-			value = "Entry 2");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Custom Objects B");
-
-		ObjectPortlet.viewEntryDetails(entry = "Entry 2");
-
-		var objectEntryID = JSONObject.getObjectEntryId(
-			objectName = "CustomObjectA",
-			fieldName = "customObjectFieldA",
-			entryValue = "Entry 1");
-
-		Type(
-			key_fieldLabelName = "Custom Object A",
-			locator1 = "ObjectPortlet#ADD_ENTRY_FIELD_SPECIFIC",
-			value1 = "${objectEntryID}");
-
-		Button.clickSave();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object A");

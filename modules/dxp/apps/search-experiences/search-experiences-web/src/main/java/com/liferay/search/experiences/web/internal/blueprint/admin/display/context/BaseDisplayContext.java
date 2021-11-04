@@ -136,9 +136,6 @@ public abstract class BaseDisplayContext<R> {
 
 		BooleanQuery booleanQuery = queries.booleanQuery();
 
-		booleanQuery.addFilterQueryClauses(
-			queries.term(Field.GROUP_ID, themeDisplay.getCompanyGroupId()));
-
 		int status = ParamUtil.getInteger(
 			liferayPortletRequest, "status", WorkflowConstants.STATUS_APPROVED);
 

@@ -37,7 +37,16 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
+		try (PreparedStatement countPreparedStatement =
+				connection.prepareStatement(
+					"select count(*) from LayoutPageTemplateEntry where " +
+						"groupId = ? and name = ?");
+			PreparedStatement deletePreparedStatement =
+				connection.prepareStatement(
+					"delete from LayoutPageTemplateEntry where groupId <> ? " +
+						"and layoutPageTemplateCollectionId <> 0 and type_ = " +
+							"? and layoutPrototypeId = ?");
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(
 					StringBundler.concat(
 						"select layoutPageTemplateEntryId, companyId, name, ",
@@ -46,6 +55,11 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 						LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
 						" and groupId in (select groupId from Group_ where ",
 						"site = [$FALSE$])")));
+			PreparedStatement updatePreparedStatement =
+				connection.prepareStatement(
+					"update LayoutPageTemplateEntry set groupId = ? , " +
+						"layoutPageTemplateCollectionId = 0, name = ? where " +
+							"layoutPageTemplateEntryId = ?");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -57,14 +71,17 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 
 				_updateLayoutPageTemplateEntry(
 					layoutPageTemplateEntryId, companyId, name,
-					layoutPrototypeId);
+					layoutPrototypeId, countPreparedStatement,
+					deletePreparedStatement, updatePreparedStatement);
 			}
 		}
 	}
 
 	private void _updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long companyId, String name,
-			long layoutPrototypeId)
+			long layoutPrototypeId, PreparedStatement countPreparedStatement,
+			PreparedStatement deletePreparedStatement,
+			PreparedStatement updatePreparedStatement)
 		throws Exception {
 
 		Company company = _companyLocalService.getCompany(companyId);
@@ -72,51 +89,31 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 		String newName = name;
 
 		for (int i = 1;; i++) {
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"select count(*) from LayoutPageTemplateEntry where " +
-							"groupId = ? and name = ?")) {
+			countPreparedStatement.setLong(1, company.getGroupId());
+			countPreparedStatement.setString(2, newName);
 
-				preparedStatement.setLong(1, company.getGroupId());
-				preparedStatement.setString(2, newName);
+			ResultSet resultSet = countPreparedStatement.executeQuery();
 
-				ResultSet resultSet = preparedStatement.executeQuery();
-
-				if (resultSet.next() && (resultSet.getInt(1) > 0)) {
-					newName = name + i;
-				}
-				else {
-					break;
-				}
+			if (resultSet.next() && (resultSet.getInt(1) > 0)) {
+				newName = name + i;
+			}
+			else {
+				break;
 			}
 		}
 
-		try (PreparedStatement updatePreparedStatement =
-				connection.prepareStatement(
-					"update LayoutPageTemplateEntry set groupId = ? , " +
-						"layoutPageTemplateCollectionId = 0, name = ? where " +
-							"layoutPageTemplateEntryId = ?")) {
+		updatePreparedStatement.setLong(1, company.getGroupId());
+		updatePreparedStatement.setString(2, newName);
+		updatePreparedStatement.setLong(3, layoutPageTemplateEntryId);
 
-			updatePreparedStatement.setLong(1, company.getGroupId());
-			updatePreparedStatement.setString(2, newName);
-			updatePreparedStatement.setLong(3, layoutPageTemplateEntryId);
+		updatePreparedStatement.executeUpdate();
 
-			updatePreparedStatement.executeUpdate();
-		}
+		deletePreparedStatement.setLong(1, company.getGroupId());
+		deletePreparedStatement.setInt(
+			2, LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE);
+		deletePreparedStatement.setLong(3, layoutPrototypeId);
 
-		try (PreparedStatement deletePreparedStatement =
-				connection.prepareStatement(
-					"delete from LayoutPageTemplateEntry where groupId <> ? " +
-						"and layoutPageTemplateCollectionId <> 0 and type_ = " +
-							"? and layoutPrototypeId = ?")) {
-
-			deletePreparedStatement.setLong(1, company.getGroupId());
-			deletePreparedStatement.setInt(
-				2, LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE);
-			deletePreparedStatement.setLong(3, layoutPrototypeId);
-
-			deletePreparedStatement.executeUpdate();
-		}
+		deletePreparedStatement.executeUpdate();
 	}
 
 	private final CompanyLocalService _companyLocalService;

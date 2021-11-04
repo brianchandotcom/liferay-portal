@@ -375,6 +375,9 @@ definition {
 			fieldName = "Separator",
 			targetFieldLabel = "Select from List");
 
+		Translations.addLanguageManageTranslations(key_language = "pt-BR");
+
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContentStructures.addName(structureName = "WC Titulo Estrutura");

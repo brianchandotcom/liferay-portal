@@ -233,6 +233,9 @@ public class EditStyleBookEntryDisplayContext {
 					layoutPageTemplateEntryItemSelectorCriterion =
 						new LayoutPageTemplateEntryItemSelectorCriterion();
 
+				layoutPageTemplateEntryItemSelectorCriterion.setGroupId(
+					_getPreviewItemsGroupId());
+
 				layoutPageTemplateEntryItemSelectorCriterion.setLayoutType(
 					layoutType);
 

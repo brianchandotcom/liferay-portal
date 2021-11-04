@@ -1900,7 +1900,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jaxb-api.jar</file-name>
-				<version>2.3.0.LIFERAY-PATCHED-2</version>
+				<version>2.3.0</version>
 				<project-name>JAXB-API</project-name>
 				<project-url>http://jaxb.java.net</project-url>
 				<licenses>
@@ -1961,7 +1961,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jaxws-api.jar</file-name>
-				<version>2.3.0.LIFERAY-PATCHED-1</version>
+				<version>2.3.0</version>
 				<project-name>JAX-WS (JSR 224) API</project-name>
 				<project-url>https://github.com/javaee/jax-ws-spec</project-url>
 				<licenses>
@@ -2280,7 +2280,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jws-api.jar</file-name>
-				<version>1.1.0.LIFERAY-PATCHED-1</version>
+				<version>1.1</version>
 				<project-name>Java EE Web Services Metadata API</project-name>
 				<project-url>http://glassfish.java.net</project-url>
 				<licenses>
@@ -2755,7 +2755,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/soap-api.jar</file-name>
-				<version>1.4.0.LIFERAY-PATCHED-1</version>
+				<version>1.4.0</version>
 				<project-name>SAAJ API</project-name>
 				<project-url>https://javaee.github.io/javaee-spec/</project-url>
 				<licenses>

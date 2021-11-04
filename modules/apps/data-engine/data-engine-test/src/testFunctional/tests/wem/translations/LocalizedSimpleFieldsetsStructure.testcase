@@ -790,6 +790,8 @@ definition {
 				fieldsGroupLabelEdit = "${prefix} Fields Group");
 		}
 
+		Translations.addLanguageManageTranslations(key_language = "pt-BR");
+
 		PortletEntry.changeLocale(
 			locale = "pt-BR",
 			modal = "true");
@@ -833,6 +835,8 @@ definition {
 			fieldFieldLabelEdit = "Quarto Texto",
 			fieldsetModal = "true");
 
+		Translations.addLanguageManageTranslations(key_language = "es-ES");
+
 		PortletEntry.changeLocale(
 			locale = "es-ES",
 			modal = "true");
@@ -875,6 +879,8 @@ definition {
 			fieldFieldLabel = "Fourth Text",
 			fieldFieldLabelEdit = "Cuarto Texto",
 			fieldsetModal = "true");
+
+		Translations.addLanguageManageTranslations(key_language = "de-DE");
 
 		PortletEntry.changeLocale(
 			locale = "de-DE",

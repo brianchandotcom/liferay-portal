@@ -304,8 +304,6 @@ public class EditStyleBookEntryDisplayContext {
 				PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 					RequestBackedPortletURLFactoryUtil.create(
 						_httpServletRequest),
-					_themeDisplay.getScopeGroup(),
-					_themeDisplay.getScopeGroupId(),
 					_renderResponse.getNamespace() + "selectPreviewItem",
 					layoutItemSelectorCriterion);
 

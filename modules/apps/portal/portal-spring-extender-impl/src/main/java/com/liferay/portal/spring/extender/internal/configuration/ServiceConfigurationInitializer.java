@@ -65,14 +65,10 @@ public class ServiceConfigurationInitializer {
 	}
 
 	protected void start() {
-		BundleContext bundleContext = _bundle.getBundleContext();
+		_initServiceComponent();
 
-		if (_serviceConfiguration != null) {
-			_initServiceComponent();
-
-			_registerConfiguration(
-				bundleContext, _serviceConfiguration, "service");
-		}
+		_registerConfiguration(
+			_bundle.getBundleContext(), _serviceConfiguration, "service");
 	}
 
 	private void _initServiceComponent() {

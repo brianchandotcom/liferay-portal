@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionC
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -65,10 +64,6 @@ public class EditExportBatchPlannerPlanMVCActionCommand
 		String taskItemDelegateName = ParamUtil.getString(
 			portletRequest, "taskItemDelegateName");
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
-
-		if (Validator.isNull(name)) {
-			name = _getGenericName(internalClassName);
-		}
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
@@ -149,11 +144,6 @@ public class EditExportBatchPlannerPlanMVCActionCommand
 		}
 
 		return Boolean.TRUE.toString();
-	}
-
-	private String _getGenericName(String value) {
-		return value.substring(value.lastIndexOf(StringPool.PERIOD)) +
-			" Plan Execution " + System.currentTimeMillis();
 	}
 
 	@Reference

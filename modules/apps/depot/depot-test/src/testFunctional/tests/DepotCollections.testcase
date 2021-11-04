@@ -780,22 +780,6 @@ definition {
 			site = "false",
 			title = "Depot Dynamic Asset List");
 
-		for (var i : list "1,2,3") {
-			DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-			AssetListsAdmin.viewContent(
-				assetListTitle = "Depot Dynamic Asset List",
-				assetTitle = "WC WebContent Title ${i}",
-				assetType = "Web Content Article");
-		}
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewContent(
-			assetListTitle = "Depot Dynamic Asset List",
-			assetTitle = "Document Title",
-			assetType = "Document");
-
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.editAssetList(assetListTitle = "Depot Dynamic Asset List");

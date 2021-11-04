@@ -32,7 +32,7 @@ definition {
 
 	@description = "This ensures that a manual collection in a depot can be published in the site through the Asset Publisher for local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	@uitest
 	test CanBePublishedViaLocalStaging {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -112,7 +112,7 @@ definition {
 
 	@description = "This ensures that a manual collection in a depot can be published in the site through the Asset Publisher for remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	@uitest
 	test CanBePublishedViaRemoteStaging {
 		property app.server.bundles.size = "1";
@@ -216,7 +216,7 @@ definition {
 
 	@description = "This ensures that the scope can be changed through dynamic selection in a depot."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	@uitest
 	test CanChangeScope {
 		JSONWebcontent.addWebContent(
@@ -292,7 +292,7 @@ definition {
 
 	@description = "This ensures that collections from a site can select the basic web content stored in a depot."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanCreateCollectionOnSiteUsingDepotWC {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -345,7 +345,7 @@ definition {
 
 	@description = "This ensures that the image is displayed by AP through Collections in a depot."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	@uitest
 	test CanDisplayImageInAP {
 		JSONDocument.addFileWithUploadedFile(
@@ -409,7 +409,7 @@ definition {
 
 	@description = "This ensures that tagged the web content is displayed by AP through dynamic selection in a depot."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	@uitest
 	test CanDisplayWCWithTagInAP {
 		for (var i : list "1,2") {
@@ -477,7 +477,7 @@ definition {
 
 	@description = "This ensures that images are excluded with the dynamic selection that does not contain the keyword "Image" in a depot."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanExcludeImagesDynamically {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -534,7 +534,7 @@ definition {
 
 	@description = "This ensures that the asset types will not be displayed when disabling the applications."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanNotDisplayDisabledApplications {
 		JSONAssetlist.addDynamicAssetListEntry(
 			groupName = "Test Depot Name",
@@ -616,7 +616,7 @@ definition {
 
 	@description = "This ensures that user can not select the collection in depot after disabling Collections."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanNotSelectAfterDisablingCollections {
 		JSONAssetlist.addManualAssetListEntry(
 			groupName = "Test Depot Name",
@@ -655,7 +655,7 @@ definition {
 
 	@description = "This ensures that the asset can be removed in Collections."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanRemoveSelectedAsset {
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
@@ -708,7 +708,7 @@ definition {
 
 	@description = "This ensures that an image can be selected from other site scope through dynamic selection that does not contain the keyword."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanSelectDMFromOtherScopeDynamically {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -772,7 +772,7 @@ definition {
 
 	@description = "This ensures that the documents with document type can be selected through Collections in a depot."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanSelectDocumentsWithTypeManually {
 		for (var i : list "1,2") {
 			DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
@@ -821,7 +821,7 @@ definition {
 
 	@description = "This ensures that multiple documents can be selected through Collections in a depot."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanSelectMultipleDMManually {
 		for (var documentName : list "Document_1.doc,Document_2.jpg,Document_3.txt") {
 			var extension = StringUtil.extractLast("${documentName}", ".");
@@ -878,7 +878,7 @@ definition {
 
 	@description = "This ensures that multiple web content can be selected through Collections in a depot."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanSelectMultipleWCManually {
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
@@ -922,7 +922,7 @@ definition {
 
 	@description = "This ensures that only web contents configured to show with dynamic selection are displayed in a depot."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanSelectOnlyWCDynamically {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -972,7 +972,7 @@ definition {
 
 	@description = "This ensures that web contents from all the scopes can be selected through dynamic selection in a depot."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanSelectWCFromAllScopesDynamically {
 		for (var i : list "1,2") {
 			JSONGroup.addGroup(groupName = "Test Site Name ${i}");
@@ -1024,7 +1024,7 @@ definition {
 
 	@description = "This ensures that the web content created by the structure can be selected via searching for the corresponding structure name."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	@uitest
 	test CanSelectWCWithStructure {
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");

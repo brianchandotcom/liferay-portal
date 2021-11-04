@@ -347,6 +347,12 @@ public abstract class PoshiElement
 					"\n\n", "\n");
 			}
 
+			if ((previousPoshiNode == null) &&
+				(poshiNode instanceof InlinePoshiComment)) {
+
+				padPoshiScriptSnippet = "\n" + padPoshiScriptSnippet;
+			}
+
 			if (StringUtil.endsWith(sb.toString(), "\ndefinition {") &&
 				!padPoshiScriptSnippet.startsWith("\n\n")) {
 
@@ -356,6 +362,10 @@ public abstract class PoshiElement
 			sb.append(padPoshiScriptSnippet);
 
 			previousPoshiNode = poshiNode;
+		}
+
+		if (previousPoshiNode instanceof InlinePoshiComment) {
+			sb.append("\n");
 		}
 
 		sb.append("\n");

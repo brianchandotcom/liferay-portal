@@ -2740,7 +2740,7 @@ definition {
 			AssertElementPresent(
 				key_breadcrumbName = "Site Settings",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
-			
+
 			MenuBar.viewActive(menuBar = "Google PageSpeed Insights");
 		}
 	}

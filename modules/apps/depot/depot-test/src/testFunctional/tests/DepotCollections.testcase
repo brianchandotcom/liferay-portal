@@ -691,6 +691,15 @@ definition {
 				assetTitle = "Document Text Title ${i}",
 				assetType = "Document");
 		}
+
+		for (var i : list "1,2") {
+			DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+			AssetListsAdmin.viewNoContent(
+				assetListTitle = "Depot Dynamic Asset List",
+				assetTitle = "Document Image Title ${i}",
+				assetType = "Document");
+		}
 	}
 
 	@description = "This ensures that the asset can be removed in Collections."

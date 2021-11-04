@@ -262,6 +262,46 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This is a test for LPS-136809. It checks that a Blog entry can be viewed with the Menu Display configured."
+	@priority = "3"
+	test CanViewBlogWithCardDisplay {
+		var key_fieldName = "displayStyle";
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Blogs",
+			configurationName = "Blogs",
+			configurationScope = "Widget Scope");
+
+		Type(
+			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+			value1 = "ddmTemplate_BLOGS-CARD-FTL");
+
+		Button.clickSave();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		AssertSelectedLabel(
+			locator1 = "Select#DISPLAY_TEMPLATE",
+			value1 = "Card");
+	}
+
 	@description = "This checks that the full content of an entry can be displayed."
 	@priority = "4"
 	@refactordone
@@ -389,16 +429,6 @@ definition {
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
-	}
-
-	@description = "This is a test for LPS-136809. It checks that a Blog entry can be viewed with the Menu Display configured."
-	@ignore = "true"
-	@priority = "3"
-	test CanViewBlogWithMenuDisplay {
-		property portal.acceptance = "false";
-
-		// TODO LPS-136809 CanViewBlogWithMenuDisplay pending implementation
-
 	}
 
 	@description = "This checks that the title of an entry can be displayed."

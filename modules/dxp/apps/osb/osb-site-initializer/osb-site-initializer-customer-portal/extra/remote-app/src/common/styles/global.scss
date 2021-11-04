@@ -11,7 +11,9 @@
 	--box-shadow-lg: var(--elevation-fluffy-3) rgba(11, 95, 255, 0.09);
 	--color-state-success-lighten-1: #eef8ec;
 	--display-line-height: 48px;
-	--form-input-error-bg: #feefef;
+	--color-state-error-lighten-2: #feefef;
+	--color-state-info-lighten-2: #eef2fa;
+	--form-input-error-bg: var(--color-state-error-lighten-2);
 	--form-input-success-bg: var(--color-state-success-lighten-1);
 	--form-input-font-weight: 700;
 	--form-input-label-font-weight: 700;

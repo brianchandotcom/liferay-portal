@@ -15,6 +15,10 @@ definition {
 	}
 
 	macro assertDeleteEntryButtonNotPresent {
+		AssertElementNotPresent(
+			key_entry = "${entry}",
+			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+
 		AssertElementNotPresent(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 	}
 

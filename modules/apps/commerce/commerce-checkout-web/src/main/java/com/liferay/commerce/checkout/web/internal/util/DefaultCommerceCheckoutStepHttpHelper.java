@@ -86,10 +86,12 @@ public class DefaultCommerceCheckoutStepHttpHelper
 		CommerceAddress billingAddress = commerceOrder.getBillingAddress();
 
 		if (((commerceAccount != null) &&
+			 (commerceAccount.getDefaultBillingAddressId() != 0) &&
+			 (commerceAccount.getDefaultShippingAddressId() != 0) &&
 			 (commerceAccount.getDefaultBillingAddressId() ==
 				 commerceAccount.getDefaultShippingAddressId()) &&
 			 (billingAddress == null) && (shippingAddress == null) &&
-			 !commerceOrder.isB2B()) ||
+			 _commerceShippingHelper.isShippable(commerceOrder)) ||
 			((billingAddress != null) && (shippingAddress != null) &&
 			 (billingAddress.getCommerceAddressId() ==
 				 shippingAddress.getCommerceAddressId()))) {

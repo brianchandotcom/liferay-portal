@@ -22,7 +22,7 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHel
 import com.liferay.fragment.exception.RequiredFragmentEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
@@ -94,71 +95,7 @@ public class FragmentEntryStagedModelRepository
 			uuid, groupId);
 
 		if (fragmentEntry != null) {
-			if (!extraData.isEmpty()) {
-				List<FragmentEntryLink> fragmentEntryLinks =
-					FragmentEntryLinkLocalServiceUtil.
-						getFragmentEntryLinksByFragmentEntryId(
-							fragmentEntry.getFragmentEntryId());
-
-				if (!fragmentEntryLinks.isEmpty()) {
-					Group stagingGroup = _staging.getStagingGroup(groupId);
-
-					JSONObject extraDataJSONObject =
-						JSONFactoryUtil.createJSONObject(extraData);
-
-					boolean privateLayout = GetterUtil.getBoolean(
-						extraDataJSONObject.get("privateLayout"));
-
-					JSONArray jsonArray = (JSONArray)extraDataJSONObject.get(
-						"layoutIds");
-
-					long[] plids = new long[0];
-
-					for (long layoutId : JSONUtil.toLongArray(jsonArray)) {
-						Layout stagingLayout = _layoutService.fetchLayout(
-							stagingGroup.getGroupId(), privateLayout, layoutId);
-
-						if (stagingLayout == null) {
-							continue;
-						}
-
-						Layout liveLayout =
-							_layoutService.getLayoutByUuidAndGroupId(
-								stagingLayout.getUuid(), groupId,
-								privateLayout);
-
-						plids = ArrayUtil.append(plids, liveLayout.getPlid());
-
-						Layout draftLayout = liveLayout.fetchDraftLayout();
-
-						if (draftLayout != null) {
-							plids = ArrayUtil.append(
-								plids, draftLayout.getPlid());
-						}
-					}
-
-					long[] fragmentEntryLinkIds =
-						new long[fragmentEntryLinks.size()];
-
-					for (int i = 0; i < fragmentEntryLinks.size(); i++) {
-						FragmentEntryLink fragmentEntryLink =
-							fragmentEntryLinks.get(i);
-
-						if (ArrayUtil.contains(
-								plids, fragmentEntryLink.getPlid())) {
-
-							fragmentEntryLinkIds[i] =
-								fragmentEntryLink.getFragmentEntryLinkId();
-						}
-						else {
-							throw new RequiredFragmentEntryException();
-						}
-					}
-
-					FragmentEntryLinkLocalServiceUtil.deleteFragmentEntryLinks(
-						fragmentEntryLinkIds);
-				}
-			}
+			_deleteFragmentEntryLinks(extraData, fragmentEntry, groupId);
 
 			deleteStagedModel(fragmentEntry);
 		}
@@ -227,6 +164,76 @@ public class FragmentEntryStagedModelRepository
 			fragmentEntry.getConfiguration(),
 			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.getStatus());
 	}
+
+	private void _deleteFragmentEntryLinks(
+			String extraData, FragmentEntry fragmentEntry, long groupId)
+		throws PortalException {
+
+		if (extraData.isEmpty()) {
+			return;
+		}
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksByFragmentEntryId(
+					fragmentEntry.getFragmentEntryId());
+
+		if (ListUtil.isEmpty(fragmentEntryLinks)) {
+			return;
+		}
+
+		Group stagingGroup = _staging.getStagingGroup(groupId);
+
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
+			extraData);
+
+		boolean privateLayout = GetterUtil.getBoolean(
+			extraDataJSONObject.get("privateLayout"));
+
+		JSONArray jsonArray = (JSONArray)extraDataJSONObject.get("layoutIds");
+
+		long[] plids = new long[0];
+
+		for (long layoutId : JSONUtil.toLongArray(jsonArray)) {
+			Layout stagingLayout = _layoutService.fetchLayout(
+				stagingGroup.getGroupId(), privateLayout, layoutId);
+
+			if (stagingLayout == null) {
+				continue;
+			}
+
+			Layout liveLayout = _layoutService.getLayoutByUuidAndGroupId(
+				stagingLayout.getUuid(), groupId, privateLayout);
+
+			plids = ArrayUtil.append(plids, liveLayout.getPlid());
+
+			Layout draftLayout = liveLayout.fetchDraftLayout();
+
+			if (draftLayout != null) {
+				plids = ArrayUtil.append(plids, draftLayout.getPlid());
+			}
+		}
+
+		long[] fragmentEntryLinkIds = new long[fragmentEntryLinks.size()];
+
+		for (int i = 0; i < fragmentEntryLinks.size(); i++) {
+			FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(i);
+
+			if (ArrayUtil.contains(plids, fragmentEntryLink.getPlid())) {
+				fragmentEntryLinkIds[i] =
+					fragmentEntryLink.getFragmentEntryLinkId();
+			}
+			else {
+				throw new RequiredFragmentEntryException();
+			}
+		}
+
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(
+			fragmentEntryLinkIds);
+	}
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;

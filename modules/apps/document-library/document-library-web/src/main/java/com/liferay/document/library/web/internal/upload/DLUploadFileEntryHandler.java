@@ -128,9 +128,10 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 	private boolean _exists(long groupId, long folderId, String fileName) {
 		try {
-			if (_dlAppService.getFileEntry(groupId, folderId, fileName) !=
-					null) {
+			FileEntry fileEntry = _dlAppService.getFileEntryByFileName(
+				groupId, folderId, fileName);
 
+			if (fileEntry != null) {
 				return true;
 			}
 

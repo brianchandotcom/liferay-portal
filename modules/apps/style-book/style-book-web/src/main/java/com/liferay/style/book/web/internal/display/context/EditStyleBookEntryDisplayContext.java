@@ -226,13 +226,6 @@ public class EditStyleBookEntryDisplayContext {
 				getLayoutPageTemplateEntriesCount(
 					_getPreviewItemsGroupId(), layoutType);
 
-		int numItems = Math.min(total, 4);
-
-		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
-			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
-				_getPreviewItemsGroupId(), layoutType, 0, numItems,
-				new LayoutPageTemplateEntryModifiedDateComparator(false));
-
 		return JSONUtil.put(
 			"itemSelectorURL",
 			() -> {
@@ -259,6 +252,15 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"recentLayouts",
 			() -> {
+				int numItems = Math.min(total, 4);
+
+				List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+					LayoutPageTemplateEntryServiceUtil.
+						getLayoutPageTemplateEntries(
+							_getPreviewItemsGroupId(), layoutType, 0, numItems,
+							new LayoutPageTemplateEntryModifiedDateComparator(
+								false));
+
 				Stream<LayoutPageTemplateEntry>
 					layoutPageTemplateEntriesStream =
 						layoutPageTemplateEntries.stream();
@@ -285,12 +287,6 @@ public class EditStyleBookEntryDisplayContext {
 		int total = LayoutLocalServiceUtil.getLayoutsCount(
 			_getPreviewItemsGroupId());
 
-		int numItems = Math.min(total, 4);
-
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			_getPreviewItemsGroupId(), 0, numItems,
-			new LayoutModifiedDateComparator(false));
-
 		return JSONUtil.put(
 			"itemSelectorURL",
 			() -> {
@@ -312,6 +308,12 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"recentLayouts",
 			() -> {
+				int numItems = Math.min(total, 4);
+
+				List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+					_getPreviewItemsGroupId(), 0, numItems,
+					new LayoutModifiedDateComparator(false));
+
 				Stream<Layout> layoutsStream = layouts.stream();
 
 				return JSONUtil.putAll(

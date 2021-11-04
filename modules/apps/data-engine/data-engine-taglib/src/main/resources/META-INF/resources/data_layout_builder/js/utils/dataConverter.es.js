@@ -177,17 +177,16 @@ export function getDefaultDataLayout(dataDefinition) {
  * @param {object} field.settingsContext - The settings context of a field
  */
 export function getDataDefinitionField({nestedFields = [], settingsContext}) {
-	const nestedDataDefinitionFields = nestedFields.map((field) =>
-		getDataDefinitionField(field)
-	);
 	const dataDefinition = {
 		customProperties: {},
-		nestedDataDefinitionFields,
+		nestedDataDefinitionFields: nestedFields.map((field) =>
+			getDataDefinitionField(field)
+		),
 	};
 	const settingsContextVisitor = new PagesVisitor(settingsContext.pages);
 
 	settingsContextVisitor.mapFields(
-		({fieldName, localizable, localizedValue, value}) => {
+		({fieldName, localizable, localizedValue = {}, value}) => {
 			if (fieldName === 'predefinedValue') {
 				fieldName = 'defaultValue';
 			}
@@ -195,16 +194,11 @@ export function getDataDefinitionField({nestedFields = [], settingsContext}) {
 				fieldName = 'fieldType';
 			}
 
-			const updatableHash = DEFAULT_DDM_FIELD_PROPERTIES.has(fieldName)
+			const properties = DEFAULT_DDM_FIELD_PROPERTIES.has(fieldName)
 				? dataDefinition
 				: dataDefinition.customProperties;
 
-			if (localizable) {
-				updatableHash[fieldName] = localizedValue ?? {};
-			}
-			else {
-				updatableHash[fieldName] = value;
-			}
+			properties[fieldName] = localizable ? localizedValue : value;
 		},
 		false
 	);

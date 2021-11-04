@@ -1,0 +1,17 @@
+{
+	"action": "create",
+	"bcc": "",
+	"cc": "",
+	"description": "notification template",
+	"enabled": true,
+	"from": "orders@liferay.com",
+	"fromNameMap": {
+		"en-US": "Test name"
+	},
+	"name": "Test notification template create",
+	"objectDefinitionName": "C_QuoteComparison",
+	"subjectMap": {
+		"en-US": "Your order has been received."
+	},
+	"to": "test@liferay.com"
+}

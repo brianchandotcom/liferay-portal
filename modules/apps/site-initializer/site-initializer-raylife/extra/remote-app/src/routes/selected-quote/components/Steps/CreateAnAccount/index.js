@@ -83,7 +83,7 @@ export const CreateAnAccount = ({setExpanded, setStepChecked}) => {
 				<div>
 					{email && !isEmailValid && (
 						<WarningBadge>
-							Must be a valid email address.
+							Please enter a valid email address.
 						</WarningBadge>
 					)}
 				</div>

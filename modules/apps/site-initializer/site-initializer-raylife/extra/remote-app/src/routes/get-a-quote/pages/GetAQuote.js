@@ -29,6 +29,12 @@ const QuoteApp = () => {
 	};
 
 	useEffect(() => {
+		window.onbeforeunload = function (event) {
+			event.returnValue = 'Changes you made may not be saved.';
+		};
+	});
+
+	useEffect(() => {
 		updateState('');
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedStep.section, selectedStep.subsection]);

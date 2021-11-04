@@ -100,6 +100,8 @@ const useFormActions = (form, previousSection, nextSection, errorMessage) => {
 	const onNext = async () => {
 		await _SaveData();
 
+		window.onbeforeunload = function () {};
+
 		const validated = _onValidation();
 
 		if (validated) {

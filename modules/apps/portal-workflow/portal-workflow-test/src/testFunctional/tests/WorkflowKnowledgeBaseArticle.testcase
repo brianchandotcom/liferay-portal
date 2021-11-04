@@ -33,11 +33,12 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			WebContent.tearDownCP();
 
 			Workflow.tearDownPortalWorkflow();
 
 			Workflow.tearDownSiteWorkflow();
+
+			KBArticle.tearDownCP();
 		}
 	}
 
@@ -142,9 +143,27 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test SubmitForPublicationButtonIsAvaliable {
+		Navigator.openURL();
 
-		// TODO LRQA-69925 SubmitForPublicationButtonIsAvaliable pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Knowledge Base");
 
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			saveAsDraft = "true");
+
+		Navigator.gotoBack();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Knowledge Base Article Title");
+
+		AssertElementPresent(
+			key_text = "Submit for Publication",
+			locator1 = "Button#ANY");
 	}
 
 }

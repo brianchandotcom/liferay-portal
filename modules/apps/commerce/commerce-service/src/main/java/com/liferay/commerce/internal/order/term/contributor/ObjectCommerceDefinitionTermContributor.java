@@ -118,9 +118,7 @@ public class ObjectCommerceDefinitionTermContributor
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			objectFieldId);
 
-		// TODO return objectField.getLable(locale);
-
-		return objectField.getName();
+		return objectField.getLabel(locale);
 	}
 
 	@Override

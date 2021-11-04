@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.Files;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -80,6 +82,27 @@ public class BuildDatabaseUtil {
 		if (build instanceof TopLevelBuild) {
 			_downloadBuildDatabaseFileFromTopLevelBuild(
 				buildDatabaseFile, (TopLevelBuild)build);
+
+			if (!JenkinsResultsParserUtil.isCINode()) {
+				File defaultBuildDir = new File(
+					JenkinsResultsParserUtil.getBuildDirPath());
+
+				if (!defaultBuildDir.exists()) {
+					defaultBuildDir.mkdirs();
+				}
+
+				File defaultBuildDatabaseFile = new File(
+					defaultBuildDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
+
+				try {
+					Files.copy(
+						buildDatabaseFile.toPath(),
+						defaultBuildDatabaseFile.toPath());
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			}
 		}
 	}
 

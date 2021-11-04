@@ -20,6 +20,22 @@
 			</supports>
 		</permissions>
 	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.account.model.AccountGroup</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_account_admin_web_internal_portlet_AccountGroupsAdminPortlet</portlet-name>
+		</portlet-ref>
+		<weight>2</weight>
+		<permissions>
+			<supports>
+				<action-key>ASSIGN_ACCOUNTS</action-key>
+				<action-key>DELETE</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+				<action-key>VIEW_ACCOUNTS</action-key>
+			</supports>
+		</permissions>
+	</model-resource>
 	<model-resource organization="true" portal="true">
 		<model-name>com.liferay.portal.kernel.model.Organization</model-name>
 		<portlet-ref>

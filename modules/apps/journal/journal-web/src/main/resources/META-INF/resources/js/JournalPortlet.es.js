@@ -125,7 +125,12 @@ export default function _JournalPortlet({
 
 			availableLocalesInput.value = availableLocales;
 
-			submitAsyncForm(form, {redirectOnSave});
+			if (autoSaveDraftEnabled) {
+				submitAsyncForm(form, {redirectOnSave});
+			}
+			else {
+				form.submit();
+			}
 		}
 		else {
 			if (showErrors) {

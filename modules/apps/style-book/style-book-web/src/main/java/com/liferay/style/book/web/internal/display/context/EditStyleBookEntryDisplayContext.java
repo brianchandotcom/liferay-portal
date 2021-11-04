@@ -226,11 +226,7 @@ public class EditStyleBookEntryDisplayContext {
 				getLayoutPageTemplateEntriesCount(
 					_themeDisplay.getScopeGroupId(), layoutType);
 
-		int numItems = 4;
-
-		if (total < numItems) {
-			numItems = total;
-		}
+		int numItems = Math.min(total, 4);
 
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
@@ -289,11 +285,7 @@ public class EditStyleBookEntryDisplayContext {
 		int total = LayoutLocalServiceUtil.getLayoutsCount(
 			_themeDisplay.getScopeGroupId());
 
-		int numItems = 4;
-
-		if (total < numItems) {
-			numItems = total;
-		}
+		int numItems = Math.min(total, 4);
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			_themeDisplay.getScopeGroupId(), 0, numItems,

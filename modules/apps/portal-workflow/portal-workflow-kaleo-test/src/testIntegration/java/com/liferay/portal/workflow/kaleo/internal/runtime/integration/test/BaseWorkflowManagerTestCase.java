@@ -28,6 +28,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Map;
@@ -54,8 +55,23 @@ public abstract class BaseWorkflowManagerTestCase {
 			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousMailTestRule.INSTANCE);
 
+	protected InputStream getResourceInputStream(String name) {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		return classLoader.getResourceAsStream(
+			"com/liferay/portal/workflow/kaleo/dependencies/" + name);
+	}
+
 	protected ServiceRegistration<WorkflowHandler<?>>
 		registryWorkflowHandler() {
+
+		return registryWorkflowHandler("Single Approver");
+	}
+
+	protected ServiceRegistration<WorkflowHandler<?>> registryWorkflowHandler(
+		String workflowDefinitionName) {
 
 		Class<?> clazz = getClass();
 
@@ -88,7 +104,8 @@ public abstract class BaseWorkflowManagerTestCase {
 							updateWorkflowDefinitionLink(
 								TestPropsValues.getUserId(),
 								TestPropsValues.getCompanyId(), 0,
-								clazz.getName(), 0, 0, "Single Approver", 1);
+								clazz.getName(), 0, 0, workflowDefinitionName,
+								1);
 					}
 
 					if (Objects.equals(

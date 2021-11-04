@@ -1434,9 +1434,52 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test EditExperienceWithDraftABTest {
+		property portal.acceptance = "true";
 
-		// TODO LPS-137496 EditExperienceWithDraftABTest pending implementation
+		task ("Create an experience and add on content page") {
+			ContentPages.gotoPageEditor();
 
+			PageEditor.addExperience(
+				experienceName = "NewAnyoneExperience",
+				segmentName = "Anyone");
+
+			Button.clickPublish();
+		}
+
+		task ("Select the new experience") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ABTest.openABTestPanel();
+
+			ABTest.changeExperienceABTest(experience = "NewAnyoneExperience");
+		}
+		task ("Create AB test with a variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+		}
+
+		task ("Go to  edit the content page.") {
+			ContentPages.gotoPageEditor();
+		}
+
+		task ("Assert the experience cannot be edited") {
+			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+			AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
+		}
+
+		task ("Delete AB Test") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ABTest.openABTestPanel();
+
+			ABTest.changeExperienceABTest(experience = "NewAnyoneExperience");
+
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-97882: Validate if, when the user tries to edit an existing A/B Test, a modal is opened requiring some initial fields information"
@@ -1841,12 +1884,54 @@ definition {
 	}
 
 	@description = "LPS-103334: Validate if the AB Test is in the status running, the experience about the AB Test is active is in Non-Edition Mode"
-	@ignore = "true"
 	@priority = "5"
 	test NotPossibleToEditExperienceWithRunningABTest {
+		property portal.acceptance = "true";
 
-		// TODO LPS-137496 NotPossibleToEditExperienceWithRunningABTest pending implementation
+		task ("Create an experience and add on content page") {
+			ContentPages.gotoPageEditor();
 
+			PageEditor.addExperience(
+				experienceName = "NewAnyoneExperience",
+				segmentName = "Anyone");
+
+			Button.clickPublish();
+		}
+
+		task ("Select the new experience") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ABTest.openABTestPanel();
+
+			ABTest.changeExperienceABTest(experience = "NewAnyoneExperience");
+		}
+		task ("Create AB test with a variant and run test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+		}
+
+		task ("Go to  edit the content page.") {
+			ContentPages.gotoPageEditor();
+		}
+
+		task ("Assert the experience cannot be edited") {
+			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+			AssertElementNotPresent(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
+		}
+
+		task ("Terminate AB Test") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ABTest.changeExperienceABTest(experience = "NewAnyoneExperience");
+
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-97882: Validate if, when the A/B Test icon is pressed, it calls the function to open or close the A/B Test sidebar"
@@ -2032,7 +2117,7 @@ definition {
 	@description = "LPS-97196: Validate if all the information configured in the "Review and Start Test" screen appears correctly after the user clicks on the Run button"
 	@priority = "5"
 	test ReviewAndStartRunCheckInfo {
-		task ("Create AB test, create variant and delete variant") {
+		task ("Create AB test, create two variants") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",
 				testTitle = "AB test title");
@@ -2070,7 +2155,7 @@ definition {
 	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, the sum of all traffic split options should be 100%"
 	@priority = "4"
 	test ReviewAndStartSum100 {
-		task ("Create AB test, create variant and delete variant") {
+		task ("Create AB test, create two variants") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",
 				testTitle = "AB test title");

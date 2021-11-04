@@ -1,6 +1,8 @@
 @default = "isHTMLSourceTextPresent"
 definition {
+
 	function isHTMLSourceTextPresent {
 		selenium.isHTMLSourceTextPresent();
 	}
+
 }

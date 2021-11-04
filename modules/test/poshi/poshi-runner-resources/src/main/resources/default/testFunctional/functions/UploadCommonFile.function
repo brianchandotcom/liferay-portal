@@ -1,5 +1,6 @@
 @default = "uploadCommonFile"
 definition {
+
 	function uploadCommonFile {
 		selenium.waitForVisible();
 
@@ -13,4 +14,5 @@ definition {
 
 		selenium.uploadCommonFile();
 	}
+
 }

@@ -1,5 +1,6 @@
 @default = "clickAt"
 definition {
+
 	function clickAt {
 		selenium.waitForVisible();
 
@@ -45,4 +46,5 @@ definition {
 			selenium.clickAt();
 		}
 	}
+
 }

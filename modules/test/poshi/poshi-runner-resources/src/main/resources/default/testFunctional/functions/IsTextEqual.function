@@ -1,5 +1,6 @@
 @default = "isTextEqual"
 definition {
+
 	function isPartialText {
 		selenium.waitForElementPresent();
 
@@ -32,4 +33,5 @@ definition {
 
 		selenium.isValue();
 	}
+
 }

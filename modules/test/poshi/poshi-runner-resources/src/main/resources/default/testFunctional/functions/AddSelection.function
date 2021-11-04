@@ -1,5 +1,6 @@
 @default = "addSelection"
 definition {
+
 	function addSelection {
 		selenium.waitForVisible();
 
@@ -7,4 +8,5 @@ definition {
 
 		selenium.addSelection();
 	}
+
 }

@@ -1,5 +1,6 @@
 @default = "isElementNotPresent"
 definition {
+
 	function isElementNotPresent {
 		if (selenium.isElementPresent()) {
 			selenium.isNotVisible();
@@ -14,4 +15,5 @@ definition {
 
 		selenium.isNotVisible();
 	}
+
 }

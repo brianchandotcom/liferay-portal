@@ -1,5 +1,6 @@
 @default = "mouseDown"
 definition {
+
 	function javaScriptMouseDown {
 		selenium.javaScriptMouseDown();
 	}
@@ -11,4 +12,5 @@ definition {
 	function mouseDownAt {
 		selenium.mouseDownAt();
 	}
+
 }

@@ -1,6 +1,7 @@
 @default = "assertElementNotPresent"
 @summary = "Assert that '${locator1}' is not available"
 definition {
+
 	function assertElementNotPresent {
 		selenium.waitForElementNotPresent();
 
@@ -12,4 +13,5 @@ definition {
 
 		selenium.assertNotVisible();
 	}
+
 }

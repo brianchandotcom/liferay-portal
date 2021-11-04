@@ -1,6 +1,7 @@
 @default = "assertClick"
 @summary = "Click on '${locator1}' that should have a value of '${value1}'"
 definition {
+
 	function assertClick {
 		if (contains("${locator1}", "/input")) {
 			AssertClick.assertValueClickAt();
@@ -75,4 +76,5 @@ definition {
 
 		selenium.mouseUp();
 	}
+
 }

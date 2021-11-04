@@ -1,6 +1,8 @@
 @default = "sikuliMouseMove"
 definition {
+
 	function sikuliMouseMove {
 		selenium.sikuliMouseMove();
 	}
+
 }

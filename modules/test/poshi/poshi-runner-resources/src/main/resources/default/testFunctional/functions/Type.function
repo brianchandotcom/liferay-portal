@@ -1,6 +1,7 @@
 @default = "type"
 @summary = "Type to '${locator1}' the value '${value1}'"
 definition {
+
 	function clickAtSendKeys {
 		selenium.waitForVisible();
 
@@ -116,4 +117,5 @@ definition {
 
 		Type.type();
 	}
+
 }

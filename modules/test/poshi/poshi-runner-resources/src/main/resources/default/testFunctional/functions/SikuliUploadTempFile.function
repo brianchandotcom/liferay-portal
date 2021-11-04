@@ -1,6 +1,8 @@
 @default = "sikuliUploadTempFile"
 definition {
+
 	function sikuliUploadTempFile {
 		selenium.sikuliUploadTempFile();
 	}
+
 }

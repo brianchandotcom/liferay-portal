@@ -1,6 +1,8 @@
 @default = "sikuliUploadTCatFile"
 definition {
+
 	function sikuliUploadTCatFile {
 		selenium.sikuliUploadTCatFile();
 	}
+
 }

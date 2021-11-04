@@ -1,8 +1,10 @@
 @default = "assertNotEditable"
 definition {
+
 	function assertNotEditable {
 		selenium.waitForVisible();
 
 		selenium.assertNotEditable();
 	}
+
 }

@@ -1,8 +1,10 @@
 @default = "assertNotVisible"
 definition {
+
 	function assertNotVisible {
 		selenium.waitForNotVisible();
 
 		selenium.assertNotVisible();
 	}
+
 }

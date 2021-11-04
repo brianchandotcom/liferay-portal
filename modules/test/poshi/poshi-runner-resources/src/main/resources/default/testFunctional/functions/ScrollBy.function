@@ -1,6 +1,8 @@
 @default = "scrollBy"
 definition {
+
 	function scrollBy {
 		selenium.scrollBy();
 	}
+
 }

@@ -1,5 +1,6 @@
 @default = "selectFrame"
 definition {
+
 	function selectFrame {
 		if (contains("${locator1}", "/iframe")) {
 			selenium.waitForVisible();
@@ -16,4 +17,5 @@ definition {
 	function selectFrameTop {
 		selenium.selectFrame("relative=top");
 	}
+
 }

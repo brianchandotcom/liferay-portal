@@ -1,5 +1,6 @@
 @default = "makeVisible"
 definition {
+
 	@summary-ignore = "true"
 	function makeVisible {
 		selenium.waitForElementPresent();
@@ -8,4 +9,5 @@ definition {
 
 		selenium.makeVisible();
 	}
+
 }

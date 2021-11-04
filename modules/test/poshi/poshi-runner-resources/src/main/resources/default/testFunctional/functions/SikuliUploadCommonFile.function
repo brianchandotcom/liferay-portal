@@ -1,6 +1,8 @@
 @default = "sikuliUploadCommonFile"
 definition {
+
 	function sikuliUploadCommonFile {
 		selenium.sikuliUploadCommonFile();
 	}
+
 }

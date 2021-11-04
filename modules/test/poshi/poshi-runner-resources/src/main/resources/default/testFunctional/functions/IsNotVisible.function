@@ -1,8 +1,10 @@
 @default = "isNotVisible"
 definition {
+
 	function isNotVisible {
 		selenium.waitForElementPresent();
 
 		selenium.isNotVisible();
 	}
+
 }

@@ -1,6 +1,7 @@
 @default = "click"
 @summary = "Click on '${locator1}'"
 definition {
+
 	function click {
 		selenium.waitForVisible();
 
@@ -60,4 +61,5 @@ definition {
 	function pauseMakeVisibleClickAt {
 		Click.makeVisibleClickAt();
 	}
+
 }

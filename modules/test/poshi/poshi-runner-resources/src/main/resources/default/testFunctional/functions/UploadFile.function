@@ -1,8 +1,10 @@
 @default = "uploadFile"
 definition {
+
 	function uploadFile {
 		selenium.waitForVisible();
 
 		selenium.uploadFile();
 	}
+
 }

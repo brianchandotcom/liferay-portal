@@ -1,6 +1,7 @@
 @default = "open"
 @summary = "Open browser to '${locator1}'"
 definition {
+
 	function open {
 		selenium.selectWindow("null");
 
@@ -28,4 +29,5 @@ definition {
 
 		selenium.selectWindow("windowName");
 	}
+
 }

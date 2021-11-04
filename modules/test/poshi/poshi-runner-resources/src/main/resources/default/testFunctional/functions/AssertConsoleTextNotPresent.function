@@ -1,6 +1,8 @@
 @default = "assertConsoleTextNotPresent"
 definition {
+
 	function assertConsoleTextNotPresent {
 		selenium.assertConsoleTextNotPresent();
 	}
+
 }

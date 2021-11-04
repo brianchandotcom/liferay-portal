@@ -1,6 +1,8 @@
 @default = "sikuliRightMouseDown"
 definition {
+
 	function sikuliRightMouseDown {
 		selenium.sikuliRightMouseDown();
 	}
+
 }

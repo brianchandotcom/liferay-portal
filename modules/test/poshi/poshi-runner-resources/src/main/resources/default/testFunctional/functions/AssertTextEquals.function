@@ -1,6 +1,7 @@
 @default = "assertTextEquals"
 @summary = "Assert that '${locator1}' equals the value '${value1}'"
 definition {
+
 	function assertCKEditorText {
 		selenium.waitForVisible(
 			"//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]"
@@ -64,4 +65,5 @@ definition {
 
 		selenium.assertValue();
 	}
+
 }

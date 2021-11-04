@@ -1,5 +1,6 @@
 @default = "select"
 definition {
+
 	function pauseSelect {
 		selenium.select();
 	}
@@ -19,4 +20,5 @@ definition {
 
 		selenium.click("//option[contains(.,'${value1}')]");
 	}
+
 }

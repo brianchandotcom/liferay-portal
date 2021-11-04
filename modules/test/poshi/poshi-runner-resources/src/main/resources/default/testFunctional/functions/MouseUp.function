@@ -1,5 +1,6 @@
 @default = "mouseUp"
 definition {
+
 	function javaScriptMouseUp {
 		selenium.javaScriptMouseUp();
 	}
@@ -15,4 +16,5 @@ definition {
 	function mouseUpAt {
 		selenium.mouseUpAt();
 	}
+
 }

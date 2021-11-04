@@ -1,8 +1,10 @@
 @default = "assertCssValue"
 definition {
+
 	function assertCssValue {
 		selenium.waitForVisible();
 
 		selenium.assertCssValue("${locator1}", "${locator2}");
 	}
+
 }

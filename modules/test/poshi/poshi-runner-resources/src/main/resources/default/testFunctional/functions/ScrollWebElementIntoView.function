@@ -1,6 +1,8 @@
 @default = "scrollWebElementIntoView"
 definition {
+
 	function scrollWebElementIntoView {
 		selenium.scrollWebElementIntoView();
 	}
+
 }

@@ -1,5 +1,6 @@
 @default = "assertSelectedLabel"
 definition {
+
 	function assertPartialSelectedLabel {
 		selenium.waitForVisible();
 
@@ -14,4 +15,5 @@ definition {
 
 		selenium.assertSelectedLabel();
 	}
+
 }

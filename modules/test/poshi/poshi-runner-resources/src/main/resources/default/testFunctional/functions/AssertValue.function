@@ -1,5 +1,6 @@
 @default = "assertValue"
 definition {
+
 	function assertValue {
 		selenium.waitForVisible();
 
@@ -7,4 +8,5 @@ definition {
 
 		selenium.assertValue();
 	}
+
 }

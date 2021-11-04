@@ -1,6 +1,7 @@
 @default = "assertConfirmation"
 @summary = "Assert that the confirmation window equals the value '${value1}'"
 definition {
+
 	function assertConfirmation {
 		selenium.assertConfirmation();
 	}
@@ -21,4 +22,5 @@ definition {
 	function waitForConfirmation {
 		selenium.waitForConfirmation();
 	}
+
 }

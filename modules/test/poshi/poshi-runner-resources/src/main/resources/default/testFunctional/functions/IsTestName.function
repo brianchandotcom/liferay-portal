@@ -1,7 +1,9 @@
 @default = "isTestName"
 @summary = "Evaluate the current test name."
 definition {
+
 	function isTestName {
 		selenium.isTestName("${value1}");
 	}
+
 }

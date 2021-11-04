@@ -1,5 +1,6 @@
 @default = "copy"
 definition {
+
 	function ckEditorCopy {
 		selenium.waitForVisible(
 			"//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]"
@@ -40,4 +41,5 @@ definition {
 
 		selenium.copyValue();
 	}
+
 }

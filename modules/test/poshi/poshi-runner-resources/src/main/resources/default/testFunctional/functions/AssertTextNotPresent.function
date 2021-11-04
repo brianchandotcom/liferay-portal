@@ -1,8 +1,10 @@
 @default = "assertTextNotPresent"
 definition {
+
 	function assertTextNotPresent {
 		selenium.waitForTextNotPresent();
 
 		selenium.assertTextNotPresent();
 	}
+
 }

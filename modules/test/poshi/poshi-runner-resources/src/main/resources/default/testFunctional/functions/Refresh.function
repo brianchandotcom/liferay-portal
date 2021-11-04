@@ -1,6 +1,8 @@
 @default = "refresh"
 definition {
+
 	function refresh {
 		selenium.refresh();
 	}
+
 }

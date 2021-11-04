@@ -1,5 +1,6 @@
 @default = "uploadTempFile"
 definition {
+
 	function uploadTempFile {
 		selenium.waitForVisible();
 
@@ -7,4 +8,5 @@ definition {
 
 		selenium.uploadTempFile();
 	}
+
 }

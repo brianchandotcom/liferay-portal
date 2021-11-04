@@ -1,6 +1,8 @@
 @default = "isNotChecked"
 definition {
+
 	function isNotChecked {
 		selenium.isNotChecked();
 	}
+
 }

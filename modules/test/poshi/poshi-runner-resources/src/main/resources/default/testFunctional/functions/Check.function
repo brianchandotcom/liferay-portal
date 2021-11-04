@@ -1,5 +1,6 @@
 @default = "clickAt"
 definition {
+
 	function checkToggleSwitch {
 		selenium.waitForElementPresent();
 
@@ -35,4 +36,5 @@ definition {
 
 		AssertElementPresent();
 	}
+
 }

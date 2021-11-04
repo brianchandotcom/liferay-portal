@@ -54,7 +54,7 @@ function SaveTemplate({
 				'change',
 				handleExternalInputChange
 			);
-	}, []);
+	}, [namespace]);
 
 	return (
 		<span className="mr-3">

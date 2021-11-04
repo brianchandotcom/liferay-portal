@@ -91,7 +91,7 @@
 						"definition": {
 							"layout": {
 								"borderWidth": 0,
-								"marginBottom": 0,
+								"marginBottom": 6,
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
@@ -108,13 +108,15 @@
 									"fragment": {
 										"key": "colorful-head"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "sub-content",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												}
 											}
 										},
@@ -122,7 +124,8 @@
 											"id": "main-content",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												}
 											}
 										}
@@ -138,18 +141,21 @@
 									"fragment": {
 										"key": "list-item-with-icon"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "main-image",
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {}
+														"value_i18n": {
+														}
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												}
 											}
 										},
@@ -157,7 +163,8 @@
 											"id": "main-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												}
 											}
 										}
@@ -170,18 +177,21 @@
 									"fragment": {
 										"key": "list-item-with-icon"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "main-image",
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {}
+														"value_i18n": {
+														}
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												}
 											}
 										},
@@ -189,7 +199,8 @@
 											"id": "main-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {
@@ -207,18 +218,21 @@
 									"fragment": {
 										"key": "list-item-with-icon"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "main-image",
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {}
+														"value_i18n": {
+														}
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												}
 											}
 										},
@@ -226,7 +240,8 @@
 											"id": "main-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {
@@ -244,18 +259,21 @@
 									"fragment": {
 										"key": "list-item-with-icon"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "main-image",
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {}
+														"value_i18n": {
+														}
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												}
 											}
 										},
@@ -263,7 +281,8 @@
 											"id": "main-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {
@@ -281,18 +300,21 @@
 									"fragment": {
 										"key": "list-item-with-icon"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "main-image",
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {}
+														"value_i18n": {
+														}
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												}
 											}
 										},
@@ -300,7 +322,8 @@
 											"id": "main-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {
@@ -318,18 +341,21 @@
 									"fragment": {
 										"key": "list-item-with-icon"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "main-image",
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {}
+														"value_i18n": {
+														}
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												}
 											}
 										},
@@ -337,7 +363,8 @@
 											"id": "main-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {
@@ -355,18 +382,21 @@
 									"fragment": {
 										"key": "list-item-with-icon"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "main-image",
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {}
+														"value_i18n": {
+														}
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												}
 											}
 										},
@@ -374,7 +404,8 @@
 											"id": "main-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {

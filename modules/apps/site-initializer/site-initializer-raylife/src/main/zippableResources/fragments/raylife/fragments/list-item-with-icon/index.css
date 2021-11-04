@@ -7,7 +7,7 @@
 	font-size:var(--h4-font-size, 1rem);
 }
 
-.fragment_71 #plus-icon{
+.fragment_71 .custom-icon{
 	height:1.5rem;
 	width:1.5rem;
 	cursor:pointer;

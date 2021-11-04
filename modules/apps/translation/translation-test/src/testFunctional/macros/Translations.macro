@@ -2,17 +2,16 @@ definition {
 
 	macro addLanguageManageTranslations {
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
-		
+
 		Click(locator1 = "Translation#TRANSLATION_MANAGE_BUTTON");
 
 		Click(locator1 = "Button#PLUS");
 
 		Click(
-			locator1 = "Translation#TRANSLATION_MANAGE_OPTION",
-			key_language = "${key_language}");
+			key_language = "${key_language}",
+			locator1 = "Translation#TRANSLATION_MANAGE_OPTION");
 
 		Click(locator1 = "Button#DONE");
-
 	}
 
 	macro assertFileNameFromTempFolder {

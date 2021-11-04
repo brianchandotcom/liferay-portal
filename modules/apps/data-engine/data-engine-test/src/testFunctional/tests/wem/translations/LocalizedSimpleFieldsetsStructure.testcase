@@ -237,7 +237,7 @@ definition {
 			fieldFieldLabel = "Rich Text",
 			fieldName = "Rich Text",
 			targetFieldLabel = "Text");
-		
+
 		Translations.addLanguageManageTranslations(key_language = "pt-BR");
 
 		PortletEntry.changeLocale(
@@ -448,7 +448,7 @@ definition {
 				fieldsGroupLabelEdit = "${prefix} Fields Group");
 		}
 
-		Translations.addLanguageManageTranslations(key_language = "pt-BR");	
+		Translations.addLanguageManageTranslations(key_language = "pt-BR");
 
 		PortletEntry.changeLocale(
 			locale = "pt-BR",

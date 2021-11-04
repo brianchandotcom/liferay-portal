@@ -39,6 +39,8 @@ definition {
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
+		Translations.addLanguageManageTranslations(key_language = "pt-BR");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldsetsLabel(
@@ -243,6 +245,8 @@ definition {
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
+		Translations.addLanguageManageTranslations(key_language = "pt-BR");
+
 		DataEngine.addTranslationToFieldset(
 			fieldNameList = "Text,Color",
 			fieldsetName = "New Fieldset",
@@ -325,8 +329,6 @@ definition {
 
 		FormViewBuilder.saveButtonFieldset();
 
-		FormViewBuilder.propagateChange();
-
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
@@ -335,6 +337,8 @@ definition {
 			fieldNameList = "Text,Numeric,Date",
 			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");
+
+		Translations.addLanguageManageTranslations(key_language = "pt-BR");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -635,6 +639,8 @@ definition {
 			localeList = "en-US");
 
 		Refresh();
+
+		Translations.addLanguageManageTranslations(key_language = "en-US");
 
 		PortletEntry.changeLocale(locale = "en-US");
 

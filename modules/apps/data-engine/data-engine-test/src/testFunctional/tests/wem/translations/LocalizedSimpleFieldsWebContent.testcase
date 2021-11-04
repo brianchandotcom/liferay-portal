@@ -1193,6 +1193,8 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
+		Translations.addLanguageManageTranslations(key_language = "ca-ES");
+
 		PortletEntry.changeLocale(locale = "ca-ES");
 
 		DataEngine.editFieldLabel(

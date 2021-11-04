@@ -16,7 +16,7 @@ package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountGroupRelLocalService;
+import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -51,11 +51,11 @@ public class AssignAccountGroupAccountEntriesMVCActionCommand
 		long[] accountEntryIds = ParamUtil.getLongValues(
 			actionRequest, "accountEntryIds");
 
-		_accountGroupRelLocalService.addAccountGroupRels(
+		_accountGroupRelService.addAccountGroupRels(
 			accountGroupId, AccountEntry.class.getName(), accountEntryIds);
 	}
 
 	@Reference
-	private AccountGroupRelLocalService _accountGroupRelLocalService;
+	private AccountGroupRelService _accountGroupRelService;
 
 }

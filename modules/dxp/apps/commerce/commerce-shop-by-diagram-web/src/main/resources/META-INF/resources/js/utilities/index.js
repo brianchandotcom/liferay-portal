@@ -11,6 +11,8 @@
 
 import {DIAGRAM_LABELS_MAX_LENGTH, DRAG_AND_DROP_THRESHOLD} from './constants';
 
+export const TOOLTIP_DISTANCE_FROM_TARGET = 10;
+
 export function calculateTooltipStyleFromTarget(target) {
 	const {
 		height: targetHeight,
@@ -23,18 +25,13 @@ export function calculateTooltipStyleFromTarget(target) {
 	const targetRight = window.innerWidth - targetLeft - targetWidth;
 	const style = {};
 
-	if (targetTop + targetHeight / 2 < window.innerHeight / 2) {
-		style.top = distanceFromTop + targetHeight;
-	}
-	else {
-		style.top = distanceFromTop + targetHeight - 150;
-	}
+	style.top = distanceFromTop + targetHeight / 2;
 
 	if (targetLeft + targetWidth / 2 < window.innerWidth / 2) {
-		style.left = targetLeft + targetWidth + 10;
+		style.left = targetLeft + targetWidth + TOOLTIP_DISTANCE_FROM_TARGET;
 	}
 	else {
-		style.right = targetRight + targetWidth + 10;
+		style.right = targetRight + targetWidth + TOOLTIP_DISTANCE_FROM_TARGET;
 	}
 
 	return style;

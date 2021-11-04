@@ -18,12 +18,13 @@ import DiagramWithAutomapping from '../src/main/resources/META-INF/resources/js/
 render(
 	Diagram,
 	{
-		diagramId: '46375',
+		datasetDisplayId: 'csDiagramMappedProducts',
+		diagramId: '44132',
 		imageURL:
-			'/documents/20118/0/login_portlet_splash.jpg/31c61626-ae8c-6a29-8ab6-22a10249be49?version=1.0&t=1634051992174&download=true',
+			'/documents/20118/0/Zoom+Background+for+Italy_Light+Blue%402x.png/5ecfa67a-e340-6d3c-987f-bf44ebc3ba60?version=1.0&t=1636016213786&download=true',
 		isAdmin: true,
 		pinsRadius: 1.0,
-		productId: '46355',
+		productId: '44112',
 	},
 	document.getElementById('shop-by-diagram')
 );
@@ -31,30 +32,54 @@ render(
 render(
 	DiagramTable,
 	{
-		isAdmin: false,
-		productId: '46355',
+		isAdmin: true,
+		productId: '44647',
 	},
 	document.getElementById('shop-by-diagram-table')
 );
 
 render(
-	DiagramWithAutomapping,
+	Diagram,
 	{
-		diagramId: '46522',
+		channelId: '42160',
+		datasetDisplayId: 'csDiagramMappedProducts',
+		diagramId: '44132',
 		imageURL:
-			'/documents/20123/0/308056.svg/b77d6493-ab31-d7e5-cb6a-616c9d37ab9b?version=1.0&t=1634286500938&download=true',
+			'/documents/20118/0/Zoom+Background+for+Italy_Light+Blue%402x.png/5ecfa67a-e340-6d3c-987f-bf44ebc3ba60?version=1.0&t=1636016213786&download=true',
 		isAdmin: false,
-		pinsCSSSelectors: ['#Livello_Testi > text', '[id*=MTEXT] > text'],
-		productId: '46505',
+		pinsRadius: 1.0,
+		productId: '44112',
 	},
-	document.getElementById('shop-by-diagram-automapping')
+	document.getElementById('shop-by-diagram-front')
 );
 
 render(
 	DiagramTable,
 	{
 		isAdmin: false,
-		productId: '46505',
+		productId: '44647',
 	},
-	document.getElementById('shop-by-diagram-automapping-table')
+	document.getElementById('shop-by-diagram-table-front')
 );
+
+// render(
+// 	DiagramWithAutomapping,
+// 	{
+// 		diagramId: '46522',
+// 		imageURL:
+// 			'/documents/20123/0/308056.svg/b77d6493-ab31-d7e5-cb6a-616c9d37ab9b?version=1.0&t=1634286500938&download=true',
+// 		isAdmin: false,
+// 		pinsCSSSelectors: ['#Livello_Testi > text', '[id*=MTEXT] > text'],
+// 		productId: '46505',
+// 	},
+// 	document.getElementById('shop-by-diagram-automapping')
+// );
+
+// render(
+// 	DiagramTable,
+// 	{
+// 		isAdmin: false,
+// 		productId: '46505',
+// 	},
+// 	document.getElementById('shop-by-diagram-automapping-table')
+// );

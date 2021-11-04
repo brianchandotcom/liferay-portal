@@ -13,7 +13,11 @@ import {drag as d3drag, event as d3event, select as d3select} from 'd3';
 import {openToast} from 'frontend-js-web';
 
 import DiagramZoomHandler from '../utilities/DiagramZoomHandler';
-import {PINS_CIRCLE_RADIUS, PINS_RADIUS} from '../utilities/constants';
+import {
+	PINS_CIRCLE_RADIUS,
+	PINS_RADIUS,
+	ZOOM_DISABLED,
+} from '../utilities/constants';
 import {savePin} from '../utilities/data';
 import {
 	getAbsolutePositions,
@@ -79,10 +83,17 @@ class D3Handler extends DiagramZoomHandler {
 			.attr('y', 0)
 			.on('load', (_d, index, nodes) => {
 				const imageWidth = nodes[index].getBoundingClientRect().width;
+
 				const panX =
 					(wrappperBoundingClientRect.width - imageWidth) / 2;
 
-				this._d3diagramWrapper.call(this._zoom.translateBy, panX, 0);
+				if (!ZOOM_DISABLED) {
+					this._d3diagramWrapper.call(
+						this._zoom.translateBy,
+						panX,
+						0
+					);
+				}
 
 				this.imageRendered = true;
 
@@ -252,6 +263,7 @@ class D3Handler extends DiagramZoomHandler {
 						this._currentScale
 					)})`
 			)
+			.attr('role', 'pin')
 			.on('click', (_d, index, nodes) => {
 				this._selectPinNode(nodes[index]);
 			});

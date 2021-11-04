@@ -197,12 +197,16 @@ $diagram-height: 700px;
 	}
 }
 
-.diagram-tooltip {
-	background: $white;
-	border-radius: 3px;
-	box-shadow: 1px 6px 11px rgba(0, 0, 0, 0.1);
-	padding: map-get($spacers, 4);
-	position: absolute;
-	width: 400px;
+.diagram-tooltip-wrapper {
 	z-index: 900;
+	position: absolute;
+
+	.diagram-tooltip {
+		transform: translate(0, -50%);
+		background: $white;
+		border-radius: 3px;
+		box-shadow: 1px 6px 11px rgba(0, 0, 0, 0.1);
+		padding: map-get($spacers, 4);
+		width: 400px;
+	}
 }

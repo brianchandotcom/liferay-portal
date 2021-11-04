@@ -46,12 +46,8 @@ function TooltipProvider({children, closeTooltip, target}) {
 
 	return (
 		<ReactPortal container={bodyRef.current}>
-			<div className="diagram-tooltip-wrapper">
-				<div
-					className="diagram-tooltip"
-					ref={tooltipRef}
-					style={tooltipStyle}
-				>
+			<div className="diagram-tooltip-wrapper" style={tooltipStyle}>
+				<div className="diagram-tooltip" ref={tooltipRef}>
 					{children}
 				</div>
 			</div>

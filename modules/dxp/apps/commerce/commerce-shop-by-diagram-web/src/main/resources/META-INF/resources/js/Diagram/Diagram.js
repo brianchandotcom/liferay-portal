@@ -18,6 +18,7 @@ import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import AdminTooltipContent from '../components/AdminTooltipContent';
 import DiagramFooter from '../components/DiagramFooter';
 import DiagramHeader from '../components/DiagramHeader';
+import StorefrontTooltipContent from '../components/StorefrontTooltipContent';
 import TooltipProvider from '../components/TooltipProvider';
 import {PINS_RADIUS} from '../utilities/constants';
 import {loadPins, updateGlobalPinsRadius} from '../utilities/data';
@@ -29,6 +30,7 @@ import '../../css/diagram.scss';
 const debouncedUpdatePinsRadius = debounce(updateGlobalPinsRadius, 800);
 
 function Diagram({
+	channelId,
 	datasetDisplayId,
 	diagramId,
 	imageURL,
@@ -106,25 +108,34 @@ function Diagram({
 				<ClayLoadingIndicator className="svg-loader" />
 
 				<svg className="svg-wrapper" ref={svgRef}>
+					<title>{Liferay.Language.get('product-diagram')}</title>
 					<g className="zoom-handler" ref={zoomHandlerRef} />
 				</svg>
 			</div>
 
-			{isAdmin && tooltipData && (
+			{tooltipData && (
 				<TooltipProvider
 					closeTooltip={() => setTooltipData(null)}
 					target={tooltipData.target}
 				>
-					<AdminTooltipContent
-						closeTooltip={() => setTooltipData(null)}
-						datasetDisplayId={datasetDisplayId}
-						productId={productId}
-						readOnlySequence={false}
-						updatePins={updatePins}
-						{...tooltipData}
-					/>
+					{isAdmin ? (
+						<AdminTooltipContent
+							closeTooltip={() => setTooltipData(null)}
+							datasetDisplayId={datasetDisplayId}
+							productId={productId}
+							readOnlySequence={false}
+							updatePins={updatePins}
+							{...tooltipData}
+						/>
+					) : (
+						<StorefrontTooltipContent
+							channelId={channelId}
+							{...tooltipData}
+						/>
+					)}
 				</TooltipProvider>
 			)}
+
 			<DiagramFooter
 				chartInstance={chartInstance}
 				currentZoom={currentZoom}
@@ -141,6 +152,7 @@ Diagram.defaultProps = {
 };
 
 Diagram.propTypes = {
+	channelId: PropTypes.string,
 	datasetDisplayId: PropTypes.string,
 	diagramId: PropTypes.string.isRequired,
 	imageURL: PropTypes.string.isRequired,

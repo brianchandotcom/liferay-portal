@@ -34,11 +34,9 @@ definition {
 	@description = "Verify that is able to add a future validation using the response date as parameter"
 	@priority = "5"
 	test CanAddFutureValidationUsingResponseDate {
-		var displayDateDay = DateUtil.getCurrentDate();
-		var displayDateMonth = DateUtil.getCurrentMonth();
 		var displayDateYear = DateUtil.getCurrentYear();
 		var futureYear = ${displayDateYear} + 1;
-		var displayFutureDate = "${displayDateMonth}/${displayDateDay}/${futureYear}";
+		var displayFutureDate = "01/01/${futureYear}";
 
 		FormsAdmin.addForm();
 
@@ -88,13 +86,11 @@ definition {
 	@description = "Verify that is able to add a past and range validation using the response date as parameter"
 	@priority = "5"
 	test CanAddPastValidationUsingResponseDate {
-		var displayDateDay = DateUtil.getCurrentDate();
-		var displayDateMonth = DateUtil.getCurrentMonth();
 		var displayDateYear = DateUtil.getCurrentYear();
 		var futureYear = ${displayDateYear} + 1;
 		var pastYear = ${displayDateYear} - 1;
-		var displayFutureDate = "${displayDateMonth}/${displayDateDay}/${futureYear}";
-		var displayPastDate = "${displayDateMonth}/${displayDateDay}/${pastYear}";
+		var displayFutureDate = "01/01/${futureYear}";
+		var displayPastDate = "01/01/${pastYear}";
 
 		FormsAdmin.addForm();
 
@@ -747,11 +743,9 @@ definition {
 	@description = "Verify if the Repeatable option is working correctly on the Date field using the Validation with custom date"
 	@priority = "4"
 	test ValidationCanBeRepeatable {
-		var displayDateDay = DateUtil.getCurrentDate();
-		var displayDateMonth = DateUtil.getCurrentMonth();
 		var displayDateYear = DateUtil.getCurrentYear();
 		var futureYear = ${displayDateYear} + 1;
-		var displayFutureDate = "${displayDateMonth}/${displayDateDay}/${futureYear}";
+		var displayFutureDate = "01/01/${futureYear}";
 
 		FormsAdmin.addForm();
 
@@ -930,13 +924,11 @@ definition {
 	@description = "Verify if the Predefined values are working correctly on the Date field using the Validation with custom date"
 	@priority = "5"
 	test ValidationIsWorkingOnPredefinedValue {
-		var displayDateDay = DateUtil.getCurrentDate();
-		var displayDateMonth = DateUtil.getCurrentMonth();
 		var displayDateYear = DateUtil.getCurrentYear();
 		var futureYear = ${displayDateYear} + 1;
 		var pastYear = ${displayDateYear} - 1;
-		var displayPastDate = "${displayDateMonth}/${displayDateDay}/${pastYear}";
-		var displayFutureDate = "${displayDateMonth}/${displayDateDay}/${futureYear}";
+		var displayPastDate = "01/01/${pastYear}";
+		var displayFutureDate = "01/01/${futureYear}";
 
 		FormsAdmin.addForm();
 

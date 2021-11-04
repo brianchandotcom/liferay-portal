@@ -97,6 +97,8 @@ definition {
 			key_fieldFieldLabel = "Date",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
+		Translations.addLanguageManageTranslations(key_language = "pt-BR");
+
 		DataEngine.viewFieldsetTranslation(
 			fieldNameList = "Date",
 			fieldsetName = "Fieldset Name",

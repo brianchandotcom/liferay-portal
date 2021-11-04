@@ -30,8 +30,6 @@ definition {
 		var curl = "http://${portalHostname}:${port}/_tasks";
 
 		while (!(isSet(reindexStartTime)) || "${retryReindex}" == "true" && (maxIterations = "2")) {
-			Navigator.gotoNavItem(navItem = "Index Actions");
-
 			if (isSet(action)) {
 				Click(
 					key_action = "${action}",
@@ -79,12 +77,16 @@ definition {
 			if ("${reindexElapsedTime}" == "0") {
 				echo("Elasticsearch failed to receive reindex request.");
 
+				Refresh();
+
 				var retryReindex = "true";
 			}
 			else if ("${reindexElapsedTime}" == "240") {
 				echo("Reindex timed out after 240 seconds.");
 
 				takeScreenshot();
+
+				Refresh();
 
 				var retryReindex = "true";
 			}

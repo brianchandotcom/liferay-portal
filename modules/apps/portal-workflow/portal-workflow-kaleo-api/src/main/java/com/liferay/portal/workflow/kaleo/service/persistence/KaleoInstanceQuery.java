@@ -29,6 +29,14 @@ public class KaleoInstanceQuery implements Serializable {
 		_companyId = serviceContext.getCompanyId();
 	}
 
+	public String getAssetDescription() {
+		return _assetDescription;
+	}
+
+	public String getAssetTitle() {
+		return _assetTitle;
+	}
+
 	public String[] getClassNames() {
 		return _classNames;
 	}
@@ -81,6 +89,18 @@ public class KaleoInstanceQuery implements Serializable {
 		return _completed;
 	}
 
+	public boolean isSearchByActiveWorkflowHandlers() {
+		return _searchByActiveWorkflowHandlers;
+	}
+
+	public void setAssetDescription(String assetDescription) {
+		_assetDescription = assetDescription;
+	}
+
+	public void setAssetTitle(String assetTitle) {
+		_assetTitle = assetTitle;
+	}
+
 	public void setClassNames(String[] classNames) {
 		_classNames = classNames;
 	}
@@ -125,10 +145,18 @@ public class KaleoInstanceQuery implements Serializable {
 		_rootKaleoInstanceTokenId = rootKaleoInstanceTokenId;
 	}
 
+	public void setSearchByActiveWorkflowHandlers(
+		boolean searchByActiveWorkflowHandlers) {
+
+		_searchByActiveWorkflowHandlers = searchByActiveWorkflowHandlers;
+	}
+
 	public void setUserId(Long userId) {
 		_userId = userId;
 	}
 
+	private String _assetDescription;
+	private String _assetTitle;
 	private String[] _classNames;
 	private Long _classPK;
 	private final long _companyId;
@@ -141,6 +169,7 @@ public class KaleoInstanceQuery implements Serializable {
 	private Long _kaleoDefinitionVersionId;
 	private Long _kaleoInstanceId;
 	private Long _rootKaleoInstanceTokenId;
+	private boolean _searchByActiveWorkflowHandlers;
 	private Long _userId;
 
 }

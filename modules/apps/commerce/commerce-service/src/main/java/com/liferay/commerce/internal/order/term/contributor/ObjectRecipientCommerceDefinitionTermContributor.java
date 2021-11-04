@@ -16,22 +16,26 @@ package com.liferay.commerce.internal.order.term.contributor;
 
 import com.liferay.commerce.order.CommerceDefinitionTermContributor;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 /**
  * @author Marco Leo
@@ -40,11 +44,28 @@ public class ObjectRecipientCommerceDefinitionTermContributor
 	implements CommerceDefinitionTermContributor {
 
 	public ObjectRecipientCommerceDefinitionTermContributor(
+		long objectDefinitionId,
+		ObjectFieldLocalService objectFieldLocalService,
 		UserGroupLocalService userGroupLocalService,
 		UserLocalService userLocalService) {
 
+		_objectDefinitionId = objectDefinitionId;
+		_objectFieldLocalService = objectFieldLocalService;
 		_userGroupLocalService = userGroupLocalService;
 		_userLocalService = userLocalService;
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(_objectDefinitionId);
+
+		for (ObjectField objectField : objectFields) {
+			_languageKeys.put(
+				StringBundler.concat(
+					"[%",
+					StringUtil.toUpperCase(
+						StringUtil.replace(objectField.getName(), ' ', '_')),
+					"%]"),
+				objectField.getObjectFieldId());
+		}
 	}
 
 	@Override
@@ -61,6 +82,10 @@ public class ObjectRecipientCommerceDefinitionTermContributor
 			return String.valueOf(objectEntry.getUserId());
 		}
 
+		if (term.equals("[%OBJECT_ENTRY_ID%]")) {
+			return String.valueOf(objectEntry.getObjectEntryId());
+		}
+
 		if (term.startsWith("[%USER_GROUP_")) {
 			String[] termParts = term.split("_");
 
@@ -71,15 +96,43 @@ public class ObjectRecipientCommerceDefinitionTermContributor
 			return _getUserIds(userGroup);
 		}
 
-		return term;
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectEntry.getObjectEntryId());
+
+		if (objectField == null) {
+			return term;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing term for object field " + objectField.getName());
+		}
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		return String.valueOf(values.get(objectField.getName()));
 	}
 
 	@Override
 	public String getLabel(String term, Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+		if (term.equals("[%OBJECT_ENTRY_CREATOR%]")) {
+			return LanguageUtil.get(locale, "creator");
+		}
 
-		return LanguageUtil.get(resourceBundle, _languageKeys.get(term));
+		if (term.equals("[%OBJECT_ENTRY_ID%]")) {
+			return LanguageUtil.get(locale, "id");
+		}
+
+		if (term.equals("[%USER_GROUP_NAME%]")) {
+			return LanguageUtil.get(locale, "user-group-name");
+		}
+
+		long objectFieldId = _languageKeys.get(term);
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectFieldId);
+
+		return objectField.getLabel(locale);
 	}
 
 	@Override
@@ -101,12 +154,18 @@ public class ObjectRecipientCommerceDefinitionTermContributor
 		return sb.toString();
 	}
 
-	private static final Map<String, String> _languageKeys = HashMapBuilder.put(
-		"[%OBJECT_ENTRY_CREATOR%]", "creator"
-	).put(
-		"[%USER_GROUP_NAME%]", "user-group-name"
-	).build();
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectRecipientCommerceDefinitionTermContributor.class);
 
+	private final Map<String, Long> _languageKeys = HashMapBuilder.put(
+		"[%OBJECT_ENTRY_CREATOR%]", 0L
+	).put(
+		"[%OBJECT_ENTRY_ID%]", 0L
+	).put(
+		"[%USER_GROUP_NAME%]", 0L
+	).build();
+	private final long _objectDefinitionId;
+	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final UserGroupLocalService _userGroupLocalService;
 	private final UserLocalService _userLocalService;
 

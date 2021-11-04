@@ -54,16 +54,10 @@ describe('dataConverter', () => {
 
 	it('is getting data definition field', () => {
 		expect(
-			getDataDefinitionField(
-				{
-					nestedFields: [],
-					settingsContext: {
-						pages: [],
-					},
-				},
-				[],
-				'en_US'
-			)
+			getDataDefinitionField({
+				nestedFields: [],
+				settingsContext: {pages: []},
+			})
 		).toMatchObject({
 			customProperties: {},
 			nestedDataDefinitionFields: [],

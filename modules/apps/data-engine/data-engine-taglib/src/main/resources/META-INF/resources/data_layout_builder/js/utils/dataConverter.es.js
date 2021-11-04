@@ -153,65 +153,6 @@ export function getDefaultDataLayout(dataDefinition) {
 	};
 }
 
-export function getDataDefinitionAndDataLayout({
-	availableLanguageIds = [themeDisplay.getDefaultLanguageId()],
-	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
-	pages,
-	paginationMode,
-	rules = [],
-}) {
-	const fieldDefinitions = [];
-	const pagesVisitor = new PagesVisitor(pages);
-
-	const newPages = pagesVisitor.mapFields((field) => {
-		fieldDefinitions.push(getDataDefinitionField(field));
-
-		return field.fieldName;
-	}, false);
-
-	return {
-		definition: {
-			availableLanguageIds,
-			dataDefinitionFields: fieldDefinitions,
-			defaultLanguageId,
-		},
-		layout: {
-			dataLayoutPages: newPages.map((page) => {
-				const rows = page.rows.map((row) => {
-					const columns = row.columns.map((column) => {
-						return {
-							columnSize: column.size,
-							fieldNames: column.fields,
-						};
-					});
-
-					return {
-						dataLayoutColumns: columns,
-					};
-				});
-
-				return {
-					dataLayoutRows: rows,
-					description: page.localizedDescription,
-					title: page.localizedTitle,
-				};
-			}),
-			dataRules: rules.map((rule) => {
-				if (typeof rule.name === 'string') {
-					rule.name = {
-						[defaultLanguageId]: rule.name,
-					};
-				}
-
-				delete rule.ruleEditedIndex;
-
-				return rule;
-			}),
-			paginationMode,
-		},
-	};
-}
-
 /**
  * Gets a data definition from a field
  *
@@ -279,33 +220,6 @@ export function getDataDefinitionFieldByFieldName({
 	};
 }
 
-export function getDDMSettingsContextWithVisualProperties({
-	dataDefinitionField,
-	editingLanguageId,
-	fieldTypes,
-}) {
-	const {pages} = getDDMFormFieldSettingsContext({
-		dataDefinitionField,
-		editingLanguageId,
-		fieldTypes,
-	});
-	const visitor = new PagesVisitor(pages);
-
-	const fieldProperties = {};
-
-	visitor.mapFields(
-		({fieldName, localizable, localizedValue, value, visualProperty}) => {
-			if (visualProperty) {
-				fieldProperties[fieldName] = localizable
-					? localizedValue
-					: value;
-			}
-		}
-	);
-
-	return fieldProperties;
-}
-
 /**
  * Converts a FieldSet from data-engine to form-builder data definition
  */
@@ -356,76 +270,6 @@ export function getFieldSetDDMForm({
 		pages,
 		title: name[editingLanguageId] ?? name[defaultLanguageId],
 	};
-}
-
-export function getFormData({
-	availableLanguageIds,
-	availableLanguageIdsState,
-	defaultLanguageId,
-	layoutProvider,
-}) {
-	const {
-		props: {defaultLanguageId: layoutDefaultLanguageId},
-		state: {pages: layoutProviderPages, rules},
-	} = layoutProvider;
-
-	const pagesVisitor = new PagesVisitor(layoutProviderPages);
-
-	const pages = pagesVisitor.mapFields(
-		(field) => {
-			const {settingsContext} = field;
-
-			const settingsContextPagesVisitor = new PagesVisitor(
-				settingsContext.pages
-			);
-
-			const newSettingsContext = {
-				...settingsContext,
-				pages: settingsContextPagesVisitor.mapFields(
-					(settingsField) => {
-						if (settingsField.type === 'options') {
-							const {value} = settingsField;
-							const newValue = {};
-
-							Object.keys(value).forEach((locale) => {
-								newValue[locale] = value[locale]?.filter(
-									(localizedValue) =>
-										localizedValue.value !== '' &&
-										localizedValue.label !== ''
-								);
-							});
-
-							if (!newValue[layoutDefaultLanguageId]) {
-								newValue[layoutDefaultLanguageId] = [];
-							}
-
-							settingsField = {
-								...settingsField,
-								value: newValue,
-							};
-						}
-
-						return settingsField;
-					}
-				),
-			};
-
-			return {
-				...field,
-				settingsContext: newSettingsContext,
-			};
-		},
-		true,
-		true
-	);
-
-	return getDataDefinitionAndDataLayout({
-		availableLanguageIds: availableLanguageIdsState ?? availableLanguageIds,
-		defaultLanguageId,
-		pages,
-		paginationMode: layoutProvider.getPaginationMode(),
-		rules,
-	});
 }
 
 // private

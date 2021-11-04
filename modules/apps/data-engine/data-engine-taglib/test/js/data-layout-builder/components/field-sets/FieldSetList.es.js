@@ -405,10 +405,6 @@ describe('FieldSets', () => {
 			fieldSets: [fieldSet],
 		};
 
-		jest.spyOn(DataConverter, 'getDataDefinitionFieldSet').mockReturnValue({
-			fieldSet,
-		});
-
 		const {container} = render(
 			<DndProvider backend={HTML5Backend}>
 				<FieldSetWrapper state={state}>

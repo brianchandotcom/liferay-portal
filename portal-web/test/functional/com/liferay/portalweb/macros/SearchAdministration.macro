@@ -55,8 +55,6 @@ definition {
 
 			if ("${reindexStartTime}" == "60") {
 				echo("Elasticsearch failed to receive reindex request after 60 seconds.");
-
-				takeScreenshot();
 			}
 			else {
 				echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
@@ -76,6 +74,8 @@ definition {
 
 			if ("${reindexElapsedTime}" == "0") {
 				echo("Elasticsearch failed to receive reindex request.");
+
+				takeScreenshot();
 
 				Refresh();
 

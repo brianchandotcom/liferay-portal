@@ -19,7 +19,6 @@ import {
 	parseProps,
 } from 'data-engine-js-components-web';
 import {
-	dataDefinitionReducer,
 	dataLayoutReducer,
 	dragAndDropReducer,
 	fieldEditableReducer,
@@ -63,7 +62,6 @@ const App = (props) => {
 					<FormProvider
 						initialState={INITIAL_STATE}
 						reducers={[
-							dataDefinitionReducer,
 							dataLayoutReducer,
 							dragAndDropReducer,
 							fieldEditableReducer,

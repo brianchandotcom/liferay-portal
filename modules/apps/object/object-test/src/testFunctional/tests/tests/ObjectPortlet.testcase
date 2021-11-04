@@ -1192,13 +1192,83 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to view other user's Object entry with only the Add Object Entry permission"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CannotViewOtherUsersEntryWithOnlyAddPermission {
 		property portal.acceptance = "true";
 
-		// TODO LPS-140528 CannotViewOtherUsersEntryWithOnlyAddPermission pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Text test");
+
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionValue = "",
+			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
+			permissionNavigationValue = "Custom Objects",
+			roleTitle = "Regular Role",
+			roleType = "Regular");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX",
+			permissionDefinitionValue = "",
+			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
+			permissionNavigationValue = "Custom Objects",
+			roleTitle = "Regular Role",
+			roleType = "Regular");
+
+		Navigator.openURL();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Test Entry");
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to view other user's Object entry without the View permission"

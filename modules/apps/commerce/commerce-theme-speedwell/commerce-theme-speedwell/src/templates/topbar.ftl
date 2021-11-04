@@ -79,13 +79,15 @@
 			</div>
 		</div>
 
-		<div class="speedwell-topbar__cart-wrapper speedwell-cart">
-			<@liferay_commerce_ui["mini-cart"]
-				displayTotalItemsQuantity=mini_cart_display_total_items_count
-				spritemap="${themeDisplay.getPathThemeImages()}/icons.svg"
-				toggleable=!mini_cart_keep_open
-			/>
-		</div>
+		<#if show_mini_cart>
+			<div class="speedwell-topbar__cart-wrapper speedwell-cart">
+				<@liferay_commerce_ui["mini-cart"]
+					displayTotalItemsQuantity=mini_cart_display_total_items_count
+					spritemap="${themeDisplay.getPathThemeImages()}/icons.svg"
+					toggleable=!mini_cart_keep_open
+				/>
+			</div>
+		</#if>
 	</#if>
 	</div>
 </div>

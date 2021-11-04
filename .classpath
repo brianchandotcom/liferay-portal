@@ -123,7 +123,6 @@
 	<classpathentry kind="lib" path="lib/development/websocket-api.jar"/>
 	<classpathentry kind="lib" path="lib/development/xmlresolver.jar"/>
 	<classpathentry kind="lib" path="lib/development/xmltask.jar"/>
-	<classpathentry kind="lib" path="lib/portal/abdera.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ant.jar"/>
 	<classpathentry kind="lib" path="lib/portal/antlr2.jar"/>
 	<classpathentry kind="lib" path="lib/portal/antlr3.jar"/>
@@ -135,8 +134,6 @@
 	<classpathentry kind="lib" path="lib/portal/asm.jar"/>
 	<classpathentry kind="lib" path="lib/portal/aspectj-rt.jar"/>
 	<classpathentry kind="lib" path="lib/portal/aspectj-weaver.jar"/>
-	<classpathentry kind="lib" path="lib/portal/axiom-api.jar"/>
-	<classpathentry kind="lib" path="lib/portal/axiom-impl.jar"/>
 	<classpathentry kind="lib" path="lib/portal/axis.jar"/>
 	<classpathentry kind="lib" path="lib/portal/axis-ant.jar"/>
 	<classpathentry kind="lib" path="lib/portal/bcmail.jar"/>

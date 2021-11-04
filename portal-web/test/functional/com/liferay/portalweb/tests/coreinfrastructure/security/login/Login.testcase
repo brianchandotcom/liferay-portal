@@ -9,7 +9,7 @@ definition {
 		TestCase.setUpPortalInstance();
 	}
 
-	@description = "This is a use case for LRQA-48218."
+	@description = "This is a use case for LRQA-48218. User should be redirected to the changed landing page upon login."
 	@priority = "5"
 	test DefaultPortalLandingPage {
 		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPage";
@@ -58,7 +58,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-39744."
+	@description = "This is a use case for LPS-39744. Default landing page could be set by property and user is redirected to the changed landing page."
 	@priority = "5"
 	test DefaultPortalLandingPageSetByProperty {
 		property custom.properties = "default.landing.page.path=/web/guest/landing";
@@ -89,7 +89,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105151."
+	@description = "This is a use case for LPS-105151. User could login to a virtual instance using the system level's OpenID Connect Provider."
 	@priority = "4"
 	test EnabledOpenIDConnectOnSystemLevel {
 		property dummy.socket.proxy.disabled = "true";
@@ -172,7 +172,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-27624."
+	@description = "This is a use case for LRQA-27624. Users could login and logout using their Facebook profile."
 	@priority = "4"
 	test FacebookSSOSmoke {
 		property portal.ssl.enabled = "true";
@@ -215,7 +215,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-72398."
+	@description = "This is a use case for LPS-72398. Users could login to Portal when the default langauge is not English."
 	@priority = "5"
 	test LoginWithSpanishOnlyEnabledLocale {
 		property test.name.skip.portal.instance = "Login#LoginWithSpanishOnlyEnabledLocale";
@@ -252,7 +252,7 @@ definition {
 		}
 	}
 
-	@description = "Since we log in through navigation by default normally, this will test the login through the UI."
+	@description = "Users could login through the UI."
 	@priority = "5"
 	test LoginWithUI {
 		property environment.acceptance = "true";
@@ -271,7 +271,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105151."
+	@description = "This is a use case for LPS-105151. Users could login and logout using multiple OpenID Connect providers."
 	@priority = "4"
 	test MultipleOpenIDConnectProvider {
 		property dummy.socket.proxy.disabled = "true";
@@ -397,7 +397,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105151."
+	@description = "This is a use case for LPS-105151. Users could login with instance-level configured OpenID Connect provider."
 	@priority = "4"
 	test OpenIDConnectOnInstanceLevelSmoke {
 		property dummy.socket.proxy.disabled = "true";
@@ -475,7 +475,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-40911."
+	@description = "This is a use case for LRQA-40911. Users could login and logout using OpenID Connect provider."
 	@priority = "4"
 	test OpenIDConnectSmoke {
 		property dummy.socket.proxy.disabled = "true";
@@ -605,7 +605,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-27622."
+	@description = "This is a use case for LRQA-27622. Users could login using Token Based SSO."
 	@priority = "5"
 	test TokenBasedSSOSmoke {
 		property test.name.skip.portal.instance = "Login#TokenBasedSSOSmoke";
@@ -678,7 +678,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-27619."
+	@description = "This is a use case for LRQA-27619. Verify that LDAP and OpenSSO portlets are present at Instance Settings."
 	@priority = "3"
 	test ViewInstanceSettingsAuthentication {
 		property osgi.app.includes = "portal-security-sso-openid";

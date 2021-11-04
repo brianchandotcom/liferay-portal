@@ -83,13 +83,17 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Writer writer = httpServletResponse.getWriter();
 
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("<li class=\"");
 		sb.append(_getCssClass(httpServletRequest));
 		sb.append("\"><span class=\"align-items-center ");
 		sb.append("control-menu-level-1-heading d-flex mr-1\" ");
-		sb.append("data-qa-id=\"headerTitle\"><span class=\"text-truncate\">");
+		sb.append("data-qa-id=\"headerTitle\"><span class=\"");
+		sb.append("lfr-portal-tooltip text-truncate\" title=\"");
+		sb.append(
+			HtmlUtil.escapeAttribute(_getHeaderTitle(httpServletRequest)));
+		sb.append("\">");
 		sb.append(_getHeaderTitle(httpServletRequest));
 		sb.append("</span>");
 

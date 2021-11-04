@@ -24,7 +24,7 @@ SegmentsExperienceSelectorDisplayContext segmentsExperienceSelectorDisplayContex
 	<div class="dropdown">
 		<button aria-expanded="false" aria-haspopup="true" class="btn btn-sm btn-unstyled dropdown-toggle" id="<portlet:namespace />dropdownToggle" type="button">
 			<span class="align-items-center c-inner d-flex" tabindex="-1">
-				<span class="mr-2 text-truncate">
+				<span class="lfr-portal-tooltip mr-2 text-truncate" title="<%= HtmlUtil.escapeAttribute(segmentsExperienceSelectorDisplayContext.getSelectedSegmentsExperienceName()) %>">
 					<%= segmentsExperienceSelectorDisplayContext.getSelectedSegmentsExperienceName() %>
 				</span>
 
@@ -47,11 +47,11 @@ SegmentsExperienceSelectorDisplayContext segmentsExperienceSelectorDisplayContex
 				<li>
 					<a class="border-0 dropdown-item list-group-item list-group-item-flex rounded-0" href="<%= segmentsExperiencesJSONObject.getString("url") %>">
 						<div class="autofit-col autofit-col-expand">
-							<p class="list-group-title text-truncate">
+							<p class="lfr-portal-tooltip list-group-title text-truncate" title="<%= HtmlUtil.escapeAttribute(segmentsExperiencesJSONObject.getString("segmentsExperienceName")) %>">
 								<%= segmentsExperiencesJSONObject.getString("segmentsExperienceName") %>
 							</p>
 
-							<p class="list-group-text text-secondary text-truncate">
+							<p class="lfr-portal-tooltip list-group-text text-secondary text-truncate" title="<%= HtmlUtil.escapeAttribute(segmentsExperiencesJSONObject.getString("segmentsEntryName")) %>">
 								<liferay-ui:message arguments='<%= segmentsExperiencesJSONObject.getString("segmentsEntryName") %>' key="segment-x" />
 							</p>
 						</div>

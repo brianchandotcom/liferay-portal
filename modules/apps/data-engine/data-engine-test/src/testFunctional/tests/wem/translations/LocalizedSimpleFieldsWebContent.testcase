@@ -1577,6 +1577,8 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
+		Translations.addLanguageManageTranslations(key_language = "zh-CN");
+
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		DataEngine.editFieldLabel(

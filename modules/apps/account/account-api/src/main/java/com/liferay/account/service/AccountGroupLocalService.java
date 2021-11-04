@@ -110,10 +110,12 @@ public interface AccountGroupLocalService
 	 *
 	 * @param accountGroup the account group
 	 * @return the account group that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public AccountGroup deleteAccountGroup(AccountGroup accountGroup);
+	public AccountGroup deleteAccountGroup(AccountGroup accountGroup)
+		throws PortalException;
 
 	/**
 	 * Deletes the account group with the primary key from the database. Also notifies the appropriate model listeners.

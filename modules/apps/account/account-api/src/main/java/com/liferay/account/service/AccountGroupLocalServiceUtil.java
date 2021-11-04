@@ -101,8 +101,11 @@ public class AccountGroupLocalServiceUtil {
 	 *
 	 * @param accountGroup the account group
 	 * @return the account group that was removed
+	 * @throws PortalException
 	 */
-	public static AccountGroup deleteAccountGroup(AccountGroup accountGroup) {
+	public static AccountGroup deleteAccountGroup(AccountGroup accountGroup)
+		throws PortalException {
+
 		return getService().deleteAccountGroup(accountGroup);
 	}
 

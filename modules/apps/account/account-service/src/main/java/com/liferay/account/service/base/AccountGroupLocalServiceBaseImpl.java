@@ -133,10 +133,13 @@ public abstract class AccountGroupLocalServiceBaseImpl
 	 *
 	 * @param accountGroup the account group
 	 * @return the account group that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public AccountGroup deleteAccountGroup(AccountGroup accountGroup) {
+	public AccountGroup deleteAccountGroup(AccountGroup accountGroup)
+		throws PortalException {
+
 		return accountGroupPersistence.remove(accountGroup);
 	}
 

@@ -15,6 +15,7 @@ definition {
 				  -d iFrameURL=${iFrameURLModified} \
 				  -d instanceable=true \
 				  -d nameMap='{\"en_US\":\"${nameModified}\"}' \
+				  -d friendlyURLMapping= \
 				  -d portletCategoryName=RemoteApps \
 				  -d properties=
 		''';

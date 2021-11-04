@@ -74,11 +74,13 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 		for (int i = 1;; i++) {
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						StringBundler.concat(
-							"select count(*) from LayoutPageTemplateEntry ",
-							"where groupId = ", company.getGroupId(),
-							" and name = '", newName, "'"));
-				ResultSet resultSet = preparedStatement.executeQuery()) {
+						"select count(*) from LayoutPageTemplateEntry where " +
+							"groupId = ? and name = ?")) {
+
+				preparedStatement.setLong(1, company.getGroupId());
+				preparedStatement.setString(2, newName);
+
+				ResultSet resultSet = preparedStatement.executeQuery();
 
 				if (resultSet.next() && (resultSet.getInt(1) > 0)) {
 					newName = name + i;
@@ -89,21 +91,32 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 			}
 		}
 
-		runSQL(
-			StringBundler.concat(
-				"update LayoutPageTemplateEntry set groupId = ",
-				company.getGroupId(),
-				", layoutPageTemplateCollectionId = 0, name = '", newName,
-				"' where layoutPageTemplateEntryId = ",
-				layoutPageTemplateEntryId));
+		try (PreparedStatement updatePreparedStatement =
+				connection.prepareStatement(
+					"update LayoutPageTemplateEntry set groupId = ? , " +
+						"layoutPageTemplateCollectionId = 0, name = ? where " +
+							"layoutPageTemplateEntryId = ?")) {
 
-		runSQL(
-			StringBundler.concat(
-				"delete from LayoutPageTemplateEntry where groupId <> ",
-				company.getGroupId(),
-				" and layoutPageTemplateCollectionId <> 0 and type_ = ",
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
-				" and layoutPrototypeId = ", layoutPrototypeId));
+			updatePreparedStatement.setLong(1, company.getGroupId());
+			updatePreparedStatement.setString(2, newName);
+			updatePreparedStatement.setLong(3, layoutPageTemplateEntryId);
+
+			updatePreparedStatement.executeUpdate();
+		}
+
+		try (PreparedStatement deletePreparedStatement =
+				connection.prepareStatement(
+					"delete from LayoutPageTemplateEntry where groupId <> ? " +
+						"and layoutPageTemplateCollectionId <> 0 and type_ = " +
+							"? and layoutPrototypeId = ?")) {
+
+			deletePreparedStatement.setLong(1, company.getGroupId());
+			deletePreparedStatement.setInt(
+				2, LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE);
+			deletePreparedStatement.setLong(3, layoutPrototypeId);
+
+			deletePreparedStatement.executeUpdate();
+		}
 	}
 
 	private final CompanyLocalService _companyLocalService;

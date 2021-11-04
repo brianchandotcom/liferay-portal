@@ -31,7 +31,7 @@ definition {
 
 		var reindexElapsedTime = "0";
 
-		while ("${reindexElapsedTime}" == "0" || "${reindexElapsedTime}" == "480" && (maxIterations = "2")) {
+		while ("${reindexElapsedTime}" == "0" || "${retryReindex}" == "true" && (maxIterations = "2")) {
 			Navigator.gotoNavItem(navItem = "Index Actions");
 
 			if (isSet(action)) {
@@ -80,11 +80,15 @@ definition {
 
 			if ("${reindexElapsedTime}" == "0") {
 				echo("Elasticsearch failed to receive reindex request.");
+
+				var retryReindex = "true";
 			}
 			else if ("${reindexElapsedTime}" == "240") {
 				echo("Reindex timed out after 240 seconds.");
 
 				takeScreenshot();
+
+				var retryReindex = "true";
 			}
 			else {
 				echo("Finished reindexing after ${reindexElapsedTime} seconds.");

@@ -3,11 +3,10 @@ const minusIcon = fragmentElement.querySelector('#minus-icon');
 const customIcons = fragmentElement.getElementsByClassName('custom-icon');
 const collapseDiv = fragmentElement.querySelector('#collapseDiv');
 
-for(let i = 0; i < customIcons.length; i++){
+for (let i = 0; i < customIcons.length; i++) {
 	const icon = customIcons[i];
-	
+
 	icon.onclick = function () {
-		
 		let flag = collapseDiv.classList.contains('collapse');
 		if (flag) {
 			collapseDiv.classList.remove('collapse');

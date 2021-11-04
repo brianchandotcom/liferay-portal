@@ -18,16 +18,12 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.internal.loader.ModuleResourceLoader;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,15 +40,12 @@ public class ServiceConfigurationInitializer {
 
 	public ServiceConfigurationInitializer(
 		Bundle bundle, ClassLoader classLoader,
-		Configuration portletConfiguration, Configuration serviceConfiguration,
-		ResourceActions resourceActions,
+		Configuration serviceConfiguration,
 		ServiceComponentLocalService serviceComponentLocalService) {
 
 		_bundle = bundle;
 		_classLoader = classLoader;
-		_portletConfiguration = portletConfiguration;
 		_serviceConfiguration = serviceConfiguration;
-		_resourceActions = resourceActions;
 		_serviceComponentLocalService = serviceComponentLocalService;
 
 		_serviceComponentConfiguration = new ModuleResourceLoader(bundle);
@@ -73,13 +66,6 @@ public class ServiceConfigurationInitializer {
 
 	protected void start() {
 		BundleContext bundleContext = _bundle.getBundleContext();
-
-		if (_portletConfiguration != null) {
-			_readResourceActions();
-
-			_registerConfiguration(
-				bundleContext, _portletConfiguration, "portlet");
-		}
 
 		if (_serviceConfiguration != null) {
 			_initServiceComponent();
@@ -124,30 +110,6 @@ public class ServiceConfigurationInitializer {
 		}
 	}
 
-	private void _readResourceActions() {
-		try {
-			_resourceActions.populateModelResources(
-				_classLoader,
-				StringUtil.split(
-					_portletConfiguration.get(
-						PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
-
-			if (!PropsValues.RESOURCE_ACTIONS_STRICT_MODE_ENABLED) {
-				_resourceActions.populatePortletResources(
-					_classLoader,
-					StringUtil.split(
-						_portletConfiguration.get(
-							PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
-			}
-		}
-		catch (Exception exception) {
-			_log.error(
-				"Unable to read resource actions config in " +
-					PropsKeys.RESOURCE_ACTIONS_CONFIGS,
-				exception);
-		}
-	}
-
 	private void _registerConfiguration(
 		BundleContext bundleContext, Configuration configuration, String name) {
 
@@ -166,8 +128,6 @@ public class ServiceConfigurationInitializer {
 
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
-	private final Configuration _portletConfiguration;
-	private final ResourceActions _resourceActions;
 	private final ServiceComponentConfiguration _serviceComponentConfiguration;
 	private final ServiceComponentLocalService _serviceComponentLocalService;
 	private final Configuration _serviceConfiguration;

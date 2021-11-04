@@ -16,7 +16,9 @@ package com.liferay.account.internal.upgrade;
 
 import com.liferay.account.internal.upgrade.v1_1_0.SchemaUpgradeProcess;
 import com.liferay.account.internal.upgrade.v2_3_0.AccountResourceUpgradeProcess;
+import com.liferay.account.internal.upgrade.v2_4_0.AccountGroupResourceUpgradeProcess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -88,9 +90,16 @@ public class AccountServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.2.0", "2.3.0", new AccountResourceUpgradeProcess());
+
+		registry.register(
+			"2.3.0", "2.4.0",
+			new AccountGroupResourceUpgradeProcess(_resourceLocalService));
 	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 }

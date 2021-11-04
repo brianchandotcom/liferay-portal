@@ -138,6 +138,14 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 				redirect = _portal.getLayoutFullURL(draftLayout, themeDisplay);
 			}
 
+			long segmentsExperienceId = ParamUtil.getLong(
+				httpServletRequest, "p_s_e_id", -1);
+
+			if (segmentsExperienceId != -1) {
+				redirect = _http.setParameter(
+					redirect, "p_s_e_id", segmentsExperienceId);
+			}
+
 			redirect = _http.setParameter(
 				redirect, "p_l_back_url",
 				_portal.getLayoutFullURL(

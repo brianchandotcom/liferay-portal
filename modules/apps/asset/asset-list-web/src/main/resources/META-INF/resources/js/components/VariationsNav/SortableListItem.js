@@ -13,12 +13,21 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
 import PropTypes from 'prop-types';
 import React, {useRef} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 
-const SortableListItem = ({id, index, onMove, sortableListItem}) => {
+import SortableListItemMoreActions from './SortableListItemMoreActions';
+
+const SortableListItem = ({
+	handleItemMove,
+	id,
+	index,
+	sortableListItem,
+	totalItems,
+}) => {
 	const ref = useRef(null);
 
 	const [, drop] = useDrop({
@@ -51,7 +60,7 @@ const SortableListItem = ({id, index, onMove, sortableListItem}) => {
 				return;
 			}
 
-			onMove(dragIndex, hoverIndex);
+			handleItemMove({hoverIndex, index: dragIndex});
 
 			item.index = hoverIndex;
 		},
@@ -70,8 +79,8 @@ const SortableListItem = ({id, index, onMove, sortableListItem}) => {
 	drag(drop(ref));
 
 	const style = {
-		backgroundColor: isItemBeingDragged ? '#EFEFEF' : '',
-		border: isItemBeingDragged ? '2px solid #555555' : '',
+		backgroundColor: isItemBeingDragged ? 'var(--light)' : '',
+		border: isItemBeingDragged ? '1px solid var(--primary)' : '',
 		cursor: 'grab',
 		opacity: isDragging ? 0 : 1,
 	};
@@ -79,7 +88,7 @@ const SortableListItem = ({id, index, onMove, sortableListItem}) => {
 	return (
 		<ClayList.Item
 			active={sortableListItem.active}
-			className="align-items-center"
+			className="align-items-center justify-content-between"
 			flex
 			id={`sortableListItem${sortableListItem.editAssetListEntryURL}`}
 			ref={ref}
@@ -91,19 +100,27 @@ const SortableListItem = ({id, index, onMove, sortableListItem}) => {
 
 			<ClayList.ItemField>
 				<ClayList.ItemTitle>
-					<a href={sortableListItem.editAssetListEntryURL}>
+					<ClayLink href={sortableListItem.editAssetListEntryURL}>
 						{sortableListItem.label}
-					</a>
+					</ClayLink>
 				</ClayList.ItemTitle>
+			</ClayList.ItemField>
+
+			<ClayList.ItemField shrink>
+				<SortableListItemMoreActions
+					index={index}
+					onReorder={handleItemMove}
+					totalItems={totalItems}
+				/>
 			</ClayList.ItemField>
 		</ClayList.Item>
 	);
 };
 
 SortableListItem.propTypes = {
+	handleItemMove: PropTypes.func.isRequired,
 	id: PropTypes.string.isRequired,
 	index: PropTypes.number.isRequired,
-	onMove: PropTypes.func.isRequired,
 	sortableListItem: PropTypes.object.isRequired,
 };
 

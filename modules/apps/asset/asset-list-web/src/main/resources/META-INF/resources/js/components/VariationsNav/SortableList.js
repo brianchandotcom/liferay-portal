@@ -23,13 +23,14 @@ import SortableListItem from './SortableListItem';
 const SortableList = ({items}) => {
 	const [listItems, setListItems] = useState(items);
 
-	const handleMove = useCallback(
-		(dragIndex, hoverIndex) => {
+	const handleItemMove = useCallback(
+		({direction = 0, hoverIndex = null, index}) => {
+			const start = hoverIndex || index + direction;
 			const tempList = [...listItems];
 
-			tempList.splice(dragIndex, 1);
+			tempList.splice(index, 1);
 
-			tempList.splice(hoverIndex, 0, listItems[dragIndex]);
+			tempList.splice(start, 0, listItems[index]);
 
 			setListItems(tempList);
 		},
@@ -41,11 +42,12 @@ const SortableList = ({items}) => {
 			<ClayList className="mt-4">
 				{listItems.map((item, index) => (
 					<SortableListItem
+						handleItemMove={handleItemMove}
 						id={`sortableListItem-${item.editAssetListEntryURL}`}
 						index={index}
 						key={item.editAssetListEntryURL}
-						onMove={handleMove}
 						sortableListItem={item}
+						totalItems={listItems.length}
 					/>
 				))}
 			</ClayList>

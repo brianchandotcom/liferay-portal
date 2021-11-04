@@ -82,6 +82,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TRANSLATION_MANAGE_BUTTON</td>
+	<td>//button[@id='manage-translations']//span[text()='Manage Translations']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSLATION_MANAGE_OPTION</td>
+	<td>//div[contains(@class,'dropdown-menu dropdown-menu-indicator-start show')]//li//button[text()='${key_language}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TRANSLATION_STATUS_TITLE</td>
 	<td>//div[contains(@id,'JournalPortlet')]//span[contains(text(),'${key_localizedLanguage}')]//span</td>
 	<td></td>
@@ -93,7 +103,7 @@
 </tr>
 <tr>
 	<td>LOCALIZATION_NAME</td>
-	<td>//div[contains(@class,'menu-open')]//a[@data-value='${key_locale}']</td>
+	<td>//div[contains(@class,'menu-open')]//a[@data-languageid='${key_locale}']</td>
 	<td></td>
 </tr>
 </tbody>

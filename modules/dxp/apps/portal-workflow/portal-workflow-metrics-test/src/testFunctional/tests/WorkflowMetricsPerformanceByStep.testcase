@@ -544,7 +544,7 @@ definition {
 			WorkflowMetricsPerformanceByStep.goToPerformanceTab();
 
 			Click(
-				key_stepsNumber = "3",
+				key_stepsNumber = "2",
 				locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
 		}
 

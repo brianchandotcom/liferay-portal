@@ -163,6 +163,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	@refactorneeded
 	test DirectUpgradeFromArchive6130 {

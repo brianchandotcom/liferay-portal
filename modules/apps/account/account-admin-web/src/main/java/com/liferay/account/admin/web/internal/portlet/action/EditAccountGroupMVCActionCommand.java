@@ -16,7 +16,7 @@ package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountGroup;
-import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -54,7 +54,7 @@ public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
 		String description = ParamUtil.getString(actionRequest, "description");
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		return _accountGroupLocalService.addAccountGroup(
+		return _accountGroupService.addAccountGroup(
 			themeDisplay.getUserId(), description, name);
 	}
 
@@ -92,12 +92,12 @@ public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
 		String description = ParamUtil.getString(actionRequest, "description");
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		_accountGroupLocalService.updateAccountGroup(
+		_accountGroupService.updateAccountGroup(
 			accountGroupId, description, name);
 	}
 
 	@Reference
-	private AccountGroupLocalService _accountGroupLocalService;
+	private AccountGroupService _accountGroupService;
 
 	@Reference
 	private Http _http;

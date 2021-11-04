@@ -15,7 +15,7 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -48,9 +48,7 @@ public class DeleteAccountGroupsMVCActionCommand extends BaseMVCActionCommand {
 		long[] accountGroupIds = ParamUtil.getLongValues(
 			actionRequest, "accountGroupIds");
 
-		for (long accountGroupId : accountGroupIds) {
-			_accountGroupLocalService.deleteAccountGroup(accountGroupId);
-		}
+		_accountGroupService.deleteAccountGroups(accountGroupIds);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -60,6 +58,6 @@ public class DeleteAccountGroupsMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private AccountGroupLocalService _accountGroupLocalService;
+	private AccountGroupService _accountGroupService;
 
 }

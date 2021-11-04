@@ -102,7 +102,7 @@ describe('MappingInput', () => {
 					fireEvent.click(mappingPanelButton);
 
 					expect(inputValue.value).toBe(
-						` $\{${baseProps.fields[0].key}:${baseProps.fields[0].label}} ${baseProps.value}`
+						`$\{${baseProps.fields[0].key}:${baseProps.fields[0].label}} ${baseProps.value}`
 					);
 				});
 			});

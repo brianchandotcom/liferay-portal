@@ -53,11 +53,10 @@ function MappingInput({
 		const selectionEnd = inputEl.current.selectionEnd;
 		const fieldVariable = fieldTemplate(key, label);
 
-		setValue(
-			(value) =>
-				`${value.slice(0, selectionStart)}${fieldVariable}${value.slice(
-					selectionEnd
-				)}`
+		setValue((value) =>
+			`${value.slice(0, selectionStart)}${fieldVariable}${value.slice(
+				selectionEnd
+			)}`.trim()
 		);
 
 		setTimeout(() => {

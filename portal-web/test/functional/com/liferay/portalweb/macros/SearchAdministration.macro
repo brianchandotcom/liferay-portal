@@ -29,9 +29,7 @@ definition {
 
 		var curl = "http://${portalHostname}:${port}/_tasks";
 
-		var reindexElapsedTime = "0";
-
-		while ("${reindexElapsedTime}" == "0" || "${retryReindex}" == "true" && (maxIterations = "2")) {
+		while (!(isSet(reindexStartTime)) || "${retryReindex}" == "true" && (maxIterations = "2")) {
 			Navigator.gotoNavItem(navItem = "Index Actions");
 
 			if (isSet(action)) {

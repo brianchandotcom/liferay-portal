@@ -71,51 +71,41 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 				String name = resultSet.getString("name");
 				long layoutPrototypeId = resultSet.getLong("layoutPrototypeId");
 
-				_updateLayoutPageTemplateEntry(
-					layoutPageTemplateEntryId, companyId, name,
-					layoutPrototypeId, countPreparedStatement,
-					deletePreparedStatement, updatePreparedStatement);
+				Company company = _companyLocalService.getCompany(companyId);
+
+				String newName = name;
+
+				for (int i = 1;; i++) {
+					countPreparedStatement.setLong(1, company.getGroupId());
+					countPreparedStatement.setString(2, newName);
+
+					ResultSet countResultSet =
+						countPreparedStatement.executeQuery();
+
+					if (countResultSet.next() &&
+						(countResultSet.getInt(1) > 0)) {
+
+						newName = name + i;
+					}
+					else {
+						break;
+					}
+				}
+
+				updatePreparedStatement.setLong(1, company.getGroupId());
+				updatePreparedStatement.setString(2, newName);
+				updatePreparedStatement.setLong(3, layoutPageTemplateEntryId);
+
+				updatePreparedStatement.executeUpdate();
+
+				deletePreparedStatement.setLong(1, company.getGroupId());
+				deletePreparedStatement.setInt(
+					2, LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE);
+				deletePreparedStatement.setLong(3, layoutPrototypeId);
+
+				deletePreparedStatement.executeUpdate();
 			}
 		}
-	}
-
-	private void _updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, long companyId, String name,
-			long layoutPrototypeId, PreparedStatement countPreparedStatement,
-			PreparedStatement deletePreparedStatement,
-			PreparedStatement updatePreparedStatement)
-		throws Exception {
-
-		Company company = _companyLocalService.getCompany(companyId);
-
-		String newName = name;
-
-		for (int i = 1;; i++) {
-			countPreparedStatement.setLong(1, company.getGroupId());
-			countPreparedStatement.setString(2, newName);
-
-			ResultSet resultSet = countPreparedStatement.executeQuery();
-
-			if (resultSet.next() && (resultSet.getInt(1) > 0)) {
-				newName = name + i;
-			}
-			else {
-				break;
-			}
-		}
-
-		updatePreparedStatement.setLong(1, company.getGroupId());
-		updatePreparedStatement.setString(2, newName);
-		updatePreparedStatement.setLong(3, layoutPageTemplateEntryId);
-
-		updatePreparedStatement.executeUpdate();
-
-		deletePreparedStatement.setLong(1, company.getGroupId());
-		deletePreparedStatement.setInt(
-			2, LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE);
-		deletePreparedStatement.setLong(3, layoutPrototypeId);
-
-		deletePreparedStatement.executeUpdate();
 	}
 
 	private final CompanyLocalService _companyLocalService;

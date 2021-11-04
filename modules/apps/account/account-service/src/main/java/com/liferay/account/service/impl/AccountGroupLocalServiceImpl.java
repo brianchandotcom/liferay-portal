@@ -22,6 +22,7 @@ import com.liferay.account.service.persistence.AccountGroupRelPersistence;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -79,6 +81,12 @@ public class AccountGroupLocalServiceImpl
 		accountGroup.setName(name);
 		accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 
+		// Resources
+
+		_resourceLocalService.addResources(
+			user.getCompanyId(), 0, user.getUserId(),
+			AccountGroup.class.getName(), accountGroupId, false, false, false);
+
 		return accountGroupPersistence.update(accountGroup);
 	}
 
@@ -112,7 +120,9 @@ public class AccountGroupLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public AccountGroup deleteAccountGroup(AccountGroup accountGroup) {
+	public AccountGroup deleteAccountGroup(AccountGroup accountGroup)
+		throws PortalException {
+
 		accountGroupPersistence.remove(accountGroup);
 
 		List<AccountGroupRel> accountGroupRels =
@@ -122,6 +132,13 @@ public class AccountGroupLocalServiceImpl
 		for (AccountGroupRel accountGroupRel : accountGroupRels) {
 			_accountGroupRelPersistence.remove(accountGroupRel);
 		}
+
+		// Resources
+
+		_resourceLocalService.deleteResource(
+			accountGroup.getCompanyId(), AccountGroup.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			accountGroup.getAccountGroupId());
 
 		return accountGroup;
 	}
@@ -281,6 +298,9 @@ public class AccountGroupLocalServiceImpl
 
 	@Reference
 	private AccountGroupRelPersistence _accountGroupRelPersistence;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

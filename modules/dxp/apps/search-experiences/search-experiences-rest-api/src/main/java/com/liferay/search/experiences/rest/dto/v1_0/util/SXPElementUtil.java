@@ -17,21 +17,24 @@ package com.liferay.search.experiences.rest.dto.v1_0.util;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 
+import java.util.Locale;
+
 /**
  * @author André de Oliveira
  */
 public class SXPElementUtil {
 
 	public static SXPElement toSXPElement(
-		com.liferay.search.experiences.model.SXPElement sxpElement) {
+		com.liferay.search.experiences.model.SXPElement sxpElement,
+		Locale locale) {
 
 		return new SXPElement() {
 			{
-				description = "";
+				description = sxpElement.getDescription(locale);
 				elementDefinition = ElementDefinitionUtil.toElementDefinition(
 					sxpElement.getElementDefinitionJSON());
 				id = sxpElement.getSXPElementId();
-				title = "";
+				title = sxpElement.getTitle(locale);
 			}
 		};
 	}

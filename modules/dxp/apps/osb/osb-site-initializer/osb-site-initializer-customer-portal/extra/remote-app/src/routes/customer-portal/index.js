@@ -1,14 +1,16 @@
-import CustomerPortalStyles from '~/routes/customer-portal/styles/app.scss';
+import CustomerPortalStyles from "~/routes/customer-portal/styles/app.scss";
+import { AppProvider } from "./context";
+import Pages from "./pages";
 
-import Home from './pages/Home';
-
-const CustomerPortal = () => {
-	return (
-		<>
-			<style>{CustomerPortalStyles}</style>
-			<Home />
-		</>
-	);
+const CustomerPortal = (props) => {
+  return (
+    <>
+      <style>{CustomerPortalStyles}</style>
+      <AppProvider {...props}>
+        <Pages />
+      </AppProvider>
+    </>
+  );
 };
 
 export default CustomerPortal;

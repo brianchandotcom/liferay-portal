@@ -17,7 +17,6 @@ package com.liferay.search.experiences.rest.internal.resource.v1_0;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -49,7 +48,8 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 	@Override
 	public SXPElement getSXPElement(Long sxpElementId) throws Exception {
 		return SXPElementUtil.toSXPElement(
-			_sxpElementService.getSXPElement(sxpElementId));
+			_sxpElementService.getSXPElement(sxpElementId),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	@Override
@@ -76,7 +76,8 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 			null,
 			document -> SXPElementUtil.toSXPElement(
 				_sxpElementService.getSXPElement(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Override
@@ -84,11 +85,15 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 		return SXPElementUtil.toSXPElement(
 			_sxpElementService.addSXPElement(
 				Collections.singletonMap(
-					LocaleUtil.US, sxpElement.getDescription()),
+					contextAcceptLanguage.getPreferredLocale(),
+					sxpElement.getDescription()),
 				String.valueOf(sxpElement.getElementDefinition()), false,
-				Collections.singletonMap(LocaleUtil.US, sxpElement.getTitle()),
+				Collections.singletonMap(
+					contextAcceptLanguage.getPreferredLocale(),
+					sxpElement.getTitle()),
 				0,
-				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+				ServiceContextFactory.getInstance(contextHttpServletRequest)),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	@Reference

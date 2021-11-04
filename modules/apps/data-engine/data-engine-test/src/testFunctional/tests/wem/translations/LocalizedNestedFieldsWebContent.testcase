@@ -305,6 +305,9 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
+		Translations.addLanguageManageTranslations(key_language = "pt-BR");
+
+
 		DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
 
 		PortletEntry.changeLocale(locale = "pt-BR");

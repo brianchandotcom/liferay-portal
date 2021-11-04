@@ -17,6 +17,21 @@ import {FieldSupport, PagesVisitor} from 'data-engine-js-components-web';
 import {getDataDefinitionField as getDataDefinitionFieldUtils} from './dataDefinition.es';
 import {normalizeDataDefinition, normalizeDataLayout} from './normalizers.es';
 
+const DEFAULT_DDM_FIELD_PROPERTIES = new Set([
+	'defaultValue',
+	'fieldType',
+	'indexable',
+	'indexType',
+	'label',
+	'localizable',
+	'name',
+	'readOnly',
+	'repeatable',
+	'required',
+	'showLabel',
+	'tip',
+]);
+
 export function getDDMFormField({
 	dataDefinition,
 	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
@@ -180,9 +195,9 @@ export function getDataDefinitionField({nestedFields = [], settingsContext}) {
 				fieldName = 'fieldType';
 			}
 
-			const updatableHash = _isCustomProperty(fieldName)
-				? dataDefinition.customProperties
-				: dataDefinition;
+			const updatableHash = DEFAULT_DDM_FIELD_PROPERTIES.has(fieldName)
+				? dataDefinition
+				: dataDefinition.customProperties;
 
 			if (localizable) {
 				updatableHash[fieldName] = localizedValue ?? {};
@@ -291,33 +306,13 @@ function _getDataDefinitionFieldPropertyValue(
 ) {
 	const {customProperties} = dataDefinitionField;
 
-	if (customProperties && _isCustomProperty(propertyName)) {
-		return customProperties[propertyName];
-	}
-
-	return dataDefinitionField[propertyName];
-}
-
-function _isCustomProperty(name) {
-	return ![
-		'defaultValue',
-		'fieldType',
-		'indexable',
-		'indexType',
-		'label',
-		'localizable',
-		'name',
-		'readOnly',
-		'repeatable',
-		'required',
-		'showLabel',
-		'tip',
-	].includes(name);
+	return customProperties && !DEFAULT_DDM_FIELD_PROPERTIES.has(propertyName)
+		? customProperties[propertyName]
+		: dataDefinitionField[propertyName];
 }
 
 // For test purpose only
 
 export default {
 	_fromDDMFormToDataDefinitionPropertyName,
-	_isCustomProperty,
 };

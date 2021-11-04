@@ -63,9 +63,4 @@ describe('dataConverter', () => {
 			nestedDataDefinitionFields: [],
 		});
 	});
-
-	it('is component custom property', () => {
-		expect(dataConverter._isCustomProperty('defaultValue')).toBe(false);
-		expect(dataConverter._isCustomProperty('otherProperty')).toBe(true);
-	});
 });

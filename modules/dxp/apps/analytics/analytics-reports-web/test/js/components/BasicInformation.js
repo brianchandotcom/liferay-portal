@@ -57,7 +57,7 @@ describe('BasicInformation', () => {
 
 		expect(getByText(testProps.canonicalURL)).toBeInTheDocument();
 
-		const formattedPublishDate = '2021 M09 20';
+		const formattedPublishDate = 'September 20, 2021';
 		expect(
 			getByText('published-on-' + formattedPublishDate)
 		).toBeInTheDocument();

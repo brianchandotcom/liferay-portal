@@ -13,7 +13,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, render, wait} from '@testing-library/react';
 import React from 'react';
 
-import Main from '../../../src/main/resources/META-INF/resources/js/components/main';
+import Main from '../../../src/main/resources/META-INF/resources/js/components/Main';
 import {ChartStateContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/ChartStateContext';
 import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 

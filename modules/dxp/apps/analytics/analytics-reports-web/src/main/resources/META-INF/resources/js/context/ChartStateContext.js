@@ -92,8 +92,8 @@ export function useDateTitle() {
 		ChartStateContext
 	);
 
-	const firstDate = new Date(timeRange.startDate);
-	const lastDate = new Date(timeRange.endDate);
+	const firstDate = new Date(timeRange.startDate.concat('T00:00:00'));
+	const lastDate = new Date(timeRange.endDate.concat('T00:00:00'));
 
 	const increment =
 		timeSpanKey === LAST_7_DAYS ? 7 : timeSpanKey === LAST_30_DAYS ? 30 : 0;

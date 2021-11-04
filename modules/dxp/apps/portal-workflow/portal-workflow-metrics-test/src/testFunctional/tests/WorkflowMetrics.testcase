@@ -2317,10 +2317,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
+		SearchAdministration.openSearchAdmin();
 
 		WorkflowMetrics.goToFieldMappingsTab();
 

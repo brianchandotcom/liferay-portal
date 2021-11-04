@@ -563,10 +563,7 @@ definition {
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
+		SearchAdministration.openSearchAdmin();
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
@@ -594,10 +591,7 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "stop-elasticsearch -Delasticsearch.bundle.number=1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
+		SearchAdministration.openSearchAdmin();
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
@@ -632,10 +626,7 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "stop-elasticsearch -Delasticsearch.bundle.number=2");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
+		SearchAdministration.openSearchAdmin();
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",

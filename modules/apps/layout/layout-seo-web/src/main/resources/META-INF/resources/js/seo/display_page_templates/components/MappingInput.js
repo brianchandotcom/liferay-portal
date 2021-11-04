@@ -19,7 +19,8 @@ import React, {useRef, useState} from 'react';
 
 import MappingPanel from './MappingPanel';
 
-const fieldTemplate = (key) => ` $\{${key}} `;
+const sanitizeLabel = (label) => label.replace(/}|[\r\n]+/gm, '');
+const fieldTemplate = (key, label) => ` $\{${key}:${sanitizeLabel(label)}} `;
 
 function MappingInput({
 	component,
@@ -47,10 +48,10 @@ function MappingInput({
 		addNewVar(field);
 	};
 
-	const addNewVar = ({key}) => {
+	const addNewVar = ({key, label}) => {
 		const selectionStart = inputEl.current.selectionStart;
 		const selectionEnd = inputEl.current.selectionEnd;
-		const fieldVariable = fieldTemplate(key);
+		const fieldVariable = fieldTemplate(key, label);
 
 		setValue(
 			(value) =>

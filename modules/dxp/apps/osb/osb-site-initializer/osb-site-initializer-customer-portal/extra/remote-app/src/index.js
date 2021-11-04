@@ -1,20 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {WebComponent} from '~/common/WebComponent';
+import { WebComponent } from '~/common/WebComponent';
 import ClayProvider from '~/common/providers/ClayProvider';
 
 import SharedStyle from '~/common/styles/global.scss';
 import CustomerPortal from '~/routes/customer-portal';
 import Onboarding from '~/routes/onboarding';
 
-const CustomerPortalApplication = ({liferaywebdavurl, route}) => {
+const CustomerPortalApplication = ({ liferaywebdavurl, route }) => {
 	const SearchParams = new URLSearchParams(window.location.search);
 
 	const routeEntry = SearchParams.get('customer_dev_application') || route;
 
-	if (routeEntry === 'portal') {
-		return <CustomerPortal />;
+	if (routeEntry === "portal") {
+		return <CustomerPortal assetsPath={liferaywebdavurl} />;
 	}
 
 	if (routeEntry === 'onboarding') {

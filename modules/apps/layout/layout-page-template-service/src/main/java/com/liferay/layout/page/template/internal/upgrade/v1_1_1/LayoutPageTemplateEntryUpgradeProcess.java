@@ -46,21 +46,23 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 					"delete from LayoutPageTemplateEntry where groupId <> ? " +
 						"and layoutPageTemplateCollectionId <> 0 and type_ = " +
 							"? and layoutPrototypeId = ?");
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				SQLTransformer.transform(
-					StringBundler.concat(
-						"select layoutPageTemplateEntryId, companyId, name, ",
-						"layoutPrototypeId from LayoutPageTemplateEntry where ",
-						"type_ = ",
-						LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
-						" and groupId in (select groupId from Group_ where ",
-						"site = [$FALSE$])")));
+			PreparedStatement selectPreparedStatement =
+				connection.prepareStatement(
+					SQLTransformer.transform(
+						StringBundler.concat(
+							"select layoutPageTemplateEntryId, companyId, ",
+							"name, layoutPrototypeId from ",
+							"LayoutPageTemplateEntry where type_ = ",
+							LayoutPageTemplateEntryTypeConstants.
+								TYPE_WIDGET_PAGE,
+							" and groupId in (select groupId from Group_ ",
+							"where site = [$FALSE$])")));
 			PreparedStatement updatePreparedStatement =
 				connection.prepareStatement(
 					"update LayoutPageTemplateEntry set groupId = ? , " +
 						"layoutPageTemplateCollectionId = 0, name = ? where " +
 							"layoutPageTemplateEntryId = ?");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
 				long layoutPageTemplateEntryId = resultSet.getLong(

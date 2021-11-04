@@ -407,7 +407,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 				searchContainer.setResults(
 					_layoutPageTemplateEntryService.
 						getLayoutPageTemplateEntries(
-							_themeDisplay.getScopeGroupId(),
+							_getGroupId(),
 							_layoutPageTemplateEntryItemSelectorCriterion.
 								getLayoutType(),
 							searchContainer.getStart(),
@@ -416,7 +416,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 				searchContainer.setTotal(
 					_layoutPageTemplateEntryService.
 						getLayoutPageTemplateEntriesCount(
-							_themeDisplay.getScopeGroupId(),
+							_getGroupId(),
 							_layoutPageTemplateEntryItemSelectorCriterion.
 								getLayoutType()));
 			}
@@ -424,7 +424,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 				searchContainer.setResults(
 					_layoutPageTemplateEntryService.
 						getLayoutPageTemplateEntries(
-							_themeDisplay.getScopeGroupId(), keywords,
+							_getGroupId(), keywords,
 							_layoutPageTemplateEntryItemSelectorCriterion.
 								getLayoutType(),
 							WorkflowConstants.STATUS_ANY,
@@ -434,7 +434,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 				searchContainer.setTotal(
 					_layoutPageTemplateEntryService.
 						getLayoutPageTemplateEntriesCount(
-							_themeDisplay.getScopeGroupId(), keywords,
+							_getGroupId(), keywords,
 							_layoutPageTemplateEntryItemSelectorCriterion.
 								getLayoutType(),
 							WorkflowConstants.STATUS_ANY));
@@ -458,6 +458,24 @@ public class LayoutPageTemplateEntryItemSelectorView
 			return true;
 		}
 
+		private long _getGroupId() {
+			if (_groupId != null) {
+				return _groupId;
+			}
+
+			long groupId =
+				_layoutPageTemplateEntryItemSelectorCriterion.getGroupId();
+
+			if (groupId <= 0) {
+				groupId = _themeDisplay.getScopeGroupId();
+			}
+
+			_groupId = groupId;
+
+			return _groupId;
+		}
+
+		private Long _groupId;
 		private final HttpServletRequest _httpServletRequest;
 		private final LayoutPageTemplateEntryItemSelectorCriterion
 			_layoutPageTemplateEntryItemSelectorCriterion;

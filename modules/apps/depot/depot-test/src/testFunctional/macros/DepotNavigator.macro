@@ -54,6 +54,35 @@ definition {
 		}
 	}
 
+	macro gotoDepotAdminViaBreadcrumb {
+		if (isSet(portletName)) {
+			AssertTextEquals(
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
+				value1 = "${portletName}");
+
+			Click(
+				key_breadcrumbName = "${depotName}",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
+
+			AssertTextEquals(
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
+				value1 = "${depotName}");
+
+			AssertElementNotPresent(locator1 = "ProductMenu#TOGGLE");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
+				value1 = "${depotName}");
+		}
+
+		Click(
+			key_breadcrumbName = "Asset Libraries",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
+
+		LexiconEntry.viewEntryName(rowEntry = "${depotName}");
+	}
+
 	macro gotoDepotPortlet {
 		if (isSet(listView)) {
 			var key_listEntry = "${depotName}";

@@ -492,6 +492,15 @@ definition {
 		IFrame.saveConfiguration();
 	}
 
+	macro editCoverImageCaption {
+		Type(
+			key_editor = "coverImageCaption",
+			locator1 = "AlloyEditor#EDITOR",
+			value1 = "${captionField}");
+
+		Button.clickPublish();
+	}
+
 	macro editDraftPG {
 		BlogsNavigator.gotoEditPG(entryTitle = "${entryTitle}");
 

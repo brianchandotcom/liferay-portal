@@ -530,7 +530,7 @@ definition {
 
 	}
 
-	@description = "This test filters application to Forms, Web Content, Bookmarks, and Contacts and views all filtered data in Review Data section"
+	@description = "This test filters application to Forms, Web Content and Contacts and views all filtered data in Review Data section"
 	@priority = "3"
 	test CanFilterAndViewData {
 		User.logoutAndLoginPG(
@@ -620,15 +620,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userPassword = "test");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Bookmarks");
-
-		Bookmark.addCP(
-			bookmarkDescription = "This is a test bookmark!",
-			bookmarkName = "Test Bookmark",
-			bookmarkURL = "https://www.liferay.com");
-
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
@@ -648,14 +639,6 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
 		GDPR.filterByScope(scope = "Regular Sites");
-
-		Click.clickNoWaitForVisible(
-			key_selectData = "Bookmarks",
-			locator1 = "DataErasure#REVIEW_DATA_SELECT");
-
-		AssertElementPresent(
-			key_rowEntry = "Test Bookmark",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
 		Click.clickNoWaitForVisible(
 			key_selectData = "Forms",

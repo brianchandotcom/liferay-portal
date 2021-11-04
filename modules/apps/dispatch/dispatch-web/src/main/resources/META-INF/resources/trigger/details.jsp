@@ -54,7 +54,7 @@ if (dispatchTrigger != null) {
 
 		<aui:form action="<%= editDispatchTriggerActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+			<aui:input name="redirect" type="hidden" value="<%= (dispatchTrigger == null) ? redirect : currentURL %>" />
 			<aui:input name="dispatchTriggerId" type="hidden" value="<%= String.valueOf(dispatchTriggerId) %>" />
 			<aui:input name="dispatchTaskExecutorType" type="hidden" value="<%= dispatchTaskExecutorType %>" />
 			<aui:input name="dispatchTaskSettings" type="hidden" />

@@ -1942,12 +1942,55 @@ definition {
 	}
 
 	@description = "LPS-119476: When there's a submit element with no ID, the matching element doesn't show as selectable"
-	@ignore = "true"
 	@priority = "3"
 	test SubmitElementWithNoID {
+		task ("Add a HTML fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		// TODO LPS-137499 SubmitElementWithNoID pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML");
+		}
 
+		task ("Edit the inline content of HTML fragment") {
+			var htmlSnippet = '''
+<input type="submit" />
+		''';
+
+			PageEditor.editFragmentHTML(
+				content = "${htmlSnippet}",
+				fragmentName = "HTML",
+				id = "element-html");
+			
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test and select clickable element") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Click on Select Clickable Element") {
+			Click(
+			key_value = "Select Clickable Element",
+			locator1 = "ABTest#SECONDARY_BUTTON");
+		}
+
+		task ("Assert the button is dosen't highlighted") {
+			AssertElementNotPresent(
+				key_idElement = "customId",
+				locator1 = "ABTest#TARGET_ELEMENT_EDIT",
+				value1 = "customId");
+		}
+	
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-97882: Validate if each A/B Test is related for one experience, if the user changes between the experience, the context about the A/B Test changes too"
@@ -2154,12 +2197,61 @@ definition {
 	}
 
 	@description = "LPS-119476: When the user enters the ID of a submit element in the ID Element box and hits enter, the matching element gets highlighted and selected"
-	@ignore = "true"
 	@priority = "3"
 	test TypeSubmitElementID {
+		task ("Add a HTML fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		// TODO LPS-137499 TypeSubmitElementID pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML");
+		}
 
+		task ("Edit the inline content of HTML fragment") {
+			var htmlSnippet = '''
+<input type="submit" id="customId" />
+		''';
+
+			PageEditor.editFragmentHTML(
+				content = "${htmlSnippet}",
+				fragmentName = "HTML",
+				id = "element-html");
+			
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test and select clickable element") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Write ID Element") {
+			ABTest.writeId(elementId = "customId");
+
+				KeyPress(
+					locator1 = "ABTest#ID_BOX",
+					value1 = "\ENTER");
+		}
+
+		task ("Assert the button is highlighted and selected.") {
+			AssertTextEquals(
+				locator1 = "ABTest#TARGET_LABEL",
+				value1 = "Target");
+			
+			AssertTextEquals(
+				key_id = "customId",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
+				value1 = "customId");
+		}
+	
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-119475: When a user clicks on the x icon of the selected element, the element gets unselected"

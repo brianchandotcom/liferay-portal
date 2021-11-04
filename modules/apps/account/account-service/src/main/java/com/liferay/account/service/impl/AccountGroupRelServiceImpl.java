@@ -14,10 +14,19 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.base.AccountGroupRelServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,4 +39,56 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class AccountGroupRelServiceImpl extends AccountGroupRelServiceBaseImpl {
+
+	@Override
+	public AccountGroupRel addAccountGroupRel(
+			long accountGroupId, String className, long classPK)
+		throws PortalException {
+
+		if (Objects.equals(AccountEntry.class.getName(), className)) {
+			_accountGroupModelResourcePermission.check(
+				getPermissionChecker(), accountGroupId,
+				AccountActionKeys.ASSIGN_ACCOUNTS);
+		}
+
+		return accountGroupRelLocalService.addAccountGroupRel(
+			accountGroupId, className, classPK);
+	}
+
+	@Override
+	public void addAccountGroupRels(
+			long accountGroupId, String className, long[] classPKs)
+		throws PortalException {
+
+		if (Objects.equals(AccountEntry.class.getName(), className)) {
+			_accountGroupModelResourcePermission.check(
+				getPermissionChecker(), accountGroupId,
+				AccountActionKeys.ASSIGN_ACCOUNTS);
+		}
+
+		accountGroupRelLocalService.addAccountGroupRels(
+			accountGroupId, className, classPKs);
+	}
+
+	@Override
+	public void deleteAccountGroupRels(
+			long accountGroupId, String className, long[] classPKs)
+		throws PortalException {
+
+		if (Objects.equals(AccountEntry.class.getName(), className)) {
+			_accountGroupModelResourcePermission.check(
+				getPermissionChecker(), accountGroupId,
+				AccountActionKeys.ASSIGN_ACCOUNTS);
+		}
+
+		accountGroupRelLocalService.deleteAccountGroupRels(
+			accountGroupId, className, classPKs);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountGroup)"
+	)
+	private ModelResourcePermission<AccountGroup>
+		_accountGroupModelResourcePermission;
+
 }

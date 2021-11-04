@@ -48,7 +48,11 @@
 		@include card;
 
 		height: 112px;
-		width: 468px;
+		width: 700px;
+
+		.subtitle {
+			padding-top: var(--spacer-1);
+		}
 
 		&:hover {
 			@include hover-shadow;
@@ -64,14 +68,14 @@
 			}
 
 			.card-text {
-				align-items: self-end;
 				display: flex;
 				flex-direction: column;
+				align-items: self-end;
 			}
 
 			.sm-mb {
-				margin-bottom: 0.125rem;
 				margin-top: 0.125rem;
+				margin-bottom: 0.125rem;
 			}
 		}
 	}

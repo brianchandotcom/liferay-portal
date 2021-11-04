@@ -5,39 +5,31 @@ import StatusTag from './StatusTag';
 
 const getCurrentEndDate = (currentEndDate) => {
 	const date = new Date(currentEndDate);
-	const month = date.toLocaleDateString('default', {month: 'short'});
+	const month = date.toLocaleDateString('default', { month: 'short' });
 	const day = date.getDate();
 	const year = date.getFullYear();
 
 	return `${month} ${day}, ${year}`;
-};
+}
 
-const ProjectCard = ({onClick, region, sla, small, status, title}) => {
+const ProjectCard = ({ onClick, region, sla, small, status, title }) => {
+
 	return (
-		<ClayCard
-			className={classNames('m-0', {
+		<ClayCard className={classNames('m-0',
+			{
 				'project-card': !small,
-				'project-card-sm': small,
-			})}
-			onClick={() => onClick()}
-		>
-			<ClayCard.Body
-				className={classNames(
-					'd-flex',
-					'h-100',
-					'justify-content-between',
-					{
-						'flex-column': !small,
-						'flex-row': small,
-					}
-				)}
-			>
-				<ClayCard.Description
-					className="text-neutral-3"
-					displayType="title"
-					tag={small ? 'h4' : 'h3'}
-				>
+				'project-card-sm': small
+			}
+		)} onClick={() => onClick()}>
+			<ClayCard.Body className={classNames("d-flex", "h-100", "justify-content-between", {
+				'flex-column': !small,
+				'flex-row': small
+			})}>
+				<ClayCard.Description className="text-neutral-3" displayType="title" tag={small ? "h4" : "h3"}>
 					{title}
+					{small && <div className="font-weight-lighter subtitle text-neutral-5 text-paragraph text-uppercase">
+						Digitals
+					</div>}
 				</ClayCard.Description>
 
 				<div
@@ -69,19 +61,13 @@ const ProjectCard = ({onClick, region, sla, small, status, title}) => {
 							</span>
 						</div>
 
-						<div className="text-neutral-5 text-paragraph-sm">
-							{region}
-						</div>
+						{small && <div className="text-neutral-5 text-paragraph-sm" >
+							Support Region <span className="font-weight-bold">{region}</span>
+						</div>}
 					</ClayCard.Description>
-					{!small && (
-						<BaseButton
-							appendIcon="angle-right"
-							borderless
-							className="p-0 text-brand-primary"
-						>
-							See details
-						</BaseButton>
-					)}
+					{!small && <BaseButton appendIcon="angle-right" borderless className="p-0 text-brand-primary">
+						See details
+					</BaseButton>}
 				</div>
 			</ClayCard.Body>
 		</ClayCard>

@@ -236,8 +236,17 @@ definition {
 
 		Pause(locator1 = "3000");
 
+		SelectFrame(value1 = "relative-top");
+
 		if (isSet(captionField)) {
 			AssertElementPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION");
+
+			if (!("${captionField}" == "true")) {
+				Type(
+					key_editor = "coverImageCaption",
+					locator1 = "AlloyEditor#EDITOR",
+					value1 = "${captionField}");
+			}
 		}
 
 		BlogsEntry.addEntryContent(

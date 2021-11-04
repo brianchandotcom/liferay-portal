@@ -57,6 +57,28 @@ definition {
 			noApplication = "true");
 	}
 
+	@description = "This test covers LPS-133904. It asserts that users can navigate via the breadcrumb."
+	@priority = "3"
+	test CanNavigateViaBreadcrumb {
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoDepotAdminViaBreadcrumb(
+			depotName = "Test Depot Name",
+			portletName = "Web Content");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoDepotAdminViaBreadcrumb(
+			depotName = "Test Depot Name",
+			portletName = "Documents and Media");
+
+		DepotNavigator.openDepotTranslationProcesses(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoDepotAdminViaBreadcrumb(
+			depotName = "Test Depot Name",
+			portletName = "Translation Processes");
+	}
+
 	@description = "This ensures that disabled DM and WC assets from a depot do not appear when using the item selector on a connected site."
 	@priority = "5"
 	@refactordone

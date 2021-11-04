@@ -811,21 +811,23 @@ definition {
 	test SelectDocumentFromOtherScopeDynamically {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		for (var i : list "1,2") {
+		for (var scope : list "Depot,Site") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_${i}.doc",
-				groupName = "Test Site Name",
+				dmDocumentTitle = "DM Doc ${scope} Title",
+				groupName = "Test ${scope} Name",
 				mimeType = "application/msword",
-				sourceFileName = "Document_${i}.doc");
+				sourceFileName = "Document_1.doc");
 		}
 
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Image Title",
-			groupName = "Test Depot Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpeg");
+		for (var scope : list "Depot,Site") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Image Description",
+				dmDocumentTitle = "DM Image ${scope} Title",
+				groupName = "Test ${scope} Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpeg");
+		}
 
 		JSONAssetlist.addDynamicAssetListEntry(
 			groupName = "Test Depot Name",
@@ -844,23 +846,25 @@ definition {
 		AssetListsAdmin.editAssetList(assetListTitle = "Depot Dynamic Asset List");
 
 		AssetListsAdmin.addKeywordsFilter(
-			keyWords = "doc",
+			keyWords = "Doc",
 			queryAndOperator = "Any",
 			queryContains = "Does Not Contain");
 
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+		for (var assetTitle : list "DM Image Depot Title,DM Image Site Title") {
+			DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
-		AssetListsAdmin.viewContent(
-			assetListTitle = "Depot Dynamic Asset List",
-			assetTitle = "DM Image Title",
-			assetType = "Document");
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Depot Dynamic Asset List",
+				assetTitle = "${assetTitle}",
+				assetType = "Document");
+		}
 
-		for (var i : list "1,2") {
+		for (var assetTitle : list "DM Doc Depot Title,DM Doc Site Title") {
 			DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 			AssetListsAdmin.viewNoContent(
 				assetListTitle = "Depot Dynamic Asset List",
-				assetTitle = "Document_${i}.doc",
+				assetTitle = "${assetTitle}",
 				assetType = "Document");
 		}
 	}

@@ -15,8 +15,9 @@
 package com.liferay.site.initializer.extender.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.model.AssetVocabularyConstants;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
@@ -159,6 +160,48 @@ public class BundleSiteInitializerTest {
 		bundle.uninstall();
 	}
 
+	private void _assertAssetCategories(Group group) throws Exception {
+		Group globalGroup = _groupLocalService.getCompanyGroup(
+			group.getCompanyId());
+
+		AssetCategory companyAssetCategory1 =
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					globalGroup.getGroupId(), "TESTCAT0001");
+
+		Assert.assertNotNull(companyAssetCategory1);
+		Assert.assertEquals(
+			"Test Asset Category 1", companyAssetCategory1.getName());
+
+		AssetCategory companyAssetCategory2 =
+			_assetCategoryLocalService.fetchCategory(
+				globalGroup.getGroupId(), companyAssetCategory1.getCategoryId(),
+				"Test Asset Category 2",
+				companyAssetCategory1.getVocabularyId());
+
+		Assert.assertNotNull(companyAssetCategory2);
+		Assert.assertEquals(
+			"TESTCAT0002", companyAssetCategory2.getExternalReferenceCode());
+
+		AssetCategory groupAssetCategory1 =
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					group.getGroupId(), "TESTCAT0003");
+
+		Assert.assertNotNull(groupAssetCategory1);
+		Assert.assertEquals(
+			"Test Asset Category 3", groupAssetCategory1.getName());
+
+		AssetCategory groupAssetCategory2 =
+			_assetCategoryLocalService.fetchCategory(
+				group.getGroupId(), groupAssetCategory1.getCategoryId(),
+				"Test Asset Category 4", groupAssetCategory1.getVocabularyId());
+
+		Assert.assertNotNull(groupAssetCategory2);
+		Assert.assertEquals(
+			"TESTCAT0004", groupAssetCategory2.getExternalReferenceCode());
+	}
+
 	private void _assertAssetVocabularies(Group group) throws Exception {
 		Group globalGroup = _groupLocalService.getCompanyGroup(
 			group.getCompanyId());
@@ -178,6 +221,8 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(groupVocabulary);
 		Assert.assertEquals(
 			"TESTVOC0002", groupVocabulary.getExternalReferenceCode());
+
+		_assertAssetCategories(group);
 	}
 
 	private void _assertCommerceCatalogs(Group group) throws Exception {
@@ -360,6 +405,9 @@ public class BundleSiteInitializerTest {
 			return bundleContext.installBundle(location, inputStream);
 		}
 	}
+
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

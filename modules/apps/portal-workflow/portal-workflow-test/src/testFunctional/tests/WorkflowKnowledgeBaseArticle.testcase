@@ -14,12 +14,16 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+		Navigator.gotoNavTab(navTab = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Knowledge Base Article");
 	}
 
 	tearDown {
@@ -104,8 +108,24 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSaveAsDraft {
+		Navigator.openURL();
 
-		// TODO LRQA-69924 CanSaveAsDraft pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Knowledge Base");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			saveAsDraft = "true");
+
+		Navigator.gotoBack();
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbStatus = "Draft");
 
 	}
 

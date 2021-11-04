@@ -113,6 +113,17 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewPortalSmokeArchive7413 {
+		property data.archive.type = "data-archive-portal";
+		property portal.upgrades = "true";
+		property portal.version = "7.4.13";
+		property test.assert.warning.exceptions = "true";
+		property test.run.environment = "EE";
+
+		Upgrade.viewUpgrade();
+	}
+
+	@priority = "5"
 	test ViewPortalSmokeArchive70106 {
 		property data.archive.type = "data-archive-portal";
 		property portal.upgrades = "true";
@@ -221,6 +232,20 @@ definition {
 		property portal.upgrades = "true";
 		property portal.upstream = "quarantine";
 		property portal.version = "7.3.10";
+		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.run.environment = "EE";
+
+		Upgrade.viewUpgrade();
+	}
+
+	@priority = "5"
+	test ViewPortalSmokeArchiveAutoUpgrade7413 {
+		property custom.properties = "upgrade.database.auto.run=true";
+		property data.archive.type = "data-archive-portal";
+		property portal.upgrades = "true";
+		property portal.upstream = "quarantine";
+		property portal.version = "7.4.13";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.run.environment = "EE";

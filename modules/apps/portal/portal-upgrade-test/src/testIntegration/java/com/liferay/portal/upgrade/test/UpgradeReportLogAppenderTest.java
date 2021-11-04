@@ -122,13 +122,13 @@ public class UpgradeReportLogAppenderTest {
 			int initialCount = GetterUtil.getInteger(matcher.group(2), -1);
 			int finalCount = GetterUtil.getInteger(matcher.group(3), -1);
 
-			if (tableName.equals(table1Name)) {
+			if (StringUtil.equalsIgnoreCase(tableName, table1Name)) {
 				table1Exists = true;
 
 				Assert.assertEquals(0, initialCount);
 				Assert.assertEquals(1, finalCount);
 			}
-			else if (tableName.equals(table2Name)) {
+			else if (StringUtil.equalsIgnoreCase(tableName, table2Name)) {
 				table2Exists = true;
 
 				Assert.assertEquals(1, initialCount);

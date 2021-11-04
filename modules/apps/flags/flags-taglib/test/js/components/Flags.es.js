@@ -42,6 +42,7 @@ function _renderFlagsComponent({
 	reasons = {value: 'text', value2: 'text2'},
 	signedIn = false,
 	uri = '//',
+	viewMode = true,
 } = {}) {
 	return render(
 		<Flags
@@ -53,6 +54,7 @@ function _renderFlagsComponent({
 			reasons={reasons}
 			signedIn={signedIn}
 			uri={uri}
+			viewMode={viewMode}
 		/>,
 		{
 			baseElement: document.body,
@@ -74,6 +76,12 @@ describe('Flags', () => {
 		const {getByText} = _renderFlagsComponent({onlyIcon: true});
 
 		expect(getByText('report')).toHaveClass('sr-only');
+	});
+
+	it('disables interaction when the view mode is not active', () => {
+		const {getByRole} = _renderFlagsComponent({viewMode: false});
+
+		expect(getByRole('button')).toBeDisabled();
 	});
 
 	it('submits a report successfully with baseData', async () => {

@@ -1079,28 +1079,26 @@ definition {
 	test CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness {
 		property test.name.skip.portal.instance = "2BAccount#CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness";
 
-		task ("Login as Super User to create Person accounts and assign Account Admin to those accounts") {
+		task ("Login as Super User to create a Person type account and assign Account Admin to it") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "test test");
 
-			for (var accountNumber : list "1,2") {
-				JSONAccountEntry.addAccountEntry(
-					accountEntryName = "Person ${accountNumber}",
-					accountEntryType = "Person");
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Person Account",
+				accountEntryType = "Person");
 
-				Accounts.openAccountsAdmin();
-
-				Accounts.gotoEdit(accountName = "Person ${accountNumber}");
-
-				Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn");
-			}
-		}
-
-		task ("View that all accounts were created") {
 			Accounts.openAccountsAdmin();
 
-			for (var accounts : list "Account Name,Person 1,Person 2") {
+			Accounts.gotoEdit(accountName = "Person Account");
+
+			Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn");
+		}
+
+		task ("View that all accounts are listed") {
+			Accounts.openAccountsAdmin();
+
+			for (var accounts : list "Account Name,Person Account") {
 				LexiconEntry.viewEntryName(rowEntry = "${accounts}");
 			}
 		}
@@ -1113,7 +1111,7 @@ definition {
 			Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Business");
 		}
 
-		task ("Log back in as Account Administrator and assert that only the Business account is listed and Person accounts are not") {
+		task ("Log back in as Account Administrator and assert that only the Business account is listed and the Person account is not") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
@@ -1124,11 +1122,9 @@ definition {
 				key_rowEntry = "Account Name",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
-			for (var accountNumber : list "1,2") {
-				AssertElementNotPresent(
-					key_rowEntry = "Person ${accountNumber}",
-					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-			}
+			AssertElementNotPresent(
+				key_rowEntry = "Person Account",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 		}
 	}
 
@@ -1137,28 +1133,26 @@ definition {
 	test CanOnlyViewPersonAccountsWhenAllowedAccountTypeIsPerson {
 		property test.name.skip.portal.instance = "2BAccount#CanOnlyViewPersonAccountsWhenAllowedAccountTypeIsPerson";
 
-		task ("Login as Super User to create Person accounts and assign Account Admin to those accounts") {
+		task ("Login as Super User to create a Person type account and assign Account Admin to it") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "test test");
 
-			for (var accountNumber : list "1,2") {
-				JSONAccountEntry.addAccountEntry(
-					accountEntryName = "Person ${accountNumber}",
-					accountEntryType = "Person");
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Person Account",
+				accountEntryType = "Person");
 
-				Accounts.openAccountsAdmin();
-
-				Accounts.gotoEdit(accountName = "Person ${accountNumber}");
-
-				Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn");
-			}
-		}
-
-		task ("View that all accounts were created") {
 			Accounts.openAccountsAdmin();
 
-			for (var accounts : list "Account Name,Person 1,Person 2") {
+			Accounts.gotoEdit(accountName = "Person Account");
+
+			Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn");
+		}
+
+		task ("View that all accounts are listed") {
+			Accounts.openAccountsAdmin();
+
+			for (var accounts : list "Account Name,Person Account") {
 				LexiconEntry.viewEntryName(rowEntry = "${accounts}");
 			}
 		}
@@ -1171,7 +1165,7 @@ definition {
 			Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Person");
 		}
 
-		task ("Log back in as Account Administrator and assert that the Business account is not visible and only Person accounts are listed") {
+		task ("Log back in as Account Administrator and assert that the Business account is not visible and only Person Account is listed") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
@@ -1182,11 +1176,9 @@ definition {
 				key_rowEntry = "Account Name",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
-			for (var accountNumber : list "1,2") {
-				AssertElementPresent(
-					key_rowEntry = "Person ${accountNumber}",
-					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-			}
+			AssertElementPresent(
+				key_rowEntry = "Person Account",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 		}
 	}
 

@@ -35,7 +35,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -113,15 +112,6 @@ public class DDMFormBuilderContextFactoryHelper {
 			"pages", new ArrayList<>()
 		).put(
 			"rules", new ArrayList<>()
-		).put(
-			"successPage",
-			HashMapBuilder.<String, Object>put(
-				"body", StringPool.BLANK
-			).put(
-				"enabled", Boolean.FALSE
-			).put(
-				"title", StringPool.BLANK
-			).build()
 		).put(
 			"sidebarPanels", _getSidebarPanels()
 		).build();

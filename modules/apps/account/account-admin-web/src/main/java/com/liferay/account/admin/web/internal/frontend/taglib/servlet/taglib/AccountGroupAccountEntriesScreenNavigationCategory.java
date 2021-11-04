@@ -16,11 +16,17 @@ package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.account.admin.web.internal.display.AccountGroupDisplay;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountGroupPermission;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
 import java.io.IOException;
 
@@ -75,7 +81,22 @@ public class AccountGroupAccountEntriesScreenNavigationCategory
 			return false;
 		}
 
-		return true;
+		try {
+			if (AccountGroupPermission.contains(
+					PermissionCheckerFactoryUtil.create(user),
+					accountGroupDisplay.getAccountGroupId(),
+					AccountActionKeys.VIEW_ACCOUNTS)) {
+
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return false;
 	}
 
 	@Override
@@ -91,5 +112,8 @@ public class AccountGroupAccountEntriesScreenNavigationCategory
 
 	@Reference
 	protected JSPRenderer jspRenderer;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountGroupAccountEntriesScreenNavigationCategory.class);
 
 }

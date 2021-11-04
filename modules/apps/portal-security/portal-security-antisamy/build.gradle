@@ -101,22 +101,6 @@ private String _filterDefaultSanitizer(String line) {
 	}
 	else if (line.contains('<tag-rules>')) {
 		line = """\
-			|	<allowed-empty-tags>
-			|		<literal-list>
-			|			<literal value="br"/>
-			|			<literal value="hr"/>
-			|			<literal value="a"/>
-			|			<literal value="img"/>
-			|			<literal value="param"/>
-			|			<literal value="input"/>
-			|			<literal value="textarea"/>
-			|			<literal value="basefont"/>
-			|			<literal value="col"/>
-			|			<literal value="div"/>
-			|			<literal value="source"/>
-			|		</literal-list>
-			|	</allowed-empty-tags>
-			|
 			|${line}
 			|		<tag name="article" action="validate" />
 			|		<tag name="aside" action="validate" />

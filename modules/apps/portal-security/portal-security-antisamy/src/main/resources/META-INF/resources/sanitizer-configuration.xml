@@ -487,22 +487,6 @@ http://www.w3.org/TR/html401/struct/global.html
 		<tag>grin</tag>
 	</tags-to-encode>
 
-	<allowed-empty-tags>
-		<literal-list>
-			<literal value="br"/>
-			<literal value="hr"/>
-			<literal value="a"/>
-			<literal value="img"/>
-			<literal value="param"/>
-			<literal value="input"/>
-			<literal value="textarea"/>
-			<literal value="basefont"/>
-			<literal value="col"/>
-			<literal value="div"/>
-			<literal value="source"/>
-		</literal-list>
-	</allowed-empty-tags>
-
 	<tag-rules>
 		<tag name="article" action="validate" />
 		<tag name="aside" action="validate" />
@@ -2523,5 +2507,21 @@ http://www.w3.org/TR/html401/struct/global.html
 		</property>
 		<!--  end manual properties -->
 	</css-rules>
+
+	<allowed-empty-tags>
+		<literal-list>
+			<literal value="br"/>
+			<literal value="hr"/>
+			<literal value="a"/>
+			<literal value="img"/>
+			<literal value="param"/>
+			<literal value="input"/>
+			<literal value="textarea"/>
+			<literal value="basefont"/>
+			<literal value="col"/>
+			<literal value="div"/>
+			<literal value="source"/>
+		</literal-list>
+	</allowed-empty-tags>
 
 </anti-samy-rules>

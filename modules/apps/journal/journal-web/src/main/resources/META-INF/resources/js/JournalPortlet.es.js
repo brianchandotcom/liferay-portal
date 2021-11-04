@@ -187,15 +187,24 @@ export default function _JournalPortlet({
 	const handleResetValuesButtonClick = (event) => {
 		publishingLock.lock();
 
-		form.setAttribute('action', event.currentTarget.dataset.url);
+		if (
+			confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-reset-the-default-values'
+				)
+			)
+		) {
+			if (editingDefaultValues) {
+				actionInput.value = articleId
+					? '/journal/update_data_engine_default_values'
+					: '/journal/add_data_engine_default_values';
+			}
 
-		if (editingDefaultValues) {
-			actionInput.value = articleId
-				? '/journal/update_data_engine_default_values'
-				: '/journal/add_data_engine_default_values';
+			submitForm(document.hrefFm, event.currentTarget.dataset.url);
 		}
-
-		form.submit();
+		else {
+			publishingLock.unlock();
+		}
 	};
 
 	const showAlert = (message) => {

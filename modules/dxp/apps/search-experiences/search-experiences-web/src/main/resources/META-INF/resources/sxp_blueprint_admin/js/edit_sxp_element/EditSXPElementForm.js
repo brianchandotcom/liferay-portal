@@ -48,10 +48,11 @@ function EditSXPElementForm({
 	initialTitle = {},
 	predefinedVariables = [],
 	readOnly,
-	sxpElementId,
 	type,
 }) {
-	const {defaultLocale, namespace, redirectURL} = useContext(ThemeContext);
+	const {defaultLocale, namespace, redirectURL, sxpElementId} = useContext(
+		ThemeContext
+	);
 
 	const initialConfiguration = JSON.parse(initialConfigurationString);
 

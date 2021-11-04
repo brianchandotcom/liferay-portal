@@ -431,17 +431,20 @@ export default function ({
 			{
 				label: 'KeywordQueryContributor',
 				setProperty: setKeywordQuery,
-				url: `/o/search-experiences-rest/v1.0/keyword-query-contributors`,
+				url:
+					'/o/search-experiences-rest/v1.0/keyword-query-contributors',
 			},
 			{
 				label: 'ModelPrefilterContributor',
 				setProperty: setModelPrefilter,
-				url: `/o/search-experiences-rest/v1.0/model-prefilter-contributors`,
+				url:
+					'/o/search-experiences-rest/v1.0/model-prefilter-contributors',
 			},
 			{
 				label: 'QueryPrefilterContributor',
 				setProperty: setQueryPrefilter,
-				url: `/o/search-experiences-rest/v1.0/query-prefilter-contributors`,
+				url:
+					'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
 			},
 		].forEach(({label, setProperty, url}) =>
 			fetchData(

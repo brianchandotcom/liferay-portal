@@ -52,7 +52,6 @@ const TABS = {
 /* eslint-enable sort-keys */
 
 function EditSXPBlueprintForm({
-	sxpBlueprintId,
 	entityJSON,
 	indexFields,
 	initialConfigurationString = '{}',
@@ -61,7 +60,7 @@ function EditSXPBlueprintForm({
 	initialTitle = {},
 	querySXPElements = [],
 }) {
-	const {namespace, redirectURL} = useContext(ThemeContext);
+	const {namespace, redirectURL, sxpBlueprintId} = useContext(ThemeContext);
 
 	const [errors, setErrors] = useState([]);
 	const [previewInfo, setPreviewInfo] = useState(() => ({

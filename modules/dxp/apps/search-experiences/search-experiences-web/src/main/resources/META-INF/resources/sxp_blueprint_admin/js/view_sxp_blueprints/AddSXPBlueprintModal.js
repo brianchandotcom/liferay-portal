@@ -432,19 +432,22 @@ export function AddSXPBlueprintModal({
 		[
 			{
 				setProperty: setSearchableTypes,
-				url: `/o/search-experiences-rest/v1.0/searchable-asset-names`,
+				url: '/o/search-experiences-rest/v1.0/searchable-asset-names',
 			},
 			{
 				setProperty: setKeywordQuery,
-				url: `/o/search-experiences-rest/v1.0/keyword-query-contributors`,
+				url:
+					'/o/search-experiences-rest/v1.0/keyword-query-contributors',
 			},
 			{
 				setProperty: setModelPrefilter,
-				url: `/o/search-experiences-rest/v1.0/model-prefilter-contributors`,
+				url:
+					'/o/search-experiences-rest/v1.0/model-prefilter-contributors',
 			},
 			{
 				setProperty: setQueryPrefilter,
-				url: `/o/search-experiences-rest/v1.0/query-prefilter-contributors`,
+				url:
+					'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
 			},
 		].forEach(({setProperty, url}) =>
 			fetchData(

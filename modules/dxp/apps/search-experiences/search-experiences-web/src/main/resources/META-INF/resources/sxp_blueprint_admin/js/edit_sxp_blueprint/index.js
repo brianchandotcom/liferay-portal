@@ -19,14 +19,9 @@ import EditSXPBlueprintForm from './EditSXPBlueprintForm';
 export default function ({context}) {
 	const [resource, setResource] = useState(null);
 
-	const url = new URL(window.location.href);
-	const sxpBlueprintId = url.searchParams.get(
-		`${context.namespace}sxpBlueprintId`
-	);
-
 	useEffect(() => {
 		fetchData(
-			`/o/search-experiences-rest/v1.0/sxp-blueprints/${sxpBlueprintId}`,
+			`/o/search-experiences-rest/v1.0/sxp-blueprints/${context.sxpBlueprintId}`,
 			{method: 'GET'},
 			(responseContent) => setResource(responseContent),
 			() => setResource({})
@@ -53,7 +48,6 @@ export default function ({context}) {
 						}
 						initialTitle={resource.initialTitle}
 						querySXPElements={resource.querySXPElements}
-						sxpBlueprintId={sxpBlueprintId}
 					/>
 				</ErrorBoundary>
 			</div>

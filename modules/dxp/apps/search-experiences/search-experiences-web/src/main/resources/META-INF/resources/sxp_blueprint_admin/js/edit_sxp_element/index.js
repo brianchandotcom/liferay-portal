@@ -19,14 +19,9 @@ import EditSXPElementForm from './EditSXPElementForm';
 export default function ({context}) {
 	const [resource, setResource] = useState(null);
 
-	const url = new URL(window.location.href);
-	const sxpElementId = url.searchParams.get(
-		`${context.namespace}sxpElementId`
-	);
-
 	useEffect(() => {
 		fetchData(
-			`/o/search-experiences-rest/v1.0/sxp-elements/${sxpElementId}`,
+			`/o/search-experiences-rest/v1.0/sxp-elements/${context.sxpElementId}`,
 			{
 				method: 'GET',
 			},
@@ -51,7 +46,6 @@ export default function ({context}) {
 						initialTitle={resource.initialTitle}
 						predefinedVariables={resource.predefinedVariables}
 						readOnly={resource.readOnly}
-						sxpElementId={sxpElementId}
 						type={resource.type}
 					/>
 				</ErrorBoundary>

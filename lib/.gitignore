@@ -83,7 +83,6 @@
 /development/velocity-tools.jar
 /development/websocket-api.jar
 /development/xmlresolver.jar
-/portal/abdera.jar
 /portal/activation.jar
 /portal/ant.jar
 /portal/antlr2.jar
@@ -96,8 +95,6 @@
 /portal/asm.jar
 /portal/aspectj-rt.jar
 /portal/aspectj-weaver.jar
-/portal/axiom-api.jar
-/portal/axiom-impl.jar
 /portal/axis-ant.jar
 /portal/axis.jar
 /portal/bcmail.jar

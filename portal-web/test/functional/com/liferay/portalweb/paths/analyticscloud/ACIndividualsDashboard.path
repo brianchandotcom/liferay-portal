@@ -88,6 +88,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INDIVIDUALS_EVENTS_DATE</td>
+	<td>//div[contains(@class,'activities-date')]//h4</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIVE_INDIVIDUAL_CHART</td>
 	<td>//*[contains(@class,'recharts-layer recharts-bar-rectangle')]/*[contains(@fill-opacity,'1')]</td>
 	<td></td>

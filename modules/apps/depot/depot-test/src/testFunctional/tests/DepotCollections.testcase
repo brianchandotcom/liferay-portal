@@ -1076,46 +1076,4 @@ definition {
 		}
 	}
 
-	@description = "This ensures that Collections can be set in a depot."
-	@priority = "5"
-	@refactorneeded
-	test Smoke {
-		property portal.acceptance = "true";
-		property testray.component.names = "Asset Lists";
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Collections");
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
-			value1 = "No Collections yet.");
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO_TAGLIB_DESCRIPTION",
-			value1 = "Fortunately, it is very easy to add new ones.");
-
-		LexiconEntry.gotoAdd();
-
-		MenuItem.viewPresent(menuItem = "Manual Collection");
-
-		MenuItem.viewPresent(menuItem = "Dynamic Collection");
-
-		Refresh();
-
-		Click(locator1 = "Message#EMPTY_INFO_TAGLIB");
-
-		Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
-
-		AssertElementPresent(
-			key_menuItem = "Manual Collection",
-			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
-
-		AssertElementPresent(
-			key_menuItem = "Dynamic Collection",
-			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
-	}
-
 }

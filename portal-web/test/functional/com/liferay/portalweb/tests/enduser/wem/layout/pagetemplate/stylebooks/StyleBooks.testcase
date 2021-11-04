@@ -70,36 +70,6 @@ definition {
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 		}
 
-		task ("Assert the widget page is shown in preview iframe") {
-			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
-
-			AssertVisible(
-				key_pageName = "Test Widget Page Name",
-				locator1 = "Home#PAGE");
-
-			Portlet.viewTitle(portletName = "Blogs");
-		}
-
-		task ("Assert not allow interact with preview page") {
-			AssertElementPresent(locator1 = "StyleBookEditor#CURSOR_NOT_ALLOWED");
-
-			SelectFrameTop();
-		}
-
-		task ("Navigate to content page via page preview info bar") {
-			AssertTextEquals(
-				locator1 = "StyleBookEditor#PAGE_PREVIEW_INFO_BAR_TOGGLE",
-				value1 = "Test Widget Page Name");
-
-			StyleBooks.goToPageViaPagePreviewInfoBar(pageName = "Test Content Page Name");
-
-			Click(locator1 = "StyleBookEditor#PAGE_PREVIEW_INFO_BAR_TOGGLE");
-
-			AssertTextEquals(
-				locator1 = "StyleBookEditor#PAGE_PREVIEW_INFO_BAR_TOGGLE",
-				value1 = "Test Content Page Name");
-		}
-
 		task ("Assert the content page is shown in preview iframe") {
 			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
 
@@ -113,6 +83,36 @@ definition {
 				key_id = "element-text",
 				key_type = "text",
 				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT");
+		}
+
+		task ("Assert not allow interact with preview page") {
+			AssertElementPresent(locator1 = "StyleBookEditor#CURSOR_NOT_ALLOWED");
+
+			SelectFrameTop();
+		}
+
+		task ("Navigate to widget page via page preview info bar") {
+			AssertTextEquals(
+				locator1 = "StyleBookEditor#PAGE_PREVIEW_INFO_BAR_TOGGLE",
+				value1 = "Test Content Page Name");
+
+			StyleBooks.goToPageViaPagePreviewInfoBar(pageName = "Test Widget Page Name");
+
+			Click(locator1 = "StyleBookEditor#PAGE_PREVIEW_INFO_BAR_TOGGLE");
+
+			AssertTextEquals(
+				locator1 = "StyleBookEditor#PAGE_PREVIEW_INFO_BAR_TOGGLE",
+				value1 = "Test Widget Page Name");
+		}
+
+		task ("Assert the widget page is shown in preview iframe") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertVisible(
+				key_pageName = "Test Widget Page Name",
+				locator1 = "Home#PAGE");
+
+			Portlet.viewTitle(portletName = "Blogs");
 		}
 
 		task ("Assert not allow interact with preview page") {

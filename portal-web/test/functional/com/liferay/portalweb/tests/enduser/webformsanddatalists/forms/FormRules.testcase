@@ -563,6 +563,71 @@ definition {
 		FormRules.viewBrokenRule(ruleNumber = "1");
 	}
 
+	@description = "LPS-89260 - Verify that rules are working for multiple selection fields"
+	@priority = "4"
+	test CanUseRuleOnMultipleSelectionField {
+		property test.name.skip.portal.instance = "FormRules#CanUseRuleOnMultipleSelectionField";
+
+		FormsAdmin.addForm();
+
+		Form.editName();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		FormFields.editOptionsRow(
+			optionName = "student",
+			optionValue = "student",
+			rowNumber = "1");
+
+		FormFields.editOptionsRow(
+			optionName = "professional",
+			optionValue = "professional",
+			rowNumber = "2");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "student ID");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Multiple Selection",
+			conditionOperator = "Is Equal To",
+			conditionRowNumber = "1",
+			conditionValueField = "student",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Enable",
+			actionRowNumber = "1",
+			actionTarget = "student ID");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.openPublishURL();
+
+		FormFields.enableMultipleSelectionCheckbox(
+			fieldName = "Multiple",
+			optionValue = "student",
+			rowNumber = "1");
+
+		FormFields.viewFieldEnabled(fieldName = "Numeric");
+	}
+
 	@description = "Verify that the Condition label of a Rule changes when the corresponding Field's Label is edited"
 	@priority = "5"
 	test ConditionIsUpdatedWhenFieldLabelIsEdited {

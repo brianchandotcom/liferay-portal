@@ -14,9 +14,15 @@
 
 package com.liferay.account.service.http;
 
+import com.liferay.account.service.AccountGroupRelServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.account.service.AccountGroupRelServiceUtil</code> service
+ * <code>AccountGroupRelServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,58 @@ package com.liferay.account.service.http;
  */
 @Deprecated
 public class AccountGroupRelServiceSoap {
+
+	public static com.liferay.account.model.AccountGroupRelSoap
+			addAccountGroupRel(
+				long accountGroupId, String className, long classPK)
+		throws RemoteException {
+
+		try {
+			com.liferay.account.model.AccountGroupRel returnValue =
+				AccountGroupRelServiceUtil.addAccountGroupRel(
+					accountGroupId, className, classPK);
+
+			return com.liferay.account.model.AccountGroupRelSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void addAccountGroupRels(
+			long accountGroupId, String className, long[] classPKs)
+		throws RemoteException {
+
+		try {
+			AccountGroupRelServiceUtil.addAccountGroupRels(
+				accountGroupId, className, classPKs);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteAccountGroupRels(
+			long accountGroupId, String className, long[] classPKs)
+		throws RemoteException {
+
+		try {
+			AccountGroupRelServiceUtil.deleteAccountGroupRels(
+				accountGroupId, className, classPKs);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AccountGroupRelServiceSoap.class);
+
 }

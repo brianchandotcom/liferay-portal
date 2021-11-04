@@ -33,12 +33,9 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			KBArticle.tearDownCP();
 
 			Workflow.tearDownPortalWorkflow();
-
-			Workflow.tearDownSiteWorkflow();
-
-			KBArticle.tearDownCP();
 		}
 	}
 
@@ -46,9 +43,22 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ArticleStatusIsPendingAfterSubmitForPublication {
+		Navigator.openURL();
 
-		// TODO LRQA-69926 ArticleStatusIsPendingAfterSubmitForPublication pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Knowledge Base");
 
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbWorkflowAction = "Submit for Publication");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbStatus = "Pending");
 	}
 
 	@description = "Verify that the user can Approve a Basic Article"

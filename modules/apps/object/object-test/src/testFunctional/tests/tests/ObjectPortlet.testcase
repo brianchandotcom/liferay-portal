@@ -913,13 +913,58 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to add an Object entry without the Add Object Entry permission"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CannotAddObjectEntryWithoutAddPermission {
 		property portal.acceptance = "true";
 
-		// TODO LPS-140526 CannotAddObjectEntryWithoutAddPermission pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACTION_CHECKBOX",
+			permissionDefinitionValue = "",
+			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
+			permissionNavigationValue = "Custom Objects",
+			roleTitle = "Regular Role",
+			roleType = "Regular");
+
+		Navigator.openURL();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.assertPlusButtonIsNotPresent();
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to delete an Object entry without the Delete permission"

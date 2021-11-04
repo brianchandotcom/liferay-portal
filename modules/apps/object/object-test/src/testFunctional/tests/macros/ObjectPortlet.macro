@@ -114,6 +114,10 @@ definition {
 		AssertElementPresent(locator1 = "ObjectPortlet#CUSTOM_OBJECT_ON_CONTROL_PANEL");
 	}
 
+	macro assertPlusButtonIsNotPresent {
+		AssertElementNotPresent(locator1 = "Button#PLUS");
+	}
+
 	macro assertRelationshipEntrySearchResultsPresent {
 		AssertElementPresent(
 			key_entry = "${entry}",

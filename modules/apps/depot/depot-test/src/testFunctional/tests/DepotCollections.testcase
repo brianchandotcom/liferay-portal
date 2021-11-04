@@ -758,7 +758,7 @@ definition {
 	@description = "This ensures that only web contents configured to show with dynamic selection are displayed in a depot."
 	@priority = "4"
 	@refactorneeded
-	test SelectAllWebContentDynamically {
+	test SelectOnlyWCDynamically {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document Title",

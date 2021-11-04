@@ -879,13 +879,36 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136773. It checks that XSS cannot be executed in the cover image caption."
-	@ignore = "true"
 	@priority = "3"
 	test CannotExecuteXSSInCoverImageCaption {
-		property portal.acceptance = "false";
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
 
-		// TODO LPS-136773 CannotExecuteXSSInCoverImageCaption pending implementation
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntryWithUploadedCoverImage(
+			captionField = '''<script>alert(123);</script>''',
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Blog Images",
+			uploadFileName = "Document_1.jpg");
+
+		Button.clickPublish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		AssertAlertNotPresent();
 	}
 
 	@description = "This is a test for LPS-136765. It checks that Javascript cannot be executed in the custom abstract."

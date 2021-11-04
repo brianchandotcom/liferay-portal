@@ -18,7 +18,9 @@ import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.initializer.util.CPDefinitionsImporter;
 import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
+import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
 
@@ -41,11 +43,18 @@ public class CommerceReferencesHolder {
 	public CommerceAccountRoleHelper commerceAccountRoleHelper;
 
 	@Reference
+	public CommerceChannelLocalService commerceChannelLocalService;
+
+	@Reference
 	public CommerceCurrencyLocalService commerceCurrencyLocalService;
 
 	@Reference
 	public CommerceInventoryWarehousesImporter
 		commerceInventoryWarehousesImporter;
+
+	@Reference
+	public CommerceNotificationTemplateLocalService
+		commerceNotificationTemplateLocalService;
 
 	@Reference
 	public CPDefinitionsImporter cpDefinitionsImporter;

@@ -18,10 +18,12 @@
 
 <%
 SearchContainer<AccountGroupDisplay> accountGroupDisplaySearchContainer = AccountGroupDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
+
+ViewAccountGroupsManagementToolbarDisplayContext viewAccountGroupsManagementToolbarDisplayContext = new ViewAccountGroupsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountGroupDisplaySearchContainer);
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new ViewAccountGroupsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountGroupDisplaySearchContainer) %>"
+	managementToolbarDisplayContext="<%= viewAccountGroupsManagementToolbarDisplayContext %>"
 	propsTransformer="account_groups_admin/js/AccountGroupsManagementToolbarPropsTransformer"
 />
 
@@ -37,6 +39,14 @@ SearchContainer<AccountGroupDisplay> accountGroupDisplaySearchContainer = Accoun
 				keyProperty="accountGroupId"
 				modelVar="accountGroupDisplay"
 			>
+
+				<%
+				row.setData(
+					HashMapBuilder.<String, Object>put(
+						"actions", StringUtil.merge(viewAccountGroupsManagementToolbarDisplayContext.getAvailableActions(accountGroupDisplay))
+					).build());
+				%>
+
 				<portlet:renderURL var="rowURL">
 					<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_group" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />

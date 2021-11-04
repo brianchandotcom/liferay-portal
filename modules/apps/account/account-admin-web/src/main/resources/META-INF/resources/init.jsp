@@ -65,6 +65,7 @@ page import="com.liferay.account.admin.web.internal.display.context.ViewAccountR
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountUserRolesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission" %><%@
+page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountGroupPermission" %><%@
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountPermission" %><%@
 page import="com.liferay.account.admin.web.internal.servlet.taglib.util.AccountUserActionDropdownItemsProvider" %><%@
 page import="com.liferay.account.constants.AccountActionKeys" %><%@

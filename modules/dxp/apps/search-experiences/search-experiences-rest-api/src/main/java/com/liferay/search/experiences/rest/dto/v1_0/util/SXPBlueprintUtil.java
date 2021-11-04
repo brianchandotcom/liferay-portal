@@ -17,21 +17,24 @@ package com.liferay.search.experiences.rest.dto.v1_0.util;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
+import java.util.Locale;
+
 /**
  * @author Gabriel Albuquerque
  */
 public class SXPBlueprintUtil {
 
 	public static SXPBlueprint toSXPBlueprint(
-		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint) {
+		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint,
+		Locale locale) {
 
 		return new SXPBlueprint() {
 			{
 				configuration = ConfigurationUtil.toConfiguration(
 					sxpBlueprint.getConfigurationJSON());
-				description = "";
+				description = sxpBlueprint.getDescription(locale);
 				id = sxpBlueprint.getSXPBlueprintId();
-				title = "";
+				title = sxpBlueprint.getTitle(locale);
 			}
 		};
 	}

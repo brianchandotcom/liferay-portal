@@ -181,17 +181,23 @@ definition {
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "${fieldsetNameEN}");
 
+		Translations.addLanguageManageTranslations(key_language = "pt-BR");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldsetsLabel(
 			fieldsetLabel = "${fieldsetNameEN}",
 			fieldsetLabelEdit = "Fieldset Name pt-BR");
 
+		Translations.addLanguageManageTranslations(key_language = "de-DE");
+
 		PortletEntry.changeLocale(locale = "de-DE");
 
 		DataEngine.editFieldsetsLabel(
 			fieldsetLabel = "${fieldsetNameEN}",
 			fieldsetLabelEdit = "Fieldset Name de-DE");
+
+		Translations.addLanguageManageTranslations(key_language = "es-ES");
 
 		PortletEntry.changeLocale(locale = "es-ES");
 

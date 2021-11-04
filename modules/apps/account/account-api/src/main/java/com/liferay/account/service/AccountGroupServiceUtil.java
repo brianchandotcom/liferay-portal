@@ -14,6 +14,9 @@
 
 package com.liferay.account.service;
 
+import com.liferay.account.model.AccountGroup;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * Provides the remote service utility for AccountGroup. This utility wraps
  * <code>com.liferay.account.service.impl.AccountGroupServiceImpl</code> and is an
@@ -33,14 +36,40 @@ public class AccountGroupServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.account.service.impl.AccountGroupServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static AccountGroup addAccountGroup(
+			long userId, String description, String name)
+		throws PortalException {
+
+		return getService().addAccountGroup(userId, description, name);
+	}
+
+	public static AccountGroup deleteAccountGroup(long accountGroupId)
+		throws PortalException {
+
+		return getService().deleteAccountGroup(accountGroupId);
+	}
+
+	public static void deleteAccountGroups(long[] accountGroupIds)
+		throws PortalException {
+
+		getService().deleteAccountGroups(accountGroupIds);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static AccountGroup updateAccountGroup(
+			long accountGroupId, String description, String name)
+		throws PortalException {
+
+		return getService().updateAccountGroup(
+			accountGroupId, description, name);
 	}
 
 	public static AccountGroupService getService() {

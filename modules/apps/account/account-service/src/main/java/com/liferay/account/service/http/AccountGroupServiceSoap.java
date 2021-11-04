@@ -14,9 +14,15 @@
 
 package com.liferay.account.service.http;
 
+import com.liferay.account.service.AccountGroupServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.account.service.AccountGroupServiceUtil</code> service
+ * <code>AccountGroupServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,77 @@ package com.liferay.account.service.http;
  */
 @Deprecated
 public class AccountGroupServiceSoap {
+
+	public static com.liferay.account.model.AccountGroupSoap addAccountGroup(
+			long userId, String description, String name)
+		throws RemoteException {
+
+		try {
+			com.liferay.account.model.AccountGroup returnValue =
+				AccountGroupServiceUtil.addAccountGroup(
+					userId, description, name);
+
+			return com.liferay.account.model.AccountGroupSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.account.model.AccountGroupSoap deleteAccountGroup(
+			long accountGroupId)
+		throws RemoteException {
+
+		try {
+			com.liferay.account.model.AccountGroup returnValue =
+				AccountGroupServiceUtil.deleteAccountGroup(accountGroupId);
+
+			return com.liferay.account.model.AccountGroupSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteAccountGroups(long[] accountGroupIds)
+		throws RemoteException {
+
+		try {
+			AccountGroupServiceUtil.deleteAccountGroups(accountGroupIds);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.account.model.AccountGroupSoap updateAccountGroup(
+			long accountGroupId, String description, String name)
+		throws RemoteException {
+
+		try {
+			com.liferay.account.model.AccountGroup returnValue =
+				AccountGroupServiceUtil.updateAccountGroup(
+					accountGroupId, description, name);
+
+			return com.liferay.account.model.AccountGroupSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AccountGroupServiceSoap.class);
+
 }

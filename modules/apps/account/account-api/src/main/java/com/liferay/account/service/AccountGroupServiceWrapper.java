@@ -30,6 +30,29 @@ public class AccountGroupServiceWrapper
 		_accountGroupService = accountGroupService;
 	}
 
+	@Override
+	public com.liferay.account.model.AccountGroup addAccountGroup(
+			long userId, String description, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupService.addAccountGroup(userId, description, name);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountGroup deleteAccountGroup(
+			long accountGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupService.deleteAccountGroup(accountGroupId);
+	}
+
+	@Override
+	public void deleteAccountGroups(long[] accountGroupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountGroupService.deleteAccountGroups(accountGroupIds);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -38,6 +61,15 @@ public class AccountGroupServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _accountGroupService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.account.model.AccountGroup updateAccountGroup(
+			long accountGroupId, String description, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupService.updateAccountGroup(
+			accountGroupId, description, name);
 	}
 
 	@Override

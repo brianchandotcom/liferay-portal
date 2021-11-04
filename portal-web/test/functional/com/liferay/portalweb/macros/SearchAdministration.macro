@@ -17,6 +17,8 @@ definition {
 	}
 
 	macro executeReindex {
+		SearchAdministration.openIndexActions();
+
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
 			value1 = "Search");
@@ -88,6 +90,10 @@ definition {
 				echo("Finished reindexing after ${reindexElapsedTime} seconds.");
 			}
 		}
+	}
+
+	macro openIndexActions {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_search_admin_web_portlet_SearchAdminPortlet&_com_liferay_portal_search_admin_web_portlet_SearchAdminPortlet_tabs1=index-actions");
 	}
 
 }

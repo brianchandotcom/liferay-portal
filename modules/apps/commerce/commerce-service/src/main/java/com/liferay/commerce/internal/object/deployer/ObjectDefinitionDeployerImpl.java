@@ -106,7 +106,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				CommerceDefinitionTermContributor.class,
 				new ObjectRecipientCommerceDefinitionTermContributor(
-					_userGroupLocalService, _userLocalService),
+					objectDefinition.getObjectDefinitionId(),
+					_objectFieldLocalService, _userGroupLocalService,
+					_userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"commerce.definition.term.contributor.key",
 					CommerceDefinitionTermConstants.

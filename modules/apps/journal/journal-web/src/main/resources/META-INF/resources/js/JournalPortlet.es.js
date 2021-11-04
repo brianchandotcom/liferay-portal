@@ -63,6 +63,8 @@ export default function _JournalPortlet({
 		),
 	});
 
+	const editingDefaultValues = classNameId && classNameId !== '0';
+
 	const handleContextualSidebarButtonClick = () => {
 		contextualSidebarContainer?.classList.toggle(
 			'contextual-sidebar-visible'
@@ -84,7 +86,10 @@ export default function _JournalPortlet({
 			`${namespace}titleMapAsXML`
 		);
 
-		if (titleInputComponent?.getValue(defaultLanguageId)) {
+		if (
+			titleInputComponent?.getValue(defaultLanguageId) ||
+			editingDefaultValues
+		) {
 			if (!articleId) {
 				const newArticleIdInput = document.getElementById(
 					`${namespace}newArticleId`
@@ -140,7 +145,7 @@ export default function _JournalPortlet({
 			workflowActionInput.value = Liferay.Workflow.ACTION_PUBLISH;
 		}
 
-		if (classNameId && classNameId !== '0') {
+		if (editingDefaultValues) {
 			actionInput.value = articleId
 				? '/journal/update_data_engine_default_values'
 				: '/journal/add_data_engine_default_values';
@@ -184,7 +189,7 @@ export default function _JournalPortlet({
 
 		form.setAttribute('action', event.currentTarget.dataset.url);
 
-		if (classNameId && classNameId !== '0') {
+		if (editingDefaultValues) {
 			actionInput.value = articleId
 				? '/journal/update_data_engine_default_values'
 				: '/journal/add_data_engine_default_values';

@@ -180,6 +180,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 								).setResourceID(
 									"/batch_planner/edit_export_batch_planner_plan"
 								).buildString()
+							).put(
+								"namespace", liferayPortletResponse.getNamespace()
 							).build()
 						%>'
 					/>

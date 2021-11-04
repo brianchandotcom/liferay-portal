@@ -37,6 +37,7 @@ function _renderFlagsComponent({
 	captchaURI = '',
 	companyName = 'Liferay',
 	baseData = {},
+	isViewMode = true,
 	onlyIcon = false,
 	pathTermsOfUse = '/',
 	reasons = {value: 'text', value2: 'text2'},
@@ -48,6 +49,7 @@ function _renderFlagsComponent({
 			baseData={baseData}
 			captchaURI={captchaURI}
 			companyName={companyName}
+			isViewMode={isViewMode}
 			onlyIcon={onlyIcon}
 			pathTermsOfUse={pathTermsOfUse}
 			reasons={reasons}
@@ -74,6 +76,12 @@ describe('Flags', () => {
 		const {getByText} = _renderFlagsComponent({onlyIcon: true});
 
 		expect(getByText('report')).toHaveClass('sr-only');
+	});
+
+	it('disables interaction when the view mode is not active', () => {
+		const {getByRole} = _renderFlagsComponent({isViewMode: false});
+
+		expect(getByRole('button')).toBeDisabled();
 	});
 
 	it('submits a report successfully with baseData', async () => {

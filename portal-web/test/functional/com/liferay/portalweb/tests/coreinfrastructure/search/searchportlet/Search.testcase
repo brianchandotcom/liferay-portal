@@ -374,12 +374,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex spell-check dictionaries.");
+		SearchAdministration.executeReindex(action = "Reindex spell-check dictionaries.");
 
 		AssertConsoleTextPresent(value1 = "Finished indexing dictionary for spellchecker/dictionary_de_DE.txt");
 
@@ -2394,12 +2389,7 @@ definition {
 
 		// Workaround for LPS-89026
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Navigator.openURL();
 
@@ -2542,12 +2532,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Navigator.openURL();
 
@@ -2860,12 +2845,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Search#ViewSearchResultDetails";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Navigator.openURL();
 

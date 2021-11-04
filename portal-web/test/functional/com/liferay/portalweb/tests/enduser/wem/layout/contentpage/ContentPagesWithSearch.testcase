@@ -13,12 +13,7 @@ definition {
 		}
 
 		task ("Execute Reindex all search indexes") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Search");
-
-			SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+			SearchAdministration.executeReindex();
 		}
 
 		task ("Add a new site") {
@@ -453,12 +448,7 @@ definition {
 		}
 
 		task ("Execute Reindex all search indexes") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Search");
-
-			SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+			SearchAdministration.executeReindex();
 		}
 
 		task ("Navigate to the search page") {

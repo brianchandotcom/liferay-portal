@@ -321,12 +321,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Finished adding data");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

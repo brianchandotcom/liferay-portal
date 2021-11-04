@@ -348,12 +348,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		JSONUser.addUser(
 			userEmailAddress = PropsUtil.get("email.address.2"),

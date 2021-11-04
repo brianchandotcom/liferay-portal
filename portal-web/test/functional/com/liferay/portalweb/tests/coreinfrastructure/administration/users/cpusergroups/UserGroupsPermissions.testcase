@@ -490,12 +490,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "UsergroupsUsecase#UserGroupSiteOwnerPermissions";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

@@ -539,12 +539,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		property test.name.skip.portal.instance = "WebContentDisplay#ChangeTemplate";
 		property testray.component.names = "Web Content Display";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
 

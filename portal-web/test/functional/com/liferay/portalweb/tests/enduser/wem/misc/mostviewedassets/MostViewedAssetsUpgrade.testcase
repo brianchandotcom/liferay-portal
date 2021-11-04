@@ -13,12 +13,7 @@ definition {
 
 		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 	}
 
 	@description = "This is a test for LPS-125952. View displayed assets on Most Viewed Assets widget."

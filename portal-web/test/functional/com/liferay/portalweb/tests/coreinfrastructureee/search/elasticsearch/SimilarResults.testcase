@@ -270,12 +270,7 @@ definition {
 			groupName = "Guest",
 			title = "Charlie");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Navigator.openURL();
 

@@ -329,12 +329,7 @@ definition {
 	}
 
 	macro reindexAllSearchIndexes {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 	}
 
 }

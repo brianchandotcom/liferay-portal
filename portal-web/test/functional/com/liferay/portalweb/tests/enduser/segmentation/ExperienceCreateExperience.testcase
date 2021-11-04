@@ -2479,12 +2479,7 @@ definition {
 			roleTitle = "Site Role Name",
 			userEmailAddress = "userea2@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
@@ -2757,12 +2752,7 @@ definition {
 			userEmailAddress = "userea1@liferay.com",
 			userGroupName = "UG UserGroup Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 

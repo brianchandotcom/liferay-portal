@@ -34,12 +34,7 @@ definition {
 		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#AddMultipleSuborganizations";
 		property testray.component.names = "Training";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -380,12 +375,7 @@ definition {
 		property test.name.skip.portal.instance = "CPUsersandorganizations#AddOrganizationTeam";
 		property testray.component.names = "Training";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -602,12 +592,7 @@ definition {
 		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#AssignMultipleUsersToOrganization";
 		property testray.component.names = "Training";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		var count = "1";
 
@@ -1605,12 +1590,7 @@ definition {
 	test SearchTags {
 		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#SearchTags";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

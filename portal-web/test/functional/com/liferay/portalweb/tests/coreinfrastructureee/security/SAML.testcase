@@ -1541,14 +1541,12 @@ definition {
 		}
 
 		task ("Login and reindex search indexes") {
-			var baseURL = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_search_admin_web_portlet_SearchAdminPortlet");
-
-			SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+			SearchAdministration.executeReindex();
 		}
 
 		task ("View CP ldapuseremail@liferay.com information") {
+			var baseURL = PropsUtil.get("portal.url");
+
 			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
 
 			User.viewCP(

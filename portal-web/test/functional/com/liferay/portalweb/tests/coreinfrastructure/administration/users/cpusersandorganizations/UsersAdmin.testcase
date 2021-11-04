@@ -2612,12 +2612,7 @@ definition {
 	test ViewUpdateUserViaJSONWS {
 		property test.name.skip.portal.instance = "CPUsersandorganizations#ViewUpdateUserViaJSONWS";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

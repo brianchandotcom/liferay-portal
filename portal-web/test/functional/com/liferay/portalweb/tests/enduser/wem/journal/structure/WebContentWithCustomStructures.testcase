@@ -1276,12 +1276,7 @@ definition {
 		}
 
 		task ("Reindex and search it again") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Search");
-
-			SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+			SearchAdministration.executeReindex();
 
 			Navigator.openURL();
 

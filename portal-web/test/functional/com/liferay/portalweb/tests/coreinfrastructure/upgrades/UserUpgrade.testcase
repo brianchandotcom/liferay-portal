@@ -142,12 +142,7 @@ definition {
 
 		SignIn.signIn();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Upgrade.viewAndEditUser();
 	}
@@ -160,12 +155,7 @@ definition {
 
 		SignIn.signIn();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Upgrade.viewAndEditUser();
 	}
@@ -178,12 +168,7 @@ definition {
 
 		SignIn.signIn();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Upgrade.viewAndEditUser();
 	}
@@ -196,12 +181,7 @@ definition {
 
 		SignIn.signIn();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Upgrade.viewAndEditUser();
 	}
@@ -214,12 +194,7 @@ definition {
 
 		SignIn.signIn();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Upgrade.viewAndEditUser();
 	}
@@ -232,12 +207,7 @@ definition {
 
 		SignIn.signIn();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Upgrade.viewAndEditUser();
 	}
@@ -249,12 +219,7 @@ definition {
 
 		SignIn.signIn();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Upgrade.viewAndEditUser();
 	}
@@ -266,12 +231,7 @@ definition {
 
 		SignIn.signIn();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Upgrade.viewAndEditUser();
 	}
@@ -283,12 +243,7 @@ definition {
 
 		SignIn.signIn();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Upgrade.viewAndEditUser();
 	}
@@ -300,12 +255,7 @@ definition {
 
 		SignIn.signIn();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Upgrade.viewAndEditUser();
 	}
@@ -318,12 +268,7 @@ definition {
 
 		SignIn.signIn();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Upgrade.viewAndEditUser();
 	}
@@ -336,12 +281,7 @@ definition {
 
 		SignIn.signIn();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		Upgrade.viewAndEditUser();
 	}

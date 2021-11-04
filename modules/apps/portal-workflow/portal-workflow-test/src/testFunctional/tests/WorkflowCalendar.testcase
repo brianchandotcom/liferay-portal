@@ -16,12 +16,7 @@ definition {
 		User.firstLoginPG();
 
 		if ("${testPortalInstance}" != "true") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Search");
-
-			SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+			SearchAdministration.executeReindex();
 
 			ApplicationsMenu.gotoSite(site = "${siteName}");
 		}

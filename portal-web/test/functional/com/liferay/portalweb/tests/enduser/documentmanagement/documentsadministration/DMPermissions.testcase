@@ -1889,14 +1889,7 @@ definition {
 		property test.name.skip.portal.instance = "DMPermissions#ViewSearchResultsForChildObjectRespectsParentFolderPermissions";
 		property testray.component.names = "Training";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		Pause(locator1 = "3000");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

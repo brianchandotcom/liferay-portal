@@ -12,9 +12,7 @@ definition {
 	setUp {
 		SignIn.signIn();
 
-		Search.openSearchAdmin();
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 	}
 
 	@description = "This is a use case for LRQA-64613. View SAML configuration after upgrade 7.3.10"

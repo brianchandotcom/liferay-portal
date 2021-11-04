@@ -15,12 +15,7 @@ definition {
 
 		AssertLocation.assertPartialLocation(value1 = "${portalURL}/web/guest");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 	}
 
 	@priority = "4"

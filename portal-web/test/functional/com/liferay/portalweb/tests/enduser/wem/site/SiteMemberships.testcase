@@ -117,12 +117,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
 
 		if (IsElementNotPresent(locator1 = "ManagementBar#FILTER_AND_ORDER")) {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Search");
-
-			SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+			SearchAdministration.executeReindex();
 		}
 
 		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
@@ -272,12 +267,7 @@ definition {
 		property test.name.skip.portal.instance = "SiteMemberships#OrganizationsView";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		JSONOrganization.addOrganization(
 			organizationName = "Organization Name 1",

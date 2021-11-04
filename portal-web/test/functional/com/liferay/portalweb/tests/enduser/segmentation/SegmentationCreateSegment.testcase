@@ -1741,12 +1741,7 @@ definition {
 				roleTitle = "Site Role Name",
 				userEmailAddress = "userea@liferay.com");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Search");
-
-			SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+			SearchAdministration.executeReindex();
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
@@ -1940,12 +1935,7 @@ definition {
 				userEmailAddress = "userea@liferay.com",
 				userGroupName = "UG UserGroup Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Search");
-
-			SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+			SearchAdministration.executeReindex();
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {

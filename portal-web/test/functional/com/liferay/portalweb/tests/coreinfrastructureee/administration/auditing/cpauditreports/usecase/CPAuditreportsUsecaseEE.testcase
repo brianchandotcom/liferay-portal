@@ -30,12 +30,7 @@ definition {
 	test ViewResourceActionsCP {
 		property test.name.skip.portal.instance = "CPAuditreportsUsecaseEE#ViewResourceActionsCP";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

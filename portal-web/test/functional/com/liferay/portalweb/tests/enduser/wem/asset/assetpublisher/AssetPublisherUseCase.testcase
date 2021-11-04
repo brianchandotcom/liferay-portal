@@ -60,12 +60,7 @@ definition {
 		}
 
 		task ("Execute reindex all") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Search");
-
-			SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+			SearchAdministration.executeReindex();
 		}
 
 		task ("Assign user to organization") {

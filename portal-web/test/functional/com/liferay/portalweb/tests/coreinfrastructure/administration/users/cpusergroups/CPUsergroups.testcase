@@ -213,12 +213,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPUsergroups#SearchCurrentMembersAssignedToUserGroup";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		JSONUserGroup.addUserGroup(
 			userGroupDescription = "UG UserGroup Description",

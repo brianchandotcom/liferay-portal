@@ -52,12 +52,7 @@ definition {
 			searchAssetTitle = "Apple1",
 			searchAssetType = "Document");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+		SearchAdministration.executeReindex();
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Description",

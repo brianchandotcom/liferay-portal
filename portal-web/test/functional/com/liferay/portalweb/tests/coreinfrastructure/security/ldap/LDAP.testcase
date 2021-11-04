@@ -61,12 +61,7 @@ definition {
 
 			// LRQA-46018
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Search");
-
-			SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+			SearchAdministration.executeReindex();
 		}
 
 		task ("View user information and assert -Unable to encrypt blank password- message not present on console") {
@@ -119,12 +114,7 @@ definition {
 
 			// LRQA-46018
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Search");
-
-			SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
+			SearchAdministration.executeReindex();
 		}
 
 		task ("View user information") {

@@ -1,5 +1,6 @@
-<definition default="setWindowSize">
-	<command name="setWindowSize">
-		<execute selenium="setWindowSize" />
-	</command>
-</definition>
+@default = "setWindowSize"
+definition {
+	function setWindowSize {
+		selenium.setWindowSize();
+	}
+}

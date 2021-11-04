@@ -1,5 +1,6 @@
-<definition default="runScript">
-	<command name="runScript">
-		<execute selenium="runScript" />
-	</command>
-</definition>
+@default = "runScript"
+definition {
+	function runScript {
+		selenium.runScript();
+	}
+}

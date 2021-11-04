@@ -1,5 +1,7 @@
-<definition default="isTestName" summary="Evaluate the current test name.">
-	<command name="isTestName">
-		<execute argument1="${value1}" selenium="isTestName" />
-	</command>
-</definition>
+@default = "isTestName"
+@summary = "Evaluate the current test name."
+definition {
+	function isTestName {
+		selenium.isTestName("${value1}");
+	}
+}

@@ -1,19 +1,20 @@
-<definition default="isElementPresent">
-	<command name="isElementPresent">
-		<execute selenium="isElementPresent" />
-	</command>
+@default = "isElementPresent"
+definition {
+	function isElementPresent {
+		selenium.isElementPresent();
+	}
 
-	<command name="isElementPresentAfterWait">
-		<execute selenium="isElementPresentAfterWait" />
-	</command>
+	function isElementPresentAfterWait {
+		selenium.isElementPresentAfterWait();
+	}
 
-	<command name="isVisible">
-		<execute selenium="isVisible" />
-	</command>
+	function isVisible {
+		selenium.isVisible();
+	}
 
-	<command name="waitForVisible">
-		<execute selenium="waitForVisible" />
+	function waitForVisible {
+		selenium.waitForVisible();
 
-		<execute function="IsElementPresent#isVisible" />
-	</command>
-</definition>
+		IsElementPresent.isVisible();
+	}
+}

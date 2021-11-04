@@ -1,5 +1,6 @@
-<definition default="assertAccessible">
-	<command name="assertAccessible">
-		<execute selenium="assertAccessible" />
-	</command>
-</definition>
+@default = "assertAccessible"
+definition {
+	function assertAccessible {
+		selenium.assertAccessible();
+	}
+}

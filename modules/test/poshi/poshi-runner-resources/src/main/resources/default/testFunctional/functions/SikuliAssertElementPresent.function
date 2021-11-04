@@ -1,5 +1,6 @@
-<definition default="sikuliAssertElementPresent">
-	<command name="sikuliAssertElementPresent">
-		<execute selenium="sikuliAssertElementPresent" />
-	</command>
-</definition>
+@default = "sikuliAssertElementPresent"
+definition {
+	function sikuliAssertElementPresent {
+		selenium.sikuliAssertElementPresent();
+	}
+}

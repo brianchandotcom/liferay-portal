@@ -1,5 +1,6 @@
-<definition default="sikuliRightMouseDown">
-	<command name="sikuliRightMouseDown">
-		<execute selenium="sikuliRightMouseDown" />
-	</command>
-</definition>
+@default = "sikuliRightMouseDown"
+definition {
+	function sikuliRightMouseDown {
+		selenium.sikuliRightMouseDown();
+	}
+}

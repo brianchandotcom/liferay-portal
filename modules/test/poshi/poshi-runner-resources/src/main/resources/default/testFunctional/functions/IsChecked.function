@@ -1,5 +1,6 @@
-<definition default="isChecked">
-	<command name="isChecked">
-		<execute selenium="isChecked" />
-	</command>
-</definition>
+@default = "isChecked"
+definition {
+	function isChecked {
+		selenium.isChecked();
+	}
+}

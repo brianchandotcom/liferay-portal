@@ -1,17 +1,18 @@
-<definition default="mouseUp">
-	<command name="javaScriptMouseUp">
-		<execute selenium="javaScriptMouseUp" />
-	</command>
+@default = "mouseUp"
+definition {
+	function javaScriptMouseUp {
+		selenium.javaScriptMouseUp();
+	}
 
-	<command name="mouseRelease">
-		<execute selenium="mouseRelease" />
-	</command>
+	function mouseRelease {
+		selenium.mouseRelease();
+	}
 
-	<command name="mouseUp">
-		<execute selenium="mouseUp" />
-	</command>
+	function mouseUp {
+		selenium.mouseUp();
+	}
 
-	<command name="mouseUpAt">
-		<execute selenium="mouseUpAt" />
-	</command>
-</definition>
+	function mouseUpAt {
+		selenium.mouseUpAt();
+	}
+}

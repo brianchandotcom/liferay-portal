@@ -1,79 +1,78 @@
-<definition default="assertClick" summary="Click on '${locator1}' that should have a value of '${value1}'">
-	<command name="assertClick">
-		<if>
-			<contains string="${locator1}" substring="/input" />
-			<then>
-				<execute function="AssertClick#assertValueClickAt" />
-			</then>
-			<else>
-				<execute function="AssertClick#assertTextClickAt" />
-			</else>
-		</if>
-	</command>
+@default = "assertClick"
+@summary = "Click on '${locator1}' that should have a value of '${value1}'"
+definition {
+	function assertClick {
+		if (contains("${locator1}", "/input")) {
+			AssertClick.assertValueClickAt();
+		}
+		else {
+			AssertClick.assertTextClickAt();
+		}
+	}
 
-	<command name="assertPartialTextClickAt">
-		<execute function="AssertTextEquals#assertPartialText" />
+	function assertPartialTextClickAt {
+		AssertTextEquals.assertPartialText();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="clickAt" />
-	</command>
+		selenium.clickAt();
+	}
 
-	<command name="assertTextClick">
-		<execute function="AssertTextEquals#assertText" />
+	function assertTextClick {
+		AssertTextEquals.assertText();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="click" />
-	</command>
+		selenium.click();
+	}
 
-	<command name="assertTextClickAt">
-		<execute function="AssertTextEquals#assertText" />
+	function assertTextClickAt {
+		AssertTextEquals.assertText();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="clickAt" />
-	</command>
+		selenium.clickAt();
+	}
 
-	<command name="assertTextClickAtAndPause">
-		<execute function="AssertTextEquals#assertText" />
+	function assertTextClickAtAndPause {
+		AssertTextEquals.assertText();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="clickAt" />
-	</command>
+		selenium.clickAt();
+	}
 
-	<command name="assertTextClickNoMouseOver">
-		<execute function="AssertTextEquals#assertText" />
+	function assertTextClickNoMouseOver {
+		AssertTextEquals.assertText();
 
-		<execute selenium="click" />
-	</command>
+		selenium.click();
+	}
 
-	<command name="assertValueClickAt">
-		<execute function="AssertTextEquals#assertValue" />
+	function assertValueClickAt {
+		AssertTextEquals.assertValue();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="clickAt" />
-	</command>
+		selenium.clickAt();
+	}
 
-	<command name="pauseAssertPartialTextClickAt">
-		<execute function="AssertClick#assertPartialTextClickAt" />
-	</command>
+	function pauseAssertPartialTextClickAt {
+		AssertClick.assertPartialTextClickAt();
+	}
 
-	<command name="pauseAssertTextClickAt">
-		<execute function="AssertClick#assertTextClickAt" />
-	</command>
+	function pauseAssertTextClickAt {
+		AssertClick.assertTextClickAt();
+	}
 
-	<command name="pauseMakeVisibleAssertTextEqualsClickAt">
-		<execute selenium="makeVisible" />
+	function pauseMakeVisibleAssertTextEqualsClickAt {
+		selenium.makeVisible();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="waitForText" />
+		selenium.waitForText();
 
-		<execute selenium="mouseDown" />
+		selenium.mouseDown();
 
-		<execute selenium="mouseUp" />
-	</command>
-</definition>
+		selenium.mouseUp();
+	}
+}

@@ -1,13 +1,17 @@
-<definition default="assertSelectedLabel">
-	<command name="assertPartialSelectedLabel">
-		<execute selenium="waitForVisible" />
+@default = "assertSelectedLabel"
+definition {
+	function assertPartialSelectedLabel {
+		selenium.waitForVisible();
 
-		<execute argument1="xpath=(${locator1})/option[@selected='']" argument2="${value1}" selenium="assertPartialText" />
-	</command>
+		selenium.assertPartialText(
+			"xpath=(${locator1})/option[@selected='']",
+			"${value1}"
+		);
+	}
 
-	<command name="assertSelectedLabel">
-		<execute selenium="waitForVisible" />
+	function assertSelectedLabel {
+		selenium.waitForVisible();
 
-		<execute selenium="assertSelectedLabel" />
-	</command>
-</definition>
+		selenium.assertSelectedLabel();
+	}
+}

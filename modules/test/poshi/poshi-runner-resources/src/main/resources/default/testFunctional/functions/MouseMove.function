@@ -1,9 +1,10 @@
-<definition default="mouseMove">
-	<command name="mouseMove">
-		<execute selenium="mouseMove" />
-	</command>
+@default = "mouseMove"
+definition {
+	function mouseMove {
+		selenium.mouseMove();
+	}
 
-	<command name="mouseMoveAt">
-		<execute selenium="mouseMoveAt" />
-	</command>
-</definition>
+	function mouseMoveAt {
+		selenium.mouseMoveAt();
+	}
+}

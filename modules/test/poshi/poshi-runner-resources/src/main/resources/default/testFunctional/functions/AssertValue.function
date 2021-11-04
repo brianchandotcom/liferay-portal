@@ -1,9 +1,10 @@
-<definition default="assertValue">
-	<command name="assertValue">
-		<execute selenium="waitForVisible" />
+@default = "assertValue"
+definition {
+	function assertValue {
+		selenium.waitForVisible();
 
-		<execute selenium="waitForValue" />
+		selenium.waitForValue();
 
-		<execute selenium="assertValue" />
-	</command>
-</definition>
+		selenium.assertValue();
+	}
+}

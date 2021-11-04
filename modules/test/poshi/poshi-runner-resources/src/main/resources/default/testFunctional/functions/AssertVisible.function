@@ -1,7 +1,8 @@
-<definition default="assertVisible">
-	<command name="assertVisible">
-		<execute selenium="waitForVisible" />
+@default = "assertVisible"
+definition {
+	function assertVisible {
+		selenium.waitForVisible();
 
-		<execute selenium="assertVisible" />
-	</command>
-</definition>
+		selenium.assertVisible();
+	}
+}

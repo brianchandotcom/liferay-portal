@@ -1,5 +1,6 @@
-<definition default="assertConsoleTextPresent">
-	<command name="assertConsoleTextPresent">
-		<execute selenium="assertConsoleTextPresent" />
-	</command>
-</definition>
+@default = "assertConsoleTextPresent"
+definition {
+	function assertConsoleTextPresent {
+		selenium.assertConsoleTextPresent();
+	}
+}

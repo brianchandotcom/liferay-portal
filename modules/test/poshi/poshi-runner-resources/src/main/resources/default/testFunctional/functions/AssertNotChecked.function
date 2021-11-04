@@ -1,19 +1,20 @@
-<definition default="assertNotChecked">
-	<command name="assertNotChecked">
-		<execute selenium="waitForVisible" />
+@default = "assertNotChecked"
+definition {
+	function assertNotChecked {
+		selenium.waitForVisible();
 
-		<execute selenium="assertNotChecked" />
-	</command>
+		selenium.assertNotChecked();
+	}
 
-	<command name="assertNotCheckedHiddenToggleSwitch">
-		<execute selenium="waitForElementPresent" />
+	function assertNotCheckedHiddenToggleSwitch {
+		selenium.waitForElementPresent();
 
-		<execute argument1="xpath=(${locator1})/../../input" selenium="assertNotChecked" />
-	</command>
+		selenium.assertNotChecked("xpath=(${locator1})/../../input");
+	}
 
-	<command name="assertNotCheckedToggleSwitch">
-		<execute selenium="waitForElementPresent" />
+	function assertNotCheckedToggleSwitch {
+		selenium.waitForElementPresent();
 
-		<execute selenium="assertNotChecked" />
-	</command>
-</definition>
+		selenium.assertNotChecked();
+	}
+}

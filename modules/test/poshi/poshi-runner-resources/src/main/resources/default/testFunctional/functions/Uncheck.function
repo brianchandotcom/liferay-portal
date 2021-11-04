@@ -1,59 +1,48 @@
-<definition default="clickAt">
-	<command name="clickAt">
-		<execute selenium="waitForVisible" />
+@default = "clickAt"
+definition {
+	function clickAt {
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<if>
-			<condition selenium="isChecked" />
-			<then>
-				<execute selenium="clickAt" />
-			</then>
-		</if>
+		if (selenium.isChecked()) {
+			selenium.clickAt();
+		}
 
-		<execute function="AssertNotChecked#assertNotChecked" />
-	</command>
+		AssertNotChecked.assertNotChecked();
+	}
 
-	<command name="uncheckNoError">
-		<execute selenium="waitForVisible" />
+	function uncheckNoError {
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<if>
-			<condition selenium="isChecked" />
-			<then>
-				<execute selenium="clickAt" />
-			</then>
-		</if>
+		if (selenium.isChecked()) {
+			selenium.clickAt();
+		}
 
-		<execute function="AssertNotChecked#assertNotChecked" />
-	</command>
+		AssertNotChecked.assertNotChecked();
+	}
 
-	<command name="uncheckToggleSwitch">
-		<execute selenium="waitForElementPresent" />
+	function uncheckToggleSwitch {
+		selenium.waitForElementPresent();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<if>
-			<condition selenium="isChecked" />
-			<then>
-				<execute selenium="clickAt" />
-			</then>
-		</if>
+		if (selenium.isChecked()) {
+			selenium.clickAt();
+		}
 
-		<execute function="AssertNotChecked#assertNotCheckedToggleSwitch" />
-	</command>
+		AssertNotChecked.assertNotCheckedToggleSwitch();
+	}
 
-	<command name="uncheckToggleSwitchNoErrorNoAssert">
-		<execute selenium="waitForElementPresent" />
+	function uncheckToggleSwitchNoErrorNoAssert {
+		selenium.waitForElementPresent();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<if>
-			<condition selenium="isChecked" />
-			<then>
-				<execute selenium="clickAt" />
-			</then>
-		</if>
-	</command>
-</definition>
+		if (selenium.isChecked()) {
+			selenium.clickAt();
+		}
+	}
+}

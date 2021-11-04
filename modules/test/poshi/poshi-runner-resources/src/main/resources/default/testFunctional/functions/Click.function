@@ -1,62 +1,63 @@
-<definition default="click" summary="Click on '${locator1}'">
-	<command name="click">
-		<execute selenium="waitForVisible" />
+@default = "click"
+@summary = "Click on '${locator1}'"
+definition {
+	function click {
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="click" />
-	</command>
+		selenium.click();
+	}
 
-	<command name="clickAt">
-		<execute selenium="waitForVisible" />
+	function clickAt {
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="clickAt" />
-	</command>
+		selenium.clickAt();
+	}
 
-	<command name="clickNoMouseOver">
-		<execute selenium="waitForVisible" />
+	function clickNoMouseOver {
+		selenium.waitForVisible();
 
-		<execute selenium="click" />
-	</command>
+		selenium.click();
+	}
 
-	<command name="clickNoWaitForVisible">
-		<execute selenium="mouseOver" />
+	function clickNoWaitForVisible {
+		selenium.mouseOver();
 
-		<execute selenium="click" />
-	</command>
+		selenium.click();
+	}
 
-	<command name="makeVisibleClickAt">
-		<execute selenium="waitForElementPresent" />
+	function makeVisibleClickAt {
+		selenium.waitForElementPresent();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="makeVisible" />
+		selenium.makeVisible();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="clickAt" />
-	</command>
+		selenium.clickAt();
+	}
 
-	<command name="mouseOverClick">
-		<execute selenium="waitForElementPresent" />
+	function mouseOverClick {
+		selenium.waitForElementPresent();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="click" />
-	</command>
+		selenium.click();
+	}
 
-	<command name="pauseClickAt">
+	function pauseClickAt {
+		selenium.mouseOver();
 
-		<execute selenium="mouseOver" />
+		Click.clickAt();
+	}
 
-		<execute function="Click#clickAt" />
-	</command>
-
-	<command name="pauseMakeVisibleClickAt">
-		<execute function="Click#makeVisibleClickAt" />
-	</command>
-</definition>
+	function pauseMakeVisibleClickAt {
+		Click.makeVisibleClickAt();
+	}
+}

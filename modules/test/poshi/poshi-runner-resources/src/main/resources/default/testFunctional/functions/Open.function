@@ -1,29 +1,31 @@
-<definition default="open" summary="Open browser to '${locator1}'">
-	<command name="open">
-		<execute argument1="null" selenium="selectWindow" />
+@default = "open"
+@summary = "Open browser to '${locator1}'"
+definition {
+	function open {
+		selenium.selectWindow("null");
 
-		<execute argument1="relative=top" selenium="selectFrame" />
+		selenium.selectFrame("relative=top");
 
-		<execute selenium="open" />
-	</command>
+		selenium.open();
+	}
 
-	<command name="openNoError">
-		<execute argument1="null" selenium="selectWindow" />
+	function openNoError {
+		selenium.selectWindow("null");
 
-		<execute argument1="relative=top" selenium="selectFrame" />
+		selenium.selectFrame("relative=top");
 
-		<execute selenium="open" />
-	</command>
+		selenium.open();
+	}
 
-	<command name="openWindow">
-		<execute argument1="null" selenium="selectWindow" />
+	function openWindow {
+		selenium.selectWindow("null");
 
-		<execute argument1="relative=top" selenium="selectFrame" />
+		selenium.selectFrame("relative=top");
 
-		<execute argument1="${locator1}" argument2="windowName" selenium="openWindow" />
+		selenium.openWindow("${locator1}", "windowName");
 
-		<execute argument1="windowName" argument2="windowName" selenium="waitForPopUp" />
+		selenium.waitForPopUp("windowName", "windowName");
 
-		<execute argument1="windowName" selenium="selectWindow" />
-	</command>
-</definition>
+		selenium.selectWindow("windowName");
+	}
+}

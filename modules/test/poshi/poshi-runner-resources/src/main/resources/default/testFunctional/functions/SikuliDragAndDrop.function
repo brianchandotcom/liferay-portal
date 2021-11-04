@@ -1,5 +1,6 @@
-<definition default="sikuliDragAndDrop">
-	<command name="sikuliDragAndDrop">
-		<execute selenium="sikuliDragAndDrop" />
-	</command>
-</definition>
+@default = "sikuliDragAndDrop"
+definition {
+	function sikuliDragAndDrop {
+		selenium.sikuliDragAndDrop();
+	}
+}

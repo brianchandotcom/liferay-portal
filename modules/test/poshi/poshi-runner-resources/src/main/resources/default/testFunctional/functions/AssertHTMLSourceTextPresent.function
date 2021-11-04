@@ -1,5 +1,6 @@
-<definition default="assertHTMLSourceTextPresent">
-	<command name="assertHTMLSourceTextPresent">
-		<execute selenium="assertHTMLSourceTextPresent" />
-	</command>
-</definition>
+@default = "assertHTMLSourceTextPresent"
+definition {
+	function assertHTMLSourceTextPresent {
+		selenium.assertHTMLSourceTextPresent();
+	}
+}

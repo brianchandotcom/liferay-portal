@@ -1,5 +1,6 @@
-<definition default="sikuliMouseMove">
-	<command name="sikuliMouseMove">
-		<execute selenium="sikuliMouseMove" />
-	</command>
-</definition>
+@default = "sikuliMouseMove"
+definition {
+	function sikuliMouseMove {
+		selenium.sikuliMouseMove();
+	}
+}

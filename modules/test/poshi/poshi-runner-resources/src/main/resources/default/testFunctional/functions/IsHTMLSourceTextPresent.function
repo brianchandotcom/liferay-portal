@@ -1,5 +1,6 @@
-<definition default="isHTMLSourceTextPresent">
-	<command name="isHTMLSourceTextPresent">
-		<execute selenium="isHTMLSourceTextPresent" />
-	</command>
-</definition>
+@default = "isHTMLSourceTextPresent"
+definition {
+	function isHTMLSourceTextPresent {
+		selenium.isHTMLSourceTextPresent();
+	}
+}

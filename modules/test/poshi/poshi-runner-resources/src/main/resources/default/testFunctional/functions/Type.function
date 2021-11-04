@@ -1,113 +1,119 @@
-<definition default="type" summary="Type to '${locator1}' the value '${value1}'">
-	<command name="clickAtSendKeys">
-		<execute selenium="waitForVisible" />
+@default = "type"
+@summary = "Type to '${locator1}' the value '${value1}'"
+definition {
+	function clickAtSendKeys {
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="clickAt" />
+		selenium.clickAt();
 
-		<execute selenium="sendKeys" />
+		selenium.sendKeys();
 
-		<execute selenium="clickAt" />
-	</command>
+		selenium.clickAt();
+	}
 
-	<command name="clickAtType">
-		<execute selenium="waitForVisible" />
+	function clickAtType {
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="clickAt" />
+		selenium.clickAt();
 
-		<execute selenium="type" />
+		selenium.type();
 
-		<execute selenium="clickAt" />
-	</command>
+		selenium.clickAt();
+	}
 
-	<command name="sendKeys">
-		<execute selenium="waitForVisible" />
+	function sendKeys {
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="sendKeys" />
-	</command>
+		selenium.sendKeys();
+	}
 
-	<command name="sendKeysAceEditor">
-		<execute selenium="waitForElementPresent" />
+	function sendKeysAceEditor {
+		selenium.waitForElementPresent();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="sendKeysAceEditor" />
-	</command>
+		selenium.sendKeysAceEditor();
+	}
 
-	<command name="sendKeysAceEditorNoMouseOver">
-		<execute selenium="waitForElementPresent" />
+	function sendKeysAceEditorNoMouseOver {
+		selenium.waitForElementPresent();
 
-		<execute selenium="sendKeysAceEditor" />
-	</command>
+		selenium.sendKeysAceEditor();
+	}
 
-	<command name="sendKeysNoWait">
-		<execute selenium="mouseOver" />
+	function sendKeysNoWait {
+		selenium.mouseOver();
 
-		<execute selenium="sendKeys" />
-	</command>
+		selenium.sendKeys();
+	}
 
-	<command name="type">
-		<execute selenium="waitForVisible" />
+	function type {
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="type" />
-	</command>
+		selenium.type();
+	}
 
-	<command name="typeAceEditor">
-		<execute selenium="waitForElementPresent" />
+	function typeAceEditor {
+		selenium.waitForElementPresent();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="typeAceEditor" />
-	</command>
+		selenium.typeAceEditor();
+	}
 
-	<command name="typeAceEditorNoMouseOver">
-		<execute selenium="waitForElementPresent" />
+	function typeAceEditorNoMouseOver {
+		selenium.waitForElementPresent();
 
-		<execute selenium="typeAceEditor" />
-	</command>
+		selenium.typeAceEditor();
+	}
 
-	<command name="typeCKEditor">
-		<execute selenium="waitForVisible" />
+	function typeCKEditor {
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="typeCKEditor" />
-	</command>
+		selenium.typeCKEditor();
+	}
 
-	<command name="typeCKEditorWaitForCKEditor">
-		<execute argument1="//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]" selenium="waitForVisible" />
+	function typeCKEditorWaitForCKEditor {
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]"
+		);
 
-		<execute function="Type#typeCKEditor" />
-	</command>
+		Type.typeCKEditor();
+	}
 
-	<command name="typeClickAt">
-		<execute selenium="waitForVisible" />
+	function typeClickAt {
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="type" />
+		selenium.type();
 
-		<execute selenium="clickAt" />
-	</command>
+		selenium.clickAt();
+	}
 
-	<command name="typeEditor">
-		<execute selenium="waitForElementPresent" />
+	function typeEditor {
+		selenium.waitForElementPresent();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="typeEditor" />
-	</command>
+		selenium.typeEditor();
+	}
 
-	<command name="typeWaitForCKEditor">
-		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
+	function typeWaitForCKEditor {
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]"
+		);
 
-		<execute function="Type#type" />
-	</command>
-</definition>
+		Type.type();
+	}
+}

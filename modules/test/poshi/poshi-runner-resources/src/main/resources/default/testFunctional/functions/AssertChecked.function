@@ -1,19 +1,20 @@
-<definition default="assertChecked">
-	<command name="assertChecked">
-		<execute selenium="waitForVisible" />
+@default = "assertChecked"
+definition {
+	function assertChecked {
+		selenium.waitForVisible();
 
-		<execute selenium="assertChecked" />
-	</command>
+		selenium.assertChecked();
+	}
 
-	<command name="assertCheckedToggleSwitch">
-		<execute selenium="waitForElementPresent" />
+	function assertCheckedToggleSwitch {
+		selenium.waitForElementPresent();
 
-		<execute selenium="assertChecked" />
-	</command>
+		selenium.assertChecked();
+	}
 
-	<command name="waitForElementPresentAssertChecked">
-		<execute selenium="waitForElementPresent" />
+	function waitForElementPresentAssertChecked {
+		selenium.waitForElementPresent();
 
-		<execute selenium="assertChecked" />
-	</command>
-</definition>
+		selenium.assertChecked();
+	}
+}

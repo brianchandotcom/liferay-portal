@@ -1,5 +1,6 @@
-<definition default="sikuliUploadTempFile">
-	<command name="sikuliUploadTempFile">
-		<execute selenium="sikuliUploadTempFile" />
-	</command>
-</definition>
+@default = "sikuliUploadTempFile"
+definition {
+	function sikuliUploadTempFile {
+		selenium.sikuliUploadTempFile();
+	}
+}

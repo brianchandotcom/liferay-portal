@@ -1,5 +1,6 @@
-<definition default="isSikuliImagePresent">
-	<command name="isSikuliImagePresent">
-		<execute selenium="isSikuliImagePresent" />
-	</command>
-</definition>
+@default = "isSikuliImagePresent"
+definition {
+	function isSikuliImagePresent {
+		selenium.isSikuliImagePresent();
+	}
+}

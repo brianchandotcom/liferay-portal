@@ -1,7 +1,8 @@
-<definition default="isNotVisible">
-	<command name="isNotVisible">
-		<execute selenium="waitForElementPresent" />
+@default = "isNotVisible"
+definition {
+	function isNotVisible {
+		selenium.waitForElementPresent();
 
-		<execute selenium="isNotVisible" />
-	</command>
-</definition>
+		selenium.isNotVisible();
+	}
+}

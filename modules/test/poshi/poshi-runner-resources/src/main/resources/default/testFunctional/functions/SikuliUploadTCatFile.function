@@ -1,5 +1,6 @@
-<definition default="sikuliUploadTCatFile">
-	<command name="sikuliUploadTCatFile">
-		<execute selenium="sikuliUploadTCatFile" />
-	</command>
-</definition>
+@default = "sikuliUploadTCatFile"
+definition {
+	function sikuliUploadTCatFile {
+		selenium.sikuliUploadTCatFile();
+	}
+}

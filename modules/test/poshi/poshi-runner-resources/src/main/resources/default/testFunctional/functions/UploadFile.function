@@ -1,7 +1,8 @@
-<definition default="uploadFile">
-	<command name="uploadFile">
-		<execute selenium="waitForVisible" />
+@default = "uploadFile"
+definition {
+	function uploadFile {
+		selenium.waitForVisible();
 
-		<execute selenium="uploadFile" />
-	</command>
-</definition>
+		selenium.uploadFile();
+	}
+}

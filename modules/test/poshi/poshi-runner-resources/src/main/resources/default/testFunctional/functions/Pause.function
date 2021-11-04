@@ -1,5 +1,7 @@
-<definition default="pause">
-	<command name="pause" summary-ignore="true">
-		<execute selenium="pause" />
-	</command>
-</definition>
+@default = "pause"
+definition {
+	@summary-ignore = "true"
+	function pause {
+		selenium.pause();
+	}
+}

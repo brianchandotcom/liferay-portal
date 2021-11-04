@@ -1,7 +1,8 @@
-<definition default="assertTextPresent">
-	<command name="assertTextPresent">
-		<execute selenium="waitForTextPresent" />
+@default = "assertTextPresent"
+definition {
+	function assertTextPresent {
+		selenium.waitForTextPresent();
 
-		<execute selenium="assertTextPresent" />
-	</command>
-</definition>
+		selenium.assertTextPresent();
+	}
+}

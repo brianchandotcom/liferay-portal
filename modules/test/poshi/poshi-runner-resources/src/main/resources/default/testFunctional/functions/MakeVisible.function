@@ -1,9 +1,11 @@
-<definition default="makeVisible">
-	<command name="makeVisible" summary-ignore="true">
-		<execute selenium="waitForElementPresent" />
+@default = "makeVisible"
+definition {
+	@summary-ignore = "true"
+	function makeVisible {
+		selenium.waitForElementPresent();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="makeVisible" />
-	</command>
-</definition>
+		selenium.makeVisible();
+	}
+}

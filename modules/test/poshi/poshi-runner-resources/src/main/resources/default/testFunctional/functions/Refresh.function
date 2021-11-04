@@ -1,5 +1,6 @@
-<definition default="refresh">
-	<command name="refresh">
-		<execute selenium="refresh" />
-	</command>
-</definition>
+@default = "refresh"
+definition {
+	function refresh {
+		selenium.refresh();
+	}
+}

@@ -1,21 +1,22 @@
-<definition default="select">
-	<command name="pauseSelect">
-		<execute selenium="select" />
-	</command>
+@default = "select"
+definition {
+	function pauseSelect {
+		selenium.select();
+	}
 
-	<command name="select">
-		<execute selenium="waitForVisible" />
+	function select {
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="select" />
-	</command>
+		selenium.select();
+	}
 
-	<command name="selectByClick">
-		<execute selenium="waitForVisible" />
+	function selectByClick {
+		selenium.waitForVisible();
 
-		<execute argument1="${locator1}" selenium="click" />
+		selenium.click("${locator1}");
 
-		<execute argument1="//option[contains(.,'${value1}')]" selenium="click" />
-	</command>
-</definition>
+		selenium.click("//option[contains(.,'${value1}')]");
+	}
+}

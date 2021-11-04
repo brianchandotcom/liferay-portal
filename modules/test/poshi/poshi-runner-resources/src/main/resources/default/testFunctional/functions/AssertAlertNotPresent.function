@@ -1,5 +1,6 @@
-<definition default="assertAlertNotPresent">
-	<command name="assertAlertNotPresent">
-		<execute selenium="assertAlertNotPresent" />
-	</command>
-</definition>
+@default = "assertAlertNotPresent"
+definition {
+	function assertAlertNotPresent {
+		selenium.assertAlertNotPresent();
+	}
+}

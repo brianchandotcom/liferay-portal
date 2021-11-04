@@ -52,12 +52,10 @@ definition {
 		}
 	}
 
-	@description = "This ensures that sharing a document to a user, and changing its sharing permissions via Manage Collaborators. This test also covers permissions and making sure users only have access to sharing permissions assigned to him."
+	@description = "This test asserts that a user can change the view permission to the comment permission via the manage collaborators."
 	@priority = "5"
 	@refactordone
-	test CanChangePermissionsViaManageCollaborators {
-		property portal.acceptance = "true";
-
+	test CanChangePermissionToCommentViaManageCollaborators {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -101,12 +99,29 @@ definition {
 		DMDocumentSharing.viewDocumentViaSharedContent(
 			contentSharingPermission = "Comment",
 			dmDocumentTitle = "DM Document Title");
+	}
 
-		User.logoutPG();
+	@description = "This test asserts that a user can change the view permission to the update permission via the manage collaborators"
+	@priority = "5"
+	@refactordone
+	test CanChangePermissionToUpdateViaManageCollaborators {
+		property portal.acceptance = "true";
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

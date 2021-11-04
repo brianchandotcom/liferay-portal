@@ -58,12 +58,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS-->
-<tr>
 	<td>CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACTION_CHECKBOX</td>
 	<td>xpath=(//input[contains(@name,'_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_allRowIds') and contains(@title,'Select All')])[1]</td>
 	<td></td>

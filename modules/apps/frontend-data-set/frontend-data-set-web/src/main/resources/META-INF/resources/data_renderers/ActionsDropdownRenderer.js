@@ -22,7 +22,7 @@ import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import DataSetDisplayContext from '../DataSetDisplayContext';
+import DataSetContext from '../DataSetContext';
 import {ACTION_ITEM_TARGETS} from '../utils/actionItems/constants';
 import {formatActionURL} from '../utils/index';
 import {openPermissionsModal, resolveModalSize} from '../utils/modals/index';
@@ -135,7 +135,7 @@ function ActionItem({
 	target,
 	title,
 }) {
-	const context = useContext(DataSetDisplayContext);
+	const context = useContext(DataSetContext);
 
 	function handleClickOnLink(event) {
 		event.preventDefault();
@@ -178,7 +178,7 @@ function ActionItem({
 }
 
 function ActionsDropdownRenderer({actions, itemData, itemId}) {
-	const context = useContext(DataSetDisplayContext);
+	const context = useContext(DataSetContext);
 	const [menuActive, setMenuActive] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const inlineEditingAvailable =

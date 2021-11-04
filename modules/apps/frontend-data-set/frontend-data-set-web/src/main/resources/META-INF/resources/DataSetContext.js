@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-const DataSetDisplayContext = React.createContext({
+const DataSetContext = React.createContext({
 	actionParameterName: null,
 	formId: null,
 	formName: null,
@@ -33,4 +33,4 @@ const DataSetDisplayContext = React.createContext({
 	updateSorting: () => {},
 });
 
-export default DataSetDisplayContext;
+export default DataSetContext;

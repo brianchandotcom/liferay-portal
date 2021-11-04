@@ -18,7 +18,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
-import DataSetDisplayContext from '../../DataSetDisplayContext';
+import DataSetContext from '../../DataSetContext';
 import {OPEN_SIDE_PANEL} from '../../utils/eventsDefinitions';
 import {logError} from '../../utils/logError';
 import {getOpenedSidePanel} from '../../utils/sidePanels';
@@ -60,7 +60,7 @@ function BulkActions({
 	selectedItemsValue,
 	total,
 }) {
-	const {actionParameterName} = useContext(DataSetDisplayContext);
+	const {actionParameterName} = useContext(DataSetContext);
 	const [
 		currentSidePanelActionPayload,
 		setCurrentSidePanelActionPayload,
@@ -142,7 +142,7 @@ function BulkActions({
 	);
 
 	return selectedItemsValue.length ? (
-		<DataSetDisplayContext.Consumer>
+		<DataSetContext.Consumer>
 			{({
 				formId,
 				formName,
@@ -205,7 +205,7 @@ function BulkActions({
 					</div>
 				</nav>
 			)}
-		</DataSetDisplayContext.Consumer>
+		</DataSetContext.Consumer>
 	) : null;
 }
 

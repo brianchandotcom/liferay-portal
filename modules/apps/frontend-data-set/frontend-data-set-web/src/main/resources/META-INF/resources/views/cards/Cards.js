@@ -24,7 +24,7 @@ import {
 	isLink,
 } from '../../data_renderers/ActionsDropdownRenderer';
 
-function Cards({dataLoading, dataSetDisplayContext, items, schema}) {
+function Cards({dataLoading, dataSetContext, items, schema}) {
 	const {
 		executeAsyncItemAction,
 		highlightItems,
@@ -35,7 +35,7 @@ function Cards({dataLoading, dataSetDisplayContext, items, schema}) {
 		selectedItemsKey,
 		selectedItemsValue,
 		style,
-	} = useContext(dataSetDisplayContext);
+	} = useContext(dataSetContext);
 
 	if (dataLoading) {
 		return <ClayLoadingIndicator className="mt-7" />;

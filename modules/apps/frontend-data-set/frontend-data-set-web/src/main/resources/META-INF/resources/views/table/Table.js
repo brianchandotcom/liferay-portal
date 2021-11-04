@@ -18,7 +18,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useMemo} from 'react';
 
-import DataSetDisplayContext from '../../DataSetDisplayContext';
+import DataSetContext from '../../DataSetContext';
 import EmptyResultMessage from '../../EmptyResultMessage';
 import ActionsDropdownRenderer from '../../data_renderers/ActionsDropdownRenderer';
 import {getValueDetailsFromItem} from '../../utils/index';
@@ -84,7 +84,7 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 		selectionType,
 		sorting,
 		updateSorting,
-	} = useContext(DataSetDisplayContext);
+	} = useContext(DataSetContext);
 	const [{visibleFieldNames}] = useContext(ViewsContext);
 
 	const visibleFields = getVisibleFields(schema.fields, visibleFieldNames);

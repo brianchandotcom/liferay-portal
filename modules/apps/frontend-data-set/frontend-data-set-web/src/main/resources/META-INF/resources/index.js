@@ -12,12 +12,12 @@
  * details.
  */
 
-import {render, useThunk} from '@liferay/frontend-js-react-web';
+import {useThunk} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useReducer} from 'react';
 
 import {AppContext} from './AppContext';
-import DataSetDisplay from './DataSetDisplay';
+import DataSet from './DataSet';
 import ViewsContext, {viewsReducer} from './views/ViewsContext';
 
 const App = ({
@@ -44,7 +44,7 @@ const App = ({
 	return (
 		<AppContext.Provider value={{apiURL, appURL, portletId}}>
 			<ViewsContext.Provider value={[state, dispatch]}>
-				<DataSetDisplay {...props} />
+				<DataSet {...props} />
 			</ViewsContext.Provider>
 		</AppContext.Provider>
 	);
@@ -70,4 +70,14 @@ App.proptypes = {
 	).isRequired,
 };
 
-export default (...data) => render(App, ...data);
+export {App as DataSet};
+
+// Renderers API
+
+export {default as DataRenderers} from './data_renderers/index';
+export {default as DateRenderer} from './data_renderers/DateRenderer';
+export {default as StatusRenderer} from './data_renderers/StatusRenderer';
+
+// Data Set Events API
+
+export {default as DATA_SET_EVENT} from './utils/eventsDefinitions';

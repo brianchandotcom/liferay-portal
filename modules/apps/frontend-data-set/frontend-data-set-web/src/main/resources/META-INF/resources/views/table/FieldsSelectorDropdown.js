@@ -19,12 +19,12 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext';
-import DataSetDisplayContext from '../../DataSetDisplayContext';
+import DataSetContext from '../../DataSetContext';
 import persistVisibleFieldNames from '../../thunks/persistVisibleFieldNames';
 import ViewsContext from '../ViewsContext';
 
 const FieldsSelectorDropdown = ({fields}) => {
-	const {id} = useContext(DataSetDisplayContext);
+	const {id} = useContext(DataSetContext);
 	const {appURL, portletId} = useContext(AppContext);
 	const [{visibleFieldNames}, dispatch] = useContext(ViewsContext);
 

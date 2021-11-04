@@ -46,7 +46,7 @@ TimelineEntry.propTypes = {
 
 TimelineEntry.defaultProps = {};
 
-function Timeline({dataSetDisplayContext, items}) {
+function Timeline({dataSetContext, items}) {
 	return (
 		<ClayList className={classNames('mb-0', 'timeline')}>
 			{items.map((item, i) => (
@@ -54,7 +54,7 @@ function Timeline({dataSetDisplayContext, items}) {
 					key={i}
 					{...item}
 					borderBottom={i !== items.length - 1}
-					dataSetDisplayContext={dataSetDisplayContext}
+					dataSetContext={dataSetContext}
 				/>
 			))}
 		</ClayList>
@@ -63,7 +63,7 @@ function Timeline({dataSetDisplayContext, items}) {
 
 Timeline.propTypes = {
 	dataRenderers: PropTypes.object,
-	dataSetDisplayContext: PropTypes.any,
+	dataSetContext: PropTypes.any,
 	items: PropTypes.array,
 };
 

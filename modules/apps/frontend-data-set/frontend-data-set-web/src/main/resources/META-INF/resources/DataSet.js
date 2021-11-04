@@ -24,8 +24,9 @@ import React, {
 	useState,
 } from 'react';
 
+import './styles/main.scss';
 import {AppContext} from './AppContext';
-import DataSetDisplayContext from './DataSetDisplayContext';
+import DataSetContext from './DataSetContext';
 import EmptyResultMessage from './EmptyResultMessage';
 import {updateViewComponent} from './actions/updateViewComponent';
 import ManagementBar from './management_bar/ManagementBar';
@@ -52,7 +53,7 @@ import getJsModule from './utils/modules';
 import ViewsContext from './views/ViewsContext';
 import {getViewContentRenderer} from './views/index';
 
-function DataSetDisplay({
+const DataSet = ({
 	actionParameterName,
 	bulkActions,
 	creationMenu,
@@ -79,16 +80,14 @@ function DataSetDisplay({
 	sidePanelId,
 	sorting: sortingProp,
 	style,
-}) {
+}) => {
 	const {apiURL} = useContext(AppContext);
 
 	const wrapperRef = useRef(null);
 	const [componentLoading, setComponentLoading] = useState(false);
 	const [dataLoading, setDataLoading] = useState(!!apiURL);
-	const [dataSetDisplaySupportModalId] = useState(
-		`support-modal-${getRandomId()}`
-	);
-	const [dataSetDisplaySupportSidePanelId] = useState(
+	const [dataSetSupportModalId] = useState(`support-modal-${getRandomId()}`);
+	const [dataSetSupportSidePanelId] = useState(
 		sidePanelId || `support-side-panel-${getRandomId()}`
 	);
 	const [delta, setDelta] = useState(
@@ -330,7 +329,7 @@ function DataSetDisplay({
 	}, [id]);
 
 	const managementBar = showManagementBar ? (
-		<div className="data-set-display-management-bar-wrapper">
+		<div className="data-set-management-bar-wrapper">
 			<ManagementBar
 				bulkActions={bulkActions}
 				creationMenu={creationMenu}
@@ -344,7 +343,7 @@ function DataSetDisplay({
 				selectedItemsValue={selectedItemsValue}
 				selectionType={selectionType}
 				showSearch={showSearch}
-				sidePanelId={dataSetDisplaySupportSidePanelId}
+				sidePanelId={dataSetSupportSidePanelId}
 				total={items?.length ?? 0}
 			/>
 		</div>
@@ -352,7 +351,7 @@ function DataSetDisplay({
 
 	const view =
 		!dataLoading && !componentLoading ? (
-			<div className="data-set-display-content-wrapper">
+			<div className="data-set-content-wrapper">
 				<input
 					hidden
 					name={`${namespace || id + '_'}${
@@ -365,7 +364,7 @@ function DataSetDisplay({
 				overrideEmptyResultView ||
 				inlineAddingSettings ? (
 					<CurrentViewComponent
-						dataSetDisplayContext={DataSetDisplayContext}
+						dataSetContext={DataSetContext}
 						items={items}
 						itemsActions={itemsActions}
 						style={style}
@@ -386,7 +385,7 @@ function DataSetDisplay({
 
 	const paginationComponent =
 		showPagination && pagination && items?.length ? (
-			<div className="data-set-display-pagination-wrapper">
+			<div className="data-set-pagination-wrapper">
 				<ClayPaginationBarWithBasicItems
 					activeDelta={delta}
 					activePage={pageNumber}
@@ -426,7 +425,7 @@ function DataSetDisplay({
 
 	function openSidePanel(config) {
 		return Liferay.fire(OPEN_SIDE_PANEL, {
-			id: dataSetDisplaySupportSidePanelId,
+			id: dataSetSupportSidePanelId,
 			onSubmit: refreshData,
 			...config,
 		});
@@ -434,7 +433,7 @@ function DataSetDisplay({
 
 	function openModal(config) {
 		return Liferay.fire(OPEN_MODAL, {
-			id: dataSetDisplaySupportModalId,
+			id: dataSetSupportModalId,
 			onSubmit: refreshData,
 			...config,
 		});
@@ -572,7 +571,7 @@ function DataSetDisplay({
 	}
 
 	return (
-		<DataSetDisplayContext.Provider
+		<DataSetContext.Provider
 			value={{
 				actionParameterName,
 				applyItemInlineUpdates,
@@ -589,7 +588,7 @@ function DataSetDisplay({
 				itemsActions,
 				itemsChanges,
 				loadData: refreshData,
-				modalId: dataSetDisplaySupportModalId,
+				modalId: dataSetSupportModalId,
 				namespace,
 				nestedItemsKey,
 				nestedItemsReferenceKey,
@@ -601,7 +600,7 @@ function DataSetDisplay({
 				selectedItemsKey,
 				selectedItemsValue,
 				selectionType,
-				sidePanelId: dataSetDisplaySupportSidePanelId,
+				sidePanelId: dataSetSupportSidePanelId,
 				sorting,
 				style,
 				toggleItemInlineEdit,
@@ -611,32 +610,32 @@ function DataSetDisplay({
 				updateSorting: setSorting,
 			}}
 		>
-			<Modal id={dataSetDisplaySupportModalId} onClose={refreshData} />
+			<Modal id={dataSetSupportModalId} onClose={refreshData} />
 
 			{!sidePanelId && (
 				<SidePanel
-					id={dataSetDisplaySupportSidePanelId}
+					id={dataSetSupportSidePanelId}
 					onAfterSubmit={refreshData}
 				/>
 			)}
 
-			<div className="data-set-display-wrapper" ref={wrapperRef}>
+			<div className="data-set-wrapper" ref={wrapperRef}>
 				{style === 'default' && (
-					<div className="data-set-display data-set-display-inline">
+					<div className="data-set data-set-inline">
 						{managementBar}
 						{wrappedView}
 						{paginationComponent}
 					</div>
 				)}
 				{style === 'stacked' && (
-					<div className="data-set-display data-set-display-stacked">
+					<div className="data-set data-set-stacked">
 						{managementBar}
 						{wrappedView}
 						{paginationComponent}
 					</div>
 				)}
 				{style === 'fluid' && (
-					<div className="data-set-display data-set-display-fluid">
+					<div className="data-set data-set-fluid">
 						{managementBar}
 						<div className="container-fluid container-xl mt-3">
 							{wrappedView}
@@ -645,11 +644,11 @@ function DataSetDisplay({
 					</div>
 				)}
 			</div>
-		</DataSetDisplayContext.Provider>
+		</DataSetContext.Provider>
 	);
-}
+};
 
-DataSetDisplay.propTypes = {
+DataSet.propTypes = {
 	apiURL: PropTypes.string,
 	bulkActions: PropTypes.array,
 	creationMenu: PropTypes.shape({
@@ -706,7 +705,7 @@ DataSetDisplay.propTypes = {
 	style: PropTypes.oneOf(['default', 'fluid', 'stacked']),
 };
 
-DataSetDisplay.defaultProps = {
+DataSet.defaultProps = {
 	bulkActions: [],
 	filters: [],
 	inlineEditingSettings: null,
@@ -724,4 +723,4 @@ DataSetDisplay.defaultProps = {
 	style: 'default',
 };
 
-export default DataSetDisplay;
+export default DataSet;

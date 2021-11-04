@@ -17,12 +17,12 @@ import ClayDropDown from '@clayui/drop-down';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import DataSetDisplayContext from '../../DataSetDisplayContext';
+import DataSetContext from '../../DataSetContext';
 import {triggerAction} from '../../utils/actionItems/index';
 
 function CreationMenu({primaryItems}) {
 	const [active, setActive] = useState(false);
-	const dataSetContext = useContext(DataSetDisplayContext);
+	const dataSetContext = useContext(DataSetContext);
 
 	return (
 		primaryItems?.length > 0 && (

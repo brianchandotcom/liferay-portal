@@ -1109,7 +1109,8 @@ public abstract class PoshiElement
 	protected static final String VAR_STATEMENT_END_REGEX = "(;|)$";
 
 	protected static final Pattern poshiScriptAnnotationPattern =
-		Pattern.compile("@[\\w-]*[\\s]*?=[\\s]\".*?\"(?=\\n)", Pattern.DOTALL);
+		Pattern.compile(
+			"@[\\w-]*[\\s]*?(\n|=[\\s]\".*?\"(?=\\n))", Pattern.DOTALL);
 	protected static final Pattern poshiScriptBlockPattern = Pattern.compile(
 		"^[^{]*\\{[\\s\\S]*\\}$");
 

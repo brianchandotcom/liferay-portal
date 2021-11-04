@@ -736,14 +736,14 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	}
 
 	protected void addUserGroupsNotAddedByLDAPImport(
-			long userId, Set<Long> userGroupIds)
+			long userId, Set<Long> ldapServerGroupIds, Set<Long> userGroupIds)
 		throws Exception {
 
 		List<UserGroup> userGroups = _userGroupLocalService.getUserUserGroups(
 			userId);
 
 		for (UserGroup userGroup : userGroups) {
-			if (!userGroup.isAddedByLDAPImport()) {
+			if (!ldapServerGroupIds.contains(userGroup.getUserGroupId())) {
 				userGroupIds.add(userGroup.getUserGroupId());
 			}
 		}
@@ -1203,7 +1203,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 		}
 
-		addUserGroupsNotAddedByLDAPImport(user.getUserId(), newUserGroupIds);
+		addUserGroupsNotAddedByLDAPImport(
+			user.getUserId(), ldapServerGroupIds, newUserGroupIds);
 
 		Set<Long> oldUserGroupIds = new LinkedHashSet<>();
 

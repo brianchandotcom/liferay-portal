@@ -67,8 +67,16 @@ public class ServiceConfigurationInitializer {
 	protected void start() {
 		_initServiceComponent();
 
-		_registerConfiguration(
-			_bundle.getBundleContext(), _serviceConfiguration, "service");
+		BundleContext bundleContext = _bundle.getBundleContext();
+
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				Configuration.class, _serviceConfiguration,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"name", "service"
+				).put(
+					"origin.bundle.symbolic.name", _bundle.getSymbolicName()
+				).build()));
 	}
 
 	private void _initServiceComponent() {
@@ -104,19 +112,6 @@ public class ServiceConfigurationInitializer {
 			_log.error(
 				"Unable to initialize service component", portalException);
 		}
-	}
-
-	private void _registerConfiguration(
-		BundleContext bundleContext, Configuration configuration, String name) {
-
-		_serviceRegistrations.add(
-			bundleContext.registerService(
-				Configuration.class, configuration,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"name", name
-				).put(
-					"origin.bundle.symbolic.name", _bundle.getSymbolicName()
-				).build()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

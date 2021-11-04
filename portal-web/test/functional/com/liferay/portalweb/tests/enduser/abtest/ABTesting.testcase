@@ -1963,7 +1963,7 @@ definition {
 				content = "${htmlSnippet}",
 				fragmentName = "HTML",
 				id = "element-html");
-			
+
 			Button.clickPublish();
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
@@ -1977,8 +1977,8 @@ definition {
 
 		task ("Click on Select Clickable Element") {
 			Click(
-			key_value = "Select Clickable Element",
-			locator1 = "ABTest#SECONDARY_BUTTON");
+				key_value = "Select Clickable Element",
+				locator1 = "ABTest#SECONDARY_BUTTON");
 		}
 
 		task ("Assert the button is dosen't highlighted") {
@@ -1987,7 +1987,7 @@ definition {
 				locator1 = "ABTest#TARGET_ELEMENT_EDIT",
 				value1 = "customId");
 		}
-	
+
 		task ("Delete AB Test") {
 			ABTest.editOrDeleteABTest(value = "Delete");
 		}
@@ -2218,7 +2218,7 @@ definition {
 				content = "${htmlSnippet}",
 				fragmentName = "HTML",
 				id = "element-html");
-			
+
 			Button.clickPublish();
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
@@ -2233,22 +2233,22 @@ definition {
 		task ("Write ID Element") {
 			ABTest.writeId(elementId = "customId");
 
-				KeyPress(
-					locator1 = "ABTest#ID_BOX",
-					value1 = "\ENTER");
+			KeyPress(
+				locator1 = "ABTest#ID_BOX",
+				value1 = "\ENTER");
 		}
 
 		task ("Assert the button is highlighted and selected.") {
 			AssertTextEquals(
 				locator1 = "ABTest#TARGET_LABEL",
 				value1 = "Target");
-			
+
 			AssertTextEquals(
 				key_id = "customId",
 				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX",
 				value1 = "customId");
 		}
-	
+
 		task ("Delete AB Test") {
 			ABTest.editOrDeleteABTest(value = "Delete");
 		}

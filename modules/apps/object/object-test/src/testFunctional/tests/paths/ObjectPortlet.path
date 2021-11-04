@@ -36,6 +36,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>CUSTOM_OBJECT_ON_CONTROL_PANEL</td>
+		<td>//span[contains(@class,'c-inner') and contains(text(),'Custom Objects')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>DUPLICATED_ENTRY_VALUE</td>
 		<td>(//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_entry}')])[2]</td>
 		<td></td>
@@ -73,6 +78,11 @@
 	<tr>
 		<td>GENERIC_ENTRY_COLUMN</td>
 		<td>//div[contains(@class,'dnd-th')][contains(text(),'${key_fieldLabelName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_PORTLET_HEADER</td>
+		<td>//span[@data-qa-id='headerTitle' and contains (text(),'${key_objectLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>

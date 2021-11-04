@@ -77,12 +77,58 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is possible to view and access the Custom Object portlet with the Access in Control Panel permission"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAccessCustomObjectWithAccessPermission {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-140525 CanAccessCustomObjectWithAccessPermission pending implementation
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACTION_CHECKBOX",
+			permissionDefinitionValue = "",
+			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
+			permissionNavigationValue = "Custom Objects",
+			roleTitle = "Regular Role",
+			roleType = "Regular");
+
+		Navigator.openURL();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectPortlet.assertObjectIsDisplayedOnControlPanel();
+
+		ObjectPortlet.goToCustomObjectPortletOnControlPanel();
+
+		ObjectPortlet.assertHeader(objectLabel = "Custom Object");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a BigDecimal field on layout"

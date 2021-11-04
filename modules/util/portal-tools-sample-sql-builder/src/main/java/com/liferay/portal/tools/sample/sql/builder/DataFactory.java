@@ -3724,39 +3724,8 @@ public class DataFactory {
 	public DLFolderModel newDLFolderModel(
 		long groupId, long parentFolderId, String name) {
 
-		DLFolderModel dlFolderModel = new DLFolderModelImpl();
-
-		// UUID
-
-		dlFolderModel.setUuid(SequentialUUID.generate());
-
-		// PK fields
-
-		dlFolderModel.setFolderId(_counter.get());
-
-		// Group instance
-
-		dlFolderModel.setGroupId(groupId);
-
-		// Audit fields
-
-		dlFolderModel.setCompanyId(_companyId);
-		dlFolderModel.setUserId(_sampleUserId);
-		dlFolderModel.setUserName(_SAMPLE_USER_NAME);
-		dlFolderModel.setCreateDate(nextFutureDate());
-		dlFolderModel.setModifiedDate(nextFutureDate());
-
-		// Other fields
-
-		dlFolderModel.setRepositoryId(groupId);
-		dlFolderModel.setParentFolderId(parentFolderId);
-		dlFolderModel.setName(name);
-		dlFolderModel.setLastPostDate(nextFutureDate());
-		dlFolderModel.setDefaultFileEntryTypeId(_DEFAULT_DL_FILE_ENTRY_TYPE_ID);
-		dlFolderModel.setLastPublishDate(nextFutureDate());
-		dlFolderModel.setStatusDate(nextFutureDate());
-
-		return dlFolderModel;
+		return newDLFolderModel(
+			_counter.get(), groupId, parentFolderId, "", name);
 	}
 
 	public List<DLFolderModel> newDLFolderModels(
@@ -6123,6 +6092,46 @@ public class DataFactory {
 
 		return newDlFileEntryModel(
 			dlFolderModel, "TestFile" + index, "txt", ContentTypes.TEXT_PLAIN);
+	}
+
+	protected DLFolderModel newDLFolderModel(
+		long folderId, long groupId, long parentFolderId, String treePath,
+		String name) {
+
+		DLFolderModel dlFolderModel = new DLFolderModelImpl();
+
+		// UUID
+
+		dlFolderModel.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		dlFolderModel.setFolderId(folderId);
+
+		// Group instance
+
+		dlFolderModel.setGroupId(groupId);
+
+		// Audit fields
+
+		dlFolderModel.setCompanyId(_companyId);
+		dlFolderModel.setUserId(_sampleUserId);
+		dlFolderModel.setUserName(_SAMPLE_USER_NAME);
+		dlFolderModel.setCreateDate(nextFutureDate());
+		dlFolderModel.setModifiedDate(nextFutureDate());
+
+		// Other fields
+
+		dlFolderModel.setRepositoryId(groupId);
+		dlFolderModel.setParentFolderId(parentFolderId);
+		dlFolderModel.setTreePath(treePath);
+		dlFolderModel.setName(name);
+		dlFolderModel.setLastPostDate(nextFutureDate());
+		dlFolderModel.setDefaultFileEntryTypeId(_DEFAULT_DL_FILE_ENTRY_TYPE_ID);
+		dlFolderModel.setLastPublishDate(nextFutureDate());
+		dlFolderModel.setStatusDate(nextFutureDate());
+
+		return dlFolderModel;
 	}
 
 	protected GroupModel newGroupModel(

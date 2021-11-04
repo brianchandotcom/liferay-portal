@@ -237,6 +237,8 @@ definition {
 			fieldFieldLabel = "Rich Text",
 			fieldName = "Rich Text",
 			targetFieldLabel = "Text");
+		
+		Translations.addLanguageManageTranslations(key_language = "pt-BR");
 
 		PortletEntry.changeLocale(
 			locale = "pt-BR",
@@ -261,6 +263,8 @@ definition {
 			fieldFieldLabelEdit = "Rico Texto",
 			fieldsetModal = "true");
 
+		Translations.addLanguageManageTranslations(key_language = "es-ES");
+
 		PortletEntry.changeLocale(
 			locale = "es-ES",
 			modal = "true");
@@ -283,6 +287,8 @@ definition {
 			fieldFieldLabel = "Rich Text",
 			fieldFieldLabelEdit = "Rica Texto",
 			fieldsetModal = "true");
+
+		Translations.addLanguageManageTranslations(key_language = "ja-JP");
 
 		PortletEntry.changeLocale(
 			locale = "ja-JP",

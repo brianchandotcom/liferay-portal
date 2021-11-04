@@ -14,16 +14,25 @@
 
 package com.liferay.account.admin.web.internal.display.context;
 
+import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
 import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
+import com.liferay.account.admin.web.internal.display.AccountGroupDisplay;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountGroupPermission;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -48,6 +57,10 @@ public class ViewAccountGroupAccountEntriesManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
+		if (!_hasAssignAccountsPermission()) {
+			return null;
+		}
+
 		return DropdownItemList.of(
 			DropdownItemBuilder.putData(
 				"action", "removeAccountGroupAccountEntries"
@@ -71,5 +84,49 @@ public class ViewAccountGroupAccountEntriesManagementToolbarDisplayContext
 			}
 		).build();
 	}
+
+	@Override
+	public Boolean isSelectable() {
+		return _hasAssignAccountsPermission();
+	}
+
+	@Override
+	public Boolean isShowCreationMenu() {
+		return _hasAssignAccountsPermission();
+	}
+
+	private long _getAccountGroupId() {
+		AccountGroupDisplay accountGroupDisplay =
+			(AccountGroupDisplay)httpServletRequest.getAttribute(
+				AccountWebKeys.ACCOUNT_GROUP_DISPLAY);
+
+		if (accountGroupDisplay != null) {
+			return accountGroupDisplay.getAccountGroupId();
+		}
+
+		return 0;
+	}
+
+	private boolean _hasAssignAccountsPermission() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			return AccountGroupPermission.contains(
+				themeDisplay.getPermissionChecker(), _getAccountGroupId(),
+				AccountActionKeys.ASSIGN_ACCOUNTS);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewAccountGroupAccountEntriesManagementToolbarDisplayContext.class);
 
 }

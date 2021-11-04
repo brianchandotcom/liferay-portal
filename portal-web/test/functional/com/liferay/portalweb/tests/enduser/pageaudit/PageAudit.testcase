@@ -34,13 +34,43 @@ definition {
 
 	@description = "LPS-132234: Given the detail view of the page audit panel
 	Then the checks related to Low contrast ratio, Missing image-alt and Missing input-image-alt will appear under the Accessibility section"
-
-	@ignore = "true"
 	@priority = "3"
-	test AccessibilityErrors {
+	test AccessibilityFailures {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";
 
-		// TODO LPS-132234 AccessibilityErrors pending implementation
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
 
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Run Page Audit") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Check if proper failures are displayed at Accessibility section") {
+			AssertElementPresent(
+				failingCheckCategory = "Accessibility",
+				failingCheckName = "Low Contrast Ratio",
+				locator1 = "PageAudit#FAILING_CHECK_CATEGORY_NAME");
+
+			AssertElementPresent(
+				failingCheckCategory = "Accessibility",
+				failingCheckName = "Missing Img ALT Attributes",
+				locator1 = "PageAudit#FAILING_CHECK_CATEGORY_NAME");
+
+			AssertElementPresent(
+				failingCheckCategory = "Accessibility",
+				failingCheckName = "Missing Input ALT Attributes",
+				locator1 = "PageAudit#FAILING_CHECK_CATEGORY_NAME");
+		}
 	}
 
 	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
@@ -68,12 +98,90 @@ definition {
 	@description = "LPS-132234: Given the page audit panel detail view and a user with NO permissions for editing the page
 	When there is no meta description for the page
 	Then the users will see a text: Add a meta-description from the Configuration section of this page."
-	@ignore = "true"
 	@priority = "4"
-	test AddMetaDescription {
+	test CheckMissingMetaDescriptionWithoutPermission {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckInvalidCanonicalURL";
 
-		// TODO LPS-132234 AddMetaDescription pending implementation
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "WebContentEditorRole Name",
+				roleTitle = "WebContentEditorRole Name");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "WebContentEditorRole Name");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "WebContentEditorRole Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Open detailed view and check text") {
+			PageAudit.goToDetailView(failingCheckName = "Missing Meta Description");
+
+			AssertElementPresent(
+				key_text = "Add a description from the configuration section of this page.",
+				locator1 = "PageAudit#FAILING_CHECK_DETAIL_TEXT");
+
+			AssertElementNotPresent(
+				key_text = "Add a description",
+				locator1 = "Link#ANY");
+		}
+
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
+		}
 	}
 
 	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Site Scope section
@@ -123,12 +231,90 @@ definition {
 	@description = "LPS-132234: Given the page audit panel detail view and a user with NO permissions to edit Instance Settings
 	When there is no canonical URL, or it doesn't coincide with the page's URL
 	Then the users will see the invalid canonical URL, and a text: If the problem is that the canonical URL doesn't match the URL of the page, try changing the configuration for using localized canonical URLs from Instance settings > Pages > SEO"
-	@ignore = "true"
 	@priority = "4"
-	test CanonicalURLError {
+	test CheckInvalidCanonicalURLWithoutPermission {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckInvalidCanonicalURL";
 
-		// TODO LPS-132234 CanonicalURLError pending implementation
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "WebContentEditorRole Name",
+				roleTitle = "WebContentEditorRole Name");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "WebContentEditorRole Name");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "WebContentEditorRole Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Open detailed view and check text") {
+			PageAudit.goToDetailView(failingCheckName = "Invalid Canonical URL");
+
+			AssertElementPresent(
+				key_text = "try changing the configuration for using localized canonical URLs from Instance Settings > Pages > SEO.",
+				locator1 = "PageAudit#FAILING_CHECK_DETAIL_TEXT");
+
+			AssertElementNotPresent(
+				key_text = "Instance Settings > Pages > SEO",
+				locator1 = "Link#ANY");
+		}
+
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
+		}
 	}
 
 	@description = "LPS-129375: Given the Page Audit panel of a content page
@@ -2650,12 +2836,36 @@ definition {
 	@description = "LPS-132234: Given the page audit panel detail view
 	When there are more than 10 failing elements for a single issue
 	Then the users can see a Show more button every 10 failing elements, and when they click on it another 10 elements are displayed"
-	@ignore = "true"
 	@priority = "3"
 	test DisplayMoreErrors {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";
 
-		// TODO LPS-132234 DisplayMoreErrors pending implementation
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test-10-more-issues.html");
+		}
 
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Run Page Audit") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Check the number of failures and view more fails") {
+			PageAudit.goToDetailView(failingCheckName = "Illegible Font Sizes");
+
+			AssertElementPresent(
+				badgeValue = "12",
+				locator1 = "PageAudit#BADGE_NUMBER");
+			
+			Button.click(button = "View More");
+		}
 	}
 
 	@description = "LPS-128383: Given the preferred strategy dropdown in the Site Scope section
@@ -3255,23 +3465,157 @@ definition {
 	@description = "LPS-132234: Given the page audit panel detail view and a user with NO permissions for editing the page
 	When the page is blocked from indexing
 	Then the users will see a text: Change the robots.txt setting from the Configuration section of this page"
-	@ignore = "true"
 	@priority = "4"
-	test RobotsSetting {
+	test CheckPageBlockedFromIndexingWithoutPermission {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckInvalidCanonicalURL";
 
-		// TODO LPS-132234 RobotsSetting pending implementation
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "WebContentEditorRole Name",
+				roleTitle = "WebContentEditorRole Name");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "WebContentEditorRole Name");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "WebContentEditorRole Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Open detailed view and check text") {
+			PageAudit.goToDetailView(failingCheckName = "Page Blocked from Indexing");
+
+			AssertElementPresent(
+				key_text = "Change the robots.txt setting from the configuration section of this page.",
+				locator1 = "PageAudit#FAILING_CHECK_DETAIL_TEXT");
+
+			AssertElementNotPresent(
+				key_text = "Change the robots.txt  setting",
+				locator1 = "Link#ANY");
+		}
+
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
+		}
 	}
 
 	@description = "LPS-132234: Given the detail view of the page audit panel
 	Then the checks related to Incorrect image-aspect-ratio, Missing meta-description, Invalid Hreflang, Invalid canonical URL, Illegible font sizes,
 	Small tap targets, Missing <title> element and Crawlable-anchors will appear under the SEO section"
-	@ignore = "true"
 	@priority = "3"
-	test SEOMistakes {
+	test SEOFailures {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";
 
-		// TODO LPS-132234 SEOMistakes pending implementation
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
 
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Run Page Audit") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Check if proper failures are displayed at Accessibility section") {
+			AssertElementPresent(
+				failingCheckCategory = "SEO",
+				failingCheckName = "Invalid Canonical URL",
+				locator1 = "PageAudit#FAILING_CHECK_CATEGORY_NAME");
+
+			AssertElementPresent(
+				failingCheckCategory = "SEO",
+				failingCheckName = "Not All Links Are Crawlable",
+				locator1 = "PageAudit#FAILING_CHECK_CATEGORY_NAME");
+
+			AssertElementPresent(
+				failingCheckCategory = "SEO",
+				failingCheckName = "Illegible Font Sizes",
+				locator1 = "PageAudit#FAILING_CHECK_CATEGORY_NAME");
+
+			AssertElementPresent(
+				failingCheckCategory = "SEO",
+				failingCheckName = "Invalid Hreflang",
+				locator1 = "PageAudit#FAILING_CHECK_CATEGORY_NAME");
+
+			AssertElementPresent(
+				failingCheckCategory = "SEO",
+				failingCheckName = "Incorrect Image Aspect Ratios",
+				locator1 = "PageAudit#FAILING_CHECK_CATEGORY_NAME");
+
+			AssertElementPresent(
+				failingCheckCategory = "SEO",
+				failingCheckName = "Missing Meta Description",
+				locator1 = "PageAudit#FAILING_CHECK_CATEGORY_NAME");
+
+			AssertElementPresent(
+				failingCheckCategory = "SEO",
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_CATEGORY_NAME");
+
+			AssertElementPresent(
+				failingCheckCategory = "SEO",
+				failingCheckName = "Missing <title> Element",
+				locator1 = "PageAudit#FAILING_CHECK_CATEGORY_NAME");
+		}
 	}
 
 	@description = "LPS-125851: Given any value in the Site Scope section

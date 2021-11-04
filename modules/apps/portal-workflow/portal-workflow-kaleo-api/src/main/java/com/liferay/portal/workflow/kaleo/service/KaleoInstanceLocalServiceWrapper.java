@@ -336,13 +336,14 @@ public class KaleoInstanceLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
-		getKaleoInstances(
-			Long userId, String assetClassName, Long assetClassPK,
-			Boolean completed, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
-					orderByComparator,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+			getKaleoInstances(
+				Long userId, String assetClassName, Long assetClassPK,
+				Boolean completed, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
+						orderByComparator,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoInstanceLocalService.getKaleoInstances(
 			userId, assetClassName, assetClassPK, completed, start, end,
@@ -351,13 +352,14 @@ public class KaleoInstanceLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
-		getKaleoInstances(
-			Long userId, String[] assetClassNames, Boolean completed, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
-					orderByComparator,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+			getKaleoInstances(
+				Long userId, String[] assetClassNames, Boolean completed,
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
+						orderByComparator,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoInstanceLocalService.getKaleoInstances(
 			userId, assetClassNames, completed, start, end, orderByComparator,
@@ -366,13 +368,14 @@ public class KaleoInstanceLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
-		getKaleoInstances(
-			String kaleoDefinitionName, int kaleoDefinitionVersion,
-			boolean completed, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
-					orderByComparator,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+			getKaleoInstances(
+				String kaleoDefinitionName, int kaleoDefinitionVersion,
+				boolean completed, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
+						orderByComparator,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoInstanceLocalService.getKaleoInstances(
 			kaleoDefinitionName, kaleoDefinitionVersion, completed, start, end,

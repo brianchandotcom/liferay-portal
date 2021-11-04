@@ -2707,9 +2707,42 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test InvalidAPIKeyErrorIsRecovered {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";
 
-		// TODO LPS-135681 InvalidAPIKeyErrorIsRecovered pending implementation
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
 
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "InvalidAPI");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			WaitForElementPresent(
+				errorTitle = "The API key is invalid.",
+				locator1 = "PageAudit#ERROR_WARNING_TITLE");
+		}
+
+		task ("Navigate to Site Settings") {
+			Button.click(button = "Set API Key");
+
+			AssertElementPresent(
+				key_breadcrumbName = "Site Settings",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
+			
+			MenuBar.viewActive(menuBar = "Google PageSpeed Insights");
+		}
 	}
 
 	@description = "LPS-130636: Given a site

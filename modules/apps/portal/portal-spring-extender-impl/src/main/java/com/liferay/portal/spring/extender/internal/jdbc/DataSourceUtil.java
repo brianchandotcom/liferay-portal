@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.dao.jdbc.DataSourceProvider;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 
@@ -28,6 +30,12 @@ import javax.sql.DataSource;
 public class DataSourceUtil {
 
 	public static DataSource getDataSource(ClassLoader extendeeClassLoader) {
+		DataSource dataSource = _dataSources.get(extendeeClassLoader);
+
+		if (dataSource != null) {
+			return dataSource;
+		}
+
 		ServiceLoader<DataSourceProvider> serviceLoader = ServiceLoader.load(
 			DataSourceProvider.class, extendeeClassLoader);
 
@@ -41,5 +49,14 @@ public class DataSourceUtil {
 
 		return InfrastructureUtil.getDataSource();
 	}
+
+	public static void setDataSource(
+		ClassLoader extendeeClassLoader, DataSource dataSource) {
+
+		_dataSources.put(extendeeClassLoader, dataSource);
+	}
+
+	private static final Map<ClassLoader, DataSource> _dataSources =
+		new ConcurrentHashMap<>();
 
 }

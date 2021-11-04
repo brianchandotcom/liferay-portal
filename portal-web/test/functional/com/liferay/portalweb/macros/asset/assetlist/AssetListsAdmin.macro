@@ -36,13 +36,7 @@ definition {
 
 	macro addDynamicSelection {
 		if (isSet(depotName)) {
-			Click(locator1 = "Message#EMPTY_INFO_TAGLIB");
-
-			Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
-
-			Click(
-				key_menuItem = "Dynamic Collection",
-				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+			LexiconEntry.gotoAddMenuItem(menuItem = "Dynamic Collection");
 		}
 		else if (IsVisible(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
 			Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
@@ -98,13 +92,7 @@ definition {
 
 	macro addManualSelection {
 		if (isSet(depotName)) {
-			Click(locator1 = "Message#EMPTY_INFO_TAGLIB");
-
-			Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
-
-			Click(
-				key_menuItem = "Manual Collection",
-				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+			LexiconEntry.gotoAddMenuItem(menuItem = "Manual Collection");
 		}
 		else if (IsVisible(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
 			Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");

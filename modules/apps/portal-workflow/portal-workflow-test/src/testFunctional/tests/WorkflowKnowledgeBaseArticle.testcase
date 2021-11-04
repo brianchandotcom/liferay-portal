@@ -134,8 +134,47 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditApprovedBasicArticle {
+		Navigator.openURL();
 
-		// TODO LRQA-69928 CanEditApprovedBasicArticle pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Knowledge Base");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbWorkflowAction = "Submit for Publication");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Knowledge Base Article Title",
+			workflowAssetType = "Knowledge Base Article",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Knowledge Base Article Title",
+			workflowAssetType = "Knowledge Base Article",
+			workflowTask = "Review");
+		
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Knowledge Base");
+
+		WorkflowKnowledgeBaseArticle.editKBArticle(
+			submitForPublication = "true",
+			kbArticleContentEdit = "Knowledge Base Article Content Edit",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content Edit",
+			kbArticleTitle = "Knowledge Base Article Title Edit",
+			kbStatus = "Pending");
 
 	}
 

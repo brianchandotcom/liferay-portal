@@ -1,0 +1,48 @@
+definition {
+    	macro editKBArticle {
+		Click(
+			key_rowEntry = "${kbArticleTitle}",
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "A new version is created automatically if this content is modified.");
+
+		AssertElementPresent(locator1 = "TextInput#TITLE");
+
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbArticleTitleEdit}");
+
+		if (isSet(kbArticleContentEdit)) {
+			CKEditor.addContent(kbArticleContentEdit = "${kbArticleContentEdit}");
+		}
+
+		if (isSet(kbArticleAttachment)) {
+			KBArticle.selectAttachmentCP(kbArticleAttachment = "${kbArticleAttachment}");
+		}
+
+		if (isSet(customFieldTextEdit)) {
+			Panel.expandPanel(panel = "Custom Fields");
+
+			Type(
+				locator1 = "TextInput#CUSTOM_FIELD",
+				value1 = "${customFieldTextEdit}");
+		}
+
+		if ("${cancel}" == "true") {
+			Button.clickCancel();
+		}
+        else if ("${submitForPublication}" == "true") {
+			PortletEntry.submitForPublication();
+		}
+		else if ("${saveAsDraft}" == "true") {
+			PortletEntry.saveAsDraft();
+		}
+		else {
+			PortletEntry.publish();
+		}
+	}
+}

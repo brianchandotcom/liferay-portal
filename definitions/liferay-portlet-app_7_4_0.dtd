@@ -416,6 +416,8 @@ http://docs.liferay.com/portal/7.1-latest/javadocs/portal-kernel/com/liferay/ass
 <!--
 The atom-collection-adapter value must be a class that implements
 com.liferay.portal.kernel.atom.AtomCollectionAdapter.
+
+This element is deprecated as of 7.4.0, with no direct replacement.
 -->
 <!ELEMENT atom-collection-adapter (#PCDATA)>
 

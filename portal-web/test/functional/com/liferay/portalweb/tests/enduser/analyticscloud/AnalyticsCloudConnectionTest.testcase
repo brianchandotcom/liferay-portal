@@ -36,6 +36,8 @@ definition {
 	@description = "Automation ID: LRAC-8832 | Test Summary: Add DXP data source and configure only one site"
 	@priority = "3"
 	test AddDataSourceForOneSite {
+		property portal.release = "true";
+
 		task ("Add site and page") {
 			ACUtils.addSiteAndPage();
 		}
@@ -123,6 +125,8 @@ definition {
 	@description = "Automation ID: LRAC-8835 | Test Summary: Assert Liferay Data Source Contact Count Preview"
 	@priority = "4"
 	test AssertLiferayDataSourceContactCountPreview {
+		property portal.release = "true";
+
 		task ("Connect DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}
@@ -170,6 +174,8 @@ definition {
 	@description = "Automation ID: LRAC-8834 | Test Summary: Assert the Liferay DXP Data Source Status"
 	@priority = "3"
 	test AssertLiferayDataSourceStatus {
+		property portal.release = "true";
+
 		task ("Connect DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
@@ -250,6 +256,8 @@ definition {
 	@description = "Sync Liferay Data Source Contacts"
 	@priority = "5"
 	test CanSyncAllContactsFromDXPToAC {
+		property portal.release = "true";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -286,6 +294,8 @@ definition {
 	@description = "Validate if the user can connect AC to DXP"
 	@priority = "5"
 	test ConnectACtoDXP {
+		property portal.release = "true";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 	}
 
@@ -330,6 +340,8 @@ definition {
 	@description = "Automation ID: LRAC-8839 | Test Summary: Preview the number of Organization contacts to sync"
 	@priority = "3"
 	test OrganizationContactSyncPreview {
+		property portal.release = "true";
+
 		task ("Create a new user, a new organization and assign the organization for the created user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -438,6 +450,8 @@ definition {
 	@description = "Automation ID: LRAC-8822 | Test Summary: Sync Liferay Data Source Contacts by User Groups"
 	@priority = "4"
 	test SyncDataSourceContactsByGroups {
+		property portal.release = "true";
+
 		task ("Add user, group and assign user to group") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -499,6 +513,8 @@ definition {
 	@description = "Automation ID: LRAC-8823 | Test Summary: Sync Liferay Data Source Contacts by Organizations"
 	@priority = "4"
 	test SyncDataSourceContactsByOrganizations {
+		property portal.release = "true";
+
 		task ("Create a new user, a new organization and assign the organization for the created user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -573,6 +589,8 @@ definition {
 	@description = "Automation ID: LRAC-8824 | Test Summary: Preview the number of User Group contacts to sync"
 	@priority = "4"
 	test UserGroupContactSyncPreview {
+		property portal.release = "true";
+
 		var user = "ac";
 		var groupsList = "User Group1,User Group2";
 
@@ -647,6 +665,8 @@ definition {
 	@description = "Automation ID: LRAC-8128 | Test Summary: View asset added by DXP data source"
 	@priority = "5"
 	test ViewAssetAddedByDXPDataSource {
+		property portal.release = "true";
+		
 		task ("Create site, page and add a blog to the page") {
 			ACUtils.addSiteAndPage();
 

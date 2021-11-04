@@ -33,7 +33,7 @@ const baseProps = {
 	selectedSource: {
 		classTypeLabel: 'Label source type',
 	},
-	value: 'field-2',
+	value: '${field-2}',
 };
 
 const renderComponent = (props) =>
@@ -95,16 +95,14 @@ describe('MappingInput', () => {
 			});
 
 			describe('and the user selects another field', () => {
-				beforeEach(() => {
+				it('adds the new field ${key:label} to the input', () => {
 					fireEvent.change(fieldSelect, {
 						target: {value: baseProps.fields[0].key},
 					});
 					fireEvent.click(mappingPanelButton);
-				});
 
-				it('adds the new field key to the input', () => {
 					expect(inputValue.value).toBe(
-						` $\{${baseProps.fields[0].key}} ${baseProps.value}`
+						` $\{${baseProps.fields[0].key}:${baseProps.fields[0].label}} ${baseProps.value}`
 					);
 				});
 			});

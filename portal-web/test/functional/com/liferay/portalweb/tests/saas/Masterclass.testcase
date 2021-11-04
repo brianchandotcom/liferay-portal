@@ -1,0 +1,509 @@
+@component-name = "portal-lol"
+definition {
+
+	property database.types = "mysql";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "LOL";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Masterclass Site") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
+
+			Site.addCustomCP(
+				siteName = "Site Name",
+				siteTemplateName = "Masterclass");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+
+			WebContent.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-137508. Create a Site with the Masterclass Site initializer"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AddMasterclassSite {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "This is a test for LPS-141573. Apply the Masterclass Modern Style Book to home pages"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ApplyMasterclassModernStyleBook {
+
+		// TODO Create the automation about the LPS-141573.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Border and Classroom Header fragments"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassBorderandHeader {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass button and link fragments"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassButtonandLink {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass  container and image fragments"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassContainerandImage {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Cookie Banner fragment"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassCookieBanner {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Footer fragment"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassFooter {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Heading fragment"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassHeading {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Hero fragment"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassHero {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Map Video fragment"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassMapVideo {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Navbar fragment"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassNavbar {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Private Header fragment"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassPrivateHeader {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Sign In fragment"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassSignIn {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Subscribe Form fragment"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassSubscribeForm {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Tabs fragment"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassTabs {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Text Block fragment"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassTextBlock {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Video fragment"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassVideo {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Video Player fragment"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanUseMasterclassVideoPlayer {
+
+		// TODO Create the automation about the LPS-136183.
+
+	}
+
+	@description = "This is a test for LPS-141370. Can change the Number of Blogs in the List at Display Page Template of Blogs"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ChangetheNumberofBlogsinBlogsListatDPT {
+
+		// TODO Create the automation about the LPS-141370.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass Apply Page in Desktop size"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test MasterclassApplyinDesktopSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass Apply Page in Mobile size"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test MasterclassApplyinMobileSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass Apply Page in Tablet size"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test MasterclassApplyinTabletSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass Blog Page in Desktop size"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MasterclassBloginDesktopSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass Blog Page in Mobile size"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MasterclassBloginMobileSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass Blog Page in Tablet size"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MasterclassBloginTabletSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass Home Page in Desktop size"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MasterclassHomeinDesktopSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass Home Page in Mobile size"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MasterclassHomeinMobileSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass Home Page in Tablet size"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MasterclassHomeinTabletSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass My Learning Page in Mobile size"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MasterclassMyLearninginDesktopSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass My Learning Page in Mobile size"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MasterclassMyLearninginMobileSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass My Learning Page in Tablet size"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MasterclassMyLearninginTabletSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass Sign In Page in Desktop size"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MasterclassSignIninDesktopSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass Sign In Page in Mobile size"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MasterclassSignIninMobileSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-140611. Masterclass Sign In Page in Tablet size"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MasterclassSignIninTabletSize {
+
+		// TODO Create the automation about the LPS-140611.
+
+	}
+
+	@description = "This is a test for LPS-141768. View the READ MORE links of the three courses redirect to the course display page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ReadMoreLinksRedirectToCourseDisplayPage {
+
+		// TODO Create the automation about the LPS-141768.
+
+	}
+
+	@description = "This is a test for LPS-140613. View if the Student can have permissions set"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SetStudentPermission {
+
+		// TODO Create the automation about the LPS-140613.
+
+	}
+
+	@description = "This is a test for LPS-140613. View if the Teacher can have permissions set"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SetTeacherPermission {
+
+		// TODO Create the automation about the LPS-140613.
+
+	}
+
+	@description = "This is a test for LPS-141768. View the three available courses in Home content page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewAvailableCoursesinHomeCP {
+
+		// TODO Create the automation about the LPS-141768.
+
+	}
+
+	@description = "This is a test for LPS-141370. View a Blog Collection in Display Page Template of Blogs"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewBlogCollectioninDPTofBlogs {
+
+		// TODO Create the automation about the LPS-141370.
+
+	}
+
+	@description = "This is a test for LPS-141370. View a List of Blogs in the Blog Detail View"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewBlogListinBlogDetailView {
+
+		// TODO Create the automation about the LPS-141370.
+
+	}
+
+	@description = "This is a test for LPS-141768. View list to the three available courses pages"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewListofAvailableCoursesPage {
+
+		// TODO Create the automation about the LPS-141768.
+
+	}
+
+	@description = "This is a test for LPS-137508. View the Masterclass Categories"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ViewMasterclassCategories {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "This is a test for LPS-137508. View the Masterclass Stylebook Classic Theme"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewMasterclassClassicStylebook {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "This is a test for LPS-137508. View the Masterclass Collections"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewMasterclassCollections {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "This is a test for LPS-137508. View the Masterclass Documents"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewMasterclassDocuments {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "This is a test for LPS-137508. View the Masterclass Fragments Collections"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ViewMasterclassFragmentsCollections {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "This is a test for LPS-141573. View the Masterclass Modern Style Book in content pages"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ViewMasterclassModernStyleBookonPage {
+
+		// TODO Create the automation about the LPS-141573.
+
+	}
+
+	@description = "This is a test for LPS-137508. View the Masterclass Pages"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewMasterclassPages {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "This is a test for LPS-137508. View the Masterclass Page Templates"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewMasterclassPageTemplates {
+
+		// TODO Create the automation about the LPS-137508.
+
+	}
+
+	@description = "This is a test for LPS-141768. View the names of the three courses redirect to the course display page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewNameofCoursesRedirectToCourseDisplayPage {
+
+		// TODO Create the automation about the LPS-141768.
+
+	}
+
+	@description = "This is a test for LPS-140613. View the Student and Teacher are present in Site Roles"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewStudentandTeacheronSiteRoles {
+
+		// TODO Create the automation about the LPS-140613.
+
+	}
+
+	@description = "This is a test for LPS-140613. View permissions for Student and Teacher"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewStudentandTeacherPermissions {
+
+		// TODO Create the automation about the LPS-140613.
+
+	}
+
+}

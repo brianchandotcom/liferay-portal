@@ -147,6 +147,8 @@ definition {
 			fieldFieldLabel = "Rich Text",
 			fieldHelp = "Help Text");
 
+		Translations.addLanguageManageTranslations(key_language = "pt-BR");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContentStructures.addName(structureName = "Nome da Estrutura WC");

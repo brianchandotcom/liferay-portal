@@ -1022,57 +1022,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a web content can be selected from other site scope through dynamic selection that does not contain the keyword."
-	@priority = "5"
-	@refactorneeded
-	test SelectWCFromOtherScopeDynamically {
-		JSONGroup.addGroup(groupName = "Test Site Name");
-
-		for (var i : list "1 2,2 3,3 4") {
-			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content",
-				groupName = "Test Site Name",
-				title = "WC WebContent Title ${i}");
-		}
-
-		JSONAssetlist.addDynamicAssetListEntry(
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "Depot Dynamic Asset List");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.configureScope(
-			assetListTitle = "Depot Dynamic Asset List",
-			otherSite = "Test Site Name",
-			selectedAsset = "All Types");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.editAssetList(assetListTitle = "Depot Dynamic Asset List");
-
-		AssetListsAdmin.addKeywordsFilter(
-			keyWords = "3",
-			queryAndOperator = "Any",
-			queryContains = "Does Not Contain");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewContent(
-			assetListTitle = "Depot Dynamic Asset List",
-			assetTitle = "WC WebContent Title 1 2",
-			assetType = "Web Content Article");
-
-		for (var i : list "2 3,3 4") {
-			DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-			AssetListsAdmin.viewNoContent(
-				assetListTitle = "Depot Dynamic Asset List",
-				assetTitle = "WC WebContent Title ${i}",
-				assetType = "Web Content Article");
-		}
-	}
-
 	@description = "This ensures that the web content created by the structure can be selected via searching for the corresponding structure name."
 	@priority = "5"
 	@refactorneeded

@@ -100,7 +100,6 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbStatus = "Approved");
-
 	}
 
 	@description = "Verify that the user can Approve a Basic Article when the Child Article is Pending"
@@ -157,7 +156,7 @@ definition {
 			workflowAssetTitle = "Knowledge Base Article Title",
 			workflowAssetType = "Knowledge Base Article",
 			workflowTask = "Review");
-		
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -166,16 +165,15 @@ definition {
 			portlet = "Knowledge Base");
 
 		WorkflowKnowledgeBaseArticle.editKBArticle(
-			submitForPublication = "true",
 			kbArticleContentEdit = "Knowledge Base Article Content Edit",
 			kbArticleTitle = "Knowledge Base Article Title",
-			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
+			kbArticleTitleEdit = "Knowledge Base Article Title Edit",
+			submitForPublication = "true");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content Edit",
 			kbArticleTitle = "Knowledge Base Article Title Edit",
 			kbStatus = "Pending");
-
 	}
 
 	@description = "Create a Knowledge Base child Article and approve the child, assert that the parent is still pending"
@@ -217,7 +215,6 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbStatus = "Pending");
-
 	}
 
 	@description = "Verify that when the Basic Article is saved as Draft it's status is Draft"
@@ -242,16 +239,42 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbStatus = "Draft");
-
 	}
 
 	@description = "Verify that the child Basic Article status is Pending after Submit for Publication"
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ChildArticleStatusIsPendingAfterSubmitForPublication {
+		Navigator.openURL();
 
-		// TODO LRQA-69930 ChildArticleStatusIsPendingAfterSubmitForPublication pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Knowledge Base");
 
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbWorkflowAction = "Submit for Publication");
+
+		WorkflowKnowledgeBaseArticle.addChildArticle(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbChildArticleContent = "Knowledge Base Child Article Content",
+			kbChildArticleTitle = "Knowledge Base Child Article Title",
+			submitForPublication = "true");
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Knowledge Base Child Article Content",
+			kbChildArticleTitle = "Knowledge Base Child Article Title");
+
+		AssertElementPresent(
+			key_kbArticleTitle = "Knowledge Base Child Article Title",
+			locator1 = "KnowledgeBase#ARTICLE_TABLE_ARTICLE_STATUS",
+			value1 = "Pending");
 	}
 
 	@description = "Verify that when the Basic Article is saved as Draft the Submit for Publication button still available"

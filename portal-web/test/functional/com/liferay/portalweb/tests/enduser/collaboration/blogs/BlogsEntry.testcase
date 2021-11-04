@@ -559,13 +559,52 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136772. It checks that the cover image caption can be deleted."
-	@ignore = "true"
 	@priority = "3"
 	test CanDeleteCoverImageCaption {
-		property portal.acceptance = "false";
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
 
-		// TODO LPS-136772 CanDeleteCoverImageCaption pending implementation
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntryWithUploadedCoverImage(
+			captionField = "Cover Image Caption",
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Blog Images",
+			uploadFileName = "Document_1.jpg");
+
+		Button.clickPublish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		AssertTextEquals(
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION",
+			value1 = "Cover Image Caption");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+
+		Blogs.editCoverImageCaption(captionField = "");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		AssertElementNotPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION");
 	}
 
 	@description = "This checks that a blog entry can saved as a draft and then deleted."

@@ -74,6 +74,21 @@ export default function _JournalPortlet({
 	const handleDDMFormError = (error) => {
 		publishingLock.unlock();
 		console.error(error);
+
+		const titleInputComponent = Liferay.component(
+			`${namespace}titleMapAsXML`
+		);
+
+		if (!titleInputComponent?.getValue(defaultLanguageId)) {
+			showAlert(
+				Liferay.Util.sub(
+					Liferay.Language.get(
+						'please-enter-a-valid-title-for-the-default-language-x'
+					),
+					defaultLanguageId.replace('_', '-')
+				)
+			);
+		}
 	};
 
 	const handleDDMFormValid = (

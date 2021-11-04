@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXECUTE_REINDEX_BUTTON</td>
+	<td>//li[contains(.,'${key_action}')]//button[contains(.,'Execute')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NODE_COUNT</td>
 	<td>//div[contains(@class,'connection-info') and contains(.,'${key_connectionID}')]//a[contains(@aria-controls,'SearchAdminPortlet_Nodes')]</td>
 	<td></td>

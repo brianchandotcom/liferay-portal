@@ -16,7 +16,7 @@ definition {
 			value1 = "${serverVersion}");
 	}
 
-	macro executeSearchReindex {
+	macro executeReindex {
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
 			value1 = "Search");
@@ -32,15 +32,15 @@ definition {
 		while ("${reindexElapsedTime}" == "0" || "${reindexElapsedTime}" == "480" && (maxIterations = "2")) {
 			Navigator.gotoNavItem(navItem = "Index Actions");
 
-			if (isSet(actionsDescription)) {
+			if (isSet(action)) {
 				Click(
-					key_actionsDescription = "${actionsDescription}",
-					locator1 = "Button#EXECUTE_ACTION");
+					key_action = "${action}",
+					locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
 			}
 			else {
 				Click(
-					key_actionsDescription = "Reindex search indexes.",
-					locator1 = "Button#EXECUTE_ACTION");
+					key_action = "Reindex search indexes.",
+					locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
 			}
 
 			var reindexStartTime = "0";

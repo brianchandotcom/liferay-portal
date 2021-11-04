@@ -573,8 +573,10 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test ViewLocaleInNewVirtualInstance {
+		property portal.acceptance = "true";
+		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "Locale#ViewLocaleInNewVirtualInstance";
 
 		User.firstLoginPG();
@@ -592,6 +594,13 @@ definition {
 			domain = "www.able.com",
 			portalInstanceId = "www.able.com",
 			virtualHost = "www.able.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.viewCP(virtualHost = "www.able.com");
 
 		User.firstLoginUI(
 			localization = "IT",

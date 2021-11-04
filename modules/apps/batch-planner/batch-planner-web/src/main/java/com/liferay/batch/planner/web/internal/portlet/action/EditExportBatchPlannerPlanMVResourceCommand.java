@@ -51,19 +51,27 @@ public class EditExportBatchPlannerPlanMVResourceCommand
 			editExportBatchPlannerPlanMVCActionCommand =
 				(EditExportBatchPlannerPlanMVCActionCommand)_mvcActionCommand;
 
-		BatchPlannerPlan batchPlannerPlan =
-			editExportBatchPlannerPlanMVCActionCommand.addBatchPlannerPlan(
-				resourceRequest);
+		try {
+			BatchPlannerPlan batchPlannerPlan =
+				editExportBatchPlannerPlanMVCActionCommand.addBatchPlannerPlan(
+					resourceRequest);
 
-		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse,
-			JSONUtil.put(
-				"batchPlannerPlanId", batchPlannerPlan.getBatchPlannerPlanId()
-			).put(
-				"name", batchPlannerPlan.getName()
-			).put(
-				"success", Boolean.TRUE
-			));
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"batchPlannerPlanId",
+					batchPlannerPlan.getBatchPlannerPlanId()
+				).put(
+					"name", batchPlannerPlan.getName()
+				).put(
+					"success", Boolean.TRUE
+				));
+		}
+		catch (Exception exception) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put("error", exception.getMessage()));
+		}
 	}
 
 	@Reference(

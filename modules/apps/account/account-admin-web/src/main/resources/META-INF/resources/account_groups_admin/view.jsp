@@ -54,6 +54,12 @@ ViewAccountGroupsManagementToolbarDisplayContext viewAccountGroupsManagementTool
 					<portlet:param name="screenNavigationCategoryKey" value="<%= AccountScreenNavigationEntryConstants.CATEGORY_KEY_ACCOUNTS %>" />
 				</portlet:renderURL>
 
+				<%
+				if (!AccountGroupPermission.contains(permissionChecker, accountGroupDisplay.getAccountGroupId(), ActionKeys.UPDATE)) {
+					rowURL = null;
+				}
+				%>
+
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-title"
 					href="<%= rowURL %>"

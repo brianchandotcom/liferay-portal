@@ -17,7 +17,6 @@ package com.liferay.search.experiences.rest.internal.resource.v1_0;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -49,7 +48,8 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 	@Override
 	public SXPBlueprint getSXPBlueprint(Long sxpBlueprintId) throws Exception {
 		return SXPBlueprintUtil.toSXPBlueprint(
-			_sxpBlueprintService.getSXPBlueprint(sxpBlueprintId));
+			_sxpBlueprintService.getSXPBlueprint(sxpBlueprintId),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	@Override
@@ -76,7 +76,8 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 			null,
 			document -> SXPBlueprintUtil.toSXPBlueprint(
 				_sxpBlueprintService.getSXPBlueprint(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Override
@@ -87,11 +88,14 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 			_sxpBlueprintService.addSXPBlueprint(
 				String.valueOf(sxpBlueprint.getConfiguration()),
 				Collections.singletonMap(
-					LocaleUtil.US, sxpBlueprint.getDescription()),
+					contextAcceptLanguage.getPreferredLocale(),
+					sxpBlueprint.getDescription()),
 				null,
 				Collections.singletonMap(
-					LocaleUtil.US, sxpBlueprint.getTitle()),
-				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+					contextAcceptLanguage.getPreferredLocale(),
+					sxpBlueprint.getTitle()),
+				ServiceContextFactory.getInstance(contextHttpServletRequest)),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	@Reference

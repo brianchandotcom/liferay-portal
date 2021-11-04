@@ -34,6 +34,7 @@ definition {
 
 	@description = "LPS-132234: Given the detail view of the page audit panel
 	Then the checks related to Low contrast ratio, Missing image-alt and Missing input-image-alt will appear under the Accessibility section"
+
 	@priority = "3"
 	test AccessibilityFailures {
 		property portal.acceptance = "true";
@@ -95,95 +96,6 @@ definition {
 
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view and a user with NO permissions for editing the page
-	When there is no meta description for the page
-	Then the users will see a text: Add a meta-description from the Configuration section of this page."
-	@priority = "4"
-	test CheckMissingMetaDescriptionWithoutPermission {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckInvalidCanonicalURL";
-
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "WebContentEditorRole Name",
-				roleTitle = "WebContentEditorRole Name");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE",
-				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "WebContentEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Set Google PageSpeed API") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
-		}
-
-		task ("Disable option to strangers to verify email") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "User Authentication",
-				configurationName = "General",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-		}
-
-		task ("Login with new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("Open Page Audit panel and run it") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
-		}
-
-		task ("Open detailed view and check text") {
-			PageAudit.goToDetailView(failingCheckName = "Missing Meta Description");
-
-			AssertElementPresent(
-				key_text = "Add a description from the configuration section of this page.",
-				locator1 = "PageAudit#FAILING_CHECK_DETAIL_TEXT");
-
-			AssertElementNotPresent(
-				key_text = "Add a description",
-				locator1 = "Link#ANY");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
-		}
-	}
-
 	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Site Scope section
 	When the Enable Google PageSpeed Insights check is unchecked
 	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"
@@ -225,95 +137,6 @@ definition {
 
 		task ("Reset Google PageSpeed API to default at System Settings") {
 			PageAudit.configurationTeardown();
-		}
-	}
-
-	@description = "LPS-132234: Given the page audit panel detail view and a user with NO permissions to edit Instance Settings
-	When there is no canonical URL, or it doesn't coincide with the page's URL
-	Then the users will see the invalid canonical URL, and a text: If the problem is that the canonical URL doesn't match the URL of the page, try changing the configuration for using localized canonical URLs from Instance settings > Pages > SEO"
-	@priority = "4"
-	test CheckInvalidCanonicalURLWithoutPermission {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckInvalidCanonicalURL";
-
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "WebContentEditorRole Name",
-				roleTitle = "WebContentEditorRole Name");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE",
-				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "WebContentEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Set Google PageSpeed API") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
-		}
-
-		task ("Disable option to strangers to verify email") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "User Authentication",
-				configurationName = "General",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-		}
-
-		task ("Login with new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("Open Page Audit panel and run it") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
-		}
-
-		task ("Open detailed view and check text") {
-			PageAudit.goToDetailView(failingCheckName = "Invalid Canonical URL");
-
-			AssertElementPresent(
-				key_text = "try changing the configuration for using localized canonical URLs from Instance Settings > Pages > SEO.",
-				locator1 = "PageAudit#FAILING_CHECK_DETAIL_TEXT");
-
-			AssertElementNotPresent(
-				key_text = "Instance Settings > Pages > SEO",
-				locator1 = "Link#ANY");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
 		}
 	}
 
@@ -540,6 +363,95 @@ definition {
 			AssertTextPresent(
 				locator1 = "PageAudit#FAILING_CHECK_TITLE",
 				value1 = "Invalid Canonical URL");
+		}
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view and a user with NO permissions to edit Instance Settings
+	When there is no canonical URL, or it doesn't coincide with the page's URL
+	Then the users will see the invalid canonical URL, and a text: If the problem is that the canonical URL doesn't match the URL of the page, try changing the configuration for using localized canonical URLs from Instance settings > Pages > SEO"
+	@priority = "4"
+	test CheckInvalidCanonicalURLWithoutPermission {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckInvalidCanonicalURL";
+
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "WebContentEditorRole Name",
+				roleTitle = "WebContentEditorRole Name");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "WebContentEditorRole Name");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "WebContentEditorRole Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Open detailed view and check text") {
+			PageAudit.goToDetailView(failingCheckName = "Invalid Canonical URL");
+
+			AssertElementPresent(
+				key_text = "try changing the configuration for using localized canonical URLs from Instance Settings > Pages > SEO.",
+				locator1 = "PageAudit#FAILING_CHECK_DETAIL_TEXT");
+
+			AssertElementNotPresent(
+				key_text = "Instance Settings > Pages > SEO",
+				locator1 = "Link#ANY");
+		}
+
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
 		}
 	}
 
@@ -824,6 +736,95 @@ definition {
 			AssertElementPresent(
 				failingText = "Add a description",
 				locator1 = "PageAudit#FAILING_ELEMENT_TEXT");
+		}
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view and a user with NO permissions for editing the page
+	When there is no meta description for the page
+	Then the users will see a text: Add a meta-description from the Configuration section of this page."
+	@priority = "4"
+	test CheckMissingMetaDescriptionWithoutPermission {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckInvalidCanonicalURL";
+
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "WebContentEditorRole Name",
+				roleTitle = "WebContentEditorRole Name");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "WebContentEditorRole Name");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "WebContentEditorRole Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Open detailed view and check text") {
+			PageAudit.goToDetailView(failingCheckName = "Missing Meta Description");
+
+			AssertElementPresent(
+				key_text = "Add a description from the configuration section of this page.",
+				locator1 = "PageAudit#FAILING_CHECK_DETAIL_TEXT");
+
+			AssertElementNotPresent(
+				key_text = "Add a description",
+				locator1 = "Link#ANY");
+		}
+
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
 		}
 	}
 
@@ -2771,6 +2772,95 @@ definition {
 		}
 	}
 
+	@description = "LPS-132234: Given the page audit panel detail view and a user with NO permissions for editing the page
+	When the page is blocked from indexing
+	Then the users will see a text: Change the robots.txt setting from the Configuration section of this page"
+	@priority = "4"
+	test CheckPageBlockedFromIndexingWithoutPermission {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckInvalidCanonicalURL";
+
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "WebContentEditorRole Name",
+				roleTitle = "WebContentEditorRole Name");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "WebContentEditorRole Name");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "WebContentEditorRole Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Open detailed view and check text") {
+			PageAudit.goToDetailView(failingCheckName = "Page Blocked from Indexing");
+
+			AssertElementPresent(
+				key_text = "Change the robots.txt setting from the configuration section of this page.",
+				locator1 = "PageAudit#FAILING_CHECK_DETAIL_TEXT");
+
+			AssertElementNotPresent(
+				key_text = "Change the robots.txt  setting",
+				locator1 = "Link#ANY");
+		}
+
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
+		}
+	}
+
 	@description = "LPS-132234: Given the page audit panel detail view
 	When there tap targets on the page that are too small or are overlapping with others
 	Then the users will see the matching failing elements, with the tap target snippet, size and Overlapping Target if there is one"
@@ -2863,7 +2953,7 @@ definition {
 			AssertElementPresent(
 				badgeValue = "12",
 				locator1 = "PageAudit#BADGE_NUMBER");
-			
+
 			Button.click(button = "View More");
 		}
 	}
@@ -3460,95 +3550,6 @@ definition {
 
 		// TODO LPS-128385 PreferredStrategyForMobileValue pending implementation
 
-	}
-
-	@description = "LPS-132234: Given the page audit panel detail view and a user with NO permissions for editing the page
-	When the page is blocked from indexing
-	Then the users will see a text: Change the robots.txt setting from the Configuration section of this page"
-	@priority = "4"
-	test CheckPageBlockedFromIndexingWithoutPermission {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckInvalidCanonicalURL";
-
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "WebContentEditorRole Name",
-				roleTitle = "WebContentEditorRole Name");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE",
-				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "WebContentEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Set Google PageSpeed API") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
-		}
-
-		task ("Disable option to strangers to verify email") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "User Authentication",
-				configurationName = "General",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-		}
-
-		task ("Login with new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("Open Page Audit panel and run it") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
-		}
-
-		task ("Open detailed view and check text") {
-			PageAudit.goToDetailView(failingCheckName = "Page Blocked from Indexing");
-
-			AssertElementPresent(
-				key_text = "Change the robots.txt setting from the configuration section of this page.",
-				locator1 = "PageAudit#FAILING_CHECK_DETAIL_TEXT");
-
-			AssertElementNotPresent(
-				key_text = "Change the robots.txt  setting",
-				locator1 = "Link#ANY");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
-		}
 	}
 
 	@description = "LPS-132234: Given the detail view of the page audit panel

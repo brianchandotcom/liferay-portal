@@ -112,7 +112,7 @@ definition {
 		}
 		else {
 			ClickNoError(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
-		}		
+		}
 
 		if (IsElementNotPresent(locator1 = "PageAudit#ERROR_WARNING_BOX")) {
 			AssertElementPresent(locator1 = "PageAudit#PROGRESS_BAR");

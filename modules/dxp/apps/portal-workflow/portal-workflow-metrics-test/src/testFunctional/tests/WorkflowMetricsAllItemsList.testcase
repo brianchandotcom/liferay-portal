@@ -1545,6 +1545,8 @@ definition {
 	@description = "LPS-86652 - Verify that long texts will display ellipsis"
 	@priority = "3"
 	test LongTextsDisplayEllipsis {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1588,6 +1590,8 @@ definition {
 	@description = "LPS-98517 - Verify that the long usernames in the result table do not break into different lines"
 	@priority = "3"
 	test LongUserNameDisplaysEllipsis {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

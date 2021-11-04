@@ -1,0 +1,64 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Asset Lists";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is use case for LPS-129109. No alert shown when view the collection page based on collection with XSS name."
+	@priority = "4"
+	test ViewCollectionPageBasedOnCollectionWithXSSName {
+
+		task ("Create a manual collection with XSS name for All Types") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "<script>alert(123)</script>");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
+		}
+
+		task ("Add collection page based on manual collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "<script>alert(123)</script>",
+				pageName = "Collection Page Name",
+				tabName = "Collections");
+
+			PortletEntry.publish();
+		}
+
+		task ("Navigate to collection page at view mode") {
+			SitePages.gotoPageMenuItem(
+				menuItem = "View",
+				pageName = "Collection Page Name");
+		}
+		
+		task ("Assert no alert showing") {
+			AssertAlertNotPresent();
+		}
+	}
+}

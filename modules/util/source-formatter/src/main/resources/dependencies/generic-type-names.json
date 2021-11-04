@@ -665,14 +665,6 @@
 			"name": "com.liferay.portal.fabric.worker.FabricWorker"
 		},
 		{
-			"genericTypeCount": 1,
-			"name": "com.liferay.portal.kernel.atom.BaseAtomCollectionAdapter"
-		},
-		{
-			"genericTypeCount": 1,
-			"name": "com.liferay.portal.kernel.atom.BaseMediaAtomCollectionAdapter"
-		},
-		{
 			"genericTypeCount": 2,
 			"name": "com.liferay.portal.kernel.cache.PortalCache"
 		},

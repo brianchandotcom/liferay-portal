@@ -19,7 +19,6 @@ import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -182,9 +181,6 @@ public class PortletBagFactory {
 			bundleContext, portlet, properties, serviceRegistrations);
 
 		_registerAssetRendererFactoryInstances(
-			bundleContext, portlet, properties, serviceRegistrations);
-
-		_registerAtomCollectionAdapterInstances(
 			bundleContext, portlet, properties, serviceRegistrations);
 
 		_registerCustomAttributesDisplayInstances(
@@ -353,28 +349,6 @@ public class PortletBagFactory {
 
 				serviceRegistrations.add(serviceRegistration);
 			}
-		}
-	}
-
-	private void _registerAtomCollectionAdapterInstances(
-			BundleContext bundleContext, Portlet portlet,
-			Dictionary<String, Object> properties,
-			List<ServiceRegistration<?>> serviceRegistrations)
-		throws Exception {
-
-		for (String atomCollectionAdapterClass :
-				portlet.getAtomCollectionAdapterClasses()) {
-
-			AtomCollectionAdapter<?> atomCollectionAdapterInstance =
-				_newInstance(
-					AtomCollectionAdapter.class, atomCollectionAdapterClass);
-
-			ServiceRegistration<?> serviceRegistration =
-				bundleContext.registerService(
-					AtomCollectionAdapter.class, atomCollectionAdapterInstance,
-					properties);
-
-			serviceRegistrations.add(serviceRegistration);
 		}
 	}
 

@@ -310,31 +310,6 @@ public class PortletWrapper
 	}
 
 	/**
-	 * Returns the names of the classes that represent atom collection adapters
-	 * associated with the portlet.
-	 *
-	 * @return the names of the classes that represent atom collection adapters
-	 associated with the portlet
-	 */
-	@Override
-	public java.util.List<String> getAtomCollectionAdapterClasses() {
-		return model.getAtomCollectionAdapterClasses();
-	}
-
-	/**
-	 * Returns the atom collection adapter instances of the portlet.
-	 *
-	 * @return the atom collection adapter instances of the portlet
-	 */
-	@Override
-	public java.util.List
-		<com.liferay.portal.kernel.atom.AtomCollectionAdapter<?>>
-			getAtomCollectionAdapterInstances() {
-
-		return model.getAtomCollectionAdapterInstances();
-	}
-
-	/**
 	 * Returns the names of the parameters that will be automatically propagated
 	 * through the portlet.
 	 *
@@ -2484,20 +2459,6 @@ public class PortletWrapper
 	@Override
 	public void setAsyncSupported(boolean asyncSupported) {
 		model.setAsyncSupported(asyncSupported);
-	}
-
-	/**
-	 * Sets the names of the classes that represent atom collection adapters
-	 * associated with the portlet.
-	 *
-	 * @param atomCollectionAdapterClasses the names of the classes that
-	 represent atom collection adapters associated with the portlet
-	 */
-	@Override
-	public void setAtomCollectionAdapterClasses(
-		java.util.List<String> atomCollectionAdapterClasses) {
-
-		model.setAtomCollectionAdapterClasses(atomCollectionAdapterClasses);
 	}
 
 	/**

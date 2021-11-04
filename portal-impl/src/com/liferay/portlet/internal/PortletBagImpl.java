@@ -21,7 +21,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
@@ -131,24 +130,6 @@ public class PortletBagImpl implements PortletBag {
 		}
 
 		return _toList(_assetRendererFactoryInstances);
-	}
-
-	@Override
-	public List<AtomCollectionAdapter<?>> getAtomCollectionAdapterInstances() {
-		if (_atomCollectionAdapterInstances == null) {
-			synchronized (this) {
-				if (_atomCollectionAdapterInstances == null) {
-					_atomCollectionAdapterInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext,
-							(Class<AtomCollectionAdapter<?>>)
-								(Class<?>)AtomCollectionAdapter.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_atomCollectionAdapterInstances);
 	}
 
 	@Override
@@ -599,8 +580,6 @@ public class PortletBagImpl implements PortletBag {
 
 	private volatile ServiceTrackerList<AssetRendererFactory<?>>
 		_assetRendererFactoryInstances;
-	private volatile ServiceTrackerList<AtomCollectionAdapter<?>>
-		_atomCollectionAdapterInstances;
 	private volatile ServiceTrackerList<ConfigurationAction>
 		_configurationActionInstances;
 	private volatile ServiceTrackerList<ControlPanelEntry>

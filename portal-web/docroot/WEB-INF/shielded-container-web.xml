@@ -96,11 +96,6 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
-		<servlet-name>Atom Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.AtomServlet</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
 		<servlet-name>Combo Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.ComboServlet</servlet-class>
 		<async-supported>true</async-supported>
@@ -926,10 +921,6 @@
 	<servlet-mapping>
 		<servlet-name>XML-RPC Servlet</servlet-name>
 		<url-pattern>/xmlrpc/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Atom Servlet</servlet-name>
-		<url-pattern>/api/atom/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>JSON Servlet</servlet-name>

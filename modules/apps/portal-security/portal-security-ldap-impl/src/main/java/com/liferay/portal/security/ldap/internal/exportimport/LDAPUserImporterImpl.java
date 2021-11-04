@@ -977,15 +977,16 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		}
 	}
 
-	protected Set<Long> importGroup(
+	protected UserGroup importGroup(
 			LDAPImportContext ldapImportContext,
-			SafeLdapName userGroupDNSafeLdapName, User user,
-			Set<Long> newUserGroupIds)
+			SafeLdapName userGroupDNSafeLdapName, User user)
 		throws Exception {
 
 		String userGroupIdKey = null;
 
 		Long userGroupId = null;
+
+		UserGroup userGroup = null;
 
 		LDAPImportConfiguration ldapImportConfiguration =
 			_ldapImportConfigurationProvider.getConfiguration(
@@ -1029,12 +1030,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 					nameNotFoundException);
 			}
 
-			UserGroup userGroup = importUserGroup(
+			userGroup = importUserGroup(
 				ldapImportContext.getCompanyId(), groupAttributes,
 				ldapImportContext.getGroupMappings());
 
 			if (userGroup == null) {
-				return newUserGroupIds;
+				return null;
 			}
 
 			userGroupId = userGroup.getUserGroupId();
@@ -1050,9 +1051,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 					"Adding user ", user, " to user group ", userGroupId));
 		}
 
-		newUserGroupIds.add(userGroupId);
-
-		return newUserGroupIds;
+		return userGroup;
 	}
 
 	protected void importGroups(
@@ -1129,9 +1128,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 					SafeLdapName userGroupSafeLdapName =
 						SafeLdapNameFactory.from(searchResult);
 
-					newUserGroupIds = importGroup(
-						ldapImportContext, userGroupSafeLdapName, user,
-						newUserGroupIds);
+					UserGroup userGroup = importGroup(
+						ldapImportContext, userGroupSafeLdapName, user);
+
+					if (userGroup != null) {
+						newUserGroupIds.add(userGroup.getUserGroupId());
+					}
 				}
 			}
 		}
@@ -1162,9 +1164,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				SafeLdapName groupSafeLdapName = SafeLdapNameFactory.from(
 					userGroupAttribute, i);
 
-				newUserGroupIds = importGroup(
-					ldapImportContext, groupSafeLdapName, user,
-					newUserGroupIds);
+				UserGroup userGroup = importGroup(
+					ldapImportContext, groupSafeLdapName, user);
+
+				if (userGroup != null) {
+					newUserGroupIds.add(userGroup.getUserGroupId());
+				}
 			}
 		}
 

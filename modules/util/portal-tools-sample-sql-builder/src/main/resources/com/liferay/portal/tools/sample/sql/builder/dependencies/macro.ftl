@@ -104,7 +104,7 @@
 	_parentDLFolderId
 >
 	<#if _dlFolderDepth <= dataFactory.maxDLFolderDepth>
-		<#local dlFolderModels = dataFactory.newDLFolderModels(_groupId, _parentDLFolderId)>
+		<#local dlFolderModels = dataFactory.newDLFolderModels(_groupId, _parentDLFolderId, _dlFolderDepth)>
 
 		<#list dlFolderModels as dlFolderModel>
 			${dataFactory.toInsertSQL(dlFolderModel)}

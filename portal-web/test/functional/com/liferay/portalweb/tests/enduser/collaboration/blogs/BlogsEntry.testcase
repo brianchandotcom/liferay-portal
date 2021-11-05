@@ -582,11 +582,10 @@ definition {
 
 		Button.clickPublish();
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "blogs-page");
 
 		AssertTextEquals(
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION",
@@ -598,11 +597,10 @@ definition {
 
 		Blogs.editCoverImageCaption(captionField = "");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "blogs-page");
 
 		AssertElementNotPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION");
 	}

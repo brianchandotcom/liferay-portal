@@ -21,7 +21,6 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.discount.CommerceDiscountValue;
-import com.liferay.commerce.exception.CommerceOrderItemRequestedDeliveryDateException;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.exception.GuestCartItemMaxAllowedException;
 import com.liferay.commerce.exception.NoSuchOrderItemException;
@@ -619,12 +618,6 @@ public class CommerceOrderItemLocalServiceImpl
 			long commerceOrderItemId, Date requestedDeliveryDate)
 		throws PortalException {
 
-		if ((requestedDeliveryDate != null) &&
-			requestedDeliveryDate.before(new Date())) {
-
-			throw new CommerceOrderItemRequestedDeliveryDateException();
-		}
-
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
@@ -662,12 +655,6 @@ public class CommerceOrderItemLocalServiceImpl
 		Date requestedDeliveryDate = PortalUtil.getDate(
 			requestedDeliveryDateMonth, requestedDeliveryDateDay,
 			requestedDeliveryDateYear);
-
-		if ((requestedDeliveryDate != null) &&
-			requestedDeliveryDate.before(new Date())) {
-
-			throw new CommerceOrderItemRequestedDeliveryDateException();
-		}
 
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);

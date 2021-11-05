@@ -117,11 +117,9 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 			for (CPCatalogEntry cpCatalogEntry :
 					cpDataSourceResult.getCPCatalogEntries()) {
 
-				if (layoutUuid.equals(layout.getUuid())) {
-					visitLayout(
-						element, layout, cpCatalogEntry.getCPDefinitionId(),
-						themeDisplay);
-				}
+				visitLayout(
+					element, layout, cpCatalogEntry.getCPDefinitionId(),
+					themeDisplay);
 			}
 		}
 	}

@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>WorkflowKnowledgeBaseArticle</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WorkflowKnowledgeBaseArticle</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>ARTICLE_TABLE_ARTICLE_STATUS</td>
+	<td>//div[contains(.,'${key_kbArticleTitle}')]//span[@class='workflow-status']/span[contains(text(),'${key_kbArticleStatus}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

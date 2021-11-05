@@ -93,7 +93,7 @@ public class DeletionSystemEventExporter {
 				"/deletion-system-events.xml",
 			document.formattedString());
 
-		if (!ListUtil.isNotEmpty(exportedSystemEventIds) &&
+		if (ListUtil.isNotEmpty(exportedSystemEventIds) &&
 			ExportImportThreadLocal.isStagingInProcess()) {
 
 			ExportImportProcessCallbackRegistryUtil.registerCallback(

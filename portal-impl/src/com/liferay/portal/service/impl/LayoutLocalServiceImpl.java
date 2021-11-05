@@ -2484,11 +2484,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		friendlyURL = layoutLocalServiceHelper.getFriendlyURL(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			StringPool.BLANK, friendlyURL);
+			StringPool.BLANK, friendlyURL, languageId);
 
 		layoutLocalServiceHelper.validateFriendlyURL(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			friendlyURL);
+			friendlyURL, languageId);
 
 		_layoutFriendlyURLLocalService.updateLayoutFriendlyURL(
 			userId, layout.getCompanyId(), layout.getGroupId(),

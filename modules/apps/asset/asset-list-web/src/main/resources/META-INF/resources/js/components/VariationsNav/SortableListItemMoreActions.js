@@ -12,33 +12,12 @@
  * details.
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-const DropDownItem = ({direction, disabled, icon, index, onClick, text}) => {
-	const handleClick = () => {
-		onClick({direction, index});
-	};
-
-	return (
-		<ClayDropDown.Item>
-			<ClayButton
-				block
-				className="align-items-center d-flex justify-content-between"
-				disabled={disabled}
-				displayType={null}
-				onClick={handleClick}
-				small
-			>
-				{text}
-				<ClayIcon symbol={icon} />
-			</ClayButton>
-		</ClayDropDown.Item>
-	);
-};
+import DropDownItem from './DropDownItem';
 
 const SortableListItemMoreActions = ({index, onReorder, totalItems}) => {
 	const [show, setShow] = useState(false);

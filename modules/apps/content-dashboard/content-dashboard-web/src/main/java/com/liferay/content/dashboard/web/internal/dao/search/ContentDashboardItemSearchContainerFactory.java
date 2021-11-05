@@ -77,16 +77,15 @@ public class ContentDashboardItemSearchContainerFactory {
 			_getContentDashboardItemSearchContainer();
 
 		return _create(
-			searchContainer.getStart(), searchContainer.getEnd(),
-			searchContainer);
+			searchContainer.getEnd(), searchContainer, searchContainer.getStart()
+		);
 	}
 
 	private SearchContainer<ContentDashboardItem<?>> _create(
-			int begin, int end,
-			SearchContainer<ContentDashboardItem<?>> searchContainer)
-		throws PortletException {
+		int end, SearchContainer<ContentDashboardItem<?>> searchContainer,
+		int start){
 
-		SearchResponse searchResponse = _getSearchResponse(end, begin);
+		SearchResponse searchResponse = _getSearchResponse(end, start);
 
 		searchContainer.setResults(
 			_getContentDashboardItems(searchResponse.getDocuments71()));
@@ -101,7 +100,7 @@ public class ContentDashboardItemSearchContainerFactory {
 		SearchContainer<ContentDashboardItem<?>> searchContainer =
 			_getContentDashboardItemSearchContainer();
 
-		return _create(-1, -1, searchContainer);
+		return _create(-1, searchContainer, -1);
 	}
 
 	private ContentDashboardItemSearchContainerFactory(

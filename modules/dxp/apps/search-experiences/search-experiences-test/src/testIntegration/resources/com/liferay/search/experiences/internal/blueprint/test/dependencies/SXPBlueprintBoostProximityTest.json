@@ -1,0 +1,40 @@
+{
+	"general": {
+		"searchableAssetTypes": [
+			"com.liferay.wiki.model.WikiPage",
+			"com.liferay.journal.model.JournalArticle"
+		]
+	},
+	"queryConfiguration": {
+		"applyIndexerClauses": false,
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "should",
+						"query": {
+							"function_score": {
+								"boost": 100,
+								"gauss": {
+									"expando__custom_fields__location_geolocation": {
+										"decay": 0.3,
+										"offset": 0,
+										"origin": {
+											"lat": "${configuration.lat}",
+											"lon": "${configuration.lon}"
+										},
+										"scale": "100km"
+									}
+								}
+							}
+						}
+					}
+				],
+				"condition": {
+				},
+				"enabled": true
+			}
+		]
+	}
+}

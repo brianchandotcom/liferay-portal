@@ -1,0 +1,32 @@
+{
+	"queryConfiguration": {
+		"applyIndexerClauses": true,
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "should",
+						"query": {
+							"term": {
+								"assetCategoryIds": {
+									"boost": 1000,
+									"value": "${configuration.asset_category_id}"
+								}
+							}
+						}
+					}
+				],
+				"condition": {
+					"range": {
+						"format": "yyyyMMdd",
+						"gt": "${time.current_date|modifier=-30d,dateFormat=yyyyMMdd}",
+						"lt": "${time.current_date|modifier=+1d,dateFormat=yyyyMMdd}",
+						"parameterName": "${time.current_date}"
+					}
+				},
+				"enabled": true
+			}
+		]
+	}
+}

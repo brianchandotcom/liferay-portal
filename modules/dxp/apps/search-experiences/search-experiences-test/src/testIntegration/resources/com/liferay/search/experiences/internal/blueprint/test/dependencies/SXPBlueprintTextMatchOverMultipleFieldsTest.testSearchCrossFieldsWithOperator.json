@@ -1,0 +1,30 @@
+{
+	"queryConfiguration": {
+		"applyIndexerClauses": false,
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "must",
+						"query": {
+							"multi_match": {
+								"boost": "${configuration.boost}",
+								"fields": [
+									"${configuration.fields.titleBoost}",
+									"${configuration.fields.contentBoost}"
+								],
+								"operator": "${configuration.operator}",
+								"query": "${keywords}",
+								"type": "${configuration.type}"
+							}
+						}
+					}
+				],
+				"condition": {
+				},
+				"enabled": true
+			}
+		]
+	}
+}

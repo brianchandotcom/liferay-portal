@@ -1,0 +1,32 @@
+{
+	"general": {
+		"searchableAssetTypes": [
+			"com.liferay.wiki.model.WikiPage",
+			"com.liferay.journal.model.JournalArticle"
+		]
+	},
+	"queryConfiguration": {
+		"applyIndexerClauses": false,
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "filter",
+						"query": {
+							"terms": {
+								"scopeGroupId": [
+									"${configuration.scope_group_id_1}",
+									"${configuration.scope_group_id_2}"
+								]
+							}
+						}
+					}
+				],
+				"condition": {
+				},
+				"enabled": true
+			}
+		]
+	}
+}

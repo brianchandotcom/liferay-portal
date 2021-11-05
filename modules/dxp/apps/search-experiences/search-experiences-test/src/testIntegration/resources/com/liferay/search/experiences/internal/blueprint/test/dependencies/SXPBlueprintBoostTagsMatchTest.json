@@ -1,0 +1,32 @@
+{
+	"general": {
+		"searchableAssetTypes": [
+			"com.liferay.wiki.model.WikiPage",
+			"com.liferay.journal.model.JournalArticle"
+		]
+	},
+	"queryConfiguration": {
+		"applyIndexerClauses": false,
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "should",
+						"query": {
+							"term": {
+								"assetTagNames.raw": {
+									"boost": 100,
+									"value": "${keywords}"
+								}
+							}
+						}
+					}
+				],
+				"condition": {
+				},
+				"enabled": true
+			}
+		]
+	}
+}

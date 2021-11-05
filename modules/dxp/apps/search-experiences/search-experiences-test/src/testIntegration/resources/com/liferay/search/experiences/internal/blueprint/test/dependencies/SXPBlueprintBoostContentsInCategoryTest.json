@@ -1,0 +1,26 @@
+{
+	"queryConfiguration": {
+		"applyIndexerClauses": true,
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "should",
+						"query": {
+							"terms": {
+								"assetCategoryIds": [
+									"${configuration.asset_category_ids}"
+								],
+								"boost": 100
+							}
+						}
+					}
+				],
+				"condition": {
+				},
+				"enabled": true
+			}
+		]
+	}
+}

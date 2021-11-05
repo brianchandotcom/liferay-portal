@@ -1,0 +1,50 @@
+{
+	"queryConfiguration": {
+		"applyIndexerClauses": false,
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "must",
+						"query": {
+							"match": {
+								"content_en_US": {
+									"boost": 200,
+									"query": "${configuration.query}"
+								}
+							}
+						}
+					}
+				],
+				"condition": {
+				},
+				"enabled": true
+			},
+			{
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "must",
+						"query": {
+							"multi_match": {
+								"boost": 1,
+								"fields": [
+									"localized_title${context.language_id}^2",
+									"content${context.language_id}^1"
+								],
+								"fuzziness": "AUTO",
+								"operator": "or",
+								"query": "${keywords}",
+								"type": "best_fields"
+							}
+						}
+					}
+				],
+				"condition": {
+				},
+				"enabled": true
+			}
+		]
+	}
+}

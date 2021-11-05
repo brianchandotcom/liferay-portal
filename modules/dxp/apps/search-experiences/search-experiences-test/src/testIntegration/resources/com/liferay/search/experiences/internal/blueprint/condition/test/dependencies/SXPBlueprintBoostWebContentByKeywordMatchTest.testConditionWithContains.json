@@ -1,0 +1,30 @@
+{
+	"queryConfiguration": {
+		"applyIndexerClauses": false,
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "should",
+						"query": {
+							"terms": {
+								"articleId_String_sortable": [
+									"${articleId}"
+								],
+								"boost": 100
+							}
+						}
+					}
+				],
+				"condition": {
+					"contains": {
+						"parameterName": "${keywords}",
+						"value": "cola"
+					}
+				},
+				"enabled": true
+			}
+		]
+	}
+}

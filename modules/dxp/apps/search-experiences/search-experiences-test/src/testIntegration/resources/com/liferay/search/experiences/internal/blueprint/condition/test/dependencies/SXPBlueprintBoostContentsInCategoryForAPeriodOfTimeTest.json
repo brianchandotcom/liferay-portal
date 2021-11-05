@@ -1,0 +1,34 @@
+{
+	"queryConfiguration": {
+		"applyIndexerClauses": false,
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "should",
+						"query": {
+							"term": {
+								"assetCategoryIds": {
+									"boost": 1000,
+									"value": "${configuration.asset_category_id}"
+								}
+							}
+						}
+					}
+				],
+				"condition": {
+					"range": {
+						"format": "yyyyMMdd",
+						"parameterName": "${time.current_date}",
+						"value": [
+							"${configuration.start_date}",
+							"${configuration.end_date}"
+						]
+					}
+				},
+				"enabled": true
+			}
+		]
+	}
+}

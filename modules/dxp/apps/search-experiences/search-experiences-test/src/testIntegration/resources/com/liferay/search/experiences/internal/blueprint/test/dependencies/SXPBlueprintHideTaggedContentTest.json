@@ -1,0 +1,31 @@
+{
+	"queryConfiguration": {
+		"applyIndexerClauses": true,
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "filter",
+						"query": {
+							"bool": {
+								"must_not": [
+									{
+										"term": {
+											"assetTagNames.raw": {
+												"value": "hide"
+											}
+										}
+									}
+								]
+							}
+						}
+					}
+				],
+				"condition": {
+				},
+				"enabled": true
+			}
+		]
+	}
+}

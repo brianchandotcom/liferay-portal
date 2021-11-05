@@ -1,0 +1,29 @@
+{
+	"queryConfiguration": {
+		"applyIndexerClauses": false,
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "must",
+						"query": {
+							"simple_query_string": {
+								"boost": 1,
+								"default_operator": "and",
+								"fields": [
+									"localized_title${context.language_id}^2",
+									"content${context.language_id}^2"
+								],
+								"query": "${keywords}"
+							}
+						}
+					}
+				],
+				"condition": {
+				},
+				"enabled": true
+			}
+		]
+	}
+}

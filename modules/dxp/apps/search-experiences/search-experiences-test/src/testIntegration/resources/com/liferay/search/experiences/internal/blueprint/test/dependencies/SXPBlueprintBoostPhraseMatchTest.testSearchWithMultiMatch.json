@@ -1,0 +1,31 @@
+{
+	"queryConfiguration": {
+		"applyIndexerClauses": false,
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "must",
+						"query": {
+							"multi_match": {
+								"boost": "10",
+								"fields": [
+									"localized_title${context.language_id}^2",
+									"content${context.language_id}^1"
+								],
+								"fuzziness": "AUTO",
+								"operator": "or",
+								"query": "${keywords}",
+								"type": "most_fields"
+							}
+						}
+					}
+				],
+				"condition": {
+				},
+				"enabled": true
+			}
+		]
+	}
+}

@@ -19,7 +19,13 @@ import React, {useState} from 'react';
 
 import DropDownItem from './DropDownItem';
 
-const SortableListItemMoreActions = ({index, onReorder, totalItems}) => {
+const SortableListItemMoreActions = ({
+	index,
+	itemIsDeleteable,
+	onDeleteVariation,
+	onReorder,
+	totalItems,
+}) => {
 	const [show, setShow] = useState(false);
 
 	const dropDownItems = [
@@ -35,7 +41,24 @@ const SortableListItemMoreActions = ({index, onReorder, totalItems}) => {
 			icon: 'angle-down',
 			text: 'Deprioritize',
 		},
+		{
+			cssClasses: 'border-top mt-4',
+			deleteAction: true,
+			disabled: !itemIsDeleteable,
+			icon: 'trash',
+			text: 'Delete',
+		},
 	];
+
+	const handleClick = ({deleteAction, direction, index}) => {
+		if (deleteAction) {
+			onDeleteVariation();
+
+			return;
+		}
+
+		onReorder({direction, index});
+	};
 
 	return (
 		<ClayDropDown
@@ -49,17 +72,28 @@ const SortableListItemMoreActions = ({index, onReorder, totalItems}) => {
 			}
 		>
 			<ClayDropDown.ItemList>
-				{dropDownItems.map(({direction, disabled, icon, text}) => (
-					<DropDownItem
-						direction={direction}
-						disabled={disabled}
-						icon={icon}
-						index={index}
-						key={text}
-						onClick={onReorder}
-						text={text}
-					/>
-				))}
+				{dropDownItems.map(
+					({
+						cssClasses,
+						deleteAction,
+						direction,
+						disabled,
+						icon,
+						text,
+					}) => (
+						<DropDownItem
+							cssClasses={cssClasses}
+							deleteAction={deleteAction}
+							direction={direction}
+							disabled={disabled}
+							icon={icon}
+							index={index}
+							key={text}
+							onClick={handleClick}
+							text={text}
+						/>
+					)
+				)}
 			</ClayDropDown.ItemList>
 		</ClayDropDown>
 	);
@@ -67,7 +101,10 @@ const SortableListItemMoreActions = ({index, onReorder, totalItems}) => {
 
 SortableListItemMoreActions.propTypes = {
 	index: PropTypes.number.isRequired,
+	itemIsDeleteable: PropTypes.bool.isRequired,
+	onDeleteVariation: PropTypes.func.isRequired,
 	onReorder: PropTypes.func.isRequired,
+	totalItems: PropTypes.number.isRequired,
 };
 
 export default SortableListItemMoreActions;

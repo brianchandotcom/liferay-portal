@@ -18,13 +18,22 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const DropDownItem = ({direction, disabled, icon, index, onClick, text}) => {
+const DropDownItem = ({
+	cssClasses = '',
+	deleteAction = false,
+	direction,
+	disabled = false,
+	icon,
+	index,
+	onClick,
+	text,
+}) => {
 	const handleClick = () => {
-		onClick({direction, index});
+		onClick({deleteAction, direction, index});
 	};
 
 	return (
-		<ClayDropDown.Item>
+		<ClayDropDown.Item className={cssClasses}>
 			<ClayButton
 				block
 				className="align-items-center d-flex justify-content-between"
@@ -40,8 +49,13 @@ const DropDownItem = ({direction, disabled, icon, index, onClick, text}) => {
 	);
 };
 
+DropDownItem.defaultProps = {
+	direction: null,
+};
+
 DropDownItem.propTypes = {
-	direction: PropTypes.number.isRequired,
+	cssClasses: PropTypes.string,
+	direction: PropTypes.number,
 	disabled: PropTypes.bool.isRequired,
 	icon: PropTypes.string.isRequired,
 	index: PropTypes.number.isRequired,

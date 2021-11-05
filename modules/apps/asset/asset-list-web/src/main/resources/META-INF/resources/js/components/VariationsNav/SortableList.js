@@ -37,11 +37,26 @@ const SortableList = ({items}) => {
 		[listItems]
 	);
 
+	const handleItemDelete = ({deleteURL}) => {
+		if (!deleteURL) {
+			return;
+		}
+
+		if (
+			confirm(
+				'Are you sure you want to delete this? It will be deleted immediately.'
+			)
+		) {
+			submitForm(document.hrefFm, deleteURL);
+		}
+	};
+
 	return (
 		<DndProvider backend={HTML5Backend}>
 			<ClayList className="mt-4">
 				{listItems.map((item, index) => (
 					<SortableListItem
+						handleItemDelete={handleItemDelete}
 						handleItemMove={handleItemMove}
 						id={`sortableListItem-${item.editAssetListEntryURL}`}
 						index={index}

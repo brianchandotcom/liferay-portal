@@ -1431,6 +1431,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public String getTestBaseDirName() {
+		return _TEST_BASE_DIR_NAME;
+	}
+
+	@Override
 	public String getTestDependenciesDirName() {
 		return _TEST_DEPENDENCIES_DIR_NAME;
 	}
@@ -2200,7 +2205,29 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void ocularAssertElementImage(String locator, String filePath)
 		throws Exception {
 
-		ocularConfig();
+		StringBuilder snapFilePath = new StringBuilder();
+
+		snapFilePath.append(
+			getTestBaseDirName() + getOcularSnapImageDirName() + filePath);
+
+		File snapFile = new File(snapFilePath.toString());
+
+		if (!snapFile.exists()) {
+			snapFile.mkdirs();
+		}
+
+		StringBuilder resultFilePath = new StringBuilder();
+
+		resultFilePath.append(
+			getTestBaseDirName() + getOcularResultImageDirName() + filePath);
+
+		File resultFile = new File(resultFilePath.toString());
+
+		resultFile.mkdirs();
+
+		OcularConfiguration ocularConfiguration = Ocular.config();
+
+		ocularConfiguration.resultPath(Paths.get(resultFile.toString()));
 
 		WebElement webElement = getWebElement(locator);
 
@@ -4547,10 +4574,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		OcularConfiguration ocularConfiguration = Ocular.config();
 
 		ocularConfiguration = ocularConfiguration.snapshotPath(
-				Paths.get(testBaseDirName, getOcularSnapImageDirName()));
+			Paths.get(testBaseDirName, getOcularSnapImageDirName()));
 
 		ocularConfiguration.resultPath(
-				Paths.get(testBaseDirName, getOcularResultImageDirName()));
+			Paths.get(testBaseDirName, getOcularResultImageDirName()));
 
 		ocularConfiguration.globalSimilarity(99);
 
@@ -4712,6 +4739,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	private static final String _OUTPUT_DIR_NAME;
 
 	private static final String _SIKULI_IMAGES_DIR_NAME;
+
+	private static final String _TEST_BASE_DIR_NAME;
 
 	private static final String _TEST_DEPENDENCIES_DIR_NAME;
 

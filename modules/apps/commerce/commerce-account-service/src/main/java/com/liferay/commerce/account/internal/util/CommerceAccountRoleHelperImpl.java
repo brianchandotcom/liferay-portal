@@ -120,6 +120,10 @@ public class CommerceAccountRoleHelperImpl
 				});
 
 			resourceActionIds.put(
+				"com.liferay.commerce.model.CommerceOrderType",
+				new String[] {ActionKeys.VIEW});
+
+			resourceActionIds.put(
 				"com.liferay.commerce.order",
 				new String[] {
 					"ADD_COMMERCE_ORDER", "APPROVE_OPEN_COMMERCE_ORDERS",
@@ -144,6 +148,10 @@ public class CommerceAccountRoleHelperImpl
 		}
 		else if (name.equals(
 					CommerceAccountConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER)) {
+
+			resourceActionIds.put(
+				"com.liferay.commerce.model.CommerceOrderType",
+				new String[] {ActionKeys.VIEW});
 
 			resourceActionIds.put(
 				"com.liferay.commerce.order",

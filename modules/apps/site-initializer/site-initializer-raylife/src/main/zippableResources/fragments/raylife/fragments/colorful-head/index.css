@@ -1,8 +1,8 @@
-.fragment_238 {
-	font-weight:var(--font-weight-bolder);
+.colorful-head {
 	font-size: var(--display4-size);
+	font-weight: var(--font-weight-bolder);
 }
 
-.fragment_238 #color-text{
-	color:var(--color-brand-primary);
+.colorful-head #color-text {
+	color: var(--color-brand-primary);
 }

@@ -1,14 +1,14 @@
-.fragment_71 .main-div{
+.insurance-faq .main-div {
 	width:50.5rem;
 }
 
-.fragment_71 p{
-	font-weight:var(--font-weight-bold);
-	font-size:var(--h4-font-size, 1rem);
+.insurance-faq p {
+	font-size: var(--h4-font-size, 1rem);
+	font-weight: var(--font-weight-bold);
 }
 
-.fragment_71 .custom-icon{
-	height:1.5rem;
+.insurance-faq .custom-icon {
+	height: 1.5rem;
 	width:1.5rem;
 	cursor:pointer;
 }

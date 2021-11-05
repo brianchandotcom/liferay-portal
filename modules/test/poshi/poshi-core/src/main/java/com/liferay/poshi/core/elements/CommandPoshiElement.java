@@ -17,6 +17,9 @@ package com.liferay.poshi.core.elements;
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.util.ListUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -100,17 +103,13 @@ public class CommandPoshiElement extends PoshiElement {
 
 	@Override
 	public String toPoshiScript() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("\n");
-
 		DescriptionPoshiElement descriptionPoshiElement =
 			(DescriptionPoshiElement)element("description");
 
-		if (descriptionPoshiElement != null) {
-			sb.append("\n\t");
+		List<String> annotationsList = new ArrayList<>();
 
-			sb.append(descriptionPoshiElement.toPoshiScript());
+		if (descriptionPoshiElement != null) {
+			annotationsList.add("\t" + descriptionPoshiElement.toPoshiScript());
 		}
 
 		for (PoshiElementAttribute poshiElementAttribute :
@@ -122,14 +121,28 @@ public class CommandPoshiElement extends PoshiElement {
 				continue;
 			}
 
-			sb.append("\n\t@");
-			sb.append(poshiElementAttribute.toPoshiScript());
+			annotationsList.add("\t@" + poshiElementAttribute.toPoshiScript());
 		}
 
-		String annotations = sb.toString();
+		Collections.sort(
+			annotationsList,
+			new Comparator<String>() {
 
-		String sortedAnnotations = ListUtil.sort(
-			annotations.replaceFirst("^\n*(.*)", "$1"), "\"\n");
+				@Override
+				public int compare(String annotation1, String annotation2) {
+					String annotationName1 = _getAnnotationName(annotation1);
+					String annotationName2 = _getAnnotationName(annotation2);
+
+					return annotationName1.compareTo(annotationName2);
+				}
+
+				private String _getAnnotationName(String annotation) {
+					return annotation.replaceFirst("(.+)( .+|)", "$1");
+				}
+
+			});
+
+		String sortedAnnotations = ListUtil.toString(annotationsList, "\n");
 
 		if (sortedAnnotations.length() > 0) {
 			return "\n\n" + sortedAnnotations +

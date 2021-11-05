@@ -822,8 +822,6 @@ definition {
 
 		Button.clickSave();
 
-		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
-
 		Alert.viewErrorMessage(errorMessage = "Please enter a valid title for the default language: en-US");
 	}
 

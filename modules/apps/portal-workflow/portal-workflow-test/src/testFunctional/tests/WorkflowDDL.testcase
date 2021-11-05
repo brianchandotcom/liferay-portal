@@ -450,11 +450,47 @@ definition {
 	}
 
 	@description = "Verify that, editing a Pending entry, the DDL Entry status remains on Pending"
-	@ignore = "true"
 	@priority = "3"
 	test StatusIsPendingWhenPendingEntryIsEdited {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists");
 
-		// TODO LRQA-69479 StatusIsPendingWhenPendingEntryIsEdited pending implementation
+		DDLList.addCP(
+			ddlListDescription = "DDL List Description",
+			ddlListName = "DDL List",
+			workflowDefinition = "Single Approver");
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Contacts");
+
+		DDLDataDefinition.save();
+
+		DDLList.viewCP(ddlListName = "DDL List");
+
+		DDLRecord.addNewContacts(
+			ddlCompany = "Liferay",
+			ddlEmail = "qa@liferay.com",
+			ddlFirstName = "Test",
+			ddlInstantMesseger = "Liferay",
+			ddlJobTitle = "QA",
+			ddlLastName = "Test",
+			ddlPhoneMobile = "12345678",
+			ddlPhoneOffice = "12345678");
+
+		PortletEntry.submitForPublication();
+
+		DDLList.viewStatusDDL(key_status = "Pending");
+
+		DDLRecord.editDLLRecordContacts(
+			ddlListName = "DDL List",
+			ddlCompanyEdit = "Liferay Edit",
+			ddlFirstNameEdit = "Test Edit");
+
+		PortletEntry.save();
+
+		DDLList.viewStatusDDL(key_status = "Pending");
+
 
 	}
 

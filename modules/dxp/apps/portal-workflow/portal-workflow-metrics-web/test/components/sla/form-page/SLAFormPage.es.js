@@ -9,66 +9,68 @@
  * distribution rights of the Software.
  */
 
-import {act, cleanup, fireEvent, render} from '@testing-library/react';
-import React from 'react';
+import {act, fireEvent} from '@testing-library/react';
+
+// import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {SLAContext} from '../../../../src/main/resources/META-INF/resources/js/components/sla/SLAContainer.es';
-import SLAFormPage from '../../../../src/main/resources/META-INF/resources/js/components/sla/form-page/SLAFormPage.es';
-import ToasterProvider from '../../../../src/main/resources/META-INF/resources/js/shared/components/toaster/ToasterProvider.es';
-import {MockRouter} from '../../../mock/MockRouter.es';
+// import {SLAContext} from '../../../../src/main/resources/META-INF/resources/js/components/sla/SLAContainer.es';
+// import SLAFormPage from '../../../../src/main/resources/META-INF/resources/js/components/sla/form-page/SLAFormPage.es';
+// import ToasterProvider from '../../../../src/main/resources/META-INF/resources/js/shared/components/toaster/ToasterProvider.es';
+// import {MockRouter} from '../../../mock/MockRouter.es';
 
-describe('The SLAFormPage component should', () => {
-	const calendars = [
-		{
-			defaultCalendar: false,
-			key: 'dummy',
-			title: 'Dummy',
-		},
-		{
-			defaultCalendar: true,
-			key: 'default',
-			title: '24/7',
-		},
-	];
+xdescribe('The SLAFormPage component should', () => {
 
-	const nodes = [
-		{
-			id: 35903,
-			initial: false,
-			label: 'Approved',
-			name: 'approved',
-			terminal: true,
-			type: 'STATE',
-		},
-		{
-			id: 35905,
-			initial: true,
-			label: 'Created',
-			name: 'created',
-			terminal: false,
-			type: 'STATE',
-		},
-		{
-			id: 35911,
-			initial: false,
-			label: 'Review',
-			name: 'review',
-			terminal: false,
-			type: 'TASK',
-		},
-		{
-			id: 35927,
-			initial: false,
-			label: 'Update',
-			name: 'update',
-			terminal: false,
-			type: 'TASK',
-		},
-	];
+	// const calendars = [
+	// 	{
+	// 		defaultCalendar: false,
+	// 		key: 'dummy',
+	// 		title: 'Dummy',
+	// 	},
+	// 	{
+	// 		defaultCalendar: true,
+	// 		key: 'default',
+	// 		title: '24/7',
+	// 	},
+	// ];
 
-	describe('Create a new SLA', () => {
+	// const nodes = [
+	// 	{
+	// 		id: 35903,
+	// 		initial: false,
+	// 		label: 'Approved',
+	// 		name: 'approved',
+	// 		terminal: true,
+	// 		type: 'STATE',
+	// 	},
+	// 	{
+	// 		id: 35905,
+	// 		initial: true,
+	// 		label: 'Created',
+	// 		name: 'created',
+	// 		terminal: false,
+	// 		type: 'STATE',
+	// 	},
+	// 	{
+	// 		id: 35911,
+	// 		initial: false,
+	// 		label: 'Review',
+	// 		name: 'review',
+	// 		terminal: false,
+	// 		type: 'TASK',
+	// 	},
+	// 	{
+	// 		id: 35927,
+	// 		initial: false,
+	// 		label: 'Update',
+	// 		name: 'update',
+	// 		terminal: false,
+	// 		type: 'TASK',
+	// 	},
+	// ];
+
+	xdescribe('Create a new SLA', () => {
 		let alertMessage,
 			container,
 			durationDaysField,
@@ -77,92 +79,91 @@ describe('The SLAFormPage component should', () => {
 			getByText,
 			nameField,
 			nameInput,
-			renderResult,
 			saveButton,
 			startField,
 			stopField;
 
-		const data = {
-			calendarKey: '',
-			dateModified: '2020-04-01T02:36:00Z',
-			description: '',
-			duration: 300000,
-			id: 38067,
-			name: 'SLA',
-			processId: 35901,
-			startNodeKeys: {
-				nodeKeys: [
-					{
-						executionType: 'begin',
-						id: '37735',
-					},
-				],
-				status: 0,
-			},
-			status: 0,
-			stopNodeKeys: {
-				nodeKeys: [
-					{
-						executionType: 'end',
-						id: '37733',
-					},
-				],
-				status: 0,
-			},
-		};
+		// const data = {
+		// 	calendarKey: '',
+		// 	dateModified: '2020-04-01T02:36:00Z',
+		// 	description: '',
+		// 	duration: 300000,
+		// 	id: 38067,
+		// 	name: 'SLA',
+		// 	processId: 35901,
+		// 	startNodeKeys: {
+		// 		nodeKeys: [
+		// 			{
+		// 				executionType: 'begin',
+		// 				id: '37735',
+		// 			},
+		// 		],
+		// 		status: 0,
+		// 	},
+		// 	status: 0,
+		// 	stopNodeKeys: {
+		// 		nodeKeys: [
+		// 			{
+		// 				executionType: 'end',
+		// 				id: '37733',
+		// 			},
+		// 		],
+		// 		status: 0,
+		// 	},
+		// };
 
-		const clientMock = {
-			get: jest
-				.fn()
-				.mockResolvedValueOnce({data: {items: calendars}})
-				.mockResolvedValue({data: {items: nodes}}),
-			post: jest
-				.fn()
-				.mockRejectedValueOnce({})
-				.mockRejectedValueOnce({
-					response: {
-						data: [
-							{
-								fieldName: 'name',
-								message:
-									'An SLA with the same name already exists.',
-							},
-						],
-					},
-				})
-				.mockResolvedValue({data}),
-		};
+		// const clientMock = {
+		// 	get: jest
+		// 		.fn()
+		// 		.mockResolvedValueOnce({data: {items: calendars}})
+		// 		.mockResolvedValue({data: {items: nodes}}),
+		// 	post: jest
+		// 		.fn()
+		// 		.mockRejectedValueOnce({})
+		// 		.mockRejectedValueOnce({
+		// 			response: {
+		// 				data: [
+		// 					{
+		// 						fieldName: 'name',
+		// 						message:
+		// 							'An SLA with the same name already exists.',
+		// 					},
+		// 				],
+		// 			},
+		// 		})
+		// 		.mockResolvedValue({data}),
+		// };
 
 		const historyMock = {
 			goBack: jest.fn(),
 		};
 
-		beforeAll(async () => {
-			cleanup();
+		// beforeAll(async () => {
+		// 	cleanup();
 
-			renderResult = render(
-				<MockRouter client={clientMock}>
-					<ToasterProvider>
-						<SLAContext.Provider value={{}}>
-							<SLAFormPage
-								history={historyMock}
-								processId="5678"
-								query=""
-							/>
-						</SLAContext.Provider>
-					</ToasterProvider>
-				</MockRouter>
-			);
+		// 	renderResult = render(
+		// 		<MockRouter client={clientMock}>
+		// 			<ToasterProvider>
+		// 				<SLAContext.Provider value={{}}>
+		// 					<SLAFormPage
+		// 						history={historyMock}
+		// 						processId="5678"
+		// 						query=""
+		// 					/>
+		// 				</SLAContext.Provider>
+		// 			</ToasterProvider>
+		// 		</MockRouter>
+		// 	);
 
-			container = renderResult.container;
-			getByText = renderResult.getByText;
+		// 	container = renderResult.container;
+		// 	getByText = renderResult.getByText;
 
-			await act(async () => {
-				jest.runAllTimers();
-			});
-		});
+		// 	await act(async () => {
+		// 		jest.runAllTimers();
+		// 	});
+		// });
 
-		it('Be rendered correctly', () => {
+		xit('Be rendered correctly', () => {
 			durationDaysField = getByText('days').parentNode;
 			durationHoursField = getByText('hours').parentNode;
 			durationHoursInput = container.querySelector('#slaDurationHours');
@@ -219,7 +220,7 @@ describe('The SLAFormPage component should', () => {
 			expect(durationHoursField.classList).not.toContain('has-error');
 		});
 
-		it('Display errors when submitting the form with empty values', () => {
+		xit('Display errors when submitting the form with empty values', () => {
 			fireEvent.click(saveButton);
 
 			alertMessage = getByText('please-fill-in-the-required-fields');
@@ -240,7 +241,7 @@ describe('The SLAFormPage component should', () => {
 			expect(alertMessage).toBeTruthy();
 		});
 
-		it('Display a field error when the duration receives an invalid value', () => {
+		xit('Display a field error when the duration receives an invalid value', () => {
 			fireEvent.change(durationHoursInput, {target: {value: '99:99'}});
 
 			fireEvent.blur(durationHoursInput);
@@ -256,7 +257,7 @@ describe('The SLAFormPage component should', () => {
 			expect(durationHoursField.classList).not.toContain('has-error');
 		});
 
-		it('Dismiss errors when the inputs receive valid values and submit', async () => {
+		xit('Dismiss errors when the inputs receive valid values and submit', async () => {
 			const dropDownListItems = document.querySelectorAll(
 				'.dropdown-item'
 			);
@@ -286,7 +287,7 @@ describe('The SLAFormPage component should', () => {
 			});
 		});
 
-		it('Display an error when a SLA submission failure happens and resubmit', async () => {
+		xit('Display an error when a SLA submission failure happens and resubmit', async () => {
 			const alertToast = await document.querySelector(
 				'.alert-dismissible'
 			);
@@ -308,7 +309,7 @@ describe('The SLAFormPage component should', () => {
 			});
 		});
 
-		it('Display an error when trying to submit a SLA with a name that already exists', async () => {
+		xit('Display an error when trying to submit a SLA with a name that already exists', async () => {
 			expect(nameField).toHaveTextContent(
 				'An SLA with the same name already exists.'
 			);
@@ -320,51 +321,51 @@ describe('The SLAFormPage component should', () => {
 			});
 		});
 
-		it('Redirect to SLAListPage after successful submit', async () => {
+		xit('Redirect to SLAListPage after successful submit', async () => {
 			expect(historyMock.goBack).toHaveBeenCalled();
 		});
 	});
 
-	describe('Edit a SLA', () => {
-		let container, getByText, renderResult;
+	xdescribe('Edit a SLA', () => {
+		let container, getByText;
 
-		const data = {
-			calendarKey: 'default',
-			dateModified: '2020-03-31T19:22:35Z',
-			description: '',
-			duration: 60000,
-			id: 37772,
-			name: 'SLA',
-			processId: 35901,
-			startNodeKeys: {
-				nodeKeys: [
-					{
-						executionType: 'begin',
-						id: '35905',
-					},
-				],
-				status: 0,
-			},
-			status: 0,
-			stopNodeKeys: {
-				nodeKeys: [
-					{
-						executionType: 'end',
-						id: '35903',
-					},
-				],
-				status: 0,
-			},
-		};
+		// const data = {
+		// 	calendarKey: 'default',
+		// 	dateModified: '2020-03-31T19:22:35Z',
+		// 	description: '',
+		// 	duration: 60000,
+		// 	id: 37772,
+		// 	name: 'SLA',
+		// 	processId: 35901,
+		// 	startNodeKeys: {
+		// 		nodeKeys: [
+		// 			{
+		// 				executionType: 'begin',
+		// 				id: '35905',
+		// 			},
+		// 		],
+		// 		status: 0,
+		// 	},
+		// 	status: 0,
+		// 	stopNodeKeys: {
+		// 		nodeKeys: [
+		// 			{
+		// 				executionType: 'end',
+		// 				id: '35903',
+		// 			},
+		// 		],
+		// 		status: 0,
+		// 	},
+		// };
 
-		const clientMock = {
-			get: jest
-				.fn()
-				.mockResolvedValueOnce({data: {items: calendars}})
-				.mockResolvedValueOnce({data: {items: nodes}})
-				.mockResolvedValue({data}),
-			put: jest.fn().mockResolvedValue({}),
-		};
+		// const clientMock = {
+		// 	get: jest
+		// 		.fn()
+		// 		.mockResolvedValueOnce({data: {items: calendars}})
+		// 		.mockResolvedValueOnce({data: {items: nodes}})
+		// 		.mockResolvedValue({data}),
+		// 	put: jest.fn().mockResolvedValue({}),
+		// };
 
 		const historyMock = {
 			goBack: jest.fn(),
@@ -372,32 +373,32 @@ describe('The SLAFormPage component should', () => {
 
 		const contextMock = {setSLAUpdated: jest.fn()};
 
-		beforeAll(async () => {
-			cleanup();
+		// beforeAll(async () => {
+		// 	cleanup();
 
-			renderResult = render(
-				<MockRouter client={clientMock}>
-					<ToasterProvider>
-						<SLAContext.Provider value={contextMock}>
-							<SLAFormPage
-								history={historyMock}
-								id="1234"
-								processId="5678"
-							/>
-						</SLAContext.Provider>
-					</ToasterProvider>
-				</MockRouter>
-			);
+		// 	renderResult = render(
+		// 		<MockRouter client={clientMock}>
+		// 			<ToasterProvider>
+		// 				<SLAContext.Provider value={contextMock}>
+		// 					<SLAFormPage
+		// 						history={historyMock}
+		// 						id="1234"
+		// 						processId="5678"
+		// 					/>
+		// 				</SLAContext.Provider>
+		// 			</ToasterProvider>
+		// 		</MockRouter>
+		// 	);
 
-			container = renderResult.container;
-			getByText = renderResult.getByText;
+		// 	container = renderResult.container;
+		// 	getByText = renderResult.getByText;
 
-			await act(async () => {
-				jest.runAllTimers();
-			});
-		});
+		// 	await act(async () => {
+		// 		jest.runAllTimers();
+		// 	});
+		// });
 
-		it('Render form in edit mode with correct data', async () => {
+		xit('Render form in edit mode with correct data', async () => {
 			const calendar = container.querySelector('#slaCalendarKey');
 			const durationDaysField = getByText('days').parentNode;
 			const durationHoursField = getByText('hours').parentNode;
@@ -431,91 +432,91 @@ describe('The SLAFormPage component should', () => {
 			});
 		});
 
-		it('Redirect to SLAListPage after successful submit', async () => {
+		xit('Redirect to SLAListPage after successful submit', async () => {
 			expect(historyMock.goBack).toHaveBeenCalled();
 			expect(contextMock.setSLAUpdated).toHaveBeenCalledWith(true);
 		});
 	});
 
-	describe('Edit a Blocked SLA', () => {
-		let getByText, renderResult;
+	xdescribe('Edit a Blocked SLA', () => {
+		let getByText;
 
-		const nodes = [
-			{
-				id: 37733,
-				initial: false,
-				label: 'Approved',
-				name: 'approved',
-				terminal: true,
-				type: 'STATE',
-			},
-			{
-				id: 37735,
-				initial: true,
-				label: 'Created',
-				name: 'created',
-				terminal: false,
-				type: 'STATE',
-			},
-			{
-				id: 37741,
-				initial: false,
-				label: 'Review',
-				name: 'review',
-				terminal: false,
-				type: 'TASK',
-			},
-		];
+		// const nodes = [
+		// 	{
+		// 		id: 37733,
+		// 		initial: false,
+		// 		label: 'Approved',
+		// 		name: 'approved',
+		// 		terminal: true,
+		// 		type: 'STATE',
+		// 	},
+		// 	{
+		// 		id: 37735,
+		// 		initial: true,
+		// 		label: 'Created',
+		// 		name: 'created',
+		// 		terminal: false,
+		// 		type: 'STATE',
+		// 	},
+		// 	{
+		// 		id: 37741,
+		// 		initial: false,
+		// 		label: 'Review',
+		// 		name: 'review',
+		// 		terminal: false,
+		// 		type: 'TASK',
+		// 	},
+		// ];
 
-		const data = {
-			calendarKey: '',
-			dateModified: '2020-03-31T15:56:06Z',
-			description: '',
-			duration: 60000,
-			id: 37538,
-			name: 'SLA',
-			pauseNodeKeys: {
-				nodeKeys: [
-					{
-						executionType: 'on',
-						id: '37741',
-					},
-				],
-				status: 0,
-			},
-			processId: 35901,
-			status: 2,
-		};
+		// const data = {
+		// 	calendarKey: '',
+		// 	dateModified: '2020-03-31T15:56:06Z',
+		// 	description: '',
+		// 	duration: 60000,
+		// 	id: 37538,
+		// 	name: 'SLA',
+		// 	pauseNodeKeys: {
+		// 		nodeKeys: [
+		// 			{
+		// 				executionType: 'on',
+		// 				id: '37741',
+		// 			},
+		// 		],
+		// 		status: 0,
+		// 	},
+		// 	processId: 35901,
+		// 	status: 2,
+		// };
 
-		const clientMock = {
-			get: jest
-				.fn()
-				.mockResolvedValueOnce({data: {items: calendars}})
-				.mockResolvedValueOnce({data: {items: nodes}})
-				.mockResolvedValueOnce({data}),
-		};
+		// const clientMock = {
+		// 	get: jest
+		// 		.fn()
+		// 		.mockResolvedValueOnce({data: {items: calendars}})
+		// 		.mockResolvedValueOnce({data: {items: nodes}})
+		// 		.mockResolvedValueOnce({data}),
+		// };
 
-		beforeAll(async () => {
-			cleanup();
+		// beforeAll(async () => {
+		// 	cleanup();
 
-			renderResult = render(
-				<MockRouter client={clientMock}>
-					<ToasterProvider>
-						<SLAContext.Provider value={{}}>
-							<SLAFormPage id="37741" processId="35901" />
-						</SLAContext.Provider>
-					</ToasterProvider>
-				</MockRouter>
-			);
+		// 	renderResult = render(
+		// 		<MockRouter client={clientMock}>
+		// 			<ToasterProvider>
+		// 				<SLAContext.Provider value={{}}>
+		// 					<SLAFormPage id="37741" processId="35901" />
+		// 				</SLAContext.Provider>
+		// 			</ToasterProvider>
+		// 		</MockRouter>
+		// 	);
 
-			getByText = renderResult.getByText;
+		// 	getByText = renderResult.getByText;
 
-			await act(async () => {
-				jest.runAllTimers();
-			});
-		});
+		// 	await act(async () => {
+		// 		jest.runAllTimers();
+		// 	});
+		// });
 
-		it('Handle errors at start and stop node keys', () => {
+		xit('Handle errors at start and stop node keys', () => {
 			const alertChange = getByText(
 				'the-time-frame-options-changed-in-the-workflow-definition'
 			);

@@ -9,96 +9,96 @@
  * distribution rights of the Software.
  */
 
-import {act, cleanup, render} from '@testing-library/react';
-import React from 'react';
+// import {act, cleanup, render} from '@testing-library/react';
+// import React from 'react';
 
-import CompletedItemsCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/process-items/CompletedItemsCard.es';
-import {stringify} from '../../../../src/main/resources/META-INF/resources/js/shared/components/router/queryString.es';
-import {jsonSessionStorage} from '../../../../src/main/resources/META-INF/resources/js/shared/util/storage.es';
-import {MockRouter} from '../../../mock/MockRouter.es';
+// import CompletedItemsCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/process-items/CompletedItemsCard.es';
+// import {stringify} from '../../../../src/main/resources/META-INF/resources/js/shared/components/router/queryString.es';
+// import {jsonSessionStorage} from '../../../../src/main/resources/META-INF/resources/js/shared/util/storage.es';
+// import {MockRouter} from '../../../mock/MockRouter.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
-const {filters, processId} = {
-	filters: {
-		completedDateEnd: '2019-12-09T00:00:00Z',
-		completedDateStart: '2019-12-03T00:00:00Z',
-		completedTimeRange: ['7'],
-	},
-	processId: 12345,
-};
-const data = {
-	instanceCount: 6,
-	onTimeInstanceCount: 2,
-	overdueInstanceCount: 1,
-	process: {
-		id: 38803,
-		title: 'Single Approver',
-	},
-	untrackedInstanceCount: 3,
-};
-const query = stringify({filters});
-const timeRangeData = {
-	items: [
-		{
-			dateEnd: '2019-12-09T00:00:00Z',
-			dateStart: '2019-12-03T00:00:00Z',
-			defaultTimeRange: false,
-			id: 7,
-			name: 'Last 7 Days',
-		},
-		{
-			dateEnd: '2019-12-09T00:00:00Z',
-			dateStart: '2019-11-10T00:00:00Z',
-			defaultTimeRange: true,
-			id: 30,
-			name: 'Last 30 Days',
-		},
-	],
-	totalCount: 2,
-};
+// const {filters, processId} = {
+// 	filters: {
+// 		completedDateEnd: '2019-12-09T00:00:00Z',
+// 		completedDateStart: '2019-12-03T00:00:00Z',
+// 		completedTimeRange: ['7'],
+// 	},
+// 	processId: 12345,
+// };
+// const data = {
+// 	instanceCount: 6,
+// 	onTimeInstanceCount: 2,
+// 	overdueInstanceCount: 1,
+// 	process: {
+// 		id: 38803,
+// 		title: 'Single Approver',
+// 	},
+// 	untrackedInstanceCount: 3,
+// };
+// const query = stringify({filters});
+// const timeRangeData = {
+// 	items: [
+// 		{
+// 			dateEnd: '2019-12-09T00:00:00Z',
+// 			dateStart: '2019-12-03T00:00:00Z',
+// 			defaultTimeRange: false,
+// 			id: 7,
+// 			name: 'Last 7 Days',
+// 		},
+// 		{
+// 			dateEnd: '2019-12-09T00:00:00Z',
+// 			dateStart: '2019-11-10T00:00:00Z',
+// 			defaultTimeRange: true,
+// 			id: 30,
+// 			name: 'Last 30 Days',
+// 		},
+// 	],
+// 	totalCount: 2,
+// };
 
 describe('The completed items card component should', () => {
 	let container, getAllByText;
 
-	afterEach(cleanup);
+	// afterEach(cleanup);
 
-	beforeAll(() => {
-		jsonSessionStorage.set('timeRanges', timeRangeData);
-	});
+	// beforeAll(() => {
+	// 	jsonSessionStorage.set('timeRanges', timeRangeData);
+	// });
 
-	beforeEach(async () => {
-		const clientMock = {
-			get: jest.fn().mockResolvedValue({data}),
-		};
+	// beforeEach(async () => {
+	// 	const clientMock = {
+	// 		get: jest.fn().mockResolvedValue({data}),
+	// 	};
 
-		const wrapper = ({children}) => (
-			<MockRouter client={clientMock} query={query}>
-				{children}
-			</MockRouter>
-		);
+	// 	const wrapper = ({children}) => (
+	// 		<MockRouter client={clientMock} query={query}>
+	// 			{children}
+	// 		</MockRouter>
+	// 	);
 
-		const renderResult = render(
-			<CompletedItemsCard routeParams={{processId}} />,
-			{wrapper}
-		);
+	// 	const renderResult = render(
+	// 		<CompletedItemsCard routeParams={{processId}} />,
+	// 		{wrapper}
+	// 	);
 
-		container = renderResult.container;
-		getAllByText = renderResult.getAllByText;
+	// 	container = renderResult.container;
+	// 	getAllByText = renderResult.getAllByText;
 
-		await act(async () => {
-			jest.runAllTimers();
-		});
-	});
+	// 	await act(async () => {
+	// 		jest.runAllTimers();
+	// 	});
+	// });
 
-	it('Be rendered with time range filter', async () => {
+	xit('Be rendered with time range filter', async () => {
 		const activeItem = document.querySelector('.active');
 
 		expect(getAllByText('Last 7 Days').length).toEqual(2);
 		expect(activeItem).toHaveTextContent('Last 7 Days');
 	});
 
-	it('Be rendered with overdue count "1"', () => {
+	xit('Be rendered with overdue count "1"', () => {
 		const panelBody = container.querySelector('.panel-body');
 
 		const overdueLink = panelBody.children[0].children[0];
@@ -114,7 +114,7 @@ describe('The completed items card component should', () => {
 		);
 	});
 
-	it('Be rendered with onTime count "2"', () => {
+	xit('Be rendered with onTime count "2"', () => {
 		const panelBody = container.querySelector('.panel-body');
 
 		const onTimeLink = panelBody.children[0].children[1];
@@ -130,7 +130,7 @@ describe('The completed items card component should', () => {
 		);
 	});
 
-	it('Be rendered with untracked count "3"', () => {
+	xit('Be rendered with untracked count "3"', () => {
 		const panelBody = container.querySelector('.panel-body');
 
 		const untrackedLink = panelBody.children[0].children[2];
@@ -147,7 +147,7 @@ describe('The completed items card component should', () => {
 		);
 	});
 
-	it('Be rendered with total completed count "6"', () => {
+	xit('Be rendered with total completed count "6"', () => {
 		const panelBody = container.querySelector('.panel-body');
 
 		const totalLink = panelBody.children[0].children[3];

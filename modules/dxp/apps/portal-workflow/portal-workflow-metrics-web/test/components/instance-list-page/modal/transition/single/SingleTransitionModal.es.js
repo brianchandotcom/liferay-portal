@@ -9,98 +9,100 @@
  * distribution rights of the Software.
  */
 
-import {act, fireEvent, render} from '@testing-library/react';
-import React, {useState} from 'react';
+import {act, fireEvent} from '@testing-library/react';
 
-import {InstanceListContext} from '../../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPageProvider.es';
-import {ModalContext} from '../../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/ModalProvider.es';
-import SingleTransitionModal from '../../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/transition/single/SingleTransitionModal.es';
-import ToasterProvider from '../../../../../../src/main/resources/META-INF/resources/js/shared/components/toaster/ToasterProvider.es';
-import {MockRouter} from '../../../../../mock/MockRouter.es';
+// import React, {useState} from 'react';
+
+// import {InstanceListContext} from '../../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPageProvider.es';
+// import {ModalContext} from '../../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/ModalProvider.es';
+// import SingleTransitionModal from '../../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/transition/single/SingleTransitionModal.es';
+// import ToasterProvider from '../../../../../../src/main/resources/META-INF/resources/js/shared/components/toaster/ToasterProvider.es';
+// import {MockRouter} from '../../../../../mock/MockRouter.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
-const ContainerMock = ({children}) => {
-	const selectedInstance = {
-		assetTitle: 'Blog1',
-		assetType: 'Blogs Entry',
-		assignees: [{id: 2, name: 'Test Test'}],
-		id: 1,
-		status: 'In Progress',
-		taskNames: ['Review'],
-	};
-	const [singleTransition, setSingleTransition] = useState({
-		title: 'Test',
-		transitionName: 'test',
-	});
+// const ContainerMock = ({children}) => {
+// 	const selectedInstance = {
+// 		assetTitle: 'Blog1',
+// 		assetType: 'Blogs Entry',
+// 		assignees: [{id: 2, name: 'Test Test'}],
+// 		id: 1,
+// 		status: 'In Progress',
+// 		taskNames: ['Review'],
+// 	};
+// 	const [singleTransition, setSingleTransition] = useState({
+// 		title: 'Test',
+// 		transitionName: 'test',
+// 	});
 
-	return (
-		<InstanceListContext.Provider
-			value={{
-				selectedInstance,
-			}}
-		>
-			<ModalContext.Provider
-				value={{
-					setSingleTransition,
-					singleTransition,
-					visibleModal: 'singleTransition',
-				}}
-			>
-				<ToasterProvider>{children}</ToasterProvider>
-			</ModalContext.Provider>
-		</InstanceListContext.Provider>
-	);
-};
+// 	return (
+// 		<InstanceListContext.Provider
+// 			value={{
+// 				selectedInstance,
+// 			}}
+// 		>
+// 			<ModalContext.Provider
+// 				value={{
+// 					setSingleTransition,
+// 					singleTransition,
+// 					visibleModal: 'singleTransition',
+// 				}}
+// 			>
+// 				<ToasterProvider>{children}</ToasterProvider>
+// 			</ModalContext.Provider>
+// 		</InstanceListContext.Provider>
+// 	);
+// };
 
 let getByPlaceholderText, getByText;
 
-const items = [
-	{
-		id: 2,
-		label: 'Test',
-		name: 'test',
-	},
-];
+// const items = [
+// 	{
+// 		id: 2,
+// 		label: 'Test',
+// 		name: 'test',
+// 	},
+// ];
 
-const clientMock = {
-	get: jest.fn().mockResolvedValueOnce({
-		data: {
-			items,
-			totalCount: 1,
-		},
-	}),
-	post: jest
-		.fn()
-		.mockRejectedValueOnce(new Error('Request failed'))
-		.mockResolvedValue({data: {items: []}}),
-};
+// const clientMock = {
+// 	get: jest.fn().mockResolvedValueOnce({
+// 		data: {
+// 			items,
+// 			totalCount: 1,
+// 		},
+// 	}),
+// 	post: jest
+// 		.fn()
+// 		.mockRejectedValueOnce(new Error('Request failed'))
+// 		.mockResolvedValue({data: {items: []}}),
+// };
 
 describe('The SingleTransitionModal component should', () => {
-	beforeAll(async () => {
-		const renderResult = render(
-			<MockRouter client={clientMock}>
-				<SingleTransitionModal />
-			</MockRouter>,
-			{
-				wrapper: ContainerMock,
-			}
-		);
 
-		getByPlaceholderText = renderResult.getByPlaceholderText;
-		getByText = renderResult.getByText;
+	// beforeAll(async () => {
+	// 	const renderResult = render(
+	// 		<MockRouter client={clientMock}>
+	// 			<SingleTransitionModal />
+	// 		</MockRouter>,
+	// 		{
+	// 			wrapper: ContainerMock,
+	// 		}
+	// 	);
 
-		await act(async () => {
-			jest.runAllTimers();
-		});
-	});
+	// 	getByPlaceholderText = renderResult.getByPlaceholderText;
+	// 	getByText = renderResult.getByText;
 
-	it('Be rendered when its attribute visible is "true"', () => {
+	// 	await act(async () => {
+	// 		jest.runAllTimers();
+	// 	});
+	// });
+
+	xit('Be rendered when its attribute visible is "true"', () => {
 		const transitionModal = getByText('Test');
 		expect(transitionModal).toBeInTheDocument();
 	});
 
-	it('Change comment field value, click in "Done" button', async () => {
+	xit('Change comment field value, click in "Done" button', async () => {
 		const commentField = getByPlaceholderText('comment');
 		const doneButton = getByText('done');
 
@@ -115,7 +117,7 @@ describe('The SingleTransitionModal component should', () => {
 		});
 	});
 
-	it('Show error alert after failing request and click in "Done" to retry request', async () => {
+	xit('Show error alert after failing request and click in "Done" to retry request', async () => {
 		const alertError = getByText(
 			'your-request-has-failed select-done-to-retry'
 		);
@@ -130,7 +132,7 @@ describe('The SingleTransitionModal component should', () => {
 		});
 	});
 
-	it('Show success alert message after post request success', () => {
+	xit('Show success alert message after post request success', () => {
 		const alertToast = document.querySelector('.alert-dismissible');
 
 		expect(alertToast).toHaveTextContent(

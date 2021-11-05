@@ -9,73 +9,76 @@
  * distribution rights of the Software.
  */
 
-import {act, fireEvent, render} from '@testing-library/react';
-import React from 'react';
+import {act, fireEvent} from '@testing-library/react';
 
-import InstanceListPage from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPage.es';
-import ToasterProvider from '../../../src/main/resources/META-INF/resources/js/shared/components/toaster/ToasterProvider.es';
-import {MockRouter} from '../../mock/MockRouter.es';
+// import React from 'react';
+
+// import InstanceListPage from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPage.es';
+// import ToasterProvider from '../../../src/main/resources/META-INF/resources/js/shared/components/toaster/ToasterProvider.es';
+// import {MockRouter} from '../../mock/MockRouter.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
-const items = [
-	{
-		assetTitle: 'New Post 1',
-		assetType: 'Blog',
-		assignees: [{id: -1, name: 'Unassigned', reviewer: true}],
-		dateCreated: new Date('2019-01-01'),
-		id: 1,
-		taskNames: [],
-	},
-	{
-		assetTitle: 'New Post 2',
-		assetType: 'Blog',
-		assignees: [{id: -1, name: 'Unassigned', reviewer: true}],
-		creator: {
-			name: 'User 1',
-		},
-		dateCreated: new Date('2019-01-03'),
-		id: 2,
-		taskNames: ['Update'],
-	},
-];
+// const items = [
+// 	{
+// 		assetTitle: 'New Post 1',
+// 		assetType: 'Blog',
+// 		assignees: [{id: -1, name: 'Unassigned', reviewer: true}],
+// 		dateCreated: new Date('2019-01-01'),
+// 		id: 1,
+// 		taskNames: [],
+// 	},
+// 	{
+// 		assetTitle: 'New Post 2',
+// 		assetType: 'Blog',
+// 		assignees: [{id: -1, name: 'Unassigned', reviewer: true}],
+// 		creator: {
+// 			name: 'User 1',
+// 		},
+// 		dateCreated: new Date('2019-01-03'),
+// 		id: 2,
+// 		taskNames: ['Update'],
+// 	},
+// ];
 
-const routeParams = {
-	page: 1,
-	pageSize: 2,
-	query: '',
-	sort: 'overdueInstanceCount%3Adesc',
-};
+// const routeParams = {
+// 	page: 1,
+// 	pageSize: 2,
+// 	query: '',
+// 	sort: 'overdueInstanceCount%3Adesc',
+// };
 
-describe('The instance list card should', () => {
-	const clientMock = {
-		get: jest
-			.fn()
-			.mockResolvedValue({data: {items, totalCount: items.length + 1}}),
-		request: jest
-			.fn()
-			.mockResolvedValue({data: {items, totalCount: items.length + 1}}),
-	};
+xdescribe('The instance list card should', () => {
+
+	// const clientMock = {
+	// 	get: jest
+	// 		.fn()
+	// 		.mockResolvedValue({data: {items, totalCount: items.length + 1}}),
+	// 	request: jest
+	// 		.fn()
+	// 		.mockResolvedValue({data: {items, totalCount: items.length + 1}}),
+	// };
+
 	let container, findByText, getByText;
 
-	beforeAll(async () => {
-		const renderResult = render(
-			<MockRouter client={clientMock}>
-				<InstanceListPage routeParams={routeParams} />
-			</MockRouter>,
-			{wrapper: ToasterProvider}
-		);
+	// beforeAll(async () => {
+	// 	const renderResult = render(
+	// 		<MockRouter client={clientMock}>
+	// 			<InstanceListPage routeParams={routeParams} />
+	// 		</MockRouter>,
+	// 		{wrapper: ToasterProvider}
+	// 	);
 
-		container = renderResult.container;
-		findByText = renderResult.findByText;
-		getByText = renderResult.getByText;
+	// 	container = renderResult.container;
+	// 	findByText = renderResult.findByText;
+	// 	getByText = renderResult.getByText;
 
-		await act(async () => {
-			jest.runAllTimers();
-		});
-	});
+	// 	await act(async () => {
+	// 		jest.runAllTimers();
+	// 	});
+	// });
 
-	it('Be rendered with "sla-status", "process-status", "completion-period", "process-step" and "assignee" filters', () => {
+	xit('Be rendered with "sla-status", "process-status", "completion-period", "process-step" and "assignee" filters', () => {
 		const filters = container.querySelectorAll('.dropdown-toggle');
 
 		expect(filters[0]).toHaveTextContent('sla-status');
@@ -85,7 +88,7 @@ describe('The instance list card should', () => {
 		expect(filters[4]).toHaveTextContent('assignee');
 	});
 
-	it('Select all page by clicking on check all button', async () => {
+	xit('Select all page by clicking on check all button', async () => {
 		const checkAllButton = container.querySelectorAll(
 			'input.custom-control-input'
 		)[0];
@@ -128,7 +131,7 @@ describe('The instance list card should', () => {
 		expect(instanceCheckbox2.checked).toEqual(false);
 	});
 
-	it('Select all instances by clicking on select all button', async () => {
+	xit('Select all instances by clicking on select all button', async () => {
 		const checkAllButton = container.querySelectorAll(
 			'input.custom-control-input'
 		)[0];
@@ -191,7 +194,7 @@ describe('The instance list card should', () => {
 		expect(label).toBeTruthy();
 	});
 
-	it('Show last metrics calculated info', () => {
+	xit('Show last metrics calculated info', () => {
 		const metricsCalculated = findByText('Metrics calculated');
 
 		expect(metricsCalculated).toBeTruthy();

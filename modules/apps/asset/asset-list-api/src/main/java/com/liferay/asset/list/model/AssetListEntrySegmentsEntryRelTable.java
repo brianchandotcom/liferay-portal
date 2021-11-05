@@ -66,6 +66,9 @@ public class AssetListEntrySegmentsEntryRelTable
 	public final Column<AssetListEntrySegmentsEntryRelTable, Long>
 		assetListEntryId = createColumn(
 			"assetListEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<AssetListEntrySegmentsEntryRelTable, Integer> priority =
+		createColumn(
+			"priority", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<AssetListEntrySegmentsEntryRelTable, Long>
 		segmentsEntryId = createColumn(
 			"segmentsEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

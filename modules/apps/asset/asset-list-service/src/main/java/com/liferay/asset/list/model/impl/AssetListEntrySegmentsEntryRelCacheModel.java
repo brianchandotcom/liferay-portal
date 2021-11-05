@@ -82,7 +82,7 @@ public class AssetListEntrySegmentsEntryRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -106,6 +106,8 @@ public class AssetListEntrySegmentsEntryRelCacheModel
 		sb.append(modifiedDate);
 		sb.append(", assetListEntryId=");
 		sb.append(assetListEntryId);
+		sb.append(", priority=");
+		sb.append(priority);
 		sb.append(", segmentsEntryId=");
 		sb.append(segmentsEntryId);
 		sb.append(", typeSettings=");
@@ -163,6 +165,7 @@ public class AssetListEntrySegmentsEntryRelCacheModel
 
 		assetListEntrySegmentsEntryRelImpl.setAssetListEntryId(
 			assetListEntryId);
+		assetListEntrySegmentsEntryRelImpl.setPriority(priority);
 		assetListEntrySegmentsEntryRelImpl.setSegmentsEntryId(segmentsEntryId);
 
 		if (typeSettings == null) {
@@ -207,6 +210,8 @@ public class AssetListEntrySegmentsEntryRelCacheModel
 
 		assetListEntryId = objectInput.readLong();
 
+		priority = objectInput.readInt();
+
 		segmentsEntryId = objectInput.readLong();
 		typeSettings = (String)objectInput.readObject();
 		lastPublishDate = objectInput.readLong();
@@ -245,6 +250,8 @@ public class AssetListEntrySegmentsEntryRelCacheModel
 
 		objectOutput.writeLong(assetListEntryId);
 
+		objectOutput.writeInt(priority);
+
 		objectOutput.writeLong(segmentsEntryId);
 
 		if (typeSettings == null) {
@@ -268,6 +275,7 @@ public class AssetListEntrySegmentsEntryRelCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long assetListEntryId;
+	public int priority;
 	public long segmentsEntryId;
 	public String typeSettings;
 	public long lastPublishDate;

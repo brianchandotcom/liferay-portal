@@ -48,6 +48,7 @@ public class AssetListEntrySegmentsEntryRelSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setAssetListEntryId(model.getAssetListEntryId());
+		soapModel.setPriority(model.getPriority());
 		soapModel.setSegmentsEntryId(model.getSegmentsEntryId());
 		soapModel.setTypeSettings(model.getTypeSettings());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
@@ -203,6 +204,14 @@ public class AssetListEntrySegmentsEntryRelSoap implements Serializable {
 		_assetListEntryId = assetListEntryId;
 	}
 
+	public int getPriority() {
+		return _priority;
+	}
+
+	public void setPriority(int priority) {
+		_priority = priority;
+	}
+
 	public long getSegmentsEntryId() {
 		return _segmentsEntryId;
 	}
@@ -238,6 +247,7 @@ public class AssetListEntrySegmentsEntryRelSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _assetListEntryId;
+	private int _priority;
 	private long _segmentsEntryId;
 	private String _typeSettings;
 	private Date _lastPublishDate;

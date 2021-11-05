@@ -49,6 +49,7 @@ create table AssetListEntrySegmentsEntryRel (
 	createDate DATE null,
 	modifiedDate DATE null,
 	assetListEntryId LONG,
+	priority INTEGER,
 	segmentsEntryId LONG,
 	typeSettings TEXT null,
 	lastPublishDate DATE null,

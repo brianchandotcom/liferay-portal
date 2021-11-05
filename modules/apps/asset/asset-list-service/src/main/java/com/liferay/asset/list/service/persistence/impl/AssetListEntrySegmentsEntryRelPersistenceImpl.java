@@ -3730,6 +3730,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
 		ctStrictColumnNames.add("assetListEntryId");
+		ctStrictColumnNames.add("priority");
 		ctStrictColumnNames.add("segmentsEntryId");
 		ctStrictColumnNames.add("typeSettings");
 		ctStrictColumnNames.add("lastPublishDate");

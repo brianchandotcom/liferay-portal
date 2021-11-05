@@ -61,6 +61,7 @@ public class AssetListEntrySegmentsEntryRelWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("assetListEntryId", getAssetListEntryId());
+		attributes.put("priority", getPriority());
 		attributes.put("segmentsEntryId", getSegmentsEntryId());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -136,6 +137,12 @@ public class AssetListEntrySegmentsEntryRelWrapper
 
 		if (assetListEntryId != null) {
 			setAssetListEntryId(assetListEntryId);
+		}
+
+		Integer priority = (Integer)attributes.get("priority");
+
+		if (priority != null) {
+			setPriority(priority);
 		}
 
 		Long segmentsEntryId = (Long)attributes.get("segmentsEntryId");
@@ -260,6 +267,16 @@ public class AssetListEntrySegmentsEntryRelWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the priority of this asset list entry segments entry rel.
+	 *
+	 * @return the priority of this asset list entry segments entry rel
+	 */
+	@Override
+	public int getPriority() {
+		return model.getPriority();
 	}
 
 	/**
@@ -428,6 +445,16 @@ public class AssetListEntrySegmentsEntryRelWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the priority of this asset list entry segments entry rel.
+	 *
+	 * @param priority the priority of this asset list entry segments entry rel
+	 */
+	@Override
+	public void setPriority(int priority) {
+		model.setPriority(priority);
 	}
 
 	/**

@@ -1,0 +1,44 @@
+{
+	"label": {
+		"en_US": "Quote Retrieve"
+	},
+	"name": "QuoteRetrieve",
+	"objectFields": [
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Retrieve E-mail"
+			},
+			"name": "retrieveEmail",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Product"
+			},
+			"name": "product",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Application Id"
+			},
+			"name": "applicationId",
+			"required": true,
+			"type": "Long"
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Quote Retrieves"
+	},
+	"scope": "site"
+}

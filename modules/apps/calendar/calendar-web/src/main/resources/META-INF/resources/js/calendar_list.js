@@ -321,23 +321,25 @@ AUI.add(
 					var result = val;
 
 					if (val) {
-						result = {
-							align: {
-								points: [
-									A.WidgetPositionAlign.TL,
-									A.WidgetPositionAlign.BL,
-								],
+						result = Object.assign(
+							{
+								align: {
+									points: [
+										A.WidgetPositionAlign.TL,
+										A.WidgetPositionAlign.BL,
+									],
+								},
+								bubbleTargets: [instance],
+								constrain: true,
+								host: instance,
+								items: [],
+								plugins: [A.Plugin.OverlayAutohide],
+								visible: false,
+								width: 290,
+								zIndex: Liferay.zIndex.MENU,
 							},
-							bubbleTargets: [instance],
-							constrain: true,
-							host: instance,
-							items: [],
-							plugins: [A.Plugin.OverlayAutohide],
-							visible: false,
-							width: 290,
-							zIndex: Liferay.zIndex.MENU,
-							...(val || {}),
-						};
+							val || {}
+						);
 					}
 
 					return result;

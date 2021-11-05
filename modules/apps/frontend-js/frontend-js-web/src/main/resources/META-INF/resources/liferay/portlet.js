@@ -558,10 +558,7 @@
 
 			if (portlet) {
 				if (mergeWithRefreshURLData) {
-					data = Object.assign(
-						portlet.refreshURLData || {},
-						data || {}
-					);
+					data = A.merge(portlet.refreshURLData || {}, data || {});
 				}
 				else {
 					data = data || portlet.refreshURLData || {};

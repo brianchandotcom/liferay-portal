@@ -148,7 +148,7 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 		itemSubtypesJSONArray = contentDashboardItemTypeJSONObject.getJSONArray(
 			"itemSubtypes");
 
-		Assert.assertEquals(3, itemSubtypesJSONArray.length());
+		Assert.assertEquals(2, itemSubtypesJSONArray.length());
 
 		itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(0);
 
@@ -160,14 +160,6 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 			"Basic Document", itemSubtypeJSONObject.getString("label"));
 
 		itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(1);
-
-		Assert.assertEquals(
-			DLFileEntryType.class.getName(),
-			itemSubtypeJSONObject.getString("className"));
-		Assert.assertNotNull(itemSubtypeJSONObject.getString("classPK"));
-		Assert.assertNotNull(itemSubtypeJSONObject.getString("label"));
-
-		itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(2);
 
 		Assert.assertEquals(
 			DLFileEntryType.class.getName(),

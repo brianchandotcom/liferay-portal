@@ -1,7 +1,7 @@
 {
 	"cacheable": true,
 	"fragmentEntryKey": "heading",
-	"icon": "text-editor",
+	"icon": "heading",
 	"name": "heading",
 	"thumbnail": "heading.png",
 	"type": "component"

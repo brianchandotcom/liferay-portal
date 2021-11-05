@@ -744,15 +744,15 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		task ("View the viewDuration of pageUnloaded event is greater than 5000 ms") {
+		task ("View the viewDuration of pageUnloaded event is less than 1500ms") {
 			var viewDuration = ACUtils.getEventPropertyValue(
 				applicationId = "Page",
 				eventId = "pageUnloaded",
 				property = "viewDuration");
 
-			TestUtils.isGreaterThan(
+			TestUtils.isLessThan(
 				actual = "${viewDuration}",
-				expected = "5000");
+				expected = "1500");
 		}
 
 		task ("View the request common properties value") {

@@ -25,7 +25,8 @@
 						}
 					],
 					"fragmentStyle": {
-						"hidden": true
+						"hidden": true,
+						"textAlign": ""
 					},
 					"fragmentViewports": [
 						{

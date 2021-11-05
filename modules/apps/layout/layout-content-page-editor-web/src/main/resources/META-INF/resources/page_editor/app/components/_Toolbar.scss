@@ -65,6 +65,10 @@ html#{$cadmin-selector} {
 							margin-left: $pageEditorSpacing;
 						}
 					}
+
+					> .nav-item > .navbar-nav > .nav-item + .nav-item {
+						margin-left: $pageEditorSpacing;
+					}
 				}
 
 				@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {

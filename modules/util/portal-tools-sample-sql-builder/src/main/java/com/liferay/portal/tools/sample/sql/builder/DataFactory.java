@@ -3735,8 +3735,7 @@ public class DataFactory {
 		List<DLFolderModel> dlFolderModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_DL_FOLDER_COUNT);
 
-		Map<Long, String> treePathMap = new HashMap<>(
-			BenchmarksPropsValues.MAX_DL_FOLDER_COUNT);
+		Map<Long, String> treePathMap = new HashMap<>();
 
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_DL_FOLDER_COUNT; i++) {
 			long folderId = _counter.get();

@@ -92,14 +92,6 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
 	}
 
-	macro assertCannotDeleteOnlyPage {
-		Click.waitForMenuToggleJSClick(
-			key_pageName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
-
-		MenuItem.viewNotPresent(menuItem = "Delete");
-	}
-
 	macro assertCanonicalURL {
 		var HTML = '''<link data-senna-track="temporary" href="''';
 		var HTML2 = '''" rel="canonical">''';

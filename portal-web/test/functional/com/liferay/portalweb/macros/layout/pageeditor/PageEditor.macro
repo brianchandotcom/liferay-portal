@@ -2988,12 +2988,6 @@ definition {
 		Click(locator1 = "PageEditor#EXPERIENCE_PRIORITIZE_BUTTON");
 	}
 
-	macro publishPage {
-		AssertClick(
-			locator1 = "Button#SUBMIT",
-			value1 = "Publish");
-	}
-
 	macro removeFragment {
 		var key_fragmentName = "${fragmentName}";
 

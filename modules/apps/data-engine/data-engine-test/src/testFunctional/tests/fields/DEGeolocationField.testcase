@@ -117,6 +117,15 @@ definition {
 			fieldName = "Geolocation");
 	}
 
+	@description = "This is a test for LRQA-70109. This test verifies that is possible to remove a duplicated field (repeatable)."
+	@ignore = "true"
+	@priority = "4"
+	test CanRemoveDuplicatedField {
+
+		// TODO LRQA-70109 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+
+	}
+
 	@description = "This is a test for LRQA-68679. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked"
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToDisable {

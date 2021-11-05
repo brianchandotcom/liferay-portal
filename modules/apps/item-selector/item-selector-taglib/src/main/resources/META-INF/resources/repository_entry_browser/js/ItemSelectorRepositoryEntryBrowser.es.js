@@ -56,7 +56,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	}
 
 	attachItemSelectorPreviewComponent() {
-		const itemsNodes = Array.from(this.all('.item-preview'));
+		const itemsNodes = Array.from(this.all('.item-preview-editable'));
 
 		const items = itemsNodes.map((node) => node.dataset);
 

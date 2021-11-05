@@ -161,7 +161,6 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewDefaultMyWorkflowTasksCP();
-
 	}
 
 	@description = "Verify that, when the user Save as Draft, the task is not displayed on My Workflow Tasks"

@@ -173,9 +173,9 @@ definition {
 				eventId = "pageLoaded",
 				property = "pageLoadTime");
 
-			TestUtils.isGreaterThan(
+			TestUtils.isLessThan(
 				actual = "${pageLoadTime}",
-				expected = "1000");
+				expected = "1500");
 		}
 
 		task ("View the WebContent events triggered for guest") {
@@ -458,9 +458,9 @@ definition {
 				eventId = "fieldBlurred",
 				property = "focusDuration");
 
-			TestUtils.isGreaterThan(
+			TestUtils.isLessThan(
 				actual = "${focusDuration}",
-				expected = "5000");
+				expected = "1500");
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Form",

@@ -6,9 +6,15 @@ definition {
 	property testray.main.component.name = "Site Pages Administration";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 	}
 
 	tearDown {
@@ -18,19 +24,9 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+			Role.tearDownCP();
 
-			Site.tearDownCP();
-
-			WebContent.tearDownCP();
-
-			BlogsEntry.tearDownCP();
-
-			MessageboardsThread.tearDownCP();
-
-			Page.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
 			JSONUser.tearDownNonAdminUsers();
 

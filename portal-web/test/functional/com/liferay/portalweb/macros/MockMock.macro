@@ -88,15 +88,22 @@ definition {
 
 		MockMock._gotoMail(newTab = "${newTab}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "MockMock#MOCKMOCK_SUBJECT_FIELD_LINK",
-			value1 = "${asset}");
+		if (isSet(deleteAll)) {
+			Click(
+				key_text = "Delete all",
+				locator1 = "Link#ANY");
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "MockMock#MOCKMOCK_SUBJECT_FIELD_LINK",
+				value1 = "${asset}");
 
-		AssertClick(
-			locator1 = "MockMock#MOCKMOCK_DELETE_FIELD",
-			value1 = "Delete");
+			AssertClick(
+				locator1 = "MockMock#MOCKMOCK_DELETE_FIELD",
+				value1 = "Delete");
 
-		AssertElementNotPresent(locator1 = "MockMock#MOCKMOCK_SUBJECT_FIELD_LINK");
+			AssertElementNotPresent(locator1 = "MockMock#MOCKMOCK_SUBJECT_FIELD_LINK");
+		}
 	}
 
 	macro getBodySpecificText {

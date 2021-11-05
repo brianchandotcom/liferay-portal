@@ -16,6 +16,7 @@ package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.configuration.CommercePriceConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
@@ -23,6 +24,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.url.CPFriendlyURL;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -31,6 +33,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -99,12 +103,16 @@ public class MiniCartTag extends IncludeTag {
 
 			_checkoutURL = StringPool.BLANK;
 
-			PortletURL commerceCheckoutPortletURL =
-				_commerceOrderHttpHelper.getCommerceCheckoutPortletURL(
-					httpServletRequest);
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				httpServletRequest, CommercePortletKeys.COMMERCE_CHECKOUT,
+				PortletProvider.Action.VIEW);
 
-			if (commerceCheckoutPortletURL != null) {
-				_checkoutURL = String.valueOf(commerceCheckoutPortletURL);
+			if (portletURL != null) {
+				_checkoutURL = PortletURLBuilder.create(
+					portletURL
+				).setMVCRenderCommandName(
+					"/commerce_checkout/checkout_redirect"
+				).buildString();
 			}
 		}
 		catch (PortalException portalException) {

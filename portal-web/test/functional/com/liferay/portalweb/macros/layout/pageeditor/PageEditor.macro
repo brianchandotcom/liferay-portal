@@ -1205,6 +1205,24 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if (isSet(numberOfSlides)) {
+			Type(
+				key_fieldLabel = "Number of Slides",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "${numberOfSlides}");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
+
+			AssertTextEquals(
+				key_fieldLabel = "Number of Slides",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "${numberOfSlides}");
+		}
+
 		if (isSet(numberOfTabs)) {
 			Type(
 				key_fieldLabel = "Number Of Tabs",

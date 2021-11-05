@@ -510,7 +510,8 @@ public class PoshiContext {
 		Collections.addAll(poshiFileIncludes, POSHI_SUPPORT_FILE_INCLUDES);
 
 		_readPoshiFilesFromClassPath(
-			poshiFileIncludes.toArray(new String[0]), "testFunctional");
+			poshiFileIncludes.toArray(new String[0]), "default/testFunctional",
+			"testFunctional");
 
 		String testBaseDirName = PropsUtil.get("test.base.dir.name");
 
@@ -1155,24 +1156,32 @@ public class PoshiContext {
 						URI.create(resourceURLString.substring(0, x)),
 						new HashMap<String, String>(), classLoader)) {
 
+					String namespace = null;
+
 					Matcher matcher = _poshiResourceJarNamePattern.matcher(
 						resourceURLString);
 
-					if (!matcher.find()) {
+					if (matcher.find()) {
+						namespace = StringUtils.capitalize(
+							matcher.group("namespace"));
+					}
+					else if (resourceName.equals("default/testFunctional")) {
+						namespace = "Default";
+					}
+
+					if (namespace == null) {
 						throw new RuntimeException(
 							"A namespace must be defined for resource: " +
 								resourceURLString);
 					}
-
-					String namespace = StringUtils.capitalize(
-						matcher.group("namespace"));
 
 					if (namespace.equals(_DEFAULT_NAMESPACE)) {
 						throw new RuntimeException(
 							"Namespace: '" + _DEFAULT_NAMESPACE +
 								"' is reserved");
 					}
-					else if (_namespaces.contains(namespace)) {
+
+					if (_namespaces.contains(namespace)) {
 						throw new RuntimeException(
 							"Duplicate namespace " + namespace);
 					}

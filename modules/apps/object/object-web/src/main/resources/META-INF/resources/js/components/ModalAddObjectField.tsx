@@ -19,6 +19,7 @@ import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
 import useForm from '../hooks/useForm';
+import {default as errorsMapping} from '../utils/errors';
 import {toCamelCase} from '../utils/string';
 import Input from './form/Input';
 import Select from './form/Select';
@@ -85,11 +86,16 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, observer, onClose}) => {
 			window.location.reload();
 		}
 		else {
-			const {
-				title = Liferay.Language.get('an-error-occurred'),
-			} = await response.json();
+			const {type} = await response.json();
+			const isMapped = Object.prototype.hasOwnProperty.call(
+				errorsMapping,
+				type
+			);
+			const errorMessage = isMapped
+				? errorsMapping[type]
+				: Liferay.Language.get('an-error-occurred');
 
-			setError(title);
+			setError(errorMessage);
 		}
 	};
 

@@ -19,6 +19,7 @@ import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
 import useForm from '../hooks/useForm';
+import {default as errorsMapping} from '../utils/errors';
 import {
 	firstLetterUppercase,
 	removeAllSpecialCharacters,
@@ -84,11 +85,16 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 			window.location.reload();
 		}
 		else {
-			const {
-				title = Liferay.Language.get('an-error-occurred'),
-			} = await response.json();
+			const {type} = await response.json();
+			const isMapped = Object.prototype.hasOwnProperty.call(
+				errorsMapping,
+				type
+			);
+			const errorMessage = isMapped
+				? errorsMapping[type]
+				: Liferay.Language.get('an-error-occurred');
 
-			setError(title);
+			setError(errorMessage);
 		}
 	};
 
@@ -98,11 +104,9 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 		if (!values.label) {
 			errors.label = Liferay.Language.get('required');
 		}
-
 		if (!(values.name ?? values.label)) {
 			errors.name = Liferay.Language.get('required');
 		}
-
 		if (!values.pluralLabel) {
 			errors.pluralLabel = Liferay.Language.get('required');
 		}

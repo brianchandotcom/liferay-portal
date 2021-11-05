@@ -323,11 +323,41 @@ definition {
 	}
 
 	@description = "Verify that, editing a Pending entry, a message is displayed"
-	@ignore = "true"
 	@priority = "2"
 	test MessageIsDisplayedOnEditingPendingEntry {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists");
 
-		// TODO LRQA-69480 MessageIsDisplayedOnEditingPendingEntry pending implementation
+		DDLList.addCP(
+			ddlListDescription = "DDL List Description",
+			ddlListName = "DDL List",
+			workflowDefinition = "Single Approver");
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Contacts");
+
+		DDLDataDefinition.save();
+
+		DDLList.viewCP(ddlListName = "DDL List");
+
+		DDLRecord.addNewContacts(
+			ddlCompany = "Liferay",
+			ddlEmail = "qa@liferay.com",
+			ddlFirstName = "Test",
+			ddlInstantMesseger = "Liferay",
+			ddlJobTitle = "QA",
+			ddlLastName = "Test",
+			ddlPhoneMobile = "12345678",
+			ddlPhoneOffice = "12345678");
+
+		PortletEntry.submitForPublication();
+
+		DDLList.viewStatusDDL(key_status = "Pending");
+
+		DDLRecord.editPG(ddlListName = "${ddlListName}");
+
+		DDLList.viewWorkflowInProcessMessage(errorMessage = "There is a publication workflow in process. Some actions may be disabled depending on the status and your role through this process.");
 
 	}
 

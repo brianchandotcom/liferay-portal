@@ -208,4 +208,17 @@ definition {
 			value1 = "${ddlListName}");
 	}
 
+	macro viewStatusDDL {
+		AssertElementPresent(
+			key_status = "${key_status}",
+			locator1 = "DDL#LIST_TABLE_NAME_STATUS");
+	}
+
+	macro viewWorkflowInProcessMessage {
+		AssertTextEquals(
+			key_errorMessage = "${errorMessage}",
+			locator1 = "DDLRecord#ERROR_MESSAGE",
+			value1 = "${errorMessage}");
+	}
+
 }

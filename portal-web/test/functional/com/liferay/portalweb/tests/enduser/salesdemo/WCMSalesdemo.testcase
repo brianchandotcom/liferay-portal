@@ -54,9 +54,11 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#IFRAME_PORTLET");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Embedded#EMBEDDED_TEXT_UPDATED",
-			value1 = "updated");
+		AssertVisible(
+			key_title = "Yes",
+			locator1 = "Header#H1_TITLE");
+
+		SelectFrameTop();
 	}
 
 	@priority = "4"

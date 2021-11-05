@@ -145,6 +145,7 @@
 		<!-- Other fields -->
 
 		<column name="assetListEntryId" type="long" />
+		<column name="priority" type="int" />
 		<column name="segmentsEntryId" type="long" />
 		<column name="typeSettings" type="String" />
 		<column name="lastPublishDate" type="Date" />

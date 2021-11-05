@@ -822,8 +822,10 @@ definition {
 	test CheckTabBlurredWhenComesFromADifferentTab {
 		property proxy.server.enabled = "true";
 
-		task ("Get site assigned property name") {
+		task ("Get site assigned property name and get data source name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+
+			var dataSource = StringUtil.extractFirst("${propertyName}"," ");
 		}
 
 		task ("Get the Property ID in AC") {
@@ -860,7 +862,7 @@ definition {
 		}
 
 		task ("Switch to the previous tab") {
-			SelectWindow(locator1 = "title=AC Page - Site Name - Liferay DXP");
+			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
 		}
 
 		task ("Wait for sending requests") {

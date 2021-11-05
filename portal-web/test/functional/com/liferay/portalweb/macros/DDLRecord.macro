@@ -1147,40 +1147,4 @@ definition {
 		}
 	}
 
-	macro addNewContacts {
-		Click(locator1 = "Button#PLUS");
-
-		Type(
-			locator1 = "DDLRecord#COMPANY_FIELD",
-			value1 = "${ddlCompany}");
-
-		Type(
-			locator1 = "DDLRecord#EMAIL_FIELD",
-			value1 = "${ddlEmail}");
-
-		Type(
-			locator1 = "DDLRecord#FIRST_NAME_FIELD",
-			value1 = "${ddlFirstName}");
-
-		Type(
-			locator1 = "DDLRecord#INSTANT_MESSEGER_FIELD",
-			value1 = "${ddlInstantMesseger}");
-
-		Type(
-			locator1 = "DDLRecord#JOB_TITLE_FIELD",
-			value1 = "${ddlJobTitle}");
-
-		Type(
-			locator1 = "DDLRecord#LAST_NAME_FIELD",
-			value1 = "${ddlLastName}");
-
-		Type(
-			locator1 = "DDLRecord#PHONE_MOBILE_FIELD",
-			value1 = "${ddlPhoneMobile}");
-
-		Type(
-			locator1 = "DDLRecord#PHONE_OFFICE_FIELD",
-			value1 = "${ddlPhoneOffice}");
-	}
-
 }

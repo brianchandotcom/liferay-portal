@@ -2,16 +2,16 @@
 	"action": "create",
 	"bcc": "",
 	"cc": "",
-	"description": "notification template",
+	"description": "",
 	"enabled": true,
-	"from": "orders@liferay.com",
+	"from": "solutions@liferay.com",
 	"fromNameMap": {
-		"en-US": "Test name"
+		"en-US": "Raylife"
 	},
-	"name": "Test notification template create",
-	"objectDefinitionName": "C_QuoteComparison",
+	"name": "Quote retrieve notification template",
+	"objectDefinitionName": "C_QuoteRetrieve",
 	"subjectMap": {
-		"en-US": "Your order has been received."
+		"en-US": "Continue your Raylife [%PRODUCT%] quote"
 	},
-	"to": "test@liferay.com"
+	"to": "[%RETRIEVEEMAIL%]"
 }

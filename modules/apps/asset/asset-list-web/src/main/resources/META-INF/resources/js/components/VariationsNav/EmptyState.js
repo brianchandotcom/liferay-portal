@@ -63,7 +63,7 @@ EmptyState.propTypes = {
 	actionButtonUrl: PropTypes.string.isRequired,
 	availableSegments: PropTypes.bool.isRequired,
 	disableActionButton: PropTypes.bool,
-	selectSegmentCallback: PropTypes.string.isRequired,
+	selectSegmentCallback: PropTypes.func.isRequired,
 };
 
 export default EmptyState;

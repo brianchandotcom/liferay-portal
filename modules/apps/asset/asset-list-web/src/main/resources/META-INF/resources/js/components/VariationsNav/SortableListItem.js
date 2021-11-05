@@ -22,6 +22,7 @@ import {useDrag, useDrop} from 'react-dnd';
 import SortableListItemMoreActions from './SortableListItemMoreActions';
 
 const SortableListItem = ({
+	handleItemDelete,
 	handleItemMove,
 	id,
 	index,
@@ -109,6 +110,15 @@ const SortableListItem = ({
 			<ClayList.ItemField shrink>
 				<SortableListItemMoreActions
 					index={index}
+					itemIsDeleteable={
+						!!sortableListItem.deleteAssetListEntryVariationURL
+					}
+					onDeleteVariation={() =>
+						handleItemDelete({
+							deleteURL:
+								sortableListItem.deleteAssetListEntryVariationURL,
+						})
+					}
 					onReorder={handleItemMove}
 					totalItems={totalItems}
 				/>
@@ -118,6 +128,7 @@ const SortableListItem = ({
 };
 
 SortableListItem.propTypes = {
+	handleItemDelete: PropTypes.func.isRequired,
 	handleItemMove: PropTypes.func.isRequired,
 	id: PropTypes.string.isRequired,
 	index: PropTypes.number.isRequired,

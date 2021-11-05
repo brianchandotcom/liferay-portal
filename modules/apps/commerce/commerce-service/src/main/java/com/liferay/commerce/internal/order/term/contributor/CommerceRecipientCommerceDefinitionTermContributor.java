@@ -96,17 +96,6 @@ public class CommerceRecipientCommerceDefinitionTermContributor
 
 			commerceOrder = commerceOrderItem.getCommerceOrder();
 		}
-		else if (object instanceof ObjectEntry) {
-			ObjectEntry objectEntry = (ObjectEntry)object;
-
-			Map<String, Serializable> values = objectEntry.getValues();
-
-			term = StringUtil.toLowerCase(StringUtil.removeSubstrings(term, "[%", "%]"), locale);
-
-			if (values.get(term) != null) {
-				return String.valueOf(values.get(term));
-			}
-		}
 
 		if (commerceOrder == null) {
 			return term;

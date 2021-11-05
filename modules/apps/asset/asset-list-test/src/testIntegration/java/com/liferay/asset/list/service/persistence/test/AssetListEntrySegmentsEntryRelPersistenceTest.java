@@ -157,6 +157,8 @@ public class AssetListEntrySegmentsEntryRelPersistenceTest {
 		newAssetListEntrySegmentsEntryRel.setAssetListEntryId(
 			RandomTestUtil.nextLong());
 
+		newAssetListEntrySegmentsEntryRel.setPriority(RandomTestUtil.nextInt());
+
 		newAssetListEntrySegmentsEntryRel.setSegmentsEntryId(
 			RandomTestUtil.nextLong());
 
@@ -212,6 +214,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceTest {
 		Assert.assertEquals(
 			existingAssetListEntrySegmentsEntryRel.getAssetListEntryId(),
 			newAssetListEntrySegmentsEntryRel.getAssetListEntryId());
+		Assert.assertEquals(
+			existingAssetListEntrySegmentsEntryRel.getPriority(),
+			newAssetListEntrySegmentsEntryRel.getPriority());
 		Assert.assertEquals(
 			existingAssetListEntrySegmentsEntryRel.getSegmentsEntryId(),
 			newAssetListEntrySegmentsEntryRel.getSegmentsEntryId());
@@ -309,8 +314,8 @@ public class AssetListEntrySegmentsEntryRelPersistenceTest {
 			"ctCollectionId", true, "uuid", true,
 			"assetListEntrySegmentsEntryRelId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "assetListEntryId", true,
-			"segmentsEntryId", true, "lastPublishDate", true);
+			true, "modifiedDate", true, "assetListEntryId", true, "priority",
+			true, "segmentsEntryId", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -675,6 +680,8 @@ public class AssetListEntrySegmentsEntryRelPersistenceTest {
 
 		assetListEntrySegmentsEntryRel.setAssetListEntryId(
 			RandomTestUtil.nextLong());
+
+		assetListEntrySegmentsEntryRel.setPriority(RandomTestUtil.nextInt());
 
 		assetListEntrySegmentsEntryRel.setSegmentsEntryId(
 			RandomTestUtil.nextLong());

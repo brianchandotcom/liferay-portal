@@ -78,8 +78,9 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"assetListEntryId", Types.BIGINT}, {"segmentsEntryId", Types.BIGINT},
-		{"typeSettings", Types.CLOB}, {"lastPublishDate", Types.TIMESTAMP}
+		{"assetListEntryId", Types.BIGINT}, {"priority", Types.INTEGER},
+		{"segmentsEntryId", Types.BIGINT}, {"typeSettings", Types.CLOB},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -97,13 +98,14 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("assetListEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("segmentsEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetListEntrySegmentsEntryRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,alEntrySegmentsEntryRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,segmentsEntryId LONG,typeSettings TEXT null,lastPublishDate DATE null,primary key (alEntrySegmentsEntryRelId, ctCollectionId))";
+		"create table AssetListEntrySegmentsEntryRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,alEntrySegmentsEntryRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,priority INTEGER,segmentsEntryId LONG,typeSettings TEXT null,lastPublishDate DATE null,primary key (alEntrySegmentsEntryRelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetListEntrySegmentsEntryRel";
@@ -377,6 +379,12 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 			(BiConsumer<AssetListEntrySegmentsEntryRel, Long>)
 				AssetListEntrySegmentsEntryRel::setAssetListEntryId);
 		attributeGetterFunctions.put(
+			"priority", AssetListEntrySegmentsEntryRel::getPriority);
+		attributeSetterBiConsumers.put(
+			"priority",
+			(BiConsumer<AssetListEntrySegmentsEntryRel, Integer>)
+				AssetListEntrySegmentsEntryRel::setPriority);
+		attributeGetterFunctions.put(
 			"segmentsEntryId",
 			AssetListEntrySegmentsEntryRel::getSegmentsEntryId);
 		attributeSetterBiConsumers.put(
@@ -630,6 +638,20 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 	}
 
 	@Override
+	public int getPriority() {
+		return _priority;
+	}
+
+	@Override
+	public void setPriority(int priority) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_priority = priority;
+	}
+
+	@Override
 	public long getSegmentsEntryId() {
 		return _segmentsEntryId;
 	}
@@ -765,6 +787,7 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 		assetListEntrySegmentsEntryRelImpl.setModifiedDate(getModifiedDate());
 		assetListEntrySegmentsEntryRelImpl.setAssetListEntryId(
 			getAssetListEntryId());
+		assetListEntrySegmentsEntryRelImpl.setPriority(getPriority());
 		assetListEntrySegmentsEntryRelImpl.setSegmentsEntryId(
 			getSegmentsEntryId());
 		assetListEntrySegmentsEntryRelImpl.setTypeSettings(getTypeSettings());
@@ -803,6 +826,8 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 			this.<Date>getColumnOriginalValue("modifiedDate"));
 		assetListEntrySegmentsEntryRelImpl.setAssetListEntryId(
 			this.<Long>getColumnOriginalValue("assetListEntryId"));
+		assetListEntrySegmentsEntryRelImpl.setPriority(
+			this.<Integer>getColumnOriginalValue("priority"));
 		assetListEntrySegmentsEntryRelImpl.setSegmentsEntryId(
 			this.<Long>getColumnOriginalValue("segmentsEntryId"));
 		assetListEntrySegmentsEntryRelImpl.setTypeSettings(
@@ -947,6 +972,8 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 		assetListEntrySegmentsEntryRelCacheModel.assetListEntryId =
 			getAssetListEntryId();
 
+		assetListEntrySegmentsEntryRelCacheModel.priority = getPriority();
+
 		assetListEntrySegmentsEntryRelCacheModel.segmentsEntryId =
 			getSegmentsEntryId();
 
@@ -1078,6 +1105,7 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _assetListEntryId;
+	private int _priority;
 	private long _segmentsEntryId;
 	private String _typeSettings;
 	private Date _lastPublishDate;
@@ -1123,6 +1151,7 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("assetListEntryId", _assetListEntryId);
+		_columnOriginalValues.put("priority", _priority);
 		_columnOriginalValues.put("segmentsEntryId", _segmentsEntryId);
 		_columnOriginalValues.put("typeSettings", _typeSettings);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
@@ -1173,11 +1202,13 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 
 		columnBitmasks.put("assetListEntryId", 1024L);
 
-		columnBitmasks.put("segmentsEntryId", 2048L);
+		columnBitmasks.put("priority", 2048L);
 
-		columnBitmasks.put("typeSettings", 4096L);
+		columnBitmasks.put("segmentsEntryId", 4096L);
 
-		columnBitmasks.put("lastPublishDate", 8192L);
+		columnBitmasks.put("typeSettings", 8192L);
+
+		columnBitmasks.put("lastPublishDate", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

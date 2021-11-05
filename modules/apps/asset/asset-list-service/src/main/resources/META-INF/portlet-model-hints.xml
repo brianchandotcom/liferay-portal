@@ -52,6 +52,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="assetListEntryId" type="long" />
+		<field name="priority" type="int" />
 		<field name="segmentsEntryId" type="long" />
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />

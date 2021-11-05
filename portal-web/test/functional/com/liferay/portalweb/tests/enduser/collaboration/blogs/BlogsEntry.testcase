@@ -593,6 +593,8 @@ definition {
 
 		BlogsEntry.editCoverImageCaption(captionField = "");
 
+		Button.clickPublish();
+
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Guest",

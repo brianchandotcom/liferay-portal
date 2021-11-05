@@ -35,11 +35,14 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -47,11 +50,14 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.impl.ThemeSettingImpl;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.TimeZone;
 
 import javax.portlet.PortletPreferences;
@@ -107,6 +113,22 @@ public class CommerceGuestCheckoutAuthenticationCommerceHealthStatus
 			commerceChannel.getSiteGroupId(), privateLayout,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, name, null,
 			LayoutConstants.TYPE_PORTLET, true, friendlyURL, serviceContext);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.put(
+			"lfr-theme:regular:show-mini-cart", "false");
+
+		layout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+
+		Theme theme = layout.getTheme();
+
+		setThemeSettingProperties(theme, typeSettingsUnicodeProperties);
+
+		_layoutSetLocalService.updateLookAndFeel(
+			serviceContext.getScopeGroupId(), privateLayout, theme.getThemeId(),
+			StringPool.BLANK, StringPool.BLANK);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -179,16 +201,6 @@ public class CommerceGuestCheckoutAuthenticationCommerceHealthStatus
 			_layoutLocalService.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), layout.getTypeSettings());
-
-			UnicodeProperties typeSettingsUnicodeProperties =
-				layout.getTypeSettingsProperties();
-
-			typeSettingsUnicodeProperties.put(
-				"lfr-theme:regular:show-mini-cart", "false");
-
-			layout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
-
-			_layoutLocalService.updateLayout(layout);
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
@@ -273,6 +285,47 @@ public class CommerceGuestCheckoutAuthenticationCommerceHealthStatus
 		return false;
 	}
 
+	protected void deleteThemeSettingsProperties(
+		UnicodeProperties typeSettingsUnicodeProperties, String device) {
+
+		String keyPrefix = ThemeSettingImpl.namespaceProperty(device);
+
+		Set<String> keys = typeSettingsUnicodeProperties.keySet();
+
+		Iterator<String> iterator = keys.iterator();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			if (key.startsWith(keyPrefix)) {
+				iterator.remove();
+			}
+		}
+	}
+
+	protected void setThemeSettingProperties(
+		Theme theme, UnicodeProperties typeSettingUnicodeProperties) {
+
+		String device = "regular";
+
+		deleteThemeSettingsProperties(typeSettingUnicodeProperties, device);
+
+		Map<String, ThemeSetting> themeSettings =
+			theme.getConfigurableSettings();
+
+		for (Map.Entry<String, ThemeSetting> entry : themeSettings.entrySet()) {
+			ThemeSetting themeSetting = entry.getValue();
+
+			String value = themeSetting.getValue();
+
+			if (!value.equals(themeSetting.getValue())) {
+				typeSettingUnicodeProperties.setProperty(
+					ThemeSettingImpl.namespaceProperty(device, entry.getKey()),
+					value);
+			}
+		}
+	}
+
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -296,6 +349,9 @@ public class CommerceGuestCheckoutAuthenticationCommerceHealthStatus
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
 	private PortletPreferencesFactory _portletPreferencesFactory;

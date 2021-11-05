@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>FIELD_LABEL_INDEXED</td>
-	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}'] | //legend[normalize-space(text())='${key_fieldLabel}'])[${index}]</td>
+	<td>//div[contains(@class,'ddm-field')][${index}]//label[normalize-space(text())='${key_fieldLabel}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -744,7 +744,10 @@ definition {
 
 		ObjectAdmin.gotoRelationshipsTab();
 
-		ObjectAdmin.addObjectRelationshipViaUI(label = "Relationship");
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "Relationship",
+			object = "CustomObject",
+			type = "One to Many");
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
@@ -907,23 +910,13 @@ definition {
 
 		ObjectAdmin.gotoRelationshipsTab();
 
-		LexiconEntry.gotoAdd();
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "Relationship",
+			name = "",
+			object = "CustomObject",
+			type = "One to Many");
 
-		Click(locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_FORM");
-
-		Click(
-			key_type = "One to Many",
-			locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
-
-		Select(
-			locator1 = "ObjectAdmin#SELECT_OBJECT_RELATIONSHIP",
-			value1 = "CustomObject");
-
-		Button.clickSave();
-
-		AssertTextEquals(
-			locator1 = "Message#ERROR",
-			value1 = "Name is null");
+		AssertElementPresent(locator1 = "ObjectAdmin#NAME_OBJECT_RELATIONSHIP_REQUIRED");
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Object blank"
@@ -944,9 +937,7 @@ definition {
 			label = "Custom Relationship",
 			type = "One to Many");
 
-		AssertTextEquals(
-			locator1 = "Message#ERROR",
-			value1 = "No ObjectDefinition exists with the primary key 0");
+		AssertElementPresent(locator1 = "ObjectAdmin#SELECT_OBJECT_RELATIONSHIP_REQUIRED");
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Type blank"
@@ -967,9 +958,7 @@ definition {
 			label = "Relationship",
 			object = "CustomObject");
 
-		AssertTextEquals(
-			locator1 = "Message#ERROR",
-			value1 = "Invalid type null");
+		AssertElementPresent(locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_FORM_REQUIRED");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Type field blank"
@@ -1370,7 +1359,9 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.assertObjectStatus(status = "Draft");
+		ObjectAdmin.assertObjectStatus(
+			label = "Custom Object",
+			status = "Draft");
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
@@ -1378,7 +1369,9 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.assertObjectStatus(status = "Approved");
+		ObjectAdmin.assertObjectStatus(
+			label = "Custom Object",
+			status = "Approved");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to publish an Object with the Publish Object Definition permission"
@@ -1676,6 +1669,10 @@ definition {
 
 		CreateObject.saveObject();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
 		CreateObject.checkToggleActive();
 
 		CreateObject.saveObject();
@@ -1697,9 +1694,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Entry 1");
 
-		AssertClick(
-			locator1 = "Button#MAIN_CONTENT_SUBMIT",
-			value1 = "Submit");
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -3174,6 +3169,10 @@ definition {
 
 		CreateObject.saveObject();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
 		CreateObject.checkToggleActive();
 
 		CreateObject.saveObject();
@@ -3729,6 +3728,11 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
 
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectFieldB",
+			objectName = "CustomObjectB",
+			value = "Entry");
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object A");
@@ -3951,6 +3955,7 @@ definition {
 
 		ObjectAdmin.assertObjectColumnValue(
 			label = "Custom Object",
+			scope = "company",
 			status = "Draft",
 			system = "No");
 	}

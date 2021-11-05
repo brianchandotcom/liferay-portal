@@ -101,6 +101,16 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>NAME_OBJECT_RELATIONSHIP</td>
+		<td>//input[@id ='objectRelationshipName']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>NAME_OBJECT_RELATIONSHIP_REQUIRED</td>
+		<td>//input[@id ='objectRelationshipName']/..//div//span[contains(text(),'Required')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>PLURAL_LABEL_CUSTOM_OBJECT</td>
 		<td>//input[@id='objectDefinitionPluralLabel']</td>
 		<td></td>
@@ -181,6 +191,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>RELATIONSHIPS_TYPE_FORM_REQUIRED</td>
+		<td>//div[contains(@class, 'form-control')]/../following-sibling::div//span[contains(text(),'Required')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SELECT_RELATIONSHIPS_TYPE_OPTION</td>
 		<td>//button[@class = 'dropdown-item']//div[contains(text(),'${key_type}')]</td>
 		<td></td>
@@ -196,13 +211,18 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_SCOPE</td>
+		<td>//a[contains(text(),'${key_label}')]/../../following-sibling::div[contains(text(),'${key_scope}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OBJECT_STATUS</td>
-		<td>//strong[contains(@class, 'workflow-value') and contains(text(),'${key_status}')]</td>
+		<td>//a[contains(text(),'${key_label}')]/../../following-sibling::div//strong[contains(@class, 'workflow-value') and contains(text(),'${key_status}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_SYSTEM</td>
-		<td>//div[contains(text(),'${key_system}')]</td>
+		<td>//a[contains(text(),'${key_label}')]/../../following-sibling::div[contains(text(),'${key_system}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -243,6 +263,11 @@
 	<tr>
 		<td>SELECT_OBJECT_RELATIONSHIP</td>
 		<td>//select[@class = 'form-control']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_OBJECT_RELATIONSHIP_REQUIRED</td>
+		<td>//select[@class = 'form-control']/following-sibling::div//span[contains(text(),'Required')]</td>
 		<td></td>
 	</tr>
 	<tr>

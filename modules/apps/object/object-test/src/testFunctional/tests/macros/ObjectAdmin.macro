@@ -148,6 +148,12 @@ definition {
 				value1 = "${object}");
 		}
 
+		if (isSet(name)) {
+			Type(
+				locator1 = "ObjectAdmin#NAME_OBJECT_RELATIONSHIP",
+				value1 = "${name}");
+		}
+
 		Button.clickSave();
 	}
 
@@ -225,12 +231,17 @@ definition {
 
 	macro assertObjectColumnValue {
 		var key_label = "${label}";
+		var key_scope = "${scope}";
 		var key_system = "${system}";
 		var key_status = "${status}";
 
 		AssertTextEquals(
 			locator1 = "ObjectAdmin#OBJECT_LABEL",
 			value1 = "${label}");
+
+		AssertTextEquals(
+			locator1 = "ObjectAdmin#OBJECT_SCOPE",
+			value1 = "${scope}");
 
 		AssertTextEquals(
 			locator1 = "ObjectAdmin#OBJECT_SYSTEM",
@@ -273,9 +284,10 @@ definition {
 	}
 
 	macro assertObjectStatus {
-		AssertElementPresent(
-			key_status = "${status}",
-			locator1 = "ObjectAdmin#OBJECT_STATUS");
+		key_status = "${status}";
+		key_label = "${label}";
+
+		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_STATUS");
 	}
 
 	macro assertRelationshipsTypeDescription {

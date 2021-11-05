@@ -591,10 +591,6 @@ definition {
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION",
 			value1 = "Cover Image Caption");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
-
 		Blogs.editCoverImageCaption(captionField = "");
 
 		BlogsNavigator.openToEditEntryInSite(

@@ -3563,12 +3563,41 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Workflow Site Menu page when reactivated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectReappearsWorkflowSiteMenuWhenReactivated {
 
-		// TODO LPS-140879 ObjectReappearsWorkflowSiteMenuWhenReactivated pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			panelCategoryKey = "Content & Data",
+			pluralLabelName = "Custom Objects",
+			scope = "site");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		AssertElementPresent(
+			key_workflowResourceValue = "Custom Object",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
 	}
 
 	@description = "LPS-135551 - Verify that when the Object is scoped by Site each site will have its own entries"

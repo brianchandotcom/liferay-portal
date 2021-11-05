@@ -36,6 +36,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8370 | Test Summary: 180 Days time period filter in Interests List"
+	@ignore = "true"
 	@priority = "3"
 	test CanTimeFilterUse180DaysInInterestsList {
 		property portal.upstream = "quarantine";
@@ -158,6 +159,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8371 | Test Summary: Last Year time period filter in Interests List"
+	@ignore = "true"
 	@priority = "3"
 	test CanTimeFilterUseLastYearInInterestsList {
 		property portal.upstream = "quarantine";

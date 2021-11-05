@@ -197,6 +197,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8506 | Test Summary: Segment Overview distribution filtered by number"
+	@ignore = "true"
 	@priority = "3"
 	test SegmentOverviewDistributionFilteredByNumber {
 		property portal.upstream = "quarantine";

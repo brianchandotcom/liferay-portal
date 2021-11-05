@@ -38,6 +38,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8433 | Test Summary: Form appears on card shows the pages that the form appears on"
+	@ignore = "true"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesFormsExists {
 		property portal.upstream = "quarantine";
@@ -357,6 +358,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8421 | Test Summary: Assert Assets Forms Custom Range Time Filter in Behaviour Report	"
+	@ignore = "true"
 	@priority = "5"
 	test CanTimeFilterUseCustomRangeInFormsBehaviourReport {
 		property portal.upstream = "quarantine";
@@ -474,6 +476,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8426 | Test Summary: Forms submissions by location card shows expected views by location"
+	@ignore = "true"
 	@priority = "5"
 	test FormsLocationCardShowsViewsByExpectedLocation {
 		property portal.upstream = "quarantine";

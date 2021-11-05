@@ -123,6 +123,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8893 | Test Summary: Able to unsuppress user"
+	@ignore = "true"
 	@priority = "3"
 	test CanUnsuppressUser {
 		property portal.upstream = "quarantine";
@@ -174,6 +175,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8892 | Test Summary: Suppressed user appears in Suppressed User List"
+	@ignore = "true"
 	@priority = "5"
 	test SuppressedUserAppearsInSuppressedUserList {
 		property portal.upstream = "quarantine";

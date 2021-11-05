@@ -29,6 +29,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8493 | Test Summary: Segment Composition shows Active and Known individuals"
+	@ignore = "true"
 	@priority = "3"
 	test SegmentCompositionShowsActiveAndKnownIndividuals {
 		property portal.upstream = "quarantine";

@@ -59,6 +59,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8626 | Test Summary: Segment distribution chart can be filtered by date property"
+	@ignore = "true"
 	@priority = "5"
 	test CanDistributionChartFilteredDateProperty {
 		property portal.upstream = "quarantine";
@@ -126,6 +127,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8627 | Test Summary: Segment distribution chart can be filtered by number property"
+	@ignore = "true"
 	@priority = "3"
 	test CanDistributionChartFilteredNumber {
 		property portal.upstream = "quarantine";
@@ -205,6 +207,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8628 | Test Summary: Segment distribution chart can be filtered by text property"
+	@ignore = "true"
 	@priority = "3"
 	test CanDistributionChartFilteredText {
 		property portal.upstream = "quarantine";

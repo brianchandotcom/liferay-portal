@@ -34,6 +34,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8319 | Test Summary: Custom Range time period filter in Sites"
+	@ignore = "true"
 	@priority = "5"
 	test CustomRangeTimePeriodFilterSites {
 		property portal.upstream = "quarantine";
@@ -91,6 +92,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8321 | Test Summary: 1st user access and no property was selected yet"
+	@ignore = "true"
 	@priority = "4"
 	test FirstAccessAndNoProperty {
 		property portal.upstream = "quarantine";
@@ -127,6 +129,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8317 | Test Summary: 180 Days time period filter in Sites"
+	@ignore = "true"
 	@priority = "3"
 	test PeriodFilter180Days {
 		property portal.upstream = "quarantine";
@@ -181,6 +184,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8318 | Test Summary: Last Year time period filter in Sites"
+	@ignore = "true"
 	@priority = "3"
 	test PeriodFilterLastYear {
 		property portal.upstream = "quarantine";

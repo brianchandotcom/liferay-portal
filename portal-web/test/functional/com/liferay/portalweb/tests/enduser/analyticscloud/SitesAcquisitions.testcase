@@ -47,6 +47,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8344 | Test Summary: Site overview acquisition card shows which channels individuals are coming from"
+	@ignore = "true"
 	@priority = "5"
 	test AssertShowsChannelsIndividualsComingFrom {
 		property portal.upstream = "quarantine";

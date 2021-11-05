@@ -709,6 +709,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8127 | Test Summary: View page added by DXP data source"
+	@ignore = "true"
 	@priority = "5"
 	test ViewPageAddedByDXPDataSource {
 		property portal.upstream = "quarantine";

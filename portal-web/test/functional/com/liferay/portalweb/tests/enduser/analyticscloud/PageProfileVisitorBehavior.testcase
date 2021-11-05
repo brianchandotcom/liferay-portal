@@ -61,6 +61,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8514 | Test Summary: Page Profile Visitor behavior card shows the number of unique visitors and views"
+	@ignore = "true"
 	@priority = "5"
 	test ShowNumberOfUniqueVisitorsAndViews {
 		property portal.upstream = "quarantine";
@@ -136,6 +137,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8516 | Test Summary: Assert Sites Page Overview time filter to Custom Filter"
+	@ignore = "true"
 	@priority = "5"
 	test TimeFilterByCustomRangeInPagesOverview {
 		property portal.upstream = "quarantine";
@@ -213,6 +215,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8517 | Test Summary: Assert Sites Page Overview time filter changes to 180 days"
+	@ignore = "true"
 	@priority = "5"
 	test TimeFilterByLast180DaysInPagesOverview {
 		property portal.upstream = "quarantine";
@@ -284,6 +287,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8515 | Test Summary: Last Year time period filter in Page Overview"
+	@ignore = "true"
 	@priority = "5"
 	test TimeFilterByLastYearInPagesOverview {
 		property portal.upstream = "quarantine";

@@ -36,6 +36,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8304 | Test Summary: Assert Sites Top Pages Card Entrance Pages Highest Entrances"
+	@ignore = "true"
 	@priority = "3"
 	test AssertSitesTopPagesCardEntrancePagesHighestEntrances {
 		property portal.upstream = "quarantine";
@@ -90,6 +91,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8302 | Test Summary: Assert Sites Top Pages Card Exit Pages Highest Exits"
+	@ignore = "true"
 	@priority = "3"
 	test AssertSitesTopPagesCardExitPagesHighestExits {
 		property portal.upstream = "quarantine";
@@ -156,6 +158,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8301 | Test Summary: Assert Sites Top Pages Card Visited Pages Highest Views"
+	@ignore = "true"
 	@priority = "3"
 	test AssertSitesTopPagesCardVisitedPagesHighestViews {
 		property portal.upstream = "quarantine";
@@ -244,6 +247,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8305 | Test Summary: Assert Sites Top Pages Change Time Filter"
+	@ignore = "true"
 	@priority = "3"
 	test AssertSitesTopPagesChangeTimeFilter {
 		property portal.upstream = "quarantine";
@@ -293,6 +297,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8296 | Test Summary: Show Top 5 Entrance Pages"
+	@ignore = "true"
 	@priority = "5"
 	test ShowTop5EntrancePages {
 		property portal.upstream = "quarantine";
@@ -349,6 +354,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8297 | Test Summary: Show Top 5 Exit Pages"
+	@ignore = "true"
 	@priority = "5"
 	test ShowTop5ExitPages {
 		property portal.upstream = "quarantine";
@@ -420,6 +426,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8294 | Test Summary: Show Top 5 Visited Pages"
+	@ignore = "true"
 	@priority = "5"
 	test ShowTop5VisitedPages {
 		property portal.upstream = "quarantine";

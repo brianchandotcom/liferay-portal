@@ -129,6 +129,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8919 | Test Summary: Top Interests as of today shows the top 5 interest topics for all individuals"
+	@ignore = "true"
 	@priority = "5"
 	test ShowsTop5InterestTopicsForAllIndividuals {
 		property portal.upstream = "quarantine";

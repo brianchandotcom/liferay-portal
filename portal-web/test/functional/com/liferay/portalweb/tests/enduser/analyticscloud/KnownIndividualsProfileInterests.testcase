@@ -44,6 +44,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9132 | Test Summary: Individuals interest details has a tab that shows active pages"
+	@ignore = "true"
 	@priority = "3"
 	test AssertIndividualsinterestActivePages {
 		property portal.upstream = "quarantine";
@@ -94,6 +95,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9131 | Test Summary: Individuals interest details has a tab that shows inactive pages"
+	@ignore = "true"
 	@priority = "3"
 	test AssertIndividualsInterestInactivePages {
 		property portal.upstream = "quarantine";
@@ -141,6 +143,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8950 | Test Summary: Interests that are associated with the individual appear in the list"
+	@ignore = "true"
 	@priority = "5"
 	test InterestsAssociatedWithIndividualAppearInList {
 		property portal.upstream = "quarantine";

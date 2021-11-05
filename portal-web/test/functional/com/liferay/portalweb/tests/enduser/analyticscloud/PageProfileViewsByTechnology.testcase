@@ -90,6 +90,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8362 | Test Summary: Page profile views by technology shows which browsers are being used"
+	@ignore = "true"
 	@priority = "5"
 	test ShowsWhichBrowsersBeingUsed {
 		property portal.upstream = "quarantine";
@@ -107,6 +108,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8363 | Test Summary: Page profile views by technology shows which devices are being used"
+	@ignore = "true"
 	@priority = "5"
 	test ShowsWhichDevicesBeingUsed {
 		property portal.upstream = "quarantine";

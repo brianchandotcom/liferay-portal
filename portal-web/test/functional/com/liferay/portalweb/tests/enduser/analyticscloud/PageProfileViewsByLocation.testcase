@@ -41,6 +41,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8359 | Test Summary: Page profile views by location shows where views are coming from"
+	@ignore = "true"
 	@priority = "5"
 	test PageLocationCardShowsViewsByExpectedLocation {
 		property portal.upstream = "quarantine";

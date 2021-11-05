@@ -41,6 +41,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8330 | Test Summary: Assert Chart ticks for pages Visitor Behavior standardized"
+	@ignore = "true"
 	@priority = "5"
 	test AssertChartTicksPagesVisitorBehaviorStandardized {
 		property portal.upstream = "quarantine";

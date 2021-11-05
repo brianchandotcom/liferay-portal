@@ -206,6 +206,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8605 | Test Summary: The top interests list is searchable"
+	@ignore = "true"
 	test CanSearchTopInterestsListSegments {
 		property portal.upstream = "quarantine";
 
@@ -302,6 +303,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8606 | Test Summary: Order the Details of a Segment's Interest"
+	@ignore = "true"
 	@priority = "3"
 	test OrderSegmentInterestDetails {
 		property portal.upstream = "quarantine";
@@ -521,6 +523,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8616 | Test Summary: Order the Segment Profile Engagement List"
+	@ignore = "true"
 	@priority = "4"
 	test OrderSegmentProfileEngagementScoreList {
 		property portal.upstream = "quarantine";
@@ -657,6 +660,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8607 | Test Summary: Order a Segment Profile's Interest"
+	@ignore = "true"
 	@priority = "3"
 	test OrderSegmentProfileInterests {
 		property portal.upstream = "quarantine";
@@ -802,6 +806,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8608 | Test Summary: Paginate Segment Profile in an Interest detail"
+	@ignore = "true"
 	@priority = "3"
 	test PaginateSegmentProfileInterestDetail {
 		property portal.upstream = "quarantine";
@@ -1102,6 +1107,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8609 | Test Summary: Search a Segment Profile's Interest"
+	@ignore = "true"
 	@priority = "3"
 	test SearchSegmentProfilesInterest {
 		property portal.upstream = "quarantine";
@@ -1197,6 +1203,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8610 | Test Summary: Segment interest details has a tab that shows active pages"
+	@ignore = "true"
 	@priority = "3"
 	test SegmentInterestDetailsTabShowsActivePages {
 		property portal.upstream = "quarantine";
@@ -1278,6 +1285,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8612 | Test Summary: Segment interest details has a tab that shows inactive pages"
+	@ignore = "true"
 	@priority = "3"
 	test SegmentInterestDetailsTabShowsInactivePages {
 		property portal.upstream = "quarantine";
@@ -1384,6 +1392,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8611 | Test Summary: Interest details are shown"
+	@ignore = "true"
 	@priority = "3"
 	test ViewInterestDetails {
 		property portal.upstream = "quarantine";
@@ -1475,6 +1484,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8604 | Test Summary: Top interests for the workspace are shown in a list"
+	@ignore = "true"
 	@priority = "5"
 	test ViewSegmentsTopInterestsList {
 		property portal.upstream = "quarantine";

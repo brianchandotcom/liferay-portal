@@ -40,6 +40,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8979 | Test Summary: All interests in the workspace appear in a list"
+	@ignore = "true"
 	@priority = "5"
 	test AllInterestsInWorkspaceAppearInList {
 		property portal.upstream = "quarantine";
@@ -123,6 +124,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8981| Test Summary: Assert individual interest shows contributing pages"
+	@ignore = "true"
 	@priority = "3"
 	test AssertIndividualInterestContributingPages {
 		property portal.upstream = "quarantine";
@@ -192,6 +194,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8982| Test Summary: Individuals interest details are shown"
+	@ignore = "true"
 	@priority = "3"
 	test AssertIndividualInterestDetails {
 		property portal.upstream = "quarantine";
@@ -255,6 +258,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8980 | Test Summary: Order the Individual's Interest List"
+	@ignore = "true"
 	@priority = "3"
 	test OrderIndividualsInterests {
 		property portal.upstream = "quarantine";
@@ -332,6 +336,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8983 | Test Summary: Individuals Interest list has pagination"
+	@ignore = "true"
 	@priority = "3"
 	test PaginateIndividualsInterestsList {
 		property portal.upstream = "quarantine";

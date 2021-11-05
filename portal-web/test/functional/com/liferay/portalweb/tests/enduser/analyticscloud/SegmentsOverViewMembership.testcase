@@ -125,6 +125,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8486 | Test Summary: Membership card exists and shows members added"
+	@ignore = "true"
 	@priority = "5"
 	test ViewMembershipCardExistsShowsMembersAdded {
 		property portal.upstream = "quarantine";
@@ -213,6 +214,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8489 | Test Summary: Points on membership card can be hovered for more details"
+	@ignore = "true"
 	@priority = "4"
 	test ViewMembershipCardHoverDetails {
 		property portal.upstream = "quarantine";
@@ -302,6 +304,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8488 | Test Summary: Membership card shows anonymous users"
+	@ignore = "true"
 	@priority = "5"
 	test ViewMembershipCardShowsAnonymousUsers {
 		property portal.upstream = "quarantine";
@@ -373,6 +376,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8487 | Test Summary: Membership card shows members removed"
+	@ignore = "true"
 	@priority = "5"
 	test ViewMembershipCardShowsMembersRemoved {
 		property portal.upstream = "quarantine";

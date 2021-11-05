@@ -34,6 +34,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-6637 | Automation ID: LRAC-8309 | Test Summary: Private IPs reported as Local Network"
+	@ignore = "true"
 	@priority = "4"
 	test CanprivateIpsReportedAsLocalNetwork {
 		property portal.upstream = "quarantine";

@@ -45,6 +45,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8456 | Test Summary: Web content appears on card shows the pages that the web content appears on"
+	@ignore = "true"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesWebContentExists {
 		property portal.upstream = "quarantine";
@@ -94,6 +95,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8446 | Test Summary: Assert 180 day time filter in Assets"
+	@ignore = "true"
 	@priority = "3"
 	test AssertAssetsPageTimeFilter180Days {
 		property portal.upstream = "quarantine";
@@ -292,6 +294,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8444 | Test Summary: Custom Range time filter in Web Content assets page"
+	@ignore = "true"
 	@priority = "4"
 	test CanAssertWebContentTimeFIlterCustom {
 		property portal.upstream = "quarantine";
@@ -486,6 +489,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8445 | Test Summary: Assert Web Content 180 Days Time Filter In Web Content Assets Page"
+	@ignore = "true"
 	@priority = "5"
 	test CanUse180DaysTimeFilterInWebContentOverview {
 		property portal.upstream = "quarantine";
@@ -534,6 +538,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8443 | Test Summary: Assert Custom Range time filter in assets"
+	@ignore = "true"
 	@priority = "5"
 	test CanUseCustomRangeTimeFilterInWebContentOverview {
 		property portal.upstream = "quarantine";
@@ -758,6 +763,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8451 | Test Summary: Web content submissions by location card shows expected views by location"
+	@ignore = "true"
 	@priority = "5"
 	test WebContentLocationCardShowsViewsByExpectedLocation {
 		property portal.upstream = "quarantine";

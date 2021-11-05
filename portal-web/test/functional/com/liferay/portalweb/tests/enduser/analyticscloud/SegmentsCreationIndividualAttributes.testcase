@@ -265,6 +265,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8568 | Test Summary: Add segment using an individual property 'user'"
+	@ignore = "true"
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertyUser {
 		property portal.upstream = "quarantine";
@@ -405,6 +406,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8569 | Test Summary: Add segment with custom field for individuals"
+	@ignore = "true"
 	@priority = "4"
 	test CanAddSegmentWithCustomFieldsForIndividuals {
 		property portal.upstream = "quarantine";

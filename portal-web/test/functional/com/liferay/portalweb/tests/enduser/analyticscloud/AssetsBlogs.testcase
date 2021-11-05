@@ -92,6 +92,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8384 | Test Summary: Assert 180 day time filter in Blogs"
+	@ignore = "true"
 	@priority = "3"
 	test AssertBlogsPageTImeFilter180Days {
 		property portal.upstream = "quarantine";
@@ -280,6 +281,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8378 | Test Summary: Blogs location card shows views by the expected location"
+	@ignore = "true"
 	@priority = "5"
 	test BlogsLocationCardShowsViewsByExpectedLocation {
 		property portal.upstream = "quarantine";

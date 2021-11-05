@@ -703,6 +703,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9028 | Test Summary: Search an Individual's Interest List"
+	@ignore = "true"
 	@priority = "4"
 	test SearchIndividualsInterests {
 		property portal.upstream = "quarantine";

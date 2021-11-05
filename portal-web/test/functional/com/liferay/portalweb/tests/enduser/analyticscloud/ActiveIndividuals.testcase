@@ -225,6 +225,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8914 | Test Summary: Assert Individual Activities time filter 180 Days"
+	@ignore = "true"
 	@priority = "3"
 	test AssertIndividualActivitiesTimeFilter180Days {
 		property portal.upstream = "quarantine";

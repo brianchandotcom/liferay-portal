@@ -33,6 +33,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8356 | Test Summary: 180 Days time period filter in Path Analysis"
+	@ignore = "true"
 	@priority = "3"
 	test CanTimeFilterUse180DaysPathAnalysis {
 		property portal.upstream = "quarantine";
@@ -66,6 +67,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8358 | Test Summary: Custom Range time period filter in Path Analysis"
+	@ignore = "true"
 	@priority = "5"
 	test CanTimeFilterUseCustomRangeInPathAnalysis {
 		property portal.upstream = "quarantine";
@@ -103,6 +105,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8357 | Test Summary: Last Year time period filter in Path Analysis"
+	@ignore = "true"
 	@priority = "3"
 	test CanTimeFilterUseLastYearPathAnalysis {
 		property portal.upstream = "quarantine";

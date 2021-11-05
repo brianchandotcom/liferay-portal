@@ -34,6 +34,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8351 | Test Summary: Page profile audience card shows known and anonymous individuals as well as segmented/unsegmented individuals"
+	@ignore = "true"
 	@priority = "5"
 	test ShowsKnownAnonymousIndividualsAsWellAsSegmentedUnsegmentedIndividuals {
 		property portal.upstream = "quarantine";

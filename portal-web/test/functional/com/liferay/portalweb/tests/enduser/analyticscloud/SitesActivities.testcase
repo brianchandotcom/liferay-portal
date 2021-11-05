@@ -36,6 +36,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8293 | Test Summary: Assert 180 Day time period filter in Sites"
+	@ignore = "true"
 	@priority = "3"
 	test Assert180DayTimePeriodFilterInSites {
 		property portal.upstream = "quarantine";
@@ -74,6 +75,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8291 | Test Summary: Assert Sites Activities 180 Days Time Period Filter In Page Table"
+	@ignore = "true"
 	@priority = "3"
 	test AssertSitesActivities180DaysTimePeriodFilterInPageTable {
 		property portal.upstream = "quarantine";
@@ -216,6 +218,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8275 | Test Summary: Site Activity Card: Can filter graph by day"
+	@ignore = "true"
 	@priority = "5"
 	test CanFilterActivityCardGraphByDay {
 		property portal.upstream = "quarantine";
@@ -260,6 +263,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8278 | Test Summary: Site Activity Card: Can filter graph by month"
+	@ignore = "true"
 	@priority = "5"
 	test CanFilterActivityCardGraphByMonth {
 		property portal.upstream = "quarantine";
@@ -304,6 +308,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8276 | Test Summary: Site Activity Card: Can filter graph by week"
+	@ignore = "true"
 	@priority = "5"
 	test CanFilterActivityCardGraphByWeek {
 		property portal.upstream = "quarantine";
@@ -513,6 +518,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8295 | Test Summary: Assert Sites Activity time filter able to use Custom Range"
+	@ignore = "true"
 	@priority = "5"
 	test CanSitesActivityTimeFilterUseCustomRange {
 		property portal.upstream = "quarantine";
@@ -565,6 +571,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8290 | Test Summary: Unique Visitors label is shown on the tabs of Pages dashboards"
+	@ignore = "true"
 	@priority = "3"
 	test CanUniqueVisitorsLabelShowPagesDashboards {
 		property portal.upstream = "quarantine";
@@ -675,6 +682,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8274 | Test Summary: Site Activity Card: Bounce rate and % change is shown"
+	@ignore = "true"
 	@priority = "5"
 	test ShownBounceRateAndPercentageChangeShown {
 		property portal.upstream = "quarantine";
@@ -723,6 +731,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8273 | Test Summary: Site Activity Card: Session duration and % change is shown"
+	@ignore = "true"
 	@priority = "5"
 	test ShownSessionDurationAndPercentageChangeShown {
 		property portal.upstream = "quarantine";
@@ -774,6 +783,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8272 | Test Summary: Site Activity Card: Total Sessions/Visitor and % change is shown"
+	@ignore = "true"
 	@priority = "5"
 	test ShownTotalSessionsVisitorAndPercentageChangeShown {
 		property portal.upstream = "quarantine";

@@ -184,6 +184,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8524 | Test Summary: No change on segment profile selected point"
+	@ignore = "true"
 	@priority = "3"
 	test NoChangeOnSegmentProfileSelectedPoint {
 		property portal.upstream = "quarantine";
@@ -400,6 +401,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8522 | Test Summary: Segment Membership graph exist and shows members"
+	@ignore = "true"
 	@priority = "4"
 	test SegmentMembershipGraphExistAndShowsMembers {
 		property portal.upstream = "quarantine";
@@ -472,6 +474,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8521 | Test Summary: Selected segment membership point can clear date selection"
+	@ignore = "true"
 	@priority = "3"
 	test SelectedSegmentMembershipPointCanClearDateSelection {
 		property portal.upstream = "quarantine";
@@ -549,6 +552,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8525 | Test Summary: Select point on membership shows individuals added/removed"
+	@ignore = "true"
 	@priority = "3"
 	test SelectPointOnMembershipShowsIndividualsAddedOrRemoved {
 		property portal.upstream = "quarantine";
@@ -626,6 +630,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8511 | Test Summary: Segment membership graph shows historical increase or decrease in members"
+	@ignore = "true"
 	@priority = "5"
 	test ViewMembershipGraphShowsIncreaseOrDecreaseMembers {
 		property portal.upstream = "quarantine";
@@ -705,6 +710,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8510 | Test Summary: Segment membership shows known, anonymous, and total members"
+	@ignore = "true"
 	@priority = "5"
 	test ViewMembershipShowsKnownAnonymousTotalMembers {
 		property portal.upstream = "quarantine";

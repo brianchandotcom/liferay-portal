@@ -75,6 +75,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8501 | Test Summary: Interest can be aggregated from multiple pages"
+	@ignore = "true"
 	@priority = "4"
 	test InterestCanBeAggregatedFromMultiplePages {
 		property portal.upstream = "quarantine";
@@ -142,6 +143,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8502 | Test Summary: Search the Details of a Segment's Interest"
+	@ignore = "true"
 	@priority = "3"
 	test SearchDetailsOfSegmentsInterest {
 		property portal.upstream = "quarantine";
@@ -243,6 +245,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8500 | Test Summary: List of interests appears as bar graphs with percentage of interested members"
+	@ignore = "true"
 	@priority = "5"
 	test ViewListInterestsAppearsBarGraphsWithPercentage {
 		property portal.upstream = "quarantine";

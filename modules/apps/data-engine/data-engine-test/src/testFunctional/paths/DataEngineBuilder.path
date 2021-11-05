@@ -107,7 +107,7 @@
 </tr>
 <tr>
 	<td>OPTION_SELECTED</td>
-	<td>//input[contains(@class,'form-control') and contains(@value,'${key_optionValue}')]</td>
+	<td>//input[contains(@class,'custom-control-input') and contains(@value,'${key_optionValue}')]</td>
 	<td></td>
 </tr>
 <tr>

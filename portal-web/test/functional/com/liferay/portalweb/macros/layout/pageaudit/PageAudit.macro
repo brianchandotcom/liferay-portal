@@ -10,6 +10,14 @@ definition {
 			value1 = "Cancel");
 	}
 
+	macro changeLocale {
+		Click(locator1 = "PageAudit#LOCALE_BUTTON");
+
+		Click(
+			key_locale = "${locale}",
+			locator1 = "Translation#DROPDOWN_MENU_ITEM");
+	}
+
 	macro configurationTeardown {
 		PageAudit.goToGooglePageSpeedInsightsSystemSettingConfiguration();
 

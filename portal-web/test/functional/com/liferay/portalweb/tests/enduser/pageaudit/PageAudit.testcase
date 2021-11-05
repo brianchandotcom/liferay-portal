@@ -2813,12 +2813,51 @@ definition {
 	@description = "LPS-119066: Given the Page Audit Panel
 	When the user clicks on the language selector and selects other language
 	Then the title of the page shows the matching translation (if existing), the URL changes (if localized URLs is enabled) and the API is called so the progress bar shows"
-	@ignore = "true"
 	@priority = "3"
-	test NewLanguageinAuditPanel {
+	test AssertPageAuditLocale {
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-		// TODO LPS-119066 NewLanguageinAuditPanel pending implementation
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
 
+		task ("Add a translation for that page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Content Page");
+
+			Page.addFriendlyURLLocalizedPG(
+				friendlyUrlLocalized = "fr_FR",
+				localizedFriendlyURL = "");
+
+			PortletEntry.inputName(name = "Principal");
+
+			Button.clickSave();
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelBeforeConfiguration();
+
+			AssertTextPresent(
+				locator1 = "PageAudit#PANEL_PAGE_TITLE",
+				value1 = "Home");
+		}
+
+		task ("Change language") {
+			PageAudit.changeLocale(locale = "French");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#PANEL_PAGE_TITLE",
+				value1 = "Principal");
+			
+			AssertElementPresent(
+				locator1 = "PageAudit#PANEL_PAGE_URL",
+				partialUrl = "/fr/");
+		}
 	}
 
 	@description = "LPS-119068: When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Back button, s/he is led to the page view again"

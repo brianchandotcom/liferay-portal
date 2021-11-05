@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOCALE_BUTTON</td>
+	<td>//div[contains(@class,'sidebar-body')] //button[*[name()='svg'][contains(@class,'lexicon-icon')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NO_ISSUES_MESSAGE</td>
 	<td>//div[contains(@class, 'font-weight-semi-bold')]</td>
 	<td></td>
@@ -88,6 +93,11 @@
 <tr>
 	<td>PANEL_PAGE_TITLE</td>
 	<td>//*[contains(@class, 'text-truncate') and contains(@title, '${pageName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_PAGE_URL</td>
+	<td>//div[contains(@class, 'sidebar-body')] //*[contains(@class, 'text-secondary') and contains(.,'${partialUrl}')]</td>
 	<td></td>
 </tr>
 <tr>

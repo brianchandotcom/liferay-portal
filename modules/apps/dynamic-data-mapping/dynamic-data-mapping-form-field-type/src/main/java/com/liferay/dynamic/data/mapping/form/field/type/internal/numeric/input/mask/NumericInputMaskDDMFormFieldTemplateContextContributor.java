@@ -16,10 +16,8 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric.input.
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
-import com.liferay.dynamic.data.mapping.form.field.type.internal.configuration.FFDecimalPlacesSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -39,7 +37,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -47,7 +44,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carolina Barbosa
  */
 @Component(
-	configurationPid = "com.liferay.dynamic.data.mapping.form.field.type.internal.configuration.FFDecimalPlacesSettings",
 	immediate = true,
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.NUMERIC_INPUT_MASK,
 	service = {
@@ -66,18 +62,10 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributor
 		return HashMapBuilder.<String, Object>put(
 			"decimalSymbols", _createOptions(_getDecimalSymbols())
 		).put(
-			"ffDecimalPlacesSettingsEnabled", _ffDecimalPlacesSettings.enabled()
-		).put(
 			"thousandsSeparators", _createOptions(_getThousandsSeparators())
 		).putAll(
 			_getValueParameters(ddmFormFieldRenderingContext.getValue())
 		).build();
-	}
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_ffDecimalPlacesSettings = ConfigurableUtil.createConfigurable(
-			FFDecimalPlacesSettings.class, properties);
 	}
 
 	private List<Object> _createOptions(Map<String, Object> map) {
@@ -171,8 +159,6 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NumericInputMaskDDMFormFieldTemplateContextContributor.class);
-
-	private FFDecimalPlacesSettings _ffDecimalPlacesSettings;
 
 	@Reference
 	private JSONFactory _jsonFactory;

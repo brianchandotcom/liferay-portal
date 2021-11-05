@@ -50,7 +50,6 @@ interface IProps {
 	decimalSymbols: ISelectProps<DecimalSymbol>[];
 	defaultLanguageId: Locale;
 	editingLanguageId: Locale;
-	ffDecimalPlacesSettingsEnabled: boolean;
 	readOnly: boolean;
 	thousandsSeparator?: ThousandsSeparator[];
 	thousandsSeparators: ISelectProps<ThousandsSeparator>[];
@@ -80,7 +79,6 @@ const NumericInputMask: React.FC<IProps> = ({
 	decimalSymbol: decimalSymbolInitial,
 	decimalSymbols: decimalSymbolsProp,
 	editingLanguageId,
-	ffDecimalPlacesSettingsEnabled,
 	onBlur,
 	onChange,
 	onFocus,
@@ -216,7 +214,7 @@ const NumericInputMask: React.FC<IProps> = ({
 					/>
 				</div>
 			</div>
-			{visible && ffDecimalPlacesSettingsEnabled && (
+			{visible && (
 				<div>
 					<div className="form-group">
 						<label htmlFor="decimal_places ">

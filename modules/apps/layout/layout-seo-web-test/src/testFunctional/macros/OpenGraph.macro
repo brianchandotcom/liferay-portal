@@ -272,8 +272,8 @@ definition {
 
 		if ("${portlet}" == "SEO") {
 			AssertElementPresent(
-				key_mappedField = "title",
-				locator1 = "TextInput#SEO_HTML_TITLE",
+				key_text = "Title",
+				locator1 = "TextInput#ANY",
 				mappedFieldValue = "title");
 
 			AssertElementPresent(

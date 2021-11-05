@@ -308,6 +308,7 @@ public class EditStyleBookEntryDisplayContext {
 				layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 					new LayoutItemSelectorReturnType());
 				layoutItemSelectorCriterion.setShowDraftPages(true);
+				layoutItemSelectorCriterion.setShowHiddenPages(true);
 
 				PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 					RequestBackedPortletURLFactoryUtil.create(

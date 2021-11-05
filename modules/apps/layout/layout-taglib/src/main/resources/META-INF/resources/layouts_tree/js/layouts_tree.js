@@ -234,7 +234,7 @@ AUI.add(
 				var newNode = {
 					alwaysShowHitArea: hasChildren,
 					cssClasses: {
-						pages: Object.assign(TREE_CSS_CLASSES, cssIcons),
+						pages: A.merge(TREE_CSS_CLASSES, cssIcons),
 					},
 					draggable: node.sortable,
 					expanded,
@@ -309,15 +309,17 @@ AUI.add(
 			_formatNodeLabel(node, cssClass, name, title) {
 				var instance = this;
 
-				var data = {
-					cssClass,
-					label: name,
-					plid: node.plid,
-					title,
-					url: node.regularURL,
-					uuid: node.uuid,
-					...node,
-				};
+				var data = A.merge(
+					{
+						cssClass,
+						label: name,
+						plid: node.plid,
+						title,
+						url: node.regularURL,
+						uuid: node.uuid,
+					},
+					node
+				);
 
 				var label = instance._createNodeLink(
 					data,
@@ -331,11 +333,13 @@ AUI.add(
 				var instance = this;
 
 				var rootLabel = instance._createNodeLink(
-					{
-						label: Liferay.Util.escapeHTML(rootConfig.label),
-						plid: rootConfig.defaultParentLayoutId,
-						...rootConfig,
-					},
+					A.merge(
+						{
+							label: Liferay.Util.escapeHTML(rootConfig.label),
+							plid: rootConfig.defaultParentLayoutId,
+						},
+						rootConfig
+					),
 					rootConfig.linkTemplate
 				);
 
@@ -537,7 +541,7 @@ AUI.add(
 					linkTemplate: NODE_LINK_TPL,
 				};
 
-				return Object.assign(defaultRootConfig, val);
+				return A.merge(defaultRootConfig, val);
 			},
 
 			_updateLayout(data) {

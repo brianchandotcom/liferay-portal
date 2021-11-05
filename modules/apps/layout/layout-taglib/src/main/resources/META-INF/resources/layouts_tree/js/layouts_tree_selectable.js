@@ -46,7 +46,7 @@ AUI.add(
 
 					return new A.Do.AlterReturn(
 						'Modified checked and type attributes',
-						Object.assign(currentRetVal, {
+						A.merge(currentRetVal, {
 							checked: instance.get(STR_DEFAULT_STATE),
 							type: 'liferay-task',
 						})
@@ -69,7 +69,7 @@ AUI.add(
 
 					return new A.Do.AlterReturn(
 						'Modified checked, label and type attributes',
-						Object.assign(A.Do.currentRetVal, {
+						A.merge(A.Do.currentRetVal, {
 							checked: instance.get(STR_DEFAULT_STATE),
 							label: rootConfig.label,
 							type: 'liferay-task',

@@ -29,6 +29,7 @@ import {StoreContextProvider, useSelector} from '../contexts/StoreContext';
 import {WidgetsContextProvider} from '../contexts/WidgetsContext';
 import {reducer} from '../reducers/index';
 import selectLanguageId from '../selectors/selectLanguageId';
+import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import {DragAndDropContextProvider} from '../utils/drag-and-drop/useDragAndDrop';
 import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
 import DragPreview from './DragPreview';
@@ -65,6 +66,7 @@ export default function App({state}) {
 
 	return (
 		<StoreContextProvider initialState={initialState} reducer={reducer}>
+			<BackURL />
 			<LanguageDirection />
 			<URLParser />
 			<ControlsProvider>
@@ -108,6 +110,45 @@ export default function App({state}) {
 
 App.propTypes = {
 	state: PropTypes.object.isRequired,
+};
+
+const BackURL = () => {
+	const [backLinkElement, backLinkURL] = useMemo(() => {
+		const backLinkElement = document.querySelector('.lfr-back-link');
+
+		try {
+			return [backLinkElement, new URL(backLinkElement?.href)];
+		}
+		catch (error) {
+			return [];
+		}
+	}, []);
+
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+
+	useEffect(() => {
+		if (backLinkElement && backLinkURL && segmentsExperienceId) {
+			backLinkURL.searchParams.set('p_s_e_id', segmentsExperienceId);
+			backLinkElement.href = backLinkURL.toString();
+
+			const currentURL = new URL(window.location.href);
+
+			if (currentURL.searchParams.has('p_l_back_url')) {
+				currentURL.searchParams.set(
+					'p_l_back_url',
+					backLinkURL.toString()
+				);
+
+				window.history.replaceState(
+					null,
+					document.title,
+					currentURL.toString()
+				);
+			}
+		}
+	}, [backLinkElement, backLinkURL, segmentsExperienceId]);
+
+	return null;
 };
 
 const LanguageDirection = () => {

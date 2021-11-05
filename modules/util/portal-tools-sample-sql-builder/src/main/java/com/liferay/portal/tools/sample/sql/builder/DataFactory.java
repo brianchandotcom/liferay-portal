@@ -3743,7 +3743,7 @@ public class DataFactory {
 
 			StringBundler sb = new StringBundler(3);
 
-			if (parentFolderId == 0) {
+			if (depth == 1) {
 				sb.append(StringPool.FORWARD_SLASH);
 				sb.append(String.valueOf(folderId));
 				sb.append(StringPool.FORWARD_SLASH);

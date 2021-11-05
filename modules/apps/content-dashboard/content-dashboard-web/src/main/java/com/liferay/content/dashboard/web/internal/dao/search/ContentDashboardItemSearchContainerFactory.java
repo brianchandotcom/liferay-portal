@@ -77,21 +77,8 @@ public class ContentDashboardItemSearchContainerFactory {
 			_getContentDashboardItemSearchContainer();
 
 		return _create(
-			searchContainer.getEnd(), searchContainer, searchContainer.getStart()
-		);
-	}
-
-	private SearchContainer<ContentDashboardItem<?>> _create(
-		int end, SearchContainer<ContentDashboardItem<?>> searchContainer,
-		int start){
-
-		SearchResponse searchResponse = _getSearchResponse(end, start);
-
-		searchContainer.setResults(
-			_getContentDashboardItems(searchResponse.getDocuments71()));
-		searchContainer.setTotal(searchResponse.getTotalHits());
-
-		return searchContainer;
+			searchContainer.getEnd(), searchContainer,
+			searchContainer.getStart());
 	}
 
 	public SearchContainer<ContentDashboardItem<?>> createWithAllResults()
@@ -124,6 +111,19 @@ public class ContentDashboardItemSearchContainerFactory {
 		_searcher = searcher;
 
 		_locale = _portal.getLocale(_portletRequest);
+	}
+
+	private SearchContainer<ContentDashboardItem<?>> _create(
+		int end, SearchContainer<ContentDashboardItem<?>> searchContainer,
+		int start) {
+
+		SearchResponse searchResponse = _getSearchResponse(end, start);
+
+		searchContainer.setResults(
+			_getContentDashboardItems(searchResponse.getDocuments71()));
+		searchContainer.setTotal(searchResponse.getTotalHits());
+
+		return searchContainer;
 	}
 
 	private List<ContentDashboardItem<?>> _getContentDashboardItems(

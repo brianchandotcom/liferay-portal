@@ -53,6 +53,7 @@ export interface Config {
 
 	changeMasterLayoutURL: string;
 	changeStyleBookEntryURL: string;
+	createLayoutPageTemplateEntryEnabled: boolean;
 	createLayoutPageTemplateEntryURL: string;
 	collectionSelectorURL: string;
 

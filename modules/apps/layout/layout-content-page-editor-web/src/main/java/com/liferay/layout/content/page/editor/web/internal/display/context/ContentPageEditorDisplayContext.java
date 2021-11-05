@@ -276,6 +276,10 @@ public class ContentPageEditorDisplayContext {
 					LanguageResources.getResourceBundle(
 						themeDisplay.getLocale()))
 			).put(
+				"createLayoutPageTemplateEntryEnabled",
+				_ffLayoutContentPageEditorConfiguration.
+					createLayoutPageTemplateEntryEnabled()
+			).put(
 				"createLayoutPageTemplateEntryURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor" +

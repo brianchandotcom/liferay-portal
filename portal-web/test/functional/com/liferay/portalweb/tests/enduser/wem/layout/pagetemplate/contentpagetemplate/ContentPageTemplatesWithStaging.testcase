@@ -221,7 +221,7 @@ definition {
 				index = "1",
 				locator1 = "Fragment#FRAGMENT_BODY",
 				locator2 = "text-align",
-				value1 = "start");
+				value1 = "left");
 
 			Click(
 				key_text = "undo",

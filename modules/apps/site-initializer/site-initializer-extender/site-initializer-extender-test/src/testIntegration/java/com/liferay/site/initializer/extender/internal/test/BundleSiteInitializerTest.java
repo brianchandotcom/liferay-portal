@@ -119,12 +119,6 @@ public class BundleSiteInitializerTest {
 
 		try {
 			siteInitializer.initialize(group.getGroupId());
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
-
-		try {
 			_assertAssetVocabularies(group);
 			_assertCommerceCatalogs(group);
 			_assertCommerceChannel(group);
@@ -141,6 +135,7 @@ public class BundleSiteInitializerTest {
 			GroupLocalServiceUtil.deleteGroup(group);
 		}
 		finally {
+			ServiceContextThreadLocal.popServiceContext();
 
 			// TODO We should not need to delete the object definition manually
 			// because of DataGuardTestRule. However,
@@ -164,63 +159,63 @@ public class BundleSiteInitializerTest {
 		Group globalGroup = _groupLocalService.getCompanyGroup(
 			group.getCompanyId());
 
-		AssetCategory companyAssetCategory1 =
+		AssetCategory testAssetCategory1 =
 			_assetCategoryLocalService.
 				fetchAssetCategoryByExternalReferenceCode(
 					globalGroup.getGroupId(), "TESTCAT0001");
 
-		Assert.assertNotNull(companyAssetCategory1);
+		Assert.assertNotNull(testAssetCategory1);
 		Assert.assertEquals(
-			"Test Asset Category 1", companyAssetCategory1.getName());
+			"Test Asset Category 1", testAssetCategory1.getName());
 
-		AssetCategory companyAssetCategory2 =
+		AssetCategory testAssetCategory2 =
 			_assetCategoryLocalService.fetchCategory(
-				globalGroup.getGroupId(), companyAssetCategory1.getCategoryId(),
+				globalGroup.getGroupId(), testAssetCategory1.getCategoryId(),
 				"Test Asset Category 2",
-				companyAssetCategory1.getVocabularyId());
+				testAssetCategory1.getVocabularyId());
 
-		Assert.assertNotNull(companyAssetCategory2);
+		Assert.assertNotNull(testAssetCategory2);
 		Assert.assertEquals(
-			"TESTCAT0002", companyAssetCategory2.getExternalReferenceCode());
+			"TESTCAT0002", testAssetCategory2.getExternalReferenceCode());
 
-		AssetCategory groupAssetCategory1 =
+		AssetCategory testAssetCategory3 =
 			_assetCategoryLocalService.
 				fetchAssetCategoryByExternalReferenceCode(
 					group.getGroupId(), "TESTCAT0003");
 
-		Assert.assertNotNull(groupAssetCategory1);
+		Assert.assertNotNull(testAssetCategory3);
 		Assert.assertEquals(
-			"Test Asset Category 3", groupAssetCategory1.getName());
+			"Test Asset Category 3", testAssetCategory3.getName());
 
-		AssetCategory groupAssetCategory2 =
+		AssetCategory testAssetCategory4 =
 			_assetCategoryLocalService.fetchCategory(
-				group.getGroupId(), groupAssetCategory1.getCategoryId(),
-				"Test Asset Category 4", groupAssetCategory1.getVocabularyId());
+				group.getGroupId(), testAssetCategory3.getCategoryId(),
+				"Test Asset Category 4", testAssetCategory3.getVocabularyId());
 
-		Assert.assertNotNull(groupAssetCategory2);
+		Assert.assertNotNull(testAssetCategory4);
 		Assert.assertEquals(
-			"TESTCAT0004", groupAssetCategory2.getExternalReferenceCode());
+			"TESTCAT0004", testAssetCategory4.getExternalReferenceCode());
 	}
 
 	private void _assertAssetVocabularies(Group group) throws Exception {
 		Group globalGroup = _groupLocalService.getCompanyGroup(
 			group.getCompanyId());
 
-		AssetVocabulary companyVocabulary =
+		AssetVocabulary testAssetVocabulary1 =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
 				globalGroup.getGroupId(), "Test Asset Vocabulary 1");
 
-		Assert.assertNotNull(companyVocabulary);
+		Assert.assertNotNull(testAssetVocabulary1);
 		Assert.assertEquals(
-			"TESTVOC0001", companyVocabulary.getExternalReferenceCode());
+			"TESTVOC0001", testAssetVocabulary1.getExternalReferenceCode());
 
-		AssetVocabulary groupVocabulary =
+		AssetVocabulary testAssetVocabulary2 =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
 				group.getGroupId(), "Test Asset Vocabulary 2");
 
-		Assert.assertNotNull(groupVocabulary);
+		Assert.assertNotNull(testAssetVocabulary2);
 		Assert.assertEquals(
-			"TESTVOC0002", groupVocabulary.getExternalReferenceCode());
+			"TESTVOC0002", testAssetVocabulary2.getExternalReferenceCode());
 
 		_assertAssetCategories(group);
 	}

@@ -214,7 +214,7 @@ public abstract class Base${schemaName}ResourceImpl
 						source="Site" + schemaName
 					/>,
 					siteId, portletName, roleNames);
-			<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "Permission")>
+			<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "PermissionsPage")>
 				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
 					<#assign generateGetPermissionCheckerMethods = true />
 
@@ -235,7 +235,7 @@ public abstract class Base${schemaName}ResourceImpl
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
-			<#elseif stringUtil.equals(javaMethodSignature.methodName, "putAssetLibrary" + schemaName + "Permission")>
+			<#elseif stringUtil.equals(javaMethodSignature.methodName, "putAssetLibrary" + schemaName + "PermissionsPage")>
 				<#assign generateGetPermissionCheckerMethods = true />
 
 				String portletName = getPermissionCheckerPortletName(assetLibraryId);
@@ -251,7 +251,7 @@ public abstract class Base${schemaName}ResourceImpl
 						source="AssetLibrary" + schemaName
 					/>
 				</@updateResourcePermissions>
-			<#elseif stringUtil.equals(javaMethodSignature.methodName, "putSite" + schemaName + "Permission")>
+			<#elseif stringUtil.equals(javaMethodSignature.methodName, "putSite" + schemaName + "PermissionsPage")>
 				<#assign generateGetPermissionCheckerMethods = true />
 
 				String portletName = getPermissionCheckerPortletName(siteId);
@@ -731,7 +731,7 @@ public abstract class Base${schemaName}ResourceImpl
 	HashMapBuilder.put(
 		"get", addAction(ActionKeys.PERMISSIONS, "get${source}PermissionsPage", ${resourceName}, ${resourceId})
 	).put(
-		"replace", addAction(ActionKeys.PERMISSIONS, "put${source}Permission", ${resourceName}, ${resourceId})
+		"replace", addAction(ActionKeys.PERMISSIONS, "put${source}PermissionsPage", ${resourceName}, ${resourceId})
 	).build()
 </#macro>
 

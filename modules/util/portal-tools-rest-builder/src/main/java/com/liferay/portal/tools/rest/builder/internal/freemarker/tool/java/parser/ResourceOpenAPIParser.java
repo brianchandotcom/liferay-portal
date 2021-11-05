@@ -515,7 +515,7 @@ public class ResourceOpenAPIParser {
 
 		String operationId = operation.getOperationId();
 
-		if ((operationId != null) && operationId.endsWith("Permission") &&
+		if ((operationId != null) && operationId.endsWith("PermissionsPage") &&
 			operationId.startsWith("put") && requestBodyMediaTypes.isEmpty()) {
 
 			javaMethodParameters.add(

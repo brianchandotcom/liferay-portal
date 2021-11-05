@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shop.by.diagram.admin.web.internal.type;
 
+import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
@@ -148,6 +149,17 @@ public class SVGCSDiagramType implements CSDiagramType {
 			CommerceContext commerceContext =
 				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
+
+			long commerceAccountId = 0;
+
+			CommerceAccount commerceAccount =
+				commerceContext.getCommerceAccount();
+
+			if(commerceAccount != null){
+				commerceAccountId = commerceAccount.getCommerceAccountId();
+
+				hashMapWrapper.put("commerceAccountId", commerceAccountId);
+			}
 
 			CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 

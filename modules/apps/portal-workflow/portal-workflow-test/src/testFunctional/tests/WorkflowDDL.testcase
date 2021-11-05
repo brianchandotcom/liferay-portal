@@ -358,7 +358,6 @@ definition {
 		DDLRecord.editPG(ddlListName = "${ddlListName}");
 
 		DDLList.viewWorkflowInProcessMessage(errorMessage = "There is a publication workflow in process. Some actions may be disabled depending on the status and your role through this process.");
-
 	}
 
 	@priority = "4"

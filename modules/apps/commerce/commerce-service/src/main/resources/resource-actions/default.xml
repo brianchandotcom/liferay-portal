@@ -41,6 +41,9 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.model.CommerceOrderType</model-name>
 		<portlet-ref>
+			<portlet-name>com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_order_web_internal_portlet_CommerceOrderTypePortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>

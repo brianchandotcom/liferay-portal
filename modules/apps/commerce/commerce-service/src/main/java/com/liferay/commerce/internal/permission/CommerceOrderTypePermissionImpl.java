@@ -18,6 +18,7 @@ import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.permission.CommerceOrderTypePermission;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -135,8 +136,10 @@ public class CommerceOrderTypePermissionImpl
 			return true;
 		}
 
+		User user = permissionChecker.getUser();
+
 		return permissionChecker.hasPermission(
-			null, CommerceOrderType.class.getName(),
+			user.getGroupId(), CommerceOrderType.class.getName(),
 			commerceOrderType.getCommerceOrderTypeId(), actionId);
 	}
 

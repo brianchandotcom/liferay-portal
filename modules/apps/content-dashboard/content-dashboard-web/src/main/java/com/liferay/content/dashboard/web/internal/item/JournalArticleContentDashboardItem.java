@@ -28,7 +28,6 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;

@@ -60,6 +60,10 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 		return _parentBatchTestClassGroup.getBatchName();
 	}
 
+	public String getCohortName() {
+		return _parentBatchTestClassGroup.getCohortName();
+	}
+
 	@Override
 	public Job getJob() {
 		return _parentBatchTestClassGroup.getJob();

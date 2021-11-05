@@ -93,6 +93,22 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return batchName;
 	}
 
+	public String getCohortName() {
+		String cohortName = getFirstPropertyValue("test.batch.cohort.name");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(cohortName)) {
+			return cohortName;
+		}
+
+		cohortName = JenkinsResultsParserUtil.getCohortName();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(cohortName)) {
+			return cohortName;
+		}
+
+		return "test-1";
+	}
+
 	@Override
 	public Job getJob() {
 		return portalTestClassJob;

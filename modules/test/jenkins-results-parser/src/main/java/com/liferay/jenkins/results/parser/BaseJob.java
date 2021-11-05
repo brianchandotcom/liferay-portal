@@ -211,6 +211,8 @@ public abstract class BaseJob implements Job {
 			Properties batchProperties = new Properties();
 
 			batchProperties.setProperty(
+				"test.batch.cohort.name", batchTestClassGroup.getCohortName());
+			batchProperties.setProperty(
 				"test.batch.job.name", batchTestClassGroup.getBatchJobName());
 			batchProperties.setProperty(
 				"test.batch.maximum.slaves.per.host",
@@ -250,6 +252,9 @@ public abstract class BaseJob implements Job {
 				SegmentTestClassGroup segmentTestClassGroup =
 					batchTestClassGroup.getSegmentTestClassGroup(i);
 
+				segmentProperties.setProperty(
+					"test.batch.cohort.name",
+					segmentTestClassGroup.getCohortName());
 				segmentProperties.setProperty(
 					"test.batch.job.name",
 					segmentTestClassGroup.getBatchJobName());

@@ -14,6 +14,8 @@ definition {
 
     macro viewFieldSetCannotBeDeleted {
         Search.searchCP(searchTerm = "${fieldSetName}");
+	macro viewFieldSetCannotBeDeleted {
+		Search.searchCP(searchTerm = "${fieldSetName}");
 
 		Click.waitForMenuToggleJSClick(
 			key_kfFieldSetName = "${fieldSetName}",
@@ -34,6 +36,6 @@ definition {
 			value1 = "No Field Sets were found.");
 	}
 		Alert.viewErrorMessage(errorMessage = "The structure cannot be deleted because it is required by one or more structure links.");
-    }
+	}
 
 }

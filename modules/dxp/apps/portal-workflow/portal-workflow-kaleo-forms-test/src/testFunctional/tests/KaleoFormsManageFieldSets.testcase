@@ -114,8 +114,6 @@ definition {
 	@priority = "4"
 	test CanNotDeleteFieldSets {
 		KaleoFormsManageFieldSets.viewFieldSetCannotBeDeleted(fieldSetName = "Contacts");
-
-
 	}
 
 	@description = "Verify that user can Reverse sort Direction and if the elements reverse position."

@@ -333,9 +333,7 @@ public class ExecutePoshiElement extends PoshiElement {
 
 			s = s.substring(s.lastIndexOf("\n"));
 
-			if (multilineSnippet ||
-				((s.length() + assignment.length() + 1) > 80)) {
-
+			if (multilineSnippet) {
 				if (s.endsWith(" ")) {
 					sb.setLength(sb.length() - 1);
 				}

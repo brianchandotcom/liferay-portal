@@ -53,6 +53,17 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 				/>
 			</aui:field-wrapper>
 
+			<aui:field-wrapper label="description" name="description">
+				<liferay-ui:input-localized
+					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+					name="description"
+					type="textarea"
+					xml="<%= editRemoteAppEntryDisplayContext.getDescription() %>"
+				/>
+			</aui:field-wrapper>
+
+			<aui:input label="sourceCodeURL" name="sourceCodeURL" type="text" />
+
 			<clay:select
 				disabled="<%= editRemoteAppEntryDisplayContext.isTypeDisabled() %>"
 				label="type"

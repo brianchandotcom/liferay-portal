@@ -15,8 +15,10 @@
 package com.liferay.remote.app.web.internal.frontend.taglib.clay.data.set;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.web.internal.frontend.taglib.clay.data.set.model.StatusInfo;
 
 import java.util.Locale;
 
@@ -38,6 +40,15 @@ public class RemoteAppClayDataSetEntry {
 
 	public long getRemoteAppEntryId() {
 		return _remoteAppEntry.getRemoteAppEntryId();
+	}
+
+	public StatusInfo getStatus() {
+		String label = WorkflowConstants.getStatusLabel(
+			_remoteAppEntry.getStatus());
+
+		return new StatusInfo(
+			_remoteAppEntry.getStatus(), label,
+			LanguageUtil.get(_locale, label));
 	}
 
 	public String getType() {

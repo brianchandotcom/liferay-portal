@@ -106,6 +106,11 @@ public class EditRemoteAppEntryDisplayContext {
 		return customElementURLs;
 	}
 
+	public String getDescription() {
+		return BeanParamUtil.getString(
+			_remoteAppEntry, _portletRequest, "description");
+	}
+
 	public String getName() {
 		return BeanParamUtil.getString(
 			_remoteAppEntry, _portletRequest, "name");

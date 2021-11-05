@@ -3784,12 +3784,10 @@ definition {
 
 	macro viewMatchingCalendarIndexesInPartitionedDatabase {
 		var baseSchemaIndex = SQL.executeMySQLStatement(
-			mysqlStatement = "SHOW INDEX FROM Calendar;");
-
-		SQL.executeMySQLStatement(mysqlStatement = "USE lpartition_39371;");
+			mysqlStatement = "SHOW INDEX FROM lportal.Calendar;");
 
 		var partitionSchemaIndex = SQL.executeMySQLStatement(
-			mysqlStatement = "SHOW INDEX FROM Calendar;");
+			mysqlStatement = "SHOW INDEX FROM lpartition_41246.Calendar;");
 
 		if ("${baseSchemaIndex}" == "${partitionSchemaIndex}") {
 			echo("Calendar Index matches: ${baseSchemaIndex}");

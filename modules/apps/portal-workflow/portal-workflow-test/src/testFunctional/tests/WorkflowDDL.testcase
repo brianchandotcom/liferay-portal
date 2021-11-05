@@ -483,15 +483,13 @@ definition {
 		DDLList.viewStatusDDL(key_status = "Pending");
 
 		DDLRecord.editDLLRecordContacts(
-			ddlListName = "DDL List",
 			ddlCompanyEdit = "Liferay Edit",
-			ddlFirstNameEdit = "Test Edit");
+			ddlFirstNameEdit = "Test Edit",
+			ddlListName = "DDL List");
 
 		PortletEntry.save();
 
 		DDLList.viewStatusDDL(key_status = "Pending");
-
-
 	}
 
 }

@@ -208,10 +208,4 @@ definition {
 			value1 = "${ddlListName}");
 	}
 
-	macro viewStatusDDL {
-		AssertElementPresent(
-			key_status = "${key_status}",
-			locator1 = "DDL#LIST_TABLE_NAME_STATUS");
-	}
-
 }

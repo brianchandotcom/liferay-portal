@@ -3745,7 +3745,7 @@ public class DataFactory {
 
 			if (depth == 1) {
 				sb.append(StringPool.FORWARD_SLASH);
-				sb.append(String.valueOf(folderId));
+				sb.append(folderId);
 				sb.append(StringPool.FORWARD_SLASH);
 			}
 			else {
@@ -3754,7 +3754,7 @@ public class DataFactory {
 
 				sb.append(parentTreePathMap.get(parentFolderId));
 
-				sb.append(String.valueOf(folderId));
+				sb.append(folderId);
 				sb.append(StringPool.FORWARD_SLASH);
 			}
 

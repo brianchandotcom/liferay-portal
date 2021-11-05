@@ -76,12 +76,12 @@ public class ContentDashboardItemSearchContainerFactory {
 		SearchContainer<ContentDashboardItem<?>> searchContainer =
 			_getContentDashboardItemSearchContainer();
 
-		return create(
+		return _create(
 			searchContainer.getStart(), searchContainer.getEnd(),
 			searchContainer);
 	}
 
-	public SearchContainer<ContentDashboardItem<?>> create(
+	private SearchContainer<ContentDashboardItem<?>> _create(
 			int begin, int end,
 			SearchContainer<ContentDashboardItem<?>> searchContainer)
 		throws PortletException {
@@ -101,7 +101,7 @@ public class ContentDashboardItemSearchContainerFactory {
 		SearchContainer<ContentDashboardItem<?>> searchContainer =
 			_getContentDashboardItemSearchContainer();
 
-		return create(-1, -1, searchContainer);
+		return _create(-1, -1, searchContainer);
 	}
 
 	private ContentDashboardItemSearchContainerFactory(

@@ -255,12 +255,11 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"recentLayouts",
 			() -> {
-				int numItems = Math.min(total, 4);
-
 				List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 					LayoutPageTemplateEntryServiceUtil.
 						getLayoutPageTemplateEntries(
-							_getPreviewItemsGroupId(), layoutType, 0, numItems,
+							_getPreviewItemsGroupId(), layoutType, 0,
+							Math.min(total, 4),
 							new LayoutPageTemplateEntryModifiedDateComparator(
 								false));
 
@@ -311,10 +310,8 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"recentLayouts",
 			() -> {
-				int numItems = Math.min(total, 4);
-
 				List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-					_getPreviewItemsGroupId(), 0, numItems,
+					_getPreviewItemsGroupId(), 0, Math.min(total, 4),
 					new LayoutModifiedDateComparator(false));
 
 				Stream<Layout> layoutsStream = layouts.stream();

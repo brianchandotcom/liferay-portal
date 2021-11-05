@@ -165,12 +165,6 @@ public class FileUtil {
 		return _file.extractText(inputStream, fileName, maxStringLength);
 	}
 
-	public static String[] find(
-		String directory, String includes, String excludes) {
-
-		return _file.find(directory, includes, excludes);
-	}
-
 	public static String getAbsolutePath(File file) {
 		return _file.getAbsolutePath(file);
 	}

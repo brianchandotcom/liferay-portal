@@ -434,7 +434,7 @@ public class ContentDashboardAdminDisplayContext {
 		return _userId;
 	}
 
-	public HashMap<String, Object> getXLSProps() {
+	public HashMap<String, Object> getXlsProps() {
 		return HashMapBuilder.<String, Object>put(
 			"fileURL",
 			() -> ResourceURLBuilder.createResourceURL(

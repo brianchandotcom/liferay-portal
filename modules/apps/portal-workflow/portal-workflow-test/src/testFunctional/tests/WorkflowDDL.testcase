@@ -156,7 +156,6 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewDefaultMyWorkflowTasksCP();
-
 	}
 
 	@description = "Verify that, editing an Approved entry, the DDL Entry status returns to Pending"

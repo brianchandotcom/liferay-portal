@@ -16,12 +16,12 @@ import ThemeContext from '../shared/ThemeContext';
 import {fetchData} from '../utils/fetch';
 import EditSXPBlueprintForm from './EditSXPBlueprintForm';
 
-export default function ({context}) {
+export default function ({defaultLocale, namespace, redirect, sxpBlueprintId}) {
 	const [resource, setResource] = useState(null);
 
 	useEffect(() => {
 		fetchData(
-			`/o/search-experiences-rest/v1.0/sxp-blueprints/${context.sxpBlueprintId}`,
+			`/o/search-experiences-rest/v1.0/sxp-blueprints/${sxpBlueprintId}`,
 			{method: 'GET'},
 			(responseContent) => setResource(responseContent),
 			() => setResource({})
@@ -33,7 +33,14 @@ export default function ({context}) {
 	}
 
 	return (
-		<ThemeContext.Provider value={context}>
+		<ThemeContext.Provider
+			value={{
+				defaultLocale,
+				namespace,
+				redirectURL: redirect,
+				sxpBlueprintId,
+			}}
+		>
 			<div className="edit-sxp-blueprint-root">
 				<ErrorBoundary>
 					<EditSXPBlueprintForm

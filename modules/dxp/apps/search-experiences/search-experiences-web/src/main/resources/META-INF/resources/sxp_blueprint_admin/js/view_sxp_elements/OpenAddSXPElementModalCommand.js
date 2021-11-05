@@ -42,7 +42,13 @@ function dispose() {
 	unmountComponentAtNode(getDefaultModalContainer());
 }
 
-function openAddSXPElementModal({defaultLocale, dialogTitle, namespace, type}) {
+function openAddSXPElementModal({
+	defaultLocale,
+	dialogTitle,
+	editSXPElementURL,
+	portletNamespace,
+	type,
+}) {
 	dispose();
 
 	render(
@@ -50,8 +56,9 @@ function openAddSXPElementModal({defaultLocale, dialogTitle, namespace, type}) {
 			closeModal={dispose}
 			defaultLocale={defaultLocale}
 			dialogTitle={dialogTitle}
+			editSXPElementURL={editSXPElementURL}
 			initialVisible="true"
-			namespace={namespace}
+			portletNamespace={portletNamespace}
 			type={type}
 		/>,
 		DEFAULT_RENDER_DATA,

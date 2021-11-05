@@ -16,7 +16,9 @@ import openAddSXPElementModal from './OpenAddSXPElementModalCommand';
 export default function propsTransformer({
 	additionalProps: {
 		deleteSXPElementURL,
+		editSXPElementURL,
 		hideSXPElementURL,
+		redirectURL,
 		showSXPElementURL,
 	},
 	portletNamespace,
@@ -26,8 +28,9 @@ export default function propsTransformer({
 		openAddSXPElementModal({
 			defaultLocale: itemData.defaultLocale,
 			dialogTitle: Liferay.Language.get('new-search-element'),
-			namespace: portletNamespace,
-			redirectURL: itemData.redirectURL,
+			editSXPElementURL,
+			portletNamespace,
+			redirectURL,
 			type: itemData.type,
 		});
 	};

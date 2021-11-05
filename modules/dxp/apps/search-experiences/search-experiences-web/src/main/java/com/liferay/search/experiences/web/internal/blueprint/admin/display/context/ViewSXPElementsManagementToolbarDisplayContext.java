@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.search.experiences.constants.SXPActionKeys;
@@ -95,10 +94,6 @@ public class ViewSXPElementsManagementToolbarDisplayContext
 			).putData(
 				"defaultLocale",
 				LocaleUtil.toLanguageId(LocaleUtil.getDefault())
-			).putData(
-				"editElementURL",
-				createActionURL(
-					"/sxp_blueprint_admin/edit_sxp_element", Constants.ADD)
 			).putData(
 				"type", String.valueOf(SXPElementConstants.TYPE_QUERY)
 			).setLabel(

@@ -18,7 +18,7 @@ import {fetch, navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {DEFAULT_ERROR} from '../utils/constants';
-import {DEFAULT_EDIT_SXP_ELEMENT} from '../utils/data';
+import {isDefined} from '../utils/utils';
 
 /**
  * A slightly modified version of frontend-js-web module's SimpleInputModal
@@ -26,95 +26,27 @@ import {DEFAULT_EDIT_SXP_ELEMENT} from '../utils/data';
  */
 const AddSXPElementModal = ({
 	closeModal,
-	defaultLocale,
+
+	// TODO Update title and description to accept map of locales.
+	// defaultLocale,
+
 	dialogTitle,
+	editSXPElementURL,
 	initialVisible,
-	namespace,
+	portletNamespace,
 	submitButtonLabel = Liferay.Language.get('create'),
-	type,
+
+	// TODO The property "type" is not defined in SXPElement.
+	// type,
+
 	redirectURL = '',
 }) => {
 	const isMounted = useIsMounted();
 	const [errorMessage, setErrorMessage] = useState();
 	const [loadingResponse, setLoadingResponse] = useState(false);
 	const [visible, setVisible] = useState(initialVisible);
-	const [inputValue, setInputValue] = useState('');
+	const [titleInputValue, setTitleInputValue] = useState('');
 	const [descriptionInputValue, setDescriptionInputValue] = useState('');
-
-	const handleFormError = (responseContent) => {
-		setErrorMessage(responseContent.error || DEFAULT_ERROR);
-
-		setLoadingResponse(false);
-	};
-
-	const _handleSubmit = (event) => {
-		event.preventDefault();
-
-		const formData = new FormData(
-			document.querySelector(`#${namespace}form`)
-		);
-
-		formData.append(
-			`${namespace}configuration`,
-			JSON.stringify(DEFAULT_EDIT_SXP_ELEMENT)
-		);
-
-		fetch('/o/search-experiences-rest/v1.0/sxp-elements', {
-
-			// body: formData,
-
-			body: JSON.stringify({
-				description: descriptionInputValue,
-				title: inputValue,
-
-				// type,
-
-			}),
-			headers: new Headers({
-				'Content-Type': 'application/json',
-			}),
-
-			method: 'POST',
-		})
-			.then((response) => {
-				if (!response.ok) {
-					handleFormError();
-				}
-
-				return response.json();
-			})
-			.then((responseContent) => {
-				if (isMounted()) {
-					if (responseContent.error) {
-						handleFormError(responseContent);
-					}
-					else {
-						setVisible(false);
-
-						closeModal();
-
-						if (responseContent.id) {
-							const newRedirectURL = new URL(redirectURL);
-
-							newRedirectURL.searchParams.set(
-								'sxpElementId',
-								responseContent.id
-							);
-
-							navigate(newRedirectURL);
-						}
-						else {
-							navigate(redirectURL);
-						}
-					}
-				}
-			})
-			.catch((response) => {
-				handleFormError(response);
-			});
-
-		setLoadingResponse(true);
-	};
 
 	const {observer, onClose} = useModal({
 		onClose: () => {
@@ -124,19 +56,80 @@ const AddSXPElementModal = ({
 		},
 	});
 
+	const _handleFormError = (responseContent) => {
+		setErrorMessage(responseContent.error || DEFAULT_ERROR);
+
+		setLoadingResponse(false);
+	};
+
+	const _handleSubmit = (event) => {
+		event.preventDefault();
+
+		fetch('/o/search-experiences-rest/v1.0/sxp-elements', {
+			body: JSON.stringify({
+				description: descriptionInputValue,
+
+				// TODO The property "elementDefinitionJSON" is not defined in SXPElement.
+				// elementDefinitionJSON: JSON.stringify(DEFAULT_EDIT_SXP_ELEMENT),
+
+				title: titleInputValue,
+
+				// TODO The property "type" is not defined in SXPElement.
+				// type,
+
+			}),
+			headers: new Headers({
+				'Content-Type': 'application/json',
+			}),
+			method: 'POST',
+		})
+			.then((response) => {
+				if (!response.ok) {
+					_handleFormError();
+				}
+
+				return response.json();
+			})
+			.then((responseContent) => {
+				if (isMounted()) {
+					if (responseContent.error) {
+						_handleFormError(responseContent);
+					}
+					else {
+						setVisible(false);
+
+						closeModal();
+
+						if (isDefined(responseContent.id)) {
+							const url = new URL(editSXPElementURL);
+
+							url.searchParams.set(
+								`${portletNamespace}sxpElementId`,
+								responseContent.id
+							);
+
+							navigate(url);
+						}
+						else {
+							navigate(redirectURL);
+						}
+					}
+				}
+			})
+			.catch((response) => {
+				_handleFormError(response);
+			});
+
+		setLoadingResponse(true);
+	};
+
 	return (
 		visible && (
 			<ClayModal observer={observer} size="md">
 				<ClayModal.Header>{dialogTitle}</ClayModal.Header>
 
-				<form id={`${namespace}form`} onSubmit={_handleSubmit}>
+				<form id={`${portletNamespace}form`} onSubmit={_handleSubmit}>
 					<ClayModal.Body>
-						<input
-							name={`${namespace}sxpElementType`}
-							type="hidden"
-							value={type}
-						/>
-
 						<div
 							className={getCN('form-group', {
 								'has-error': errorMessage,
@@ -144,7 +137,7 @@ const AddSXPElementModal = ({
 						>
 							<label
 								className="control-label"
-								htmlFor={`${namespace}title`}
+								htmlFor={`${portletNamespace}title`}
 							>
 								{Liferay.Language.get('name')}
 
@@ -157,21 +150,14 @@ const AddSXPElementModal = ({
 								autoFocus
 								className="form-control"
 								disabled={loadingResponse}
-								id={`${namespace}title`}
-								name={`${namespace}title`}
+								id={`${portletNamespace}title`}
+								name={`${portletNamespace}title`}
 								onChange={(event) =>
-									setInputValue(event.target.value)
+									setTitleInputValue(event.target.value)
 								}
 								required
 								type="text"
-								value={inputValue}
-							/>
-
-							<input
-								id={`${namespace}title_${defaultLocale}`}
-								name={`${namespace}title_${defaultLocale}`}
-								type="hidden"
-								value={inputValue}
+								value={titleInputValue}
 							/>
 
 							{errorMessage && (
@@ -189,7 +175,7 @@ const AddSXPElementModal = ({
 						<div className="form-group">
 							<label
 								className="control-label"
-								htmlFor={`${namespace}description`}
+								htmlFor={`${portletNamespace}description`}
 							>
 								{Liferay.Language.get('description')}
 							</label>
@@ -197,18 +183,11 @@ const AddSXPElementModal = ({
 							<textarea
 								className="form-control"
 								disabled={loadingResponse}
-								id={`${namespace}description`}
-								name={`${namespace}description`}
+								id={`${portletNamespace}description`}
+								name={`${portletNamespace}description`}
 								onChange={(event) =>
 									setDescriptionInputValue(event.target.value)
 								}
-								value={descriptionInputValue}
-							/>
-
-							<input
-								id={`${namespace}description_${defaultLocale}`}
-								name={`${namespace}description_${defaultLocale}`}
-								type="hidden"
 								value={descriptionInputValue}
 							/>
 						</div>

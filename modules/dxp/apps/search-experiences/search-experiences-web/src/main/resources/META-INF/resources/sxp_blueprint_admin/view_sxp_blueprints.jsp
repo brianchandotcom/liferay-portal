@@ -31,6 +31,15 @@ ViewSXPBlueprintsDisplayContext viewSXPBlueprintsDisplayContext = (ViewSXPBluepr
 			).setRedirect(
 				currentURL
 			).buildString()
+		).put(
+			"editSXPBlueprintURL",
+			PortletURLBuilder.createRenderURL(
+				renderResponse
+			).setMVCRenderCommandName(
+				"/sxp_blueprint_admin/edit_sxp_blueprint"
+			).setRedirect(
+				currentURL
+			).buildString()
 		).build()
 	%>'
 	managementToolbarDisplayContext="<%= (ViewSXPBlueprintsManagementToolbarDisplayContext)request.getAttribute(SXPWebKeys.VIEW_SXP_BLUEPRINTS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT) %>"

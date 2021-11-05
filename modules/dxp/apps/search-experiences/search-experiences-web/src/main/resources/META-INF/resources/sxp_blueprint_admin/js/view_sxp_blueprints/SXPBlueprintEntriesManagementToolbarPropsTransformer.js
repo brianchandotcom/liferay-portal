@@ -14,7 +14,7 @@ import {postForm} from 'frontend-js-web';
 import openAddSXPBlueprintModal from './OpenAddSXPBlueprintModalCommand';
 
 export default function propsTransformer({
-	additionalProps: {deleteSXPBlueprintURL},
+	additionalProps: {deleteSXPBlueprintURL, editSXPBlueprintURL},
 	portletNamespace,
 	...otherProps
 }) {
@@ -23,7 +23,8 @@ export default function propsTransformer({
 			contextPath: itemData.contextPath,
 			defaultLocale: itemData.defaultLocale,
 			dialogTitle: Liferay.Language.get('new-search-blueprint'),
-			namespace: portletNamespace,
+			editSXPBlueprintURL,
+			portletNamespace,
 			redirectURL: itemData.redirectURL,
 		});
 	};

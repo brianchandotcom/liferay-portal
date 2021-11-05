@@ -99,10 +99,11 @@ const AddModal = ({
 	closeModal,
 	defaultLocale,
 	dialogTitle,
+	editSXPBlueprintURL,
 	initialVisible,
 	keywordQueryContributors = [],
 	modelPrefilterContributors = [],
-	namespace,
+	portletNamespace,
 	queryPrefilterContributors = [],
 	redirectURL = '',
 	searchableTypes = [],
@@ -126,11 +127,11 @@ const AddModal = ({
 		event.preventDefault();
 
 		const formData = new FormData(
-			document.querySelector(`#${namespace}form`)
+			document.querySelector(`#${portletNamespace}form`)
 		);
 
 		formData.append(
-			`${namespace}configuration`,
+			`${portletNamespace}configuration`,
 			JSON.stringify({
 				advanced_configuration: DEFAULT_ADVANCED_CONFIGURATION,
 				aggregation_configuration: {},
@@ -162,7 +163,7 @@ const AddModal = ({
 		);
 
 		formData.append(
-			`${namespace}selectedSXPElements`,
+			`${portletNamespace}selectedSXPElements`,
 			JSON.stringify({
 				query_configuration:
 					framework === FRAMEWORK_TYPES.BASELINE
@@ -205,14 +206,14 @@ const AddModal = ({
 						closeModal();
 
 						if (responseContent.id) {
-							const newRedirectURL = new URL(redirectURL);
+							const url = new URL(editSXPBlueprintURL);
 
-							newRedirectURL.searchParams.set(
-								'sxpBlueprintId',
+							url.searchParams.set(
+								`${portletNamespace}sxpBlueprintId`,
 								responseContent.id
 							);
 
-							navigate(newRedirectURL);
+							navigate(url);
 						}
 						else {
 							navigate(redirectURL);
@@ -244,7 +245,7 @@ const AddModal = ({
 			>
 				<ClayModal.Header>{dialogTitle}</ClayModal.Header>
 
-				<form id={`${namespace}form`} onSubmit={_handleSubmit}>
+				<form id={`${portletNamespace}form`} onSubmit={_handleSubmit}>
 					<ClayModal.Body>
 						<div
 							className={getCN('form-group', {
@@ -253,7 +254,7 @@ const AddModal = ({
 						>
 							<label
 								className="control-label"
-								htmlFor={`${namespace}title`}
+								htmlFor={`${portletNamespace}title`}
 							>
 								{Liferay.Language.get('name')}
 
@@ -266,8 +267,8 @@ const AddModal = ({
 								autoFocus
 								className="form-control"
 								disabled={loadingResponse}
-								id={`${namespace}title`}
-								name={`${namespace}title`}
+								id={`${portletNamespace}title`}
+								name={`${portletNamespace}title`}
 								onChange={(event) =>
 									setInputValue(event.target.value)
 								}
@@ -277,8 +278,8 @@ const AddModal = ({
 							/>
 
 							<input
-								id={`${namespace}title_${defaultLocale}`}
-								name={`${namespace}title_${defaultLocale}`}
+								id={`${portletNamespace}title_${defaultLocale}`}
+								name={`${portletNamespace}title_${defaultLocale}`}
 								type="hidden"
 								value={inputValue}
 							/>
@@ -298,7 +299,7 @@ const AddModal = ({
 						<div className="form-group">
 							<label
 								className="control-label"
-								htmlFor={`${namespace}description`}
+								htmlFor={`${portletNamespace}description`}
 							>
 								{Liferay.Language.get('description')}
 							</label>
@@ -306,8 +307,8 @@ const AddModal = ({
 							<textarea
 								className="form-control"
 								disabled={loadingResponse}
-								id={`${namespace}description`}
-								name={`${namespace}description`}
+								id={`${portletNamespace}description`}
+								name={`${portletNamespace}description`}
 								onChange={(event) =>
 									setDescriptionInputValue(event.target.value)
 								}
@@ -315,8 +316,8 @@ const AddModal = ({
 							/>
 
 							<input
-								id={`${namespace}description_${defaultLocale}`}
-								name={`${namespace}description_${defaultLocale}`}
+								id={`${portletNamespace}description_${defaultLocale}`}
+								name={`${portletNamespace}description_${defaultLocale}`}
 								type="hidden"
 								value={descriptionInputValue}
 							/>
@@ -325,7 +326,7 @@ const AddModal = ({
 						<div className="form-group">
 							<label
 								className="control-label"
-								htmlFor={`${namespace}framework`}
+								htmlFor={`${portletNamespace}framework`}
 							>
 								{Liferay.Language.get('start-with')}
 
@@ -420,13 +421,22 @@ export function AddSXPBlueprintModal({
 	contextPath,
 	defaultLocale,
 	dialogTitle,
-	namespace,
+	editSXPBlueprintURL,
+	portletNamespace,
 	redirectURL,
 }) {
 	const [searchableTypes, setSearchableTypes] = useState(null);
-	const [keywordQuery, setKeywordQuery] = useState(null);
-	const [modelPrefilter, setModelPrefilter] = useState(null);
-	const [queryPrefilter, setQueryPrefilter] = useState(null);
+	const [keywordQueryContributors, setKeywordQueryContributors] = useState(
+		null
+	);
+	const [
+		modelPrefilterContributors,
+		setModelPrefilterContributors,
+	] = useState(null);
+	const [
+		queryPrefilterContributors,
+		setQueryPrefilterContributors,
+	] = useState(null);
 
 	useEffect(() => {
 		[
@@ -435,17 +445,17 @@ export function AddSXPBlueprintModal({
 				url: '/o/search-experiences-rest/v1.0/searchable-asset-names',
 			},
 			{
-				setProperty: setKeywordQuery,
+				setProperty: setKeywordQueryContributors,
 				url:
 					'/o/search-experiences-rest/v1.0/keyword-query-contributors',
 			},
 			{
-				setProperty: setModelPrefilter,
+				setProperty: setModelPrefilterContributors,
 				url:
 					'/o/search-experiences-rest/v1.0/model-prefilter-contributors',
 			},
 			{
-				setProperty: setQueryPrefilter,
+				setProperty: setQueryPrefilterContributors,
 				url:
 					'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
 			},
@@ -466,9 +476,9 @@ export function AddSXPBlueprintModal({
 	}, []); //eslint-disable-line
 
 	if (
-		!keywordQuery ||
-		!modelPrefilter ||
-		!queryPrefilter ||
+		!keywordQueryContributors ||
+		!modelPrefilterContributors ||
+		!queryPrefilterContributors ||
 		!searchableTypes
 	) {
 		return null;
@@ -480,11 +490,12 @@ export function AddSXPBlueprintModal({
 			contextPath={contextPath}
 			defaultLocale={defaultLocale}
 			dialogTitle={dialogTitle}
+			editSXPBlueprintURL={editSXPBlueprintURL}
 			initialVisible
-			keywordQueryContributors={keywordQuery}
-			modelPrefilterContributors={modelPrefilter}
-			namespace={namespace}
-			queryPrefilterContributors={queryPrefilter}
+			keywordQueryContributors={keywordQueryContributors}
+			modelPrefilterContributors={modelPrefilterContributors}
+			portletNamespace={portletNamespace}
+			queryPrefilterContributors={queryPrefilterContributors}
 			redirectURL={redirectURL}
 			searchableTypes={searchableTypes}
 		/>

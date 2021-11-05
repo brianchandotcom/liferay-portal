@@ -16,12 +16,12 @@ import ThemeContext from '../shared/ThemeContext';
 import {fetchData} from '../utils/fetch';
 import EditSXPElementForm from './EditSXPElementForm';
 
-export default function ({context}) {
+export default function ({defaultLocale, namespace, redirect, sxpElementId}) {
 	const [resource, setResource] = useState(null);
 
 	useEffect(() => {
 		fetchData(
-			`/o/search-experiences-rest/v1.0/sxp-elements/${context.sxpElementId}`,
+			`/o/search-experiences-rest/v1.0/sxp-elements/${sxpElementId}`,
 			{
 				method: 'GET',
 			},
@@ -35,7 +35,14 @@ export default function ({context}) {
 	}
 
 	return (
-		<ThemeContext.Provider value={context}>
+		<ThemeContext.Provider
+			value={{
+				defaultLocale,
+				namespace,
+				redirectURL: redirect,
+				sxpElementId,
+			}}
+		>
 			<div className="edit-sxp-element-root">
 				<ErrorBoundary>
 					<EditSXPElementForm

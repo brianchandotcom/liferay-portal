@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.model.SXPBlueprint;
@@ -77,10 +76,6 @@ public class ViewSXPBlueprintsManagementToolbarDisplayContext
 			).putData(
 				"defaultLocale",
 				LocaleUtil.toLanguageId(LocaleUtil.getDefault())
-			).putData(
-				"editSXPBlueprintURL",
-				createActionURL(
-					"/sxp_blueprint_admin/edit_sxp_blueprint", Constants.ADD)
 			).setLabel(
 				LanguageUtil.get(httpServletRequest, "add-blueprint")
 			).build()

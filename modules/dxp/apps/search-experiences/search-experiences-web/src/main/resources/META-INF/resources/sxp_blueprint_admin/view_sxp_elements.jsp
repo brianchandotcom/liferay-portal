@@ -32,6 +32,15 @@ ViewSXPElementsDisplayContext viewSXPElementsDisplayContext = (ViewSXPElementsDi
 				currentURL
 			).buildString()
 		).put(
+			"editSXPElementURL",
+			PortletURLBuilder.createRenderURL(
+				renderResponse
+			).setMVCRenderCommandName(
+				"/sxp_blueprint_admin/edit_sxp_element"
+			).setRedirect(
+				currentURL
+			).buildString()
+		).put(
 			"hideSXPElementURL",
 			PortletURLBuilder.createActionURL(
 				renderResponse
@@ -44,6 +53,8 @@ ViewSXPElementsDisplayContext viewSXPElementsDisplayContext = (ViewSXPElementsDi
 			).setParameter(
 				"hidden", true
 			).buildString()
+		).put(
+			"redirectURL", currentURL
 		).put(
 			"showSXPElementURL",
 			PortletURLBuilder.createActionURL(

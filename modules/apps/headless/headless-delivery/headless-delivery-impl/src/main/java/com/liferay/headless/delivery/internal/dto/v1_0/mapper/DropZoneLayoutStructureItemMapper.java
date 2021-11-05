@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
@@ -79,6 +80,14 @@ public class DropZoneLayoutStructureItemMapper
 			fragmentEntryKey);
 
 		if (fragmentEntry != null) {
+			return true;
+		}
+
+		FragmentComposition fragmentComposition =
+			_fragmentCollectionContributorTracker.getFragmentComposition(
+				fragmentEntryKey);
+
+		if (fragmentComposition != null) {
 			return true;
 		}
 

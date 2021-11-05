@@ -7564,18 +7564,9 @@ virtualHostname="localhost"
 	</target>
 
 	<target name="execute-mysql">
-		<loadfile
-			property="mysql.statement"
-			srcfile="${mysql.input.file}"
-		/>
-
 		<get-test-app-server-lib-portal-dir />
 
-		<sql classpath="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="${mysql.output.file}" password="${database.mysql.password}" print="true" url="${database.mysql.url}" userid="${database.mysql.username}">
-			<![CDATA[
-				${mysql.statement}
-			]]>
-		</sql>
+		<sql classpath="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="${mysql.output.file}" password="${database.mysql.password}" print="true" src="${mysql.input.file}" url="${database.mysql.url}" userid="${database.mysql.username}" />
 	</target>
 
 	<target name="generate-changelog">

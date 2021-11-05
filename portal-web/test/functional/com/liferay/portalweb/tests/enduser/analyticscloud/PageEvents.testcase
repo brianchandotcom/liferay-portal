@@ -540,15 +540,15 @@ definition {
 				eventId = "tabBlurred");
 		}
 
-		task ("View the viewDuration of pageUnloaded event is greater than 5000 ms") {
+		task ("View the viewDuration of pageUnloaded event is less than 1500ms") {
 			var viewDuration = ACUtils.getEventPropertyValue(
 				applicationId = "Page",
 				eventId = "pageUnloaded",
 				property = "viewDuration");
 
-			TestUtils.isGreaterThan(
+			TestUtils.isLessThan(
 				actual = "${viewDuration}",
-				expected = "5000");
+				expected = "1500");
 		}
 
 		task ("View the pageViewed event triggered") {
@@ -557,15 +557,15 @@ definition {
 				eventId = "pageViewed");
 		}
 
-		task ("View the pageLoadTime of pageLoaded event is greater than 1000ms") {
+		task ("View the pageLoadTime of pageLoaded event is less than 1500ms") {
 			var pageLoadTime = ACUtils.getEventPropertyValue(
 				applicationId = "Page",
 				eventId = "pageLoaded",
 				property = "pageLoadTime");
 
-			TestUtils.isGreaterThan(
+			TestUtils.isLessThan(
 				actual = "${pageLoadTime}",
-				expected = "1000");
+				expected = "1500");
 		}
 
 		task ("View the request common properties value") {

@@ -651,7 +651,7 @@
 
 			var currentTarget = Util.getElement(event.currentTarget);
 
-			config = A.mix({...currentTarget.dataset}, config);
+			config = A.mix(A.merge({}, currentTarget.dataset), config);
 
 			if (!config.uri) {
 				config.uri =
@@ -1166,7 +1166,7 @@
 			var defaultValues = {
 				eventName: 'selectStructure',
 			};
-			// eslint-disable-next-line @liferay/aui/no-merge
+
 			config = A.merge(defaultValues, config);
 
 			var params = {
@@ -1471,7 +1471,6 @@
 
 				var editURL = new Liferay.Util.PortletURL.createPortletURL(
 					config.uri,
-					// eslint-disable-next-line @liferay/aui/no-merge
 					A.merge(
 						{
 							eventName,
@@ -1482,7 +1481,6 @@
 
 				config.uri = editURL.toString();
 
-				// eslint-disable-next-line @liferay/aui/no-merge
 				config.dialogIframe = A.merge(
 					{
 						bodyCssClass: 'dialog-with-footer',

@@ -67,7 +67,6 @@ AUI.add(
 
 				strings: {
 					setter(value) {
-						// eslint-disable-next-line @liferay/aui/no-merge
 						return A.merge(value, {
 							items: Liferay.Language.get('items'),
 							next: Liferay.Language.get('next'),

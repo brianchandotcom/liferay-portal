@@ -41,7 +41,6 @@ const chartFactory = ({
 					totalEntries={totalEntries}
 				/>
 			);
-
 		case 'numeric': {
 			if (Array.isArray(values)) {
 				return (
@@ -57,7 +56,6 @@ const chartFactory = ({
 				return '';
 			}
 		}
-
 		case 'grid': {
 			return (
 				<MultiBarChart
@@ -68,7 +66,6 @@ const chartFactory = ({
 				/>
 			);
 		}
-
 		case 'object-relationship':
 		case 'radio':
 		case 'select': {

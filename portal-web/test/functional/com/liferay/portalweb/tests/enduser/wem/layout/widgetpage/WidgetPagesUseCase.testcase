@@ -29,173 +29,743 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
 			JSONUser.tearDownNonAdminUsers();
-
-			Role.tearDownCP();
 		}
 	}
 
+	@description = "The user can add a blogs entry and message boards via collaboration panel page."
+	@priority = "3"
+	@uitest
+	test AddAssetsViaCollaborationPanel {
+		task ("Add a panel page with collaboration component") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			SitePages.addPublicPage(
+				componentName = "Collaboration",
+				pageName = "Test Page Name",
+				sitePageType = "Panel");
+		}
+
+		task ("View collaboration portlets are shown") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Page.viewPanelPortletListPG(
+				componentName = "Collaboration",
+				pageName = "Test Page Name",
+				portletNameList = "Blogs,Blogs Aggregator,Invite Members,Message Boards,Microblogs,Microblogs Status Update,My Subscriptions,Questions,Recent Bloggers");
+		}
+
+		task ("Add a blogs entry") {
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
+
+		task ("View Blogs Entry is shown") {
+			Page.gotoPagePanelPortlet(portletName = "Blogs");
+
+			BlogsEntry.viewPG(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Add a message boards via panel page") {
+			Page.gotoPagePanelPortlet(portletName = "Message Boards");
+
+			MessageboardsThread.addPG(
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject");
+		}
+
+		task ("View message boards is shown") {
+			Page.gotoPagePanelPortlet(portletName = "Message Boards");
+
+			MessageboardsThread.gotoPG(
+				lastPostUserName = "Test Test",
+				replyCount = "0",
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject");
+
+			MessageboardsThread.viewPG(
+				replyCount = "0",
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject",
+				userName = "Test Test");
+		}
+	}
+
+	@description = "The user can not delete the last public page on Liferay instance."
 	@priority = "3"
 	test CannotDeleteLastPublicPageOnLiferay {
-		property testray.component.names = "Site Pages Administration";
+		task ("Delete the Search page in Liferay instance") {
+			SitePages.openPagesAdmin(siteURLKey = "guest");
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+			SitePages.deletePage(pageName = "Search");
+		}
 
-		SitePages.deletePage(pageName = "Search");
+		task ("View the last public page can not be deleted") {
+			SitePages.clickPageMenu(pageName = "Home");
 
-		Page.assertCannotDeleteOnlyPage(pageName = "Home");
+			MenuItem.viewNotPresent(menuItem = "Delete");
+		}
 	}
 
+	@description = "The user can receive an email notification after subscribe to blogs and message boards and its content is not shown to non logged users."
 	@priority = "3"
-	test ChangingPageTypeLayoutToLinkToAPageOfThisSiteHidesChildPages {
-		property testray.component.names = "Site Pages Administration";
+	test CannotViewPrivateContentAndPageAsGuest {
+		property custom.properties = "auth.login.prompt.enabled=true${line.separator}jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=";
+		property test.name.skip.portal.instance = "WidgetPagesUseCase#CannotViewPrivateContentAndPageAsGuest";
+		property test.smtp.server.enabled = "true";
+		property testray.component.names = "Message Boards";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = PropsUtil.get("email.address.2"),
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page1 Name");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = PropsUtil.get("email.address.2"));
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page2 Name");
+		task ("Assign the administrator role to new user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = PropsUtil.get("email.address.2"));
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		task ("Add a private page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Private Page");
+		}
 
-		SitePages.addPublicChildPage(
-			childPageName = "Child Page Name",
-			parentPageName = "Site Page2 Name");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		SitePages.configurePage(
-			pageLinkName = "Site Page1 Name",
-			pageName = "Site Page2 Name",
-			privacy = "Public Pages",
-			sitePageType = "Link to a Page of This Site");
+		task ("Add a Blogs and Message Boards widget to page") {
+			for (var widgetName : list "Blogs,Message Boards") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page1 Name",
-			siteName = "Site Name");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = PropsUtil.get("email.address.2"),
+				userLoginFullName = "userfn1 userln1");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		task ("Subscribe to blogs and message boards") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		SitePages.togglePrivacy(privacy = "Public Pages");
+			Blogs.subscribePG();
 
-		Click(
-			key_itemName = "Site Page2 Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
+			MessageboardsPortlet.subscribePG();
+		}
 
-		AssertVisible(
-			key_itemName = "Child Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
+		task ("Sign in as Test Test") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+		}
+
+		task ("Add a blogs entry") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Blogs.addEntryWithPermissions(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				viewableBy = "Site Members");
+		}
+
+		task ("Add a message boards thread") {
+			MessageboardsThread.addPGWithPermissions(
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject",
+				viewableBySelection = "Site Members");
+		}
+
+		task ("View the email notification in Mock Mock") {
+			MockMock.viewMail(
+				asset = "Blogs Entry",
+				content = "Blogs Entry Title",
+				recipient = "userfn1 userln1",
+				sender = "Joe Bloggs",
+				subject = "Test Test Published &quot;Blogs Entry Title&quot; on Test Site Name Blogs");
+
+			MockMock.clickBodyLink(
+				asset = "Blogs Entry Title",
+				bodyLink = "CONTINUE READING");
+		}
+
+		task ("Get blogs and message boards URL") {
+			var blogEntryURL = selenium.getLocation();
+
+			var messageBoardsThreadURL = MockMock.getBodySpecificText(
+				asset = "MB",
+				content = "MB Thread Message Body",
+				extractFirstText = "<br />",
+				recipient = "userfn1 userln1",
+				sender = "Joe Bloggs",
+				specificText = "Liferay Message Boards<br />",
+				subject = "Home - Test Site Name New Message: MB Thread Message Subject");
+		}
+
+		task ("Delete all notifications") {
+			MockMock._backtoInbox();
+
+			MockMock.deleteMail(deleteAll = "true");
+		}
+
+		task ("Log out the user") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			User.logoutPG();
+		}
+
+		task ("View login page when reaching private page") {
+			Navigator.gotoPrivateSitePage(
+				pageName = "Test Private Page",
+				siteName = "Test Site Name");
+
+			User.viewLoginPG();
+
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+
+			AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR");
+		}
+
+		task ("View blogs entry is not shown for non logged user") {
+			Navigator.openSpecificURL(url = "${blogEntryURL}");
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "You do not have the required permissions.");
+		}
+
+		task ("View message boards not shown for non logged user") {
+			Navigator.openSpecificURL(url = "${messageBoardsThreadURL}");
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "You do not have the required permissions.");
+		}
 	}
 
-	@priority = "3"
-	test DefaultLanguageWithEmptyFriendlyURLThrowsErrorExceptions {
-		property testray.component.names = "Site Pages Administration";
+	@description = "The user can receive an email notification after subscribe to blogs and message boards and its content is not shown to non site member."
+	@priority = "5"
+	test CannotViewPrivateContentAndPageAsUserWithoutPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=";
+		property test.name.skip.portal.instance = "WidgetPagesUseCase#CannotViewPrivateContentAndPageAsUserWithoutPermissions";
+		property test.smtp.server.enabled = "true";
+		property testray.component.names = "Message Boards,Training";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Page Name");
+		task ("Add a new first user") {
+			JSONUser.addUser(
+				userEmailAddress = PropsUtil.get("email.address.2"),
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = PropsUtil.get("email.address.2"));
+		}
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Page Name");
+		task ("Assign the administrator role to new first user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = PropsUtil.get("email.address.2"));
+		}
 
-		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "de_DE",
-			localizedFriendlyURL = "/german");
+		task ("Add a new second user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
 
-		Page.deleteFriendlyURLPG(friendlyUrlLocalized = "en_US");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea2@liferay.com");
+		}
 
-		Navigator.gotoPage(pageName = "Page Name");
+		task ("Add a private page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Private Page");
+		}
 
-		AssertConsoleTextNotPresent(value1 = "java.lang.StringIndexOutOfBoundsException: String index out of range: -1");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+		task ("Add a Blogs and Message Boards widget to page") {
+			for (var widgetName : list "Blogs,Message Boards") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Page Name");
+		task ("Sign in as first new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = PropsUtil.get("email.address.2"),
+				userLoginFullName = "userfn1 userln1");
+		}
 
-		Page.viewPageFriendlyURLPG(pageName = "page-name");
+		task ("Subscribe to blogs and message boards") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Blogs.subscribePG();
+
+			MessageboardsPortlet.subscribePG();
+		}
+
+		task ("Sign in as Test Test") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+		}
+
+		task ("Add a blogs entry") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Blogs.addEntryWithPermissions(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				viewableBy = "Site Members");
+		}
+
+		task ("Add a message boards thread") {
+			MessageboardsThread.addPGWithPermissions(
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject",
+				viewableBySelection = "Site Members");
+		}
+
+		task ("View the email notification in Mock Mock") {
+			MockMock.viewMail(
+				asset = "Blogs Entry",
+				content = "Blogs Entry Title",
+				recipient = "userfn1 userln1",
+				sender = "Joe Bloggs",
+				subject = "Test Test Published &quot;Blogs Entry Title&quot; on Test Site Name Blogs");
+
+			MockMock.clickBodyLink(
+				asset = "Blogs Entry Title",
+				bodyLink = "CONTINUE READING");
+		}
+
+		task ("Get blogs and message boards URL") {
+			var blogEntryURL = selenium.getLocation();
+
+			var messageBoardsThreadURL = MockMock.getBodySpecificText(
+				asset = "MB",
+				content = "MB Thread Message Body",
+				extractFirstText = "<br />",
+				recipient = "userfn1 userln1",
+				sender = "Joe Bloggs",
+				specificText = "Liferay Message Boards<br />",
+				subject = "Home - Test Site Name New Message: MB Thread Message Subject");
+		}
+
+		task ("Delete all notifications") {
+			MockMock._backtoInbox();
+
+			MockMock.deleteMail(deleteAll = "true");
+		}
+
+		task ("Sign in as second new user") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea2@liferay.com",
+				userLoginFullName = "userfn2 userln2");
+		}
+
+		task ("View private page is not shown") {
+			Navigator.openPrivateURL();
+
+			AssertTextEquals(
+				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+				value1 = "Not Found");
+		}
+
+		task ("View blogs entry is not shown") {
+			Navigator.openSpecificURL(url = "${blogEntryURL}");
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "You do not have the required permissions.");
+		}
+
+		task ("View message boards is not shown") {
+			Navigator.openSpecificURL(url = "${messageBoardsThreadURL}");
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "You do not have the required permissions.");
+		}
 	}
 
-	@description = "This is a use case for LPS-71160"
+	@description = "User admin can choose when a private widget page will be visible to assigned role."
+	@priority = "5"
+	test CannotViewPrivatePageAsUserWithoutPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WidgetPagesUseCase#PrivatePageVisibleToAssignedRole";
+		property testray.component.names = "Permissions,Roles,Training";
+
+		task ("Add a private widget page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a new regular role") {
+			JSONRole.addRegularRole(roleTitle = "Regular Role Name");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign the regular role to new user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Regular Role Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Remove View permission of private widget page on Site Member") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PermissionsInline.gotoSitepageCP(
+				pageName = "Test Page Name",
+				privacy = "Private Pages");
+
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Site Member");
+		}
+
+		task ("Grant View permission of private widget page on Regular Role") {
+			Role.definePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Regular Role Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("View private page is shown") {
+			Navigator.openPrivateSitePageURL(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+
+			AssertElementNotPresent(
+				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+				value1 = "Not Found");
+		}
+
+		task ("Sign in as Test Test") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove View permission of private widget page on Regular Role") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PermissionsInline.gotoSitepageCP(
+				pageName = "Test Page Name",
+				privacy = "Private Pages");
+
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Regular Role Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("View private page is not shown") {
+			Navigator.openPrivateSitePageURL(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Home");
+
+			AssertTextEquals(
+				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+				value1 = "Not Found");
+		}
+	}
+
+	@description = "The user can add an embedded and panel page via pages administration."
+	@priority = "5"
+	@uitest
+	test ConfigureEmbeddedAndPanelPage {
+		property osgi.app.includes = "bookmarks";
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		task ("Add an embedded page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicPage(
+				pageName = "Test Page Name 1",
+				pageTypeURL = "https://www.google.com",
+				sitePageType = "Embedded");
+		}
+
+		task ("Change embedded type URL") {
+			SitePages.configurePage(
+				pageName = "Test Page Name 1",
+				pageTypeURL = "http://iscaliforniaonfire.com/",
+				privacy = "Public Pages",
+				sitePageType = "Embedded");
+		}
+
+		task ("Add a panel page with community component") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicPage(
+				componentName = "Community",
+				pageName = "Test Page Name 2",
+				sitePageType = "Panel");
+		}
+
+		task ("View the community options are checked in page settings") {
+			Page.viewPanelPortletListCP(
+				componentName = "Community",
+				pageName = "Test Page Name 2",
+				portletNameList = "Bookmarks,My Sites,Page Comments,Page Flags,Page Ratings");
+		}
+
+		task ("View california page is shown") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_IFRAME");
+
+			AssertVisible(
+				key_title = "Yes",
+				locator1 = "Header#H1_TITLE");
+		}
+
+		task ("View community portlets are shown") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			Page.viewPanelPortletListPG(
+				componentName = "Community",
+				pageName = "Test Page Name 2",
+				portletNameList = "Bookmarks,My Sites,Page Comments,Page Flags,Page Ratings");
+		}
+	}
+
+	@description = "This is a use case for LPS-71160. Can edit the SEO settings in a widget page via control menu."
 	@priority = "5"
 	test EditPageViaControlMenu {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Site Page");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		Navigator.gotoPage(pageName = "Site Page");
+		task ("Edit the page via control menu") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Navigator.gotoEditPageViaControlMenu(pageName = "Site Page");
+			Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
 
-		Page.editName(pageNameEdit = "Site Page Edit");
+			Page.editName(pageNameEdit = "Test Page Name Edit");
+		}
 
-		Navigator.gotoPage(pageName = "Site Page Edit");
+		task ("View the edited name in pages admin") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name Edit",
+				siteName = "Test Site Name");
 
-		Page.view(
-			pageName = "Site Page Edit",
-			privacy = "Public Pages");
+			Page.view(
+				pageName = "Test Page Name Edit",
+				privacy = "Public Pages");
+		}
 
-		Navigator.gotoPage(pageName = "Site Page Edit");
+		task ("Edit the SEO settings") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name Edit",
+				siteName = "Test Site Name");
 
-		Navigator.gotoEditPageViaControlMenu(pageName = "Site Page Edit");
+			Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name Edit");
 
-		Navigator.gotoNavTab(navTab = "SEO");
+			Page.editPageMetadata(
+				htmlTitle = "S.P.A.C.E.Home",
+				metaTagsDescription = "Welcome to S.P.A.C.E., a graduate-level school for those passionate about expanding their horizons through science, research, and space travel",
+				metaTagsKeywords = "space, education, space travel, graduateschool");
+		}
 
-		Page.editPageMetadata(
-			HTMLTitle = "S.P.A.C.E.Home",
-			metaTagsDescription = "Welcome to S.P.A.C.E., a graduate-level school for those passionate about expanding their horizons through science, research, and space travel",
-			metaTagsKeywords = "space, education, space travel, graduateschool");
+		task ("View the SEO settings is shown") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name Edit",
+				siteName = "Test Site Name");
 
-		Navigator.gotoPage(pageName = "Site Page Edit");
+			Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name Edit");
 
-		Navigator.gotoEditPageViaControlMenu(pageName = "Site Page Edit");
+			Page.viewPageMetadata(
+				htmlTitle = "S.P.A.C.E.Home",
+				metaTagsDescription = "Welcome to S.P.A.C.E., a graduate-level school for those passionate about expanding their horizons through science, research, and space travel",
+				metaTagsKeywords = "space, education, space travel, graduateschool");
+		}
+	}
 
-		Navigator.gotoNavTab(navTab = "SEO");
+	@description = "An error is thrown when the default language has an empty friendly url in widget page."
+	@priority = "3"
+	test ViewNoExceptionWhenPageWithoutFriendlyURLInDefaultLanguage {
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		Page.viewPageMetadata(
-			HTMLTitle = "S.P.A.C.E.Home",
-			metaTagsDescription = "Welcome to S.P.A.C.E., a graduate-level school for those passionate about expanding their horizons through science, research, and space travel",
-			metaTagsKeywords = "space, education, space travel, graduateschool");
+		task ("Add a localized friendly url") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			Page.addFriendlyURLLocalizedPG(
+				friendlyUrlLocalized = "de_DE",
+				localizedFriendlyURL = "/german");
+		}
+
+		task ("Delete default friendly url") {
+			Page.deleteFriendlyURLPG(friendlyUrlLocalized = "en_US");
+		}
+
+		task ("View no error thrown on console when navigating to page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertConsoleTextNotPresent(value1 = "java.lang.StringIndexOutOfBoundsException: String index out of range: -1");
+		}
+
+		task ("View default friendly url") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			Page.viewPageFriendlyURLPG(pageName = "test-page-name");
+		}
 	}
 
 	@description = "This is a use case for LPS-121346. The Home page is shown when access to a non existing page."
 	@priority = "3"
-	test SitesPanelLayout {
+	test ViewNotFoundWhenAccessToNonExistingPage {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Site Pages Administration";
 
-		var portalURL = PropsUtil.get("portal.url");
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+		task ("Assign the power role to new user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Power User",
-			userEmailAddress = "userea@liferay.com");
+		task ("Sign in as new user") {
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		task ("Access a non existing page") {
+			var portalURL = PropsUtil.get("portal.url");
 
-		task ("Assert the Home page is not shown") {
 			Navigator.openSpecificURL(url = "${portalURL}/web/usersn/page-name");
+		}
 
+		task ("View not found error in home page") {
 			AssertTextEquals(
 				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
 				value1 = "Not Found");
@@ -206,683 +776,190 @@ definition {
 				key_portletTitleName = "Profile",
 				locator1 = "Home#PORTLET_HEADER");
 		}
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
 	}
 
-	@priority = "5"
-	test SitesPrivatePagesPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WidgetPagesUseCase#SitesPrivatePagesPermissions";
-		property testray.component.names = "Permissions,Roles,Site Pages Administration,Training";
+	@description = "The user can receive an email notification after subscribe to blogs and message boards and its content is shown to site member."
+	@priority = "3"
+	test ViewPrivateContentAndPageAsSiteMember {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=";
+		property test.name.skip.portal.instance = "WidgetPagesUseCase#ViewPrivateContentAndPageAsSiteMember";
+		property test.smtp.server.enabled = "true";
+		property testray.component.names = "Message Boards";
 
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		task ("Add a new first user") {
+			JSONUser.addUser(
+				userEmailAddress = PropsUtil.get("email.address.2"),
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = PropsUtil.get("email.address.2"));
+		}
 
-		Site.addCP(
-			membershipType = "Private",
-			siteName = "Site Name",
-			siteTemplateName = "Site Template Name",
-			siteType = "Site Template");
+		task ("Assign the administrator role to new first user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = PropsUtil.get("email.address.2"));
+		}
 
-		JSONLayout.addPrivateLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page");
+		task ("Add a new second user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
 
-		JSONRole.addRegularRole(
-			roleKey = "Roles Regrole Name",
-			roleTitle = "Roles Regrole Name");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea2@liferay.com");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Assign the second user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea2@liferay.com");
+		}
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+		task ("Add a private page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Private Page");
+		}
 
-		JSONUser.addUserToSite(
-			groupName = "Site Name",
-			userEmailAddress = "userea@liferay.com");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Roles Regrole Name",
-			userEmailAddress = "userea@liferay.com");
+		task ("Add a Blogs and Message Boards widget to page") {
+			for (var widgetName : list "Blogs,Message Boards") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		task ("Sign in as first new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = PropsUtil.get("email.address.2"),
+				userLoginFullName = "userfn1 userln1");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		task ("Subscribe to blogs and message boards") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		PermissionsInline.gotoSitepageCP(
-			pageName = "Site Page",
-			privacy = "Private Pages");
+			Blogs.subscribePG();
 
-		Role.removePermissionPG(
-			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Site Member");
+			MessageboardsPortlet.subscribePG();
+		}
 
-		Role.definePermissionPG(
-			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Roles Regrole Name");
+		task ("Sign in as Test Test") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+		}
 
-		User.logoutPG();
+		task ("Add a blogs entry") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+			Blogs.addEntryWithPermissions(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				viewableBy = "Site Members");
+		}
 
-		Navigator.openPrivateSitePageURL(
-			pageName = "Site Page",
-			siteName = "Site Name");
+		task ("Add a message boards thread") {
+			MessageboardsThread.addPGWithPermissions(
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject",
+				viewableBySelection = "Site Members");
+		}
 
-		if (IsElementNotPresent(locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR")) {
+		task ("View the email notification in Mock Mock") {
+			MockMock.viewMail(
+				asset = "Blogs Entry",
+				content = "Blogs Entry Title",
+				recipient = "userfn1 userln1",
+				sender = "Joe Bloggs",
+				subject = "Test Test Published &quot;Blogs Entry Title&quot; on Test Site Name Blogs");
+
+			MockMock.clickBodyLink(
+				asset = "Blogs Entry Title",
+				bodyLink = "CONTINUE READING");
+		}
+
+		task ("Get blogs and message boards URL") {
+			var blogEntryURL = selenium.getLocation();
+
+			var messageBoardsThreadURL = MockMock.getBodySpecificText(
+				asset = "MB",
+				content = "MB Thread Message Body",
+				extractFirstText = "<br />",
+				recipient = "userfn1 userln1",
+				sender = "Joe Bloggs",
+				specificText = "Liferay Message Boards<br />",
+				subject = "Home - Test Site Name New Message: MB Thread Message Subject");
+		}
+
+		task ("Delete all notifications") {
+			MockMock._backtoInbox();
+
+			MockMock.deleteMail(deleteAll = "true");
+		}
+
+		task ("Sign in as second new user") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea2@liferay.com",
+				userLoginFullName = "userfn2 userln2");
+		}
+
+		task ("View private page is shown") {
+			Navigator.gotoPrivateSitePage(
+				pageName = "Test Private Page",
+				siteName = "Test Site Name");
+
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+
 			AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR");
 		}
-		else {
-			AssertTextNotEquals.assertNotPartialText(
-				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Not Found");
+
+		task ("View blogs entry is shown for site member user") {
+			Navigator.openSpecificURL(url = "${blogEntryURL}");
+
+			BlogsNavigator.gotoPG(
+				blogEntryURL = "${blogEntryURL}",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
 		}
 
-		User.logoutPG();
+		task ("View message boards is shown for site member user") {
+			Navigator.openSpecificURL(url = "${messageBoardsThreadURL}");
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+			MessageboardsThread.gotoPG(
+				lastPostUserName = "Test Test",
+				messageBoardsThreadURL = "${messageBoardsThreadURL}",
+				replyCount = "1",
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
-
-		PermissionsInline.gotoSitepageCP(
-			pageName = "Site Page",
-			privacy = "Private Pages");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Roles Regrole Name");
-
-		User.logoutPG();
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.openPrivateSitePageURL(
-			pageName = "Site Page",
-			siteName = "Site Name");
-
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Not Found");
-
-		if (IsElementPresent(locator1 = "Home#BREADCRUMB_2")) {
-			AssertTextNotEquals(
-				locator1 = "Home#BREADCRUMB_2",
-				value1 = "Site Page");
+			MessageboardsThread.viewPG(
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject");
 		}
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-	}
-
-	@priority = "3"
-	test ViewSecureContentAndPageAsGuest {
-		property custom.properties = "auth.login.prompt.enabled=true${line.separator}jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "WidgetPagesUseCase#ViewSecureContentAndPageAsGuest";
-		property test.smtp.server.enabled = "true";
-		property testray.component.names = "Message Boards,Site Pages Administration";
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		SearchAdministration.executeReindex();
-
-		JSONUser.addUser(
-			userEmailAddress = PropsUtil.get("email.address.2"),
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = PropsUtil.get("email.address.2"));
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = PropsUtil.get("email.address.2"));
-
-		JSONLayout.addPrivateLayout(
-			groupName = "Guest",
-			layoutName = "Test Private Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blog and Message Board Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blog and Message Board Page",
-			widgetName = "Blogs");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blog and Message Board Page",
-			widgetName = "Message Boards");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = PropsUtil.get("email.address.2"),
-			userLoginFullName = "userfn1 userln1");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		Blogs.subscribePG();
-
-		MessageboardsPortlet.subscribePG();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		Blogs.addEntryWithPermissions(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title GMB1",
-			viewableBy = "Site Members");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		MessageboardsThread.addPGWithPermissions(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject GMMB2",
-			viewableBySelection = "Site Members");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		MockMock.viewMail(
-			asset = "Blogs Entry",
-			content = "Blogs Entry Title GMB1",
-			recipient = "userfn1 userln1",
-			sender = "Joe Bloggs",
-			subject = "Test Test Published &quot;Blogs Entry Title GMB1&quot; on ${siteName} Blogs");
-
-		MockMock.clickBodyLink(
-			asset = "Blogs Entry Title GMB1",
-			bodyLink = "CONTINUE READING");
-
-		var blogEntryURL = selenium.getLocation();
-
-		var messageBoardsThreadURL = MockMock.getBodySpecificText(
-			asset = "MB",
-			content = "MB Thread Message Body",
-			extractFirstText = "<br />",
-			recipient = "userfn1 userln1",
-			sender = "Joe Bloggs",
-			specificText = "${siteName} Message Boards<br />",
-			subject = "Home - ${siteName} New Message: MB Thread Message Subject GMMB2");
-
-		MockMock._backtoInbox();
-
-		Click(
-			key_text = "Delete all",
-			locator1 = "Link#ANY");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		User.logoutPG();
-
-		Navigator.openPrivateURL();
-
-		User.viewLoginPG();
-
-		AssertElementNotPresent(locator1 = "Message#ERROR");
-
-		AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR");
-
-		Navigator.openSpecificURL(url = "${blogEntryURL}");
-
-		Alert.viewRequestFailedToComplete();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR",
-			value1 = "You do not have the required permissions.");
-
-		Navigator.openSpecificURL(url = "${messageBoardsThreadURL}");
-
-		Alert.viewRequestFailedToComplete();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR",
-			value1 = "You do not have the required permissions.");
-	}
-
-	@priority = "3"
-	test ViewSecureContentAndPageAsSiteMember {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "WidgetPagesUseCase#ViewSecureContentAndPageAsSiteMember";
-		property test.smtp.server.enabled = "true";
-		property testray.component.names = "Message Boards,Site Pages Administration";
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		JSONUser.addUser(
-			userEmailAddress = PropsUtil.get("email.address.2"),
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea2@liferay.com",
-			userFirstName = "userfn2",
-			userLastName = "userln2",
-			userScreenName = "usersn2");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = PropsUtil.get("email.address.2"));
-
-		JSONUser.addUserToSite(
-			groupName = "Guest",
-			userEmailAddress = "userea2@liferay.com");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = PropsUtil.get("email.address.2"));
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea2@liferay.com");
-
-		JSONLayout.addPrivateLayout(
-			groupName = "Guest",
-			layoutName = "Test Private Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blog and Message Board Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blog and Message Board Page",
-			widgetName = "Blogs");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blog and Message Board Page",
-			widgetName = "Message Boards");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = PropsUtil.get("email.address.2"),
-			userLoginFullName = "userfn1 userln1");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		Blogs.subscribePG();
-
-		MessageboardsPortlet.subscribePG();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		Blogs.addEntryWithPermissions(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title GMB2",
-			viewableBy = "Site Members");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		MessageboardsThread.addPGWithPermissions(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject GMMB3",
-			viewableBySelection = "Site Members");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		MockMock.viewMail(
-			asset = "Blogs Entry",
-			content = "Blogs Entry Title GMB2",
-			recipient = "userfn1 userln1",
-			sender = "Joe Bloggs",
-			subject = "Test Test Published &quot;Blogs Entry Title GMB2&quot; on ${siteName} Blogs");
-
-		MockMock.clickBodyLink(
-			asset = "Blogs Entry Title GMB2",
-			bodyLink = "CONTINUE READING");
-
-		var blogEntryURL = selenium.getLocation();
-
-		var messageBoardsThreadURL = MockMock.getBodySpecificText(
-			asset = "MB",
-			content = "MB Thread Message Body",
-			extractFirstText = "<br />",
-			recipient = "userfn1 userln1",
-			sender = "Test Test",
-			specificText = "${siteName} Message Boards<br />",
-			subject = "Home - ${siteName} New Message: MB Thread Message Subject GMMB3");
-
-		MockMock._backtoInbox();
-
-		Click(
-			key_text = "Delete all",
-			locator1 = "Link#ANY");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
-
-		Navigator.openPrivateURL();
-
-		Page.viewSpecificPG(pageNameList = "Test Private Page");
-
-		AssertElementNotPresent(locator1 = "Message#ERROR");
-
-		AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR");
-
-		Navigator.openSpecificURL(url = "${blogEntryURL}");
-
-		BlogsNavigator.gotoPG(
-			blogEntryURL = "${blogEntryURL}",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title GMB2");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		Navigator.openSpecificURL(url = "${messageBoardsThreadURL}");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			messageBoardsThreadURL = "${messageBoardsThreadURL}",
-			replyCount = "1",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject GMMB3");
-
-		MessageboardsThread.viewPG(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject GMMB3");
-	}
-
-	@priority = "5"
-	test ViewSecureContentAndPageAsUser {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "WidgetPagesUseCase#ViewSecureContentAndPageAsUser";
-		property test.smtp.server.enabled = "true";
-		property testray.component.names = "Message Boards,Site Pages Administration,Training";
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		JSONUser.addUser(
-			userEmailAddress = PropsUtil.get("email.address.2"),
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea2@liferay.com",
-			userFirstName = "userfn2",
-			userLastName = "userln2",
-			userScreenName = "usersn2");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = PropsUtil.get("email.address.2"));
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = PropsUtil.get("email.address.2"));
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea2@liferay.com");
-
-		JSONLayout.addPrivateLayout(
-			groupName = "Guest",
-			layoutName = "Test Private Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blog and Message Board Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blog and Message Board Page",
-			widgetName = "Blogs");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blog and Message Board Page",
-			widgetName = "Message Boards");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = PropsUtil.get("email.address.2"),
-			userLoginFullName = "userfn1 userln1");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		Blogs.subscribePG();
-
-		MessageboardsPortlet.subscribePG();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		Blogs.addEntryWithPermissions(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title GMB3",
-			viewableBy = "Site Members");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		MessageboardsThread.addPGWithPermissions(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject GMMB4",
-			viewableBySelection = "Site Members");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		MockMock.viewMail(
-			asset = "Blogs Entry",
-			content = "Blogs Entry Title GMB3",
-			recipient = "userfn1 userln1",
-			sender = "Joe Bloggs",
-			subject = "Test Test Published &quot;Blogs Entry Title GMB3&quot; on ${siteName} Blogs");
-
-		MockMock.clickBodyLink(
-			asset = "Blogs Entry Title GMB3",
-			bodyLink = "CONTINUE READING");
-
-		var blogEntryURL = selenium.getLocation();
-
-		var messageBoardsThreadURL = MockMock.getBodySpecificText(
-			asset = "MB",
-			content = "MB Thread Message Body",
-			extractFirstText = "<br />",
-			recipient = "userfn1 userln1",
-			sender = "Test Test",
-			specificText = "${siteName} Message Boards<br />",
-			subject = "Home - ${siteName} New Message: MB Thread Message Subject GMMB4");
-
-		MockMock._backtoInbox();
-
-		Click(
-			key_text = "Delete all",
-			locator1 = "Link#ANY");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
-
-		Navigator.openPrivateURL();
-
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Not Found");
-
-		Navigator.openSpecificURL(url = "${blogEntryURL}");
-
-		Alert.viewRequestFailedToComplete();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR",
-			value1 = "You do not have the required permissions.");
-
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		Navigator.openSpecificURL(url = "${messageBoardsThreadURL}");
-
-		Alert.viewRequestFailedToComplete();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR",
-			value1 = "You do not have the required permissions.");
-	}
-
-	@priority = "3"
-	test WebContentAdministrationSitesPagesPanel {
-		property testray.component.names = "Site Pages Administration";
-
-		SitePages.openPagesAdmin(siteURLKey = "guest");
-
-		SitePages.addPublicPage(
-			componentName = "Collaboration",
-			pageName = "Panel Test Page",
-			sitePageType = "Panel");
-
-		Navigator.gotoPage(pageName = "Panel Test Page");
-
-		Page.viewPanelPortletListPG(
-			componentName = "Collaboration",
-			pageName = "Panel Test Page",
-			portletNameList = "Blogs,Message Boards");
-
-		HeadlessBlog.addBlogEntry(
-			content = "This is Blog Post 1 Content",
-			groupName = "Guest",
-			title = "Blog Post 1");
-
-		Navigator.gotoPage(pageName = "Panel Test Page");
-
-		Page.gotoPagePanelPortlet(portletName = "Blogs");
-
-		BlogsEntry.viewPG(
-			entryContent = "This is Blog Post 1 Content",
-			entryTitle = "Blog Post 1");
-
-		Page.gotoPagePanelPortlet(portletName = "Message Boards");
-
-		MessageboardsThread.addPG(
-			threadBody = "This is Message Boards Thread 1",
-			threadSubject = "Thread 1");
-
-		Navigator.gotoPage(pageName = "Panel Test Page");
-
-		Page.gotoPagePanelPortlet(portletName = "Message Boards");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			replyCount = "0",
-			threadBody = "This is Message Boards Thread 1",
-			threadSubject = "Thread 1");
-
-		MessageboardsThread.viewPG(
-			replyCount = "0",
-			threadBody = "This is Message Boards Thread 1",
-			threadSubject = "Thread 1",
-			userName = "Test Test");
-	}
-
-	@priority = "5"
-	test WebContentAdministrationSitesPageTypes {
-		property osgi.app.includes = "bookmarks";
-		property portal.acceptance = "true";
-		property testray.component.names = "Site Pages Administration,Training";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONGroup.addGroup(groupName = "Page Type Test Site Name");
-
-		SitePages.openPagesAdmin(siteURLKey = "page-type-test-site-name");
-
-		SitePages.addPublicPage(pageName = "Blank Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Blank Page",
-			siteName = "Page Type Test Site Name");
-
-		SitePages.openPagesAdmin(siteURLKey = "page-type-test-site-name");
-
-		SitePages.addPublicPage(
-			pageName = "Embedded Page",
-			pageTypeURL = "https://www.google.com",
-			sitePageType = "Embedded");
-
-		SitePages.configurePage(
-			pageName = "Embedded Page",
-			pageTypeURL = "http://iscaliforniaonfire.com/",
-			privacy = "Public Pages",
-			sitePageType = "Embedded");
-
-		SitePages.openPagesAdmin(siteURLKey = "page-type-test-site-name");
-
-		SitePages.addPublicPage(
-			componentName = "Community",
-			pageName = "Panel Page",
-			sitePageType = "Panel");
-
-		Page.viewPanelPortletListCP(
-			componentName = "Community",
-			pageName = "Panel Page",
-			portletNameList = "Bookmarks,My Sites,Page Comments,Page Flags,Page Ratings");
-
-		Navigator.gotoSitePage(
-			pageName = "Embedded Page",
-			siteName = "Page Type Test Site Name");
-
-		AssertLocation(value1 = "${portalURL}/web/page-type-test-site-name/embedded-page");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_IFRAME");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Embedded#EMBEDDED_TEXT_YES",
-			value1 = "Yes");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Embedded#EMBEDDED_TEXT_UPDATED",
-			value1 = "updated");
-
-		SelectFrameTop(value1 = "relative=top");
-
-		Navigator.gotoSitePage(
-			pageName = "Panel Page",
-			siteName = "Page Type Test Site Name");
-
-		Page.viewPanelPortletListPG(
-			componentName = "Community",
-			pageName = "Panel Page",
-			portletNameList = "Bookmarks,My Sites,Page Comments,Page Flags,Page Ratings");
 	}
 
 }

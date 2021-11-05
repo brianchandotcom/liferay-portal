@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -111,6 +112,12 @@ public class CommerceNotificationHelperImpl
 					getDefinitionTermContributorsByContributorKey(
 						CommerceDefinitionTermConstants.
 							RECIPIENT_DEFINITION_TERMS_CONTRIBUTOR);
+
+			definitionTermContributors = ListUtil.concat(
+				definitionTermContributors,
+				_commerceDefinitionTermContributorRegistry.
+					getDefinitionTermContributorsByNotificationTypeKey(
+						commerceNotificationType.getKey()));
 		}
 		else {
 			definitionTermContributors =

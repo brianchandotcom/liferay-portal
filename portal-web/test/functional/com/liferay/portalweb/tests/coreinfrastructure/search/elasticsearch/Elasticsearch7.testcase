@@ -316,7 +316,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		SearchAdministration.openSearchAdmin();
+		SearchAdministration.openSearchAdmin(baseURL = "http://localhost:9080");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",

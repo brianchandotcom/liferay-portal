@@ -3735,7 +3735,8 @@ public class DataFactory {
 		List<DLFolderModel> dlFolderModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_DL_FOLDER_COUNT);
 
-		Map<Long, String> treePathMap = new HashMap<>();
+		Map<Long, String> treePathMap = _treePathMaps.computeIfAbsent(
+			depth, HashMap::new);
 
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_DL_FOLDER_COUNT; i++) {
 			long folderId = _counter.get();
@@ -3764,8 +3765,6 @@ public class DataFactory {
 					folderId, groupId, parentFolderId, sb.toString(),
 					"Test Folder " + i));
 		}
-
-		_treePathMaps.put(depth, treePathMap);
 
 		return dlFolderModels;
 	}

@@ -243,8 +243,30 @@ public class EditAssetListDisplayContext {
 					getSegmentsEntryName(
 						assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
 						_themeDisplay.getLocale())
+				).put(
+					"deleteAssetListEntryVariationURL", _getDeleteAssetListEntryVariationURL(liferayPortletResponse, assetListEntrySegmentsEntryRel)
+				).put(
+					"assetListEntrySegmentsEntryRelId", assetListEntrySegmentsEntryRel.getAssetListEntrySegmentsEntryRelId()
 				)
 			).toArray());
+	}
+
+	private String _getDeleteAssetListEntryVariationURL(
+		LiferayPortletResponse liferayPortletResponse,
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel) {
+		if (assetListEntrySegmentsEntryRel.getSegmentsEntryId() == SegmentsEntryConstants.ID_DEFAULT || isLiveGroup()) {
+			return "";
+		}
+
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/asset_list/delete_asset_list_entry_variation"
+		).setParameter(
+			"assetListEntryId", assetListEntrySegmentsEntryRel.getAssetListEntryId()
+		).setParameter(
+			"segmentsEntryId", assetListEntrySegmentsEntryRel.getSegmentsEntryId()
+		).buildString();
 	}
 
 	public int getAssetListEntryType() {

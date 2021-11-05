@@ -321,7 +321,7 @@ AUI.add(
 					var result = val;
 
 					if (val) {
-						result = Object.assign(
+						result = A.merge(
 							{
 								align: {
 									points: [

@@ -36,13 +36,38 @@ definition {
 
 	}
 
-	@description = "This is a test for LRQA-69474. Verify that if it is possible to create a Dynamic Data List. "
-	@ignore = "true"
-	@priority = "3"
+	@description = "This is a test for LRQA-69474. Verify that if it is possible to create a Dynamic Data List."
+	@priority = "5"
 	test CanCreateDDL {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists");
 
-		// TODO LRQA-69474 CanCreateDDL pending implementation
+		DDLList.addCP(
+			ddlListDescription = "DDL List Description",
+			ddlListName = "DDL List",
+			workflowDefinition = "Single Approver");
 
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Contacts");
+
+		DDLDataDefinition.save();
+
+		DDLList.viewCP(ddlListName = "DDL List");
+
+		DDLRecord.addNewContacts(
+			ddlCompany = "Liferay",
+			ddlEmail = "qa@liferay.com",
+			ddlFirstName = "Test",
+			ddlInstantMesseger = "Liferay",
+			ddlJobTitle = "QA",
+			ddlLastName = "Test",
+			ddlPhoneMobile = "12345678",
+			ddlPhoneOffice = "12345678");
+
+		PortletEntry.submitForPublication();
+
+		DDLList.viewStatusDDL(key_status = "Pending");
 	}
 
 	@description = "Verify that the user can Publish a Entry after Save as Draft"

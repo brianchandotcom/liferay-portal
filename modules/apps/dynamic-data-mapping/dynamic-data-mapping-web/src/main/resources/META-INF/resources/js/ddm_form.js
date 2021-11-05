@@ -162,7 +162,7 @@ AUI.add(
 				var FieldClass = getFieldClass(fieldDefinition.type);
 
 				var field = new FieldClass(
-					Object.assign(
+					Object.merge(
 						instance.getAttrs(
 							AObject.keys(DDMPortletSupport.ATTRS)
 						),

@@ -1,0 +1,13 @@
+definition {
+
+	macro setFilter {
+		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
+
+		Click(
+			key_text = "${filterType}",
+			locator1 = "A11yTool#FILTER_CHECKBOX");
+
+		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
+	}
+
+}

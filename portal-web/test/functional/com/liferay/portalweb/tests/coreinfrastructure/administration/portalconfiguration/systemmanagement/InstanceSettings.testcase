@@ -844,6 +844,7 @@ definition {
 	@priority = "4"
 	test ExportedFactoryConfigurationCanBeImported {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "InstanceSettings#ExportedFactoryConfigurationCanBeImported";
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");

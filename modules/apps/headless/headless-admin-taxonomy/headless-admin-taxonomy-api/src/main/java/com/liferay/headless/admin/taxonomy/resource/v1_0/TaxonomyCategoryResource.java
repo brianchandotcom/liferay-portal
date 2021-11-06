@@ -98,7 +98,9 @@ public interface TaxonomyCategoryResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putTaxonomyCategoryPermissionsPage(String taxonomyCategoryId)
+			putTaxonomyCategoryPermissionsPage(
+				String taxonomyCategoryId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(

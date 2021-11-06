@@ -87,12 +87,13 @@ public interface NavigationMenuResource {
 				Long navigationMenuId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putNavigationMenuPermission(
+	public Page<Permission> putNavigationMenuPermissionsPage(
 			Long navigationMenuId, Permission[] permissions)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putNavigationMenuPermissionHttpResponse(
-			Long navigationMenuId, Permission[] permissions)
+	public HttpInvoker.HttpResponse
+			putNavigationMenuPermissionsPageHttpResponse(
+				Long navigationMenuId, Permission[] permissions)
 		throws Exception;
 
 	public Page<NavigationMenu> getSiteNavigationMenusPage(
@@ -128,12 +129,13 @@ public interface NavigationMenuResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putSiteNavigationMenuPermission(
+	public Page<Permission> putSiteNavigationMenuPermissionsPage(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putSiteNavigationMenuPermissionHttpResponse(
-			Long siteId, Permission[] permissions)
+	public HttpInvoker.HttpResponse
+			putSiteNavigationMenuPermissionsPageHttpResponse(
+				Long siteId, Permission[] permissions)
 		throws Exception;
 
 	public static class Builder {
@@ -692,12 +694,12 @@ public interface NavigationMenuResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putNavigationMenuPermission(
+		public Page<Permission> putNavigationMenuPermissionsPage(
 				Long navigationMenuId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putNavigationMenuPermissionHttpResponse(
+				putNavigationMenuPermissionsPageHttpResponse(
 					navigationMenuId, permissions);
 
 			String content = httpResponse.getContent();
@@ -737,8 +739,9 @@ public interface NavigationMenuResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putNavigationMenuPermissionHttpResponse(
-				Long navigationMenuId, Permission[] permissions)
+		public HttpInvoker.HttpResponse
+				putNavigationMenuPermissionsPageHttpResponse(
+					Long navigationMenuId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1125,12 +1128,12 @@ public interface NavigationMenuResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putSiteNavigationMenuPermission(
+		public Page<Permission> putSiteNavigationMenuPermissionsPage(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteNavigationMenuPermissionHttpResponse(
+				putSiteNavigationMenuPermissionsPageHttpResponse(
 					siteId, permissions);
 
 			String content = httpResponse.getContent();
@@ -1171,7 +1174,7 @@ public interface NavigationMenuResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putSiteNavigationMenuPermissionHttpResponse(
+				putSiteNavigationMenuPermissionsPageHttpResponse(
 					Long siteId, Permission[] permissions)
 			throws Exception {
 

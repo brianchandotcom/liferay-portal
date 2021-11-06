@@ -64,12 +64,12 @@ public interface ContentStructureResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putAssetLibraryContentStructurePermission(
+	public Page<Permission> putAssetLibraryContentStructurePermissionsPage(
 			Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putAssetLibraryContentStructurePermissionHttpResponse(
+			putAssetLibraryContentStructurePermissionsPageHttpResponse(
 				Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
@@ -89,12 +89,13 @@ public interface ContentStructureResource {
 				Long contentStructureId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putContentStructurePermission(
+	public Page<Permission> putContentStructurePermissionsPage(
 			Long contentStructureId, Permission[] permissions)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putContentStructurePermissionHttpResponse(
-			Long contentStructureId, Permission[] permissions)
+	public HttpInvoker.HttpResponse
+			putContentStructurePermissionsPageHttpResponse(
+				Long contentStructureId, Permission[] permissions)
 		throws Exception;
 
 	public Page<ContentStructure> getSiteContentStructuresPage(
@@ -116,12 +117,12 @@ public interface ContentStructureResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putSiteContentStructurePermission(
+	public Page<Permission> putSiteContentStructurePermissionsPage(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putSiteContentStructurePermissionHttpResponse(
+			putSiteContentStructurePermissionsPageHttpResponse(
 				Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -392,12 +393,12 @@ public interface ContentStructureResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putAssetLibraryContentStructurePermission(
+		public Page<Permission> putAssetLibraryContentStructurePermissionsPage(
 				Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibraryContentStructurePermissionHttpResponse(
+				putAssetLibraryContentStructurePermissionsPageHttpResponse(
 					assetLibraryId, permissions);
 
 			String content = httpResponse.getContent();
@@ -438,7 +439,7 @@ public interface ContentStructureResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putAssetLibraryContentStructurePermissionHttpResponse(
+				putAssetLibraryContentStructurePermissionsPageHttpResponse(
 					Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
@@ -655,12 +656,12 @@ public interface ContentStructureResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putContentStructurePermission(
+		public Page<Permission> putContentStructurePermissionsPage(
 				Long contentStructureId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putContentStructurePermissionHttpResponse(
+				putContentStructurePermissionsPageHttpResponse(
 					contentStructureId, permissions);
 
 			String content = httpResponse.getContent();
@@ -701,7 +702,7 @@ public interface ContentStructureResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putContentStructurePermissionHttpResponse(
+				putContentStructurePermissionsPageHttpResponse(
 					Long contentStructureId, Permission[] permissions)
 			throws Exception {
 
@@ -944,12 +945,12 @@ public interface ContentStructureResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putSiteContentStructurePermission(
+		public Page<Permission> putSiteContentStructurePermissionsPage(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteContentStructurePermissionHttpResponse(
+				putSiteContentStructurePermissionsPageHttpResponse(
 					siteId, permissions);
 
 			String content = httpResponse.getContent();
@@ -990,7 +991,7 @@ public interface ContentStructureResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putSiteContentStructurePermissionHttpResponse(
+				putSiteContentStructurePermissionsPageHttpResponse(
 					Long siteId, Permission[] permissions)
 			throws Exception {
 

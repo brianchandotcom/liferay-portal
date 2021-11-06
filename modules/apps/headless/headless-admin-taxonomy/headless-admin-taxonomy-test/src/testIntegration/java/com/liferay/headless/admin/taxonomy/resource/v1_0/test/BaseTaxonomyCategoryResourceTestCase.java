@@ -906,12 +906,29 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			200,
 			taxonomyCategoryResource.
 				putTaxonomyCategoryPermissionsPageHttpResponse(
-					taxonomyCategory.getId()));
+					taxonomyCategory.getId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"VIEW"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
 
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyCategoryResource.
-				putTaxonomyCategoryPermissionsPageHttpResponse("-"));
+				putTaxonomyCategoryPermissionsPageHttpResponse(
+					"-",
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
 	}
 
 	protected TaxonomyCategory

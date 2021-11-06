@@ -846,8 +846,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putMessageBoardThreadPermission",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS,
+					"putMessageBoardThreadPermissionsPage", resourceName,
+					resourceId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -877,7 +878,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putMessageBoardThreadPermission(
+			putMessageBoardThreadPermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("messageBoardThreadId")
@@ -912,8 +913,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putMessageBoardThreadPermission",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS,
+					"putMessageBoardThreadPermissionsPage", resourceName,
+					resourceId)
 			).build(),
 			resourceId, resourceName, null);
 	}
@@ -1237,7 +1239,8 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS,
-					"putSiteMessageBoardThreadPermission", portletName, siteId)
+					"putSiteMessageBoardThreadPermissionsPage", portletName,
+					siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}
@@ -1265,7 +1268,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteMessageBoardThreadPermission(
+			putSiteMessageBoardThreadPermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("siteId")
@@ -1298,7 +1301,8 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS,
-					"putSiteMessageBoardThreadPermission", portletName, siteId)
+					"putSiteMessageBoardThreadPermissionsPage", portletName,
+					siteId)
 			).build(),
 			siteId, portletName, null);
 	}

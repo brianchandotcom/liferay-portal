@@ -66,7 +66,7 @@ public interface SitePageResource {
 	public SitePage getSiteSitePage(Long siteId, String friendlyUrlPath)
 		throws Exception;
 
-	public Page<SitePage> getSiteSitePageFriendlyUrlPathExperiencesPage(
+	public Page<SitePage> getSiteSitePagesExperiencesPage(
 			Long siteId, String friendlyUrlPath)
 		throws Exception;
 

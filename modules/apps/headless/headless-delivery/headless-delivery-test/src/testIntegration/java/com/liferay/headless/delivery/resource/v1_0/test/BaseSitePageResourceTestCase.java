@@ -496,33 +496,28 @@ public abstract class BaseSitePageResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteSitePageFriendlyUrlPathExperiencesPage()
-		throws Exception {
-
-		Long siteId =
-			testGetSiteSitePageFriendlyUrlPathExperiencesPage_getSiteId();
+	public void testGetSiteSitePagesExperiencesPage() throws Exception {
+		Long siteId = testGetSiteSitePagesExperiencesPage_getSiteId();
 		Long irrelevantSiteId =
-			testGetSiteSitePageFriendlyUrlPathExperiencesPage_getIrrelevantSiteId();
+			testGetSiteSitePagesExperiencesPage_getIrrelevantSiteId();
 		String friendlyUrlPath =
-			testGetSiteSitePageFriendlyUrlPathExperiencesPage_getFriendlyUrlPath();
+			testGetSiteSitePagesExperiencesPage_getFriendlyUrlPath();
 		String irrelevantFriendlyUrlPath =
-			testGetSiteSitePageFriendlyUrlPathExperiencesPage_getIrrelevantFriendlyUrlPath();
+			testGetSiteSitePagesExperiencesPage_getIrrelevantFriendlyUrlPath();
 
-		Page<SitePage> page =
-			sitePageResource.getSiteSitePageFriendlyUrlPathExperiencesPage(
-				siteId, friendlyUrlPath);
+		Page<SitePage> page = sitePageResource.getSiteSitePagesExperiencesPage(
+			siteId, friendlyUrlPath);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
 		if ((irrelevantSiteId != null) && (irrelevantFriendlyUrlPath != null)) {
 			SitePage irrelevantSitePage =
-				testGetSiteSitePageFriendlyUrlPathExperiencesPage_addSitePage(
+				testGetSiteSitePagesExperiencesPage_addSitePage(
 					irrelevantSiteId, irrelevantFriendlyUrlPath,
 					randomIrrelevantSitePage());
 
-			page =
-				sitePageResource.getSiteSitePageFriendlyUrlPathExperiencesPage(
-					irrelevantSiteId, irrelevantFriendlyUrlPath);
+			page = sitePageResource.getSiteSitePagesExperiencesPage(
+				irrelevantSiteId, irrelevantFriendlyUrlPath);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -532,15 +527,13 @@ public abstract class BaseSitePageResourceTestCase {
 			assertValid(page);
 		}
 
-		SitePage sitePage1 =
-			testGetSiteSitePageFriendlyUrlPathExperiencesPage_addSitePage(
-				siteId, friendlyUrlPath, randomSitePage());
+		SitePage sitePage1 = testGetSiteSitePagesExperiencesPage_addSitePage(
+			siteId, friendlyUrlPath, randomSitePage());
 
-		SitePage sitePage2 =
-			testGetSiteSitePageFriendlyUrlPathExperiencesPage_addSitePage(
-				siteId, friendlyUrlPath, randomSitePage());
+		SitePage sitePage2 = testGetSiteSitePagesExperiencesPage_addSitePage(
+			siteId, friendlyUrlPath, randomSitePage());
 
-		page = sitePageResource.getSiteSitePageFriendlyUrlPathExperiencesPage(
+		page = sitePageResource.getSiteSitePagesExperiencesPage(
 			siteId, friendlyUrlPath);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -551,30 +544,27 @@ public abstract class BaseSitePageResourceTestCase {
 		assertValid(page);
 	}
 
-	protected SitePage
-			testGetSiteSitePageFriendlyUrlPathExperiencesPage_addSitePage(
-				Long siteId, String friendlyUrlPath, SitePage sitePage)
+	protected SitePage testGetSiteSitePagesExperiencesPage_addSitePage(
+			Long siteId, String friendlyUrlPath, SitePage sitePage)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetSiteSitePageFriendlyUrlPathExperiencesPage_getSiteId()
+	protected Long testGetSiteSitePagesExperiencesPage_getSiteId()
 		throws Exception {
 
 		return testGroup.getGroupId();
 	}
 
-	protected Long
-			testGetSiteSitePageFriendlyUrlPathExperiencesPage_getIrrelevantSiteId()
+	protected Long testGetSiteSitePagesExperiencesPage_getIrrelevantSiteId()
 		throws Exception {
 
 		return irrelevantGroup.getGroupId();
 	}
 
-	protected String
-			testGetSiteSitePageFriendlyUrlPathExperiencesPage_getFriendlyUrlPath()
+	protected String testGetSiteSitePagesExperiencesPage_getFriendlyUrlPath()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -582,7 +572,7 @@ public abstract class BaseSitePageResourceTestCase {
 	}
 
 	protected String
-			testGetSiteSitePageFriendlyUrlPathExperiencesPage_getIrrelevantFriendlyUrlPath()
+			testGetSiteSitePagesExperiencesPage_getIrrelevantFriendlyUrlPath()
 		throws Exception {
 
 		return null;

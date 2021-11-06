@@ -102,7 +102,7 @@ public interface MessageBoardMessageResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putMessageBoardMessagePermission(
+			putMessageBoardMessagePermissionsPage(
 				Long messageBoardMessageId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
@@ -172,7 +172,7 @@ public interface MessageBoardMessageResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteMessageBoardMessagePermission(
+			putSiteMessageBoardMessagePermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;

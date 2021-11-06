@@ -104,11 +104,11 @@ public interface WikiNodeResource {
 			Long siteId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putSiteWikiNodePermission(
+	public Page<Permission> putSiteWikiNodePermissionsPage(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putSiteWikiNodePermissionHttpResponse(
+	public HttpInvoker.HttpResponse putSiteWikiNodePermissionsPageHttpResponse(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -151,11 +151,11 @@ public interface WikiNodeResource {
 			Long wikiNodeId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putWikiNodePermission(
+	public Page<Permission> putWikiNodePermissionsPage(
 			Long wikiNodeId, Permission[] permissions)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putWikiNodePermissionHttpResponse(
+	public HttpInvoker.HttpResponse putWikiNodePermissionsPageHttpResponse(
 			Long wikiNodeId, Permission[] permissions)
 		throws Exception;
 
@@ -853,12 +853,12 @@ public interface WikiNodeResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putSiteWikiNodePermission(
+		public Page<Permission> putSiteWikiNodePermissionsPage(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteWikiNodePermissionHttpResponse(siteId, permissions);
+				putSiteWikiNodePermissionsPageHttpResponse(siteId, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -897,8 +897,9 @@ public interface WikiNodeResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putSiteWikiNodePermissionHttpResponse(
-				Long siteId, Permission[] permissions)
+		public HttpInvoker.HttpResponse
+				putSiteWikiNodePermissionsPageHttpResponse(
+					Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1421,12 +1422,12 @@ public interface WikiNodeResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putWikiNodePermission(
+		public Page<Permission> putWikiNodePermissionsPage(
 				Long wikiNodeId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putWikiNodePermissionHttpResponse(wikiNodeId, permissions);
+				putWikiNodePermissionsPageHttpResponse(wikiNodeId, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -1465,7 +1466,7 @@ public interface WikiNodeResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putWikiNodePermissionHttpResponse(
+		public HttpInvoker.HttpResponse putWikiNodePermissionsPageHttpResponse(
 				Long wikiNodeId, Permission[] permissions)
 			throws Exception {
 

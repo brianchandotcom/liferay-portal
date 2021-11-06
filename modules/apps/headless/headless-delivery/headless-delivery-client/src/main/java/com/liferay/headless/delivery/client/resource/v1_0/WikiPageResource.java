@@ -150,11 +150,11 @@ public interface WikiPageResource {
 			Long wikiPageId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putWikiPagePermission(
+	public Page<Permission> putWikiPagePermissionsPage(
 			Long wikiPageId, Permission[] permissions)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putWikiPagePermissionHttpResponse(
+	public HttpInvoker.HttpResponse putWikiPagePermissionsPageHttpResponse(
 			Long wikiPageId, Permission[] permissions)
 		throws Exception;
 
@@ -1407,12 +1407,12 @@ public interface WikiPageResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putWikiPagePermission(
+		public Page<Permission> putWikiPagePermissionsPage(
 				Long wikiPageId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putWikiPagePermissionHttpResponse(wikiPageId, permissions);
+				putWikiPagePermissionsPageHttpResponse(wikiPageId, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -1451,7 +1451,7 @@ public interface WikiPageResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putWikiPagePermissionHttpResponse(
+		public HttpInvoker.HttpResponse putWikiPagePermissionsPageHttpResponse(
 				Long wikiPageId, Permission[] permissions)
 			throws Exception {
 

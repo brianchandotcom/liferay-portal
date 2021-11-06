@@ -659,7 +659,7 @@ public abstract class BaseWikiPageResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putWikiPagePermission",
+					ActionKeys.PERMISSIONS, "putWikiPagePermissionsPage",
 					resourceName, resourceId)
 			).build(),
 			resourceId, resourceName, roleNames);
@@ -686,7 +686,7 @@ public abstract class BaseWikiPageResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putWikiPagePermission(
+			putWikiPagePermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("wikiPageId")
@@ -719,7 +719,7 @@ public abstract class BaseWikiPageResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putWikiPagePermission",
+					ActionKeys.PERMISSIONS, "putWikiPagePermissionsPage",
 					resourceName, resourceId)
 			).build(),
 			resourceId, resourceName, null);

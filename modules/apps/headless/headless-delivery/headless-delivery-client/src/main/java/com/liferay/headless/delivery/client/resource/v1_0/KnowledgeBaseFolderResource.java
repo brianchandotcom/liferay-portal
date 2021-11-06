@@ -98,12 +98,12 @@ public interface KnowledgeBaseFolderResource {
 				Long knowledgeBaseFolderId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putKnowledgeBaseFolderPermission(
+	public Page<Permission> putKnowledgeBaseFolderPermissionsPage(
 			Long knowledgeBaseFolderId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putKnowledgeBaseFolderPermissionHttpResponse(
+			putKnowledgeBaseFolderPermissionsPageHttpResponse(
 				Long knowledgeBaseFolderId, Permission[] permissions)
 		throws Exception;
 
@@ -193,12 +193,12 @@ public interface KnowledgeBaseFolderResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putSiteKnowledgeBaseFolderPermission(
+	public Page<Permission> putSiteKnowledgeBaseFolderPermissionsPage(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putSiteKnowledgeBaseFolderPermissionHttpResponse(
+			putSiteKnowledgeBaseFolderPermissionsPageHttpResponse(
 				Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -854,12 +854,12 @@ public interface KnowledgeBaseFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putKnowledgeBaseFolderPermission(
+		public Page<Permission> putKnowledgeBaseFolderPermissionsPage(
 				Long knowledgeBaseFolderId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putKnowledgeBaseFolderPermissionHttpResponse(
+				putKnowledgeBaseFolderPermissionsPageHttpResponse(
 					knowledgeBaseFolderId, permissions);
 
 			String content = httpResponse.getContent();
@@ -900,7 +900,7 @@ public interface KnowledgeBaseFolderResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putKnowledgeBaseFolderPermissionHttpResponse(
+				putKnowledgeBaseFolderPermissionsPageHttpResponse(
 					Long knowledgeBaseFolderId, Permission[] permissions)
 			throws Exception {
 
@@ -1737,12 +1737,12 @@ public interface KnowledgeBaseFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putSiteKnowledgeBaseFolderPermission(
+		public Page<Permission> putSiteKnowledgeBaseFolderPermissionsPage(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteKnowledgeBaseFolderPermissionHttpResponse(
+				putSiteKnowledgeBaseFolderPermissionsPageHttpResponse(
 					siteId, permissions);
 
 			String content = httpResponse.getContent();
@@ -1783,7 +1783,7 @@ public interface KnowledgeBaseFolderResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putSiteKnowledgeBaseFolderPermissionHttpResponse(
+				putSiteKnowledgeBaseFolderPermissionsPageHttpResponse(
 					Long siteId, Permission[] permissions)
 			throws Exception {
 

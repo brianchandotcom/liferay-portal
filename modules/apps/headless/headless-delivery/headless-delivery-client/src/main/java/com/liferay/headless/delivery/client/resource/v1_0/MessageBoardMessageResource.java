@@ -132,12 +132,12 @@ public interface MessageBoardMessageResource {
 				Long messageBoardMessageId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putMessageBoardMessagePermission(
+	public Page<Permission> putMessageBoardMessagePermissionsPage(
 			Long messageBoardMessageId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putMessageBoardMessagePermissionHttpResponse(
+			putMessageBoardMessagePermissionsPageHttpResponse(
 				Long messageBoardMessageId, Permission[] permissions)
 		throws Exception;
 
@@ -275,12 +275,12 @@ public interface MessageBoardMessageResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putSiteMessageBoardMessagePermission(
+	public Page<Permission> putSiteMessageBoardMessagePermissionsPage(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putSiteMessageBoardMessagePermissionHttpResponse(
+			putSiteMessageBoardMessagePermissionsPageHttpResponse(
 				Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -1275,12 +1275,12 @@ public interface MessageBoardMessageResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putMessageBoardMessagePermission(
+		public Page<Permission> putMessageBoardMessagePermissionsPage(
 				Long messageBoardMessageId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putMessageBoardMessagePermissionHttpResponse(
+				putMessageBoardMessagePermissionsPageHttpResponse(
 					messageBoardMessageId, permissions);
 
 			String content = httpResponse.getContent();
@@ -1321,7 +1321,7 @@ public interface MessageBoardMessageResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putMessageBoardMessagePermissionHttpResponse(
+				putMessageBoardMessagePermissionsPageHttpResponse(
 					Long messageBoardMessageId, Permission[] permissions)
 			throws Exception {
 
@@ -2568,12 +2568,12 @@ public interface MessageBoardMessageResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putSiteMessageBoardMessagePermission(
+		public Page<Permission> putSiteMessageBoardMessagePermissionsPage(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteMessageBoardMessagePermissionHttpResponse(
+				putSiteMessageBoardMessagePermissionsPageHttpResponse(
 					siteId, permissions);
 
 			String content = httpResponse.getContent();
@@ -2614,7 +2614,7 @@ public interface MessageBoardMessageResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putSiteMessageBoardMessagePermissionHttpResponse(
+				putSiteMessageBoardMessagePermissionsPageHttpResponse(
 					Long siteId, Permission[] permissions)
 			throws Exception {
 

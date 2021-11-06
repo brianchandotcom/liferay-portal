@@ -428,9 +428,10 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
-	public void testPutBlogPostingPermission() throws Exception {
+	public void testPutBlogPostingPermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		BlogPosting blogPosting = testPutBlogPostingPermission_addBlogPosting();
+		BlogPosting blogPosting =
+			testPutBlogPostingPermissionsPage_addBlogPosting();
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
@@ -438,7 +439,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			200,
-			blogPostingResource.putBlogPostingPermissionHttpResponse(
+			blogPostingResource.putBlogPostingPermissionsPageHttpResponse(
 				blogPosting.getId(),
 				new Permission[] {
 					new Permission() {
@@ -451,7 +452,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404,
-			blogPostingResource.putBlogPostingPermissionHttpResponse(
+			blogPostingResource.putBlogPostingPermissionsPageHttpResponse(
 				0L,
 				new Permission[] {
 					new Permission() {
@@ -463,7 +464,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 				}));
 	}
 
-	protected BlogPosting testPutBlogPostingPermission_addBlogPosting()
+	protected BlogPosting testPutBlogPostingPermissionsPage_addBlogPosting()
 		throws Exception {
 
 		return blogPostingResource.postSiteBlogPosting(
@@ -1033,10 +1034,10 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
-	public void testPutSiteBlogPostingPermission() throws Exception {
+	public void testPutSiteBlogPostingPermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting blogPosting =
-			testPutSiteBlogPostingPermission_addBlogPosting();
+			testPutSiteBlogPostingPermissionsPage_addBlogPosting();
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
@@ -1044,7 +1045,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			200,
-			blogPostingResource.putSiteBlogPostingPermissionHttpResponse(
+			blogPostingResource.putSiteBlogPostingPermissionsPageHttpResponse(
 				blogPosting.getSiteId(),
 				new Permission[] {
 					new Permission() {
@@ -1057,7 +1058,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404,
-			blogPostingResource.putSiteBlogPostingPermissionHttpResponse(
+			blogPostingResource.putSiteBlogPostingPermissionsPageHttpResponse(
 				blogPosting.getSiteId(),
 				new Permission[] {
 					new Permission() {
@@ -1069,7 +1070,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 				}));
 	}
 
-	protected BlogPosting testPutSiteBlogPostingPermission_addBlogPosting()
+	protected BlogPosting testPutSiteBlogPostingPermissionsPage_addBlogPosting()
 		throws Exception {
 
 		return blogPostingResource.postSiteBlogPosting(

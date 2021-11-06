@@ -88,12 +88,13 @@ public interface StructuredContentFolderResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putAssetLibraryStructuredContentFolderPermission(
-			Long assetLibraryId, Permission[] permissions)
+	public Page<Permission>
+			putAssetLibraryStructuredContentFolderPermissionsPage(
+				Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putAssetLibraryStructuredContentFolderPermissionHttpResponse(
+			putAssetLibraryStructuredContentFolderPermissionsPageHttpResponse(
 				Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
@@ -136,12 +137,12 @@ public interface StructuredContentFolderResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putSiteStructuredContentFolderPermission(
+	public Page<Permission> putSiteStructuredContentFolderPermissionsPage(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putSiteStructuredContentFolderPermissionHttpResponse(
+			putSiteStructuredContentFolderPermissionsPageHttpResponse(
 				Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -154,12 +155,12 @@ public interface StructuredContentFolderResource {
 				Long structuredContentFolderId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putStructuredContentFolderPermission(
+	public Page<Permission> putStructuredContentFolderPermissionsPage(
 			Long structuredContentFolderId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putStructuredContentFolderPermissionHttpResponse(
+			putStructuredContentFolderPermissionsPageHttpResponse(
 				Long structuredContentFolderId, Permission[] permissions)
 		throws Exception;
 
@@ -703,12 +704,12 @@ public interface StructuredContentFolderResource {
 		}
 
 		public Page<Permission>
-				putAssetLibraryStructuredContentFolderPermission(
+				putAssetLibraryStructuredContentFolderPermissionsPage(
 					Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibraryStructuredContentFolderPermissionHttpResponse(
+				putAssetLibraryStructuredContentFolderPermissionsPageHttpResponse(
 					assetLibraryId, permissions);
 
 			String content = httpResponse.getContent();
@@ -749,7 +750,7 @@ public interface StructuredContentFolderResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putAssetLibraryStructuredContentFolderPermissionHttpResponse(
+				putAssetLibraryStructuredContentFolderPermissionsPageHttpResponse(
 					Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
@@ -1166,12 +1167,12 @@ public interface StructuredContentFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putSiteStructuredContentFolderPermission(
+		public Page<Permission> putSiteStructuredContentFolderPermissionsPage(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteStructuredContentFolderPermissionHttpResponse(
+				putSiteStructuredContentFolderPermissionsPageHttpResponse(
 					siteId, permissions);
 
 			String content = httpResponse.getContent();
@@ -1212,7 +1213,7 @@ public interface StructuredContentFolderResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putSiteStructuredContentFolderPermissionHttpResponse(
+				putSiteStructuredContentFolderPermissionsPageHttpResponse(
 					Long siteId, Permission[] permissions)
 			throws Exception {
 
@@ -1349,12 +1350,12 @@ public interface StructuredContentFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putStructuredContentFolderPermission(
+		public Page<Permission> putStructuredContentFolderPermissionsPage(
 				Long structuredContentFolderId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putStructuredContentFolderPermissionHttpResponse(
+				putStructuredContentFolderPermissionsPageHttpResponse(
 					structuredContentFolderId, permissions);
 
 			String content = httpResponse.getContent();
@@ -1395,7 +1396,7 @@ public interface StructuredContentFolderResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putStructuredContentFolderPermissionHttpResponse(
+				putStructuredContentFolderPermissionsPageHttpResponse(
 					Long structuredContentFolderId, Permission[] permissions)
 			throws Exception {
 

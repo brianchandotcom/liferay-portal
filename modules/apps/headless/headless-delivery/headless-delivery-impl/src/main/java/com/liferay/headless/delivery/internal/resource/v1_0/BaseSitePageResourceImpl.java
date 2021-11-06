@@ -198,7 +198,7 @@ public abstract class BaseSitePageResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<SitePage> getSiteSitePageFriendlyUrlPathExperiencesPage(
+	public Page<SitePage> getSiteSitePagesExperiencesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteId")

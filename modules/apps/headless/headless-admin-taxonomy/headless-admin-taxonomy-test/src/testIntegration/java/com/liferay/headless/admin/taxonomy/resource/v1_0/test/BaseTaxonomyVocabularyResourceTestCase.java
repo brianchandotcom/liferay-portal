@@ -623,13 +623,29 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			200,
 			taxonomyVocabularyResource.
 				putAssetLibraryTaxonomyVocabularyPermissionsPageHttpResponse(
-					testDepotEntry.getDepotEntryId()));
+					testDepotEntry.getDepotEntryId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
 
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyVocabularyResource.
 				putAssetLibraryTaxonomyVocabularyPermissionsPageHttpResponse(
-					testDepotEntry.getDepotEntryId()));
+					testDepotEntry.getDepotEntryId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
 	}
 
 	protected TaxonomyVocabulary
@@ -1274,13 +1290,29 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			200,
 			taxonomyVocabularyResource.
 				putSiteTaxonomyVocabularyPermissionsPageHttpResponse(
-					taxonomyVocabulary.getSiteId()));
+					taxonomyVocabulary.getSiteId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
 
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyVocabularyResource.
 				putSiteTaxonomyVocabularyPermissionsPageHttpResponse(
-					taxonomyVocabulary.getSiteId()));
+					taxonomyVocabulary.getSiteId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
 	}
 
 	protected TaxonomyVocabulary
@@ -1523,12 +1555,29 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			200,
 			taxonomyVocabularyResource.
 				putTaxonomyVocabularyPermissionsPageHttpResponse(
-					taxonomyVocabulary.getId()));
+					taxonomyVocabulary.getId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"VIEW"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
 
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyVocabularyResource.
-				putTaxonomyVocabularyPermissionsPageHttpResponse(0L));
+				putTaxonomyVocabularyPermissionsPageHttpResponse(
+					0L,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
 	}
 
 	protected TaxonomyVocabulary

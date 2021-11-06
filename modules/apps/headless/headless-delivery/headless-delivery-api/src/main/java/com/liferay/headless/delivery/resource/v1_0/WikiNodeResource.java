@@ -88,7 +88,7 @@ public interface WikiNodeResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteWikiNodePermission(
+			putSiteWikiNodePermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
@@ -111,7 +111,7 @@ public interface WikiNodeResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putWikiNodePermission(
+			putWikiNodePermissionsPage(
 				Long wikiNodeId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;

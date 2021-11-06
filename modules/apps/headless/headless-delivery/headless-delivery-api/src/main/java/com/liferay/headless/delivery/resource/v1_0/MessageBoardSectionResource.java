@@ -87,7 +87,7 @@ public interface MessageBoardSectionResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putMessageBoardSectionPermission(
+			putMessageBoardSectionPermissionsPage(
 				Long messageBoardSectionId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
@@ -130,7 +130,7 @@ public interface MessageBoardSectionResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteMessageBoardSectionPermission(
+			putSiteMessageBoardSectionPermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;

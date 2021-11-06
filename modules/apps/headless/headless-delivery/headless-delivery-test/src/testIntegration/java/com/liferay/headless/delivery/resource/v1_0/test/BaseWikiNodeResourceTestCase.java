@@ -732,9 +732,9 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	@Test
-	public void testPutSiteWikiNodePermission() throws Exception {
+	public void testPutSiteWikiNodePermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WikiNode wikiNode = testPutSiteWikiNodePermission_addWikiNode();
+		WikiNode wikiNode = testPutSiteWikiNodePermissionsPage_addWikiNode();
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
@@ -742,7 +742,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			200,
-			wikiNodeResource.putSiteWikiNodePermissionHttpResponse(
+			wikiNodeResource.putSiteWikiNodePermissionsPageHttpResponse(
 				wikiNode.getSiteId(),
 				new Permission[] {
 					new Permission() {
@@ -755,7 +755,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404,
-			wikiNodeResource.putSiteWikiNodePermissionHttpResponse(
+			wikiNodeResource.putSiteWikiNodePermissionsPageHttpResponse(
 				wikiNode.getSiteId(),
 				new Permission[] {
 					new Permission() {
@@ -767,7 +767,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 				}));
 	}
 
-	protected WikiNode testPutSiteWikiNodePermission_addWikiNode()
+	protected WikiNode testPutSiteWikiNodePermissionsPage_addWikiNode()
 		throws Exception {
 
 		return wikiNodeResource.postSiteWikiNode(
@@ -923,9 +923,9 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	@Test
-	public void testPutWikiNodePermission() throws Exception {
+	public void testPutWikiNodePermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WikiNode wikiNode = testPutWikiNodePermission_addWikiNode();
+		WikiNode wikiNode = testPutWikiNodePermissionsPage_addWikiNode();
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
@@ -933,7 +933,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			200,
-			wikiNodeResource.putWikiNodePermissionHttpResponse(
+			wikiNodeResource.putWikiNodePermissionsPageHttpResponse(
 				wikiNode.getId(),
 				new Permission[] {
 					new Permission() {
@@ -946,7 +946,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404,
-			wikiNodeResource.putWikiNodePermissionHttpResponse(
+			wikiNodeResource.putWikiNodePermissionsPageHttpResponse(
 				0L,
 				new Permission[] {
 					new Permission() {
@@ -958,7 +958,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 				}));
 	}
 
-	protected WikiNode testPutWikiNodePermission_addWikiNode()
+	protected WikiNode testPutWikiNodePermissionsPage_addWikiNode()
 		throws Exception {
 
 		return wikiNodeResource.postSiteWikiNode(

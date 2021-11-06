@@ -80,7 +80,7 @@ public interface StructuredContentFolderResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putAssetLibraryStructuredContentFolderPermission(
+			putAssetLibraryStructuredContentFolderPermissionsPage(
 				Long assetLibraryId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
@@ -105,7 +105,7 @@ public interface StructuredContentFolderResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteStructuredContentFolderPermission(
+			putSiteStructuredContentFolderPermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
@@ -116,7 +116,7 @@ public interface StructuredContentFolderResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putStructuredContentFolderPermission(
+			putStructuredContentFolderPermissionsPage(
 				Long structuredContentFolderId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;

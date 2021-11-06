@@ -4783,7 +4783,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.delivery.client', and version '4.0.13'."
+        'com.liferay.headless.delivery.client', and version '4.0.14'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -4986,7 +4986,7 @@ paths:
                         application/xml: {}
             tags: ["ContentStructure"]
         put:
-            operationId: putAssetLibraryContentStructurePermission
+            operationId: putAssetLibraryContentStructurePermissionsPage
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -5152,7 +5152,7 @@ paths:
                         application/xml: {}
             tags: ["DocumentFolder"]
         put:
-            operationId: putAssetLibraryDocumentFolderPermission
+            operationId: putAssetLibraryDocumentFolderPermissionsPage
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -5271,7 +5271,7 @@ paths:
                         application/xml: {}
             tags: ["Document"]
         put:
-            operationId: putAssetLibraryDocumentPermission
+            operationId: putAssetLibraryDocumentPermissionsPage
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -5414,7 +5414,7 @@ paths:
                         application/xml: {}
             tags: ["StructuredContentFolder"]
         put:
-            operationId: putAssetLibraryStructuredContentFolderPermission
+            operationId: putAssetLibraryStructuredContentFolderPermissionsPage
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -5538,7 +5538,7 @@ paths:
                         application/xml: {}
             tags: ["StructuredContent"]
         put:
-            operationId: putAssetLibraryStructuredContentPermission
+            operationId: putAssetLibraryStructuredContentPermissionsPage
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -5889,7 +5889,7 @@ paths:
                         application/xml: {}
             tags: ["BlogPosting"]
         put:
-            operationId: putBlogPostingPermission
+            operationId: putBlogPostingPermissionsPage
             parameters:
                 - in: path
                   name: blogPostingId
@@ -6160,7 +6160,7 @@ paths:
                         application/xml: {}
             tags: ["ContentStructure"]
         put:
-            operationId: putContentStructurePermission
+            operationId: putContentStructurePermissionsPage
             parameters:
                 - in: path
                   name: contentStructureId
@@ -6440,7 +6440,7 @@ paths:
                         application/xml: {}
             tags: ["DocumentFolder"]
         put:
-            operationId: putDocumentFolderPermission
+            operationId: putDocumentFolderPermissionsPage
             parameters:
                 - in: path
                   name: documentFolderId
@@ -6878,7 +6878,7 @@ paths:
                         application/xml: {}
             tags: ["Document"]
         put:
-            operationId: putDocumentPermission
+            operationId: putDocumentPermissionsPage
             parameters:
                 - in: path
                   name: documentId
@@ -7193,7 +7193,7 @@ paths:
                         application/xml: {}
             tags: ["KnowledgeBaseArticle"]
         put:
-            operationId: putKnowledgeBaseArticlePermission
+            operationId: putKnowledgeBaseArticlePermissionsPage
             parameters:
                 - in: path
                   name: knowledgeBaseArticleId
@@ -7570,7 +7570,7 @@ paths:
                         application/xml: {}
             tags: ["KnowledgeBaseFolder"]
         put:
-            operationId: putKnowledgeBaseFolderPermission
+            operationId: putKnowledgeBaseFolderPermissionsPage
             parameters:
                 - in: path
                   name: knowledgeBaseFolderId
@@ -7963,7 +7963,7 @@ paths:
                         application/xml: {}
             tags: ["MessageBoardMessage"]
         put:
-            operationId: putMessageBoardMessagePermission
+            operationId: putMessageBoardMessagePermissionsPage
             parameters:
                 - in: path
                   name: messageBoardMessageId
@@ -8295,7 +8295,7 @@ paths:
                         application/xml: {}
             tags: ["MessageBoardSection"]
         put:
-            operationId: putMessageBoardSectionPermission
+            operationId: putMessageBoardSectionPermissionsPage
             parameters:
                 - in: path
                   name: messageBoardSectionId
@@ -8826,7 +8826,7 @@ paths:
                         application/xml: {}
             tags: ["MessageBoardThread"]
         put:
-            operationId: putMessageBoardThreadPermission
+            operationId: putMessageBoardThreadPermissionsPage
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -8962,7 +8962,7 @@ paths:
                         application/xml: {}
             tags: ["NavigationMenu"]
         put:
-            operationId: putNavigationMenuPermission
+            operationId: putNavigationMenuPermissionsPage
             parameters:
                 - in: path
                   name: navigationMenuId
@@ -9249,7 +9249,7 @@ paths:
                         application/xml: {}
             tags: ["BlogPosting"]
         put:
-            operationId: putSiteBlogPostingPermission
+            operationId: putSiteBlogPostingPermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -9496,7 +9496,7 @@ paths:
                         application/xml: {}
             tags: ["ContentStructure"]
         put:
-            operationId: putSiteContentStructurePermission
+            operationId: putSiteContentStructurePermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -9562,7 +9562,7 @@ paths:
             tags: ["ContentTemplate"]
     "/sites/{siteId}/content-templates/{contentTemplateId}":
         get:
-            operationId: getContentTemplate
+            operationId: getSiteContentTemplate
             parameters:
                 - in: path
                   name: siteId
@@ -9692,7 +9692,7 @@ paths:
                         application/xml: {}
             tags: ["DocumentFolder"]
         put:
-            operationId: putSiteDocumentFolderPermission
+            operationId: putSiteDocumentFolderPermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -9909,7 +9909,7 @@ paths:
                         application/xml: {}
             tags: ["Document"]
         put:
-            operationId: putSiteDocumentPermission
+            operationId: putSiteDocumentPermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -10117,7 +10117,7 @@ paths:
                         application/xml: {}
             tags: ["KnowledgeBaseArticle"]
         put:
-            operationId: putSiteKnowledgeBaseArticlePermission
+            operationId: putSiteKnowledgeBaseArticlePermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -10334,7 +10334,7 @@ paths:
                         application/xml: {}
             tags: ["KnowledgeBaseFolder"]
         put:
-            operationId: putSiteKnowledgeBaseFolderPermission
+            operationId: putSiteKnowledgeBaseFolderPermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -10569,7 +10569,7 @@ paths:
                         application/xml: {}
             tags: ["MessageBoardMessage"]
         put:
-            operationId: putSiteMessageBoardMessagePermission
+            operationId: putSiteMessageBoardMessagePermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -10690,7 +10690,7 @@ paths:
                         application/xml: {}
             tags: ["MessageBoardSection"]
         put:
-            operationId: putSiteMessageBoardSectionPermission
+            operationId: putSiteMessageBoardSectionPermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -10840,7 +10840,7 @@ paths:
                         application/xml: {}
             tags: ["MessageBoardThread"]
         put:
-            operationId: putSiteMessageBoardThreadPermission
+            operationId: putSiteMessageBoardThreadPermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -10937,7 +10937,7 @@ paths:
                         application/xml: {}
             tags: ["NavigationMenu"]
         put:
-            operationId: putSiteNavigationMenuPermission
+            operationId: putSiteNavigationMenuPermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -11041,7 +11041,7 @@ paths:
             # @review
             description:
                 Retrieves the experiences of a given Page
-            operationId: getSiteSitePageFriendlyUrlPathExperiencesPage
+            operationId: getSiteSitePagesExperiencesPage
             parameters:
                 - in: path
                   name: siteId
@@ -11269,7 +11269,7 @@ paths:
                         application/xml: {}
             tags: ["StructuredContentFolder"]
         put:
-            operationId: putSiteStructuredContentFolderPermission
+            operationId: putSiteStructuredContentFolderPermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -11547,7 +11547,7 @@ paths:
                         application/xml: {}
             tags: ["StructuredContent"]
         put:
-            operationId: putSiteStructuredContentPermission
+            operationId: putSiteStructuredContentPermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -11748,7 +11748,7 @@ paths:
                         application/xml: {}
             tags: ["WikiNode"]
         put:
-            operationId: putSiteWikiNodePermission
+            operationId: putSiteWikiNodePermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -11869,7 +11869,7 @@ paths:
                         application/xml: {}
             tags: ["StructuredContentFolder"]
         put:
-            operationId: putStructuredContentFolderPermission
+            operationId: putStructuredContentFolderPermissionsPage
             parameters:
                 - in: path
                   name: structuredContentFolderId
@@ -12498,7 +12498,7 @@ paths:
                         application/xml: {}
             tags: ["StructuredContent"]
         put:
-            operationId: putStructuredContentPermission
+            operationId: putStructuredContentPermissionsPage
             parameters:
                 - in: path
                   name: structuredContentId
@@ -12541,7 +12541,7 @@ paths:
             description:
                 Retrieves the structured content's rendered template (the result of applying the structure's values to a
                 template).
-            operationId: getStructuredContentRenderedContentTemplate
+            operationId: getStructuredContentRenderedContentContentTemplate
             parameters:
                 - in: path
                   name: structuredContentId
@@ -12684,7 +12684,7 @@ paths:
                         application/xml: {}
             tags: ["WikiNode"]
         put:
-            operationId: putWikiNodePermission
+            operationId: putWikiNodePermissionsPage
             parameters:
                 - in: path
                   name: wikiNodeId
@@ -12995,7 +12995,7 @@ paths:
                         application/xml: {}
             tags: ["WikiPage"]
         put:
-            operationId: putWikiPagePermission
+            operationId: putWikiPagePermissionsPage
             parameters:
                 - in: path
                   name: wikiPageId

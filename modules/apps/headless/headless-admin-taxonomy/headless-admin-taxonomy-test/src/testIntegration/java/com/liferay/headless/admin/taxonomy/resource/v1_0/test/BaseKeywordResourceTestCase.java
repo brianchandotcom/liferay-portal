@@ -562,12 +562,28 @@ public abstract class BaseKeywordResourceTestCase {
 		assertHttpResponseStatusCode(
 			200,
 			keywordResource.putAssetLibraryKeywordPermissionsPageHttpResponse(
-				testDepotEntry.getDepotEntryId()));
+				testDepotEntry.getDepotEntryId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"PERMISSIONS"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
 
 		assertHttpResponseStatusCode(
 			404,
 			keywordResource.putAssetLibraryKeywordPermissionsPageHttpResponse(
-				testDepotEntry.getDepotEntryId()));
+				testDepotEntry.getDepotEntryId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
 	}
 
 	protected Keyword testPutAssetLibraryKeywordPermissionsPage_addKeyword()
@@ -1182,12 +1198,28 @@ public abstract class BaseKeywordResourceTestCase {
 		assertHttpResponseStatusCode(
 			200,
 			keywordResource.putSiteKeywordPermissionsPageHttpResponse(
-				keyword.getSiteId()));
+				keyword.getSiteId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"PERMISSIONS"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
 
 		assertHttpResponseStatusCode(
 			404,
 			keywordResource.putSiteKeywordPermissionsPageHttpResponse(
-				keyword.getSiteId()));
+				keyword.getSiteId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
 	}
 
 	protected Keyword testPutSiteKeywordPermissionsPage_addKeyword()

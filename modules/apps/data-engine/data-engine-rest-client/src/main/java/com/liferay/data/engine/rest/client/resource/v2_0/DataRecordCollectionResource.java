@@ -130,12 +130,12 @@ public interface DataRecordCollectionResource {
 				Long dataRecordCollectionId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putDataRecordCollectionPermission(
+	public Page<Permission> putDataRecordCollectionPermissionsPage(
 			Long dataRecordCollectionId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putDataRecordCollectionPermissionHttpResponse(
+			putDataRecordCollectionPermissionsPageHttpResponse(
 				Long dataRecordCollectionId, Permission[] permissions)
 		throws Exception;
 
@@ -1075,12 +1075,12 @@ public interface DataRecordCollectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putDataRecordCollectionPermission(
+		public Page<Permission> putDataRecordCollectionPermissionsPage(
 				Long dataRecordCollectionId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putDataRecordCollectionPermissionHttpResponse(
+				putDataRecordCollectionPermissionsPageHttpResponse(
 					dataRecordCollectionId, permissions);
 
 			String content = httpResponse.getContent();
@@ -1121,7 +1121,7 @@ public interface DataRecordCollectionResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putDataRecordCollectionPermissionHttpResponse(
+				putDataRecordCollectionPermissionsPageHttpResponse(
 					Long dataRecordCollectionId, Permission[] permissions)
 			throws Exception {
 

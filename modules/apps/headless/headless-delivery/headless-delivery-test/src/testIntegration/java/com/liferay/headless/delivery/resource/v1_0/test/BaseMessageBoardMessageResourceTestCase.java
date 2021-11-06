@@ -465,10 +465,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
-	public void testPutMessageBoardMessagePermission() throws Exception {
+	public void testPutMessageBoardMessagePermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardMessage messageBoardMessage =
-			testPutMessageBoardMessagePermission_addMessageBoardMessage();
+			testPutMessageBoardMessagePermissionsPage_addMessageBoardMessage();
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
@@ -477,7 +477,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		assertHttpResponseStatusCode(
 			200,
 			messageBoardMessageResource.
-				putMessageBoardMessagePermissionHttpResponse(
+				putMessageBoardMessagePermissionsPageHttpResponse(
 					messageBoardMessage.getId(),
 					new Permission[] {
 						new Permission() {
@@ -491,7 +491,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			messageBoardMessageResource.
-				putMessageBoardMessagePermissionHttpResponse(
+				putMessageBoardMessagePermissionsPageHttpResponse(
 					0L,
 					new Permission[] {
 						new Permission() {
@@ -504,7 +504,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	protected MessageBoardMessage
-			testPutMessageBoardMessagePermission_addMessageBoardMessage()
+			testPutMessageBoardMessagePermissionsPage_addMessageBoardMessage()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -2004,10 +2004,12 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
-	public void testPutSiteMessageBoardMessagePermission() throws Exception {
+	public void testPutSiteMessageBoardMessagePermissionsPage()
+		throws Exception {
+
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardMessage messageBoardMessage =
-			testPutSiteMessageBoardMessagePermission_addMessageBoardMessage();
+			testPutSiteMessageBoardMessagePermissionsPage_addMessageBoardMessage();
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
@@ -2016,7 +2018,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		assertHttpResponseStatusCode(
 			200,
 			messageBoardMessageResource.
-				putSiteMessageBoardMessagePermissionHttpResponse(
+				putSiteMessageBoardMessagePermissionsPageHttpResponse(
 					messageBoardMessage.getSiteId(),
 					new Permission[] {
 						new Permission() {
@@ -2030,7 +2032,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			messageBoardMessageResource.
-				putSiteMessageBoardMessagePermissionHttpResponse(
+				putSiteMessageBoardMessagePermissionsPageHttpResponse(
 					messageBoardMessage.getSiteId(),
 					new Permission[] {
 						new Permission() {
@@ -2043,7 +2045,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	protected MessageBoardMessage
-			testPutSiteMessageBoardMessagePermission_addMessageBoardMessage()
+			testPutSiteMessageBoardMessagePermissionsPage_addMessageBoardMessage()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

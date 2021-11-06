@@ -593,10 +593,12 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPutAssetLibraryDocumentFolderPermission() throws Exception {
+	public void testPutAssetLibraryDocumentFolderPermissionsPage()
+		throws Exception {
+
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentFolder documentFolder =
-			testPutAssetLibraryDocumentFolderPermission_addDocumentFolder();
+			testPutAssetLibraryDocumentFolderPermissionsPage_addDocumentFolder();
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
@@ -605,7 +607,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		assertHttpResponseStatusCode(
 			200,
 			documentFolderResource.
-				putAssetLibraryDocumentFolderPermissionHttpResponse(
+				putAssetLibraryDocumentFolderPermissionsPageHttpResponse(
 					testDepotEntry.getDepotEntryId(),
 					new Permission[] {
 						new Permission() {
@@ -619,7 +621,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			documentFolderResource.
-				putAssetLibraryDocumentFolderPermissionHttpResponse(
+				putAssetLibraryDocumentFolderPermissionsPageHttpResponse(
 					testDepotEntry.getDepotEntryId(),
 					new Permission[] {
 						new Permission() {
@@ -632,7 +634,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	protected DocumentFolder
-			testPutAssetLibraryDocumentFolderPermission_addDocumentFolder()
+			testPutAssetLibraryDocumentFolderPermissionsPage_addDocumentFolder()
 		throws Exception {
 
 		return documentFolderResource.postAssetLibraryDocumentFolder(
@@ -845,10 +847,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPutDocumentFolderPermission() throws Exception {
+	public void testPutDocumentFolderPermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentFolder documentFolder =
-			testPutDocumentFolderPermission_addDocumentFolder();
+			testPutDocumentFolderPermissionsPage_addDocumentFolder();
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
@@ -856,7 +858,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			200,
-			documentFolderResource.putDocumentFolderPermissionHttpResponse(
+			documentFolderResource.putDocumentFolderPermissionsPageHttpResponse(
 				documentFolder.getId(),
 				new Permission[] {
 					new Permission() {
@@ -869,7 +871,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404,
-			documentFolderResource.putDocumentFolderPermissionHttpResponse(
+			documentFolderResource.putDocumentFolderPermissionsPageHttpResponse(
 				0L,
 				new Permission[] {
 					new Permission() {
@@ -881,7 +883,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				}));
 	}
 
-	protected DocumentFolder testPutDocumentFolderPermission_addDocumentFolder()
+	protected DocumentFolder
+			testPutDocumentFolderPermissionsPage_addDocumentFolder()
 		throws Exception {
 
 		return documentFolderResource.postSiteDocumentFolder(
@@ -1696,10 +1699,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPutSiteDocumentFolderPermission() throws Exception {
+	public void testPutSiteDocumentFolderPermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentFolder documentFolder =
-			testPutSiteDocumentFolderPermission_addDocumentFolder();
+			testPutSiteDocumentFolderPermissionsPage_addDocumentFolder();
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
@@ -1707,33 +1710,35 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			200,
-			documentFolderResource.putSiteDocumentFolderPermissionHttpResponse(
-				documentFolder.getSiteId(),
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"PERMISSIONS"});
-							setRoleName(role.getName());
+			documentFolderResource.
+				putSiteDocumentFolderPermissionsPageHttpResponse(
+					documentFolder.getSiteId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
 						}
-					}
-				}));
+					}));
 
 		assertHttpResponseStatusCode(
 			404,
-			documentFolderResource.putSiteDocumentFolderPermissionHttpResponse(
-				documentFolder.getSiteId(),
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"-"});
-							setRoleName("-");
+			documentFolderResource.
+				putSiteDocumentFolderPermissionsPageHttpResponse(
+					documentFolder.getSiteId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
 						}
-					}
-				}));
+					}));
 	}
 
 	protected DocumentFolder
-			testPutSiteDocumentFolderPermission_addDocumentFolder()
+			testPutSiteDocumentFolderPermissionsPage_addDocumentFolder()
 		throws Exception {
 
 		return documentFolderResource.postSiteDocumentFolder(

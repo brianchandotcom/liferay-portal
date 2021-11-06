@@ -289,7 +289,7 @@ public abstract class BaseDocumentFolderResourceImpl
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS,
-					"putAssetLibraryDocumentFolderPermission", portletName,
+					"putAssetLibraryDocumentFolderPermissionsPage", portletName,
 					assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, roleNames);
@@ -320,7 +320,7 @@ public abstract class BaseDocumentFolderResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putAssetLibraryDocumentFolderPermission(
+			putAssetLibraryDocumentFolderPermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("assetLibraryId")
@@ -353,7 +353,7 @@ public abstract class BaseDocumentFolderResourceImpl
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS,
-					"putAssetLibraryDocumentFolderPermission", portletName,
+					"putAssetLibraryDocumentFolderPermissionsPage", portletName,
 					assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, null);
@@ -709,7 +709,7 @@ public abstract class BaseDocumentFolderResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putDocumentFolderPermission",
+					ActionKeys.PERMISSIONS, "putDocumentFolderPermissionsPage",
 					resourceName, resourceId)
 			).build(),
 			resourceId, resourceName, roleNames);
@@ -738,7 +738,7 @@ public abstract class BaseDocumentFolderResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putDocumentFolderPermission(
+			putDocumentFolderPermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("documentFolderId")
@@ -772,7 +772,7 @@ public abstract class BaseDocumentFolderResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putDocumentFolderPermission",
+					ActionKeys.PERMISSIONS, "putDocumentFolderPermissionsPage",
 					resourceName, resourceId)
 			).build(),
 			resourceId, resourceName, null);
@@ -1162,8 +1162,8 @@ public abstract class BaseDocumentFolderResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteDocumentFolderPermission",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS,
+					"putSiteDocumentFolderPermissionsPage", portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}
@@ -1191,7 +1191,7 @@ public abstract class BaseDocumentFolderResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteDocumentFolderPermission(
+			putSiteDocumentFolderPermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("siteId")
@@ -1222,8 +1222,8 @@ public abstract class BaseDocumentFolderResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteDocumentFolderPermission",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS,
+					"putSiteDocumentFolderPermissionsPage", portletName, siteId)
 			).build(),
 			siteId, portletName, null);
 	}

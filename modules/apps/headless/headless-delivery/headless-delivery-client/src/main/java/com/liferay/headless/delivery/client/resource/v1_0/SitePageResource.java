@@ -58,13 +58,12 @@ public interface SitePageResource {
 			Long siteId, String friendlyUrlPath)
 		throws Exception;
 
-	public Page<SitePage> getSiteSitePageFriendlyUrlPathExperiencesPage(
+	public Page<SitePage> getSiteSitePagesExperiencesPage(
 			Long siteId, String friendlyUrlPath)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			getSiteSitePageFriendlyUrlPathExperiencesPageHttpResponse(
-				Long siteId, String friendlyUrlPath)
+	public HttpInvoker.HttpResponse getSiteSitePagesExperiencesPageHttpResponse(
+			Long siteId, String friendlyUrlPath)
 		throws Exception;
 
 	public SitePage getSiteSitePageExperienceExperienceKey(
@@ -351,12 +350,12 @@ public interface SitePageResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<SitePage> getSiteSitePageFriendlyUrlPathExperiencesPage(
+		public Page<SitePage> getSiteSitePagesExperiencesPage(
 				Long siteId, String friendlyUrlPath)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteSitePageFriendlyUrlPathExperiencesPageHttpResponse(
+				getSiteSitePagesExperiencesPageHttpResponse(
 					siteId, friendlyUrlPath);
 
 			String content = httpResponse.getContent();
@@ -397,7 +396,7 @@ public interface SitePageResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getSiteSitePageFriendlyUrlPathExperiencesPageHttpResponse(
+				getSiteSitePagesExperiencesPageHttpResponse(
 					Long siteId, String friendlyUrlPath)
 			throws Exception {
 

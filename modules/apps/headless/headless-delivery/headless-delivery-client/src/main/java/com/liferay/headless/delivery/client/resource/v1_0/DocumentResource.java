@@ -89,12 +89,12 @@ public interface DocumentResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putAssetLibraryDocumentPermission(
+	public Page<Permission> putAssetLibraryDocumentPermissionsPage(
 			Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putAssetLibraryDocumentPermissionHttpResponse(
+			putAssetLibraryDocumentPermissionsPageHttpResponse(
 				Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
@@ -211,11 +211,11 @@ public interface DocumentResource {
 			Long documentId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putDocumentPermission(
+	public Page<Permission> putDocumentPermissionsPage(
 			Long documentId, Permission[] permissions)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putDocumentPermissionHttpResponse(
+	public HttpInvoker.HttpResponse putDocumentPermissionsPageHttpResponse(
 			Long documentId, Permission[] permissions)
 		throws Exception;
 
@@ -295,11 +295,11 @@ public interface DocumentResource {
 			Long siteId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putSiteDocumentPermission(
+	public Page<Permission> putSiteDocumentPermissionsPage(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putSiteDocumentPermissionHttpResponse(
+	public HttpInvoker.HttpResponse putSiteDocumentPermissionsPageHttpResponse(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -752,12 +752,12 @@ public interface DocumentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putAssetLibraryDocumentPermission(
+		public Page<Permission> putAssetLibraryDocumentPermissionsPage(
 				Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibraryDocumentPermissionHttpResponse(
+				putAssetLibraryDocumentPermissionsPageHttpResponse(
 					assetLibraryId, permissions);
 
 			String content = httpResponse.getContent();
@@ -798,7 +798,7 @@ public interface DocumentResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putAssetLibraryDocumentPermissionHttpResponse(
+				putAssetLibraryDocumentPermissionsPageHttpResponse(
 					Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
@@ -2041,12 +2041,12 @@ public interface DocumentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putDocumentPermission(
+		public Page<Permission> putDocumentPermissionsPage(
 				Long documentId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putDocumentPermissionHttpResponse(documentId, permissions);
+				putDocumentPermissionsPageHttpResponse(documentId, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -2085,7 +2085,7 @@ public interface DocumentResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putDocumentPermissionHttpResponse(
+		public HttpInvoker.HttpResponse putDocumentPermissionsPageHttpResponse(
 				Long documentId, Permission[] permissions)
 			throws Exception {
 
@@ -2856,12 +2856,12 @@ public interface DocumentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putSiteDocumentPermission(
+		public Page<Permission> putSiteDocumentPermissionsPage(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteDocumentPermissionHttpResponse(siteId, permissions);
+				putSiteDocumentPermissionsPageHttpResponse(siteId, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -2900,8 +2900,9 @@ public interface DocumentResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putSiteDocumentPermissionHttpResponse(
-				Long siteId, Permission[] permissions)
+		public HttpInvoker.HttpResponse
+				putSiteDocumentPermissionsPageHttpResponse(
+					Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

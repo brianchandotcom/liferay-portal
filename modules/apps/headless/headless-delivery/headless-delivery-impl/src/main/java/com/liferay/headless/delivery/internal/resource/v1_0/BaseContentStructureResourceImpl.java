@@ -190,8 +190,8 @@ public abstract class BaseContentStructureResourceImpl
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS,
-					"putAssetLibraryContentStructurePermission", portletName,
-					assetLibraryId)
+					"putAssetLibraryContentStructurePermissionsPage",
+					portletName, assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, roleNames);
 	}
@@ -221,7 +221,7 @@ public abstract class BaseContentStructureResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putAssetLibraryContentStructurePermission(
+			putAssetLibraryContentStructurePermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("assetLibraryId")
@@ -254,8 +254,8 @@ public abstract class BaseContentStructureResourceImpl
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS,
-					"putAssetLibraryContentStructurePermission", portletName,
-					assetLibraryId)
+					"putAssetLibraryContentStructurePermissionsPage",
+					portletName, assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, null);
 	}
@@ -350,8 +350,9 @@ public abstract class BaseContentStructureResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putContentStructurePermission",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS,
+					"putContentStructurePermissionsPage", resourceName,
+					resourceId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -379,7 +380,7 @@ public abstract class BaseContentStructureResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putContentStructurePermission(
+			putContentStructurePermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("contentStructureId")
@@ -414,8 +415,9 @@ public abstract class BaseContentStructureResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putContentStructurePermission",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS,
+					"putContentStructurePermissionsPage", resourceName,
+					resourceId)
 			).build(),
 			resourceId, resourceName, null);
 	}
@@ -536,8 +538,9 @@ public abstract class BaseContentStructureResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteContentStructurePermission",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS,
+					"putSiteContentStructurePermissionsPage", portletName,
+					siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}
@@ -565,7 +568,7 @@ public abstract class BaseContentStructureResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteContentStructurePermission(
+			putSiteContentStructurePermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("siteId")
@@ -597,8 +600,9 @@ public abstract class BaseContentStructureResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteContentStructurePermission",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS,
+					"putSiteContentStructurePermissionsPage", portletName,
+					siteId)
 			).build(),
 			siteId, portletName, null);
 	}

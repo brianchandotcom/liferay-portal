@@ -100,7 +100,7 @@ public interface DataRecordCollectionResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putDataRecordCollectionPermission(
+			putDataRecordCollectionPermissionsPage(
 				Long dataRecordCollectionId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;

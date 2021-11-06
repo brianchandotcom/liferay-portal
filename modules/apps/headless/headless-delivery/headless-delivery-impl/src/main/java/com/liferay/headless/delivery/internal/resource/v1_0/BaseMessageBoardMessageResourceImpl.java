@@ -646,8 +646,9 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putMessageBoardMessagePermission",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS,
+					"putMessageBoardMessagePermissionsPage", resourceName,
+					resourceId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -679,7 +680,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putMessageBoardMessagePermission(
+			putMessageBoardMessagePermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("messageBoardMessageId")
@@ -714,8 +715,9 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putMessageBoardMessagePermission",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS,
+					"putMessageBoardMessagePermissionsPage", resourceName,
+					resourceId)
 			).build(),
 			resourceId, resourceName, null);
 	}
@@ -1388,7 +1390,8 @@ public abstract class BaseMessageBoardMessageResourceImpl
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS,
-					"putSiteMessageBoardMessagePermission", portletName, siteId)
+					"putSiteMessageBoardMessagePermissionsPage", portletName,
+					siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}
@@ -1418,7 +1421,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteMessageBoardMessagePermission(
+			putSiteMessageBoardMessagePermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("siteId")
@@ -1451,7 +1454,8 @@ public abstract class BaseMessageBoardMessageResourceImpl
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS,
-					"putSiteMessageBoardMessagePermission", portletName, siteId)
+					"putSiteMessageBoardMessagePermissionsPage", portletName,
+					siteId)
 			).build(),
 			siteId, portletName, null);
 	}

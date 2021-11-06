@@ -86,12 +86,12 @@ public interface StructuredContentResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putAssetLibraryStructuredContentPermission(
+	public Page<Permission> putAssetLibraryStructuredContentPermissionsPage(
 			Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putAssetLibraryStructuredContentPermissionHttpResponse(
+			putAssetLibraryStructuredContentPermissionsPageHttpResponse(
 				Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
@@ -189,12 +189,12 @@ public interface StructuredContentResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putSiteStructuredContentPermission(
+	public Page<Permission> putSiteStructuredContentPermissionsPage(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putSiteStructuredContentPermissionHttpResponse(
+			putSiteStructuredContentPermissionsPageHttpResponse(
 				Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -315,12 +315,13 @@ public interface StructuredContentResource {
 				Long structuredContentId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putStructuredContentPermission(
+	public Page<Permission> putStructuredContentPermissionsPage(
 			Long structuredContentId, Permission[] permissions)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putStructuredContentPermissionHttpResponse(
-			Long structuredContentId, Permission[] permissions)
+	public HttpInvoker.HttpResponse
+			putStructuredContentPermissionsPageHttpResponse(
+				Long structuredContentId, Permission[] permissions)
 		throws Exception;
 
 	public String
@@ -333,12 +334,12 @@ public interface StructuredContentResource {
 				Long structuredContentId, String displayPageKey)
 		throws Exception;
 
-	public String getStructuredContentRenderedContentTemplate(
+	public String getStructuredContentRenderedContentContentTemplate(
 			Long structuredContentId, String contentTemplateId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getStructuredContentRenderedContentTemplateHttpResponse(
+			getStructuredContentRenderedContentContentTemplateHttpResponse(
 				Long structuredContentId, String contentTemplateId)
 		throws Exception;
 
@@ -794,12 +795,12 @@ public interface StructuredContentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putAssetLibraryStructuredContentPermission(
+		public Page<Permission> putAssetLibraryStructuredContentPermissionsPage(
 				Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibraryStructuredContentPermissionHttpResponse(
+				putAssetLibraryStructuredContentPermissionsPageHttpResponse(
 					assetLibraryId, permissions);
 
 			String content = httpResponse.getContent();
@@ -840,7 +841,7 @@ public interface StructuredContentResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putAssetLibraryStructuredContentPermissionHttpResponse(
+				putAssetLibraryStructuredContentPermissionsPageHttpResponse(
 					Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
@@ -1791,12 +1792,12 @@ public interface StructuredContentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putSiteStructuredContentPermission(
+		public Page<Permission> putSiteStructuredContentPermissionsPage(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteStructuredContentPermissionHttpResponse(
+				putSiteStructuredContentPermissionsPageHttpResponse(
 					siteId, permissions);
 
 			String content = httpResponse.getContent();
@@ -1837,7 +1838,7 @@ public interface StructuredContentResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putSiteStructuredContentPermissionHttpResponse(
+				putSiteStructuredContentPermissionsPageHttpResponse(
 					Long siteId, Permission[] permissions)
 			throws Exception {
 
@@ -3082,12 +3083,12 @@ public interface StructuredContentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putStructuredContentPermission(
+		public Page<Permission> putStructuredContentPermissionsPage(
 				Long structuredContentId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putStructuredContentPermissionHttpResponse(
+				putStructuredContentPermissionsPageHttpResponse(
 					structuredContentId, permissions);
 
 			String content = httpResponse.getContent();
@@ -3128,7 +3129,7 @@ public interface StructuredContentResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putStructuredContentPermissionHttpResponse(
+				putStructuredContentPermissionsPageHttpResponse(
 					Long structuredContentId, Permission[] permissions)
 			throws Exception {
 
@@ -3262,12 +3263,12 @@ public interface StructuredContentResource {
 			return httpInvoker.invoke();
 		}
 
-		public String getStructuredContentRenderedContentTemplate(
+		public String getStructuredContentRenderedContentContentTemplate(
 				Long structuredContentId, String contentTemplateId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getStructuredContentRenderedContentTemplateHttpResponse(
+				getStructuredContentRenderedContentContentTemplateHttpResponse(
 					structuredContentId, contentTemplateId);
 
 			String content = httpResponse.getContent();
@@ -3308,7 +3309,7 @@ public interface StructuredContentResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getStructuredContentRenderedContentTemplateHttpResponse(
+				getStructuredContentRenderedContentContentTemplateHttpResponse(
 					Long structuredContentId, String contentTemplateId)
 			throws Exception {
 

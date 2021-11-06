@@ -69,7 +69,7 @@ public interface ContentTemplateResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public ContentTemplate getContentTemplate(
+	public ContentTemplate getSiteContentTemplate(
 			Long siteId, String contentTemplateId)
 		throws Exception;
 

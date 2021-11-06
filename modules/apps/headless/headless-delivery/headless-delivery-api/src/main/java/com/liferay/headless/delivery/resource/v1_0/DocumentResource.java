@@ -81,7 +81,7 @@ public interface DocumentResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putAssetLibraryDocumentPermission(
+			putAssetLibraryDocumentPermissionsPage(
 				Long assetLibraryId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
@@ -133,7 +133,7 @@ public interface DocumentResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putDocumentPermission(
+			putDocumentPermissionsPage(
 				Long documentId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
@@ -174,7 +174,7 @@ public interface DocumentResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteDocumentPermission(
+			putSiteDocumentPermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;

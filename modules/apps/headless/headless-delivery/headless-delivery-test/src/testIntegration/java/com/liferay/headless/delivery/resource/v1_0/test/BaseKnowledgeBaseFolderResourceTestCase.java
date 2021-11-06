@@ -422,10 +422,10 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPutKnowledgeBaseFolderPermission() throws Exception {
+	public void testPutKnowledgeBaseFolderPermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseFolder knowledgeBaseFolder =
-			testPutKnowledgeBaseFolderPermission_addKnowledgeBaseFolder();
+			testPutKnowledgeBaseFolderPermissionsPage_addKnowledgeBaseFolder();
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
@@ -434,7 +434,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		assertHttpResponseStatusCode(
 			200,
 			knowledgeBaseFolderResource.
-				putKnowledgeBaseFolderPermissionHttpResponse(
+				putKnowledgeBaseFolderPermissionsPageHttpResponse(
 					knowledgeBaseFolder.getId(),
 					new Permission[] {
 						new Permission() {
@@ -448,7 +448,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseFolderResource.
-				putKnowledgeBaseFolderPermissionHttpResponse(
+				putKnowledgeBaseFolderPermissionsPageHttpResponse(
 					0L,
 					new Permission[] {
 						new Permission() {
@@ -461,7 +461,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	protected KnowledgeBaseFolder
-			testPutKnowledgeBaseFolderPermission_addKnowledgeBaseFolder()
+			testPutKnowledgeBaseFolderPermissionsPage_addKnowledgeBaseFolder()
 		throws Exception {
 
 		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
@@ -1060,10 +1060,12 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPutSiteKnowledgeBaseFolderPermission() throws Exception {
+	public void testPutSiteKnowledgeBaseFolderPermissionsPage()
+		throws Exception {
+
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseFolder knowledgeBaseFolder =
-			testPutSiteKnowledgeBaseFolderPermission_addKnowledgeBaseFolder();
+			testPutSiteKnowledgeBaseFolderPermissionsPage_addKnowledgeBaseFolder();
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
@@ -1072,7 +1074,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		assertHttpResponseStatusCode(
 			200,
 			knowledgeBaseFolderResource.
-				putSiteKnowledgeBaseFolderPermissionHttpResponse(
+				putSiteKnowledgeBaseFolderPermissionsPageHttpResponse(
 					knowledgeBaseFolder.getSiteId(),
 					new Permission[] {
 						new Permission() {
@@ -1086,7 +1088,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseFolderResource.
-				putSiteKnowledgeBaseFolderPermissionHttpResponse(
+				putSiteKnowledgeBaseFolderPermissionsPageHttpResponse(
 					knowledgeBaseFolder.getSiteId(),
 					new Permission[] {
 						new Permission() {
@@ -1099,7 +1101,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	protected KnowledgeBaseFolder
-			testPutSiteKnowledgeBaseFolderPermission_addKnowledgeBaseFolder()
+			testPutSiteKnowledgeBaseFolderPermissionsPage_addKnowledgeBaseFolder()
 		throws Exception {
 
 		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(

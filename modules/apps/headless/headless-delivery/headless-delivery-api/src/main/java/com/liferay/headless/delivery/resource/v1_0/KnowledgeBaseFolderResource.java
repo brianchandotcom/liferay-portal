@@ -86,7 +86,7 @@ public interface KnowledgeBaseFolderResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putKnowledgeBaseFolderPermission(
+			putKnowledgeBaseFolderPermissionsPage(
 				Long knowledgeBaseFolderId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
@@ -134,7 +134,7 @@ public interface KnowledgeBaseFolderResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteKnowledgeBaseFolderPermission(
+			putSiteKnowledgeBaseFolderPermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;

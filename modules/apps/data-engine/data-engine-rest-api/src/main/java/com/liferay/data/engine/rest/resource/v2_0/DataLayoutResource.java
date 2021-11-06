@@ -59,7 +59,7 @@ public interface DataLayoutResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public void deleteDataLayoutsDataDefinition(Long dataDefinitionId)
+	public void deleteDataDefinitionDataLayout(Long dataDefinitionId)
 		throws Exception;
 
 	public Page<DataLayout> getDataDefinitionDataLayoutsPage(

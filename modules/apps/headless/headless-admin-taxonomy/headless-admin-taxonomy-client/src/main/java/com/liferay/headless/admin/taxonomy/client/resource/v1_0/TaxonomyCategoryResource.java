@@ -27,6 +27,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -124,12 +126,12 @@ public interface TaxonomyCategoryResource {
 		throws Exception;
 
 	public Page<Permission> putTaxonomyCategoryPermissionsPage(
-			String taxonomyCategoryId)
+			String taxonomyCategoryId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			putTaxonomyCategoryPermissionsPageHttpResponse(
-				String taxonomyCategoryId)
+				String taxonomyCategoryId, Permission[] permissions)
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
@@ -1125,12 +1127,12 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public Page<Permission> putTaxonomyCategoryPermissionsPage(
-				String taxonomyCategoryId)
+				String taxonomyCategoryId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putTaxonomyCategoryPermissionsPageHttpResponse(
-					taxonomyCategoryId);
+					taxonomyCategoryId, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -1171,10 +1173,20 @@ public interface TaxonomyCategoryResource {
 
 		public HttpInvoker.HttpResponse
 				putTaxonomyCategoryPermissionsPageHttpResponse(
-					String taxonomyCategoryId)
+					String taxonomyCategoryId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				Stream.of(
+					permissions
+				).map(
+					value -> String.valueOf(value)
+				).collect(
+					Collectors.toList()
+				).toString(),
+				"application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

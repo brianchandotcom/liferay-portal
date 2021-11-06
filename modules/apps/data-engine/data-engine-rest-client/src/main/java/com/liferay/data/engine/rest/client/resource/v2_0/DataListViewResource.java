@@ -40,11 +40,11 @@ public interface DataListViewResource {
 		return new Builder();
 	}
 
-	public void deleteDataListViewsDataDefinition(Long dataDefinitionId)
+	public void deleteDataDefinitionDataListView(Long dataDefinitionId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteDataListViewsDataDefinitionHttpResponse(Long dataDefinitionId)
+			deleteDataDefinitionDataListViewHttpResponse(Long dataDefinitionId)
 		throws Exception;
 
 	public Page<DataListView> getDataDefinitionDataListViewsPage(
@@ -181,11 +181,11 @@ public interface DataListViewResource {
 	public static class DataListViewResourceImpl
 		implements DataListViewResource {
 
-		public void deleteDataListViewsDataDefinition(Long dataDefinitionId)
+		public void deleteDataDefinitionDataListView(Long dataDefinitionId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteDataListViewsDataDefinitionHttpResponse(dataDefinitionId);
+				deleteDataDefinitionDataListViewHttpResponse(dataDefinitionId);
 
 			String content = httpResponse.getContent();
 
@@ -225,7 +225,7 @@ public interface DataListViewResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteDataListViewsDataDefinitionHttpResponse(
+				deleteDataDefinitionDataListViewHttpResponse(
 					Long dataDefinitionId)
 			throws Exception {
 

@@ -97,7 +97,7 @@ public abstract class BaseDataDefinitionFieldLinkResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<DataDefinitionFieldLink>
-			getDataDefinitionDataDefinitionFieldLinkPage(
+			getDataDefinitionDataDefinitionFieldLinksPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("dataDefinitionId")
@@ -148,7 +148,9 @@ public abstract class BaseDataDefinitionFieldLinkResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return null;
+		return getDataDefinitionDataDefinitionFieldLinksPage(
+			Long.parseLong((String)parameters.get("dataDefinitionId")),
+			(String)parameters.get("fieldName"));
 	}
 
 	@Override

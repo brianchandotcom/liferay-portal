@@ -121,12 +121,13 @@ public interface DataDefinitionResource {
 				Long dataDefinitionId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putDataDefinitionPermission(
+	public Page<Permission> putDataDefinitionPermissionsPage(
 			Long dataDefinitionId, Permission[] permissions)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putDataDefinitionPermissionHttpResponse(
-			Long dataDefinitionId, Permission[] permissions)
+	public HttpInvoker.HttpResponse
+			putDataDefinitionPermissionsPageHttpResponse(
+				Long dataDefinitionId, Permission[] permissions)
 		throws Exception;
 
 	public Page<DataDefinition>
@@ -1067,12 +1068,12 @@ public interface DataDefinitionResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putDataDefinitionPermission(
+		public Page<Permission> putDataDefinitionPermissionsPage(
 				Long dataDefinitionId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putDataDefinitionPermissionHttpResponse(
+				putDataDefinitionPermissionsPageHttpResponse(
 					dataDefinitionId, permissions);
 
 			String content = httpResponse.getContent();
@@ -1112,8 +1113,9 @@ public interface DataDefinitionResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putDataDefinitionPermissionHttpResponse(
-				Long dataDefinitionId, Permission[] permissions)
+		public HttpInvoker.HttpResponse
+				putDataDefinitionPermissionsPageHttpResponse(
+					Long dataDefinitionId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

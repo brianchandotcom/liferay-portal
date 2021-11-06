@@ -92,7 +92,7 @@ public interface BlogPostingResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putBlogPostingPermission(
+			putBlogPostingPermissionsPage(
 				Long blogPostingId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
@@ -131,7 +131,7 @@ public interface BlogPostingResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteBlogPostingPermission(
+			putSiteBlogPostingPermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;

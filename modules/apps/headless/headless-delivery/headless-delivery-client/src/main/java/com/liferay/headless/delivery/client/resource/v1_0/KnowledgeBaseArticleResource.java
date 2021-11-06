@@ -137,12 +137,12 @@ public interface KnowledgeBaseArticleResource {
 				Long knowledgeBaseArticleId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putKnowledgeBaseArticlePermission(
+	public Page<Permission> putKnowledgeBaseArticlePermissionsPage(
 			Long knowledgeBaseArticleId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putKnowledgeBaseArticlePermissionHttpResponse(
+			putKnowledgeBaseArticlePermissionsPageHttpResponse(
 				Long knowledgeBaseArticleId, Permission[] permissions)
 		throws Exception;
 
@@ -291,12 +291,12 @@ public interface KnowledgeBaseArticleResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putSiteKnowledgeBaseArticlePermission(
+	public Page<Permission> putSiteKnowledgeBaseArticlePermissionsPage(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putSiteKnowledgeBaseArticlePermissionHttpResponse(
+			putSiteKnowledgeBaseArticlePermissionsPageHttpResponse(
 				Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -1308,12 +1308,12 @@ public interface KnowledgeBaseArticleResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putKnowledgeBaseArticlePermission(
+		public Page<Permission> putKnowledgeBaseArticlePermissionsPage(
 				Long knowledgeBaseArticleId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putKnowledgeBaseArticlePermissionHttpResponse(
+				putKnowledgeBaseArticlePermissionsPageHttpResponse(
 					knowledgeBaseArticleId, permissions);
 
 			String content = httpResponse.getContent();
@@ -1354,7 +1354,7 @@ public interface KnowledgeBaseArticleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putKnowledgeBaseArticlePermissionHttpResponse(
+				putKnowledgeBaseArticlePermissionsPageHttpResponse(
 					Long knowledgeBaseArticleId, Permission[] permissions)
 			throws Exception {
 
@@ -2689,12 +2689,12 @@ public interface KnowledgeBaseArticleResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putSiteKnowledgeBaseArticlePermission(
+		public Page<Permission> putSiteKnowledgeBaseArticlePermissionsPage(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteKnowledgeBaseArticlePermissionHttpResponse(
+				putSiteKnowledgeBaseArticlePermissionsPageHttpResponse(
 					siteId, permissions);
 
 			String content = httpResponse.getContent();
@@ -2735,7 +2735,7 @@ public interface KnowledgeBaseArticleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putSiteKnowledgeBaseArticlePermissionHttpResponse(
+				putSiteKnowledgeBaseArticlePermissionsPageHttpResponse(
 					Long siteId, Permission[] permissions)
 			throws Exception {
 

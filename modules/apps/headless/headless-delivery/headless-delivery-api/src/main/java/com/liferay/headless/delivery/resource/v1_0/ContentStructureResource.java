@@ -69,7 +69,7 @@ public interface ContentStructureResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putAssetLibraryContentStructurePermission(
+			putAssetLibraryContentStructurePermissionsPage(
 				Long assetLibraryId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
@@ -83,7 +83,7 @@ public interface ContentStructureResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putContentStructurePermission(
+			putContentStructurePermissionsPage(
 				Long contentStructureId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
@@ -100,7 +100,7 @@ public interface ContentStructureResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteContentStructurePermission(
+			putSiteContentStructurePermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;

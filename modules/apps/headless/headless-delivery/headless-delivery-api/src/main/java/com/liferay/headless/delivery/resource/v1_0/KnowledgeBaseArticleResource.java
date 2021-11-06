@@ -104,7 +104,7 @@ public interface KnowledgeBaseArticleResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putKnowledgeBaseArticlePermission(
+			putKnowledgeBaseArticlePermissionsPage(
 				Long knowledgeBaseArticleId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
@@ -179,7 +179,7 @@ public interface KnowledgeBaseArticleResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteKnowledgeBaseArticlePermission(
+			putSiteKnowledgeBaseArticlePermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;

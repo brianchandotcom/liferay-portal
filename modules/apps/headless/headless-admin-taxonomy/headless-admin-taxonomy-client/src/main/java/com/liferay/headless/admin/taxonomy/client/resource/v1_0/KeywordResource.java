@@ -27,6 +27,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -76,12 +78,12 @@ public interface KeywordResource {
 		throws Exception;
 
 	public Page<Permission> putAssetLibraryKeywordPermissionsPage(
-			Long assetLibraryId)
+			Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			putAssetLibraryKeywordPermissionsPageHttpResponse(
-				Long assetLibraryId)
+				Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
 	public Page<Keyword> getKeywordsRankedPage(
@@ -167,11 +169,12 @@ public interface KeywordResource {
 			Long siteId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putSiteKeywordPermissionsPage(Long siteId)
+	public Page<Permission> putSiteKeywordPermissionsPage(
+			Long siteId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putSiteKeywordPermissionsPageHttpResponse(
-			Long siteId)
+			Long siteId, Permission[] permissions)
 		throws Exception;
 
 	public static class Builder {
@@ -603,12 +606,12 @@ public interface KeywordResource {
 		}
 
 		public Page<Permission> putAssetLibraryKeywordPermissionsPage(
-				Long assetLibraryId)
+				Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putAssetLibraryKeywordPermissionsPageHttpResponse(
-					assetLibraryId);
+					assetLibraryId, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -649,10 +652,20 @@ public interface KeywordResource {
 
 		public HttpInvoker.HttpResponse
 				putAssetLibraryKeywordPermissionsPageHttpResponse(
-					Long assetLibraryId)
+					Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				Stream.of(
+					permissions
+				).map(
+					value -> String.valueOf(value)
+				).collect(
+					Collectors.toList()
+				).toString(),
+				"application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1681,11 +1694,12 @@ public interface KeywordResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putSiteKeywordPermissionsPage(Long siteId)
+		public Page<Permission> putSiteKeywordPermissionsPage(
+				Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteKeywordPermissionsPageHttpResponse(siteId);
+				putSiteKeywordPermissionsPageHttpResponse(siteId, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -1725,10 +1739,21 @@ public interface KeywordResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putSiteKeywordPermissionsPageHttpResponse(Long siteId)
+				putSiteKeywordPermissionsPageHttpResponse(
+					Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				Stream.of(
+					permissions
+				).map(
+					value -> String.valueOf(value)
+				).collect(
+					Collectors.toList()
+				).toString(),
+				"application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

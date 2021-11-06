@@ -1029,7 +1029,7 @@ public class Query {
 			_contentTemplateResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			contentTemplateResource ->
-				contentTemplateResource.getContentTemplate(
+				contentTemplateResource.getSiteContentTemplate(
 					Long.valueOf(siteKey), contentTemplateId));
 	}
 
@@ -2566,10 +2566,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sitePageFriendlyUrlPathExperiences(friendlyUrlPath: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sitePagesExperiences(friendlyUrlPath: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the experiences of a given Page")
-	public SitePagePage sitePageFriendlyUrlPathExperiences(
+	public SitePagePage sitePagesExperiences(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("friendlyUrlPath") String friendlyUrlPath)
 		throws Exception {
@@ -2578,7 +2578,7 @@ public class Query {
 			_sitePageResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			sitePageResource -> new SitePagePage(
-				sitePageResource.getSiteSitePageFriendlyUrlPathExperiencesPage(
+				sitePageResource.getSiteSitePagesExperiencesPage(
 					Long.valueOf(siteKey), friendlyUrlPath)));
 	}
 
@@ -2965,12 +2965,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentRenderedContentTemplate(contentTemplateId: ___, structuredContentId: ___){}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentRenderedContentContentTemplate(contentTemplateId: ___, structuredContentId: ___){}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves the structured content's rendered template (the result of applying the structure's values to a template)."
 	)
-	public String structuredContentRenderedContentTemplate(
+	public String structuredContentRenderedContentContentTemplate(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("contentTemplateId") String contentTemplateId)
 		throws Exception {
@@ -2980,7 +2980,7 @@ public class Query {
 			this::_populateResourceContext,
 			structuredContentResource ->
 				structuredContentResource.
-					getStructuredContentRenderedContentTemplate(
+					getStructuredContentRenderedContentContentTemplate(
 						structuredContentId, contentTemplateId));
 	}
 
@@ -3624,6 +3624,36 @@ public class Query {
 
 	}
 
+	@GraphQLTypeExtension(StructuredContent.class)
+	public class
+		GetStructuredContentRenderedContentContentTemplateTypeExtension {
+
+		public GetStructuredContentRenderedContentContentTemplateTypeExtension(
+			StructuredContent structuredContent) {
+
+			_structuredContent = structuredContent;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the structured content's rendered template (the result of applying the structure's values to a template)."
+		)
+		public String renderedContentContentTemplate(
+				@GraphQLName("contentTemplateId") String contentTemplateId)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_structuredContentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				structuredContentResource ->
+					structuredContentResource.
+						getStructuredContentRenderedContentContentTemplate(
+							_structuredContent.getId(), contentTemplateId));
+		}
+
+		private StructuredContent _structuredContent;
+
+	}
+
 	@GraphQLTypeExtension(WikiNode.class)
 	public class GetWikiNodeWikiPagesPageTypeExtension {
 
@@ -4187,35 +4217,6 @@ public class Query {
 		}
 
 		private NavigationMenu _navigationMenu;
-
-	}
-
-	@GraphQLTypeExtension(StructuredContent.class)
-	public class GetStructuredContentRenderedContentTemplateTypeExtension {
-
-		public GetStructuredContentRenderedContentTemplateTypeExtension(
-			StructuredContent structuredContent) {
-
-			_structuredContent = structuredContent;
-		}
-
-		@GraphQLField(
-			description = "Retrieves the structured content's rendered template (the result of applying the structure's values to a template)."
-		)
-		public String renderedContentTemplate(
-				@GraphQLName("contentTemplateId") String contentTemplateId)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_structuredContentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				structuredContentResource ->
-					structuredContentResource.
-						getStructuredContentRenderedContentTemplate(
-							_structuredContent.getId(), contentTemplateId));
-		}
-
-		private StructuredContent _structuredContent;
 
 	}
 

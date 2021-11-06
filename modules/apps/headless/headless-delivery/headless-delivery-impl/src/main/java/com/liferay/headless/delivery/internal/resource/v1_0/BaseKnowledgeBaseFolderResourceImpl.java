@@ -441,8 +441,9 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putKnowledgeBaseFolderPermission",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS,
+					"putKnowledgeBaseFolderPermissionsPage", resourceName,
+					resourceId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -474,7 +475,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putKnowledgeBaseFolderPermission(
+			putKnowledgeBaseFolderPermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("knowledgeBaseFolderId")
@@ -509,8 +510,9 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putKnowledgeBaseFolderPermission",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS,
+					"putKnowledgeBaseFolderPermissionsPage", resourceName,
+					resourceId)
 			).build(),
 			resourceId, resourceName, null);
 	}
@@ -945,7 +947,8 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS,
-					"putSiteKnowledgeBaseFolderPermission", portletName, siteId)
+					"putSiteKnowledgeBaseFolderPermissionsPage", portletName,
+					siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}
@@ -975,7 +978,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteKnowledgeBaseFolderPermission(
+			putSiteKnowledgeBaseFolderPermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("siteId")
@@ -1008,7 +1011,8 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS,
-					"putSiteKnowledgeBaseFolderPermission", portletName, siteId)
+					"putSiteKnowledgeBaseFolderPermissionsPage", portletName,
+					siteId)
 			).build(),
 			siteId, portletName, null);
 	}

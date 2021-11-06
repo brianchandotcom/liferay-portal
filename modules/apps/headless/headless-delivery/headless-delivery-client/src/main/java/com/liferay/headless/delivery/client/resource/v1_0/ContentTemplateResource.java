@@ -62,11 +62,11 @@ public interface ContentTemplateResource {
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
-	public ContentTemplate getContentTemplate(
+	public ContentTemplate getSiteContentTemplate(
 			Long siteId, String contentTemplateId)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getContentTemplateHttpResponse(
+	public HttpInvoker.HttpResponse getSiteContentTemplateHttpResponse(
 			Long siteId, String contentTemplateId)
 		throws Exception;
 
@@ -354,12 +354,12 @@ public interface ContentTemplateResource {
 			return httpInvoker.invoke();
 		}
 
-		public ContentTemplate getContentTemplate(
+		public ContentTemplate getSiteContentTemplate(
 				Long siteId, String contentTemplateId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getContentTemplateHttpResponse(siteId, contentTemplateId);
+				getSiteContentTemplateHttpResponse(siteId, contentTemplateId);
 
 			String content = httpResponse.getContent();
 
@@ -398,7 +398,7 @@ public interface ContentTemplateResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getContentTemplateHttpResponse(
+		public HttpInvoker.HttpResponse getSiteContentTemplateHttpResponse(
 				Long siteId, String contentTemplateId)
 			throws Exception {
 

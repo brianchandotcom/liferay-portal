@@ -122,11 +122,11 @@ public interface BlogPostingResource {
 			Long blogPostingId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putBlogPostingPermission(
+	public Page<Permission> putBlogPostingPermissionsPage(
 			Long blogPostingId, Permission[] permissions)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putBlogPostingPermissionHttpResponse(
+	public HttpInvoker.HttpResponse putBlogPostingPermissionsPageHttpResponse(
 			Long blogPostingId, Permission[] permissions)
 		throws Exception;
 
@@ -201,12 +201,13 @@ public interface BlogPostingResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putSiteBlogPostingPermission(
+	public Page<Permission> putSiteBlogPostingPermissionsPage(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putSiteBlogPostingPermissionHttpResponse(
-			Long siteId, Permission[] permissions)
+	public HttpInvoker.HttpResponse
+			putSiteBlogPostingPermissionsPageHttpResponse(
+				Long siteId, Permission[] permissions)
 		throws Exception;
 
 	public void putSiteBlogPostingSubscribe(Long siteId) throws Exception;
@@ -1184,12 +1185,12 @@ public interface BlogPostingResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putBlogPostingPermission(
+		public Page<Permission> putBlogPostingPermissionsPage(
 				Long blogPostingId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putBlogPostingPermissionHttpResponse(
+				putBlogPostingPermissionsPageHttpResponse(
 					blogPostingId, permissions);
 
 			String content = httpResponse.getContent();
@@ -1229,8 +1230,9 @@ public interface BlogPostingResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putBlogPostingPermissionHttpResponse(
-				Long blogPostingId, Permission[] permissions)
+		public HttpInvoker.HttpResponse
+				putBlogPostingPermissionsPageHttpResponse(
+					Long blogPostingId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1977,12 +1979,13 @@ public interface BlogPostingResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putSiteBlogPostingPermission(
+		public Page<Permission> putSiteBlogPostingPermissionsPage(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteBlogPostingPermissionHttpResponse(siteId, permissions);
+				putSiteBlogPostingPermissionsPageHttpResponse(
+					siteId, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -2022,7 +2025,7 @@ public interface BlogPostingResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putSiteBlogPostingPermissionHttpResponse(
+				putSiteBlogPostingPermissionsPageHttpResponse(
 					Long siteId, Permission[] permissions)
 			throws Exception {
 

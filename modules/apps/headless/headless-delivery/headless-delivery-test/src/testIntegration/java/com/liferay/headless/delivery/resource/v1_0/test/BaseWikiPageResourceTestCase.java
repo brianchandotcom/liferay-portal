@@ -920,9 +920,9 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	@Test
-	public void testPutWikiPagePermission() throws Exception {
+	public void testPutWikiPagePermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WikiPage wikiPage = testPutWikiPagePermission_addWikiPage();
+		WikiPage wikiPage = testPutWikiPagePermissionsPage_addWikiPage();
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
@@ -930,7 +930,7 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			200,
-			wikiPageResource.putWikiPagePermissionHttpResponse(
+			wikiPageResource.putWikiPagePermissionsPageHttpResponse(
 				wikiPage.getId(),
 				new Permission[] {
 					new Permission() {
@@ -943,7 +943,7 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404,
-			wikiPageResource.putWikiPagePermissionHttpResponse(
+			wikiPageResource.putWikiPagePermissionsPageHttpResponse(
 				0L,
 				new Permission[] {
 					new Permission() {
@@ -955,7 +955,7 @@ public abstract class BaseWikiPageResourceTestCase {
 				}));
 	}
 
-	protected WikiPage testPutWikiPagePermission_addWikiPage()
+	protected WikiPage testPutWikiPagePermissionsPage_addWikiPage()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

@@ -56,7 +56,7 @@ public interface DataDefinitionFieldLinkResource {
 	}
 
 	public Page<DataDefinitionFieldLink>
-			getDataDefinitionDataDefinitionFieldLinkPage(
+			getDataDefinitionDataDefinitionFieldLinksPage(
 				Long dataDefinitionId, String fieldName)
 		throws Exception;
 

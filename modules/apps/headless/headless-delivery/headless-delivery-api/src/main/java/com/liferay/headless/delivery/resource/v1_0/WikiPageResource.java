@@ -108,7 +108,7 @@ public interface WikiPageResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putWikiPagePermission(
+			putWikiPagePermissionsPage(
 				Long wikiPageId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;

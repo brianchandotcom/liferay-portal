@@ -192,30 +192,30 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 	}
 
 	@Test
-	public void testGetDataDefinitionDataDefinitionFieldLinkPage()
+	public void testGetDataDefinitionDataDefinitionFieldLinksPage()
 		throws Exception {
 
 		Long dataDefinitionId =
-			testGetDataDefinitionDataDefinitionFieldLinkPage_getDataDefinitionId();
+			testGetDataDefinitionDataDefinitionFieldLinksPage_getDataDefinitionId();
 		Long irrelevantDataDefinitionId =
-			testGetDataDefinitionDataDefinitionFieldLinkPage_getIrrelevantDataDefinitionId();
+			testGetDataDefinitionDataDefinitionFieldLinksPage_getIrrelevantDataDefinitionId();
 
 		Page<DataDefinitionFieldLink> page =
 			dataDefinitionFieldLinkResource.
-				getDataDefinitionDataDefinitionFieldLinkPage(
+				getDataDefinitionDataDefinitionFieldLinksPage(
 					dataDefinitionId, RandomTestUtil.randomString());
 
 		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantDataDefinitionId != null) {
 			DataDefinitionFieldLink irrelevantDataDefinitionFieldLink =
-				testGetDataDefinitionDataDefinitionFieldLinkPage_addDataDefinitionFieldLink(
+				testGetDataDefinitionDataDefinitionFieldLinksPage_addDataDefinitionFieldLink(
 					irrelevantDataDefinitionId,
 					randomIrrelevantDataDefinitionFieldLink());
 
 			page =
 				dataDefinitionFieldLinkResource.
-					getDataDefinitionDataDefinitionFieldLinkPage(
+					getDataDefinitionDataDefinitionFieldLinksPage(
 						irrelevantDataDefinitionId, null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -227,16 +227,16 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 		}
 
 		DataDefinitionFieldLink dataDefinitionFieldLink1 =
-			testGetDataDefinitionDataDefinitionFieldLinkPage_addDataDefinitionFieldLink(
+			testGetDataDefinitionDataDefinitionFieldLinksPage_addDataDefinitionFieldLink(
 				dataDefinitionId, randomDataDefinitionFieldLink());
 
 		DataDefinitionFieldLink dataDefinitionFieldLink2 =
-			testGetDataDefinitionDataDefinitionFieldLinkPage_addDataDefinitionFieldLink(
+			testGetDataDefinitionDataDefinitionFieldLinksPage_addDataDefinitionFieldLink(
 				dataDefinitionId, randomDataDefinitionFieldLink());
 
 		page =
 			dataDefinitionFieldLinkResource.
-				getDataDefinitionDataDefinitionFieldLinkPage(
+				getDataDefinitionDataDefinitionFieldLinksPage(
 					dataDefinitionId, null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -248,7 +248,7 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 	}
 
 	protected DataDefinitionFieldLink
-			testGetDataDefinitionDataDefinitionFieldLinkPage_addDataDefinitionFieldLink(
+			testGetDataDefinitionDataDefinitionFieldLinksPage_addDataDefinitionFieldLink(
 				Long dataDefinitionId,
 				DataDefinitionFieldLink dataDefinitionFieldLink)
 		throws Exception {
@@ -258,7 +258,7 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 	}
 
 	protected Long
-			testGetDataDefinitionDataDefinitionFieldLinkPage_getDataDefinitionId()
+			testGetDataDefinitionDataDefinitionFieldLinksPage_getDataDefinitionId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -266,7 +266,7 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 	}
 
 	protected Long
-			testGetDataDefinitionDataDefinitionFieldLinkPage_getIrrelevantDataDefinitionId()
+			testGetDataDefinitionDataDefinitionFieldLinksPage_getIrrelevantDataDefinitionId()
 		throws Exception {
 
 		return null;

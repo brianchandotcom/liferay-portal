@@ -41,10 +41,10 @@ public interface DataLayoutResource {
 		return new Builder();
 	}
 
-	public void deleteDataLayoutsDataDefinition(Long dataDefinitionId)
+	public void deleteDataDefinitionDataLayout(Long dataDefinitionId)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse deleteDataLayoutsDataDefinitionHttpResponse(
+	public HttpInvoker.HttpResponse deleteDataDefinitionDataLayoutHttpResponse(
 			Long dataDefinitionId)
 		throws Exception;
 
@@ -198,11 +198,11 @@ public interface DataLayoutResource {
 
 	public static class DataLayoutResourceImpl implements DataLayoutResource {
 
-		public void deleteDataLayoutsDataDefinition(Long dataDefinitionId)
+		public void deleteDataDefinitionDataLayout(Long dataDefinitionId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteDataLayoutsDataDefinitionHttpResponse(dataDefinitionId);
+				deleteDataDefinitionDataLayoutHttpResponse(dataDefinitionId);
 
 			String content = httpResponse.getContent();
 
@@ -242,7 +242,7 @@ public interface DataLayoutResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteDataLayoutsDataDefinitionHttpResponse(
+				deleteDataDefinitionDataLayoutHttpResponse(
 					Long dataDefinitionId)
 			throws Exception {
 

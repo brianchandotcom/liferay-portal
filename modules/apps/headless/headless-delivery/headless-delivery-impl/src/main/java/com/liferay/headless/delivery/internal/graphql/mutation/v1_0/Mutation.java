@@ -358,7 +358,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateBlogPostingPermission(
+			updateBlogPostingPermissionsPage(
 				@GraphQLName("blogPostingId") Long blogPostingId,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -370,7 +370,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			blogPostingResource -> {
 				Page paginationPage =
-					blogPostingResource.putBlogPostingPermission(
+					blogPostingResource.putBlogPostingPermissionsPage(
 						blogPostingId, permissions);
 
 				return paginationPage.getItems();
@@ -442,7 +442,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteBlogPostingPermission(
+			updateSiteBlogPostingPermissionsPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -454,7 +454,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			blogPostingResource -> {
 				Page paginationPage =
-					blogPostingResource.putSiteBlogPostingPermission(
+					blogPostingResource.putSiteBlogPostingPermissionsPage(
 						Long.valueOf(siteKey), permissions);
 
 				return paginationPage.getItems();
@@ -711,7 +711,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateAssetLibraryContentStructurePermission(
+			updateAssetLibraryContentStructurePermissionsPage(
 				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -724,7 +724,7 @@ public class Mutation {
 			contentStructureResource -> {
 				Page paginationPage =
 					contentStructureResource.
-						putAssetLibraryContentStructurePermission(
+						putAssetLibraryContentStructurePermissionsPage(
 							Long.valueOf(assetLibraryId), permissions);
 
 				return paginationPage.getItems();
@@ -733,7 +733,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateContentStructurePermission(
+			updateContentStructurePermissionsPage(
 				@GraphQLName("contentStructureId") Long contentStructureId,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -745,7 +745,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			contentStructureResource -> {
 				Page paginationPage =
-					contentStructureResource.putContentStructurePermission(
+					contentStructureResource.putContentStructurePermissionsPage(
 						contentStructureId, permissions);
 
 				return paginationPage.getItems();
@@ -754,7 +754,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteContentStructurePermission(
+			updateSiteContentStructurePermissionsPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -766,8 +766,9 @@ public class Mutation {
 			this::_populateResourceContext,
 			contentStructureResource -> {
 				Page paginationPage =
-					contentStructureResource.putSiteContentStructurePermission(
-						Long.valueOf(siteKey), permissions);
+					contentStructureResource.
+						putSiteContentStructurePermissionsPage(
+							Long.valueOf(siteKey), permissions);
 
 				return paginationPage.getItems();
 			});
@@ -808,7 +809,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateAssetLibraryDocumentPermission(
+			updateAssetLibraryDocumentPermissionsPage(
 				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -820,7 +821,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentResource -> {
 				Page paginationPage =
-					documentResource.putAssetLibraryDocumentPermission(
+					documentResource.putAssetLibraryDocumentPermissionsPage(
 						Long.valueOf(assetLibraryId), permissions);
 
 				return paginationPage.getItems();
@@ -989,7 +990,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateDocumentPermission(
+			updateDocumentPermissionsPage(
 				@GraphQLName("documentId") Long documentId,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -1000,8 +1001,9 @@ public class Mutation {
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			documentResource -> {
-				Page paginationPage = documentResource.putDocumentPermission(
-					documentId, permissions);
+				Page paginationPage =
+					documentResource.putDocumentPermissionsPage(
+						documentId, permissions);
 
 				return paginationPage.getItems();
 			});
@@ -1083,7 +1085,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteDocumentPermission(
+			updateSiteDocumentPermissionsPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -1095,7 +1097,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentResource -> {
 				Page paginationPage =
-					documentResource.putSiteDocumentPermission(
+					documentResource.putSiteDocumentPermissionsPage(
 						Long.valueOf(siteKey), permissions);
 
 				return paginationPage.getItems();
@@ -1133,7 +1135,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateAssetLibraryDocumentFolderPermission(
+			updateAssetLibraryDocumentFolderPermissionsPage(
 				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -1146,7 +1148,7 @@ public class Mutation {
 			documentFolderResource -> {
 				Page paginationPage =
 					documentFolderResource.
-						putAssetLibraryDocumentFolderPermission(
+						putAssetLibraryDocumentFolderPermissionsPage(
 							Long.valueOf(assetLibraryId), permissions);
 
 				return paginationPage.getItems();
@@ -1230,7 +1232,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateDocumentFolderPermission(
+			updateDocumentFolderPermissionsPage(
 				@GraphQLName("documentFolderId") Long documentFolderId,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -1242,7 +1244,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentFolderResource -> {
 				Page paginationPage =
-					documentFolderResource.putDocumentFolderPermission(
+					documentFolderResource.putDocumentFolderPermissionsPage(
 						documentFolderId, permissions);
 
 				return paginationPage.getItems();
@@ -1326,7 +1328,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteDocumentFolderPermission(
+			updateSiteDocumentFolderPermissionsPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -1338,7 +1340,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentFolderResource -> {
 				Page paginationPage =
-					documentFolderResource.putSiteDocumentFolderPermission(
+					documentFolderResource.putSiteDocumentFolderPermissionsPage(
 						Long.valueOf(siteKey), permissions);
 
 				return paginationPage.getItems();
@@ -1475,7 +1477,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateKnowledgeBaseArticlePermission(
+			updateKnowledgeBaseArticlePermissionsPage(
 				@GraphQLName("knowledgeBaseArticleId") Long
 					knowledgeBaseArticleId,
 				@GraphQLName("permissions")
@@ -1489,7 +1491,7 @@ public class Mutation {
 			knowledgeBaseArticleResource -> {
 				Page paginationPage =
 					knowledgeBaseArticleResource.
-						putKnowledgeBaseArticlePermission(
+						putKnowledgeBaseArticlePermissionsPage(
 							knowledgeBaseArticleId, permissions);
 
 				return paginationPage.getItems();
@@ -1652,7 +1654,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteKnowledgeBaseArticlePermission(
+			updateSiteKnowledgeBaseArticlePermissionsPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -1665,7 +1667,7 @@ public class Mutation {
 			knowledgeBaseArticleResource -> {
 				Page paginationPage =
 					knowledgeBaseArticleResource.
-						putSiteKnowledgeBaseArticlePermission(
+						putSiteKnowledgeBaseArticlePermissionsPage(
 							Long.valueOf(siteKey), permissions);
 
 				return paginationPage.getItems();
@@ -1858,7 +1860,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateKnowledgeBaseFolderPermission(
+			updateKnowledgeBaseFolderPermissionsPage(
 				@GraphQLName("knowledgeBaseFolderId") Long
 					knowledgeBaseFolderId,
 				@GraphQLName("permissions")
@@ -1872,7 +1874,7 @@ public class Mutation {
 			knowledgeBaseFolderResource -> {
 				Page paginationPage =
 					knowledgeBaseFolderResource.
-						putKnowledgeBaseFolderPermission(
+						putKnowledgeBaseFolderPermissionsPage(
 							knowledgeBaseFolderId, permissions);
 
 				return paginationPage.getItems();
@@ -1971,7 +1973,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteKnowledgeBaseFolderPermission(
+			updateSiteKnowledgeBaseFolderPermissionsPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -1984,7 +1986,7 @@ public class Mutation {
 			knowledgeBaseFolderResource -> {
 				Page paginationPage =
 					knowledgeBaseFolderResource.
-						putSiteKnowledgeBaseFolderPermission(
+						putSiteKnowledgeBaseFolderPermissionsPage(
 							Long.valueOf(siteKey), permissions);
 
 				return paginationPage.getItems();
@@ -2234,7 +2236,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateMessageBoardMessagePermission(
+			updateMessageBoardMessagePermissionsPage(
 				@GraphQLName("messageBoardMessageId") Long
 					messageBoardMessageId,
 				@GraphQLName("permissions")
@@ -2248,7 +2250,7 @@ public class Mutation {
 			messageBoardMessageResource -> {
 				Page paginationPage =
 					messageBoardMessageResource.
-						putMessageBoardMessagePermission(
+						putMessageBoardMessagePermissionsPage(
 							messageBoardMessageId, permissions);
 
 				return paginationPage.getItems();
@@ -2381,7 +2383,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteMessageBoardMessagePermission(
+			updateSiteMessageBoardMessagePermissionsPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -2394,7 +2396,7 @@ public class Mutation {
 			messageBoardMessageResource -> {
 				Page paginationPage =
 					messageBoardMessageResource.
-						putSiteMessageBoardMessagePermission(
+						putSiteMessageBoardMessagePermissionsPage(
 							Long.valueOf(siteKey), permissions);
 
 				return paginationPage.getItems();
@@ -2482,7 +2484,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateMessageBoardSectionPermission(
+			updateMessageBoardSectionPermissionsPage(
 				@GraphQLName("messageBoardSectionId") Long
 					messageBoardSectionId,
 				@GraphQLName("permissions")
@@ -2496,7 +2498,7 @@ public class Mutation {
 			messageBoardSectionResource -> {
 				Page paginationPage =
 					messageBoardSectionResource.
-						putMessageBoardSectionPermission(
+						putMessageBoardSectionPermissionsPage(
 							messageBoardSectionId, permissions);
 
 				return paginationPage.getItems();
@@ -2584,7 +2586,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteMessageBoardSectionPermission(
+			updateSiteMessageBoardSectionPermissionsPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -2597,7 +2599,7 @@ public class Mutation {
 			messageBoardSectionResource -> {
 				Page paginationPage =
 					messageBoardSectionResource.
-						putSiteMessageBoardSectionPermission(
+						putSiteMessageBoardSectionPermissionsPage(
 							Long.valueOf(siteKey), permissions);
 
 				return paginationPage.getItems();
@@ -2766,7 +2768,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateMessageBoardThreadPermission(
+			updateMessageBoardThreadPermissionsPage(
 				@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -2778,8 +2780,9 @@ public class Mutation {
 			this::_populateResourceContext,
 			messageBoardThreadResource -> {
 				Page paginationPage =
-					messageBoardThreadResource.putMessageBoardThreadPermission(
-						messageBoardThreadId, permissions);
+					messageBoardThreadResource.
+						putMessageBoardThreadPermissionsPage(
+							messageBoardThreadId, permissions);
 
 				return paginationPage.getItems();
 			});
@@ -2847,7 +2850,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteMessageBoardThreadPermission(
+			updateSiteMessageBoardThreadPermissionsPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -2860,7 +2863,7 @@ public class Mutation {
 			messageBoardThreadResource -> {
 				Page paginationPage =
 					messageBoardThreadResource.
-						putSiteMessageBoardThreadPermission(
+						putSiteMessageBoardThreadPermissionsPage(
 							Long.valueOf(siteKey), permissions);
 
 				return paginationPage.getItems();
@@ -2928,7 +2931,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateNavigationMenuPermission(
+			updateNavigationMenuPermissionsPage(
 				@GraphQLName("navigationMenuId") Long navigationMenuId,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -2940,7 +2943,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			navigationMenuResource -> {
 				Page paginationPage =
-					navigationMenuResource.putNavigationMenuPermission(
+					navigationMenuResource.putNavigationMenuPermissionsPage(
 						navigationMenuId, permissions);
 
 				return paginationPage.getItems();
@@ -2978,7 +2981,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteNavigationMenuPermission(
+			updateSiteNavigationMenuPermissionsPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -2990,7 +2993,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			navigationMenuResource -> {
 				Page paginationPage =
-					navigationMenuResource.putSiteNavigationMenuPermission(
+					navigationMenuResource.putSiteNavigationMenuPermissionsPage(
 						Long.valueOf(siteKey), permissions);
 
 				return paginationPage.getItems();
@@ -3030,7 +3033,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateAssetLibraryStructuredContentPermission(
+			updateAssetLibraryStructuredContentPermissionsPage(
 				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -3043,7 +3046,7 @@ public class Mutation {
 			structuredContentResource -> {
 				Page paginationPage =
 					structuredContentResource.
-						putAssetLibraryStructuredContentPermission(
+						putAssetLibraryStructuredContentPermissionsPage(
 							Long.valueOf(assetLibraryId), permissions);
 
 				return paginationPage.getItems();
@@ -3121,7 +3124,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteStructuredContentPermission(
+			updateSiteStructuredContentPermissionsPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -3134,7 +3137,7 @@ public class Mutation {
 			structuredContentResource -> {
 				Page paginationPage =
 					structuredContentResource.
-						putSiteStructuredContentPermission(
+						putSiteStructuredContentPermissionsPage(
 							Long.valueOf(siteKey), permissions);
 
 				return paginationPage.getItems();
@@ -3305,7 +3308,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateStructuredContentPermission(
+			updateStructuredContentPermissionsPage(
 				@GraphQLName("structuredContentId") Long structuredContentId,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -3317,8 +3320,9 @@ public class Mutation {
 			this::_populateResourceContext,
 			structuredContentResource -> {
 				Page paginationPage =
-					structuredContentResource.putStructuredContentPermission(
-						structuredContentId, permissions);
+					structuredContentResource.
+						putStructuredContentPermissionsPage(
+							structuredContentId, permissions);
 
 				return paginationPage.getItems();
 			});
@@ -3388,7 +3392,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateAssetLibraryStructuredContentFolderPermission(
+			updateAssetLibraryStructuredContentFolderPermissionsPage(
 				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -3401,7 +3405,7 @@ public class Mutation {
 			structuredContentFolderResource -> {
 				Page paginationPage =
 					structuredContentFolderResource.
-						putAssetLibraryStructuredContentFolderPermission(
+						putAssetLibraryStructuredContentFolderPermissionsPage(
 							Long.valueOf(assetLibraryId), permissions);
 
 				return paginationPage.getItems();
@@ -3441,7 +3445,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteStructuredContentFolderPermission(
+			updateSiteStructuredContentFolderPermissionsPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -3454,7 +3458,7 @@ public class Mutation {
 			structuredContentFolderResource -> {
 				Page paginationPage =
 					structuredContentFolderResource.
-						putSiteStructuredContentFolderPermission(
+						putSiteStructuredContentFolderPermissionsPage(
 							Long.valueOf(siteKey), permissions);
 
 				return paginationPage.getItems();
@@ -3463,7 +3467,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateStructuredContentFolderPermission(
+			updateStructuredContentFolderPermissionsPage(
 				@GraphQLName("structuredContentFolderId") Long
 					structuredContentFolderId,
 				@GraphQLName("permissions")
@@ -3477,7 +3481,7 @@ public class Mutation {
 			structuredContentFolderResource -> {
 				Page paginationPage =
 					structuredContentFolderResource.
-						putStructuredContentFolderPermission(
+						putStructuredContentFolderPermissionsPage(
 							structuredContentFolderId, permissions);
 
 				return paginationPage.getItems();
@@ -3685,7 +3689,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteWikiNodePermission(
+			updateSiteWikiNodePermissionsPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -3697,7 +3701,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			wikiNodeResource -> {
 				Page paginationPage =
-					wikiNodeResource.putSiteWikiNodePermission(
+					wikiNodeResource.putSiteWikiNodePermissionsPage(
 						Long.valueOf(siteKey), permissions);
 
 				return paginationPage.getItems();
@@ -3761,7 +3765,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateWikiNodePermission(
+			updateWikiNodePermissionsPage(
 				@GraphQLName("wikiNodeId") Long wikiNodeId,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -3772,8 +3776,9 @@ public class Mutation {
 			_wikiNodeResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			wikiNodeResource -> {
-				Page paginationPage = wikiNodeResource.putWikiNodePermission(
-					wikiNodeId, permissions);
+				Page paginationPage =
+					wikiNodeResource.putWikiNodePermissionsPage(
+						wikiNodeId, permissions);
 
 				return paginationPage.getItems();
 			});
@@ -3941,7 +3946,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateWikiPagePermission(
+			updateWikiPagePermissionsPage(
 				@GraphQLName("wikiPageId") Long wikiPageId,
 				@GraphQLName("permissions")
 					com.liferay.portal.vulcan.permission.Permission[]
@@ -3952,8 +3957,9 @@ public class Mutation {
 			_wikiPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			wikiPageResource -> {
-				Page paginationPage = wikiPageResource.putWikiPagePermission(
-					wikiPageId, permissions);
+				Page paginationPage =
+					wikiPageResource.putWikiPagePermissionsPage(
+						wikiPageId, permissions);
 
 				return paginationPage.getItems();
 			});

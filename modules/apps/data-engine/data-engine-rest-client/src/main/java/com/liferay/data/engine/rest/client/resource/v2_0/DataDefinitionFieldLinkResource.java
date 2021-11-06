@@ -40,12 +40,12 @@ public interface DataDefinitionFieldLinkResource {
 	}
 
 	public Page<DataDefinitionFieldLink>
-			getDataDefinitionDataDefinitionFieldLinkPage(
+			getDataDefinitionDataDefinitionFieldLinksPage(
 				Long dataDefinitionId, String fieldName)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getDataDefinitionDataDefinitionFieldLinkPageHttpResponse(
+			getDataDefinitionDataDefinitionFieldLinksPageHttpResponse(
 				Long dataDefinitionId, String fieldName)
 		throws Exception;
 
@@ -122,12 +122,12 @@ public interface DataDefinitionFieldLinkResource {
 		implements DataDefinitionFieldLinkResource {
 
 		public Page<DataDefinitionFieldLink>
-				getDataDefinitionDataDefinitionFieldLinkPage(
+				getDataDefinitionDataDefinitionFieldLinksPage(
 					Long dataDefinitionId, String fieldName)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getDataDefinitionDataDefinitionFieldLinkPageHttpResponse(
+				getDataDefinitionDataDefinitionFieldLinksPageHttpResponse(
 					dataDefinitionId, fieldName);
 
 			String content = httpResponse.getContent();
@@ -168,7 +168,7 @@ public interface DataDefinitionFieldLinkResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getDataDefinitionDataDefinitionFieldLinkPageHttpResponse(
+				getDataDefinitionDataDefinitionFieldLinksPageHttpResponse(
 					Long dataDefinitionId, String fieldName)
 			throws Exception {
 

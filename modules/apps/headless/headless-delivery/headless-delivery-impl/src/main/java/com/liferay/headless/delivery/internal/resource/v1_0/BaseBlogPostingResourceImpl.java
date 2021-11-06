@@ -560,7 +560,7 @@ public abstract class BaseBlogPostingResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putBlogPostingPermission",
+					ActionKeys.PERMISSIONS, "putBlogPostingPermissionsPage",
 					resourceName, resourceId)
 			).build(),
 			resourceId, resourceName, roleNames);
@@ -587,7 +587,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putBlogPostingPermission(
+			putBlogPostingPermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("blogPostingId")
@@ -620,7 +620,7 @@ public abstract class BaseBlogPostingResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putBlogPostingPermission",
+					ActionKeys.PERMISSIONS, "putBlogPostingPermissionsPage",
 					resourceName, resourceId)
 			).build(),
 			resourceId, resourceName, null);
@@ -996,7 +996,7 @@ public abstract class BaseBlogPostingResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteBlogPostingPermission",
+					ActionKeys.PERMISSIONS, "putSiteBlogPostingPermissionsPage",
 					portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
@@ -1023,7 +1023,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteBlogPostingPermission(
+			putSiteBlogPostingPermissionsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("siteId")
@@ -1054,7 +1054,7 @@ public abstract class BaseBlogPostingResourceImpl
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteBlogPostingPermission",
+					ActionKeys.PERMISSIONS, "putSiteBlogPostingPermissionsPage",
 					portletName, siteId)
 			).build(),
 			siteId, portletName, null);

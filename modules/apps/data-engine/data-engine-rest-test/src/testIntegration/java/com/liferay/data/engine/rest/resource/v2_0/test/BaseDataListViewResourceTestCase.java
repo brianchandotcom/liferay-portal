@@ -196,19 +196,19 @@ public abstract class BaseDataListViewResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteDataListViewsDataDefinition() throws Exception {
+	public void testDeleteDataDefinitionDataListView() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataListView dataListView =
-			testDeleteDataListViewsDataDefinition_addDataListView();
+			testDeleteDataDefinitionDataListView_addDataListView();
 
 		assertHttpResponseStatusCode(
 			204,
-			dataListViewResource.deleteDataListViewsDataDefinitionHttpResponse(
+			dataListViewResource.deleteDataDefinitionDataListViewHttpResponse(
 				dataListView.getDataDefinitionId()));
 	}
 
 	protected DataListView
-			testDeleteDataListViewsDataDefinition_addDataListView()
+			testDeleteDataDefinitionDataListView_addDataListView()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

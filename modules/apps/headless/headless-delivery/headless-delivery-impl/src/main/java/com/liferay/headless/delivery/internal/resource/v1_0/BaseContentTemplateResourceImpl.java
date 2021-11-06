@@ -212,7 +212,7 @@ public abstract class BaseContentTemplateResourceImpl
 	@javax.ws.rs.Path("/sites/{siteId}/content-templates/{contentTemplateId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ContentTemplate getContentTemplate(
+	public ContentTemplate getSiteContentTemplate(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteId")

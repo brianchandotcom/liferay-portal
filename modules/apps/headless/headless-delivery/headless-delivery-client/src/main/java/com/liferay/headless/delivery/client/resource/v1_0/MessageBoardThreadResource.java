@@ -179,12 +179,13 @@ public interface MessageBoardThreadResource {
 				Long messageBoardThreadId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putMessageBoardThreadPermission(
+	public Page<Permission> putMessageBoardThreadPermissionsPage(
 			Long messageBoardThreadId, Permission[] permissions)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putMessageBoardThreadPermissionHttpResponse(
-			Long messageBoardThreadId, Permission[] permissions)
+	public HttpInvoker.HttpResponse
+			putMessageBoardThreadPermissionsPageHttpResponse(
+				Long messageBoardThreadId, Permission[] permissions)
 		throws Exception;
 
 	public void putMessageBoardThreadSubscribe(Long messageBoardThreadId)
@@ -248,12 +249,12 @@ public interface MessageBoardThreadResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putSiteMessageBoardThreadPermission(
+	public Page<Permission> putSiteMessageBoardThreadPermissionsPage(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putSiteMessageBoardThreadPermissionHttpResponse(
+			putSiteMessageBoardThreadPermissionsPageHttpResponse(
 				Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -1640,12 +1641,12 @@ public interface MessageBoardThreadResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putMessageBoardThreadPermission(
+		public Page<Permission> putMessageBoardThreadPermissionsPage(
 				Long messageBoardThreadId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putMessageBoardThreadPermissionHttpResponse(
+				putMessageBoardThreadPermissionsPageHttpResponse(
 					messageBoardThreadId, permissions);
 
 			String content = httpResponse.getContent();
@@ -1686,7 +1687,7 @@ public interface MessageBoardThreadResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putMessageBoardThreadPermissionHttpResponse(
+				putMessageBoardThreadPermissionsPageHttpResponse(
 					Long messageBoardThreadId, Permission[] permissions)
 			throws Exception {
 
@@ -2350,12 +2351,12 @@ public interface MessageBoardThreadResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putSiteMessageBoardThreadPermission(
+		public Page<Permission> putSiteMessageBoardThreadPermissionsPage(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteMessageBoardThreadPermissionHttpResponse(
+				putSiteMessageBoardThreadPermissionsPageHttpResponse(
 					siteId, permissions);
 
 			String content = httpResponse.getContent();
@@ -2396,7 +2397,7 @@ public interface MessageBoardThreadResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putSiteMessageBoardThreadPermissionHttpResponse(
+				putSiteMessageBoardThreadPermissionsPageHttpResponse(
 					Long siteId, Permission[] permissions)
 			throws Exception {
 

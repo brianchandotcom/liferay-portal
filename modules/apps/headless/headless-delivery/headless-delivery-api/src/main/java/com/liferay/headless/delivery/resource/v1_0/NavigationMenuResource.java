@@ -78,7 +78,7 @@ public interface NavigationMenuResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putNavigationMenuPermission(
+			putNavigationMenuPermissionsPage(
 				Long navigationMenuId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
@@ -100,7 +100,7 @@ public interface NavigationMenuResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteNavigationMenuPermission(
+			putSiteNavigationMenuPermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;

@@ -329,7 +329,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.data.engine.rest.client', and version '3.0.9'."
+        'com.liferay.data.engine.rest.client', and version '3.0.10'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -507,7 +507,7 @@ paths:
             tags: ["DataDefinition"]
     "/data-definitions/{dataDefinitionId}/data-definition-field-links":
         get:
-            operationId: getDataDefinitionDataDefinitionFieldLinkPage
+            operationId: getDataDefinitionDataDefinitionFieldLinksPage
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -535,7 +535,7 @@ paths:
             tags: ["DataDefinitionFieldLink"]
     "/data-definitions/{dataDefinitionId}/data-layouts":
         delete:
-            operationId: deleteDataLayoutsDataDefinition
+            operationId: deleteDataDefinitionDataLayout
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -618,7 +618,7 @@ paths:
             tags: ["DataLayout"]
     "/data-definitions/{dataDefinitionId}/data-list-views":
         delete:
-            operationId: deleteDataListViewsDataDefinition
+            operationId: deleteDataDefinitionDataListView
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -877,7 +877,7 @@ paths:
                         application/xml: {}
             tags: ["DataDefinition"]
         put:
-            operationId: putDataDefinitionPermission
+            operationId: putDataDefinitionPermissionsPage
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -1232,7 +1232,7 @@ paths:
                         application/xml: {}
             tags: ["DataRecordCollection"]
         put:
-            operationId: putDataRecordCollectionPermission
+            operationId: putDataRecordCollectionPermissionsPage
             parameters:
                 - in: path
                   name: dataRecordCollectionId

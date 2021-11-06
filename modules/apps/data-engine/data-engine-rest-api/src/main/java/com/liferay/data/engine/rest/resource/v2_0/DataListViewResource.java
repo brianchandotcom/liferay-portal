@@ -58,7 +58,7 @@ public interface DataListViewResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public void deleteDataListViewsDataDefinition(Long dataDefinitionId)
+	public void deleteDataDefinitionDataListView(Long dataDefinitionId)
 		throws Exception;
 
 	public Page<DataListView> getDataDefinitionDataListViewsPage(

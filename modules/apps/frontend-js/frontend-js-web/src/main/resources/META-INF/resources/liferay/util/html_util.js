@@ -34,7 +34,7 @@ const HTML_UNESCAPED_VALUES = Object.keys(MAP_HTML_CHARS_ESCAPED);
 
 const HTML_ESCAPE = new RegExp(`[${HTML_UNESCAPED_VALUES.join('')}]`, 'g');
 
-const HTML_UNESCAPE = /&([^;]+);/g;
+const HTML_UNESCAPE = /&([^\s;]+);/g;
 
 export function escapeHTML(string) {
 	return string.replace(

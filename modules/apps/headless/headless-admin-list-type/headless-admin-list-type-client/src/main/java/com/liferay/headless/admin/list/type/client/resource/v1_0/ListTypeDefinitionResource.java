@@ -22,6 +22,7 @@ import com.liferay.headless.admin.list.type.client.problem.Problem;
 import com.liferay.headless.admin.list.type.client.serdes.v1_0.ListTypeDefinitionSerDes;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -41,11 +42,13 @@ public interface ListTypeDefinitionResource {
 	}
 
 	public Page<ListTypeDefinition> getListTypeDefinitionsPage(
-			String search, Pagination pagination)
+			String search, List<String> aggregations, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getListTypeDefinitionsPageHttpResponse(
-			String search, Pagination pagination)
+			String search, List<String> aggregations, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public ListTypeDefinition postListTypeDefinition(
@@ -172,11 +175,13 @@ public interface ListTypeDefinitionResource {
 		implements ListTypeDefinitionResource {
 
 		public Page<ListTypeDefinition> getListTypeDefinitionsPage(
-				String search, Pagination pagination)
+				String search, List<String> aggregations, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getListTypeDefinitionsPageHttpResponse(search, pagination);
+				getListTypeDefinitionsPageHttpResponse(
+					search, aggregations, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -216,7 +221,8 @@ public interface ListTypeDefinitionResource {
 		}
 
 		public HttpInvoker.HttpResponse getListTypeDefinitionsPageHttpResponse(
-				String search, Pagination pagination)
+				String search, List<String> aggregations, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -244,11 +250,19 @@ public interface ListTypeDefinitionResource {
 				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(

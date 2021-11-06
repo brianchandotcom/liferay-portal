@@ -17,6 +17,7 @@ package com.liferay.headless.admin.list.type.internal.resource.v1_0;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.internal.dto.v1_0.util.ListTypeEntryUtil;
+import com.liferay.headless.admin.list.type.internal.odata.entity.v1_0.ListTypedefinitionEntityModel;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.list.type.constants.ListTypeActionKeys;
 import com.liferay.list.type.constants.ListTypeConstants;
@@ -25,13 +26,20 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,7 +53,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = ListTypeDefinitionResource.class
 )
 public class ListTypeDefinitionResourceImpl
-	extends BaseListTypeDefinitionResourceImpl {
+	extends BaseListTypeDefinitionResourceImpl implements EntityModelResource {
 
 	@Override
 	public void deleteListTypeDefinition(Long listTypeDefinitionId)
@@ -53,6 +61,11 @@ public class ListTypeDefinitionResourceImpl
 
 		_listTypeDefinitionService.deleteListTypeDefinition(
 			listTypeDefinitionId);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	@Override
@@ -66,7 +79,8 @@ public class ListTypeDefinitionResourceImpl
 
 	@Override
 	public Page<ListTypeDefinition> getListTypeDefinitionsPage(
-			String search, Pagination pagination)
+			String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -85,7 +99,7 @@ public class ListTypeDefinitionResourceImpl
 			).build(),
 			booleanQuery -> {
 			},
-			null,
+			filter,
 			com.liferay.list.type.model.ListTypeDefinition.class.getName(),
 			search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
@@ -94,7 +108,7 @@ public class ListTypeDefinitionResourceImpl
 				searchContext.setAttribute(Field.NAME, search);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
-			null,
+			sorts,
 			document -> _toListTypeDefinition(
 				_listTypeDefinitionService.getListTypeDefinition(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
@@ -186,6 +200,9 @@ public class ListTypeDefinitionResourceImpl
 			}
 		};
 	}
+
+	private static final EntityModel _entityModel =
+		new ListTypedefinitionEntityModel();
 
 	@Reference
 	private ListTypeDefinitionService _listTypeDefinitionService;

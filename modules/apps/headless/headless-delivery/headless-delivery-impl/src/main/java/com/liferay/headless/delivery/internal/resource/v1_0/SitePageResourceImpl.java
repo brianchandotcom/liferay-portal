@@ -125,7 +125,15 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	@Override
-	public Page<SitePage> getSiteSitePageFriendlyUrlPathExperiencesPage(
+	public String getSiteSitePageRenderedPage(
+			Long siteId, String friendlyUrlPath)
+		throws Exception {
+
+		return _toHTML(friendlyUrlPath, siteId, null);
+	}
+
+	@Override
+	public Page<SitePage> getSiteSitePagesExperiencesPage(
 			Long siteId, String friendlyUrlPath)
 		throws Exception {
 
@@ -137,14 +145,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				segmentsExperience -> _toSitePage(
 					_isEmbeddedPageDefinition(), layout,
 					segmentsExperience.getSegmentsExperienceKey())));
-	}
-
-	@Override
-	public String getSiteSitePageRenderedPage(
-			Long siteId, String friendlyUrlPath)
-		throws Exception {
-
-		return _toHTML(friendlyUrlPath, siteId, null);
 	}
 
 	@Override
@@ -221,8 +221,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				}
 
 				return addAction(
-					ActionKeys.VIEW,
-					"getSiteSitePageFriendlyUrlPathExperiencesPage",
+					ActionKeys.VIEW, "getSiteSitePagesExperiencesPage",
 					Group.class.getName(), layout.getGroupId());
 			}
 		).put(

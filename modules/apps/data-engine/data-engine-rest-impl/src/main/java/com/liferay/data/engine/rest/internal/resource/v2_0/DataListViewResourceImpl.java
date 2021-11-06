@@ -85,18 +85,7 @@ public class DataListViewResourceImpl
 	extends BaseDataListViewResourceImpl implements EntityModelResource {
 
 	@Override
-	public void deleteDataListView(Long dataListViewId) throws Exception {
-		_dataDefinitionModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(),
-			_getDDMStructureId(
-				_deDataListViewLocalService.getDEDataListView(dataListViewId)),
-			ActionKeys.DELETE);
-
-		_deleteDataListView(dataListViewId);
-	}
-
-	@Override
-	public void deleteDataListViewsDataDefinition(Long dataDefinitionId)
+	public void deleteDataDefinitionDataListView(Long dataDefinitionId)
 		throws Exception {
 
 		for (DEDataListView deDataListView :
@@ -105,6 +94,17 @@ public class DataListViewResourceImpl
 
 			_deleteDataListView(deDataListView.getDeDataListViewId());
 		}
+	}
+
+	@Override
+	public void deleteDataListView(Long dataListViewId) throws Exception {
+		_dataDefinitionModelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(),
+			_getDDMStructureId(
+				_deDataListViewLocalService.getDEDataListView(dataListViewId)),
+			ActionKeys.DELETE);
+
+		_deleteDataListView(dataListViewId);
 	}
 
 	@Override

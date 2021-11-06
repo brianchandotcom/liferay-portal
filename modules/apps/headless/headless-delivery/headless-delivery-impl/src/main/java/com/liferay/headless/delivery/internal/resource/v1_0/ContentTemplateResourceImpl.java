@@ -68,7 +68,12 @@ public class ContentTemplateResourceImpl
 	}
 
 	@Override
-	public ContentTemplate getContentTemplate(
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
+	}
+
+	@Override
+	public ContentTemplate getSiteContentTemplate(
 			Long siteId, String contentTemplateId)
 		throws Exception {
 
@@ -79,11 +84,6 @@ public class ContentTemplateResourceImpl
 		return ContentTemplateUtil.toContentTemplate(
 			ddmTemplate, _getDtoConverterContext(ddmTemplate),
 			groupLocalService, _portal, _userLocalService);
-	}
-
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		return _entityModel;
 	}
 
 	@Override
@@ -134,7 +134,7 @@ public class ContentTemplateResourceImpl
 				"get",
 				addAction(
 					ActionKeys.VIEW, ddmTemplate.getTemplateId(),
-					"getContentTemplate", ddmTemplate.getUserId(),
+					"getSiteContentTemplate", ddmTemplate.getUserId(),
 					DDMTemplate.class.getName() + "-" +
 						JournalArticle.class.getName(),
 					ddmTemplate.getGroupId())),

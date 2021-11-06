@@ -94,7 +94,8 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 	}
 
 	@Override
-	protected DataListView testDeleteDataListView_addDataListView()
+	protected DataListView
+			testDeleteDataDefinitionDataListView_addDataListView()
 		throws Exception {
 
 		return dataListViewResource.postDataDefinitionDataListView(
@@ -102,8 +103,7 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 	}
 
 	@Override
-	protected DataListView
-			testDeleteDataListViewsDataDefinition_addDataListView()
+	protected DataListView testDeleteDataListView_addDataListView()
 		throws Exception {
 
 		return dataListViewResource.postDataDefinitionDataListView(

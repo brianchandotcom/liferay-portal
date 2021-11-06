@@ -319,7 +319,7 @@ public class DataRecordCollectionResourceTest
 
 	@Override
 	protected DataRecordCollection
-			testPutDataRecordCollectionPermission_addDataRecordCollection()
+			testPutDataRecordCollectionPermissionsPage_addDataRecordCollection()
 		throws Exception {
 
 		return dataRecordCollectionResource.

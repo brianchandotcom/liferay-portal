@@ -218,7 +218,7 @@ public class MessageBoardMessageResourceTest
 
 	@Override
 	protected MessageBoardMessage
-			testPutMessageBoardMessagePermission_addMessageBoardMessage()
+			testPutMessageBoardMessagePermissionsPage_addMessageBoardMessage()
 		throws Exception {
 
 		return _addMessageBoardMessage();
@@ -265,7 +265,7 @@ public class MessageBoardMessageResourceTest
 
 	@Override
 	protected MessageBoardMessage
-			testPutSiteMessageBoardMessagePermission_addMessageBoardMessage()
+			testPutSiteMessageBoardMessagePermissionsPage_addMessageBoardMessage()
 		throws Exception {
 
 		return _addMessageBoardMessage();

@@ -267,8 +267,8 @@ public class StructuredContentDTOConverter
 					renderedContentURL = JaxRsLinkUtil.getJaxRsLink(
 						"headless-delivery",
 						BaseStructuredContentResourceImpl.class,
-						"getStructuredContentRenderedContentTemplate", uriInfo,
-						journalArticle.getResourcePrimKey(),
+						"getStructuredContentRenderedContentContentTemplate",
+						uriInfo, journalArticle.getResourcePrimKey(),
 						ddmTemplate.getTemplateKey());
 
 					setMarkedAsDefault(

@@ -736,7 +736,8 @@ public class DataDefinitionResourceTest
 	}
 
 	@Override
-	protected DataDefinition testPutDataDefinitionPermission_addDataDefinition()
+	protected DataDefinition
+			testPutDataDefinitionPermissionsPage_addDataDefinition()
 		throws Exception {
 
 		return dataDefinitionResource.postSiteDataDefinitionByContentType(

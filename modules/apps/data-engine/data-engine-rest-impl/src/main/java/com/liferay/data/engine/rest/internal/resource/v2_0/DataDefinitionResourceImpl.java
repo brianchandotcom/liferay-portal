@@ -195,7 +195,7 @@ public class DataDefinitionResourceImpl
 
 		DataLayoutResource dataLayoutResource = _getDataLayoutResource(false);
 
-		dataLayoutResource.deleteDataLayoutsDataDefinition(dataDefinitionId);
+		dataLayoutResource.deleteDataDefinitionDataLayout(dataDefinitionId);
 
 		DataListViewResource.Builder dataListViewResourceBuilder =
 			_dataListViewResourceFactory.create();
@@ -207,8 +207,7 @@ public class DataDefinitionResourceImpl
 				contextUser
 			).build();
 
-		dataListViewResource.deleteDataListViewsDataDefinition(
-			dataDefinitionId);
+		dataListViewResource.deleteDataDefinitionDataListView(dataDefinitionId);
 
 		_ddlRecordSetLocalService.deleteDDMStructureRecordSets(
 			dataDefinitionId);

@@ -110,21 +110,7 @@ public class DataLayoutResourceImpl
 	extends BaseDataLayoutResourceImpl implements EntityModelResource {
 
 	@Override
-	public void deleteDataLayout(Long dataLayoutId) throws Exception {
-		DDMStructureLayout ddmStructureLayout =
-			_ddmStructureLayoutLocalService.getStructureLayout(dataLayoutId);
-
-		DDMStructure ddmStructure = ddmStructureLayout.getDDMStructure();
-
-		_dataDefinitionModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(),
-			ddmStructure.getStructureId(), ActionKeys.DELETE);
-
-		_deleteDataLayout(dataLayoutId);
-	}
-
-	@Override
-	public void deleteDataLayoutsDataDefinition(Long dataDefinitionId)
+	public void deleteDataDefinitionDataLayout(Long dataDefinitionId)
 		throws Exception {
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
@@ -144,6 +130,20 @@ public class DataLayoutResourceImpl
 				_deleteDataLayout(ddmStructureLayout.getStructureLayoutId());
 			}
 		}
+	}
+
+	@Override
+	public void deleteDataLayout(Long dataLayoutId) throws Exception {
+		DDMStructureLayout ddmStructureLayout =
+			_ddmStructureLayoutLocalService.getStructureLayout(dataLayoutId);
+
+		DDMStructure ddmStructure = ddmStructureLayout.getDDMStructure();
+
+		_dataDefinitionModelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(),
+			ddmStructure.getStructureId(), ActionKeys.DELETE);
+
+		_deleteDataLayout(dataLayoutId);
 	}
 
 	@Override

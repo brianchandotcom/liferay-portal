@@ -115,32 +115,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Assert.assertNotNull(siteSitePageExperienceExperienceKeyRenderedPage);
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteSitePageFriendlyUrlPathExperiencesPage()
-		throws Exception {
-
-		Layout layout = _addLayout(testGroup.getGroupId());
-
-		String friendlyURL = layout.getFriendlyURL();
-
-		Page<SitePage> page =
-			sitePageResource.getSiteSitePageFriendlyUrlPathExperiencesPage(
-				testGroup.getGroupId(), friendlyURL.substring(1));
-
-		long originalPageCount = page.getTotalCount();
-
-		_addSegmentsExperience(
-			layout,
-			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
-
-		page = sitePageResource.getSiteSitePageFriendlyUrlPathExperiencesPage(
-			testGroup.getGroupId(), friendlyURL.substring(1));
-
-		Assert.assertEquals(originalPageCount + 1, page.getTotalCount());
-	}
-
 	@Override
 	@Test
 	public void testGetSiteSitePageRenderedPage() throws Exception {
@@ -153,6 +127,29 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				testGroup.getGroupId(), friendlyURL.substring(1));
 
 		Assert.assertNotNull(siteSitePageRenderedPage);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSitePagesExperiencesPage() throws Exception {
+		Layout layout = _addLayout(testGroup.getGroupId());
+
+		String friendlyURL = layout.getFriendlyURL();
+
+		Page<SitePage> page = sitePageResource.getSiteSitePagesExperiencesPage(
+			testGroup.getGroupId(), friendlyURL.substring(1));
+
+		long originalPageCount = page.getTotalCount();
+
+		_addSegmentsExperience(
+			layout,
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		page = sitePageResource.getSiteSitePagesExperiencesPage(
+			testGroup.getGroupId(), friendlyURL.substring(1));
+
+		Assert.assertEquals(originalPageCount + 1, page.getTotalCount());
 	}
 
 	@Override

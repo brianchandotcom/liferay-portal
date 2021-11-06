@@ -402,7 +402,7 @@ public class StructuredContentResourceTest
 
 	@Override
 	@Test
-	public void testGetStructuredContentRenderedContentTemplate()
+	public void testGetStructuredContentRenderedContentContentTemplate()
 		throws Exception {
 
 		StructuredContent structuredContent =
@@ -416,7 +416,7 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(
 			"<div>" + contentFieldValue.getData() + "</div>",
 			structuredContentResource.
-				getStructuredContentRenderedContentTemplate(
+				getStructuredContentRenderedContentContentTemplate(
 					structuredContent.getId(), _ddmTemplate.getTemplateKey()));
 	}
 
@@ -588,7 +588,7 @@ public class StructuredContentResourceTest
 
 	@Override
 	protected StructuredContent
-			testPutAssetLibraryStructuredContentPermission_addStructuredContent()
+			testPutAssetLibraryStructuredContentPermissionsPage_addStructuredContent()
 		throws Exception {
 
 		StructuredContent structuredContent = randomStructuredContent();

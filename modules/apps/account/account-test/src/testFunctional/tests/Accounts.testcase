@@ -345,6 +345,8 @@ definition {
 	@description = "This test asserts that a domain blocked in one instance will not be blocked when creating a separate virtual instance."
 	@priority = "4"
 	test BlockedDomainsAreInstanceWide {
+		property test.name.skip.portal.instance = "Accounts#BlockedDomainsAreInstanceWide";
+
 		task ("Block google.com domain and create a new account") {
 			AccountConfiguration.addBlockedEmailDomain(settingValues = "google.com");
 
@@ -376,17 +378,12 @@ definition {
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "New Instance Account",
-				accountEntryType = "Business",
-				creatorEmailAddress = "test@www.able.com");
-
 			Navigator.openSpecificURL(url = "http://www.able.com:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet");
+
+			Accounts.addBusinessAccount(accountName = "New Instance Account");
 		}
 
 		task ("Add a user with the same domain and assert the error message for blocked domains does not display") {
-			LexiconEntry.gotoEntry(rowEntry = "New Instance Account");
-
 			Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
 			LexiconEntry.gotoAdd();

@@ -230,6 +230,12 @@ definition {
 		PageEditor.viewFragment(fragmentName = "Collection Display");
 	}
 
+	macro focusSlide {
+		Click(
+			ariaLabel = "Focus slide ${slideNumber}",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+	}
+
 	macro gotoPageEditor {
 		Click(locator1 = "Icon#EDIT_PENCIL");
 

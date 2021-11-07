@@ -1,0 +1,199 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-140820. The user could increase the Number of Slides in Banner Slider."
+	@priority = "5"
+	test IncreaseNumberOfSlides {
+		task ("Add a Banner Slider fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Slider");
+		}
+
+		task ("Edit the inline texts in the first slide") {
+			PageEditor.editFragmentText(
+				className = "slider",
+				fragmentName = "Banner Slider",
+				id = "01-02-title",
+				text = "NBA Finals");
+
+			PageEditor.editFragmentText(
+				className = "slider",
+				fragmentName = "Banner Slider",
+				id = "01-03-subtitle",
+				text = "Nets vs Warriors");
+		}
+
+		task ("Change the Number of Slides to 4") {
+			PageEditor.gotoConfiguration(fragmentName = "Banner Slider");
+
+			PageEditor.configureFragment(numberOfSlides = "4");
+		}
+
+		task ("View inline texts of slides") {
+			PageEditor.viewFragmentEditableText(
+				className = "slider",
+				editableText = "NBA Finals",
+				fragmentName = "Banner Slider",
+				id = "01-02-title");
+
+			PageEditor.viewFragmentEditableText(
+				className = "slider",
+				editableText = "Nets vs Warriors",
+				fragmentName = "Banner Slider",
+				id = "01-03-subtitle");
+
+			ContentPages.focusSlide(slideNumber = "2");
+
+			PageEditor.viewFragmentEditableText(
+				className = "slider",
+				editableText = "Slide 2 Title",
+				fragmentName = "Banner Slider",
+				id = "02-02-title");
+
+			PageEditor.viewFragmentEditableText(
+				className = "slider",
+				editableText = "Slide 2 Subtitle",
+				fragmentName = "Banner Slider",
+				id = "02-03-subtitle");
+
+			ContentPages.focusSlide(slideNumber = "3");
+
+			PageEditor.viewFragmentEditableText(
+				className = "slider",
+				editableText = "Slide 3 Title",
+				fragmentName = "Banner Slider",
+				id = "03-02-title");
+
+			PageEditor.viewFragmentEditableText(
+				className = "slider",
+				editableText = "Slide 3 Subtitle",
+				fragmentName = "Banner Slider",
+				id = "03-03-subtitle");
+
+			ContentPages.focusSlide(slideNumber = "4");
+
+			PageEditor.viewFragmentEditableText(
+				className = "slider",
+				editableText = "Slide 4 Title",
+				fragmentName = "Banner Slider",
+				id = "04-02-title");
+
+			PageEditor.viewFragmentEditableText(
+				className = "slider",
+				editableText = "Slide 4 Subtitle",
+				fragmentName = "Banner Slider",
+				id = "04-03-subtitle");
+		}
+
+		task ("Edit the inline texts in the fourth slide") {
+			PageEditor.editFragmentText(
+				className = "slider",
+				fragmentName = "Banner Slider",
+				id = "04-02-title",
+				text = "New Movie Releases");
+
+			PageEditor.editFragmentText(
+				className = "slider",
+				fragmentName = "Banner Slider",
+				id = "04-03-subtitle",
+				text = "Eternals");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View inline texts of slides at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ContentPages.focusSlide(slideNumber = "1");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "slider",
+				id = "01-02-title",
+				text = "NBA Finals");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "slider",
+				id = "01-03-subtitle",
+				text = "Nets vs Warriors");
+
+			ContentPages.focusSlide(slideNumber = "2");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "slider",
+				id = "02-02-title",
+				text = "Slide 2 Title");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "slider",
+				id = "02-03-subtitle",
+				text = "Slide 2 Subtitle");
+
+			ContentPages.focusSlide(slideNumber = "3");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "slider",
+				id = "03-02-title",
+				text = "Slide 3 Title");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "slider",
+				id = "03-03-subtitle",
+				text = "Slide 3 Subtitle");
+
+			ContentPages.focusSlide(slideNumber = "4");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "slider",
+				id = "04-02-title",
+				text = "New Movie Releases");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "slider",
+				id = "04-03-subtitle",
+				text = "Eternals");
+		}
+	}
+
+}

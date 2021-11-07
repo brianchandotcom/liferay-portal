@@ -2686,14 +2686,15 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED");
 	}
 
-	macro filterColletion {
-		Click(locator1 = "PageEditor#COLLECTION_ITEM_VIEW_COLLECTION_OPTIONS");
+	macro filterCollection {
+		PageEditor.gotoEllipsisMenuItemInItemSelector(
+			fieldLabel = "Collection",
+			menuItem = "Filter Collection");
 
-		Click(locator1 = "PageEditor#COLLECTION_ITEM_FILTER_COLLECTION");
-
-		PageEditor.selectGerenicField(
-			fieldLabel = "${fieldLabel}",
-			option = "${option}");
+		Select(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${option}");
 
 		Button.click(button = "Apply");
 	}

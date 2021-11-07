@@ -17,6 +17,7 @@ package com.liferay.poshi.core.elements;
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.util.CharPool;
+import com.liferay.poshi.core.util.ListUtil;
 import com.liferay.poshi.core.util.RegexUtil;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
@@ -298,9 +299,10 @@ public class ExecutePoshiElement extends PoshiElement {
 
 		boolean multilineSnippet = false;
 
-		String assignmentsString = assignments.toString();
+		String assignmentsString = ListUtil.toString(assignments);
 
-		if (assignmentsString.matches("\\[\\w+ = (\"|(''')).+?\\1, .+\\]") &&
+		if ((assignments.size() > 1) &&
+			assignmentsString.matches("\\w+\\s*=.+") &&
 			!isConditionValidInParent((PoshiElement)getParent())) {
 
 			multilineSnippet = true;

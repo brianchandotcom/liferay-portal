@@ -3179,13 +3179,6 @@ definition {
 			value1 = "${filter}");
 	}
 
-	macro selectGerenicField {
-		Select(
-			key_fieldLabel = "${fieldLabel}",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${option}");
-	}
-
 	macro selectItemToPreviewWithObject {
 		Click(locator1 = "PageEditor#PREVIEW_WITH_DROPDOWN_MENU");
 

@@ -85,17 +85,16 @@ definition {
 			fragmentName = "Heading",
 			label = "Expand Collection Display");
 
-		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			listStyle = "Table",
+			selectedName = "Custom Objects");
 
-		PageEditor.selectGerenicField(
-			fieldLabel = "List Style",
-			option = "Table");
-
-		PageEditor.filterColletion(
+		PageEditor.filterCollection(
 			fieldLabel = "Field",
 			option = "True");
 
-		PageEditor.publishPage();
+		PageEditor.clickPublish();
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "View",
@@ -167,13 +166,12 @@ definition {
 			fragmentName = "Heading",
 			label = "Expand Collection Display");
 
-		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			pagination = "Numeric",
+			selectedName = "Custom Objects");
 
-		PageEditor.selectGerenicField(
-			fieldLabel = "Pagination",
-			option = "Numeric");
-
-		PageEditor.publishPage();
+		PageEditor.clickPublish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
@@ -234,13 +232,12 @@ definition {
 			fragmentName = "Heading",
 			label = "Expand Collection Display");
 
-		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			pagination = "Simple",
+			selectedName = "Custom Objects");
 
-		PageEditor.selectGerenicField(
-			fieldLabel = "Pagination",
-			option = "Simple");
-
-		PageEditor.publishPage();
+		PageEditor.clickPublish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",

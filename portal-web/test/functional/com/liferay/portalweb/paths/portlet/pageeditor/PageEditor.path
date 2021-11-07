@@ -119,11 +119,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COLLECTION_ITEM_FILTER_COLLECTION</td>
-	<td>//button[contains(@class,'dropdown-item')][contains(text(),'Filter Collection')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>COLLECTION_ITEM_IMAGE</td>
 	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//div[contains(@class,'page-editor__collection')]/div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@style,'${key_entryImage}')]</td>
 	<td></td>
@@ -162,11 +157,6 @@
 	<td>COLLECTION_ITEM_TRUE_ENTRY</td>
 	<td>//span[contains(@class,'text-truncate')][contains(text(),'true')]
 </td>
-	<td></td>
-</tr>
-<tr>
-	<td>COLLECTION_ITEM_VIEW_COLLECTION_OPTIONS</td>
-	<td>//button[contains(@aria-label,'View Collection Options')]</td>
 	<td></td>
 </tr>
 <!--COLLECTION_FILTER-->

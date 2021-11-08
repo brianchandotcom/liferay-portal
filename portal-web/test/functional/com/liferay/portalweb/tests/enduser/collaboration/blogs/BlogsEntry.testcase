@@ -999,13 +999,17 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		AssertElementNotPresent(locator1 = "Ratings#BOTH_THUMBS");
+		for (var keyText : list "thumbs-up,thumbs-down") {
+			AssertElementNotPresent(locator1 = "Icon#ANY");
+		}
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		AssertElementNotPresent(locator1 = "Ratings#BOTH_THUMBS");
+		for (var keyText : list "thumbs-up,thumbs-down") {
+			AssertElementNotPresent(locator1 = "Icon#ANY");
+		}
 	}
 
 	@description = "This checks that a blog draft can be published."

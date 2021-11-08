@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>HIGHLIGHTED_ELEMENT_COUNT</td>
-	<td>//*[contains(@id, 'a11yContainer')]//*[contains(@class, 'a11y-overlay')][${key_text}]</td>
+	<td>//*[contains(@id, 'a11yContainer')]//*[contains(@class, 'a11y-overlay')][${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

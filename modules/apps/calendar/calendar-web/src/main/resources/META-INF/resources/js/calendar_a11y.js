@@ -19,7 +19,7 @@ AUI.add(
 
 		template = template.replace('aria-role="heading"', '');
 		template = template.replace('<div class="yui3-u', '<h1 class="yui3-u');
-		template = template.replace('</div> +', '</h1> +');
+		template = template.replace(/div></, 'h1><');
 
 		A.CalendarBase.HEADER_TEMPLATE = template;
 	},

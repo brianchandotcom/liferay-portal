@@ -1,13 +1,13 @@
-import backgroundImg from "../assets/background.png"
+import { useContext } from "react";
+import { AppContext } from "../context";
 
-
-const Banner = () => {
+const Banner = ({ userName }) => {
+  const [state] = useContext(AppContext);
 
   return (
-
-    <div className="align-items-stretch banner d-flex" style={{ backgroundImage: `url(${backgroundImg})` }} >
-      <div className="d-flex flex-column justify-content-between m-3 p-5 text-neutral-10">
-        <div className="display-4 font-weight-normal">Welcome, <span className="font-weight-bolder">Sarah!</span></div>
+    <div className="banner d-flex flex-column ml-5 rounded-left">
+      <div className="d-flex flex-column h-100 justify-content-between m-3 p-5 text-neutral-10">
+        <div className="display-4 font-weight-normal">Welcome, <span className="font-weight-bolder">{userName}!</span></div>
 
         <div>
           <h2>Projects</h2>
@@ -16,7 +16,9 @@ const Banner = () => {
         </div>
       </div>
 
+      <img className="position-absolute" src={`${state.assetsPath}/assets/banner_background_customer_portal.svg`} />
     </div>
+
   );
 };
 

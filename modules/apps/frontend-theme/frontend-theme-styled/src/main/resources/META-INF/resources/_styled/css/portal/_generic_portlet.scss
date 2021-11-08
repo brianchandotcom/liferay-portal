@@ -29,26 +29,3 @@
 		}
 	}
 }
-
-.controls-hidden {
-	.lfr-configurator-visibility {
-		display: none;
-	}
-
-	.portlet-topper-toolbar {
-		display: none !important;
-	}
-}
-
-.js {
-	.controls-hidden {
-		.lfr-meta-actions,
-		.lfr-configurator-visibility {
-			display: none;
-		}
-	}
-
-	.page-maximized .portlet-topper-toolbar {
-		display: block;
-	}
-}

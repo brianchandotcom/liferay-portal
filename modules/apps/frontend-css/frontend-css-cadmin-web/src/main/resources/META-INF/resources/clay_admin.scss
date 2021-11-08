@@ -280,6 +280,19 @@ html#{$cadmin-selector} {
 			padding: 12px;
 		}
 
+		// Lfr Portlet Controls
+
+		.controls-hidden {
+			.lfr-meta-actions,
+			.lfr-configurator-visibility {
+				display: none;
+			}
+
+			.portlet-topper-toolbar {
+				display: none !important;
+			}
+		}
+
 		// Lfr Source Editor
 
 		&.lfr-fullscreen-source-editor-header {

@@ -116,13 +116,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ELEMENT_NEEDS_TO_BE_SELECTED_MENSSAGE</td>
+	<td>ELEMENT_NEEDS_TO_BE_SELECTED_MESSAGE</td>
 	<td>//div[contains(@class,"c-mb-2 c-mt-2 font-weight-semi-bold text-danger") and contains(text(),"An element needs to be selected.")]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EYE_BUTTON_SHOW_ELEMENT</td>
 	<td>//button[contains(@class,"btn btn-monospaced btn-secondary")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPERIENCE_LOCKED_MESSAGE</td>
+	<td>//button[@class="nav-link btn btn-unstyled"]</td>
 	<td></td>
 </tr>
 <tr>
@@ -153,6 +158,11 @@
 <tr>
 	<td>REVIEW_AND_RUN_TEST_BUTTON</td>
 	<td>//button[contains(@class,'btn-primary') and contains(text(),'Review and Run Test')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PADLOCK_ICON</td>
+	<td>//*[contains(@class, 'lexicon-icon lexicon-icon-lock text-secondary')]</td>
 	<td></td>
 </tr>
 <tr>

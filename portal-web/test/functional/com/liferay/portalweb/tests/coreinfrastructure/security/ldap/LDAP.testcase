@@ -65,10 +65,7 @@ definition {
 		}
 
 		task ("View user information and assert -Unable to encrypt blank password- message not present on console") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.viewCP(
 				userEmailAddress = "ldapuseremail@liferay.com",
@@ -118,10 +115,7 @@ definition {
 		}
 
 		task ("View user information") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.viewCP(
 				userEmailAddress = "ldapuseremail@liferay.com",
@@ -191,10 +185,7 @@ definition {
 		property test.name.skip.portal.instance = "LDAP#ViewHiddenSecurityCredential";
 
 		task ("Add Server and edit security credential") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "LDAP",
@@ -213,10 +204,7 @@ definition {
 		property test.name.skip.portal.instance = "LDAP#ViewInstanceSettingsEnableLDAPAuthNotAffectSystemSetting";
 
 		task ("Enable LDAP Authentication") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "LDAP",
@@ -229,10 +217,7 @@ definition {
 		}
 
 		task ("Assert LDAP Authentication enabled checkbox is not checked") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "LDAP",

@@ -267,6 +267,7 @@ for (long groupId : groupIds) {
 			var delegateTarget = event.delegateTarget;
 
 			Liferay.Util.openSelectionModal({
+				customSelectEvent: true,
 				multiple: true,
 				onSelect: function (selectedItems) {
 					if (selectedItems) {

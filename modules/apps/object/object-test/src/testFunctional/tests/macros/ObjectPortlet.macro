@@ -136,18 +136,6 @@ definition {
 			value1 = "must have UPDATE permission for com.liferay.object.model.ObjectDefinition#");
 	}
 
-	macro assertUserCanUpdateEntryWithPermission {
-		Click(locator1 = "ObjectPortlet#VIEW_ENTRY_EYE_BUTTON");
-
-		Type.type(
-			locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
-			value1 = "${updateEntry}");
-
-		Button.clickSave();
-
-		ObjectPortlet.viewEntry(entry = "${entry}");
-	}
-
 	macro changePagination {
 		Click(locator1 = "ObjectPortlet#PAGINATION_ITEMS_PER_PAGE_SELECT");
 

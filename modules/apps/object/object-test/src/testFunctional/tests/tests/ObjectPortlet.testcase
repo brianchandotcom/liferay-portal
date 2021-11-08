@@ -1665,9 +1665,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.assertUserCanUpdateEntryWithPermission(
-			entry = "Test 2",
-			updateEntry = "Test 2");
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Test 2");
+
+		ObjectPortlet.viewEntry(entry = "Test 2");
 	}
 
 	@description = "LPS-138755 - Add an entry with another user and make sure the author value is correctly displayed"

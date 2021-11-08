@@ -118,6 +118,19 @@ public class BatchPlannerLogLocalServiceImpl
 	}
 
 	@Override
+	public BatchPlannerLog fetchBatchPlannerLog(
+		String batchEngineTaskERC, boolean export) {
+
+		if (export) {
+			return batchPlannerLogPersistence.fetchByBatchEngineExportTaskERC(
+				batchEngineTaskERC);
+		}
+
+		return batchPlannerLogPersistence.fetchByBatchEngineImportTaskERC(
+			batchEngineTaskERC);
+	}
+
+	@Override
 	public BatchPlannerLog fetchBatchPlannerPlanBatchPlannerLog(
 		long batchPlannerPlanId) {
 

@@ -16,12 +16,18 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String className = (String)request.getAttribute("liferay-friendly-url:history:className");
+long classPK = (long)request.getAttribute("liferay-friendly-url:history:classPK");
+String elementId = (String)request.getAttribute("liferay-friendly-url:history:elementId");
+%>
+
 <div class="btn-url-history-wrapper">
 
 	<%
 	User defaultUser = company.getDefaultUser();
 
-	String friendlyURLEntryURL = StringBundler.concat(themeDisplay.getPortalURL(), Portal.PATH_MODULE, "/friendly-url/", Layout.class.getName(), StringPool.SLASH, selLayout.getPlid());
+	String friendlyURLEntryURL = StringBundler.concat(themeDisplay.getPortalURL(), Portal.PATH_MODULE, "/friendly-url/", className, StringPool.SLASH, classPK);
 	%>
 
 	<react:component
@@ -30,7 +36,7 @@
 			HashMapBuilder.<String, Object>put(
 				"defaultLanguageId", LocaleUtil.toLanguageId(defaultUser.getLocale())
 			).put(
-				"elementId", portletDisplay.getNamespace() + "friendlyURL"
+				"elementId", elementId
 			).put(
 				"friendlyURLEntryURL", friendlyURLEntryURL
 			).build()

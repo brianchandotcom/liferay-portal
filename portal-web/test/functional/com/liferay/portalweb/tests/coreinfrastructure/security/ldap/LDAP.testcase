@@ -26,6 +26,7 @@ definition {
 
 	@description = "This is a use case for LPS-65498. LDAP user can be imported with blank password."
 	@priority = "5"
+	@uitest
 	test ImportLDAPUserWithBlankPassword {
 		property apacheds.blank.user.password.enabled = "true";
 		property apacheds.enabled = "true";
@@ -181,6 +182,7 @@ definition {
 
 	@description = "This is a use case for LPS-73381. LDAP security credentials are obscured when entered."
 	@priority = "4"
+	@uitest
 	test ViewHiddenSecurityCredential {
 		property test.name.skip.portal.instance = "LDAP#ViewHiddenSecurityCredential";
 

@@ -1291,7 +1291,7 @@ definition {
 			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 		}
 
-		task("Assert that the ABTest draft keeps appearing") {
+		task ("Assert that the ABTest draft keeps appearing") {
 			Button.clickPublish();
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
@@ -1415,7 +1415,7 @@ definition {
 			AssertElementNotPresent(locator1 = "ABTest#AB_TEST_BUTTON");
 
 			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
-			
+
 			PageEditor.changeExperience(newExperience = "NewAnyoneExperience");
 		}
 

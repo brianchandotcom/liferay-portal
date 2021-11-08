@@ -48,6 +48,7 @@ import com.liferay.search.experiences.rest.dto.v1_0.Highlight;
 import com.liferay.search.experiences.rest.dto.v1_0.HighlightField;
 import com.liferay.search.experiences.rest.dto.v1_0.Parameter;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.dto.v1_0.ValueDefinition;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
 
@@ -145,8 +146,13 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 				() -> {
 					Parameter parameter = new Parameter();
 
-					parameter.setDefaultValueString(
-						RandomTestUtil.randomString());
+					parameter.setValueDefinition(
+						new ValueDefinition() {
+							{
+								setDefaultValueString(
+									RandomTestUtil.randomString());
+							}
+						});
 
 					return parameter;
 				}

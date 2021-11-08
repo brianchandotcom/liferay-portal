@@ -378,6 +378,72 @@ definition {
 		}
 	}
 
+	@description = "This test sets a valid domain for a business account. Account Admin can only add users with a valid domain"
+	@priority = "3"
+	test AccountAdminCanOnlyAddUserWithValidDomain {
+		task ("Login as Super User and enable email domain") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			AccountConfiguration.enableAccountEmailDomain();
+		}
+
+		task ("Login as Account Admin and edit Account Name with a domain set") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			Accounts.editPG(
+				accountName = "Account Name",
+				domainNames = "gmail.com");
+		}
+
+		task ("Attempt to add user using the valid domain and assert that the new user is added into the account") {
+			Accounts.addNewUserWithSameDomain(
+				accountName = "Account Name",
+				assigneeName = "gmailUser",
+				emailDomainName = "gmail.com",
+				userEmailAddress = "userea@gmail.com",
+				userFirstName = "gmailUser",
+				userLastName = "gmailUser",
+				userScreenName = "User",
+				validDomainNames = "gmail.com");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
+
+			AssertElementPresent(
+				key_userName = "gmailUser",
+				locator1 = "Account#USER_TABLE_NAME");
+		}
+
+		task ("As account admin attempt to add user using the invalid domain and assert that the new user is not added into the account") {
+			Accounts.addNewUserWithInvalidDomain(
+				accountName = "Account Name",
+				asAccountAdmin = "true",
+				assigneeName = "9teenUser",
+				emailDomainName = "9teen.com",
+				userEmailAddress = "userea@9teen.com",
+				userFirstName = "9teenUser",
+				userLastName = "9teenUser",
+				userScreenName = "User1");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
+
+			LexiconEntry.viewNoEntry(rowEntry = "9teenUser 9teenUser");
+		}
+	}
+
 	@description = "This test asserts that an Account Admin can set a billing address to an Account."
 	@priority = "5"
 	test AccountAdminCanSetDefaultBillingAddress {

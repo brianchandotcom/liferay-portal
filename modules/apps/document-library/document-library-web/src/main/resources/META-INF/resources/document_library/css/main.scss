@@ -361,7 +361,7 @@ $productMenuWidth: 320px;
 	}
 
 	.lfr-header-row {
-		border: 1px solid transparent;
+		border: 1px solid #7b7b7b;
 		min-height: 31px;
 
 		.lfr-asset-summary {
@@ -390,6 +390,7 @@ $productMenuWidth: 320px;
 		}
 
 		.lfr-search-combobox {
+			border-color: #5f5f5f;
 			float: right;
 			margin: -2px 0 0 2px;
 		}

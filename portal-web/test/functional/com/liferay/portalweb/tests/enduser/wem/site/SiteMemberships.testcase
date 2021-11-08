@@ -28,6 +28,7 @@ definition {
 		}
 	}
 
+	@description = "Assert could assign user to new site in site membership admin."
 	@priority = "4"
 	test AddMember {
 		property testray.component.names = "Site Administration,Users and Organizations";
@@ -48,6 +49,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
+	@description = "Assert could assign site role to default site in site membership admin."
 	@priority = "5"
 	test AddMemberAssignSiteRole {
 		property portal.acceptance = "true";
@@ -79,6 +81,7 @@ definition {
 			roleTitle = "Site Content Reviewer");
 	}
 
+	@description = "Assert could assign organization to default site in site membership admin."
 	@priority = "4"
 	test AddMemberOrganization {
 		property testray.component.names = "Site Administration,Users and Organizations";
@@ -94,50 +97,46 @@ definition {
 		Site.viewMemberOrganizationCP(orgName = "Organization Name");
 	}
 
+	@description = "Assert could assign users to new site in site membership admin."
 	@priority = "5"
 	test AddMembersSiteUser {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SiteMemberships#AddMembersSiteUser";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		for (var userNum : list "1,2,3") {
+			JSONUser.addUser(
+				userEmailAddress = "userea${userNum}@liferay.com",
+				userFirstName = "userfn${userNum}",
+				userLastName = "userln${userNum}",
+				userScreenName = "usersn${userNum}");
+		}
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		// This is a workarond for managment bar is temporarily unavailable, this error only fail in this case and there is still other case just use Site.assignUserAsMemberCP after adding a user and site.
-
 		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
-		LexiconEntry.gotoAdd();
-
-		SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
-
-		if (IsElementNotPresent(locator1 = "ManagementBar#FILTER_AND_ORDER")) {
-			SearchAdministration.executeReindex();
+		for (var userNum : list "1,2,3") {
+			Site.assignUserAsMemberCP(
+				userFirstName = "userfn${userNum}",
+				userLastName = "userln${userNum}",
+				userScreenName = "usersn${userNum}");
 		}
 
 		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
-
-		Site.viewMemberCP(
-			siteName = "Site Name",
-			siteScopeName = "Site Name",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		for (var userNum : list "1,2,3") {
+			Site.viewMemberCP(
+				siteName = "Site Name",
+				siteScopeName = "Site Name",
+				userFirstName = "userfn${userNum}",
+				userLastName = "userln${userNum}",
+				userScreenName = "usersn${userNum}");
+		}
 	}
 
+	@description = "Assert could assign uer group to default site in site membership admin."
 	@priority = "4"
+	@uitest
 	test AddMemberUserGroup {
 		property testray.component.names = "Site Administration,User Groups";
 
@@ -154,7 +153,9 @@ definition {
 		Site.viewMemberUserGroupCP(userGroupName = "User Group Name");
 	}
 
+	@description = "Assert could assign site role to user group in site membership admin."
 	@priority = "4"
+	@uitest
 	test AddMemberUserGroupAssignSiteRole {
 		property testray.component.names = "Site Administration,User Groups";
 
@@ -183,6 +184,7 @@ definition {
 			roleTitle = "Site Content Reviewer");
 	}
 
+	@description = "Assert could limit memebership in site membership admin."
 	@priority = "4"
 	test LimitMembershipParentSite {
 		property testray.component.names = "Site Administration";
@@ -261,6 +263,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
+	@description = "Assert could assign prganization in site membership admin."
 	@priority = "5"
 	test OrganizationsView {
 		property portal.acceptance = "true";
@@ -346,6 +349,7 @@ definition {
 		Site.viewMemberOrganizationCP(orgName = "Organization Name 3");
 	}
 
+	@description = "Assert could remove memebership in site membership admin."
 	@priority = "5"
 	test RemoveMember {
 		property portal.acceptance = "true";
@@ -372,6 +376,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
+	@description = "Assert could search organization memebership in site membership admin."
 	@priority = "3"
 	test SiteMembershipSearchOrganization {
 		property testray.component.names = "Site Administration,Users and Organizations";
@@ -395,6 +400,7 @@ definition {
 		Site.searchMembershipCP(searchValue = "&quot;Organization Name 1&quot;");
 	}
 
+	@description = "Assert could search user group memebership in site membership admin."
 	@priority = "3"
 	test SiteMembershipSearchUserGroup {
 		property testray.component.names = "Site Administration,User Groups";
@@ -420,6 +426,7 @@ definition {
 		Site.searchMembershipCP(searchValue = "&quot;User Group Name 1&quot;");
 	}
 
+	@description = "View pagination in site membership admin."
 	@priority = "3"
 	test SiteMembershipsPagination {
 		property testray.component.names = "Site Administration,Users and Organizations";
@@ -505,6 +512,7 @@ definition {
 		Site.viewMemberListCP(usersEmailsList = "userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com");
 	}
 
+	@description = "Assert could search user via user info in site membership admin."
 	@priority = "4"
 	test SiteMembershipsSearch {
 		property testray.component.names = "Site Administration,Users and Organizations";
@@ -676,6 +684,7 @@ definition {
 			userScreenName = "member3");
 	}
 
+	@description = "View memebership request in site membership admin."
 	@priority = "3"
 	test ViewMembershipRequestWithSiteMembershipScope {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -723,7 +732,9 @@ definition {
 		Site.viewNoSiteMembershipsRequest();
 	}
 
+	@description = "Assert could not add user with Allow Manual Membership Management disabled."
 	@priority = "3"
+	@uitest
 	test ViewNoManualMembershipManagement {
 		property testray.component.names = "Site Administration";
 

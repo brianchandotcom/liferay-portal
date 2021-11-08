@@ -2962,6 +2962,17 @@ definition {
 
 	}
 
+	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
+	When the value is void ('Choose an option')
+	Then the call is made for Google Page Speed default value - desktop"
+	@ignore = "true"
+	@priority = "3"
+	test DefaultStrategyAtSystemSettings {
+
+		// TODO LPS-125851 VoidEqualsDesktop pending implementation
+
+	}
+
 	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
 	When the value is void ('Choose an option')
 	Then the call is made for Google Page Speed default value - desktop"
@@ -2970,6 +2981,17 @@ definition {
 	test DesktopDefaultValue {
 
 		// TODO LPS-128385 DesktopDefaultValue pending implementation
+
+	}
+
+	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
+	When the value is Desktop
+	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are NOT retrieved"
+	@ignore = "true"
+	@priority = "4"
+	test DesktopStrategyAtSystemSettings {
+
+		// TODO LPS-125851 AdditionalChecksForDesktopValue pending implementation
 
 	}
 
@@ -3040,17 +3062,6 @@ definition {
 
 	}
 
-	@description = "LPS-125851: Given the Google PageSpeed settings tab in the 'SITE SCOPE' section
-	When the Enable Google PageSpeed Insights check is unchecked
-	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"
-	@ignore = "true"
-	@priority = "3"
-	test UncheckedSystemSettingsSiteScopeThenUncheckedAtTabSiteSettings {
-
-		// TODO LPS-125851 InsightsVisibleInSiteSettingsAndSites pending implementation
-
-	}
-
 	@description = "LPS-135681: Given the Page Audit panel when the invalid API Key error is retrieved
 	When the user clicks on the Set API Key button
 	Then the user navigates to Site settings > Pages > Google PageSpeed Insights tab"
@@ -3103,6 +3114,17 @@ definition {
 	test LanguageCacheData {
 
 		// TODO LPS-130636 LanguageCacheData pending implementation
+
+	}
+
+	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
+	When the value is Mobile
+	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
+	@ignore = "true"
+	@priority = "4"
+	test MobileStrategyAtSystemSettings {
+
+		// TODO LPS-125851 AdditionalChecksForMobileValue pending implementation
 
 	}
 
@@ -3702,17 +3724,6 @@ definition {
 
 	}
 
-	@description = "LPS-125851: Given the Google PageSpeed settings tab in the System Scope section
-	When the Enable Google PageSpeed Insights check is unchecked
-	Then the 'Google PageSpeed Insights' tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section"
-	@ignore = "true"
-	@priority = "3"
-	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtVirtualInstance {
-
-		// TODO LPS-125851 TabGoogleInvisibleInVirtualInstanceScope pending implementation
-
-	}
-
 	@description = "LPS-128383: Given the PageSpeed Insights settings in the System Settings
 	When Google PageSpeed Insights is not enabled (unchecked)
 	Then the tab Google PageSpeed Insights is not visible from Instance settings"
@@ -3721,6 +3732,39 @@ definition {
 	test TabGoogleSpeedInvisibleInSites {
 
 		// TODO LPS-128383 TabGoogleSpeedInvisibleInSites pending implementation
+
+	}
+
+	@description = "LPS-125851: Given the Google PageSpeed settings tab in the 'SITE SCOPE' section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"
+	@ignore = "true"
+	@priority = "3"
+	test UncheckedSystemSettingsSiteScopeThenUncheckedAtTabSiteSettings {
+
+		// TODO LPS-125851 InsightsVisibleInSiteSettingsAndSites pending implementation
+
+	}
+
+	@description = "LPS-125851: Given the Google PageSpeed settings tab in the System Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab isn't visible in the 'SITE SCOPE' section "
+	@ignore = "true"
+	@priority = "3"
+	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtSiteScope {
+
+		// TODO LPS-125851 TabSpeed​​​​InsightsInvisibleInSiteScope pending implementation
+
+	}
+
+	@description = "LPS-125851: Given the Google PageSpeed settings tab in the System Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section"
+	@ignore = "true"
+	@priority = "3"
+	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtVirtualInstance {
+
+		// TODO LPS-125851 TabGoogleInvisibleInVirtualInstanceScope pending implementation
 
 	}
 
@@ -3746,17 +3790,6 @@ definition {
 
 	}
 
-	@description = "LPS-125851: Given the Google PageSpeed settings tab in the System Scope section
-	When the Enable Google PageSpeed Insights check is unchecked
-	Then the 'Google PageSpeed Insights' tab isn't visible in the 'SITE SCOPE' section "
-	@ignore = "true"
-	@priority = "3"
-	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtSiteScope {
-
-		// TODO LPS-125851 TabSpeed​​​​InsightsInvisibleInSiteScope pending implementation
-
-	}
-
 	@description = "LPS-128383: Given any value in the Instance settings Site scope section
 	When the same value has been overwritten in any of the sites
 	Then the value in the site prevails over any changes in the Instance settings"
@@ -3765,17 +3798,6 @@ definition {
 	test ValuesOverWrittenInSites {
 
 		// TODO LPS-128383 ValuesOverWrittenInSites pending implementation
-
-	}
-
-	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
-	When the value is void ('Choose an option')
-	Then the call is made for Google Page Speed default value - desktop"
-	@ignore = "true"
-	@priority = "3"
-	test DefaultStrategyAtSystemSettings {
-
-		// TODO LPS-125851 VoidEqualsDesktop pending implementation
 
 	}
 

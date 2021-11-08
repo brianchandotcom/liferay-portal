@@ -1521,6 +1521,60 @@ definition {
 			customFieldText = "Custom Field for Account");
 	}
 
+	@description = "This test asserts that a user can view all the Account Groups an account is assigned to via Account details page"
+	@priority = "4"
+	test CanEditAddressFields {
+		task ("Add an inital account entry with city, country, postal code, region, and street.") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "CanEditAddressFields",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "CanEditAddressFields");
+			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Accounts.addAddress(
+				addressCity = "Dalian",
+				addressCountry = "Cuba",
+				addressName = "Address Entry Name",
+				addressPostalCode = "116023",
+				addressStreet1 = "537 Huangpu Road Taide Building,");
+		}
+
+		task ("Edit the previously added account entry information.") {
+			Accounts.editAddress(
+				addressCity = "Irvine",
+				addressCountry = "Chile",
+				addressName = "Address Entry Name",
+				addressPostalCode = "123456",
+				addressStreet1 = "Street address one");
+		}
+
+		task ("Assert that the correct edits were made to street and city") {
+			AssertTextEquals(
+				key_columnName = "lfr-street-column",
+				key_rowEntry = "Address Entry Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+				value1 = "Street address one");
+
+			AssertTextEquals(
+				key_columnName = "lfr-city-column",
+				key_rowEntry = "Address Entry Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+				value1 = "Irvine");
+		}
+
+		task ("Assert that original names are no longer present for street and city.") {
+			AssertElementNotPresent(
+				key_rowEntry = "537 Huangpu Road Taide Building,",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD");
+
+			AssertElementNotPresent(
+				key_rowEntry = "Dalian",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD");
+		}
+	}
+
 	@description = "This test asserts that External Reference Code is editable."
 	@priority = "3"
 	test CanEditExternalReferenceCode {

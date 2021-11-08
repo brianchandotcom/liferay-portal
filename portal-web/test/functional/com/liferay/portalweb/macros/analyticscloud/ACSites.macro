@@ -74,9 +74,17 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
+		while (IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART") && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
 		Click.mouseDownMouseUp(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
 
-		while (IsElementNotPresent(locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS", key_value = "${valueVisitors}", key_visitors = "${visitorsType}")) {
+		while (IsElementNotPresent(locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS", key_value = "${valueVisitors}", key_visitors = "${visitorsType}") && (maxIterations = "50")) {
 			TestUtils.hardRefresh();
 
 			ACTimeFilter.clickTimeFilterButton();

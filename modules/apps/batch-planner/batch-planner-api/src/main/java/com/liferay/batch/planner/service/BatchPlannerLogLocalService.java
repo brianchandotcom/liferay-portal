@@ -208,6 +208,10 @@ public interface BatchPlannerLogLocalService
 	public BatchPlannerLog fetchBatchPlannerLog(long batchPlannerLogId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchPlannerLog fetchBatchPlannerLog(
+		String batchEngineTaskERC, boolean export);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BatchPlannerLog fetchBatchPlannerPlanBatchPlannerLog(
 		long batchPlannerPlanId);
 

@@ -226,6 +226,12 @@ public class BatchPlannerLogLocalServiceUtil {
 		return getService().fetchBatchPlannerLog(batchPlannerLogId);
 	}
 
+	public static BatchPlannerLog fetchBatchPlannerLog(
+		String batchEngineTaskERC, boolean export) {
+
+		return getService().fetchBatchPlannerLog(batchEngineTaskERC, export);
+	}
+
 	public static BatchPlannerLog fetchBatchPlannerPlanBatchPlannerLog(
 		long batchPlannerPlanId) {
 

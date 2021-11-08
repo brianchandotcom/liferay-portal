@@ -647,9 +647,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				commerceInventoryWarehouses,
 				CommerceInventoryWarehouse.
 					COMMERCE_INVENTORY_WAREHOUSE_ID_ACCESSOR),
-			BundleSiteInitializer.class.getClassLoader(),
-			"/site-initializer/commerce-catalogs/" +
-				StringUtil.replace(resourcePath, ".json", "/"),
+			_classLoader, StringUtil.replace(resourcePath, ".json", "/"),
 			serviceContext.getScopeGroupId(), serviceContext.getUserId());
 	}
 

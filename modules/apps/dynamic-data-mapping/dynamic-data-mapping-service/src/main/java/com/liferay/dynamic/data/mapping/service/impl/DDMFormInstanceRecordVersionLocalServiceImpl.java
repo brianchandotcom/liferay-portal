@@ -78,6 +78,14 @@ public class DDMFormInstanceRecordVersionLocalServiceImpl
 	}
 
 	@Override
+	public List<DDMFormInstanceRecordVersion> getFormInstanceRecordVersions(
+		long userId, long formInstanceId) {
+
+		return ddmFormInstanceRecordVersionPersistence.findByU_F(
+			userId, formInstanceId);
+	}
+
+	@Override
 	public int getFormInstanceRecordVersionsCount(
 		long ddmFormInstanceRecordId) {
 

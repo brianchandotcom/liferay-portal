@@ -25,6 +25,7 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.importer.item.CommerceOrderImporterItem;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterType;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
+import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -67,8 +68,8 @@ public class ImportCommerceOrderItemsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		int notImportedRowsCount = 0;
 		int importedRowsCount = 0;
+		int notImportedRowsCount = 0;
 
 		long commerceOrderId = ParamUtil.getLong(
 			actionRequest, "commerceOrderId");
@@ -93,6 +94,12 @@ public class ImportCommerceOrderItemsMVCActionCommand
 				for (CommerceOrderImporterItem commerceOrderImporterItem :
 						commerceOrderImporterItems) {
 
+					if (commerceOrderImporterItem.getQuantity() < 1) {
+						notImportedRowsCount++;
+
+						continue;
+					}
+
 					try {
 						_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 							commerceOrderId,
@@ -109,6 +116,11 @@ public class ImportCommerceOrderItemsMVCActionCommand
 					}
 					catch (CommerceOrderValidatorException
 								commerceOrderValidatorException) {
+
+						notImportedRowsCount++;
+					}
+					catch (NoSuchCPInstanceException
+								noSuchCPInstanceException) {
 
 						notImportedRowsCount++;
 					}
@@ -137,12 +149,18 @@ public class ImportCommerceOrderItemsMVCActionCommand
 			}
 		}
 
+		hideDefaultErrorMessage(actionRequest);
 		hideDefaultSuccessMessage(actionRequest);
 
-		SessionMessages.add(
-			actionRequest, "notImportedRowsCount", notImportedRowsCount);
-		SessionMessages.add(
-			actionRequest, "importedRowsCount", importedRowsCount);
+		if (importedRowsCount > 0) {
+			SessionMessages.add(
+				actionRequest, "importedRowsCount", importedRowsCount);
+		}
+
+		if (notImportedRowsCount > 0) {
+			SessionErrors.add(
+				actionRequest, "notImportedRowsCount", notImportedRowsCount);
+		}
 
 		sendRedirect(
 			actionRequest, actionResponse,

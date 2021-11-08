@@ -44,6 +44,7 @@ public class CommerceOrderTypeRelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commerceOrderTypeRelId", getCommerceOrderTypeRelId());
 		attributes.put("companyId", getCompanyId());
@@ -60,6 +61,12 @@ public class CommerceOrderTypeRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String externalReferenceCode = (String)attributes.get(
 			"externalReferenceCode");
 
@@ -219,6 +226,16 @@ public class CommerceOrderTypeRelWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this commerce order type rel.
+	 *
+	 * @return the mvcc version of this commerce order type rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the primary key of this commerce order type rel.
 	 *
 	 * @return the primary key of this commerce order type rel
@@ -346,6 +363,16 @@ public class CommerceOrderTypeRelWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce order type rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce order type rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

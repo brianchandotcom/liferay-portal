@@ -18,6 +18,7 @@ import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceOrderTypeCacheModel
-	implements CacheModel<CommerceOrderType>, Externalizable {
+	implements CacheModel<CommerceOrderType>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,8 +49,9 @@ public class CommerceOrderTypeCacheModel
 		CommerceOrderTypeCacheModel commerceOrderTypeCacheModel =
 			(CommerceOrderTypeCacheModel)object;
 
-		if (commerceOrderTypeId ==
-				commerceOrderTypeCacheModel.commerceOrderTypeId) {
+		if ((commerceOrderTypeId ==
+				commerceOrderTypeCacheModel.commerceOrderTypeId) &&
+			(mvccVersion == commerceOrderTypeCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +61,28 @@ public class CommerceOrderTypeCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceOrderTypeId);
+		int hashCode = HashUtil.hash(0, commerceOrderTypeId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
-		sb.append("{externalReferenceCode=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
 		sb.append(", commerceOrderTypeId=");
 		sb.append(commerceOrderTypeId);
@@ -111,6 +127,8 @@ public class CommerceOrderTypeCacheModel
 	public CommerceOrderType toEntityModel() {
 		CommerceOrderTypeImpl commerceOrderTypeImpl =
 			new CommerceOrderTypeImpl();
+
+		commerceOrderTypeImpl.setMvccVersion(mvccVersion);
 
 		if (externalReferenceCode == null) {
 			commerceOrderTypeImpl.setExternalReferenceCode("");
@@ -208,6 +226,7 @@ public class CommerceOrderTypeCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		externalReferenceCode = objectInput.readUTF();
 
 		commerceOrderTypeId = objectInput.readLong();
@@ -237,6 +256,8 @@ public class CommerceOrderTypeCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (externalReferenceCode == null) {
 			objectOutput.writeUTF("");
 		}
@@ -295,6 +316,7 @@ public class CommerceOrderTypeCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long mvccVersion;
 	public String externalReferenceCode;
 	public long commerceOrderTypeId;
 	public long companyId;

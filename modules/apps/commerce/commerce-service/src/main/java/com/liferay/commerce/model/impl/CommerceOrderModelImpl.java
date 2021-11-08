@@ -80,7 +80,8 @@ public class CommerceOrderModelImpl
 	public static final String TABLE_NAME = "CommerceOrder";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"commerceOrderId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -142,6 +143,7 @@ public class CommerceOrderModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceOrderId", Types.BIGINT);
@@ -214,7 +216,7 @@ public class CommerceOrderModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrder (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceCurrencyId LONG,commerceOrderTypeId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodKey VARCHAR(75) null,transactionId TEXT null,commerceShippingMethodId LONG,shippingOptionName VARCHAR(255) null,purchaseOrderNumber VARCHAR(75) null,couponCode VARCHAR(75) null,lastPriceUpdateDate DATE null,subtotal DECIMAL(30, 16) null,subtotalDiscountAmount DECIMAL(30, 16) null,subtotalDiscountPercentLevel1 DECIMAL(30, 16) null,subtotalDiscountPercentLevel2 DECIMAL(30, 16) null,subtotalDiscountPercentLevel3 DECIMAL(30, 16) null,subtotalDiscountPercentLevel4 DECIMAL(30, 16) null,shippingAmount DECIMAL(30, 16) null,shippingDiscountAmount DECIMAL(30, 16) null,shippingDiscountPercentLevel1 DECIMAL(30, 16) null,shippingDiscountPercentLevel2 DECIMAL(30, 16) null,shippingDiscountPercentLevel3 DECIMAL(30, 16) null,shippingDiscountPercentLevel4 DECIMAL(30, 16) null,taxAmount DECIMAL(30, 16) null,total DECIMAL(30, 16) null,totalDiscountAmount DECIMAL(30, 16) null,totalDiscountPercentageLevel1 DECIMAL(30, 16) null,totalDiscountPercentageLevel2 DECIMAL(30, 16) null,totalDiscountPercentageLevel3 DECIMAL(30, 16) null,totalDiscountPercentageLevel4 DECIMAL(30, 16) null,subtotalWithTaxAmount DECIMAL(30, 16) null,subtotalDiscountWithTaxAmount DECIMAL(30, 16) null,subtotalDiscountPctLev1WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev2WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev3WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev4WithTax DECIMAL(30, 16) null,shippingWithTaxAmount DECIMAL(30, 16) null,shippingDiscountWithTaxAmount DECIMAL(30, 16) null,shippingDiscountPctLev1WithTax DECIMAL(30, 16) null,shippingDiscountPctLev2WithTax DECIMAL(30, 16) null,shippingDiscountPctLev3WithTax DECIMAL(30, 16) null,shippingDiscountPctLev4WithTax DECIMAL(30, 16) null,totalWithTaxAmount DECIMAL(30, 16) null,totalDiscountWithTaxAmount DECIMAL(30, 16) null,totalDiscountPctLev1WithTax DECIMAL(30, 16) null,totalDiscountPctLev2WithTax DECIMAL(30, 16) null,totalDiscountPctLev3WithTax DECIMAL(30, 16) null,totalDiscountPctLev4WithTax DECIMAL(30, 16) null,advanceStatus VARCHAR(75) null,paymentStatus INTEGER,orderDate DATE null,orderStatus INTEGER,printedNote STRING null,requestedDeliveryDate DATE null,manuallyAdjusted BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CommerceOrder (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceCurrencyId LONG,commerceOrderTypeId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodKey VARCHAR(75) null,transactionId TEXT null,commerceShippingMethodId LONG,shippingOptionName VARCHAR(255) null,purchaseOrderNumber VARCHAR(75) null,couponCode VARCHAR(75) null,lastPriceUpdateDate DATE null,subtotal DECIMAL(30, 16) null,subtotalDiscountAmount DECIMAL(30, 16) null,subtotalDiscountPercentLevel1 DECIMAL(30, 16) null,subtotalDiscountPercentLevel2 DECIMAL(30, 16) null,subtotalDiscountPercentLevel3 DECIMAL(30, 16) null,subtotalDiscountPercentLevel4 DECIMAL(30, 16) null,shippingAmount DECIMAL(30, 16) null,shippingDiscountAmount DECIMAL(30, 16) null,shippingDiscountPercentLevel1 DECIMAL(30, 16) null,shippingDiscountPercentLevel2 DECIMAL(30, 16) null,shippingDiscountPercentLevel3 DECIMAL(30, 16) null,shippingDiscountPercentLevel4 DECIMAL(30, 16) null,taxAmount DECIMAL(30, 16) null,total DECIMAL(30, 16) null,totalDiscountAmount DECIMAL(30, 16) null,totalDiscountPercentageLevel1 DECIMAL(30, 16) null,totalDiscountPercentageLevel2 DECIMAL(30, 16) null,totalDiscountPercentageLevel3 DECIMAL(30, 16) null,totalDiscountPercentageLevel4 DECIMAL(30, 16) null,subtotalWithTaxAmount DECIMAL(30, 16) null,subtotalDiscountWithTaxAmount DECIMAL(30, 16) null,subtotalDiscountPctLev1WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev2WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev3WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev4WithTax DECIMAL(30, 16) null,shippingWithTaxAmount DECIMAL(30, 16) null,shippingDiscountWithTaxAmount DECIMAL(30, 16) null,shippingDiscountPctLev1WithTax DECIMAL(30, 16) null,shippingDiscountPctLev2WithTax DECIMAL(30, 16) null,shippingDiscountPctLev3WithTax DECIMAL(30, 16) null,shippingDiscountPctLev4WithTax DECIMAL(30, 16) null,totalWithTaxAmount DECIMAL(30, 16) null,totalDiscountWithTaxAmount DECIMAL(30, 16) null,totalDiscountPctLev1WithTax DECIMAL(30, 16) null,totalDiscountPctLev2WithTax DECIMAL(30, 16) null,totalDiscountPctLev3WithTax DECIMAL(30, 16) null,totalDiscountPctLev4WithTax DECIMAL(30, 16) null,advanceStatus VARCHAR(75) null,paymentStatus INTEGER,orderDate DATE null,orderStatus INTEGER,printedNote STRING null,requestedDeliveryDate DATE null,manuallyAdjusted BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrder";
 
@@ -266,6 +268,7 @@ public class CommerceOrderModelImpl
 
 		CommerceOrder model = new CommerceOrderImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceOrderId(soapModel.getCommerceOrderId());
@@ -519,6 +522,11 @@ public class CommerceOrderModelImpl
 		Map<String, BiConsumer<CommerceOrder, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<CommerceOrder, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", CommerceOrder::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceOrder, Long>)CommerceOrder::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CommerceOrder::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<CommerceOrder, String>)CommerceOrder::setUuid);
@@ -944,6 +952,21 @@ public class CommerceOrderModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -2368,6 +2391,7 @@ public class CommerceOrderModelImpl
 	public Object clone() {
 		CommerceOrderImpl commerceOrderImpl = new CommerceOrderImpl();
 
+		commerceOrderImpl.setMvccVersion(getMvccVersion());
 		commerceOrderImpl.setUuid(getUuid());
 		commerceOrderImpl.setExternalReferenceCode(getExternalReferenceCode());
 		commerceOrderImpl.setCommerceOrderId(getCommerceOrderId());
@@ -2478,6 +2502,8 @@ public class CommerceOrderModelImpl
 	public CommerceOrder cloneWithOriginalValues() {
 		CommerceOrderImpl commerceOrderImpl = new CommerceOrderImpl();
 
+		commerceOrderImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceOrderImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		commerceOrderImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
@@ -2716,6 +2742,8 @@ public class CommerceOrderModelImpl
 	public CacheModel<CommerceOrder> toCacheModel() {
 		CommerceOrderCacheModel commerceOrderCacheModel =
 			new CommerceOrderCacheModel();
+
+		commerceOrderCacheModel.mvccVersion = getMvccVersion();
 
 		commerceOrderCacheModel.uuid = getUuid();
 
@@ -3100,6 +3128,7 @@ public class CommerceOrderModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _commerceOrderId;
@@ -3200,6 +3229,7 @@ public class CommerceOrderModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);

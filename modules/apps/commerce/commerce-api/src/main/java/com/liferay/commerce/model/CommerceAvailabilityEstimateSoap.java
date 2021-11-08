@@ -36,6 +36,7 @@ public class CommerceAvailabilityEstimateSoap implements Serializable {
 		CommerceAvailabilityEstimateSoap soapModel =
 			new CommerceAvailabilityEstimateSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceAvailabilityEstimateId(
 			model.getCommerceAvailabilityEstimateId());
@@ -107,6 +108,14 @@ public class CommerceAvailabilityEstimateSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceAvailabilityEstimateId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -191,6 +200,7 @@ public class CommerceAvailabilityEstimateSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceAvailabilityEstimateId;
 	private long _companyId;

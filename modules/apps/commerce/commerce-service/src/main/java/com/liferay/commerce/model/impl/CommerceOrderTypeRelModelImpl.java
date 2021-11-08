@@ -79,7 +79,7 @@ public class CommerceOrderTypeRelModelImpl
 	public static final String TABLE_NAME = "CommerceOrderTypeRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
 		{"commerceOrderTypeRelId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -91,6 +91,7 @@ public class CommerceOrderTypeRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceOrderTypeRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -104,7 +105,7 @@ public class CommerceOrderTypeRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderTypeRel (externalReferenceCode VARCHAR(75) null,commerceOrderTypeRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceOrderTypeId LONG)";
+		"create table CommerceOrderTypeRel (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceOrderTypeRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceOrderTypeId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceOrderTypeRel";
@@ -193,6 +194,7 @@ public class CommerceOrderTypeRelModelImpl
 
 		CommerceOrderTypeRel model = new CommerceOrderTypeRelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceOrderTypeRelId(soapModel.getCommerceOrderTypeRelId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -365,6 +367,12 @@ public class CommerceOrderTypeRelModelImpl
 					<String, BiConsumer<CommerceOrderTypeRel, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceOrderTypeRel::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceOrderTypeRel, Long>)
+				CommerceOrderTypeRel::setMvccVersion);
+		attributeGetterFunctions.put(
 			"externalReferenceCode",
 			CommerceOrderTypeRel::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
@@ -431,6 +439,21 @@ public class CommerceOrderTypeRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -741,6 +764,7 @@ public class CommerceOrderTypeRelModelImpl
 		CommerceOrderTypeRelImpl commerceOrderTypeRelImpl =
 			new CommerceOrderTypeRelImpl();
 
+		commerceOrderTypeRelImpl.setMvccVersion(getMvccVersion());
 		commerceOrderTypeRelImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceOrderTypeRelImpl.setCommerceOrderTypeRelId(
@@ -765,6 +789,8 @@ public class CommerceOrderTypeRelModelImpl
 		CommerceOrderTypeRelImpl commerceOrderTypeRelImpl =
 			new CommerceOrderTypeRelImpl();
 
+		commerceOrderTypeRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceOrderTypeRelImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		commerceOrderTypeRelImpl.setCommerceOrderTypeRelId(
@@ -864,6 +890,8 @@ public class CommerceOrderTypeRelModelImpl
 	public CacheModel<CommerceOrderTypeRel> toCacheModel() {
 		CommerceOrderTypeRelCacheModel commerceOrderTypeRelCacheModel =
 			new CommerceOrderTypeRelCacheModel();
+
+		commerceOrderTypeRelCacheModel.mvccVersion = getMvccVersion();
 
 		commerceOrderTypeRelCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -1010,6 +1038,7 @@ public class CommerceOrderTypeRelModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private long _commerceOrderTypeRelId;
 	private long _companyId;
@@ -1049,6 +1078,7 @@ public class CommerceOrderTypeRelModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put(
@@ -1074,25 +1104,27 @@ public class CommerceOrderTypeRelModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("externalReferenceCode", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("commerceOrderTypeRelId", 2L);
+		columnBitmasks.put("externalReferenceCode", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("commerceOrderTypeRelId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("classNameId", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("classPK", 256L);
+		columnBitmasks.put("classNameId", 256L);
 
-		columnBitmasks.put("commerceOrderTypeId", 512L);
+		columnBitmasks.put("classPK", 512L);
+
+		columnBitmasks.put("commerceOrderTypeId", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

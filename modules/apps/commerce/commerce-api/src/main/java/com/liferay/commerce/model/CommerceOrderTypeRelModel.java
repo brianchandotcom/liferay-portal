@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -38,7 +39,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommerceOrderTypeRelModel
 	extends AttachedModel, AuditedModel, BaseModel<CommerceOrderTypeRel>,
-			ShardedModel {
+			MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -59,6 +60,22 @@ public interface CommerceOrderTypeRelModel
 	 * @param primaryKey the primary key of this commerce order type rel
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce order type rel.
+	 *
+	 * @return the mvcc version of this commerce order type rel
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce order type rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce order type rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the external reference code of this commerce order type rel.

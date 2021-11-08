@@ -34,6 +34,9 @@ public class CommerceOrderTypeRelTable
 	public static final CommerceOrderTypeRelTable INSTANCE =
 		new CommerceOrderTypeRelTable();
 
+	public final Column<CommerceOrderTypeRelTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceOrderTypeRelTable, String>
 		externalReferenceCode = createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,

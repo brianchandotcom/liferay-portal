@@ -33,6 +33,8 @@ public class CommerceAddressTable extends BaseTable<CommerceAddressTable> {
 	public static final CommerceAddressTable INSTANCE =
 		new CommerceAddressTable();
 
+	public final Column<CommerceAddressTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceAddressTable, String> externalReferenceCode =
 		createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,

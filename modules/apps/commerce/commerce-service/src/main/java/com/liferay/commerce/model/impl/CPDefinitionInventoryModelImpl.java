@@ -78,11 +78,11 @@ public class CPDefinitionInventoryModelImpl
 	public static final String TABLE_NAME = "CPDefinitionInventory";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"CPDefinitionInventoryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"CPDefinitionId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"CPDefinitionInventoryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"CPDefinitionId", Types.BIGINT},
 		{"CPDefinitionInventoryEngine", Types.VARCHAR},
 		{"lowStockActivity", Types.VARCHAR},
 		{"displayAvailability", Types.BOOLEAN},
@@ -98,6 +98,7 @@ public class CPDefinitionInventoryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDefinitionInventoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -120,7 +121,7 @@ public class CPDefinitionInventoryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionInventory (uuid_ VARCHAR(75) null,CPDefinitionInventoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPDefinitionInventoryEngine VARCHAR(75) null,lowStockActivity VARCHAR(75) null,displayAvailability BOOLEAN,displayStockQuantity BOOLEAN,minStockQuantity INTEGER,backOrders BOOLEAN,minOrderQuantity INTEGER,maxOrderQuantity INTEGER,allowedOrderQuantities VARCHAR(75) null,multipleOrderQuantity INTEGER)";
+		"create table CPDefinitionInventory (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionInventoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPDefinitionInventoryEngine VARCHAR(75) null,lowStockActivity VARCHAR(75) null,displayAvailability BOOLEAN,displayStockQuantity BOOLEAN,minStockQuantity INTEGER,backOrders BOOLEAN,minOrderQuantity INTEGER,maxOrderQuantity INTEGER,allowedOrderQuantities VARCHAR(75) null,multipleOrderQuantity INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionInventory";
@@ -203,6 +204,7 @@ public class CPDefinitionInventoryModelImpl
 
 		CPDefinitionInventory model = new CPDefinitionInventoryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPDefinitionInventoryId(
 			soapModel.getCPDefinitionInventoryId());
@@ -386,6 +388,12 @@ public class CPDefinitionInventoryModelImpl
 				new LinkedHashMap
 					<String, BiConsumer<CPDefinitionInventory, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", CPDefinitionInventory::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CPDefinitionInventory, Long>)
+				CPDefinitionInventory::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CPDefinitionInventory::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -510,6 +518,21 @@ public class CPDefinitionInventoryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -966,6 +989,7 @@ public class CPDefinitionInventoryModelImpl
 		CPDefinitionInventoryImpl cpDefinitionInventoryImpl =
 			new CPDefinitionInventoryImpl();
 
+		cpDefinitionInventoryImpl.setMvccVersion(getMvccVersion());
 		cpDefinitionInventoryImpl.setUuid(getUuid());
 		cpDefinitionInventoryImpl.setCPDefinitionInventoryId(
 			getCPDefinitionInventoryId());
@@ -1002,6 +1026,8 @@ public class CPDefinitionInventoryModelImpl
 		CPDefinitionInventoryImpl cpDefinitionInventoryImpl =
 			new CPDefinitionInventoryImpl();
 
+		cpDefinitionInventoryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		cpDefinitionInventoryImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		cpDefinitionInventoryImpl.setCPDefinitionInventoryId(
@@ -1118,6 +1144,8 @@ public class CPDefinitionInventoryModelImpl
 	public CacheModel<CPDefinitionInventory> toCacheModel() {
 		CPDefinitionInventoryCacheModel cpDefinitionInventoryCacheModel =
 			new CPDefinitionInventoryCacheModel();
+
+		cpDefinitionInventoryCacheModel.mvccVersion = getMvccVersion();
 
 		cpDefinitionInventoryCacheModel.uuid = getUuid();
 
@@ -1311,6 +1339,7 @@ public class CPDefinitionInventoryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _CPDefinitionInventoryId;
 	private long _groupId;
@@ -1361,6 +1390,7 @@ public class CPDefinitionInventoryModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"CPDefinitionInventoryId", _CPDefinitionInventoryId);
@@ -1408,43 +1438,45 @@ public class CPDefinitionInventoryModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("uuid_", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("CPDefinitionInventoryId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("groupId", 4L);
+		columnBitmasks.put("CPDefinitionInventoryId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("CPDefinitionId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("CPDefinitionInventoryEngine", 512L);
+		columnBitmasks.put("CPDefinitionId", 512L);
 
-		columnBitmasks.put("lowStockActivity", 1024L);
+		columnBitmasks.put("CPDefinitionInventoryEngine", 1024L);
 
-		columnBitmasks.put("displayAvailability", 2048L);
+		columnBitmasks.put("lowStockActivity", 2048L);
 
-		columnBitmasks.put("displayStockQuantity", 4096L);
+		columnBitmasks.put("displayAvailability", 4096L);
 
-		columnBitmasks.put("minStockQuantity", 8192L);
+		columnBitmasks.put("displayStockQuantity", 8192L);
 
-		columnBitmasks.put("backOrders", 16384L);
+		columnBitmasks.put("minStockQuantity", 16384L);
 
-		columnBitmasks.put("minOrderQuantity", 32768L);
+		columnBitmasks.put("backOrders", 32768L);
 
-		columnBitmasks.put("maxOrderQuantity", 65536L);
+		columnBitmasks.put("minOrderQuantity", 65536L);
 
-		columnBitmasks.put("allowedOrderQuantities", 131072L);
+		columnBitmasks.put("maxOrderQuantity", 131072L);
 
-		columnBitmasks.put("multipleOrderQuantity", 262144L);
+		columnBitmasks.put("allowedOrderQuantities", 262144L);
+
+		columnBitmasks.put("multipleOrderQuantity", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

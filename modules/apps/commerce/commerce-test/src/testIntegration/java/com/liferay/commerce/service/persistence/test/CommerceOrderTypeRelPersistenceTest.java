@@ -127,6 +127,8 @@ public class CommerceOrderTypeRelPersistenceTest {
 
 		CommerceOrderTypeRel newCommerceOrderTypeRel = _persistence.create(pk);
 
+		newCommerceOrderTypeRel.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceOrderTypeRel.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -154,6 +156,9 @@ public class CommerceOrderTypeRelPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceOrderTypeRel.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceOrderTypeRel.getMvccVersion(),
+			newCommerceOrderTypeRel.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceOrderTypeRel.getExternalReferenceCode(),
 			newCommerceOrderTypeRel.getExternalReferenceCode());
@@ -249,10 +254,11 @@ public class CommerceOrderTypeRelPersistenceTest {
 
 	protected OrderByComparator<CommerceOrderTypeRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceOrderTypeRel", "externalReferenceCode", true,
-			"commerceOrderTypeRelId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "commerceOrderTypeId", true);
+			"CommerceOrderTypeRel", "mvccVersion", true,
+			"externalReferenceCode", true, "commerceOrderTypeRelId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true,
+			"commerceOrderTypeId", true);
 	}
 
 	@Test
@@ -578,6 +584,8 @@ public class CommerceOrderTypeRelPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceOrderTypeRel commerceOrderTypeRel = _persistence.create(pk);
+
+		commerceOrderTypeRel.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceOrderTypeRel.setExternalReferenceCode(
 			RandomTestUtil.randomString());

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -37,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceAddressModel
-	extends AttachedModel, BaseModel<CommerceAddress>, GroupedModel,
+	extends AttachedModel, BaseModel<CommerceAddress>, GroupedModel, MVCCModel,
 			ShardedModel {
 
 	/*
@@ -59,6 +60,22 @@ public interface CommerceAddressModel
 	 * @param primaryKey the primary key of this commerce address
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce address.
+	 *
+	 * @return the mvcc version of this commerce address
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce address.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce address
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the external reference code of this commerce address.

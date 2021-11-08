@@ -35,6 +35,7 @@ public class CommerceShipmentItemSoap implements Serializable {
 
 		CommerceShipmentItemSoap soapModel = new CommerceShipmentItemSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceShipmentItemId(model.getCommerceShipmentItemId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -107,6 +108,14 @@ public class CommerceShipmentItemSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceShipmentItemId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceShipmentItemId() {
@@ -199,6 +208,7 @@ public class CommerceShipmentItemSoap implements Serializable {
 		_quantity = quantity;
 	}
 
+	private long _mvccVersion;
 	private long _commerceShipmentItemId;
 	private long _groupId;
 	private long _companyId;

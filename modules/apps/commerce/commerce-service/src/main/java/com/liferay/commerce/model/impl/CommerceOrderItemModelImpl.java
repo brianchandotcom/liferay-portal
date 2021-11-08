@@ -85,7 +85,7 @@ public class CommerceOrderItemModelImpl
 	public static final String TABLE_NAME = "CommerceOrderItem";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
 		{"commerceOrderItemId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -130,6 +130,7 @@ public class CommerceOrderItemModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceOrderItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -190,7 +191,7 @@ public class CommerceOrderItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderItem (externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,bookedQuantityId LONG,commerceOrderId LONG,commercePriceListId LONG,CPInstanceId LONG,CProductId LONG,parentCommerceOrderItemId LONG,shippingAddressId LONG,deliveryGroup VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,depth DOUBLE,discountAmount DECIMAL(30, 16) null,discountPercentageLevel1 DECIMAL(30, 16) null,discountPercentageLevel2 DECIMAL(30, 16) null,discountPercentageLevel3 DECIMAL(30, 16) null,discountPercentageLevel4 DECIMAL(30, 16) null,discountPctLevel1WithTaxAmount DECIMAL(30, 16) null,discountPctLevel2WithTaxAmount DECIMAL(30, 16) null,discountPctLevel3WithTaxAmount DECIMAL(30, 16) null,discountPctLevel4WithTaxAmount DECIMAL(30, 16) null,discountWithTaxAmount DECIMAL(30, 16) null,finalPrice DECIMAL(30, 16) null,finalPriceWithTaxAmount DECIMAL(30, 16) null,freeShipping BOOLEAN,height DOUBLE,json TEXT null,manuallyAdjusted BOOLEAN,maxSubscriptionCycles LONG,name STRING null,printedNote STRING null,promoPrice DECIMAL(30, 16) null,promoPriceWithTaxAmount DECIMAL(30, 16) null,quantity INTEGER,requestedDeliveryDate DATE null,shipSeparately BOOLEAN,shippable BOOLEAN,shippedQuantity INTEGER,shippingExtraPrice DOUBLE,sku VARCHAR(75) null,subscription BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings VARCHAR(75) null,unitPrice DECIMAL(30, 16) null,unitPriceWithTaxAmount DECIMAL(30, 16) null,weight DOUBLE,width DOUBLE)";
+		"create table CommerceOrderItem (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,bookedQuantityId LONG,commerceOrderId LONG,commercePriceListId LONG,CPInstanceId LONG,CProductId LONG,parentCommerceOrderItemId LONG,shippingAddressId LONG,deliveryGroup VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,depth DOUBLE,discountAmount DECIMAL(30, 16) null,discountPercentageLevel1 DECIMAL(30, 16) null,discountPercentageLevel2 DECIMAL(30, 16) null,discountPercentageLevel3 DECIMAL(30, 16) null,discountPercentageLevel4 DECIMAL(30, 16) null,discountPctLevel1WithTaxAmount DECIMAL(30, 16) null,discountPctLevel2WithTaxAmount DECIMAL(30, 16) null,discountPctLevel3WithTaxAmount DECIMAL(30, 16) null,discountPctLevel4WithTaxAmount DECIMAL(30, 16) null,discountWithTaxAmount DECIMAL(30, 16) null,finalPrice DECIMAL(30, 16) null,finalPriceWithTaxAmount DECIMAL(30, 16) null,freeShipping BOOLEAN,height DOUBLE,json TEXT null,manuallyAdjusted BOOLEAN,maxSubscriptionCycles LONG,name STRING null,printedNote STRING null,promoPrice DECIMAL(30, 16) null,promoPriceWithTaxAmount DECIMAL(30, 16) null,quantity INTEGER,requestedDeliveryDate DATE null,shipSeparately BOOLEAN,shippable BOOLEAN,shippedQuantity INTEGER,shippingExtraPrice DOUBLE,sku VARCHAR(75) null,subscription BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings VARCHAR(75) null,unitPrice DECIMAL(30, 16) null,unitPriceWithTaxAmount DECIMAL(30, 16) null,weight DOUBLE,width DOUBLE)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderItem";
 
@@ -294,6 +295,7 @@ public class CommerceOrderItemModelImpl
 
 		CommerceOrderItem model = new CommerceOrderItemImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceOrderItemId(soapModel.getCommerceOrderItemId());
 		model.setGroupId(soapModel.getGroupId());
@@ -527,6 +529,12 @@ public class CommerceOrderItemModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<CommerceOrderItem, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", CommerceOrderItem::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceOrderItem, Long>)
+				CommerceOrderItem::setMvccVersion);
 		attributeGetterFunctions.put(
 			"externalReferenceCode",
 			CommerceOrderItem::getExternalReferenceCode);
@@ -879,6 +887,21 @@ public class CommerceOrderItemModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -2156,6 +2179,7 @@ public class CommerceOrderItemModelImpl
 		CommerceOrderItemImpl commerceOrderItemImpl =
 			new CommerceOrderItemImpl();
 
+		commerceOrderItemImpl.setMvccVersion(getMvccVersion());
 		commerceOrderItemImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceOrderItemImpl.setCommerceOrderItemId(getCommerceOrderItemId());
@@ -2245,6 +2269,8 @@ public class CommerceOrderItemModelImpl
 		CommerceOrderItemImpl commerceOrderItemImpl =
 			new CommerceOrderItemImpl();
 
+		commerceOrderItemImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceOrderItemImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		commerceOrderItemImpl.setCommerceOrderItemId(
@@ -2443,6 +2469,8 @@ public class CommerceOrderItemModelImpl
 	public CacheModel<CommerceOrderItem> toCacheModel() {
 		CommerceOrderItemCacheModel commerceOrderItemCacheModel =
 			new CommerceOrderItemCacheModel();
+
+		commerceOrderItemCacheModel.mvccVersion = getMvccVersion();
 
 		commerceOrderItemCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -2773,6 +2801,7 @@ public class CommerceOrderItemModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private long _commerceOrderItemId;
 	private long _groupId;
@@ -2862,6 +2891,7 @@ public class CommerceOrderItemModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("commerceOrderItemId", _commerceOrderItemId);
@@ -2980,119 +3010,121 @@ public class CommerceOrderItemModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("externalReferenceCode", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("commerceOrderItemId", 2L);
+		columnBitmasks.put("externalReferenceCode", 2L);
 
-		columnBitmasks.put("groupId", 4L);
+		columnBitmasks.put("commerceOrderItemId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("bookedQuantityId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("commerceOrderId", 512L);
+		columnBitmasks.put("bookedQuantityId", 512L);
 
-		columnBitmasks.put("commercePriceListId", 1024L);
+		columnBitmasks.put("commerceOrderId", 1024L);
 
-		columnBitmasks.put("CPInstanceId", 2048L);
+		columnBitmasks.put("commercePriceListId", 2048L);
 
-		columnBitmasks.put("CProductId", 4096L);
+		columnBitmasks.put("CPInstanceId", 4096L);
 
-		columnBitmasks.put("parentCommerceOrderItemId", 8192L);
+		columnBitmasks.put("CProductId", 8192L);
 
-		columnBitmasks.put("shippingAddressId", 16384L);
+		columnBitmasks.put("parentCommerceOrderItemId", 16384L);
 
-		columnBitmasks.put("deliveryGroup", 32768L);
+		columnBitmasks.put("shippingAddressId", 32768L);
 
-		columnBitmasks.put("deliveryMaxSubscriptionCycles", 65536L);
+		columnBitmasks.put("deliveryGroup", 65536L);
 
-		columnBitmasks.put("deliverySubscriptionLength", 131072L);
+		columnBitmasks.put("deliveryMaxSubscriptionCycles", 131072L);
 
-		columnBitmasks.put("deliverySubscriptionType", 262144L);
+		columnBitmasks.put("deliverySubscriptionLength", 262144L);
 
-		columnBitmasks.put("deliverySubTypeSettings", 524288L);
+		columnBitmasks.put("deliverySubscriptionType", 524288L);
 
-		columnBitmasks.put("depth", 1048576L);
+		columnBitmasks.put("deliverySubTypeSettings", 1048576L);
 
-		columnBitmasks.put("discountAmount", 2097152L);
+		columnBitmasks.put("depth", 2097152L);
 
-		columnBitmasks.put("discountPercentageLevel1", 4194304L);
+		columnBitmasks.put("discountAmount", 4194304L);
 
-		columnBitmasks.put("discountPercentageLevel2", 8388608L);
+		columnBitmasks.put("discountPercentageLevel1", 8388608L);
 
-		columnBitmasks.put("discountPercentageLevel3", 16777216L);
+		columnBitmasks.put("discountPercentageLevel2", 16777216L);
 
-		columnBitmasks.put("discountPercentageLevel4", 33554432L);
+		columnBitmasks.put("discountPercentageLevel3", 33554432L);
 
-		columnBitmasks.put("discountPctLevel1WithTaxAmount", 67108864L);
+		columnBitmasks.put("discountPercentageLevel4", 67108864L);
 
-		columnBitmasks.put("discountPctLevel2WithTaxAmount", 134217728L);
+		columnBitmasks.put("discountPctLevel1WithTaxAmount", 134217728L);
 
-		columnBitmasks.put("discountPctLevel3WithTaxAmount", 268435456L);
+		columnBitmasks.put("discountPctLevel2WithTaxAmount", 268435456L);
 
-		columnBitmasks.put("discountPctLevel4WithTaxAmount", 536870912L);
+		columnBitmasks.put("discountPctLevel3WithTaxAmount", 536870912L);
 
-		columnBitmasks.put("discountWithTaxAmount", 1073741824L);
+		columnBitmasks.put("discountPctLevel4WithTaxAmount", 1073741824L);
 
-		columnBitmasks.put("finalPrice", 2147483648L);
+		columnBitmasks.put("discountWithTaxAmount", 2147483648L);
 
-		columnBitmasks.put("finalPriceWithTaxAmount", 4294967296L);
+		columnBitmasks.put("finalPrice", 4294967296L);
 
-		columnBitmasks.put("freeShipping", 8589934592L);
+		columnBitmasks.put("finalPriceWithTaxAmount", 8589934592L);
 
-		columnBitmasks.put("height", 17179869184L);
+		columnBitmasks.put("freeShipping", 17179869184L);
 
-		columnBitmasks.put("json", 34359738368L);
+		columnBitmasks.put("height", 34359738368L);
 
-		columnBitmasks.put("manuallyAdjusted", 68719476736L);
+		columnBitmasks.put("json", 68719476736L);
 
-		columnBitmasks.put("maxSubscriptionCycles", 137438953472L);
+		columnBitmasks.put("manuallyAdjusted", 137438953472L);
 
-		columnBitmasks.put("name", 274877906944L);
+		columnBitmasks.put("maxSubscriptionCycles", 274877906944L);
 
-		columnBitmasks.put("printedNote", 549755813888L);
+		columnBitmasks.put("name", 549755813888L);
 
-		columnBitmasks.put("promoPrice", 1099511627776L);
+		columnBitmasks.put("printedNote", 1099511627776L);
 
-		columnBitmasks.put("promoPriceWithTaxAmount", 2199023255552L);
+		columnBitmasks.put("promoPrice", 2199023255552L);
 
-		columnBitmasks.put("quantity", 4398046511104L);
+		columnBitmasks.put("promoPriceWithTaxAmount", 4398046511104L);
 
-		columnBitmasks.put("requestedDeliveryDate", 8796093022208L);
+		columnBitmasks.put("quantity", 8796093022208L);
 
-		columnBitmasks.put("shipSeparately", 17592186044416L);
+		columnBitmasks.put("requestedDeliveryDate", 17592186044416L);
 
-		columnBitmasks.put("shippable", 35184372088832L);
+		columnBitmasks.put("shipSeparately", 35184372088832L);
 
-		columnBitmasks.put("shippedQuantity", 70368744177664L);
+		columnBitmasks.put("shippable", 70368744177664L);
 
-		columnBitmasks.put("shippingExtraPrice", 140737488355328L);
+		columnBitmasks.put("shippedQuantity", 140737488355328L);
 
-		columnBitmasks.put("sku", 281474976710656L);
+		columnBitmasks.put("shippingExtraPrice", 281474976710656L);
 
-		columnBitmasks.put("subscription", 562949953421312L);
+		columnBitmasks.put("sku", 562949953421312L);
 
-		columnBitmasks.put("subscriptionLength", 1125899906842624L);
+		columnBitmasks.put("subscription", 1125899906842624L);
 
-		columnBitmasks.put("subscriptionType", 2251799813685248L);
+		columnBitmasks.put("subscriptionLength", 2251799813685248L);
 
-		columnBitmasks.put("subscriptionTypeSettings", 4503599627370496L);
+		columnBitmasks.put("subscriptionType", 4503599627370496L);
 
-		columnBitmasks.put("unitPrice", 9007199254740992L);
+		columnBitmasks.put("subscriptionTypeSettings", 9007199254740992L);
 
-		columnBitmasks.put("unitPriceWithTaxAmount", 18014398509481984L);
+		columnBitmasks.put("unitPrice", 18014398509481984L);
 
-		columnBitmasks.put("weight", 36028797018963968L);
+		columnBitmasks.put("unitPriceWithTaxAmount", 36028797018963968L);
 
-		columnBitmasks.put("width", 72057594037927936L);
+		columnBitmasks.put("weight", 72057594037927936L);
+
+		columnBitmasks.put("width", 144115188075855872L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

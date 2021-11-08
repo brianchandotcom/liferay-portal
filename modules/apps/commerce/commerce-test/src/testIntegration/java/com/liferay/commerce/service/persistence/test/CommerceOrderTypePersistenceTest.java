@@ -125,6 +125,8 @@ public class CommerceOrderTypePersistenceTest {
 
 		CommerceOrderType newCommerceOrderType = _persistence.create(pk);
 
+		newCommerceOrderType.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceOrderType.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -165,6 +167,9 @@ public class CommerceOrderTypePersistenceTest {
 		CommerceOrderType existingCommerceOrderType =
 			_persistence.findByPrimaryKey(newCommerceOrderType.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceOrderType.getMvccVersion(),
+			newCommerceOrderType.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceOrderType.getExternalReferenceCode(),
 			newCommerceOrderType.getExternalReferenceCode());
@@ -280,13 +285,13 @@ public class CommerceOrderTypePersistenceTest {
 
 	protected OrderByComparator<CommerceOrderType> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceOrderType", "externalReferenceCode", true,
-			"commerceOrderTypeId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "description", true, "active", true, "displayDate", true,
-			"displayOrder", true, "expirationDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"CommerceOrderType", "mvccVersion", true, "externalReferenceCode",
+			true, "commerceOrderTypeId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"name", true, "description", true, "active", true, "displayDate",
+			true, "displayOrder", true, "expirationDate", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -578,6 +583,8 @@ public class CommerceOrderTypePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceOrderType commerceOrderType = _persistence.create(pk);
+
+		commerceOrderType.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceOrderType.setExternalReferenceCode(
 			RandomTestUtil.randomString());

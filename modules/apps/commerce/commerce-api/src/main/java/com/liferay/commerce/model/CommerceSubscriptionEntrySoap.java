@@ -36,6 +36,7 @@ public class CommerceSubscriptionEntrySoap implements Serializable {
 		CommerceSubscriptionEntrySoap soapModel =
 			new CommerceSubscriptionEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceSubscriptionEntryId(
 			model.getCommerceSubscriptionEntryId());
@@ -135,6 +136,14 @@ public class CommerceSubscriptionEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceSubscriptionEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -375,6 +384,7 @@ public class CommerceSubscriptionEntrySoap implements Serializable {
 		_deliveryStartDate = deliveryStartDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceSubscriptionEntryId;
 	private long _groupId;

@@ -84,7 +84,7 @@ public class CommerceOrderTypeModelImpl
 	public static final String TABLE_NAME = "CommerceOrderType";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
 		{"commerceOrderTypeId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -100,6 +100,7 @@ public class CommerceOrderTypeModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceOrderTypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -121,7 +122,7 @@ public class CommerceOrderTypeModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderType (externalReferenceCode VARCHAR(75) null,commerceOrderTypeId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,active_ BOOLEAN,displayDate DATE null,displayOrder INTEGER,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CommerceOrderType (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceOrderTypeId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,active_ BOOLEAN,displayDate DATE null,displayOrder INTEGER,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderType";
 
@@ -207,6 +208,7 @@ public class CommerceOrderTypeModelImpl
 
 		CommerceOrderType model = new CommerceOrderTypeImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceOrderTypeId(soapModel.getCommerceOrderTypeId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -386,6 +388,12 @@ public class CommerceOrderTypeModelImpl
 				new LinkedHashMap<String, BiConsumer<CommerceOrderType, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceOrderType::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceOrderType, Long>)
+				CommerceOrderType::setMvccVersion);
+		attributeGetterFunctions.put(
 			"externalReferenceCode",
 			CommerceOrderType::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
@@ -493,6 +501,21 @@ public class CommerceOrderTypeModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1285,6 +1308,7 @@ public class CommerceOrderTypeModelImpl
 		CommerceOrderTypeImpl commerceOrderTypeImpl =
 			new CommerceOrderTypeImpl();
 
+		commerceOrderTypeImpl.setMvccVersion(getMvccVersion());
 		commerceOrderTypeImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceOrderTypeImpl.setCommerceOrderTypeId(getCommerceOrderTypeId());
@@ -1315,6 +1339,8 @@ public class CommerceOrderTypeModelImpl
 		CommerceOrderTypeImpl commerceOrderTypeImpl =
 			new CommerceOrderTypeImpl();
 
+		commerceOrderTypeImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceOrderTypeImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		commerceOrderTypeImpl.setCommerceOrderTypeId(
@@ -1429,6 +1455,8 @@ public class CommerceOrderTypeModelImpl
 	public CacheModel<CommerceOrderType> toCacheModel() {
 		CommerceOrderTypeCacheModel commerceOrderTypeCacheModel =
 			new CommerceOrderTypeCacheModel();
+
+		commerceOrderTypeCacheModel.mvccVersion = getMvccVersion();
 
 		commerceOrderTypeCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -1636,6 +1664,7 @@ public class CommerceOrderTypeModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private long _commerceOrderTypeId;
 	private long _companyId;
@@ -1687,6 +1716,7 @@ public class CommerceOrderTypeModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("commerceOrderTypeId", _commerceOrderTypeId);
@@ -1729,41 +1759,43 @@ public class CommerceOrderTypeModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("externalReferenceCode", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("commerceOrderTypeId", 2L);
+		columnBitmasks.put("externalReferenceCode", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("commerceOrderTypeId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("name", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("description", 256L);
+		columnBitmasks.put("name", 256L);
 
-		columnBitmasks.put("active_", 512L);
+		columnBitmasks.put("description", 512L);
 
-		columnBitmasks.put("displayDate", 1024L);
+		columnBitmasks.put("active_", 1024L);
 
-		columnBitmasks.put("displayOrder", 2048L);
+		columnBitmasks.put("displayDate", 2048L);
 
-		columnBitmasks.put("expirationDate", 4096L);
+		columnBitmasks.put("displayOrder", 4096L);
 
-		columnBitmasks.put("lastPublishDate", 8192L);
+		columnBitmasks.put("expirationDate", 8192L);
 
-		columnBitmasks.put("status", 16384L);
+		columnBitmasks.put("lastPublishDate", 16384L);
 
-		columnBitmasks.put("statusByUserId", 32768L);
+		columnBitmasks.put("status", 32768L);
 
-		columnBitmasks.put("statusByUserName", 65536L);
+		columnBitmasks.put("statusByUserId", 65536L);
 
-		columnBitmasks.put("statusDate", 131072L);
+		columnBitmasks.put("statusByUserName", 131072L);
+
+		columnBitmasks.put("statusDate", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -77,10 +77,11 @@ public class CommerceShipmentItemModelImpl
 	public static final String TABLE_NAME = "CommerceShipmentItem";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"commerceShipmentItemId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"commerceShipmentId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"commerceShipmentItemId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"commerceShipmentId", Types.BIGINT},
 		{"commerceOrderItemId", Types.BIGINT},
 		{"commerceInventoryWarehouseId", Types.BIGINT},
 		{"quantity", Types.INTEGER}
@@ -90,6 +91,7 @@ public class CommerceShipmentItemModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceShipmentItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -104,7 +106,7 @@ public class CommerceShipmentItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceShipmentItem (commerceShipmentItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShipmentId LONG,commerceOrderItemId LONG,commerceInventoryWarehouseId LONG,quantity INTEGER)";
+		"create table CommerceShipmentItem (mvccVersion LONG default 0 not null,commerceShipmentItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShipmentId LONG,commerceOrderItemId LONG,commerceInventoryWarehouseId LONG,quantity INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceShipmentItem";
@@ -187,6 +189,7 @@ public class CommerceShipmentItemModelImpl
 
 		CommerceShipmentItem model = new CommerceShipmentItemImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceShipmentItemId(soapModel.getCommerceShipmentItemId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -361,6 +364,12 @@ public class CommerceShipmentItemModelImpl
 					<String, BiConsumer<CommerceShipmentItem, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceShipmentItem::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceShipmentItem, Long>)
+				CommerceShipmentItem::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceShipmentItemId",
 			CommerceShipmentItem::getCommerceShipmentItemId);
 		attributeSetterBiConsumers.put(
@@ -433,6 +442,21 @@ public class CommerceShipmentItemModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -726,6 +750,7 @@ public class CommerceShipmentItemModelImpl
 		CommerceShipmentItemImpl commerceShipmentItemImpl =
 			new CommerceShipmentItemImpl();
 
+		commerceShipmentItemImpl.setMvccVersion(getMvccVersion());
 		commerceShipmentItemImpl.setCommerceShipmentItemId(
 			getCommerceShipmentItemId());
 		commerceShipmentItemImpl.setGroupId(getGroupId());
@@ -751,6 +776,8 @@ public class CommerceShipmentItemModelImpl
 		CommerceShipmentItemImpl commerceShipmentItemImpl =
 			new CommerceShipmentItemImpl();
 
+		commerceShipmentItemImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceShipmentItemImpl.setCommerceShipmentItemId(
 			this.<Long>getColumnOriginalValue("commerceShipmentItemId"));
 		commerceShipmentItemImpl.setGroupId(
@@ -852,6 +879,8 @@ public class CommerceShipmentItemModelImpl
 	public CacheModel<CommerceShipmentItem> toCacheModel() {
 		CommerceShipmentItemCacheModel commerceShipmentItemCacheModel =
 			new CommerceShipmentItemCacheModel();
+
+		commerceShipmentItemCacheModel.mvccVersion = getMvccVersion();
 
 		commerceShipmentItemCacheModel.commerceShipmentItemId =
 			getCommerceShipmentItemId();
@@ -992,6 +1021,7 @@ public class CommerceShipmentItemModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceShipmentItemId;
 	private long _groupId;
 	private long _companyId;
@@ -1032,6 +1062,7 @@ public class CommerceShipmentItemModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"commerceShipmentItemId", _commerceShipmentItemId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1058,27 +1089,29 @@ public class CommerceShipmentItemModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("commerceShipmentItemId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("groupId", 2L);
+		columnBitmasks.put("commerceShipmentItemId", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("commerceShipmentId", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("commerceOrderItemId", 256L);
+		columnBitmasks.put("commerceShipmentId", 256L);
 
-		columnBitmasks.put("commerceInventoryWarehouseId", 512L);
+		columnBitmasks.put("commerceOrderItemId", 512L);
 
-		columnBitmasks.put("quantity", 1024L);
+		columnBitmasks.put("commerceInventoryWarehouseId", 1024L);
+
+		columnBitmasks.put("quantity", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

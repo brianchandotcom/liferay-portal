@@ -44,6 +44,7 @@ public class CommerceOrderItemWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commerceOrderItemId", getCommerceOrderItemId());
 		attributes.put("groupId", getGroupId());
@@ -127,6 +128,12 @@ public class CommerceOrderItemWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String externalReferenceCode = (String)attributes.get(
 			"externalReferenceCode");
 
@@ -943,6 +950,16 @@ public class CommerceOrderItemWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this commerce order item.
+	 *
+	 * @return the mvcc version of this commerce order item
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the name of this commerce order item.
 	 *
 	 * @return the name of this commerce order item
@@ -1732,6 +1749,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce order item.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce order item
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

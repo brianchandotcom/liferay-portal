@@ -129,6 +129,8 @@ public class CommerceSubscriptionEntryPersistenceTest {
 		CommerceSubscriptionEntry newCommerceSubscriptionEntry =
 			_persistence.create(pk);
 
+		newCommerceSubscriptionEntry.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceSubscriptionEntry.setUuid(RandomTestUtil.randomString());
 
 		newCommerceSubscriptionEntry.setGroupId(RandomTestUtil.nextLong());
@@ -210,6 +212,9 @@ public class CommerceSubscriptionEntryPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceSubscriptionEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceSubscriptionEntry.getMvccVersion(),
+			newCommerceSubscriptionEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceSubscriptionEntry.getUuid(),
 			newCommerceSubscriptionEntry.getUuid());
@@ -431,7 +436,7 @@ public class CommerceSubscriptionEntryPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceSubscriptionEntry", "uuid", true,
+			"CommerceSubscriptionEntry", "mvccVersion", true, "uuid", true,
 			"commerceSubscriptionEntryId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "CPInstanceUuid", true, "CProductId", true,
@@ -789,6 +794,8 @@ public class CommerceSubscriptionEntryPersistenceTest {
 
 		CommerceSubscriptionEntry commerceSubscriptionEntry =
 			_persistence.create(pk);
+
+		commerceSubscriptionEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceSubscriptionEntry.setUuid(RandomTestUtil.randomString());
 

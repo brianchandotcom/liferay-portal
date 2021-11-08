@@ -83,6 +83,7 @@ public class CommerceShippingMethodModelImpl
 	public static final String TABLE_NAME = "CommerceShippingMethod";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"commerceShippingMethodId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -96,6 +97,7 @@ public class CommerceShippingMethodModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceShippingMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -112,7 +114,7 @@ public class CommerceShippingMethodModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceShippingMethod (commerceShippingMethodId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,imageId LONG,engineKey VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN)";
+		"create table CommerceShippingMethod (mvccVersion LONG default 0 not null,commerceShippingMethodId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,imageId LONG,engineKey VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceShippingMethod";
@@ -189,6 +191,7 @@ public class CommerceShippingMethodModelImpl
 
 		CommerceShippingMethod model = new CommerceShippingMethodImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceShippingMethodId(
 			soapModel.getCommerceShippingMethodId());
 		model.setGroupId(soapModel.getGroupId());
@@ -366,6 +369,12 @@ public class CommerceShippingMethodModelImpl
 					<String, BiConsumer<CommerceShippingMethod, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceShippingMethod::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceShippingMethod, Long>)
+				CommerceShippingMethod::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceShippingMethodId",
 			CommerceShippingMethod::getCommerceShippingMethodId);
 		attributeSetterBiConsumers.put(
@@ -448,6 +457,21 @@ public class CommerceShippingMethodModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1046,6 +1070,7 @@ public class CommerceShippingMethodModelImpl
 		CommerceShippingMethodImpl commerceShippingMethodImpl =
 			new CommerceShippingMethodImpl();
 
+		commerceShippingMethodImpl.setMvccVersion(getMvccVersion());
 		commerceShippingMethodImpl.setCommerceShippingMethodId(
 			getCommerceShippingMethodId());
 		commerceShippingMethodImpl.setGroupId(getGroupId());
@@ -1071,6 +1096,8 @@ public class CommerceShippingMethodModelImpl
 		CommerceShippingMethodImpl commerceShippingMethodImpl =
 			new CommerceShippingMethodImpl();
 
+		commerceShippingMethodImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceShippingMethodImpl.setCommerceShippingMethodId(
 			this.<Long>getColumnOriginalValue("commerceShippingMethodId"));
 		commerceShippingMethodImpl.setGroupId(
@@ -1181,6 +1208,8 @@ public class CommerceShippingMethodModelImpl
 	public CacheModel<CommerceShippingMethod> toCacheModel() {
 		CommerceShippingMethodCacheModel commerceShippingMethodCacheModel =
 			new CommerceShippingMethodCacheModel();
+
+		commerceShippingMethodCacheModel.mvccVersion = getMvccVersion();
 
 		commerceShippingMethodCacheModel.commerceShippingMethodId =
 			getCommerceShippingMethodId();
@@ -1340,6 +1369,7 @@ public class CommerceShippingMethodModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceShippingMethodId;
 	private long _groupId;
 	private long _companyId;
@@ -1386,6 +1416,7 @@ public class CommerceShippingMethodModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"commerceShippingMethodId", _commerceShippingMethodId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1423,31 +1454,33 @@ public class CommerceShippingMethodModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("commerceShippingMethodId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("groupId", 2L);
+		columnBitmasks.put("commerceShippingMethodId", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("name", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("description", 256L);
+		columnBitmasks.put("name", 256L);
 
-		columnBitmasks.put("imageId", 512L);
+		columnBitmasks.put("description", 512L);
 
-		columnBitmasks.put("engineKey", 1024L);
+		columnBitmasks.put("imageId", 1024L);
 
-		columnBitmasks.put("priority", 2048L);
+		columnBitmasks.put("engineKey", 2048L);
 
-		columnBitmasks.put("active_", 4096L);
+		columnBitmasks.put("priority", 4096L);
+
+		columnBitmasks.put("active_", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

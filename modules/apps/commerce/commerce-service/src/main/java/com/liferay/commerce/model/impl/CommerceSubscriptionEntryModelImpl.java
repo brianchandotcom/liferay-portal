@@ -79,7 +79,8 @@ public class CommerceSubscriptionEntryModelImpl
 	public static final String TABLE_NAME = "CommerceSubscriptionEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"commerceSubscriptionEntryId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"commerceSubscriptionEntryId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -107,6 +108,7 @@ public class CommerceSubscriptionEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceSubscriptionEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -139,7 +141,7 @@ public class CommerceSubscriptionEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceSubscriptionEntry (uuid_ VARCHAR(75) null,commerceSubscriptionEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPInstanceUuid VARCHAR(75) null,CProductId LONG,commerceOrderItemId LONG,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,currentCycle LONG,maxSubscriptionCycles LONG,subscriptionStatus INTEGER,lastIterationDate DATE null,nextIterationDate DATE null,startDate DATE null,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryCurrentCycle LONG,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionStatus INTEGER,deliveryLastIterationDate DATE null,deliveryNextIterationDate DATE null,deliveryStartDate DATE null)";
+		"create table CommerceSubscriptionEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceSubscriptionEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPInstanceUuid VARCHAR(75) null,CProductId LONG,commerceOrderItemId LONG,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,currentCycle LONG,maxSubscriptionCycles LONG,subscriptionStatus INTEGER,lastIterationDate DATE null,nextIterationDate DATE null,startDate DATE null,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryCurrentCycle LONG,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionStatus INTEGER,deliveryLastIterationDate DATE null,deliveryNextIterationDate DATE null,deliveryStartDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceSubscriptionEntry";
@@ -246,6 +248,7 @@ public class CommerceSubscriptionEntryModelImpl
 
 		CommerceSubscriptionEntry model = new CommerceSubscriptionEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceSubscriptionEntryId(
 			soapModel.getCommerceSubscriptionEntryId());
@@ -449,6 +452,12 @@ public class CommerceSubscriptionEntryModelImpl
 					<String, BiConsumer<CommerceSubscriptionEntry, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceSubscriptionEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceSubscriptionEntry, Long>)
+				CommerceSubscriptionEntry::setMvccVersion);
+		attributeGetterFunctions.put(
 			"uuid", CommerceSubscriptionEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -644,6 +653,21 @@ public class CommerceSubscriptionEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1285,6 +1309,7 @@ public class CommerceSubscriptionEntryModelImpl
 		CommerceSubscriptionEntryImpl commerceSubscriptionEntryImpl =
 			new CommerceSubscriptionEntryImpl();
 
+		commerceSubscriptionEntryImpl.setMvccVersion(getMvccVersion());
 		commerceSubscriptionEntryImpl.setUuid(getUuid());
 		commerceSubscriptionEntryImpl.setCommerceSubscriptionEntryId(
 			getCommerceSubscriptionEntryId());
@@ -1343,6 +1368,8 @@ public class CommerceSubscriptionEntryModelImpl
 		CommerceSubscriptionEntryImpl commerceSubscriptionEntryImpl =
 			new CommerceSubscriptionEntryImpl();
 
+		commerceSubscriptionEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceSubscriptionEntryImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		commerceSubscriptionEntryImpl.setCommerceSubscriptionEntryId(
@@ -1481,6 +1508,8 @@ public class CommerceSubscriptionEntryModelImpl
 		CommerceSubscriptionEntryCacheModel
 			commerceSubscriptionEntryCacheModel =
 				new CommerceSubscriptionEntryCacheModel();
+
+		commerceSubscriptionEntryCacheModel.mvccVersion = getMvccVersion();
 
 		commerceSubscriptionEntryCacheModel.uuid = getUuid();
 
@@ -1771,6 +1800,7 @@ public class CommerceSubscriptionEntryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceSubscriptionEntryId;
 	private long _groupId;
@@ -1831,6 +1861,7 @@ public class CommerceSubscriptionEntryModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"commerceSubscriptionEntryId", _commerceSubscriptionEntryId);
@@ -1896,63 +1927,65 @@ public class CommerceSubscriptionEntryModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("uuid_", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("commerceSubscriptionEntryId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("groupId", 4L);
+		columnBitmasks.put("commerceSubscriptionEntryId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("CPInstanceUuid", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("CProductId", 512L);
+		columnBitmasks.put("CPInstanceUuid", 512L);
 
-		columnBitmasks.put("commerceOrderItemId", 1024L);
+		columnBitmasks.put("CProductId", 1024L);
 
-		columnBitmasks.put("subscriptionLength", 2048L);
+		columnBitmasks.put("commerceOrderItemId", 2048L);
 
-		columnBitmasks.put("subscriptionType", 4096L);
+		columnBitmasks.put("subscriptionLength", 4096L);
 
-		columnBitmasks.put("subscriptionTypeSettings", 8192L);
+		columnBitmasks.put("subscriptionType", 8192L);
 
-		columnBitmasks.put("currentCycle", 16384L);
+		columnBitmasks.put("subscriptionTypeSettings", 16384L);
 
-		columnBitmasks.put("maxSubscriptionCycles", 32768L);
+		columnBitmasks.put("currentCycle", 32768L);
 
-		columnBitmasks.put("subscriptionStatus", 65536L);
+		columnBitmasks.put("maxSubscriptionCycles", 65536L);
 
-		columnBitmasks.put("lastIterationDate", 131072L);
+		columnBitmasks.put("subscriptionStatus", 131072L);
 
-		columnBitmasks.put("nextIterationDate", 262144L);
+		columnBitmasks.put("lastIterationDate", 262144L);
 
-		columnBitmasks.put("startDate", 524288L);
+		columnBitmasks.put("nextIterationDate", 524288L);
 
-		columnBitmasks.put("deliverySubscriptionLength", 1048576L);
+		columnBitmasks.put("startDate", 1048576L);
 
-		columnBitmasks.put("deliverySubscriptionType", 2097152L);
+		columnBitmasks.put("deliverySubscriptionLength", 2097152L);
 
-		columnBitmasks.put("deliverySubTypeSettings", 4194304L);
+		columnBitmasks.put("deliverySubscriptionType", 4194304L);
 
-		columnBitmasks.put("deliveryCurrentCycle", 8388608L);
+		columnBitmasks.put("deliverySubTypeSettings", 8388608L);
 
-		columnBitmasks.put("deliveryMaxSubscriptionCycles", 16777216L);
+		columnBitmasks.put("deliveryCurrentCycle", 16777216L);
 
-		columnBitmasks.put("deliverySubscriptionStatus", 33554432L);
+		columnBitmasks.put("deliveryMaxSubscriptionCycles", 33554432L);
 
-		columnBitmasks.put("deliveryLastIterationDate", 67108864L);
+		columnBitmasks.put("deliverySubscriptionStatus", 67108864L);
 
-		columnBitmasks.put("deliveryNextIterationDate", 134217728L);
+		columnBitmasks.put("deliveryLastIterationDate", 134217728L);
 
-		columnBitmasks.put("deliveryStartDate", 268435456L);
+		columnBitmasks.put("deliveryNextIterationDate", 268435456L);
+
+		columnBitmasks.put("deliveryStartDate", 536870912L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 
@@ -42,7 +43,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommerceOrderTypeModel
 	extends AuditedModel, BaseModel<CommerceOrderType>, LocalizedModel,
-			ShardedModel, WorkflowedModel {
+			MVCCModel, ShardedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -63,6 +64,22 @@ public interface CommerceOrderTypeModel
 	 * @param primaryKey the primary key of this commerce order type
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce order type.
+	 *
+	 * @return the mvcc version of this commerce order type
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce order type.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce order type
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the external reference code of this commerce order type.

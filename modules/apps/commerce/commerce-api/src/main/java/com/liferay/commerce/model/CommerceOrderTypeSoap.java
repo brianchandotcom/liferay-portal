@@ -33,6 +33,7 @@ public class CommerceOrderTypeSoap implements Serializable {
 	public static CommerceOrderTypeSoap toSoapModel(CommerceOrderType model) {
 		CommerceOrderTypeSoap soapModel = new CommerceOrderTypeSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCommerceOrderTypeId(model.getCommerceOrderTypeId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -110,6 +111,14 @@ public class CommerceOrderTypeSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceOrderTypeId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getExternalReferenceCode() {
@@ -260,6 +269,7 @@ public class CommerceOrderTypeSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private long _commerceOrderTypeId;
 	private long _companyId;

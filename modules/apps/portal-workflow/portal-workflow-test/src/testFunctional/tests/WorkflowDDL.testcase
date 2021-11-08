@@ -78,7 +78,6 @@ definition {
 		DDLList.viewCP(ddlListName = "DDL List");
 
 		DDLList.viewStatusDDL(key_status = "Approved");
-
 	}
 
 	@description = "This is a test for LRQA-69474. Verify that if it is possible to create a Dynamic Data List."

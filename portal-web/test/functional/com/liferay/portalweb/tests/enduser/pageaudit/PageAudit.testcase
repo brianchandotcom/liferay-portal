@@ -79,7 +79,7 @@ definition {
 	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are NOT retrieved"
 	@ignore = "true"
 	@priority = "4"
-	test AdditionalChecksForDesktopValue {
+	test DesktopStrategyAtSystemSettings {
 
 		// TODO LPS-125851 AdditionalChecksForDesktopValue pending implementation
 
@@ -90,7 +90,7 @@ definition {
 	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
 	@ignore = "true"
 	@priority = "4"
-	test AdditionalChecksForMobileValue {
+	test MobileStrategyAtSystemSettings {
 
 		// TODO LPS-125851 AdditionalChecksForMobileValue pending implementation
 
@@ -3045,7 +3045,7 @@ definition {
 	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"
 	@ignore = "true"
 	@priority = "3"
-	test InsightsVisibleInSiteSettingsAndSites {
+	test UncheckedSystemSettingsSiteScopeThenUncheckedAtTabSiteSettings {
 
 		// TODO LPS-125851 InsightsVisibleInSiteSettingsAndSites pending implementation
 
@@ -3696,7 +3696,7 @@ definition {
 	Then the value in the site prevails over any changes in the System Settings Site Scope section"
 	@ignore = "true"
 	@priority = "5"
-	test SiteHierarchy {
+	test SiteSettingsHierarchyOverSystemSettings {
 
 		// TODO LPS-125851 SiteHierarchy pending implementation
 
@@ -3707,7 +3707,7 @@ definition {
 	Then the 'Google PageSpeed Insights' tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section"
 	@ignore = "true"
 	@priority = "3"
-	test TabGoogleInvisibleInVirtualInstanceScope {
+	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtVirtualInstance {
 
 		// TODO LPS-125851 TabGoogleInvisibleInVirtualInstanceScope pending implementation
 
@@ -3729,7 +3729,7 @@ definition {
 	Then the 'Google PageSpeed Insights' tab is visible in the 'SITE SCOPE' section "
 	@ignore = "true"
 	@priority = "3"
-	test TABGoogleVisibleInSiteScope {
+	test UncheckedSystemSettingsVirtualInstanceThenNotVisibleAtSiteScope {
 
 		// TODO LPS-125851 TABGoogleVisibleInSiteScope pending implementation
 
@@ -3740,7 +3740,7 @@ definition {
 	Then the 'Google PageSpeed Insights' tab isn't visible in the Site settings of any of the sites of the current Instance."
 	@ignore = "true"
 	@priority = "3"
-	test TabInsightsInvisibleInSites {
+	test UncheckedSystemSettingsVirtualInstanceThenNotVisibleAtTabSiteSettings {
 
 		// TODO LPS-125851 TabInsightsInvisibleInSites pending implementation
 
@@ -3751,7 +3751,7 @@ definition {
 	Then the 'Google PageSpeed Insights' tab isn't visible in the 'SITE SCOPE' section "
 	@ignore = "true"
 	@priority = "3"
-	test TabSpeed​​​​InsightsInvisibleInSiteScope {
+	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtSiteScope {
 
 		// TODO LPS-125851 TabSpeed​​​​InsightsInvisibleInSiteScope pending implementation
 
@@ -3773,7 +3773,7 @@ definition {
 	Then the call is made for Google Page Speed default value - desktop"
 	@ignore = "true"
 	@priority = "3"
-	test VoidEqualsDesktop {
+	test DefaultStrategyAtSystemSettings {
 
 		// TODO LPS-125851 VoidEqualsDesktop pending implementation
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.Route;
 import com.liferay.portal.kernel.portlet.Router;
+import com.liferay.portlet.RouterImpl;
 import com.liferay.remote.app.model.RemoteAppEntry;
 
 import java.util.HashMap;

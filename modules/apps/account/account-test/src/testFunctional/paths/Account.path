@@ -135,6 +135,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VALID_DOMAINS_EMPTY_INFO_MESSAGE</td>
+	<td>//p[normalize-space(text())='This account does not have a valid domain.']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VALID_DOMAINS_HEADING</td>
 	<td>//div[contains(@class,'section')]//span[normalize-space(text())='Valid Domains']</td>
 	<td></td>

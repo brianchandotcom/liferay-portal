@@ -17,15 +17,19 @@ package com.liferay.search.experiences.rest.internal.resource.v1_0;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
-import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
+import com.liferay.search.experiences.rest.internal.dto.v1_0.converter.SXPElementDTOConverter;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
 import com.liferay.search.experiences.service.SXPElementService;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,8 +51,12 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 
 	@Override
 	public SXPElement getSXPElement(Long sxpElementId) throws Exception {
-		return SXPElementUtil.toSXPElement(
-			contextAcceptLanguage.getPreferredLocale(),
+		return _sxpElementDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, contextHttpServletRequest, sxpElementId,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
 			_sxpElementService.getSXPElement(sxpElementId));
 	}
 
@@ -74,27 +82,39 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
 			null,
-			document -> SXPElementUtil.toSXPElement(
-				contextAcceptLanguage.getPreferredLocale(),
+			document -> _sxpElementDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					new HashMap<>(), _dtoConverterRegistry,
+					contextHttpServletRequest,
+					document.get(Field.ENTRY_CLASS_PK),
+					contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+					contextUser),
 				_sxpElementService.getSXPElement(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
 	public SXPElement postSXPElement(SXPElement sxpElement) throws Exception {
-		return SXPElementUtil.toSXPElement(
-			contextAcceptLanguage.getPreferredLocale(),
+		return _sxpElementDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, contextHttpServletRequest,
+				sxpElement.getId(), contextAcceptLanguage.getPreferredLocale(),
+				contextUriInfo, contextUser),
 			_sxpElementService.addSXPElement(
-				Collections.singletonMap(
-					contextAcceptLanguage.getPreferredLocale(),
-					sxpElement.getDescription()),
+				LocalizedMapUtil.getLocalizedMap(
+					sxpElement.getDescription_i18n()),
 				String.valueOf(sxpElement.getElementDefinition()), false,
-				Collections.singletonMap(
-					contextAcceptLanguage.getPreferredLocale(),
-					sxpElement.getTitle()),
-				0,
+				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private SXPElementDTOConverter _sxpElementDTOConverter;
 
 	@Reference
 	private SXPElementService _sxpElementService;

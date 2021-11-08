@@ -872,6 +872,12 @@ definition {
 				value1 = "${addressCity}");
 		}
 
+		if (isSet(addressCountry)) {
+			Select(
+				locator1 = "Select#COUNTRY",
+				value1 = "${addressCountry}");
+		}
+
 		if (isSet(addressRegion)) {
 			Select(
 				locator1 = "Select#REGION",
@@ -882,12 +888,6 @@ definition {
 			Type(
 				locator1 = "TextInput#POSTAL_CODE",
 				value1 = "${addressPostalCode}");
-		}
-
-		if (isSet(addressCountry)) {
-			Select(
-				locator1 = "Select#COUNTRY",
-				value1 = "${addressCountry}");
 		}
 
 		if (isSet(phoneNumber)) {

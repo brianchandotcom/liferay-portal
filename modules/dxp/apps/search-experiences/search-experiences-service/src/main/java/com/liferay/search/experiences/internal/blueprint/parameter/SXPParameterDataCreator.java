@@ -40,12 +40,10 @@ import com.liferay.search.experiences.blueprint.parameter.LongSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.StringArraySXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.StringSXPParameter;
-import com.liferay.search.experiences.internal.blueprint.parameter.contributor.CommerceSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.ContextSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.IpstackSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.OpenWeatherMapSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.SXPParameterContributor;
-import com.liferay.search.experiences.internal.blueprint.parameter.contributor.SystemSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.TimeSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.UserSXPParameterContributor;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
@@ -87,11 +85,6 @@ public class SXPParameterDataCreator {
 		Map<String, Parameter> parameters = configuration.getParameters();
 
 		if (!MapUtil.isEmpty(parameters)) {
-			_addSXPParameter(
-				"page", parameters.get("page"), searchContext, sxpParameters);
-			_addSXPParameter(
-				"size", parameters.get("size"), searchContext, sxpParameters);
-
 			_addSXPParameters(parameters, searchContext, sxpParameters);
 		}
 
@@ -103,12 +96,10 @@ public class SXPParameterDataCreator {
 	@Activate
 	protected void activate() {
 		_sxpParameterContributors = new SXPParameterContributor[] {
-			new CommerceSXPParameterContributor(),
 			new ContextSXPParameterContributor(
 				_groupLocalService, _language, _layoutLocalService),
 			new IpstackSXPParameterContributor(_configurationProvider),
 			new OpenWeatherMapSXPParameterContributor(_configurationProvider),
-			new SystemSXPParameterContributor(),
 			new TimeSXPParameterContributor(_language, _userLocalService),
 			new UserSXPParameterContributor(
 				_language, _roleLocalService, _segmentsEntryRetriever,

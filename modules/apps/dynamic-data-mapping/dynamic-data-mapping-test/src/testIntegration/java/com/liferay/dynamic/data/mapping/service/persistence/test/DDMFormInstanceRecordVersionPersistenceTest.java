@@ -246,6 +246,14 @@ public class DDMFormInstanceRecordVersionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByU_F() throws Exception {
+		_persistence.countByU_F(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByU_F(0L, 0L);
+	}
+
+	@Test
 	public void testCountByF_F() throws Exception {
 		_persistence.countByF_F(RandomTestUtil.nextLong(), "");
 

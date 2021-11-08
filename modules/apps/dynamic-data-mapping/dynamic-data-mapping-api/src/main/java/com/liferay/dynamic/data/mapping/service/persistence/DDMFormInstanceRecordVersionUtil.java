@@ -312,6 +312,197 @@ public class DDMFormInstanceRecordVersionUtil {
 	}
 
 	/**
+	 * Returns all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 * @return the matching ddm form instance record versions
+	 */
+	public static List<DDMFormInstanceRecordVersion> findByU_F(
+		long userId, long formInstanceId) {
+
+		return getPersistence().findByU_F(userId, formInstanceId);
+	}
+
+	/**
+	 * Returns a range of all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 * @param start the lower bound of the range of ddm form instance record versions
+	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
+	 * @return the range of matching ddm form instance record versions
+	 */
+	public static List<DDMFormInstanceRecordVersion> findByU_F(
+		long userId, long formInstanceId, int start, int end) {
+
+		return getPersistence().findByU_F(userId, formInstanceId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 * @param start the lower bound of the range of ddm form instance record versions
+	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm form instance record versions
+	 */
+	public static List<DDMFormInstanceRecordVersion> findByU_F(
+		long userId, long formInstanceId, int start, int end,
+		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
+
+		return getPersistence().findByU_F(
+			userId, formInstanceId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 * @param start the lower bound of the range of ddm form instance record versions
+	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ddm form instance record versions
+	 */
+	public static List<DDMFormInstanceRecordVersion> findByU_F(
+		long userId, long formInstanceId, int start, int end,
+		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByU_F(
+			userId, formInstanceId, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first ddm form instance record version in the ordered set where userId = &#63; and formInstanceId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm form instance record version
+	 * @throws NoSuchFormInstanceRecordVersionException if a matching ddm form instance record version could not be found
+	 */
+	public static DDMFormInstanceRecordVersion findByU_F_First(
+			long userId, long formInstanceId,
+			OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchFormInstanceRecordVersionException {
+
+		return getPersistence().findByU_F_First(
+			userId, formInstanceId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first ddm form instance record version in the ordered set where userId = &#63; and formInstanceId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm form instance record version, or <code>null</code> if a matching ddm form instance record version could not be found
+	 */
+	public static DDMFormInstanceRecordVersion fetchByU_F_First(
+		long userId, long formInstanceId,
+		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
+
+		return getPersistence().fetchByU_F_First(
+			userId, formInstanceId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last ddm form instance record version in the ordered set where userId = &#63; and formInstanceId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddm form instance record version
+	 * @throws NoSuchFormInstanceRecordVersionException if a matching ddm form instance record version could not be found
+	 */
+	public static DDMFormInstanceRecordVersion findByU_F_Last(
+			long userId, long formInstanceId,
+			OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchFormInstanceRecordVersionException {
+
+		return getPersistence().findByU_F_Last(
+			userId, formInstanceId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last ddm form instance record version in the ordered set where userId = &#63; and formInstanceId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddm form instance record version, or <code>null</code> if a matching ddm form instance record version could not be found
+	 */
+	public static DDMFormInstanceRecordVersion fetchByU_F_Last(
+		long userId, long formInstanceId,
+		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
+
+		return getPersistence().fetchByU_F_Last(
+			userId, formInstanceId, orderByComparator);
+	}
+
+	/**
+	 * Returns the ddm form instance record versions before and after the current ddm form instance record version in the ordered set where userId = &#63; and formInstanceId = &#63;.
+	 *
+	 * @param formInstanceRecordVersionId the primary key of the current ddm form instance record version
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ddm form instance record version
+	 * @throws NoSuchFormInstanceRecordVersionException if a ddm form instance record version with the primary key could not be found
+	 */
+	public static DDMFormInstanceRecordVersion[] findByU_F_PrevAndNext(
+			long formInstanceRecordVersionId, long userId, long formInstanceId,
+			OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchFormInstanceRecordVersionException {
+
+		return getPersistence().findByU_F_PrevAndNext(
+			formInstanceRecordVersionId, userId, formInstanceId,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 */
+	public static void removeByU_F(long userId, long formInstanceId) {
+		getPersistence().removeByU_F(userId, formInstanceId);
+	}
+
+	/**
+	 * Returns the number of ddm form instance record versions where userId = &#63; and formInstanceId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 * @return the number of matching ddm form instance record versions
+	 */
+	public static int countByU_F(long userId, long formInstanceId) {
+		return getPersistence().countByU_F(userId, formInstanceId);
+	}
+
+	/**
 	 * Returns all the ddm form instance record versions where formInstanceId = &#63; and formInstanceVersion = &#63;.
 	 *
 	 * @param formInstanceId the form instance ID

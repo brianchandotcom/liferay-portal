@@ -36,6 +36,127 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140820. The user could decrease the Number of Slides in Banner Slider."
+	@priority = "5"
+	test DecreaseNumberOfSlides {
+		task ("Add a Banner Slider fragment to a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Slider");
+		}
+
+		task ("Map the Title and Author Name fields to title and subtitle fields in the first slide") {
+			PageEditorMapping.mapEditableTextToField(
+				className = "slider",
+				field = "Title",
+				fragmentName = "Slider",
+				id = "01-02-title");
+
+			PageEditorMapping.mapEditableTextToField(
+				className = "slider",
+				field = "Author Name",
+				fragmentName = "Slider",
+				id = "01-03-subtitle");
+		}
+
+		task ("Change the Number of Slides to 2") {
+			PageEditor.gotoConfiguration(fragmentName = "Slider");
+
+			PageEditor.configureFragment(numberOfSlides = "2");
+		}
+
+		task ("Map the Content and Display Page URL fields to title and subtitle fields in the second slide") {
+			ContentPages.focusSlide(slideNumber = "2");
+
+			PageEditorMapping.mapEditableTextToField(
+				className = "slider",
+				field = "Content",
+				fragmentName = "Slider",
+				id = "02-02-title");
+
+			PageEditorMapping.mapEditableTextToField(
+				className = "slider",
+				field = "Display Page URL",
+				fragmentName = "Slider",
+				id = "02-03-subtitle");
+		}
+
+		task ("View the third slide is not shown in Banner Slide") {
+			AssertElementNotPresent(
+				ariaLabel = "Focus slide 3",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content and associate it to the display page template") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("View the mapped contents of the slides in associated display page template") {
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Title",
+				menuItem = "View Content");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+
+			var baseURL = PropsUtil.get("portal.url");
+
+			ContentPages.focusSlide(slideNumber = "1");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "slider",
+				id = "01-02-title",
+				text = "Web Content Title");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "slider",
+				id = "01-03-subtitle",
+				text = "Test Test");
+
+			ContentPages.focusSlide(slideNumber = "2");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "slider",
+				id = "02-02-title",
+				text = "Web Content Content");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "slider",
+				id = "02-03-subtitle",
+				text = "${baseURL}/web/test-site-name/w/web-content-title");
+		}
+
+		task ("View the third slide is not shown in Slide") {
+			AssertElementNotPresent(
+				ariaLabel = "Focus slide 3",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		}
+	}
+
 	@description = "This is a test for LPS-140820. The user could increase the Number of Slides in Banner Slider."
 	@priority = "5"
 	test IncreaseNumberOfSlides {

@@ -56,6 +56,15 @@ definition {
 		}
 	}
 
+	@description = "LRQA-71360 - Verify that the user can add a new calendar on the Manage Calendar Page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddCalendarOnManageCalendarPage {
+
+		// TODO LRQA-71553 CanAddCalendarOnManageCalendarPage pending implementation
+
+	}
+
 	@priority = "3"
 	test ChangeCalendarTypeForAllDayEvent {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -196,6 +205,15 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
+	@description = "LRQA-71360 - Verify that when the user change the calendar color it also changes the color column on the Manage Calendar page"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CheckTheColorColumnIsChanged {
+
+		// TODO LRQA-71551 CheckTheColorColumnIsChanged pending implementation
+
+	}
+
 	@priority = "4"
 	test DeactivateAndDeleteSiteCalendarAndViewSiteCalendarEvent {
 		ApplicationsMenu.gotoPortlet(
@@ -272,6 +290,15 @@ definition {
 			user = "Test Test");
 
 		Calendar.viewDefault();
+	}
+
+	@description = "LRQA-71360 - Verify  that the Manage Calendar page displays the  Name, Description, Color and Default columns"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisplayNameDescriptionColorsDefaultColumns {
+
+		// TODO LRQA-71552 DisplayNameDescriptionColorsDefaultColumns pending implementation
+
 	}
 
 	@priority = "3"
@@ -361,6 +388,15 @@ definition {
 		Calendar.view(
 			calendarName = "userfn userln - userfn userln Edit",
 			calendarType = "Other Calendars");
+	}
+
+	@description = "LRQA-71360 - Verify that the Manage Calendar Page displays a list of the created calendars"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ManageCalendarsDisplaysAListOfCalendars {
+
+		// TODO LRQA-71554 ManageCalendarsDisplaysAListOfCalendars pending implementation
+
 	}
 
 	@priority = "5"
@@ -669,42 +705,6 @@ definition {
 		Calendar.viewCurrentSiteCalendarName(
 			calendarName = "Site Name",
 			siteName = "Site Name Edit");
-	}
-
-	@description = "LRQA-71360 - Verify that the Manage Calendar Page displays a list of the created calendars"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test ManageCalendarsDisplaysAListOfCalendars {
-
-		// TODO LRQA-71554 ManageCalendarsDisplaysAListOfCalendars pending implementation
-
-	}
-
-	@description = "LRQA-71360 - Verify that the user can add a new calendar on the Manage Calendar Page"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanAddCalendarOnManageCalendarPage {
-
-		// TODO LRQA-71553 CanAddCalendarOnManageCalendarPage pending implementation
-
-	}
-
-	@description = "LRQA-71360 - Verify  that the Manage Calendar page displays the  Name, Description, Color and Default columns"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test DisplayNameDescriptionColorsDefaultColumns {
-
-		// TODO LRQA-71552 DisplayNameDescriptionColorsDefaultColumns pending implementation
-
-	}
-
-	@description = "LRQA-71360 - Verify that when the user change the calendar color it also changes the color column on the Manage Calendar page"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CheckTheColorColumnIsChanged {
-
-		// TODO LRQA-71551 CheckTheColorColumnIsChanged pending implementation
-
 	}
 
 }

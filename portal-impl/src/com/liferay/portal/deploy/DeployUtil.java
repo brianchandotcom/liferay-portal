@@ -268,8 +268,6 @@ public class DeployUtil {
 			tempDirPath + "/liferay/com/liferay/portal/deploy/dependencies/" +
 				resource);
 
-		//if (!file.exists() || resource.startsWith("ext-")) {
-
 		File parentFile = file.getParentFile();
 
 		if (parentFile != null) {
@@ -277,8 +275,6 @@ public class DeployUtil {
 		}
 
 		StreamUtil.transfer(inputStream, new FileOutputStream(file));
-
-		//}
 
 		return FileUtil.getAbsolutePath(file);
 	}

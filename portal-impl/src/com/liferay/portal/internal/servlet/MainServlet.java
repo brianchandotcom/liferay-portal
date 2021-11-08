@@ -91,7 +91,6 @@ import com.liferay.portal.struts.TilesUtil;
 import com.liferay.portal.struts.model.ActionForward;
 import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.struts.model.ModuleConfig;
-import com.liferay.portal.util.ExtRegistry;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsUtil;
@@ -345,17 +344,6 @@ public class MainServlet extends HttpServlet {
 					"/WEB-INF/shielded-container-web.xml"));
 
 			_checkWebSettings(xml);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Initialize extension environment");
-		}
-
-		try {
-			ExtRegistry.registerPortal(servletContext);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

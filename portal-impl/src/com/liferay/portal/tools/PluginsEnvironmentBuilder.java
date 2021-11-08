@@ -25,12 +25,10 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.xml.SAXReaderImpl;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FilenameFilter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -591,60 +589,20 @@ public class PluginsEnvironmentBuilder {
 		Set<String> globalJars = new LinkedHashSet<>();
 		List<String> portalJars = new ArrayList<>();
 
-		Set<String> extGlobalJars = new LinkedHashSet<>();
-		Set<String> extPortalJars = new LinkedHashSet<>();
-
 		String libDirPath = StringUtil.replace(
 			libDir.getPath(), CharPool.BACK_SLASH, CharPool.SLASH);
 
-		if (libDirPath.contains("/ext/")) {
-			FilenameFilter filenameFilter = new GlobFilenameFilter("*.jar");
+		globalJars.add("portlet.jar");
 
-			for (String dirName : new String[] {"global", "portal"}) {
-				File file = new File(libDirPath + "/../ext-lib/" + dirName);
+		portalJars.addAll(dependencyJars);
+		portalJars.add("commons-logging.jar");
+		portalJars.add("log4j-1.2-api.jar");
+		portalJars.add("log4j-api.jar");
+		portalJars.add("log4j-core.jar");
 
-				List<String> jars = ListUtil.fromArray(
-					file.list(filenameFilter));
+		portalJars = ListUtil.unique(portalJars);
 
-				if (dirName.equals("global")) {
-					extGlobalJars.addAll(ListUtil.sort(jars));
-
-					File dir = new File(PropsValues.LIFERAY_LIB_GLOBAL_DIR);
-
-					String[] fileNames = dir.list(filenameFilter);
-
-					globalJars.addAll(
-						ListUtil.sort(ListUtil.fromArray(fileNames)));
-
-					globalJars.removeAll(extGlobalJars);
-				}
-				else if (dirName.equals("portal")) {
-					extPortalJars.addAll(ListUtil.sort(jars));
-
-					File dir = new File(PropsValues.LIFERAY_LIB_PORTAL_DIR);
-
-					String[] fileNames = dir.list(filenameFilter);
-
-					portalJars.addAll(
-						ListUtil.sort(ListUtil.fromArray(fileNames)));
-
-					portalJars.removeAll(extPortalJars);
-				}
-			}
-		}
-		else {
-			globalJars.add("portlet.jar");
-
-			portalJars.addAll(dependencyJars);
-			portalJars.add("commons-logging.jar");
-			portalJars.add("log4j-1.2-api.jar");
-			portalJars.add("log4j-api.jar");
-			portalJars.add("log4j-core.jar");
-
-			portalJars = ListUtil.unique(portalJars);
-
-			Collections.sort(portalJars);
-		}
+		Collections.sort(portalJars);
 
 		String[] customJarsArray = libDir.list(new GlobFilenameFilter("*.jar"));
 
@@ -756,14 +714,6 @@ public class PluginsEnvironmentBuilder {
 
 		addClasspathEntry(sb, "/portal/util-taglib/util-taglib.jar");
 
-		for (String jar : extGlobalJars) {
-			addClasspathEntry(sb, "docroot/WEB-INF/ext-lib/global/" + jar);
-		}
-
-		for (String jar : extPortalJars) {
-			addClasspathEntry(sb, "docroot/WEB-INF/ext-lib/portal/" + jar);
-		}
-
 		for (String jar : customJars) {
 			if (libDirPath.contains("/tmp/WEB-INF/lib")) {
 				addClasspathEntry(sb, "tmp/WEB-INF/lib/" + jar);
@@ -837,50 +787,6 @@ public class PluginsEnvironmentBuilder {
 		writeClasspathFile(
 			libDir, dependencyJars, projectDirName, projectName, javaProject);
 
-		for (String sourceDirName : _SOURCE_DIR_NAMES) {
-			if (!_fileImpl.exists(projectDirName + "/" + sourceDirName)) {
-				continue;
-			}
-
-			List<String> gitIgnores = new ArrayList<>();
-
-			if (sourceDirName.endsWith("ext-impl/src")) {
-				gitIgnores.add("/classes");
-				gitIgnores.add("/ext-impl.jar");
-			}
-			else if (sourceDirName.endsWith("ext-kernel/src")) {
-				gitIgnores.add("/classes");
-				gitIgnores.add("/ext-kernel.jar");
-			}
-			else if (sourceDirName.endsWith("ext-util-bridges/src")) {
-				gitIgnores.add("/classes");
-				gitIgnores.add("/ext-util-bridges.jar");
-			}
-			else if (sourceDirName.endsWith("ext-util-java/src")) {
-				gitIgnores.add("/classes");
-				gitIgnores.add("/ext-util-java.jar");
-			}
-			else if (sourceDirName.endsWith("ext-util-taglib/src")) {
-				gitIgnores.add("/classes");
-				gitIgnores.add("/ext-util-taglib.jar");
-			}
-			else {
-				continue;
-			}
-
-			String dirName = StringBundler.concat(
-				projectDirName, "/", sourceDirName, "/../");
-
-			if (gitIgnores.isEmpty()) {
-				_fileImpl.delete(dirName + ".gitignore");
-			}
-			else {
-				String gitIgnoresString = StringUtil.merge(gitIgnores, "\n");
-
-				_fileImpl.write(dirName + ".gitignore", gitIgnoresString);
-			}
-		}
-
 		if (_fileImpl.exists(projectDirName + "/test")) {
 			_fileImpl.write(
 				projectDirName + "/.gitignore", "/test-classes\n/test-results");
@@ -934,11 +840,7 @@ public class PluginsEnvironmentBuilder {
 	private static final String _BRANCH = "master";
 
 	private static final String[] _SOURCE_DIR_NAMES = {
-		"docroot/WEB-INF/ext-impl/src", "docroot/WEB-INF/ext-kernel/src",
-		"docroot/WEB-INF/ext-util-bridges/src",
-		"docroot/WEB-INF/ext-util-java/src",
-		"docroot/WEB-INF/ext-util-taglib/src", "docroot/WEB-INF/service",
-		"docroot/WEB-INF/src", "src"
+		"docroot/WEB-INF/service", "docroot/WEB-INF/src", "src"
 	};
 
 	private static final String[] _TEST_TYPES = {"integration", "unit"};

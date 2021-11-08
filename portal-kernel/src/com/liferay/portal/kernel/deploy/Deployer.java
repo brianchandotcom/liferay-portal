@@ -29,8 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface Deployer {
 
-	public void addExtJar(List<String> jars, String resource) throws Exception;
-
 	public void addRequiredJar(List<String> jars, String resource)
 		throws Exception;
 

@@ -56,7 +56,6 @@ import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.WebXMLBuilder;
 import com.liferay.portal.tools.deploy.extension.DeploymentExtension;
-import com.liferay.portal.util.ExtRegistry;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -167,34 +166,6 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
-		}
-	}
-
-	@Override
-	public void addExtJar(List<String> jars, String resource) throws Exception {
-		Set<String> servletContextNames = ExtRegistry.getServletContextNames();
-
-		for (String servletContextName : servletContextNames) {
-			String extResource =
-				"ext-" + servletContextName + resource.substring(3);
-
-			String path = DeployUtil.getResourcePath(tempDirPaths, extResource);
-
-			if (_log.isDebugEnabled()) {
-				if (path == null) {
-					_log.debug("Resource " + extResource + " is not available");
-				}
-				else {
-					_log.debug(
-						StringBundler.concat(
-							"Resource ", extResource, " is available at ",
-							path));
-				}
-			}
-
-			if (path != null) {
-				jars.add(path);
-			}
 		}
 	}
 

@@ -166,6 +166,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8095 | Test Summary: Can delete a custom asset report"
+	@ignore = "true"
 	@priority = "5"
 	test CanDeleteCustomAssetReport {
 		property portal.upstream = "quarantine";

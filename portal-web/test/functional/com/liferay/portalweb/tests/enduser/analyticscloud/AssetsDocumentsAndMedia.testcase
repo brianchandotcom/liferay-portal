@@ -106,6 +106,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8394 | Test Summary: Assert 180 day time filter in Documents and Media"
+	@ignore = "true"
 	@priority = "3"
 	test AssertDocumentsAndMediaPageTImeFilter180Days {
 		property portal.upstream = "quarantine";
@@ -220,6 +221,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8403 | Test Summary: Documents audience card shows expected amount of segmented and unsegmented individuals"
+	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInDM {
 		property portal.upstream = "quarantine";
@@ -308,6 +310,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8395 | Test Summary: Custom Range time filter in Documents and Media assets page"
+	@ignore = "true"
 	@priority = "4"
 	test CanAssertDocumentsAndMediaTimeFilterCustom {
 		property portal.upstream = "quarantine";

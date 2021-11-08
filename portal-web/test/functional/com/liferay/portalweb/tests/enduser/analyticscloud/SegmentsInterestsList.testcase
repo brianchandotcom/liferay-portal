@@ -137,6 +137,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8614 | Test Summary: Assert top interest shown in segment profile"
+	@ignore = "true"
 	@priority = "3"
 	test AssertTopInterestShownInSegmentProfile {
 		property portal.upstream = "quarantine";

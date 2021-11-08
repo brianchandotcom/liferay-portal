@@ -180,6 +180,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9019 | Test Summary: Search an Individual's Interest List with a query that won't return results"
+	@ignore = "true"
 	@priority = "3"
 	test AssertNoIndividualsInterestsResults {
 		property portal.upstream = "quarantine";

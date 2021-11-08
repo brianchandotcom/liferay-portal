@@ -831,6 +831,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8271 | Test Summary: Site Activity Card: Total site visitors and % change is shown"
+	@ignore = "true"
 	@priority = "5"
 	test ShownTotalSiteVisitorsAndPercentageChangeShown {
 		property portal.upstream = "quarantine";

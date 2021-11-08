@@ -300,6 +300,10 @@
 		<finder name="FormInstanceRecordId" return-type="Collection">
 			<finder-column name="formInstanceRecordId" />
 		</finder>
+		<finder name="U_F" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="formInstanceId" />
+		</finder>
 		<finder name="F_F" return-type="Collection">
 			<finder-column name="formInstanceId" />
 			<finder-column name="formInstanceVersion" />

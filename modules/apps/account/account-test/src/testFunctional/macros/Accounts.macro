@@ -71,6 +71,8 @@ definition {
 
 		PortletEntry.inputName(name = "${accountName}");
 
+		AssertElementPresent(locator1 = "Account#VALID_DOMAINS_EMPTY_INFO_MESSAGE");
+
 		AssertClick(
 			locator1 = "Account#VALID_DOMAINS_ADD_BUTTON",
 			value1 = "Add");

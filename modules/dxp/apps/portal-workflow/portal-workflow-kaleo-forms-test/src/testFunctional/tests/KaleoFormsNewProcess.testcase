@@ -68,9 +68,6 @@ definition {
 		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.viewWorkflowCannotBeUnpublish(workflowDefinitionTitle = "Single Approver");
-
-
-		
 	}
 
 	@description = "Verify that the user can only choose one Field Set."

@@ -208,6 +208,38 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
+	macro createKaleoFormsProcess {
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "${kfProcessDescription}",
+			kfProcessName = "${kfProcessName}");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "${kfFieldSetName}",
+			kfProcessName = "${kfProcessName}");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "${kfProcessName}",
+			workflowDefinitionTitle = "${workflowDefinitionTitle}");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.assignForm(
+			kfProcessName = "${kfProcessName}",
+			workflowTask = "${workflowTask}");
+
+		KaleoFormsAdmin.addForm(kfFormName = "${kfFormName}");
+
+		KaleoFormsAdmin.saveForm();
+
+		KaleoFormsAdmin.chooseForm(kfFormName = "${kfFormName}");
+
+		KaleoFormsAdmin.saveProcess(kfProcessName = "${kfProcessName}");
+	}
+
 	macro deactivateWorkflow {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Unpublish",
@@ -434,38 +466,6 @@ definition {
 		var key_kfProgressName = "${kfProgressName}";
 
 		Click(locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_PROGRESS_BAR_NAME");
-	}
-
-	macro createKaleoFormsProcess {
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "${kfProcessDescription}",
-			kfProcessName = "${kfProcessName}");
-
-		KaleoFormsAdmin.next();
-
-		KaleoFormsAdmin.chooseFieldSet(
-			kfFieldSetName = "${kfFieldSetName}",
-			kfProcessName = "${kfProcessName}");
-
-		KaleoFormsAdmin.next();
-
-		KaleoFormsAdmin.chooseWorkflow(
-			kfProcessName = "${kfProcessName}",
-			workflowDefinitionTitle = "${workflowDefinitionTitle}");
-
-		KaleoFormsAdmin.next();
-
-		KaleoFormsAdmin.assignForm(
-			kfProcessName = "${kfProcessName}",
-			workflowTask = "${workflowTask}");
-
-		KaleoFormsAdmin.addForm(kfFormName = "${kfFormName}");
-
-		KaleoFormsAdmin.saveForm();
-
-		KaleoFormsAdmin.chooseForm(kfFormName = "${kfFormName}");
-
-		KaleoFormsAdmin.saveProcess(kfProcessName = "${kfProcessName}");
 	}
 
 	macro next {

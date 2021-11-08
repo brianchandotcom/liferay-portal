@@ -18,6 +18,7 @@ import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.util.CharPool;
 import com.liferay.poshi.core.util.ListUtil;
+import com.liferay.poshi.core.util.NaturalOrderStringComparator;
 import com.liferay.poshi.core.util.RegexUtil;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
@@ -325,7 +326,10 @@ public class ExecutePoshiElement extends PoshiElement {
 					String name2 = assignment2.substring(
 						0, assignment2.indexOf(CharPool.EQUAL));
 
-					return name1.compareTo(name2);
+					NaturalOrderStringComparator naturalOrderStringComparator =
+						new NaturalOrderStringComparator();
+
+					return naturalOrderStringComparator.compare(name1, name2);
 				}
 
 			});

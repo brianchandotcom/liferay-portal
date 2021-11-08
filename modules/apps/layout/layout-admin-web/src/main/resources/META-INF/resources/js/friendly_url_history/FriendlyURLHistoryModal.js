@@ -16,7 +16,7 @@ import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {fetch, objectToFormData, openToast} from 'frontend-js-web';
+import {fetch, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -37,12 +37,10 @@ const showToastError = () => {
 
 const FriendlyURLHistoryModal = ({
 	defaultLanguageId,
-	deleteFriendlyURLEntryLocalizationURL,
-	friendlyURLEntryLocalizationsURL,
+	friendlyURLEntryURL,
 	initialLanguageId,
 	observer,
 	portletNamespace,
-	restoreFriendlyURLEntryLocalizationURL,
 }) => {
 	const [languageId, setLanguageId] = useState();
 	const [loading, setLoading] = useState(true);
@@ -54,7 +52,7 @@ const FriendlyURLHistoryModal = ({
 	const isMounted = useIsMounted();
 
 	const getFriendlyUrlLocalizations = useCallback(() => {
-		fetch(friendlyURLEntryLocalizationsURL)
+		fetch(friendlyURLEntryURL)
 			.then((response) => response.json())
 			.then((response) => {
 				if (isMounted()) {
@@ -78,7 +76,7 @@ const FriendlyURLHistoryModal = ({
 				logError(error);
 				showToastError();
 			});
-	}, [friendlyURLEntryLocalizationsURL, isMounted]);
+	}, [friendlyURLEntryURL, isMounted]);
 
 	useEffect(() => {
 		getFriendlyUrlLocalizations();
@@ -126,13 +124,9 @@ const FriendlyURLHistoryModal = ({
 	}, [friendlyURLEntryLocalizations, loading, languageId]);
 
 	const sendRequest = useCallback(
-		(url, friendlyURLEntryId) => {
-			return fetch(url, {
-				body: objectToFormData({
-					[`${portletNamespace}friendlyURLEntryId`]: friendlyURLEntryId,
-					[`${portletNamespace}languageId`]: languageId,
-				}),
-				method: 'POST',
+		(url, friendlyURLEntryId, method = 'GET') => {
+			return fetch(`${url}/${friendlyURLEntryId}/${languageId}`, {
+				method,
 			})
 				.then((response) => response.json())
 				.catch((error) => {
@@ -140,14 +134,15 @@ const FriendlyURLHistoryModal = ({
 					showToastError();
 				});
 		},
-		[languageId, portletNamespace]
+		[languageId]
 	);
 
 	const handleDeleteFriendlyUrl = useCallback(
 		(deleteFriendlyURLEntryId) => {
 			sendRequest(
-				deleteFriendlyURLEntryLocalizationURL,
-				deleteFriendlyURLEntryId
+				friendlyURLEntryURL,
+				deleteFriendlyURLEntryId,
+				'DELETE'
 			).then(({success} = {}) => {
 				if (success) {
 					setFriendlyURLEntryLocalizations(
@@ -171,14 +166,15 @@ const FriendlyURLHistoryModal = ({
 				}
 			});
 		},
-		[deleteFriendlyURLEntryLocalizationURL, languageId, sendRequest]
+		[friendlyURLEntryURL, languageId, sendRequest]
 	);
 
 	const handleRestoreFriendlyUrl = useCallback(
 		(restoreFriendlyUrlEntryId, urlTitle) => {
 			sendRequest(
-				restoreFriendlyURLEntryLocalizationURL,
-				restoreFriendlyUrlEntryId
+				friendlyURLEntryURL,
+				restoreFriendlyUrlEntryId,
+				'POST'
 			).then(({success} = {}) => {
 				if (isMounted() && success) {
 					getFriendlyUrlLocalizations();
@@ -207,7 +203,7 @@ const FriendlyURLHistoryModal = ({
 			isMounted,
 			languageId,
 			portletNamespace,
-			restoreFriendlyURLEntryLocalizationURL,
+			friendlyURLEntryURL,
 			sendRequest,
 		]
 	);
@@ -319,11 +315,9 @@ const FriendlyURLHistoryModal = ({
 
 FriendlyURLHistoryModal.propTypes = {
 	defaultLanguageId: PropTypes.string.isRequired,
-	deleteFriendlyURLEntryLocalizationURL: PropTypes.string.isRequired,
-	friendlyURLEntryLocalizationsURL: PropTypes.string.isRequired,
+	friendlyURLEntryURL: PropTypes.string.isRequired,
 	observer: PropTypes.object.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
-	restoreFriendlyURLEntryLocalizationURL: PropTypes.string.isRequired,
 };
 
 export default FriendlyURLHistoryModal;

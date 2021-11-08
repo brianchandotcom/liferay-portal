@@ -8,11 +8,11 @@
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Retrieve E-mail"
+				"en_US": "Application Id"
 			},
-			"name": "retrieveEmail",
+			"name": "applicationId",
 			"required": true,
-			"type": "String"
+			"type": "Long"
 		},
 		{
 			"indexed": false,
@@ -28,11 +28,11 @@
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Application Id"
+				"en_US": "Retrieve E-mail"
 			},
-			"name": "applicationId",
+			"name": "retrieveEmail",
 			"required": true,
-			"type": "Long"
+			"type": "String"
 		}
 	],
 	"panelAppOrder": "100",

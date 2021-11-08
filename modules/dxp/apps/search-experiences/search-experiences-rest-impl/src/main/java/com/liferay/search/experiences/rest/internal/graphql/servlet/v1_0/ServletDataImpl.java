@@ -17,6 +17,7 @@ package com.liferay.search.experiences.rest.internal.graphql.servlet.v1_0;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.search.experiences.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.search.experiences.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.search.experiences.rest.resource.v1_0.FieldMappingInfoResource;
 import com.liferay.search.experiences.rest.resource.v1_0.KeywordQueryContributorResource;
 import com.liferay.search.experiences.rest.resource.v1_0.ModelPrefilterContributorResource;
 import com.liferay.search.experiences.rest.resource.v1_0.QueryPrefilterContributorResource;
@@ -52,6 +53,8 @@ public class ServletDataImpl implements ServletData {
 		Mutation.setSearchResponseResourceComponentServiceObjects(
 			_searchResponseResourceComponentServiceObjects);
 
+		Query.setFieldMappingInfoResourceComponentServiceObjects(
+			_fieldMappingInfoResourceComponentServiceObjects);
 		Query.setKeywordQueryContributorResourceComponentServiceObjects(
 			_keywordQueryContributorResourceComponentServiceObjects);
 		Query.setModelPrefilterContributorResourceComponentServiceObjects(
@@ -94,6 +97,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SearchResponseResource>
 		_searchResponseResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<FieldMappingInfoResource>
+		_fieldMappingInfoResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<KeywordQueryContributorResource>

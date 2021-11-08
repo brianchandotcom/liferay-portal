@@ -194,7 +194,7 @@ definition {
 			var monthAndDay = StringUtil.extractFirst("${individualCurrentDate}",",");
 			var currentDay = StringUtil.extractLast("${monthAndDay}"," ");
 
-			result = MathUtil.isGreaterThan("${currentDay}", "${displayDateDay}");
+			var result = MathUtil.isGreaterThan("${currentDay}", "${displayDateDay}");
 
 			if ("${result}" == "true") {
 				displayDateDay = MathUtil.sum("${displayDateDay}", "1");

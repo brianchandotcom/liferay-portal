@@ -111,11 +111,21 @@ definition {
 		}
 
 		task ("Verify page has Minor, Moderate, Serious, and Critical set of violations") {
-			for (var severity : list "minor,moderate,serious,critical") {
-				AssertElementPresent(
-					key_text = "${severity}",
-					locator1 = "A11yTool#VIOLATION_PANEL_ITEM_SEVERITY");
-			}
+			VerifyElementPresent(
+				key_text = "minor",
+				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_SEVERITY");
+
+			VerifyElementPresent(
+				key_text = "moderate",
+				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_SEVERITY");
+
+			VerifyElementPresent(
+				key_text = "serious",
+				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_SEVERITY");
+
+			VerifyElementPresent(
+				key_text = "critical",
+				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_SEVERITY");
 		}
 
 		task ("Filter impact by Critical") {
@@ -123,30 +133,36 @@ definition {
 		}
 
 		task ("Assert only critical violations are present on the side panel") {
-			VerifyElementPresent(
+			AssertElementPresent(
 				key_text = "critical",
 				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_SEVERITY");
 
-			for (var severity : list "minor,moderate,serious") {
-				AssertElementNotPresent(
-					key_text = "${severity}",
-					locator1 = "A11yTool#VIOLATION_PANEL_ITEM_SEVERITY");
-			}
+			AssertElementNotPresent(
+				key_text = "minor",
+				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_SEVERITY");
+
+			AssertElementNotPresent(
+				key_text = "moderate",
+				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_SEVERITY");
+
+			AssertElementNotPresent(
+				key_text = "serious",
+				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_SEVERITY");
 		}
 
 		task ("Assert only critical elements are highlighted") {
-			var i = "1";
+			AssertClick(
+				key_index = "1",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_COUNT",
+				value1 = "");
 
-			while (IsElementPresent(key_text = "${i}", locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_COUNT")) {
-				Click(
-					key_text = "${i}",
-					locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_COUNT");
-
-				var i = ${i} + 1;
-			}
+			AssertClick(
+				key_index = "2",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_COUNT",
+				value1 = "");
 
 			AssertElementNotPresent(
-				key_text = "${i}",
+				key_index = "3",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_COUNT");
 
 			AssertElementPresent(
@@ -157,11 +173,17 @@ definition {
 		}
 
 		task ("Assert minor, moderate, serious violations are not highlighted") {
-			for (var severity : list "minor,moderate,serious") {
-				AssertElementNotPresent(
-					key_text = "${severity}",
-					locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_SEVERITY");
-			}
+			AssertElementNotPresent(
+				key_text = "minor",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_SEVERITY");
+
+			AssertElementNotPresent(
+				key_text = "moderate",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_SEVERITY");
+
+			AssertElementNotPresent(
+				key_text = "serious",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_SEVERITY");
 		}
 
 		takeScreenshot();

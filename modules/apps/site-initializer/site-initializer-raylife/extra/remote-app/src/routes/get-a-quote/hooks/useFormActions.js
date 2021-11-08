@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {LiferayService} from '~/common/services/liferay';
 import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
+import {clearExitAlert} from '~/common/utils/exitAlert';
 import {smoothScroll} from '~/common/utils/scroll';
 import {useStepWizard} from '~/routes/get-a-quote/hooks/useStepWizard';
 import {verifyInputAgentPage} from '~/routes/get-a-quote/utils/contact-agent';
@@ -49,7 +50,8 @@ const useFormActions = (form, previousSection, nextSection, errorMessage) => {
 			Storage.setItem(STORAGE_KEYS.CONTEXTUAL_MESSAGE, phraseAgentPage);
 			window.location.href = `${liferaySiteName}/get-in-touch`;
 			validated = false;
-		} else {
+		}
+		else {
 			Storage.removeItem(STORAGE_KEYS.CONTEXTUAL_MESSAGE);
 		}
 
@@ -66,7 +68,8 @@ const useFormActions = (form, previousSection, nextSection, errorMessage) => {
 			setApplicationId(response.data.id);
 
 			return response;
-		} catch (error) {
+		}
+		catch (error) {
 			setError('continueButton', {
 				message:
 					errorMessage ||
@@ -90,6 +93,8 @@ const useFormActions = (form, previousSection, nextSection, errorMessage) => {
 	const onSave = async () => {
 		await _SaveData();
 
+		clearExitAlert();
+
 		window.location.href = liferaySiteName;
 	};
 
@@ -100,7 +105,7 @@ const useFormActions = (form, previousSection, nextSection, errorMessage) => {
 	const onNext = async () => {
 		await _SaveData();
 
-		window.onbeforeunload = function () {};
+		clearExitAlert();
 
 		const validated = _onValidation();
 

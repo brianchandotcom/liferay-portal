@@ -94,6 +94,14 @@ components:
                     items:
                         type: object
                     type: array
+        FieldMappingInfo:
+            properties:
+                languageIdPosition:
+                    type: integer
+                name:
+                    type: string
+                type:
+                    type: string
         HighlightField:
             properties:
                 fragment_offset:
@@ -468,6 +476,28 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SearchResponse"
             tags: ["SearchResponse"]
+    /field-mapping-infos:
+        get:
+            operationId: getFieldMappingInfosPage
+            parameters:
+                - in: query
+                  name: query
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/FieldMappingInfo"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/FieldMappingInfo"
+                                type: array
+            tags: ["FieldMappingInfo"]
     /keyword-query-contributors:
         get:
             operationId: getKeywordQueryContributorsPage

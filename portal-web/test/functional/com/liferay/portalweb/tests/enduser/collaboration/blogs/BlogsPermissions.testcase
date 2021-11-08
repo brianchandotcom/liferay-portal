@@ -1118,6 +1118,8 @@ definition {
 	@description = "This is a test for LPS-136783. It checks that a normal site member cannot edit someone else's blog."
 	@priority = "3"
 	test CannotEditEntryWhenUserHasNoPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");

@@ -21,12 +21,14 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
@@ -87,8 +89,18 @@ public class SegmentsExperienceSelectorDisplayContext {
 
 	public String getSelectedSegmentsExperienceName() {
 		long segmentsExperienceId = ParamUtil.getLong(
-			_httpServletRequest, "p_s_e_id",
-			SegmentsExperienceConstants.ID_DEFAULT);
+			_httpServletRequest, "p_s_e_id", -1);
+
+		if (segmentsExperienceId == -1) {
+			long[] segmentsExperienceIds = GetterUtil.getLongValues(
+				_httpServletRequest.getAttribute(
+					SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
+				new long[] {SegmentsExperienceConstants.ID_DEFAULT});
+
+			if (segmentsExperienceIds.length > 0) {
+				segmentsExperienceId = segmentsExperienceIds[0];
+			}
+		}
 
 		SegmentsExperience segmentsExperience =
 			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
@@ -115,8 +127,9 @@ public class SegmentsExperienceSelectorDisplayContext {
 				_themeDisplay.getLocale())
 		).put(
 			"url",
-			HttpUtil.removeParameter(
-				PortalUtil.getCurrentURL(_httpServletRequest), "p_s_e_id")
+			HttpUtil.setParameter(
+				PortalUtil.getCurrentURL(_httpServletRequest), "p_s_e_id",
+				SegmentsExperienceConstants.ID_DEFAULT)
 		);
 	}
 

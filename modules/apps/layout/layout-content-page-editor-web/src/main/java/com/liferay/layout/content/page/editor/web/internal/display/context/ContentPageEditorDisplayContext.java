@@ -135,6 +135,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType;
@@ -788,18 +789,33 @@ public class ContentPageEditorDisplayContext {
 
 		// LPS-131416
 
-		long segmentsExperienceId = GetterUtil.getLong(
-			unicodeProperties.getProperty("segmentsExperienceId"),
-			SegmentsExperienceConstants.ID_DEFAULT);
+		_segmentsExperienceId = GetterUtil.getLong(
+			unicodeProperties.getProperty("segmentsExperienceId"), -1);
 
-		_segmentsExperienceId = Optional.ofNullable(
-			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
-				segmentsExperienceId)
-		).map(
-			SegmentsExperience::getSegmentsExperienceId
-		).orElse(
-			SegmentsExperienceConstants.ID_DEFAULT
-		);
+		if (_segmentsExperienceId != -1) {
+			_segmentsExperienceId = Optional.ofNullable(
+				SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+					_segmentsExperienceId)
+			).map(
+				SegmentsExperience::getSegmentsExperienceId
+			).orElse(
+				-1L
+			);
+		}
+
+		if (_segmentsExperienceId == -1) {
+			long[] segmentsExperienceIds = GetterUtil.getLongValues(
+				httpServletRequest.getAttribute(
+					SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
+				new long[] {SegmentsExperienceConstants.ID_DEFAULT});
+
+			if (segmentsExperienceIds.length > 0) {
+				_segmentsExperienceId = segmentsExperienceIds[0];
+			}
+			else {
+				_segmentsExperienceId = SegmentsExperienceConstants.ID_DEFAULT;
+			}
+		}
 
 		return _segmentsExperienceId;
 	}

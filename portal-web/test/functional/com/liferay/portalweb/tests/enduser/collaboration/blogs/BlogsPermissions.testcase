@@ -1134,10 +1134,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		AssertElementPresent(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -1147,10 +1143,6 @@ definition {
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Power User",
 			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(

@@ -37,10 +37,10 @@ const showToastError = () => {
 
 const FriendlyURLHistoryModal = ({
 	defaultLanguageId,
+	elementId,
 	friendlyURLEntryURL,
 	initialLanguageId,
 	observer,
-	portletNamespace,
 }) => {
 	const [languageId, setLanguageId] = useState();
 	const [loading, setLoading] = useState(true);
@@ -179,9 +179,7 @@ const FriendlyURLHistoryModal = ({
 				if (isMounted() && success) {
 					getFriendlyUrlLocalizations();
 
-					const inputComponent = Liferay.component(
-						`${portletNamespace}friendlyURL`
-					);
+					const inputComponent = Liferay.component(elementId);
 
 					if (inputComponent.getSelectedLanguageId() === languageId) {
 						inputComponent.updateInput(urlTitle);
@@ -199,11 +197,11 @@ const FriendlyURLHistoryModal = ({
 			});
 		},
 		[
+			elementId,
+			friendlyURLEntryURL,
 			getFriendlyUrlLocalizations,
 			isMounted,
 			languageId,
-			portletNamespace,
-			friendlyURLEntryURL,
 			sendRequest,
 		]
 	);
@@ -315,9 +313,9 @@ const FriendlyURLHistoryModal = ({
 
 FriendlyURLHistoryModal.propTypes = {
 	defaultLanguageId: PropTypes.string.isRequired,
+	elementId: PropTypes.string.isRequired,
 	friendlyURLEntryURL: PropTypes.string.isRequired,
 	observer: PropTypes.object.isRequired,
-	portletNamespace: PropTypes.string.isRequired,
 };
 
 export default FriendlyURLHistoryModal;

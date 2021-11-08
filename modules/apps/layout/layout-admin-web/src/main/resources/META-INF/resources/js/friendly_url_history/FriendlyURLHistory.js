@@ -19,7 +19,7 @@ import React, {useState} from 'react';
 
 import FriendlyURLHistoryModal from './FriendlyURLHistoryModal';
 
-export default function FriendlyURLHistory({portletNamespace, ...restProps}) {
+export default function FriendlyURLHistory({elementId, ...restProps}) {
 	const [showModal, setShowModal] = useState(false);
 	const [selectedLanguageId, setSelectedLanguageId] = useState();
 
@@ -40,7 +40,7 @@ export default function FriendlyURLHistory({portletNamespace, ...restProps}) {
 				onClick={() => {
 					setSelectedLanguageId(
 						Liferay.component(
-							`${portletNamespace}friendlyURL`
+							elementId
 						).getSelectedLanguageId()
 					);
 					setShowModal(true);
@@ -52,10 +52,10 @@ export default function FriendlyURLHistory({portletNamespace, ...restProps}) {
 			{showModal && (
 				<FriendlyURLHistoryModal
 					{...restProps}
+					elementId={elementId}
 					initialLanguageId={selectedLanguageId}
 					observer={observer}
 					onModalClose={onClose}
-					portletNamespace={portletNamespace}
 				/>
 			)}
 		</>
@@ -63,5 +63,5 @@ export default function FriendlyURLHistory({portletNamespace, ...restProps}) {
 }
 
 FriendlyURLHistory.propTypes = {
-	portletNamespace: PropTypes.string.isRequired,
+	elementId: PropTypes.string.isRequired,
 };

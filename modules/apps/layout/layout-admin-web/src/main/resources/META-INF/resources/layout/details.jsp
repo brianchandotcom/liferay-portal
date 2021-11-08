@@ -105,6 +105,8 @@ String friendlyURLBase = StringPool.BLANK;
 							HashMapBuilder.<String, Object>put(
 								"defaultLanguageId", LocaleUtil.toLanguageId(defaultUser.getLocale())
 							).put(
+								"elementId", portletDisplay.getNamespace() + "friendlyURL"
+							).put(
 								"friendlyURLEntryURL", friendlyURLEntryURL
 							).build()
 						%>'

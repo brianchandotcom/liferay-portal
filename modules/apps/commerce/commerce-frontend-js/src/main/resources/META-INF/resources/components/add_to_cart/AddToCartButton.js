@@ -28,6 +28,8 @@ import {
 import {showErrorNotification} from '../../utilities/notifications';
 import {ALL, GUEST_COMMERCE_ORDER_COOKIE_IDENTIFIER} from './constants';
 
+import './add_to_cart.scss';
+
 const orderCookie = new CommerceCookie(GUEST_COMMERCE_ORDER_COOKIE_IDENTIFIER);
 
 function AddToCartButton({
@@ -36,7 +38,6 @@ function AddToCartButton({
 	orderId,
 	quantity,
 	settings,
-	spritemap,
 }) {
 	const CartResource = useMemo(
 		() => ServiceProvider.DeliveryCartAPI('v1'),
@@ -89,6 +90,8 @@ function AddToCartButton({
 				)
 				.catch(() => Promise.resolve(false))
 				.then((inCart) => {
+
+
 					updateCatalogItem({
 						...catalogItem,
 						...cpInstance,
@@ -139,54 +142,52 @@ function AddToCartButton({
 	}, [changeOrder, remove, reset, settings.namespace]);
 
 	return (
-		<>
-			<ClayButton
-				block={settings.iconOnly ? false : settings.block}
-				className={classnames({
-					'btn-add-to-cart': true,
-					'btn-lg': !settings.block,
-					'icon-only': settings.iconOnly,
-					'is-added': catalogItem.inCart,
-				})}
-				disabled={disabled}
-				displayType="primary"
-				onClick={() =>
-					add()
-						.then((order) => {
-							const orderDidChange = order.id !== activeOrder.id;
+		<ClayButton
+			block={settings.iconOnly ? false : settings.block}
+			className={classnames({
+				'btn-add-to-cart': true,
+				'btn-lg': !settings.block,
+				'icon-only': settings.iconOnly,
+				'is-added': catalogItem.inCart,
+			})}
+			disabled={disabled}
+			displayType="primary"
+			onClick={() =>
+				add()
+					.then((order) => {
+						const orderDidChange = order.id !== activeOrder.id;
 
-							Liferay.fire(
-								CURRENT_ORDER_UPDATED,
-								orderDidChange ? {...order} : {...activeOrder}
+						Liferay.fire(
+							CURRENT_ORDER_UPDATED,
+							orderDidChange ? {...order} : {...activeOrder}
+						);
+
+						updateCatalogItem({...catalogItem, inCart: true});
+
+						if (orderDidChange) {
+							orderCookie.setValue(
+								channel.groupId,
+								order.orderUUID
 							);
 
-							updateCatalogItem({...catalogItem, inCart: true});
-
-							if (orderDidChange) {
-								orderCookie.setValue(
-									channel.groupId,
-									order.orderUUID
-								);
-
-								setActiveOrder(order);
-							}
-						})
-						.catch(showErrorNotification)
-				}
-			>
-				{!settings.iconOnly && (
-					<span className="text-truncate-inline">
-						<span className="text-truncate">
-							{Liferay.Language.get('add-to-cart')}
-						</span>
+							setActiveOrder(order);
+						}
+					})
+					.catch(showErrorNotification)
+			}
+		>
+			{!settings.iconOnly && (
+				<span className="text-truncate-inline">
+					<span className="text-truncate">
+						{Liferay.Language.get('add-to-cart')}
 					</span>
-				)}
-
-				<span className="cart-icon">
-					<ClayIcon spritemap={spritemap} symbol="shopping-cart" />
 				</span>
-			</ClayButton>
-		</>
+			)}
+
+			<span className="cart-icon">
+				<ClayIcon symbol="shopping-cart" />
+			</span>
+		</ClayButton>
 	);
 }
 
@@ -214,11 +215,14 @@ AddToCartButton.propTypes = {
 		 * one and the same per single channel
 		 */
 		currencyCode: PropTypes.string.isRequired,
-		groupId: PropTypes.number.isRequired,
+		groupId: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.number,
+		]).isRequired,
 		id: PropTypes.number.isRequired,
 	}),
 	cpInstance: PropTypes.shape({
-		accountId: PropTypes.number,
+		accountId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		inCart: PropTypes.bool,
 		options: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 		skuId: PropTypes.number.isRequired,
@@ -227,8 +231,8 @@ AddToCartButton.propTypes = {
 			PropTypes.number,
 		]),
 	}).isRequired,
-	orderId: PropTypes.number,
-	orderUUID: PropTypes.number,
+	orderId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	orderUUID: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	quantity: PropTypes.number,
 	settings: PropTypes.shape({
 		block: PropTypes.bool,
@@ -236,7 +240,6 @@ AddToCartButton.propTypes = {
 		iconOnly: PropTypes.bool,
 		namespace: PropTypes.string,
 	}),
-	spritemap: PropTypes.string,
 };
 
 export default AddToCartButton;

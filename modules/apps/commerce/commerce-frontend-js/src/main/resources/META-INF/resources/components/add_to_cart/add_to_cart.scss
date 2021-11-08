@@ -1,18 +1,13 @@
-$add-to-cart: 'add-to-cart';
+@import 'atlas-variables';
 
-$add-to-cart-selectors: (
-	btn: '.btn-#{$add-to-cart}',
-	wrapper: '.#{$add-to-cart}-wrapper',
-);
-
-#{map-get($add-to-cart-selectors, wrapper)} {
+.add-to-cart-wrapper {
 	.quantity-selector {
 		margin: 0.5rem 0;
 		max-width: 6.125rem;
 	}
 }
 
-#{map-get($add-to-cart-selectors, btn)} {
+.btn-add-to-cart {
 	border-color: transparent;
 	min-width: 3.5rem;
 	white-space: nowrap;
@@ -112,6 +107,6 @@ $add-to-cart-selectors: (
 	}
 }
 
-.product-detail-actions .#{$add-to-cart} {
+.product-detail-actions .add-to-cart{
 	margin: 0 !important;
 }

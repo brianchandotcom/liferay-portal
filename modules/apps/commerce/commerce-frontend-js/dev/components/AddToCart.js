@@ -24,7 +24,7 @@ for (let i = 1; i <= 15; i++) {
 		},
 		cpInstance: {
 			accountId: 43936,
-			isInCart: false,
+			inCart: false,
 			options: '[]',
 			skuId: 43712,
 		},
@@ -40,7 +40,6 @@ for (let i = 1; i <= 15; i++) {
 				minQuantity: 1,
 				multipleQuantity: 1,
 			},
-		},
-		spritemap: './assets/clay/icons.svg',
+		}
 	});
 }

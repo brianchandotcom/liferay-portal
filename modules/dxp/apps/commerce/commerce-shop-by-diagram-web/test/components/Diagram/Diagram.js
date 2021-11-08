@@ -79,7 +79,9 @@ describe('Diagram', () => {
 		});
 
 		it('must show the pins', async () => {
-			const pinsNodes = await waitForElement(async () => diagram.getAllByRole('pin'));
+			const pinsNodes = await waitForElement(async () =>
+				diagram.getAllByRole('pin')
+			);
 			const sequences = pinsData.map((pin) => pin.sequence);
 
 			expect(sequences.length).toBe(pinsNodes.length);
@@ -90,17 +92,21 @@ describe('Diagram', () => {
 		});
 
 		it('must show a tooltip when a pin is clicked', async () => {
-			const pinsNodes = await waitForElement(async () => diagram.getAllByRole('pin'));
-            
+			const pinsNodes = await waitForElement(async () =>
+				diagram.getAllByRole('pin')
+			);
+
 			fireEvent.click(pinsNodes[0]);
-            
+
 			const tooltip = document.querySelector('.diagram-tooltip');
 
 			expect(tooltip).toBeInTheDocument();
 		});
 
 		it('must show consistent data within the tooltip', async () => {
-			const pinsNodes = await waitForElement(async () => diagram.getAllByRole('pin'));
+			const pinsNodes = await waitForElement(async () =>
+				diagram.getAllByRole('pin')
+			);
 
 			pinsNodes.forEach((pin, index) => {
 				fireEvent.click(pin);
@@ -151,7 +157,9 @@ describe('Diagram', () => {
 		});
 
 		it('must show the pins', async () => {
-			const pinsNodes = await waitForElement(async () => diagram.getAllByRole('pin'));
+			const pinsNodes = await waitForElement(async () =>
+				diagram.getAllByRole('pin')
+			);
 			const sequences = pinsData.map((pin) => pin.sequence);
 
 			expect(sequences.length).toBe(pinsNodes.length);

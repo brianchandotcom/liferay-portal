@@ -25,7 +25,8 @@ class DiagramZoomHandler {
 	_handleClickOutside(event) {
 		if (
 			!this._diagramWrapper.parentNode.contains(event.target) &&
-			!event.target.closest('.diagram-tooltip-wrapper')
+			!event.target.closest('.diagram-tooltip-wrapper') &&
+			!event.target.closest('.dropdown-menu')
 		) {
 			this._resetActivePinsState();
 		}

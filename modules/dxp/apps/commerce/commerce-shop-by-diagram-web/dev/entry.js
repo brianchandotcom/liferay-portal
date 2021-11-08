@@ -18,13 +18,14 @@ import DiagramWithAutomapping from '../src/main/resources/META-INF/resources/js/
 render(
 	Diagram,
 	{
+		channelId: '42522',
 		datasetDisplayId: 'csDiagramMappedProducts',
-		diagramId: '44132',
+		diagramId: '43987',
 		imageURL:
-			'/documents/20118/0/Zoom+Background+for+Italy_Light+Blue%402x.png/5ecfa67a-e340-6d3c-987f-bf44ebc3ba60?version=1.0&t=1636016213786&download=true',
+			'/documents/20118/0/login_portlet_splash.jpg/b2759a4d-8c53-3c7e-b165-2db2a00ef460?version=1.0&t=1636104336285&download=true',
 		isAdmin: true,
 		pinsRadius: 1.0,
-		productId: '44112',
+		productId: '43967',
 	},
 	document.getElementById('shop-by-diagram')
 );
@@ -33,7 +34,7 @@ render(
 	DiagramTable,
 	{
 		isAdmin: true,
-		productId: '44647',
+		productId: '43967',
 	},
 	document.getElementById('shop-by-diagram-table')
 );
@@ -41,14 +42,20 @@ render(
 render(
 	Diagram,
 	{
-		channelId: '42160',
 		datasetDisplayId: 'csDiagramMappedProducts',
-		diagramId: '44132',
-		imageURL:
-			'/documents/20118/0/Zoom+Background+for+Italy_Light+Blue%402x.png/5ecfa67a-e340-6d3c-987f-bf44ebc3ba60?version=1.0&t=1636016213786&download=true',
-		isAdmin: false,
+		orderUUID: '2e5185eb-e978-706d-1928-eefbe94f13d8',
+		channelGroupId: '42523',
+		commerceAccountId: '44009',
+		diagramId: '43987',
 		pinsRadius: 1.0,
-		productId: '44112',
+		productId: '43967',
+		cartId: '44139',
+		isAdmin: false,
+		imageURL:
+			'/documents/20118/0/login_portlet_splash.jpg/b2759a4d-8c53-3c7e-b165-2db2a00ef460?version=1.0&t=1636104336285&download=true',
+		commerceCurrencyCode: 'USD',
+		productBaseURL: 'http://localhost:8080/group/minium/p/',
+		channelId: '42522',
 	},
 	document.getElementById('shop-by-diagram-front')
 );
@@ -57,7 +64,7 @@ render(
 	DiagramTable,
 	{
 		isAdmin: false,
-		productId: '44647',
+		productId: '43967',
 	},
 	document.getElementById('shop-by-diagram-table-front')
 );

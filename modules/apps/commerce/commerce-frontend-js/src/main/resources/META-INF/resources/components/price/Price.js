@@ -35,20 +35,12 @@ function Price({
 		adaptLegacyPriceModel(price)
 	);
 
-	const {
-		discountPercentage,
-		finalPriceFormatted,
-		priceFormatted,
-		promoPrice,
-		promoPriceFormatted,
-	} = activePrice;
-
 	const discountLevels = displayDiscountLevels
 		? collectDiscountLevels(activePrice)
 		: [];
 
-	const hasDiscount = isNonnull(discountPercentage, ...discountLevels);
-	const hasPromo = isNonnull(promoPrice);
+	const hasDiscount = isNonnull(activePrice.discountPercentage, ...discountLevels);
+	const hasPromo = isNonnull(activePrice.promoPrice);
 
 	const updatePrice = ({cpInstance}) =>
 		setActivePrice((currentPrice) => ({
@@ -86,7 +78,7 @@ function Price({
 					'price-value-inactive': hasPromo || hasDiscount,
 				})}
 			>
-				{priceFormatted}
+				{activePrice.priceFormatted}
 			</span>
 
 			{hasPromo && (
@@ -100,7 +92,7 @@ function Price({
 							hasDiscount && 'price-value-inactive'
 						)}
 					>
-						{promoPriceFormatted}
+						{activePrice.promoPriceFormatted}
 					</span>
 				</>
 			)}
@@ -124,7 +116,7 @@ function Price({
 							))
 						) : (
 							<span className="price-value-percentage">
-								&ndash;{discountPercentage}%
+								&ndash;{activePrice.discountPercentage}%
 							</span>
 						)}
 					</span>
@@ -134,7 +126,7 @@ function Price({
 							: Liferay.Language.get('gross-price')}
 					</span>
 					<span className="price-value price-value-final">
-						{finalPriceFormatted}
+						{activePrice.finalPriceFormatted}
 					</span>
 				</>
 			)}

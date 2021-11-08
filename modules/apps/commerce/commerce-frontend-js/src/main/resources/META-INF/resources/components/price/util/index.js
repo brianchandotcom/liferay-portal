@@ -28,7 +28,7 @@ export function adaptLegacyPriceModel(priceModel) {
 	} = priceModel;
 
 	return {
-		discountPercentage: parseFloat(discountPercentage),
+		discountPercentage: parseFloat(discountPercentage || 0),
 		finalPriceFormatted: finalPrice || price,
 		priceFormatted: price,
 

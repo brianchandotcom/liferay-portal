@@ -30,13 +30,19 @@ import '../../css/diagram.scss';
 const debouncedUpdatePinsRadius = debounce(updateGlobalPinsRadius, 800);
 
 function Diagram({
+	cartId,
+	channelGroupId,
 	channelId,
+	commerceAccountId,
+	commerceCurrencyCode,
 	datasetDisplayId,
 	diagramId,
 	imageURL,
 	isAdmin,
 	namespace,
+	orderUUID,
 	pinsRadius: initialPinsRadius,
+	productBaseURL,
 	productId,
 }) {
 	const chartInstance = useRef(null);
@@ -129,7 +135,13 @@ function Diagram({
 						/>
 					) : (
 						<StorefrontTooltipContent
+							accountId={commerceAccountId}
+							cartId={cartId}
+							channelGroupId={channelGroupId}
 							channelId={channelId}
+							currencyCode={commerceCurrencyCode}
+							orderUUID={orderUUID}
+							productBaseURL={productBaseURL}
 							{...tooltipData}
 						/>
 					)}
@@ -152,12 +164,18 @@ Diagram.defaultProps = {
 };
 
 Diagram.propTypes = {
+	cartId: PropTypes.string,
+	channelGroupId: PropTypes.string,
 	channelId: PropTypes.string,
+	commerceAccountId: PropTypes.string,
+	commerceCurrencyCode: PropTypes.string,
 	datasetDisplayId: PropTypes.string,
 	diagramId: PropTypes.string.isRequired,
 	imageURL: PropTypes.string.isRequired,
 	isAdmin: PropTypes.bool.isRequired,
+	orderUUID: PropTypes.string,
 	pinsRadius: PropTypes.number,
+	productBaseURL: PropTypes.string,
 	productId: PropTypes.string.isRequired,
 };
 

@@ -108,3 +108,34 @@ export function formatLabel(label) {
 
 	return label;
 }
+
+export function formatProductOptions(skuOptions, productOptions) {
+	const optionsData = Object.entries(skuOptions);
+
+	if (!optionsData.length) {
+		return 'null';
+	}
+
+	const [optionId, optionValueId] = optionsData[0];
+
+	const option = productOptions.find(
+		(productOption) => String(productOption.id) === String(optionId)
+	);
+
+	const optionValue =
+		option &&
+		option.productOptionValues.find(
+			(productOptionValue) =>
+				String(productOptionValue.id) === String(optionValueId)
+		);
+
+	return JSON.stringify([{key: option.key, value: [optionValue.key]}]);
+}
+
+export function getProductURL(productBaseURL, productURLs) {
+	const productShortLink =
+		productURLs[Liferay.ThemeDisplay.getLanguageId()] ||
+		productURLs[Liferay.ThemeDisplay.getDefaultLanguageId()];
+
+	return productBaseURL + productShortLink;
+}

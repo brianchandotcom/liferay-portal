@@ -36,7 +36,6 @@ class D3Handler extends DiagramZoomHandler {
 		this._zoomWrapper = zoomWrapper;
 		this._handleZoom = this._handleZoom.bind(this);
 		this.rendered = false;
-		
 
 		this._printSVGImage().then(() => {
 			this.rendered = true;

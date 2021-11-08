@@ -27,15 +27,15 @@ function WrapperWithQuantity({AddToCartButton, ...props}) {
 		settings.disabled || !cpInstance.accountId
 	);
 
-	const onCPInstanceChange = ({cpInstance}) => {
-		const isPurchasable =
-			cpInstance.purchasable &&
-			(cpInstance.backOrderAllowed || cpInstance.stockQuantity > 0);
-
-		setDisabled(disabled || !isPurchasable);
-	};
-
 	useEffect(() => {
+		function onCPInstanceChange({cpInstance}) {
+			const isPurchasable =
+				cpInstance.purchasable &&
+				(cpInstance.backOrderAllowed || cpInstance.stockQuantity > 0);
+	
+			setDisabled((disabled) => disabled || !isPurchasable);
+		};
+
 		if (settings.namespace) {
 			Liferay.on(
 				`${settings.namespace}${CP_INSTANCE_CHANGED}`,
@@ -51,14 +51,15 @@ function WrapperWithQuantity({AddToCartButton, ...props}) {
 				);
 			}
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [settings.namespace]);
+
+	const alignment = props.settings.alignment || 'center'
 
 	return (
 		<div
 			className={classnames({
+				[`align-items-${alignment}`]: props.settings.alignment !== 'full-width',
 				'add-to-cart-wrapper': true,
-				'align-items-center': true,
 				'd-flex': true,
 				'flex-column': props.settings.block,
 			})}
@@ -78,13 +79,16 @@ function WrapperWithQuantity({AddToCartButton, ...props}) {
 WrapperWithQuantity.propTypes = {
 	AddToCartButton: PropTypes.func.isRequired,
 	cpInstance: PropTypes.shape({
-		accountId: PropTypes.number,
+		accountId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	}),
 	quantity: PropTypes.number,
 	settings: PropTypes.shape({
+		alignment: PropTypes.oneOf([
+			'center', 'left', 'right', 'full-width'
+		]),
 		block: PropTypes.bool,
 		disabled: PropTypes.bool,
-		namespace: PropTypes.bool,
+		namespace: PropTypes.string,
 		withQuantity: PropTypes.shape({
 			allowedQuantities: PropTypes.arrayOf(PropTypes.number),
 			disabled: PropTypes.bool,

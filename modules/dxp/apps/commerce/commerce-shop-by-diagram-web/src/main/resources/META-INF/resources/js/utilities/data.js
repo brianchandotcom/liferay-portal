@@ -120,13 +120,21 @@ export const getMappedProducts = (productId, query, page, pageSize) => {
 	}).then((response) => response.json());
 };
 
+const products = new Map();
+
 export const getProduct = (productId, channelId) => {
+	const fetchedProduct = products.get(productId);
+
+	if (fetchedProduct) {
+		return Promise.resolve(fetchedProduct);
+	}
+
 	const productURL = new URL(
 		`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}`,
 		themeDisplay.getPortalURL()
 	);
 
-	productURL.searchParams.set('nestedFields', 'skus,images,configuration');
+	productURL.searchParams.set('nestedFields', 'skus,images,productOptions');
 
 	return fetch(productURL, {
 		headers: HEADERS,
@@ -139,6 +147,10 @@ export const getProduct = (productId, channelId) => {
 			return response.json().then(Promise.reject);
 		}
 
-		return response.json();
+		return response.json().then((product) => {
+			products.set(productId, product);
+
+			return product;
+		});
 	});
 };

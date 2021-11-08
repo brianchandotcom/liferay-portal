@@ -101,6 +101,10 @@ module.exports = {
 				__dirname,
 				'../../../../node_modules/@liferay/frontend-js-state-web/src/main/resources/META-INF/resources/index.ts'
 			),
+			'commerce-frontend-js/components/add_to_cart/AddToCart': path.resolve(
+				__dirname,
+				'../../../../node_modules/commerce-frontend-js/src/main/resources/META-INF/resources/components/add_to_cart/AddToCart.js'
+			),
 			'commerce-frontend-js/components/autocomplete/Autocomplete': path.resolve(
 				__dirname,
 				'../../../../node_modules/commerce-frontend-js/src/main/resources/META-INF/resources/components/autocomplete/Autocomplete.js'

@@ -71,9 +71,9 @@ describe('Diagram', () => {
 				);
 			});
 
-            await waitForElement(async () => 
-                diagram.container.querySelector('.sequences')
-            )
+			await waitForElement(async () =>
+				diagram.container.querySelector('.sequences')
+			);
 		});
 
 		afterEach(() => {
@@ -97,7 +97,9 @@ describe('Diagram', () => {
 		});
 
 		it('must show the pins', () => {
-			const pinsNodes = diagram.container.querySelectorAll(defaultDiagramProps.pinsCSSSelectors);
+			const pinsNodes = diagram.container.querySelectorAll(
+				defaultDiagramProps.pinsCSSSelectors
+			);
 			const sequences = pinsData.map((pin) => pin.sequence);
 
 			expect(sequences.length).toBe(pinsNodes.length);
@@ -108,8 +110,10 @@ describe('Diagram', () => {
 		});
 
 		it('must show a tooltip when a pin is clicked', () => {
-            const pinsNodes = diagram.container.querySelectorAll(defaultDiagramProps.pinsCSSSelectors);
-            
+			const pinsNodes = diagram.container.querySelectorAll(
+				defaultDiagramProps.pinsCSSSelectors
+			);
+
 			fireEvent.click(pinsNodes[0]);
 
 			const tooltip = document.querySelector('.diagram-tooltip');
@@ -118,7 +122,9 @@ describe('Diagram', () => {
 		});
 
 		it('must show consistent data within the tooltip', () => {
-            const pinsNodes = diagram.container.querySelectorAll(defaultDiagramProps.pinsCSSSelectors);
+			const pinsNodes = diagram.container.querySelectorAll(
+				defaultDiagramProps.pinsCSSSelectors
+			);
 
 			pinsNodes.forEach((pin, index) => {
 				fireEvent.click(pin);
@@ -143,7 +149,6 @@ describe('Diagram', () => {
 				}
 			});
 		});
-
 	});
 
 	describe('Default Renderer Frontstore', () => {
@@ -156,9 +161,9 @@ describe('Diagram', () => {
 				);
 			});
 
-            await waitForElement(async () => 
-                diagram.container.querySelector('.sequences')
-            )
+			await waitForElement(async () =>
+				diagram.container.querySelector('.sequences')
+			);
 		});
 
 		afterEach(() => {
@@ -170,7 +175,9 @@ describe('Diagram', () => {
 		});
 
 		it('must show the pins', async () => {
-            const pinsNodes = diagram.container.querySelectorAll(defaultDiagramProps.pinsCSSSelectors);
+			const pinsNodes = diagram.container.querySelectorAll(
+				defaultDiagramProps.pinsCSSSelectors
+			);
 			const sequences = pinsData.map((pin) => pin.sequence);
 
 			expect(sequences.length).toBe(pinsNodes.length);

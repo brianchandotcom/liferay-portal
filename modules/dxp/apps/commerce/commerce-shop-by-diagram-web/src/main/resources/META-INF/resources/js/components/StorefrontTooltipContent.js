@@ -9,20 +9,170 @@
  * distribution rights of the Software.
  */
 
+import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+import AddToCart from 'commerce-frontend-js/components/add_to_cart/AddToCart';
 import React, {useEffect, useState} from 'react';
 
 import {getProduct} from '../utilities/data';
+import {formatProductOptions, getProductURL} from '../utilities/index';
+import Price from './Price';
 
-function StorefrontTooltipContent({channelId, selectedPin}) {
-	const [productDetails, updateProductDetails] = useState(null);
+function SkuContent({
+	accountId,
+	cartId,
+	channelGroupId,
+	channelId,
+	currencyCode,
+	orderUUID,
+	product,
+	productBaseURL,
+	quantity,
+	quantityDetails,
+	sku,
+}) {
+	return (
+		<div className="row">
+			{product.urlImage && (
+				<div className="col-auto">
+					<ClaySticker className="fill-cover" size="xl">
+						<ClaySticker.Image
+							alt={product.name}
+							src={product.urlImage}
+						/>
+					</ClaySticker>
+				</div>
+			)}
+
+			<div className="col">
+				<div className="mb-1">
+					{sku?.availability && (
+						<ClayLabel
+							displayType={
+								sku.availability.label === 'available'
+									? 'success'
+									: 'danger'
+							}
+						>
+							{sku.availability.label_i18n}
+						</ClayLabel>
+					)}
+				</div>
+
+				<h4 className="component-title mb-1">
+					<a href={getProductURL(productBaseURL, product.urls)}>
+						{product.name}
+					</a>
+				</h4>
+
+				<p>
+					{Liferay.Language.get('quantity')}: {quantity}
+				</p>
+			</div>
+
+			{sku && (
+				<div className="col-auto text-right">
+					<Price className="mb-1" {...sku.price} />
+
+					<AddToCart
+						channel={{
+							currencyCode,
+							groupId: channelGroupId,
+							id: channelId,
+						}}
+						cpInstance={{
+							accountId,
+							isInCart: false,
+							options: formatProductOptions(
+								sku.options,
+								product.productOptions
+							),
+							skuId: sku.id,
+						}}
+						orderId={cartId}
+						orderUUID={orderUUID}
+						quantity={quantity}
+						settings={{
+							alignment: 'full-width',
+							block: true,
+							iconOnly: true,
+							withQuantity: {
+								allowedQuantities:
+									quantityDetails.allowedOrderQuantities,
+								maxQuantity: quantityDetails.maxOrderQuantity,
+								minQuantity: quantityDetails.minOrderQuantity,
+								multipleQuantity:
+									quantityDetails.multipleOrderQuantity,
+							},
+						}}
+					/>
+				</div>
+			)}
+		</div>
+	);
+}
+
+function DiagramContent({product, productBaseURL}) {
+	const productURL = getProductURL(productBaseURL, product.urls);
+
+	return (
+		<div className="row">
+			{product.urlImage && (
+				<div className="col-auto">
+					<ClaySticker className="fill-cover" size="xl">
+						<ClaySticker.Image
+							alt={product.name}
+							src={product.urlImage}
+						/>
+					</ClaySticker>
+				</div>
+			)}
+
+			<div className="col">
+				<h4 className="component-title">
+					<a href={productURL}>{product.name}</a>
+				</h4>
+			</div>
+
+			<div className="col-auto">
+				<a className="btn btn-secondary" href={productURL}>
+					{Liferay.Language.get('view')}
+				</a>
+			</div>
+		</div>
+	);
+}
+
+function ExternalContent({product}) {
+	return <h4>{product.sku}</h4>;
+}
+
+const ContentsMap = {
+	diagram: DiagramContent,
+	external: ExternalContent,
+	sku: SkuContent,
+};
+
+function StorefrontTooltipContent({
+	accountId,
+	cartId,
+	channelGroupId,
+	channelId,
+	currencyCode,
+	orderUUID,
+	productBaseURL,
+	selectedPin,
+}) {
+	const [product, updateProduct] = useState(null);
 	const [loading, updateLoading] = useState(false);
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
-		if (selectedPin.mappedProduct.type !== 'sku') {
+		if (selectedPin.mappedProduct.type === 'external') {
+			updateProduct(selectedPin.mappedProduct);
+
 			return;
 		}
 
@@ -34,40 +184,38 @@ function StorefrontTooltipContent({channelId, selectedPin}) {
 					return;
 				}
 
-				console.log(product);
-
+				updateProduct(product);
 				updateLoading(false);
-				updateProductDetails(product);
 			}
 		);
 	}, [channelId, isMounted, selectedPin]);
 
-	const productName =
-		productDetails?.name[themeDisplay.getLanguageId()] ||
-		productDetails?.name[themeDisplay.getDefaultLanguageId()];
+	const currentSku = product
+		? product?.skus?.find(
+				(skuData) => skuData.sku === selectedPin.mappedProduct.sku
+		  )
+		: null;
+	const quantityDetails = product?.productConfiguration || {};
+	const Renderer = ContentsMap[selectedPin.mappedProduct.type];
 
 	return (
 		<div>
 			{loading && <ClayLoadingIndicator className="my-3" small />}
 
-			{!loading && productDetails && (
-				<div className="row">
-					{productDetails.thumbnail && (
-						<div className="col-auto">
-							<ClaySticker size="xl">
-								<ClaySticker.Image
-									alt={productName}
-									src={productDetails.thumbnail}
-								/>
-							</ClaySticker>
-						</div>
-					)}
-
-					<div className="col">{productName}</div>
-				</div>
+			{!loading && product && (
+				<Renderer
+					accountId={accountId}
+					cartId={cartId}
+					channelGroupId={channelGroupId}
+					currencyCode={currencyCode}
+					orderUUID={orderUUID}
+					product={product}
+					productBaseURL={productBaseURL}
+					quantity={selectedPin.mappedProduct.quantity}
+					quantityDetails={quantityDetails}
+					sku={currentSku}
+				/>
 			)}
-
-			{!loading && !productDetails && <div>asd</div>}
 		</div>
 	);
 }

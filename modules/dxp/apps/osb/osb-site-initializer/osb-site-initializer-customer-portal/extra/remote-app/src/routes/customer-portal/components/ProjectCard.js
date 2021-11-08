@@ -12,60 +12,44 @@ const getCurrentEndDate = (currentEndDate) => {
 	return `${month} ${day}, ${year}`;
 }
 
-const ProjectCard = ({ onClick, region, sla, small, status, title }) => {
-
+const ProjectCard = ({ code, isSmall, onClick, region, sla, status, title }) => {
 	return (
 		<ClayCard className={classNames('m-0',
 			{
-				'project-card': !small,
-				'project-card-sm': small
+				'project-card': !isSmall,
+				'project-card-sm': isSmall
 			}
 		)} onClick={() => onClick()}>
-			<ClayCard.Body className={classNames("d-flex", "h-100", "justify-content-between", {
-				'flex-column': !small,
-				'flex-row': small
+			<ClayCard.Body className={classNames('d-flex h-100 justify-content-between', {
+				'flex-column': !isSmall,
+				'flex-row': isSmall
 			})}>
-				<ClayCard.Description className="text-neutral-3" displayType="title" tag={small ? "h4" : "h3"}>
+				<ClayCard.Description className="text-neutral-3" displayType="title" tag={isSmall ? "h4" : "h3"}>
 					{title}
-					{small && <div className="font-weight-lighter subtitle text-neutral-5 text-paragraph text-uppercase">
-						Digitals
+					{isSmall && <div className="font-weight-lighter subtitle text-neutral-5 text-paragraph text-uppercase">
+						{code}
 					</div>}
 				</ClayCard.Description>
 
-				<div
-					className={classNames('d-flex', 'justify-content-between', {
-						'align-items-end': small,
-					})}
-				>
-					<ClayCard.Description
-						displayType="text"
-						tag="div"
-						title={null}
-						truncate={false}
-					>
+				<div className={classNames('d-flex justify-content-between', { 'align-items-end': isSmall })}>
+					<ClayCard.Description displayType="text" tag="div" title={null} truncate={false}>
 						<StatusTag currentStatus={status} />
 
-						<div
-							className={classNames(
-								'text-paragraph-sm',
-								'text-neutral-5',
-								{
-									'my-1': !small,
-									'sm-mb': small,
-								}
-							)}
-						>
+						<div className={classNames('text-paragraph-sm', 'text-neutral-5', {
+							'my-1': !isSmall,
+							'sm-mb': isSmall
+						})}>
 							Ends on{' '}
 							<span className="font-weight-bold text-paragraph">
 								{getCurrentEndDate(sla.currentEndDate)}
 							</span>
 						</div>
 
-						{small && <div className="text-neutral-5 text-paragraph-sm" >
+						{isSmall && <div className="text-neutral-5 text-paragraph-sm" >
 							Support Region <span className="font-weight-bold">{region}</span>
 						</div>}
 					</ClayCard.Description>
-					{!small && <BaseButton appendIcon="angle-right" borderless className="p-0 text-brand-primary">
+					{!isSmall && <BaseButton appendIcon="angle-right" borderless className="p-0 text-brand-primary">
 						See details
 					</BaseButton>}
 				</div>

@@ -115,16 +115,16 @@ const Home = () => {
 						</div>
 					)}
 					<div
-						className={classNames("d-flex", "flex-wrap", {
+						className={classNames('d-flex flex-wrap', {
 							"home-projects": !withManyProjects,
 							"home-projects-sm pt-2": withManyProjects,
 						})}
 					>
 						{currentProjects.map((project, index) => (
 							<ProjectCard
+								isSmall={withManyProjects}
 								key={index}
 								onClick={() => nextPage(project)}
-								small={withManyProjects}
 								{...project}
 							/>
 						))}

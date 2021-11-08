@@ -28,14 +28,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.felix.scr.impl.inject.ActivatorParameter;
+import org.apache.felix.scr.impl.inject.Annotations;
+import org.apache.felix.scr.impl.inject.ClassUtils;
 import org.apache.felix.scr.impl.inject.LifecycleMethod;
 import org.apache.felix.scr.impl.inject.MethodResult;
-import org.apache.felix.scr.impl.inject.ScrComponentContext;
-import org.apache.felix.scr.impl.inject.internal.Annotations;
-import org.apache.felix.scr.impl.inject.internal.ClassUtils;
 import org.apache.felix.scr.impl.logger.ComponentLogger;
-import org.apache.felix.scr.impl.logger.InternalLogger.Level;
+import org.apache.felix.scr.impl.manager.ComponentContextImpl;
 import org.apache.felix.scr.impl.metadata.DSVersion;
+import org.osgi.service.log.LogService;
 
 
 public class ActivateMethod extends BaseMethod<ActivatorParameter, Object> implements LifecycleMethod
@@ -290,12 +290,11 @@ public class ActivateMethod extends BaseMethod<ActivatorParameter, Object> imple
     }
 
     /**
-     * @see org.apache.felix.scr.impl.inject.LifecycleMethod#invoke(Object,
-     *      ScrComponentContext, int, MethodResult)
+     * @see org.apache.felix.scr.impl.inject.LifecycleMethod#invoke(java.lang.Object, org.apache.felix.scr.impl.manager.ComponentContextImpl, int, org.apache.felix.scr.impl.inject.MethodResult)
      */
     @Override
     public MethodResult invoke(final Object componentInstance,
-            final ScrComponentContext componentContext,
+    		final ComponentContextImpl<?> componentContext,
     		final int reason,
     		final MethodResult methodCallFailureResult) {
         return invoke(componentInstance, new ActivatorParameter(componentContext, reason), methodCallFailureResult);

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -104,7 +105,8 @@ public class CommerceNotificationHelperImpl
 			placeholders.add(matcher.group());
 		}
 
-		List<CommerceDefinitionTermContributor> definitionTermContributors;
+		List<CommerceDefinitionTermContributor> definitionTermContributors =
+			Collections.emptyList();
 
 		if (fieldType == _TOFIELD) {
 			definitionTermContributors =
@@ -112,19 +114,13 @@ public class CommerceNotificationHelperImpl
 					getDefinitionTermContributorsByContributorKey(
 						CommerceDefinitionTermConstants.
 							RECIPIENT_DEFINITION_TERMS_CONTRIBUTOR);
+		}
 
-			definitionTermContributors = ListUtil.concat(
-				definitionTermContributors,
-				_commerceDefinitionTermContributorRegistry.
-					getDefinitionTermContributorsByNotificationTypeKey(
-						commerceNotificationType.getKey()));
-		}
-		else {
-			definitionTermContributors =
-				_commerceDefinitionTermContributorRegistry.
-					getDefinitionTermContributorsByNotificationTypeKey(
-						commerceNotificationType.getKey());
-		}
+		definitionTermContributors = ListUtil.concat(
+			definitionTermContributors,
+			_commerceDefinitionTermContributorRegistry.
+				getDefinitionTermContributorsByNotificationTypeKey(
+					commerceNotificationType.getKey()));
 
 		for (CommerceDefinitionTermContributor definitionTermContributor :
 				definitionTermContributors) {

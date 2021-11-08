@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 
@@ -28,18 +27,17 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Javier de Arcos
  */
-@Component(
-	property = "model.class.name=com.liferay.remote.app.model.RemoteAppEntry",
-	service = WorkflowHandler.class
-)
 public class RemoteAppEntryWorkflowHandler
 	extends BaseWorkflowHandler<RemoteAppEntry> {
+
+	public RemoteAppEntryWorkflowHandler(
+		RemoteAppEntryLocalService remoteAppEntryLocalService) {
+
+		_remoteAppEntryLocalService = remoteAppEntryLocalService;
+	}
 
 	@Override
 	public String getClassName() {
@@ -66,7 +64,6 @@ public class RemoteAppEntryWorkflowHandler
 			userId, classPK, status);
 	}
 
-	@Reference
-	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
+	private final RemoteAppEntryLocalService _remoteAppEntryLocalService;
 
 }

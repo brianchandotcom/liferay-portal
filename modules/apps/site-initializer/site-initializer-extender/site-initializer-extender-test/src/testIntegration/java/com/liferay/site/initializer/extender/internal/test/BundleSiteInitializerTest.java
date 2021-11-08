@@ -47,10 +47,13 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -136,6 +139,7 @@ public class BundleSiteInitializerTest {
 			_assertLayouts(group);
 			_assertObjectDefinition(group);
 			_assertStyleBookEntry(group);
+			_assertUpdateLayoutSet(group);
 
 			GroupLocalServiceUtil.deleteGroup(group);
 		}
@@ -416,6 +420,26 @@ public class BundleSiteInitializerTest {
 			frontendTokensValues.contains("blockquote-small-color"));
 	}
 
+	private void _assertUpdateLayoutSet(Group group) throws Exception {
+		LayoutSet privateLayoutSet = _layoutSetLocalService.fetchLayoutSet(
+			group.getGroupId(), true);
+
+		Assert.assertNotNull(privateLayoutSet);
+
+		Theme privateTheme = privateLayoutSet.getTheme();
+
+		Assert.assertEquals("Dialect", privateTheme.getName());
+
+		LayoutSet publicLayoutSet = _layoutSetLocalService.fetchLayoutSet(
+			group.getGroupId(), false);
+
+		Assert.assertNotNull(publicLayoutSet);
+
+		Theme publicTheme = publicLayoutSet.getTheme();
+
+		Assert.assertEquals("Dialect", publicTheme.getName());
+	}
+
 	private Bundle _installBundle(BundleContext bundleContext, String location)
 		throws Exception {
 
@@ -466,6 +490,9 @@ public class BundleSiteInitializerTest {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

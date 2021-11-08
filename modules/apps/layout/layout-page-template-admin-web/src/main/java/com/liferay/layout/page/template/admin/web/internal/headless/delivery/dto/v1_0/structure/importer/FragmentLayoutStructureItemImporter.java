@@ -176,13 +176,6 @@ public class FragmentLayoutStructureItemImporter
 		return PageElement.Type.FRAGMENT;
 	}
 
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
 	private FragmentEntryLink _addFragmentEntryLink(
 			Layout layout, PageElement pageElement, int position,
 			Set<String> warningMessages)
@@ -1012,6 +1005,7 @@ public class FragmentLayoutStructureItemImporter
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[resources:(.+?)\\]");
 
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference

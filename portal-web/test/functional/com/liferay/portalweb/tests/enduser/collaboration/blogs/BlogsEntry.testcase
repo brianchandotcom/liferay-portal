@@ -1003,9 +1003,10 @@ definition {
 			AssertElementNotPresent(locator1 = "Icon#ANY");
 		}
 
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		for (var keyText : list "thumbs-up,thumbs-down") {
 			AssertElementNotPresent(locator1 = "Icon#ANY");

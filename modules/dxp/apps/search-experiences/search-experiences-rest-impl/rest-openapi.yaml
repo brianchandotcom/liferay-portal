@@ -112,59 +112,8 @@ components:
                     type: string
         Parameter:
             properties:
-                dateFormat:
-                    type: string
-                defaultValueDouble:
-                    format: double
-                    type: number
-                defaultValueFloat:
-                    format: float
-                    type: number
-                defaultValueInteger:
-                    type: integer
-                defaultValueLong:
-                    format: int64
-                    type: integer
-                defaultValueString:
-                    type: string
-                defaultValuesIntegerArray:
-                    items:
-                        type: integer
-                    type: array
-                defaultValuesLongArray:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                defaultValuesStringArray:
-                    items:
-                        type: string
-                    type: array
-                maxValueDouble:
-                    format: double
-                    type: number
-                maxValueFloat:
-                    format: float
-                    type: number
-                maxValueInteger:
-                    type: integer
-                maxValueLong:
-                    format: int64
-                    type: integer
-                minValueDouble:
-                    format: double
-                    type: number
-                minValueFloat:
-                    format: float
-                    type: number
-                minValueInteger:
-                    type: integer
-                minValueLong:
-                    format: int64
-                    type: integer
-                parameterType:
-                    enum: [Date, Double, Float, Integer, IntegerArray, Long, LongArray, String, StringArray, TimeRange]
-                    type: string
+                valueDefinition:
+                    $ref: "#/components/schemas/ValueDefinition"
         QueryPrefilterContributor:
             properties:
                 className:
@@ -321,18 +270,10 @@ components:
                                                     properties:
                                                         boost:
                                                             type: boolean
-                                                        defaultValue:
-                                                            type: object
-                                                        format:
-                                                            type: string
                                                         helpText:
                                                             type: string
                                                         label:
                                                             type: string
-                                                        maxValue:
-                                                            type: object
-                                                        minValue:
-                                                            type: object
                                                         name:
                                                             type: string
                                                         nullable:
@@ -348,14 +289,14 @@ components:
                                                             type: array
                                                         required:
                                                             type: boolean
-                                                        stepValue:
-                                                            type: object
-                                                        type:
+                                                        uiType:
                                                             type: string
                                                         unit:
                                                             type: string
                                                         unitSuffix:
                                                             type: string
+                                                        valueDefinition:
+                                                            $ref: "#/components/schemas/ValueDefinition"
                                                     type: object
                                                 type: array
                                         type: object
@@ -417,12 +358,81 @@ components:
             properties:
                 className:
                     type: string
+            type: object
         SearchableAssetNameDisplay:
             properties:
                 className:
                     type: string
                 displayName:
                     type: string
+            type: object
+        ValueDefinition:
+            properties:
+                defaultValueDouble:
+                    format: double
+                    type: number
+                defaultValueFloat:
+                    format: float
+                    type: number
+                defaultValueInteger:
+                    type: integer
+                defaultValueLong:
+                    format: int64
+                    type: integer
+                defaultValueString:
+                    type: string
+                defaultValuesIntegerArray:
+                    items:
+                        type: integer
+                    type: array
+                defaultValuesLongArray:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                defaultValuesStringArray:
+                    items:
+                        type: string
+                    type: array
+                format:
+                    type: string
+                maxValueDouble:
+                    format: double
+                    type: number
+                maxValueFloat:
+                    format: float
+                    type: number
+                maxValueInteger:
+                    type: integer
+                maxValueLong:
+                    format: int64
+                    type: integer
+                minValueDouble:
+                    format: double
+                    type: number
+                minValueFloat:
+                    format: float
+                    type: number
+                minValueInteger:
+                    type: integer
+                minValueLong:
+                    format: int64
+                    type: integer
+                stepValueDouble:
+                    format: double
+                    type: number
+                stepValueFloat:
+                    format: float
+                    type: number
+                stepValueInteger:
+                    type: integer
+                stepValueLong:
+                    format: int64
+                    type: integer
+                type:
+                    enum: [Date, Double, Float, Integer, IntegerArray, Long, LongArray, String, StringArray, TimeRange]
+                    type: string
+            type: object
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID

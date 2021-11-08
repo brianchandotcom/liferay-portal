@@ -55,48 +55,6 @@ public class Field implements Cloneable, Serializable {
 
 	protected Boolean boost;
 
-	public Object getDefaultValue() {
-		return defaultValue;
-	}
-
-	public void setDefaultValue(Object defaultValue) {
-		this.defaultValue = defaultValue;
-	}
-
-	public void setDefaultValue(
-		UnsafeSupplier<Object, Exception> defaultValueUnsafeSupplier) {
-
-		try {
-			defaultValue = defaultValueUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Object defaultValue;
-
-	public String getFormat() {
-		return format;
-	}
-
-	public void setFormat(String format) {
-		this.format = format;
-	}
-
-	public void setFormat(
-		UnsafeSupplier<String, Exception> formatUnsafeSupplier) {
-
-		try {
-			format = formatUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String format;
-
 	public String getHelpText() {
 		return helpText;
 	}
@@ -138,48 +96,6 @@ public class Field implements Cloneable, Serializable {
 	}
 
 	protected String label;
-
-	public Object getMaxValue() {
-		return maxValue;
-	}
-
-	public void setMaxValue(Object maxValue) {
-		this.maxValue = maxValue;
-	}
-
-	public void setMaxValue(
-		UnsafeSupplier<Object, Exception> maxValueUnsafeSupplier) {
-
-		try {
-			maxValue = maxValueUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Object maxValue;
-
-	public Object getMinValue() {
-		return minValue;
-	}
-
-	public void setMinValue(Object minValue) {
-		this.minValue = minValue;
-	}
-
-	public void setMinValue(
-		UnsafeSupplier<Object, Exception> minValueUnsafeSupplier) {
-
-		try {
-			minValue = minValueUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Object minValue;
 
 	public String getName() {
 		return name;
@@ -263,45 +179,26 @@ public class Field implements Cloneable, Serializable {
 
 	protected Boolean required;
 
-	public Object getStepValue() {
-		return stepValue;
+	public String getUiType() {
+		return uiType;
 	}
 
-	public void setStepValue(Object stepValue) {
-		this.stepValue = stepValue;
+	public void setUiType(String uiType) {
+		this.uiType = uiType;
 	}
 
-	public void setStepValue(
-		UnsafeSupplier<Object, Exception> stepValueUnsafeSupplier) {
+	public void setUiType(
+		UnsafeSupplier<String, Exception> uiTypeUnsafeSupplier) {
 
 		try {
-			stepValue = stepValueUnsafeSupplier.get();
+			uiType = uiTypeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Object stepValue;
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String type;
+	protected String uiType;
 
 	public String getUnit() {
 		return unit;
@@ -342,6 +239,28 @@ public class Field implements Cloneable, Serializable {
 	}
 
 	protected String unitSuffix;
+
+	public ValueDefinition getValueDefinition() {
+		return valueDefinition;
+	}
+
+	public void setValueDefinition(ValueDefinition valueDefinition) {
+		this.valueDefinition = valueDefinition;
+	}
+
+	public void setValueDefinition(
+		UnsafeSupplier<ValueDefinition, Exception>
+			valueDefinitionUnsafeSupplier) {
+
+		try {
+			valueDefinition = valueDefinitionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ValueDefinition valueDefinition;
 
 	@Override
 	public Field clone() throws CloneNotSupportedException {

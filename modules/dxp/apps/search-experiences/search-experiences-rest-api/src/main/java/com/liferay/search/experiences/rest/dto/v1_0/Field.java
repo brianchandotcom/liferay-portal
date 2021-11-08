@@ -86,63 +86,6 @@ public class Field implements Serializable {
 	protected Boolean boost;
 
 	@Schema
-	@Valid
-	public Object getDefaultValue() {
-		return defaultValue;
-	}
-
-	public void setDefaultValue(Object defaultValue) {
-		this.defaultValue = defaultValue;
-	}
-
-	@JsonIgnore
-	public void setDefaultValue(
-		UnsafeSupplier<Object, Exception> defaultValueUnsafeSupplier) {
-
-		try {
-			defaultValue = defaultValueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object defaultValue;
-
-	@Schema
-	public String getFormat() {
-		return format;
-	}
-
-	public void setFormat(String format) {
-		this.format = format;
-	}
-
-	@JsonIgnore
-	public void setFormat(
-		UnsafeSupplier<String, Exception> formatUnsafeSupplier) {
-
-		try {
-			format = formatUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String format;
-
-	@Schema
 	public String getHelpText() {
 		return helpText;
 	}
@@ -197,64 +140,6 @@ public class Field implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
-
-	@Schema
-	@Valid
-	public Object getMaxValue() {
-		return maxValue;
-	}
-
-	public void setMaxValue(Object maxValue) {
-		this.maxValue = maxValue;
-	}
-
-	@JsonIgnore
-	public void setMaxValue(
-		UnsafeSupplier<Object, Exception> maxValueUnsafeSupplier) {
-
-		try {
-			maxValue = maxValueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object maxValue;
-
-	@Schema
-	@Valid
-	public Object getMinValue() {
-		return minValue;
-	}
-
-	public void setMinValue(Object minValue) {
-		this.minValue = minValue;
-	}
-
-	@JsonIgnore
-	public void setMinValue(
-		UnsafeSupplier<Object, Exception> minValueUnsafeSupplier) {
-
-		try {
-			minValue = minValueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object minValue;
 
 	@Schema
 	public String getName() {
@@ -368,21 +253,20 @@ public class Field implements Serializable {
 	protected Boolean required;
 
 	@Schema
-	@Valid
-	public Object getStepValue() {
-		return stepValue;
+	public String getUiType() {
+		return uiType;
 	}
 
-	public void setStepValue(Object stepValue) {
-		this.stepValue = stepValue;
+	public void setUiType(String uiType) {
+		this.uiType = uiType;
 	}
 
 	@JsonIgnore
-	public void setStepValue(
-		UnsafeSupplier<Object, Exception> stepValueUnsafeSupplier) {
+	public void setUiType(
+		UnsafeSupplier<String, Exception> uiTypeUnsafeSupplier) {
 
 		try {
-			stepValue = stepValueUnsafeSupplier.get();
+			uiType = uiTypeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -394,33 +278,7 @@ public class Field implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object stepValue;
-
-	@Schema
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String type;
+	protected String uiType;
 
 	@Schema
 	public String getUnit() {
@@ -476,6 +334,36 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unitSuffix;
 
+	@Schema
+	@Valid
+	public ValueDefinition getValueDefinition() {
+		return valueDefinition;
+	}
+
+	public void setValueDefinition(ValueDefinition valueDefinition) {
+		this.valueDefinition = valueDefinition;
+	}
+
+	@JsonIgnore
+	public void setValueDefinition(
+		UnsafeSupplier<ValueDefinition, Exception>
+			valueDefinitionUnsafeSupplier) {
+
+		try {
+			valueDefinition = valueDefinitionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ValueDefinition valueDefinition;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -513,30 +401,6 @@ public class Field implements Serializable {
 			sb.append(boost);
 		}
 
-		if (defaultValue != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"defaultValue\": ");
-
-			sb.append(String.valueOf(defaultValue));
-		}
-
-		if (format != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"format\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(format));
-
-			sb.append("\"");
-		}
-
 		if (helpText != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -563,26 +427,6 @@ public class Field implements Serializable {
 			sb.append(_escape(label));
 
 			sb.append("\"");
-		}
-
-		if (maxValue != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"maxValue\": ");
-
-			sb.append(String.valueOf(maxValue));
-		}
-
-		if (minValue != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"minValue\": ");
-
-			sb.append(String.valueOf(minValue));
 		}
 
 		if (name != null) {
@@ -639,26 +483,16 @@ public class Field implements Serializable {
 			sb.append(required);
 		}
 
-		if (stepValue != null) {
+		if (uiType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"stepValue\": ");
-
-			sb.append(String.valueOf(stepValue));
-		}
-
-		if (type != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
+			sb.append("\"uiType\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(type));
+			sb.append(_escape(uiType));
 
 			sb.append("\"");
 		}
@@ -689,6 +523,16 @@ public class Field implements Serializable {
 			sb.append(_escape(unitSuffix));
 
 			sb.append("\"");
+		}
+
+		if (valueDefinition != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"valueDefinition\": ");
+
+			sb.append(String.valueOf(valueDefinition));
 		}
 
 		sb.append("}");

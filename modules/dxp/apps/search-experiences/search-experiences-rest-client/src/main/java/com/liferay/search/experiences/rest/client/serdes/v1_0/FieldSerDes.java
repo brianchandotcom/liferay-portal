@@ -65,34 +65,6 @@ public class FieldSerDes {
 			sb.append(field.getBoost());
 		}
 
-		if (field.getDefaultValue() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"defaultValue\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(field.getDefaultValue()));
-
-			sb.append("\"");
-		}
-
-		if (field.getFormat() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"format\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(field.getFormat()));
-
-			sb.append("\"");
-		}
-
 		if (field.getHelpText() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -117,34 +89,6 @@ public class FieldSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(field.getLabel()));
-
-			sb.append("\"");
-		}
-
-		if (field.getMaxValue() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"maxValue\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(field.getMaxValue()));
-
-			sb.append("\"");
-		}
-
-		if (field.getMinValue() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"minValue\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(field.getMinValue()));
 
 			sb.append("\"");
 		}
@@ -203,30 +147,16 @@ public class FieldSerDes {
 			sb.append(field.getRequired());
 		}
 
-		if (field.getStepValue() != null) {
+		if (field.getUiType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"stepValue\": ");
+			sb.append("\"uiType\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(field.getStepValue()));
-
-			sb.append("\"");
-		}
-
-		if (field.getType() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(field.getType()));
+			sb.append(_escape(field.getUiType()));
 
 			sb.append("\"");
 		}
@@ -259,6 +189,16 @@ public class FieldSerDes {
 			sb.append("\"");
 		}
 
+		if (field.getValueDefinition() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"valueDefinition\": ");
+
+			sb.append(String.valueOf(field.getValueDefinition()));
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -284,20 +224,6 @@ public class FieldSerDes {
 			map.put("boost", String.valueOf(field.getBoost()));
 		}
 
-		if (field.getDefaultValue() == null) {
-			map.put("defaultValue", null);
-		}
-		else {
-			map.put("defaultValue", String.valueOf(field.getDefaultValue()));
-		}
-
-		if (field.getFormat() == null) {
-			map.put("format", null);
-		}
-		else {
-			map.put("format", String.valueOf(field.getFormat()));
-		}
-
 		if (field.getHelpText() == null) {
 			map.put("helpText", null);
 		}
@@ -310,20 +236,6 @@ public class FieldSerDes {
 		}
 		else {
 			map.put("label", String.valueOf(field.getLabel()));
-		}
-
-		if (field.getMaxValue() == null) {
-			map.put("maxValue", null);
-		}
-		else {
-			map.put("maxValue", String.valueOf(field.getMaxValue()));
-		}
-
-		if (field.getMinValue() == null) {
-			map.put("minValue", null);
-		}
-		else {
-			map.put("minValue", String.valueOf(field.getMinValue()));
 		}
 
 		if (field.getName() == null) {
@@ -354,18 +266,11 @@ public class FieldSerDes {
 			map.put("required", String.valueOf(field.getRequired()));
 		}
 
-		if (field.getStepValue() == null) {
-			map.put("stepValue", null);
+		if (field.getUiType() == null) {
+			map.put("uiType", null);
 		}
 		else {
-			map.put("stepValue", String.valueOf(field.getStepValue()));
-		}
-
-		if (field.getType() == null) {
-			map.put("type", null);
-		}
-		else {
-			map.put("type", String.valueOf(field.getType()));
+			map.put("uiType", String.valueOf(field.getUiType()));
 		}
 
 		if (field.getUnit() == null) {
@@ -380,6 +285,14 @@ public class FieldSerDes {
 		}
 		else {
 			map.put("unitSuffix", String.valueOf(field.getUnitSuffix()));
+		}
+
+		if (field.getValueDefinition() == null) {
+			map.put("valueDefinition", null);
+		}
+		else {
+			map.put(
+				"valueDefinition", String.valueOf(field.getValueDefinition()));
 		}
 
 		return map;
@@ -407,16 +320,6 @@ public class FieldSerDes {
 					field.setBoost((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "defaultValue")) {
-				if (jsonParserFieldValue != null) {
-					field.setDefaultValue((Object)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "format")) {
-				if (jsonParserFieldValue != null) {
-					field.setFormat((String)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "helpText")) {
 				if (jsonParserFieldValue != null) {
 					field.setHelpText((String)jsonParserFieldValue);
@@ -425,16 +328,6 @@ public class FieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "label")) {
 				if (jsonParserFieldValue != null) {
 					field.setLabel((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "maxValue")) {
-				if (jsonParserFieldValue != null) {
-					field.setMaxValue((Object)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "minValue")) {
-				if (jsonParserFieldValue != null) {
-					field.setMinValue((Object)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -464,14 +357,9 @@ public class FieldSerDes {
 					field.setRequired((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "stepValue")) {
+			else if (Objects.equals(jsonParserFieldName, "uiType")) {
 				if (jsonParserFieldValue != null) {
-					field.setStepValue((Object)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "type")) {
-				if (jsonParserFieldValue != null) {
-					field.setType((String)jsonParserFieldValue);
+					field.setUiType((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "unit")) {
@@ -482,6 +370,13 @@ public class FieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "unitSuffix")) {
 				if (jsonParserFieldValue != null) {
 					field.setUnitSuffix((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "valueDefinition")) {
+				if (jsonParserFieldValue != null) {
+					field.setValueDefinition(
+						ValueDefinitionSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

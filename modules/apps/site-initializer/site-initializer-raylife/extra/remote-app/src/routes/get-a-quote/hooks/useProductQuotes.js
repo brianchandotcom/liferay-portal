@@ -14,7 +14,8 @@ export const useProductQuotes = () => {
 		try {
 			const response = await LiferayService.getProductQuotes();
 			setData(response);
-		} catch (error) {
+		}
+		catch (error) {
 			setError(error);
 		}
 	};

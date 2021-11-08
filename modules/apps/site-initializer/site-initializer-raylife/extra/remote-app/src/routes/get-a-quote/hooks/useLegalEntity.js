@@ -13,7 +13,8 @@ export const useLegalEntity = () => {
 		try {
 			const response = await MockService.getLegalEntities();
 			setData(response);
-		} catch (error) {
+		}
+		catch (error) {
 			console.warn(error);
 			setError(error);
 		}

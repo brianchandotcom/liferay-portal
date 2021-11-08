@@ -14,7 +14,8 @@ const getDefaultValues = () => {
 		}
 
 		return data;
-	} catch (error) {
+	}
+	catch (error) {
 		console.warn(error.message);
 
 		return {};

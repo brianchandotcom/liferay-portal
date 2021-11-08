@@ -3,11 +3,12 @@ import {useFormContext} from 'react-hook-form';
 import {CardFormActionsWithSave} from '~/common/components/fragments/Card/FormActionsWithSave';
 import {LiferayService} from '~/common/services/liferay';
 import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
+import {clearExitAlert} from '~/common/utils/exitAlert';
 import {smoothScroll} from '~/common/utils/scroll';
 import {AppContext} from '~/routes/get-a-quote/context/AppContext';
 import {setSelectedProduct} from '~/routes/get-a-quote/context/actions';
-import {useStepWizard} from '~/routes/get-a-quote/hooks/useStepWizard';
 
+import {useStepWizard} from '~/routes/get-a-quote/hooks/useStepWizard';
 import {AVAILABLE_STEPS} from '~/routes/get-a-quote/utils/constants';
 import {BusinessTypeSearch} from './Search';
 
@@ -29,6 +30,8 @@ export const FormBasicBusinessType = ({form}) => {
 	};
 
 	const goToPreviousPage = () => {
+		clearExitAlert();
+
 		window.location.href = LiferayService.getLiferaySiteName();
 
 		if (Storage.itemExist(STORAGE_KEYS.BACK_TO_EDIT)) {

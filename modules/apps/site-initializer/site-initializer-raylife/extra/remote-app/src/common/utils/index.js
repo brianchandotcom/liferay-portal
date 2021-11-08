@@ -16,7 +16,8 @@ export const countCompletedFields = (fields) => {
 			) {
 				count += 1;
 			}
-		} else {
+		}
+		else {
 			count += countCompletedFields(value);
 		}
 	});

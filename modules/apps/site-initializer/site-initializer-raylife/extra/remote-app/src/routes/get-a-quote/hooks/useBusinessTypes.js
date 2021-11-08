@@ -20,7 +20,8 @@ export const useBusinessTypes = () => {
 			setError('');
 
 			return setData(response);
-		} catch (error) {
+		}
+		catch (error) {
 			return setError(
 				'Unable to make the request. Please try again later.'
 			);

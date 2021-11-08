@@ -33,7 +33,8 @@ export const Forms = ({form}) => {
 			JSON.parse(Storage.getItem(STORAGE_KEYS.BACK_TO_EDIT))
 		) {
 			loadSections();
-		} else {
+		}
+		else {
 			setLoadedSections(true);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,9 +52,11 @@ export const Forms = ({form}) => {
 
 				if (stepBasicName === 'businessInformation') {
 					setSection(AVAILABLE_STEPS.BASICS_BUSINESS_INFORMATION);
-				} else if (stepBasicName === 'business-type') {
+				}
+				else if (stepBasicName === 'business-type') {
 					setSection(AVAILABLE_STEPS.BASICS_BUSINESS_TYPE);
-				} else {
+				}
+				else {
 					setSection(AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE);
 				}
 				break;

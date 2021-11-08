@@ -181,7 +181,7 @@
 	}
 
 	.upload-section {
-		padding: 48px 0px 16px 22px;
+		padding: 48px 0 16px 22px;
 
 		.header {
 			margin-bottom: 16px;
@@ -275,7 +275,7 @@
 							top: -196px;
 							width: 36px;
 							filter: drop-shadow(
-								0px 5px 15px rgba(77, 133, 255, 0.12)
+								0 5px 15px rgba(77, 133, 255, 0.12)
 							);
 						}
 
@@ -362,7 +362,7 @@
 					font-size: 16px;
 					font-weight: 500;
 					justify-content: center;
-					left: 0px;
+					left: 0;
 					position: static;
 					top: 64px;
 

@@ -16,7 +16,8 @@ export const useTriggerContext = () => {
 	const updateState = (label) => {
 		if (label === selectedTrigger) {
 			dispatch(setSelectedTrigger(''));
-		} else {
+		}
+		else {
 			dispatch(setSelectedTrigger(label));
 		}
 	};

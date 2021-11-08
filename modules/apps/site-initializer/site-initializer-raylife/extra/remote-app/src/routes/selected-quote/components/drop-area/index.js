@@ -150,7 +150,8 @@ const DropArea = ({
 	return (
 		<div
 			className={classNames('drop-area', {
-				hide: !showUpload,
+				// eslint-disable-next-line quote-props
+				'hide': !showUpload,
 				'margin-left': files.length > 0,
 			})}
 			ref={dropAreaRef}

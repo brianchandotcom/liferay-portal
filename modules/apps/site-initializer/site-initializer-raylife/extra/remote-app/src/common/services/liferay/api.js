@@ -11,7 +11,8 @@ export const getLiferayAuthenticationToken = () => {
 		const token = Liferay.authToken;
 
 		return token;
-	} catch (error) {
+	}
+	catch (error) {
 		console.warn('Not able to find Liferay auth token\n', error);
 
 		return '';

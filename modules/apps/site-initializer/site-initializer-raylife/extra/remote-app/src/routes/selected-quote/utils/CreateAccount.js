@@ -23,7 +23,8 @@ export function validadePassword(confirmPassword, password) {
 	if (confirmPassword && password) {
 		if (password !== confirmPassword) {
 			rules.samePassword = UNCHECKED_VALUE;
-		} else {
+		}
+		else {
 			rules.samePassword =
 				password === confirmPassword ? CHECK_VALUE : NATURAL_VALUE;
 		}
@@ -38,7 +39,8 @@ export function validadePassword(confirmPassword, password) {
 			if (uniqueValues.size >= 5) {
 				rules.uniqueCharacter = CHECK_VALUE;
 				break;
-			} else {
+			}
+			else {
 				rules.uniqueCharacter = UNCHECKED_VALUE;
 			}
 		}

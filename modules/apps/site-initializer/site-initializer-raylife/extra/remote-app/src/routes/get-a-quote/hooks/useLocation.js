@@ -14,7 +14,8 @@ export const useLocation = () => {
 		try {
 			const response = await MockService.getUSStates();
 			setData(response);
-		} catch (error) {
+		}
+		catch (error) {
 			console.warn(error);
 			setError(error);
 		}
@@ -32,7 +33,8 @@ export const useLocation = () => {
 				);
 				callback(address);
 			});
-		} catch (error) {
+		}
+		catch (error) {
 			console.warn(error);
 		}
 	};

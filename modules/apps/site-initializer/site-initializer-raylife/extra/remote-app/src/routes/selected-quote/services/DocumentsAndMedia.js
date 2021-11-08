@@ -68,7 +68,8 @@ export const createFolderIfNotExist = async (
 
 	if (folderExist.data.totalCount) {
 		folder = folderExist.data.items[0];
-	} else {
+	}
+	else {
 		const response = await createDocumentFolder(
 			siteId,
 			{

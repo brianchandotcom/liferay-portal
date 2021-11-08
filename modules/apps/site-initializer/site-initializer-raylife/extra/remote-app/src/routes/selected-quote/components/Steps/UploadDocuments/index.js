@@ -75,7 +75,8 @@ const UploadDocuments = ({
 					};
 				})
 			);
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
 		}
 	};
@@ -169,7 +170,8 @@ const UploadDocuments = ({
 					);
 
 					setFilePropertyValue(fileEntry.id, 'documentId', data.id);
-				} catch (error) {
+				}
+				catch (error) {
 					console.error(error);
 				}
 			}
@@ -198,6 +200,7 @@ const UploadDocuments = ({
 			onDiscardChanges();
 			setDiscardChanges();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [discardChanges]);
 
 	return (

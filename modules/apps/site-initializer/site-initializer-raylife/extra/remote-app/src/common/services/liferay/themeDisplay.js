@@ -7,7 +7,8 @@ export const getLiferayGroupId = () => {
 		const groupId = Liferay.ThemeDisplay.getSiteGroupId();
 
 		return groupId;
-	} catch (error) {
+	}
+	catch (error) {
 		console.warn('Not able to find Liferay Group Id\n', error);
 
 		return '';
@@ -23,7 +24,8 @@ export const getScopeGroupId = () => {
 		const scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
 
 		return scopeGroupId;
-	} catch (error) {
+	}
+	catch (error) {
 		console.warn('Not able to find Liferay Scope Group Id\n', error);
 
 		return '';

@@ -26,6 +26,7 @@ module.exports = {
 	},
 	webpack: {
 		configure: (webpackConfig) => {
+
 			/**
 			 * This change is necessary to import SCSS as string
 			 * to inject into style tag

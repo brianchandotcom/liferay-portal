@@ -341,6 +341,14 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<DDMFormInstanceRecordVersion>
+		getFormInstanceRecordVersions(long userId, long formInstanceId) {
+
+		return _ddmFormInstanceRecordVersionLocalService.
+			getFormInstanceRecordVersions(userId, formInstanceId);
+	}
+
+	@Override
 	public int getFormInstanceRecordVersionsCount(
 		long ddmFormInstanceRecordId) {
 

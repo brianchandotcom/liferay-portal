@@ -305,6 +305,13 @@ public class DDMFormInstanceRecordVersionLocalServiceUtil {
 			ddmFormInstanceRecordId, start, end, orderByComparator);
 	}
 
+	public static List<DDMFormInstanceRecordVersion>
+		getFormInstanceRecordVersions(long userId, long formInstanceId) {
+
+		return getService().getFormInstanceRecordVersions(
+			userId, formInstanceId);
+	}
+
 	public static int getFormInstanceRecordVersionsCount(
 		long ddmFormInstanceRecordId) {
 

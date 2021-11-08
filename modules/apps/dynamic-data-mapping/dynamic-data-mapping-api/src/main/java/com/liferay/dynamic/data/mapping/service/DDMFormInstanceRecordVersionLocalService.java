@@ -270,6 +270,10 @@ public interface DDMFormInstanceRecordVersionLocalService
 		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMFormInstanceRecordVersion> getFormInstanceRecordVersions(
+		long userId, long formInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFormInstanceRecordVersionsCount(long ddmFormInstanceRecordId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

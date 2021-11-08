@@ -44,6 +44,10 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 		<liferay-ui:error exception="<%= ObjectDefinitionActiveException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionLabelException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionNameException.class %>" />
+		<liferay-ui:error exception="<%= ObjectDefinitionNameException.MustBeginWithUpperCaseLetter.class %>" message="the-first-character-of-a-name-must-be-an-upper-case-letter" />
+		<liferay-ui:error exception="<%= ObjectDefinitionNameException.MustBeLessThan41Characters.class %>" message="only-41-characters-are-allowed" />
+		<liferay-ui:error exception="<%= ObjectDefinitionNameException.MustNotBeDuplicate.class %>" message="this-name-is-already-in-use-try-another-one" />
+		<liferay-ui:error exception="<%= ObjectDefinitionNameException.MustOnlyContainLettersAndDigits.class %>" message="name-must-only-contain-letters-and-digits" />
 		<liferay-ui:error exception="<%= ObjectDefinitionPluralLabelException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionScopeException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionStatusException.class %>" />

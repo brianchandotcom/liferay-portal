@@ -146,23 +146,14 @@ definition {
 			ACNavigation.goToIndividuals();
 		}
 
-		task ("Go to Individuals overview") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-		}
-
 		task ("Hover on the Active Individuals graph and assert the elements that are shown on the tooltip") {
-			Click.mouseDownMouseUp(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
-
 			for (var current : list "Known-0,Anonymous-1,Total-1") {
 				var visitorsType = StringUtil.extractFirst("${current}","-");
 				var valueVisitors = StringUtil.extractLast("${current}","-");
 
-				AssertElementPresent(
-					key_value = "${valueVisitors}",
-					key_visitors = "${visitorsType}",
-					locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
+				ACSites.viewVisitorsOnGraph(
+					valueVisitors = "${valueVisitors}",
+					visitorsType = "${visitorsType}");
 			}
 		}
 
@@ -194,23 +185,14 @@ definition {
 			ACNavigation.goToIndividuals();
 		}
 
-		task ("Go to Individuals overview") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-		}
-
 		task ("Hover on the Active Individuals graph and assert the elements that are shown on the tooltip") {
-			Click.mouseDownMouseUp(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
-
 			for (var current : list "Known-1,Anonymous-0,Total-1") {
 				var visitorsType = StringUtil.extractFirst("${current}","-");
 				var valueVisitors = StringUtil.extractLast("${current}","-");
 
-				AssertElementPresent(
-					key_value = "${valueVisitors}",
-					key_visitors = "${visitorsType}",
-					locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
+				ACSites.viewVisitorsOnGraph(
+					valueVisitors = "${valueVisitors}",
+					visitorsType = "${visitorsType}");
 			}
 		}
 	}

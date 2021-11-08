@@ -282,6 +282,11 @@ public abstract class BaseWorkspaceGitRepository
 
 		gitWorkingDirectory.displayLog();
 
+		if (_isPullRequest()) {
+			gitWorkingDirectory.createLocalGitBranch(
+				getUpstreamBranchName(), true, getBaseBranchSHA());
+		}
+
 		writePropertiesFiles();
 
 		_setUp = true;

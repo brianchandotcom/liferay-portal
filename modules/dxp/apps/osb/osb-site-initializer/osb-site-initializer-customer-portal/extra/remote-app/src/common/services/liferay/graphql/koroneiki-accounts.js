@@ -19,7 +19,10 @@ const getKoroneikiAccountsByFilter = (filter) => {
                 koroneikiAccounts(filter: "${filters}") {
                   items {
                     accountKey
+                    code
                     slaCurrent
+                    slaExpired
+                    slaFuture
                     slaCurrentEndDate
                     region
                     liferayContactName

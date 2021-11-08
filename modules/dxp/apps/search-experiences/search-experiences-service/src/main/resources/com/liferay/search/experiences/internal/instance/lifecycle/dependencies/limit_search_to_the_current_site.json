@@ -1,0 +1,37 @@
+{
+	"description_i18n": {
+		"en_US": "Limit search to the current site."
+	},
+	"elementDefinition": {
+		"category": "filter",
+		"icon": "filter",
+		"sxpBlueprint": {
+			"configuration": {
+				"queryConfiguration": {
+					"queryEntries": [
+						{
+							"clauses": [
+								{
+									"context": "query",
+									"occur": "filter",
+									"query": {
+										"wrapper": {
+											"query": {
+												"term": {
+													"scopeGroupId": "${context.scope_group_id}"
+												}
+											}
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		}
+	},
+	"title_i18n": {
+		"en_US": "Limit Search to the Current Site"
+	}
+}

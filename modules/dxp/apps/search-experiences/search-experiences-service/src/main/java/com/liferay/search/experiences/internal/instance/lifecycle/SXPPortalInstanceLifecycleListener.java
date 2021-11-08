@@ -45,21 +45,22 @@ public class SXPPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-
-		// TODO Remove the method _addSXPElement and inline the logic if
-		// paste_any_elasticsearch_query is the only search experiences
-		// element that needs to be added per company
-
+		_addSXPElement(company, "boost_asset_type");
+		_addSXPElement(company, "limit_search_to_the_current_site");
 		_addSXPElement(company, "paste_any_elasticsearch_query");
+	}
+
+	protected SXPElement readSXPElement(String fileName) {
+		String json = StringUtil.read(
+			getClass(), "dependencies/" + fileName + ".json");
+
+		return SXPElementUtil.toSXPElement(json);
 	}
 
 	private void _addSXPElement(Company company, String fileName)
 		throws Exception {
 
-		String json = StringUtil.read(
-			getClass(), "dependencies/" + fileName + ".json");
-
-		SXPElement sxpElement = SXPElementUtil.toSXPElement(json);
+		SXPElement sxpElement = readSXPElement(fileName);
 
 		if (ListUtil.exists(
 				_sxpElementLocalService.getSXPElements(company.getCompanyId()),

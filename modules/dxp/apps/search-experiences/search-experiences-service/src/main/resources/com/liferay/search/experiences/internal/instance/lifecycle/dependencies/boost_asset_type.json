@@ -1,0 +1,63 @@
+{
+	"description_i18n": {
+		"en_US": "Boost the given asset type over others."
+	},
+	"elementDefinition": {
+		"category": "boost",
+		"icon": "thumbs-up",
+		"sxpBlueprint": {
+			"configuration": {
+				"queryConfiguration": {
+					"queryEntries": [
+						{
+							"clauses": [
+								{
+									"context": "query",
+									"occur": "should",
+									"query": {
+										"wrapper": {
+											"query": {
+												"term": {
+													"entryClassName": {
+														"boost": "${configuration.boost}",
+														"value": "${configuration.entry_class_name}"
+													}
+												}
+											}
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		},
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"label": "Asset Type",
+							"name": "entry_class_name",
+							"uiType": "searchableType"
+						},
+						{
+							"label": "Boost",
+							"name": "boost",
+							"uiType": "number",
+							"valueDefinition": {
+								"defaultValueInteger": 10,
+								"minValueInteger": 0,
+								"type": "Integer"
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Boost Asset Type"
+	}
+}

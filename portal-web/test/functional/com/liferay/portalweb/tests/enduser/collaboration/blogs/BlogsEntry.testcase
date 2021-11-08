@@ -668,13 +668,46 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136771. It checks that the cover image caption can be edited with special characters."
-	@ignore = "true"
 	@priority = "3"
 	test CanEditCoverImageCaptionWithSpecialCharacters {
-		property portal.acceptance = "false";
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
 
-		// TODO LPS-136771 CanEditCoverImageCaptionWithSpecialCharacters pending implementation
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntryWithUploadedCoverImage(
+			captionField = "Cover Image Caption",
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Blog Images",
+			uploadFileName = "Document_1.jpg");
+
+		Button.clickPublish();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		BlogsEntry.editCoverImageCaption(captionField = "!@#$%^&*()");
+
+		Button.clickPublish();
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		AssertTextEquals(
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION",
+			value1 = "!@#$%^&*()");
 	}
 
 	@description = "This test covers LPS-106613. It ensures that the custom abstract can be added and edited."

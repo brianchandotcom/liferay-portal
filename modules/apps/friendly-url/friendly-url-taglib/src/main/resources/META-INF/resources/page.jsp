@@ -17,24 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = (String)request.getAttribute("liferay-friendly-url:history:className");
-long classPK = (long)request.getAttribute("liferay-friendly-url:history:classPK");
+String defaultLanguageId = (String)request.getAttribute("liferay-friendly-url:history:defaultLanguageId");
 String elementId = (String)request.getAttribute("liferay-friendly-url:history:elementId");
+String friendlyURLEntryURL = (String)request.getAttribute("liferay-friendly-url:history:friendlyURLEntryURL");
 %>
 
 <div class="btn-url-history-wrapper">
-
-	<%
-	User defaultUser = company.getDefaultUser();
-
-	String friendlyURLEntryURL = StringBundler.concat(themeDisplay.getPortalURL(), Portal.PATH_MODULE, "/friendly-url/", className, StringPool.SLASH, classPK);
-	%>
-
 	<react:component
 		module="js/FriendlyURLHistory"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"defaultLanguageId", LocaleUtil.toLanguageId(defaultUser.getLocale())
+				"defaultLanguageId", defaultLanguageId
 			).put(
 				"elementId", elementId
 			).put(

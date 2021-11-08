@@ -15,6 +15,14 @@
 package com.liferay.friendly.url.taglib.servlet.taglib;
 
 import com.liferay.friendly.url.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,11 +83,42 @@ public class FriendlyURLHistoryTag extends IncludeTag {
 		super.setAttributes(httpServletRequest);
 
 		httpServletRequest.setAttribute(
-			"liferay-friendly-url:history:className", getClassName());
-		httpServletRequest.setAttribute(
-			"liferay-friendly-url:history:classPK", getClassPK());
+			"liferay-friendly-url:history:defaultLanguageId",
+			_getDefaultLanguageId(httpServletRequest));
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:history:elementId", getElementId());
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:history:friendlyURLEntryURL",
+			_getFriendlyURLEntryURL(httpServletRequest));
+	}
+
+	private String _getDefaultLanguageId(
+		HttpServletRequest httpServletRequest) {
+
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			User user = themeDisplay.getDefaultUser();
+
+			return user.getLanguageId();
+		}
+		catch (Exception exception) {
+			return LanguageUtil.getLanguageId(LocaleUtil.getDefault());
+		}
+	}
+
+	private String _getFriendlyURLEntryURL(
+		HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return StringBundler.concat(
+			themeDisplay.getPortalURL(), Portal.PATH_MODULE, "/friendly-url/",
+			getClassName(), StringPool.SLASH, getClassPK());
 	}
 
 	private static final String _PAGE = "/page.jsp";

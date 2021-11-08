@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-5029."
+	@description = "This is a use case for LRQA-5029. Verify guest users cannot configure blogs."
 	@priority = "5"
 	test ViewBlogsPortletAsGuestPG {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
@@ -79,7 +79,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-42712."
+	@description = "This is a use case for LRQA-42712. Verify guest users cannot configure public pages."
 	@priority = "4"
 	test ViewNoDisplayPortletConfigurationPermission {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";

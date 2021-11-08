@@ -1,5 +1,50 @@
 definition {
 
+	macro configureDisplayStyleInSystemSettings {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Blogs",
+			configurationName = "Blogs",
+			configurationScope = "Widget Scope");
+
+		if ("${displayStyle}" == "Abstract") {
+			Type(
+				key_fieldName = "displayStyle",
+				locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+				value1 = "abstract");
+		}
+		else if ("${displayStyle}" == "Full Content") {
+			Type(
+				key_fieldName = "displayStyle",
+				locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+				value1 = "full-content");
+		}
+		else if ("${displayStyle}" == "Title") {
+			Type(
+				key_fieldName = "displayStyle",
+				locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+				value1 = "title");
+		}
+		else if ("${displayStyle}" == "Basic") {
+			Type(
+				key_fieldName = "displayStyle",
+				locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+				value1 = "ddmTemplate_BLOGS-BASIC-FTL");
+		}
+		else if ("${displayStyle}" == "Card") {
+			Type(
+				key_fieldName = "displayStyle",
+				locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+				value1 = "ddmTemplate_BLOGS-CARD-FTL");
+		}
+
+		Button.clickSave();
+	}
+
 	macro enableReadingTime {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

@@ -975,7 +975,7 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 
 		task ("Add application") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -1038,7 +1038,15 @@ definition {
 		}
 
 		task ("Post client credential token via curl") {
-			com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+			Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "OAuth Application");
+
+			OAuth2.assertPortletHeader(header = "OAuth Application");
+
+			OAuth2.postClientCredentialTokenViaCurl();
 		}
 
 		task ("View granted auth via user") {

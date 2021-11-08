@@ -296,14 +296,13 @@ definition {
 		DDLList.viewStatusDDL(key_status = "Approved");
 
 		DDLRecord.editDLLRecordContacts(
-			ddlListName = "DDL List",
 			ddlCompanyEdit = "Liferay Edit",
-			ddlFirstNameEdit = "Test Edit");
-		
+			ddlFirstNameEdit = "Test Edit",
+			ddlListName = "DDL List");
+
 		PortletEntry.submitForPublication();
 
-		DDLList.viewStatusDDL(key_status = "Pending");	
-
+		DDLList.viewStatusDDL(key_status = "Pending");
 	}
 
 	@description = "This is a use case for LPS-61212."

@@ -683,10 +683,6 @@ public class FragmentEntryConfigurationParserImpl
 			JSONObject configurationValueJSONObject =
 				JSONFactoryUtil.createJSONObject(value);
 
-			if (configurationValueJSONObject.length() == 0) {
-				return null;
-			}
-
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerialize(
 					_getInfoDisplayObjectEntry(value)));

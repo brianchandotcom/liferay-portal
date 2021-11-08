@@ -42,12 +42,10 @@
 		<finder name="BatchPlannerPlanId" return-type="BatchPlannerLog">
 			<finder-column name="batchPlannerPlanId" />
 		</finder>
-		<finder name="BPPI_BEETERC" return-type="BatchPlannerLog" unique="true">
-			<finder-column name="batchPlannerPlanId" />
+		<finder name="BatchEngineExportTaskERC" return-type="BatchPlannerLog" unique="true">
 			<finder-column name="batchEngineExportTaskERC" />
 		</finder>
-		<finder name="BPPI_BEITERC" return-type="BatchPlannerLog" unique="true">
-			<finder-column name="batchPlannerPlanId" />
+		<finder name="BatchEngineImportTaskERC" return-type="BatchPlannerLog" unique="true">
 			<finder-column name="batchEngineImportTaskERC" />
 		</finder>
 		<finder name="BPPI_DTERC" return-type="BatchPlannerLog" unique="true">

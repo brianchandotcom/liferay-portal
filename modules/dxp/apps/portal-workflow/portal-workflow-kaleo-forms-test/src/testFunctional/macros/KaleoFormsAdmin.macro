@@ -1059,6 +1059,14 @@ definition {
 			locator1 = "KaleoFormsAdminEditProcess#WORKFLOW_NAVIGATION_UNPUBLISHED_TAB",
 			value1 = "Unpublished");
 	}
+	
+	macro viewTableDisplaysColumns{
+		for (var tableHeader : list "ID,Name,Description,Modified Date") {
+			AssertElementPresent(
+				key_tableHeader = "${tableHeader}",
+				locator1 = "LexiconTable#TABLE_HEADER");
+		}
+	}
 
 	macro viewWorkflowCannotBeUnpublish {
 		LexiconEntry.gotoEntryMenuItemNoError(
@@ -1067,4 +1075,5 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "Unable to delete the workflow definition that is in use.");
 	}
+
 }

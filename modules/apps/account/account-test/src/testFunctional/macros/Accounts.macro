@@ -499,7 +499,16 @@ definition {
 			locator1 = "Button#SAVE",
 			value1 = "Save");
 
-		Alert.viewSuccessMessage();
+		// Assert error message if it is being added by Account Admin
+
+		if (isSet(asAccountAdmin)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "Your request failed to complete.");
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro addNewUserWithSameDomain {
@@ -950,7 +959,29 @@ definition {
 			locator1 = "Portlet#TITLE",
 			value1 = "Edit ${accountName}");
 
-		PortletEntry.inputName(name = "${accountNameEdit}");
+		if (isSet(accountNameEdit)) {
+			PortletEntry.inputName(name = "${accountNameEdit}");
+		}
+
+		if (isSet(domainNames)) {
+			AssertClick(
+				locator1 = "Account#VALID_DOMAINS_ADD_BUTTON",
+				value1 = "Add");
+
+			SelectFrame(locator1 = "IFrame#ADD_DOMAIN");
+
+			PortletEntry.inputText(
+				fieldLabel = "Domain",
+				text = "${domainNames}");
+
+			Button.clickSave();
+
+			for (var domainName : list "${domainNames}") {
+				AssertElementPresent(
+					key_domainName = "${domainName}",
+					locator1 = "Account#VALID_DOMAINS_DOMAIN_NAME");
+			}
+		}
 
 		if (isSet(accountDescriptionEdit)) {
 			PortletEntry.inputDescription(description = "${accountDescriptionEdit}");

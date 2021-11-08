@@ -555,8 +555,6 @@ definition {
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.viewTableDisplaysColumns();
-		
-		
 	}
 
 	@description = "Verify that the page displays the pagination button."

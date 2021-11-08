@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-65498."
+	@description = "This is a use case for LPS-65498. LDAP user can be imported with blank password."
 	@priority = "5"
 	test ImportLDAPUserWithBlankPassword {
 		property apacheds.blank.user.password.enabled = "true";
@@ -80,7 +80,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-30529."
+	@description = "This is a use case for LPS-30529. User fields are not reset to default when signing in with imported LDAP user."
 	@priority = "4"
 	test ResetFieldsValueForImportedLDAPUser {
 		property apacheds.enabled = "true";
@@ -185,7 +185,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-73381."
+	@description = "This is a use case for LPS-73381. LDAP security credentials are obscured when entered."
 	@priority = "4"
 	test ViewHiddenSecurityCredential {
 		property test.name.skip.portal.instance = "LDAP#ViewHiddenSecurityCredential";
@@ -207,7 +207,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-73381."
+	@description = "This is a use case for LPS-73381. LDAP instance settings do not affect system settings."
 	@priority = "3"
 	test ViewLDAPInstanceSettingsDoNotAffectSystemSettings {
 		property test.name.skip.portal.instance = "LDAP#ViewInstanceSettingsEnableLDAPAuthNotAffectSystemSetting";

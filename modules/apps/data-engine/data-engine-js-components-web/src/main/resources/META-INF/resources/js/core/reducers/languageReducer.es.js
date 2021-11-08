@@ -142,6 +142,8 @@ const updateFieldLanguage = ({
 			updatedField.options = currentOptions;
 		}
 
+		updatedField.locale = editingLanguageId;
+
 		return updatedField;
 	});
 
@@ -158,6 +160,7 @@ const updateFieldLanguage = ({
 			defaultLanguageId,
 			editingLanguageId
 		),
+		locale: editingLanguageId,
 		name: generateName(name, {
 			instanceId: instanceId || generateInstanceId(),
 			repeatedIndex: getRepeatedIndex(name),

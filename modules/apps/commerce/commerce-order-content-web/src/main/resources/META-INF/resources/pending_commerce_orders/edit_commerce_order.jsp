@@ -79,13 +79,20 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceOrderId" type="hidden" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
 
-	<liferay-ui:error exception="<%= CommerceOrderImporterTypeException.class %>" key="commerceOrderImporterTypeKey">
+	<liferay-ui:error embed="<%= false %>" exception="<%= CommerceOrderImporterTypeException.class %>" message="the-import-process-failed" />
+
+	<liferay-ui:error embed="<%= false %>" key="commerceOrderImporterTypeKey">
+
+		<%
+		String commerceOrderImporterTypeKey = (String)SessionErrors.get(renderRequest, "commerceOrderImporterTypeKey");
+		%>
+
 		<c:choose>
-			<c:when test='<%= Validator.isNull((String)SessionMessages.get(renderRequest, "commerceOrderImporterTypeKey")) %>'>
+			<c:when test="<%= Validator.isNull(commerceOrderImporterTypeKey) %>">
 				<liferay-ui:message key="the-import-process-failed" />
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message arguments='<%= (String)SessionMessages.get(renderRequest, "commerceOrderImporterTypeKey") %>' key="the-x-could-not-be-imported" />
+				<liferay-ui:message arguments="<%= commerceOrderImporterTypeKey %>" key="the-x-could-not-be-imported" />
 			</c:otherwise>
 		</c:choose>
 	</liferay-ui:error>
@@ -116,9 +123,9 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 		<liferay-ui:message arguments='<%= (int)SessionMessages.get(renderRequest, "importedRowsCount") %>' key="x-rows-were-imported-successfully" translateArguments="<%= false %>" />
 	</liferay-ui:success>
 
-	<liferay-ui:success key="notImportedRowsCount">
-		<liferay-ui:message arguments='<%= (int)SessionMessages.get(renderRequest, "notImportedRowsCount") %>' key="x-rows-were-not-imported" translateArguments="<%= false %>" />
-	</liferay-ui:success>
+	<liferay-ui:error embed="<%= false %>" key="notImportedRowsCount">
+		<liferay-ui:message arguments='<%= (int)SessionErrors.get(renderRequest, "notImportedRowsCount") %>' key="x-rows-were-not-imported" translateArguments="<%= false %>" />
+	</liferay-ui:error>
 
 	<aui:model-context bean="<%= commerceOrder %>" model="<%= CommerceOrder.class %>" />
 

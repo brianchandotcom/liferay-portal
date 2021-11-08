@@ -16,35 +16,62 @@
 
 <%@ include file="/init.jsp" %>
 
-<portlet:actionURL name="/commerce_open_order_content/import_csv_file_entry" var="importCSVFileEntryActionURL" />
+<div class="container-fluid container-xl mt-3">
+	<div class="alert alert-info center container-fluid">
+		<div class="mb-2 row-fluid">
+			<clay:icon symbol="info-circle" /> <strong class="lead"><liferay-ui:message key="info" /></strong>: <liferay-ui:message key="download-csv-template-help" />
+		</div>
 
-<aui:form action="<%= importCSVFileEntryActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.IMPORT %>" />
-	<aui:input name="fileEntryId" type="hidden" />
+		<div class="row-fluid">
+			<aui:button href="<%= commerceOrderContentDisplayContext.getCSVTemplateDownloadURL() %>" name="downloadCSVTemplateButton" primary="<%= true %>" value="download-template" />
+		</div>
+	</div>
 
-	<p class="text-default">
-		<span class="hide" id="<portlet:namespace />fileEntryRemoveIcon" role="button">
-			<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
-		</span>
-		<span id="<portlet:namespace />fileEntryNameInput">
-			<span class="text-muted"><liferay-ui:message key="none" /></span>
-		</span>
-	</p>
+	<portlet:actionURL name="/commerce_open_order_content/import_csv" var="importCSVActionURL" />
 
-	<aui:button name="selectFileButton" value="select" />
+	<aui:form action="<%= importCSVActionURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.IMPORT %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="commerceOrderId" type="hidden" value="<%= String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId()) %>" />
+		<aui:input name="fileEntryId" type="hidden" />
+		<aui:input name="commerceOrderImporterTypeKey" type="hidden" value="<%= CSVCommerceOrderImporterTypeImpl.KEY %>" />
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="importButton" primary="<%= true %>" type="submit" value='<%= LanguageUtil.get(request, "import") %>' />
+		<liferay-ui:error embed="<%= false %>" key="commerceOrderImporterTypeKey">
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+			<%
+			String commerceOrderImporterTypeKey = (String)SessionErrors.get(renderRequest, "commerceOrderImporterTypeKey");
+			%>
+
+			<c:choose>
+				<c:when test="<%= Validator.isNull(commerceOrderImporterTypeKey) %>">
+					<liferay-ui:message key="the-import-process-failed" />
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:message arguments="<%= commerceOrderImporterTypeKey %>" key="the-x-could-not-be-imported" />
+				</c:otherwise>
+			</c:choose>
+		</liferay-ui:error>
+
+		<p class="text-default">
+			<span class="hide" id="<portlet:namespace />fileEntryRemoveIcon" role="button">
+				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+			</span>
+			<span id="<portlet:namespace />fileEntryNameInput"></span>
+		</p>
+
+		<aui:button name="selectFileButton" value="select" />
+
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" name="importButton" primary="<%= true %>" type="submit" value='<%= LanguageUtil.get(request, "import") %>' />
+
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+</div>
 
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"currentURL", currentURL
-		).put(
 			"itemSelectorURL", commerceOrderContentDisplayContext.getCSVFileEntryItemSelectorURL()
 		).build()
 	%>'

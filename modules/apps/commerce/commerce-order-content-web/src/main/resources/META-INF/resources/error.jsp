@@ -21,7 +21,7 @@
 <liferay-ui:error exception="<%= CommerceOrderImporterTypeException.class %>" key="commerceOrderImporterTypeKey">
 
 	<%
-	String commerceOrderImporterTypeKey = (String)SessionMessages.get(renderRequest, "commerceOrderImporterTypeKey");
+	String commerceOrderImporterTypeKey = (String)SessionErrors.get(renderRequest, "commerceOrderImporterTypeKey");
 	%>
 
 	<c:choose>

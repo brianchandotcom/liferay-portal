@@ -12,27 +12,17 @@
  * details.
  */
 
-import {createPortletURL, navigate} from 'frontend-js-web';
-
-export default function ({currentURL, itemSelectorURL, namespace}) {
+export default function ({itemSelectorURL, namespace}) {
 	const fileEntryIdInput = document.getElementById(`${namespace}fileEntryId`);
-	const fileEntryNameInput = document.getElementById(`${namespace}fileEntryNameInput`);
-	const fileEntryRemoveIcon = document.getElementById(`${namespace}fileEntryRemoveIcon`);
-	const importButton = document.getElementById(`${namespace}importButton`);
-	const selectFileButton = document.getElementById(`${namespace}selectFileButton`);
-
-	if (importButton) {
-		importButton.addEventListener('click', (event) => {
-			event.preventDefault();
-
-			if (fileEntryIdInput) {
-				navigate(
-					createPortletURL(
-						currentURL,
-						{fileEntryId: fileEntryIdInput.value}));
-			}
-		});
-	}
+	const fileEntryNameInput = document.getElementById(
+		`${namespace}fileEntryNameInput`
+	);
+	const fileEntryRemoveIcon = document.getElementById(
+		`${namespace}fileEntryRemoveIcon`
+	);
+	const selectFileButton = document.getElementById(
+		`${namespace}selectFileButton`
+	);
 
 	if (fileEntryNameInput && fileEntryRemoveIcon && selectFileButton) {
 		selectFileButton.addEventListener('click', (event) => {
@@ -68,7 +58,7 @@ export default function ({currentURL, itemSelectorURL, namespace}) {
 				fileEntryIdInput.value = 0;
 			}
 
-			fileEntryNameInput.innerText = Liferay.Language.get('none');
+			fileEntryNameInput.innerText = '';
 
 			fileEntryRemoveIcon.classList.add('hide');
 		});

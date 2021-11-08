@@ -82,7 +82,13 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 						themeDisplay.getRequest(),
 						PortalUtil.getPathContext() +
 							"/o/frontend-editor-ckeditor-web/ckeditor/skins" +
-								"/moono-lexicon/editor.css")))
+								"/moono-lexicon/editor.css")),
+				HtmlUtil.escape(
+					PortalUtil.getStaticResourceURL(
+						themeDisplay.getRequest(),
+						PortalUtil.getPathContext() +
+							"/o/frontend-editor-ckeditor-web/ckeditor/skins" +
+								"/moono-lexicon/dialog.css")))
 		).put(
 			"contentsLangDirection",
 			HtmlUtil.escapeJS(

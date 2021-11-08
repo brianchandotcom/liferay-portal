@@ -91,27 +91,11 @@ String friendlyURLBase = StringPool.BLANK;
 
 		<c:choose>
 			<c:when test="<%= selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem() %>">
-				<div class="btn-url-history-wrapper">
-
-					<%
-					User defaultUser = company.getDefaultUser();
-
-					String friendlyURLEntryURL = StringBundler.concat(themeDisplay.getPortalURL(), Portal.PATH_MODULE, "/friendly-url/", Layout.class.getName(), StringPool.SLASH, selLayout.getPlid());
-					%>
-
-					<react:component
-						module="js/friendly_url_history/FriendlyURLHistory"
-						props='<%=
-							HashMapBuilder.<String, Object>put(
-								"defaultLanguageId", LocaleUtil.toLanguageId(defaultUser.getLocale())
-							).put(
-								"elementId", portletDisplay.getNamespace() + "friendlyURL"
-							).put(
-								"friendlyURLEntryURL", friendlyURLEntryURL
-							).build()
-						%>'
-					/>
-				</div>
+				<liferay-friendly-url:history
+					className="<%= Layout.class.getName() %>"
+					classPK="<%= selLayout.getPlid() %>"
+					elementId='<%= portletDisplay.getNamespace() + "friendlyURL" %>'
+				/>
 
 				<div class="form-group friendly-url">
 					<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "there-is-a-limit-of-x-characters-in-encoded-format-for-friendly-urls-(e.g.-x)", new String[] {String.valueOf(LayoutConstants.FRIENDLY_URL_MAX_LENGTH), "<em>/news</em>"}, false) %>' /></label>

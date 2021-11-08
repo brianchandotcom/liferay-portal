@@ -13,3 +13,27 @@
  * details.
  */
 --%>
+
+<%@ include file="/init.jsp" %>
+
+<div class="btn-url-history-wrapper">
+
+	<%
+	User defaultUser = company.getDefaultUser();
+
+	String friendlyURLEntryURL = StringBundler.concat(themeDisplay.getPortalURL(), Portal.PATH_MODULE, "/friendly-url/", Layout.class.getName(), StringPool.SLASH, selLayout.getPlid());
+	%>
+
+	<react:component
+		module="js/FriendlyURLHistory"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"defaultLanguageId", LocaleUtil.toLanguageId(defaultUser.getLocale())
+			).put(
+				"elementId", portletDisplay.getNamespace() + "friendlyURL"
+			).put(
+				"friendlyURLEntryURL", friendlyURLEntryURL
+			).build()
+		%>'
+	/>
+</div>

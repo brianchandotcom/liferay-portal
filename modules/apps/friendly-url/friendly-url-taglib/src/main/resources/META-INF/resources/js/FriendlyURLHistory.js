@@ -39,9 +39,7 @@ export default function FriendlyURLHistory({elementId, ...restProps}) {
 				displayType="secondary"
 				onClick={() => {
 					setSelectedLanguageId(
-						Liferay.component(
-							elementId
-						).getSelectedLanguageId()
+						Liferay.component(elementId).getSelectedLanguageId()
 					);
 					setShowModal(true);
 				}}

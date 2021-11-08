@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -230,6 +231,26 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			"7.1.0", "7.2.0",
 			new com.liferay.commerce.internal.upgrade.v7_2_0.
 				CommerceOrderTypeUpgradeProcess());
+
+		registry.register(
+			"7.2.0", "7.3.0",
+			new MVCCVersionUpgradeProcess() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {
+						"CPDAvailabilityEstimate", "CPDefinitionInventory",
+						"CommerceAddressRestriction",
+						"CommerceAvailabilityEstimate", "CommerceOrder",
+						"CommerceOrderItem", "CommerceOrderNote",
+						"CommerceOrderPayment", "CommerceOrderType",
+						"CommerceOrderTypeRel", "CommerceShipment",
+						"CommerceShipmentItem", "CommerceShippingMethod",
+						"CommerceSubscriptionEntry"
+					};
+				}
+
+			});
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");

@@ -1594,7 +1594,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addSiteNavigationMenuItems(
+	private void _addSiteNavigationLayoutMenuItems(
 			JSONArray jsonArray, SiteNavigationMenu siteNavigationMenu,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -1646,9 +1646,44 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), name, serviceContext);
 
-			_addSiteNavigationMenuItems(
+			_addSiteNavigationLayoutMenuItems(
 				jsonObject.getJSONArray("pages"), siteNavigationMenu,
 				serviceContext);
+
+			JSONArray urlsJSONArray = jsonObject.getJSONArray("urls");
+
+			if (urlsJSONArray == null) {
+				continue;
+			}
+
+			_addSiteNavigationURLMenuItems(
+				urlsJSONArray, siteNavigationMenu, serviceContext);
+		}
+	}
+
+	private void _addSiteNavigationURLMenuItems(
+			JSONArray jsonArray, SiteNavigationMenu siteNavigationMenu,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				new UnicodeProperties();
+
+			typeSettingsUnicodeProperties.setProperty(
+				"name", jsonObject.getString("name"));
+			typeSettingsUnicodeProperties.setProperty(
+				"url", jsonObject.getString("url"));
+			typeSettingsUnicodeProperties.setProperty(
+				"useNewTab", jsonObject.getString("useNewTab"));
+
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				SiteNavigationMenuItemTypeConstants.URL,
+				typeSettingsUnicodeProperties.toString(), serviceContext);
 		}
 	}
 

@@ -633,20 +633,21 @@ public class FragmentLayoutStructureItemImporter
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntry(groupId, fragmentKey);
 
-		if (fragmentEntry == null) {
-			Company company = _companyLocalService.getCompanyById(companyId);
-
-			fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
-				company.getGroupId(), fragmentKey);
-
-			if (fragmentEntry == null) {
-				fragmentEntry =
-					_fragmentCollectionContributorTracker.getFragmentEntry(
-						fragmentKey);
-			}
+		if (fragmentEntry != null) {
+			return fragmentEntry;
 		}
 
-		return fragmentEntry;
+		Company company = _companyLocalService.getCompanyById(companyId);
+
+		fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
+			company.getGroupId(), fragmentKey);
+
+		if (fragmentEntry != null) {
+			return fragmentEntry;
+		}
+
+		return _fragmentCollectionContributorTracker.getFragmentEntry(
+			fragmentKey);
 	}
 
 	private String _getProcessedHTML(

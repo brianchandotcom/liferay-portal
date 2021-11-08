@@ -20,7 +20,7 @@
 	<td>//div[contains(@class,'input-localized-palette-container')]//a[contains(@class,'dropdown-item') and contains(.,'${key_tagLanguage}') and contains(.,'${key_infoLaguage}')]</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>SAVE_BUTTON_INACTIVE</td>
 	<td>//button[@disabled='' and contains(.,'Save')]</td>
 	<td></td>
@@ -42,7 +42,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_NAVIGATOR_MULTI_STEP_PROGRESS_BAR_</td>
+	<td>FORM_NAVIGATOR_MULTI_STEP_PROGRESS_BAR</td>
 	<td>//div[contains(text(),'${key_stepProcess}')]//..//*[name()='svg'][contains(@class,'lexicon-icon lexicon-icon-${key_iconType}')]</td>
 	<td></td>
 </tr>

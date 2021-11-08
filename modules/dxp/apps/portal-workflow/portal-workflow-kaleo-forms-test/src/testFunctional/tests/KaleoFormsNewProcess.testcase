@@ -45,35 +45,13 @@ definition {
 	test CanNotUnpublishAWorkflowThatIsInUse {
 		KaleoFormsAdmin.addProcess();
 
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
-		KaleoFormsAdmin.chooseFieldSet(
+		KaleoFormsAdmin.createKaleoFormsProcess(
 			kfFieldSetName = "Contacts",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
-		KaleoFormsAdmin.chooseWorkflow(
+			kfFormName = "Created Task Form",
+			kfProcessDescription = "Kaleo Forms Process Description",
 			kfProcessName = "Kaleo Forms Process",
-			workflowDefinitionTitle = "Single Approver");
-
-		KaleoFormsAdmin.next();
-
-		KaleoFormsAdmin.assignForm(
-			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Single Approver",
 			workflowTask = "created");
-
-		KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
-
-		KaleoFormsAdmin.saveForm();
-
-		KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form");
-
-		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.addProcess();
 
@@ -89,7 +67,10 @@ definition {
 
 		KaleoFormsAdmin.next();
 
-		KaleoFormsAdmin.workflowCannotBeUnpublish(workflowDefinitionTitle = "Single Approver");
+		KaleoFormsAdmin.viewWorkflowCannotBeUnpublish(workflowDefinitionTitle = "Single Approver");
+
+
+		
 	}
 
 	@description = "Verify that the user can only choose one Field Set."
@@ -99,22 +80,19 @@ definition {
 
 		KaleoFormsAdmin.addProcessDetails(
 			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process Name");
+			kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "Contacts",
-			kfProcessName = "Kaleo Forms Process Name");
+			kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "Inventory",
-			kfProcessName = "Kaleo Forms Process Name");
+			kfProcessName = "Kaleo Forms Process");
 
-		AssertElementNotPresent(
-			key_kfFieldSetName = "Contacts",
-			locator1 = "KaleoFormsAdminEditProcess#SELECTED_FIELD_SET",
-			value1 = "${key_kfFieldSetName}");
+		KaleoFormsAdmin.viewNotSelectedFieldSet(kfFieldSetName = "Contacts");
 	}
 
 	@description = "Verify that the user can only choose one Workflow."
@@ -188,8 +166,9 @@ definition {
 	test IconTranslationEnglishByDefault {
 		KaleoFormsAdmin.addProcess();
 
-		KaleoFormsAdmin.viewLanguageByDefault(
+		KaleoFormsAdmin.viewSelectedLanguage(
 			defaultLanguage = "en-US",
+			dropdownTagLanguage = "en-US",
 			infoLaguage = "Default");
 	}
 

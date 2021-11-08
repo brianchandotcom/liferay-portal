@@ -436,6 +436,38 @@ definition {
 		Click(locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_PROGRESS_BAR_NAME");
 	}
 
+	macro createKaleoFormsProcess {
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "${kfProcessDescription}",
+			kfProcessName = "${kfProcessName}");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "${kfFieldSetName}",
+			kfProcessName = "${kfProcessName}");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "${kfProcessName}",
+			workflowDefinitionTitle = "${workflowDefinitionTitle}");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.assignForm(
+			kfProcessName = "${kfProcessName}",
+			workflowTask = "${workflowTask}");
+
+		KaleoFormsAdmin.addForm(kfFormName = "${kfFormName}");
+
+		KaleoFormsAdmin.saveForm();
+
+		KaleoFormsAdmin.chooseForm(kfFormName = "${kfFormName}");
+
+		KaleoFormsAdmin.saveProcess(kfProcessName = "${kfProcessName}");
+	}
+
 	macro next {
 		AssertElementNotPresent(locator1 = "KaleoFormsAdminEditProcess#NEXT_BUTTON_INACTIVE");
 
@@ -711,26 +743,6 @@ definition {
 			value1 = "Please add at least one field.");
 	}
 
-	macro viewLanguageByDefault {
-		Click(
-			key_locale = "${defaultLanguage}",
-			locator1 = "Translation#CURRENT_LOCALE_NAME");
-
-		AssertElementPresent(
-			key_infoLaguage = "${infoLaguage}",
-			key_tagLanguage = "${defaultLanguage}",
-			locator1 = "KaleoFormsAdminEditProcess#DROPDOWN_LANGUAGE");
-
-		Click(
-			key_locale = "${defaultLanguage}",
-			locator1 = "Translation#CURRENT_LOCALE_DESCRIPTION");
-
-		AssertElementPresent(
-			key_infoLaguage = "${infoLaguage}",
-			key_tagLanguage = "${defaultLanguage}",
-			locator1 = "KaleoFormsAdminEditProcess#DROPDOWN_LANGUAGE");
-	}
-
 	macro viewNewProcessProgressBar {
 		var key_kfProgressName = "${kfProgressName}";
 
@@ -761,6 +773,13 @@ definition {
 
 	macro viewNoPublishedWorkflowDefinitions {
 		AssertVisible(locator1 = "KaleoFormsAdmin#KALEO_WORKFLOW_PUBLISHED_EMPTY_MESSAGE");
+	}
+
+	macro viewNotSelectedFieldSet {
+		AssertElementNotPresent(
+			key_kfFieldSetName = "${kfFieldSetName}",
+			locator1 = "KaleoFormsAdminEditProcess#SELECTED_FIELD_SET",
+			value1 = "${key_kfFieldSetName}");
 	}
 
 	macro viewNoUnpublishedWorkflowDefinitions {
@@ -925,7 +944,7 @@ definition {
 		AssertElementPresent(
 			key_iconType = "${iconType}",
 			key_stepProcess = "${stepProcess}",
-			locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_MULTI_STEP_PROGRESS_BAR_");
+			locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_MULTI_STEP_PROGRESS_BAR");
 	}
 
 	macro viewPublishedWorkflowDefinitions {
@@ -940,6 +959,26 @@ definition {
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminEditProcess#SELECTED_FIELD_SET",
 			value1 = "${kfFieldSetName}");
+	}
+
+	macro viewSelectedLanguage {
+		Click(
+			key_locale = "${defaultLanguage}",
+			locator1 = "Translation#CURRENT_LOCALE_NAME");
+
+		AssertElementPresent(
+			key_infoLaguage = "${infoLaguage}",
+			key_tagLanguage = "${dropdownTagLanguage}",
+			locator1 = "KaleoFormsAdminEditProcess#DROPDOWN_LANGUAGE");
+
+		Click(
+			key_locale = "${defaultLanguage}",
+			locator1 = "Translation#CURRENT_LOCALE_DESCRIPTION");
+
+		AssertElementPresent(
+			key_infoLaguage = "${infoLaguage}",
+			key_tagLanguage = "${dropdownTagLanguage}",
+			locator1 = "KaleoFormsAdminEditProcess#DROPDOWN_LANGUAGE");
 	}
 
 	macro viewSelectedWorkflow {
@@ -973,12 +1012,12 @@ definition {
 			value1 = "Unpublished");
 	}
 
-	macro workflowCannotBeUnpublish {
+	macro viewWorkflowCannotBeUnpublish {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Unpublish",
 			rowEntry = "${workflowDefinitionTitle}");
 
 		Alert.viewErrorMessage(errorMessage = "Unable to delete the workflow definition that is in use.");
 	}
-	
+
 }

@@ -82,14 +82,21 @@ public class PreviewCommerceOrderItemDataSetDataProvider
 		return TransformUtil.transform(
 			_commerceOrderImporterItems,
 			commerceOrderImporterItem -> {
-				CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+				String externalReferenceCode = StringPool.BLANK;
+
+				CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
 					commerceOrderImporterItem.getCPInstanceId());
+
+				if (cpInstance != null) {
+					externalReferenceCode =
+						cpInstance.getExternalReferenceCode();
+				}
 
 				CommerceOrderItemPrice commerceOrderItemPrice =
 					commerceOrderImporterItem.getCommerceOrderItemPrice();
 
 				return new PreviewOrderItem(
-					cpInstance.getExternalReferenceCode(),
+					externalReferenceCode,
 					_getImportStatus(commerceOrderImporterItem, locale),
 					_getCommerceOrderOptions(commerceOrderImporterItem, locale),
 					commerceOrderImporterItem.getName(locale),

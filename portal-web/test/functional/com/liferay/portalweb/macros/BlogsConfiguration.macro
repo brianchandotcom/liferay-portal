@@ -12,35 +12,25 @@ definition {
 			configurationScope = "Widget Scope");
 
 		if ("${displayStyle}" == "Abstract") {
-			Type(
-				key_fieldName = "displayStyle",
-				locator1 = "FormFields#TEXT_MULTILINE_FIELD",
-				value1 = "abstract");
+			var displayStyleKey = "abstract";
 		}
 		else if ("${displayStyle}" == "Full Content") {
-			Type(
-				key_fieldName = "displayStyle",
-				locator1 = "FormFields#TEXT_MULTILINE_FIELD",
-				value1 = "full-content");
+			var displayStyleKey = "full-content";
 		}
 		else if ("${displayStyle}" == "Title") {
-			Type(
-				key_fieldName = "displayStyle",
-				locator1 = "FormFields#TEXT_MULTILINE_FIELD",
-				value1 = "title");
+			var displayStyleKey = "title";
 		}
 		else if ("${displayStyle}" == "Basic") {
-			Type(
-				key_fieldName = "displayStyle",
-				locator1 = "FormFields#TEXT_MULTILINE_FIELD",
-				value1 = "ddmTemplate_BLOGS-BASIC-FTL");
+			var displayStyleKey = "ddmTemplate_BLOGS-BASIC-FTL";
 		}
 		else if ("${displayStyle}" == "Card") {
-			Type(
-				key_fieldName = "displayStyle",
-				locator1 = "FormFields#TEXT_MULTILINE_FIELD",
-				value1 = "ddmTemplate_BLOGS-CARD-FTL");
+			var displayStyleKey = "ddmTemplate_BLOGS-CARD-FTL";
 		}
+
+		Type(
+			key_fieldName = "displayStyle",
+			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+			value1 = "${displayStyleKey}");
 
 		Button.clickSave();
 	}

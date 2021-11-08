@@ -31,7 +31,6 @@
 				{
 					"fields": [
 						{
-							"defaultValue": "must",
 							"label": "Occur",
 							"name": "occur",
 							"options": [
@@ -52,12 +51,16 @@
 									"value": "filter"
 								}
 							],
-							"type": "select"
+							"uiType": "select",
+							"valueDefinition": {
+								"defaultValueString": "must",
+								"type": "String"
+							}
 						},
 						{
 							"label": "Query",
 							"name": "query",
-							"type": "json"
+							"uiType": "json"
 						}
 					]
 				}

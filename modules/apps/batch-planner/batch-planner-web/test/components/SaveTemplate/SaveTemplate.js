@@ -19,30 +19,16 @@ import {
 	render,
 	waitForElement,
 } from '@testing-library/react';
+import fetchMock from 'fetch-mock';
 import React from 'react';
 
 import SaveTemplate from '../../../src/main/resources/META-INF/resources/js/SaveTemplate';
 
 const INPUT_VALUE_TEST = 'test';
 const BASE_PROPS = {
-	formDataQuerySelector: 'form',
-	formSubmitURL: 'https://formUrl.test',
-	namespace: 'test',
-};
-
-window.Liferay = {
-	Language: {
-		get: (key) => {
-			let counter = 0;
-
-			return key.replace(new RegExp('(^x-)|(-x-)|(-x$)', 'gm'), (match) =>
-				match.replace('x', `{${counter++}}`)
-			);
-		},
-	},
-	ThemeDisplay: {
-		getBCP47LanguageId: () => 'en-US',
-	},
+	formSaveAsTemplateDataQuerySelector: 'form',
+	formSaveAsTemplateURL: 'https://formUrl.test',
+	portletNamespace: 'test',
 };
 
 describe('SaveTemplateModal', () => {
@@ -56,7 +42,10 @@ describe('SaveTemplateModal', () => {
 		document.body.appendChild(form);
 	});
 
-	afterEach(cleanup);
+	afterEach(() => {
+		fetchMock.restore();
+		cleanup();
+	});
 
 	it('must render save template button', () => {
 		const {getByText} = render(<SaveTemplate {...BASE_PROPS} />);
@@ -91,6 +80,55 @@ describe('SaveTemplateModal', () => {
 			);
 
 			expect(saveButton).toBeDisabled();
+		});
+
+		it('must has button enabled if text input provided', async () => {
+			const testName = 'test';
+			const {getByPlaceholderText, getByText} = render(
+				<SaveTemplate {...BASE_PROPS} />
+			);
+
+			fireEvent.click(
+				getByText(Liferay.Language.get('save-as-template'))
+			);
+
+			await waitForElement(() => getByText(Liferay.Language.get('save')));
+
+			fireEvent.change(
+				getByPlaceholderText(Liferay.Language.get('template-name')),
+				{target: {value: testName}}
+			);
+
+			expect(getByText(Liferay.Language.get('save'))).not.toBeDisabled();
+		});
+
+		it('must call api with form data and add the input field data', async () => {
+			const mockedApi = fetchMock.mock(
+				BASE_PROPS.formSaveAsTemplateURL,
+				() => {
+					return {test: 'test'};
+				}
+			);
+
+			const testName = 'test';
+			const {getByPlaceholderText, getByText} = render(
+				<SaveTemplate {...BASE_PROPS} />
+			);
+
+			fireEvent.click(
+				getByText(Liferay.Language.get('save-as-template'))
+			);
+
+			await waitForElement(() => getByText(Liferay.Language.get('save')));
+
+			fireEvent.change(
+				getByPlaceholderText(Liferay.Language.get('template-name')),
+				{target: {value: testName}}
+			);
+
+			fireEvent.click(getByText(Liferay.Language.get('save')));
+
+			expect(mockedApi.called()).toBe(true);
 		});
 	});
 });

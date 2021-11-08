@@ -14,13 +14,14 @@
 
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
+import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import SaveTemplateModal from './SaveTemplateModal';
+import ExportModal from './ExportModal';
 
-function SaveTemplate({
-	formSaveAsTemplateDataQuerySelector,
-	formSaveAsTemplateURL,
+function Export({
+	formExportDataQuerySelector,
+	formExportURL,
 	portletNamespace,
 }) {
 	const [disable, setDisable] = useState(true);
@@ -28,9 +29,13 @@ function SaveTemplate({
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false),
 	});
-	const onButtonClick = useCallback(() => {
-		setVisible(true);
-	}, [setVisible]);
+	const onButtonClick = useCallback(
+		(event) => {
+			event.preventDefault();
+			setVisible(true);
+		},
+		[setVisible]
+	);
 
 	useEffect(() => {
 		const externalInput = document.querySelector(
@@ -57,22 +62,22 @@ function SaveTemplate({
 	}, [portletNamespace]);
 
 	return (
-		<span className="mr-3">
+		<span>
 			<ClayButton
 				disabled={disable}
-				displayType="secondary"
+				displayType="primary"
 				id={`${portletNamespace}saveTemplate`}
 				onClick={onButtonClick}
-				type="button"
+				type="submit"
 			>
-				{Liferay.Language.get('save-as-template')}
+				{Liferay.Language.get('export')}
 			</ClayButton>
 
 			{visible && (
-				<SaveTemplateModal
+				<ExportModal
 					closeModal={onClose}
-					formDataQuerySelector={formSaveAsTemplateDataQuerySelector}
-					formSubmitURL={formSaveAsTemplateURL}
+					formDataQuerySelector={formExportDataQuerySelector}
+					formSubmitURL={formExportURL}
 					namespace={portletNamespace}
 					observer={observer}
 				/>
@@ -81,4 +86,10 @@ function SaveTemplate({
 	);
 }
 
-export default SaveTemplate;
+Export.propTypes = {
+	formExportDataQuerySelector: PropTypes.string.isRequired,
+	formExportURL: PropTypes.string.isRequired,
+	portletNamespace: PropTypes.string.isRequired,
+};
+
+export default Export;

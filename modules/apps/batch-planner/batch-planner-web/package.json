@@ -13,5 +13,9 @@
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test"
 	},
+	"jest": {
+		"setupFiles": ["<rootDir>test/setup.js"],
+		"testPathIgnorePatterns": ["setup.js"]
+	},
 	"version": "1.0.13"
 }

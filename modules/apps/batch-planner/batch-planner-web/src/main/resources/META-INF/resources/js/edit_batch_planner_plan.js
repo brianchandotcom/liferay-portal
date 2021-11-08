@@ -19,13 +19,6 @@ const HEADERS = new Headers({
 	'x-csrf-token': window.Liferay.authToken,
 });
 
-function enableButtons() {
-	const buttons = document.querySelectorAll('form button');
-	buttons.forEach((button) => {
-		button.removeAttribute('disabled');
-	});
-}
-
 function getOptionElement(label, schemaName, value) {
 	const optionElement = document.createElement('option');
 
@@ -104,16 +97,14 @@ export default function ({namespace}) {
 			});
 
 			internalClassNameSelect.disabled = false;
-		}
-		catch (error) {
+		} catch (error) {
 			openToast({
 				message: Liferay.Language.get('your-request-has-failed'),
 				type: 'danger',
 			});
 
 			console.error('Failed to fetch ' + error);
-		}
-		finally {
+		} finally {
 			event.target.disabled = false;
 		}
 	});
@@ -164,10 +155,7 @@ export default function ({namespace}) {
 			Liferay.fire('schema-selected', {
 				schema: schemaEntry.properties,
 			});
-
-			enableButtons();
-		}
-		catch (error) {
+		} catch (error) {
 			openToast({
 				message: Liferay.Language.get('your-request-has-failed'),
 				type: 'danger',

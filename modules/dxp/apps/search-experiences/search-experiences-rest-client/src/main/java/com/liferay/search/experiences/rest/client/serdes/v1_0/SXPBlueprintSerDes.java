@@ -79,6 +79,16 @@ public class SXPBlueprintSerDes {
 			sb.append("\"");
 		}
 
+		if (sxpBlueprint.getDescription_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description_i18n\": ");
+
+			sb.append(_toJSON(sxpBlueprint.getDescription_i18n()));
+		}
+
 		if (sxpBlueprint.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -101,6 +111,16 @@ public class SXPBlueprintSerDes {
 			sb.append(_escape(sxpBlueprint.getTitle()));
 
 			sb.append("\"");
+		}
+
+		if (sxpBlueprint.getTitle_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"title_i18n\": ");
+
+			sb.append(_toJSON(sxpBlueprint.getTitle_i18n()));
 		}
 
 		sb.append("}");
@@ -139,6 +159,15 @@ public class SXPBlueprintSerDes {
 				"description", String.valueOf(sxpBlueprint.getDescription()));
 		}
 
+		if (sxpBlueprint.getDescription_i18n() == null) {
+			map.put("description_i18n", null);
+		}
+		else {
+			map.put(
+				"description_i18n",
+				String.valueOf(sxpBlueprint.getDescription_i18n()));
+		}
+
 		if (sxpBlueprint.getId() == null) {
 			map.put("id", null);
 		}
@@ -151,6 +180,13 @@ public class SXPBlueprintSerDes {
 		}
 		else {
 			map.put("title", String.valueOf(sxpBlueprint.getTitle()));
+		}
+
+		if (sxpBlueprint.getTitle_i18n() == null) {
+			map.put("title_i18n", null);
+		}
+		else {
+			map.put("title_i18n", String.valueOf(sxpBlueprint.getTitle_i18n()));
 		}
 
 		return map;
@@ -186,6 +222,13 @@ public class SXPBlueprintSerDes {
 					sxpBlueprint.setDescription((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
+				if (jsonParserFieldValue != null) {
+					sxpBlueprint.setDescription_i18n(
+						(Map)SXPBlueprintSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					sxpBlueprint.setId(
@@ -195,6 +238,13 @@ public class SXPBlueprintSerDes {
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
 					sxpBlueprint.setTitle((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title_i18n")) {
+				if (jsonParserFieldValue != null) {
+					sxpBlueprint.setTitle_i18n(
+						(Map)SXPBlueprintSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

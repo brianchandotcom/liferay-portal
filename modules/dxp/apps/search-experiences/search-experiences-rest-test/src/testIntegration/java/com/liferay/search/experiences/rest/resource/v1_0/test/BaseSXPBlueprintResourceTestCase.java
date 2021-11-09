@@ -540,8 +540,24 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description_i18n", additionalAssertFieldName)) {
+				if (sxpBlueprint.getDescription_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (sxpBlueprint.getTitle() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("title_i18n", additionalAssertFieldName)) {
+				if (sxpBlueprint.getTitle_i18n() == null) {
 					valid = false;
 				}
 
@@ -663,6 +679,17 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description_i18n", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)sxpBlueprint1.getDescription_i18n(),
+						(Map)sxpBlueprint2.getDescription_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sxpBlueprint1.getId(), sxpBlueprint2.getId())) {
@@ -676,6 +703,17 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sxpBlueprint1.getTitle(), sxpBlueprint2.getTitle())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("title_i18n", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)sxpBlueprint1.getTitle_i18n(),
+						(Map)sxpBlueprint2.getTitle_i18n())) {
 
 					return false;
 				}
@@ -793,6 +831,11 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("description_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -804,6 +847,11 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("title_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(

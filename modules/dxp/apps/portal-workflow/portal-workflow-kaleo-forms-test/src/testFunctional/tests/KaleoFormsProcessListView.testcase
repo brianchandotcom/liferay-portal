@@ -111,7 +111,6 @@ definition {
 			workflowTask = "created");
 
 		KaleoFormsAdmin.viewExportRecords(kfProcessName = "Kaleo Forms Process");
-
 	}
 
 	@description = "Verify that the user is able to order by Create Date."

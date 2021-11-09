@@ -649,6 +649,16 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
+	macro viewExportRecords {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Export",
+			rowEntry = "${kfProcessName}");
+
+		AssertElementPresent(locator1 = "KaleoFormsAdminViewProcessRecords#EXPORT_TABLE_MODAL");
+
+		AssertElementPresent(locator1 = "KaleoFormsAdminViewProcessRecords#EXPORT_DIALOG_BOX_FILE_EXTENSION_SELECT");
+	}
+
 	macro viewFieldRequired {
 		if ("${progressTitle}" == "Details") {
 			KaleoFormsAdmin.viewNewProcessProgressBar(
@@ -1040,16 +1050,6 @@ definition {
 			rowEntry = "${workflowDefinitionTitle}");
 
 		Alert.viewErrorMessage(errorMessage = "Unable to delete the workflow definition that is in use.");
-	}
-
-	macro viewExportRecords {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Export",
-			rowEntry = "${kfProcessName}");
-		
-		AssertElementPresent(locator1 = "KaleoFormsAdminViewProcessRecords#EXPORT_TABLE_MODAL");
-
-		AssertElementPresent(locator1 = "KaleoFormsAdminViewProcessRecords#EXPORT_DIALOG_BOX_FILE_EXTENSION_SELECT");
 	}
 
 }

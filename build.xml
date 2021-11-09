@@ -935,7 +935,10 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			<arg line="checkout refs/heads/master-private -- working.dir.properties" />
 		</exec>
 
-		<move file="git-clone-profile-dxp/working.dir.properties" todir="." />
+		<move
+			file="git-clone-profile-dxp/working.dir.properties"
+			todir="."
+		/>
 
 		<setup-profile-dxp
 			to.branch.name="${git.working.branch.name}-private"

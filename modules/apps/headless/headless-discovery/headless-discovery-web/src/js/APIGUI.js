@@ -26,6 +26,10 @@ import apiFetch from './util/apiFetch';
 import 'graphiql/graphiql.css';
 
 const APIGUI = () => {
+	const contextPath = window.location.pathname.substring(
+		0,
+		window.location.pathname.indexOf('/o/')
+	);
 	const urlParams = new URLSearchParams(window.location.search);
 
 	const [active, setActive] = useState(false);
@@ -46,25 +50,25 @@ const APIGUI = () => {
 	};
 
 	useEffect(() => {
-		apiFetch('/o/openapi', 'get', {}).then((response) => {
+		apiFetch(contextPath + '/o/openapi', 'get', {}).then((response) => {
 			setEndpoints(
 				Object.keys(response)
 					.flatMap((key) => response[key])
 					.map((url) => url.replace('openapi.yaml', 'openapi.json'))
 			);
 		});
-	}, []);
+	}, [contextPath]);
 
 	const graphQLFetcher = useCallback(
 		(graphQLParams) =>
 			apiFetch(
-				'/o/graphql',
+				contextPath + '/o/graphql',
 				'post',
 				graphQLParams,
 				'application/json',
 				headers
 			),
-		[headers]
+		[contextPath, headers]
 	);
 
 	const requestInterceptor = (req) => {

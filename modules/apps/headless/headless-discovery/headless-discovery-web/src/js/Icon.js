@@ -15,10 +15,16 @@
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
+const contextPath = window.location.pathname.substring(
+	0,
+	window.location.pathname.indexOf('/o/')
+);
+
 export const spritemap =
 	window.location.protocol +
 	'//' +
 	window.location.host +
+	contextPath +
 	'/o/classic-theme/images/clay/icons.svg';
 
 const Icon = (props) => {

@@ -55,6 +55,27 @@ public class Field implements Cloneable, Serializable {
 
 	protected Boolean boost;
 
+	public FieldMapping[] getFieldMappings() {
+		return fieldMappings;
+	}
+
+	public void setFieldMappings(FieldMapping[] fieldMappings) {
+		this.fieldMappings = fieldMappings;
+	}
+
+	public void setFieldMappings(
+		UnsafeSupplier<FieldMapping[], Exception> fieldMappingsUnsafeSupplier) {
+
+		try {
+			fieldMappings = fieldMappingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FieldMapping[] fieldMappings;
+
 	public String getHelpText() {
 		return helpText;
 	}

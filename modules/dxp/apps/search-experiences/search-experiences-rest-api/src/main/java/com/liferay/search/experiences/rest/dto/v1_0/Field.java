@@ -86,6 +86,35 @@ public class Field implements Serializable {
 	protected Boolean boost;
 
 	@Schema
+	@Valid
+	public FieldMapping[] getFieldMappings() {
+		return fieldMappings;
+	}
+
+	public void setFieldMappings(FieldMapping[] fieldMappings) {
+		this.fieldMappings = fieldMappings;
+	}
+
+	@JsonIgnore
+	public void setFieldMappings(
+		UnsafeSupplier<FieldMapping[], Exception> fieldMappingsUnsafeSupplier) {
+
+		try {
+			fieldMappings = fieldMappingsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected FieldMapping[] fieldMappings;
+
+	@Schema
 	public String getHelpText() {
 		return helpText;
 	}
@@ -399,6 +428,26 @@ public class Field implements Serializable {
 			sb.append("\"boost\": ");
 
 			sb.append(boost);
+		}
+
+		if (fieldMappings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fieldMappings\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < fieldMappings.length; i++) {
+				sb.append(String.valueOf(fieldMappings[i]));
+
+				if ((i + 1) < fieldMappings.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (helpText != null) {

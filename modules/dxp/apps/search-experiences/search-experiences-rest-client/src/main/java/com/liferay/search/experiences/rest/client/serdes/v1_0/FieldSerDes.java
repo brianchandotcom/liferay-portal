@@ -15,6 +15,7 @@
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
 import com.liferay.search.experiences.rest.client.dto.v1_0.Field;
+import com.liferay.search.experiences.rest.client.dto.v1_0.FieldMapping;
 import com.liferay.search.experiences.rest.client.dto.v1_0.Option;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
@@ -63,6 +64,26 @@ public class FieldSerDes {
 			sb.append("\"boost\": ");
 
 			sb.append(field.getBoost());
+		}
+
+		if (field.getFieldMappings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fieldMappings\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < field.getFieldMappings().length; i++) {
+				sb.append(String.valueOf(field.getFieldMappings()[i]));
+
+				if ((i + 1) < field.getFieldMappings().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (field.getHelpText() != null) {
@@ -224,6 +245,13 @@ public class FieldSerDes {
 			map.put("boost", String.valueOf(field.getBoost()));
 		}
 
+		if (field.getFieldMappings() == null) {
+			map.put("fieldMappings", null);
+		}
+		else {
+			map.put("fieldMappings", String.valueOf(field.getFieldMappings()));
+		}
+
 		if (field.getHelpText() == null) {
 			map.put("helpText", null);
 		}
@@ -318,6 +346,18 @@ public class FieldSerDes {
 			if (Objects.equals(jsonParserFieldName, "boost")) {
 				if (jsonParserFieldValue != null) {
 					field.setBoost((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fieldMappings")) {
+				if (jsonParserFieldValue != null) {
+					field.setFieldMappings(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> FieldMappingSerDes.toDTO((String)object)
+						).toArray(
+							size -> new FieldMapping[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "helpText")) {

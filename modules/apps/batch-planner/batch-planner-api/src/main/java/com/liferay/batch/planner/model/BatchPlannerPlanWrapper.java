@@ -175,6 +175,13 @@ public class BatchPlannerPlanWrapper
 		return model.getActive();
 	}
 
+	@Override
+	public BatchPlannerLog getBatchPlannerLog()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getBatchPlannerLog();
+	}
+
 	/**
 	 * Returns the batch planner plan ID of this batch planner plan.
 	 *

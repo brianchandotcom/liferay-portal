@@ -541,6 +541,27 @@ public class Product implements Cloneable, Serializable {
 
 	protected String urlImage;
 
+	public Map<String, String> getUrls() {
+		return urls;
+	}
+
+	public void setUrls(Map<String, String> urls) {
+		this.urls = urls;
+	}
+
+	public void setUrls(
+		UnsafeSupplier<Map<String, String>, Exception> urlsUnsafeSupplier) {
+
+		try {
+			urls = urlsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> urls;
+
 	@Override
 	public Product clone() throws CloneNotSupportedException {
 		return (Product)super.clone();

@@ -815,6 +815,14 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("urls", additionalAssertFieldName)) {
+				if (product.getUrls() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1159,6 +1167,14 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("urls", additionalAssertFieldName)) {
+				if (!equals((Map)product1.getUrls(), (Map)product2.getUrls())) {
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1453,6 +1469,11 @@ public abstract class BaseProductResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("urls")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(

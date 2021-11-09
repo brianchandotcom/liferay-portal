@@ -745,6 +745,35 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String urlImage;
 
+	@Schema
+	@Valid
+	public Map<String, String> getUrls() {
+		return urls;
+	}
+
+	public void setUrls(Map<String, String> urls) {
+		this.urls = urls;
+	}
+
+	@JsonIgnore
+	public void setUrls(
+		UnsafeSupplier<Map<String, String>, Exception> urlsUnsafeSupplier) {
+
+		try {
+			urls = urlsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Map<String, String> urls;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -1141,6 +1170,16 @@ public class Product implements Serializable {
 			sb.append(_escape(urlImage));
 
 			sb.append("\"");
+		}
+
+		if (urls != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"urls\": ");
+
+			sb.append(_toJSON(urls));
 		}
 
 		sb.append("}");

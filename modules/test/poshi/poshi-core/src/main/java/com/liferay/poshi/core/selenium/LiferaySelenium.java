@@ -234,8 +234,6 @@ public interface LiferaySelenium {
 
 	public String getSikuliImagesDirName();
 
-	public String getTestBaseDirName();
-
 	public String getTestDependenciesDirName();
 
 	public String getTestName();

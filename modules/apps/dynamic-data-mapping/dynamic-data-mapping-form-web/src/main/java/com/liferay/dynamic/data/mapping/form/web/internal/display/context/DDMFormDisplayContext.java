@@ -585,6 +585,21 @@ public class DDMFormDisplayContext {
 		return ParamUtil.getBoolean(_renderRequest, "shared");
 	}
 
+	public boolean isLimitToOneSubmissionPerUserEnabled()
+		throws PortalException {
+
+		DDMFormInstance ddmFormInstance = getFormInstance();
+
+		if (ddmFormInstance == null) {
+			return false;
+		}
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			ddmFormInstance.getSettingsModel();
+
+		return ddmFormInstanceSettings.limitToOneSubmissionPerUser();
+	}
+
 	public boolean isPreview() throws PortalException {
 		ThemeDisplay themeDisplay = getThemeDisplay();
 

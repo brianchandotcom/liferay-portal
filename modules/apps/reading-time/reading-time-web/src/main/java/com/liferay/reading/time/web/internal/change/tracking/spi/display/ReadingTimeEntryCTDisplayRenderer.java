@@ -40,7 +40,7 @@ public class ReadingTimeEntryCTDisplayRenderer
 	}
 
 	@Override
-	public boolean isHideable(ReadingTimeEntry model) {
+	public boolean isHideable(ReadingTimeEntry readingTimeEntry) {
 		return true;
 	}
 

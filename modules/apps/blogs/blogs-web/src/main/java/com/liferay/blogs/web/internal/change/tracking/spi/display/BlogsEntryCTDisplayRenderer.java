@@ -50,10 +50,9 @@ public class BlogsEntryCTDisplayRenderer
 
 	@Override
 	public String getContent(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Locale locale,
-			BlogsEntry blogsEntry)
-		throws Exception {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Locale locale,
+		BlogsEntry blogsEntry) {
 
 		return blogsEntry.getContent();
 	}

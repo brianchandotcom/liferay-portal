@@ -74,6 +74,17 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 					</div>
 				</div>
 			</c:when>
+			<c:when test="<%= ddmFormDisplayContext.hasSubmittedAnEntry() && !ddmFormDisplayContext.isPreview() %>">
+				<div class="portlet-forms">
+					<div class="ddm-form-basic-info">
+						<clay:container-fluid>
+							<h1 class="ddm-form-name"><%= LanguageUtil.get(request, "you-have-already-responded") %></h1>
+
+							<p class="ddm-form-description"><%= LanguageUtil.get(request, "you-can-fill-out-this-form-only-once.-contact-the-owner-of-the-form-if-you-think-this-is-a-mistake") %></p>
+						</clay:container-fluid>
+					</div>
+				</div>
+			</c:when>
 			<c:when test="<%= ddmFormDisplayContext.isFormAvailable() %>">
 				<portlet:actionURL name="/dynamic_data_mapping_form/add_form_instance_record" var="addFormInstanceRecordActionURL" />
 

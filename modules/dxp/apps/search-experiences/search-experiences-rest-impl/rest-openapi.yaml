@@ -329,6 +329,15 @@ components:
                         type: string
                     type: object
             type: object
+        SXPParameterContributorDefinition:
+            properties:
+                className:
+                  type: string
+                description:
+                  type: string
+                templateVariable:
+                  type: string
+            type: object
         SearchRequest:
             properties:
                 queryString:
@@ -831,3 +840,21 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SXPElement"
             tags: ["SXPElement"]
+    /sxp-parameter-contributor-definitions:
+        get:
+            operationId: getSXPParameterContributorDefinitionsPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SXPParameterContributorDefinition"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SXPParameterContributorDefinition"
+                                type: array
+            tags: ["SXPParameterContributorDefinition"]
+            

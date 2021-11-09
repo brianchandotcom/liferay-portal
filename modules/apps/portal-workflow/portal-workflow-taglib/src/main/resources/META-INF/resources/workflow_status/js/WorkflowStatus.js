@@ -17,6 +17,8 @@ import React from 'react';
 import ModelInfo from './components/model-info/ModelInfo';
 import StatusLabel from './components/status-label/StatusLabel';
 
+import '../css/main.scss';
+
 export default function WorkflowStatus({
 	id,
 	idLabel,

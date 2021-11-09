@@ -1,0 +1,60 @@
+.modal-full-screen {
+	display: flex;
+	justify-content: center;
+
+	.modal-body {
+		overflow: hidden;
+		padding: 0;
+	}
+}
+
+@media screen and (min-width: 1700px) {
+	.modal-full-screen {
+		.modal-content,
+		.modal-body {
+			width: 1500px;
+		}
+
+		.modal-body {
+			height: 676px;
+		}
+
+		.modal-content {
+			height: 740px;
+		}
+	}
+}
+
+@media screen and (min-width: 1280px) and (max-width: 1699px) {
+	.modal-full-screen {
+		.modal-content,
+		.modal-body {
+			width: 1050px;
+		}
+
+		.modal-body {
+			height: 590px;
+		}
+
+		.modal-content {
+			height: 654px;
+		}
+	}
+}
+
+@media screen and (min-width: 992px) and (max-width: 1279px) {
+	.modal-full-screen {
+		.modal-content,
+		.modal-body {
+			width: 700px;
+		}
+
+		.modal-body {
+			height: 573px;
+		}
+
+		.modal-content {
+			height: 637px;
+		}
+	}
+}

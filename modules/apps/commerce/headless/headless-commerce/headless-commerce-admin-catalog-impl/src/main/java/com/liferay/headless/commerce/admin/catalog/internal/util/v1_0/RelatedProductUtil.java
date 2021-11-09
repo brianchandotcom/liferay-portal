@@ -15,15 +15,12 @@
 package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
-import com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.RelatedProduct;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,29 +36,6 @@ public class RelatedProductUtil {
 			RelatedProduct relatedProduct, long cpDefinitionId,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		try {
-			CPDefinitionLink cpDefinitionLink =
-				cpDefinitionLinkService.getCPDefinitionLink(
-					relatedProduct.getId());
-
-			return cpDefinitionLinkService.updateCPDefinitionLink(
-				relatedProduct.getId(),
-				GetterUtil.get(
-					relatedProduct.getPriority(),
-					cpDefinitionLink.getPriority()),
-				serviceContext);
-		}
-		catch (NoSuchCPDefinitionLinkException
-					noSuchCPDefinitionLinkException) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to find relatedProduct with ID: " +
-						relatedProduct.getId(),
-					noSuchCPDefinitionLinkException);
-			}
-		}
 
 		CPDefinition cpDefinition = null;
 
@@ -91,13 +65,28 @@ public class RelatedProductUtil {
 			}
 		}
 
-		return cpDefinitionLinkService.addCPDefinitionLink(
-			cpDefinitionId, cpDefinition.getCProductId(),
-			GetterUtil.get(relatedProduct.getPriority(), 0D),
-			relatedProduct.getType(), serviceContext);
-	}
+		CPDefinitionLink cpDefinitionLink =
+			cpDefinitionLinkService.fetchCPDefinitionLink(
+				cpDefinitionId, cpDefinition.getCProductId(),
+				relatedProduct.getType());
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		RelatedProductUtil.class);
+		if (relatedProduct.getId() != null) {
+			cpDefinitionLink = cpDefinitionLinkService.fetchCPDefinitionLink(
+				relatedProduct.getId());
+		}
+
+		if (cpDefinitionLink == null) {
+			return cpDefinitionLinkService.addCPDefinitionLink(
+				cpDefinitionId, cpDefinition.getCProductId(),
+				GetterUtil.get(relatedProduct.getPriority(), 0D),
+				relatedProduct.getType(), serviceContext);
+		}
+
+		return cpDefinitionLinkService.updateCPDefinitionLink(
+			cpDefinitionLink.getCPDefinitionLinkId(),
+			GetterUtil.get(
+				relatedProduct.getPriority(), cpDefinitionLink.getPriority()),
+			serviceContext);
+	}
 
 }

@@ -454,7 +454,7 @@ definition {
 	test CannotViewPrivatePageAsUserWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WidgetPagesUseCase#PrivatePageVisibleToAssignedRole";
+		property test.name.skip.portal.instance = "WidgetPagesUseCase#CannotViewPrivatePageAsUserWithoutPermissions";
 		property testray.component.names = "Permissions,Roles,Training";
 
 		task ("Add a private widget page") {
@@ -523,9 +523,7 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
 
-			AssertElementNotPresent(
-				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Not Found");
+			AssertTextNotPresent(value1 = "The requested resource could not be found");
 		}
 
 		task ("Sign in as Test Test") {
@@ -559,9 +557,7 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Home");
 
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Not Found");
+			AssertTextNotPresent(value1 = "The requested resource could not be found");
 		}
 	}
 

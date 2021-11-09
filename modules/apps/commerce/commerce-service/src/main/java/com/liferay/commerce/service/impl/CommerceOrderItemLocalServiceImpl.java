@@ -1578,17 +1578,17 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
-		_updateBookedQuantity(
-			serviceContext.getUserId(), commerceOrderItem,
-			commerceOrderItem.getBookedQuantityId(), quantity,
-			commerceOrderItem.getQuantity());
-
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
 		validate(
 			serviceContext.getLocale(), commerceOrder,
 			commerceOrderItem.getCPDefinition(),
 			commerceOrderItem.fetchCPInstance(), quantity);
+
+		_updateBookedQuantity(
+			serviceContext.getUserId(), commerceOrderItem,
+			commerceOrderItem.getBookedQuantityId(), quantity,
+			commerceOrderItem.getQuantity());
 
 		updateWorkflow(commerceOrder, serviceContext);
 

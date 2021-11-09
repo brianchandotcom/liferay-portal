@@ -14,9 +14,14 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinitionProvider;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPParameterContributorDefinition;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPParameterContributorDefinitionResource;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -29,4 +34,36 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class SXPParameterContributorDefinitionResourceImpl
 	extends BaseSXPParameterContributorDefinitionResourceImpl {
+
+	@Override
+	public Page<SXPParameterContributorDefinition>
+			getSXPParameterContributorDefinitionsPage()
+		throws Exception {
+
+		return Page.of(
+			transform(
+				_sxpParameterContributorDefinitionProvider.
+					getSXPParameterContributorDefinitions(
+						contextCompany.getCompanyId()),
+				sxpParameterContributorDefinition ->
+					new SXPParameterContributorDefinition() {
+						{
+							className =
+								sxpParameterContributorDefinition.
+									getClassName();
+							description = LanguageUtil.get(
+								contextAcceptLanguage.getPreferredLocale(),
+								sxpParameterContributorDefinition.
+									getLanguageKey());
+							templateVariable =
+								sxpParameterContributorDefinition.
+									getTemplateVariable();
+						}
+					}));
+	}
+
+	@Reference
+	private SXPParameterContributorDefinitionProvider
+		_sxpParameterContributorDefinitionProvider;
+
 }

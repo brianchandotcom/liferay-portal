@@ -1103,7 +1103,7 @@ definition {
 		}
 
 		task ("Assert pagination can be changed and correct entries and amount are displayed") {
-			for (var listEntries : list "4,8,20,60") {
+			for (var listEntries : list "4,8,20") {
 				Pagination.changePagination(itemsPerPage = "${listEntries}");
 
 				if ("${listEntries}" == "4") {
@@ -1828,6 +1828,113 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Person Account");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Business Account");
+	}
+
+	@description = "This test asserts that users are correctly filtered by First Name, Last Name, and Email Address in the Assign Users Modal"
+	@priority = "4"
+	test CanFilterAndOrderUsersInAssignUsersModal {
+		task ("Add an account and add 3 different users with varying names and email addresses") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Business Account",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Business Account");
+
+			Accounts.addNewUserToBusinessAccount(
+				accountName = "Business Account",
+				assigneeName = "A-user",
+				userEmailAddress = "Z-ea@liferay.com",
+				userFirstName = "A-user",
+				userLastName = "userln2",
+				userScreenName = "A-user");
+
+			Accounts.addNewUserToBusinessAccount(
+				accountName = "Business Account",
+				assigneeName = "B-user",
+				userEmailAddress = "Y-ea@liferay.com",
+				userFirstName = "B-user",
+				userLastName = "userln3",
+				userScreenName = "B-user");
+
+			Accounts.addNewUserToBusinessAccount(
+				accountName = "Business Account",
+				assigneeName = "C-user",
+				userEmailAddress = "X-ea@liferay.com",
+				userFirstName = "C-user",
+				userLastName = "userln1",
+				userScreenName = "C-user");
+		}
+
+		task ("Open and click into the Assign Users Modal") {
+			LexiconEntry.gotoAdd();
+
+			WaitForElementPresent(
+				key_title = "Assign Users to Business Account",
+				locator1 = "IFrame#MODAL_ANY");
+
+			SelectFrame(
+				key_title = "Assign Users to Business Account",
+				locator1 = "IFrame#MODAL_ANY");
+		}
+
+		task ("Assert users can be ordered by First Name and are in correct order") {
+			ManagementBar.setFilterAndOrder(orderBy = "First Name");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "A-user");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "2",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "B-user");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "3",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "C-user");
+		}
+
+		task ("Assert users can be ordered by Last Name and are in correct order") {
+			ManagementBar.setFilterAndOrder(orderBy = "Last Name");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "userln1");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "2",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "userln2");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "3",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "userln3");
+		}
+
+		task ("Assert users can be ordered by Email Address and are in correct order") {
+			ManagementBar.setFilterAndOrder(orderBy = "Email Address");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "x-ea@liferay.com");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "2",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "y-ea@liferay.com");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "3",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "z-ea@liferay.com");
+		}
 	}
 
 	@description = "This asserts that filter in setting default shipping will not change to billing and that billing addresses do not display as options."

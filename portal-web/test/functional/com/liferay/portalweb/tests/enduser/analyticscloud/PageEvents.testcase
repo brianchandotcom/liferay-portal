@@ -618,15 +618,15 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		task ("View the pageLoadTime of pageLoaded event is less than 1500ms") {
+		task ("View the pageLoadTime of pageLoaded event is greater than 0 ms") {
 			var pageLoadTime = ACUtils.getEventPropertyValue(
 				applicationId = "Page",
 				eventId = "pageLoaded",
 				property = "pageLoadTime");
 
-			TestUtils.isLessThan(
+			TestUtils.isGreaterThan(
 				actual = "${pageLoadTime}",
-				expected = "1500");
+				expected = "0");
 		}
 
 		task ("View the request common properties value") {

@@ -110,12 +110,14 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 				_portletLocalService.loadGetPortletsMap(
 					company1.getCompanyId());
 
-			Assert.assertTrue(portlets.containsKey("companyPortlet"));
+			Assert.assertTrue(
+				portlets.toString(), portlets.containsKey("companyPortlet"));
 
 			portlets = _portletLocalService.loadGetPortletsMap(
 				company2.getCompanyId());
 
-			Assert.assertFalse(portlets.containsKey("companyPortlet"));
+			Assert.assertFalse(
+				portlets.toString(), portlets.containsKey("companyPortlet"));
 		}
 		finally {
 			for (ServiceRegistration<?> serviceRegistration :
@@ -166,12 +168,14 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 				_portletLocalService.loadGetPortletsMap(
 					company1.getCompanyId());
 
-			Assert.assertTrue(portlets.containsKey("companyPortlet"));
+			Assert.assertTrue(
+				portlets.toString(), portlets.containsKey("companyPortlet"));
 
 			portlets = _portletLocalService.loadGetPortletsMap(
 				company2.getCompanyId());
 
-			Assert.assertFalse(portlets.containsKey("companyPortlet"));
+			Assert.assertFalse(
+				portlets.toString(), portlets.containsKey("companyPortlet"));
 		}
 		finally {
 			for (ServiceRegistration<?> serviceRegistration :

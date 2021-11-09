@@ -705,9 +705,10 @@ definition {
 			layoutName = "Blogs Page",
 			siteURLKey = "guest");
 
-		AssertTextEquals(
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION",
-			value1 = "!@#$%^&*()");
+		BlogsEntry.viewEntryPG(
+			entryCaption = "!@#$%^&*()",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This test covers LPS-106613. It ensures that the custom abstract can be added and edited."

@@ -1028,6 +1028,12 @@ definition {
 			}
 		}
 
+		if (isSet(entryCaption)) {
+			AssertTextEquals(
+				locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION",
+				value1 = "${entryCaption}");
+		}
+
 		if (isSet(entryContent)) {
 			var key_entryContent = "${entryContent}";
 

@@ -157,8 +157,10 @@ public class BundleSiteInitializerTest {
 					serviceContext.getCompanyId(),
 					"C_TestBundleSiteInitializer");
 
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition.getObjectDefinitionId());
+			if (objectDefinition != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition.getObjectDefinitionId());
+			}
 		}
 
 		bundle.uninstall();

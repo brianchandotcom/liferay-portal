@@ -23,6 +23,7 @@ import com.liferay.search.experiences.rest.resource.v1_0.ModelPrefilterContribut
 import com.liferay.search.experiences.rest.resource.v1_0.QueryPrefilterContributorResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
+import com.liferay.search.experiences.rest.resource.v1_0.SXPParameterContributorDefinitionResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameDisplayResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameResource;
@@ -65,6 +66,9 @@ public class ServletDataImpl implements ServletData {
 			_sxpBlueprintResourceComponentServiceObjects);
 		Query.setSXPElementResourceComponentServiceObjects(
 			_sxpElementResourceComponentServiceObjects);
+		Query.
+			setSXPParameterContributorDefinitionResourceComponentServiceObjects(
+				_sxpParameterContributorDefinitionResourceComponentServiceObjects);
 		Query.setSearchableAssetNameResourceComponentServiceObjects(
 			_searchableAssetNameResourceComponentServiceObjects);
 		Query.setSearchableAssetNameDisplayResourceComponentServiceObjects(
@@ -113,6 +117,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<QueryPrefilterContributorResource>
 		_queryPrefilterContributorResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SXPParameterContributorDefinitionResource>
+		_sxpParameterContributorDefinitionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SearchableAssetNameResource>

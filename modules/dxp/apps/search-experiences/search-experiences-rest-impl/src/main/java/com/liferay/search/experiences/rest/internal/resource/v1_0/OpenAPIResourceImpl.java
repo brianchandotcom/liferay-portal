@@ -92,6 +92,8 @@ public class OpenAPIResourceImpl {
 
 			add(SXPElementResourceImpl.class);
 
+			add(SXPParameterContributorDefinitionResourceImpl.class);
+
 			add(SearchResponseResourceImpl.class);
 
 			add(SearchableAssetNameResourceImpl.class);

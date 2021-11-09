@@ -16,6 +16,7 @@ package com.liferay.batch.planner.web.internal.portlet.action;
 
 import com.liferay.batch.planner.batch.engine.broker.BatchEngineBroker;
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
+import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerMappingService;
@@ -63,7 +64,7 @@ public class EditExportBatchPlannerPlanMVCResourceCommand
 		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.EXPORT)) {
-			_runBatchPlannerPlan(resourceRequest);
+			_runBatchPlannerPlan(resourceRequest, resourceResponse);
 		}
 		else if (cmd.equals(Constants.SAVE)) {
 			_addBatchPlannerPlan(resourceRequest, resourceResponse);
@@ -171,7 +172,8 @@ public class EditExportBatchPlannerPlanMVCResourceCommand
 		return Boolean.TRUE.toString();
 	}
 
-	private void _runBatchPlannerPlan(ResourceRequest resourceRequest)
+	private void _runBatchPlannerPlan(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		BatchPlannerPlan batchPlannerPlan = _addBatchPlannerPlan(
@@ -179,6 +181,15 @@ public class EditExportBatchPlannerPlanMVCResourceCommand
 
 		if (!batchPlannerPlan.isTemplate()) {
 			_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+
+			BatchPlannerLog batchPlannerLog =
+				batchPlannerPlan.getBatchPlannerLog();
+
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"exportTaskId",
+					batchPlannerLog.getBatchEngineExportTaskERC()));
 		}
 	}
 

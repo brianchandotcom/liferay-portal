@@ -152,6 +152,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		window.setSize(new Dimension(1280, 1040));
 
 		webDriver.get(browserURL);
+
+		ocularConfig();
 	}
 
 	@Override
@@ -2200,7 +2202,33 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void ocularAssertElementImage(String locator, String filePath)
 		throws Exception {
 
-		ocularConfig();
+		StringBuilder snapFilePath = new StringBuilder();
+
+		String filePathDir = filePath.substring(0, filePath.lastIndexOf("/"));
+
+		snapFilePath.append(
+			PropsValues.TEST_BASE_DIR_NAME + getOcularSnapImageDirName() + "/" +
+				filePathDir);
+
+		File snapFile = new File(snapFilePath.toString());
+
+		if (!snapFile.exists()) {
+			snapFile.mkdirs();
+		}
+
+		StringBuilder resultFilePath = new StringBuilder();
+
+		resultFilePath.append(
+			PropsValues.TEST_BASE_DIR_NAME + getOcularResultImageDirName() +
+				"/" + filePathDir);
+
+		File resultFile = new File(resultFilePath.toString());
+
+		resultFile.mkdirs();
+
+		OcularConfiguration ocularConfiguration = Ocular.config();
+
+		ocularConfiguration.resultPath(Paths.get(resultFile.toString()));
 
 		WebElement webElement = getWebElement(locator);
 
@@ -4547,10 +4575,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		OcularConfiguration ocularConfiguration = Ocular.config();
 
 		ocularConfiguration = ocularConfiguration.snapshotPath(
-				Paths.get(testBaseDirName, getOcularSnapImageDirName()));
+			Paths.get(testBaseDirName, getOcularSnapImageDirName()));
 
 		ocularConfiguration.resultPath(
-				Paths.get(testBaseDirName, getOcularResultImageDirName()));
+			Paths.get(testBaseDirName, getOcularResultImageDirName()));
 
 		ocularConfiguration.globalSimilarity(99);
 

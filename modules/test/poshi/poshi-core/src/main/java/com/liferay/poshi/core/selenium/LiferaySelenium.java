@@ -360,7 +360,7 @@ public interface LiferaySelenium {
 	public void mouseUpAt(String locator, String coordString);
 
 	public void ocularAssertElementImage(String locator, String filePath)
-			throws Exception;
+		throws Exception;
 
 	public void open(String url) throws Exception;
 

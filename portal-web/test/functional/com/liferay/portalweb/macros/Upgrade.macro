@@ -4980,10 +4980,6 @@ definition {
 			webContentContent = "WC WebContent2 Content",
 			webContentTitle = "WC WebContent2 Title");
 
-		SignOut.signOut();
-
-		SignIn.signIn();
-
 		Upgrade.viewMatchingCalendarIndexesInPartitionedDatabase();
 	}
 

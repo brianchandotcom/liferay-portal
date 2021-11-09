@@ -137,8 +137,7 @@ public interface DDMFormInstanceSettings {
 
 	@DDMFormField(
 		label = "%limit-to-one-submission-per-user",
-		tip = "%require-user-athentication-for-more-accurate-data",
-		type = "checkbox"
+		tip = "%respondents-will-be-required-to-sign-in", type = "checkbox"
 	)
 	public boolean limitToOneSubmissionPerUser();
 

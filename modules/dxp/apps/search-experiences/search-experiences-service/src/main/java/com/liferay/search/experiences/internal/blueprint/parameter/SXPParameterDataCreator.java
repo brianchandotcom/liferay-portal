@@ -40,6 +40,8 @@ import com.liferay.search.experiences.blueprint.parameter.LongSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.StringArraySXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.StringSXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
+import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinitionProvider;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.ContextSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.IpstackSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.OpenWeatherMapSXPParameterContributor;
@@ -55,10 +57,13 @@ import com.liferay.segments.SegmentsEntryRetriever;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
@@ -70,8 +75,15 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = SXPParameterDataCreator.class)
-public class SXPParameterDataCreator {
+@Component(
+	immediate = true,
+	service = {
+		SXPParameterContributorDefinitionProvider.class,
+		SXPParameterDataCreator.class
+	}
+)
+public class SXPParameterDataCreator
+	implements SXPParameterContributorDefinitionProvider {
 
 	public SXPParameterData create(
 		SearchContext searchContext, SXPBlueprint sxpBlueprint) {
@@ -92,6 +104,28 @@ public class SXPParameterDataCreator {
 		_contribute(searchContext, sxpBlueprint, sxpParameters);
 
 		return new SXPParameterData(keywords, sxpParameters);
+	}
+
+	@Override
+	public List<SXPParameterContributorDefinition>
+		getSXPParameterContributorDefinitions(long companyId) {
+
+		if (ArrayUtil.isEmpty(_sxpParameterContributors)) {
+			return Collections.emptyList();
+		}
+
+		List<SXPParameterContributorDefinition>
+			sxpParameterContributorDefinitions = new ArrayList<>();
+
+		for (SXPParameterContributor sxpParameterContributor :
+				_sxpParameterContributors) {
+
+			sxpParameterContributorDefinitions.addAll(
+				sxpParameterContributor.getSXPParameterContributorDefinitions(
+					companyId));
+		}
+
+		return sxpParameterContributorDefinitions;
 	}
 
 	@Activate

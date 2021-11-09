@@ -23,6 +23,7 @@ definition {
 		}
 	}
 
+	@description = "Inactive and reactive site."
 	@priority = "4"
 	test ActivateSite {
 		property test.name.skip.portal.instance = "Sites#ActivateSite";
@@ -63,6 +64,7 @@ definition {
 		AssertTextNotPresent(value1 = "This site is inactive. Please contact the administrator.");
 	}
 
+	@description = "Add child site in child site."
 	@priority = "4"
 	test AddChildChildSite {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -87,6 +89,7 @@ definition {
 			siteName = "Child SiteName");
 	}
 
+	@description = "View public page via virtual host URL."
 	@priority = "3"
 	test AddPublicVirtualHostsSiteURL {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -109,6 +112,7 @@ definition {
 			sitePageURL = "http://www.able.com:8080/site-page");
 	}
 
+	@description = "Able to add a site with comma."
 	@priority = "3"
 	test AddSiteWithCommaInName {
 		JSONGroup.addGroup(groupName = "Site Name,");
@@ -118,6 +122,7 @@ definition {
 		Site.viewCP(siteName = "Site Name,");
 	}
 
+	@description = "Unable to add sanme site name."
 	@priority = "3"
 	test AddSiteWithInvalidDuplicateName {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -129,6 +134,7 @@ definition {
 			siteNameInvalid = "Duplicate");
 	}
 
+	@description = "Unable to add site name with invalid characters * and numeric."
 	@priority = "3"
 	test AddSiteWithInvalidName {
 		for (var siteName : list " ,Site Name*,22222") {
@@ -140,6 +146,7 @@ definition {
 		}
 	}
 
+	@description = "Deleting firiendly URL makes it not able to access page via fridely URL."
 	@priority = "4"
 	test DeleteSiteFriendlyURL {
 		Site.openSitesAdmin();
@@ -181,6 +188,7 @@ definition {
 			value1 = "Not Found");
 	}
 
+	@description = "Could edit site name."
 	@priority = "5"
 	test EditSite {
 		property portal.acceptance = "true";
@@ -198,6 +206,7 @@ definition {
 		Site.viewCP(siteName = "Site Name Edit");
 	}
 
+	@description = "Could edit friendly URL and access by it."
 	@priority = "4"
 	test EditSiteFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
@@ -233,6 +242,7 @@ definition {
 			sitePageURL = "${portalURL}/group/alpha");
 	}
 
+	@description = "Could not add invalid friendly URL and can access by former friendly URL."
 	@priority = "3"
 	test EditSiteFriendlyURLInvalid {
 		property portal.acceptance = "true";
@@ -264,6 +274,7 @@ definition {
 			siteFriendlyURL = "${portalURL}/web/site-name");
 	}
 
+	@description = "Able to search and find site by site name."
 	@priority = "5"
 	test SearchSite {
 		property portal.acceptance = "true";
@@ -275,6 +286,7 @@ definition {
 		Site.searchCP(siteName = "Site Name");
 	}
 
+	@description = "Can not choose its own site as parent site."
 	@priority = "3"
 	test SiteCannotBeItsOwnParent {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -286,6 +298,7 @@ definition {
 			parentSiteName = "Site Name");
 	}
 
+	@description = "Can not choose its own site as parent site in staging."
 	@priority = "3"
 	test SiteCannotBeItsOwnParentStaging {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -294,13 +307,11 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Site Page");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		Staging.activateStagingCP(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Site Page",
-			siteName = "Site Name");
+		Navigator.gotoStagedView();
 
 		Staging.viewStagingLocalLivePG();
 
@@ -311,6 +322,7 @@ definition {
 			parentSiteName = "Site Name");
 	}
 
+	@description = "View Web Content Admin displayed in global site."
 	@priority = "4"
 	test ViewDefaultGlobalScopeLandingPage {
 		property testray.component.names = "Site Administration";
@@ -324,6 +336,7 @@ definition {
 			siteName = "Global");
 	}
 
+	@description = "View parent site in child site's Sites Directory."
 	@priority = "4"
 	test ViewDisplayParentSiteViaSitesDirectory {
 		Site.openSitesAdmin();
@@ -383,6 +396,7 @@ definition {
 		SitesDirectory.viewDescriptivePG(siteName = "Site Name");
 	}
 
+	@description = "View sites in child site's Sites Directory."
 	@priority = "4"
 	test ViewSiteHierarchiesViaSitesDirectory {
 		Site.openSitesAdmin();

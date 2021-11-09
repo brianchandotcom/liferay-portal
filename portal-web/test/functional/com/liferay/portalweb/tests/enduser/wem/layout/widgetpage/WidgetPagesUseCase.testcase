@@ -24,6 +24,10 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
 			Role.tearDownCP();
 
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");

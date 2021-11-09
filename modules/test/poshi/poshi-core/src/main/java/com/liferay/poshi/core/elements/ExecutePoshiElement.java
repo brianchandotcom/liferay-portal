@@ -303,7 +303,7 @@ public class ExecutePoshiElement extends PoshiElement {
 		String assignmentsString = ListUtil.toString(assignments);
 
 		if ((assignments.size() > 1) &&
-			assignmentsString.matches("\\w+\\s*=.+") &&
+			assignmentsString.matches("(?s)\\w+\\s*=.+") &&
 			!isConditionValidInParent((PoshiElement)getParent())) {
 
 			multilineSnippet = true;

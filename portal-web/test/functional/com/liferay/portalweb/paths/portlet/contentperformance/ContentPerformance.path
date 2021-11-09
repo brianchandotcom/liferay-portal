@@ -51,9 +51,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>SELECT_TRAFFIC_SOURCES_NUMBER</td>
-    <td>//div[@class='pie-chart-wrapper'] //td[contains(text(),'0')]</td>
-    <td></td>
+	<td>SELECT_TRAFFIC_SOURCES_NUMBER</td>
+	<td>//div[@class='pie-chart-wrapper'] //td[contains(text(),'0')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

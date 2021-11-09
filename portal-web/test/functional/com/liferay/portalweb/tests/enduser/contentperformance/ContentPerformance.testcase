@@ -270,18 +270,18 @@ definition {
 				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
 			}
 			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
-			
-            AssertElementPresent(
-                locator1 = "ContentPerformance#SELECT_TRAFFIC_SOURCES_NUMBER",
-                value1 = "0");
-        }
+
+			AssertElementPresent(
+				locator1 = "ContentPerformance#SELECT_TRAFFIC_SOURCES_NUMBER",
+				value1 = "0");
+		}
 
 		task ("Click and Assert if element still present") {
-            ClickNoError(locator1 = "ContentPerformance#SELECT_TRAFFIC_SOURCES_NUMBER");
-            AssertElementPresent(
-                locator1 = "ContentPerformance#SELECT_TRAFFIC_SOURCES_NUMBER",
-                value1 = "0");
-    	}
+			ClickNoError(locator1 = "ContentPerformance#SELECT_TRAFFIC_SOURCES_NUMBER");
+			AssertElementPresent(
+				locator1 = "ContentPerformance#SELECT_TRAFFIC_SOURCES_NUMBER",
+				value1 = "0");
+		}
 	}
 
 	@description = "LPS-108856: When user opens Content Performance panel and AC is connected but not synced, the Content Performance panel displays instructions to sync to AC (Dont show me this again button and the message is not displayed)"

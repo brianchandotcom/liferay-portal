@@ -11,7 +11,7 @@ definition {
 
 		User.firstLoginPG();
 
-		WorkflowUser.disableCaptchaToCreateNewUser();
+		
 	}
 
 	tearDown {

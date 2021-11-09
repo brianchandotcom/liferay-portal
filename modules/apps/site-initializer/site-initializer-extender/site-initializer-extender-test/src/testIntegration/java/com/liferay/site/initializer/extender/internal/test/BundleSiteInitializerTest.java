@@ -137,9 +137,9 @@ public class BundleSiteInitializerTest {
 			_assertFragmentEntries(group);
 			_assertLayoutPageTemplateEntry(group);
 			_assertLayouts(group);
+			_assertLayoutSets(group);
 			_assertObjectDefinition(group);
 			_assertStyleBookEntry(group);
-			_assertUpdateLayoutSet(group);
 		}
 		finally {
 			GroupLocalServiceUtil.deleteGroup(group);
@@ -421,7 +421,7 @@ public class BundleSiteInitializerTest {
 			frontendTokensValues.contains("blockquote-small-color"));
 	}
 
-	private void _assertUpdateLayoutSet(Group group) throws Exception {
+	private void _assertLayoutSets(Group group) throws Exception {
 		LayoutSet privateLayoutSet = _layoutSetLocalService.fetchLayoutSet(
 			group.getGroupId(), true);
 

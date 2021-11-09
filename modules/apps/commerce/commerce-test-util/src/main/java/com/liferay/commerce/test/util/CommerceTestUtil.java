@@ -225,6 +225,9 @@ public class CommerceTestUtil {
 		CommerceAddress shippingCommerceAddress = addUserCommerceAddress(
 			groupId, userId);
 
+		commerceOrder = CommerceOrderLocalServiceUtil.getCommerceOrder(
+			commerceOrder.getCommerceOrderId());
+
 		commerceOrder.setBillingAddressId(
 			billingCommerceAddress.getCommerceAddressId());
 		commerceOrder.setShippingAddressId(

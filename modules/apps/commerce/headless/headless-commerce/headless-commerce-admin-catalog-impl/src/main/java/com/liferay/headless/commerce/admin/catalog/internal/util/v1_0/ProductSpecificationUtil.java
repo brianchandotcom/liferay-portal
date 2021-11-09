@@ -17,6 +17,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
+import com.liferay.commerce.product.service.CPSpecificationOptionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
@@ -45,16 +46,28 @@ public class ProductSpecificationUtil {
 				getCPSpecificationOptionId(
 					cpSpecificationOptionService, productSpecification,
 					serviceContext.getCompanyId(), serviceContext),
-				getCPOptionCategoryId(productSpecification),
+				getCPOptionCategoryId(
+					productSpecification, serviceContext.getCompanyId()),
 				LanguageUtils.getLocalizedMap(productSpecification.getValue()),
 				GetterUtil.get(productSpecification.getPriority(), 0D),
 				serviceContext);
 	}
 
 	public static long getCPOptionCategoryId(
-		ProductSpecification productSpecification) {
+		ProductSpecification productSpecification, long companyId) {
 
 		if (productSpecification.getOptionCategoryId() == null) {
+			String specificationKey = FriendlyURLNormalizerUtil.normalize(
+				productSpecification.getSpecificationKey());
+
+			CPSpecificationOption cpSpecificationOption =
+				CPSpecificationOptionLocalServiceUtil.
+					fetchCPSpecificationOption(companyId, specificationKey);
+
+			if (cpSpecificationOption != null) {
+				return cpSpecificationOption.getCPOptionCategoryId();
+			}
+
 			return 0;
 		}
 
@@ -77,7 +90,8 @@ public class ProductSpecificationUtil {
 		if (cpSpecificationOption == null) {
 			cpSpecificationOption =
 				cpSpecificationOptionService.addCPSpecificationOption(
-					getCPOptionCategoryId(productSpecification),
+					getCPOptionCategoryId(
+						productSpecification, serviceContext.getCompanyId()),
 					LanguageUtils.getLocalizedMap(
 						productSpecification.getLabel()),
 					LanguageUtils.getLocalizedMap(
@@ -102,7 +116,8 @@ public class ProductSpecificationUtil {
 			updateCPDefinitionSpecificationOptionValue(
 				cpDefinitionSpecificationOptionValue.
 					getCPDefinitionSpecificationOptionValueId(),
-				getCPOptionCategoryId(productSpecification),
+				getCPOptionCategoryId(
+					productSpecification, serviceContext.getCompanyId()),
 				LanguageUtils.getLocalizedMap(productSpecification.getValue()),
 				GetterUtil.get(
 					productSpecification.getPriority(),

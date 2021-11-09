@@ -146,6 +146,34 @@ public class SXPElement implements Serializable {
 	protected ElementDefinition elementDefinition;
 
 	@Schema
+	public Boolean getHidden() {
+		return hidden;
+	}
+
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
+	}
+
+	@JsonIgnore
+	public void setHidden(
+		UnsafeSupplier<Boolean, Exception> hiddenUnsafeSupplier) {
+
+		try {
+			hidden = hiddenUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean hidden;
+
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -288,6 +316,16 @@ public class SXPElement implements Serializable {
 			sb.append("\"elementDefinition\": ");
 
 			sb.append(String.valueOf(elementDefinition));
+		}
+
+		if (hidden != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"hidden\": ");
+
+			sb.append(hidden);
 		}
 
 		if (id != null) {

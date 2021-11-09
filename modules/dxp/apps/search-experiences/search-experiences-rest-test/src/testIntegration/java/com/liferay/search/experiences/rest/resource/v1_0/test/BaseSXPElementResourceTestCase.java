@@ -536,6 +536,14 @@ public abstract class BaseSXPElementResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("hidden", additionalAssertFieldName)) {
+				if (sxpElement.getHidden() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (sxpElement.getTitle() == null) {
 					valid = false;
@@ -671,6 +679,16 @@ public abstract class BaseSXPElementResourceTestCase {
 				if (!Objects.deepEquals(
 						sxpElement1.getElementDefinition(),
 						sxpElement2.getElementDefinition())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("hidden", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sxpElement1.getHidden(), sxpElement2.getHidden())) {
 
 					return false;
 				}
@@ -824,6 +842,11 @@ public abstract class BaseSXPElementResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("hidden")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -888,6 +911,7 @@ public abstract class BaseSXPElementResourceTestCase {
 			{
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				hidden = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}

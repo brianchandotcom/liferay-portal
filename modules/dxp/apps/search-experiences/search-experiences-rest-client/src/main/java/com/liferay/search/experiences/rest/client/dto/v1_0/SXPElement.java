@@ -100,6 +100,27 @@ public class SXPElement implements Cloneable, Serializable {
 
 	protected ElementDefinition elementDefinition;
 
+	public Boolean getHidden() {
+		return hidden;
+	}
+
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
+	}
+
+	public void setHidden(
+		UnsafeSupplier<Boolean, Exception> hiddenUnsafeSupplier) {
+
+		try {
+			hidden = hiddenUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean hidden;
+
 	public Long getId() {
 		return id;
 	}

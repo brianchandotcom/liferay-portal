@@ -87,6 +87,16 @@ public class SXPElementSerDes {
 			sb.append(String.valueOf(sxpElement.getElementDefinition()));
 		}
 
+		if (sxpElement.getHidden() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"hidden\": ");
+
+			sb.append(sxpElement.getHidden());
+		}
+
 		if (sxpElement.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -164,6 +174,13 @@ public class SXPElementSerDes {
 				String.valueOf(sxpElement.getElementDefinition()));
 		}
 
+		if (sxpElement.getHidden() == null) {
+			map.put("hidden", null);
+		}
+		else {
+			map.put("hidden", String.valueOf(sxpElement.getHidden()));
+		}
+
 		if (sxpElement.getId() == null) {
 			map.put("id", null);
 		}
@@ -223,6 +240,11 @@ public class SXPElementSerDes {
 					sxpElement.setElementDefinition(
 						ElementDefinitionSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "hidden")) {
+				if (jsonParserFieldValue != null) {
+					sxpElement.setHidden((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

@@ -25,6 +25,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -50,6 +51,10 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 
 		if (!isCategorizable(groupId, classNameId, classPK)) {
 			return;
+		}
+
+		if (className.equals(Group.class.getName())) {
+			groupId = classPK;
 		}
 
 		for (AssetVocabulary assetVocabulary :

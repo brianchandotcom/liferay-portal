@@ -18,6 +18,26 @@ definition {
 			item = "${item}");
 	}
 
+	macro importStyleBookFromTempFolder {
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Import");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		var stylebookZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "style-book-*.zip");
+
+		UploadTempFile(
+			locator1 = "TextInput#FILE",
+			value1 = "${stylebookZipFileName}");
+
+		Button.clickImport();
+
+		Alert.viewSuccessMessage();
+
+		IFrame.closeFrame();
+	}
+
 	macro openStyleBooksAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_style_book_web_internal_portlet_StyleBookPortlet");
 	}

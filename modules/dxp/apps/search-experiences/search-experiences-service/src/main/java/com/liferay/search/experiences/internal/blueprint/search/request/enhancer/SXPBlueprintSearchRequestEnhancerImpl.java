@@ -66,14 +66,17 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		SearchRequestBuilder searchRequestBuilder,
 		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint) {
 
-		@SuppressWarnings("unchecked")
-		DTOConverter dtoConverter = _dtoConverterRegistry.getDTOConverter(
-			com.liferay.search.experiences.model.SXPBlueprint.class.getName());
+		DTOConverter
+			<com.liferay.search.experiences.model.SXPBlueprint, SXPBlueprint>
+				dtoConverter =
+					(DTOConverter
+						<com.liferay.search.experiences.model.SXPBlueprint,
+						 SXPBlueprint>)_dtoConverterRegistry.getDTOConverter(
+							 com.liferay.search.experiences.model.SXPBlueprint.
+								 class.getName());
 
 		try {
-			_enhance(
-				searchRequestBuilder,
-				(SXPBlueprint)dtoConverter.toDTO(sxpBlueprint));
+			_enhance(searchRequestBuilder, dtoConverter.toDTO(sxpBlueprint));
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

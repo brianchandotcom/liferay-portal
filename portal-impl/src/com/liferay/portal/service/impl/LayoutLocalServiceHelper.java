@@ -76,6 +76,15 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 	public String getFriendlyURL(
 			long groupId, boolean privateLayout, long layoutId, String name,
+			String friendlyURL)
+		throws PortalException {
+
+		return getFriendlyURL(
+			groupId, privateLayout, layoutId, name, friendlyURL, null);
+	}
+
+	public String getFriendlyURL(
+			long groupId, boolean privateLayout, long layoutId, String name,
 			String friendlyURL, String languageId)
 		throws PortalException {
 
@@ -338,6 +347,15 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 	public void validateFriendlyURL(
 			long groupId, boolean privateLayout, long layoutId,
+			String friendlyURL)
+		throws PortalException {
+
+		validateFriendlyURL(
+			groupId, privateLayout, layoutId, friendlyURL, null);
+	}
+
+	public void validateFriendlyURL(
+			long groupId, boolean privateLayout, long layoutId,
 			String friendlyURL, String languageId)
 		throws PortalException {
 
@@ -360,7 +378,8 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 				layoutFriendlyURL.getPlid());
 
 			if ((layout.getLayoutId() != layoutId) ||
-				!languageId.equals(layoutFriendlyURL.getLanguageId())) {
+				(Validator.isNotNull(languageId) &&
+				 !languageId.equals(layoutFriendlyURL.getLanguageId()))) {
 
 				LayoutFriendlyURLException layoutFriendlyURLException =
 					new LayoutFriendlyURLException(

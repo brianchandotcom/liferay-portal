@@ -24,6 +24,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
+import com.liferay.search.experiences.rest.dto.v1_0.util.ElementDefinitionUtil;
 import com.liferay.search.experiences.rest.internal.dto.v1_0.converter.SXPElementDTOConverter;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
 import com.liferay.search.experiences.service.SXPElementService;
@@ -95,6 +96,28 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 	}
 
 	@Override
+	public SXPElement patchSXPElement(Long sxpElementId, SXPElement sxpElement)
+		throws Exception {
+
+		return _sxpElementDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, contextHttpServletRequest,
+				sxpElement.getId(), contextAcceptLanguage.getPreferredLocale(),
+				contextUriInfo, contextUser),
+			_sxpElementService.updateSXPElement(
+				sxpElementId,
+				LocalizedMapUtil.getLocalizedMap(
+					sxpElement.getDescription_i18n()),
+				String.valueOf(
+					ElementDefinitionUtil.unpack(
+						sxpElement.getElementDefinition())),
+				sxpElement.getHidden(),
+				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()),
+				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+	}
+
+	@Override
 	public SXPElement postSXPElement(SXPElement sxpElement) throws Exception {
 		return _sxpElementDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -105,7 +128,10 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 			_sxpElementService.addSXPElement(
 				LocalizedMapUtil.getLocalizedMap(
 					sxpElement.getDescription_i18n()),
-				String.valueOf(sxpElement.getElementDefinition()), false,
+				String.valueOf(
+					ElementDefinitionUtil.unpack(
+						sxpElement.getElementDefinition())),
+				false,
 				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}

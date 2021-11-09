@@ -311,6 +311,8 @@ public class VarPoshiElement extends PoshiElement {
 				}
 			}
 			else {
+				value = StringUtil.replace(value, "\"", "&quot;");
+
 				value = doubleQuoteContent(value);
 			}
 		}

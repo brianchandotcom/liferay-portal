@@ -58,7 +58,7 @@ definition {
 		task ("Change the timezone to Log Angeles of United States") {
 			ACWorkspace.configureWorkspaceSettings(
 				timezone = "United States",
-				timezoneId = "UTC-07:00 Pacific Time (America/Los Angeles)");
+				timezoneId = "UTC-08:00 Pacific Time (America/Los Angeles)");
 
 			ACUtils.waitForLoading();
 		}
@@ -68,7 +68,7 @@ definition {
 		}
 
 		task ("View the information banner") {
-			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC-07:00 Pacific Time");
+			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC-08:00 Pacific Time");
 		}
 
 		task ("Dismiss the information banner") {

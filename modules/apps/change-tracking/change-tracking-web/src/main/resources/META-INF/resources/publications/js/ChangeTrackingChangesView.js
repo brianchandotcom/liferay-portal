@@ -1551,36 +1551,6 @@ export default ({
 	};
 
 	const handleShowHideableToggle = (showHideable) => {
-		const breadcrumbItems = getBreadcrumbItems(
-			renderState.node,
-			renderState.id
-		);
-
-		if (!showHideable) {
-			if (renderState.node.hideable) {
-				let nodeId = 0;
-
-				for (let i = breadcrumbItems.length - 2; i > 0; i--) {
-					const breadcrumbItem = breadcrumbItems[i];
-
-					if (!breadcrumbItem.hideable) {
-						if (breadcrumbItem.nodeId) {
-							nodeId = breadcrumbItem.nodeId;
-						}
-
-						break;
-					}
-				}
-
-				handleNavigationUpdate({
-					nodeId,
-					showHideable,
-				});
-
-				return;
-			}
-		}
-
 		const entryParam = getEntryParam(renderState.node);
 
 		const params = new URLSearchParams(window.location.search);
@@ -1631,7 +1601,7 @@ export default ({
 				newState.path = path;
 			}
 
-			if (updatedFilters) {
+			if (updatedFilters && renderState.id === 0) {
 				window.history.pushState(newState, document.title, path);
 			}
 			else {

@@ -25,22 +25,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 %>
 
 <div class="container pt-4">
-	<form
-		action="<%=
-			PortletURLBuilder.createActionURL(
-				renderResponse
-			).setActionName(
-				"/batch_planner/edit_export_batch_planner_plan"
-			).setCMD(
-				Constants.EXPORT
-			).setRedirect(
-				backURL
-			).buildString()
-		%>"
-		id="<portlet:namespace />fm"
-		method="POST"
-		name="<portlet:namespace />fm"
-	>
+	<form id="<portlet:namespace />fm" name="<portlet:namespace />fm">
 		<aui:input name="batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
 		<aui:input name="export" type="hidden" value="<%= true %>" />
 		<aui:input name="name" type="hidden" />
@@ -186,13 +171,25 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 						%>'
 					/>
 				</span>
-
-				<clay:button
-					disabled="true"
-					displayType="primary"
-					label="export"
-					type="submit"
-				/>
+				<span>
+					<react:component
+						module="js/RunExportTask"
+						props='<%=
+							HashMapBuilder.<String, Object>put(
+								"namespace", liferayPortletResponse.getNamespace()
+							).put(
+								"runExportTaskURL",
+								ResourceURLBuilder.createResourceURL(
+									renderResponse
+								).setCMD(
+									Constants.EXPORT
+								).setResourceID(
+									"/batch_planner/edit_export_batch_planner_plan"
+								).buildString()
+							).build()
+						%>'
+					/>
+				</span>
 			</liferay-frontend:edit-form-footer>
 		</div>
 	</form>

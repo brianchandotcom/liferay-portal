@@ -319,6 +319,8 @@ components:
                                     type: array
                             type: object
                     type: object
+                hidden:
+                    type: boolean
                 id:
                     format: int64
                     type: integer

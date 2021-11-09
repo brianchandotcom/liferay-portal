@@ -140,7 +140,6 @@ definition {
 		KaleoFormsAdmin.viewProcessByPosition(
 			key_order = "1",
 			key_title = "Kaleo Forms Process 1 Edited");
-
 	}
 
 	@description = "Verify that the user is able to order by Last Modified."

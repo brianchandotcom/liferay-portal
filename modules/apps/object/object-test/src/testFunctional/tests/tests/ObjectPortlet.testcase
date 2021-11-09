@@ -810,16 +810,17 @@ definition {
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
 			objectName = "CustomObject",
-			value = "123.123456");
+			value = "123.654321");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.updateEntry(
-			entry = "123.123456",
+			entry = "123.654321",
 			updateEntry = "1.12345678");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
+		ObjectPortlet.assertEntryNotPresent(entry = "123.654321");
 		ObjectPortlet.viewEntry(entry = "1.12345678");
 	}
 
@@ -851,6 +852,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
+		ObjectPortlet.assertEntryNotPresent(entry = "No");
 		ObjectPortlet.viewEntry(entry = "Yes");
 	}
 
@@ -884,6 +886,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
+		ObjectPortlet.assertEntryNotPresent(entry = "2001-01-01");
 		ObjectPortlet.viewEntry(entry = "2002-02-02");
 	}
 
@@ -917,6 +920,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
+		ObjectPortlet.assertEntryNotPresent(entry = "1.23");
 		ObjectPortlet.viewEntry(entry = "4.56");
 	}
 
@@ -940,16 +944,17 @@ definition {
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
 			objectName = "CustomObject",
-			value = "123");
+			value = "321");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.updateEntry(
-			entry = "123",
+			entry = "321",
 			updateEntry = "123456");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
+		ObjectPortlet.assertEntryNotPresent(entry = "321");
 		ObjectPortlet.viewEntry(entry = "123456");
 	}
 
@@ -973,16 +978,17 @@ definition {
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
 			objectName = "CustomObject",
-			value = "123456789");
+			value = "987654321");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.updateEntry(
-			entry = "123456789",
+			entry = "987654321",
 			updateEntry = "12345678912345678");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
+		ObjectPortlet.assertEntryNotPresent(entry = "987654321");
 		ObjectPortlet.viewEntry(entry = "12345678912345678");
 	}
 
@@ -1027,6 +1033,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
+		ObjectPortlet.assertEntryNotPresent(entry = "Text test");
 		ObjectPortlet.viewEntry(entry = "Update Text test");
 	}
 
@@ -1661,8 +1668,13 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Test 2");
+		ObjectPortlet.updateEntry(
+			entry = "Text test",
+			updateEntry = "Test 2");
 
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Text test");
 		ObjectPortlet.viewEntry(entry = "Test 2");
 	}
 

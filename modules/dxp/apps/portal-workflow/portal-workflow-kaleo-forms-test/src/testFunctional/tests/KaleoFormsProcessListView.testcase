@@ -98,11 +98,19 @@ definition {
 	}
 
 	@description = "Verify that the user can export a process."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanExportProcess {
+		KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70671 CanExportProcess pending implementation
+		KaleoFormsAdmin.createKaleoFormsProcess(
+			kfFieldSetName = "Contacts",
+			kfFormName = "Created Task Form",
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Single Approver",
+			workflowTask = "created");
+
+		KaleoFormsAdmin.viewExportRecords(kfProcessName = "Kaleo Forms Process");
 
 	}
 

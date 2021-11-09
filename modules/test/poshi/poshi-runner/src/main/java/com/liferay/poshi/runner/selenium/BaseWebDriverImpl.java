@@ -2202,33 +2202,23 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void ocularAssertElementImage(String locator, String filePath)
 		throws Exception {
 
-		StringBuilder snapFilePath = new StringBuilder();
-
-		String filePathDir = filePath.substring(0, filePath.lastIndexOf("/"));
-
-		snapFilePath.append(
+		File snapFile = new File(
 			PropsValues.TEST_BASE_DIR_NAME + getOcularSnapImageDirName() + "/" +
-				filePathDir);
-
-		File snapFile = new File(snapFilePath.toString());
+				filePath);
 
 		if (!snapFile.exists()) {
 			snapFile.mkdirs();
 		}
 
-		StringBuilder resultFilePath = new StringBuilder();
-
-		resultFilePath.append(
+		File resultFile = new File(
 			PropsValues.TEST_BASE_DIR_NAME + getOcularResultImageDirName() +
-				"/" + filePathDir);
-
-		File resultFile = new File(resultFilePath.toString());
+				"/" + filePath);
 
 		resultFile.mkdirs();
 
 		OcularConfiguration ocularConfiguration = Ocular.config();
 
-		ocularConfiguration.resultPath(Paths.get(resultFile.toString()));
+		ocularConfiguration.resultPath(Paths.get(resultFile.getParent()));
 
 		WebElement webElement = getWebElement(locator);
 

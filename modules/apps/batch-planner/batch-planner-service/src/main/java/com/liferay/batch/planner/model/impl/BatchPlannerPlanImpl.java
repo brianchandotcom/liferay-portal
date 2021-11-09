@@ -16,6 +16,7 @@ package com.liferay.batch.planner.model.impl;
 
 import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.service.BatchPlannerLogLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Igor Beslic
@@ -25,6 +26,11 @@ public class BatchPlannerPlanImpl extends BatchPlannerPlanBaseImpl {
 	public BatchPlannerLog fetchBatchPlannerLog() {
 		return BatchPlannerLogLocalServiceUtil.
 			fetchBatchPlannerPlanBatchPlannerLog(getBatchPlannerPlanId());
+	}
+
+	public BatchPlannerLog getBatchPlannerLog() throws PortalException {
+		return BatchPlannerLogLocalServiceUtil.
+			getBatchPlannerPlanBatchPlannerLog(getBatchPlannerPlanId());
 	}
 
 }

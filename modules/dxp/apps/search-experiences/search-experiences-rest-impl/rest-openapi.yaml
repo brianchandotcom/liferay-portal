@@ -289,11 +289,19 @@ components:
                     type: object
                 description:
                     type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 id:
                     format: int64
                     type: integer
                 title:
                     type: string
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
             type: object
         SXPElement:
             properties:

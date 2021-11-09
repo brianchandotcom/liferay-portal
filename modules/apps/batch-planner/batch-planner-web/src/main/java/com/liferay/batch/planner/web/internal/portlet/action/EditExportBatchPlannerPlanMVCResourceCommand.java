@@ -23,8 +23,10 @@ import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.service.BatchPlannerPolicyService;
 import com.liferay.batch.planner.service.persistence.BatchPlannerMappingUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -32,9 +34,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,12 +50,27 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER,
 		"mvc.command.name=/batch_planner/edit_export_batch_planner_plan"
 	},
-	service = MVCActionCommand.class
+	service = MVCResourceCommand.class
 )
-public class EditExportBatchPlannerPlanMVCActionCommand
-	extends BaseTransactionalMVCActionCommand {
+public class EditExportBatchPlannerPlanMVCResourceCommand
+	extends BaseTransactionalMVCResourceCommand {
 
-	public BatchPlannerPlan addBatchPlannerPlan(PortletRequest portletRequest)
+	@Override
+	protected void doTransactionalCommand(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
+
+		if (cmd.equals(Constants.EXPORT)) {
+			_runBatchPlannerPlan(resourceRequest);
+		}
+		else if (cmd.equals(Constants.SAVE)) {
+			_addBatchPlannerPlan(resourceRequest, resourceResponse);
+		}
+	}
+
+	private BatchPlannerPlan _addBatchPlannerPlan(PortletRequest portletRequest)
 		throws Exception {
 
 		String externalType = ParamUtil.getString(
@@ -92,21 +109,29 @@ public class EditExportBatchPlannerPlanMVCActionCommand
 		return batchPlannerPlan;
 	}
 
-	@Override
-	protected void doTransactionalCommand(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	private void _addBatchPlannerPlan(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		try {
+			BatchPlannerPlan batchPlannerPlan = _addBatchPlannerPlan(
+				resourceRequest);
 
-		if (cmd.equals(Constants.EXPORT)) {
-			BatchPlannerPlan batchPlannerPlan = addBatchPlannerPlan(
-				actionRequest);
-
-			if (!batchPlannerPlan.isTemplate()) {
-				_batchEngineBroker.submit(
-					batchPlannerPlan.getBatchPlannerPlanId());
-			}
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"batchPlannerPlanId",
+					batchPlannerPlan.getBatchPlannerPlanId()
+				).put(
+					"name", batchPlannerPlan.getName()
+				).put(
+					"success", Boolean.TRUE
+				));
+		}
+		catch (Exception exception) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put("error", exception.getMessage()));
 		}
 	}
 
@@ -144,6 +169,17 @@ public class EditExportBatchPlannerPlanMVCActionCommand
 		}
 
 		return Boolean.TRUE.toString();
+	}
+
+	private void _runBatchPlannerPlan(ResourceRequest resourceRequest)
+		throws Exception {
+
+		BatchPlannerPlan batchPlannerPlan = _addBatchPlannerPlan(
+			resourceRequest);
+
+		if (!batchPlannerPlan.isTemplate()) {
+			_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+		}
 	}
 
 	@Reference

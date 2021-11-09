@@ -55,7 +55,7 @@ definition {
 			ACSettings.goToWorkspace();
 		}
 
-		task ("Change the timezone to Log Angeles of United States") {
+		task ("Change the timezone to Los Angeles of United States") {
 			ACWorkspace.configureWorkspaceSettings(
 				timezone = "United States",
 				timezoneId = "UTC-08:00 Pacific Time (America/Los Angeles)");
@@ -101,7 +101,7 @@ definition {
 			ACSettings.goToWorkspace();
 		}
 
-		task ("Change the timezone to Log Angeles of United States") {
+		task ("Change the timezone to Los Angeles of United States") {
 			ACWorkspace.configureWorkspaceSettings(
 				timezone = "Brazil",
 				timezoneId = "UTC-03:00 Brasilia Time (America/Recife)");
@@ -267,10 +267,10 @@ definition {
 			ACSettings.goToWorkspace();
 		}
 
-		task ("Change the timezone to Log Angeles of United States") {
+		task ("Change the timezone to Los Angeles of United States") {
 			ACWorkspace.configureWorkspaceSettings(
 				timezone = "United States",
-				timezoneId = "UTC-07:00 Pacific Time (America/Los Angeles)");
+				timezoneId = "UTC-08:00 Pacific Time (America/Los Angeles)");
 
 			ACUtils.waitForLoading();
 		}
@@ -280,7 +280,7 @@ definition {
 		}
 
 		task ("View the information banner") {
-			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC-07:00 Pacific Time");
+			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC-08:00 Pacific Time");
 		}
 
 		task ("Change the timezone to Shanghai of China") {

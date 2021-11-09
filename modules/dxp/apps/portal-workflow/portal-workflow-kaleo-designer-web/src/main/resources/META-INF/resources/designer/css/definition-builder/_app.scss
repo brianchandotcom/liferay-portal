@@ -1,9 +1,15 @@
 .definition-builder-app {
 	height: calc(100vh - 120px);
 
-	.definition-canvas {
+	.diagram-builder {
+		display: flex;
+		flex-direction: row;
 		height: 100%;
-		position: relative;
-		width: 100%;
+
+		.diagram-area {
+			height: 100%;
+			position: relative;
+			width: 100%;
+		}
 	}
 }

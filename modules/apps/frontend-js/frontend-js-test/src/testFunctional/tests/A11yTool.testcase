@@ -50,6 +50,33 @@ definition {
 		}
 	}
 
+	@description = "LPS-142107. Verifies a11y tool can be disabled."
+	@priority = "5"
+	test CanBeDisabledWithDevelopment {
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
+
+		task ("Modify the config file to be set to false") {
+			OSGiConfig.deployOSGiConfigFile(
+				OSGiConfigFileName = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config",
+				OSGiConfigs = "enable=B&quot;false&quot;");
+		}
+
+		task ("Restart portal") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Assert the side panel is not present on the page") {
+			Navigator.gotoPage(pageName = "A11y Test Page");
+
+			AssertElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER");
+		}
+
+		takeScreenshot();
+	}
+
 	@description = "LPS-140736. Ensures there is no accessibility side panel on a page with no violations."
 	@priority = "5"
 	test CanDetectNoViolations {

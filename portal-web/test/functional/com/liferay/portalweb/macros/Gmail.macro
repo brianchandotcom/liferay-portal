@@ -33,7 +33,7 @@ definition {
 				value1 = "Refresh");
 		}
 
-		while (!IsTextEqual.isPartialText(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME", value1 = "${emailFromUserName}")) {
+		while (!(IsTextEqual.isPartialText(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME", value1 = "${emailFromUserName}"))) {
 			Pause(locator1 = "5000");
 		}
 

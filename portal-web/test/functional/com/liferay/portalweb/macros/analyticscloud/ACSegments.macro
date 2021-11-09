@@ -309,7 +309,7 @@ definition {
 	}
 
 	macro editSegment {
-		if (!IsTextEqual.isPartialText(locator1 = "ACSegments#SEGMENT_LABEL", value1 = "SEGMENT")) {
+		if (!(IsTextEqual.isPartialText(locator1 = "ACSegments#SEGMENT_LABEL", value1 = "SEGMENT"))) {
 			ACSegments.searchSegment(findSegment = "${searchTerm}");
 
 			ACUtils.clickKebab();

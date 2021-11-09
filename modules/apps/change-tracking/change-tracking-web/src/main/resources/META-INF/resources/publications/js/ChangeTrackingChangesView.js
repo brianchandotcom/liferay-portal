@@ -1643,6 +1643,10 @@ export default ({
 	};
 
 	const renderFilterDropdown = () => {
+		if (renderState.id > 0) {
+			return '';
+		}
+
 		return (
 			<ClayManagementToolbar.ItemList>
 				<ClayManagementToolbar.Item>
@@ -1751,62 +1755,72 @@ export default ({
 		return (
 			<ClayManagementToolbar>
 				{renderFilterDropdown()}
-				<ClayManagementToolbar.Search
-					onSubmit={(event) => {
-						event.preventDefault();
+				{renderState.id > 0 ? (
+					<ClayManagementToolbar.ItemList expand />
+				) : (
+					<ClayManagementToolbar.Search
+						onSubmit={(event) => {
+							event.preventDefault();
 
-						handleFiltersUpdate(
-							filtersState,
-							entrySearchTerms.trim()
-						);
-					}}
-					showMobile={searchMobile}
-				>
-					<ClayInput.Group>
-						<ClayInput.GroupItem>
-							<ClayInput
-								aria-label={Liferay.Language.get('search')}
-								className="form-control input-group-inset input-group-inset-after"
-								disabled={changes.length === 0}
-								onChange={(event) =>
-									setEntrySearchTerms(event.target.value)
-								}
-								placeholder={`${Liferay.Language.get(
-									'search'
-								)}...`}
-								type="text"
-								value={entrySearchTerms}
-							/>
-							<ClayInput.GroupInsetItem after tag="span">
-								<ClayButtonWithIcon
-									className="navbar-breakpoint-d-none"
+							handleFiltersUpdate(
+								filtersState,
+								entrySearchTerms.trim()
+							);
+						}}
+						showMobile={searchMobile}
+					>
+						<ClayInput.Group>
+							<ClayInput.GroupItem>
+								<ClayInput
+									aria-label={Liferay.Language.get('search')}
+									className="form-control input-group-inset input-group-inset-after"
 									disabled={changes.length === 0}
-									displayType="unstyled"
-									onClick={() => setSearchMobile(false)}
-									spritemap={spritemap}
-									symbol="times"
+									onChange={(event) =>
+										setEntrySearchTerms(event.target.value)
+									}
+									placeholder={`${Liferay.Language.get(
+										'search'
+									)}...`}
+									type="text"
+									value={entrySearchTerms}
 								/>
-								<ClayButtonWithIcon
-									displayType="unstyled"
+								<ClayInput.GroupInsetItem after tag="span">
+									<ClayButtonWithIcon
+										className="navbar-breakpoint-d-none"
+										disabled={changes.length === 0}
+										displayType="unstyled"
+										onClick={() => setSearchMobile(false)}
+										spritemap={spritemap}
+										symbol="times"
+									/>
+									<ClayButtonWithIcon
+										disabled={changes.length === 0}
+										displayType="unstyled"
+										spritemap={spritemap}
+										symbol="search"
+										type="submit"
+									/>
+								</ClayInput.GroupInsetItem>
+							</ClayInput.GroupItem>
+						</ClayInput.Group>
+					</ClayManagementToolbar.Search>
+				)}
+				<ClayManagementToolbar.ItemList>
+					{renderState.id === 0 && (
+						<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
+							<ClayButton
+								className="nav-link nav-link-monospaced"
+								disabled={changes.length === 0}
+								displayType="unstyled"
+								onClick={() => setSearchMobile(true)}
+							>
+								<ClayIcon
 									spritemap={spritemap}
 									symbol="search"
-									type="submit"
 								/>
-							</ClayInput.GroupInsetItem>
-						</ClayInput.GroupItem>
-					</ClayInput.Group>
-				</ClayManagementToolbar.Search>
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
-						<ClayButton
-							className="nav-link nav-link-monospaced"
-							disabled={changes.length === 0}
-							displayType="unstyled"
-							onClick={() => setSearchMobile(true)}
-						>
-							<ClayIcon spritemap={spritemap} symbol="search" />
-						</ClayButton>
-					</ClayManagementToolbar.Item>
+							</ClayButton>
+						</ClayManagementToolbar.Item>
+					)}
 					<ClayManagementToolbar.Item className="simple-toggle-switch-reverse">
 						<ClayToggle
 							disabled={changes.length === 0}
@@ -1840,6 +1854,10 @@ export default ({
 	};
 
 	const renderResultsBar = () => {
+		if (renderState.id > 0) {
+			return '';
+		}
+
 		const labels = [];
 
 		const changeTypes = filtersState['changeTypes'];

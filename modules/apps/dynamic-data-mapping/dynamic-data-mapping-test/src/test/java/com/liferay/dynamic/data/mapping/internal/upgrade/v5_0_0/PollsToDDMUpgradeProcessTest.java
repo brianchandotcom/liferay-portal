@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -107,37 +108,20 @@ public class PollsToDDMUpgradeProcessTest extends BaseDDMTestCase {
 
 	@Test
 	public void testGetDataJSONObject() throws Exception {
-		DDMFormField ddmFormField = _pollsToDDMUpgradeProcess.getDDMFormField(
-			new DDMFormFieldOptions(LocaleUtil.US));
-
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions(
-			LocaleUtil.US);
-
-		ddmFormFieldOptions.addOption("Option1");
-		ddmFormFieldOptions.addOption("Option2");
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
-
-		ddmFormField.setName("SingleSelection");
-
 		Assert.assertEquals(
 			JSONUtil.put(
 				"SingleSelection",
 				JSONUtil.put(
 					"type", "radio"
 				).put(
-					"values",
-					JSONUtil.put(
-						"Option1", 0
-					).put(
-						"Option2", 0
-					)
+					"values", JSONFactoryUtil.createJSONObject()
 				)
 			).put(
 				"totalItems", 0
 			).toString(),
 			String.valueOf(
-				_pollsToDDMUpgradeProcess.getDataJSONObject(ddmFormField)));
+				_pollsToDDMUpgradeProcess.getDataJSONObject(
+					"SingleSelection")));
 	}
 
 	@Test

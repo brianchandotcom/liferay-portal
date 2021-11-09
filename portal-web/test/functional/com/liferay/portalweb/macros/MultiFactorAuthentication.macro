@@ -33,7 +33,13 @@ definition {
 	}
 
 	macro canAdminDisableBasicAuthentication {
-		if (contains("${userResponse}", "Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser")) {
+		var curl = '''
+				http://www.able.com:8080/api/jsonws/user/get-current-user
+			''';
+
+		var reponse = JSONCurlUtil.get("${curl}");
+
+		if (contains("${reponse}", "Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser")) {
 			echo("Instance admin is able to disable Basic Authentication.");
 		}
 		else {

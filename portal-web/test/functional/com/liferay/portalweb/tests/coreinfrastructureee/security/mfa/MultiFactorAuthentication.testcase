@@ -367,13 +367,7 @@ definition {
 		}
 
 		task ("Check if Instance admin is able to disable Basic Authentication") {
-			var curl = '''
-				http://www.able.com:8080/api/jsonws/user/get-current-user
-			''';
-
-			var reponse = JSONCurlUtil.get("${curl}");
-
-			MultiFactorAuthentication.canAdminDisableBasicAuthentication(userResponse = "${response}");
+			MultiFactorAuthentication.canAdminDisableBasicAuthentication();
 		}
 	}
 

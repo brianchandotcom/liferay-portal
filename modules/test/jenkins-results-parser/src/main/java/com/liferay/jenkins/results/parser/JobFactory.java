@@ -244,9 +244,7 @@ public class JobFactory {
 			return pluginsUpstreamJob;
 		}
 
-		if (jobName.startsWith("test-portal-acceptance-pullrequest(") ||
-			jobName.equals("test-portal-source-format")) {
-
+		if (jobName.startsWith("test-portal-acceptance-pullrequest(")) {
 			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
 				new PortalAcceptancePullRequestJob(
 					jobName, buildProfile, testSuiteName, branchName);
@@ -338,6 +336,16 @@ public class JobFactory {
 					jobName, buildProfile, branchName, testSuiteName));
 
 			return _jobs.get(jobKey);
+		}
+
+		if (jobName.equals("test-portal-source-format")) {
+			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
+				new PortalAcceptancePullRequestJob(
+					jobName, buildProfile, "sf", branchName);
+
+			_jobs.put(jobKey, portalAcceptancePullRequestJob);
+
+			return portalAcceptancePullRequestJob;
 		}
 
 		if (jobName.startsWith("test-portal-testsuite-upstream(")) {

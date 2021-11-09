@@ -40,7 +40,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-116106. Page Creator can change style book of content page via Look and Feel settings in Staging site."
+	@description = "This is a test for LPS-116106. Page Creator can change style book of content page via Look and Feel settings in Staging site."
 	@priority = "3"
 	test ChangeStyleBookOfContentPageViaLookAndFeelInStagingSite {
 		task ("Edit the style book and Publish it") {
@@ -234,7 +234,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-116106. Page Creator can quickly change style book via Page Design Options panel in Staging site."
+	@description = "This is a test for LPS-116106. Page Creator can quickly change style book via Page Design Options panel in Staging site."
 	@priority = "4"
 	test ChangeStyleBookOfContentPageViaPageDesignOptionsPanelInStagingSite {
 		task ("Edit the style book and Publish it") {
@@ -392,7 +392,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-116106 and LPS-121004. Page Creator can change style book of widget page via Look and Feel settings in Staging site."
+	@description = "This is a test for LPS-116106 and LPS-121004. Page Creator can change style book of widget page via Look and Feel settings in Staging site."
 	@priority = "3"
 	test ChangeStyleBookOfWidgetPageViaLookAndFeelInStagingSite {
 		task ("Edit the style book and Publish it") {
@@ -549,7 +549,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-116078. Can preview the effect on page when edit the style book in Staging site."
+	@description = "This is a test for LPS-116078. Can preview the effect on page when edit the style book in Staging site."
 	@priority = "4"
 	test PreviewTheEffectOnPageInStyleBookEditorInStagingSite {
 		task ("Edit the style book and Publish it") {
@@ -631,7 +631,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-116077. The data of Style Books is immediately available to Live site when manage it in Staging site."
+	@description = "This is a test for LPS-116077. The data of Style Books is immediately available to Live site when manage it in Staging site."
 	@priority = "5"
 	test ViewDataChangesOfStyleBookAreImmediatelyAvailableToLiveSite {
 		property portal.acceptance = "true";

@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-116078. Can navigate to preview page via page preview info bar but not interact with preview page in style book editor."
+	@description = "This is a test for LPS-116078. Can navigate to preview page via page preview info bar but not interact with preview page in style book editor."
 	@priority = "4"
 	test CanNavigateToPreviewPageViaPagePreviewInfoBarButNotAllowInteractWithPreviewPage {
 		task ("Add a content page") {
@@ -122,7 +122,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-116078. Can not preview style book when there are no pages in site."
+	@description = "This is a test for LPS-116078. Can not preview style book when there are no pages in site."
 	@priority = "4"
 	test CannotPreviewStyleBookWhenSiteWithoutPage {
 		task ("Add a style book") {
@@ -142,7 +142,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-121979 and LPS-120005. Change the configuration of page won't break the connection with its style book."
+	@description = "This is a test for LPS-121979 and LPS-120005. Change the configuration of page won't break the connection with its style book."
 	@priority = "5"
 	test ChangeConfigurationOfPageBasedOnStyleBook {
 		property portal.acceptance = "true";
@@ -245,7 +245,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-116106. Page Creator can change style book of content page via Look and Feel settings."
+	@description = "This is a test for LPS-116106. Page Creator can change style book of content page via Look and Feel settings."
 	@priority = "4"
 	test ChangeStyleBookOfContentPageViaLookAndFeel {
 		task ("Add a style book") {
@@ -470,7 +470,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-116106. Page Creator can change style book of widget page via Look and Feel settings."
+	@description = "This is a test for LPS-116106. Page Creator can change style book of widget page via Look and Feel settings."
 	@priority = "4"
 	test ChangeStyleBookOfWidgetPageViaLookAndFeel {
 		task ("Add a style book") {
@@ -607,7 +607,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-119898. When editing a style book you can preview the changes instantly."
+	@description = "This is a test for LPS-119898. When editing a style book you can preview the changes instantly."
 	@priority = "4"
 	test PreviewBackgroundColorWhenEditingStyleBook {
 		task ("Add a content page") {
@@ -669,7 +669,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-116078. Can preview the effect on page when edit the style book."
+	@description = "This is a test for LPS-116078. Can preview the effect on page when edit the style book."
 	@priority = "5"
 	test PreviewTheEffectOnPageInStyleBookEditor {
 		property portal.acceptance = "true";

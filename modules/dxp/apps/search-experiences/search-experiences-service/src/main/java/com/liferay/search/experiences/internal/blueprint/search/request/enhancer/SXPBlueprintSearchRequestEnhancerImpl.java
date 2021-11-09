@@ -28,6 +28,8 @@ import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.significance.SignificanceHeuristics;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
@@ -66,9 +68,21 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		SearchRequestBuilder searchRequestBuilder,
 		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint) {
 
-		_enhance(
-			searchRequestBuilder,
-			SXPBlueprintUtil.toSXPBlueprint(null, sxpBlueprint));
+		DTOConverter
+			<com.liferay.search.experiences.model.SXPBlueprint, SXPBlueprint>
+				dtoConverter =
+					(DTOConverter
+						<com.liferay.search.experiences.model.SXPBlueprint,
+						 SXPBlueprint>)_dtoConverterRegistry.getDTOConverter(
+							 com.liferay.search.experiences.model.SXPBlueprint.
+								 class.getName());
+
+		try {
+			_enhance(searchRequestBuilder, dtoConverter.toDTO(sxpBlueprint));
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	@Override
@@ -216,6 +230,9 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 	@Reference
 	private ComplexQueryPartBuilderFactory _complexQueryPartBuilderFactory;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private FieldConfigBuilderFactory _fieldConfigBuilderFactory;

@@ -1,0 +1,666 @@
+{
+	"configuration": {
+		"advanced": {
+		},
+		"aggregationConfiguration": {
+			"aggs": {
+				"avg-test": {
+					"avg": {
+						"field": "content_en_US_length_sortable",
+						"missing": 1
+					}
+				},
+				"avg_bucket-test": {
+					"avg_bucket": {
+						"buckets_path": "pipeline_test_parent>content_lengths",
+						"gap_policy": "skip"
+					}
+				},
+				"bucket_script-test": {
+					"aggs": {
+						"bucket_script": {
+							"bucket_script": {
+								"buckets_path": {
+									"restaurantContentLengths": "restaurants>restaurant_content_lengths",
+									"totalContentLengths": "content_lengths"
+								},
+								"description": "Percentage content of restaurant-tagged content lengths of all content lenghts",
+								"script": "params.restaurantContentLengths / params.totalContentLengths * 100"
+							}
+						},
+						"content_lengths": {
+							"sum": {
+								"field": "content_en_US_length_sortable"
+							}
+						},
+						"restaurants": {
+							"aggs": {
+								"restaurant_content_lengths": {
+									"sum": {
+										"field": "content_en_US_length_sortable"
+									}
+								}
+							},
+							"filter": {
+								"term": {
+									"assetTagNames.raw": "restaurant"
+								}
+							}
+						}
+					},
+					"date_histogram": {
+						"date_histogram_interval": "minute",
+						"description": "Modifications histogram",
+						"field": "modified"
+					}
+				},
+				"bucket_selector-test": {
+					"aggs": {
+						"bucket_selector": {
+							"bucket_selector": {
+								"buckets_path": {
+									"sumAllLengths": "content_lengths"
+								},
+								"script": "params.sumAllLengths > 140"
+							}
+						},
+						"content_lengths": {
+							"sum": {
+								"field": "content_en_US_length_sortable"
+							}
+						}
+					},
+					"date_histogram": {
+						"date_histogram_interval": "minute",
+						"description": "Modifications histogram",
+						"field": "modified"
+					}
+				},
+				"cardinality-test": {
+					"cardinality": {
+						"field": "assetTagNames.raw"
+					}
+				},
+				"cumulative_sum-test": {
+					"aggs": {
+						"content_lengths": {
+							"sum": {
+								"field": "content_en_US_length_sortable"
+							}
+						},
+						"cumulative_sum": {
+							"cumulative_sum": {
+								"buckets_path": "content_lengths"
+							}
+						}
+					},
+					"date_histogram": {
+						"date_histogram_interval": "minute",
+						"description": "Modifications histogram",
+						"field": "modified"
+					}
+				},
+				"date_histogram-test": {
+					"date_histogram": {
+						"date_histogram_interval": "minute",
+						"field": "modified",
+						"keyed": true,
+						"min_doc_count": 1,
+						"order": {
+							"_count": "asc"
+						}
+					}
+				},
+				"date_range-test": {
+					"date_range": {
+						"field": "modified",
+						"format": "yyyyMMddHHmmss",
+						"keyed": true,
+						"min_doc_count": 1,
+						"ranges": [
+							{
+								"from": "20200503000000",
+								"key": "old-ones",
+								"to": "20210503000000"
+							},
+							{
+								"from": "20210503000000",
+								"key": "new-ones",
+								"to": "20220503000000"
+							}
+						]
+					}
+				},
+				"derivate_test": {
+					"aggs": {
+						"content_lengths": {
+							"sum": {
+								"field": "content_en_US_length_sortable"
+							}
+						},
+						"derivative": {
+							"derivative": {
+								"buckets_path": "content_lengths"
+							}
+						}
+					},
+					"date_histogram": {
+						"date_histogram_interval": "minute",
+						"description": "Modifications histogram",
+						"field": "modified"
+					}
+				},
+				"extended_stat_bucket-test": {
+					"extended_stats_bucket": {
+						"buckets_path": "pipeline_test_parent>content_lengths"
+					}
+				},
+				"extended_stats-test": {
+					"extended_stats": {
+						"field": "content_en_US_length_sortable",
+						"sigma": 3
+					}
+				},
+				"filter-test": {
+					"aggs": {
+						"avg_content_length": {
+							"avg": {
+								"field": "content_en_US_length_sortable"
+							}
+						}
+					},
+					"filter": {
+						"term": {
+							"entryClassName": "com.liferay.journal.model.JournalArticle"
+						}
+					}
+				},
+				"filters-test": {
+					"filters": {
+						"filters": {
+							"blog-entries": {
+								"term": {
+									"entryClassName": "com.liferay.blogs.model.BlogsEntry;"
+								}
+							},
+							"journal-articles": {
+								"term": {
+									"entryClassName": "com.liferay.journal.model.JournalArticle"
+								}
+							}
+						},
+						"other_bucket": true,
+						"other_bucket_key": "other_messages"
+					}
+				},
+				"geo_bounds-test": {
+					"geo_bounds": {
+						"field": "expando__keyword__custom_fields__location_geolocation",
+						"wrap_longitude": true
+					}
+				},
+				"geo_centroid-test": {
+					"geo_centroid": {
+						"field": "expando__keyword__custom_fields__location_geolocation"
+					}
+				},
+				"geo_distance-test": {
+					"geo_distance": {
+						"field": "expando__keyword__custom_fields__location_geolocation",
+						"keyed": true,
+						"origin": "41.8781,87.6298",
+						"ranges": [
+							{
+								"key": "a",
+								"to": 8500
+							},
+							{
+								"from": 8500,
+								"key": "b",
+								"to": 11000
+							},
+							{
+								"from": 11000,
+								"key": "c"
+							}
+						],
+						"unit": "mi"
+					}
+				},
+				"geohash_grid-test": {
+					"geohash_grid": {
+						"field": "expando__keyword__custom_fields__location_geolocation",
+						"precision": 3,
+						"shard_size": 100,
+						"size": 10000
+					}
+				},
+				"global-test": {
+					"global": {
+					}
+				},
+				"histogram-test": {
+					"histogram": {
+						"field": "content_en_US_length_sortable",
+						"hard_bounds": {
+							"max": 50,
+							"min": 10
+						},
+						"interval": 10,
+						"keyed": true,
+						"min_doc_count": 1,
+						"order": {
+							"_count": "asc"
+						}
+					}
+				},
+				"max-test": {
+					"max": {
+						"field": "content_en_US_length_sortable"
+					}
+				},
+				"max_bucket-test": {
+					"max_bucket": {
+						"buckets_path": "pipeline_test_parent>content_lengths"
+					}
+				},
+				"min-test": {
+					"min": {
+						"field": "content_en_US_length_sortable"
+					}
+				},
+				"min_bucket-test": {
+					"max_bucket": {
+						"buckets_path": "pipeline_test_parent>content_lengths"
+					}
+				},
+				"missing-test": {
+					"missing": {
+						"field": "price"
+					}
+				},
+				"moving_function-test": {
+					"aggs": {
+						"content_lengths": {
+							"sum": {
+								"field": "content_en_US_length_sortable"
+							}
+						},
+						"moving_function": {
+							"moving_function": {
+								"buckets_path": "content_lengths",
+								"script": "MovingFunctions.unweightedAvg(values)",
+								"window": 10
+							}
+						}
+					},
+					"date_histogram": {
+						"date_histogram_interval": "minute",
+						"description": "Modifications histogram",
+						"field": "modified"
+					}
+				},
+				"nested-test": {
+					"aggs": {
+						"nested-terms": {
+							"terms": {
+								"field": "ddmFieldArray.ddmFieldName"
+							}
+						}
+					},
+					"nested": {
+						"description": "Number of unique nested field values",
+						"enabled": true,
+						"path": "ddmFieldArray"
+					}
+				},
+				"percentile_ranks-test": {
+					"percentile_ranks": {
+						"field": "content_en_US_length_sortable",
+						"values": [
+							10,
+							20,
+							30,
+							40,
+							50
+						]
+					}
+				},
+				"percentiles-test": {
+					"percentiles": {
+						"field": "content_en_US_length_sortable",
+						"percents": [
+							25,
+							50,
+							75,
+							99
+						]
+					}
+				},
+				"percentiles_bucket-test": {
+					"percentiles_bucket": {
+						"buckets_path": "pipeline_test_parent>content_lengths",
+						"percents": [
+							25,
+							50,
+							75
+						]
+					}
+				},
+				"pipeline_test_parent": {
+					"aggs": {
+						"content_lengths": {
+							"sum": {
+								"field": "content_en_US_length_sortable"
+							}
+						}
+					},
+					"date_histogram": {
+						"date_histogram_interval": "minute",
+						"description": "Modifications histogram",
+						"field": "modified"
+					}
+				},
+				"range-test": {
+					"range": {
+						"description": "Content length ranges",
+						"enabled": true,
+						"field": "content_en_US_length_sortable",
+						"keyed": true,
+						"missing": 1,
+						"ranges": [
+							{
+								"to": 15
+							},
+							{
+								"from": 15,
+								"to": 25
+							},
+							{
+								"from": 25
+							}
+						]
+					}
+				},
+				"reverse_nested-test": {
+					"aggs": {
+						"reverse_nested-top_field_names": {
+							"aggs": {
+								"reverse_nested-tags_to_content": {
+									"aggs": {
+										"reverse_nested-tags_per_content": {
+											"terms": {
+												"field": "assetTagNames.raw"
+											}
+										}
+									},
+									"reverse_nested": {
+									}
+								}
+							},
+							"terms": {
+								"field": "ddmFieldArray.ddmFieldName"
+							}
+						}
+					},
+					"nested": {
+						"path": "ddmFieldArray"
+					}
+				},
+				"scripted_metric-test": {
+					"scripted_metric": {
+						"combine_script": "int length = 0; for (t in state.lengths) { length += t } return length",
+						"description": "Metrics: scripted metric",
+						"enabled": true,
+						"init_script": "state.lengths = []",
+						"map_script": "state.lengths.add(doc.content_en_US_length_sortable.value)",
+						"params": {
+						},
+						"reduce_script": "int length = 0; for (a in states) { length += a } return length"
+					}
+				},
+				"serial_differencing-test": {
+					"aggs": {
+						"content_lengths": {
+							"sum": {
+								"field": "content_en_US_length_sortable"
+							}
+						},
+						"serial_differencing": {
+							"serial_differencing": {
+								"buckets_path": "content_lengths",
+								"lag": 30
+							}
+						}
+					},
+					"date_histogram": {
+						"date_histogram_interval": "minute",
+						"description": "Modifications histogram",
+						"field": "modified"
+					}
+				},
+				"significant_terms-test": {
+					"significant_terms": {
+						"enabled": false,
+						"field": "assetTagNames.raw"
+					}
+				},
+				"significant_text-test": {
+					"significant_text": {
+						"enabled": false,
+						"field": "title_en_US"
+					}
+				},
+				"stats-test": {
+					"stats": {
+						"description": "Statistics for content length",
+						"field": "content_en_US_length_sortable"
+					}
+				},
+				"stats_bucket-test": {
+					"stats_bucket": {
+						"buckets_path": "pipeline_test_parent>content_lengths",
+						"description": "Stats of the content lengths by modification per minute"
+					}
+				},
+				"sum-test": {
+					"sum": {
+						"description": "Sum of all content lengths:",
+						"field": "content_en_US_length_sortable"
+					}
+				},
+				"sum_bucket-test": {
+					"sum_bucket": {
+						"buckets_path": "pipeline_test_parent>content_lengths",
+						"description": "Sum of the content lengths by modification per minute"
+					}
+				},
+				"terms-test": {
+					"terms": {
+						"exclude": [
+							"establishment"
+						],
+						"field": "assetTagNames.raw",
+						"shard_min_doc_count": 1,
+						"shard_size": 1,
+						"size": 10
+					}
+				},
+				"top_hits-test": {
+					"aggs": {
+						"top-hits": {
+							"top_hits": {
+								"_source": {
+									"includes": [
+										"title_en_US",
+										"articleId"
+									]
+								},
+								"doc_value_fields": [
+									"articleId"
+								],
+								"explain": true,
+								"from": 0,
+								"highlight": {
+									"fields": {
+										"content${context.language_id}": {
+										},
+										"title${context.language_id}": {
+										}
+									},
+									"fragment_size": 50,
+									"require_field_match": true,
+									"snippet_size": 10
+								},
+								"size": 3,
+								"track_scores": false,
+								"version": false
+							}
+						}
+					},
+					"terms": {
+						"field": "assetTagNames.raw",
+						"size": 3
+					}
+				},
+				"value_count-test": {
+					"value_count": {
+						"description": "Number of asset tag name values",
+						"field": "assetTagNames.raw"
+					}
+				},
+				"weighted_avg-test": {
+					"weighted_avg": {
+						"description": "Weighted average of content length by version count",
+						"value": {
+							"field": "content_en_US_length_sortable"
+						},
+						"weight": {
+							"field": "versionCount_sortable"
+						}
+					}
+				}
+			}
+		},
+		"facet": {
+		},
+		"general": {
+			"clauseContributorsExcludes": [
+			],
+			"clauseContributorsIncludes": [
+				"com.liferay.asset.internal.search.spi.model.query.contributor.AssetEntryModelPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.AssetCategoryIdsQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.AssetTagNamesQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.FolderIdQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.GroupIdQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.LayoutQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.UserIdQueryPreFilterContributor",
+				"com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryModelPreFilterContributor",
+				"com.liferay.account.internal.search.spi.model.query.contributor.OrganizationModelPreFilterContributor",
+				"com.liferay.account.internal.search.spi.model.query.contributor.UserModelPreFilterContributor",
+				"com.liferay.address.internal.search.spi.model.query.contributor.AddressModelPreFilterContributor",
+				"com.liferay.analytics.settings.web.internal.search.spi.model.query.contributor.UserModelPreFilterContributor",
+				"com.liferay.asset.categories.internal.search.spi.model.query.contributor.AssetCategoryModelPreFilterContributor",
+				"com.liferay.blogs.internal.search.spi.model.query.contributor.BlogsEntryModelPreFilterContributor",
+				"com.liferay.bookmarks.internal.search.spi.model.query.contributor.BookmarksEntryModelPreFilterContributor",
+				"com.liferay.bookmarks.internal.search.spi.model.query.contributor.BookmarksFolderModelPreFilterContributor",
+				"com.liferay.calendar.internal.search.spi.model.query.contributor.CalendarBookingModelPreFilterContributor",
+				"com.liferay.change.tracking.internal.search.spi.model.query.contributor.CTModelPreFilterContributor",
+				"com.liferay.data.engine.internal.search.spi.model.query.contributor.DEDataListViewModelPreFilterContributor",
+				"com.liferay.document.library.internal.search.spi.model.query.contributor.DLFileEntryModelPreFilterContributor",
+				"com.liferay.document.library.internal.search.spi.model.query.contributor.DLFolderModelPreFilterContributor",
+				"com.liferay.dynamic.data.lists.internal.search.spi.model.query.contributor.DDLRecordModelPreFilterContributor",
+				"com.liferay.dynamic.data.lists.internal.search.spi.model.query.contributor.DDLRecordSetModelPreFilterContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMFormInstanceRecordModelPreFilterContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMStructureLayoutModelPreFilterContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMStructureModelPreFilterContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMTemplateModelPreFilterContributor",
+				"com.liferay.exportimport.internal.search.spi.model.query.contributor.ExportImportConfigurationModelPreFilterContributor",
+				"com.liferay.layout.internal.search.spi.model.query.contributor.LayoutModelPreFilterContributor",
+				"com.liferay.message.boards.internal.search.spi.model.query.contributor.MBCategoryModelPreFilterContributor",
+				"com.liferay.message.boards.internal.search.spi.model.query.contributor.MBMessageModelPreFilterContributor",
+				"com.liferay.message.boards.internal.search.spi.model.query.contributor.MBThreadModelPreFilterContributor",
+				"com.liferay.organizations.internal.search.spi.model.query.contributor.OrganizationModelPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.StagingModelPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.WorkflowStatusModelPreFilterContributor",
+				"com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor.KaleoInstanceModelPreFilterContributor",
+				"com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor.KaleoInstanceTokenModelPreFilterContributor",
+				"com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor.KaleoLogModelPreFilterContributor",
+				"com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor.KaleoTaskInstanceTokenModelPreFilterContributor",
+				"com.liferay.redirect.internal.search.spi.model.query.contributor.RedirectNotFoundEntryModelPreFilterContributor",
+				"com.liferay.segments.internal.search.spi.model.query.contributor.SegmentsEntryModelPreFilterContributor",
+				"com.liferay.segments.internal.search.spi.model.query.contributor.UserModelPreFilterContributor",
+				"com.liferay.users.admin.internal.search.spi.model.query.contributor.UserModelPreFilterContributor",
+				"com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor",
+				"com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor",
+				"com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor",
+				"com.liferay.asset.categories.internal.search.spi.model.query.contributor.AssetCategoryKeywordQueryContributor",
+				"com.liferay.asset.categories.internal.search.spi.model.query.contributor.AssetVocabularyKeywordQueryContributor",
+				"com.liferay.asset.tags.internal.search.spi.model.query.contributor.AssetTagKeywordQueryContributor",
+				"com.liferay.blogs.internal.search.spi.model.query.contributor.BlogsEntryKeywordQueryContributor",
+				"com.liferay.calendar.internal.search.spi.model.query.contributor.CalendarBookingKeywordQueryContributor",
+				"com.liferay.calendar.internal.search.spi.model.query.contributor.CalendarKeywordQueryContributor",
+				"com.liferay.contacts.internal.search.spi.model.query.contributor.ContactKeywordQueryContributor",
+				"com.liferay.data.engine.internal.search.spi.model.query.contributor.DEDataListViewKeywordQueryContributor",
+				"com.liferay.depot.internal.search.spi.model.query.contributor.DepotEntryKeywordQueryContributor",
+				"com.liferay.document.library.internal.search.spi.model.query.contributor.DLFileEntryKeywordQueryContributor",
+				"com.liferay.document.library.internal.search.spi.model.query.contributor.DLFileEntryTypeKeywordQueryContributor",
+				"com.liferay.dynamic.data.lists.internal.search.spi.model.query.contributor.DDLRecordKeywordQueryContributor",
+				"com.liferay.dynamic.data.lists.internal.search.spi.model.query.contributor.DDLRecordSetKeywordQueryContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMFormInstanceRecordKeywordQueryContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMStructureKeywordQueryContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMStructureLayoutKeywordQueryContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMTemplateKeywordQueryContributor",
+				"com.liferay.exportimport.internal.search.spi.model.query.contributor.ExportImportConfigurationKeywordQueryContributor",
+				"com.liferay.layout.internal.search.spi.model.query.contributor.LayoutKeywordQueryContributor",
+				"com.liferay.message.boards.internal.search.spi.model.query.contributor.MBMessageKeywordQueryContributor",
+				"com.liferay.organizations.internal.search.spi.model.query.contributor.OrganizationKeywordQueryContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.AlwaysPresentFieldsKeywordQueryContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.AssetCategoryTitlesKeywordQueryContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.AssetInternalCategoryTitlesKeywordQueryContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.AssetTagNamesKeywordQueryContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.DefaultKeywordQueryContributor",
+				"com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor.KaleoInstanceTokenKeywordQueryContributor",
+				"com.liferay.redirect.internal.search.spi.model.query.contributor.RedirectEntryKeywordQueryContributor",
+				"com.liferay.redirect.internal.search.spi.model.query.contributor.RedirectNotFoundEntryKeywordQueryContributor",
+				"com.liferay.segments.internal.search.spi.model.query.contributor.SegmentsEntryKeywordQueryContributor",
+				"com.liferay.translation.internal.search.spi.model.query.contributor.TranslationEntryKeywordQueryContributor",
+				"com.liferay.user.groups.admin.internal.search.spi.model.query.contributor.UserGroupKeywordQueryContributor",
+				"com.liferay.users.admin.internal.search.spi.model.query.contributor.UserKeywordQueryContributor"
+			],
+			"searchableAssetTypes": [
+				"com.liferay.blogs.model.BlogsEntry",
+				"com.liferay.bookmarks.model.BookmarksEntry",
+				"com.liferay.bookmarks.model.BookmarksFolder",
+				"com.liferay.calendar.model.CalendarBooking",
+				"com.liferay.commerce.product.model.CPDefinition",
+				"com.liferay.document.library.kernel.model.DLFileEntry",
+				"com.liferay.document.library.kernel.model.DLFolder",
+				"com.liferay.dynamic.data.lists.model.DDLRecord",
+				"com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord",
+				"com.liferay.journal.model.JournalArticle",
+				"com.liferay.journal.model.JournalFolder",
+				"com.liferay.knowledge.base.model.KBArticle",
+				"com.liferay.message.boards.model.MBMessage",
+				"com.liferay.portal.kernel.model.Layout",
+				"com.liferay.portal.kernel.model.User",
+				"com.liferay.wiki.model.WikiPage"
+			]
+		},
+		"highlight": {
+		},
+		"parameters": {
+		},
+		"queryConfiguration": {
+			"applyIndexerClauses": true
+		},
+		"sortConfiguration": {
+		}
+	},
+	"description_i18n": {
+		"en_US": "All supported aggregations test"
+	},
+	"title_i18n": {
+		"en_US": "Aggregations Test"
+	}
+}

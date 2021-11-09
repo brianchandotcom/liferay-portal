@@ -1,0 +1,458 @@
+{
+	"configuration": {
+		"advanced": {
+		},
+		"aggregationConfiguration": {
+		},
+		"facet": {
+		},
+		"general": {
+			"clauseContributorsExcludes": [
+			],
+			"clauseContributorsIncludes": [
+				"com.liferay.asset.internal.search.spi.model.query.contributor.AssetEntryModelPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.AssetCategoryIdsQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.AssetTagNamesQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.FolderIdQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.GroupIdQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.LayoutQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.UserIdQueryPreFilterContributor",
+				"com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryModelPreFilterContributor",
+				"com.liferay.account.internal.search.spi.model.query.contributor.OrganizationModelPreFilterContributor",
+				"com.liferay.account.internal.search.spi.model.query.contributor.UserModelPreFilterContributor",
+				"com.liferay.address.internal.search.spi.model.query.contributor.AddressModelPreFilterContributor",
+				"com.liferay.analytics.settings.web.internal.search.spi.model.query.contributor.UserModelPreFilterContributor",
+				"com.liferay.asset.categories.internal.search.spi.model.query.contributor.AssetCategoryModelPreFilterContributor",
+				"com.liferay.blogs.internal.search.spi.model.query.contributor.BlogsEntryModelPreFilterContributor",
+				"com.liferay.bookmarks.internal.search.spi.model.query.contributor.BookmarksEntryModelPreFilterContributor",
+				"com.liferay.bookmarks.internal.search.spi.model.query.contributor.BookmarksFolderModelPreFilterContributor",
+				"com.liferay.calendar.internal.search.spi.model.query.contributor.CalendarBookingModelPreFilterContributor",
+				"com.liferay.change.tracking.internal.search.spi.model.query.contributor.CTModelPreFilterContributor",
+				"com.liferay.data.engine.internal.search.spi.model.query.contributor.DEDataListViewModelPreFilterContributor",
+				"com.liferay.document.library.internal.search.spi.model.query.contributor.DLFileEntryModelPreFilterContributor",
+				"com.liferay.document.library.internal.search.spi.model.query.contributor.DLFolderModelPreFilterContributor",
+				"com.liferay.dynamic.data.lists.internal.search.spi.model.query.contributor.DDLRecordModelPreFilterContributor",
+				"com.liferay.dynamic.data.lists.internal.search.spi.model.query.contributor.DDLRecordSetModelPreFilterContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMFormInstanceRecordModelPreFilterContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMStructureLayoutModelPreFilterContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMStructureModelPreFilterContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMTemplateModelPreFilterContributor",
+				"com.liferay.exportimport.internal.search.spi.model.query.contributor.ExportImportConfigurationModelPreFilterContributor",
+				"com.liferay.layout.internal.search.spi.model.query.contributor.LayoutModelPreFilterContributor",
+				"com.liferay.message.boards.internal.search.spi.model.query.contributor.MBCategoryModelPreFilterContributor",
+				"com.liferay.message.boards.internal.search.spi.model.query.contributor.MBMessageModelPreFilterContributor",
+				"com.liferay.message.boards.internal.search.spi.model.query.contributor.MBThreadModelPreFilterContributor",
+				"com.liferay.organizations.internal.search.spi.model.query.contributor.OrganizationModelPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.StagingModelPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.WorkflowStatusModelPreFilterContributor",
+				"com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor.KaleoInstanceModelPreFilterContributor",
+				"com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor.KaleoInstanceTokenModelPreFilterContributor",
+				"com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor.KaleoLogModelPreFilterContributor",
+				"com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor.KaleoTaskInstanceTokenModelPreFilterContributor",
+				"com.liferay.redirect.internal.search.spi.model.query.contributor.RedirectNotFoundEntryModelPreFilterContributor",
+				"com.liferay.segments.internal.search.spi.model.query.contributor.SegmentsEntryModelPreFilterContributor",
+				"com.liferay.segments.internal.search.spi.model.query.contributor.UserModelPreFilterContributor",
+				"com.liferay.users.admin.internal.search.spi.model.query.contributor.UserModelPreFilterContributor",
+				"com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor",
+				"com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor",
+				"com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor",
+				"com.liferay.asset.categories.internal.search.spi.model.query.contributor.AssetCategoryKeywordQueryContributor",
+				"com.liferay.asset.categories.internal.search.spi.model.query.contributor.AssetVocabularyKeywordQueryContributor",
+				"com.liferay.asset.tags.internal.search.spi.model.query.contributor.AssetTagKeywordQueryContributor",
+				"com.liferay.blogs.internal.search.spi.model.query.contributor.BlogsEntryKeywordQueryContributor",
+				"com.liferay.calendar.internal.search.spi.model.query.contributor.CalendarBookingKeywordQueryContributor",
+				"com.liferay.calendar.internal.search.spi.model.query.contributor.CalendarKeywordQueryContributor",
+				"com.liferay.contacts.internal.search.spi.model.query.contributor.ContactKeywordQueryContributor",
+				"com.liferay.data.engine.internal.search.spi.model.query.contributor.DEDataListViewKeywordQueryContributor",
+				"com.liferay.depot.internal.search.spi.model.query.contributor.DepotEntryKeywordQueryContributor",
+				"com.liferay.document.library.internal.search.spi.model.query.contributor.DLFileEntryKeywordQueryContributor",
+				"com.liferay.document.library.internal.search.spi.model.query.contributor.DLFileEntryTypeKeywordQueryContributor",
+				"com.liferay.dynamic.data.lists.internal.search.spi.model.query.contributor.DDLRecordKeywordQueryContributor",
+				"com.liferay.dynamic.data.lists.internal.search.spi.model.query.contributor.DDLRecordSetKeywordQueryContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMFormInstanceRecordKeywordQueryContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMStructureKeywordQueryContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMStructureLayoutKeywordQueryContributor",
+				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMTemplateKeywordQueryContributor",
+				"com.liferay.exportimport.internal.search.spi.model.query.contributor.ExportImportConfigurationKeywordQueryContributor",
+				"com.liferay.layout.internal.search.spi.model.query.contributor.LayoutKeywordQueryContributor",
+				"com.liferay.message.boards.internal.search.spi.model.query.contributor.MBMessageKeywordQueryContributor",
+				"com.liferay.organizations.internal.search.spi.model.query.contributor.OrganizationKeywordQueryContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.AlwaysPresentFieldsKeywordQueryContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.AssetCategoryTitlesKeywordQueryContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.AssetInternalCategoryTitlesKeywordQueryContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.AssetTagNamesKeywordQueryContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.DefaultKeywordQueryContributor",
+				"com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor.KaleoInstanceTokenKeywordQueryContributor",
+				"com.liferay.redirect.internal.search.spi.model.query.contributor.RedirectEntryKeywordQueryContributor",
+				"com.liferay.redirect.internal.search.spi.model.query.contributor.RedirectNotFoundEntryKeywordQueryContributor",
+				"com.liferay.segments.internal.search.spi.model.query.contributor.SegmentsEntryKeywordQueryContributor",
+				"com.liferay.translation.internal.search.spi.model.query.contributor.TranslationEntryKeywordQueryContributor",
+				"com.liferay.user.groups.admin.internal.search.spi.model.query.contributor.UserGroupKeywordQueryContributor",
+				"com.liferay.users.admin.internal.search.spi.model.query.contributor.UserKeywordQueryContributor"
+			]
+		},
+		"highlight": {
+		},
+		"parameters": {
+		},
+		"queryConfiguration": {
+			"applyIndexerClauses": true,
+			"queryEntries": [
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"wrapper": {
+									"query": {
+										"function_score": {
+											"boost": 2,
+											"gauss": {
+												"expando__keyword__custom_fields__location_geolocation": {
+													"decay": 0.3,
+													"offset": 0,
+													"origin": {
+														"lat": "${ipstack.latitude}",
+														"lon": "${ipstack.longitude}"
+													},
+													"scale": "5000km"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					]
+				},
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"wrapper": {
+									"query": {
+										"bool": {
+											"must": [
+												{
+													"terms": {
+														"entryClassName": [
+															"com.liferay.portal.kernel.model.Layout",
+															"com.liferay.journal.model.JournalArticle"
+														]
+													}
+												},
+												{
+													"term": {
+														"defaultLanguageId": {
+															"boost": 20,
+															"value": "${context.language_id}"
+														}
+													}
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					]
+				},
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"wrapper": {
+									"query": {
+										"terms": {
+											"boost": 10,
+											"groupId": "${user.group_ids}"
+										}
+									}
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		"sortConfiguration": {
+		}
+	},
+	"description_i18n": {
+		"en_US": "A sample Blueprint for personalizing Liferay search. Builds on top of default Liferay search clauses and boosts contents matching user's properties like language, location, groups and segments. Geolocation field has to be configured and data provider be enabled in Blueprints configuration to take advantage of location features."
+	},
+	"elementInstances": [
+		{
+			"sxpElement": {
+				"description_i18n": {
+					"en_US": "Boost contents tagged close to my location with a Gaussian function"
+				},
+				"elementDefinition": {
+					"category": "boost",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "should",
+											"query": {
+												"wrapper": {
+													"query": {
+														"function_score": {
+															"boost": "${configuration.boost}",
+															"gauss": {
+																"${configuration.field}": {
+																	"decay": "${configuration.decay}",
+																	"offset": 0,
+																	"origin": {
+																		"lat": "${ipstack.latitude}",
+																		"lon": "${ipstack.longitude}"
+																	},
+																	"scale": "${configuration.scale}"
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					"icon": "thumbs-up",
+					"uiConfiguration": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"helpText": "A geopoint field",
+										"label": "Field",
+										"name": "field",
+										"uiType": "text",
+										"valueDefinition": {
+											"defaultValueString": "expando__keyword__custom_fields__location_geolocation",
+											"type": "String"
+										}
+									},
+									{
+										"label": "Decay",
+										"name": "decay",
+										"uiType": "slider",
+										"valueDefinition": {
+											"defaultValueFloat": 0.3,
+											"maxValueFloat": 0.99,
+											"minValueFloat": 0.01,
+											"stepValueFloat": 0.1,
+											"type": "Float"
+										}
+									},
+									{
+										"label": "Scale",
+										"name": "scale",
+										"uiType": "number",
+										"unit": "km",
+										"unitSuffix": "km",
+										"valueDefinition": {
+											"defaultValueInteger": 100,
+											"minValueInteger": 0,
+											"type": "Integer"
+										}
+									},
+									{
+										"label": "Boost",
+										"name": "boost",
+										"uiType": "number",
+										"valueDefinition": {
+											"defaultValueInteger": 2,
+											"minValueInteger": 0,
+											"type": "Integer"
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"title_i18n": {
+					"en_US": "Boost Proximity"
+				},
+				"type": 10
+			},
+			"type": 10,
+			"uiConfigurationValues": {
+				"boost": {
+					"defaultValueInteger": 2,
+					"type": "Integer"
+				},
+				"decay": {
+					"defaultValueFloat": 0.3,
+					"type": "Float"
+				},
+				"field": {
+					"defaultValueString": "expando__keyword__custom_fields__location_geolocation",
+					"type": "String"
+				},
+				"scale": {
+					"defaultValueInteger": 5000,
+					"type": "Integer"
+				}
+			}
+		},
+		{
+			"sxpElement": {
+				"description_i18n": {
+					"en_US": "Boost contents having the current session language as the default language"
+				},
+				"elementDefinition": {
+					"category": "boost",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "should",
+											"query": {
+												"wrapper": {
+													"query": {
+														"bool": {
+															"must": [
+																{
+																	"terms": {
+																		"entryClassName": [
+																			"com.liferay.portal.kernel.model.Layout",
+																			"com.liferay.journal.model.JournalArticle"
+																		]
+																	}
+																},
+																{
+																	"term": {
+																		"defaultLanguageId": {
+																			"boost": "${configuration.boost}",
+																			"value": "${context.language_id}"
+																		}
+																	}
+																}
+															]
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					"icon": "thumbs-up",
+					"uiConfiguration": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"label": "Boost",
+										"name": "boost",
+										"uiType": "number",
+										"valueDefinition": {
+											"defaultValueInteger": 20,
+											"minValueInteger": 0,
+											"type": "Integer"
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"title_i18n": {
+					"en_US": "Boost Contents for the Current Language"
+				},
+				"type": 10
+			},
+			"type": 10,
+			"uiConfigurationValues": {
+				"boost": {
+					"defaultValueInteger": 20,
+					"type": "Integer"
+				}
+			}
+		},
+		{
+			"sxpElement": {
+				"description_i18n": {
+					"en_US": "Boost contents on sites I'm a member of"
+				},
+				"elementDefinition": {
+					"category": "boost",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "should",
+											"query": {
+												"wrapper": {
+													"query": {
+														"terms": {
+															"boost": "${configuration.boost}",
+															"groupId": "${user.group_ids}"
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					"icon": "thumbs-up",
+					"uiConfiguration": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"label": "Boost",
+										"name": "boost",
+										"uiType": "number",
+										"valueDefinition": {
+											"defaultValueInteger": 10,
+											"minValueInteger": 0,
+											"type": "Integer"
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"title_i18n": {
+					"en_US": "Boost Contents on My Sites"
+				},
+				"type": 10
+			},
+			"type": 10,
+			"uiConfigurationValues": {
+				"boost": {
+					"defaultValueInteger": 10,
+					"type": "Integer"
+				}
+			}
+		}
+	],
+	"title_i18n": {
+		"en_US": "Personalization Test"
+	}
+}

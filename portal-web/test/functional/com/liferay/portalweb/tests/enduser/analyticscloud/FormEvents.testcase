@@ -151,7 +151,7 @@ definition {
 				value = "${formId}");
 		}
 
-		task ("View the focusDuration of fieldBlurred event is greater than 2000 ms") {
+		task ("View the focusDuration of fieldBlurred event is greater than 0 ms") {
 			var focusDuration = ACUtils.getEventPropertyValue(
 				applicationId = "Form",
 				eventId = "fieldBlurred",
@@ -159,7 +159,7 @@ definition {
 
 			TestUtils.isGreaterThan(
 				actual = "${focusDuration}",
-				expected = "2000");
+				expected = "0");
 		}
 
 		task ("View the fieldName of fieldBlurred event") {

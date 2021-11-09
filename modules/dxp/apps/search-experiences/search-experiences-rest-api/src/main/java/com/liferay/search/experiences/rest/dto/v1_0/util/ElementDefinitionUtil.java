@@ -26,7 +26,7 @@ public class ElementDefinitionUtil {
 		return unpack(ElementDefinition.unsafeToDTO(json));
 	}
 
-	protected static ElementDefinition unpack(
+	public static ElementDefinition unpack(
 		ElementDefinition elementDefinition) {
 
 		if (elementDefinition == null) {

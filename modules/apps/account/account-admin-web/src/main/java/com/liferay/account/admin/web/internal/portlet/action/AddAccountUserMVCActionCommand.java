@@ -20,8 +20,6 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelService;
-import com.liferay.account.service.AccountEntryService;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
@@ -29,7 +27,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
@@ -83,7 +80,7 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
 		long prefixId = ParamUtil.getLong(actionRequest, "prefixId");
 		long suffixId = ParamUtil.getLong(actionRequest, "suffixId");
-		String jobTitle =  ParamUtil.getString(actionRequest, "jobTitle");
+		String jobTitle = ParamUtil.getString(actionRequest, "jobTitle");
 
 		try {
 			AccountEntryUserRel accountEntryUserRel = null;

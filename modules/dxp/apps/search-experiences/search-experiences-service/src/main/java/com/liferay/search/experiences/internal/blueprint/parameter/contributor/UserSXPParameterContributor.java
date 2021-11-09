@@ -112,8 +112,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				LongArraySXPParameter.class, "current-site-role-ids",
 				"user.current_site_role_ids"),
 			new SXPParameterContributorDefinition(
-				StringSXPParameter.class, "email-address-domain",
-				"user.email_address_domain"),
+				StringSXPParameter.class, "email-domain", "user.email_domain"),
 			new SXPParameterContributorDefinition(
 				StringSXPParameter.class, "first-name", "user.first_name"),
 			new SXPParameterContributorDefinition(

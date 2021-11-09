@@ -57,7 +57,7 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 				"context.company_id", true, searchContext.getCompanyId()));
 		sxpParameters.add(
 			new LongSXPParameter(
-				"context.ct_collection_id", true,
+				"context.publication_id", true,
 				CTCollectionThreadLocal.getCTCollectionId()));
 
 		Locale locale = searchContext.getLocale();
@@ -75,7 +75,7 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 		if (layout != null) {
 			sxpParameters.add(
 				new StringSXPParameter(
-					"context.layout_locale_name", true,
+					"context.layout-name-localized", true,
 					layout.getName(locale, true)));
 			sxpParameters.add(
 				new LongSXPParameter("plid", true, layout.getPlid()));
@@ -113,20 +113,20 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 			new SXPParameterContributorDefinition(
 				LongSXPParameter.class, "company-id", "context.company_id"),
 			new SXPParameterContributorDefinition(
-				LongSXPParameter.class, "ct-collection-id",
+				LongSXPParameter.class, "publication-id",
 				"context.ct_collection_id"),
 			new SXPParameterContributorDefinition(
-				BooleanSXPParameter.class, "staging-group",
+				BooleanSXPParameter.class, "is-staging-group",
 				"context.is_staging_group"),
 			new SXPParameterContributorDefinition(
 				StringSXPParameter.class, "language", "context.language"),
 			new SXPParameterContributorDefinition(
 				StringSXPParameter.class, "language-id", "context.language_id"),
 			new SXPParameterContributorDefinition(
-				StringSXPParameter.class, "layout-locale-name",
-				"context.layout_locale_name"),
+				StringSXPParameter.class, "layout-name-localized",
+				"context.layout-name-localized"),
 			new SXPParameterContributorDefinition(
-				LongSXPParameter.class, "plid", "context.plid"),
+				LongSXPParameter.class, "page-layout-id", "context.plid"),
 			new SXPParameterContributorDefinition(
 				LongSXPParameter.class, "scope-group-id",
 				"context.scope_group_id"));

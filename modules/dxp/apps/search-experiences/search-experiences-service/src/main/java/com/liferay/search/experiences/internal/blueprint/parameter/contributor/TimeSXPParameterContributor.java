@@ -94,7 +94,7 @@ public class TimeSXPParameterContributor implements SXPParameterContributor {
 				_getTimeOfDay(localDateTime.toLocalTime())));
 		sxpParameters.add(
 			new StringSXPParameter(
-				"time.time_zone_locale_name", true,
+				"time.time_zone_name_localized", true,
 				timeZone.getDisplayName(searchContext.getLocale())));
 	}
 
@@ -126,8 +126,8 @@ public class TimeSXPParameterContributor implements SXPParameterContributor {
 			new SXPParameterContributorDefinition(
 				StringSXPParameter.class, "time-of-day", "time.time_of_day"),
 			new SXPParameterContributorDefinition(
-				StringSXPParameter.class, "time-zone-locale-name",
-				"time.time_zone_locale_name"));
+				StringSXPParameter.class, "time-zone-name-localized",
+				"time.time_zone_name_localized"));
 	}
 
 	private String _getTimeOfDay(LocalTime localTime) {

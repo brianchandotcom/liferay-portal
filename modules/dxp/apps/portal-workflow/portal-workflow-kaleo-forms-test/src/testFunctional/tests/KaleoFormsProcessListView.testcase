@@ -149,7 +149,6 @@ definition {
 		KaleoFormsAdmin.viewProcessByPosition(
 			key_order = "3",
 			key_title = "Kaleo Forms Process 1 Edited");
-			
 	}
 
 	@description = "Verify that the user can search a process by description."

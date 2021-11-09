@@ -819,6 +819,13 @@ definition {
 		AssertElementPresent(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 	}
 
+	macro viewProcessByPosition {
+		AssertElementPresent(
+			key_order = "${key_order}",
+			key_title = "${key_title}",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE_ORDER");
+	}
+
 	macro viewProcessDetails {
 		KaleoFormsAdmin.editProcess(kfProcessName = "${kfProcessName}");
 
@@ -1033,13 +1040,6 @@ definition {
 			rowEntry = "${workflowDefinitionTitle}");
 
 		Alert.viewErrorMessage(errorMessage = "Unable to delete the workflow definition that is in use.");
-	}
-
-	macro viewProcessByPosition {
-		AssertElementPresent(
-			key_order = "${key_order}",
-			key_title = "${key_title}",
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE_ORDER");
 	}
 
 }

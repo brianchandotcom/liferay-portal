@@ -465,6 +465,7 @@ definition {
 
 	@description = "This is a use case for LPS-102467 and LPS-110444"
 	@priority = "5"
+	@uitest
 	test EditEmailTemplate {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#EditEmailTemplate";
@@ -787,6 +788,7 @@ definition {
 
 	@description = "This is a use case for LPS-101746"
 	@priority = "5"
+	@uitest
 	test LoginWithIPBasedVerifierEnabled {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
@@ -994,6 +996,7 @@ definition {
 
 	@description = "This is a use case for LPS-101720"
 	@priority = "5"
+	@uitest
 	test LoginWithOTPEnabled {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1369,6 +1372,7 @@ definition {
 
 	@description = "This is a use case for LPS-118204"
 	@priority = "4"
+	@uitest
 	test VerifyUIchangesInMFA {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";

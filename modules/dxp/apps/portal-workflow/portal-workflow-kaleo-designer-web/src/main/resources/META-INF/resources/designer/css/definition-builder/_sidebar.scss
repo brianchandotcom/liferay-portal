@@ -1,0 +1,18 @@
+.sidebar {
+	background: #fff;
+	border-left: 1px solid #e7e7ed;
+	width: 368px;
+
+	.sidebar-header {
+		align-items: center;
+		border-bottom: 1px solid #e7e7ed;
+		display: flex;
+		height: 75px;
+
+		.title {
+			color: #272833;
+			font-size: 20px;
+			font-weight: 700;
+		}
+	}
+}

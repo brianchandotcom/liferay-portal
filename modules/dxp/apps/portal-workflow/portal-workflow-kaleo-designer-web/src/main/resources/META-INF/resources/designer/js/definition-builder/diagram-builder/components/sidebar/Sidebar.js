@@ -10,30 +10,14 @@
  */
 
 import React from 'react';
-import ReactFlow, {
-	Background,
-	Controls,
-	ReactFlowProvider,
-} from 'react-flow-renderer';
 
-import Sidebar from './components/sidebar/Sidebar';
-
-const onLoad = (reactFlowInstance) => {
-	reactFlowInstance.fitView();
-};
-
-export default function DiagramBuilder() {
+export default function Sidebar() {
 	return (
-		<div className="diagram-builder">
-			<div className="diagram-area">
-				<ReactFlowProvider>
-					<ReactFlow elements={[]} minZoom="0.1" onLoad={onLoad} />
-					<Controls showInteractive={false} />
-					<Background size={1} />
-				</ReactFlowProvider>
+		<div className="sidebar">
+			<div className="sidebar-header">
+				<span className="title">Nodes</span>
 			</div>
-
-			<Sidebar />
+			<div className="sidebar-body"></div>
 		</div>
 	);
 }

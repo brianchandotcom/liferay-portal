@@ -93,6 +93,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -458,6 +459,32 @@ public class DDMFormDisplayContext {
 		}
 
 		return _hasAddFormInstanceRecordPermission;
+	}
+
+	public boolean hasSubmittedAnEntry() throws PortalException {
+		if (isDefaultUser() || !isLimitToOneSubmissionPerUserEnabled()) {
+			return false;
+		}
+
+		List<DDMFormInstanceRecordVersion> ddmFormInstanceRecordVersions =
+			_ddmFormInstanceRecordVersionLocalService.
+				getFormInstanceRecordVersions(getUserId(), getFormInstanceId());
+
+		Stream<DDMFormInstanceRecordVersion> stream =
+			ddmFormInstanceRecordVersions.stream();
+
+		Optional<DDMFormInstanceRecordVersion>
+			ddmFormInstanceRecordVersionOptional = stream.filter(
+				ddmFormInstanceRecordVersion ->
+					ddmFormInstanceRecordVersion.getStatus() !=
+						WorkflowConstants.STATUS_DRAFT
+			).findFirst();
+
+		if (ddmFormInstanceRecordVersionOptional.isPresent()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean hasValidStorageType(DDMFormInstance ddmFormInstance) {

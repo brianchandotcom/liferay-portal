@@ -140,10 +140,9 @@ public class BundleSiteInitializerTest {
 			_assertObjectDefinition(group);
 			_assertStyleBookEntry(group);
 			_assertUpdateLayoutSet(group);
-
-			GroupLocalServiceUtil.deleteGroup(group);
 		}
 		finally {
+			GroupLocalServiceUtil.deleteGroup(group);
 			ServiceContextThreadLocal.popServiceContext();
 
 			// TODO We should not need to delete the object definition manually
@@ -161,9 +160,9 @@ public class BundleSiteInitializerTest {
 				_objectDefinitionLocalService.deleteObjectDefinition(
 					objectDefinition.getObjectDefinitionId());
 			}
-		}
 
-		bundle.uninstall();
+			bundle.uninstall();
+		}
 	}
 
 	private void _assertAssetCategories(Group group) throws Exception {

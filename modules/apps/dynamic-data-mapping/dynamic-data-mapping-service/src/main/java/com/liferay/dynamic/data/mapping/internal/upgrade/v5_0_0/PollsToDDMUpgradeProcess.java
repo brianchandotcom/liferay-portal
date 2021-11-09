@@ -141,28 +141,13 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 		runSQL("delete from PollsQuestion");
 	}
 
-	protected JSONObject getDataJSONObject(DDMFormField ddmFormField) {
+	protected JSONObject getDataJSONObject(String ddmFormFieldName) {
 		return JSONUtil.put(
-			ddmFormField.getName(),
+			ddmFormFieldName,
 			JSONUtil.put(
 				"type", DDMFormFieldTypeConstants.RADIO
 			).put(
-				"values",
-				() -> {
-					JSONObject valuesJSONObject =
-						JSONFactoryUtil.createJSONObject();
-
-					DDMFormFieldOptions ddmFormFieldOptions =
-						ddmFormField.getDDMFormFieldOptions();
-
-					for (String optionValue :
-							ddmFormFieldOptions.getOptionsValues()) {
-
-						valuesJSONObject.put(optionValue, 0);
-					}
-
-					return valuesJSONObject;
-				}
+				"values", JSONFactoryUtil.createJSONObject()
 			)
 		).put(
 			"totalItems", 0
@@ -901,7 +886,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 			groupId, companyId, userId, userName, createDate, questionId,
 			structureVersionId, name, description, lastPublishDate);
 
-		JSONObject dataJSONObject = getDataJSONObject(ddmFormField);
+		JSONObject dataJSONObject = getDataJSONObject(ddmFormField.getName());
 
 		_upgradePollsVotes(
 			dataJSONObject, ddmFormFieldOptionsValues, ddmFormField.getName(),

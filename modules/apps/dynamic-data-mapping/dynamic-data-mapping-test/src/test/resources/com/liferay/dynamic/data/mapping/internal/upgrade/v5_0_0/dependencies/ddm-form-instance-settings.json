@@ -26,6 +26,11 @@
 			"value": ""
 		},
 		{
+			"fieldReference": "limitToOneSubmissionPerUser",
+			"name": "limitToOneSubmissionPerUser",
+			"value": "false"
+		},
+		{
 			"fieldReference": "objectDefinitionId",
 			"name": "objectDefinitionId",
 			"value": ""

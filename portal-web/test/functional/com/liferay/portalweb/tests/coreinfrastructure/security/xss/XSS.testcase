@@ -25,7 +25,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-90727."
+	@description = "This is a use case for LPS-90727. Assert no XSS vulnerability when modifying a specific URL from the control panel"
 	@priority = "5"
 	test AssertXSSVulnerabilityInControlPanel {
 		var portalURL = PropsUtil.get("portal.url");
@@ -92,7 +92,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-92264."
+	@description = "This is a use case for LPS-92264. Assert no XSS pop up in asset publisher content"
 	@priority = "5"
 	test ViewAssetPublisherContent {
 		task ("Add web content") {

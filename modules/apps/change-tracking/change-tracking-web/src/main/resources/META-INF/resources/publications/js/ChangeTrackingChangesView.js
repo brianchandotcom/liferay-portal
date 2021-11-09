@@ -98,12 +98,12 @@ export default ({
 	defaultLocale,
 	deleteCTCommentURL,
 	discardURL,
+	entryFromURL,
 	expired,
 	getCTCommentsURL,
 	keywordsFromURL,
 	modelData,
 	namespace,
-	pathFromURL,
 	rootDisplayClasses,
 	showHideableFromURL,
 	siteNames,
@@ -132,9 +132,9 @@ export default ({
 	const MVC_RENDER_COMMAND_NAME = '/change_tracking/view_changes';
 	const PARAM_CHANGE_TYPES = namespace + 'changeTypes';
 	const PARAM_CT_COLLECTION_ID = namespace + 'ctCollectionId';
+	const PARAM_ENTRY = namespace + 'entry';
 	const PARAM_KEYWORDS = namespace + 'keywords';
 	const PARAM_MVC_RENDER_COMMAND_NAME = namespace + 'mvcRenderCommandName';
-	const PARAM_PATH = namespace + 'path';
 	const PARAM_SHOW_HIDEABLE = namespace + 'showHideable';
 	const PARAM_SITES = namespace + 'sites';
 	const PARAM_TYPES = namespace + 'types';
@@ -191,8 +191,8 @@ export default ({
 	}
 
 	params.delete(PARAM_CHANGE_TYPES);
+	params.delete(PARAM_ENTRY);
 	params.delete(PARAM_KEYWORDS);
-	params.delete(PARAM_PATH);
 	params.delete(PARAM_SHOW_HIDEABLE);
 	params.delete(PARAM_SITES);
 	params.delete(PARAM_TYPES);
@@ -202,6 +202,31 @@ export default ({
 
 	const commentsCache = useRef({});
 	const renderCache = useRef({});
+
+	const getNodeId = useCallback(
+		(modelKey) => {
+			const stack = [contextView.everything];
+
+			while (stack.length > 0) {
+				const element = stack.pop();
+
+				if (element.modelKey === modelKey) {
+					return element.nodeId;
+				}
+
+				if (!element.children) {
+					continue;
+				}
+
+				for (let i = 0; i < element.children.length; i++) {
+					stack.push(element.children[i]);
+				}
+			}
+
+			return 0;
+		},
+		[contextView]
+	);
 
 	const modelsRef = useRef(null);
 
@@ -221,6 +246,7 @@ export default ({
 				model.siteName = GLOBAL_SITE_NAME;
 			}
 
+			model.nodeId = getNodeId(Number(modelKeys[i]));
 			model.typeName = typeNames[model.modelClassNameId];
 
 			if (model.ctEntryId) {
@@ -335,45 +361,6 @@ export default ({
 		}
 	}
 
-	const getPathState = useCallback(
-		(param) => {
-			if (!param) {
-				return {
-					nodeId: 0,
-				};
-			}
-
-			const pathState = {
-				nodeId: 0,
-			};
-
-			const parts = param.split('-');
-
-			const modelClassNameId = parts[0];
-			const modelClassPK = parts[1];
-
-			for (let i = 0; i < changes.length; i++) {
-				const modelKey = changes[i];
-
-				const model = modelsRef.current[modelKey];
-
-				if (
-					modelClassNameId === model.modelClassNameId &&
-					modelClassPK === model.modelClassPK
-				) {
-					pathState.nodeId = modelKey;
-				}
-			}
-
-			return pathState;
-		},
-		[changes]
-	);
-
-	const pathState = getPathState(pathFromURL);
-
-	const initialNodeId = pathState.nodeId;
-
 	const getModels = useCallback((nodes) => {
 		if (!nodes) {
 			return [];
@@ -385,11 +372,9 @@ export default ({
 			const node = nodes[i];
 
 			let modelKey = node;
-			let nodeId = node;
 
 			if (typeof node === 'object') {
 				modelKey = node.modelKey;
-				nodeId = node.nodeId;
 			}
 
 			if (
@@ -405,7 +390,9 @@ export default ({
 				JSON.stringify(modelsRef.current[modelKey])
 			);
 
-			json.nodeId = nodeId;
+			if (typeof node === 'object') {
+				json.nodeId = node.nodeId;
+			}
 
 			models.push(json);
 		}
@@ -415,16 +402,80 @@ export default ({
 
 	const getNode = useCallback(
 		(nodeId) => {
-			if (nodeId === 0) {
-				return {children: getModels(changes)};
+			const rootNode = {children: getModels(changes), nodeId: 0};
+
+			if (!nodeId) {
+				return rootNode;
 			}
 
-			return JSON.parse(JSON.stringify(modelsRef.current[nodeId]));
+			let modelKey = null;
+
+			if (typeof nodeId === 'string') {
+				const parts = nodeId.split('-');
+
+				if (parts.length !== 2) {
+					return rootNode;
+				}
+
+				const modelClassNameId = parts[0];
+				const modelClassPK = parts[1];
+
+				const keys = Object.keys(modelsRef.current);
+
+				for (let i = 0; i < keys.length; i++) {
+					const model = modelsRef.current[keys[i]];
+
+					if (
+						model.modelClassNameId === modelClassNameId &&
+						model.modelClassPK === modelClassPK
+					) {
+						modelKey = Number(keys[i]);
+
+						break;
+					}
+				}
+
+				if (modelKey === null) {
+					return rootNode;
+				}
+			}
+
+			const stack = [contextViewRef.current.everything];
+
+			while (stack.length > 0) {
+				const element = stack.pop();
+
+				if (
+					(modelKey !== null && element.modelKey === modelKey) ||
+					element.nodeId === nodeId
+				) {
+					const node = JSON.parse(
+						JSON.stringify(modelsRef.current[element.modelKey])
+					);
+
+					node.children = getModels(element.children);
+					node.nodeId = element.nodeId;
+
+					return node;
+				}
+
+				if (!element.children) {
+					continue;
+				}
+
+				for (let i = 0; i < element.children.length; i++) {
+					const child = element.children[i];
+
+					stack.push(child);
+				}
+			}
+
+			return rootNode;
 		},
 		[changes, getModels]
 	);
 
-	const initialNode = getNode(initialNodeId);
+	const initialNode = getNode(entryFromURL);
 
 	const initialShowHideable = initialNode.hideable
 		? true
@@ -592,20 +643,28 @@ export default ({
 			initialNode.children,
 			initialShowHideable
 		),
-		id: initialNodeId,
+		id: initialNode.nodeId,
 		node: initialNode,
 		page: 1,
 		showHideable: initialShowHideable,
 	});
 
+	const getEntryParam = (node) => {
+		if (node.modelClassNameId) {
+			return node.modelClassNameId + '-' + node.modelClassPK;
+		}
+
+		return '';
+	};
+
 	const getPath = useCallback(
-		(filters, keywords, pathParam, showHideable) => {
+		(filters, entryParam, keywords, showHideable) => {
 			let path =
 				basePath.current +
 				'&' +
-				PARAM_PATH +
+				PARAM_ENTRY +
 				'=' +
-				pathParam +
+				entryParam +
 				'&' +
 				PARAM_SHOW_HIDEABLE +
 				'=' +
@@ -648,45 +707,14 @@ export default ({
 		},
 		[
 			PARAM_CHANGE_TYPES,
+			PARAM_ENTRY,
 			PARAM_KEYWORDS,
-			PARAM_PATH,
 			PARAM_SHOW_HIDEABLE,
 			PARAM_SITES,
 			PARAM_TYPES,
 			PARAM_USERS,
 		]
 	);
-
-	const getPathParam = (node) => {
-		let path = '';
-
-		const nodes = [];
-
-		if (node.modelClassNameId) {
-			nodes.push({
-				label: node.title,
-				modelClassNameId: node.modelClassNameId,
-				modelClassPK: node.modelClassPK,
-			});
-		}
-
-		if (nodes.length > 0) {
-			let tree = '';
-
-			for (let i = 0; i < nodes.length; i++) {
-				const node = nodes[i];
-
-				if (node.modelClassNameId) {
-					tree +=
-						'/' + node.modelClassNameId + '-' + node.modelClassPK;
-				}
-			}
-
-			path += tree;
-		}
-
-		return path;
-	};
 
 	const handleNavigationUpdate = useCallback(
 		(json) => {
@@ -700,12 +728,12 @@ export default ({
 
 			const node = getNode(nodeId);
 
-			const pathParam = getPathParam(node);
+			const entryParam = getEntryParam(node);
 
 			const path = getPath(
 				filtersState,
+				entryParam,
 				resultsKeywords,
-				pathParam,
 				showHideable
 			);
 
@@ -775,11 +803,7 @@ export default ({
 				return;
 			}
 
-			const pathState = getPathState(params.get(PARAM_PATH));
-
-			const nodeId = pathState.nodeId;
-
-			const node = getNode(nodeId);
+			const node = getNode(params.get(PARAM_ENTRY));
 
 			let keywords = params.get(PARAM_KEYWORDS);
 
@@ -818,7 +842,7 @@ export default ({
 					node.children,
 					showHideable
 				),
-				id: nodeId,
+				id: node.nodeId,
 				node,
 				page: 1,
 				showHideable,
@@ -828,15 +852,14 @@ export default ({
 		},
 		[
 			PARAM_CHANGE_TYPES,
+			PARAM_ENTRY,
 			PARAM_KEYWORDS,
-			PARAM_PATH,
 			PARAM_SITES,
 			PARAM_TYPES,
 			PARAM_USERS,
 			filterNodes,
 			getFilters,
 			getNode,
-			getPathState,
 			isWithinApp,
 			renderState,
 		]
@@ -1493,12 +1516,12 @@ export default ({
 	};
 
 	const handleFiltersUpdate = (filters, keywords) => {
-		const pathParam = getPathParam(renderState.node);
+		const entryParam = getEntryParam(renderState.node);
 
 		const path = getPath(
 			filters,
+			entryParam,
 			keywords,
-			pathParam,
 			renderState.showHideable
 		);
 
@@ -1558,13 +1581,11 @@ export default ({
 			}
 		}
 
-		const oldState = window.history.state;
-
-		const pathParam = getPathParam(renderState.node);
+		const entryParam = getEntryParam(renderState.node);
 
 		const params = new URLSearchParams(window.location.search);
 
-		const oldPathParam = params.get(PARAM_PATH);
+		const oldEntryParam = params.get(PARAM_ENTRY);
 
 		const filters = JSON.parse(JSON.stringify(filtersState));
 
@@ -1590,12 +1611,12 @@ export default ({
 
 		if (
 			isWithinApp(params) &&
-			(updatedFilters || !oldPathParam || oldPathParam === pathParam)
+			(updatedFilters || !oldEntryParam || oldEntryParam === entryParam)
 		) {
 			const path = getPath(
 				filters,
+				entryParam,
 				resultsKeywords,
-				pathParam,
 				showHideable
 			);
 
@@ -1604,8 +1625,8 @@ export default ({
 				senna: true,
 			};
 
-			if (oldState) {
-				newState = JSON.parse(JSON.stringify(oldState));
+			if (window.history.state) {
+				newState = JSON.parse(JSON.stringify(window.history.state));
 
 				newState.path = path;
 			}
@@ -2012,7 +2033,10 @@ export default ({
 	};
 
 	const renderTable = () => {
-		if (!renderState.children || renderState.children.length === 0) {
+		if (renderState.id > 0) {
+			return '';
+		}
+		else if (!renderState.children || renderState.children.length === 0) {
 			if (
 				renderState.node.children &&
 				renderState.node.children.length > 0

@@ -356,6 +356,8 @@ public class ViewChangesDisplayContext {
 				"ctCollectionId", _ctCollection.getCtCollectionId()
 			).buildString()
 		).put(
+			"entryFromURL", ParamUtil.getString(_renderRequest, "entry")
+		).put(
 			"expired",
 			_ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED
 		).put(
@@ -392,8 +394,6 @@ public class ViewChangesDisplayContext {
 			}
 		).put(
 			"namespace", _renderResponse.getNamespace()
-		).put(
-			"pathFromURL", ParamUtil.getString(_renderRequest, "path")
 		).put(
 			"rootDisplayClasses",
 			() -> {

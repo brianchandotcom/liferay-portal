@@ -548,8 +548,7 @@ definition {
 
 			TestUtils.isGreaterThan(
 				actual = "${viewDuration}",
-				expected = "0"
-			);
+				expected = "0");
 		}
 
 		task ("View the pageViewed event triggered") {
@@ -566,7 +565,7 @@ definition {
 
 			TestUtils.isGreaterThan(
 				actual = "${pageLoadTime}",
-				expected = "0");	
+				expected = "0");
 		}
 
 		task ("View the request common properties value") {
@@ -745,15 +744,15 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		task ("View the viewDuration of pageUnloaded event is less than 1500ms") {
+		task ("View the viewDuration of pageUnloaded event is greater than 0 ms") {
 			var viewDuration = ACUtils.getEventPropertyValue(
 				applicationId = "Page",
 				eventId = "pageUnloaded",
 				property = "viewDuration");
 
-			TestUtils.isLessThan(
+			TestUtils.isGreaterThan(
 				actual = "${viewDuration}",
-				expected = "1500");
+				expected = "0");
 		}
 
 		task ("View the request common properties value") {

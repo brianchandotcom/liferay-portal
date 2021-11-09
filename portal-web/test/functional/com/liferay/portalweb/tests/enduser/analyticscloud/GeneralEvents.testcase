@@ -460,8 +460,7 @@ definition {
 
 			TestUtils.isGreaterThan(
 				actual = "${focusDuration}",
-				expected = "0"
-			);
+				expected = "0");
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Form",

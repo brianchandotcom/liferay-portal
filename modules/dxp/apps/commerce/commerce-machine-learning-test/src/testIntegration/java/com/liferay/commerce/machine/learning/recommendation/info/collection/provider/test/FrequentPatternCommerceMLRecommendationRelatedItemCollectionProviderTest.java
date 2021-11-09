@@ -143,45 +143,35 @@ public class
 				_commerceCatalog.getGroupId());
 
 			for (int j = 0; j < _DEFAULT_RECOMMENDATION_COUNT; j++) {
+				CPDefinition recommendedCPDefinition =
+					CPTestUtil.addCPDefinition(_commerceCatalog.getGroupId());
+
 				FrequentPatternCommerceMLRecommendation
 					frequentPatternCommerceMLRecommendation =
 						_frequentPatternCommerceMLRecommendationManager.
-							addFrequentPatternCommerceMLRecommendation(
-								_createFrequentPatternCommerceMLRecommendation(
-									new long[] {
-										cpDefinition.getCPDefinitionId()
-									}));
+							create();
+
+				frequentPatternCommerceMLRecommendation.setAntecedentIds(
+					new long[] {cpDefinition.getCPDefinitionId()});
+				frequentPatternCommerceMLRecommendation.setAntecedentIdsLength(
+					1);
+				frequentPatternCommerceMLRecommendation.setCompanyId(
+					TestPropsValues.getCompanyId());
+				frequentPatternCommerceMLRecommendation.setCreateDate(
+					new Date());
+				frequentPatternCommerceMLRecommendation.
+					setRecommendedEntryClassPK(
+						recommendedCPDefinition.getCPDefinitionId());
+				frequentPatternCommerceMLRecommendation.setScore(1.0F);
 
 				frequentPatternCommerceMLRecommendations.add(
-					frequentPatternCommerceMLRecommendation);
+					_frequentPatternCommerceMLRecommendationManager.
+						addFrequentPatternCommerceMLRecommendation(
+							frequentPatternCommerceMLRecommendation));
 			}
 		}
 
 		return frequentPatternCommerceMLRecommendations;
-	}
-
-	private FrequentPatternCommerceMLRecommendation
-			_createFrequentPatternCommerceMLRecommendation(long[] antecedentIds)
-		throws Exception {
-
-		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
-			_commerceCatalog.getGroupId());
-
-		FrequentPatternCommerceMLRecommendation
-			frequentPatternCommerceMLRecommendation =
-				_frequentPatternCommerceMLRecommendationManager.create();
-
-		frequentPatternCommerceMLRecommendation.setAntecedentIds(antecedentIds);
-		frequentPatternCommerceMLRecommendation.setAntecedentIdsLength(
-			antecedentIds.length);
-		frequentPatternCommerceMLRecommendation.setCompanyId(
-			TestPropsValues.getCompanyId());
-		frequentPatternCommerceMLRecommendation.setCreateDate(new Date());
-		frequentPatternCommerceMLRecommendation.setRecommendedEntryClassPK(
-			cpDefinition.getCPDefinitionId());
-		frequentPatternCommerceMLRecommendation.setScore(1.0F);
-
-		return frequentPatternCommerceMLRecommendation;
 	}
 
 	private void _testGetRelatedItemsInfoPage(

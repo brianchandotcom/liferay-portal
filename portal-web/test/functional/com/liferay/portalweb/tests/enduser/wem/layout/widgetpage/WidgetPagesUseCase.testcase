@@ -102,7 +102,7 @@ definition {
 
 	@description = "The user can not delete the last public page on Liferay instance."
 	@priority = "3"
-	test CannotDeleteLastPublicPageOnLiferay {
+	test CannotDeleteLastPublicPageOnDefaultSite {
 		task ("Delete the Search page in Liferay instance") {
 			SitePages.openPagesAdmin(siteURLKey = "guest");
 

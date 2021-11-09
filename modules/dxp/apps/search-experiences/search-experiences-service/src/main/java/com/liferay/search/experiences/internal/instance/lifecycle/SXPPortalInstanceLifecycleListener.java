@@ -58,8 +58,8 @@ public class SXPPortalInstanceLifecycleListener
 	}
 
 	protected static final String[] FILE_NAMES = {
-		"boost_asset_type", "limit_search_to_the_current_site",
-		"paste_any_elasticsearch_query"
+		"boost_all_keywords_match", "boost_asset_type",
+		"limit_search_to_the_current_site", "paste_any_elasticsearch_query"
 	};
 
 	private void _addSXPElement(Company company, String fileName)

@@ -241,7 +241,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			User.logoutPG();
+			UserBar.signOut();
 		}
 
 		task ("View login page when reaching private page") {

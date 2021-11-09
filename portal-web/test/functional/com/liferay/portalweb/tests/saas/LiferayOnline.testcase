@@ -57,6 +57,8 @@ definition {
 
 	@priority = "5"
 	test Smoke {
+		property liferay.online.smoke = "true";
+
 		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle");
 
 		HeadlessPortalInstanceAPI.addPortalInstance(

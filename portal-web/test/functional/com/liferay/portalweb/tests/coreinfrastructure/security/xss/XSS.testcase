@@ -28,18 +28,22 @@ definition {
 	@description = "This is a use case for LPS-90727. Assert no XSS vulnerability when modifying a specific URL from the control panel"
 	@priority = "5"
 	test AssertXSSVulnerabilityInControlPanel {
-		var portalURL = PropsUtil.get("portal.url");
+		task ("Go to Account Settings and save p_p_auth param from the URL") {
+			var portalURL = PropsUtil.get("portal.url");
 
-		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
-		AssertElementPresent.assertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+			AssertElementPresent.assertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
-		var currentURL = Navigator.getCurrentURL();
-		var p_p_authParam = StringUtil.extractLast("${currentURL}", "=");
+			var currentURL = Navigator.getCurrentURL();
+			var p_p_authParam = StringUtil.extractLast("${currentURL}", "=");
+		}
 
-		Navigator.openSpecificURL(url = "${portalURL}/en/group/control_panel/manage;'*prompt()*'?p_p_id=com_liferay_my_account_web_portlet_MyAccountPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_auth=${p_p_authParam}");
+		task ("Go to url with p_p_authParam and assert no dialog box appears") {
+			Navigator.openSpecificURL(url = "${portalURL}/en/group/control_panel/manage;'*prompt()*'?p_p_id=com_liferay_my_account_web_portlet_MyAccountPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_auth=${p_p_authParam}");
 
-		AssertAlertNotPresent();
+			AssertAlertNotPresent();
+		}
 	}
 
 	@description = "This is a use case for LRQA-7595. Validade XSS vulnerabilities"

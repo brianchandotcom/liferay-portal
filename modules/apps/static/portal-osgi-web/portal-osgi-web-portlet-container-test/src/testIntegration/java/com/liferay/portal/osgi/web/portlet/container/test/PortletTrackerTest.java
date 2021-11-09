@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -45,7 +46,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
@@ -84,6 +88,107 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testGetPortletMapFromRemotePortlet() throws Exception {
+		Company company1 = CompanyTestUtil.addCompany();
+		Company company2 = CompanyTestUtil.addCompany();
+
+		PortalInstances.reload(_servletContext);
+
+		try {
+			setUpPortlet(
+				_internalClassTestPortlet,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.portlet.company", company1.getCompanyId()
+				).put(
+					"com.liferay.portlet.display-category", "company-scope"
+				).build(),
+				"companyPortlet", false);
+
+			Map<String, Portlet> portlets =
+				_portletLocalService.loadGetPortletsMap(
+					company1.getCompanyId());
+
+			Assert.assertTrue(portlets.containsKey("companyPortlet"));
+
+			portlets = _portletLocalService.loadGetPortletsMap(
+				company2.getCompanyId());
+
+			Assert.assertFalse(portlets.containsKey("companyPortlet"));
+		}
+		finally {
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations) {
+
+				serviceRegistration.unregister();
+			}
+
+			serviceRegistrations.clear();
+
+			_companyLocalService.deleteCompany(company2);
+
+			_companyLocalService.deleteCompany(company1);
+
+			PortalInstances.reload(_servletContext);
+		}
+	}
+
+	@Test
+	public void testPortletsMapOnlyCopiesGlobalPortletsForNewCompanies()
+		throws Exception {
+
+		List<Company> companies = new ArrayList<>();
+
+		try {
+			Company company1 = CompanyTestUtil.addCompany();
+
+			companies.add(company1);
+
+			PortalInstances.reload(_servletContext);
+
+			setUpPortlet(
+				_internalClassTestPortlet,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.portlet.company", company1.getCompanyId()
+				).put(
+					"com.liferay.portlet.display-category", "company-scope"
+				).build(),
+				"companyPortlet", false);
+
+			Company company2 = CompanyTestUtil.addCompany();
+
+			companies.add(company2);
+
+			PortalInstances.reload(_servletContext);
+
+			Map<String, Portlet> portlets =
+				_portletLocalService.loadGetPortletsMap(
+					company1.getCompanyId());
+
+			Assert.assertTrue(portlets.containsKey("companyPortlet"));
+
+			portlets = _portletLocalService.loadGetPortletsMap(
+				company2.getCompanyId());
+
+			Assert.assertFalse(portlets.containsKey("companyPortlet"));
+		}
+		finally {
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations) {
+
+				serviceRegistration.unregister();
+			}
+
+			serviceRegistrations.clear();
+
+			_companyLocalService.forEachCompany(
+				company -> _companyLocalService.deleteCompany(company),
+				companies);
+
+			PortalInstances.reload(_servletContext);
+		}
+	}
 
 	@Test
 	public void testPortletTrackerBundleStopCleanup() throws Exception {
@@ -357,6 +462,9 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 	private final InternalClassTestPortlet _internalClassTestPortlet =
 		new InternalClassTestPortlet();
+
+	@Inject
+	private PortletLocalService _portletLocalService;
 
 	@Inject(filter = "original.bean=true")
 	private ServletContext _servletContext;

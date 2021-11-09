@@ -172,6 +172,52 @@ public class LiferayRelengUtil {
 		return false;
 	}
 
+	public static boolean hasStaleUnstyledTheme(
+		Project project, File artifactPropertiesFile) {
+
+		String projectName = project.getName();
+
+		if (!projectName.startsWith("frontend-theme") ||
+			!artifactPropertiesFile.exists()) {
+
+			return false;
+		}
+
+		Properties artifactProperties = GUtil.loadProperties(
+			artifactPropertiesFile);
+
+		String artifactGitId = artifactProperties.getProperty(
+			"artifact.git.id");
+
+		if (Validator.isNull(artifactGitId)) {
+			return false;
+		}
+
+		Project parentThemeUnstyledProject = GradleUtil.getProject(
+			project.getRootProject(),
+			GradlePluginsDefaultsUtil.PARENT_THEME_UNSTYLED_PROJECT_NAME);
+
+		if (parentThemeUnstyledProject == null) {
+			return false;
+		}
+
+		String result = GitUtil.getGitResult(
+			project, parentThemeUnstyledProject.getProjectDir(), "log",
+			"--format=%s", artifactGitId + "..HEAD", ":(exclude)test", ".");
+
+		for (String line : result.split("\\r?\\n")) {
+			if (Validator.isNull(line) ||
+				line.contains(_IGNORED_MESSAGE_PATTERN)) {
+
+				continue;
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean hasUnpublishedCommits(
 		Project project, File artifactProjectDir, File artifactPropertiesFile) {
 

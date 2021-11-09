@@ -487,6 +487,12 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					return true;
 				}
 
+				if (LiferayRelengUtil.hasStaleUnstyledTheme(
+						project, recordArtifactTask.getOutputFile())) {
+
+					return true;
+				}
+
 				return false;
 			}
 
@@ -760,6 +766,12 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				if (Boolean.parseBoolean(force) ||
 					(liferayThemeProject &&
 					 LiferayRelengUtil.hasStaleParentTheme(project))) {
+
+					return true;
+				}
+
+				if (LiferayRelengUtil.hasStaleUnstyledTheme(
+						project, recordArtifactTask.getOutputFile())) {
 
 					return true;
 				}

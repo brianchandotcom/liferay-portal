@@ -48,8 +48,15 @@ public class GradlePluginsDefaultsUtil {
 	};
 
 	public static final String[] PARENT_THEME_PROJECT_NAMES = {
-		"frontend-theme-styled", "frontend-theme-unstyled"
+		GradlePluginsDefaultsUtil.PARENT_THEME_STYLED_PROJECT_NAME,
+		GradlePluginsDefaultsUtil.PARENT_THEME_UNSTYLED_PROJECT_NAME
 	};
+
+	public static final String PARENT_THEME_STYLED_PROJECT_NAME =
+		"frontend-theme-styled";
+
+	public static final String PARENT_THEME_UNSTYLED_PROJECT_NAME =
+		"frontend-theme-unstyled";
 
 	public static final String SNAPSHOT_PROPERTY_NAME = "snapshot";
 

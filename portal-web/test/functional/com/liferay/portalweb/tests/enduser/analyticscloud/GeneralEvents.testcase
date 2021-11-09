@@ -44,6 +44,7 @@ definition {
 	@priority = "5"
 	test CheckGeneralEventsForUnknownUser {
 		property proxy.server.enabled = "true";
+		property test.name.skip.portal.instance = "GeneralEvents#CheckGeneralEventsForUnknownUser";
 
 		task ("Add widget pages") {
 			for (var layoutName : list "WebContent,Blog,Document,Form") {

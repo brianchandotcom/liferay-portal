@@ -85,6 +85,8 @@ definition {
 			locator1 = "OneDrive#DOCUMENTS_TITLE_RENAME",
 			value1 = "\RETURN");
 
+		WaitForElementPresent(locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS");
+
 		Navigator.closeWindow();
 
 		SelectFrameTop();

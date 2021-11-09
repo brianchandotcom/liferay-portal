@@ -17,15 +17,19 @@ package com.liferay.search.experiences.rest.internal.resource.v1_0;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
-import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
+import com.liferay.search.experiences.rest.internal.dto.v1_0.converter.SXPBlueprintDTOConverter;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.service.SXPBlueprintService;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,8 +51,12 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 
 	@Override
 	public SXPBlueprint getSXPBlueprint(Long sxpBlueprintId) throws Exception {
-		return SXPBlueprintUtil.toSXPBlueprint(
-			contextAcceptLanguage.getPreferredLocale(),
+		return _sxpBlueprintDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, contextHttpServletRequest,
+				sxpBlueprintId, contextAcceptLanguage.getPreferredLocale(),
+				contextUriInfo, contextUser),
 			_sxpBlueprintService.getSXPBlueprint(sxpBlueprintId));
 	}
 
@@ -74,8 +82,14 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
 			null,
-			document -> SXPBlueprintUtil.toSXPBlueprint(
-				contextAcceptLanguage.getPreferredLocale(),
+			document -> _sxpBlueprintDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					new HashMap<>(), _dtoConverterRegistry,
+					contextHttpServletRequest,
+					document.get(Field.ENTRY_CLASS_PK),
+					contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+					contextUser),
 				_sxpBlueprintService.getSXPBlueprint(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
@@ -84,19 +98,27 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 	public SXPBlueprint postSXPBlueprint(SXPBlueprint sxpBlueprint)
 		throws Exception {
 
-		return SXPBlueprintUtil.toSXPBlueprint(
-			contextAcceptLanguage.getPreferredLocale(),
+		return _sxpBlueprintDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, contextHttpServletRequest,
+				sxpBlueprint.getId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
 			_sxpBlueprintService.addSXPBlueprint(
 				String.valueOf(sxpBlueprint.getConfiguration()),
-				Collections.singletonMap(
-					contextAcceptLanguage.getPreferredLocale(),
-					sxpBlueprint.getDescription()),
+				LocalizedMapUtil.getLocalizedMap(
+					sxpBlueprint.getDescription_i18n()),
 				null,
-				Collections.singletonMap(
-					contextAcceptLanguage.getPreferredLocale(),
-					sxpBlueprint.getTitle()),
+				LocalizedMapUtil.getLocalizedMap(sxpBlueprint.getTitle_i18n()),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private SXPBlueprintDTOConverter _sxpBlueprintDTOConverter;
 
 	@Reference
 	private SXPBlueprintService _sxpBlueprintService;

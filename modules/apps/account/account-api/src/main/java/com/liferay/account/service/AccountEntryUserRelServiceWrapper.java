@@ -72,6 +72,15 @@ public class AccountEntryUserRelServiceWrapper
 	}
 
 	@Override
+	public void addAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountEntryUserRelService.addAccountEntryUserRels(
+			accountEntryId, accountUserIds);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountEntryUserRel
 			addPersonTypeAccountEntryUserRel(
 				long accountEntryId, long creatorUserId, String screenName,
@@ -83,15 +92,6 @@ public class AccountEntryUserRelServiceWrapper
 		return _accountEntryUserRelService.addPersonTypeAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
 			firstName, middleName, lastName, prefixId, suffixId, jobTitle);
-	}
-
-	@Override
-	public void addAccountEntryUserRels(
-			long accountEntryId, long[] accountUserIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_accountEntryUserRelService.addAccountEntryUserRels(
-			accountEntryId, accountUserIds);
 	}
 
 	@Override

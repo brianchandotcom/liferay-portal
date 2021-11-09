@@ -189,6 +189,43 @@ public class AccountEntryUserRelServiceHttp {
 		}
 	}
 
+	public static void addAccountEntryUserRels(
+			HttpPrincipal httpPrincipal, long accountEntryId,
+			long[] accountUserIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryUserRelServiceUtil.class, "addAccountEntryUserRels",
+				_addAccountEntryUserRelsParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountEntryId, accountUserIds);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.account.model.AccountEntryUserRel
 			addPersonTypeAccountEntryUserRel(
 				HttpPrincipal httpPrincipal, long accountEntryId,
@@ -201,7 +238,7 @@ public class AccountEntryUserRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryUserRelServiceUtil.class,
 				"addPersonTypeAccountEntryUserRel",
-				_addPersonTypeAccountEntryUserRelParameterTypes3);
+				_addPersonTypeAccountEntryUserRelParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, creatorUserId, screenName,
@@ -236,43 +273,6 @@ public class AccountEntryUserRelServiceHttp {
 		}
 	}
 
-	public static void addAccountEntryUserRels(
-			HttpPrincipal httpPrincipal, long accountEntryId,
-			long[] accountUserIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				AccountEntryUserRelServiceUtil.class, "addAccountEntryUserRels",
-				_addAccountEntryUserRelsParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, accountEntryId, accountUserIds);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	public static void deleteAccountEntryUserRelByEmailAddress(
 			HttpPrincipal httpPrincipal, long accountEntryId,
 			String emailAddress)
@@ -282,7 +282,7 @@ public class AccountEntryUserRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryUserRelServiceUtil.class,
 				"deleteAccountEntryUserRelByEmailAddress",
-				_deleteAccountEntryUserRelByEmailAddressParameterTypes4);
+				_deleteAccountEntryUserRelByEmailAddressParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, emailAddress);
@@ -320,7 +320,7 @@ public class AccountEntryUserRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryUserRelServiceUtil.class,
 				"deleteAccountEntryUserRels",
-				_deleteAccountEntryUserRelsParameterTypes4);
+				_deleteAccountEntryUserRelsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, accountUserIds);
@@ -357,7 +357,7 @@ public class AccountEntryUserRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryUserRelServiceUtil.class,
 				"setPersonTypeAccountEntryUser",
-				_setPersonTypeAccountEntryUserParameterTypes5);
+				_setPersonTypeAccountEntryUserParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, userId);
@@ -406,22 +406,22 @@ public class AccountEntryUserRelServiceHttp {
 			long.class, String.class, long[].class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _addAccountEntryUserRelsParameterTypes2 =
+	private static final Class<?>[] _addAccountEntryUserRelsParameterTypes3 =
 		new Class[] {long.class, long[].class};
 	private static final Class<?>[]
-		_addPersonTypeAccountEntryUserRelParameterTypes3 = new Class[] {
+		_addPersonTypeAccountEntryUserRelParameterTypes4 = new Class[] {
 			long.class, long.class, String.class, String.class,
 			java.util.Locale.class, String.class, String.class, String.class,
 			long.class, long.class, String.class
 		};
 	private static final Class<?>[]
-		_deleteAccountEntryUserRelByEmailAddressParameterTypes4 = new Class[] {
+		_deleteAccountEntryUserRelByEmailAddressParameterTypes5 = new Class[] {
 			long.class, String.class
 		};
-	private static final Class<?>[] _deleteAccountEntryUserRelsParameterTypes4 =
+	private static final Class<?>[] _deleteAccountEntryUserRelsParameterTypes6 =
 		new Class[] {long.class, long[].class};
 	private static final Class<?>[]
-		_setPersonTypeAccountEntryUserParameterTypes5 = new Class[] {
+		_setPersonTypeAccountEntryUserParameterTypes7 = new Class[] {
 			long.class, long.class
 		};
 

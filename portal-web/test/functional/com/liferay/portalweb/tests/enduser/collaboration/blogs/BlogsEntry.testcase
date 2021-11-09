@@ -591,6 +591,11 @@ definition {
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION",
 			value1 = "Cover Image Caption");
 
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
 		BlogsEntry.editCoverImageCaption(captionField = "");
 
 		Button.clickPublish();

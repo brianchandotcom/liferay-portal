@@ -426,12 +426,11 @@ definition {
 			value1 = "Asset Libraries");
 	}
 
+	// May need to update test after LPS-133688 is fixed
+
 	@description = "This ensures that a user can not create a repository with the same escape characters name as another repository."
 	@priority = "5"
 	@refactordone
-
-	// May need to update test after LPS-133688 is fixed
-
 	test CannotAddDuplicateWithEscapeCharacters {
 		DepotNavigator.openDepotAdmin();
 

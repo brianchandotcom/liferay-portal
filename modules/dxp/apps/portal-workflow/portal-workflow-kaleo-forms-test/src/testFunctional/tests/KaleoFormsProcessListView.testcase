@@ -107,11 +107,39 @@ definition {
 	}
 
 	@description = "Verify that the user is able to order by Create Date."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanOrderByCreateDate {
+		for (var newProcess : list "1,2,3") {
+			KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70669 CanOrderByCreateDate pending implementation
+			KaleoFormsAdmin.createKaleoFormsProcess(
+				kfFieldSetName = "Contacts",
+				kfFormName = "Created Task Form",
+				kfProcessDescription = "Kaleo Forms Process Description ${newProcess}",
+				kfProcessName = "Kaleo Forms Process ${newProcess}",
+				workflowDefinitionTitle = "Single Approver",
+				workflowTask = "created");
+		}
+
+		for (var viewProcess : list "1,2,3") {
+			KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process ${viewProcess}");
+		}
+
+		KaleoFormsAdmin.editProcess(kfProcessName = "Kaleo Forms Process 1");
+
+		KaleoFormsAdmin.editProcessDetails(
+			kfProcessDescriptionEdit = "Kaleo Forms Process Description 1 Edited",
+			kfProcessNameEdit = "Kaleo Forms Process 1 Edited");
+
+		KaleoFormsAdmin.gotoProgressStep(kfProgressName = "Forms");
+
+		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process 1 Edited");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Create Date");
+
+		KaleoFormsAdmin.viewProcessByPosition(
+			key_order = "1",
+			key_title = "Kaleo Forms Process 1 Edited");
 
 	}
 

@@ -582,10 +582,10 @@ definition {
 
 		Button.clickPublish();
 
-		BlogsNavigator.openToEditEntryInSite(
+		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			groupName = "Guest",
-			siteURLKey = "blogs-page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		AssertTextEquals(
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION",
@@ -595,10 +595,10 @@ definition {
 
 		Button.clickPublish();
 
-		BlogsNavigator.openToEditEntryInSite(
+		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			groupName = "Guest",
-			siteURLKey = "blogs-page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		AssertElementNotPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION");
 	}

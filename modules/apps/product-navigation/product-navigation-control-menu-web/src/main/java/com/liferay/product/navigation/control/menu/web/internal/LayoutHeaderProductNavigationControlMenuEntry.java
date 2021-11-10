@@ -14,7 +14,6 @@
 
 package com.liferay.product.navigation.control.menu.web.internal;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -33,28 +32,23 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.product.navigation.control.menu.web.internal.configuration.FFProductNavigationControlMenuConfiguration;
 
 import java.io.IOException;
 import java.io.Writer;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.product.navigation.control.menu.web.internal.configuration.FFProductNavigationControlMenuConfiguration",
 	immediate = true,
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
@@ -133,14 +127,6 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		return super.isShow(httpServletRequest);
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffProductNavigationControlMenuConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFProductNavigationControlMenuConfiguration.class, properties);
-	}
-
 	private String _getCssClass(HttpServletRequest httpServletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -185,10 +171,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!_ffProductNavigationControlMenuConfiguration.
-				layoutExperienceSelectorEnabled() ||
-			!layout.isTypeContent()) {
-
+		if (!layout.isTypeContent()) {
 			return false;
 		}
 
@@ -214,10 +197,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!_ffProductNavigationControlMenuConfiguration.
-				layoutExperienceSelectorEnabled() ||
-			!layout.isTypeContent()) {
-
+		if (!layout.isTypeContent()) {
 			return false;
 		}
 
@@ -249,9 +229,6 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		return false;
 	}
-
-	private static volatile FFProductNavigationControlMenuConfiguration
-		_ffProductNavigationControlMenuConfiguration;
 
 	@Reference
 	private Portal _portal;

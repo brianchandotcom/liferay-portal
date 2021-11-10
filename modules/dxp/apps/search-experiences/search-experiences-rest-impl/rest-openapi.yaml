@@ -94,6 +94,57 @@ components:
                     items:
                         type: object
                     type: array
+        ElementDefinition:
+            properties:
+                category:
+                    type: string
+                icon:
+                    type: string
+                sxpBlueprint:
+                    $ref: "#/components/schemas/SXPBlueprint"
+                uiConfiguration:
+                    properties:
+                        fieldSets:
+                            items:
+                                properties:
+                                    fields:
+                                        items:
+                                            properties:
+                                                boost:
+                                                    type: boolean
+                                                helpText:
+                                                    type: string
+                                                label:
+                                                    type: string
+                                                name:
+                                                    type: string
+                                                nullable:
+                                                    type: boolean
+                                                options:
+                                                    items:
+                                                        properties:
+                                                            label:
+                                                                type: string
+                                                            value:
+                                                                type: string
+                                                        type: object
+                                                    type: array
+                                                required:
+                                                    type: boolean
+                                                uiType:
+                                                    type: string
+                                                unit:
+                                                    type: string
+                                                unitSuffix:
+                                                    type: string
+                                                valueDefinition:
+                                                    $ref: "#/components/schemas/ValueDefinition"
+                                            type: object
+                                        type: array
+                                type: object
+                            type: array
+                    type: object
+            type: object
         FieldMappingInfo:
             properties:
                 languageIdPosition:
@@ -250,6 +301,10 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                elementDefinitions:
+                    items:
+                        $ref: "#/components/schemas/ElementDefinition"
+                    type: array
                 id:
                     format: int64
                     type: integer
@@ -269,56 +324,7 @@ components:
                         type: string
                     type: object
                 elementDefinition:
-                    properties:
-                        category:
-                            type: string
-                        icon:
-                            type: string
-                        sxpBlueprint:
-                            $ref: "#/components/schemas/SXPBlueprint"
-                        uiConfiguration:
-                            properties:
-                                fieldSets:
-                                    items:
-                                        properties:
-                                            fields:
-                                                items:
-                                                    properties:
-                                                        boost:
-                                                            type: boolean
-                                                        helpText:
-                                                            type: string
-                                                        label:
-                                                            type: string
-                                                        name:
-                                                            type: string
-                                                        nullable:
-                                                            type: boolean
-                                                        options:
-                                                            items:
-                                                                properties:
-                                                                    label:
-                                                                        type: string
-                                                                    value:
-                                                                        type: string
-                                                                type: object
-                                                            type: array
-                                                        required:
-                                                            type: boolean
-                                                        uiType:
-                                                            type: string
-                                                        unit:
-                                                            type: string
-                                                        unitSuffix:
-                                                            type: string
-                                                        valueDefinition:
-                                                            $ref: "#/components/schemas/ValueDefinition"
-                                                    type: object
-                                                type: array
-                                        type: object
-                                    type: array
-                            type: object
-                    type: object
+                    $ref: "#/components/schemas/ElementDefinition"
                 hidden:
                     type: boolean
                 id:

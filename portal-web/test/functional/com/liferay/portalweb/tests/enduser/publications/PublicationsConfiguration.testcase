@@ -71,7 +71,7 @@ definition {
 		Publications.enablePublications();
 
 		AssertTextEquals(
-			locator1 = "Publications#MANGE_PUBLICATIONS_PAGE_TITLE",
+			locator1 = "Publications#MANAGE_PUBLICATIONS_PAGE_TITLE",
 			value1 = "Publications");
 
 		AssertTextPresent(

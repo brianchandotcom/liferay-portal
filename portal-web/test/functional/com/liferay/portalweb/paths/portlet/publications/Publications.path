@@ -116,12 +116,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MANGE_PUBLICATIONS_PAGE_TITLE</td>
+	<td>MANAGE_PUBLICATIONS_PAGE_TITLE</td>
 	<td>//span[contains(@data-qa-id,'headerTitle')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MANGE_PUBLICATIONS_NAVBAR_TITLE</td>
+	<td>MANAGE_PUBLICATIONS_NAVBAR_TITLE</td>
 	<td>//li[contains(@class,'nav-item')]/a[contains(.,'${key_navBarTitle}')]</td>
 	<td></td>
 </tr>

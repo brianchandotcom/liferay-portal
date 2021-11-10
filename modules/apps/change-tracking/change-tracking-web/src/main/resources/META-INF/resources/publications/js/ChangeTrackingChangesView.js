@@ -2173,6 +2173,7 @@ export default ({
 					<div className="col-md-12">
 						{renderState.node.modelClassNameId && (
 							<ChangeTrackingRenderView
+								childEntries={renderState.children}
 								ctEntry={!!renderState.node.ctEntryId}
 								dataURL={getDataURL(renderState.node)}
 								defaultLocale={defaultLocale}
@@ -2189,10 +2190,17 @@ export default ({
 											renderState.node.modelClassPK
 									]
 								}
+								handleNavigation={(nodeId) =>
+									handleNavigationUpdate({
+										nodeId,
+									})
+								}
+								parentEntries={renderState.parents}
 								showDropdown={
 									activeCTCollection &&
 									renderState.node.modelClassNameId
 								}
+								showHideable={renderState.showHideable}
 								spritemap={spritemap}
 								title={renderState.node.title}
 								updateCache={(data) => {
@@ -2201,14 +2209,6 @@ export default ({
 											'-' +
 											renderState.node.modelClassPK
 									] = data;
-
-									setRenderState({
-										changes: renderState.changes,
-										id: renderState.id,
-										node: renderState.node,
-										page: renderState.page,
-										showHideable: renderState.showHideable,
-									});
 								}}
 							/>
 						)}

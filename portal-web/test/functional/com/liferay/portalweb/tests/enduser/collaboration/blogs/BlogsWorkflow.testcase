@@ -23,13 +23,73 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136813. It checks that a Blog entry can be resubmitted after it is rejected."
-	@ignore = "true"
 	@priority = "4"
 	test CanResubmitRejectedEntry {
-		property portal.acceptance = "false";
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
 
-		// TODO LPS-136813 CanResubmitRejectedEntry pending implementation
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
 
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Guest");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		WorkflowAsset.gotoViaNotification(
+			assetType = "Blogs Entry",
+			user = "Test Test");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reject");
+
+		Workflow.confirmWorkflowAction();
+
+		Refresh();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Resubmit");
+
+		Workflow.confirmWorkflowAction();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		WorkflowAsset.gotoViaNotification(
+			assetType = "Blogs Entry",
+			user = "Test Test");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+
+		Workflow.confirmWorkflowAction();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 	}
 
 }

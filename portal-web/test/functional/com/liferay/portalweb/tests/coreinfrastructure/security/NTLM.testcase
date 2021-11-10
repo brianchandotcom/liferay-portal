@@ -7,7 +7,9 @@ definition {
 	property testray.main.component.name = "Security";
 
 	setUp {
-		SignIn.signIn();
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
 	}
 
 	@description = "LPS-126598 TC-2: Validate there is no NTLM option under SSO category in Instance Settings"

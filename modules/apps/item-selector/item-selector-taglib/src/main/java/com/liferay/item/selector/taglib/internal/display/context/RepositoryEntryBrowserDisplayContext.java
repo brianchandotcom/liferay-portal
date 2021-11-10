@@ -14,6 +14,7 @@
 
 package com.liferay.item.selector.taglib.internal.display.context;
 
+import com.liferay.document.library.constants.DLContentTypes;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -61,9 +62,20 @@ public class RepositoryEntryBrowserDisplayContext {
 			return false;
 		}
 
-		return ArrayUtil.contains(
-			PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
-			fileVersion.getMimeType());
+		if (ArrayUtil.contains(
+				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
+				fileVersion.getMimeType()) ||
+			ArrayUtil.contains(
+				PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES,
+				fileVersion.getMimeType()) ||
+			Objects.equals(
+				DLContentTypes.VIDEO_EXTERNAL_SHORTCUT,
+				fileVersion.getMimeType())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSearchEverywhere() {

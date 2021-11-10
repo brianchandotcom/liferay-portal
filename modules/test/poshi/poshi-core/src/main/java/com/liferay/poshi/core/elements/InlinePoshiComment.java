@@ -64,7 +64,7 @@ public class InlinePoshiComment extends PoshiComment {
 		if (isPoshiScriptComment(poshiScript)) {
 			String text = poshiScript.substring(2);
 
-			setText(" " + text.trim() + " ");
+			setText(" " + text + " ");
 		}
 	}
 
@@ -73,7 +73,12 @@ public class InlinePoshiComment extends PoshiComment {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("\n\n\t//");
-		sb.append(StringUtil.trimTrailing(getText()));
+
+		String comment = getText();
+
+		comment = comment.substring(1);
+
+		sb.append(StringUtil.trimTrailing(comment));
 
 		return sb.toString();
 	}

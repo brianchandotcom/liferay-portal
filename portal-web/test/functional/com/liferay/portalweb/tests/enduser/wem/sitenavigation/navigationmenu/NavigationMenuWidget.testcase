@@ -53,7 +53,7 @@ definition {
 		task ("Grand all permissions to Power User for that page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PermissionsInline.gotoSitepageCP(
+			PermissionsInline.gotoSitePageCP(
 				pageName = "Test Page Name",
 				privacy = "Public Pages");
 

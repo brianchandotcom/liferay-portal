@@ -518,7 +518,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PermissionsInline.gotoSitepageCP(
+		PermissionsInline.gotoSitePageCP(
 			pageName = "Private Blogs Page",
 			privacy = "Private Pages");
 

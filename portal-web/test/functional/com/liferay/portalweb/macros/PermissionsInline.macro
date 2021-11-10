@@ -273,7 +273,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoSitepageCP {
+	macro gotoSitePageCP {
 		SitePages.togglePrivacy(privacy = "${privacy}");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();

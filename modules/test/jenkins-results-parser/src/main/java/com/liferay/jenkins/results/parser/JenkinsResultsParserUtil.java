@@ -1842,7 +1842,13 @@ public class JenkinsResultsParserUtil {
 		try {
 			InetAddress inetAddress = InetAddress.getLocalHost();
 
-			return inetAddress.getHostName();
+			String hostName = inetAddress.getHostName();
+
+			if (hostName.matches("\\d+-\\d+-\\d+-\\d+")) {
+				hostName = "cloud-" + hostName;
+			}
+
+			return hostName;
 		}
 		catch (UnknownHostException unknownHostException) {
 			return defaultHostName;

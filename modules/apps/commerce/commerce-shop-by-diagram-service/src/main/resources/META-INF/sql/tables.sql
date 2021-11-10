@@ -1,4 +1,5 @@
 create table CSDiagramEntry (
+	mvccVersion LONG default 0 not null,
 	CSDiagramEntryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -15,6 +16,7 @@ create table CSDiagramEntry (
 );
 
 create table CSDiagramPin (
+	mvccVersion LONG default 0 not null,
 	CSDiagramPinId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -28,6 +30,7 @@ create table CSDiagramPin (
 );
 
 create table CSDiagramSetting (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	CSDiagramSettingId LONG not null primary key,
 	companyId LONG,

@@ -33,6 +33,7 @@ public class CSDiagramEntrySoap implements Serializable {
 	public static CSDiagramEntrySoap toSoapModel(CSDiagramEntry model) {
 		CSDiagramEntrySoap soapModel = new CSDiagramEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCSDiagramEntryId(model.getCSDiagramEntryId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -102,6 +103,14 @@ public class CSDiagramEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCSDiagramEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCSDiagramEntryId() {
@@ -212,6 +221,7 @@ public class CSDiagramEntrySoap implements Serializable {
 		_sku = sku;
 	}
 
+	private long _mvccVersion;
 	private long _CSDiagramEntryId;
 	private long _companyId;
 	private long _userId;

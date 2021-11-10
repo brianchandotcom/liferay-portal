@@ -33,6 +33,7 @@ public class CSDiagramSettingSoap implements Serializable {
 	public static CSDiagramSettingSoap toSoapModel(CSDiagramSetting model) {
 		CSDiagramSettingSoap soapModel = new CSDiagramSettingSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCSDiagramSettingId(model.getCSDiagramSettingId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -105,6 +106,14 @@ public class CSDiagramSettingSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCSDiagramSettingId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -203,6 +212,7 @@ public class CSDiagramSettingSoap implements Serializable {
 		_type = type;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _CSDiagramSettingId;
 	private long _companyId;

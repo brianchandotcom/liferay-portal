@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry">
+		<field name="mvccVersion" type="long" />
 		<field name="CSDiagramEntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -17,6 +18,7 @@
 		<field name="sku" type="String" />
 	</model>
 	<model name="com.liferay.commerce.shop.by.diagram.model.CSDiagramPin">
+		<field name="mvccVersion" type="long" />
 		<field name="CSDiagramPinId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -29,6 +31,7 @@
 		<field name="sequence" type="String" />
 	</model>
 	<model name="com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="CSDiagramSettingId" type="long" />
 		<field name="companyId" type="long" />

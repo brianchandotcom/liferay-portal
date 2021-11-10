@@ -75,17 +75,19 @@ public class CSDiagramPinModelImpl
 	public static final String TABLE_NAME = "CSDiagramPin";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"CSDiagramPinId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"CPDefinitionId", Types.BIGINT}, {"positionX", Types.DOUBLE},
-		{"positionY", Types.DOUBLE}, {"sequence", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"CSDiagramPinId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"CPDefinitionId", Types.BIGINT},
+		{"positionX", Types.DOUBLE}, {"positionY", Types.DOUBLE},
+		{"sequence", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CSDiagramPinId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -99,7 +101,7 @@ public class CSDiagramPinModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CSDiagramPin (CSDiagramPinId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,positionX DOUBLE,positionY DOUBLE,sequence VARCHAR(75) null)";
+		"create table CSDiagramPin (mvccVersion LONG default 0 not null,CSDiagramPinId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,positionX DOUBLE,positionY DOUBLE,sequence VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CSDiagramPin";
 
@@ -157,6 +159,7 @@ public class CSDiagramPinModelImpl
 
 		CSDiagramPin model = new CSDiagramPinImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCSDiagramPinId(soapModel.getCSDiagramPinId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -319,6 +322,11 @@ public class CSDiagramPinModelImpl
 			new LinkedHashMap<String, BiConsumer<CSDiagramPin, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CSDiagramPin::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CSDiagramPin, Long>)CSDiagramPin::setMvccVersion);
+		attributeGetterFunctions.put(
 			"CSDiagramPinId", CSDiagramPin::getCSDiagramPinId);
 		attributeSetterBiConsumers.put(
 			"CSDiagramPinId",
@@ -365,6 +373,21 @@ public class CSDiagramPinModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -615,6 +638,7 @@ public class CSDiagramPinModelImpl
 	public Object clone() {
 		CSDiagramPinImpl csDiagramPinImpl = new CSDiagramPinImpl();
 
+		csDiagramPinImpl.setMvccVersion(getMvccVersion());
 		csDiagramPinImpl.setCSDiagramPinId(getCSDiagramPinId());
 		csDiagramPinImpl.setCompanyId(getCompanyId());
 		csDiagramPinImpl.setUserId(getUserId());
@@ -635,6 +659,8 @@ public class CSDiagramPinModelImpl
 	public CSDiagramPin cloneWithOriginalValues() {
 		CSDiagramPinImpl csDiagramPinImpl = new CSDiagramPinImpl();
 
+		csDiagramPinImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		csDiagramPinImpl.setCSDiagramPinId(
 			this.<Long>getColumnOriginalValue("CSDiagramPinId"));
 		csDiagramPinImpl.setCompanyId(
@@ -729,6 +755,8 @@ public class CSDiagramPinModelImpl
 	public CacheModel<CSDiagramPin> toCacheModel() {
 		CSDiagramPinCacheModel csDiagramPinCacheModel =
 			new CSDiagramPinCacheModel();
+
+		csDiagramPinCacheModel.mvccVersion = getMvccVersion();
 
 		csDiagramPinCacheModel.CSDiagramPinId = getCSDiagramPinId();
 
@@ -866,6 +894,7 @@ public class CSDiagramPinModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _CSDiagramPinId;
 	private long _companyId;
 	private long _userId;
@@ -905,6 +934,7 @@ public class CSDiagramPinModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("CSDiagramPinId", _CSDiagramPinId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -928,25 +958,27 @@ public class CSDiagramPinModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("CSDiagramPinId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("companyId", 2L);
+		columnBitmasks.put("CSDiagramPinId", 2L);
 
-		columnBitmasks.put("userId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("userName", 8L);
+		columnBitmasks.put("userId", 8L);
 
-		columnBitmasks.put("createDate", 16L);
+		columnBitmasks.put("userName", 16L);
 
-		columnBitmasks.put("modifiedDate", 32L);
+		columnBitmasks.put("createDate", 32L);
 
-		columnBitmasks.put("CPDefinitionId", 64L);
+		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("positionX", 128L);
+		columnBitmasks.put("CPDefinitionId", 128L);
 
-		columnBitmasks.put("positionY", 256L);
+		columnBitmasks.put("positionX", 256L);
 
-		columnBitmasks.put("sequence", 512L);
+		columnBitmasks.put("positionY", 512L);
+
+		columnBitmasks.put("sequence", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

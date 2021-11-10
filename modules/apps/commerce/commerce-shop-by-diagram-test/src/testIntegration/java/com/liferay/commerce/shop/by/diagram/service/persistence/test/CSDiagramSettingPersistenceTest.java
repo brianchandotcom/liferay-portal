@@ -126,6 +126,8 @@ public class CSDiagramSettingPersistenceTest {
 
 		CSDiagramSetting newCSDiagramSetting = _persistence.create(pk);
 
+		newCSDiagramSetting.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCSDiagramSetting.setUuid(RandomTestUtil.randomString());
 
 		newCSDiagramSetting.setCompanyId(RandomTestUtil.nextLong());
@@ -154,6 +156,9 @@ public class CSDiagramSettingPersistenceTest {
 		CSDiagramSetting existingCSDiagramSetting =
 			_persistence.findByPrimaryKey(newCSDiagramSetting.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCSDiagramSetting.getMvccVersion(),
+			newCSDiagramSetting.getMvccVersion());
 		Assert.assertEquals(
 			existingCSDiagramSetting.getUuid(), newCSDiagramSetting.getUuid());
 		Assert.assertEquals(
@@ -240,11 +245,11 @@ public class CSDiagramSettingPersistenceTest {
 
 	protected OrderByComparator<CSDiagramSetting> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CSDiagramSetting", "uuid", true, "CSDiagramSettingId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "CPAttachmentFileEntryId", true,
-			"CPDefinitionId", true, "color", true, "radius", true, "type",
-			true);
+			"CSDiagramSetting", "mvccVersion", true, "uuid", true,
+			"CSDiagramSettingId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"CPAttachmentFileEntryId", true, "CPDefinitionId", true, "color",
+			true, "radius", true, "type", true);
 	}
 
 	@Test
@@ -527,6 +532,8 @@ public class CSDiagramSettingPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CSDiagramSetting csDiagramSetting = _persistence.create(pk);
+
+		csDiagramSetting.setMvccVersion(RandomTestUtil.nextLong());
 
 		csDiagramSetting.setUuid(RandomTestUtil.randomString());
 

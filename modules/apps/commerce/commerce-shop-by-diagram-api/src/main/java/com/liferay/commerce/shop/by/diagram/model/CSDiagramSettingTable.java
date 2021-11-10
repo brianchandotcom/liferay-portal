@@ -33,6 +33,8 @@ public class CSDiagramSettingTable extends BaseTable<CSDiagramSettingTable> {
 	public static final CSDiagramSettingTable INSTANCE =
 		new CSDiagramSettingTable();
 
+	public final Column<CSDiagramSettingTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CSDiagramSettingTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CSDiagramSettingTable, Long> CSDiagramSettingId =

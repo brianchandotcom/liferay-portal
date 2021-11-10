@@ -18,6 +18,7 @@ import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CSDiagramPinCacheModel
-	implements CacheModel<CSDiagramPin>, Externalizable {
+	implements CacheModel<CSDiagramPin>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,7 +49,9 @@ public class CSDiagramPinCacheModel
 		CSDiagramPinCacheModel csDiagramPinCacheModel =
 			(CSDiagramPinCacheModel)object;
 
-		if (CSDiagramPinId == csDiagramPinCacheModel.CSDiagramPinId) {
+		if ((CSDiagramPinId == csDiagramPinCacheModel.CSDiagramPinId) &&
+			(mvccVersion == csDiagramPinCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class CSDiagramPinCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CSDiagramPinId);
+		int hashCode = HashUtil.hash(0, CSDiagramPinId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{CSDiagramPinId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", CSDiagramPinId=");
 		sb.append(CSDiagramPinId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -93,6 +110,7 @@ public class CSDiagramPinCacheModel
 	public CSDiagramPin toEntityModel() {
 		CSDiagramPinImpl csDiagramPinImpl = new CSDiagramPinImpl();
 
+		csDiagramPinImpl.setMvccVersion(mvccVersion);
 		csDiagramPinImpl.setCSDiagramPinId(CSDiagramPinId);
 		csDiagramPinImpl.setCompanyId(companyId);
 		csDiagramPinImpl.setUserId(userId);
@@ -136,6 +154,8 @@ public class CSDiagramPinCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		CSDiagramPinId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -155,6 +175,8 @@ public class CSDiagramPinCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(CSDiagramPinId);
 
 		objectOutput.writeLong(companyId);
@@ -185,6 +207,7 @@ public class CSDiagramPinCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public long CSDiagramPinId;
 	public long companyId;
 	public long userId;

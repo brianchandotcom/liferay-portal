@@ -16,6 +16,7 @@ package com.liferay.commerce.shop.by.diagram.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -36,7 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CSDiagramSettingModel
-	extends BaseModel<CSDiagramSetting>, ShardedModel, StagedAuditedModel {
+	extends BaseModel<CSDiagramSetting>, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +59,22 @@ public interface CSDiagramSettingModel
 	 * @param primaryKey the primary key of this cs diagram setting
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this cs diagram setting.
+	 *
+	 * @return the mvcc version of this cs diagram setting
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this cs diagram setting.
+	 *
+	 * @param mvccVersion the mvcc version of this cs diagram setting
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this cs diagram setting.

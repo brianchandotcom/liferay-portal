@@ -33,6 +33,7 @@ public class CSDiagramPinSoap implements Serializable {
 	public static CSDiagramPinSoap toSoapModel(CSDiagramPin model) {
 		CSDiagramPinSoap soapModel = new CSDiagramPinSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCSDiagramPinId(model.getCSDiagramPinId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -94,6 +95,14 @@ public class CSDiagramPinSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCSDiagramPinId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCSDiagramPinId() {
@@ -176,6 +185,7 @@ public class CSDiagramPinSoap implements Serializable {
 		_sequence = sequence;
 	}
 
+	private long _mvccVersion;
 	private long _CSDiagramPinId;
 	private long _companyId;
 	private long _userId;

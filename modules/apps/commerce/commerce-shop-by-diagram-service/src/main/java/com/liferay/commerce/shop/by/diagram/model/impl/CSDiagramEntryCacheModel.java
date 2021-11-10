@@ -18,6 +18,7 @@ import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CSDiagramEntryCacheModel
-	implements CacheModel<CSDiagramEntry>, Externalizable {
+	implements CacheModel<CSDiagramEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,7 +49,9 @@ public class CSDiagramEntryCacheModel
 		CSDiagramEntryCacheModel csDiagramEntryCacheModel =
 			(CSDiagramEntryCacheModel)object;
 
-		if (CSDiagramEntryId == csDiagramEntryCacheModel.CSDiagramEntryId) {
+		if ((CSDiagramEntryId == csDiagramEntryCacheModel.CSDiagramEntryId) &&
+			(mvccVersion == csDiagramEntryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class CSDiagramEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CSDiagramEntryId);
+		int hashCode = HashUtil.hash(0, CSDiagramEntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
-		sb.append("{CSDiagramEntryId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", CSDiagramEntryId=");
 		sb.append(CSDiagramEntryId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -99,6 +116,7 @@ public class CSDiagramEntryCacheModel
 	public CSDiagramEntry toEntityModel() {
 		CSDiagramEntryImpl csDiagramEntryImpl = new CSDiagramEntryImpl();
 
+		csDiagramEntryImpl.setMvccVersion(mvccVersion);
 		csDiagramEntryImpl.setCSDiagramEntryId(CSDiagramEntryId);
 		csDiagramEntryImpl.setCompanyId(companyId);
 		csDiagramEntryImpl.setUserId(userId);
@@ -151,6 +169,8 @@ public class CSDiagramEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		CSDiagramEntryId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -175,6 +195,8 @@ public class CSDiagramEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(CSDiagramEntryId);
 
 		objectOutput.writeLong(companyId);
@@ -216,6 +238,7 @@ public class CSDiagramEntryCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public long CSDiagramEntryId;
 	public long companyId;
 	public long userId;

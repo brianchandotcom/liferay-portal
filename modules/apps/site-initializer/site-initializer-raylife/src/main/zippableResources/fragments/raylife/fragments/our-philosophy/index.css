@@ -9,10 +9,10 @@
 }
 
 .product-actions .product-actions-title {
-	color: var(--color-neutral-1);
+	color: var(--color-neutral-9);
 }
 
 .product-actions .product-actions-description {
-	color: var(--color-neutral-2);
+	color: var(--color-neutral-8);
 	font-size: var(--font-size-lg);
 }

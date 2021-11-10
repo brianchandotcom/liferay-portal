@@ -20,7 +20,7 @@
 }
 
 label {
-	color: $color-neutral-0;
+	color: $color-neutral-black;
 	display: flex;
 	font-family: $font-family;
 	font-size: 1.125rem;
@@ -42,7 +42,7 @@ input,
 	background: $background;
 	border: 1px solid $color-action-neutral-default;
 	border-radius: 0.25rem;
-	color: $color-neutral-0;
+	color: $color-neutral-black;
 	display: flex;
 	flex: 1;
 	font-family: $font-family;

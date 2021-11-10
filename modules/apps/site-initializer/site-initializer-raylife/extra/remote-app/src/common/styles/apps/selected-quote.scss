@@ -30,7 +30,7 @@
 }
 
 .panel-container {
-	border-bottom: 1px solid $color-neutral-7;
+	border-bottom: 1px solid $color-neutral-3;
 	padding: 34px 48px;
 	width: 100%;
 
@@ -41,7 +41,7 @@
 		justify-content: space-between;
 
 		.panel-left {
-			color: $color-neutral-1;
+			color: $color-neutral-9;
 			font-size: 24px;
 			font-weight: 700;
 		}
@@ -53,7 +53,7 @@
 				margin-bottom: 24px;
 
 				h3 {
-					color: $color-neutral-2;
+					color: $color-neutral-8;
 					font-size: 14px;
 					font-weight: 700;
 					margin-bottom: 8px;
@@ -64,7 +64,7 @@
 					flex-direction: row;
 
 					.image {
-						border: 1px solid $color-neutral-7;
+						border: 1px solid $color-neutral-3;
 						border-radius: 4px;
 						height: 48px;
 						margin-right: 8px;
@@ -196,12 +196,12 @@
 				}
 
 				span.optional {
-					color: $color-neutral-2;
+					color: $color-neutral-8;
 				}
 			}
 
 			.subtitle {
-				color: $color-neutral-2;
+				color: $color-neutral-8;
 				font-size: 16px;
 				font-weight: 500;
 			}
@@ -239,7 +239,7 @@
 						}
 
 						span {
-							color: $color-neutral-2;
+							color: $color-neutral-8;
 							font-size: 13px;
 							margin-top: 4px;
 							width: 176px;
@@ -285,15 +285,15 @@
 							text-align: center;
 
 							span {
-								color: $color-neutral-2;
+								color: $color-neutral-8;
 								font-size: 13px;
 								margin-top: 4px;
 								width: 176px;
 							}
 
 							.content {
-								background-color: $color-neutral-9;
-								border: 1px solid $color-neutral-8;
+								background-color: $color-neutral-1;
+								border: 1px solid $color-neutral-2;
 								border-radius: 16px;
 								height: 176px;
 								object-fit: cover;
@@ -355,7 +355,7 @@
 					background: $color-brand-primary-lighten-6;
 					border: 2px dashed $color-brand-primary-lighten-3;
 					border-radius: 16px;
-					color: $color-neutral-2;
+					color: $color-neutral-8;
 					display: flex;
 					flex-direction: row;
 					flex-wrap: wrap;
@@ -500,12 +500,12 @@
 
 		input:valid {
 			background-color: $background;
-			border: solid 1px $color-neutral-0;
+			border: solid 1px $color-neutral-black;
 		}
 
 		input:valid + .ca-label {
 			background-color: $background;
-			color: $color-neutral-0;
+			color: $color-neutral-black;
 			font-size: 13px;
 			transform: translate(0, -21px) scale(1);
 		}
@@ -523,7 +523,7 @@
 		}
 
 		::placeholder {
-			color: $color-neutral-0;
+			color: $color-neutral-black;
 			font-weight: $font-weight-bolder;
 		}
 
@@ -573,11 +573,11 @@
 		}
 
 		&.neutral {
-			color: $color-neutral-3;
+			color: $color-neutral-7;
 
 			.ca-icon-rule {
-				border-color: $color-neutral-3;
-				fill: $color-neutral-3;
+				border-color: $color-neutral-7;
+				fill: $color-neutral-7;
 			}
 		}
 

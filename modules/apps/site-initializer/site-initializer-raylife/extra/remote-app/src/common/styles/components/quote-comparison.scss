@@ -43,7 +43,7 @@
 		text-align: center;
 
 		.subtitle {
-			color: $color-neutral-2;
+			color: $color-neutral-8;
 			font-size: 11px;
 			font-weight: 500;
 			line-height: 16px;
@@ -71,7 +71,7 @@
 			line-height: 56px;
 
 			div {
-				color: $color-neutral-1;
+				color: $color-neutral-9;
 				font-size: 37px;
 				font-weight: 300;
 			}
@@ -144,7 +144,7 @@
 	}
 
 	li {
-		color: $color-neutral-2;
+		color: $color-neutral-8;
 		display: flex;
 		flex: auto;
 		font-size: 13px;
@@ -153,7 +153,7 @@
 		list-style: none;
 
 		.timesIcon {
-			color: $color-neutral-3;
+			color: $color-neutral-7;
 		}
 
 		.checkIcon,
@@ -201,7 +201,7 @@
 				width: 16px;
 
 				svg {
-					fill: $color-neutral-2;
+					fill: $color-neutral-8;
 				}
 			}
 		}

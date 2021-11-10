@@ -1,11 +1,11 @@
 .selected-quote h1 {
-	color: var(--color-neutral-1);
+	color: var(--color-neutral-9);
 	font-size: 37px;
 	font-weight: 800;
 }
 
 .selected-quote h3 {
-	color: var(--color-neutral-2);
+	color: var(--color-neutral-8);
 	font-size: 24px;
 	font-weight: var(--font-weight-bolder);
 }

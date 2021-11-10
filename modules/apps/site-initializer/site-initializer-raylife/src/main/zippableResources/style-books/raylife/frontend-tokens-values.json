@@ -425,27 +425,27 @@
 	},
 	"colorNeutral0": {
 		"cssVariableMapping": "color-neutral-0",
-		"value": "#080F1B"
+		"value": "#FFFFFF"
 	},
 	"colorNeutral1": {
 		"cssVariableMapping": "color-neutral-1",
-		"value": "#2F313D"
+		"value": "#FAFAFA"
 	},
 	"colorNeutral10": {
 		"cssVariableMapping": "color-neutral-10",
-		"value": "#FFFFFF"
+		"value": "#080F1B"
 	},
 	"colorNeutral2": {
 		"cssVariableMapping": "color-neutral-2",
-		"value": "#5F6167"
+		"value": "#E2E2E4"
 	},
 	"colorNeutral3": {
 		"cssVariableMapping": "color-neutral-3",
-		"value": "#808185"
+		"value": "#D3D3D4"
 	},
 	"colorNeutral4": {
 		"cssVariableMapping": "color-neutral-4",
-		"value": "#98999A"
+		"value": "#C1C1C2"
 	},
 	"colorNeutral5": {
 		"cssVariableMapping": "color-neutral-5",
@@ -453,23 +453,23 @@
 	},
 	"colorNeutral6": {
 		"cssVariableMapping": "color-neutral-6",
-		"value": "#C1C1C2"
+		"value": "#98999A"
 	},
 	"colorNeutral7": {
 		"cssVariableMapping": "color-neutral-7",
-		"value": "#D3D3D4"
+		"value": "#808185"
 	},
 	"colorNeutral8": {
 		"cssVariableMapping": "color-neutral-8",
-		"value": "#E2E2E4"
+		"value": "#5F6167"
 	},
 	"colorNeutral9": {
 		"cssVariableMapping": "color-neutral-9",
-		"value": "#FAFAFA"
+		"value": "#2F313D"
 	},
 	"colorNeutralBlack": {
 		"cssVariableMapping": "color-neutral-black",
-		"value": "#09101D"
+		"value": "#080F1B"
 	},
 	"colorStateError": {
 		"cssVariableMapping": "color-state-error",

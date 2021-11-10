@@ -1,5 +1,5 @@
 .quote-comparison H1 {
-	color: var(--color-neutral-0);
+	color: var(--color-neutral-black);
 	font-size: 37px;
 	font-weight: 800;
 	line-height: 40px;
@@ -11,7 +11,7 @@
 }
 
 .quote-comparison p { 
-	color: var(--color-neutral-2);
+	color: var(--color-neutral-8);
 	font-size: 16px;
 	font-weight: 500;
 	line-height: 24px;

@@ -1,10 +1,10 @@
 .get-in-touch h1 {
-	color: var(--color-neutral-1);
+	color: var(--color-neutral-9);
 	font-weight: var(--display1-weight);
 }
 
 .get-in-touch p {
-	color: var(--color-neutral-2);
+	color: var(--color-neutral-8);
 }
 
 .get-in-touch ul {
@@ -13,11 +13,11 @@
 }
 
 .get-in-touch .contact-agent-title-suport {
-	color: var(--color-neutral-1);
+	color: var(--color-neutral-9);
 }
 
 .get-in-touch .content-agent-text-adictional {
-	color: var(--color-neutral-2);
+	color: var(--color-neutral-8);
 	font-size: 13px;
 	font-weight: var(--font-weight-bolder);
 }

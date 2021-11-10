@@ -12,7 +12,7 @@
 }
 
 .public-site-navbar-divider::before {
-	border: 1px solid var(--color-neutral-7);
+	border: 1px solid var(--color-neutral-3);
 	content: '';
 	margin: 0 20px;
 }
@@ -34,12 +34,12 @@
 }
 
 .public-site-navbar .portlet .nav-item .nav-link:hover {
-	color: var(--color-neutral-1);
+	color: var(--color-neutral-9);
 }
 
 .public-site-navbar .portlet .nav-item.active a {
 	border-bottom: 4px solid var(--color-action-primary-default);
-	color: var(--color-neutral-0);
+	color: var(--color-neutral-black);
 }
 
 .public-site-navbar .switch {
@@ -93,5 +93,6 @@
 }
 
 #navbarSupportedContent .btn.btn-ghost {
-	text-transform: uppercase;
 	border-radius: 4px;
+	text-transform: uppercase;
+}

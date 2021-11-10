@@ -7,7 +7,7 @@
 
 	.step-item {
 		align-items: center;
-		color: $color-neutral-4;
+		color: $color-neutral-6;
 		display: flex;
 		font-family: $font-family;
 		font-size: 1.15rem;
@@ -25,7 +25,7 @@
 		}
 
 		& > i::after {
-			background: $color-neutral-4;
+			background: $color-neutral-6;
 			border-radius: 0.5rem;
 			content: '';
 			display: block;

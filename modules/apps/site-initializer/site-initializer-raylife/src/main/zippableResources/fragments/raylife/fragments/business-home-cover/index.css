@@ -7,7 +7,7 @@
 }
 
 .business-home-cover .business-home-cover-box {
-	background-color: var(--color-neutral-10);
+	background-color: var(--color-neutral-0);
 	border-radius: 8px;
 	box-shadow: 0px 10px 30px rgba(77, 133, 255, 0.09);
 	font-size: var(--font-size-lg);
@@ -64,11 +64,11 @@ select {
 }
 
 .business-home-cover .subtitle {
-	color: var(--color-neutral-1);
+	color: var(--color-neutral-9);
 }
 
 .business-home-cover .placeholder-title {
-	color: var(--color-neutral-0);
+	color: var(--color-neutral-black);
 }
 
 .business-home-cover .business-home-cover-box p {
@@ -91,12 +91,12 @@ select {
 }
 
 .business-home-cover .business-email-delivered p {
-	color: var(--color-neutral-2);
+	color: var(--color-neutral-8);
 	font-size: var(--font-size-base);
 }
 
 .business-home-cover .business-home-cover-link {
-	color: var(--color-neutral-2);
+	color: var(--color-neutral-8);
 	font-weight: bold;
 }
 

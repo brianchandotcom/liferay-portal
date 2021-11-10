@@ -362,7 +362,7 @@
 		</finder>
 		<finder name="G_N" return-type="AssetVocabulary" unique="true">
 			<finder-column name="groupId" />
-			<finder-column name="name" />
+			<finder-column case-sensitive="false" name="name" />
 		</finder>
 		<finder name="G_LikeN" return-type="Collection">
 			<finder-column name="groupId" />

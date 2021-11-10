@@ -3207,13 +3207,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			List<CharSequence> charSequences = new ArrayList<>();
 
 			for (String key : value.split(",")) {
-				CharSequence charSequence = null;
+				CharSequence charSequence = key;
 
 				if (_keysMap.containsKey(key)) {
 					charSequence = _keysMap.get(key);
-				}
-				else {
-					charSequence = key;
 				}
 
 				charSequences.add(charSequence);

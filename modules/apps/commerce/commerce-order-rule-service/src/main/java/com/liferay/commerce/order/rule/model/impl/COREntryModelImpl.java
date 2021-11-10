@@ -76,22 +76,24 @@ public class COREntryModelImpl
 	public static final String TABLE_NAME = "COREntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"externalReferenceCode", Types.VARCHAR}, {"COREntryId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
-		{"description", Types.VARCHAR}, {"displayDate", Types.TIMESTAMP},
-		{"expirationDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
-		{"priority", Types.INTEGER}, {"type_", Types.VARCHAR},
-		{"typeSettings", Types.CLOB}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"COREntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"active_", Types.BOOLEAN}, {"description", Types.VARCHAR},
+		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
+		{"name", Types.VARCHAR}, {"priority", Types.INTEGER},
+		{"type_", Types.VARCHAR}, {"typeSettings", Types.CLOB},
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("COREntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -115,7 +117,7 @@ public class COREntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table COREntry (externalReferenceCode VARCHAR(75) null,COREntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,description VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,name VARCHAR(75) null,priority INTEGER,type_ VARCHAR(75) null,typeSettings TEXT null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table COREntry (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,COREntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,description VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,name VARCHAR(75) null,priority INTEGER,type_ VARCHAR(75) null,typeSettings TEXT null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table COREntry";
 
@@ -209,6 +211,7 @@ public class COREntryModelImpl
 
 		COREntry model = new COREntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCOREntryId(soapModel.getCOREntryId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -378,6 +381,10 @@ public class COREntryModelImpl
 		Map<String, BiConsumer<COREntry, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<COREntry, ?>>();
 
+		attributeGetterFunctions.put("mvccVersion", COREntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<COREntry, Long>)COREntry::setMvccVersion);
 		attributeGetterFunctions.put(
 			"externalReferenceCode", COREntry::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
@@ -457,6 +464,21 @@ public class COREntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1040,6 +1062,7 @@ public class COREntryModelImpl
 	public Object clone() {
 		COREntryImpl corEntryImpl = new COREntryImpl();
 
+		corEntryImpl.setMvccVersion(getMvccVersion());
 		corEntryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		corEntryImpl.setCOREntryId(getCOREntryId());
 		corEntryImpl.setCompanyId(getCompanyId());
@@ -1070,6 +1093,8 @@ public class COREntryModelImpl
 	public COREntry cloneWithOriginalValues() {
 		COREntryImpl corEntryImpl = new COREntryImpl();
 
+		corEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		corEntryImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		corEntryImpl.setCOREntryId(
@@ -1189,6 +1214,8 @@ public class COREntryModelImpl
 	@Override
 	public CacheModel<COREntry> toCacheModel() {
 		COREntryCacheModel corEntryCacheModel = new COREntryCacheModel();
+
+		corEntryCacheModel.mvccVersion = getMvccVersion();
 
 		corEntryCacheModel.externalReferenceCode = getExternalReferenceCode();
 
@@ -1406,6 +1433,7 @@ public class COREntryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private long _COREntryId;
 	private long _companyId;
@@ -1457,6 +1485,7 @@ public class COREntryModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("COREntryId", _COREntryId);
@@ -1502,45 +1531,47 @@ public class COREntryModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("externalReferenceCode", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("COREntryId", 2L);
+		columnBitmasks.put("externalReferenceCode", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("COREntryId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("active_", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("description", 256L);
+		columnBitmasks.put("active_", 256L);
 
-		columnBitmasks.put("displayDate", 512L);
+		columnBitmasks.put("description", 512L);
 
-		columnBitmasks.put("expirationDate", 1024L);
+		columnBitmasks.put("displayDate", 1024L);
 
-		columnBitmasks.put("name", 2048L);
+		columnBitmasks.put("expirationDate", 2048L);
 
-		columnBitmasks.put("priority", 4096L);
+		columnBitmasks.put("name", 4096L);
 
-		columnBitmasks.put("type_", 8192L);
+		columnBitmasks.put("priority", 8192L);
 
-		columnBitmasks.put("typeSettings", 16384L);
+		columnBitmasks.put("type_", 16384L);
 
-		columnBitmasks.put("lastPublishDate", 32768L);
+		columnBitmasks.put("typeSettings", 32768L);
 
-		columnBitmasks.put("status", 65536L);
+		columnBitmasks.put("lastPublishDate", 65536L);
 
-		columnBitmasks.put("statusByUserId", 131072L);
+		columnBitmasks.put("status", 131072L);
 
-		columnBitmasks.put("statusByUserName", 262144L);
+		columnBitmasks.put("statusByUserId", 262144L);
 
-		columnBitmasks.put("statusDate", 524288L);
+		columnBitmasks.put("statusByUserName", 524288L);
+
+		columnBitmasks.put("statusDate", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

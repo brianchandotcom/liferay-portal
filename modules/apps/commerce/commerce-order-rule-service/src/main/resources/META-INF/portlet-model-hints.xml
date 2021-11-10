@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.order.rule.model.COREntry">
+		<field name="mvccVersion" type="long" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="COREntryId" type="long" />
 		<field name="companyId" type="long" />
@@ -26,6 +27,7 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.order.rule.model.COREntryRel">
+		<field name="mvccVersion" type="long" />
 		<field name="COREntryRelId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

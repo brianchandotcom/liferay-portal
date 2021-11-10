@@ -125,6 +125,8 @@ public class COREntryRelPersistenceTest {
 
 		COREntryRel newCOREntryRel = _persistence.create(pk);
 
+		newCOREntryRel.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCOREntryRel.setCompanyId(RandomTestUtil.nextLong());
 
 		newCOREntryRel.setUserId(RandomTestUtil.nextLong());
@@ -146,6 +148,9 @@ public class COREntryRelPersistenceTest {
 		COREntryRel existingCOREntryRel = _persistence.findByPrimaryKey(
 			newCOREntryRel.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCOREntryRel.getMvccVersion(),
+			newCOREntryRel.getMvccVersion());
 		Assert.assertEquals(
 			existingCOREntryRel.getCOREntryRelId(),
 			newCOREntryRel.getCOREntryRelId());
@@ -220,9 +225,10 @@ public class COREntryRelPersistenceTest {
 
 	protected OrderByComparator<COREntryRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"COREntryRel", "COREntryRelId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "COREntryId", true);
+			"COREntryRel", "mvccVersion", true, "COREntryRelId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true,
+			"COREntryId", true);
 	}
 
 	@Test
@@ -506,6 +512,8 @@ public class COREntryRelPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		COREntryRel corEntryRel = _persistence.create(pk);
+
+		corEntryRel.setMvccVersion(RandomTestUtil.nextLong());
 
 		corEntryRel.setCompanyId(RandomTestUtil.nextLong());
 

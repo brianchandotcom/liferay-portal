@@ -18,6 +18,7 @@ import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class COREntryCacheModel
-	implements CacheModel<COREntry>, Externalizable {
+	implements CacheModel<COREntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -47,7 +48,9 @@ public class COREntryCacheModel
 
 		COREntryCacheModel corEntryCacheModel = (COREntryCacheModel)object;
 
-		if (COREntryId == corEntryCacheModel.COREntryId) {
+		if ((COREntryId == corEntryCacheModel.COREntryId) &&
+			(mvccVersion == corEntryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -56,14 +59,28 @@ public class COREntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, COREntryId);
+		int hashCode = HashUtil.hash(0, COREntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
-		sb.append("{externalReferenceCode=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
 		sb.append(", COREntryId=");
 		sb.append(COREntryId);
@@ -111,6 +128,8 @@ public class COREntryCacheModel
 	@Override
 	public COREntry toEntityModel() {
 		COREntryImpl corEntryImpl = new COREntryImpl();
+
+		corEntryImpl.setMvccVersion(mvccVersion);
 
 		if (externalReferenceCode == null) {
 			corEntryImpl.setExternalReferenceCode("");
@@ -223,6 +242,7 @@ public class COREntryCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
+		mvccVersion = objectInput.readLong();
 		externalReferenceCode = objectInput.readUTF();
 
 		COREntryId = objectInput.readLong();
@@ -254,6 +274,8 @@ public class COREntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (externalReferenceCode == null) {
 			objectOutput.writeUTF("");
 		}
@@ -328,6 +350,7 @@ public class COREntryCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long mvccVersion;
 	public String externalReferenceCode;
 	public long COREntryId;
 	public long companyId;

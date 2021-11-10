@@ -33,6 +33,8 @@ public class COREntryTable extends BaseTable<COREntryTable> {
 
 	public static final COREntryTable INSTANCE = new COREntryTable();
 
+	public final Column<COREntryTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<COREntryTable, String> externalReferenceCode =
 		createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,

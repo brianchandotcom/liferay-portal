@@ -33,6 +33,7 @@ public class COREntrySoap implements Serializable {
 	public static COREntrySoap toSoapModel(COREntry model) {
 		COREntrySoap soapModel = new COREntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCOREntryId(model.getCOREntryId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -104,6 +105,14 @@ public class COREntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCOREntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getExternalReferenceCode() {
@@ -270,6 +279,7 @@ public class COREntrySoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private long _COREntryId;
 	private long _companyId;

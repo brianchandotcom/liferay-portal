@@ -125,6 +125,8 @@ public class COREntryPersistenceTest {
 
 		COREntry newCOREntry = _persistence.create(pk);
 
+		newCOREntry.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCOREntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		newCOREntry.setCompanyId(RandomTestUtil.nextLong());
@@ -168,6 +170,8 @@ public class COREntryPersistenceTest {
 		COREntry existingCOREntry = _persistence.findByPrimaryKey(
 			newCOREntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCOREntry.getMvccVersion(), newCOREntry.getMvccVersion());
 		Assert.assertEquals(
 			existingCOREntry.getExternalReferenceCode(),
 			newCOREntry.getExternalReferenceCode());
@@ -296,13 +300,13 @@ public class COREntryPersistenceTest {
 
 	protected OrderByComparator<COREntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"COREntry", "externalReferenceCode", true, "COREntryId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "active", true, "description", true,
-			"displayDate", true, "expirationDate", true, "name", true,
-			"priority", true, "type", true, "lastPublishDate", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"COREntry", "mvccVersion", true, "externalReferenceCode", true,
+			"COREntryId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "active", true,
+			"description", true, "displayDate", true, "expirationDate", true,
+			"name", true, "priority", true, "type", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -578,6 +582,8 @@ public class COREntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		COREntry corEntry = _persistence.create(pk);
+
+		corEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		corEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 

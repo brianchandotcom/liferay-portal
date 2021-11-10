@@ -33,6 +33,7 @@ public class COREntryRelSoap implements Serializable {
 	public static COREntryRelSoap toSoapModel(COREntryRel model) {
 		COREntryRelSoap soapModel = new COREntryRelSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCOREntryRelId(model.getCOREntryRelId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -93,6 +94,14 @@ public class COREntryRelSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCOREntryRelId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCOREntryRelId() {
@@ -167,6 +176,7 @@ public class COREntryRelSoap implements Serializable {
 		_COREntryId = COREntryId;
 	}
 
+	private long _mvccVersion;
 	private long _COREntryRelId;
 	private long _companyId;
 	private long _userId;

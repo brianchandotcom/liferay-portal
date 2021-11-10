@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Layout Page Template Item Selector API
 Bundle-SymbolicName: com.liferay.layout.page.template.item.selector.api
-Bundle-Version: 1.1.2
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.layout.page.template.item.selector,\
 	com.liferay.layout.page.template.item.selector.criterion

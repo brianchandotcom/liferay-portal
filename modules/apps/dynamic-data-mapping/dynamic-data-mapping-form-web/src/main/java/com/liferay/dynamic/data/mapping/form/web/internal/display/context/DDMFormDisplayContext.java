@@ -721,6 +721,19 @@ public class DDMFormDisplayContext {
 		return _showConfigurationIcon;
 	}
 
+	public boolean isShowPartialResultsToRespondents() throws PortalException {
+		DDMFormInstance ddmFormInstance = getFormInstance();
+
+		if (ddmFormInstance == null) {
+			return false;
+		}
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			ddmFormInstance.getSettingsModel();
+
+		return ddmFormInstanceSettings.showPartialResultsToRespondents();
+	}
+
 	public boolean isShowSubmitButton() {
 		return !ParamUtil.getBoolean(_renderRequest, "preview");
 	}
@@ -757,10 +770,15 @@ public class DDMFormDisplayContext {
 	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
-		DDMForm ddmForm) {
+			DDMForm ddmForm)
+		throws PortalException {
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
+
+		ddmFormRenderingContext.addProperty(
+			"showPartialResultsToRespondents",
+			isShowPartialResultsToRespondents());
 
 		String redirectURL = ParamUtil.getString(_renderRequest, "redirect");
 

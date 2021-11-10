@@ -14,13 +14,19 @@
 
 package com.liferay.commerce.internal.events;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -65,6 +71,12 @@ public class LoginPostAction extends Action {
 
 					httpSession.setAttribute(name, cookie.getValue());
 
+					_updateGuestCommerceOrder(
+						cookie.getValue(),
+						Long.valueOf(
+							StringUtil.extractLast(name, StringPool.POUND)),
+						httpServletRequest);
+
 					break;
 				}
 			}
@@ -74,8 +86,49 @@ public class LoginPostAction extends Action {
 		}
 	}
 
+	private void _updateGuestCommerceOrder(
+			String commerceOrderUuid, long commerceChannelGroupId,
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		CommerceOrder commerceOrder = null;
+
+		try {
+			commerceOrder =
+				_commerceOrderLocalService.getCommerceOrderByUuidAndGroupId(
+					commerceOrderUuid, commerceChannelGroupId);
+		}
+		catch (Exception exception) {
+			return;
+		}
+
+		if (commerceOrder.getCommerceAccountId() !=
+				CommerceAccountConstants.ACCOUNT_ID_GUEST) {
+
+			return;
+		}
+
+		CommerceAccount commerceAccount =
+			_commerceAccountLocalService.getPersonalCommerceAccount(
+				_portal.getUserId(httpServletRequest));
+
+		_commerceOrderLocalService.updateAccount(
+			commerceOrder.getCommerceOrderId(),
+			_portal.getUserId(httpServletRequest),
+			commerceAccount.getCommerceAccountId());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LoginPostAction.class);
+
+	@Reference
+	private CommerceAccountLocalService _commerceAccountLocalService;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Reference
 	private Portal _portal;

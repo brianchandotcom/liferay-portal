@@ -9,14 +9,16 @@
  * distribution rights of the Software.
  */
 
-import HIDE_COMMENTS from '../sxp_elements/hideComments';
-import HIDE_DEFAULT_USER from '../sxp_elements/hideDefaultUser';
-import HIDE_HIDDEN_CONTENTS from '../sxp_elements/hideHiddenContents';
-import LIMIT_SEARCH_TO_HEAD_VERSION from '../sxp_elements/limitSearchToHeadVersion';
-import LIMIT_SEARCH_TO_PUBLISHED_CONTENTS from '../sxp_elements/limitSearchToPublishedContents';
-import SCHEDULING_AWARE from '../sxp_elements/schedulingAware';
-import STAGING_AWARE from '../sxp_elements/stagingAware';
-import TEXT_MATCH_OVER_MULTIPLE_FIELDS from '../sxp_elements/textMatchOverMultipleFields';
+import boostAllKeywordsMatch from '../sxp_elements/boostAllKeywordsMatch';
+
+// import HIDE_COMMENTS from '../sxp_elements/hideComments';
+// import HIDE_DEFAULT_USER from '../sxp_elements/hideDefaultUser';
+// import HIDE_HIDDEN_CONTENTS from '../sxp_elements/hideHiddenContents';
+// import LIMIT_SEARCH_TO_HEAD_VERSION from '../sxp_elements/limitSearchToHeadVersion';
+// import LIMIT_SEARCH_TO_PUBLISHED_CONTENTS from '../sxp_elements/limitSearchToPublishedContents';
+// import SCHEDULING_AWARE from '../sxp_elements/schedulingAware';
+// import STAGING_AWARE from '../sxp_elements/stagingAware';
+// import TEXT_MATCH_OVER_MULTIPLE_FIELDS from '../sxp_elements/textMatchOverMultipleFields';
 
 export const CUSTOM_JSON_SXP_ELEMENT = {
 	sxpElementTemplateJSON: {
@@ -24,26 +26,35 @@ export const CUSTOM_JSON_SXP_ELEMENT = {
 		clauses: [],
 		conditions: {},
 		description: Liferay.Language.get('editable-json-text-area'),
+		description_i18n: {
+			en_US: Liferay.Language.get('editable-json-text-area'),
+		},
 		enabled: true,
 		icon: 'custom-field',
 		title: Liferay.Language.get('custom-json-element'),
+		title_i18n: {en_US: Liferay.Language.get('custom-json-element')},
 	},
 };
 
 export const DEFAULT_ADVANCED_CONFIGURATION = {};
 
 export const DEFAULT_BASELINE_SXP_ELEMENTS = [
-	TEXT_MATCH_OVER_MULTIPLE_FIELDS,
-	STAGING_AWARE,
-	SCHEDULING_AWARE,
-	LIMIT_SEARCH_TO_HEAD_VERSION,
-	LIMIT_SEARCH_TO_PUBLISHED_CONTENTS,
-	HIDE_HIDDEN_CONTENTS,
-	HIDE_COMMENTS,
-	HIDE_DEFAULT_USER,
+	boostAllKeywordsMatch,
+
+	// TODO Update once all elements are available
+
+	// TEXT_MATCH_OVER_MULTIPLE_FIELDS,
+	// STAGING_AWARE,
+	// SCHEDULING_AWARE,
+	// LIMIT_SEARCH_TO_HEAD_VERSION,
+	// LIMIT_SEARCH_TO_PUBLISHED_CONTENTS,
+	// HIDE_HIDDEN_CONTENTS,
+	// HIDE_COMMENTS,
+	// HIDE_DEFAULT_USER,
+
 ];
 
-export const DEFAULT_EDIT_SXP_ELEMENT = TEXT_MATCH_OVER_MULTIPLE_FIELDS;
+export const DEFAULT_EDIT_SXP_ELEMENT = boostAllKeywordsMatch; // TEXT_MATCH_OVER_MULTIPLE_FIELDS
 
 export const DEFAULT_SXP_ELEMENT_ICON = 'code';
 
@@ -51,7 +62,7 @@ export const DEFAULT_HIGHLIGHT_CONFIGURATION = {};
 
 export const DEFAULT_PARAMETER_CONFIGURATION = {};
 
-export const DEFAULT_SORT_CONFIGURATION = [];
+export const DEFAULT_SORT_CONFIGURATION = {};
 
 export const BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION = {
 	excludes: [

@@ -18,7 +18,7 @@ import {fetch, navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {DEFAULT_ERROR} from '../utils/constants';
-import {isDefined} from '../utils/utils';
+import {DEFAULT_EDIT_SXP_ELEMENT, isDefined} from '../utils/utils';
 
 /**
  * A slightly modified version of frontend-js-web module's SimpleInputModal
@@ -68,15 +68,12 @@ const AddSXPElementModal = ({
 		fetch('/o/search-experiences-rest/v1.0/sxp-elements', {
 			body: JSON.stringify({
 				description: descriptionInputValue,
-
-				// TODO The property "elementDefinitionJSON" is not defined in SXPElement.
-				// elementDefinitionJSON: JSON.stringify(DEFAULT_EDIT_SXP_ELEMENT),
-
+				elementDefinition: DEFAULT_EDIT_SXP_ELEMENT,
 				title: titleInputValue,
 
 				// TODO The property "type" is not defined in SXPElement.
-				// type,
 
+				// type,
 			}),
 			headers: new Headers({
 				'Content-Type': 'application/json',
@@ -94,8 +91,7 @@ const AddSXPElementModal = ({
 				if (isMounted()) {
 					if (responseContent.error) {
 						_handleFormError(responseContent);
-					}
-					else {
+					} else {
 						setVisible(false);
 
 						closeModal();
@@ -109,8 +105,7 @@ const AddSXPElementModal = ({
 							);
 
 							navigate(url);
-						}
-						else {
+						} else {
 							navigate(redirectURL);
 						}
 					}

@@ -541,15 +541,45 @@ export const getUIConfigurationValues = (uiConfigurationJSON) =>
 	);
 
 /**
+ * Function for getting formatting SXP element into expected sxpElementTemplateJSON,
+ * uiConfigurationJSON, and uiConfigurationValues.
+ *
+ * @param {object} querySXPElement Object of SXP Element from REST API
+ * @return {object}
+ */
+export const getSXPBlueprintForm = ({
+	description,
+	description_i18n,
+	elementDefinition,
+	title,
+	title_i18n,
+}) => ({
+	sxpElementTemplateJSON: {
+		category: elementDefinition?.category,
+		description,
+		description_i18n,
+		enabled: true,
+		icon: elementDefinition?.icon,
+		sxpBlueprint: elementDefinition?.sxpBlueprint,
+		title,
+		title_i18n,
+	},
+	uiConfigurationJSON: elementDefinition?.uiConfiguration || {},
+	uiConfigurationValues: getUIConfigurationValues(
+		elementDefinition?.uiConfiguration
+	),
+});
+
+/**
  * Function for transforming the framework configuration's `clause_contributor`
  * object to an object of clause contributors with `enabled` state.
  *
  * Example:
  * getClauseContributorsState({
- * 		excludes: [
+ * 		clauseContributorsExcludes: [
  * 			'com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor',
  * 		],
- * 		includes: [
+ * 		clauseContributorsIncludes: [
  * 			'com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor',
  * 			'com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor'
  * 		]
@@ -558,20 +588,24 @@ export const getUIConfigurationValues = (uiConfigurationJSON) =>
  *		com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor: false,
  *		com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor: true}
  *
- * @param {object} clauseContributorsConfig The framework configuration's `clause_contributors` object
+ * @param {object} { clauseContributorsExcludes, clauseContributorsIncludes } The framework configuration's
+ * clause contributors object
  * @return {object} An object of enabled state for each contributor
  */
-export const getClauseContributorsState = (clauseContributorsConfig = {}) => {
+export const getClauseContributorsState = ({
+	clauseContributorsExcludes,
+	clauseContributorsIncludes,
+}) => {
 	const clauseContributorsState = {};
 
-	if (Array.isArray(clauseContributorsConfig.excludes)) {
-		clauseContributorsConfig.excludes.forEach((exclude) => {
+	if (Array.isArray(clauseContributorsExcludes)) {
+		clauseContributorsExcludes.forEach((exclude) => {
 			clauseContributorsState[exclude] = false;
 		});
 	}
 
-	if (Array.isArray(clauseContributorsConfig.includes)) {
-		clauseContributorsConfig.includes.forEach((include) => {
+	if (Array.isArray(clauseContributorsIncludes)) {
+		clauseContributorsIncludes.forEach((include) => {
 			clauseContributorsState[include] = true;
 		});
 	}
@@ -581,7 +615,7 @@ export const getClauseContributorsState = (clauseContributorsConfig = {}) => {
 
 /**
  * Function for transforming the `enabled` state object to the framework
- * configuration's `clause_contributors` object.
+ * configuration's clause contributors object.
  *
  * Example:
  * getClauseContributorsConfig(
@@ -592,34 +626,32 @@ export const getClauseContributorsState = (clauseContributorsConfig = {}) => {
  *		}
  *	);
  * => {
- * 		excludes: [
+ * 		clauseContributorsExcludes: [
  * 			'com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor',
  * 		],
- * 		includes: [
+ * 		clauseContributorsIncludes: [
  * 			'com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor',
  * 			'com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor'
  * 		]
  * 	}
  *
  * @param {object} clauseContributorsEnabledState State object that tracks whether clause is enabled/disabled
- * @return {object} The framework configuration's `clause_contributors` object
+ * @return {object} The framework configuration's clause contributors object
  */
 export const getClauseContributorsConfig = (
 	clauseContributorsEnabledState = {}
 ) => {
-	const clauseContributors = {
-		excludes: [],
-		includes: [],
-	};
+	const clauseContributorsExcludes = [];
+	const clauseContributorsIncludes = [];
 
 	Object.keys(clauseContributorsEnabledState).forEach((key) => {
 		if (clauseContributorsEnabledState[key]) {
-			clauseContributors.includes.push(key);
+			clauseContributorsIncludes.push(key);
 		}
 		else {
-			clauseContributors.excludes.push(key);
+			clauseContributorsExcludes.push(key);
 		}
 	});
 
-	return clauseContributors;
+	return {clauseContributorsExcludes, clauseContributorsIncludes};
 };

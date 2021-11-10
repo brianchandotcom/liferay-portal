@@ -52,16 +52,17 @@ const getClassDisplayName = (className) => {
 
 function ClauseContributorsTab({
 	applyIndexerClauses,
-	clauseContributors,
+	frameworkConfig,
 	initialClauseContributorsList = [],
 	onFrameworkConfigChange,
+	onApplyIndexerClausesChange,
 }) {
 	const [category, setCategory] = useState(ALL);
 	const [contributors, setContributors] = useState(
 		initialClauseContributorsList
 	);
 	const [enabled, setEnabled] = useState(
-		getClauseContributorsState(clauseContributors)
+		getClauseContributorsState(frameworkConfig)
 	);
 	const [keyword, setKeyword] = useState('');
 	const [selected, setSelected] = useState([]);
@@ -181,20 +182,17 @@ function ClauseContributorsTab({
 			BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION
 		);
 
-		onFrameworkConfigChange({
-			apply_indexer_clauses: true,
-			clause_contributors: getClauseContributorsConfig(
-				baselineEnabledState
-			),
-		});
+		onFrameworkConfigChange(
+			getClauseContributorsConfig(baselineEnabledState)
+		);
+
+		onApplyIndexerClausesChange(true);
 
 		setEnabled(baselineEnabledState);
 	};
 
 	const _handleApplyIndexerClausesChange = () => {
-		onFrameworkConfigChange({
-			apply_indexer_clauses: !applyIndexerClauses,
-		});
+		onApplyIndexerClausesChange(!applyIndexerClauses);
 	};
 
 	const _handleSelectChange = (className) => () => {
@@ -214,9 +212,7 @@ function ClauseContributorsTab({
 			[className]: !enabled[className],
 		};
 
-		onFrameworkConfigChange({
-			clause_contributors: getClauseContributorsConfig(newEnabled),
-		});
+		onFrameworkConfigChange(getClauseContributorsConfig(newEnabled));
 
 		setEnabled(newEnabled);
 	};
@@ -228,12 +224,12 @@ function ClauseContributorsTab({
 			newEnabled[item] = value;
 		});
 
-		onFrameworkConfigChange({
-			clause_contributors: getClauseContributorsConfig({
+		onFrameworkConfigChange(
+			getClauseContributorsConfig({
 				...enabled,
 				...newEnabled,
-			}),
-		});
+			})
+		);
 
 		setEnabled({...enabled, ...newEnabled});
 		setSelected([]);
@@ -419,7 +415,8 @@ function ClauseContributorsTab({
 
 export default function ({
 	applyIndexerClauses,
-	clauseContributors,
+	frameworkConfig,
+	onApplyIndexerClausesChange,
 	onFrameworkConfigChange,
 }) {
 	const [keywordQuery, setKeywordQuery] = useState(null);
@@ -470,12 +467,13 @@ export default function ({
 	return (
 		<ClauseContributorsTab
 			applyIndexerClauses={applyIndexerClauses}
-			clauseContributors={clauseContributors}
+			frameworkConfig={frameworkConfig}
 			initialClauseContributorsList={[
 				keywordQuery,
 				modelPrefilter,
 				queryPrefilter,
 			]}
+			onApplyIndexerClausesChange={onApplyIndexerClausesChange}
 			onFrameworkConfigChange={onFrameworkConfigChange}
 		/>
 	);

@@ -56,15 +56,18 @@ export default function ({
 					<EditSXPBlueprintForm
 						entityJSON={resource.entityJSON}
 						indexFields={resource.indexFields}
-						initialConfigurationString={
-							resource.initialConfigurationString
+						initialConfiguration={resource.configuration}
+						initialDescription={
+							resource.description_i18n || {
+								[context.defaultLocale]: resource.description,
+							}
 						}
-						initialDescription={resource.initialDescription}
-						initialSelectedSXPElementsString={
-							resource.initialSelectedSXPElementsString
+						initialSXPElementInstances={resource.elementInstances}
+						initialTitle={
+							resource.title_i18n || {
+								[context.defaultLocale]: resource.title,
+							}
 						}
-						initialTitle={resource.initialTitle}
-						querySXPElements={resource.querySXPElements}
 					/>
 				</ErrorBoundary>
 			</div>

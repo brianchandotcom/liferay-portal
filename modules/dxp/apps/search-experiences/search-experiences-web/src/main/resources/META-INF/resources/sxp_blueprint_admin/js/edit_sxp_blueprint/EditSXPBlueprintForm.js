@@ -21,7 +21,6 @@ import PageToolbar from '../shared/PageToolbar';
 import SubmitWarningModal from '../shared/SubmitWarningModal';
 import ThemeContext from '../shared/ThemeContext';
 import {DEFAULT_ERROR} from '../utils/constants';
-import {CUSTOM_JSON_SXP_ELEMENT} from '../utils/data';
 import {addParams} from '../utils/fetch';
 import {INPUT_TYPES} from '../utils/inputTypes';
 import {openErrorToast, openSuccessToast} from '../utils/toasts';
@@ -54,11 +53,10 @@ const TABS = {
 function EditSXPBlueprintForm({
 	entityJSON,
 	indexFields,
-	initialConfigurationString = '{}',
+	initialConfiguration = {},
 	initialDescription = {},
-	initialSelectedSXPElementsString = '{}',
+	initialSXPElementInstances = {},
 	initialTitle = {},
-	querySXPElements = [],
 }) {
 	const {namespace, redirectURL, sxpBlueprintId} = useContext(ThemeContext);
 
@@ -73,112 +71,76 @@ function EditSXPBlueprintForm({
 	const [tab, setTab] = useState('query-builder');
 
 	const form = useRef();
-	const sidebarQuerySXPElements = useRef([
-		...querySXPElements,
-		CUSTOM_JSON_SXP_ELEMENT,
-	]);
-
-	const initialConfiguration = JSON.parse(initialConfigurationString);
-	const initialSelectedSXPElements = JSON.parse(
-		initialSelectedSXPElementsString
-	);
-
-	if (!initialSelectedSXPElements['query_configuration']) {
-		initialSelectedSXPElements['query_configuration'] = [];
-	}
 
 	const sxpElementIdCounter = useRef(
-		initialSelectedSXPElements['query_configuration'].length
+		initialSXPElementInstances.queryConfiguration?.queryEntries?.length || 0
 	);
 
-	/**
-	 * Abstracts title and description from the existing form, as
-	 * query builder has several inputs that should not be included in
-	 * submission.
-	 * @param {FormData} formData
-	 */
-	const _appendTitleAndDescription = (formData) => {
+	const _getFormInput = (key) => {
 		for (const pair of new FormData(form.current).entries()) {
-			if (
-				pair[0].includes(`${namespace}title`) ||
-				pair[0].includes(`${namespace}description`)
-			) {
-				formData.append(pair[0], pair[1]);
+			if (pair[0].includes(`${namespace}${key}`)) {
+				return pair[1];
 			}
 		}
+
+		return '';
 	};
 
 	/**
 	 * Formats the form values for the "configuration" parameter to send to
 	 * the server. Sets defaults so the JSON.parse calls don't break.
 	 * @param {Object} values Form values
-	 * @return {String}
+	 * @return {Object}
 	 */
-	const _getConfigurationString = ({
+	const _getConfiguration = ({
 		advancedConfig,
 		aggregationConfig,
+		applyIndexerClauses,
 		facetConfig,
 		frameworkConfig,
 		highlightConfig,
 		parameterConfig,
 		selectedQuerySXPElements,
 		sortConfig,
-	}) => {
-		return JSON.stringify({
-			advanced_configuration: advancedConfig
-				? JSON.parse(advancedConfig)
-				: {},
-			aggregation_configuration: aggregationConfig
-				? JSON.parse(aggregationConfig)
-				: {},
-			facet_configuration: facetConfig ? JSON.parse(facetConfig) : [],
-			framework_configuration: frameworkConfig,
-			highlight_configuration: highlightConfig
-				? JSON.parse(highlightConfig)
-				: {},
-			parameter_configuration: parameterConfig
-				? JSON.parse(parameterConfig)
-				: {},
-			query_configuration: selectedQuerySXPElements.map(
-				getSXPElementOutput
+	}) => ({
+		advanced: advancedConfig ? JSON.parse(advancedConfig) : {},
+		aggregationConfiguration: aggregationConfig
+			? JSON.parse(aggregationConfig)
+			: {},
+		facet: facetConfig ? JSON.parse(facetConfig) : {},
+		general: frameworkConfig,
+		highlight: highlightConfig ? JSON.parse(highlightConfig) : {},
+		parameters: parameterConfig ? JSON.parse(parameterConfig) : {},
+		queryConfiguration: {
+			applyIndexerClauses,
+			queryEntries: selectedQuerySXPElements.map(getSXPElementOutput),
+		},
+		sortConfiguration: sortConfig ? JSON.parse(sortConfig) : {},
+	});
+
+	const _getSelectedSXPElements = (values) => ({
+		queryConfiguration: {
+			queryEntries: values.selectedQuerySXPElements.map((item) =>
+				item.uiConfigurationJSON
+					? {
+							sxpElementTemplateJSON: item.sxpElementTemplateJSON,
+							uiConfigurationJSON: item.uiConfigurationJSON,
+							uiConfigurationValues: item.uiConfigurationValues,
+					  } // Removes ID field
+					: {
+							sxpElementTemplateJSON: getSXPElementOutput(item),
+					  }
 			),
-			sort_configuration: sortConfig ? JSON.parse(sortConfig) : {},
-		});
-	};
+		},
+	});
 
 	const _handleFormikSubmit = async (values) => {
-		const formData = new FormData();
-
-		_appendTitleAndDescription(formData);
+		let configuration;
+		let elementInstances;
 
 		try {
-			formData.append(
-				`${namespace}configuration`,
-				_getConfigurationString(values)
-			);
-
-			formData.append(
-				`${namespace}selectedSXPElements`,
-				JSON.stringify({
-					query_configuration: values.selectedQuerySXPElements.map(
-						(item) =>
-							item.uiConfigurationJSON
-								? {
-										sxpElementTemplateJSON:
-											item.sxpElementTemplateJSON,
-										uiConfigurationJSON:
-											item.uiConfigurationJSON,
-										uiConfigurationValues:
-											item.uiConfigurationValues,
-								  } // Removes ID field
-								: {
-										sxpElementTemplateJSON: getSXPElementOutput(
-											item
-										),
-								  }
-					),
-				})
-			);
+			configuration = _getConfiguration(values);
+			elementInstances = _getSelectedSXPElements(values);
 		}
 		catch (error) {
 			openErrorToast({
@@ -194,20 +156,27 @@ function EditSXPBlueprintForm({
 			return;
 		}
 
-		formData.append(`${namespace}sxpBlueprintId`, sxpBlueprintId);
-		formData.append(`${namespace}redirect`, redirectURL);
-
 		try {
 
 			// If the warning modal is already open, assume the form was submitted
 			// using the "Continue To Save" action and should skip the schema
 			// validation step.
 
+			// TODO: Update this once a validation REST endpoint is decided
+
 			if (!showSubmitWarningModal) {
 				const validateErrors = await fetch(
 					'/o/search-experiences-rest/v1.0/sxp-blueprints/validate',
 					{
-						body: formData,
+						body: JSON.stringify({
+							configuration,
+							description: _getFormInput('description'),
+							elementInstances,
+							title: _getFormInput('title'),
+						}),
+						headers: new Headers({
+							'Content-Type': 'application/json',
+						}),
 						method: 'POST',
 					}
 				).then((response) => response.json());
@@ -223,7 +192,15 @@ function EditSXPBlueprintForm({
 			const responseContent = await fetch(
 				`/o/search-experiences-rest/v1.0/sxp-blueprints/${sxpBlueprintId}`,
 				{
-					body: formData,
+					body: JSON.stringify({
+						configuration,
+						description: _getFormInput('description'),
+						elementInstances,
+						title: _getFormInput('title'),
+					}),
+					headers: new Headers({
+						'Content-Type': 'application/json',
+					}),
 					method: 'PATCH',
 				}
 			).then((response) => {
@@ -357,40 +334,39 @@ function EditSXPBlueprintForm({
 	const formik = useFormik({
 		initialValues: {
 			advancedConfig: JSON.stringify(
-				initialConfiguration['advanced_configuration'],
+				initialConfiguration.advanced,
 				null,
 				'\t'
 			),
 			aggregationConfig: JSON.stringify(
-				initialConfiguration['aggregation_configuration'],
+				initialConfiguration.aggregationConfiguration,
 				null,
 				'\t'
 			),
-			facetConfig: JSON.stringify(
-				initialConfiguration['facet_configuration'],
-				null,
-				'\t'
-			),
-			frameworkConfig:
-				initialConfiguration['framework_configuration'] || {},
+			applyIndexerClauses:
+				initialConfiguration.queryConfiguration?.applyIndexerClauses ||
+				true,
+			facetConfig: JSON.stringify(initialConfiguration.facet, null, '\t'),
+			frameworkConfig: initialConfiguration.general || {},
 			highlightConfig: JSON.stringify(
-				initialConfiguration['highlight_configuration'],
+				initialConfiguration.highlight,
 				null,
 				'\t'
 			),
 			parameterConfig: JSON.stringify(
-				initialConfiguration['parameter_configuration'],
+				initialConfiguration.parameters,
 				null,
 				'\t'
 			),
-			selectedQuerySXPElements: initialSelectedSXPElements[
-				'query_configuration'
-			].map((selectedSXPElement, index) => ({
-				...selectedSXPElement,
-				id: index,
-			})),
+			selectedQuerySXPElements:
+				initialSXPElementInstances?.queryConfiguration?.queryEntries.map(
+					(selectedSXPElement, index) => ({
+						...selectedSXPElement,
+						id: index,
+					})
+				) || [],
 			sortConfig: JSON.stringify(
-				initialConfiguration['sort_configuration'],
+				initialConfiguration.sortConfiguration,
 				null,
 				'\t'
 			),
@@ -458,15 +434,10 @@ function EditSXPBlueprintForm({
 			loading: true,
 		}));
 
-		const formData = new FormData();
-
-		_appendTitleAndDescription(formData);
+		let configuration;
 
 		try {
-			formData.append(
-				`${namespace}configuration`,
-				_getConfigurationString(formik.values)
-			);
+			configuration = _getConfiguration(formik.values);
 		}
 		catch (error) {
 			setPreviewInfo({
@@ -489,15 +460,6 @@ function EditSXPBlueprintForm({
 			return;
 		}
 
-		formData.append(`${namespace}page`, page);
-		formData.append(`${namespace}query`, value);
-		formData.append(`${namespace}pageSize`, delta);
-
-		formData.append(
-			`${namespace}previewAttributes`,
-			JSON.stringify(attributes.filter((attribute) => attribute.key))
-		);
-
 		const resultsError = {
 			errors: [
 				{
@@ -514,13 +476,11 @@ function EditSXPBlueprintForm({
 				query: value,
 			}),
 			{
-
-				// body: formData,
-
 				body: JSON.stringify({
-					configuration: {
-						general: {explain: true, includeResponseString: true},
-					},
+					configuration,
+					previewAttributes: attributes.filter(
+						(attribute) => attribute.key
+					),
 				}),
 				headers: new Headers({
 					'Content-Type': 'application/json',
@@ -593,6 +553,9 @@ function EditSXPBlueprintForm({
 		[formik]
 	);
 
+	const _handleApplyIndexerClausesChange = (value) =>
+		formik.setFieldValue('applyIndexerClauses', value);
+
 	const _handleSubmit = (event) => {
 		event.preventDefault();
 
@@ -627,13 +590,10 @@ function EditSXPBlueprintForm({
 			case 'clause-contributors':
 				return (
 					<ClauseContributorsTab
-						applyIndexerClauses={
-							formik.values.frameworkConfig[
-								'apply_indexer_clauses'
-							]
-						}
-						clauseContributors={
-							formik.values.frameworkConfig['clause_contributors']
+						applyIndexerClauses={formik.values.applyIndexerClauses}
+						frameworkConfig={formik.values.frameworkConfig}
+						onApplyIndexerClausesChange={
+							_handleApplyIndexerClausesChange
 						}
 						onFrameworkConfigChange={_handleFrameworkConfigChange}
 					/>
@@ -642,13 +602,8 @@ function EditSXPBlueprintForm({
 				return (
 					<>
 						<AddSXPElementSidebar
-							emptyMessage={Liferay.Language.get(
-								'no-query-elements-found'
-							)}
 							onAddSXPElement={_handleAddSXPElement}
 							onToggle={setShowSidebar}
-							sxpElements={sidebarQuerySXPElements.current}
-							title={Liferay.Language.get('add-query-elements')}
 							visible={showSidebar}
 						/>
 
@@ -755,12 +710,10 @@ function EditSXPBlueprintForm({
 EditSXPBlueprintForm.propTypes = {
 	entityJSON: PropTypes.object,
 	indexFields: PropTypes.arrayOf(PropTypes.object),
-	initialConfigurationString: PropTypes.string,
+	initialConfiguration: PropTypes.object,
 	initialDescription: PropTypes.object,
-	initialSelectedSXPElementsString: PropTypes.string,
+	initialSXPElementInstances: PropTypes.object,
 	initialTitle: PropTypes.object,
-	querySXPElements: PropTypes.arrayOf(PropTypes.object),
-	sxpBlueprintId: PropTypes.string,
 };
 
 export default React.memo(EditSXPBlueprintForm);

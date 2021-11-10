@@ -14,6 +14,7 @@ import React, {useEffect, useState} from 'react';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import ThemeContext from '../shared/ThemeContext';
 import {fetchData} from '../utils/fetch';
+import {getSXPBlueprintForm} from '../utils/utils';
 import EditSXPElementForm from './EditSXPElementForm';
 
 export default function ({
@@ -51,11 +52,17 @@ export default function ({
 			<div className="edit-sxp-element-root">
 				<ErrorBoundary>
 					<EditSXPElementForm
-						initialConfigurationString={
-							resource.initialConfigurationString
+						initialConfiguration={getSXPBlueprintForm(resource)}
+						initialDescription={
+							resource.description_i18n || {
+								[defaultLocale]: resource.description,
+							}
 						}
-						initialDescription={resource.initialDescription}
-						initialTitle={resource.initialTitle}
+						initialTitle={
+							resource.title_i18n || {
+								[defaultLocale]: resource.title,
+							}
+						}
 						predefinedVariables={resource.predefinedVariables}
 						readOnly={resource.readOnly}
 						type={resource.type}

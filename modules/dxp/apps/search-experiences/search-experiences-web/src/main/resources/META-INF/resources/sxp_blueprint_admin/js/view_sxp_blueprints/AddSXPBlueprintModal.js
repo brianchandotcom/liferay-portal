@@ -31,15 +31,10 @@ import {
 } from '../utils/data';
 import {fetchData} from '../utils/fetch';
 import {FRAMEWORK_TYPES} from '../utils/frameworkTypes';
-import {getSXPElementOutput, getUIConfigurationValues} from '../utils/utils';
+import {getSXPBlueprintForm, getSXPElementOutput} from '../utils/utils';
 
 const DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS = DEFAULT_BASELINE_SXP_ELEMENTS.map(
-	(sxpElement) => ({
-		...sxpElement,
-		uiConfigurationValues: getUIConfigurationValues(
-			sxpElement.uiConfigurationJSON
-		),
-	})
+	getSXPBlueprintForm
 );
 
 const FrameworkCard = ({
@@ -123,69 +118,61 @@ const AddModal = ({
 		setLoadingResponse(false);
 	};
 
+	const _getConfiguration = () => ({
+		advanced: DEFAULT_ADVANCED_CONFIGURATION,
+		aggregationConfiguration: {},
+		facet: {},
+		general: {
+			clauseContributorsExcludes:
+				framework === FRAMEWORK_TYPES.ALL
+					? []
+					: BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION.excludes,
+			clauseContributorsIncludes:
+				framework === FRAMEWORK_TYPES.ALL
+					? [
+							...keywordQueryContributors,
+							...modelPrefilterContributors,
+							...queryPrefilterContributors,
+					  ]
+					: BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION.includes,
+			searchableAssetTypes: searchableTypes,
+		},
+		highlight: DEFAULT_HIGHLIGHT_CONFIGURATION,
+		parameters: DEFAULT_PARAMETER_CONFIGURATION,
+		queryConfiguration: {
+			applyIndexerClauses: framework === FRAMEWORK_TYPES.ALL,
+			queryEntries:
+				framework === FRAMEWORK_TYPES.BASELINE
+					? DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS.map(
+							getSXPElementOutput
+					  )
+					: [],
+		},
+		sortConfiguration: DEFAULT_SORT_CONFIGURATION,
+	});
+
 	const _handleSubmit = (event) => {
 		event.preventDefault();
 
-		const formData = new FormData(
-			document.querySelector(`#${portletNamespace}form`)
-		);
-
-		formData.append(
-			`${portletNamespace}configuration`,
-			JSON.stringify({
-				advanced_configuration: DEFAULT_ADVANCED_CONFIGURATION,
-				aggregation_configuration: {},
-				facet_configuration: {},
-				framework_configuration: {
-					apply_indexer_clauses: framework === FRAMEWORK_TYPES.ALL,
-					clause_contributors:
-						framework === FRAMEWORK_TYPES.ALL
-							? {
-									includes: [
-										...keywordQueryContributors,
-										...modelPrefilterContributors,
-										...queryPrefilterContributors,
-									],
-							  }
-							: BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION,
-					searchable_asset_types: searchableTypes,
-				},
-				highlight_configuration: DEFAULT_HIGHLIGHT_CONFIGURATION,
-				parameter_configuration: DEFAULT_PARAMETER_CONFIGURATION,
-				query_configuration:
-					framework === FRAMEWORK_TYPES.BASELINE
-						? DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS.map(
-								getSXPElementOutput
-						  )
-						: [],
-				sort_configuration: DEFAULT_SORT_CONFIGURATION,
-			})
-		);
-
-		formData.append(
-			`${portletNamespace}selectedSXPElements`,
-			JSON.stringify({
-				query_configuration:
-					framework === FRAMEWORK_TYPES.BASELINE
-						? DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS
-						: [],
-			})
-		);
-
 		fetch('/o/search-experiences-rest/v1.0/sxp-blueprints', {
-
-			// body: formData,
-
 			body: JSON.stringify({
-				configuration: {
-					general: {explain: true, includeResponseString: true},
-				},
+				configuration: _getConfiguration(),
 				description: descriptionInputValue,
+				elementInstances: {
+					queryConfiguration: {
+						queryEntries:
+							framework === FRAMEWORK_TYPES.BASELINE
+								? DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS
+								: [],
+					},
+				},
 				title: inputValue,
 			}),
+
 			headers: new Headers({
 				'Content-Type': 'application/json',
 			}),
+
 			method: 'POST',
 		})
 			.then((response) => {
@@ -199,8 +186,7 @@ const AddModal = ({
 				if (isMounted()) {
 					if (responseContent.error) {
 						handleFormError(responseContent);
-					}
-					else {
+					} else {
 						setVisible(false);
 
 						closeModal();
@@ -214,8 +200,7 @@ const AddModal = ({
 							);
 
 							navigate(url);
-						}
-						else {
+						} else {
 							navigate(redirectURL);
 						}
 					}

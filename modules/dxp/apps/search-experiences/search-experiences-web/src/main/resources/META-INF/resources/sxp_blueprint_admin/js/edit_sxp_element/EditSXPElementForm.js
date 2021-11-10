@@ -43,18 +43,14 @@ import {getUIConfigurationValues} from '../utils/utils';
 import SidebarPanel from './SidebarPanel';
 
 function EditSXPElementForm({
-	initialConfigurationString = '{}',
+	initialConfiguration = {},
 	initialDescription = {},
 	initialTitle = {},
 	predefinedVariables = [],
 	readOnly,
 	type,
 }) {
-	const {defaultLocale, namespace, redirectURL, sxpElementId} = useContext(
-		ThemeContext
-	);
-
-	const initialConfiguration = JSON.parse(initialConfigurationString);
+	const {defaultLocale, redirectURL, sxpElementId} = useContext(ThemeContext);
 
 	const form = useRef();
 	const sxpElementTemplateJSONRef = useRef();
@@ -97,23 +93,6 @@ function EditSXPElementForm({
 		}
 	}, [readOnly]);
 
-	function _appendEntryLocale(entry, name, formData) {
-		if (typeof entry == 'object') {
-			return Object.keys(entry).map((key) => {
-				formData.append(
-					`${namespace}${name}_${key.replace('-', '_')}`,
-					entry[key]
-				);
-			});
-		}
-		else if (typeof entry == 'string') {
-			formData.append(
-				`${namespace}${name}_${defaultLocale.replace('-', '_')}`,
-				entry
-			);
-		}
-	}
-
 	const _handleSearchFilter = useCallback(
 		(value) => {
 			const filteredParameterDefinitions = predefinedVariables.map(
@@ -143,14 +122,15 @@ function EditSXPElementForm({
 
 		setIsSubmitting(true);
 
-		const formData = new FormData(form.current);
+		let parseSXPElementTemplateJSON;
+		let parseUIConfigurationJSON;
 
 		try {
-			const parseSXPElementTemplateJSON = _validateJSON(
+			parseSXPElementTemplateJSON = _validateJSON(
 				sxpElementTemplateJSON,
 				Liferay.Language.get('element-template-json')
 			);
-			const parseUIConfigurationJSON = _validateJSON(
+			parseUIConfigurationJSON = _validateJSON(
 				uiConfigurationJSON,
 				Liferay.Language.get('ui-configuration-json')
 			);
@@ -160,35 +140,16 @@ function EditSXPElementForm({
 				parseUIConfigurationJSON
 			);
 
-			if (!parseSXPElementTemplateJSON.title) {
+			if (
+				!parseSXPElementTemplateJSON.title &&
+				!parseSXPElementTemplateJSON.title_i18n
+			) {
 				throw Liferay.Language.get('error.title-empty');
 			}
 
-			if (
-				typeof parseSXPElementTemplateJSON.title === 'object' &&
-				!parseSXPElementTemplateJSON.title[defaultLocale]
-			) {
+			if (!parseSXPElementTemplateJSON.title_i18n[defaultLocale]) {
 				throw Liferay.Language.get('error.default-locale-title-empty');
 			}
-
-			_appendEntryLocale(
-				parseSXPElementTemplateJSON.title,
-				'title',
-				formData
-			);
-			_appendEntryLocale(
-				parseSXPElementTemplateJSON.description,
-				'description',
-				formData
-			);
-
-			formData.append(
-				`${namespace}configuration`,
-				JSON.stringify({
-					sxpElementTemplateJSON: parseSXPElementTemplateJSON,
-					uiConfigurationJSON: parseUIConfigurationJSON,
-				})
-			);
 		}
 		catch (error) {
 			openErrorToast({
@@ -200,21 +161,34 @@ function EditSXPElementForm({
 			return;
 		}
 
-		formData.append(`${namespace}sxpElementId`, sxpElementId);
-		formData.append(`${namespace}redirect`, redirectURL);
-		formData.append(`${namespace}sxpElementType`, type);
-
 		try {
 
 			// If the warning modal is already open, assume the form was submitted
 			// using the "Continue To Save" action and should skip the schema
 			// validation step.
 
+			// TODO: Update this once a validation REST endpoint is decided
+
 			if (!showSubmitWarningModal) {
 				const validateErrors = await fetch(
 					'/o/search-experiences-rest/v1.0/sxp-elements/validate',
 					{
-						body: formData,
+						body: JSON.stringify({
+							description:
+								parseSXPElementTemplateJSON.description,
+							description_i18n:
+								parseSXPElementTemplateJSON.description_i18n,
+							elementDefinition: {
+								category: parseSXPElementTemplateJSON.category,
+								icon: parseSXPElementTemplateJSON.icon,
+								sxpBlueprint:
+									parseSXPElementTemplateJSON.sxpBlueprint,
+								uiConfiguration: parseUIConfigurationJSON,
+							},
+							title: parseSXPElementTemplateJSON.title,
+							title_i18n: parseSXPElementTemplateJSON.title_i18n,
+							type,
+						}),
 						method: 'POST',
 					}
 				).then((response) => response.json());
@@ -231,7 +205,24 @@ function EditSXPElementForm({
 			const responseContent = await fetch(
 				`/o/search-experiences-rest/v1.0/sxp-elements/${sxpElementId}`,
 				{
-					body: formData,
+					body: JSON.stringify({
+						description: parseSXPElementTemplateJSON.description,
+						description_i18n:
+							parseSXPElementTemplateJSON.description_i18n,
+						elementDefinition: {
+							category: parseSXPElementTemplateJSON.category,
+							icon: parseSXPElementTemplateJSON.icon,
+							sxpBlueprint:
+								parseSXPElementTemplateJSON.sxpBlueprint,
+							uiConfiguration: parseUIConfigurationJSON,
+						},
+						title: parseSXPElementTemplateJSON.title,
+						title_i18n: parseSXPElementTemplateJSON.title_i18n,
+						type,
+					}),
+					headers: new Headers({
+						'Content-Type': 'application/json',
+					}),
 					method: 'PATCH',
 				}
 			).then((response) => {
@@ -270,7 +261,23 @@ function EditSXPElementForm({
 		return fetch(
 			`/o/search-experiences-rest/v1.0/sxp-elements/${sxpElementId}`,
 			{
-				body: formData,
+				body: JSON.stringify({
+					description: parseSXPElementTemplateJSON.description,
+					description_i18n:
+						parseSXPElementTemplateJSON.description_i18n,
+					elementDefinition: {
+						category: parseSXPElementTemplateJSON.category,
+						icon: parseSXPElementTemplateJSON.icon,
+						sxpBlueprint: parseSXPElementTemplateJSON.sxpBlueprint,
+						uiConfiguration: parseUIConfigurationJSON,
+					},
+					title: parseSXPElementTemplateJSON.title,
+					title_i18n: parseSXPElementTemplateJSON.title_i18n,
+					type,
+				}),
+				headers: new Headers({
+					'Content-Type': 'application/json',
+				}),
 				method: 'PATCH',
 			}
 		)
@@ -327,7 +334,7 @@ function EditSXPElementForm({
 		}
 
 		return (
-			<div className="portlet-sxp-blueprints-admin">
+			<div className="portlet-sxp-blueprint-admin">
 				<ErrorBoundary>
 					<SXPElement
 						collapseAll={false}
@@ -409,19 +416,12 @@ function EditSXPElementForm({
 								<ClayToolbar.Item className="text-left" expand>
 									<div>
 										<div className="entry-title text-truncate">
-											{
-												initialTitle[
-													defaultLocale.replace(
-														'_',
-														'-'
-													)
-												]
-											}
+											{initialTitle[defaultLocale]}
 										</div>
 
 										<div className="entry-description text-truncate">
 											{initialDescription[
-												defaultLocale.replace('_', '-')
+												defaultLocale
 											] || (
 												<span className="entry-description-blank">
 													{Liferay.Language.get(
@@ -691,7 +691,7 @@ function EditSXPElementForm({
 }
 
 EditSXPElementForm.propTypes = {
-	initialConfigurationString: PropTypes.string,
+	initialConfiguration: PropTypes.object,
 	initialDescription: PropTypes.object,
 	initialTitle: PropTypes.object,
 	predefinedVariables: PropTypes.arrayOf(PropTypes.object),

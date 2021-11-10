@@ -237,13 +237,8 @@ public class LayoutPageTemplateEntryServiceImpl
 		long groupId, int type, int status, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return layoutPageTemplateEntryPersistence.filterFindByG_T(
-				groupId, type, start, end, orderByComparator);
-		}
-
-		return layoutPageTemplateEntryPersistence.filterFindByG_T_S(
-			groupId, type, status, start, end, orderByComparator);
+		return getLayoutPageTemplateEntries(
+			groupId, new int[] {type}, status, start, end, orderByComparator);
 	}
 
 	@Override
@@ -252,7 +247,30 @@ public class LayoutPageTemplateEntryServiceImpl
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return getLayoutPageTemplateEntries(
-			groupId, type, WorkflowConstants.STATUS_ANY, start, end,
+			groupId, new int[] {type}, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, int[] types, int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return layoutPageTemplateEntryPersistence.filterFindByG_T(
+				groupId, types, start, end, orderByComparator);
+		}
+
+		return layoutPageTemplateEntryPersistence.filterFindByG_T_S(
+			groupId, types, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, int[] types, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+
+		return getLayoutPageTemplateEntries(
+			groupId, types, WorkflowConstants.STATUS_ANY, start, end,
 			orderByComparator);
 	}
 
@@ -429,16 +447,9 @@ public class LayoutPageTemplateEntryServiceImpl
 		long groupId, String name, int type, int status, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return layoutPageTemplateEntryPersistence.filterFindByG_T_LikeN(
-				groupId,
-				_customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
-				type, start, end, orderByComparator);
-		}
-
-		return layoutPageTemplateEntryPersistence.filterFindByG_T_LikeN_S(
-			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
-			type, status, start, end, orderByComparator);
+		return getLayoutPageTemplateEntries(
+			groupId, name, new int[] {type}, status, start, end,
+			orderByComparator);
 	}
 
 	@Override
@@ -447,7 +458,33 @@ public class LayoutPageTemplateEntryServiceImpl
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return getLayoutPageTemplateEntries(
-			groupId, name, type, WorkflowConstants.STATUS_ANY, start, end,
+			groupId, name, new int[] {type}, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, String name, int[] types, int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return layoutPageTemplateEntryPersistence.filterFindByG_T_LikeN(
+				groupId,
+				_customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+				types, start, end, orderByComparator);
+		}
+
+		return layoutPageTemplateEntryPersistence.filterFindByG_T_LikeN_S(
+			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			types, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, String name, int[] types, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+
+		return getLayoutPageTemplateEntries(
+			groupId, name, types, WorkflowConstants.STATUS_ANY, start, end,
 			orderByComparator);
 	}
 
@@ -464,20 +501,34 @@ public class LayoutPageTemplateEntryServiceImpl
 	@Override
 	public int getLayoutPageTemplateEntriesCount(long groupId, int type) {
 		return getLayoutPageTemplateEntriesCount(
-			groupId, type, WorkflowConstants.STATUS_ANY);
+			groupId, new int[] {type}, WorkflowConstants.STATUS_ANY);
 	}
 
 	@Override
 	public int getLayoutPageTemplateEntriesCount(
 		long groupId, int type, int status) {
 
+		return getLayoutPageTemplateEntriesCount(
+			groupId, new int[] {type}, status);
+	}
+
+	@Override
+	public int getLayoutPageTemplateEntriesCount(long groupId, int[] types) {
+		return getLayoutPageTemplateEntriesCount(
+			groupId, types, WorkflowConstants.STATUS_ANY);
+	}
+
+	@Override
+	public int getLayoutPageTemplateEntriesCount(
+		long groupId, int[] types, int status) {
+
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return layoutPageTemplateEntryPersistence.filterCountByG_T(
-				groupId, type);
+				groupId, types);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterCountByG_T_S(
-			groupId, type, status);
+			groupId, types, status);
 	}
 
 	@Override
@@ -584,23 +635,39 @@ public class LayoutPageTemplateEntryServiceImpl
 		long groupId, String name, int type) {
 
 		return getLayoutPageTemplateEntriesCount(
-			groupId, name, type, WorkflowConstants.STATUS_ANY);
+			groupId, name, new int[] {type});
 	}
 
 	@Override
 	public int getLayoutPageTemplateEntriesCount(
 		long groupId, String name, int type, int status) {
 
+		return getLayoutPageTemplateEntriesCount(
+			groupId, name, new int[] {type}, status);
+	}
+
+	@Override
+	public int getLayoutPageTemplateEntriesCount(
+		long groupId, String name, int[] types) {
+
+		return getLayoutPageTemplateEntriesCount(
+			groupId, name, types, WorkflowConstants.STATUS_ANY);
+	}
+
+	@Override
+	public int getLayoutPageTemplateEntriesCount(
+		long groupId, String name, int[] types, int status) {
+
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return layoutPageTemplateEntryPersistence.filterCountByG_T_LikeN(
 				groupId,
 				_customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
-				type);
+				types);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterCountByG_T_LikeN_S(
 			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
-			type, status);
+			types, status);
 	}
 
 	@Override

@@ -548,10 +548,8 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"elementDefinitions", additionalAssertFieldName)) {
-
-				if (sxpBlueprint.getElementDefinitions() == null) {
+			if (Objects.equals("elementInstances", additionalAssertFieldName)) {
+				if (sxpBlueprint.getElementInstances() == null) {
 					valid = false;
 				}
 
@@ -700,12 +698,10 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"elementDefinitions", additionalAssertFieldName)) {
-
+			if (Objects.equals("elementInstances", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						sxpBlueprint1.getElementDefinitions(),
-						sxpBlueprint2.getElementDefinitions())) {
+						sxpBlueprint1.getElementInstances(),
+						sxpBlueprint2.getElementInstances())) {
 
 					return false;
 				}
@@ -859,7 +855,7 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("elementDefinitions")) {
+		if (entityFieldName.equals("elementInstances")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

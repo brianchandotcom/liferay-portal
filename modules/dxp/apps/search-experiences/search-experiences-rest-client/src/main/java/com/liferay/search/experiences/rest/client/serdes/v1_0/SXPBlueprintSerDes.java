@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.ElementDefinition;
+import com.liferay.search.experiences.rest.client.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
@@ -91,22 +91,22 @@ public class SXPBlueprintSerDes {
 			sb.append(_toJSON(sxpBlueprint.getDescription_i18n()));
 		}
 
-		if (sxpBlueprint.getElementDefinitions() != null) {
+		if (sxpBlueprint.getElementInstances() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"elementDefinitions\": ");
+			sb.append("\"elementInstances\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < sxpBlueprint.getElementDefinitions().length;
+			for (int i = 0; i < sxpBlueprint.getElementInstances().length;
 				 i++) {
 
 				sb.append(
-					String.valueOf(sxpBlueprint.getElementDefinitions()[i]));
+					String.valueOf(sxpBlueprint.getElementInstances()[i]));
 
-				if ((i + 1) < sxpBlueprint.getElementDefinitions().length) {
+				if ((i + 1) < sxpBlueprint.getElementInstances().length) {
 					sb.append(", ");
 				}
 			}
@@ -193,13 +193,13 @@ public class SXPBlueprintSerDes {
 				String.valueOf(sxpBlueprint.getDescription_i18n()));
 		}
 
-		if (sxpBlueprint.getElementDefinitions() == null) {
-			map.put("elementDefinitions", null);
+		if (sxpBlueprint.getElementInstances() == null) {
+			map.put("elementInstances", null);
 		}
 		else {
 			map.put(
-				"elementDefinitions",
-				String.valueOf(sxpBlueprint.getElementDefinitions()));
+				"elementInstances",
+				String.valueOf(sxpBlueprint.getElementInstances()));
 		}
 
 		if (sxpBlueprint.getId() == null) {
@@ -263,18 +263,16 @@ public class SXPBlueprintSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "elementDefinitions")) {
-
+			else if (Objects.equals(jsonParserFieldName, "elementInstances")) {
 				if (jsonParserFieldValue != null) {
-					sxpBlueprint.setElementDefinitions(
+					sxpBlueprint.setElementInstances(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> ElementDefinitionSerDes.toDTO(
+							object -> ElementInstanceSerDes.toDTO(
 								(String)object)
 						).toArray(
-							size -> new ElementDefinition[size]
+							size -> new ElementInstance[size]
 						));
 				}
 			}

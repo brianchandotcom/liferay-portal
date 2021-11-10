@@ -84,6 +84,34 @@ public class Advanced implements Serializable {
 	protected String[] excludes;
 
 	@Schema
+	public Boolean getFetchSource() {
+		return fetchSource;
+	}
+
+	public void setFetchSource(Boolean fetchSource) {
+		this.fetchSource = fetchSource;
+	}
+
+	@JsonIgnore
+	public void setFetchSource(
+		UnsafeSupplier<Boolean, Exception> fetchSourceUnsafeSupplier) {
+
+		try {
+			fetchSource = fetchSourceUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean fetchSource;
+
+	@Schema
 	public String[] getIncludes() {
 		return includes;
 	}
@@ -160,6 +188,16 @@ public class Advanced implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (fetchSource != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fetchSource\": ");
+
+			sb.append(fetchSource);
 		}
 
 		if (includes != null) {

@@ -55,6 +55,27 @@ public class Advanced implements Cloneable, Serializable {
 
 	protected String[] excludes;
 
+	public Boolean getFetchSource() {
+		return fetchSource;
+	}
+
+	public void setFetchSource(Boolean fetchSource) {
+		this.fetchSource = fetchSource;
+	}
+
+	public void setFetchSource(
+		UnsafeSupplier<Boolean, Exception> fetchSourceUnsafeSupplier) {
+
+		try {
+			fetchSource = fetchSourceUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean fetchSource;
+
 	public String[] getIncludes() {
 		return includes;
 	}

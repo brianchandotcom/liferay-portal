@@ -146,21 +146,21 @@ public class SXPBlueprint implements Serializable {
 
 	@Schema
 	@Valid
-	public ElementDefinition[] getElementDefinitions() {
-		return elementDefinitions;
+	public ElementInstance[] getElementInstances() {
+		return elementInstances;
 	}
 
-	public void setElementDefinitions(ElementDefinition[] elementDefinitions) {
-		this.elementDefinitions = elementDefinitions;
+	public void setElementInstances(ElementInstance[] elementInstances) {
+		this.elementInstances = elementInstances;
 	}
 
 	@JsonIgnore
-	public void setElementDefinitions(
-		UnsafeSupplier<ElementDefinition[], Exception>
-			elementDefinitionsUnsafeSupplier) {
+	public void setElementInstances(
+		UnsafeSupplier<ElementInstance[], Exception>
+			elementInstancesUnsafeSupplier) {
 
 		try {
-			elementDefinitions = elementDefinitionsUnsafeSupplier.get();
+			elementInstances = elementInstancesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -172,7 +172,7 @@ public class SXPBlueprint implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ElementDefinition[] elementDefinitions;
+	protected ElementInstance[] elementInstances;
 
 	@Schema
 	public Long getId() {
@@ -319,19 +319,19 @@ public class SXPBlueprint implements Serializable {
 			sb.append(_toJSON(description_i18n));
 		}
 
-		if (elementDefinitions != null) {
+		if (elementInstances != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"elementDefinitions\": ");
+			sb.append("\"elementInstances\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < elementDefinitions.length; i++) {
-				sb.append(String.valueOf(elementDefinitions[i]));
+			for (int i = 0; i < elementInstances.length; i++) {
+				sb.append(String.valueOf(elementInstances[i]));
 
-				if ((i + 1) < elementDefinitions.length) {
+				if ((i + 1) < elementInstances.length) {
 					sb.append(", ");
 				}
 			}

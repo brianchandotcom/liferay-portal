@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.ElementDefinition;
+import com.liferay.search.experiences.rest.client.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ElementDefinitionSerDes {
+public class ElementInstanceSerDes {
 
-	public static ElementDefinition toDTO(String json) {
-		ElementDefinitionJSONParser elementDefinitionJSONParser =
-			new ElementDefinitionJSONParser();
+	public static ElementInstance toDTO(String json) {
+		ElementInstanceJSONParser elementInstanceJSONParser =
+			new ElementInstanceJSONParser();
 
-		return elementDefinitionJSONParser.parseToDTO(json);
+		return elementInstanceJSONParser.parseToDTO(json);
 	}
 
-	public static ElementDefinition[] toDTOs(String json) {
-		ElementDefinitionJSONParser elementDefinitionJSONParser =
-			new ElementDefinitionJSONParser();
+	public static ElementInstance[] toDTOs(String json) {
+		ElementInstanceJSONParser elementInstanceJSONParser =
+			new ElementInstanceJSONParser();
 
-		return elementDefinitionJSONParser.parseToDTOs(json);
+		return elementInstanceJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ElementDefinition elementDefinition) {
-		if (elementDefinition == null) {
+	public static String toJSON(ElementInstance elementInstance) {
+		if (elementInstance == null) {
 			return "null";
 		}
 
@@ -55,52 +55,44 @@ public class ElementDefinitionSerDes {
 
 		sb.append("{");
 
-		if (elementDefinition.getCategory() != null) {
+		if (elementInstance.getSxpElement() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"category\": ");
+			sb.append("\"sxpElement\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(elementDefinition.getCategory()));
-
-			sb.append("\"");
+			sb.append(String.valueOf(elementInstance.getSxpElement()));
 		}
 
-		if (elementDefinition.getConfiguration() != null) {
+		if (elementInstance.getSxpElementId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"configuration\": ");
+			sb.append("\"sxpElementId\": ");
 
-			sb.append(String.valueOf(elementDefinition.getConfiguration()));
+			sb.append(elementInstance.getSxpElementId());
 		}
 
-		if (elementDefinition.getIcon() != null) {
+		if (elementInstance.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"icon\": ");
+			sb.append("\"type\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(elementDefinition.getIcon()));
-
-			sb.append("\"");
+			sb.append(elementInstance.getType());
 		}
 
-		if (elementDefinition.getUiConfiguration() != null) {
+		if (elementInstance.getUiConfigurationValues() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"uiConfiguration\": ");
+			sb.append("\"uiConfigurationValues\": ");
 
-			sb.append(String.valueOf(elementDefinition.getUiConfiguration()));
+			sb.append(_toJSON(elementInstance.getUiConfigurationValues()));
 		}
 
 		sb.append("}");
@@ -109,96 +101,97 @@ public class ElementDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ElementDefinitionJSONParser elementDefinitionJSONParser =
-			new ElementDefinitionJSONParser();
+		ElementInstanceJSONParser elementInstanceJSONParser =
+			new ElementInstanceJSONParser();
 
-		return elementDefinitionJSONParser.parseToMap(json);
+		return elementInstanceJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(
-		ElementDefinition elementDefinition) {
-
-		if (elementDefinition == null) {
+	public static Map<String, String> toMap(ElementInstance elementInstance) {
+		if (elementInstance == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (elementDefinition.getCategory() == null) {
-			map.put("category", null);
+		if (elementInstance.getSxpElement() == null) {
+			map.put("sxpElement", null);
 		}
 		else {
 			map.put(
-				"category", String.valueOf(elementDefinition.getCategory()));
+				"sxpElement", String.valueOf(elementInstance.getSxpElement()));
 		}
 
-		if (elementDefinition.getConfiguration() == null) {
-			map.put("configuration", null);
+		if (elementInstance.getSxpElementId() == null) {
+			map.put("sxpElementId", null);
 		}
 		else {
 			map.put(
-				"configuration",
-				String.valueOf(elementDefinition.getConfiguration()));
+				"sxpElementId",
+				String.valueOf(elementInstance.getSxpElementId()));
 		}
 
-		if (elementDefinition.getIcon() == null) {
-			map.put("icon", null);
+		if (elementInstance.getType() == null) {
+			map.put("type", null);
 		}
 		else {
-			map.put("icon", String.valueOf(elementDefinition.getIcon()));
+			map.put("type", String.valueOf(elementInstance.getType()));
 		}
 
-		if (elementDefinition.getUiConfiguration() == null) {
-			map.put("uiConfiguration", null);
+		if (elementInstance.getUiConfigurationValues() == null) {
+			map.put("uiConfigurationValues", null);
 		}
 		else {
 			map.put(
-				"uiConfiguration",
-				String.valueOf(elementDefinition.getUiConfiguration()));
+				"uiConfigurationValues",
+				String.valueOf(elementInstance.getUiConfigurationValues()));
 		}
 
 		return map;
 	}
 
-	public static class ElementDefinitionJSONParser
-		extends BaseJSONParser<ElementDefinition> {
+	public static class ElementInstanceJSONParser
+		extends BaseJSONParser<ElementInstance> {
 
 		@Override
-		protected ElementDefinition createDTO() {
-			return new ElementDefinition();
+		protected ElementInstance createDTO() {
+			return new ElementInstance();
 		}
 
 		@Override
-		protected ElementDefinition[] createDTOArray(int size) {
-			return new ElementDefinition[size];
+		protected ElementInstance[] createDTOArray(int size) {
+			return new ElementInstance[size];
 		}
 
 		@Override
 		protected void setField(
-			ElementDefinition elementDefinition, String jsonParserFieldName,
+			ElementInstance elementInstance, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "category")) {
+			if (Objects.equals(jsonParserFieldName, "sxpElement")) {
 				if (jsonParserFieldValue != null) {
-					elementDefinition.setCategory((String)jsonParserFieldValue);
+					elementInstance.setSxpElement(
+						SXPElementSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "configuration")) {
+			else if (Objects.equals(jsonParserFieldName, "sxpElementId")) {
 				if (jsonParserFieldValue != null) {
-					elementDefinition.setConfiguration(
-						ConfigurationSerDes.toDTO(
-							(String)jsonParserFieldValue));
+					elementInstance.setSxpElementId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "icon")) {
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					elementDefinition.setIcon((String)jsonParserFieldValue);
+					elementInstance.setType(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "uiConfiguration")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "uiConfigurationValues")) {
+
 				if (jsonParserFieldValue != null) {
-					elementDefinition.setUiConfiguration(
-						UiConfigurationSerDes.toDTO(
+					elementInstance.setUiConfigurationValues(
+						(Map)ElementInstanceSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}

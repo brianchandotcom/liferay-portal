@@ -44,63 +44,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ElementDefinition")
+@GraphQLName("ElementInstance")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ElementDefinition")
-public class ElementDefinition implements Serializable {
+@XmlRootElement(name = "ElementInstance")
+public class ElementInstance implements Serializable {
 
-	public static ElementDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(ElementDefinition.class, json);
+	public static ElementInstance toDTO(String json) {
+		return ObjectMapperUtil.readValue(ElementInstance.class, json);
 	}
 
-	public static ElementDefinition unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(ElementDefinition.class, json);
+	public static ElementInstance unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(ElementInstance.class, json);
 	}
-
-	@Schema
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	@JsonIgnore
-	public void setCategory(
-		UnsafeSupplier<String, Exception> categoryUnsafeSupplier) {
-
-		try {
-			category = categoryUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String category;
 
 	@Schema
 	@Valid
-	public Configuration getConfiguration() {
-		return configuration;
+	public SXPElement getSxpElement() {
+		return sxpElement;
 	}
 
-	public void setConfiguration(Configuration configuration) {
-		this.configuration = configuration;
+	public void setSxpElement(SXPElement sxpElement) {
+		this.sxpElement = sxpElement;
 	}
 
 	@JsonIgnore
-	public void setConfiguration(
-		UnsafeSupplier<Configuration, Exception> configurationUnsafeSupplier) {
+	public void setSxpElement(
+		UnsafeSupplier<SXPElement, Exception> sxpElementUnsafeSupplier) {
 
 		try {
-			configuration = configurationUnsafeSupplier.get();
+			sxpElement = sxpElementUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -112,21 +84,23 @@ public class ElementDefinition implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Configuration configuration;
+	protected SXPElement sxpElement;
 
 	@Schema
-	public String getIcon() {
-		return icon;
+	public Long getSxpElementId() {
+		return sxpElementId;
 	}
 
-	public void setIcon(String icon) {
-		this.icon = icon;
+	public void setSxpElementId(Long sxpElementId) {
+		this.sxpElementId = sxpElementId;
 	}
 
 	@JsonIgnore
-	public void setIcon(UnsafeSupplier<String, Exception> iconUnsafeSupplier) {
+	public void setSxpElementId(
+		UnsafeSupplier<Long, Exception> sxpElementIdUnsafeSupplier) {
+
 		try {
-			icon = iconUnsafeSupplier.get();
+			sxpElementId = sxpElementIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -138,25 +112,53 @@ public class ElementDefinition implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String icon;
+	protected Long sxpElementId;
+
+	@Schema
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<Integer, Exception> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer type;
 
 	@Schema
 	@Valid
-	public UiConfiguration getUiConfiguration() {
-		return uiConfiguration;
+	public Map<String, ValueDefinition> getUiConfigurationValues() {
+		return uiConfigurationValues;
 	}
 
-	public void setUiConfiguration(UiConfiguration uiConfiguration) {
-		this.uiConfiguration = uiConfiguration;
+	public void setUiConfigurationValues(
+		Map<String, ValueDefinition> uiConfigurationValues) {
+
+		this.uiConfigurationValues = uiConfigurationValues;
 	}
 
 	@JsonIgnore
-	public void setUiConfiguration(
-		UnsafeSupplier<UiConfiguration, Exception>
-			uiConfigurationUnsafeSupplier) {
+	public void setUiConfigurationValues(
+		UnsafeSupplier<Map<String, ValueDefinition>, Exception>
+			uiConfigurationValuesUnsafeSupplier) {
 
 		try {
-			uiConfiguration = uiConfigurationUnsafeSupplier.get();
+			uiConfigurationValues = uiConfigurationValuesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -168,7 +170,7 @@ public class ElementDefinition implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected UiConfiguration uiConfiguration;
+	protected Map<String, ValueDefinition> uiConfigurationValues;
 
 	@Override
 	public boolean equals(Object object) {
@@ -176,13 +178,13 @@ public class ElementDefinition implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ElementDefinition)) {
+		if (!(object instanceof ElementInstance)) {
 			return false;
 		}
 
-		ElementDefinition elementDefinition = (ElementDefinition)object;
+		ElementInstance elementInstance = (ElementInstance)object;
 
-		return Objects.equals(toString(), elementDefinition.toString());
+		return Objects.equals(toString(), elementInstance.toString());
 	}
 
 	@Override
@@ -197,52 +199,44 @@ public class ElementDefinition implements Serializable {
 
 		sb.append("{");
 
-		if (category != null) {
+		if (sxpElement != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"category\": ");
+			sb.append("\"sxpElement\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(category));
-
-			sb.append("\"");
+			sb.append(String.valueOf(sxpElement));
 		}
 
-		if (configuration != null) {
+		if (sxpElementId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"configuration\": ");
+			sb.append("\"sxpElementId\": ");
 
-			sb.append(String.valueOf(configuration));
+			sb.append(sxpElementId);
 		}
 
-		if (icon != null) {
+		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"icon\": ");
+			sb.append("\"type\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(icon));
-
-			sb.append("\"");
+			sb.append(type);
 		}
 
-		if (uiConfiguration != null) {
+		if (uiConfigurationValues != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"uiConfiguration\": ");
+			sb.append("\"uiConfigurationValues\": ");
 
-			sb.append(String.valueOf(uiConfiguration));
+			sb.append(_toJSON(uiConfigurationValues));
 		}
 
 		sb.append("}");
@@ -252,7 +246,7 @@ public class ElementDefinition implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.ElementInstance",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.dto.v1_0.FieldMappingInfo;
 import com.liferay.search.experiences.rest.dto.v1_0.KeywordQueryContributor;
 import com.liferay.search.experiences.rest.dto.v1_0.ModelPrefilterContributor;
@@ -233,7 +235,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprint(sxpBlueprintId: ___){configuration, description, description_i18n, elementDefinitions, id, title, title_i18n}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprint(sxpBlueprintId: ___){configuration, description, description_i18n, elementInstances, id, title, title_i18n}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public SXPBlueprint sXPBlueprint(
@@ -333,6 +335,26 @@ public class Query {
 				new SearchableAssetNameDisplayPage(
 					searchableAssetNameDisplayResource.
 						getSearchableAssetNameLanguagePage(languageId)));
+	}
+
+	@GraphQLTypeExtension(ElementInstance.class)
+	public class GetSXPElementTypeExtension {
+
+		public GetSXPElementTypeExtension(ElementInstance elementInstance) {
+			_elementInstance = elementInstance;
+		}
+
+		@GraphQLField
+		public SXPElement sXPElement() throws Exception {
+			return _applyComponentServiceObjects(
+				_sxpElementResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				sxpElementResource -> sxpElementResource.getSXPElement(
+					_elementInstance.getSxpElementId()));
+		}
+
+		private ElementInstance _elementInstance;
+
 	}
 
 	@GraphQLName("FieldMappingInfoPage")

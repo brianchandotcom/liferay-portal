@@ -99,27 +99,27 @@ public class SXPBlueprint implements Cloneable, Serializable {
 
 	protected Map<String, String> description_i18n;
 
-	public ElementDefinition[] getElementDefinitions() {
-		return elementDefinitions;
+	public ElementInstance[] getElementInstances() {
+		return elementInstances;
 	}
 
-	public void setElementDefinitions(ElementDefinition[] elementDefinitions) {
-		this.elementDefinitions = elementDefinitions;
+	public void setElementInstances(ElementInstance[] elementInstances) {
+		this.elementInstances = elementInstances;
 	}
 
-	public void setElementDefinitions(
-		UnsafeSupplier<ElementDefinition[], Exception>
-			elementDefinitionsUnsafeSupplier) {
+	public void setElementInstances(
+		UnsafeSupplier<ElementInstance[], Exception>
+			elementInstancesUnsafeSupplier) {
 
 		try {
-			elementDefinitions = elementDefinitionsUnsafeSupplier.get();
+			elementInstances = elementInstancesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected ElementDefinition[] elementDefinitions;
+	protected ElementInstance[] elementInstances;
 
 	public Long getId() {
 		return id;

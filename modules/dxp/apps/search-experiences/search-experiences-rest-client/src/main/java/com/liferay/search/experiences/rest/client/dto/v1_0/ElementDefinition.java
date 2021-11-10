@@ -55,6 +55,27 @@ public class ElementDefinition implements Cloneable, Serializable {
 
 	protected String category;
 
+	public Configuration getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
+	}
+
+	public void setConfiguration(
+		UnsafeSupplier<Configuration, Exception> configurationUnsafeSupplier) {
+
+		try {
+			configuration = configurationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Configuration configuration;
+
 	public String getIcon() {
 		return icon;
 	}
@@ -73,27 +94,6 @@ public class ElementDefinition implements Cloneable, Serializable {
 	}
 
 	protected String icon;
-
-	public SXPBlueprint getSxpBlueprint() {
-		return sxpBlueprint;
-	}
-
-	public void setSxpBlueprint(SXPBlueprint sxpBlueprint) {
-		this.sxpBlueprint = sxpBlueprint;
-	}
-
-	public void setSxpBlueprint(
-		UnsafeSupplier<SXPBlueprint, Exception> sxpBlueprintUnsafeSupplier) {
-
-		try {
-			sxpBlueprint = sxpBlueprintUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected SXPBlueprint sxpBlueprint;
 
 	public UiConfiguration getUiConfiguration() {
 		return uiConfiguration;

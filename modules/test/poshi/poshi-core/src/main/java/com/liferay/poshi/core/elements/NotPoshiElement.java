@@ -72,9 +72,9 @@ public class NotPoshiElement extends PoshiElement {
 		StringBuilder sb = new StringBuilder();
 
 		for (PoshiElement poshiElement : toPoshiElements(elements())) {
-			PoshiElement parentPoshiElement = (PoshiElement)getParent();
-
 			if (poshiElement instanceof EqualsPoshiElement) {
+				PoshiElement parentPoshiElement = (PoshiElement)getParent();
+
 				if (parentPoshiElement instanceof AndPoshiElement ||
 					parentPoshiElement instanceof OrPoshiElement) {
 
@@ -91,10 +91,10 @@ public class NotPoshiElement extends PoshiElement {
 				}
 			}
 			else {
-					sb.append("!(");
+				sb.append("!(");
 
-					sb.append(poshiElement.toPoshiScript());
-					sb.append(")");
+				sb.append(poshiElement.toPoshiScript());
+				sb.append(")");
 			}
 		}
 

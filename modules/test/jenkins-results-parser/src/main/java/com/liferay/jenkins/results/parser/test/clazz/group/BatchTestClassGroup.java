@@ -80,13 +80,21 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		Matcher jobNameMatcher = _jobNamePattern.matcher(topLevelJobName);
 
+		String batchJobSuffix = "-batch";
+
+		String slaveLabel = getSlaveLabel();
+
+		if (slaveLabel.contains("win")) {
+			batchJobSuffix = "-windows-batch";
+		}
+
 		if (jobNameMatcher.find()) {
 			return JenkinsResultsParserUtil.combine(
-				jobNameMatcher.group("jobBaseName"), "-batch",
+				jobNameMatcher.group("jobBaseName"), batchJobSuffix,
 				jobNameMatcher.group("jobVariant"));
 		}
 
-		return topLevelJobName + "-batch";
+		return topLevelJobName + batchJobSuffix;
 	}
 
 	public String getBatchName() {

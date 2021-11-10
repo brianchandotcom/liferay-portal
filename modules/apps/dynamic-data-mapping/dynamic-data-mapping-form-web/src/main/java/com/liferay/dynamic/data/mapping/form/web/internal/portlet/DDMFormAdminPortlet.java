@@ -168,9 +168,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 						getDDMFormWebConfiguration(),
 					_ddmStorageAdapterTracker, _ddmStructureLocalService,
 					_ddmStructureService,
-					_ffSubmissionsSettingsConfigurationActivator.enabled(),
-					_jsonFactory, _npmResolver, _objectDefinitionLocalService,
-					_portal));
+					_ffSubmissionsSettingsConfigurationActivator, _jsonFactory,
+					_npmResolver, _objectDefinitionLocalService, _portal));
 		}
 		else {
 			renderRequest.setAttribute(
@@ -193,9 +192,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 						getDDMFormWebConfiguration(),
 					_ddmStorageAdapterTracker, _ddmStructureLocalService,
 					_ddmStructureService,
-					_ffSubmissionsSettingsConfigurationActivator.enabled(),
-					_jsonFactory, _npmResolver, _objectDefinitionLocalService,
-					_portal));
+					_ffSubmissionsSettingsConfigurationActivator, _jsonFactory,
+					_npmResolver, _objectDefinitionLocalService, _portal));
 		}
 	}
 

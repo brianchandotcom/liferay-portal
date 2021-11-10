@@ -86,13 +86,13 @@ public class CommerceCurrencyModelImpl
 	public static final String TABLE_NAME = "CommerceCurrency";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"commerceCurrencyId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"code_", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"symbol", Types.VARCHAR},
-		{"rate", Types.DECIMAL}, {"formatPattern", Types.VARCHAR},
-		{"maxFractionDigits", Types.INTEGER},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"commerceCurrencyId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"code_", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"symbol", Types.VARCHAR}, {"rate", Types.DECIMAL},
+		{"formatPattern", Types.VARCHAR}, {"maxFractionDigits", Types.INTEGER},
 		{"minFractionDigits", Types.INTEGER}, {"roundingMode", Types.VARCHAR},
 		{"primary_", Types.BOOLEAN}, {"priority", Types.DOUBLE},
 		{"active_", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP}
@@ -102,6 +102,7 @@ public class CommerceCurrencyModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceCurrencyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -124,7 +125,7 @@ public class CommerceCurrencyModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceCurrency (uuid_ VARCHAR(75) null,commerceCurrencyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name STRING null,symbol VARCHAR(75) null,rate DECIMAL(30, 16) null,formatPattern STRING null,maxFractionDigits INTEGER,minFractionDigits INTEGER,roundingMode VARCHAR(75) null,primary_ BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
+		"create table CommerceCurrency (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceCurrencyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name STRING null,symbol VARCHAR(75) null,rate DECIMAL(30, 16) null,formatPattern STRING null,maxFractionDigits INTEGER,minFractionDigits INTEGER,roundingMode VARCHAR(75) null,primary_ BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceCurrency";
 
@@ -210,6 +211,7 @@ public class CommerceCurrencyModelImpl
 
 		CommerceCurrency model = new CommerceCurrencyImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceCurrencyId(soapModel.getCommerceCurrencyId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -388,6 +390,12 @@ public class CommerceCurrencyModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<CommerceCurrency, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", CommerceCurrency::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceCurrency, Long>)
+				CommerceCurrency::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CommerceCurrency::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -490,6 +498,21 @@ public class CommerceCurrencyModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1223,6 +1246,7 @@ public class CommerceCurrencyModelImpl
 	public Object clone() {
 		CommerceCurrencyImpl commerceCurrencyImpl = new CommerceCurrencyImpl();
 
+		commerceCurrencyImpl.setMvccVersion(getMvccVersion());
 		commerceCurrencyImpl.setUuid(getUuid());
 		commerceCurrencyImpl.setCommerceCurrencyId(getCommerceCurrencyId());
 		commerceCurrencyImpl.setCompanyId(getCompanyId());
@@ -1252,6 +1276,8 @@ public class CommerceCurrencyModelImpl
 	public CommerceCurrency cloneWithOriginalValues() {
 		CommerceCurrencyImpl commerceCurrencyImpl = new CommerceCurrencyImpl();
 
+		commerceCurrencyImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceCurrencyImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		commerceCurrencyImpl.setCommerceCurrencyId(
@@ -1373,6 +1399,8 @@ public class CommerceCurrencyModelImpl
 	public CacheModel<CommerceCurrency> toCacheModel() {
 		CommerceCurrencyCacheModel commerceCurrencyCacheModel =
 			new CommerceCurrencyCacheModel();
+
+		commerceCurrencyCacheModel.mvccVersion = getMvccVersion();
 
 		commerceCurrencyCacheModel.uuid = getUuid();
 
@@ -1567,6 +1595,7 @@ public class CommerceCurrencyModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceCurrencyId;
 	private long _companyId;
@@ -1619,6 +1648,7 @@ public class CommerceCurrencyModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("commerceCurrencyId", _commerceCurrencyId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1664,43 +1694,45 @@ public class CommerceCurrencyModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("uuid_", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("commerceCurrencyId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("commerceCurrencyId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("code_", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("name", 256L);
+		columnBitmasks.put("code_", 256L);
 
-		columnBitmasks.put("symbol", 512L);
+		columnBitmasks.put("name", 512L);
 
-		columnBitmasks.put("rate", 1024L);
+		columnBitmasks.put("symbol", 1024L);
 
-		columnBitmasks.put("formatPattern", 2048L);
+		columnBitmasks.put("rate", 2048L);
 
-		columnBitmasks.put("maxFractionDigits", 4096L);
+		columnBitmasks.put("formatPattern", 4096L);
 
-		columnBitmasks.put("minFractionDigits", 8192L);
+		columnBitmasks.put("maxFractionDigits", 8192L);
 
-		columnBitmasks.put("roundingMode", 16384L);
+		columnBitmasks.put("minFractionDigits", 16384L);
 
-		columnBitmasks.put("primary_", 32768L);
+		columnBitmasks.put("roundingMode", 32768L);
 
-		columnBitmasks.put("priority", 65536L);
+		columnBitmasks.put("primary_", 65536L);
 
-		columnBitmasks.put("active_", 131072L);
+		columnBitmasks.put("priority", 131072L);
 
-		columnBitmasks.put("lastPublishDate", 262144L);
+		columnBitmasks.put("active_", 262144L);
+
+		columnBitmasks.put("lastPublishDate", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.currency.model.CommerceCurrency">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="commerceCurrencyId" type="long" />
 		<field name="companyId" type="long" />

@@ -127,6 +127,8 @@ public class CommerceCurrencyPersistenceTest {
 
 		CommerceCurrency newCommerceCurrency = _persistence.create(pk);
 
+		newCommerceCurrency.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceCurrency.setUuid(RandomTestUtil.randomString());
 
 		newCommerceCurrency.setCompanyId(RandomTestUtil.nextLong());
@@ -169,6 +171,9 @@ public class CommerceCurrencyPersistenceTest {
 		CommerceCurrency existingCommerceCurrency =
 			_persistence.findByPrimaryKey(newCommerceCurrency.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceCurrency.getMvccVersion(),
+			newCommerceCurrency.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceCurrency.getUuid(), newCommerceCurrency.getUuid());
 		Assert.assertEquals(
@@ -310,12 +315,13 @@ public class CommerceCurrencyPersistenceTest {
 
 	protected OrderByComparator<CommerceCurrency> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceCurrency", "uuid", true, "commerceCurrencyId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "code", true, "name", true, "symbol",
-			true, "rate", true, "formatPattern", true, "maxFractionDigits",
-			true, "minFractionDigits", true, "roundingMode", true, "primary",
-			true, "priority", true, "active", true, "lastPublishDate", true);
+			"CommerceCurrency", "mvccVersion", true, "uuid", true,
+			"commerceCurrencyId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "code",
+			true, "name", true, "symbol", true, "rate", true, "formatPattern",
+			true, "maxFractionDigits", true, "minFractionDigits", true,
+			"roundingMode", true, "primary", true, "priority", true, "active",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -603,6 +609,8 @@ public class CommerceCurrencyPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceCurrency commerceCurrency = _persistence.create(pk);
+
+		commerceCurrency.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceCurrency.setUuid(RandomTestUtil.randomString());
 

@@ -1227,6 +1227,8 @@ definition {
 	@description = "This is a test for LPS-136787. It checks that a user cannot subscribe to a comment without permissions."
 	@priority = "3"
 	test CannotSubscribeToCommentWithoutPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

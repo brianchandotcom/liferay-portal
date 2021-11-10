@@ -21,7 +21,7 @@ package com.liferay.remote.app.uad.constants;
 public class RemoteAppUADConstants {
 
 	public static final String[] USER_ID_FIELD_NAMES_REMOTE_APP_ENTRY = {
-		"userId"
+		"userId", "statusByUserId"
 	};
 
 }

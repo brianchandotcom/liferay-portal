@@ -37,5 +37,9 @@
 			<hint-collection name="URL" />
 		</field>
 		<field name="type" type="String" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 </model-hints>

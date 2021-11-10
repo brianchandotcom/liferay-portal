@@ -36,7 +36,12 @@ public class SXPPortalInstanceLifecycleListenerTest {
 	@Test
 	public void testReadSXPElement() {
 		for (String fileName : SXPPortalInstanceLifecycleListener.FILE_NAMES) {
-			_testReadSXPElement(fileName);
+			try {
+				_testReadSXPElement(fileName);
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(fileName, exception);
+			}
 		}
 	}
 

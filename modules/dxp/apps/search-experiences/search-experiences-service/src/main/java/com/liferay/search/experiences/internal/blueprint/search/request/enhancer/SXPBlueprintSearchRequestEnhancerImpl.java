@@ -95,6 +95,9 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		ScriptConverter scriptConverter = new ScriptConverter(_scripts);
 
 		_sxpSearchRequestBodyContributors = Arrays.asList(
+
+			// TODO AdvancedSXPSearchRequestBodyContributor with fetchSource
+
 			new AggsSXPSearchRequestBodyContributor(
 				_aggregations, _geoBuilders, highlightConverter, queryConverter,
 				scriptConverter, _significanceHeuristics, _sorts),

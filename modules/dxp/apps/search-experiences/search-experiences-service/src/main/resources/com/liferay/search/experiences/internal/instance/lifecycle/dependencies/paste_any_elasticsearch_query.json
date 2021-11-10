@@ -4,28 +4,26 @@
 	},
 	"elementDefinition": {
 		"category": "custom",
-		"icon": "custom-field",
-		"sxpBlueprint": {
-			"configuration": {
-				"queryConfiguration": {
-					"queryEntries": [
-						{
-							"clauses": [
-								{
-									"context": "query",
-									"occur": "${configuration.occur}",
-									"query": {
-										"wrapper": {
-											"query": "${configuration.query}"
-										}
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "${configuration.occur}",
+								"query": {
+									"wrapper": {
+										"query": "${configuration.query}"
 									}
 								}
-							]
-						}
-					]
-				}
+							}
+						]
+					}
+				]
 			}
 		},
+		"icon": "custom-field",
 		"uiConfiguration": {
 			"fieldSets": [
 				{

@@ -4,35 +4,33 @@
 	},
 	"elementDefinition": {
 		"category": "boost",
-		"icon": "thumbs-up",
-		"sxpBlueprint": {
-			"configuration": {
-				"queryConfiguration": {
-					"queryEntries": [
-						{
-							"clauses": [
-								{
-									"context": "query",
-									"occur": "should",
-									"query": {
-										"wrapper": {
-											"query": {
-												"term": {
-													"entryClassName": {
-														"boost": "${configuration.boost}",
-														"value": "${configuration.entry_class_name}"
-													}
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"wrapper": {
+										"query": {
+											"term": {
+												"entryClassName": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.entry_class_name}"
 												}
 											}
 										}
 									}
 								}
-							]
-						}
-					]
-				}
+							}
+						]
+					}
+				]
 			}
 		},
+		"icon": "thumbs-up",
 		"uiConfiguration": {
 			"fieldSets": [
 				{

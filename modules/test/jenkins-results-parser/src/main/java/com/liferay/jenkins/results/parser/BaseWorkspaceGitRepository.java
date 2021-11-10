@@ -505,13 +505,7 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	protected Set<String> getPropertyOptions() {
-		Set<String> propertyOptions = new HashSet<>(_propertyOptions);
-
-		if (JenkinsResultsParserUtil.isWindows()) {
-			propertyOptions.add("windows");
-		}
-
-		return propertyOptions;
+		return _propertyOptions;
 	}
 
 	private LocalGitBranch _createPullRequestLocalGitBranch() {

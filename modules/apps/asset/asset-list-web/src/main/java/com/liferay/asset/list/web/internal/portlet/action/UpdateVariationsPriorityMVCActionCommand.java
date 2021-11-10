@@ -1,27 +1,35 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 package com.liferay.asset.list.web.internal.portlet.action;
 
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
-import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
-import com.liferay.asset.list.service.AssetListEntryService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+
+/**
+ * @author Yurena Cabrera
+ */
 
 @Component(
 	immediate = true,
@@ -32,8 +40,7 @@ import java.util.stream.Stream;
 	service = MVCResourceCommand.class
 )
 public class UpdateVariationsPriorityMVCActionCommand
-	 extends BaseMVCActionCommand {
-
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -43,15 +50,23 @@ public class UpdateVariationsPriorityMVCActionCommand
 		long[] variationsPriority = ParamUtil.getLongValues(
 			actionRequest, "variationsPriority");
 
-		for (int priority = 0; priority < variationsPriority.length; priority++){
+		for (int priority = 0; priority < variationsPriority.length;
+			 priority++) {
+
 			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-				AssetListEntrySegmentsEntryRelLocalServiceUtil.
+				_assetListEntrySegmentsEntryRelLocalService.
 					getAssetListEntrySegmentsEntryRel(
 						variationsPriority[priority]);
+
 			assetListEntrySegmentsEntryRel.setPriority(priority);
 
-			AssetListEntrySegmentsEntryRelLocalServiceUtil.updateAssetListEntrySegmentsEntryRel(assetListEntrySegmentsEntryRel);
+			_assetListEntrySegmentsEntryRelLocalService.
+				updateAssetListEntrySegmentsEntryRel(
+					assetListEntrySegmentsEntryRel);
 		}
-
 	}
+
+	@Reference
+	private AssetListEntrySegmentsEntryRelLocalService
+		_assetListEntrySegmentsEntryRelLocalService;
 }

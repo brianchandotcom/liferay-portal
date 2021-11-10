@@ -196,6 +196,10 @@ public class EditAssetListDisplayContext {
 			.setParameter("type", User.class.getName())
 			.buildString();
 
+		String createUpdateVariationsPriorityURL = PortletURLBuilder.create(segmentsPortletURL)
+			.setMVCRenderCommandName("/asset_list/update_variations_priority", false)
+			.buildString();
+
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(_portletResponse);
 
@@ -210,6 +214,8 @@ public class EditAssetListDisplayContext {
 			"validAssetListEntry", Validator.isNotNull(assetListEntry.getAssetEntryType())
 		).put(
 			"createNewSegmentURL", createNewSegmentURL
+		).put(
+			"updateVariationsPriorityURL", createUpdateVariationsPriorityURL
 		)
 		.build();
 	}

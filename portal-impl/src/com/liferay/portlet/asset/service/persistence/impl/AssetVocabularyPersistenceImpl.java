@@ -3506,7 +3506,7 @@ public class AssetVocabularyPersistenceImpl
 				queryPos.add(groupId);
 
 				if (bindName) {
-					queryPos.add(name);
+					queryPos.add(StringUtil.toLowerCase(name));
 				}
 
 				List<AssetVocabulary> list = query.list();
@@ -3616,7 +3616,7 @@ public class AssetVocabularyPersistenceImpl
 				queryPos.add(groupId);
 
 				if (bindName) {
-					queryPos.add(name);
+					queryPos.add(StringUtil.toLowerCase(name));
 				}
 
 				count = (Long)query.uniqueResult();
@@ -3640,7 +3640,7 @@ public class AssetVocabularyPersistenceImpl
 		"assetVocabulary.groupId = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_N_NAME_2 =
-		"assetVocabulary.name = ?";
+		"lower(assetVocabulary.name) = ?";
 
 	private static final String _FINDER_COLUMN_G_N_NAME_3 =
 		"(assetVocabulary.name IS NULL OR assetVocabulary.name = '')";

@@ -222,6 +222,27 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected ObjectField[] objectFields;
 
+	public ObjectLayout[] getObjectLayouts() {
+		return objectLayouts;
+	}
+
+	public void setObjectLayouts(ObjectLayout[] objectLayouts) {
+		this.objectLayouts = objectLayouts;
+	}
+
+	public void setObjectLayouts(
+		UnsafeSupplier<ObjectLayout[], Exception> objectLayoutsUnsafeSupplier) {
+
+		try {
+			objectLayouts = objectLayoutsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ObjectLayout[] objectLayouts;
+
 	public ObjectRelationship[] getObjectRelationships() {
 		return objectRelationships;
 	}

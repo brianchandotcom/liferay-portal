@@ -649,6 +649,14 @@ public abstract class BaseObjectFieldResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("relationshipType", additionalAssertFieldName)) {
+				if (objectField.getRelationshipType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("required", additionalAssertFieldName)) {
 				if (objectField.getRequired() == null) {
 					valid = false;
@@ -846,6 +854,17 @@ public abstract class BaseObjectFieldResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("relationshipType", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectField1.getRelationshipType(),
+						objectField2.getRelationshipType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("required", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						objectField1.getRequired(),
@@ -1008,6 +1027,11 @@ public abstract class BaseObjectFieldResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("relationshipType")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("required")) {

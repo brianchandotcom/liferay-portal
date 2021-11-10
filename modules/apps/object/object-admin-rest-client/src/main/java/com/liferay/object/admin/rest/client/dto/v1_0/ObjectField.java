@@ -200,6 +200,36 @@ public class ObjectField implements Cloneable, Serializable {
 
 	protected String name;
 
+	public RelationshipType getRelationshipType() {
+		return relationshipType;
+	}
+
+	public String getRelationshipTypeAsString() {
+		if (relationshipType == null) {
+			return null;
+		}
+
+		return relationshipType.toString();
+	}
+
+	public void setRelationshipType(RelationshipType relationshipType) {
+		this.relationshipType = relationshipType;
+	}
+
+	public void setRelationshipType(
+		UnsafeSupplier<RelationshipType, Exception>
+			relationshipTypeUnsafeSupplier) {
+
+		try {
+			relationshipType = relationshipTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected RelationshipType relationshipType;
+
 	public Boolean getRequired() {
 		return required;
 	}
@@ -277,6 +307,39 @@ public class ObjectField implements Cloneable, Serializable {
 
 	public String toString() {
 		return ObjectFieldSerDes.toJSON(this);
+	}
+
+	public static enum RelationshipType {
+
+		ONE_TO_MANY("oneToMany"), ONE_TO_ONE("oneToOne");
+
+		public static RelationshipType create(String value) {
+			for (RelationshipType relationshipType : values()) {
+				if (Objects.equals(relationshipType.getValue(), value) ||
+					Objects.equals(relationshipType.name(), value)) {
+
+					return relationshipType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private RelationshipType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 	public static enum Type {

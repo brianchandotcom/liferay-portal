@@ -316,6 +316,35 @@ public class ObjectDefinition implements Serializable {
 
 	@Schema
 	@Valid
+	public ObjectLayout[] getObjectLayouts() {
+		return objectLayouts;
+	}
+
+	public void setObjectLayouts(ObjectLayout[] objectLayouts) {
+		this.objectLayouts = objectLayouts;
+	}
+
+	@JsonIgnore
+	public void setObjectLayouts(
+		UnsafeSupplier<ObjectLayout[], Exception> objectLayoutsUnsafeSupplier) {
+
+		try {
+			objectLayouts = objectLayoutsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ObjectLayout[] objectLayouts;
+
+	@Schema
+	@Valid
 	public ObjectRelationship[] getObjectRelationships() {
 		return objectRelationships;
 	}
@@ -690,6 +719,26 @@ public class ObjectDefinition implements Serializable {
 				sb.append(String.valueOf(objectFields[i]));
 
 				if ((i + 1) < objectFields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (objectLayouts != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectLayouts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < objectLayouts.length; i++) {
+				sb.append(String.valueOf(objectLayouts[i]));
+
+				if ((i + 1) < objectLayouts.length) {
 					sb.append(", ");
 				}
 			}

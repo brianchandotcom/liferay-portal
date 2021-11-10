@@ -283,6 +283,45 @@ public class ObjectField implements Serializable {
 	protected String name;
 
 	@Schema
+	@Valid
+	public RelationshipType getRelationshipType() {
+		return relationshipType;
+	}
+
+	@JsonIgnore
+	public String getRelationshipTypeAsString() {
+		if (relationshipType == null) {
+			return null;
+		}
+
+		return relationshipType.toString();
+	}
+
+	public void setRelationshipType(RelationshipType relationshipType) {
+		this.relationshipType = relationshipType;
+	}
+
+	@JsonIgnore
+	public void setRelationshipType(
+		UnsafeSupplier<RelationshipType, Exception>
+			relationshipTypeUnsafeSupplier) {
+
+		try {
+			relationshipType = relationshipTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected RelationshipType relationshipType;
+
+	@Schema
 	public Boolean getRequired() {
 		return required;
 	}
@@ -461,6 +500,20 @@ public class ObjectField implements Serializable {
 			sb.append("\"");
 		}
 
+		if (relationshipType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"relationshipType\": ");
+
+			sb.append("\"");
+
+			sb.append(relationshipType);
+
+			sb.append("\"");
+		}
+
 		if (required != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -496,6 +549,44 @@ public class ObjectField implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("RelationshipType")
+	public static enum RelationshipType {
+
+		ONE_TO_MANY("oneToMany"), ONE_TO_ONE("oneToOne");
+
+		@JsonCreator
+		public static RelationshipType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (RelationshipType relationshipType : values()) {
+				if (Objects.equals(relationshipType.getValue(), value)) {
+					return relationshipType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private RelationshipType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	@GraphQLName("Type")
 	public static enum Type {

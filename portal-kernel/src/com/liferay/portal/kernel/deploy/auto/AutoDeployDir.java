@@ -33,10 +33,8 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -134,15 +132,12 @@ public class AutoDeployDir {
 	}
 
 	public AutoDeployDir(
-		String name, File deployDir, File destDir, long interval,
-		List<AutoDeployListener> autoDeployListeners) {
+		String name, File deployDir, File destDir, long interval) {
 
 		_name = name;
 		_deployDir = deployDir;
 		_destDir = destDir;
 		_interval = interval;
-
-		_autoDeployListeners = new CopyOnWriteArrayList<>(autoDeployListeners);
 	}
 
 	public File getDeployDir() {
@@ -157,16 +152,8 @@ public class AutoDeployDir {
 		return _interval;
 	}
 
-	public List<AutoDeployListener> getListeners() {
-		return _autoDeployListeners;
-	}
-
 	public String getName() {
 		return _name;
-	}
-
-	public void registerListener(AutoDeployListener listener) {
-		_autoDeployListeners.add(listener);
 	}
 
 	public void start() {
@@ -217,10 +204,6 @@ public class AutoDeployDir {
 		}
 
 		_serviceTrackerList.close();
-	}
-
-	public void unregisterListener(AutoDeployListener autoDeployListener) {
-		_autoDeployListeners.remove(autoDeployListener);
 	}
 
 	protected AutoDeploymentContext buildAutoDeploymentContext(File file) {
@@ -373,7 +356,6 @@ public class AutoDeployDir {
 	private static final Pattern _versionPattern = Pattern.compile(
 		"-[\\d]+((\\.[\\d]+)+(-.+)*)\\.war$");
 
-	private final List<AutoDeployListener> _autoDeployListeners;
 	private final Map<String, Long> _blacklistFileTimestamps = new HashMap<>();
 	private final File _deployDir;
 	private final File _destDir;

@@ -657,11 +657,11 @@ definition {
 
 		OpenGraph.viewMappedField(
 			mappedField = "Title",
-			mappedFieldValue = "Title is File Name: ${fileName}");
+			mappedFieldValue = "Title is File Name: ${fileName:File Name}");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Description",
-			mappedFieldValue = "Description is MIME Type: ${mimeType}");
+			mappedFieldValue = "Description is MIME Type: ${mimeType:MIME Type}");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Image",
@@ -669,7 +669,7 @@ definition {
 
 		OpenGraph.viewMappedField(
 			mappedField = "ImageAlt",
-			mappedFieldValue = "Image Alt is Author Name: ${authorName}",
+			mappedFieldValue = "Image Alt is Author Name: ${authorName:Author Name}",
 			textType = "TextArea");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
@@ -755,11 +755,11 @@ definition {
 
 		OpenGraph.viewMappedField(
 			mappedField = "title",
-			mappedFieldValue = "HTML Title is File Name: ${fileName}");
+			mappedFieldValue = "HTML Title is File Name: ${fileName:File Name}");
 
 		OpenGraph.viewMappedField(
 			mappedField = "description",
-			mappedFieldValue = "Description is MIME Type: ${mimeType}",
+			mappedFieldValue = "Description is MIME Type: ${mimeType:MiME Type}",
 			textType = "TextArea");
 	}
 
@@ -849,7 +849,7 @@ definition {
 
 		Button.clickSave();
 
-		var mappedFieldValue = StringUtil.add("Title is Text: ${", "${textNumber}","");
+		var mappedFieldValue = StringUtil.add("Title is Text: ${", "${textNumber}:Text","");
 
 		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}","");
 
@@ -857,7 +857,7 @@ definition {
 			mappedField = "Title",
 			mappedFieldValue = "${mappedFieldValue}");
 
-		var mappedFieldValue = StringUtil.add("Description is Text: ${", "${textNumber}","");
+		var mappedFieldValue = StringUtil.add("Description is Text: ${", "${textNumber}:Text","");
 
 		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}","");
 
@@ -869,7 +869,7 @@ definition {
 			mappedField = "Image",
 			mappedFieldValue = "WC Structure Name: Small Image");
 
-		var mappedFieldValue = StringUtil.add("Image Alt is Text: ${", "${textNumber}","");
+		var mappedFieldValue = StringUtil.add("Image Alt is Text: ${", "${textNumber}:Text","");
 
 		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}","");
 
@@ -975,7 +975,7 @@ definition {
 
 		Button.clickSave();
 
-		var mappedFieldValue = StringUtil.add("HTML Title is Text: ${", "${textNumber}","");
+		var mappedFieldValue = StringUtil.add("HTML Title is Text: ${", "${textNumber}:Text","");
 
 		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}","");
 
@@ -983,7 +983,7 @@ definition {
 			mappedField = "title",
 			mappedFieldValue = "${mappedFieldValue}");
 
-		var mappedFieldValue = StringUtil.add("Description is Text: ${", "${textNumber}","");
+		var mappedFieldValue = StringUtil.add("Description is Text: ${", "${textNumber}:Text","");
 
 		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}","");
 

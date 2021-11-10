@@ -239,11 +239,11 @@ definition {
 
 		OpenGraph.viewMappedField(
 			mappedField = "Title",
-			mappedFieldValue = "Title is Title: ${title} Subtitle: ${subtitle}");
+			mappedFieldValue = "Title is Title: ${title:Title}Subtitle: ${subtitle:Subtitle}");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Description",
-			mappedFieldValue = "Description is Content: ${content} Description: ${description}",
+			mappedFieldValue = "Description is Content: ${content:Content}Description: ${description:Description}",
 			textType = "TextArea");
 
 		OpenGraph.viewMappedField(
@@ -252,7 +252,7 @@ definition {
 
 		OpenGraph.viewMappedField(
 			mappedField = "ImageAlt",
-			mappedFieldValue = "Image Alt is Author Name: ${authorName} Description: ${description}",
+			mappedFieldValue = "Image Alt is Author Name: ${authorName:Author Name}Description: ${description:Description}",
 			textType = "TextArea");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
@@ -274,9 +274,9 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/b/blogs-entry-title");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Title is Title: Blogs Entry Title Subtitle: Blogs Entry Subtitle","og:description" content="Description is Content: Blogs Entry Content Description: Custom Abstract"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Title is Title: Blogs Entry TitleSubtitle: Blogs Entry Subtitle","og:description" content="Description is Content: Blogs Entry ContentDescription: Custom Abstract"''');
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Image Alt is Author Name: Test Test Description: Custom Abstract","og:image" content="${portalURL}/image/user_portrait''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Image Alt is Author Name: Test TestDescription: Custom Abstract","og:image" content="${portalURL}/image/user_portrait''');
 	}
 
 	@description = "This test ensures that user can map the document with open graph meta tags for display pages."
@@ -334,11 +334,11 @@ definition {
 
 		OpenGraph.viewMappedField(
 			mappedField = "Title",
-			mappedFieldValue = "Title is File Name: ${fileName}");
+			mappedFieldValue = "Title is File Name: ${fileName:File Name}");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Description",
-			mappedFieldValue = "Description is MIME Type: ${mimeType}",
+			mappedFieldValue = "Description is MIME Type: ${mimeType:MIME Type}",
 			textType = "TextArea");
 
 		OpenGraph.viewMappedField(
@@ -347,7 +347,7 @@ definition {
 
 		OpenGraph.viewMappedField(
 			mappedField = "ImageAlt",
-			mappedFieldValue = "Image Alt is Author Name: ${authorName}",
+			mappedFieldValue = "Image Alt is Author Name: ${authorName:Author Name}",
 			textType = "TextArea");
 
 		JSONDocument.addFileWithUploadedFile(

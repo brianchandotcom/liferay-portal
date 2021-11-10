@@ -91,8 +91,7 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 
 		String fileName = file.getName();
 
-		if (!pluginAutoDeployListenerHelper.isExtPlugin() &&
-			!pluginAutoDeployListenerHelper.isHookPlugin() &&
+		if (!pluginAutoDeployListenerHelper.isHookPlugin() &&
 			!pluginAutoDeployListenerHelper.isMatchingFile(
 				"WEB-INF/liferay-layout-templates.xml") &&
 			!pluginAutoDeployListenerHelper.isThemePlugin() &&

@@ -2988,12 +2988,12 @@ definition {
 
 		task ("Assert if a mobile failure is not shown") {
 			AssertElementNotPresent(
-				locator1 = "PageAudit#FAILING_CHECK_NAME",
-				failingCheckName = "Small Tap Targets");
-			
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
 			AssertElementPresent(
-				locator1 = "PageAudit#FAILING_CHECK_NAME",
-				failingCheckName = "Invalid Canonical URL");
+				failingCheckName = "Invalid Canonical URL",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
 		}
 
 		task ("Reset configurations to default") {
@@ -3038,12 +3038,12 @@ definition {
 
 		task ("Assert if a mobile failure is not shown") {
 			AssertElementNotPresent(
-				locator1 = "PageAudit#FAILING_CHECK_NAME",
-				failingCheckName = "Small Tap Targets");
-			
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
 			AssertElementPresent(
-				locator1 = "PageAudit#FAILING_CHECK_NAME",
-				failingCheckName = "Invalid Canonical URL");
+				failingCheckName = "Invalid Canonical URL",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
 		}
 
 		task ("Reset configurations to default") {
@@ -3199,12 +3199,12 @@ definition {
 
 		task ("Assert if mobile failure are shown") {
 			AssertElementPresent(
-				locator1 = "PageAudit#FAILING_CHECK_NAME",
-				failingCheckName = "Small Tap Targets");
-			
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
 			AssertElementPresent(
-				locator1 = "PageAudit#FAILING_CHECK_NAME",
-				failingCheckName = "Illegible Font Sizes");
+				failingCheckName = "Illegible Font Sizes",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
 		}
 
 		task ("Reset configurations to default") {
@@ -3831,12 +3831,12 @@ definition {
 
 		task ("Assert if mobile failures are checked") {
 			AssertElementPresent(
-				locator1 = "PageAudit#FAILING_CHECK_NAME",
-				failingCheckName = "Small Tap Targets");
-			
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
 			AssertElementPresent(
-				locator1 = "PageAudit#FAILING_CHECK_NAME",
-				failingCheckName = "Illegible Font Sizes");
+				failingCheckName = "Illegible Font Sizes",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
 		}
 
 		task ("Reset configurations to default") {
@@ -3997,7 +3997,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
 				portlet = "Site Settings");
-			
+
 			Click(
 				key_itemName = "Pages",
 				locator1 = "ListGroupItem#ITEM_TEXT");
@@ -4018,7 +4018,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
 				portlet = "Site Settings");
-			
+
 			Click(
 				key_itemName = "Pages",
 				locator1 = "ListGroupItem#ITEM_TEXT");

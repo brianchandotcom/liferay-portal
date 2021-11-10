@@ -183,14 +183,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro setPreferredStrategy {
-		Click(locator1 = "PageAudit#PREFERRED_STRATEGY_DROPDOWN");
-
-		Click(
-			locator1 = "PageAudit#PREFERRED_STRATEGY_OPTION",
-			strategy = "${key_preferredStrategy}");
-	}
-
 	macro setAPIViaSystemSettings {
 		PageAudit.goToGooglePageSpeedInsightsSystemSettingConfiguration();
 
@@ -199,7 +191,7 @@ definition {
 		Type(
 			locator1 = "PageAudit#API_FIELD",
 			value1 = "${apiKey}");
-		
+
 		if (isSet(preferredStrategy)) {
 			PageAudit.setPreferredStrategy(key_preferredStrategy = "${preferredStrategy}");
 		}
@@ -213,6 +205,14 @@ definition {
 		}
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro setPreferredStrategy {
+		Click(locator1 = "PageAudit#PREFERRED_STRATEGY_DROPDOWN");
+
+		Click(
+			locator1 = "PageAudit#PREFERRED_STRATEGY_OPTION",
+			strategy = "${key_preferredStrategy}");
 	}
 
 	macro setSEOcanonicalURL {

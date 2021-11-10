@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
@@ -17,12 +18,20 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 
 import SearchInput from '../shared/SearchInput';
 import ThemeContext from '../shared/ThemeContext';
-import {DEFAULT_SXP_ELEMENT_ICON} from '../utils/data';
+import {CUSTOM_JSON_SXP_ELEMENT, DEFAULT_SXP_ELEMENT_ICON} from '../utils/data';
+import {fetchData} from '../utils/fetch';
 import {getLocalizedText} from '../utils/language';
+import {getSXPBlueprintForm} from '../utils/utils';
 
 const DEFAULT_CATEGORY = 'other';
 const DEFAULT_EXPANDED_LIST = ['match'];
@@ -73,14 +82,18 @@ const SXPElementList = ({category, expand, onAddSXPElement, sxpElements}) => {
 							{sxpElementTemplateJSON, uiConfigurationJSON},
 							index
 						) => {
-							const description = getLocalizedText(
-								sxpElementTemplateJSON.description,
-								locale
-							);
-							const title = getLocalizedText(
-								sxpElementTemplateJSON.title,
-								locale
-							);
+							const description =
+								sxpElementTemplateJSON.description ||
+								getLocalizedText(
+									sxpElementTemplateJSON.description_i18n,
+									locale
+								);
+							const title =
+								sxpElementTemplateJSON.title ||
+								getLocalizedText(
+									sxpElementTemplateJSON.title_i18n,
+									locale
+								);
 
 							return (
 								<ClayList.Item
@@ -141,17 +154,22 @@ const SXPElementList = ({category, expand, onAddSXPElement, sxpElements}) => {
 	);
 };
 
-function AddSXPElementSidebar({
-	sxpElements = [],
-	emptyMessage,
+function SXPElementSidebar({
+	emptyMessage = Liferay.Language.get('no-query-elements-found'),
 	onAddSXPElement,
 	onToggle,
-	title,
+	querySXPElements,
+	refresh,
 	visible,
 }) {
 	const {locale} = useContext(ThemeContext);
 
 	const [loading, setLoading] = useState(true);
+
+	const sxpElements = useMemo(
+		() => [...querySXPElements, CUSTOM_JSON_SXP_ELEMENT],
+		[querySXPElements]
+	);
 
 	const [filteredSXPElements, setFilteredSXPElements] = useState(sxpElements);
 
@@ -205,10 +223,12 @@ function AddSXPElementSidebar({
 		(value) => {
 			const newSXPElements = sxpElements.filter((sxpElement) => {
 				if (value) {
-					const sxpElementTitle = getLocalizedText(
-						sxpElement.sxpElementTemplateJSON.title,
-						locale
-					);
+					const sxpElementTitle =
+						sxpElement.sxpElementJSON.title ||
+						getLocalizedText(
+							sxpElement.sxpElementTemplateJSON.title_i18n,
+							locale
+						);
 
 					return sxpElementTitle
 						.toLowerCase()
@@ -238,7 +258,9 @@ function AddSXPElementSidebar({
 			<div className="sidebar-header">
 				<h4 className="component-title">
 					<span className="text-truncate-inline">
-						<span className="text-truncate">{title}</span>
+						<span className="text-truncate">
+							{Liferay.Language.get('add-query-elements')}
+						</span>
 					</span>
 				</h4>
 
@@ -260,20 +282,38 @@ function AddSXPElementSidebar({
 
 			{!loading ? (
 				filteredSXPElements.length ? (
-					<div className="sxp-element-list">
-						{categories.map((category) => (
-							<SXPElementList
-								category={category}
-								expand={
-									expandAll ||
-									DEFAULT_EXPANDED_LIST.includes(category)
-								}
-								key={category}
-								onAddSXPElement={onAddSXPElement}
-								sxpElements={categorizedSXPElements[category]}
-							/>
-						))}
-					</div>
+					<>
+						{!querySXPElements.length && (
+							<ClayAlert
+								className="no-elements-warning"
+								displayType="warning"
+								title={Liferay.Language.get('warning')}
+								variant="stripe"
+							>
+								{emptyMessage}
+								<ClayButton alert onClick={refresh}>
+									{Liferay.Language.get('refresh')}
+								</ClayButton>
+							</ClayAlert>
+						)}
+
+						<div className="sxp-element-list">
+							{categories.map((category) => (
+								<SXPElementList
+									category={category}
+									expand={
+										expandAll ||
+										DEFAULT_EXPANDED_LIST.includes(category)
+									}
+									key={category}
+									onAddSXPElement={onAddSXPElement}
+									sxpElements={
+										categorizedSXPElements[category]
+									}
+								/>
+							))}
+						</div>
+					</>
 				) : (
 					<div className="empty-list-message">
 						<ClayEmptyState description="" title={emptyMessage} />
@@ -286,12 +326,40 @@ function AddSXPElementSidebar({
 	);
 }
 
+function AddSXPElementSidebar(props) {
+	const [querySXPElements, setQuerySXPElements] = useState(null);
+
+	const getQuerySXPElements = () => {
+		fetchData(
+			'/o/search-experiences-rest/v1.0/sxp-elements',
+			{method: 'GET'},
+			(responseContent) =>
+				setQuerySXPElements(
+					responseContent.items.map(getSXPBlueprintForm)
+				),
+			() => setQuerySXPElements([])
+		);
+	};
+
+	useEffect(() => getQuerySXPElements(), []); //eslint-disable-line
+
+	if (!querySXPElements) {
+		return null;
+	}
+
+	return (
+		<SXPElementSidebar
+			querySXPElements={querySXPElements}
+			refresh={getQuerySXPElements}
+			{...props}
+		/>
+	);
+}
+
 AddSXPElementSidebar.propTypes = {
 	emptyMessage: PropTypes.string,
 	onAddSXPElement: PropTypes.func,
 	onToggle: PropTypes.func,
-	sxpElements: PropTypes.arrayOf(PropTypes.object),
-	title: PropTypes.string,
 	visible: PropTypes.bool,
 };
 

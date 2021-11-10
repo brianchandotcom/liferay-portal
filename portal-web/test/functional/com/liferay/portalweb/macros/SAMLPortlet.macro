@@ -97,7 +97,7 @@ definition {
 		}
 	}
 
-	@description = This macro should be used when the values of the User Field Expression and SAML Attribute are different inside the Attribute Mapping
+	@description = "This macro should be used when the values of the User Field Expression and SAML Attribute are different inside the Attribute Mapping"
 	macro addIdentityProviderConnectionAttributeMappingWithCustomAttributes {
 		var attributeRowID = "0";
 		var attributeRowID2 = "0";

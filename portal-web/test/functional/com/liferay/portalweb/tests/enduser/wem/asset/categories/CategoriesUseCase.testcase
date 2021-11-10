@@ -1084,7 +1084,7 @@ definition {
 		}
 	}
 
-	@Description = "This is for LPS-101409. Validate selecting multiple categories when creating page with blank template."
+	@description = "This is for LPS-101409. Validate selecting multiple categories when creating page with blank template."
 	@priority = "4"
 	test SelectMultipleRequiredCategoriesInContentPageCreation {
 		task ("Add a vocabulary with required for page") {
@@ -1125,7 +1125,7 @@ definition {
 		}
 	}
 
-	@Description = "This is for LPS-101409. Validate if select a required category when entering the page name not based on a page template."
+	@description = "This is for LPS-101409. Validate if select a required category when entering the page name not based on a page template."
 	@priority = "5"
 	test SelectRequiredCategoryInContentPageCreation {
 		property portal.acceptance = "true";
@@ -1166,7 +1166,7 @@ definition {
 		}
 	}
 
-	@Description = "This is for LPS-101409. Validate if select a required category when entering the page name based on a page template. Also add a step to check adding page with category successfully via json."
+	@description = "This is for LPS-101409. Validate if select a required category when entering the page name based on a page template. Also add a step to check adding page with category successfully via json."
 	@priority = "5"
 	test SelectRequiredCategoryInWidgetPageCreation {
 		property portal.acceptance = "true";

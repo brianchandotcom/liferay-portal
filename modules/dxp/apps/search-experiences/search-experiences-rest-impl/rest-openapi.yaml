@@ -330,12 +330,16 @@ components:
                 id:
                     format: int64
                     type: integer
+                readOnly:
+                    type: boolean
                 title:
                     type: string
                 title_i18n:
                     additionalProperties:
                         type: string
                     type: object
+                type:
+                    type: integer
             type: object
         SXPParameterContributorDefinition:
             properties:

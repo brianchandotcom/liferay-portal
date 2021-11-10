@@ -61,6 +61,11 @@
 			"value": "false"
 		},
 		{
+			"fieldReference": "showPartialResultsToRespondents",
+			"name": "showPartialResultsToRespondents",
+			"value": "false"
+		},
+		{
 			"fieldReference": "storageType",
 			"name": "storageType",
 			"value": "[\"default\"]"

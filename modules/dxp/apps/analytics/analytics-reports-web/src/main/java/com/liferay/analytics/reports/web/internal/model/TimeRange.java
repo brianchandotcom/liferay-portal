@@ -43,7 +43,9 @@ public class TimeRange {
 	public LocalDate getEndLocalDate() {
 		LocalDateTime localDateTime = LocalDateTime.now(_clock);
 
-		localDateTime = localDateTime.minusDays(1);
+		if (!_includeToday) {
+			localDateTime = localDateTime.minusDays(1);
+		}
 
 		localDateTime = localDateTime.minusDays(_getOffsetDays());
 
@@ -81,6 +83,10 @@ public class TimeRange {
 
 		if (_timeSpan.getDays() == 0) {
 			return _timeSpanOffset;
+		}
+
+		if (_includeToday) {
+			return (_timeSpan.getDays() * _timeSpanOffset) - 1;
 		}
 
 		return _timeSpan.getDays() * _timeSpanOffset;

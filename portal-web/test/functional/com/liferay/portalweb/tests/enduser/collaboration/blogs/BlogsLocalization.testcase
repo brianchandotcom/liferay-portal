@@ -47,13 +47,33 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136774. It checks that a blog can be properly displayed in Arabic in the Blogs Aggregator."
-	@ignore = "true"
 	@priority = "3"
 	test CanViewBlogInArabicViaBlogsAggregator {
-		property portal.acceptance = "false";
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
 
-		// TODO LPS-136774 CanViewBlogInArabicViaBlogsAggregator pending implementation
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs Aggregator");
+
+		JSONBlog.addEntry(
+			entryContent = "محتوى دخول المدونات",
+			entryTitle = "عنوان إدخال المدونات");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsAggregatorPortlet.viewBlogsEntryViaBAPortletPG(
+			entryContent = "محتوى دخول المدونات",
+			entryTitle = "عنوان إدخال المدونات");
 	}
 
 	@description = "This is a test for LPS-136777. It checks that a blog can be properly displayed in Japanese in the Blogs widget."

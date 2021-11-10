@@ -1240,10 +1240,6 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Guest",
-			userEmailAddress = "userea@liferay.com");
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");

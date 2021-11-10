@@ -20,6 +20,7 @@ import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.MVCCUpgradeProcess
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,6 +51,20 @@ public class CommerceInventoryUpgradeStepRegistrator
 			"1.2.0", "2.0.0", new CommerceInventoryAuditUpgradeProcess());
 
 		registry.register("2.0.0", "2.1.0", new MVCCUpgradeProcess());
+
+		registry.register(
+			"2.1.0", "2.2.0",
+			new MVCCVersionUpgradeProcess() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {
+						"CIAudit", "CIBookedQuantity", "CIReplenishmentItem",
+						"CIWarehouse", "CIWarehouseGroupRel", "CIWarehouseItem"
+					};
+				}
+
+			});
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce inventory upgrade step registrator finished");

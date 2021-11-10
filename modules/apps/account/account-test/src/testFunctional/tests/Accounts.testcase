@@ -766,6 +766,72 @@ definition {
 		Accounts.viewAssignee(assigneeName = "userfn");
 	}
 
+	@description = "This test asserts that multiple users can be assigned to an account via the Assign Users Modal"
+	@priority = "4"
+	test CanAssignMultipleUsersViaAssignUsersModal {
+		task ("Create an account and add 4 users into it") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Business Account",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Business Account");
+
+			for (var userNum : list "1,2,3,4") {
+				Accounts.addNewUserToBusinessAccount(
+					accountName = "Business Account",
+					assigneeName = "userfn${userNum}",
+					userEmailAddress = "userea${userNum}@liferay.com",
+					userFirstName = "userfn${userNum}",
+					userLastName = "userln${userNum}",
+					userScreenName = "usersn${userNum}");
+			}
+		}
+
+		task ("Remove all users from Account so they can later be assigned") {
+			PortletEntry.selectAll();
+
+			ClickNoError(
+				key_text = "times-circle",
+				locator1 = "Icon#ANY");
+
+			AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to remove the selected users?");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Open and click into the Assign Users Modal") {
+			LexiconEntry.gotoAdd();
+
+			WaitForElementPresent(
+				key_title = "Assign Users to Business Account",
+				locator1 = "IFrame#MODAL_ANY");
+
+			SelectFrame(
+				key_title = "Assign Users to Business Account",
+				locator1 = "IFrame#MODAL_ANY");
+		}
+
+		task ("Assign multiple users from Assign Users modal and assert that the correct users were added") {
+			for (var accountUser : list "1,2,3") {
+				LexiconEntry.selectEntry(rowEntry = "userfn${accountUser} userln${accountUser}");
+			}
+
+			SelectFrameTop();
+
+			Button.clickAssign();
+
+			Alert.viewSuccessMessage();
+
+			for (var accountUser : list "1,2,3") {
+				LexiconEntry.viewEntryName(rowEntry = "userfn${accountUser} userln${accountUser}");
+			}
+
+			LexiconEntry.viewNoEntry(rowEntry = "userfn4 userln4");
+		}
+	}
+
 	@description = "This test adds an organization as an assignee of a business account with domain."
 	@priority = "4"
 	test CanAssignOrganizationToAccountWithDomain {

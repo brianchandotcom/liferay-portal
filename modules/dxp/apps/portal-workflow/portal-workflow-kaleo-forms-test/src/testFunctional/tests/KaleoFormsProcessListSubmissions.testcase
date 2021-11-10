@@ -155,11 +155,49 @@ definition {
 	}
 
 	@description = "Verify that the user can Reject a submission."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanRejectASubmission {
+		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
-		// TODO LRQA-70689 CanRejectASubmission pending implementation
+		KaleoFormsAdmin.addNewContactsRecord(
+			ddlCompany = "Liferay",
+			ddlEmail = "qa@liferay.com",
+			ddlFirstName = "Test",
+			ddlInstantMesseger = "Liferay",
+			ddlJobTitle = "QA",
+			ddlLastName = "Test",
+			ddlPhoneMobile = "12345678",
+			ddlPhoneOffice = "12345678");
+
+		KaleoFormsAdmin.saveProcessRecord();
+
+		KaleoFormsAdmin.viewProcessRecordTable(
+			kfAuthor = "Test Test",
+			kfProcessFieldData = "Liferay",
+			kfStatus = "Pending");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Kaleo Forms Process",
+			workflowAssetType = "Process",
+			workflowTask = "Review");
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Kaleo Forms Process",
+			workflowAssetType = "Process",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Kaleo Forms Admin");
+
+		KaleoFormsAdmin.viewProcessRecord(kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.viewProcessRecordTable(
+			kfAuthor = "Test Test",
+			kfProcessFieldData = "Liferay",
+			kfStatus = "Pending");
 
 	}
 

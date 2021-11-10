@@ -1170,5 +1170,39 @@ definition {
 			key_itemPosition = "9",
 			locator1 = "KaleoFormsAdmin#PROCESS_TABLE_NAME_BY_INDEX");
 	}
+	
+	macro addNewContactsRecord {
+		Type(
+			locator1 = "FormFields#COMPANY_FIELD",
+			value1 = "${ddlCompany}");
+
+		Type(
+			locator1 = "FormFields#EMAIL_FIELD",
+			value1 = "${ddlEmail}");
+
+		Type(
+			locator1 = "FormFields#FIRST_NAME_FIELD",
+			value1 = "${ddlFirstName}");
+
+		Type(
+			locator1 = "FormFields#INSTANT_MESSEGER_FIELD",
+			value1 = "${ddlInstantMesseger}");
+
+		Type(
+			locator1 = "FormFields#JOB_TITLE_FIELD",
+			value1 = "${ddlJobTitle}");
+
+		Type(
+			locator1 = "FormFields#LAST_NAME_FIELD",
+			value1 = "${ddlLastName}");
+
+		Type(
+			locator1 = "FormFields#PHONE_MOBILE_FIELD",
+			value1 = "${ddlPhoneMobile}");
+
+		Type(
+			locator1 = "FormFields#PHONE_OFFICE_FIELD",
+			value1 = "${ddlPhoneOffice}");
+	}
 
 }

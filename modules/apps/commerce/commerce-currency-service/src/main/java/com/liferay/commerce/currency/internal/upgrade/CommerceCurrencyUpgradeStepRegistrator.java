@@ -18,6 +18,7 @@ import com.liferay.commerce.currency.internal.upgrade.v1_1_0.CommerceCurrencyUpg
 import com.liferay.commerce.currency.internal.upgrade.v1_2_0.CommerceCurrencySymbolUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,6 +43,17 @@ public class CommerceCurrencyUpgradeStepRegistrator
 
 		registry.register(
 			"1.1.0", "1.2.0", new CommerceCurrencySymbolUpgradeProcess());
+
+		registry.register(
+			"1.2.0", "1.3.0",
+			new MVCCVersionUpgradeProcess() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {"CommerceCurrency"};
+				}
+
+			});
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce currency upgrade step registrator finished");

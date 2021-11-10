@@ -491,6 +491,43 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test IsLocalizedInSearchAdmin {
+		property test.name.skip.portal.instance = "Search#IsLocalizedInSearchAdmin";
+
+		User.openUsersAdmin();
+
+		User.editDisplaySettingsCP(
+			languageName = "español (España)",
+			userScreenName = "test");
+
+		SearchAdministration.openSearchAdmin();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Portlet#HEADER",
+			value1 = "Búsquedas");
+
+		AssertTextEquals.assertPartialText(
+			key_navItem = "Conexiones",
+			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK",
+			value1 = "Conexiones");
+
+		AssertTextEquals.assertPartialText(
+			key_localizedKey = "Proveedor de motor de búsqueda",
+			locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR_KEY",
+			value1 = "Proveedor de motor de búsqueda");
+
+		AssertTextEquals.assertPartialText(
+			key_title = "Conexiones activas",
+			locator1 = "Header#H3_TITLE",
+			value1 = "Conexiones activas");
+
+		AssertTextEquals.assertPartialText(
+			key_tableHeader = "Nombre",
+			locator1 = "LexiconTable#TABLE_HEADER",
+			value1 = "Nombre");
+	}
+
 	@description = "This is a use case for LPS-115435."
 	@priority = "3"
 	test ModifyPaginationConfigurationProperties {

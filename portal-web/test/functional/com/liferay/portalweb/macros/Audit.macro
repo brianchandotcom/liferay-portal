@@ -1,5 +1,9 @@
 definition {
 
+	macro openAuditAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_security_audit_web_portlet_AuditPortlet");
+	}
+
 	macro searchCP {
 		if ("${searchTerm}" == "${resourceAction}") {
 			var reportFieldKey = "RESOURCE_ACTION";

@@ -227,7 +227,9 @@ definition {
 			index = "${index}",
 			locator1 = "ACSegments#CRITERIA_ELLIPSIS");
 
-		MenuItem.clickNoError(menuItem = "Delete");
+		while (IsElementPresent(criteriaName = "${criteriaName}", index = "${index}",locator1 = "ACSegments#CRITERIA_ELLIPSIS")) {
+			DropdownMenuItem.click(menuItem = "Delete");
+		}
 	}
 
 	macro deleteSegmentViaSegmentListInlineButton {

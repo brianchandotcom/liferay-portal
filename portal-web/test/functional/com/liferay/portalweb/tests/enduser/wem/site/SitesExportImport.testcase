@@ -32,7 +32,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-96391."
+	@description = "This is a use case for LPS-96391, export and import site with web content display in fragment."
 	@priority = "5"
 	test ExportImportSiteWithEmbeddedWCDInFragment {
 		property portal.acceptance = "true";

@@ -4748,6 +4748,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	private static final Map<String, Keys> _keysMap =
 		new Hashtable<String, Keys>() {
 			{
+				put("ALT", Keys.ALT);
+				put("COMMAND", Keys.COMMAND);
 				put("CONTROL", Keys.CONTROL);
 				put("CTRL", Keys.CONTROL);
 				put("SHIFT", Keys.SHIFT);

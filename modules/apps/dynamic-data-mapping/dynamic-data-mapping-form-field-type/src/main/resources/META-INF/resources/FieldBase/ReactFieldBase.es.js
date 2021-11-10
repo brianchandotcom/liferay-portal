@@ -12,22 +12,22 @@
  * details.
  */
 
-import './FieldBase.scss';
-
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayPopover from '@clayui/popover';
 import classNames from 'classnames';
 import {
+	EVENT_TYPES as CORE_EVENT_TYPES,
 	Layout,
 	getRepeatedIndex,
 	useForm,
 	useFormState,
 } from 'data-engine-js-components-web';
-import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-js-components-web/js/core/actions/eventTypes.es';
 import moment from 'moment/min/moment-with-locales';
 import React, {useMemo, useState} from 'react';
+
+import './FieldBase.scss';
 
 const convertInputValue = (fieldType, locale, value) => {
 	if (fieldType === 'date') {

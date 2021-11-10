@@ -17,16 +17,14 @@ import ClayLink from '@clayui/link';
 import {Context as ModalContext} from '@clayui/modal';
 import classNames from 'classnames';
 import {
+	EVENT_TYPES as CORE_EVENT_TYPES,
 	Pages,
+	addObjectFields,
+	updateObjectFields,
 	useConfig,
 	useForm,
 	useFormState,
 } from 'data-engine-js-components-web';
-import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-js-components-web/js/core/actions/eventTypes.es';
-import {
-	addObjectFields,
-	updateObjectFields,
-} from 'data-engine-js-components-web/js/utils/objectFields';
 import {DragLayer, MultiPanelSidebar} from 'data-engine-taglib';
 import React, {
 	useCallback,

@@ -12,12 +12,13 @@
  * details.
  */
 
-import {useConfig, useFormState} from 'data-engine-js-components-web';
-import {getFields} from 'data-engine-js-components-web/js/utils/fields.es';
 import {
+	getFields,
 	getObjectFieldName,
 	getSelectedValue,
-} from 'data-engine-js-components-web/js/utils/objectFields';
+	useConfig,
+	useFormState,
+} from 'data-engine-js-components-web';
 import {useCallback} from 'react';
 
 const getUnmappedFormFields = (formFields) => {

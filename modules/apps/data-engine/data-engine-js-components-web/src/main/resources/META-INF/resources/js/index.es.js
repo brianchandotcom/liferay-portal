@@ -17,11 +17,18 @@
 export {default as compose} from './utils/compose.es';
 export * as DRAG_TYPES from './utils/dragTypes';
 export {convertToFormData, makeFetch} from './utils/fetch.es';
-export {normalizeFieldName} from './utils/fields.es';
+export {getFields, normalizeFieldName} from './utils/fields.es';
 export * as FieldSetUtil from './utils/fieldSets';
 export * as FieldSupport from './utils/fieldSupport';
 export {getUid} from './utils/formId.es';
 export * as FormSupport from './utils/FormSupport.es';
+export {
+	addObjectFields,
+	getFieldsGroupedByTypes,
+	getObjectFieldName,
+	getSelectedValue,
+	updateObjectFields,
+} from './utils/objectFields';
 export {parseProps} from './utils/parseProps.es';
 export {getConnectedReactComponentAdapter} from './utils/ReactComponentAdapter.es';
 export {generateName, getRepeatedIndex, parseName} from './utils/repeatable.es';

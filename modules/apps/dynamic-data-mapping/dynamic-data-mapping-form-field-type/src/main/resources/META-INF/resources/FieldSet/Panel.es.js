@@ -17,8 +17,10 @@ import './Panel.scss';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {useForm} from 'data-engine-js-components-web';
-import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-js-components-web/js/core/actions/eventTypes.es';
+import {
+	EVENT_TYPES as CORE_EVENT_TYPES,
+	useForm,
+} from 'data-engine-js-components-web';
 import React from 'react';
 
 import useHeightTransition from './useHeightTransition.es';

@@ -14,8 +14,12 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
-import {useConfig, useForm, useFormState} from 'data-engine-js-components-web';
-import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-js-components-web/js/core/actions/eventTypes.es';
+import {
+	EVENT_TYPES as CORE_EVENT_TYPES,
+	useConfig,
+	useForm,
+	useFormState,
+} from 'data-engine-js-components-web';
 import React, {useEffect} from 'react';
 
 const FormSettingsModal = ({

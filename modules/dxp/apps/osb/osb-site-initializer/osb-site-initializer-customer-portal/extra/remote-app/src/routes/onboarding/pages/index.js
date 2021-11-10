@@ -6,7 +6,7 @@ import SetupDXP from "./setup.dxp";
 import Welcome from "./welcome";
 
 const Pages = () => {
-    const [{ step }] = useContext(AppContext);
+    const [{ externalReferenceCode, step }] = useContext(AppContext);
 
     if (step === steps.invites) {
         return <Invites />;
@@ -16,7 +16,7 @@ const Pages = () => {
         return <SetupDXP />;
     }
 
-    return <Welcome />;
+    return <Welcome externalReferenceCode={externalReferenceCode} />;
 };
 
 export default Pages;

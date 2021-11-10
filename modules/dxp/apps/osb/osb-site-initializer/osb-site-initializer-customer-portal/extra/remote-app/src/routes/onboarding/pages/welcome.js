@@ -1,12 +1,23 @@
 import { useContext } from "react";
 import BaseButton from "~/common/components/BaseButton";
+import { onboardingPageRedirection, overviewPageRedirection, projectsPageRedirection, usePageGuard } from "~/common/hooks/usePageGuard";
 import { AppContext } from "../context";
 import { changeStep } from "../context/actions";
 import { steps } from "../utils/constants";
 import Layout from "./layout";
+import WelcomeSkeleton from "./skeleton/welcome-skeleton";
 
-const Welcome = () => {
+const Welcome = ({ externalReferenceCode }) => {
   const [state, dispatch] = useContext(AppContext);
+  const { isLoading } = usePageGuard(
+    externalReferenceCode, 
+    onboardingPageRedirection, 
+    [overviewPageRedirection, projectsPageRedirection]
+  );
+
+  if (isLoading) {
+    return <WelcomeSkeleton />;
+  }
 
   return (
     <Layout

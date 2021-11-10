@@ -25,7 +25,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 <liferay-frontend:side-panel-content
 	title='<%= LanguageUtil.get(request, "field") %>'
 >
-	<form action="javascript:;" onSubmit="<%= liferayPortletResponse.getNamespace() + "saveObjectField();" %>">
+	<form action="javascript:;" id="<portlet:namespace />fm">
 		<div class="side-panel-content">
 			<div class="side-panel-content__body">
 				<div class="sheet">
@@ -39,7 +39,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 
 					<aui:input disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="name" required="<%= true %>" value="<%= objectField.getName() %>" />
 
-					<aui:select disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="type" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeFieldType(event);" %>' required="<%= true %>">
+					<aui:select disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="type" required="<%= true %>">
 						<aui:option label="BigDecimal" selected='<%= Objects.equals(objectField.getType(), "BigDecimal") %>' value="BigDecimal" />
 						<aui:option label="Boolean" selected='<%= Objects.equals(objectField.getType(), "Boolean") %>' value="Boolean" />
 						<aui:option label="Date" selected='<%= Objects.equals(objectField.getType(), "Date") %>' value="Date" />
@@ -60,7 +60,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 					</h2>
 
 					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-						<aui:input disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" inlineLabel="right" label='<%= LanguageUtil.get(request, "searchable") %>' labelCssClass="simple-toggle-switch" name="indexed" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeSeachableSwitch(event);" %>' type="toggle-switch" value="<%= objectField.getIndexed() %>" />
+						<aui:input disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" inlineLabel="right" label='<%= LanguageUtil.get(request, "searchable") %>' labelCssClass="simple-toggle-switch" name="indexed" type="toggle-switch" value="<%= objectField.getIndexed() %>" />
 					</aui:field-wrapper>
 
 					<div id="<portlet:namespace />indexedGroup" style="display: <%= (Objects.equals(objectField.getType(), "String") && objectField.getIndexed()) ? "block;" : "none;" %>">
@@ -71,7 +71,6 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 								id='<%= liferayPortletResponse.getNamespace() + "inputIndexedTypeKeyword" %>'
 								label='<%= LanguageUtil.get(request, "keyword") %>'
 								name="indexedType"
-								onChange='<%= liferayPortletResponse.getNamespace() + "onChangeSeachableType('keyword');" %>'
 							/>
 
 							<clay:radio
@@ -80,7 +79,6 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 								id='<%= liferayPortletResponse.getNamespace() + "inputIndexedTypeText" %>'
 								label='<%= LanguageUtil.get(request, "text") %>'
 								name="indexedType"
-								onChange='<%= liferayPortletResponse.getNamespace() + "onChangeSeachableType('text');" %>'
 							/>
 						</div>
 
@@ -112,140 +110,11 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 	</form>
 </liferay-frontend:side-panel-content>
 
-<script>
-	function <portlet:namespace />onChangeFieldType(event) {
-		const searchableContainer = document.querySelector(
-			'#<portlet:namespace />searchableContainer'
-		);
-		const indexedGroup = document.querySelector(
-			'#<portlet:namespace />indexedGroup'
-		);
-		const indexed = document.querySelector('#<portlet:namespace />indexed')
-			.value;
-
-		indexedGroup.style.display =
-			indexed && event.target.value === 'String' ? 'block' : 'none';
-		searchableContainer.style.display =
-			event.target.value !== 'Blob' ? 'block' : 'none';
-	}
-
-	function <portlet:namespace />onChangeSeachableSwitch(event) {
-		const indexedGroup = document.querySelector(
-			'#<portlet:namespace />indexedGroup'
-		);
-		const type = document.querySelector('#<portlet:namespace />type').value;
-
-		indexedGroup.style.display =
-			event.target.checked && type === 'String' ? 'block' : 'none';
-	}
-
-	function <portlet:namespace />onChangeSeachableType(value) {
-		const indexedLanguageIdGroup = document.querySelector(
-			'#<portlet:namespace />indexedLanguageIdGroup'
-		);
-
-		indexedLanguageIdGroup.style.display = value === 'text' ? 'block' : 'none';
-	}
-
-	function <portlet:namespace />saveObjectField() {
-		const inputIndexed = document.querySelector(
-			'#<portlet:namespace />indexed'
-		);
-		const inputIndexedTypeKeyword = document
-			.querySelector('#<portlet:namespace />inputIndexedTypeKeyword')
-			.querySelector('input');
-		const inputIndexedTypeText = document
-			.querySelector('#<portlet:namespace />inputIndexedTypeText')
-			.querySelector('input');
-		const inputIndexedLanguageId = document.querySelector(
-			'#<portlet:namespace />indexedLanguageId'
-		);
-		const inputLabel = document.querySelector('#<portlet:namespace />label');
-		const inputName = document.querySelector('#<portlet:namespace />name');
-		const inputRequired = document.querySelector(
-			'#<portlet:namespace />required'
-		);
-		const inputType = document.querySelector('#<portlet:namespace />type');
-
-		const indexed = inputIndexed.checked;
-		const indexedAsKeyword =
-			inputIndexed.checked && inputIndexedTypeKeyword.checked;
-		const indexedLanguageId =
-			inputIndexed.checked &&
-			inputIndexedTypeText.checked &&
-			inputType.value === 'String'
-				? inputIndexedLanguageId.value
-				: null;
-		const label = {
-			[themeDisplay.getDefaultLanguageId()]: inputLabel.value,
-		};
-		const name = inputName.value;
-		const required = inputRequired.checked;
-		const type = inputType.value;
-
-		const localizedInputs = document.querySelectorAll(
-			"input[id^='<portlet:namespace />'][type='hidden']"
-		);
-
-		const localizedLabels = Array(...localizedInputs).reduce(
-			(prev, cur, index) => {
-				if (cur.value) {
-					prev[cur.id.replace('<portlet:namespace />label_', '')] =
-						cur.value;
-				}
-
-				return prev;
-			},
-			{}
-		);
-
-		Liferay.Util.fetch(
-			'/o/object-admin/v1.0/object-fields/<%= objectField.getObjectFieldId() %>',
-			{
-				body: JSON.stringify({
-					indexed,
-					indexedAsKeyword,
-					indexedLanguageId,
-					label: localizedLabels,
-					listTypeDefinitionId: 0,
-					name,
-					required,
-					type,
-				}),
-				headers: new Headers({
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-				}),
-				method: 'PUT',
-			}
-		)
-			.then((response) => {
-				if (response.status === 401) {
-					window.location.reload();
-				}
-				else if (response.ok) {
-					Liferay.Util.openToast({
-						message:
-							'<%= LanguageUtil.get(request, "the-object-field-was-updated-successfully") %>',
-						type: 'success',
-					});
-
-					setTimeout(() => {
-						const parentWindow = Liferay.Util.getOpener();
-						parentWindow.Liferay.fire('close-side-panel');
-					}, 1500);
-				}
-				else {
-					return response.json();
-				}
-			})
-			.then((response) => {
-				if (response && response.title) {
-					Liferay.Util.openToast({
-						message: response.title,
-						type: 'danger',
-					});
-				}
-			});
-	}
-</script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"objectFieldId", objectField.getObjectFieldId()
+		).build()
+	%>'
+	module="js/editObjectField"
+/>

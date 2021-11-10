@@ -15,5 +15,5 @@
 interface IErrorMessage {
 	[key: string]: string;
 }
-declare const errors: IErrorMessage;
-export default errors;
+export declare const ERRORS: IErrorMessage;
+export {};

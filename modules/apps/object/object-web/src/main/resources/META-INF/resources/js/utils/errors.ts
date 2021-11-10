@@ -11,12 +11,10 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
 interface IErrorMessage {
 	[key: string]: string;
 }
-
-const errors: IErrorMessage = {
+export const ERRORS: IErrorMessage = {
 	'ObjectDefinitionNameException.MustBeLessThan41Characters': Liferay.Language.get(
 		'only-41-characters-are-allowed'
 	),
@@ -47,6 +45,9 @@ const errors: IErrorMessage = {
 	'ObjectFieldNameException.MustNotBeDuplicate': Liferay.Language.get(
 		'this-name-is-already-in-use-try-another-one'
 	),
+	'ObjectFieldNameException.MustNotBeNull': Liferay.Language.get(
+		'name-is-required'
+	),
 	'ObjectFieldNameException.MustNotBeReserved': Liferay.Language.get(
 		'name-reserved-by-the-system-try-another-one'
 	),
@@ -54,5 +55,3 @@ const errors: IErrorMessage = {
 		'name-must-only-contain-letters-and-digits'
 	),
 };
-
-export default errors;

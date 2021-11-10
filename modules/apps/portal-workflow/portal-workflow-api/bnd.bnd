@@ -6,5 +6,6 @@ Export-Package:\
 	com.liferay.portal.workflow.constants,\
 	com.liferay.portal.workflow.definition.link.update.handler,\
 	com.liferay.portal.workflow.exception,\
+	com.liferay.portal.workflow.instance.tracker.util,\
 	com.liferay.portal.workflow.portlet.tab
 -dsannotations-options: inherit

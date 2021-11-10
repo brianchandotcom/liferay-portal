@@ -441,6 +441,9 @@ export default ({
 				}
 			}
 
+			let node = null;
+			const parentsMap = {};
+
 			const stack = [contextViewRef.current.everything];
 
 			while (stack.length > 0) {
@@ -450,14 +453,23 @@ export default ({
 					(modelKey !== null && element.modelKey === modelKey) ||
 					element.nodeId === nodeId
 				) {
-					const node = JSON.parse(
-						JSON.stringify(modelsRef.current[element.modelKey])
-					);
+					if (element.parentNodeId) {
+						parentsMap[element.parentModelKey] =
+							element.parentNodeId;
+					}
 
-					node.children = getModels(element.children);
-					node.nodeId = element.nodeId;
+					if (node === null) {
+						node = JSON.parse(
+							JSON.stringify(modelsRef.current[element.modelKey])
+						);
 
-					return node;
+						node.children = getModels(element.children);
+						node.nodeId = element.nodeId;
+					}
+
+					if (modelKey === null) {
+						modelKey = element.modelKey;
+					}
 				}
 
 				if (!element.children) {
@@ -467,11 +479,35 @@ export default ({
 				for (let i = 0; i < element.children.length; i++) {
 					const child = element.children[i];
 
+					child.parentModelKey = element.modelKey;
+					child.parentNodeId = element.nodeId;
+
 					stack.push(child);
 				}
 			}
 
-			return rootNode;
+			if (node === null) {
+				return rootNode;
+			}
+
+			const parents = [];
+
+			const keys = Object.keys(parentsMap);
+
+			for (let i = 0; i < keys.length; i++) {
+				const modelKey = keys[i];
+
+				const nodeId = parentsMap[modelKey];
+
+				parents.push({
+					modelKey,
+					nodeId,
+				});
+			}
+
+			node.parents = getModels(parents);
+
+			return node;
 		},
 		[changes, getModels]
 	);
@@ -641,9 +677,11 @@ export default ({
 			keywordsFromURL,
 			initialShowHideable
 		),
+		children: initialNode.children,
 		id: initialNode.nodeId,
 		node: initialNode,
 		page: 1,
+		parents: initialNode.parents,
 		showHideable: initialShowHideable,
 	});
 
@@ -748,9 +786,11 @@ export default ({
 					resultsKeywords,
 					showHideable
 				),
+				children: node.children,
 				id: nodeId,
 				node,
 				page: 1,
+				parents: node.parents,
 				showHideable,
 			});
 
@@ -834,9 +874,11 @@ export default ({
 			setFiltersState(filters);
 			setRenderState({
 				changes: filterNodes(filters, keywords, showHideable),
+				children: node.children,
 				id: node.nodeId,
 				node,
 				page: 1,
+				parents: node.parents,
 				showHideable,
 			});
 			setResultsKeywords(keywords);
@@ -1501,9 +1543,11 @@ export default ({
 		setResultsKeywords(keywords);
 		setRenderState({
 			changes: filterNodes(filters, keywords, renderState.showHideable),
+			children: renderState.children,
 			id: renderState.id,
 			node: renderState.node,
 			page: renderState.page,
+			parents: renderState.parents,
 			showHideable: renderState.showHideable,
 		});
 
@@ -1572,9 +1616,11 @@ export default ({
 		setFiltersState(filters);
 		setRenderState({
 			changes: filterNodes(filters, resultsKeywords, showHideable),
+			children: renderState.children,
 			id: renderState.id,
 			node: renderState.node,
 			page: renderState.page,
+			parents: renderState.parents,
 			showHideable,
 		});
 	};
@@ -2059,18 +2105,22 @@ export default ({
 							setDeltaState(delta);
 							setRenderState({
 								changes: renderState.changes,
+								children: renderState.children,
 								id: renderState.id,
 								node: renderState.node,
 								page: 1,
+								parents: renderState.parents,
 								showHideable: renderState.showHideable,
 							});
 						}}
 						onPageChange={(page) =>
 							setRenderState({
 								changes: renderState.changes,
+								children: renderState.children,
 								id: renderState.id,
 								node: renderState.node,
 								page,
+								parents: renderState.parents,
 								showHideable: renderState.showHideable,
 							})
 						}

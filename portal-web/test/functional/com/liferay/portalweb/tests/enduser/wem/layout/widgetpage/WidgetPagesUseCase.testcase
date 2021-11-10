@@ -25,9 +25,7 @@ definition {
 		}
 
 		else {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 
 			Role.tearDownCP();
 
@@ -166,9 +164,7 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = PropsUtil.get("email.address.2"),
-				userLoginFullName = "userfn1 userln1");
+			User.logoutAndLoginPG(userLoginEmailAddress = PropsUtil.get("email.address.2"));
 		}
 
 		task ("Subscribe to blogs and message boards") {
@@ -182,9 +178,7 @@ definition {
 		}
 
 		task ("Sign in as Test Test") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 		}
 
 		task ("Add a blogs entry") {
@@ -340,9 +334,7 @@ definition {
 		}
 
 		task ("Sign in as first new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = PropsUtil.get("email.address.2"),
-				userLoginFullName = "userfn1 userln1");
+			User.logoutAndLoginPG(userLoginEmailAddress = PropsUtil.get("email.address.2"));
 		}
 
 		task ("Subscribe to blogs and message boards") {
@@ -356,9 +348,7 @@ definition {
 		}
 
 		task ("Sign in as Test Test") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 		}
 
 		task ("Add a blogs entry") {
@@ -416,9 +406,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea2@liferay.com",
-				userLoginFullName = "userfn2 userln2");
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea2@liferay.com");
 		}
 
 		task ("View private page is not shown") {
@@ -512,9 +500,7 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
 		}
 
 		task ("View private page is shown") {
@@ -528,9 +514,7 @@ definition {
 		}
 
 		task ("Sign in as Test Test") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 		}
 
 		task ("Remove View permission of private widget page on Regular Role") {
@@ -546,9 +530,7 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
 		}
 
 		task ("View private page is not shown") {
@@ -847,9 +829,7 @@ definition {
 		}
 
 		task ("Sign in as first new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = PropsUtil.get("email.address.2"),
-				userLoginFullName = "userfn1 userln1");
+			User.logoutAndLoginPG(userLoginEmailAddress = PropsUtil.get("email.address.2"));
 		}
 
 		task ("Subscribe to blogs and message boards") {
@@ -863,9 +843,7 @@ definition {
 		}
 
 		task ("Sign in as Test Test") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 		}
 
 		task ("Add a blogs entry") {
@@ -923,9 +901,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea2@liferay.com",
-				userLoginFullName = "userfn2 userln2");
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea2@liferay.com");
 		}
 
 		task ("View private page is shown") {

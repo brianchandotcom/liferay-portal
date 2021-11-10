@@ -242,7 +242,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		<ul class="list-group system-action-group">
 			<li class="clearfix list-group-item">
 				<div class="float-left">
-					<h5><liferay-ui:message key="reset-preview-and-thumbnail-files-for-documents-and-media" /></h5>
+					<h5><liferay-ui:message key="reset-preview-and-thumbnail-files-for-documents-and-media" /> <liferay-ui:icon-help message="reset-preview-and-thumbnail-files-for-documents-and-media-help" /></h5>
 				</div>
 
 				<div class="float-right">

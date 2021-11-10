@@ -56,6 +56,15 @@ definition {
 		}
 	}
 
+	@description = "LRQA-71361 - Verify that user can export a file at import Export/Import navigation menu"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanExportAFile {
+
+		// TODO LRQA-71614 CanExportAFile pending implementation
+
+	}
+
 	@description = "This is a use case for LPS-57992."
 	@priority = "4"
 	test CanExportCalendar {
@@ -76,6 +85,27 @@ definition {
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.view(eventTitle = "Event For Export");
+	}
+
+	@description = "LRQA-71361 - Verify that user can import a file at import Export/Import navigation menu"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanImportAFile {
+
+		// TODO LRQA-71615 CanImportAFile pending implementation
+
+	}
+
+	@description = "This is a use case for LPS-53072."
+	@priority = "4"
+	test CanImportCalendar {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		CalendarNavigator.gotoCurrentSiteCalendarsManage();
+
+		Calendar.importCalendarFile(
+			calendarFile = "calendar_microsoft_outlook_calendar.ics",
+			calendarName = "${siteName}");
 	}
 
 	@ignore = "true"
@@ -151,42 +181,12 @@ definition {
 			user = "Test Test");
 	}
 
-	@description = "This is a use case for LPS-53072."
-	@priority = "4"
-	test CanImportCalendar {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		CalendarNavigator.gotoCurrentSiteCalendarsManage();
-
-		Calendar.importCalendarFile(
-			calendarFile = "calendar_microsoft_outlook_calendar.ics",
-			calendarName = "${siteName}");
-	}
-
 	@description = "LRQA-71361 - Verify that the user can view the message: -Failed to import empty file.- after import empty file."
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewMessageAfterImportEmptyFile {
 
 		// TODO LRQA-71616 CanViewMessageAfterImportEmptyFile pending implementation
-
-	}
-
-	@description = "LRQA-71361 - Verify that user can import a file at import Export/Import navigation menu"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanImportAFile {
-
-		// TODO LRQA-71615 CanImportAFile pending implementation
-
-	}
-
-	@description = "LRQA-71361 - Verify that user can export a file at import Export/Import navigation menu"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanExportAFile {
-
-		// TODO LRQA-71614 CanExportAFile pending implementation
 
 	}
 

@@ -306,6 +306,11 @@ public class VarPoshiElement extends PoshiElement {
 							value = StringUtil.replace(
 								value, content,
 								swapParameterQuotations(content));
+
+							if (value.startsWith("StringUtil.regex")) {
+								value = StringUtil.replace(
+									value, "&quot;", "\"");
+							}
 						}
 					}
 				}

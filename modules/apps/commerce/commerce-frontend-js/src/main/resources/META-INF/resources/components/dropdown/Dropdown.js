@@ -92,9 +92,7 @@ function Dropdown(props) {
 							<ClayDropDown.Item key={i} {...dropdownProps}>
 								{item.icon && (
 									<span className="pr-2">
-										<ClayIcon
-											symbol={item.icon}
-										/>
+										<ClayIcon symbol={item.icon} />
 									</span>
 								)}
 								{item.label}

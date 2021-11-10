@@ -39,7 +39,10 @@ function Price({
 		? collectDiscountLevels(activePrice)
 		: [];
 
-	const hasDiscount = isNonnull(activePrice.discountPercentage, ...discountLevels);
+	const hasDiscount = isNonnull(
+		activePrice.discountPercentage,
+		...discountLevels
+	);
 	const hasPromo = isNonnull(activePrice.promoPrice);
 
 	const updatePrice = ({cpInstance}) =>

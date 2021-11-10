@@ -32,13 +32,7 @@ import './add_to_cart.scss';
 
 const orderCookie = new CommerceCookie(GUEST_COMMERCE_ORDER_COOKIE_IDENTIFIER);
 
-function AddToCartButton({
-	channel,
-	cpInstance,
-	orderId,
-	quantity,
-	settings,
-}) {
+function AddToCartButton({channel, cpInstance, orderId, quantity, settings}) {
 	const CartResource = useMemo(
 		() => ServiceProvider.DeliveryCartAPI('v1'),
 		[]
@@ -90,8 +84,6 @@ function AddToCartButton({
 				)
 				.catch(() => Promise.resolve(false))
 				.then((inCart) => {
-
-
 					updateCatalogItem({
 						...catalogItem,
 						...cpInstance,
@@ -215,11 +207,10 @@ AddToCartButton.propTypes = {
 		 * one and the same per single channel
 		 */
 		currencyCode: PropTypes.string.isRequired,
-		groupId: PropTypes.oneOfType([
-			PropTypes.string,
-			PropTypes.number,
-		]).isRequired,
-		id: PropTypes.number.isRequired,
+		groupId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+			.isRequired,
+		id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+			.isRequired,
 	}),
 	cpInstance: PropTypes.shape({
 		accountId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

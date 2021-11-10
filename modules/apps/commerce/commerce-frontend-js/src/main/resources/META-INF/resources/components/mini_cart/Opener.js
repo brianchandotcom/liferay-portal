@@ -20,11 +20,9 @@ import React, {useContext, useEffect, useState} from 'react';
 import MiniCartContext from './MiniCartContext';
 
 function Opener() {
-	const {
-		cartState,
-		displayTotalItemsQuantity,
-		openCart,
-	} = useContext(MiniCartContext);
+	const {cartState, displayTotalItemsQuantity, openCart} = useContext(
+		MiniCartContext
+	);
 
 	const {cartItems = [], summary = {}} = cartState;
 	const {itemsQuantity: initialItemsQuantity} = summary;

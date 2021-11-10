@@ -20,7 +20,9 @@
 CommerceShippingFixedOptionsDisplayContext commerceShippingFixedOptionsDisplayContext = (CommerceShippingFixedOptionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<commerce-ui:panel bodyClasses="p-0">
+<commerce-ui:panel
+	bodyClasses="p-0"
+>
 	<clay:data-set-display
 		contextParams='<%=
 			HashMapBuilder.<String, String>put(

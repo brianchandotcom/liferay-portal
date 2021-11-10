@@ -58,7 +58,6 @@ List<CPCatalogEntry> cpCatalogEntries = cpCompareContentHelper.getCPCatalogEntri
 		itemsLimit: <%= cpCompareContentHelper.getProductsLimit(portletDisplay) %>,
 		portletNamespace:
 			'<%= cpCompareContentHelper.getCompareContentPortletNamespace() %>',
-		spritemap:
-			'<%= themeDisplay.getPathThemeImages() + "/clay/icons.svg" %>',
+		spritemap: '<%= themeDisplay.getPathThemeImages() + "/clay/icons.svg" %>',
 	});
 </aui:script>

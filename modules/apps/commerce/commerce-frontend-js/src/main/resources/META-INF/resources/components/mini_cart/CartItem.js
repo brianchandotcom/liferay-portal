@@ -215,16 +215,12 @@ function CartItem({item: cartItem}) {
 					onClick={removeItem}
 					type="button"
 				>
-					<ClayIcon
-						symbol="times-circle-full"
-					/>
+					<ClayIcon symbol="times-circle-full" />
 				</button>
 			</div>
 			{(errorMessages || isShowingErrors) && (
 				<div className="mini-cart-item-errors">
-					<ClayIcon
-						symbol="exclamation-circle"
-					/>
+					<ClayIcon symbol="exclamation-circle" />
 
 					<span>
 						{Liferay.Language.get('an-unexpected-error-occurred')}

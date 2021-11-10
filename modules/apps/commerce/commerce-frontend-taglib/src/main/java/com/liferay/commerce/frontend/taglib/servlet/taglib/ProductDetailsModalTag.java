@@ -47,7 +47,8 @@ public class ProductDetailsModalTag extends ComponentRendererTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		putValue("spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg");
+		putValue(
+			"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg");
 
 		putValue("sku", "AR351184");
 

@@ -32,9 +32,9 @@ function WrapperWithQuantity({AddToCartButton, ...props}) {
 			const isPurchasable =
 				cpInstance.purchasable &&
 				(cpInstance.backOrderAllowed || cpInstance.stockQuantity > 0);
-	
+
 			setDisabled((disabled) => disabled || !isPurchasable);
-		};
+		}
 
 		if (settings.namespace) {
 			Liferay.on(
@@ -53,12 +53,13 @@ function WrapperWithQuantity({AddToCartButton, ...props}) {
 		};
 	}, [settings.namespace]);
 
-	const alignment = props.settings.alignment || 'center'
+	const alignment = props.settings.alignment || 'center';
 
 	return (
 		<div
 			className={classnames({
-				[`align-items-${alignment}`]: props.settings.alignment !== 'full-width',
+				[`align-items-${alignment}`]:
+					props.settings.alignment !== 'full-width',
 				'add-to-cart-wrapper': true,
 				'd-flex': true,
 				'flex-column': props.settings.block,
@@ -83,9 +84,7 @@ WrapperWithQuantity.propTypes = {
 	}),
 	quantity: PropTypes.number,
 	settings: PropTypes.shape({
-		alignment: PropTypes.oneOf([
-			'center', 'left', 'right', 'full-width'
-		]),
+		alignment: PropTypes.oneOf(['center', 'left', 'right', 'full-width']),
 		block: PropTypes.bool,
 		disabled: PropTypes.bool,
 		namespace: PropTypes.string,

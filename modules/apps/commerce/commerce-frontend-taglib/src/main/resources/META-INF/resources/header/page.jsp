@@ -318,8 +318,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 						<aui:script require="commerce-frontend-js/components/dropdown/entry as dropdown">
 							dropdown.default('dropdown-header', 'dropdown-header-container', {
 								items: <%= jsonSerializer.serializeDeep(dropdownItems) %>,
-								spritemap:
-									'<%= themeDisplay.getPathThemeImages() + "/clay/icons.svg" %>',
+								spritemap: '<%= themeDisplay.getPathThemeImages() + "/clay/icons.svg" %>',
 							});
 						</aui:script>
 					</c:if>

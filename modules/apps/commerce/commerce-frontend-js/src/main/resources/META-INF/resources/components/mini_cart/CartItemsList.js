@@ -52,9 +52,7 @@ function CartItemsList() {
 			) : (
 				<div className="empty-cart">
 					<div className="empty-cart-icon mb-3">
-						<ClayIcon
-							symbol="shopping-cart"
-						/>
+						<ClayIcon symbol="shopping-cart" />
 					</div>
 
 					<p className="empty-cart-label">{labels[ADD_PRODUCT]}</p>

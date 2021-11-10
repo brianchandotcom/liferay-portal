@@ -13,7 +13,6 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
-import {ClayIconSpriteContext} from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 

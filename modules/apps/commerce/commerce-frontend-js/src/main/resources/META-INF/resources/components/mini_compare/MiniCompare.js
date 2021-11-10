@@ -13,7 +13,6 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {ClayIconSpriteContext} from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
@@ -117,12 +116,7 @@ function MiniCompare(props) {
 	}, [items, props.itemsLimit]);
 
 	return (
-		<div
-			className={classnames(
-				'mini-compare',
-				!!items.length && 'active'
-			)}
-		>
+		<div className={classnames('mini-compare', !!items.length && 'active')}>
 			{Array(props.itemsLimit)
 				.fill(null)
 				.map((_el, i) => {
@@ -135,9 +129,7 @@ function MiniCompare(props) {
 							onDelete={(event) => {
 								event.preventDefault();
 								updateItems(
-									items.filter(
-										(v) => v.id !== currentItem.id
-									)
+									items.filter((v) => v.id !== currentItem.id)
 								);
 								toggleStatus(
 									props.commerceChannelGroupId,

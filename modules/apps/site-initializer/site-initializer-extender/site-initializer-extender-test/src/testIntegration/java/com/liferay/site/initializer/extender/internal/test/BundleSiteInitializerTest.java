@@ -250,6 +250,8 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(commerceCatalog2);
 		Assert.assertEquals(
 			"Test Commerce Catalog 2", commerceCatalog2.getName());
+
+		_assertCPDefinitions(group);
 	}
 
 	private void _assertCommerceChannel(Group group) throws Exception {

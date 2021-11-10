@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_ENGINE_VENDOR_KEY</td>
+	<td>//div[contains(@class,'key') and contains(.,'${key_localizedKey}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SERVER_VERSION</td>
 	<td>//td[contains(@class,'lfr-version-column')]</td>
 	<td></td>

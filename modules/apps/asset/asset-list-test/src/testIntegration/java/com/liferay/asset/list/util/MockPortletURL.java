@@ -1,8 +1,5 @@
 package com.liferay.asset.list.util;
 
-import com.liferay.asset.list.internal.portlet.action.test.AddAssetListEntryMVCActionCommandTest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
-
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
@@ -110,4 +107,4 @@ public class MockPortletURL implements PortletURL, RenderURL {
 		}
 
 	}
-}
+

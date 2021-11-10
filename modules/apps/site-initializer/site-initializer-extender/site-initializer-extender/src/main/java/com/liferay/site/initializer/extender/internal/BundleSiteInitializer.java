@@ -1744,11 +1744,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 								jsonObject.getJSONArray("elementURLs")),
 							StringPool.NEW_LINE),
 						"[$", "$]", documentsStringUtilReplaceValues),
-					StringPool.BLANK, jsonObject.getBoolean("instanceable"),
+					StringPool.BLANK, StringPool.BLANK,
+					jsonObject.getBoolean("instanceable"),
 					_toMap(
 						group.getName(LocaleUtil.getSiteDefault()) + ": ",
 						jsonObject.getString("name_i18n")),
-					jsonObject.getString("portletCategoryName"), sb.toString());
+					jsonObject.getString("portletCategoryName"), sb.toString(),
+					StringPool.BLANK);
 
 			remoteAppEntryIdsStringUtilReplaceValues.put(
 				"REMOTE_APP_ENTRY_ID:" +

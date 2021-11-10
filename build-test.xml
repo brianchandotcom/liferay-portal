@@ -11781,6 +11781,15 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			src="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip"
 		/>
 
+		<if>
+			<not>
+				<equals arg1="${data.archive.type}" arg2="data-archive-search-result-rankings" />
+			</not>
+			<then>
+				<delete dir="${liferay.home}/data/elasticsearch7" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="database.partition.enabled" />
 
 		<if>

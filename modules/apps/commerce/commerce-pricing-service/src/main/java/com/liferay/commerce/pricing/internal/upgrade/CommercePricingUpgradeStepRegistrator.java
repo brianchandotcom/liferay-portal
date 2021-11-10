@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -58,6 +59,20 @@ public class CommercePricingUpgradeStepRegistrator
 			"2.0.1", "2.1.0",
 			new CommercePricingConfigurationUpgradeProcess(
 				_configurationProvider));
+
+		registry.register(
+			"2.1.0", "2.2.0",
+			new MVCCVersionUpgradeProcess() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {
+						"CPricingClassCPDefinitionRel", "CommercePriceModifier",
+						"CommercePriceModifierRel", "CommercePricingClass"
+					};
+				}
+
+			});
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce pricing upgrade step registrator finished");

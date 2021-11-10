@@ -275,17 +275,4 @@ definition {
 		}
 	}
 
-	macro viewRateThumbReadOnly {
-		AssertElementNotPresent(
-			key_ratingResult = "Rate this as good",
-			locator1 = "Ratings#THUMB");
-
-		AssertElementNotPresent(
-			key_ratingResult = "Rate this as bad",
-			locator1 = "Ratings#THUMB");
-
-		AssertElementPresent(locator1 = "Ratings#THUMB_UP_OFF");
-		AssertElementPresent(locator1 = "Ratings#THUMB_DOWN_OFF");
-	}
-
 }

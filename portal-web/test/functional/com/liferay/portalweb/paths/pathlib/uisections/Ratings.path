@@ -21,16 +21,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>THUMB_UP_OFF</td>
-	<td>//div[contains(@class,'ratings-thumbs')]//button[contains(@disabled,'')]//span[*[name()='svg'][contains(@class,'thumbs-up')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>THUMB_DOWN_OFF</td>
-	<td>//div[contains(@class,'ratings-thumbs')]//button[contains(@disabled,'')]//span[*[name()='svg'][contains(@class,'thumbs-down')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -265,6 +265,8 @@ definition {
 	@description = "This is a test for LPS-136809. It checks that a Blog entry can be viewed with the Menu Display configured."
 	@priority = "3"
 	test CanViewBlogWithCardDisplay {
+		property test.name.skip.portal.instance = "BlogsWidget#CanViewBlogWithCardDisplay";
+
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");

@@ -227,11 +227,9 @@ definition {
 		}
 
 		task ("Go to able.com and enable OTP In time-base OTP password configuration") {
-			PortalSettings.gotoConfiguration(
+			MultiFactorAuthentication.openToConfigInInstanceSettings(
 				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Time-Based One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+				portlet = "Time-Based OTP");
 
 			MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
 		}
@@ -283,11 +281,7 @@ definition {
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
@@ -345,11 +339,7 @@ definition {
 		}
 
 		task ("Configure OTP Email sender") {
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.configureOTPEmailSender(
 				emailAddress = "test@www.able.com",
@@ -416,10 +406,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Enable OTP") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
@@ -486,11 +473,7 @@ definition {
 		}
 
 		task ("Enable OTP email sender") {
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.configureOTPEmailSender(
 				emailAddress = "test@www.able.com",
@@ -528,11 +511,7 @@ definition {
 		}
 
 		task ("Disable OTP at able.com") {
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "false");
 		}
@@ -569,19 +548,13 @@ definition {
 		}
 
 		task ("Enable OTP") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
 
 		task ("Enable IP Address 127.0.0.1/255.0.0.0") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "IP Address Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(portlet = "IP Address");
 
 			MultiFactorAuthentication.configureIPAddress(enableIP = "true");
 
@@ -625,10 +598,7 @@ definition {
 		}
 
 		task ("Enable OTP") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
@@ -680,10 +650,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Enable OTP and set failed attempts maximum number and retry time out") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 
@@ -733,19 +700,13 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Enable OTP") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
 
 		task ("Enable IP address 127.0.0.1/255.0.0.0") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "IP Address Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(portlet = "IP Address");
 
 			MultiFactorAuthentication.configureIPAddress(enableIP = "true");
 
@@ -763,10 +724,7 @@ definition {
 		}
 
 		task ("Search for Test Test on MFA IP OTP verification success") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "Audit");
+			Audit.openAuditAdmin();
 
 			Audit.searchViaKeywords(
 				resourceName = "IPAddressHeadlessMFAChecker",
@@ -784,10 +742,7 @@ definition {
 		}
 
 		task ("Configure none IP address allowed") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "IP Address Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(portlet = "IP Address");
 
 			MultiFactorAuthentication.configureIPAddress(
 				allowedIP = " ",
@@ -813,10 +768,7 @@ definition {
 		}
 
 		task ("Search for Test Test on MFA IP OTP verification failure") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "Audit");
+			Audit.openAuditAdmin();
 
 			Audit.searchViaKeywords(
 				resourceName = "IPAddressHeadlessMFAChecker",
@@ -854,11 +806,7 @@ definition {
 		}
 
 		task ("Enable OTP") {
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
@@ -870,11 +818,9 @@ definition {
 		}
 
 		task ("Enable IP address") {
-			PortalSettings.gotoConfiguration(
+			MultiFactorAuthentication.openToConfigInInstanceSettings(
 				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "IP Address Configuration",
-				configurationScope = "Virtual Instance Scope");
+				portlet = "IP Address");
 
 			MultiFactorAuthentication.configureIPAddress(enableIP = "true");
 		}
@@ -889,11 +835,9 @@ definition {
 		}
 
 		task ("Configure IP address allowed 192.168.132.153/255.0.0.0") {
-			PortalSettings.gotoConfiguration(
+			MultiFactorAuthentication.openToConfigInInstanceSettings(
 				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "IP Address Configuration",
-				configurationScope = "Virtual Instance Scope");
+				portlet = "IP Address");
 
 			MultiFactorAuthentication.configureIPAddress(
 				allowedIP = "192.168.132.153/255.0.0.0",
@@ -949,10 +893,7 @@ definition {
 		}
 
 		task ("Enable OTP") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
@@ -998,19 +939,13 @@ definition {
 		}
 
 		task ("Enable OTP") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
 
 		task ("Enable TOTP") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Time-Based One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(portlet = "Time-Based OTP");
 
 			MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
 		}
@@ -1107,11 +1042,7 @@ definition {
 		}
 
 		task ("Configure OTP email sender") {
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.configureOTPEmailSender(
 				emailAddress = "test@www.able.com",
@@ -1123,11 +1054,9 @@ definition {
 		}
 
 		task ("Enable TOTP") {
-			PortalSettings.gotoConfiguration(
+			MultiFactorAuthentication.openToConfigInInstanceSettings(
 				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Time-Based One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+				portlet = "Time-Based OTP");
 
 			MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
 		}
@@ -1184,19 +1113,13 @@ definition {
 		}
 
 		task ("Enable OTP") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "");
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
 
 		task ("Enable TOTP") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Time-Based One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(portlet = "IP Address");
 
 			MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
 		}
@@ -1264,10 +1187,7 @@ definition {
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.multi.factor.authentication.sample_1.0.0");
 
 		task ("Enable OTP") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
@@ -1300,19 +1220,13 @@ definition {
 		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
 
 		task ("Enable OTP") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
 
 		task ("Enable TOTP") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Time-Based One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(portlet = "Time-Based OTP");
 
 			MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
 		}
@@ -1366,13 +1280,10 @@ definition {
 		}
 
 		task ("Assert order field is present") {
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.viewOTPOrderFieldAvailable();
+
 			AssertElementPresent(
 				key_fieldName = "service.ranking",
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_CONFIG_FIELD");
@@ -1389,10 +1300,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Enable OTP") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
@@ -1423,10 +1331,7 @@ definition {
 		}
 
 		task ("Search Test Test in OTP browser MFA Checker") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "Audit");
+			Audit.openAuditAdmin();
 
 			Audit.searchViaKeywords(
 				resourceName = "EmailOTPBrowserMFAChecker",
@@ -1463,11 +1368,7 @@ definition {
 		}
 
 		task ("Configure OTP email sender") {
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.configureOTPEmailSender(
 				emailAddress = "test@www.able.com",
@@ -1479,11 +1380,9 @@ definition {
 		}
 
 		task ("Enable TOTP") {
-			PortalSettings.gotoConfiguration(
+			MultiFactorAuthentication.openToConfigInInstanceSettings(
 				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Time-Based One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+				portlet = "Time-Based OTP");
 
 			MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
 		}
@@ -1536,10 +1435,7 @@ definition {
 		}
 
 		task ("Search for Test Test TOTP success verification on browser setup MFA checker") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "Audit");
+			Audit.openAuditAdmin();
 
 			Audit.searchViaKeywords(
 				resourceName = "TimeBasedOTPBrowserSetupMFAChecker",

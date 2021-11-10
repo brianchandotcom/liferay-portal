@@ -204,6 +204,14 @@ public class CPDefinitionLinkLocalServiceImpl
 	}
 
 	@Override
+	public CPDefinitionLink fetchCPDefinitionLink(
+		long cpDefinitionId, long cProductId, String type) {
+
+		return cpDefinitionLinkPersistence.fetchByC_C_T(
+			cpDefinitionId, cProductId, type);
+	}
+
+	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId) {
 		return cpDefinitionLinkPersistence.findByCPDefinitionId(cpDefinitionId);
 	}

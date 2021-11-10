@@ -90,6 +90,17 @@ public class CPDefinitionLinkServiceImpl
 	}
 
 	@Override
+	public CPDefinitionLink fetchCPDefinitionLink(
+			long cpDefinitionId, long cProductId, String type)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionLinkLocalService.fetchCPDefinitionLink(
+			cpDefinitionId, cProductId, type);
+	}
+
+	@Override
 	public CPDefinitionLink getCPDefinitionLink(long cpDefinitionLinkId)
 		throws PortalException {
 

@@ -119,7 +119,7 @@
 		</finder>
 		<finder name="G_T" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="type" />
+			<finder-column arrayable-operator="OR" name="type" />
 		</finder>
 		<finder name="G_L_LikeN" return-type="Collection">
 			<finder-column name="groupId" />
@@ -144,11 +144,11 @@
 		<finder name="G_T_LikeN" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column comparator="LIKE" name="name" />
-			<finder-column name="type" />
+			<finder-column arrayable-operator="OR" name="type" />
 		</finder>
 		<finder name="G_T_S" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="type" />
+			<finder-column arrayable-operator="OR" name="type" />
 			<finder-column name="status" />
 		</finder>
 		<finder name="G_L_LikeN_S" return-type="Collection">
@@ -178,7 +178,7 @@
 		<finder name="G_T_LikeN_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column comparator="LIKE" name="name" />
-			<finder-column name="type" />
+			<finder-column arrayable-operator="OR" name="type" />
 			<finder-column name="status" />
 		</finder>
 		<finder name="G_T_D_S" return-type="Collection">

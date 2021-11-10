@@ -198,7 +198,6 @@ definition {
 			kfAuthor = "Test Test",
 			kfProcessFieldData = "Liferay",
 			kfStatus = "Pending");
-
 	}
 
 	@description = "Verify that user can search by Column Value and view the search result."

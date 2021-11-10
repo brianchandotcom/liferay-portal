@@ -498,6 +498,13 @@ public abstract class BaseWorkspaceGitRepository
 				continue;
 			}
 
+			if (JenkinsResultsParserUtil.isWindows() &&
+				propertyValue.startsWith("/") &&
+				!propertyValue.startsWith("/c/")) {
+
+				propertyValue = "C:" + propertyValue;
+			}
+
 			properties.put(propertyName, propertyValue);
 		}
 

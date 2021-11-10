@@ -1091,10 +1091,6 @@ public class JenkinsResultsParserUtil {
 	public static String getBuildDirPath() {
 		StringBuilder sb = new StringBuilder();
 
-		if (isWindows()) {
-			sb.append("C:");
-		}
-
 		sb.append("/tmp/jenkins/");
 
 		String buildNumber = System.getenv("BUILD_NUMBER");

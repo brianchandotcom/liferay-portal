@@ -62,7 +62,15 @@ public abstract class BaseLocalGitRepository
 
 	@Override
 	public File getDirectory() {
-		return getFile("directory");
+		String directoryPath = getString("directory");
+
+		if (JenkinsResultsParserUtil.isWindows() &&
+			directoryPath.startsWith("/")) {
+
+			directoryPath = "C:" + directoryPath;
+		}
+
+		return new File(directoryPath);
 	}
 
 	@Override

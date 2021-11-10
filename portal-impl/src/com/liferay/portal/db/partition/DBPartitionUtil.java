@@ -219,7 +219,43 @@ public class DBPartitionUtil {
 	private static boolean _dropDBPartition(long companyId)
 		throws PortalException {
 
-		throw new PortalException("Unable to drop database partition");
+		Connection connection = CurrentConnectionUtil.getConnection(
+			InfrastructureUtil.getDataSource());
+
+		try {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			DBInspector dbInspector = new DBInspector(connection);
+
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					_defaultSchemaName, dbInspector.getSchema(), null,
+					new String[] {"TABLE"});
+				Statement statement = connection.createStatement()) {
+
+				while (resultSet.next()) {
+					String tableName = resultSet.getString("TABLE_NAME");
+
+					if (_isControlTable(dbInspector, tableName) &&
+						dbInspector.hasColumn(tableName, "companyId")) {
+
+						statement.executeUpdate(
+							StringBundler.concat(
+								"delete from ", _defaultSchemaName,
+								StringPool.PERIOD, tableName,
+								" where companyId = ", companyId));
+					}
+				}
+
+				statement.executeUpdate(
+					"drop schema if exists " + _getSchemaName(companyId));
+			}
+		}
+		catch (Exception exception) {
+			throw new PortalException(
+				"Unable to delete database partition", exception);
+		}
+
+		return true;
 	}
 
 	private static Connection _getConnectionWrapper(Connection connection) {

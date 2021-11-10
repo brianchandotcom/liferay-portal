@@ -33,15 +33,7 @@ definition {
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertDescriptionsForConfigurationEntries";
 
 		task ("Assert Disable multi-factor authentication system-wide message is present in Multi-Factor Authentication System configuration") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication System Configuration",
-				configurationScope = "System Scope");
+			MultiFactorAuthentication.openToConfigInSystemSettings();
 
 			AssertTextEquals(
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_DISABLE",
@@ -49,10 +41,7 @@ definition {
 		}
 
 		task ("Assert default descriptions at multifactor authentication") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
 			MultiFactorAuthentication.assertDescriptions();
 		}
@@ -78,11 +67,7 @@ definition {
 		}
 
 		task ("Configure MFA and Email OTP and enable OTP") {
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
@@ -126,11 +111,8 @@ definition {
 		}
 
 		task ("Go to able.com and disable OTP") {
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
+
 			MultiFactorAuthentication.configureOTP(enableOTP = "false");
 		}
 
@@ -170,10 +152,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Enable OTP") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
@@ -238,11 +217,7 @@ definition {
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}

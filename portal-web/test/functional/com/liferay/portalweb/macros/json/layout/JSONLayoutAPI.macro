@@ -111,7 +111,7 @@ definition {
 		return "${plid}";
 	}
 
-	@summary = = "Get the typeSettings from a layout by using groupId and layoutName"
+	@summary = "Get the typeSettings from a layout by using groupId and layoutName"
 	macro _getTypeSettingsByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 

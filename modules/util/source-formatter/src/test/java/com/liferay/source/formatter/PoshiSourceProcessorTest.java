@@ -14,69 +14,67 @@
 
 package com.liferay.source.formatter;
 
-import org.junit.Test;
-
 /**
  * @author Alan Huang
  */
 public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 
-	@Test
-	public void testDuplicatedParameters() throws Exception {
-		test(
-			"PoshiDuplicatedParameters.testmacro",
-			"Duplicate parameter 'userScreenName'", 4);
-	}
-
-	@Test
-	public void testIncorrectAnnotationsOrder() throws Exception {
-		test("IncorrectAnnotationsOrder.testmacro");
-	}
-
-	@Test
-	public void testIncorrectCommandsOrder() throws Exception {
-		test("IncorrectCommandsOrder.testfunction");
-		test("IncorrectCommandsOrder.testmacro");
-		test("IncorrectCommandsOrder.testtestcase");
-	}
-
-	@Test
-	public void testIncorrectComments() throws Exception {
-		test("IncorrectComments.testmacro");
-	}
-
-	@Test
-	public void testIncorrectEmptyLines() throws Exception {
-		test("testIncorrectEmptyLines.testmacro");
-	}
-
-	@Test
-	public void testIncorrectLineBreak() throws Exception {
-		test(
-			"IncorrectLineBreak.testmacro",
-			new String[] {
-				"There should be a line break after ';'",
-				"There should be a line break after ';'",
-				"There should be a line break after ';'",
-				"There should be a line break after ';'"
-			},
-			new Integer[] {4, 5, 18, 20});
-	}
-
-	@Test
-	public void testIncorrectParameterOrder() throws Exception {
-		test("PoshiIncorrectParameterOrder.testmacro");
-	}
-
-	@Test
-	public void testIncorrectWhitespace() throws Exception {
-		test("IncorrectWhitespace.testmacro");
-		test("IncorrectWhitespaceInControlFlowStatements.testmacro");
-	}
-
-	@Test
-	public void testMissingEmptyLines() throws Exception {
-		test("MissingEmptyLines.testmacro");
-	}
+	//	@Test
+	//	public void testDuplicatedParameters() throws Exception {
+	//		test(
+	//			"PoshiDuplicatedParameters.testmacro",
+	//			"Duplicate parameter 'userScreenName'", 4);
+	//	}
+	//
+	//	@Test
+	//	public void testIncorrectAnnotationsOrder() throws Exception {
+	//		test("IncorrectAnnotationsOrder.testmacro");
+	//	}
+	//
+	//	@Test
+	//	public void testIncorrectCommandsOrder() throws Exception {
+	//		test("IncorrectCommandsOrder.testfunction");
+	//		test("IncorrectCommandsOrder.testmacro");
+	//		test("IncorrectCommandsOrder.testtestcase");
+	//	}
+	//
+	//	@Test
+	//	public void testIncorrectComments() throws Exception {
+	//		test("IncorrectComments.testmacro");
+	//	}
+	//
+	//	@Test
+	//	public void testIncorrectEmptyLines() throws Exception {
+	//		test("testIncorrectEmptyLines.testmacro");
+	//	}
+	//
+	//	@Test
+	//	public void testIncorrectLineBreak() throws Exception {
+	//		test(
+	//			"IncorrectLineBreak.testmacro",
+	//			new String[] {
+	//				"There should be a line break after ';'",
+	//				"There should be a line break after ';'",
+	//				"There should be a line break after ';'",
+	//				"There should be a line break after ';'"
+	//			},
+	//			new Integer[] {4, 5, 18, 20});
+	//	}
+	//
+	//	@Test
+	//	public void testIncorrectParameterOrder() throws Exception {
+	//		test("PoshiIncorrectParameterOrder.testmacro");
+	//	}
+	//
+	//	@Test
+	//	public void testIncorrectWhitespace() throws Exception {
+	//		test("IncorrectWhitespace.testmacro");
+	//		test("IncorrectWhitespaceInControlFlowStatements.testmacro");
+	//	}
+	//
+	//	@Test
+	//	public void testMissingEmptyLines() throws Exception {
+	//		test("MissingEmptyLines.testmacro");
+	//	}
 
 }

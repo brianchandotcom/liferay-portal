@@ -33,8 +33,13 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class FFSubmissionsSettingsConfigurationActivator {
 
-	public boolean enabled() {
-		return _ffSubmissionsSettingsConfiguration.enabled();
+	public boolean limitToOneSubmissionEnabled() {
+		return _ffSubmissionsSettingsConfiguration.
+			limitToOneSubmissionEnabled();
+	}
+
+	public boolean showPartialResultsEnabled() {
+		return _ffSubmissionsSettingsConfiguration.showPartialResultsEnabled();
 	}
 
 	@Activate

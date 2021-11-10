@@ -10,6 +10,7 @@
 </thead>
 
 <tbody>
+<!--SIDE PANEL TOP LEVEL-->
 <tr>
 	<td>VIOLATION_PANEL_HEADER</td>
 	<td>//*[contains(@class,'a11y-panel') and contains(@class,'violations-header') and contains(.,'Accessibility Violations')]</td>
@@ -26,23 +27,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIOLATION_PANEL_RULE_LIST_INDEX</td>
+	<td>//*[contains(@class,'list-group-item')][${key_index}]//*[contains(@class,'rule-list-item') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIOLATION_PANEL_ITEM_SEVERITY</td>
 	<td>//*[contains(@class,'a11y-panel')]//*[contains(@class,'list-group-subtext') and contains(.,'${key_text}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HIGHLIGHTED_ELEMENT</td>
-	<td>//*[contains(@class,'a11y-overlay')]//*[contains(@class,'a11y-backdrop')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HIGHLIGHTED_ELEMENT_COUNT</td>
-	<td>//*[contains(@id, 'a11yContainer')]//*[contains(@class, 'a11y-overlay')][${key_index}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HIGHLIGHTED_ELEMENT_ICON</td>
-	<td>//*[contains(@class,'a11y-overlay')]//*[*[name()='svg'][contains(@class,'info-circle')]]</td>
 	<td></td>
 </tr>
 <!--FILTER-->
@@ -69,6 +60,22 @@
 <tr>
 	<td>FILTER_CHECKBOX</td>
 	<td>//*[contains(@class,'a11y-dropdown show')]//*[contains(@data-testid,'')]//following-sibling::span/span[normalize-space()='${key_text}']</td>
+	<td></td>
+</tr>
+<!--HIGHLIGHTED ELEMENTS-->
+<tr>
+	<td>HIGHLIGHTED_ELEMENT</td>
+	<td>//*[contains(@class,'a11y-overlay')]//*[contains(@class,'a11y-backdrop')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIGHLIGHTED_ELEMENT_COUNT</td>
+	<td>//*[contains(@id, 'a11yContainer')]//*[contains(@class, 'a11y-overlay')][${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIGHLIGHTED_ELEMENT_ICON</td>
+	<td>//*[contains(@class,'a11y-overlay')]//*[*[name()='svg'][contains(@class,'info-circle')]]</td>
 	<td></td>
 </tr>
 <!--POPOVERS-->

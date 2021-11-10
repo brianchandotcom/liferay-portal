@@ -53,6 +53,7 @@ definition {
 	}
 
 	@description = "LRQA-53648 - Automate LPS-89014: [SLA] Create new SLA for total process resolution"
+	@ignore = "true"
 	@priority = "5"
 	test AddSLAForTotalProcessResolution {
 		property portal.acceptance = "true";

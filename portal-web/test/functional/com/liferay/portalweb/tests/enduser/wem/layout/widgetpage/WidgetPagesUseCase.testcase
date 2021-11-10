@@ -540,7 +540,7 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Home");
 
-			AssertTextNotPresent(value1 = "The requested resource could not be found");
+			AssertTextPresent(value1 = "The requested resource could not be found");
 		}
 	}
 

@@ -51,9 +51,7 @@ public class AutoDeployDir {
 
 	public static final String DEFAULT_NAME = "defaultAutoDeployDir";
 
-	public static void deploy(
-			AutoDeploymentContext autoDeploymentContext,
-			List<AutoDeployListener> autoDeployListeners)
+	public static void deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 
 		if (_serviceTrackerList != null) {
@@ -270,7 +268,7 @@ public class AutoDeployDir {
 			AutoDeploymentContext autoDeploymentContext =
 				buildAutoDeploymentContext(file);
 
-			deploy(autoDeploymentContext, _autoDeployListeners);
+			deploy(autoDeploymentContext);
 
 			return;
 		}

@@ -1229,6 +1229,20 @@ public class DDMFormAdminDisplayContext {
 		return ddmFormInstanceSettings.published();
 	}
 
+	public boolean isShowPartialResultsToRespondents(
+			DDMFormInstance ddmFormInstance)
+		throws PortalException {
+
+		if (ddmFormInstance == null) {
+			return false;
+		}
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			ddmFormInstance.getSettingsModel();
+
+		return ddmFormInstanceSettings.showPartialResultsToRespondents();
+	}
+
 	public boolean isShowPublishAlert() {
 		return ParamUtil.getBoolean(renderRequest, "showPublishAlert");
 	}

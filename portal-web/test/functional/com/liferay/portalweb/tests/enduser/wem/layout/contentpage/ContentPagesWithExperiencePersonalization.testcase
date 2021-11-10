@@ -19,7 +19,7 @@ definition {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name",
+				layoutName = "Test Page Name",
 				type = "content");
 		}
 	}
@@ -118,7 +118,7 @@ definition {
 
 		task ("Add a Collection Display fragment to content page") {
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
@@ -150,7 +150,7 @@ definition {
 
 		task ("View both web contents shown in simulation modal by default") {
 			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			MobileDevice.previewPG();
@@ -191,7 +191,7 @@ definition {
 	test ViewInlineTextItemsFromCurrentExperienceInPageContentPanel {
 		task ("Add a new experience") {
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addExperience(

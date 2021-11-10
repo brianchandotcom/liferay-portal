@@ -127,6 +127,8 @@ public class CommerceInventoryAuditPersistenceTest {
 		CommerceInventoryAudit newCommerceInventoryAudit = _persistence.create(
 			pk);
 
+		newCommerceInventoryAudit.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceInventoryAudit.setCompanyId(RandomTestUtil.nextLong());
 
 		newCommerceInventoryAudit.setUserId(RandomTestUtil.nextLong());
@@ -153,6 +155,9 @@ public class CommerceInventoryAuditPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceInventoryAudit.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceInventoryAudit.getMvccVersion(),
+			newCommerceInventoryAudit.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceInventoryAudit.getCommerceInventoryAuditId(),
 			newCommerceInventoryAudit.getCommerceInventoryAuditId());
@@ -232,10 +237,10 @@ public class CommerceInventoryAuditPersistenceTest {
 
 	protected OrderByComparator<CommerceInventoryAudit> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CIAudit", "commerceInventoryAuditId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "sku", true, "logType", true, "quantity",
-			true);
+			"CIAudit", "mvccVersion", true, "commerceInventoryAuditId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "sku", true, "logType", true,
+			"quantity", true);
 	}
 
 	@Test
@@ -480,6 +485,8 @@ public class CommerceInventoryAuditPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceInventoryAudit commerceInventoryAudit = _persistence.create(pk);
+
+		commerceInventoryAudit.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceInventoryAudit.setCompanyId(RandomTestUtil.nextLong());
 

@@ -77,17 +77,19 @@ public class CommerceInventoryAuditModelImpl
 	public static final String TABLE_NAME = "CIAudit";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"CIAuditId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"sku", Types.VARCHAR}, {"logType", Types.VARCHAR},
-		{"logTypeSettings", Types.CLOB}, {"quantity", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"CIAuditId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"sku", Types.VARCHAR},
+		{"logType", Types.VARCHAR}, {"logTypeSettings", Types.CLOB},
+		{"quantity", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CIAuditId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -101,7 +103,7 @@ public class CommerceInventoryAuditModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CIAudit (CIAuditId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,sku VARCHAR(75) null,logType VARCHAR(75) null,logTypeSettings TEXT null,quantity INTEGER)";
+		"create table CIAudit (mvccVersion LONG default 0 not null,CIAuditId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,sku VARCHAR(75) null,logType VARCHAR(75) null,logTypeSettings TEXT null,quantity INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table CIAudit";
 
@@ -170,6 +172,7 @@ public class CommerceInventoryAuditModelImpl
 
 		CommerceInventoryAudit model = new CommerceInventoryAuditImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceInventoryAuditId(
 			soapModel.getCommerceInventoryAuditId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -344,6 +347,12 @@ public class CommerceInventoryAuditModelImpl
 					<String, BiConsumer<CommerceInventoryAudit, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceInventoryAudit::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceInventoryAudit, Long>)
+				CommerceInventoryAudit::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceInventoryAuditId",
 			CommerceInventoryAudit::getCommerceInventoryAuditId);
 		attributeSetterBiConsumers.put(
@@ -408,6 +417,21 @@ public class CommerceInventoryAuditModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -688,6 +712,7 @@ public class CommerceInventoryAuditModelImpl
 		CommerceInventoryAuditImpl commerceInventoryAuditImpl =
 			new CommerceInventoryAuditImpl();
 
+		commerceInventoryAuditImpl.setMvccVersion(getMvccVersion());
 		commerceInventoryAuditImpl.setCommerceInventoryAuditId(
 			getCommerceInventoryAuditId());
 		commerceInventoryAuditImpl.setCompanyId(getCompanyId());
@@ -710,6 +735,8 @@ public class CommerceInventoryAuditModelImpl
 		CommerceInventoryAuditImpl commerceInventoryAuditImpl =
 			new CommerceInventoryAuditImpl();
 
+		commerceInventoryAuditImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceInventoryAuditImpl.setCommerceInventoryAuditId(
 			this.<Long>getColumnOriginalValue("CIAuditId"));
 		commerceInventoryAuditImpl.setCompanyId(
@@ -809,6 +836,8 @@ public class CommerceInventoryAuditModelImpl
 	public CacheModel<CommerceInventoryAudit> toCacheModel() {
 		CommerceInventoryAuditCacheModel commerceInventoryAuditCacheModel =
 			new CommerceInventoryAuditCacheModel();
+
+		commerceInventoryAuditCacheModel.mvccVersion = getMvccVersion();
 
 		commerceInventoryAuditCacheModel.commerceInventoryAuditId =
 			getCommerceInventoryAuditId();
@@ -963,6 +992,7 @@ public class CommerceInventoryAuditModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceInventoryAuditId;
 	private long _companyId;
 	private long _userId;
@@ -1004,6 +1034,7 @@ public class CommerceInventoryAuditModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("CIAuditId", _commerceInventoryAuditId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1037,25 +1068,27 @@ public class CommerceInventoryAuditModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("CIAuditId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("companyId", 2L);
+		columnBitmasks.put("CIAuditId", 2L);
 
-		columnBitmasks.put("userId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("userName", 8L);
+		columnBitmasks.put("userId", 8L);
 
-		columnBitmasks.put("createDate", 16L);
+		columnBitmasks.put("userName", 16L);
 
-		columnBitmasks.put("modifiedDate", 32L);
+		columnBitmasks.put("createDate", 32L);
 
-		columnBitmasks.put("sku", 64L);
+		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("logType", 128L);
+		columnBitmasks.put("sku", 128L);
 
-		columnBitmasks.put("logTypeSettings", 256L);
+		columnBitmasks.put("logType", 256L);
 
-		columnBitmasks.put("quantity", 512L);
+		columnBitmasks.put("logTypeSettings", 512L);
+
+		columnBitmasks.put("quantity", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

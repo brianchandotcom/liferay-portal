@@ -7,10 +7,11 @@
 	<import class="com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem" />
 	<import class="com.liferay.commerce.inventory.model.CommerceInventoryWarehouse" />
 	<import class="com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem" />
-	<class name="com.liferay.commerce.inventory.model.impl.CommerceInventoryAuditImpl" table="CIAudit">
+	<class dynamic-update="true" name="com.liferay.commerce.inventory.model.impl.CommerceInventoryAuditImpl" table="CIAudit">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CIAuditId" name="commerceInventoryAuditId" type="long">
 			<generator class="assigned" />
 		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />

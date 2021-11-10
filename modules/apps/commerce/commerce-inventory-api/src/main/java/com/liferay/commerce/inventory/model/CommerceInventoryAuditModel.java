@@ -17,6 +17,7 @@ package com.liferay.commerce.inventory.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -36,7 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceInventoryAuditModel
-	extends AuditedModel, BaseModel<CommerceInventoryAudit>, ShardedModel {
+	extends AuditedModel, BaseModel<CommerceInventoryAudit>, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +59,22 @@ public interface CommerceInventoryAuditModel
 	 * @param primaryKey the primary key of this commerce inventory audit
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce inventory audit.
+	 *
+	 * @return the mvcc version of this commerce inventory audit
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce inventory audit.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce inventory audit
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce inventory audit ID of this commerce inventory audit.

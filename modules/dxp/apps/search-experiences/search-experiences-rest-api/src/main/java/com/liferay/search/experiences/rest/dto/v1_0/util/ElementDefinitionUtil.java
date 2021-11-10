@@ -14,6 +14,9 @@
 
 package com.liferay.search.experiences.rest.dto.v1_0.util;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
@@ -24,6 +27,22 @@ public class ElementDefinitionUtil {
 
 	public static ElementDefinition toElementDefinition(String json) {
 		return unpack(ElementDefinition.unsafeToDTO(json));
+	}
+
+	public static ElementDefinition[] toElementDefinitions(String json) {
+		if (json == null) {
+			return null;
+		}
+
+		try {
+			return JSONUtil.toArray(
+				JSONFactoryUtil.createJSONArray(json),
+				jsonObject -> toElementDefinition(jsonObject.toString()),
+				ElementDefinition.class);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	public static ElementDefinition unpack(
@@ -41,6 +60,15 @@ public class ElementDefinitionUtil {
 		}
 
 		return elementDefinition;
+	}
+
+	public static ElementDefinition[] unpack(
+		ElementDefinition[] elementDefinitions) {
+
+		ArrayUtil.isNotEmptyForEach(
+			elementDefinitions, elementDefinition -> unpack(elementDefinition));
+
+		return elementDefinitions;
 	}
 
 }

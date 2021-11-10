@@ -223,15 +223,6 @@ components:
                     items:
                         $ref: "#/components/schemas/ProductSpecification"
                     type: array
-                urls:
-                    additionalProperties:
-                        type: string
-                    example:
-                        en_US: product-url-us
-                        hr_HR: product-url-hr
-                        hu_HU: product-url-hu
-                    readOnly: true
-                    type: object
                 productType:
                     example: simple
                     type: string
@@ -257,6 +248,15 @@ components:
                     type: array
                 urlImage:
                     type: string
+                urls:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: product-url-us
+                        hr_HR: product-url-hr
+                        hu_HU: product-url-hu
+                    readOnly: true
+                    type: object
             type: object
         ProductConfiguration:
             properties:

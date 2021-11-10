@@ -60,6 +60,8 @@ export const HEADERS = new Headers({
 	'Content-Type': 'application/json',
 });
 
+export const ADD_TO_CART_FROM_TABLE = false;
+
 export const PINS_RADIUS = {
 	DEFAULT: 1,
 	MAX: 3,

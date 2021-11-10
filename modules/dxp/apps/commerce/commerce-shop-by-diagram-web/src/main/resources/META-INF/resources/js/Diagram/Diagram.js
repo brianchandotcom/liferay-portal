@@ -11,6 +11,10 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
+import {
+	useCommerceAccount,
+	useCommerceCart,
+} from 'commerce-frontend-js/utilities/hooks';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
@@ -30,10 +34,10 @@ import '../../css/diagram.scss';
 const debouncedUpdatePinsRadius = debounce(updateGlobalPinsRadius, 800);
 
 function Diagram({
-	cartId,
+	cartId: initialCartId,
 	channelGroupId,
 	channelId,
-	commerceAccountId,
+	commerceAccountId: initialAccountId,
 	commerceCurrencyCode,
 	datasetDisplayId,
 	diagramId,
@@ -45,6 +49,8 @@ function Diagram({
 	productBaseURL,
 	productId,
 }) {
+	const commerceCart = useCommerceCart({id: initialCartId});
+	const commerceAccount = useCommerceAccount({id: initialAccountId});
 	const chartInstance = useRef(null);
 	const pinsRadiusInitialized = useRef(false);
 	const svgRef = useRef(null);
@@ -114,7 +120,7 @@ function Diagram({
 				<ClayLoadingIndicator className="svg-loader" />
 
 				<svg className="svg-wrapper" ref={svgRef}>
-					<title>{Liferay.Language.get('product-diagram')}</title>
+					<title>{Liferay.Language.get('diagram')}</title>
 					<g className="zoom-handler" ref={zoomHandlerRef} />
 				</svg>
 			</div>
@@ -135,8 +141,8 @@ function Diagram({
 						/>
 					) : (
 						<StorefrontTooltipContent
-							accountId={commerceAccountId}
-							cartId={cartId}
+							accountId={commerceAccount.id}
+							cartId={commerceCart.id}
 							channelGroupId={channelGroupId}
 							channelId={channelId}
 							currencyCode={commerceCurrencyCode}

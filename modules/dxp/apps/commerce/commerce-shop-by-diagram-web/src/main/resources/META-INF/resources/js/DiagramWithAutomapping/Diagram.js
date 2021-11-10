@@ -11,6 +11,10 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
+import {
+	useCommerceAccount,
+	useCommerceCart,
+} from 'commerce-frontend-js/utilities/hooks';
 import PropTypes from 'prop-types';
 import React, {
 	useCallback,
@@ -32,10 +36,10 @@ import StorefrontTooltipContent from '../components/StorefrontTooltipContent';
 import TooltipProvider from '../components/TooltipProvider';
 
 function Diagram({
-	cartId,
+	cartId: initialCartId,
 	channelGroupId,
 	channelId,
-	commerceAccountId,
+	commerceAccountId: initialAccountId,
 	commerceCurrencyCode,
 	datasetDisplayId,
 	imageURL,
@@ -44,6 +48,8 @@ function Diagram({
 	pinsCSSSelectors,
 	productId,
 }) {
+	const commerceCart = useCommerceCart({id: initialCartId});
+	const commerceAccount = useCommerceAccount({id: initialAccountId});
 	const chartInstance = useRef(null);
 	const svgRef = useRef(null);
 	const wrapperRef = useRef(null);
@@ -255,8 +261,8 @@ function Diagram({
 						/>
 					) : (
 						<StorefrontTooltipContent
-							accountId={commerceAccountId}
-							cartId={cartId}
+							accountId={commerceAccount.id}
+							cartId={commerceCart.id}
 							channelGroupId={channelGroupId}
 							channelId={channelId}
 							currencyCode={commerceCurrencyCode}

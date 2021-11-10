@@ -18,14 +18,20 @@ import DiagramWithAutomapping from '../src/main/resources/META-INF/resources/js/
 render(
 	Diagram,
 	{
-		channelId: '42522',
+		cartId: '44217',
+		channelGroupId: '42720',
+		channelId: '42719',
+		commerceAccountId: '44204',
+		commerceCurrencyCode: 'USD',
 		datasetDisplayId: 'csDiagramMappedProducts',
-		diagramId: '43987',
+		diagramId: '44184',
 		imageURL:
-			'/documents/20118/0/login_portlet_splash.jpg/b2759a4d-8c53-3c7e-b165-2db2a00ef460?version=1.0&t=1636104336285&download=true',
+			'/documents/20118/0/giphy.gif/dcf2c620-05fc-3eeb-f582-3e77198d9e44?version=1.0&t=1636543710147&download=true',
 		isAdmin: true,
+		orderUUID: '4f5d1e8a-4590-fa24-bc57-da90f45e99a1',
 		pinsRadius: 1.0,
-		productId: '43967',
+		productBaseURL: 'http://localhost:8080/group/minium/p/',
+		productId: '44164',
 	},
 	document.getElementById('shop-by-diagram')
 );
@@ -33,8 +39,8 @@ render(
 render(
 	DiagramTable,
 	{
-		isAdmin: true,
-		productId: '43967',
+		isAdmin: false,
+		productId: '44164',
 	},
 	document.getElementById('shop-by-diagram-table')
 );
@@ -42,20 +48,20 @@ render(
 render(
 	Diagram,
 	{
-		datasetDisplayId: 'csDiagramMappedProducts',
-		orderUUID: '2e5185eb-e978-706d-1928-eefbe94f13d8',
-		channelGroupId: '42523',
-		commerceAccountId: '44009',
-		diagramId: '43987',
-		pinsRadius: 1.0,
-		productId: '43967',
-		cartId: '44139',
-		isAdmin: false,
-		imageURL:
-			'/documents/20118/0/login_portlet_splash.jpg/b2759a4d-8c53-3c7e-b165-2db2a00ef460?version=1.0&t=1636104336285&download=true',
+		cartId: '44217',
+		channelGroupId: '42720',
+		channelId: '42719',
+		commerceAccountId: '44204',
 		commerceCurrencyCode: 'USD',
+		datasetDisplayId: 'csDiagramMappedProducts',
+		diagramId: '44184',
+		imageURL:
+			'/documents/20118/0/giphy.gif/dcf2c620-05fc-3eeb-f582-3e77198d9e44?version=1.0&t=1636543710147&download=true',
+		isAdmin: false,
+		orderUUID: '4f5d1e8a-4590-fa24-bc57-da90f45e99a1',
+		pinsRadius: 1.0,
 		productBaseURL: 'http://localhost:8080/group/minium/p/',
-		channelId: '42522',
+		productId: '44164',
 	},
 	document.getElementById('shop-by-diagram-front')
 );
@@ -64,29 +70,37 @@ render(
 	DiagramTable,
 	{
 		isAdmin: false,
-		productId: '43967',
+		productId: '44164',
 	},
 	document.getElementById('shop-by-diagram-table-front')
 );
 
-// render(
-// 	DiagramWithAutomapping,
-// 	{
-// 		diagramId: '46522',
-// 		imageURL:
-// 			'/documents/20123/0/308056.svg/b77d6493-ab31-d7e5-cb6a-616c9d37ab9b?version=1.0&t=1634286500938&download=true',
-// 		isAdmin: false,
-// 		pinsCSSSelectors: ['#Livello_Testi > text', '[id*=MTEXT] > text'],
-// 		productId: '46505',
-// 	},
-// 	document.getElementById('shop-by-diagram-automapping')
-// );
+render(
+	DiagramWithAutomapping,
+	{
+		cartId: '44217',
+		channelGroupId: '42720',
+		channelId: '42719',
+		commerceAccountId: '44204',
+		commerceCurrencyCode: 'USD',
+		datasetDisplayId: 'csDiagramMappedProducts',
+		diagramId: '44184',
+		imageURL:
+			'/documents/20118/0/giphy.gif/dcf2c620-05fc-3eeb-f582-3e77198d9e44?version=1.0&t=1636543710147&download=true',
+		isAdmin: true,
+		orderUUID: '4f5d1e8a-4590-fa24-bc57-da90f45e99a1',
+		pinsCSSSelectors: ['#Livello_Testi > text', '[id*=MTEXT] > text'],
+		productBaseURL: 'http://localhost:8080/group/minium/p/',
+		productId: '44164',
+	},
+	document.getElementById('shop-by-diagram-automapping')
+);
 
-// render(
-// 	DiagramTable,
-// 	{
-// 		isAdmin: false,
-// 		productId: '46505',
-// 	},
-// 	document.getElementById('shop-by-diagram-automapping-table')
-// );
+render(
+	DiagramTable,
+	{
+		isAdmin: false,
+		productId: '46505',
+	},
+	document.getElementById('shop-by-diagram-automapping-table')
+);

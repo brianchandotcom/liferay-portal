@@ -18,7 +18,11 @@ import InfiniteScroller from 'commerce-frontend-js/components/infinite_scroller/
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import {DIAGRAM_EVENTS, DIAGRAM_TABLE_EVENTS} from '../utilities/constants';
+import {
+	ADD_TO_CART_FROM_TABLE,
+	DIAGRAM_EVENTS,
+	DIAGRAM_TABLE_EVENTS,
+} from '../utilities/constants';
 import {getMappedProducts} from '../utilities/data';
 import {formatLabel} from '../utilities/index';
 import ManagementBar from './ManagementBar';
@@ -125,7 +129,7 @@ function DiagramTable({isAdmin, productId}) {
 					<ClayTable borderless>
 						<ClayTable.Head>
 							<ClayTable.Row>
-								{!isAdmin && (
+								{!isAdmin && ADD_TO_CART_FROM_TABLE && (
 									<ClayTable.Cell headingCell>
 										<ClayCheckbox
 											checked={
@@ -184,7 +188,7 @@ function DiagramTable({isAdmin, productId}) {
 											handleMouseLeave(product)
 										}
 									>
-										{!isAdmin && (
+										{!isAdmin && ADD_TO_CART_FROM_TABLE && (
 											<ClayTable.Cell>
 												<ClayCheckbox
 													checked={

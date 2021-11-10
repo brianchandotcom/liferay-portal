@@ -15,6 +15,10 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect, useState} from 'react';
 
+import {
+	CURRENT_ACCOUNT_UPDATED,
+	CURRENT_ORDER_UPDATED,
+} from './eventsDefinitions';
 import {getComponentByModuleUrl} from './modules';
 
 export function useLiferayModule(
@@ -58,4 +62,46 @@ export function usePersistentState(key, initialState = null) {
 	}, [key, persistentState]);
 
 	return [persistentState, setPersistentState];
+}
+
+export function useCommerceAccount(initialCommerceAccount) {
+	const [commerceAccount, updateCommerceAccount] = useState(
+		initialCommerceAccount
+	);
+
+	useEffect(() => {
+		function handleAccountUpdate(account) {
+			if (commerceAccount.id !== account.id) {
+				updateCommerceAccount(account);
+			}
+		}
+
+		Liferay.on(CURRENT_ACCOUNT_UPDATED, handleAccountUpdate);
+
+		return () => {
+			Liferay.detach(CURRENT_ACCOUNT_UPDATED, handleAccountUpdate);
+		};
+	}, [commerceAccount]);
+
+	return commerceAccount;
+}
+
+export function useCommerceCart(initialCart) {
+	const [commerceCart, updateCommerceCart] = useState(initialCart);
+
+	useEffect(() => {
+		function handleOrderUpdate(order) {
+			if (commerceCart.id !== order.id) {
+				updateCommerceCart(order);
+			}
+		}
+
+		Liferay.on(CURRENT_ORDER_UPDATED, handleOrderUpdate);
+
+		return () => {
+			Liferay.detach(CURRENT_ORDER_UPDATED, handleOrderUpdate);
+		};
+	}, [commerceCart]);
+
+	return commerceCart;
 }

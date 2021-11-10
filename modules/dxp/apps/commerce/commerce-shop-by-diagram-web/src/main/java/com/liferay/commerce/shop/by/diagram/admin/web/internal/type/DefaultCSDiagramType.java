@@ -111,6 +111,20 @@ public class DefaultCSDiagramType implements CSDiagramType {
 				CSDiagramSettingImageConfiguration.class, properties);
 	}
 
+	private String _getProductBaseURL(ThemeDisplay themeDisplay) {
+		Layout layout = themeDisplay.getLayout();
+
+		Group group = layout.getGroup();
+
+		String siteBaseURL = HtmlUtil.escape(
+			group.getDisplayURL(themeDisplay, layout.isPrivateLayout()));
+
+		String productURLSeparator = _cpFriendlyURL.getProductURLSeparator(
+			themeDisplay.getCompanyId());
+
+		return siteBaseURL + productURLSeparator;
+	}
+
 	private Map<String, Object> _getProps(
 			CSDiagramSetting csDiagramSetting,
 			HttpServletRequest httpServletRequest)
@@ -154,15 +168,13 @@ public class DefaultCSDiagramType implements CSDiagramType {
 				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
-			long commerceAccountId = 0;
-
 			CommerceAccount commerceAccount =
 				commerceContext.getCommerceAccount();
 
-			if(commerceAccount != null){
-				commerceAccountId = commerceAccount.getCommerceAccountId();
-
-				hashMapWrapper.put("commerceAccountId", commerceAccountId);
+			if (commerceAccount != null) {
+				hashMapWrapper.put(
+					"commerceAccountId",
+					commerceAccount.getCommerceAccountId());
 			}
 
 			CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
@@ -171,8 +183,7 @@ public class DefaultCSDiagramType implements CSDiagramType {
 				hashMapWrapper.put(
 					"cartId", commerceOrder.getCommerceOrderId());
 
-				hashMapWrapper.put(
-					"orderUUID", commerceOrder.getUuid());
+				hashMapWrapper.put("orderUUID", commerceOrder.getUuid());
 			}
 
 			hashMapWrapper.put(
@@ -189,26 +200,16 @@ public class DefaultCSDiagramType implements CSDiagramType {
 
 			hashMapWrapper.put(
 				"productBaseURL", _getProductBaseURL(themeDisplay));
-
 		}
 
 		return hashMapWrapper.build();
 	}
 
-	private String _getProductBaseURL(ThemeDisplay themeDisplay) {
-		Layout layout = themeDisplay.getLayout();
-
-		Group group = layout.getGroup();
-
-		return HtmlUtil.escape(
-			group.getDisplayURL(themeDisplay, layout.isPrivateLayout())) + _cpFriendlyURL.getProductURLSeparator(themeDisplay.getCompanyId());
-	}
+	@Reference
+	private ActionHelper _actionHelper;
 
 	@Reference
 	private CPFriendlyURL _cpFriendlyURL;
-
-	@Reference
-	private ActionHelper _actionHelper;
 
 	private volatile CSDiagramSettingImageConfiguration
 		_csDiagramSettingImageConfiguration;

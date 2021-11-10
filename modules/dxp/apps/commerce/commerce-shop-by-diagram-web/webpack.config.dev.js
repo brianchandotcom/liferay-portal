@@ -113,6 +113,10 @@ module.exports = {
 				__dirname,
 				'../../../../node_modules/commerce-frontend-js/src/main/resources/META-INF/resources/components/infinite_scroller/InfiniteScroller.js'
 			),
+			'commerce-frontend-js/utilities/hooks': path.resolve(
+				__dirname,
+				'../../../../node_modules/commerce-frontend-js/src/main/resources/META-INF/resources/utilities/hooks.js'
+			),
 			'frontend-js-web': path.resolve(
 				__dirname,
 				'../../../../node_modules/frontend-js-web/src/main/resources/META-INF/resources/index.es.js'

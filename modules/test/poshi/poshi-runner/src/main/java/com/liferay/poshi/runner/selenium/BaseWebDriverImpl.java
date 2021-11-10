@@ -3217,6 +3217,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			}
 
 			webElement.sendKeys(Keys.chord(charSequences));
+
+			return;
 		}
 
 		if (value.contains("line-number=")) {

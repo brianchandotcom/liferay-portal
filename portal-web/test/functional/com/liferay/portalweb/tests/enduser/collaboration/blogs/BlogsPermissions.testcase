@@ -1159,6 +1159,8 @@ definition {
 	@description = "This is a test for LPS-136784. It checks that a user cannot edit his own comment."
 	@priority = "3"
 	test CannotEditOwnComment {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");

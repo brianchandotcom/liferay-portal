@@ -2500,7 +2500,7 @@ definition {
 				spURL = "http://www.able.com:8080");
 		}
 
-		task ("Add and sync new user without validation" and edit service provider connection) {
+		task ("Add and sync new user without validation and edit service provider connection") {
 			SAML.addAndSyncNewUserWithoutValidation(
 				creatorEmailAddress = "test@liferay.com",
 				creatorPassword = "test",

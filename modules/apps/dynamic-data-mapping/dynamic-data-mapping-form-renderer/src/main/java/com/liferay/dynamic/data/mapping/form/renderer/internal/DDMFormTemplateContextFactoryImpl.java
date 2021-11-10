@@ -284,6 +284,11 @@ public class DDMFormTemplateContextFactoryImpl
 		templateContext.put("showCancelButton", showCancelButton);
 
 		templateContext.put(
+			"showPartialResultsToRespondents",
+			GetterUtil.getBoolean(
+				(Boolean)ddmFormRenderingContext.getProperty(
+					"showPartialResultsToRespondents")));
+		templateContext.put(
 			"showRequiredFieldsWarning",
 			ddmFormRenderingContext.isShowRequiredFieldsWarning());
 

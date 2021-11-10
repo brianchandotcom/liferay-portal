@@ -17,21 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-	String redirect = ParamUtil.getString(request, "redirect");
+String redirect = ParamUtil.getString(request, "redirect");
 
-	if (Validator.isNull(redirect)) {
-		PortletURL portletURL = renderResponse.createRenderURL();
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
 
-		redirect = portletURL.toString();
-	}
+	redirect = portletURL.toString();
+}
 
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 
-	renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
+renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 
-	AssetListEntry assetListEntry =
-		assetListDisplayContext.getAssetListEntry();
+AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 %>
 
 <clay:container-fluid
@@ -43,9 +42,10 @@
 		>
 			<div>
 				<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
+
 				<react:component
 					module="js/components/VariationsNav/index"
-					props='<%= editAssetListDisplayContext.getData() %>'
+					props="<%= editAssetListDisplayContext.getData() %>"
 				/>
 			</div>
 		</clay:col>
@@ -54,16 +54,11 @@
 			lg="9"
 		>
 			<c:choose>
-				<c:when
-					test="<%= assetListEntry.getType() == AssetListEntryTypeConstants.TYPE_DYNAMIC %>">
-					<liferay-util:include
-						page="/edit_asset_list_entry_dynamic.jsp"
-						servletContext="<%= application %>"/>
+				<c:when test="<%= assetListEntry.getType() == AssetListEntryTypeConstants.TYPE_DYNAMIC %>">
+					<liferay-util:include page="/edit_asset_list_entry_dynamic.jsp" servletContext="<%= application %>" />
 				</c:when>
 				<c:otherwise>
-					<liferay-util:include
-						page="/edit_asset_list_entry_manual.jsp"
-						servletContext="<%= application %>"/>
+					<liferay-util:include page="/edit_asset_list_entry_manual.jsp" servletContext="<%= application %>" />
 				</c:otherwise>
 			</c:choose>
 		</clay:col>
@@ -112,14 +107,14 @@
 			String className = assetListDisplayContext.getClassName(assetRendererFactory);
 		%>
 
-		Liferay.Util.setFormValues(form, {
-			classTypeIds<%= className %>: Liferay.Util.listSelect(
-				Liferay.Util.getFormElement(
-					form,
-					'<%= className %>currentClassTypeIds'
-				)
-			),
-		});
+			Liferay.Util.setFormValues(form, {
+				classTypeIds<%= className %>: Liferay.Util.listSelect(
+					Liferay.Util.getFormElement(
+						form,
+						'<%= className %>currentClassTypeIds'
+					)
+				),
+			});
 
 		<%
 		}

@@ -57,7 +57,7 @@ public class RepositoryEntryBrowserDisplayContext {
 		return group.getDescriptiveName(locale);
 	}
 
-	public boolean isEditable(FileVersion fileVersion) {
+	public boolean isPreviewable(FileVersion fileVersion) {
 		if (fileVersion == null) {
 			return false;
 		}

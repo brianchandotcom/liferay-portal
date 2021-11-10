@@ -127,6 +127,8 @@ public class CommercePricingClassPersistenceTest {
 
 		CommercePricingClass newCommercePricingClass = _persistence.create(pk);
 
+		newCommercePricingClass.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommercePricingClass.setUuid(RandomTestUtil.randomString());
 
 		newCommercePricingClass.setExternalReferenceCode(
@@ -155,6 +157,9 @@ public class CommercePricingClassPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommercePricingClass.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommercePricingClass.getMvccVersion(),
+			newCommercePricingClass.getMvccVersion());
 		Assert.assertEquals(
 			existingCommercePricingClass.getUuid(),
 			newCommercePricingClass.getUuid());
@@ -256,10 +261,11 @@ public class CommercePricingClassPersistenceTest {
 
 	protected OrderByComparator<CommercePricingClass> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommercePricingClass", "uuid", true, "externalReferenceCode", true,
-			"commercePricingClassId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "title",
-			true, "description", true, "lastPublishDate", true);
+			"CommercePricingClass", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "commercePricingClassId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "title", true, "description", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -571,6 +577,8 @@ public class CommercePricingClassPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommercePricingClass commercePricingClass = _persistence.create(pk);
+
+		commercePricingClass.setMvccVersion(RandomTestUtil.nextLong());
 
 		commercePricingClass.setUuid(RandomTestUtil.randomString());
 

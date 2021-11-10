@@ -17,6 +17,7 @@ package com.liferay.commerce.pricing.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -37,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommercePricingClassCPDefinitionRelModel
 	extends AuditedModel, BaseModel<CommercePricingClassCPDefinitionRel>,
-			ShardedModel {
+			MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -58,6 +59,22 @@ public interface CommercePricingClassCPDefinitionRelModel
 	 * @param primaryKey the primary key of this commerce pricing class cp definition rel
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce pricing class cp definition rel.
+	 *
+	 * @return the mvcc version of this commerce pricing class cp definition rel
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce pricing class cp definition rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce pricing class cp definition rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce pricing class cp definition rel ID of this commerce pricing class cp definition rel.

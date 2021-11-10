@@ -131,6 +131,8 @@ public class CommercePriceModifierPersistenceTest {
 		CommercePriceModifier newCommercePriceModifier = _persistence.create(
 			pk);
 
+		newCommercePriceModifier.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommercePriceModifier.setUuid(RandomTestUtil.randomString());
 
 		newCommercePriceModifier.setExternalReferenceCode(
@@ -186,6 +188,9 @@ public class CommercePriceModifierPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommercePriceModifier.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommercePriceModifier.getMvccVersion(),
+			newCommercePriceModifier.getMvccVersion());
 		Assert.assertEquals(
 			existingCommercePriceModifier.getUuid(),
 			newCommercePriceModifier.getUuid());
@@ -400,15 +405,15 @@ public class CommercePriceModifierPersistenceTest {
 
 	protected OrderByComparator<CommercePriceModifier> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommercePriceModifier", "uuid", true, "externalReferenceCode",
-			true, "commercePriceModifierId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "commercePriceListId", true, "title", true,
-			"target", true, "modifierAmount", true, "modifierType", true,
-			"priority", true, "active", true, "displayDate", true,
-			"expirationDate", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"CommercePriceModifier", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "commercePriceModifierId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true,
+			"commercePriceListId", true, "title", true, "target", true,
+			"modifierAmount", true, "modifierType", true, "priority", true,
+			"active", true, "displayDate", true, "expirationDate", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -733,6 +738,8 @@ public class CommercePriceModifierPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommercePriceModifier commercePriceModifier = _persistence.create(pk);
+
+		commercePriceModifier.setMvccVersion(RandomTestUtil.nextLong());
 
 		commercePriceModifier.setUuid(RandomTestUtil.randomString());
 

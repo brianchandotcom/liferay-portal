@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -40,8 +41,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommercePricingClassModel
-	extends BaseModel<CommercePricingClass>, LocalizedModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<CommercePricingClass>, LocalizedModel, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -62,6 +63,22 @@ public interface CommercePricingClassModel
 	 * @param primaryKey the primary key of this commerce pricing class
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce pricing class.
+	 *
+	 * @return the mvcc version of this commerce pricing class
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce pricing class.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce pricing class
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this commerce pricing class.

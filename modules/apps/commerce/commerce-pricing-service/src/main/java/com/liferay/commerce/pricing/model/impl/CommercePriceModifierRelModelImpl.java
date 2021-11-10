@@ -79,6 +79,7 @@ public class CommercePriceModifierRelModelImpl
 	public static final String TABLE_NAME = "CommercePriceModifierRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"commercePriceModifierRelId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -91,6 +92,7 @@ public class CommercePriceModifierRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commercePriceModifierRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -103,7 +105,7 @@ public class CommercePriceModifierRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePriceModifierRel (commercePriceModifierRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceModifierId LONG,classNameId LONG,classPK LONG)";
+		"create table CommercePriceModifierRel (mvccVersion LONG default 0 not null,commercePriceModifierRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceModifierId LONG,classNameId LONG,classPK LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommercePriceModifierRel";
@@ -180,6 +182,7 @@ public class CommercePriceModifierRelModelImpl
 
 		CommercePriceModifierRel model = new CommercePriceModifierRelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommercePriceModifierRelId(
 			soapModel.getCommercePriceModifierRelId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -355,6 +358,12 @@ public class CommercePriceModifierRelModelImpl
 					<String, BiConsumer<CommercePriceModifierRel, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommercePriceModifierRel::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommercePriceModifierRel, Long>)
+				CommercePriceModifierRel::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commercePriceModifierRelId",
 			CommercePriceModifierRel::getCommercePriceModifierRelId);
 		attributeSetterBiConsumers.put(
@@ -415,6 +424,21 @@ public class CommercePriceModifierRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -686,6 +710,7 @@ public class CommercePriceModifierRelModelImpl
 		CommercePriceModifierRelImpl commercePriceModifierRelImpl =
 			new CommercePriceModifierRelImpl();
 
+		commercePriceModifierRelImpl.setMvccVersion(getMvccVersion());
 		commercePriceModifierRelImpl.setCommercePriceModifierRelId(
 			getCommercePriceModifierRelId());
 		commercePriceModifierRelImpl.setCompanyId(getCompanyId());
@@ -708,6 +733,8 @@ public class CommercePriceModifierRelModelImpl
 		CommercePriceModifierRelImpl commercePriceModifierRelImpl =
 			new CommercePriceModifierRelImpl();
 
+		commercePriceModifierRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commercePriceModifierRelImpl.setCommercePriceModifierRelId(
 			this.<Long>getColumnOriginalValue("commercePriceModifierRelId"));
 		commercePriceModifierRelImpl.setCompanyId(
@@ -805,6 +832,8 @@ public class CommercePriceModifierRelModelImpl
 	public CacheModel<CommercePriceModifierRel> toCacheModel() {
 		CommercePriceModifierRelCacheModel commercePriceModifierRelCacheModel =
 			new CommercePriceModifierRelCacheModel();
+
+		commercePriceModifierRelCacheModel.mvccVersion = getMvccVersion();
 
 		commercePriceModifierRelCacheModel.commercePriceModifierRelId =
 			getCommercePriceModifierRelId();
@@ -942,6 +971,7 @@ public class CommercePriceModifierRelModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commercePriceModifierRelId;
 	private long _companyId;
 	private long _userId;
@@ -980,6 +1010,7 @@ public class CommercePriceModifierRelModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"commercePriceModifierRelId", _commercePriceModifierRelId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1004,23 +1035,25 @@ public class CommercePriceModifierRelModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("commercePriceModifierRelId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("companyId", 2L);
+		columnBitmasks.put("commercePriceModifierRelId", 2L);
 
-		columnBitmasks.put("userId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("userName", 8L);
+		columnBitmasks.put("userId", 8L);
 
-		columnBitmasks.put("createDate", 16L);
+		columnBitmasks.put("userName", 16L);
 
-		columnBitmasks.put("modifiedDate", 32L);
+		columnBitmasks.put("createDate", 32L);
 
-		columnBitmasks.put("commercePriceModifierId", 64L);
+		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("classNameId", 128L);
+		columnBitmasks.put("commercePriceModifierId", 128L);
 
-		columnBitmasks.put("classPK", 256L);
+		columnBitmasks.put("classNameId", 256L);
+
+		columnBitmasks.put("classPK", 512L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

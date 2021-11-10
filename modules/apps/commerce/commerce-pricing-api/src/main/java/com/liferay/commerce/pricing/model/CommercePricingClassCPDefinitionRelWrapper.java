@@ -46,6 +46,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"CommercePricingClassCPDefinitionRelId",
 			getCommercePricingClassCPDefinitionRelId());
@@ -62,6 +63,12 @@ public class CommercePricingClassCPDefinitionRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long CommercePricingClassCPDefinitionRelId = (Long)attributes.get(
 			"CommercePricingClassCPDefinitionRelId");
 
@@ -187,6 +194,16 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this commerce pricing class cp definition rel.
+	 *
+	 * @return the mvcc version of this commerce pricing class cp definition rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the primary key of this commerce pricing class cp definition rel.
 	 *
 	 * @return the primary key of this commerce pricing class cp definition rel
@@ -292,6 +309,16 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce pricing class cp definition rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce pricing class cp definition rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

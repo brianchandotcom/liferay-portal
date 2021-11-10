@@ -349,4 +349,112 @@ definition {
 		CalendarEvent.viewUnavailableCalendarsNotPresent(unavailableCalendarList = "Site B,Liferay");
 	}
 
+	@description = "LRQA-71360 - Verify that on the -Add Calendar- page the user can select checkbox ,Default Calendar ,Enable Comments ,Enable Ratings"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSelectCheckboxes {
+
+		// TODO LRQA-71595 CanSelectCheckboxes pending implementation
+
+	}
+
+	@description = "LRQA-71360 - Verify that user can choose the color of calendar in the -Add Calendar- Page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanChooseAColor {
+
+		// TODO LRQA-71596 CanChooseAColor pending implementation
+
+	}
+
+	@description = "LRQA-71360 - Verify that the name field is required"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test NameFieldIsRequired {
+
+		// TODO LRQA-71597 NameFieldIsRequired pending implementation
+
+	}
+
+	@description = "LRQA-71360 - Verify that the Time Zone -(UTC) Coordinated Universal Time- is selected by default"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test VerifyTimeZoneDefault {
+
+		// TODO LRQA-71598 VerifyTimeZoneDefault pending implementation
+
+	}
+
+	@description = "LRQA-71360 - Verify that the user can save a new calendar with permission viewable by Owner"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSaveCalendarViewableByOwner {
+
+		// TODO LRQA-71599 CanSaveCalendarViewableByOwner pending implementation
+
+	}
+
+	@description = "LRQA-71360 - Verify that the user can save a new calendar with permission viewable by Site Members"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSaveCalendarViewableBySiteMembers {
+
+		// TODO LRQA-71600 CanSaveCalendarViewableBySiteMembers pending implementation
+
+	}
+
+	@description = "LRQA-71360 - Verify that the translation icon for the -Name- field is in English-US by default"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test NameTranslationIconHasEnglishByDefault {
+
+		// TODO LRQA-71601 NameTranslationIconHasEnglishByDefault pending implementation
+
+	}
+
+	@description = "LRQA-71360 - Verify that the user can save a new calendar with permission viewable by Anyone"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSaveCalendarViewableByAnyone {
+
+		// TODO LRQA-71602 CanSaveCalendarViewableByAnyone pending implementation
+
+	}
+
+	@description = "LRQA-71360 - Verify that the translation icon for the -Description- field is in English-US by default"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DescriptionTranslationIconHasEnglishByDefault {
+
+		// TODO LRQA-71603 DescriptionTranslationIconHasEnglishByDefault pending implementation
+
+	}
+
+	@description = "LRQA-71360 - Verify that the user can cancel Adding a new calendar"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanCancelAddingCalendar {
+
+		// TODO LRQA-71604 CanCancelAddingCalendar pending implementation
+
+	}
+
+	@description = "LRQA-71360 - Verify that the user can add multiple calendars with the same name"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddMultipleCalendars {
+
+		// TODO LRQA-71605 CanAddMultipleCalendars pending implementation
+
+	}
+
+	@description = "LRQA-71360 - Verify that the user can add calendars with Non-Ascii characters on the name field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddCalendarWithNoAsciiCharactersOnNameField {
+
+		// TODO LRQA-71606 CanAddCalendarWithNoAsciiCharactersOnNameField pending implementation
+
+	}
+
 }

@@ -302,24 +302,6 @@ definition {
 	}
 
 	@priority = "3"
-	test EditCalendarCurrentSiteCalendars {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		Calendar.add(
-			calendarName = "Site Calendar Name",
-			calendarType = "Current Site Calendars",
-			site = "${siteName}");
-
-		Navigator.gotoPage(pageName = "Calendar Page");
-
-		Calendar.view(
-			calendarName = "Site Calendar Name",
-			calendarNameEdit = "Site Calendar Name Edit",
-			calendarType = "Current Site Calendars",
-			site = "${siteName}");
-	}
-
-	@priority = "3"
 	test EditCalendarMyCalendars {
 		Calendar.add(
 			calendarName = "My Calendar Name",

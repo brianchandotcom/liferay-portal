@@ -385,4 +385,22 @@ definition {
 		CalendarEvent.viewRepeatWeekStartDay(weekStartDay = "Saturday");
 	}
 
+	@description = "LRQA-71362 - Verify that the user can configure the Default Duration of an Event"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanConfigureEventsDefaultDuration {
+
+		// TODO LRQA-71621 CanConfigureEventsDefaultDuration pending implementation
+
+	}
+
+	@description = "LRQA-71362 - Verify that the user can Enable / Disable Caledar's View"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanModifyViews {
+
+		// TODO LRQA-71622 CanModifyViews pending implementation
+
+	}
+
 }

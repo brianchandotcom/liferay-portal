@@ -58,7 +58,7 @@ definition {
 
 	@description = "This is a use case for LPS-57992."
 	@priority = "4"
-	test ExportUserCalendarAsICS {
+	test CanExportCalendar {
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.add(
@@ -80,7 +80,7 @@ definition {
 
 	@ignore = "true"
 	@priority = "4"
-	test ImportCalendarAndViewEventComment {
+	test CanViewCommentFromImportedCalendar {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Calendar.enableComments(
@@ -153,7 +153,7 @@ definition {
 
 	@description = "This is a use case for LPS-53072."
 	@priority = "4"
-	test ImportMicrosoftOutlookCalendarICS {
+	test CanImportCalendar {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoCurrentSiteCalendarsManage();
@@ -161,6 +161,51 @@ definition {
 		Calendar.importCalendarFile(
 			calendarFile = "calendar_microsoft_outlook_calendar.ics",
 			calendarName = "${siteName}");
+	}
+
+	@description = "LRQA-71361 - Verify that the user can view the message: -Failed to import empty file.- after import empty file."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewMessageAfterImportEmptyFile {
+
+		// TODO LRQA-71616 CanViewMessageAfterImportEmptyFile pending implementation
+
+	}
+
+	@description = "LRQA-71361 - Verify that user can import a file at import Export/Import navigation menu"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanImportAFile {
+
+		// TODO LRQA-71615 CanImportAFile pending implementation
+
+	}
+
+	@description = "LRQA-71361 - Verify that user can export a file at import Export/Import navigation menu"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanExportAFile {
+
+		// TODO LRQA-71614 CanExportAFile pending implementation
+
+	}
+
+	@description = "LRQA-71361 - Verify that user can view the new exported process status in the Current and Previous tab"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewProcessStatusExported {
+
+		// TODO LRQA-71613 CanViewProcessStatusExported pending implementation
+
+	}
+
+	@description = "LRQA-71361 - Verify that user can view the new imported process status in the Current and Previous tab"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewProcessStatusImported {
+
+		// TODO LRQA-71612 CanViewProcessStatusImported pending implementation
+
 	}
 
 }

@@ -211,6 +211,10 @@ class D3OrganizationChart {
 		else {
 			const sourcesMap = new Map();
 
+			if (!this._root.children) {
+				return;
+			}
+
 			this._root.children.forEach((child) => {
 				const descendants = child.descendants();
 
@@ -537,6 +541,10 @@ class D3OrganizationChart {
 			y0 = source.y0 + RECT_SIZES[source.data.type].width / 2;
 		}
 		else {
+			if (!source.children) {
+				return;
+			}
+
 			y0 = source.children[0].y0 + getMinWidth(source.children) / 2;
 		}
 

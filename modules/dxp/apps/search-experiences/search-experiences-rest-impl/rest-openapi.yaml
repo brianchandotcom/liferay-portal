@@ -88,6 +88,124 @@ components:
                             type: string
                     type: object
             type: object
+        Configuration:
+            properties:
+                advanced:
+                    properties:
+                        excludes:
+                            items:
+                                type: string
+                            type: array
+                        fetchSource:
+                            type: boolean
+                        includes:
+                            items:
+                                type: string
+                            type: array
+                    type: object
+                aggregationConfiguration:
+                    properties:
+                        aggs:
+                            type: object
+                    type: object
+                facet:
+                    properties:
+                        enabled:
+                            type: boolean
+                    type: object
+                general:
+                    properties:
+                        clauseContributorsExcludes:
+                            items:
+                                type: string
+                            type: array
+                        clauseContributorsIncludes:
+                            items:
+                                type: string
+                            type: array
+                        emptySearchEnabled:
+                            type: boolean
+                        explain:
+                            type: boolean
+                        includeResponseString:
+                            type: boolean
+                        searchableAssetTypes:
+                            items:
+                                type: string
+                            type: array
+                    type: object
+                highlight:
+                    properties:
+                        fields:
+                            additionalProperties:
+                                $ref: "#/components/schemas/HighlightField"
+                            type: object
+                        fragment_size:
+                            type: integer
+                        number_of_fragments:
+                            type: integer
+                        post_tags:
+                            items:
+                                type: string
+                            type: array
+                        pre_tags:
+                            items:
+                                type: string
+                            type: array
+                        require_field_match:
+                            type: boolean
+                        type:
+                            type: string
+                    type: object
+                parameters:
+                    additionalProperties:
+                        $ref: "#/components/schemas/Parameter"
+                    type: object
+                queryConfiguration:
+                    properties:
+                        applyIndexerClauses:
+                            type: boolean
+                        queryEntries:
+                            items:
+                                properties:
+                                    clauses:
+                                        items:
+                                            $ref: "#/components/schemas/Clause"
+                                        type: array
+                                    condition:
+                                        $ref: "#/components/schemas/Condition"
+                                    enabled:
+                                        type: boolean
+                                    postFilterClauses:
+                                        items:
+                                            $ref: "#/components/schemas/Clause"
+                                        type: array
+                                    rescores:
+                                        items:
+                                            properties:
+                                                query:
+                                                    type: object
+                                                queryWeight:
+                                                    format: float
+                                                    type: number
+                                                rescoreQueryWeight:
+                                                    format: float
+                                                    type: number
+                                                scoreMode:
+                                                    type: string
+                                                windowSize:
+                                                    type: integer
+                                            type: object
+                                        type: array
+                                type: object
+                            type: array
+                    type: object
+                sortConfiguration:
+                    properties:
+                        sorts:
+                            type: object
+                    type: object
+            type: object
         DocumentField:
             properties:
                 values:
@@ -98,10 +216,10 @@ components:
             properties:
                 category:
                     type: string
+                configuration:
+                    $ref: "#/components/schemas/Configuration"
                 icon:
                     type: string
-                sxpBlueprint:
-                    $ref: "#/components/schemas/SXPBlueprint"
                 uiConfiguration:
                     properties:
                         fieldSets:
@@ -145,6 +263,20 @@ components:
                             type: array
                     type: object
             type: object
+        ElementInstance:
+            properties:
+                sxpElement:
+                    $ref: "#/components/schemas/SXPElement"
+                sxpElementId:
+                    format: int64
+                    type: integer
+                type:
+                    type: integer
+                uiConfigurationValues:
+                    additionalProperties:
+                        $ref: "#/components/schemas/ValueDefinition"
+                    type: object
+            type: object
         FieldMappingInfo:
             properties:
                 languageIdPosition:
@@ -180,130 +312,16 @@ components:
         SXPBlueprint:
             properties:
                 configuration:
-                    properties:
-                        advanced:
-                            properties:
-                                excludes:
-                                    items:
-                                        type: string
-                                    type: array
-                                includes:
-                                    items:
-                                        type: string
-                                    type: array
-                            type: object
-                        aggregationConfiguration:
-                            properties:
-                                aggs:
-                                    type: object
-                            type: object
-                        facet:
-                            properties:
-                                enabled:
-                                    type: boolean
-                            type: object
-                        general:
-                            properties:
-                                clauseContributorsExcludes:
-                                    items:
-                                        type: string
-                                    type: array
-                                clauseContributorsIncludes:
-                                    items:
-                                        type: string
-                                    type: array
-                                emptySearchEnabled:
-                                    type: boolean
-                                explain:
-                                    type: boolean
-                                includeResponseString:
-                                    type: boolean
-                                searchableAssetTypes:
-                                    items:
-                                        type: string
-                                    type: array
-                            type: object
-                        highlight:
-                            properties:
-                                fields:
-                                    additionalProperties:
-                                        $ref: "#/components/schemas/HighlightField"
-                                    type: object
-                                fragment_size:
-                                    type: integer
-                                number_of_fragments:
-                                    type: integer
-                                post_tags:
-                                    items:
-                                        type: string
-                                    type: array
-                                pre_tags:
-                                    items:
-                                        type: string
-                                    type: array
-                                require_field_match:
-                                    type: boolean
-                                type:
-                                    type: string
-                            type: object
-                        parameters:
-                            additionalProperties:
-                                $ref: "#/components/schemas/Parameter"
-                            type: object
-                        queryConfiguration:
-                            properties:
-                                applyIndexerClauses:
-                                    type: boolean
-                                queryEntries:
-                                    items:
-                                        properties:
-                                            clauses:
-                                                items:
-                                                    $ref: "#/components/schemas/Clause"
-                                                type: array
-                                            condition:
-                                                $ref: "#/components/schemas/Condition"
-                                            enabled:
-                                                type: boolean
-                                            postFilterClauses:
-                                                items:
-                                                    $ref: "#/components/schemas/Clause"
-                                                type: array
-                                            rescores:
-                                                items:
-                                                    properties:
-                                                        query:
-                                                            type: object
-                                                        queryWeight:
-                                                            format: float
-                                                            type: number
-                                                        rescoreQueryWeight:
-                                                            format: float
-                                                            type: number
-                                                        scoreMode:
-                                                            type: string
-                                                        windowSize:
-                                                            type: integer
-                                                    type: object
-                                                type: array
-                                        type: object
-                                    type: array
-                            type: object
-                        sortConfiguration:
-                            properties:
-                                sorts:
-                                    type: object
-                            type: object
-                    type: object
+                    $ref: "#/components/schemas/Configuration"
                 description:
                     type: string
                 description_i18n:
                     additionalProperties:
                         type: string
                     type: object
-                elementDefinitions:
+                elementInstances:
                     items:
-                        $ref: "#/components/schemas/ElementDefinition"
+                        $ref: "#/components/schemas/ElementInstance"
                     type: array
                 id:
                     format: int64

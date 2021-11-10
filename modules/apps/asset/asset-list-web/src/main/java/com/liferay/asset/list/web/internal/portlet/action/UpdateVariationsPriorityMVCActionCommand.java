@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.asset.list.web.internal.portlet.action;
 
 import com.liferay.asset.list.constants.AssetListPortletKeys;
@@ -26,11 +27,9 @@ import javax.portlet.ActionResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-
 /**
  * @author Yurena Cabrera
  */
-
 @Component(
 	immediate = true,
 	property = {
@@ -44,7 +43,7 @@ public class UpdateVariationsPriorityMVCActionCommand
 
 	@Override
 	protected void doProcessAction(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long[] variationsPriority = ParamUtil.getLongValues(
@@ -69,4 +68,5 @@ public class UpdateVariationsPriorityMVCActionCommand
 	@Reference
 	private AssetListEntrySegmentsEntryRelLocalService
 		_assetListEntrySegmentsEntryRelLocalService;
+
 }

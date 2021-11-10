@@ -73,11 +73,9 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -179,100 +177,6 @@ public class EditAssetListDisplayContext {
 					QueryUtil.ALL_POS);
 
 		return _assetListEntrySegmentsEntryRels;
-	}
-
-	public Map<String, Object> getData() throws Exception {
-		AssetListEntry assetListEntry = getAssetListEntry();
-
-		List<SegmentsEntry> availableSegmentsEntries = getAvailableSegmentsEntries();
-
-
-		PortletURL segmentsPortletURL = PortalUtil.getControlPanelPortletURL(
-			_httpServletRequest, _themeDisplay.getScopeGroup(), SegmentsPortletKeys.SEGMENTS, 0,
-			0, PortletRequest.RENDER_PHASE);
-
-		String createNewSegmentURL = PortletURLBuilder.create(segmentsPortletURL)
-			.setMVCRenderCommandName("/segments/edit_segments_entry", false)
-			.setParameter("type", User.class.getName())
-			.buildString();
-
-		String createUpdateVariationsPriorityURL = PortletURLBuilder.create(segmentsPortletURL)
-			.setMVCRenderCommandName("/asset_list/update_variations_priority", false)
-			.buildString();
-
-		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(_portletResponse);
-
-
-		return HashMapBuilder.<String, Object>put(
-			"openSelectSegmentsEntryDialogMethod", liferayPortletResponse.getNamespace() + "openSelectSegmentsEntryDialog"
-		).put(
-			"assetEntryListSegmentsEntryRels", _getAssetListEntrySegmentsEntryRelJSONArray()
-		).put(
-			"availableSegmentsEntries", !availableSegmentsEntries.isEmpty()
-		).put(
-			"validAssetListEntry", Validator.isNotNull(assetListEntry.getAssetEntryType())
-		).put(
-			"createNewSegmentURL", createNewSegmentURL
-		).put(
-			"updateVariationsPriorityURL", createUpdateVariationsPriorityURL
-		)
-		.build();
-	}
-
-	private JSONArray _getAssetListEntrySegmentsEntryRelJSONArray() {
-		List<AssetListEntrySegmentsEntryRel>
-			assetEntryListSegmentsEntryRels = getAssetListEntrySegmentsEntryRels();
-
-		Stream<AssetListEntrySegmentsEntryRel> stream = assetEntryListSegmentsEntryRels.stream();
-
-		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(_portletResponse);
-
-		return JSONUtil.putAll(
-			stream.map(
-				assetListEntrySegmentsEntryRel -> JSONUtil.put(
-					"active",
-					getSegmentsEntryId() == assetListEntrySegmentsEntryRel.getSegmentsEntryId()
-				).put(
-					"editAssetListEntryURL", PortletURLBuilder.createRenderURL(
-						liferayPortletResponse
-					).setMVCPath(
-						"/edit_asset_list_entry.jsp"
-					).setParameter(
-						"assetListEntryId", assetListEntrySegmentsEntryRel.getAssetListEntryId()
-					).setParameter(
-						"segmentsEntryId", assetListEntrySegmentsEntryRel.getSegmentsEntryId()
-					).buildString()
-				).put(
-					"label",
-					getSegmentsEntryName(
-						assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
-						_themeDisplay.getLocale())
-				).put(
-					"deleteAssetListEntryVariationURL", _getDeleteAssetListEntryVariationURL(liferayPortletResponse, assetListEntrySegmentsEntryRel)
-				).put(
-					"assetListEntrySegmentsEntryRelId", assetListEntrySegmentsEntryRel.getAssetListEntrySegmentsEntryRelId()
-				)
-			).toArray());
-	}
-
-	private String _getDeleteAssetListEntryVariationURL(
-		LiferayPortletResponse liferayPortletResponse,
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel) {
-		if (assetListEntrySegmentsEntryRel.getSegmentsEntryId() == SegmentsEntryConstants.ID_DEFAULT || isLiveGroup()) {
-			return "";
-		}
-
-		return PortletURLBuilder.createActionURL(
-			liferayPortletResponse
-		).setActionName(
-			"/asset_list/delete_asset_list_entry_variation"
-		).setParameter(
-			"assetListEntryId", assetListEntrySegmentsEntryRel.getAssetListEntryId()
-		).setParameter(
-			"segmentsEntryId", assetListEntrySegmentsEntryRel.getSegmentsEntryId()
-		).buildString();
 	}
 
 	public int getAssetListEntryType() {
@@ -690,6 +594,47 @@ public class EditAssetListDisplayContext {
 
 		return _getClassTypeIds(
 			unicodeProperties, className, availableClassTypeIds);
+	}
+
+	public Map<String, Object> getData() throws Exception {
+		PortletURL segmentsPortletURL = PortalUtil.getControlPanelPortletURL(
+			_httpServletRequest, _themeDisplay.getScopeGroup(),
+			SegmentsPortletKeys.SEGMENTS, 0, 0, PortletRequest.RENDER_PHASE);
+
+		return HashMapBuilder.<String, Object>put(
+			"assetEntryListSegmentsEntryRels",
+			_getAssetListEntrySegmentsEntryRelJSONArray()
+		).put(
+			"availableSegmentsEntries", !getAvailableSegmentsEntries().isEmpty()
+		).put(
+			"createNewSegmentURL",
+			PortletURLBuilder.create(
+				segmentsPortletURL
+			).setMVCRenderCommandName(
+				"/segments/edit_segments_entry", false
+			).setParameter(
+				"type", User.class.getName()
+			).buildString()
+		).put(
+			"openSelectSegmentsEntryDialogMethod",
+			() -> {
+				LiferayPortletResponse liferayPortletResponse =
+					PortalUtil.getLiferayPortletResponse(_portletResponse);
+
+				return liferayPortletResponse.getNamespace() +
+					"openSelectSegmentsEntryDialog";
+			}
+		).put(
+			"updateVariationsPriorityURL",
+			PortletURLBuilder.create(
+				segmentsPortletURL
+			).setMVCRenderCommandName(
+				"/asset_list/update_variations_priority", false
+			).buildString()
+		).put(
+			"validAssetListEntry",
+			Validator.isNotNull(getAssetListEntry().getAssetEntryType())
+		).build();
 	}
 
 	public String getDDMStructureDisplayFieldValue() throws Exception {
@@ -1273,6 +1218,52 @@ public class EditAssetListDisplayContext {
 			assetEntryItemSelectorCriterion);
 	}
 
+	private JSONArray _getAssetListEntrySegmentsEntryRelJSONArray() {
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+			getAssetListEntrySegmentsEntryRels();
+
+		Stream<AssetListEntrySegmentsEntryRel> stream =
+			assetListEntrySegmentsEntryRels.stream();
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(_portletResponse);
+
+		return JSONUtil.putAll(
+			stream.map(
+				assetListEntrySegmentsEntryRel -> JSONUtil.put(
+					"active",
+					getSegmentsEntryId() ==
+						assetListEntrySegmentsEntryRel.getSegmentsEntryId()
+				).put(
+					"assetListEntrySegmentsEntryRelId",
+					assetListEntrySegmentsEntryRel.
+						getAssetListEntrySegmentsEntryRelId()
+				).put(
+					"deleteAssetListEntryVariationURL",
+					_getDeleteAssetListEntryVariationURL(
+						liferayPortletResponse, assetListEntrySegmentsEntryRel)
+				).put(
+					"editAssetListEntryURL",
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCPath(
+						"/edit_asset_list_entry.jsp"
+					).setParameter(
+						"assetListEntryId",
+						assetListEntrySegmentsEntryRel.getAssetListEntryId()
+					).setParameter(
+						"segmentsEntryId",
+						assetListEntrySegmentsEntryRel.getSegmentsEntryId()
+					).buildString()
+				).put(
+					"label",
+					getSegmentsEntryName(
+						assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
+						_themeDisplay.getLocale())
+				)
+			).toArray());
+	}
+
 	private Long[] _getClassTypeIds(
 		UnicodeProperties unicodeProperties, String className,
 		Long[] availableClassTypeIds) {
@@ -1328,6 +1319,30 @@ public class EditAssetListDisplayContext {
 		).build();
 	}
 
+	private String _getDeleteAssetListEntryVariationURL(
+		LiferayPortletResponse liferayPortletResponse,
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel) {
+
+		if ((assetListEntrySegmentsEntryRel.getSegmentsEntryId() ==
+				SegmentsEntryConstants.ID_DEFAULT) ||
+			isLiveGroup()) {
+
+			return "";
+		}
+
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/asset_list/delete_asset_list_entry_variation"
+		).setParameter(
+			"assetListEntryId",
+			assetListEntrySegmentsEntryRel.getAssetListEntryId()
+		).setParameter(
+			"segmentsEntryId",
+			assetListEntrySegmentsEntryRel.getSegmentsEntryId()
+		).buildString();
+	}
+
 	private static final long _DEFAULT_SUBTYPE_SELECTION_ID = 0;
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -1367,4 +1382,5 @@ public class EditAssetListDisplayContext {
 	private Boolean _subtypeFieldsFilterEnabled;
 	private final ThemeDisplay _themeDisplay;
 	private final UnicodeProperties _unicodeProperties;
+
 }

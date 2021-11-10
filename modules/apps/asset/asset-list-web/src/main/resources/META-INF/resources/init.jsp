@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ page import="com.liferay.segments.constants.SegmentsPortletKeys" %>
-<%@ page import="javax.portlet.PortletRequest" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
@@ -44,7 +42,6 @@ page import="com.liferay.asset.list.constants.AssetListEntryTypeConstants" %><%@
 page import="com.liferay.asset.list.constants.AssetListFormConstants" %><%@
 page import="com.liferay.asset.list.model.AssetListEntry" %><%@
 page import="com.liferay.asset.list.model.AssetListEntryAssetEntryRel" %><%@
-page import="com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel" %><%@
 page import="com.liferay.asset.list.web.internal.constants.AssetListWebKeys" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.AssetListDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.AssetListEntryUsagesDisplayContext" %><%@
@@ -62,7 +59,6 @@ page import="com.liferay.asset.list.web.internal.util.comparator.ClassTypeNameCo
 page import="com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.Field" %><%@
-page import="com.liferay.frontend.taglib.servlet.taglib.util.EmptyResultMessageKeys" %><%@
 page import="com.liferay.info.field.InfoFieldValue" %><%@
 page import="com.liferay.info.item.InfoItemFieldValues" %><%@
 page import="com.liferay.info.item.provider.InfoItemFieldValuesProvider" %><%@
@@ -93,7 +89,6 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.segments.constants.SegmentsEntryConstants" %><%@
-page import="com.liferay.segments.model.SegmentsEntry" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.io.Serializable" %>

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -182,32 +181,23 @@ public class FragmentEntryStagedModelRepository
 			return;
 		}
 
-		Group stagingGroup = _staging.getStagingGroup(groupId);
-
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
 			extraData);
 
 		boolean privateLayout = GetterUtil.getBoolean(
 			extraDataJSONObject.get("privateLayout"));
 
-		JSONArray jsonArray = (JSONArray)extraDataJSONObject.get("layoutIds");
+		JSONArray jsonArray = (JSONArray)extraDataJSONObject.get("layoutUUIDs");
 
 		long[] plids = new long[0];
 
-		for (long layoutId : JSONUtil.toLongArray(jsonArray)) {
-			Layout stagingLayout = _layoutService.fetchLayout(
-				stagingGroup.getGroupId(), privateLayout, layoutId);
+		for (String layoutUUID : JSONUtil.toStringArray(jsonArray)) {
+			Layout layout = _layoutService.getLayoutByUuidAndGroupId(
+				layoutUUID, groupId, privateLayout);
 
-			if (stagingLayout == null) {
-				continue;
-			}
+			plids = ArrayUtil.append(plids, layout.getPlid());
 
-			Layout liveLayout = _layoutService.getLayoutByUuidAndGroupId(
-				stagingLayout.getUuid(), groupId, privateLayout);
-
-			plids = ArrayUtil.append(plids, liveLayout.getPlid());
-
-			Layout draftLayout = liveLayout.fetchDraftLayout();
+			Layout draftLayout = layout.fetchDraftLayout();
 
 			if (draftLayout != null) {
 				plids = ArrayUtil.append(plids, draftLayout.getPlid());

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -238,8 +239,18 @@ public class DeletionSystemEventExporter {
 					portletDataContext.getLayoutIds());
 
 				if (layoutIds.length > 0) {
+					String[] layoutUUIDs = new String[layoutIds.length];
+
+					for (int i = 0; i < layoutIds.length; i++) {
+						Layout layout = LayoutLocalServiceUtil.getLayout(
+							portletDataContext.getGroupId(),
+							portletDataContext.isPrivateLayout(), layoutIds[i]);
+
+						layoutUUIDs[i] = layout.getUuid();
+					}
+
 					extraDataJSONObject.put(
-						"layoutIds", layoutIds
+						"layoutUUIDs", layoutUUIDs
 					).put(
 						"privateLayout", portletDataContext.isPrivateLayout()
 					);

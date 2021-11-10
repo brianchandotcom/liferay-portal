@@ -137,9 +137,7 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 	}
 
 	@Test
-	public void testLoadGetPortletsByCompanyWithReload()
-		throws Exception {
-
+	public void testLoadGetPortletsByCompanyWithReload() throws Exception {
 		List<Company> companies = new ArrayList<>();
 
 		try {

@@ -33,6 +33,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
+import javax.validation.constraints.NotNull;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -117,7 +119,27 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				LocalizedMapUtil.getLocalizedMap(sxpBlueprint.getTitle_i18n()),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
-
+	
+	@Override
+	public SXPBlueprint patchSXPBlueprint(@NotNull Long sxpBlueprintId, SXPBlueprint sxpBlueprint) throws Exception {
+		
+		return _sxpBlueprintDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+					_dtoConverterRegistry, contextHttpServletRequest,
+					sxpBlueprint.getId(),
+					contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+					contextUser),
+				_sxpBlueprintService.updateSXPBlueprint(sxpBlueprintId,
+						String.valueOf(sxpBlueprint.getConfiguration()),
+						LocalizedMapUtil.getLocalizedMap(
+							sxpBlueprint.getDescription_i18n()),
+						Arrays.toString(
+							ElementDefinitionUtil.unpack(
+								sxpBlueprint.getElementDefinitions())),
+						LocalizedMapUtil.getLocalizedMap(sxpBlueprint.getTitle_i18n()),
+						ServiceContextFactory.getInstance(contextHttpServletRequest)));
+	}
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 

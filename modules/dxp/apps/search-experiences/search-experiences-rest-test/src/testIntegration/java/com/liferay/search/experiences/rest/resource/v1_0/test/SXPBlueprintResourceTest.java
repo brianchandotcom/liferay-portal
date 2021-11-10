@@ -15,7 +15,11 @@
 package com.liferay.search.experiences.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPBlueprint;
+
+import java.util.Collection;
+import java.util.Collections;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -37,12 +41,6 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 	@Override
 	@Test
 	public void testGraphQLGetSXPBlueprintNotFound() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPatchSXPBlueprint() throws Exception {
 	}
 
 	@Override
@@ -81,6 +79,18 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 		return _addSXPBlueprint(randomSXPBlueprint());
 	}
 
+	@Override
+	protected SXPBlueprint randomSXPBlueprint() throws Exception {
+		
+		 SXPBlueprint sxpBlueprint = super.randomSXPBlueprint();
+		 
+		 sxpBlueprint.setTitle_i18n(Collections.singletonMap("en_US",sxpBlueprint.getTitle()));
+		 
+		 sxpBlueprint.setDescription_i18n(Collections.singletonMap("en_US",sxpBlueprint.getDescription()));
+
+		 return sxpBlueprint;
+		 
+	}
 	@Override
 	protected SXPBlueprint testPostSXPBlueprint_addSXPBlueprint(
 			SXPBlueprint sxpBlueprint)

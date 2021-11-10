@@ -380,7 +380,7 @@ public class BundleSiteInitializerTest {
 	private void _assertStyleBookEntry(Group group) {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.fetchStyleBookEntry(
-				group.getGroupId(), "test-style-book-entry");
+				group.getGroupId(), "test-style-book");
 
 		Assert.assertNotNull(styleBookEntry);
 

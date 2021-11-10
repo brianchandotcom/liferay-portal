@@ -1233,18 +1233,10 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
 		JSONBlog.addComment(
 			commentBody = "Blog Comment",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Guest");
-
-		AssertElementPresent(locator1 = "Button#REPLY");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1263,10 +1255,6 @@ definition {
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Guest",
 			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(

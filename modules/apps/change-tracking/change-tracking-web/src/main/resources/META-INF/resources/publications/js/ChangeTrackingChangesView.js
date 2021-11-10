@@ -175,19 +175,20 @@ export default ({
 
 	const initialized = useRef(false);
 
-	if (
-		!initialized.current &&
-		isWithinApp(params) &&
-		(!window.history.state || !window.history.state.senna)
-	) {
+	if (!initialized.current) {
+		if (
+			isWithinApp(params) &&
+			(!window.history.state || !window.history.state.senna)
+		) {
+			const state = {
+				path: pathname + search,
+				senna: true,
+			};
+
+			window.history.replaceState(state, document.title);
+		}
+
 		initialized.current = true;
-
-		const state = {
-			path: pathname + search,
-			senna: true,
-		};
-
-		window.history.replaceState(state, document.title);
 	}
 
 	params.delete(PARAM_CHANGE_TYPES);

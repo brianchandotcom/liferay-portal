@@ -15,6 +15,7 @@
 package com.liferay.site.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.site.internal.upgrade.v2_0_0.util.SiteFriendlyURLTable;
@@ -44,6 +45,8 @@ public class SiteServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register("2.1.0", "2.1.1", new DummyUpgradeStep());
 	}
 
 }

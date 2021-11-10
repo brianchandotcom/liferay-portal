@@ -13,19 +13,32 @@ import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import AddSXPElementSidebar from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/AddSXPElementSidebar';
-import {SELECTED_SXP_ELEMENTS} from '../mocks/data';
+import {QUERY_SXP_ELEMENTS} from '../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';
 
-const DEFAULT_EXPANDED_LIST = ['match'];
+// Suppress act warning until @testing-library/react is updated past 9
+// to use screen. See https://javascript.plainenglish.io/
+// you-probably-dont-need-act-in-your-react-tests-2a0bcd2ad65c
+
+const originalError = console.error;
+
+beforeAll(() => {
+	console.error = (...args) => {
+		if (/Warning.*not wrapped in act/.test(args[0])) {
+			return;
+		}
+		originalError.call(console, ...args);
+	};
+});
+
+afterAll(() => {
+	console.error = originalError;
+});
 
 function renderAddSXPElementSidebar(props) {
 	return render(
-		<AddSXPElementSidebar
-			onAddSXPElement={jest.fn()}
-			sxpElements={SELECTED_SXP_ELEMENTS}
-			{...props}
-		/>
+		<AddSXPElementSidebar onAddSXPElement={jest.fn()} {...props} />
 	);
 }
 
@@ -36,38 +49,46 @@ describe('AddSXPElementSidebar', () => {
 		expect(container).not.toBeNull();
 	});
 
-	it('renders the titles for the possible query elements', () => {
-		const {getByText} = renderAddSXPElementSidebar();
+	it('renders the titles for the possible query elements', async () => {
+		const {container, findByText, getByText} = renderAddSXPElementSidebar();
 
-		SELECTED_SXP_ELEMENTS.map((sxpElement) => {
-			if (
-				DEFAULT_EXPANDED_LIST.includes(
-					sxpElement.sxpElementTemplateJSON.category
-				)
-			) {
-				getByText(sxpElement.sxpElementTemplateJSON.title['en_US']);
-			}
+		await findByText('boost');
+
+		container.querySelectorAll('.panel-header').forEach((header) => {
+			fireEvent.click(header);
+		});
+
+		QUERY_SXP_ELEMENTS.map((sxpElement) => {
+			getByText(sxpElement.title_i18n['en_US']);
 		});
 	});
 
-	it('renders the descriptions for the possible query elements', () => {
-		const {getByText} = renderAddSXPElementSidebar();
+	it('renders the descriptions for the possible query elements', async () => {
+		const {container, findByText, getByText} = renderAddSXPElementSidebar();
 
-		SELECTED_SXP_ELEMENTS.map((sxpElement) => {
-			if (
-				DEFAULT_EXPANDED_LIST.includes(
-					sxpElement.sxpElementTemplateJSON.category
-				)
-			) {
-				getByText(
-					sxpElement.sxpElementTemplateJSON.description['en_US']
-				);
-			}
+		await findByText('boost');
+
+		container.querySelectorAll('.panel-header').forEach((header) => {
+			fireEvent.click(header);
+		});
+
+		QUERY_SXP_ELEMENTS.map((sxpElement) => {
+			getByText(sxpElement.description_i18n['en_US']);
 		});
 	});
 
-	it('displays the add button when hovering over an element item', () => {
-		const {container, queryAllByText} = renderAddSXPElementSidebar();
+	it('displays the add button when hovering over an element item', async () => {
+		const {
+			container,
+			findByText,
+			queryAllByText,
+		} = renderAddSXPElementSidebar();
+
+		await findByText('boost');
+
+		container.querySelectorAll('.panel-header').forEach((header) => {
+			fireEvent.click(header);
+		});
 
 		fireEvent.mouseOver(container.querySelectorAll('.list-group-title')[0]);
 

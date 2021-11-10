@@ -32,7 +32,7 @@ function renderJSONSXPElement(props) {
 	return render(
 		<JSONSXPElement
 			collapseAll={false}
-			id={SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON.id}
+			id={0}
 			onDeleteSXPElement={onDeleteSXPElement}
 			setFieldTouched={setFieldTouched}
 			setFieldValue={setFieldValue}
@@ -55,7 +55,7 @@ describe('JSONSXPElement', () => {
 		const {getByText} = renderJSONSXPElement();
 
 		getByText(
-			SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON.title['en_US']
+			SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON.title_i18n['en_US']
 		);
 	});
 
@@ -63,7 +63,9 @@ describe('JSONSXPElement', () => {
 		const {getByText} = renderJSONSXPElement();
 
 		getByText(
-			SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON.description['en_US']
+			SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON.description_i18n[
+				'en_US'
+			]
 		);
 	});
 

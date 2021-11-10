@@ -1181,10 +1181,10 @@ describe('utils', () => {
 		it('returns an object for the contributors enabled state', () => {
 			expect(
 				getClauseContributorsState({
-					excludes: [
+					clauseContributorsExcludes: [
 						'com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor',
 					],
-					includes: [
+					clauseContributorsIncludes: [
 						'com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor',
 						'com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor',
 					],
@@ -1206,10 +1206,10 @@ describe('utils', () => {
 					'com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor': true,
 				})
 			).toEqual({
-				excludes: [
+				clauseContributorsExcludes: [
 					'com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor',
 				],
-				includes: [
+				clauseContributorsIncludes: [
 					'com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor',
 					'com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor',
 				],

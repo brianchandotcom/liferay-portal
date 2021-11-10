@@ -13,7 +13,7 @@ import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import QueryBuilder from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/query_builder_tab';
-import {SEARCHABLE_TYPES, SELECTED_SXP_ELEMENTS} from '../../mocks/data';
+import {SELECTED_SXP_ELEMENTS} from '../../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';
 
@@ -46,15 +46,11 @@ afterAll(() => {
 function renderBuilder(props) {
 	return render(
 		<QueryBuilder
-			frameworkConfig={{
-				apply_indexer_clauses: false,
-				searchable_asset_types: SEARCHABLE_TYPES.map(
-					({className}) => className
-				),
-			}}
 			onDeleteSXPElement={jest.fn()}
 			onFrameworkConfigChange={jest.fn()}
-			selectedSXPElements={SELECTED_SXP_ELEMENTS}
+			selectedSXPElements={SELECTED_SXP_ELEMENTS.map(
+				(element, index) => ({...element, id: index})
+			)}
 			{...props}
 		/>
 	);
@@ -75,7 +71,7 @@ describe('QueryBuilder', () => {
 		await findByText('query-builder');
 
 		SELECTED_SXP_ELEMENTS.map((sxpElement) =>
-			getByText(sxpElement.sxpElementTemplateJSON.title['en_US'])
+			getByText(sxpElement.sxpElementTemplateJSON.title_i18n['en_US'])
 		);
 	});
 
@@ -85,7 +81,9 @@ describe('QueryBuilder', () => {
 		await findByText('query-builder');
 
 		SELECTED_SXP_ELEMENTS.map((sxpElement) =>
-			getByText(sxpElement.sxpElementTemplateJSON.description['en_US'])
+			getByText(
+				sxpElement.sxpElementTemplateJSON.description_i18n['en_US']
+			)
 		);
 	});
 

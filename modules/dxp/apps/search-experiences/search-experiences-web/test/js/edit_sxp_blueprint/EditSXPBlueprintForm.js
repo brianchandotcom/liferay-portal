@@ -14,12 +14,12 @@ import React from 'react';
 
 import EditSXPBlueprintForm from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/EditSXPBlueprintForm';
 const Toasts = require('../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/toasts');
+import {getSXPElementOutput} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
 import {
 	ENTITY_JSON,
 	INDEX_FIELDS,
 	INITIAL_CONFIGURATION,
 	SELECTED_SXP_ELEMENTS,
-	SXP_ELEMENT_OUTPUTS,
 } from '../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -61,16 +61,14 @@ function renderEditSXPBlueprintForm(props) {
 		<EditSXPBlueprintForm
 			entityJSON={ENTITY_JSON}
 			indexFields={INDEX_FIELDS}
-			initialConfigurationString={JSON.stringify(INITIAL_CONFIGURATION)}
+			initialConfiguration={INITIAL_CONFIGURATION}
 			initialDescription={{}}
-			initialSelectedSXPElementsString={JSON.stringify({
-				query_configuration: [],
-			})}
-			initialTitle={{
-				'en-US': 'Test Title',
+			initialSXPElementInstances={{
+				queryConfiguration: {queryEntries: []},
 			}}
-			querySXPElements={SELECTED_SXP_ELEMENTS}
-			sxpBlueprintId="1"
+			initialTitle={{
+				en_US: 'Test Title',
+			}}
 			{...props}
 		/>
 	);
@@ -87,13 +85,18 @@ describe('EditSXPBlueprintForm', () => {
 
 	it('renders the query elements', async () => {
 		const {container, findByText} = renderEditSXPBlueprintForm({
-			initialConfigurationString: JSON.stringify({
+			initialConfiguration: {
 				...INITIAL_CONFIGURATION,
-				query_configuration: SXP_ELEMENT_OUTPUTS,
-			}),
-			initialSelectedSXPElementsString: JSON.stringify({
-				query_configuration: SELECTED_SXP_ELEMENTS,
-			}),
+				queryConfiguration: {
+					applyIndexerClauses: true,
+					queryEntries: SELECTED_SXP_ELEMENTS.map(
+						getSXPElementOutput
+					),
+				},
+			},
+			initialSXPElementInstances: {
+				queryConfiguration: {queryEntries: SELECTED_SXP_ELEMENTS},
+			},
 		});
 
 		await findByText('query-settings');
@@ -101,7 +104,7 @@ describe('EditSXPBlueprintForm', () => {
 		const {getByText} = within(container.querySelector('.builder'));
 
 		SELECTED_SXP_ELEMENTS.map((sxpElement) =>
-			getByText(sxpElement.sxpElementTemplateJSON.title['en_US'])
+			getByText(sxpElement.sxpElementTemplateJSON.title_i18n['en_US'])
 		);
 	});
 
@@ -116,6 +119,8 @@ describe('EditSXPBlueprintForm', () => {
 
 		const sxpElementCountBefore = container.querySelectorAll('.sxp-element')
 			.length;
+
+		fireEvent.click(container.querySelectorAll('.panel-header')[0]);
 
 		fireEvent.mouseOver(queryAllByLabelText('add')[0]);
 
@@ -134,13 +139,18 @@ describe('EditSXPBlueprintForm', () => {
 			getAllByLabelText,
 			getAllByText,
 		} = renderEditSXPBlueprintForm({
-			initialConfigurationString: JSON.stringify({
+			initialConfiguration: {
 				...INITIAL_CONFIGURATION,
-				query_configuration: SXP_ELEMENT_OUTPUTS,
-			}),
-			initialSelectedSXPElementsString: JSON.stringify({
-				query_configuration: SELECTED_SXP_ELEMENTS,
-			}),
+				queryConfiguration: {
+					applyIndexerClauses: true,
+					queryEntries: SELECTED_SXP_ELEMENTS.map(
+						getSXPElementOutput
+					),
+				},
+			},
+			initialSXPElementInstances: {
+				queryConfiguration: {queryEntries: SELECTED_SXP_ELEMENTS},
+			},
 		});
 
 		await findByText('query-settings');

@@ -9,21 +9,27 @@
  * distribution rights of the Software.
  */
 
-import {
-	KEYWORD_QUERY_CONTRIBUTORS,
-	MODEL_PREFILTER_CONTRIBUTORS,
-	QUERY_PREFILTER_CONTRIBUTORS,
-	SEARCHABLE_TYPES,
-} from './data';
+import {QUERY_SXP_ELEMENTS, mockClassNames} from './data';
 
 async function mockFetch(url) {
 	switch (url) {
+		case '/o/search-experiences-rest/v1.0/sxp-elements': {
+			return {
+				json: async () => ({
+					items: QUERY_SXP_ELEMENTS,
+					page: 1,
+					totalCount: QUERY_SXP_ELEMENTS.length,
+				}),
+				ok: true,
+				status: 200,
+			};
+		}
 		case '/o/search-experiences-rest/v1.0/searchable-asset-names/en_US': {
 			return {
 				json: async () => ({
-					items: SEARCHABLE_TYPES,
+					items: mockClassNames('SearchableAssetType'),
 					page: 1,
-					totalCount: SEARCHABLE_TYPES.length,
+					totalCount: 10,
 				}),
 				ok: true,
 				status: 200,
@@ -32,11 +38,9 @@ async function mockFetch(url) {
 		case '/o/search-experiences-rest/v1.0/keyword-query-contributors': {
 			return {
 				json: async () => ({
-					items: KEYWORD_QUERY_CONTRIBUTORS.map((className) => ({
-						className,
-					})),
+					items: mockClassNames('KeywordQueryContributor'),
 					page: 1,
-					totalCount: KEYWORD_QUERY_CONTRIBUTORS.length,
+					totalCount: 10,
 				}),
 				ok: true,
 				status: 200,
@@ -45,11 +49,9 @@ async function mockFetch(url) {
 		case '/o/search-experiences-rest/v1.0/model-prefilter-contributors': {
 			return {
 				json: async () => ({
-					items: MODEL_PREFILTER_CONTRIBUTORS.map((className) => ({
-						className,
-					})),
+					items: mockClassNames('ModelPrefilterContributor'),
 					page: 1,
-					totalCount: MODEL_PREFILTER_CONTRIBUTORS.length,
+					totalCount: 10,
 				}),
 				ok: true,
 				status: 200,
@@ -58,11 +60,9 @@ async function mockFetch(url) {
 		case '/o/search-experiences-rest/v1.0/query-prefilter-contributors': {
 			return {
 				json: async () => ({
-					items: QUERY_PREFILTER_CONTRIBUTORS.map((className) => ({
-						className,
-					})),
+					items: mockClassNames('QueryPrefilterContributor'),
 					page: 1,
-					totalCount: QUERY_PREFILTER_CONTRIBUTORS.length,
+					totalCount: 10,
 				}),
 				ok: true,
 				status: 200,

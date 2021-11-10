@@ -14,11 +14,7 @@ import React from 'react';
 
 import ClauseContributors from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/clause_contributors_tab';
 const Toasts = require('../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/toasts');
-import {
-	KEYWORD_QUERY_CONTRIBUTORS,
-	MODEL_PREFILTER_CONTRIBUTORS,
-	QUERY_PREFILTER_CONTRIBUTORS,
-} from '../../mocks/data';
+import {mockClassNames} from '../../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';
 
@@ -49,10 +45,11 @@ function renderClause(props) {
 	return render(
 		<ClauseContributors
 			applyIndexerClauses={false}
-			clauseContributors={{
-				excludes: [],
-				includes: [],
+			frameworkConfig={{
+				clauseContributorsExcludes: [],
+				clauseContributorsIncludes: [],
 			}}
+			onApplyIndexerClausesChange={jest.fn()}
 			onFrameworkConfigChange={jest.fn()}
 			{...props}
 		/>
@@ -69,31 +66,43 @@ describe('QueryBuilder', () => {
 	it('renders the list of contributors', async () => {
 		const {findAllByText, getByText} = renderClause();
 
-		await findAllByText(KEYWORD_QUERY_CONTRIBUTORS[0]);
+		await findAllByText('KeywordQueryContributor', {
+			exact: false,
+		});
 
-		KEYWORD_QUERY_CONTRIBUTORS.map((contributor) => getByText(contributor));
-
-		MODEL_PREFILTER_CONTRIBUTORS.map((contributor) =>
-			getByText(contributor)
+		mockClassNames('KeywordQueryContributor').forEach(({className}) =>
+			getByText(className)
 		);
 
-		QUERY_PREFILTER_CONTRIBUTORS.map((contributor) =>
-			getByText(contributor)
+		mockClassNames('ModelPrefilterContributor').forEach(({className}) =>
+			getByText(className)
+		);
+
+		mockClassNames('QueryPrefilterContributor').forEach(({className}) =>
+			getByText(className)
 		);
 	});
 
-	it('enables the correct number of contributors', async () => {
+	it('enables the correct number of active contributors', async () => {
+		const activeKeywordContributors = mockClassNames(
+			'KeywordQueryContributor',
+			false,
+			5
+		);
+
 		const {findAllByText, getAllByLabelText} = renderClause({
-			clauseContributors: {
-				excludes: [],
-				includes: KEYWORD_QUERY_CONTRIBUTORS,
+			frameworkConfig: {
+				clauseContributorsExcludes: [],
+				clauseContributorsIncludes: activeKeywordContributors,
 			},
 		});
 
-		await findAllByText(KEYWORD_QUERY_CONTRIBUTORS[0]);
+		await findAllByText('KeywordQueryContributor', {
+			exact: false,
+		});
 
 		expect(getAllByLabelText('on').length).toEqual(
-			KEYWORD_QUERY_CONTRIBUTORS.length
+			activeKeywordContributors.length
 		);
 	});
 });

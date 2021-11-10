@@ -57,7 +57,7 @@ describe('SXPElement', () => {
 		const {getByText} = renderSXPElement();
 
 		getByText(
-			SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON.title['en_US']
+			SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON.title_i18n['en_US']
 		);
 	});
 
@@ -65,7 +65,9 @@ describe('SXPElement', () => {
 		const {getByText} = renderSXPElement();
 
 		getByText(
-			SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON.description['en_US']
+			SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON.description_i18n[
+				'en_US'
+			]
 		);
 	});
 

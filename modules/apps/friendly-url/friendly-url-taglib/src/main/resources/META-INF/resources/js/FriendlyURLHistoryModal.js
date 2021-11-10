@@ -208,7 +208,7 @@ const FriendlyURLHistoryModal = ({
 
 	return (
 		<ClayModal
-			className="portlet-layouts-admin-url-history-modal"
+			className="friendly-url-history-modal"
 			observer={observer}
 			size="md"
 		>

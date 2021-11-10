@@ -22,6 +22,12 @@ String elementId = (String)request.getAttribute("liferay-friendly-url:history:el
 String friendlyURLEntryURL = (String)request.getAttribute("liferay-friendly-url:history:friendlyURLEntryURL");
 %>
 
+<liferay-util:html-top
+	outputKey="com.liferay.friendly.url.taglib.servlet.taglib.FriendlyURLHistoryTag#/page.jsp"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <div class="btn-url-history-wrapper">
 	<react:component
 		module="js/FriendlyURLHistory"

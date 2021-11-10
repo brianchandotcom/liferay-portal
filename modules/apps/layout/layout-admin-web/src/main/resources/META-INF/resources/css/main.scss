@@ -4,8 +4,6 @@
 @import 'miller_columns/MillerColumns';
 
 .portlet-layouts-admin {
-	@import 'FriendlyURLHistory';
-
 	.active > .card {
 		box-shadow: 0 0 0 2px $primary-l1;
 	}

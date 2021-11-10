@@ -4919,6 +4919,40 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-keycloak-server">
+		<sequential>
+			<property name="liferay.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies" />
+			<property name="keycloak.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies" />
+			<mirrors-get
+				dest="${liferay.dependency.dir}"
+				src="https://github.com/keycloak/keycloak/releases/download/15.0.2/keycloak-15.0.2.tar.gz"
+			/>
+			<decompress
+				dest="${liferay.dependency.dir}"
+				src="${liferay.dependency.dir}/keycloak-15.0.2.tar.gz"
+			/>
+
+			<parallel>
+				<daemons>
+					<exec dir="${liferay.dependency.dir}/keycloak-15.0.2/bin" executable="/bin/bash">
+						<arg value="./standalone.sh" />
+						<arg value="-Djboss.socket.binding.port-offset=10000" />
+						<arg value="-Dkeycloak.migration.action=import" />
+						<arg value="-Dkeycloak.migration.provider=singleFile" />
+						<arg value="-Dkeycloak.migration.file=${keycloak.dependency.dir}/keycloak-liferay-export.json" />
+						<arg value="-Dkeycloak.migration.strategy=OVERWRITE_EXISTING" />
+						<arg value="-b" />
+						<arg value="0.0.0.0" />
+					</exec>
+				</daemons>
+			</parallel>
+
+			<waitfor maxwait="60" maxwaitunit="second">
+				<http url="http://127.0.0.1:18080/" />
+			</waitfor>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-test-smtp-server">
 		<sequential>
 			<mirrors-get
@@ -5249,6 +5283,19 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<sequential>
 			<exec executable="taskkill.exe">
 				<arg line="/F /IM IEDriverServer.exe" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-keycloak-server">
+		<sequential>
+			<property name="liferay.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies" />
+
+			<exec dir="${liferay.dependency.dir}/keycloak-15.0.2/bin" executable="/bin/bash">
+				<arg value="./jboss-cli.sh" />
+				<arg value="--connect" />
+				<arg value="--controller=localhost:19990" />
+				<arg value="command=:shutdown" />
 			</exec>
 		</sequential>
 	</macrodef>
@@ -9417,6 +9464,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<antcall target="prepare-selenium-google-cloud-autotagging-properties" />
 		<antcall target="prepare-selenium-google-cloud-translation-properties" />
 		<antcall target="prepare-selenium-google-properties" />
+		<antcall target="prepare-selenium-keycloak-server" />
 		<antcall target="prepare-selenium-onedrive-properties" />
 		<antcall target="prepare-selenium-openid-properties" />
 		<antcall target="prepare-selenium-recaptcha-properties" />
@@ -10444,6 +10492,16 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				<echo append="true" file="${test.ext.properties.file}">
 					google.client.secret.4=${google.client.secret.4}
 				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-keycloak-server">
+		<get-testcase-property property.name="keycloak.enabled" />
+		<if>
+			<istrue value="${keycloak.enabled}" />
+			<then>
+				<start-keycloak-server/>
 			</then>
 		</if>
 	</target>

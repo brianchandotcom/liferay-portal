@@ -328,6 +328,39 @@ definition {
 			locator1 = "LexiconTable#TABLE_ENTRY");
 	}
 
+	@priority = "4"
+	test IsLocalizedInPublicationsAdmin {
+		User.openUsersAdmin();
+
+		User.editDisplaySettingsCP(
+			languageName = "español (España)",
+			userScreenName = "test");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		PublicationsNavigator.openPublicationsAdmin();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Publications#MANAGE_PUBLICATIONS_PAGE_TITLE",
+			value1 = "Listas de cambios");
+
+		AssertTextEquals.assertPartialText(
+			key_navItem = "Continua",
+			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK",
+			value1 = "Continua");
+
+		AssertTextEquals.assertPartialText(
+			key_tableHeader = "Publicación",
+			locator1 = "LexiconTable#TABLE_HEADER",
+			value1 = "Publicación");
+
+		AssertTextEquals.assertPartialText(
+			key_columnName = "status",
+			key_tableEntry = "En progreso",
+			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+			value1 = "En progreso");
+	}
+
 	@description = "Assert publications changes can search and sort"
 	@priority = "4"
 	test PublicationsChangesCanSearchAndSort {

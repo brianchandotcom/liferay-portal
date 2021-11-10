@@ -2782,7 +2782,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!antisamy.jar</file-name>
-				<version>1.5.9</version>
+				<version>1.6.4</version>
 				<project-name>OWASP AntiSamy</project-name>
 				<project-url>https://github.com/nahsra/antisamy</project-url>
 				<licenses>
@@ -2794,7 +2794,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!batik-constants.jar</file-name>
-				<version>1.13</version>
+				<version>1.14</version>
 				<project-name>org.apache.xmlgraphics:batik-constants</project-name>
 				<licenses>
 					<license>
@@ -2805,7 +2805,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!batik-css.jar</file-name>
-				<version>1.13</version>
+				<version>1.14</version>
 				<project-name>org.apache.xmlgraphics:batik-css</project-name>
 				<licenses>
 					<license>
@@ -2816,7 +2816,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!batik-i18n.jar</file-name>
-				<version>1.13</version>
+				<version>1.14</version>
 				<project-name>org.apache.xmlgraphics:batik-i18n</project-name>
 				<licenses>
 					<license>
@@ -2827,7 +2827,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!batik-util.jar</file-name>
-				<version>1.13</version>
+				<version>1.14</version>
 				<project-name>org.apache.xmlgraphics:batik-util</project-name>
 				<licenses>
 					<license>
@@ -2837,26 +2837,14 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.antisamy.jar!commons-io.jar</file-name>
-				<version>2.8.0</version>
-				<project-name>Apache Commons IO</project-name>
-				<project-url>https://commons.apache.org/proper/commons-io/</project-url>
+				<file-name>com.liferay.portal.security.antisamy.jar!commons-codec.jar</file-name>
+				<version>1.15</version>
+				<project-name>Apache Commons Codec</project-name>
+				<project-url>https://commons.apache.org/proper/commons-codec/</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.security.antisamy.jar!commons-logging.jar</file-name>
-				<version>1.0.4</version>
-				<project-name>Logging</project-name>
-				<project-url>http://jakarta.apache.org/commons/logging/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>/LICENSE.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2886,7 +2874,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!nekohtml.jar</file-name>
-				<version>1.9.16</version>
+				<version>1.9.22</version>
 				<project-name>Neko HTML</project-name>
 				<project-url>http://nekohtml.sourceforge.net/</project-url>
 				<licenses>
@@ -2910,7 +2898,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!xmlgraphics-commons.jar</file-name>
-				<version>2.2</version>
+				<version>2.6</version>
 				<project-name>Apache XML Graphics Commons</project-name>
 				<project-url>http://xmlgraphics.apache.org/commons/</project-url>
 				<licenses>
@@ -5514,7 +5502,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/asm-analysis.jar</file-name>
-				<version>7.0.LIFERAY-PATCHED-1</version>
+				<version>7.0</version>
 				<project-name>ASM</project-name>
 				<project-url>http://asm.ow2.io</project-url>
 				<licenses>
@@ -5526,7 +5514,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/asm-commons.jar</file-name>
-				<version>7.0.LIFERAY-PATCHED-1</version>
+				<version>7.0</version>
 				<project-name>ASM</project-name>
 				<project-url>http://asm.ow2.io</project-url>
 				<licenses>
@@ -5538,7 +5526,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/asm-tree.jar</file-name>
-				<version>7.0.LIFERAY-PATCHED-1</version>
+				<version>7.0</version>
 				<project-name>ASM</project-name>
 				<project-url>http://asm.ow2.io</project-url>
 				<licenses>
@@ -5550,7 +5538,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/asm-util.jar</file-name>
-				<version>7.0.LIFERAY-PATCHED-1</version>
+				<version>7.0</version>
 				<project-name>ASM</project-name>
 				<project-url>http://asm.ow2.io</project-url>
 				<licenses>
@@ -5562,7 +5550,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/asm.jar</file-name>
-				<version>7.0.LIFERAY-PATCHED-1</version>
+				<version>7.0</version>
 				<project-name>ASM</project-name>
 				<project-url>http://asm.ow2.io</project-url>
 				<licenses>
@@ -5624,7 +5612,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/bcmail.jar</file-name>
-				<version>1.61.LIFERAY-PATCHED-1</version>
+				<version>1.61</version>
 				<project-name>Bouncy Castle</project-name>
 				<project-url>http://www.bouncycastle.org</project-url>
 				<licenses>
@@ -5636,7 +5624,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/bcprov.jar</file-name>
-				<version>1.61.LIFERAY-PATCHED-1</version>
+				<version>1.61</version>
 				<project-name>Bouncy Castle</project-name>
 				<project-url>http://www.bouncycastle.org</project-url>
 				<licenses>
@@ -6364,7 +6352,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jaxb-api.jar</file-name>
-				<version>2.3.0.LIFERAY-PATCHED-2</version>
+				<version>2.3.0</version>
 				<project-name>JAXB-API</project-name>
 				<project-url>http://jaxb.java.net</project-url>
 				<licenses>
@@ -6425,7 +6413,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jaxws-api.jar</file-name>
-				<version>2.3.0.LIFERAY-PATCHED-1</version>
+				<version>2.3.0</version>
 				<project-name>JAX-WS (JSR 224) API</project-name>
 				<project-url>https://github.com/javaee/jax-ws-spec</project-url>
 				<licenses>
@@ -6742,7 +6730,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jws-api.jar</file-name>
-				<version>1.1.0.LIFERAY-PATCHED-1</version>
+				<version>1.1</version>
 				<project-name>Java EE Web Services Metadata API</project-name>
 				<project-url>http://glassfish.java.net</project-url>
 				<licenses>
@@ -7209,7 +7197,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/soap-api.jar</file-name>
-				<version>1.4.0.LIFERAY-PATCHED-1</version>
+				<version>1.4.0</version>
 				<project-name>SAAJ API</project-name>
 				<project-url>https://javaee.github.io/javaee-spec/</project-url>
 				<licenses>

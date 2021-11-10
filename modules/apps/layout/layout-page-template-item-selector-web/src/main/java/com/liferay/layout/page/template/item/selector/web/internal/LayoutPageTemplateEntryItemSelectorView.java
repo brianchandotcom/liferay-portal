@@ -207,24 +207,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 		public String getSubtitle(Locale locale) {
 			if (Objects.equals(
 					_layoutPageTemplateEntry.getType(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
-
-				LayoutPageTemplateCollection layoutPageTemplateCollection =
-					_layoutPageTemplateCollectionLocalService.
-						fetchLayoutPageTemplateCollection(
-							_layoutPageTemplateEntry.
-								getLayoutPageTemplateCollectionId());
-
-				if (layoutPageTemplateCollection == null) {
-					return StringPool.BLANK;
-				}
-
-				return layoutPageTemplateCollection.getName();
-			}
-			else if (Objects.equals(
-						_layoutPageTemplateEntry.getType(),
-						LayoutPageTemplateEntryTypeConstants.
-							TYPE_DISPLAY_PAGE)) {
+					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE)) {
 
 				String typeLabel = _getTypeLabel();
 
@@ -261,16 +244,18 @@ public class LayoutPageTemplateEntryItemSelectorView
 				return LanguageUtil.format(
 					_httpServletRequest, "x-usages", layoutsCount);
 			}
-			else if (Objects.equals(
-						_layoutPageTemplateEntry.getType(),
-						LayoutPageTemplateEntryTypeConstants.
-							TYPE_WIDGET_PAGE)) {
 
-				return LanguageUtil.get(
-					_httpServletRequest, "widget-page-template");
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				_layoutPageTemplateCollectionLocalService.
+					fetchLayoutPageTemplateCollection(
+						_layoutPageTemplateEntry.
+							getLayoutPageTemplateCollectionId());
+
+			if (layoutPageTemplateCollection == null) {
+				return StringPool.BLANK;
 			}
 
-			return StringPool.BLANK;
+			return layoutPageTemplateCollection.getName();
 		}
 
 		@Override

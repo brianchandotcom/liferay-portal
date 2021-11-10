@@ -291,6 +291,26 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 					httpServletRequest,
 					"com_liferay_login_web_portlet_LoginPortlet", layout,
 					PortletRequest.RENDER_PHASE);
+
+				long groupId =
+					_commerceChannelLocalService.
+						getCommerceChannelGroupIdBySiteGroupId(
+							_portal.getScopeGroupId(httpServletRequest));
+
+				Cookie cookie = new Cookie(
+					"commerceChannelGroupId", String.valueOf(groupId));
+
+				String domain = CookieKeys.getDomain(httpServletRequest);
+
+				if (Validator.isNotNull(domain)) {
+					cookie.setDomain(domain);
+				}
+
+				cookie.setMaxAge(CookieKeys.MAX_AGE);
+				cookie.setPath(StringPool.SLASH);
+
+				CookieKeys.addCookie(
+					httpServletRequest, themeDisplay.getResponse(), cookie);
 			}
 			else {
 				portletURL.setParameter(

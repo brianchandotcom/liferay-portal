@@ -107,38 +107,45 @@ public class PortalClassPathUtil {
 			classLoader = currentThread.getContextClassLoader();
 		}
 
-		StringBundler sb = new StringBundler(8);
+		File[] files = _listClassPathFiles(
+			classLoader, CentralizedThreadLocal.class.getName());
 
-		sb.append(
-			_buildClassPath(classLoader, ServletException.class.getName()));
+		StringBundler bootstrapClassPathSB = new StringBundler(
+			files.length * 2);
 
-		sb.append(File.pathSeparator);
-		sb.append(
+		for (File file : files) {
+			String absolutePath = file.getAbsolutePath();
+
+			if (absolutePath.contains("petra")) {
+				bootstrapClassPathSB.append(absolutePath);
+				bootstrapClassPathSB.append(File.pathSeparator);
+			}
+		}
+
+		if (bootstrapClassPathSB.index() > 0) {
+			bootstrapClassPathSB.setIndex(bootstrapClassPathSB.index() - 1);
+		}
+
+		StringBundler runtimeClassPathSB = new StringBundler(4);
+
+		runtimeClassPathSB.append(
 			_buildClassPath(
-				classLoader, CentralizedThreadLocal.class.getName()));
-
-		String bootstrapClassPath = sb.toString();
-
-		sb.append(File.pathSeparator);
-		sb.append(
-			_buildClassPath(
-				classLoader,
+				classLoader, ServletException.class.getName(),
+				CentralizedThreadLocal.class.getName(),
 				"com.liferay.shielded.container.ShieldedContainerInitializer"));
 
 		if (servletContext != null) {
-			sb.append(File.pathSeparator);
-			sb.append(servletContext.getRealPath(""));
-			sb.append("/WEB-INF/classes");
+			runtimeClassPathSB.append(File.pathSeparator);
+			runtimeClassPathSB.append(servletContext.getRealPath(""));
+			runtimeClassPathSB.append("/WEB-INF/classes");
 		}
-
-		String portalClassPath = sb.toString();
 
 		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		builder.setArguments(_processArgs);
-		builder.setBootstrapClassPath(bootstrapClassPath);
+		builder.setBootstrapClassPath(bootstrapClassPathSB.toString());
 		builder.setReactClassLoader(classLoader);
-		builder.setRuntimeClassPath(portalClassPath);
+		builder.setRuntimeClassPath(runtimeClassPathSB.toString());
 
 		_portalProcessConfig = builder.build();
 	}

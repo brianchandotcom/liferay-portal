@@ -1201,6 +1201,13 @@ public class JenkinsResultsParserUtil {
 			}
 
 			for (String url : _buildPropertiesURLs) {
+				if (url.startsWith("file://")) {
+					properties.putAll(
+						getProperties(new File(url.replace("file://", ""))));
+
+					continue;
+				}
+
 				properties.load(
 					new StringReader(
 						toString(
@@ -4716,7 +4723,13 @@ public class JenkinsResultsParserUtil {
 			JSONArray jsonArray;
 
 			try {
-				jsonArray = toJSONArray(getLocalURL(url), false);
+				if (url.startsWith("file://")) {
+					jsonArray = new JSONArray(
+						read(new File(url.replace("file://", ""))));
+				}
+				else {
+					jsonArray = toJSONArray(getLocalURL(url), false);
+				}
 			}
 			catch (IOException ioException) {
 				continue;
@@ -4819,7 +4832,13 @@ public class JenkinsResultsParserUtil {
 			JSONArray jsonArray;
 
 			try {
-				jsonArray = toJSONArray(getLocalURL(url), false);
+				if (url.startsWith("file://")) {
+					jsonArray = new JSONArray(
+						read(new File(url.replace("file://", ""))));
+				}
+				else {
+					jsonArray = toJSONArray(getLocalURL(url), false);
+				}
 			}
 			catch (IOException ioException) {
 				continue;

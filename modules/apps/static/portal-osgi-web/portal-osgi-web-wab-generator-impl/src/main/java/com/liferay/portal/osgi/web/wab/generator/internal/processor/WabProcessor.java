@@ -253,7 +253,7 @@ public class WabProcessor {
 
 			AutoDeployListener autoDeployListener = getAutoDeployListener(
 				autoDeploymentContext,
-				GlobalStartupAction.getAutoDeployListeners(false));
+				GlobalStartupAction.getAutoDeployListeners());
 
 			autoDeployListener.deploy(autoDeploymentContext);
 		}

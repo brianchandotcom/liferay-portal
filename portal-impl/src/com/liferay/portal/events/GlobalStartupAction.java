@@ -48,10 +48,8 @@ import javax.servlet.ServletContext;
  */
 public class GlobalStartupAction extends SimpleAction {
 
-	public static List<AutoDeployListener> getAutoDeployListeners(
-		boolean reset) {
-
-		if ((_autoDeployListeners != null) && !reset) {
+	public static List<AutoDeployListener> getAutoDeployListeners() {
+		if (_autoDeployListeners != null) {
 			return _autoDeployListeners;
 		}
 

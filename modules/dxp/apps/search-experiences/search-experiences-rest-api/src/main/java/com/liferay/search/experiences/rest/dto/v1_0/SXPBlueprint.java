@@ -145,6 +145,36 @@ public class SXPBlueprint implements Serializable {
 	protected Map<String, String> description_i18n;
 
 	@Schema
+	@Valid
+	public ElementDefinition[] getElementDefinitions() {
+		return elementDefinitions;
+	}
+
+	public void setElementDefinitions(ElementDefinition[] elementDefinitions) {
+		this.elementDefinitions = elementDefinitions;
+	}
+
+	@JsonIgnore
+	public void setElementDefinitions(
+		UnsafeSupplier<ElementDefinition[], Exception>
+			elementDefinitionsUnsafeSupplier) {
+
+		try {
+			elementDefinitions = elementDefinitionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ElementDefinition[] elementDefinitions;
+
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -287,6 +317,26 @@ public class SXPBlueprint implements Serializable {
 			sb.append("\"description_i18n\": ");
 
 			sb.append(_toJSON(description_i18n));
+		}
+
+		if (elementDefinitions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"elementDefinitions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < elementDefinitions.length; i++) {
+				sb.append(String.valueOf(elementDefinitions[i]));
+
+				if ((i + 1) < elementDefinitions.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (id != null) {

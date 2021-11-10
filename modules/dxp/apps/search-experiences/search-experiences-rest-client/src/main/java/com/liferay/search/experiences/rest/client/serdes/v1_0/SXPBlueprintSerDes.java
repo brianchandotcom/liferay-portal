@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
+import com.liferay.search.experiences.rest.client.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -87,6 +89,29 @@ public class SXPBlueprintSerDes {
 			sb.append("\"description_i18n\": ");
 
 			sb.append(_toJSON(sxpBlueprint.getDescription_i18n()));
+		}
+
+		if (sxpBlueprint.getElementDefinitions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"elementDefinitions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < sxpBlueprint.getElementDefinitions().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(sxpBlueprint.getElementDefinitions()[i]));
+
+				if ((i + 1) < sxpBlueprint.getElementDefinitions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (sxpBlueprint.getId() != null) {
@@ -168,6 +193,15 @@ public class SXPBlueprintSerDes {
 				String.valueOf(sxpBlueprint.getDescription_i18n()));
 		}
 
+		if (sxpBlueprint.getElementDefinitions() == null) {
+			map.put("elementDefinitions", null);
+		}
+		else {
+			map.put(
+				"elementDefinitions",
+				String.valueOf(sxpBlueprint.getElementDefinitions()));
+		}
+
 		if (sxpBlueprint.getId() == null) {
 			map.put("id", null);
 		}
@@ -227,6 +261,21 @@ public class SXPBlueprintSerDes {
 					sxpBlueprint.setDescription_i18n(
 						(Map)SXPBlueprintSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "elementDefinitions")) {
+
+				if (jsonParserFieldValue != null) {
+					sxpBlueprint.setElementDefinitions(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ElementDefinitionSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new ElementDefinition[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

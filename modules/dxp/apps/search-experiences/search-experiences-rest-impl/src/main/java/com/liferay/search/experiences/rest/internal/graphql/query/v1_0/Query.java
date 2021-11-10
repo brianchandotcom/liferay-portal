@@ -233,7 +233,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprint(sxpBlueprintId: ___){configuration, description, description_i18n, id, title, title_i18n}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprint(sxpBlueprintId: ___){configuration, description, description_i18n, elementDefinitions, id, title, title_i18n}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public SXPBlueprint sXPBlueprint(

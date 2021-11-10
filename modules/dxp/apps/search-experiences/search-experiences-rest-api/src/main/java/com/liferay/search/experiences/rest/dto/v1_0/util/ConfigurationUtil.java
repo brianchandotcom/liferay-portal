@@ -68,7 +68,9 @@ public class ConfigurationUtil {
 		SortConfiguration sortConfiguration =
 			configuration.getSortConfiguration();
 
-		if (sortConfiguration != null) {
+		if ((sortConfiguration != null) &&
+			(sortConfiguration.getSorts() != null)) {
+
 			sortConfiguration.setSorts(
 				JSONFactoryUtil.createJSONArray(
 					(Object[])sortConfiguration.getSorts()));

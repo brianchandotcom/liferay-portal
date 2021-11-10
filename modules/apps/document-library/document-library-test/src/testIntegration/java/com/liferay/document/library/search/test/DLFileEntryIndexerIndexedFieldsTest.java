@@ -256,6 +256,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put("readCount", String.valueOf(fileEntry.getReadCount()));
 		map.put("size", String.valueOf(fileEntry.getSize()));
 		map.put("size_sortable", String.valueOf(fileEntry.getSize()));
+		map.put("title_ja_JP", fileEntry.getTitle());
 		map.put("visible", "true");
 
 		populateDates(fileEntry, map);

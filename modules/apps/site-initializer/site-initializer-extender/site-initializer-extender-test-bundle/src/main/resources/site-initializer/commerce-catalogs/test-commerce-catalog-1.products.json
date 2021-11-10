@@ -1,0 +1,27 @@
+[
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Test Asset Category 1"
+		],
+		"description": "Test Commerce Product.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "TEST001",
+		"height": 2,
+		"images": [
+			"image.png"
+		],
+		"length": 7,
+		"minStockQuantity": 5,
+		"name": "Test Commerce Product",
+		"price": 29.0,
+		"promoPrice": 18.0,
+		"sku": "TEST001",
+		"specificationOptions": [
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60
+	}
+]

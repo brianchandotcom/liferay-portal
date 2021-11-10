@@ -20,7 +20,7 @@ definition {
 				portlet = "Sites");
 
 			Site.addCustomCP(
-				siteName = "Site Name",
+				siteName = "Test Masterclass Name",
 				siteTemplateName = "Masterclass");
 		}
 	}
@@ -32,9 +32,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Site.tearDownCP();
-
-			WebContent.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Test Masterclass Name");
 		}
 	}
 
@@ -201,12 +199,40 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141370. Can change the Number of Blogs in the List at Display Page Template of Blogs"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ChangetheNumberofBlogsinBlogsListatDPT {
+		task ("Go to Masterclass Site") {
+			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-141370.
+		task ("Go to Display Page Templates") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
 
+			NavItem.gotoPageTemplates();
+
+			Staging.gotoNavTab(tabName = "Display Page Templates");
+		}
+
+		task ("Go to Blog Entry and Edit the Layout and Maximum Number of Itens") {
+			Click(
+				key_assetType = "Blog Entry",
+				locator1 = "Sharing#SHARED_CONTENT_ASSET_TYPE");
+
+			PageEditor.editCDLayoutAndMaxNumber(
+				fragmentName = "Collection Display",
+				layoutColumns = "5 Columns",
+				maxNumber = "5");
+		}
+
+		task ("On Preview Mode Assert the Number of Blogs in the List") {
+			PageEditor.openPreviewMode();
+
+			AssertElementPresent(
+				key_colummnsNumber = "5",
+				locator1 = "Masterclass#COLUMNS_NUMBER");
+		}
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Apply Page in Desktop size"
@@ -381,21 +407,51 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141370. View a Blog Collection in Display Page Template of Blogs"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewBlogCollectioninDPTofBlogs {
+		task ("Go to Masterclass Site") {
+			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-141370.
+		task ("Go to Display Page Templates") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
 
+			NavItem.gotoPageTemplates();
+
+			Staging.gotoNavTab(tabName = "Display Page Templates");
+		}
+
+		task ("Go to Blog Entry and Assert the List of Blogs Presence") {
+			Click(
+				key_assetType = "Blog Entry",
+				locator1 = "Sharing#SHARED_CONTENT_ASSET_TYPE");
+
+			PageEditor.openPreviewMode();
+
+			AssertElementPresent(
+				key_colummnsNumber = "3",
+				locator1 = "Masterclass#COLUMNS_NUMBER");
+		}
 	}
 
 	@description = "This is a test for LPS-141370. View a List of Blogs in the Blog Detail View"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewBlogListinBlogDetailView {
+		task ("Go to Masterclass Site") {
+			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-141370.
+		task ("Go to Blog and Assert the List of Blogs Presence") {
+			Navigator._gotoPage(pageName = "Blog");
 
+			Click(locator1 = "Experience#FRAGMENT_HEADING");
+
+			AssertElementPresent(
+				key_colummnsNumber = "3",
+				locator1 = "Masterclass#COLUMNS_NUMBER");
+		}
 	}
 
 	@description = "This is a test for LPS-141768. View list to the three available courses pages"

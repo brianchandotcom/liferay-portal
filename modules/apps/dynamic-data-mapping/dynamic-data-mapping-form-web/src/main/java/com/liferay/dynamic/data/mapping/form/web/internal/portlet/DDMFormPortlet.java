@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
+import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.FFSubmissionsSettingsConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormDisplayContext;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
@@ -253,9 +254,11 @@ public class DDMFormPortlet extends MVCPortlet {
 			_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
 			_ddmFormValuesFactory, _ddmFormValuesMerger,
 			_ddmFormWebConfigurationActivator.getDDMFormWebConfiguration(),
-			_ddmStorageAdapterTracker, _groupLocalService, _jsonFactory,
-			_objectFieldLocalService, _objectRelationshipLocalService, _portal,
-			renderRequest, renderResponse, _roleLocalService, _userLocalService,
+			_ddmStorageAdapterTracker,
+			_ffSubmissionsSettingsConfigurationActivator, _groupLocalService,
+			_jsonFactory, _objectFieldLocalService,
+			_objectRelationshipLocalService, _portal, renderRequest,
+			renderResponse, _roleLocalService, _userLocalService,
 			_workflowDefinitionLinkLocalService);
 
 		renderRequest.setAttribute(
@@ -309,6 +312,10 @@ public class DDMFormPortlet extends MVCPortlet {
 
 	@Reference
 	private DDMStorageAdapterTracker _ddmStorageAdapterTracker;
+
+	@Reference
+	private FFSubmissionsSettingsConfigurationActivator
+		_ffSubmissionsSettingsConfigurationActivator;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

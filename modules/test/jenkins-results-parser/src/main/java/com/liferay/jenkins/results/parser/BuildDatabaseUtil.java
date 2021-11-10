@@ -129,6 +129,16 @@ public class BuildDatabaseUtil {
 					JenkinsResultsParserUtil.getCanonicalPath(
 						buildDatabaseFile));
 
+				if (JenkinsResultsParserUtil.isWindows()) {
+					distPath = distPath.replace("C:/Windows/TEMP/", "/tmp/");
+
+					command = JenkinsResultsParserUtil.combine(
+						"time scp \"", distNode, ":", distPath, "/",
+						BuildDatabase.FILE_NAME_BUILD_DATABASE, "\" ",
+						JenkinsResultsParserUtil.getCanonicalPath(
+							buildDatabaseFile));
+				}
+
 				command = command.replaceAll("\\(", "\\\\(");
 				command = command.replaceAll("\\)", "\\\\)");
 

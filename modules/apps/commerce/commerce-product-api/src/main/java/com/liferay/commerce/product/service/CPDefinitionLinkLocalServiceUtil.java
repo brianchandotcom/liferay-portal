@@ -266,6 +266,13 @@ public class CPDefinitionLinkLocalServiceUtil {
 		return getService().fetchCPDefinitionLink(CPDefinitionLinkId);
 	}
 
+	public static CPDefinitionLink fetchCPDefinitionLink(
+		long cpDefinitionId, long cProductId, String type) {
+
+		return getService().fetchCPDefinitionLink(
+			cpDefinitionId, cProductId, type);
+	}
+
 	/**
 	 * Returns the cp definition link matching the UUID and group.
 	 *

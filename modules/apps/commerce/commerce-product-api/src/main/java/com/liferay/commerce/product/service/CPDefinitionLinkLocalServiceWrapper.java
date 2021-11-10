@@ -299,6 +299,15 @@ public class CPDefinitionLinkLocalServiceWrapper
 			CPDefinitionLinkId);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionLink
+		fetchCPDefinitionLink(
+			long cpDefinitionId, long cProductId, String type) {
+
+		return _cpDefinitionLinkLocalService.fetchCPDefinitionLink(
+			cpDefinitionId, cProductId, type);
+	}
+
 	/**
 	 * Returns the cp definition link matching the UUID and group.
 	 *

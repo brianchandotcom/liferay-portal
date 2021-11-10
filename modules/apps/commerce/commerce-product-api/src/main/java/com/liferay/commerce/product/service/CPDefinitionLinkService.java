@@ -74,6 +74,11 @@ public interface CPDefinitionLinkService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionLink fetchCPDefinitionLink(
+			long cpDefinitionId, long cProductId, String type)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionLink getCPDefinitionLink(long cpDefinitionLinkId)
 		throws PortalException;
 

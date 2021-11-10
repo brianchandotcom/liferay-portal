@@ -237,6 +237,10 @@ public interface CPDefinitionLinkLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionLink fetchCPDefinitionLink(long CPDefinitionLinkId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionLink fetchCPDefinitionLink(
+		long cpDefinitionId, long cProductId, String type);
+
 	/**
 	 * Returns the cp definition link matching the UUID and group.
 	 *

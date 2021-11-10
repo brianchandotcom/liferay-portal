@@ -61,6 +61,14 @@ public class CPDefinitionLinkServiceUtil {
 		return getService().fetchCPDefinitionLink(cpDefinitionLinkId);
 	}
 
+	public static CPDefinitionLink fetchCPDefinitionLink(
+			long cpDefinitionId, long cProductId, String type)
+		throws PortalException {
+
+		return getService().fetchCPDefinitionLink(
+			cpDefinitionId, cProductId, type);
+	}
+
 	public static CPDefinitionLink getCPDefinitionLink(long cpDefinitionLinkId)
 		throws PortalException {
 

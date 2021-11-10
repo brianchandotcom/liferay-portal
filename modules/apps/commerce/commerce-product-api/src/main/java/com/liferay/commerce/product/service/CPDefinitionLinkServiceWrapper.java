@@ -63,6 +63,16 @@ public class CPDefinitionLinkServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinitionLink
+			fetchCPDefinitionLink(
+				long cpDefinitionId, long cProductId, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionLinkService.fetchCPDefinitionLink(
+			cpDefinitionId, cProductId, type);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionLink
 			getCPDefinitionLink(long cpDefinitionLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -119,6 +119,26 @@ public class CPDefinitionLinkServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionLinkSoap
+			fetchCPDefinitionLink(
+				long cpDefinitionId, long cProductId, String type)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.product.model.CPDefinitionLink returnValue =
+				CPDefinitionLinkServiceUtil.fetchCPDefinitionLink(
+					cpDefinitionId, cProductId, type);
+
+			return com.liferay.commerce.product.model.CPDefinitionLinkSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionLinkSoap
 			getCPDefinitionLink(long cpDefinitionLinkId)
 		throws RemoteException {
 

@@ -358,6 +358,12 @@ public class LayoutPageTemplateEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_TArrayable() throws Exception {
+		_persistence.countByG_T(
+			RandomTestUtil.nextLong(), new int[] {RandomTestUtil.nextInt(), 0});
+	}
+
+	@Test
 	public void testCountByG_L_LikeN() throws Exception {
 		_persistence.countByG_L_LikeN(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
@@ -406,12 +412,26 @@ public class LayoutPageTemplateEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_T_LikeNArrayable() throws Exception {
+		_persistence.countByG_T_LikeN(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomString(),
+			new int[] {RandomTestUtil.nextInt(), 0});
+	}
+
+	@Test
 	public void testCountByG_T_S() throws Exception {
 		_persistence.countByG_T_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
 			RandomTestUtil.nextInt());
 
 		_persistence.countByG_T_S(0L, 0, 0);
+	}
+
+	@Test
+	public void testCountByG_T_SArrayable() throws Exception {
+		_persistence.countByG_T_S(
+			RandomTestUtil.nextLong(), new int[] {RandomTestUtil.nextInt(), 0},
+			RandomTestUtil.nextInt());
 	}
 
 	@Test
@@ -461,6 +481,13 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		_persistence.countByG_T_LikeN_S(0L, "null", 0, 0);
 
 		_persistence.countByG_T_LikeN_S(0L, (String)null, 0, 0);
+	}
+
+	@Test
+	public void testCountByG_T_LikeN_SArrayable() throws Exception {
+		_persistence.countByG_T_LikeN_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomString(),
+			new int[] {RandomTestUtil.nextInt(), 0}, RandomTestUtil.nextInt());
 	}
 
 	@Test

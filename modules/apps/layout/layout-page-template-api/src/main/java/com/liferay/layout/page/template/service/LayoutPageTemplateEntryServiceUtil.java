@@ -187,6 +187,22 @@ public class LayoutPageTemplateEntryServiceUtil {
 	}
 
 	public static List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, int[] types, int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+
+		return getService().getLayoutPageTemplateEntries(
+			groupId, types, status, start, end, orderByComparator);
+	}
+
+	public static List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, int[] types, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+
+		return getService().getLayoutPageTemplateEntries(
+			groupId, types, start, end, orderByComparator);
+	}
+
+	public static List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long classNameId, int type, boolean defaultTemplate) {
 
 		return getService().getLayoutPageTemplateEntries(
@@ -317,6 +333,22 @@ public class LayoutPageTemplateEntryServiceUtil {
 			groupId, name, type, start, end, orderByComparator);
 	}
 
+	public static List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, String name, int[] types, int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+
+		return getService().getLayoutPageTemplateEntries(
+			groupId, name, types, status, start, end, orderByComparator);
+	}
+
+	public static List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, String name, int[] types, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+
+		return getService().getLayoutPageTemplateEntries(
+			groupId, name, types, start, end, orderByComparator);
+	}
+
 	public static List<LayoutPageTemplateEntry>
 		getLayoutPageTemplateEntriesByType(
 			long groupId, long layoutPageTemplateCollectionId, int type,
@@ -339,6 +371,19 @@ public class LayoutPageTemplateEntryServiceUtil {
 
 		return getService().getLayoutPageTemplateEntriesCount(
 			groupId, type, status);
+	}
+
+	public static int getLayoutPageTemplateEntriesCount(
+		long groupId, int[] types) {
+
+		return getService().getLayoutPageTemplateEntriesCount(groupId, types);
+	}
+
+	public static int getLayoutPageTemplateEntriesCount(
+		long groupId, int[] types, int status) {
+
+		return getService().getLayoutPageTemplateEntriesCount(
+			groupId, types, status);
 	}
 
 	public static int getLayoutPageTemplateEntriesCount(
@@ -413,6 +458,20 @@ public class LayoutPageTemplateEntryServiceUtil {
 
 		return getService().getLayoutPageTemplateEntriesCount(
 			groupId, name, type, status);
+	}
+
+	public static int getLayoutPageTemplateEntriesCount(
+		long groupId, String name, int[] types) {
+
+		return getService().getLayoutPageTemplateEntriesCount(
+			groupId, name, types);
+	}
+
+	public static int getLayoutPageTemplateEntriesCount(
+		long groupId, String name, int[] types, int status) {
+
+		return getService().getLayoutPageTemplateEntriesCount(
+			groupId, name, types, status);
 	}
 
 	public static int getLayoutPageTemplateEntriesCountByType(

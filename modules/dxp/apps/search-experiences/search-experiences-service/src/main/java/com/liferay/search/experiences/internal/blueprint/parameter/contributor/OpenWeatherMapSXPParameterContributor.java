@@ -122,7 +122,7 @@ public class OpenWeatherMapSXPParameterContributor
 				IntegerSXPParameter.class, "weather-condition-id",
 				"openweathermap.weather_id"),
 			new SXPParameterContributorDefinition(
-				StringSXPParameter.class, "weather-condition-name}",
+				StringSXPParameter.class, "weather-condition-name",
 				"openweathermap.weather_name"));
 	}
 

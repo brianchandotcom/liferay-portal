@@ -16,6 +16,7 @@ package com.liferay.commerce.discount.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceDiscountOrderTypeRelModel
-	extends BaseModel<CommerceDiscountOrderTypeRel>, ShardedModel,
+	extends BaseModel<CommerceDiscountOrderTypeRel>, MVCCModel, ShardedModel,
 			StagedAuditedModel {
 
 	/*
@@ -58,6 +59,22 @@ public interface CommerceDiscountOrderTypeRelModel
 	 * @param primaryKey the primary key of this commerce discount order type rel
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce discount order type rel.
+	 *
+	 * @return the mvcc version of this commerce discount order type rel
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce discount order type rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce discount order type rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this commerce discount order type rel.

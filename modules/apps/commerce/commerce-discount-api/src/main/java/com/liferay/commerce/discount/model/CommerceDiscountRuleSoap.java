@@ -35,6 +35,7 @@ public class CommerceDiscountRuleSoap implements Serializable {
 
 		CommerceDiscountRuleSoap soapModel = new CommerceDiscountRuleSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceDiscountRuleId(model.getCommerceDiscountRuleId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -105,6 +106,14 @@ public class CommerceDiscountRuleSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceDiscountRuleId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceDiscountRuleId() {
@@ -187,6 +196,7 @@ public class CommerceDiscountRuleSoap implements Serializable {
 		_typeSettings = typeSettings;
 	}
 
+	private long _mvccVersion;
 	private long _commerceDiscountRuleId;
 	private long _companyId;
 	private long _userId;

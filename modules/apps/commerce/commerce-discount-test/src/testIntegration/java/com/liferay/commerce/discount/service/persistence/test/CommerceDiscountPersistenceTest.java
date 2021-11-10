@@ -126,6 +126,8 @@ public class CommerceDiscountPersistenceTest {
 
 		CommerceDiscount newCommerceDiscount = _persistence.create(pk);
 
+		newCommerceDiscount.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceDiscount.setUuid(RandomTestUtil.randomString());
 
 		newCommerceDiscount.setExternalReferenceCode(
@@ -200,6 +202,9 @@ public class CommerceDiscountPersistenceTest {
 		CommerceDiscount existingCommerceDiscount =
 			_persistence.findByPrimaryKey(newCommerceDiscount.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceDiscount.getMvccVersion(),
+			newCommerceDiscount.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceDiscount.getUuid(), newCommerceDiscount.getUuid());
 		Assert.assertEquals(
@@ -394,18 +399,18 @@ public class CommerceDiscountPersistenceTest {
 
 	protected OrderByComparator<CommerceDiscount> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceDiscount", "uuid", true, "externalReferenceCode", true,
-			"commerceDiscountId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "title",
-			true, "target", true, "useCouponCode", true, "couponCode", true,
-			"usePercentage", true, "maximumDiscountAmount", true, "level", true,
-			"level1", true, "level2", true, "level3", true, "level4", true,
-			"limitationType", true, "limitationTimes", true,
-			"limitationTimesPerAccount", true, "numberOfUse", true,
-			"rulesConjunction", true, "active", true, "displayDate", true,
-			"expirationDate", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"CommerceDiscount", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "commerceDiscountId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "title", true, "target", true,
+			"useCouponCode", true, "couponCode", true, "usePercentage", true,
+			"maximumDiscountAmount", true, "level", true, "level1", true,
+			"level2", true, "level3", true, "level4", true, "limitationType",
+			true, "limitationTimes", true, "limitationTimesPerAccount", true,
+			"numberOfUse", true, "rulesConjunction", true, "active", true,
+			"displayDate", true, "expirationDate", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -709,6 +714,8 @@ public class CommerceDiscountPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceDiscount commerceDiscount = _persistence.create(pk);
+
+		commerceDiscount.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceDiscount.setUuid(RandomTestUtil.randomString());
 

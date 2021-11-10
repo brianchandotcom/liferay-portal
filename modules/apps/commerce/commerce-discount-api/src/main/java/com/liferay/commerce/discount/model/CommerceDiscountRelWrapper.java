@@ -42,6 +42,7 @@ public class CommerceDiscountRelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceDiscountRelId", getCommerceDiscountRelId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -57,6 +58,12 @@ public class CommerceDiscountRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceDiscountRelId = (Long)attributes.get(
 			"commerceDiscountRelId");
 
@@ -206,6 +213,16 @@ public class CommerceDiscountRelWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this commerce discount rel.
+	 *
+	 * @return the mvcc version of this commerce discount rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the primary key of this commerce discount rel.
 	 *
 	 * @return the primary key of this commerce discount rel
@@ -323,6 +340,16 @@ public class CommerceDiscountRelWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce discount rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce discount rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

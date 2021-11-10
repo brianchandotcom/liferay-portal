@@ -72,6 +72,7 @@ public class CommerceDiscountUsageEntryModelImpl
 	public static final String TABLE_NAME = "CommerceDiscountUsageEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"commerceDiscountUsageEntryId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -83,6 +84,7 @@ public class CommerceDiscountUsageEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceDiscountUsageEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -95,7 +97,7 @@ public class CommerceDiscountUsageEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceDiscountUsageEntry (commerceDiscountUsageEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceOrderId LONG,commerceDiscountId LONG)";
+		"create table CommerceDiscountUsageEntry (mvccVersion LONG default 0 not null,commerceDiscountUsageEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceOrderId LONG,commerceDiscountId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceDiscountUsageEntry";
@@ -292,6 +294,12 @@ public class CommerceDiscountUsageEntryModelImpl
 					<String, BiConsumer<CommerceDiscountUsageEntry, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceDiscountUsageEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceDiscountUsageEntry, Long>)
+				CommerceDiscountUsageEntry::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceDiscountUsageEntryId",
 			CommerceDiscountUsageEntry::getCommerceDiscountUsageEntryId);
 		attributeSetterBiConsumers.put(
@@ -353,6 +361,20 @@ public class CommerceDiscountUsageEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -598,6 +620,7 @@ public class CommerceDiscountUsageEntryModelImpl
 		CommerceDiscountUsageEntryImpl commerceDiscountUsageEntryImpl =
 			new CommerceDiscountUsageEntryImpl();
 
+		commerceDiscountUsageEntryImpl.setMvccVersion(getMvccVersion());
 		commerceDiscountUsageEntryImpl.setCommerceDiscountUsageEntryId(
 			getCommerceDiscountUsageEntryId());
 		commerceDiscountUsageEntryImpl.setCompanyId(getCompanyId());
@@ -621,6 +644,8 @@ public class CommerceDiscountUsageEntryModelImpl
 		CommerceDiscountUsageEntryImpl commerceDiscountUsageEntryImpl =
 			new CommerceDiscountUsageEntryImpl();
 
+		commerceDiscountUsageEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceDiscountUsageEntryImpl.setCommerceDiscountUsageEntryId(
 			this.<Long>getColumnOriginalValue("commerceDiscountUsageEntryId"));
 		commerceDiscountUsageEntryImpl.setCompanyId(
@@ -721,6 +746,8 @@ public class CommerceDiscountUsageEntryModelImpl
 		CommerceDiscountUsageEntryCacheModel
 			commerceDiscountUsageEntryCacheModel =
 				new CommerceDiscountUsageEntryCacheModel();
+
+		commerceDiscountUsageEntryCacheModel.mvccVersion = getMvccVersion();
 
 		commerceDiscountUsageEntryCacheModel.commerceDiscountUsageEntryId =
 			getCommerceDiscountUsageEntryId();
@@ -861,6 +888,7 @@ public class CommerceDiscountUsageEntryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceDiscountUsageEntryId;
 	private long _companyId;
 	private long _userId;
@@ -899,6 +927,7 @@ public class CommerceDiscountUsageEntryModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"commerceDiscountUsageEntryId", _commerceDiscountUsageEntryId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -922,23 +951,25 @@ public class CommerceDiscountUsageEntryModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("commerceDiscountUsageEntryId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("companyId", 2L);
+		columnBitmasks.put("commerceDiscountUsageEntryId", 2L);
 
-		columnBitmasks.put("userId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("userName", 8L);
+		columnBitmasks.put("userId", 8L);
 
-		columnBitmasks.put("createDate", 16L);
+		columnBitmasks.put("userName", 16L);
 
-		columnBitmasks.put("modifiedDate", 32L);
+		columnBitmasks.put("createDate", 32L);
 
-		columnBitmasks.put("commerceAccountId", 64L);
+		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("commerceOrderId", 128L);
+		columnBitmasks.put("commerceAccountId", 128L);
 
-		columnBitmasks.put("commerceDiscountId", 256L);
+		columnBitmasks.put("commerceOrderId", 256L);
+
+		columnBitmasks.put("commerceDiscountId", 512L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

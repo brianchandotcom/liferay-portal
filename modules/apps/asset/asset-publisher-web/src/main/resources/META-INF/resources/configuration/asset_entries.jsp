@@ -240,7 +240,7 @@ for (long groupId : groupIds) {
 		var assetEntryIds = [];
 
 		Array.prototype.forEach.call(assetEntryList, (assetEntry) => {
-			assetEntryIds.push(assetEntry.entityid);
+			assetEntryIds.push(assetEntry.value);
 
 			assetClassName = assetEntry.assetclassname;
 		});

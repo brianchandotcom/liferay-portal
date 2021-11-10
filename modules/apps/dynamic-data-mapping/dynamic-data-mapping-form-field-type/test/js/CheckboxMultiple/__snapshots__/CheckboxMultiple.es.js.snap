@@ -65,7 +65,6 @@ exports[`Field Checkbox Multiple has a helptext 1`] = `
         </label>
       </div>
       <input
-        class="form-control"
         type="hidden"
         value=""
       />
@@ -157,7 +156,6 @@ exports[`Field Checkbox Multiple has a key 1`] = `
         </label>
       </div>
       <input
-        class="form-control"
         type="hidden"
         value=""
       />
@@ -241,7 +239,6 @@ exports[`Field Checkbox Multiple has a label 1`] = `
         </label>
       </div>
       <input
-        class="form-control"
         type="hidden"
         value=""
       />
@@ -321,7 +318,6 @@ exports[`Field Checkbox Multiple has a predefined Value 1`] = `
         </label>
       </div>
       <input
-        class="form-control"
         type="hidden"
         value=""
       />
@@ -401,7 +397,6 @@ exports[`Field Checkbox Multiple has a spritemap 1`] = `
         </label>
       </div>
       <input
-        class="form-control"
         type="hidden"
         value=""
       />
@@ -481,7 +476,6 @@ exports[`Field Checkbox Multiple has a value 1`] = `
         </label>
       </div>
       <input
-        class="form-control"
         type="hidden"
         value="true"
       />
@@ -561,7 +555,6 @@ exports[`Field Checkbox Multiple has an id 1`] = `
         </label>
       </div>
       <input
-        class="form-control"
         type="hidden"
         value=""
       />
@@ -643,7 +636,6 @@ exports[`Field Checkbox Multiple is not editable 1`] = `
         </label>
       </div>
       <input
-        class="form-control"
         type="hidden"
         value=""
       />
@@ -723,7 +715,6 @@ exports[`Field Checkbox Multiple is not required 1`] = `
         </label>
       </div>
       <input
-        class="form-control"
         type="hidden"
         value=""
       />
@@ -803,7 +794,6 @@ exports[`Field Checkbox Multiple is shown as a switcher 1`] = `
         </label>
       </div>
       <input
-        class="form-control"
         type="hidden"
         value=""
       />
@@ -871,7 +861,6 @@ exports[`Field Checkbox Multiple is shown as checkbox 1`] = `
         </label>
       </div>
       <input
-        class="form-control"
         type="hidden"
         value=""
       />
@@ -955,7 +944,6 @@ exports[`Field Checkbox Multiple renders Label if showLabel is true 1`] = `
         </label>
       </div>
       <input
-        class="form-control"
         type="hidden"
         value=""
       />

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClayInput, ClayRadio} from '@clayui/form';
+import {ClayRadio} from '@clayui/form';
 import React, {useMemo} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -80,7 +80,7 @@ const Radio = ({
 					/>
 				))}
 			</div>
-			<ClayInput name={name} type="hidden" value={currentValue} />
+			<input name={name} type="hidden" value={currentValue} />
 		</FieldBase>
 	);
 };

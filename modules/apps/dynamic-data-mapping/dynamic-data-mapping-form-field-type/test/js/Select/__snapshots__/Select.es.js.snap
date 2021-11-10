@@ -303,7 +303,6 @@ exports[`Select calls onChange callback when an item is selected using multisele
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -539,7 +538,6 @@ exports[`Select filters according to the input and calls onChange callback when 
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -623,7 +621,6 @@ exports[`Select has a help text 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -719,7 +716,6 @@ exports[`Select has a key 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -807,7 +803,6 @@ exports[`Select has a label 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -891,7 +886,6 @@ exports[`Select has a placeholder 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -975,7 +969,6 @@ exports[`Select has a predefinedValue 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -1059,7 +1052,6 @@ exports[`Select has a value 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -1144,7 +1136,6 @@ exports[`Select has an id 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -1228,7 +1219,6 @@ exports[`Select has class dropdown-opened when it's opened 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -1312,7 +1302,6 @@ exports[`Select is closed by default 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -1396,7 +1385,6 @@ exports[`Select is not required 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -1497,7 +1485,6 @@ exports[`Select puts an asterisk when field is required 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -1590,7 +1577,6 @@ exports[`Select renders Label if showLabel is true 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -1674,7 +1660,6 @@ exports[`Select renders no options when options come empty 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -1769,7 +1754,6 @@ exports[`Select renders options 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />
@@ -2253,7 +2237,6 @@ exports[`Select shows a search input when the number of options is more than the
       </div>
     </div>
     <input
-      class="form-control"
       type="hidden"
       value=""
     />

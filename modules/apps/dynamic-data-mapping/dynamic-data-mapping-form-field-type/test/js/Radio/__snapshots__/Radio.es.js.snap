@@ -57,7 +57,6 @@ exports[`Field Radio has a helptext 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="radioField"
       type="hidden"
       value=""
@@ -146,7 +145,6 @@ exports[`Field Radio has a label 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="radioField"
       type="hidden"
       value=""
@@ -218,7 +216,6 @@ exports[`Field Radio has a placeholder 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="radioField"
       type="hidden"
       value=""
@@ -290,7 +287,6 @@ exports[`Field Radio has a value 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="radioField"
       type="hidden"
       value="value"
@@ -362,7 +358,6 @@ exports[`Field Radio has an id 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="radioField"
       type="hidden"
       value=""
@@ -436,7 +431,6 @@ exports[`Field Radio is not editable 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="radioField"
       type="hidden"
       value=""
@@ -508,7 +502,6 @@ exports[`Field Radio is not required 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="radioField"
       type="hidden"
       value=""
@@ -585,7 +578,6 @@ exports[`Field Radio renders Label if showLabel is true 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="radioField"
       type="hidden"
       value=""
@@ -612,7 +604,6 @@ exports[`Field Radio renders no options when options is empty 1`] = `
       class="ddm__radio"
     />
     <input
-      class="form-control"
       name="radioField"
       type="hidden"
       value=""
@@ -684,7 +675,6 @@ exports[`Field Radio renders options 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="radioField"
       type="hidden"
       value=""

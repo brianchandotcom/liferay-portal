@@ -13,7 +13,7 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
-import {ClayCheckbox, ClayInput} from '@clayui/form';
+import {ClayCheckbox} from '@clayui/form';
 import React, {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -545,7 +545,7 @@ const Main = ({
 				value={value}
 				{...otherProps}
 			/>
-			<ClayInput name={name} type="hidden" value={value} />
+			<input name={name} type="hidden" value={value} />
 		</FieldBase>
 	);
 };

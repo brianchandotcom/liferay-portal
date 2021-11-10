@@ -55,7 +55,6 @@ exports[`ValidationDate shows date range validation 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="selectedValidation"
       type="hidden"
       value="dateRange"
@@ -125,7 +124,6 @@ exports[`ValidationDate shows date range validation 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="selectedParameter"
       type="hidden"
       value=""
@@ -195,7 +193,6 @@ exports[`ValidationDate shows date range validation 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="selectedParameter"
       type="hidden"
       value=""
@@ -278,7 +275,6 @@ exports[`ValidationDate shows future dates validation 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="selectedValidation"
       type="hidden"
       value="futureDates"
@@ -342,7 +338,6 @@ exports[`ValidationDate shows future dates validation 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="selectedParameter"
       type="hidden"
       value=""
@@ -425,7 +420,6 @@ exports[`ValidationDate shows past dates validation 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="selectedValidation"
       type="hidden"
       value="pastDates"
@@ -489,7 +483,6 @@ exports[`ValidationDate shows past dates validation 1`] = `
       </div>
     </div>
     <input
-      class="form-control"
       name="selectedParameter"
       type="hidden"
       value=""

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClayCheckbox, ClayInput} from '@clayui/form';
+import {ClayCheckbox} from '@clayui/form';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
@@ -110,7 +110,7 @@ const CheckboxMultiple = ({
 					value={option.value}
 				/>
 			))}
-			<ClayInput name={name} type="hidden" value={value} />
+			<input name={name} type="hidden" value={value} />
 		</div>
 	);
 };

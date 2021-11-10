@@ -23,6 +23,7 @@
 		<span class="font-weight-bold"><liferay-ui:message key="ab-test" /></span>
 
 		<clay:button
+			aria-label='<%= LanguageUtil.get(request, "close") %>'
 			cssClass="sidenav-close text-secondary"
 			displayType="unstyled"
 			icon="times"

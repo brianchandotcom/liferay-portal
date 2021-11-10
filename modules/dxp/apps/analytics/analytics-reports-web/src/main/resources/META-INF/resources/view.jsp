@@ -27,6 +27,7 @@ String analyticsReportsPanelState = SessionClicks.get(request, "com.liferay.anal
 		<span class="font-weight-bold"><liferay-ui:message key="content-performance" /></span>
 
 		<clay:button
+			aria-label='<%= LanguageUtil.get(request, "close") %>'
 			cssClass="sidenav-close text-secondary"
 			displayType="unstyled"
 			icon="times"

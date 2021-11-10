@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
@@ -427,7 +426,6 @@ public class LayoutPageTemplateEntryItemSelectorView
 							_getGroupId(), keywords,
 							_layoutPageTemplateEntryItemSelectorCriterion.
 								getLayoutType(),
-							WorkflowConstants.STATUS_ANY,
 							searchContainer.getStart(),
 							searchContainer.getEnd(),
 							searchContainer.getOrderByComparator()));
@@ -436,8 +434,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 						getLayoutPageTemplateEntriesCount(
 							_getGroupId(), keywords,
 							_layoutPageTemplateEntryItemSelectorCriterion.
-								getLayoutType(),
-							WorkflowConstants.STATUS_ANY));
+								getLayoutType()));
 			}
 
 			return searchContainer;

@@ -1568,7 +1568,7 @@ definition {
 
 		task ("Assert that original names are no longer present for street and city.") {
 			AssertTextNotEquals(
-				key_columnName = "lfr-street-column", 
+				key_columnName = "lfr-street-column",
 				key_rowEntry = "Address Entry Name",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
 				value1 = "537 Huangpu Road Taide Building,");

@@ -133,6 +133,8 @@ public class FragmentServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register("2.7.0", "2.7.1", new DummyUpgradeStep());
 	}
 
 	@Reference

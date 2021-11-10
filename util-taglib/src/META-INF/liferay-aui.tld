@@ -16,6 +16,12 @@
 		<tag-class>com.liferay.taglib.aui.ATag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description><![CDATA[A name for the navigation component for assistive technologies to interpret.]]></description>
+			<name>ariaLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description><![CDATA[A role for assistive technologies to interpret HTML elements that have been used for something other than their intended purpose. For example, the <code>&lt;p&gt;</code> tag could be used for something other than a paragraph.]]></description>
 			<name>ariaRole</name>
 			<required>false</required>

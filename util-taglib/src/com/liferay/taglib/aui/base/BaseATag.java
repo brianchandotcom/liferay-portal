@@ -32,6 +32,10 @@ public abstract class BaseATag extends com.liferay.taglib.util.IncludeTag {
 		return super.doStartTag();
 	}
 
+	public java.lang.String getAriaLabel() {
+		return _ariaLabel;
+	}
+
 	public java.lang.String getAriaRole() {
 		return _ariaRole;
 	}
@@ -78,6 +82,10 @@ public abstract class BaseATag extends com.liferay.taglib.util.IncludeTag {
 
 	public java.lang.String getTitle() {
 		return _title;
+	}
+
+	public void setAriaLabel(java.lang.String ariaLabel) {
+		_ariaLabel = ariaLabel;
 	}
 
 	public void setAriaRole(java.lang.String ariaRole) {
@@ -132,6 +140,7 @@ public abstract class BaseATag extends com.liferay.taglib.util.IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_ariaLabel = null;
 		_ariaRole = null;
 		_cssClass = null;
 		_data = null;
@@ -164,6 +173,7 @@ public abstract class BaseATag extends com.liferay.taglib.util.IncludeTag {
 	private static final String _START_PAGE =
 		"/html/taglib/aui/a/start.jsp";
 
+	private java.lang.String _ariaLabel = null;
 	private java.lang.String _ariaRole = null;
 	private java.lang.String _cssClass = null;
 	private java.util.Map<java.lang.String, java.lang.Object> _data = null;

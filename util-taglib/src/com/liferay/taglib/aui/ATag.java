@@ -87,6 +87,7 @@ public class ATag extends BaseATag {
 	protected int processStartTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
+		String ariaLabel = getAriaLabel();
 		String ariaRole = getAriaRole();
 		String cssClass = getCssClass();
 		Map<String, Object> data = getData();
@@ -115,6 +116,12 @@ public class ATag extends BaseATag {
 		}
 		else {
 			jspWriter.write("<span ");
+		}
+
+		if (Validator.isNotNull(ariaLabel)) {
+			jspWriter.write("aria-label=\"");
+			jspWriter.write(ariaLabel);
+			jspWriter.write("\" ");
 		}
 
 		if (Validator.isNotNull(cssClass)) {

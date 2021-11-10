@@ -33,6 +33,10 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 		return super.doStartTag();
 	}
 
+	public java.lang.String getAriaLabel() {
+		return _ariaLabel;
+	}
+
 	public java.lang.String getCssClass() {
 		return _cssClass;
 	}
@@ -67,6 +71,10 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 
 	public java.lang.String getUrl() {
 		return _url;
+	}
+
+	public void setAriaLabel(java.lang.String ariaLabel) {
+		_ariaLabel = ariaLabel;
 	}
 
 	public void setCssClass(java.lang.String cssClass) {
@@ -109,6 +117,7 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_ariaLabel = null;
 		_cssClass = null;
 		_data = null;
 		_id = null;
@@ -127,6 +136,7 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		setNamespacedAttribute(request, "ariaLabel", _ariaLabel);
 		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "data", _data);
 		setNamespacedAttribute(request, "id", _id);
@@ -143,6 +153,7 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/aui/icon/page.jsp";
 
+	private java.lang.String _ariaLabel = null;
 	private java.lang.String _cssClass = null;
 	private java.util.Map<java.lang.String, java.lang.Object> _data = null;
 	private java.lang.String _id = null;

@@ -130,6 +130,7 @@ public class DLFileEntryModelDocumentContributor
 
 			document.addKeyword(
 				Field.CLASS_TYPE_ID, dlFileEntry.getFileEntryTypeId());
+			document.addText(Field.DESCRIPTION, dlFileEntry.getDescription());
 			document.addText(
 				Field.getLocalizedName(defaultLocale, Field.DESCRIPTION),
 				dlFileEntry.getDescription());
@@ -143,6 +144,7 @@ public class DLFileEntryModelDocumentContributor
 				title = _trashHelper.getOriginalTitle(title);
 			}
 
+			document.addText(Field.TITLE, title);
 			document.addText(
 				Field.getLocalizedName(defaultLocale, Field.TITLE), title);
 

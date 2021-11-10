@@ -145,7 +145,8 @@ public class EditStyleBookEntryDisplayContext {
 				JSONUtil.put(
 					"data",
 					_getOptionJSONObject(
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+						LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)
 				).put(
 					"type", "pageTemplate"
 				))
@@ -220,11 +221,11 @@ public class EditStyleBookEntryDisplayContext {
 		);
 	}
 
-	private JSONObject _getOptionJSONObject(int layoutType) {
+	private JSONObject _getOptionJSONObject(int... layoutTypes) {
 		int total =
 			LayoutPageTemplateEntryServiceUtil.
 				getLayoutPageTemplateEntriesCount(
-					_getPreviewItemsGroupId(), layoutType);
+					_getPreviewItemsGroupId(), layoutTypes);
 
 		return JSONUtil.put(
 			"itemSelectorURL",
@@ -235,8 +236,8 @@ public class EditStyleBookEntryDisplayContext {
 
 				layoutPageTemplateEntryItemSelectorCriterion.setGroupId(
 					_getPreviewItemsGroupId());
-				layoutPageTemplateEntryItemSelectorCriterion.setLayoutType(
-					layoutType);
+				layoutPageTemplateEntryItemSelectorCriterion.setLayoutTypes(
+					layoutTypes);
 
 				layoutPageTemplateEntryItemSelectorCriterion.
 					setDesiredItemSelectorReturnTypes(
@@ -257,7 +258,7 @@ public class EditStyleBookEntryDisplayContext {
 				List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 					LayoutPageTemplateEntryServiceUtil.
 						getLayoutPageTemplateEntries(
-							_getPreviewItemsGroupId(), layoutType, 0,
+							_getPreviewItemsGroupId(), layoutTypes, 0,
 							Math.min(total, 4),
 							new LayoutPageTemplateEntryModifiedDateComparator(
 								false));

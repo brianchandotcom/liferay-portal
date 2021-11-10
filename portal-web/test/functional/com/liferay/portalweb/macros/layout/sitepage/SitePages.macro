@@ -217,10 +217,6 @@ definition {
 				portlet = "Pages");
 		}
 
-		Pause(locator1 = "3000");
-
-		var key_breadcrumbName="Pages";
-
 		if ("${siteTemplate}" == "true") {
 			LexiconEntry.gotoAddMenuItem(menuItem = "Add Site Template Page");
 		}
@@ -229,6 +225,7 @@ definition {
 		}
 		else {
 			AssertClick(
+				key_breadcrumbName = "Pages",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
 				value1 = "Pages");
 
@@ -268,15 +265,12 @@ definition {
 				portlet = "Pages");
 		}
 
-		Pause(locator1 = "3000");
-
-		var key_breadcrumbName="Pages";
-
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
 			SitePages.gotoAddFirstPage(pageType = "Public Page");
 		}
 		else {
 			AssertClick(
+				key_breadcrumbName = "Pages",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH",
 				value1 = "Pages");
 

@@ -49,37 +49,6 @@ import javax.servlet.ServletContext;
 public class GlobalStartupAction extends SimpleAction {
 
 	public static List<AutoDeployListener> getAutoDeployListeners() {
-		if (_autoDeployListeners != null) {
-			return _autoDeployListeners;
-		}
-
-		List<AutoDeployListener> autoDeployListeners = new ArrayList<>();
-
-		String[] autoDeployListenerClassNames = PropsUtil.getArray(
-			PropsKeys.AUTO_DEPLOY_LISTENERS);
-
-		for (String autoDeployListenerClassName :
-				autoDeployListenerClassNames) {
-
-			try {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Instantiating " + autoDeployListenerClassName);
-				}
-
-				AutoDeployListener autoDeployListener =
-					(AutoDeployListener)InstanceFactory.newInstance(
-						autoDeployListenerClassName);
-
-				autoDeployListeners.add(autoDeployListener);
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Unable to initialiaze auto deploy listener", exception);
-			}
-		}
-
-		_autoDeployListeners = autoDeployListeners;
-
 		return _autoDeployListeners;
 	}
 
@@ -186,7 +155,36 @@ public class GlobalStartupAction extends SimpleAction {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GlobalStartupAction.class);
 
-	private static List<AutoDeployListener> _autoDeployListeners;
+	private static final List<AutoDeployListener> _autoDeployListeners;
 	private static List<HotDeployListener> _hotDeployListeners;
+
+	static {
+		List<AutoDeployListener> autoDeployListeners = new ArrayList<>();
+
+		String[] autoDeployListenerClassNames = PropsUtil.getArray(
+			PropsKeys.AUTO_DEPLOY_LISTENERS);
+
+		for (String autoDeployListenerClassName :
+				autoDeployListenerClassNames) {
+
+			try {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Instantiating " + autoDeployListenerClassName);
+				}
+
+				AutoDeployListener autoDeployListener =
+					(AutoDeployListener)InstanceFactory.newInstance(
+						autoDeployListenerClassName);
+
+				autoDeployListeners.add(autoDeployListener);
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to initialiaze auto deploy listener", exception);
+			}
+		}
+
+		_autoDeployListeners = autoDeployListeners;
+	}
 
 }

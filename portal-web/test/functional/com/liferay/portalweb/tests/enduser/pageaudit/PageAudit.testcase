@@ -3970,39 +3970,6 @@ definition {
 
 	@description = "LPS-125851: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
 	When the Enable Google PageSpeed Insights check is unchecked
-	Then the 'Google PageSpeed Insights' tab is visible in the 'SITE SCOPE' section "
-	@priority = "3"
-	test UncheckedSystemSettingsVirtualInstanceThenVisibleAtSiteScope {
-		property portal.acceptance = "true";
-        property test.name.skip.portal.instance = "PageAudit#PageWithNoIssues";
-        
-		task ("Disable Google PageSpeed settings tab in the System Scope section") {
-			PageAudit.disableGooglePageSpeed(settingsScope = "Virtual Instance Scope");
-		}
-
-		task ("Check if Google PageSpeed Insights tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section") {
-			AssertElementPresent(
-				key_configurationName = "Google PageSpeed Insights",
-				key_configurationScope = "Site Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-		}
-
-		task ("Enable Google PageSpeed settings tab again") {
-			Click.javaScriptClick(
-				checkboxName = "Enable",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		task ("Check if Google PageSpeed Insights tab is visible in the 'VIRTUAL INSTANCE SCOPE' section") {
-			AssertElementPresent(
-				key_configurationName = "Google PageSpeed Insights",
-				key_configurationScope = "Site Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-		}
-	}
-
-	@description = "LPS-125851: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
-	When the Enable Google PageSpeed Insights check is unchecked
 	Then the 'Google PageSpeed Insights' tab isn't visible in the Site settings of any of the sites of the current Instance."
 	@priority = "3"
 	test UncheckedSystemSettingsVirtualInstanceThenNotVisibleAtTabSiteSettings {
@@ -4045,6 +4012,39 @@ definition {
 				key_itemName = "Pages",
 				locator1 = "ListGroupItem#ITEM_TEXT");
 
+			AssertElementPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Site Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+	}
+
+	@description = "LPS-125851: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab is visible in the 'SITE SCOPE' section "
+	@priority = "3"
+	test UncheckedSystemSettingsVirtualInstanceThenVisibleAtSiteScope {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#PageWithNoIssues";
+
+		task ("Disable Google PageSpeed settings tab in the System Scope section") {
+			PageAudit.disableGooglePageSpeed(settingsScope = "Virtual Instance Scope");
+		}
+
+		task ("Check if Google PageSpeed Insights tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section") {
+			AssertElementPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Site Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+
+		task ("Enable Google PageSpeed settings tab again") {
+			Click.javaScriptClick(
+				checkboxName = "Enable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Check if Google PageSpeed Insights tab is visible in the 'VIRTUAL INSTANCE SCOPE' section") {
 			AssertElementPresent(
 				key_configurationName = "Google PageSpeed Insights",
 				key_configurationScope = "Site Scope",

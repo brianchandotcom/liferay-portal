@@ -17,6 +17,7 @@ package com.liferay.object.admin.rest.client.serdes.v1_0;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.client.json.BaseJSONParser;
 
@@ -190,6 +191,29 @@ public class ObjectDefinitionSerDes {
 					String.valueOf(objectDefinition.getObjectFields()[i]));
 
 				if ((i + 1) < objectDefinition.getObjectFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (objectDefinition.getObjectLayouts() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectLayouts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < objectDefinition.getObjectLayouts().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(objectDefinition.getObjectLayouts()[i]));
+
+				if ((i + 1) < objectDefinition.getObjectLayouts().length) {
 					sb.append(", ");
 				}
 			}
@@ -400,6 +424,15 @@ public class ObjectDefinitionSerDes {
 				String.valueOf(objectDefinition.getObjectFields()));
 		}
 
+		if (objectDefinition.getObjectLayouts() == null) {
+			map.put("objectLayouts", null);
+		}
+		else {
+			map.put(
+				"objectLayouts",
+				String.valueOf(objectDefinition.getObjectLayouts()));
+		}
+
 		if (objectDefinition.getObjectRelationships() == null) {
 			map.put("objectRelationships", null);
 		}
@@ -548,6 +581,18 @@ public class ObjectDefinitionSerDes {
 							object -> ObjectFieldSerDes.toDTO((String)object)
 						).toArray(
 							size -> new ObjectField[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "objectLayouts")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setObjectLayouts(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ObjectLayoutSerDes.toDTO((String)object)
+						).toArray(
+							size -> new ObjectLayout[size]
 						));
 				}
 			}

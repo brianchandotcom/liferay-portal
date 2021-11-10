@@ -213,7 +213,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectField(objectFieldId: ___){actions, id, indexed, indexedAsKeyword, indexedLanguageId, label, listTypeDefinitionId, name, required, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectField(objectFieldId: ___){actions, id, indexed, indexedAsKeyword, indexedLanguageId, label, listTypeDefinitionId, name, relationshipType, required, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectField objectField(
@@ -346,35 +346,6 @@ public class Query {
 		}
 
 		private ObjectLayout _objectLayout;
-
-	}
-
-	@GraphQLTypeExtension(ObjectDefinition.class)
-	public class GetObjectDefinitionObjectLayoutsPageTypeExtension {
-
-		public GetObjectDefinitionObjectLayoutsPageTypeExtension(
-			ObjectDefinition objectDefinition) {
-
-			_objectDefinition = objectDefinition;
-		}
-
-		@GraphQLField
-		public ObjectLayoutPage objectLayouts(
-				@GraphQLName("search") String search,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_objectLayoutResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				objectLayoutResource -> new ObjectLayoutPage(
-					objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
-						_objectDefinition.getId(), search,
-						Pagination.of(page, pageSize))));
-		}
-
-		private ObjectDefinition _objectDefinition;
 
 	}
 

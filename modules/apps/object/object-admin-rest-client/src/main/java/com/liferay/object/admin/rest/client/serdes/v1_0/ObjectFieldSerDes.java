@@ -143,6 +143,20 @@ public class ObjectFieldSerDes {
 			sb.append("\"");
 		}
 
+		if (objectField.getRelationshipType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"relationshipType\": ");
+
+			sb.append("\"");
+
+			sb.append(objectField.getRelationshipType());
+
+			sb.append("\"");
+		}
+
 		if (objectField.getRequired() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -248,6 +262,15 @@ public class ObjectFieldSerDes {
 			map.put("name", String.valueOf(objectField.getName()));
 		}
 
+		if (objectField.getRelationshipType() == null) {
+			map.put("relationshipType", null);
+		}
+		else {
+			map.put(
+				"relationshipType",
+				String.valueOf(objectField.getRelationshipType()));
+		}
+
 		if (objectField.getRequired() == null) {
 			map.put("required", null);
 		}
@@ -331,6 +354,13 @@ public class ObjectFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					objectField.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "relationshipType")) {
+				if (jsonParserFieldValue != null) {
+					objectField.setRelationshipType(
+						ObjectField.RelationshipType.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "required")) {

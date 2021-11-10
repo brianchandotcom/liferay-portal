@@ -364,6 +364,11 @@ public abstract class BaseObjectFieldResourceImpl
 			existingObjectField.setName(objectField.getName());
 		}
 
+		if (objectField.getRelationshipType() != null) {
+			existingObjectField.setRelationshipType(
+				objectField.getRelationshipType());
+		}
+
 		if (objectField.getRequired() != null) {
 			existingObjectField.setRequired(objectField.getRequired());
 		}

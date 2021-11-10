@@ -17,7 +17,6 @@ package com.liferay.portal.events;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
-import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
@@ -47,10 +46,6 @@ import javax.servlet.ServletContext;
  * @author Brian Wing Shun Chan
  */
 public class GlobalStartupAction extends SimpleAction {
-
-	public static List<AutoDeployListener> getAutoDeployListeners() {
-		return _autoDeployListeners;
-	}
 
 	public static List<HotDeployListener> getHotDeployListeners() {
 		if (_hotDeployListeners != null) {
@@ -155,36 +150,6 @@ public class GlobalStartupAction extends SimpleAction {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GlobalStartupAction.class);
 
-	private static final List<AutoDeployListener> _autoDeployListeners;
 	private static List<HotDeployListener> _hotDeployListeners;
-
-	static {
-		List<AutoDeployListener> autoDeployListeners = new ArrayList<>();
-
-		String[] autoDeployListenerClassNames = PropsUtil.getArray(
-			PropsKeys.AUTO_DEPLOY_LISTENERS);
-
-		for (String autoDeployListenerClassName :
-				autoDeployListenerClassNames) {
-
-			try {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Instantiating " + autoDeployListenerClassName);
-				}
-
-				AutoDeployListener autoDeployListener =
-					(AutoDeployListener)InstanceFactory.newInstance(
-						autoDeployListenerClassName);
-
-				autoDeployListeners.add(autoDeployListener);
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Unable to initialiaze auto deploy listener", exception);
-			}
-		}
-
-		_autoDeployListeners = autoDeployListeners;
-	}
 
 }

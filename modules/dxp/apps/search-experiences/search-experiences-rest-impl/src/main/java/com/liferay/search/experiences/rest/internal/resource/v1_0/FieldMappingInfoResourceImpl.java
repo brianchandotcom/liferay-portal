@@ -103,12 +103,6 @@ public class FieldMappingInfoResourceImpl
 
 			String fieldPath = fieldName;
 
-			if (!Validator.isBlank(query) &&
-				!StringUtil.containsIgnoreCase(fieldPath, query)) {
-
-				continue;
-			}
-
 			if (!Validator.isBlank(path)) {
 				fieldPath = path + "." + fieldName;
 			}
@@ -120,6 +114,13 @@ public class FieldMappingInfoResourceImpl
 					query);
 			}
 			else {
+				if (!Validator.isBlank(query) &&
+					!StringUtil.containsIgnoreCase(
+						fieldPath, query, StringPool.BLANK)) {
+
+					continue;
+				}
+
 				String languageId = _getLanguageId(fieldName);
 
 				int languageIdPosition = -1;

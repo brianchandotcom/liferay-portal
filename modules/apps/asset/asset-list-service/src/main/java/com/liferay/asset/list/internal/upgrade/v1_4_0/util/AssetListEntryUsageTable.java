@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author	  Víctor Galán
+ * @author	  Brian Wing Shun Chan
  * @generated
  */
 public class AssetListEntryUsageTable {
@@ -94,9 +94,11 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
 		"create index IX_76643456 on AssetListEntryUsage (assetListEntryId, classNameId, ctCollectionId)",
 		"create index IX_6E1C4974 on AssetListEntryUsage (assetListEntryId, ctCollectionId)",
-		"create unique index IX_78341F6B on AssetListEntryUsage (classNameId, classPK, portletId[$COLUMN_LENGTH:200$], ctCollectionId)",
+		"create index IX_669BC47F on AssetListEntryUsage (containerKey[$COLUMN_LENGTH:255$], containerType, plid, ctCollectionId)",
+		"create unique index IX_624112AF on AssetListEntryUsage (groupId, classNameId, containerKey[$COLUMN_LENGTH:255$], containerType, key_[$COLUMN_LENGTH:255$], plid, ctCollectionId)",
 		"create index IX_AF0F2C99 on AssetListEntryUsage (groupId, classNameId, key_[$COLUMN_LENGTH:255$], ctCollectionId)",
 		"create index IX_27D73798 on AssetListEntryUsage (groupId, classNameId, key_[$COLUMN_LENGTH:255$], type_, ctCollectionId)",
+		"create index IX_9722696C on AssetListEntryUsage (plid, ctCollectionId)",
 		"create index IX_4B343E95 on AssetListEntryUsage (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId)",
 		"create index IX_1F2615AF on AssetListEntryUsage (uuid_[$COLUMN_LENGTH:75$], ctCollectionId)",
 		"create unique index IX_AE0E22D7 on AssetListEntryUsage (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId)"

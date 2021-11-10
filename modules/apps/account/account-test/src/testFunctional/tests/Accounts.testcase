@@ -1521,7 +1521,7 @@ definition {
 			customFieldText = "Custom Field for Account");
 	}
 
-	@description = "This test asserts that a user can view all the Account Groups an account is assigned to via Account details page"
+	@description = "This test asserts that address fields are able to be added and edited."
 	@priority = "4"
 	test CanEditAddressFields {
 		task ("Add an inital account entry with city, country, postal code, region, and street.") {
@@ -1532,7 +1532,9 @@ definition {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "CanEditAddressFields");
+
 			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
 			Accounts.addAddress(
 				addressCity = "Dalian",
 				addressCountry = "Cuba",
@@ -1565,13 +1567,17 @@ definition {
 		}
 
 		task ("Assert that original names are no longer present for street and city.") {
-			AssertElementNotPresent(
-				key_rowEntry = "537 Huangpu Road Taide Building,",
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD");
+			AssertTextNotEquals(
+				key_columnName = "lfr-street-column", 
+				key_rowEntry = "Address Entry Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+				value1 = "537 Huangpu Road Taide Building,");
 
-			AssertElementNotPresent(
-				key_rowEntry = "Dalian",
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD");
+			AssertTextNotEquals(
+				key_columnName = "lfr-city-column",
+				key_rowEntry = "Address Entry Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+				value1 = "Dalian");
 		}
 	}
 

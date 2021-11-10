@@ -3201,6 +3201,27 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			return;
 		}
 
+		if (value.startsWith("keys=")) {
+			value = value.substring(5);
+
+			List<CharSequence> charSequences = new ArrayList<>();
+
+			for (String key : value.split(",")) {
+				CharSequence charSequence = null;
+
+				if (_keysMap.containsKey(key)) {
+					charSequence = _keysMap.get(key);
+				}
+				else {
+					charSequence = key;
+				}
+
+				charSequences.add(charSequence);
+			}
+
+			webElement.sendKeys(Keys.chord(charSequences));
+		}
+
 		if (value.contains("line-number=")) {
 			value = value.replaceAll("line-number=\"\\d+\"", "");
 		}
@@ -4723,6 +4744,14 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				put("CONTROL", Integer.valueOf(KeyEvent.VK_CONTROL));
 				put("CTRL", Integer.valueOf(KeyEvent.VK_CONTROL));
 				put("SHIFT", Integer.valueOf(KeyEvent.VK_SHIFT));
+			}
+		};
+	private static final Map<String, Keys> _keysMap =
+		new Hashtable<String, Keys>() {
+			{
+				put("CONTROL", Keys.CONTROL);
+				put("CTRL", Keys.CONTROL);
+				put("SHIFT", Keys.SHIFT);
 			}
 		};
 	private static final Pattern _tabPattern = Pattern.compile(

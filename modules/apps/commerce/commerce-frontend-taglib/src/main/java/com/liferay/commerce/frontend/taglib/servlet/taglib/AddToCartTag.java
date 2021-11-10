@@ -113,18 +113,6 @@ public class AddToCartTag extends IncludeTag {
 				}
 			}
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			String pathThemeImages = themeDisplay.getPathThemeImages();
-
-			_spritemap = pathThemeImages + "/icons.svg";
-
-			if (pathThemeImages.contains("classic")) {
-				_spritemap = pathThemeImages + "/lexicon/icons.svg";
-			}
-
 			if (sku != null) {
 				_stockQuantity = _commerceInventoryEngine.getStockQuantity(
 					PortalUtil.getCompanyId(httpServletRequest),
@@ -170,10 +158,6 @@ public class AddToCartTag extends IncludeTag {
 		return _options;
 	}
 
-	public String getSpritemap() {
-		return _spritemap;
-	}
-
 	@Override
 	public void setAttributes(HttpServletRequest httpServletRequest) {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
@@ -198,16 +182,6 @@ public class AddToCartTag extends IncludeTag {
 		setNamespacedAttribute(httpServletRequest, "options", _options);
 		setNamespacedAttribute(
 			httpServletRequest, "productSettingsModel", _productSettingsModel);
-
-		if (Validator.isNull(_spritemap)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			_spritemap = themeDisplay.getPathThemeImages() + "/clay/icons.svg";
-		}
-
-		setNamespacedAttribute(httpServletRequest, "spritemap", _spritemap);
 
 		setNamespacedAttribute(
 			httpServletRequest, "stockQuantity", _stockQuantity);
@@ -249,10 +223,6 @@ public class AddToCartTag extends IncludeTag {
 		_productHelper = ServletContextUtil.getProductHelper();
 	}
 
-	public void setSpritemap(String spritemap) {
-		_spritemap = spritemap;
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -275,7 +245,6 @@ public class AddToCartTag extends IncludeTag {
 		_options = null;
 		_productHelper = null;
 		_productSettingsModel = null;
-		_spritemap = null;
 		_stockQuantity = 0;
 	}
 
@@ -309,7 +278,6 @@ public class AddToCartTag extends IncludeTag {
 	private String _options;
 	private ProductHelper _productHelper;
 	private ProductSettingsModel _productSettingsModel;
-	private String _spritemap;
 	private int _stockQuantity;
 
 }

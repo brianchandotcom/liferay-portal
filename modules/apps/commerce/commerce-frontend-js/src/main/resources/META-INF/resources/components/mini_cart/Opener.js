@@ -24,7 +24,6 @@ function Opener() {
 		cartState,
 		displayTotalItemsQuantity,
 		openCart,
-		spritemap,
 	} = useContext(MiniCartContext);
 
 	const {cartItems = [], summary = {}} = cartState;
@@ -55,7 +54,7 @@ function Opener() {
 			data-badge-count={numberOfItems}
 			onClick={openCart}
 		>
-			<ClayIcon spritemap={spritemap} symbol="shopping-cart" />
+			<ClayIcon symbol="shopping-cart" />
 		</button>
 	);
 }

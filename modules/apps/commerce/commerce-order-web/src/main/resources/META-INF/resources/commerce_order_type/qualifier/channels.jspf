@@ -28,7 +28,7 @@
 			).put(
 				"rootPortletId", portletDisplay.getRootPortletId()
 			).put(
-				"spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 			).build()
 		%>'
 		module="js/channels"

@@ -54,7 +54,6 @@ function MiniCart({
 	onAddToCart,
 	orderId,
 	productURLSeparator,
-	spritemap,
 	summaryDataMapper,
 	toggleable,
 }) {
@@ -165,7 +164,6 @@ function MiniCart({
 				openCart,
 				productURLSeparator,
 				setIsUpdating,
-				spritemap,
 				summaryDataMapper,
 				toggleable,
 				updateCartModel,
@@ -296,7 +294,6 @@ MiniCart.propTypes = {
 	}),
 	onAddToCart: PropTypes.func,
 	orderId: PropTypes.number,
-	spritemap: PropTypes.string,
 	summaryDataMapper: PropTypes.func,
 	toggleable: PropTypes.bool,
 };

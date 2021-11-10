@@ -53,7 +53,6 @@ function CartItem({item: cartItem}) {
 		cartState,
 		displayDiscountLevels,
 		setIsUpdating,
-		spritemap,
 		updateCartModel,
 	} = useContext(MiniCartContext);
 
@@ -200,7 +199,6 @@ function CartItem({item: cartItem}) {
 						}
 					}}
 					quantity={quantity}
-					spritemap={spritemap}
 					{...settings}
 				/>
 			</div>
@@ -218,7 +216,6 @@ function CartItem({item: cartItem}) {
 					type="button"
 				>
 					<ClayIcon
-						spritemap={spritemap}
 						symbol="times-circle-full"
 					/>
 				</button>
@@ -226,7 +223,6 @@ function CartItem({item: cartItem}) {
 			{(errorMessages || isShowingErrors) && (
 				<div className="mini-cart-item-errors">
 					<ClayIcon
-						spritemap={spritemap}
 						symbol="exclamation-circle"
 					/>
 

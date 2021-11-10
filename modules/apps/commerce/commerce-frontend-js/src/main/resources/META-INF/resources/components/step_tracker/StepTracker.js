@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayIcon, {ClayIconSpriteContext} from '@clayui/icon';
+import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -37,18 +37,15 @@ Step.propTypes = {
 
 function StepTracker(props) {
 	return (
-		<ClayIconSpriteContext.Provider value={props.spritemap}>
-			<div className="rounded step-tracker">
-				{props.steps.map((step) => (
-					<Step key={step.id} {...step} />
-				))}
-			</div>
-		</ClayIconSpriteContext.Provider>
+		<div className="rounded step-tracker">
+			{props.steps.map((step) => (
+				<Step key={step.id} {...step} />
+			))}
+		</div>
 	);
 }
 
 StepTracker.propTypes = {
-	spritemap: PropTypes.string.isRequired,
 	steps: PropTypes.array.isRequired,
 };
 

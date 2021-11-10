@@ -24,7 +24,6 @@ function AddToWishList({
 	iconOnly,
 	isInWishList,
 	large,
-	spritemap,
 	...productInfo
 }) {
 	const [isAdded, setIsAdded] = useState(isInWishList);
@@ -56,7 +55,6 @@ function AddToWishList({
 
 			<span className="wish-list-icon">
 				<ClayIcon
-					spritemap={spritemap}
 					symbol={`heart${isAdded ? '-full' : ''}`}
 				/>
 			</span>
@@ -75,7 +73,6 @@ AddToWishList.propTypes = {
 	isInWishList: PropTypes.bool,
 	large: PropTypes.bool,
 	skuId: PropTypes.number,
-	spritemap: PropTypes.string,
 };
 
 export default AddToWishList;

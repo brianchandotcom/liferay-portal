@@ -117,47 +117,45 @@ function MiniCompare(props) {
 	}, [items, props.itemsLimit]);
 
 	return (
-		<ClayIconSpriteContext.Provider value={props.spritemap}>
-			<div
-				className={classnames(
-					'mini-compare',
-					!!items.length && 'active'
-				)}
-			>
-				{Array(props.itemsLimit)
-					.fill(null)
-					.map((_el, i) => {
-						const currentItem = items[i] || {};
+		<div
+			className={classnames(
+				'mini-compare',
+				!!items.length && 'active'
+			)}
+		>
+			{Array(props.itemsLimit)
+				.fill(null)
+				.map((_el, i) => {
+					const currentItem = items[i] || {};
 
-						return (
-							<Item
-								{...currentItem}
-								key={i}
-								onDelete={(event) => {
-									event.preventDefault();
-									updateItems(
-										items.filter(
-											(v) => v.id !== currentItem.id
-										)
-									);
-									toggleStatus(
-										props.commerceChannelGroupId,
-										currentItem.id,
-										false
-									);
-									Liferay.fire(
-										ITEM_REMOVED_FROM_COMPARE,
-										currentItem
-									);
-								}}
-							/>
-						);
-					})}
-				<a className="btn btn-primary" href={props.compareProductsURL}>
-					{Liferay.Language.get('compare')}
-				</a>
-			</div>
-		</ClayIconSpriteContext.Provider>
+					return (
+						<Item
+							{...currentItem}
+							key={i}
+							onDelete={(event) => {
+								event.preventDefault();
+								updateItems(
+									items.filter(
+										(v) => v.id !== currentItem.id
+									)
+								);
+								toggleStatus(
+									props.commerceChannelGroupId,
+									currentItem.id,
+									false
+								);
+								Liferay.fire(
+									ITEM_REMOVED_FROM_COMPARE,
+									currentItem
+								);
+							}}
+						/>
+					);
+				})}
+			<a className="btn btn-primary" href={props.compareProductsURL}>
+				{Liferay.Language.get('compare')}
+			</a>
+		</div>
 	);
 }
 
@@ -173,7 +171,6 @@ MiniCompare.propTypes = {
 	),
 	itemsLimit: PropTypes.number,
 	portletNamespace: PropTypes.string.isRequired,
-	spritemap: PropTypes.string,
 };
 
 MiniCompare.defaultProps = {

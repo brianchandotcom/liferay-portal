@@ -64,14 +64,6 @@ public class AddToWishListTag extends IncludeTag {
 			if (cpSku != null) {
 				_skuId = cpSku.getCPInstanceId();
 			}
-
-			String pathThemeImages = themeDisplay.getPathThemeImages();
-
-			_spritemap = pathThemeImages + "/icons.svg";
-
-			if (pathThemeImages.contains("classic")) {
-				_spritemap = pathThemeImages + "/lexicon/icons.svg";
-			}
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -101,7 +93,6 @@ public class AddToWishListTag extends IncludeTag {
 		setNamespacedAttribute(httpServletRequest, "inWishList", _inWishList);
 		setNamespacedAttribute(httpServletRequest, "large", _large);
 		setNamespacedAttribute(httpServletRequest, "skuId", _skuId);
-		setNamespacedAttribute(httpServletRequest, "spritemap", _spritemap);
 	}
 
 	public void setCPCatalogEntry(CPCatalogEntry cpCatalogEntry) {
@@ -135,7 +126,6 @@ public class AddToWishListTag extends IncludeTag {
 		_inWishList = false;
 		_large = false;
 		_skuId = 0;
-		_spritemap = null;
 	}
 
 	@Override
@@ -157,6 +147,5 @@ public class AddToWishListTag extends IncludeTag {
 	private boolean _inWishList;
 	private boolean _large;
 	private long _skuId;
-	private String _spritemap;
 
 }

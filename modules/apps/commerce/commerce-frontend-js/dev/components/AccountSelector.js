@@ -33,5 +33,5 @@ launcher('account_selector', 'account-selector', {
 	},
 	selectOrderURL: '/test-url/{id}',
 	setCurrentAccountURL: '/account-selector/setCurrentAccounts',
-	spritemap: './assets/icons.svg',
+	spritemap: './assets/clay/icons.svg',
 });

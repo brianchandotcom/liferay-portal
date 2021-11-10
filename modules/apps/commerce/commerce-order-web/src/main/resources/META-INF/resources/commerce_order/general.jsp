@@ -99,7 +99,7 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 	<c:if test="<%= !commerceOrder.isOpen() %>">
 		<div class="col-12 mb-4">
 			<commerce-ui:step-tracker
-				spritemap='<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
+				spritemap='<%= themeDisplay.getPathThemeImages() + "/clay/icons.svg" %>'
 				steps="<%= commerceOrderEditDisplayContext.getOrderSteps() %>"
 			/>
 		</div>

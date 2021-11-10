@@ -59,6 +59,6 @@ List<CPCatalogEntry> cpCatalogEntries = cpCompareContentHelper.getCPCatalogEntri
 		portletNamespace:
 			'<%= cpCompareContentHelper.getCompareContentPortletNamespace() %>',
 		spritemap:
-			'<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>',
+			'<%= themeDisplay.getPathThemeImages() + "/clay/icons.svg" %>',
 	});
 </aui:script>

@@ -69,10 +69,8 @@ const composeDataUpdate = (
 
 function GlobalSearch(props) {
 	const isMounted = useIsMounted();
-
 	const inputRef = useRef(null);
 	const dropdownRef = useRef(null);
-
 	const [accountsLoading, updateAccountsLoading] = useState(false);
 	const [accounts, updateAccounts] = useState(null);
 	const [accountsCount, updateAccountsCount] = useState(null);
@@ -207,7 +205,7 @@ function GlobalSearch(props) {
 	}, [active, ids]);
 
 	return (
-		<ClayIconSpriteContext.Provider value={props.spritemap}>
+		<>
 			<ClayInput
 				id={ids.input}
 				onChange={(event) => updateQuery(event.target.value)}
@@ -385,7 +383,7 @@ function GlobalSearch(props) {
 					</ClayDropDown.Item>
 				</ClayDropDown.ItemList>
 			</ClayDropDown.Menu>
-		</ClayIconSpriteContext.Provider>
+		</>
 	);
 }
 
@@ -400,7 +398,6 @@ GlobalSearch.propTypes = {
 	productURLTemplate: PropTypes.string.isRequired,
 	productsSearchURLTemplate: PropTypes.string.isRequired,
 	resultsPageSize: PropTypes.number.isRequired,
-	spritemap: PropTypes.string.isRequired,
 };
 
 GlobalSearch.defaultProps = {

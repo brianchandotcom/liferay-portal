@@ -241,7 +241,6 @@ class AddOrCreateBase extends Component {
 										onPageChange={
 											this.props.updateCurrentPage
 										}
-										spritemap={this.props.spritemap}
 										totalItems={this.props.itemsCount}
 									/>
 								</>

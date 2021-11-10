@@ -119,30 +119,27 @@ function ItemFinder(props) {
 	}
 
 	return (
-		<ClayIconSpriteContext.Provider value={props.spritemap}>
-			<AddOrCreate
-				createNewItemLabel={props.createNewItemLabel}
-				currentPage={currentPage}
-				inputPlaceholder={props.inputPlaceholder}
-				inputSearchValue={textFilter}
-				itemCreation={props.itemCreation}
-				items={items}
-				itemsCount={itemsCount}
-				itemsKey={props.itemsKey}
-				onInputSearchChange={updateTextFilter}
-				onItemCreated={createItem}
-				onItemSelected={selectItem}
-				pageSize={pageSize}
-				panelHeaderLabel={props.panelHeaderLabel}
-				schema={props.schema}
-				searchInputValue={textFilter}
-				selectedItems={selectedItems}
-				spritemap={props.spritemap}
-				titleLabel={props.titleLabel}
-				updateCurrentPage={updateCurrentPage}
-				updatePageSize={updatePageSize}
-			/>
-		</ClayIconSpriteContext.Provider>
+		<AddOrCreate
+			createNewItemLabel={props.createNewItemLabel}
+			currentPage={currentPage}
+			inputPlaceholder={props.inputPlaceholder}
+			inputSearchValue={textFilter}
+			itemCreation={props.itemCreation}
+			items={items}
+			itemsCount={itemsCount}
+			itemsKey={props.itemsKey}
+			onInputSearchChange={updateTextFilter}
+			onItemCreated={createItem}
+			onItemSelected={selectItem}
+			pageSize={pageSize}
+			panelHeaderLabel={props.panelHeaderLabel}
+			schema={props.schema}
+			searchInputValue={textFilter}
+			selectedItems={selectedItems}
+			titleLabel={props.titleLabel}
+			updateCurrentPage={updateCurrentPage}
+			updatePageSize={updatePageSize}
+		/>
 	);
 }
 

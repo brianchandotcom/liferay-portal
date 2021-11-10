@@ -49,7 +49,7 @@ public class SearchBarTag extends ComponentRendererTag {
 
 		putValue("query", query);
 
-		putValue("spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
+		putValue("spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg");
 
 		Map<String, Object> context = getContext();
 

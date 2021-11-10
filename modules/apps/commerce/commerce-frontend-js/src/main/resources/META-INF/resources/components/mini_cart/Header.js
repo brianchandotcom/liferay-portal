@@ -19,7 +19,7 @@ import MiniCartContext from './MiniCartContext';
 import {ORDER_IS_EMPTY, YOUR_ORDER} from './util/constants';
 
 function Header() {
-	const {cartState, closeCart, labels, spritemap, toggleable} = useContext(
+	const {cartState, closeCart, labels, toggleable} = useContext(
 		MiniCartContext
 	);
 
@@ -37,7 +37,7 @@ function Header() {
 				</div>
 				{toggleable && (
 					<button className="mini-cart-close" onClick={closeCart}>
-						<ClayIcon spritemap={spritemap} symbol="times" />
+						<ClayIcon symbol="times" />
 					</button>
 				)}
 			</div>

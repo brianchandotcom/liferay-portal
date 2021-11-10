@@ -319,7 +319,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 							dropdown.default('dropdown-header', 'dropdown-header-container', {
 								items: <%= jsonSerializer.serializeDeep(dropdownItems) %>,
 								spritemap:
-									'<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>',
+									'<%= themeDisplay.getPathThemeImages() + "/clay/icons.svg" %>',
 							});
 						</aui:script>
 					</c:if>

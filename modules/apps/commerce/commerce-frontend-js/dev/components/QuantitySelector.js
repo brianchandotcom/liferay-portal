@@ -23,5 +23,5 @@ launcher('quantity-selector', 'quantity-selector', {
 				resolve(quantity);
 			}, 0);
 		}),
-	spritemap: './assets/icons.svg',
+	spritemap: './assets/clay/icons.svg',
 });

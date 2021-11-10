@@ -67,10 +67,12 @@ public class SXPElementDTOConverter
 				elementDefinition = ElementDefinitionUtil.toElementDefinition(
 					sxpElement.getElementDefinitionJSON());
 				id = sxpElement.getSXPElementId();
+				readOnly = sxpElement.getReadOnly();
 				title = sxpElement.getTitle(dtoConverterContext.getLocale());
 				title_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					sxpElement.getTitleMap());
+				type = sxpElement.getType();
 			}
 		};
 	}

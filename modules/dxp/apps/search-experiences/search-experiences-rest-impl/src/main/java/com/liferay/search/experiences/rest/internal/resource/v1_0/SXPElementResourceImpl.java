@@ -132,7 +132,8 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 					ElementDefinitionUtil.unpack(
 						sxpElement.getElementDefinition())),
 				false,
-				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
+				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()),
+				sxpElement.getType(),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 

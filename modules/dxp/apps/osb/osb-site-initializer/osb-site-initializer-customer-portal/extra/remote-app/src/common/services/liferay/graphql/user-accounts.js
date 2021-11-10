@@ -1,7 +1,5 @@
 const getUserAccountById = (id) => {
-  return {
-    query: `{
-            userAccount(userAccountId: ${id}) {
+  return `userAccount(userAccountId: ${id}) {
                 id
                 name
                 image
@@ -10,9 +8,11 @@ const getUserAccountById = (id) => {
                   name
                   externalReferenceCode
                 }
-              }
-        }`
-  };
+                roleBriefs {
+                  id
+                  name
+                }
+              }`;
 }
 
 export { getUserAccountById };

@@ -2,29 +2,39 @@ import { useEffect, useState } from 'react';
 import { REACT_APP_LIFERAY_API } from '../utils';
 
 const getData = (data) => {
-	let currentData = data;
+	const currentData = {};
 
-	if (currentData) {
-		if (Object.keys(currentData)[0] === "c") {
-			currentData = currentData.c;
+	Object.keys(data).forEach((key) => {
+		if (key === 'c') {
+			Object.keys(data[key]).forEach((cObjectKey) => {
+				const cObject = data[key][cObjectKey];
+
+				if (Object.keys(cObject)[0] === 'items') {
+					currentData[cObjectKey] = cObject['items'];
+				} else {
+					currentData[cObjectKey] = cObject;
+				}
+			});
+		} else {
+			if (Object.keys(data[key])[0] === 'items') {
+				currentData[key] = data[key]['items'];
+			} else {
+				currentData[key] = data[key];
+			}
 		}
-
-		currentData = currentData[Object.keys(currentData)[0]];
-
-		if (Object.keys(currentData)[0] === "items") {
-			currentData = currentData.items;
-		}
-	}
+	});
 
 	return currentData;
 }
 
-const useGraphQL = (query) => {
+const useGraphQL = (queries) => {
 	const [isLoading, setLoading] = useState(true);
 	const [data, setData] = useState();
 	const [error, setError] = useState();
 
-	const queryString = JSON.stringify(query);
+	const queryString = JSON.stringify({
+		query: `{${queries.join('\n')}}`
+	});
 
 	const doFetch = async () => {
 		setLoading(true);

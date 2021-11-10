@@ -13,9 +13,7 @@ const getKoroneikiAccountsByFilter = (filter) => {
     }
 
     if (filters.length > 0) {
-      return {
-        query: `{
-            c {
+      return `c {
                 koroneikiAccounts(filter: "${filters}") {
                   items {
                     accountKey
@@ -27,8 +25,7 @@ const getKoroneikiAccountsByFilter = (filter) => {
                     liferayContactEmailAddress
                   }
                 }
-              }
-        }`}
+              }`;
     }
   }
 }

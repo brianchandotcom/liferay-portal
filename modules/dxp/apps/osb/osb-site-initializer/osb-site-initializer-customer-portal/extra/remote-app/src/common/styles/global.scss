@@ -5,6 +5,7 @@
 
 @import "components/button";
 @import "components/input";
+@import "components/skeleton";
 
 :host {
     --box-shadow-lg: var(--elevation-fluffy-3) rgba(11, 95, 255, 0.09);

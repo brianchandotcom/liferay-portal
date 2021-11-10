@@ -287,11 +287,9 @@ definition {
 		}
 
 		task ("Disable Auto Login Basic Authentication Header") {
-			PortalSettings.gotoConfiguration(
+			APIAuthentication.openToConfigInInstanceSettings(
 				baseURL = "http://www.able.com:8080",
-				configurationCategory = "API Authentication",
-				configurationName = "Auto Login Basic Authentication Header",
-				configurationScope = "Virtual Instance Scope");
+				portlet = "Auto Login");
 
 			FormFields.disableCheckbox(fieldName = "enabled");
 
@@ -299,11 +297,9 @@ definition {
 		}
 
 		task ("Disable Basic Authentication Protocol Support") {
-			PortalSettings.gotoConfiguration(
+			APIAuthentication.openToConfigInInstanceSettings(
 				baseURL = "http://www.able.com:8080",
-				configurationCategory = "API Authentication",
-				configurationName = "Basic Authentication Protocol Support",
-				configurationScope = "Virtual Instance Scope");
+				portlet = "Protocol Support");
 
 			FormFields.disableCheckbox(fieldName = "enabled");
 

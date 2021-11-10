@@ -32,89 +32,115 @@ definition {
 		}
 	}
 
-	@priority = "3"
-	test AddPageMultiplePagesToSite {
-		property testray.component.names = "Site Pages Administration";
-
-		SitePages.addPublicPage(pageName = "Site Page 1");
-
-		SitePages.addPublicPage(pageName = "Site Page 2");
-
-		SitePages.addPublicPage(pageName = "Site Page 3");
-
-		Page.view(
-			pageName = "Site Page 1",
-			privacy = "Public Pages");
-
-		Page.view(
-			pageName = "Site Page 2",
-			privacy = "Public Pages");
-
-		Page.view(
-			pageName = "Site Page 3",
-			privacy = "Public Pages");
-	}
-
-	@priority = "4"
-	test AddSitePrivatePage {
-		property testray.component.names = "Site Pages Administration";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		SitePages.addPrivatePage(pageName = "Site Page");
-
-		Page.view(
-			pageName = "Site Page",
-			privacy = "Private Pages");
-	}
-
+	@description = "Can add and delete a web content display widget via page."
 	@priority = "5"
-	test AddSitePublicChildPage {
-		property portal.acceptance = "true";
-		property testray.component.names = "Site Pages Administration";
-
-		SitePages.addPublicPage(pageName = "Site Page");
-
-		SitePages.addPublicChildPage(
-			childPageName = "Site Child Page",
-			parentPageName = "Site Page");
-
-		Page.view(
-			depth = "2",
-			pageName = "Site Child Page",
-			privacy = "Public Pages");
-	}
-
-	@priority = "5"
-	test AddThenDeleteWidgetFromPage {
+	@uitest
+	test AddAndDeleteWidget {
 		property portal.acceptance = "true";
 		property testray.component.names = "Web Content Display,Training";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Site Page");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Test Site Name");
+		task ("Add a Web Content Display widget to page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Portlet.addPG(portletName = "Web Content Display");
+			Portlet.addPG(portletName = "Web Content Display");
+		}
 
-		Portlet.deletePG(portletName = "Web Content Display");
+		task ("View Web Content Display is shown") {
+			Portlet.viewPG(portletName = "Web Content Display");
+		}
+
+		task ("Delete Web Content Display widget") {
+			Portlet.deletePG(portletName = "Web Content Display");
+		}
+
+		task ("View Web Content Display is not shown") {
+			Portlet.viewNoSpecificPG(portletName = "Web Content Display");
+		}
+	}
+
+	@description = "The user can add a child page in a new site."
+	@priority = "5"
+	@uitest
+	test AddChildPage {
+		property portal.acceptance = "true";
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a child page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicChildPage(
+				childPageName = "Test Child Page",
+				parentPageName = "Test Page Name");
+		}
+
+		task ("View child page in Pages admin") {
+			Page.view(
+				depth = "2",
+				pageName = "Test Child Page",
+				privacy = "Public Pages");
+		}
+	}
+
+	@description = "The user can add multiple public pages in a new site."
+	@priority = "3"
+	@uitest
+	test AddMultiplePages {
+		task ("Add three widget pages") {
+			for (var i : list "1,2,3") {
+				SitePages.addPublicPage(pageName = "Test Page Name ${i}");
+			}
+		}
+
+		task ("View pages in Pages admin") {
+			for (var i : list "1,2,3") {
+				Page.view(
+					pageName = "Test Page Name ${i}",
+					privacy = "Public Pages");
+			}
+		}
+	}
+
+	@description = "The user can add a private page in a new site."
+	@priority = "4"
+	@uitest
+	test AddPrivatePage {
+		task ("Add a private page") {
+			SitePages.addPrivatePage(pageName = "Test Private Page");
+		}
+
+		task ("View private page in Pages admin") {
+			Page.view(
+				pageName = "Test Private Page",
+				privacy = "Private Pages");
+		}
 	}
 
 	@description = "This is a test for LPS-132422. The list of actions appear in right order for pages."
 	@priority = "3"
-	test ViewOrderOfContentWidgetActions {
-		task ("Add a content page") {
+	test ViewOrderOfPageActions {
+		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name");
+				layoutName = "Test Page Name");
 		}
-		task ("Assert the actions order for widget pages") {
+
+		task ("View order of the page actions") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.clickPageMenu(pageName = "Test Widget Page Name");
+			SitePages.clickPageMenu(pageName = "Test Page Name");
 
 			MenuItem.viewOrder(menuItemList = "View,-,Convert to content page...,-,Copy page,-,Configure,Permissions,-,Delete");
 		}

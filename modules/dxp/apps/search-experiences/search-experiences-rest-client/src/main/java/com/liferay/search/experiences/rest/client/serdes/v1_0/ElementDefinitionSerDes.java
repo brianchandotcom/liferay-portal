@@ -69,6 +69,26 @@ public class ElementDefinitionSerDes {
 			sb.append("\"");
 		}
 
+		if (elementDefinition.getConfiguration() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"configuration\": ");
+
+			sb.append(String.valueOf(elementDefinition.getConfiguration()));
+		}
+
+		if (elementDefinition.getDescription_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description_i18n\": ");
+
+			sb.append(_toJSON(elementDefinition.getDescription_i18n()));
+		}
+
 		if (elementDefinition.getIcon() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -83,14 +103,14 @@ public class ElementDefinitionSerDes {
 			sb.append("\"");
 		}
 
-		if (elementDefinition.getSxpBlueprint() != null) {
+		if (elementDefinition.getTitle_i18n() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"sxpBlueprint\": ");
+			sb.append("\"title_i18n\": ");
 
-			sb.append(String.valueOf(elementDefinition.getSxpBlueprint()));
+			sb.append(_toJSON(elementDefinition.getTitle_i18n()));
 		}
 
 		if (elementDefinition.getUiConfiguration() != null) {
@@ -101,6 +121,16 @@ public class ElementDefinitionSerDes {
 			sb.append("\"uiConfiguration\": ");
 
 			sb.append(String.valueOf(elementDefinition.getUiConfiguration()));
+		}
+
+		if (elementDefinition.getUiConfigurationValues() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"uiConfigurationValues\": ");
+
+			sb.append(_toJSON(elementDefinition.getUiConfigurationValues()));
 		}
 
 		sb.append("}");
@@ -132,6 +162,24 @@ public class ElementDefinitionSerDes {
 				"category", String.valueOf(elementDefinition.getCategory()));
 		}
 
+		if (elementDefinition.getConfiguration() == null) {
+			map.put("configuration", null);
+		}
+		else {
+			map.put(
+				"configuration",
+				String.valueOf(elementDefinition.getConfiguration()));
+		}
+
+		if (elementDefinition.getDescription_i18n() == null) {
+			map.put("description_i18n", null);
+		}
+		else {
+			map.put(
+				"description_i18n",
+				String.valueOf(elementDefinition.getDescription_i18n()));
+		}
+
 		if (elementDefinition.getIcon() == null) {
 			map.put("icon", null);
 		}
@@ -139,13 +187,13 @@ public class ElementDefinitionSerDes {
 			map.put("icon", String.valueOf(elementDefinition.getIcon()));
 		}
 
-		if (elementDefinition.getSxpBlueprint() == null) {
-			map.put("sxpBlueprint", null);
+		if (elementDefinition.getTitle_i18n() == null) {
+			map.put("title_i18n", null);
 		}
 		else {
 			map.put(
-				"sxpBlueprint",
-				String.valueOf(elementDefinition.getSxpBlueprint()));
+				"title_i18n",
+				String.valueOf(elementDefinition.getTitle_i18n()));
 		}
 
 		if (elementDefinition.getUiConfiguration() == null) {
@@ -155,6 +203,15 @@ public class ElementDefinitionSerDes {
 			map.put(
 				"uiConfiguration",
 				String.valueOf(elementDefinition.getUiConfiguration()));
+		}
+
+		if (elementDefinition.getUiConfigurationValues() == null) {
+			map.put("uiConfigurationValues", null);
+		}
+		else {
+			map.put(
+				"uiConfigurationValues",
+				String.valueOf(elementDefinition.getUiConfigurationValues()));
 		}
 
 		return map;
@@ -183,21 +240,45 @@ public class ElementDefinitionSerDes {
 					elementDefinition.setCategory((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "configuration")) {
+				if (jsonParserFieldValue != null) {
+					elementDefinition.setConfiguration(
+						ConfigurationSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
+				if (jsonParserFieldValue != null) {
+					elementDefinition.setDescription_i18n(
+						(Map)ElementDefinitionSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "icon")) {
 				if (jsonParserFieldValue != null) {
 					elementDefinition.setIcon((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "sxpBlueprint")) {
+			else if (Objects.equals(jsonParserFieldName, "title_i18n")) {
 				if (jsonParserFieldValue != null) {
-					elementDefinition.setSxpBlueprint(
-						SXPBlueprintSerDes.toDTO((String)jsonParserFieldValue));
+					elementDefinition.setTitle_i18n(
+						(Map)ElementDefinitionSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "uiConfiguration")) {
 				if (jsonParserFieldValue != null) {
 					elementDefinition.setUiConfiguration(
 						UiConfigurationSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "uiConfigurationValues")) {
+
+				if (jsonParserFieldValue != null) {
+					elementDefinition.setUiConfigurationValues(
+						(Map)ElementDefinitionSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}

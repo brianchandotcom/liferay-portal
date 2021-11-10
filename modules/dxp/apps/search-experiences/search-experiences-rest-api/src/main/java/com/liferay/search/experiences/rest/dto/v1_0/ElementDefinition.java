@@ -86,6 +86,65 @@ public class ElementDefinition implements Serializable {
 	protected String category;
 
 	@Schema
+	@Valid
+	public Configuration getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
+	}
+
+	@JsonIgnore
+	public void setConfiguration(
+		UnsafeSupplier<Configuration, Exception> configurationUnsafeSupplier) {
+
+		try {
+			configuration = configurationUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Configuration configuration;
+
+	@Schema
+	@Valid
+	public Map<String, String> getDescription_i18n() {
+		return description_i18n;
+	}
+
+	public void setDescription_i18n(Map<String, String> description_i18n) {
+		this.description_i18n = description_i18n;
+	}
+
+	@JsonIgnore
+	public void setDescription_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			description_i18nUnsafeSupplier) {
+
+		try {
+			description_i18n = description_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> description_i18n;
+
+	@Schema
 	public String getIcon() {
 		return icon;
 	}
@@ -113,20 +172,21 @@ public class ElementDefinition implements Serializable {
 
 	@Schema
 	@Valid
-	public SXPBlueprint getSxpBlueprint() {
-		return sxpBlueprint;
+	public Map<String, String> getTitle_i18n() {
+		return title_i18n;
 	}
 
-	public void setSxpBlueprint(SXPBlueprint sxpBlueprint) {
-		this.sxpBlueprint = sxpBlueprint;
+	public void setTitle_i18n(Map<String, String> title_i18n) {
+		this.title_i18n = title_i18n;
 	}
 
 	@JsonIgnore
-	public void setSxpBlueprint(
-		UnsafeSupplier<SXPBlueprint, Exception> sxpBlueprintUnsafeSupplier) {
+	public void setTitle_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			title_i18nUnsafeSupplier) {
 
 		try {
-			sxpBlueprint = sxpBlueprintUnsafeSupplier.get();
+			title_i18n = title_i18nUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -138,7 +198,7 @@ public class ElementDefinition implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected SXPBlueprint sxpBlueprint;
+	protected Map<String, String> title_i18n;
 
 	@Schema
 	@Valid
@@ -169,6 +229,38 @@ public class ElementDefinition implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected UiConfiguration uiConfiguration;
+
+	@Schema
+	@Valid
+	public Map<String, ValueDefinition> getUiConfigurationValues() {
+		return uiConfigurationValues;
+	}
+
+	public void setUiConfigurationValues(
+		Map<String, ValueDefinition> uiConfigurationValues) {
+
+		this.uiConfigurationValues = uiConfigurationValues;
+	}
+
+	@JsonIgnore
+	public void setUiConfigurationValues(
+		UnsafeSupplier<Map<String, ValueDefinition>, Exception>
+			uiConfigurationValuesUnsafeSupplier) {
+
+		try {
+			uiConfigurationValues = uiConfigurationValuesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, ValueDefinition> uiConfigurationValues;
 
 	@Override
 	public boolean equals(Object object) {
@@ -211,6 +303,26 @@ public class ElementDefinition implements Serializable {
 			sb.append("\"");
 		}
 
+		if (configuration != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"configuration\": ");
+
+			sb.append(String.valueOf(configuration));
+		}
+
+		if (description_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description_i18n\": ");
+
+			sb.append(_toJSON(description_i18n));
+		}
+
 		if (icon != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -225,14 +337,14 @@ public class ElementDefinition implements Serializable {
 			sb.append("\"");
 		}
 
-		if (sxpBlueprint != null) {
+		if (title_i18n != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"sxpBlueprint\": ");
+			sb.append("\"title_i18n\": ");
 
-			sb.append(String.valueOf(sxpBlueprint));
+			sb.append(_toJSON(title_i18n));
 		}
 
 		if (uiConfiguration != null) {
@@ -243,6 +355,16 @@ public class ElementDefinition implements Serializable {
 			sb.append("\"uiConfiguration\": ");
 
 			sb.append(String.valueOf(uiConfiguration));
+		}
+
+		if (uiConfigurationValues != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"uiConfigurationValues\": ");
+
+			sb.append(_toJSON(uiConfigurationValues));
 		}
 
 		sb.append("}");

@@ -77,6 +77,16 @@ public class AdvancedSerDes {
 			sb.append("]");
 		}
 
+		if (advanced.getFetchSource() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fetchSource\": ");
+
+			sb.append(advanced.getFetchSource());
+		}
+
 		if (advanced.getIncludes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -126,6 +136,13 @@ public class AdvancedSerDes {
 			map.put("excludes", String.valueOf(advanced.getExcludes()));
 		}
 
+		if (advanced.getFetchSource() == null) {
+			map.put("fetchSource", null);
+		}
+		else {
+			map.put("fetchSource", String.valueOf(advanced.getFetchSource()));
+		}
+
 		if (advanced.getIncludes() == null) {
 			map.put("includes", null);
 		}
@@ -157,6 +174,11 @@ public class AdvancedSerDes {
 				if (jsonParserFieldValue != null) {
 					advanced.setExcludes(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fetchSource")) {
+				if (jsonParserFieldValue != null) {
+					advanced.setFetchSource((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "includes")) {

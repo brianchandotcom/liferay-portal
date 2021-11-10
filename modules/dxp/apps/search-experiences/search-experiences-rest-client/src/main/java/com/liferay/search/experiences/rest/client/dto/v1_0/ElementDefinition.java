@@ -19,6 +19,7 @@ import com.liferay.search.experiences.rest.client.serdes.v1_0.ElementDefinitionS
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -55,6 +56,49 @@ public class ElementDefinition implements Cloneable, Serializable {
 
 	protected String category;
 
+	public Configuration getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
+	}
+
+	public void setConfiguration(
+		UnsafeSupplier<Configuration, Exception> configurationUnsafeSupplier) {
+
+		try {
+			configuration = configurationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Configuration configuration;
+
+	public Map<String, String> getDescription_i18n() {
+		return description_i18n;
+	}
+
+	public void setDescription_i18n(Map<String, String> description_i18n) {
+		this.description_i18n = description_i18n;
+	}
+
+	public void setDescription_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			description_i18nUnsafeSupplier) {
+
+		try {
+			description_i18n = description_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> description_i18n;
+
 	public String getIcon() {
 		return icon;
 	}
@@ -74,26 +118,27 @@ public class ElementDefinition implements Cloneable, Serializable {
 
 	protected String icon;
 
-	public SXPBlueprint getSxpBlueprint() {
-		return sxpBlueprint;
+	public Map<String, String> getTitle_i18n() {
+		return title_i18n;
 	}
 
-	public void setSxpBlueprint(SXPBlueprint sxpBlueprint) {
-		this.sxpBlueprint = sxpBlueprint;
+	public void setTitle_i18n(Map<String, String> title_i18n) {
+		this.title_i18n = title_i18n;
 	}
 
-	public void setSxpBlueprint(
-		UnsafeSupplier<SXPBlueprint, Exception> sxpBlueprintUnsafeSupplier) {
+	public void setTitle_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			title_i18nUnsafeSupplier) {
 
 		try {
-			sxpBlueprint = sxpBlueprintUnsafeSupplier.get();
+			title_i18n = title_i18nUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected SXPBlueprint sxpBlueprint;
+	protected Map<String, String> title_i18n;
 
 	public UiConfiguration getUiConfiguration() {
 		return uiConfiguration;
@@ -116,6 +161,30 @@ public class ElementDefinition implements Cloneable, Serializable {
 	}
 
 	protected UiConfiguration uiConfiguration;
+
+	public Map<String, ValueDefinition> getUiConfigurationValues() {
+		return uiConfigurationValues;
+	}
+
+	public void setUiConfigurationValues(
+		Map<String, ValueDefinition> uiConfigurationValues) {
+
+		this.uiConfigurationValues = uiConfigurationValues;
+	}
+
+	public void setUiConfigurationValues(
+		UnsafeSupplier<Map<String, ValueDefinition>, Exception>
+			uiConfigurationValuesUnsafeSupplier) {
+
+		try {
+			uiConfigurationValues = uiConfigurationValuesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, ValueDefinition> uiConfigurationValues;
 
 	@Override
 	public ElementDefinition clone() throws CloneNotSupportedException {

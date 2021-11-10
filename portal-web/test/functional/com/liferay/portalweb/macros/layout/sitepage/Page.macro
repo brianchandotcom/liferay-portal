@@ -680,9 +680,11 @@ definition {
 	}
 
 	macro view {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
 
 		SitePages.togglePrivacy(privacy = "${privacy}");
 

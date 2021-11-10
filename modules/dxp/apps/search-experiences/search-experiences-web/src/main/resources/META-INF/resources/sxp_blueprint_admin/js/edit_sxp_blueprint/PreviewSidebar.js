@@ -245,7 +245,7 @@ function PreviewSidebar({
 			{!loading ? (
 				results.errors && !!results.errors.length ? (
 					_renderErrors()
-				) : results?.response?.hits?.total ? (
+				) : results?.response?.hits?.hits?.length ? (
 					_renderHits()
 				) : results.response ? (
 					<div className="empty-list-message">

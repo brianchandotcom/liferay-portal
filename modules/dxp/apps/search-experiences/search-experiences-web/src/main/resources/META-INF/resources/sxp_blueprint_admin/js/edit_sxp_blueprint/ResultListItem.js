@@ -68,27 +68,28 @@ function ResultListItem({item}) {
 
 	const [collapse, setCollapse] = useState(true);
 
-	const _renderListRow = (property, value = '') => (
-		<ClayLayout.Row justify="start" key={property}>
-			<ClayLayout.Col className="semibold" size={4}>
-				{removeSXPBlueprintFieldPrefix(property)}
-			</ClayLayout.Col>
+	const _renderListRow = (property, value) =>
+		value && (
+			<ClayLayout.Row justify="start" key={property}>
+				<ClayLayout.Col className="semibold" size={4}>
+					{removeSXPBlueprintFieldPrefix(property)}
+				</ClayLayout.Col>
 
-			<ClayLayout.Col
-				className={getCN({'text-truncate': collapse})}
-				size={8}
-			>
-				{truncateString(
-					typeof value === 'object'
-						? localizeDate(
-								property,
-								removeBrackets(JSON.stringify(value))
-						  )
-						: localizeDate(property, value)
-				)}
-			</ClayLayout.Col>
-		</ClayLayout.Row>
-	);
+				<ClayLayout.Col
+					className={getCN({'text-truncate': collapse})}
+					size={8}
+				>
+					{truncateString(
+						typeof value === 'object'
+							? localizeDate(
+									property,
+									removeBrackets(JSON.stringify(value))
+							  )
+							: localizeDate(property, value)
+					)}
+				</ClayLayout.Col>
+			</ClayLayout.Row>
+		);
 
 	return (
 		<ClayList.Item
@@ -117,7 +118,7 @@ function ResultListItem({item}) {
 				<ClayList.ItemTitle>
 					{item.viewURL ? (
 						<ClayLink href={item.viewURL} target="_blank">
-							{item[`title_${locale}`]}
+							{item[`title_${locale}`] || item.fullName}
 
 							<ClayIcon
 								className="shortcut-icon"
@@ -125,7 +126,7 @@ function ResultListItem({item}) {
 							/>
 						</ClayLink>
 					) : (
-						item[`title_${locale}`]
+						item[`title_${locale}`] || item.fullName
 					)}
 				</ClayList.ItemTitle>
 

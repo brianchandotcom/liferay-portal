@@ -74,10 +74,11 @@ public class CommerceNotificationAttachmentModelImpl
 	public static final String TABLE_NAME = "CNotificationAttachment";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"CNotificationAttachmentId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"CNotificationAttachmentId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP},
 		{"CNotificationQueueEntryId", Types.BIGINT},
 		{"fileEntryId", Types.BIGINT}, {"deleteOnSend", Types.BOOLEAN}
 	};
@@ -86,6 +87,7 @@ public class CommerceNotificationAttachmentModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CNotificationAttachmentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -100,7 +102,7 @@ public class CommerceNotificationAttachmentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CNotificationAttachment (uuid_ VARCHAR(75) null,CNotificationAttachmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CNotificationQueueEntryId LONG,fileEntryId LONG,deleteOnSend BOOLEAN)";
+		"create table CNotificationAttachment (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CNotificationAttachmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CNotificationQueueEntryId LONG,fileEntryId LONG,deleteOnSend BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CNotificationAttachment";
@@ -305,6 +307,12 @@ public class CommerceNotificationAttachmentModelImpl
 					<String, BiConsumer<CommerceNotificationAttachment, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceNotificationAttachment::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceNotificationAttachment, Long>)
+				CommerceNotificationAttachment::setMvccVersion);
+		attributeGetterFunctions.put(
 			"uuid", CommerceNotificationAttachment::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -381,6 +389,20 @@ public class CommerceNotificationAttachmentModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -681,6 +703,7 @@ public class CommerceNotificationAttachmentModelImpl
 		CommerceNotificationAttachmentImpl commerceNotificationAttachmentImpl =
 			new CommerceNotificationAttachmentImpl();
 
+		commerceNotificationAttachmentImpl.setMvccVersion(getMvccVersion());
 		commerceNotificationAttachmentImpl.setUuid(getUuid());
 		commerceNotificationAttachmentImpl.setCommerceNotificationAttachmentId(
 			getCommerceNotificationAttachmentId());
@@ -705,6 +728,8 @@ public class CommerceNotificationAttachmentModelImpl
 		CommerceNotificationAttachmentImpl commerceNotificationAttachmentImpl =
 			new CommerceNotificationAttachmentImpl();
 
+		commerceNotificationAttachmentImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceNotificationAttachmentImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		commerceNotificationAttachmentImpl.setCommerceNotificationAttachmentId(
@@ -809,6 +834,8 @@ public class CommerceNotificationAttachmentModelImpl
 		CommerceNotificationAttachmentCacheModel
 			commerceNotificationAttachmentCacheModel =
 				new CommerceNotificationAttachmentCacheModel();
+
+		commerceNotificationAttachmentCacheModel.mvccVersion = getMvccVersion();
 
 		commerceNotificationAttachmentCacheModel.uuid = getUuid();
 
@@ -962,6 +989,7 @@ public class CommerceNotificationAttachmentModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceNotificationAttachmentId;
 	private long _groupId;
@@ -1004,6 +1032,7 @@ public class CommerceNotificationAttachmentModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"CNotificationAttachmentId", _commerceNotificationAttachmentId);
@@ -1044,27 +1073,29 @@ public class CommerceNotificationAttachmentModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("uuid_", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("CNotificationAttachmentId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("groupId", 4L);
+		columnBitmasks.put("CNotificationAttachmentId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("CNotificationQueueEntryId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("fileEntryId", 512L);
+		columnBitmasks.put("CNotificationQueueEntryId", 512L);
 
-		columnBitmasks.put("deleteOnSend", 1024L);
+		columnBitmasks.put("fileEntryId", 1024L);
+
+		columnBitmasks.put("deleteOnSend", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

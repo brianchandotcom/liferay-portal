@@ -35,6 +35,9 @@ public class CommerceNotificationQueueEntryTable
 	public static final CommerceNotificationQueueEntryTable INSTANCE =
 		new CommerceNotificationQueueEntryTable();
 
+	public final Column<CommerceNotificationQueueEntryTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceNotificationQueueEntryTable, Long>
 		commerceNotificationQueueEntryId = createColumn(
 			"CNotificationQueueEntryId", Long.class, Types.BIGINT,

@@ -86,7 +86,7 @@ public class CommerceNotificationTemplateModelImpl
 	public static final String TABLE_NAME = "CommerceNotificationTemplate";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"commerceNotificationTemplateId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -102,6 +102,7 @@ public class CommerceNotificationTemplateModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceNotificationTemplateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -124,7 +125,7 @@ public class CommerceNotificationTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceNotificationTemplate (uuid_ VARCHAR(75) null,commerceNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,from_ VARCHAR(75) null,fromName STRING null,to_ VARCHAR(75) null,cc VARCHAR(255) null,bcc VARCHAR(255) null,type_ VARCHAR(75) null,enabled BOOLEAN,subject STRING null,body TEXT null)";
+		"create table CommerceNotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,from_ VARCHAR(75) null,fromName STRING null,to_ VARCHAR(75) null,cc VARCHAR(255) null,bcc VARCHAR(255) null,type_ VARCHAR(75) null,enabled BOOLEAN,subject STRING null,body TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceNotificationTemplate";
@@ -221,6 +222,7 @@ public class CommerceNotificationTemplateModelImpl
 		CommerceNotificationTemplate model =
 			new CommerceNotificationTemplateImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceNotificationTemplateId(
 			soapModel.getCommerceNotificationTemplateId());
@@ -407,6 +409,12 @@ public class CommerceNotificationTemplateModelImpl
 					<String, BiConsumer<CommerceNotificationTemplate, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceNotificationTemplate::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceNotificationTemplate, Long>)
+				CommerceNotificationTemplate::setMvccVersion);
+		attributeGetterFunctions.put(
 			"uuid", CommerceNotificationTemplate::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -525,6 +533,21 @@ public class CommerceNotificationTemplateModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1392,6 +1415,7 @@ public class CommerceNotificationTemplateModelImpl
 		CommerceNotificationTemplateImpl commerceNotificationTemplateImpl =
 			new CommerceNotificationTemplateImpl();
 
+		commerceNotificationTemplateImpl.setMvccVersion(getMvccVersion());
 		commerceNotificationTemplateImpl.setUuid(getUuid());
 		commerceNotificationTemplateImpl.setCommerceNotificationTemplateId(
 			getCommerceNotificationTemplateId());
@@ -1423,6 +1447,8 @@ public class CommerceNotificationTemplateModelImpl
 		CommerceNotificationTemplateImpl commerceNotificationTemplateImpl =
 			new CommerceNotificationTemplateImpl();
 
+		commerceNotificationTemplateImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceNotificationTemplateImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		commerceNotificationTemplateImpl.setCommerceNotificationTemplateId(
@@ -1552,6 +1578,8 @@ public class CommerceNotificationTemplateModelImpl
 		CommerceNotificationTemplateCacheModel
 			commerceNotificationTemplateCacheModel =
 				new CommerceNotificationTemplateCacheModel();
+
+		commerceNotificationTemplateCacheModel.mvccVersion = getMvccVersion();
 
 		commerceNotificationTemplateCacheModel.uuid = getUuid();
 
@@ -1776,6 +1804,7 @@ public class CommerceNotificationTemplateModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceNotificationTemplateId;
 	private long _groupId;
@@ -1829,6 +1858,7 @@ public class CommerceNotificationTemplateModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"commerceNotificationTemplateId", _commerceNotificationTemplateId);
@@ -1875,43 +1905,45 @@ public class CommerceNotificationTemplateModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("uuid_", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("commerceNotificationTemplateId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("groupId", 4L);
+		columnBitmasks.put("commerceNotificationTemplateId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("name", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("description", 512L);
+		columnBitmasks.put("name", 512L);
 
-		columnBitmasks.put("from_", 1024L);
+		columnBitmasks.put("description", 1024L);
 
-		columnBitmasks.put("fromName", 2048L);
+		columnBitmasks.put("from_", 2048L);
 
-		columnBitmasks.put("to_", 4096L);
+		columnBitmasks.put("fromName", 4096L);
 
-		columnBitmasks.put("cc", 8192L);
+		columnBitmasks.put("to_", 8192L);
 
-		columnBitmasks.put("bcc", 16384L);
+		columnBitmasks.put("cc", 16384L);
 
-		columnBitmasks.put("type_", 32768L);
+		columnBitmasks.put("bcc", 32768L);
 
-		columnBitmasks.put("enabled", 65536L);
+		columnBitmasks.put("type_", 65536L);
 
-		columnBitmasks.put("subject", 131072L);
+		columnBitmasks.put("enabled", 131072L);
 
-		columnBitmasks.put("body", 262144L);
+		columnBitmasks.put("subject", 262144L);
+
+		columnBitmasks.put("body", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -36,6 +36,7 @@ public class CommerceNotificationTemplateSoap implements Serializable {
 		CommerceNotificationTemplateSoap soapModel =
 			new CommerceNotificationTemplateSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceNotificationTemplateId(
 			model.getCommerceNotificationTemplateId());
@@ -116,6 +117,14 @@ public class CommerceNotificationTemplateSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceNotificationTemplateId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -276,6 +285,7 @@ public class CommerceNotificationTemplateSoap implements Serializable {
 		_body = body;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceNotificationTemplateId;
 	private long _groupId;

@@ -48,6 +48,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceNotificationTemplateCommerceAccountGroupRelId",
 			getCommerceNotificationTemplateCommerceAccountGroupRelId());
@@ -67,6 +68,12 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceNotificationTemplateCommerceAccountGroupRelId =
 			(Long)attributes.get(
 				"commerceNotificationTemplateCommerceAccountGroupRelId");
@@ -205,6 +212,16 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this commerce notification template commerce account group rel.
+	 *
+	 * @return the mvcc version of this commerce notification template commerce account group rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the primary key of this commerce notification template commerce account group rel.
 	 *
 	 * @return the primary key of this commerce notification template commerce account group rel
@@ -322,6 +339,16 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce notification template commerce account group rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce notification template commerce account group rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

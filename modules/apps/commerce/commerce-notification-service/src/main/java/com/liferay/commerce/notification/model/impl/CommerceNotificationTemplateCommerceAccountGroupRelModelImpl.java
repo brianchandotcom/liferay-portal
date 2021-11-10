@@ -77,6 +77,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	public static final String TABLE_NAME = "CNTemplateCAccountGroupRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"CNTemplateCAccountGroupRelId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -89,6 +90,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CNTemplateCAccountGroupRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -101,7 +103,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CNTemplateCAccountGroupRel (CNTemplateCAccountGroupRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceNotificationTemplateId LONG,commerceAccountGroupId LONG)";
+		"create table CNTemplateCAccountGroupRel (mvccVersion LONG default 0 not null,CNTemplateCAccountGroupRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceNotificationTemplateId LONG,commerceAccountGroupId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CNTemplateCAccountGroupRel";
@@ -173,6 +175,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 		CommerceNotificationTemplateCommerceAccountGroupRel model =
 			new CommerceNotificationTemplateCommerceAccountGroupRelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceNotificationTemplateCommerceAccountGroupRelId(
 			soapModel.
 				getCommerceNotificationTemplateCommerceAccountGroupRelId());
@@ -394,6 +397,16 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 							  ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion",
+			CommerceNotificationTemplateCommerceAccountGroupRel::
+				getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer
+				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+					CommerceNotificationTemplateCommerceAccountGroupRel::
+						setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceNotificationTemplateCommerceAccountGroupRelId",
 			CommerceNotificationTemplateCommerceAccountGroupRel::
 				getCommerceNotificationTemplateCommerceAccountGroupRelId);
@@ -483,6 +496,21 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -737,6 +765,8 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 			commerceNotificationTemplateCommerceAccountGroupRelImpl =
 				new CommerceNotificationTemplateCommerceAccountGroupRelImpl();
 
+		commerceNotificationTemplateCommerceAccountGroupRelImpl.setMvccVersion(
+			getMvccVersion());
 		commerceNotificationTemplateCommerceAccountGroupRelImpl.
 			setCommerceNotificationTemplateCommerceAccountGroupRelId(
 				getCommerceNotificationTemplateCommerceAccountGroupRelId());
@@ -772,6 +802,8 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 			commerceNotificationTemplateCommerceAccountGroupRelImpl =
 				new CommerceNotificationTemplateCommerceAccountGroupRelImpl();
 
+		commerceNotificationTemplateCommerceAccountGroupRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceNotificationTemplateCommerceAccountGroupRelImpl.
 			setCommerceNotificationTemplateCommerceAccountGroupRelId(
 				this.<Long>getColumnOriginalValue(
@@ -886,6 +918,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 		CommerceNotificationTemplateCommerceAccountGroupRelCacheModel
 			commerceNotificationTemplateCommerceAccountGroupRelCacheModel =
 				new CommerceNotificationTemplateCommerceAccountGroupRelCacheModel();
+
+		commerceNotificationTemplateCommerceAccountGroupRelCacheModel.
+			mvccVersion = getMvccVersion();
 
 		commerceNotificationTemplateCommerceAccountGroupRelCacheModel.
 			commerceNotificationTemplateCommerceAccountGroupRelId =
@@ -1051,6 +1086,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceNotificationTemplateCommerceAccountGroupRelId;
 	private long _groupId;
 	private long _companyId;
@@ -1092,6 +1128,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"CNTemplateCAccountGroupRelId",
 			_commerceNotificationTemplateCommerceAccountGroupRelId);
@@ -1130,23 +1167,25 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("CNTemplateCAccountGroupRelId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("groupId", 2L);
+		columnBitmasks.put("CNTemplateCAccountGroupRelId", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("commerceNotificationTemplateId", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("commerceAccountGroupId", 256L);
+		columnBitmasks.put("commerceNotificationTemplateId", 256L);
+
+		columnBitmasks.put("commerceAccountGroupId", 512L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -17,6 +17,7 @@ package com.liferay.commerce.notification.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -37,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceNotificationAttachmentModel
-	extends BaseModel<CommerceNotificationAttachment>, GroupedModel,
+	extends BaseModel<CommerceNotificationAttachment>, GroupedModel, MVCCModel,
 			ShardedModel, StagedAuditedModel {
 
 	/*
@@ -59,6 +60,22 @@ public interface CommerceNotificationAttachmentModel
 	 * @param primaryKey the primary key of this commerce notification attachment
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce notification attachment.
+	 *
+	 * @return the mvcc version of this commerce notification attachment
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce notification attachment.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce notification attachment
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this commerce notification attachment.

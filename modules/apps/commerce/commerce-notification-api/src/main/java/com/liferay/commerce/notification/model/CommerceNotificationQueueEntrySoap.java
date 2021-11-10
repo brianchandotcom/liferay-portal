@@ -36,6 +36,7 @@ public class CommerceNotificationQueueEntrySoap implements Serializable {
 		CommerceNotificationQueueEntrySoap soapModel =
 			new CommerceNotificationQueueEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceNotificationQueueEntryId(
 			model.getCommerceNotificationQueueEntryId());
 		soapModel.setGroupId(model.getGroupId());
@@ -119,6 +120,14 @@ public class CommerceNotificationQueueEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceNotificationQueueEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceNotificationQueueEntryId() {
@@ -297,6 +306,7 @@ public class CommerceNotificationQueueEntrySoap implements Serializable {
 		_sentDate = sentDate;
 	}
 
+	private long _mvccVersion;
 	private long _commerceNotificationQueueEntryId;
 	private long _groupId;
 	private long _companyId;

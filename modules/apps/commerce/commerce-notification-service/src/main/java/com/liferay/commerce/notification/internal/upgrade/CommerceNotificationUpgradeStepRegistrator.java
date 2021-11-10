@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -61,6 +62,21 @@ public class CommerceNotificationUpgradeStepRegistrator
 			"2.2.0", "2.2.1",
 			new CommerceNotificationTemplateGroupIdUpgradeProcess(
 				_classNameLocalService, _groupLocalService));
+
+		registry.register(
+			"2.2.1", "2.3.0",
+			new MVCCVersionUpgradeProcess() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {
+						"CNTemplateCAccountGroupRel", "CNotificationAttachment",
+						"CommerceNotificationQueueEntry",
+						"CommerceNotificationTemplate"
+					};
+				}
+
+			});
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

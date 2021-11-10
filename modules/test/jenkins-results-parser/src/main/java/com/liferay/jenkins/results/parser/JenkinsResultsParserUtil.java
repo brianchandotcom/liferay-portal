@@ -1111,7 +1111,7 @@ public class JenkinsResultsParserUtil {
 		sb.append(masterHostname);
 		sb.append("/");
 		sb.append(
-			jobName.replaceAll("([^/]+)/AXIS_VARIABLE=([^,]+),.*", "$1/$2"));
+			jobName.replaceAll("([^/]+)/AXIS_VARIABLE=([^,]+)(,.*)?", "$1/$2"));
 		sb.append("/");
 		sb.append(buildNumber);
 

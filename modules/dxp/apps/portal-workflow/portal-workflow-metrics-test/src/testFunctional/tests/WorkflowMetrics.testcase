@@ -264,6 +264,7 @@ definition {
 	}
 
 	@description = "LRQA-55606 Automate LPS-106225: [Dashboard] Apply pagination on bulk reassign workflow instances"
+	@ignore = "true"
 	@priority = "5"
 	test ApplyPaginationOnBulkReassign {
 		property portal.acceptance = "true";
@@ -526,6 +527,7 @@ definition {
 	}
 
 	@description = "LRQA-55451 Exceptions Check"
+	@ignore = "true"
 	@priority = "5"
 	test BulkReassignWorkflowInstancesExceptions {
 		property portal.acceptance = "true";

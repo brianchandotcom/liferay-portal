@@ -21,8 +21,10 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -245,6 +247,8 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(commerceCatalog2);
 		Assert.assertEquals(
 			"Test Commerce Catalog 2", commerceCatalog2.getName());
+
+		_assertCPDefinitions(group);
 	}
 
 	private void _assertCommerceChannel(Group group) throws Exception {
@@ -268,6 +272,24 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(commerceInventoryWarehouse);
 		Assert.assertEquals(
 			"Test Commerce Warehouse", commerceInventoryWarehouse.getName());
+	}
+
+	private void _assertCPDefinitions(Group group) throws Exception {
+		CPDefinition cpDefinition1 =
+			_cpDefinitionLocalService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+					"TEST001", group.getCompanyId());
+
+		Assert.assertNotNull(cpDefinition1);
+		Assert.assertEquals("Test CP Definition 1", cpDefinition1.getName());
+
+		CPDefinition cpDefinition2 =
+			_cpDefinitionLocalService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+					"TEST002", group.getCompanyId());
+
+		Assert.assertNotNull(cpDefinition2);
+		Assert.assertEquals("Test CP Definition 2", cpDefinition2.getName());
 	}
 
 	private void _assertDDMStructure(Group group) {
@@ -531,6 +553,9 @@ public class BundleSiteInitializerTest {
 	@Inject
 	private CommerceInventoryWarehouseLocalService
 		_commerceInventoryWarehouseLocalService;
+
+	@Inject
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

@@ -1,0 +1,24 @@
+[
+	{
+		"categories": [
+			"Test Asset Category 1"
+		],
+		"description": "Test description CP Definition 1",
+		"externalReferenceCode": "TEST001",
+		"name": "Test CP Definition 1",
+		"price": 29.0,
+		"promoPrice": 18.0,
+		"sku": "TEST001"
+	},
+	{
+		"categories": [
+			"Test Asset Category 1"
+		],
+		"description": "Test description CP Definition 2",
+		"externalReferenceCode": "TEST002",
+		"name": "Test CP Definition 2",
+		"price": 45.0,
+		"promoPrice": 20.0,
+		"sku": "TEST002"
+	}
+]

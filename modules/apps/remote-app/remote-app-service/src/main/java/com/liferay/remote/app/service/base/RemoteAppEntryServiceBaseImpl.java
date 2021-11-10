@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryService;
 import com.liferay.remote.app.service.RemoteAppEntryServiceUtil;
+import com.liferay.remote.app.service.persistence.RemoteAppEntryLocalizationPersistence;
 import com.liferay.remote.app.service.persistence.RemoteAppEntryPersistence;
 
 import java.lang.reflect.Field;
@@ -144,5 +145,9 @@ public abstract class RemoteAppEntryServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
+
+	@Reference
+	protected RemoteAppEntryLocalizationPersistence
+		remoteAppEntryLocalizationPersistence;
 
 }

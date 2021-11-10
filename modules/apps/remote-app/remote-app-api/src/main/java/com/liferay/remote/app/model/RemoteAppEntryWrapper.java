@@ -45,6 +45,7 @@ public class RemoteAppEntryWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
+		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("remoteAppEntryId", getRemoteAppEntryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -58,10 +59,14 @@ public class RemoteAppEntryWrapper
 		attributes.put("friendlyURLMapping", getFriendlyURLMapping());
 		attributes.put("iFrameURL", getIFrameURL());
 		attributes.put("instanceable", isInstanceable());
-		attributes.put("name", getName());
 		attributes.put("portletCategoryName", getPortletCategoryName());
 		attributes.put("properties", getProperties());
+		attributes.put("sourceCodeURL", getSourceCodeURL());
 		attributes.put("type", getType());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -78,6 +83,12 @@ public class RemoteAppEntryWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
+
+		if (defaultLanguageId != null) {
+			setDefaultLanguageId(defaultLanguageId);
 		}
 
 		Long remoteAppEntryId = (Long)attributes.get("remoteAppEntryId");
@@ -155,12 +166,6 @@ public class RemoteAppEntryWrapper
 			setInstanceable(instanceable);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
 		String portletCategoryName = (String)attributes.get(
 			"portletCategoryName");
 
@@ -174,10 +179,40 @@ public class RemoteAppEntryWrapper
 			setProperties(properties);
 		}
 
+		String sourceCodeURL = (String)attributes.get("sourceCodeURL");
+
+		if (sourceCodeURL != null) {
+			setSourceCodeURL(sourceCodeURL);
+		}
+
 		String type = (String)attributes.get("type");
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -261,9 +296,34 @@ public class RemoteAppEntryWrapper
 		return model.getCustomElementURLs();
 	}
 
+	/**
+	 * Returns the default language ID of this remote app entry.
+	 *
+	 * @return the default language ID of this remote app entry
+	 */
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	@Override
+	public String getDescription() {
+		return model.getDescription();
+	}
+
+	@Override
+	public String getDescription(String languageId) {
+		return model.getDescription(languageId);
+	}
+
+	@Override
+	public String getDescription(String languageId, boolean useDefault) {
+		return model.getDescription(languageId, useDefault);
+	}
+
+	@Override
+	public String getDescriptionMapAsXML() {
+		return model.getDescriptionMapAsXML();
 	}
 
 	/**
@@ -296,6 +356,16 @@ public class RemoteAppEntryWrapper
 		return model.getInstanceable();
 	}
 
+	@Override
+	public Map<String, String> getLanguageIdToDescriptionMap() {
+		return model.getLanguageIdToDescriptionMap();
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToNameMap() {
+		return model.getLanguageIdToNameMap();
+	}
+
 	/**
 	 * Returns the modified date of this remote app entry.
 	 *
@@ -316,80 +386,24 @@ public class RemoteAppEntryWrapper
 		return model.getMvccVersion();
 	}
 
-	/**
-	 * Returns the name of this remote app entry.
-	 *
-	 * @return the name of this remote app entry
-	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
-	/**
-	 * Returns the localized name of this remote app entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized name of this remote app entry
-	 */
-	@Override
-	public String getName(java.util.Locale locale) {
-		return model.getName(locale);
-	}
-
-	/**
-	 * Returns the localized name of this remote app entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this remote app entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
-	@Override
-	public String getName(java.util.Locale locale, boolean useDefault) {
-		return model.getName(locale, useDefault);
-	}
-
-	/**
-	 * Returns the localized name of this remote app entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized name of this remote app entry
-	 */
 	@Override
 	public String getName(String languageId) {
 		return model.getName(languageId);
 	}
 
-	/**
-	 * Returns the localized name of this remote app entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this remote app entry
-	 */
 	@Override
 	public String getName(String languageId, boolean useDefault) {
 		return model.getName(languageId, useDefault);
 	}
 
 	@Override
-	public String getNameCurrentLanguageId() {
-		return model.getNameCurrentLanguageId();
-	}
-
-	@Override
-	public String getNameCurrentValue() {
-		return model.getNameCurrentValue();
-	}
-
-	/**
-	 * Returns a map of the locales and localized names of this remote app entry.
-	 *
-	 * @return the locales and localized names of this remote app entry
-	 */
-	@Override
-	public Map<java.util.Locale, String> getNameMap() {
-		return model.getNameMap();
+	public String getNameMapAsXML() {
+		return model.getNameMapAsXML();
 	}
 
 	/**
@@ -443,6 +457,66 @@ public class RemoteAppEntryWrapper
 	}
 
 	/**
+	 * Returns the source code url of this remote app entry.
+	 *
+	 * @return the source code url of this remote app entry
+	 */
+	@Override
+	public String getSourceCodeURL() {
+		return model.getSourceCodeURL();
+	}
+
+	/**
+	 * Returns the status of this remote app entry.
+	 *
+	 * @return the status of this remote app entry
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
+	}
+
+	/**
+	 * Returns the status by user ID of this remote app entry.
+	 *
+	 * @return the status by user ID of this remote app entry
+	 */
+	@Override
+	public long getStatusByUserId() {
+		return model.getStatusByUserId();
+	}
+
+	/**
+	 * Returns the status by user name of this remote app entry.
+	 *
+	 * @return the status by user name of this remote app entry
+	 */
+	@Override
+	public String getStatusByUserName() {
+		return model.getStatusByUserName();
+	}
+
+	/**
+	 * Returns the status by user uuid of this remote app entry.
+	 *
+	 * @return the status by user uuid of this remote app entry
+	 */
+	@Override
+	public String getStatusByUserUuid() {
+		return model.getStatusByUserUuid();
+	}
+
+	/**
+	 * Returns the status date of this remote app entry.
+	 *
+	 * @return the status date of this remote app entry
+	 */
+	@Override
+	public Date getStatusDate() {
+		return model.getStatusDate();
+	}
+
+	/**
 	 * Returns the type of this remote app entry.
 	 *
 	 * @return the type of this remote app entry
@@ -493,6 +567,66 @@ public class RemoteAppEntryWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this remote app entry is approved.
+	 *
+	 * @return <code>true</code> if this remote app entry is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved() {
+		return model.isApproved();
+	}
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is denied.
+	 *
+	 * @return <code>true</code> if this remote app entry is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied() {
+		return model.isDenied();
+	}
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is a draft.
+	 *
+	 * @return <code>true</code> if this remote app entry is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft() {
+		return model.isDraft();
+	}
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is expired.
+	 *
+	 * @return <code>true</code> if this remote app entry is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired() {
+		return model.isExpired();
+	}
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is inactive.
+	 *
+	 * @return <code>true</code> if this remote app entry is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive() {
+		return model.isInactive();
+	}
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is incomplete.
+	 *
+	 * @return <code>true</code> if this remote app entry is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete() {
+		return model.isIncomplete();
+	}
+
+	/**
 	 * Returns <code>true</code> if this remote app entry is instanceable.
 	 *
 	 * @return <code>true</code> if this remote app entry is instanceable; <code>false</code> otherwise
@@ -502,24 +636,29 @@ public class RemoteAppEntryWrapper
 		return model.isInstanceable();
 	}
 
+	/**
+	 * Returns <code>true</code> if this remote app entry is pending.
+	 *
+	 * @return <code>true</code> if this remote app entry is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending() {
+		return model.isPending();
+	}
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is scheduled.
+	 *
+	 * @return <code>true</code> if this remote app entry is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled() {
+		return model.isScheduled();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
-	}
-
-	@Override
-	public void prepareLocalizedFieldsForImport()
-		throws com.liferay.portal.kernel.exception.LocaleException {
-
-		model.prepareLocalizedFieldsForImport();
-	}
-
-	@Override
-	public void prepareLocalizedFieldsForImport(
-			java.util.Locale defaultImportLocale)
-		throws com.liferay.portal.kernel.exception.LocaleException {
-
-		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -585,6 +724,16 @@ public class RemoteAppEntryWrapper
 	}
 
 	/**
+	 * Sets the default language ID of this remote app entry.
+	 *
+	 * @param defaultLanguageId the default language ID of this remote app entry
+	 */
+	@Override
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		model.setDefaultLanguageId(defaultLanguageId);
+	}
+
+	/**
 	 * Sets the friendly url mapping of this remote app entry.
 	 *
 	 * @param friendlyURLMapping the friendly url mapping of this remote app entry
@@ -635,69 +784,6 @@ public class RemoteAppEntryWrapper
 	}
 
 	/**
-	 * Sets the name of this remote app entry.
-	 *
-	 * @param name the name of this remote app entry
-	 */
-	@Override
-	public void setName(String name) {
-		model.setName(name);
-	}
-
-	/**
-	 * Sets the localized name of this remote app entry in the language.
-	 *
-	 * @param name the localized name of this remote app entry
-	 * @param locale the locale of the language
-	 */
-	@Override
-	public void setName(String name, java.util.Locale locale) {
-		model.setName(name, locale);
-	}
-
-	/**
-	 * Sets the localized name of this remote app entry in the language, and sets the default locale.
-	 *
-	 * @param name the localized name of this remote app entry
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
-	@Override
-	public void setName(
-		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
-
-		model.setName(name, locale, defaultLocale);
-	}
-
-	@Override
-	public void setNameCurrentLanguageId(String languageId) {
-		model.setNameCurrentLanguageId(languageId);
-	}
-
-	/**
-	 * Sets the localized names of this remote app entry from the map of locales and localized names.
-	 *
-	 * @param nameMap the locales and localized names of this remote app entry
-	 */
-	@Override
-	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		model.setNameMap(nameMap);
-	}
-
-	/**
-	 * Sets the localized names of this remote app entry from the map of locales and localized names, and sets the default locale.
-	 *
-	 * @param nameMap the locales and localized names of this remote app entry
-	 * @param defaultLocale the default locale
-	 */
-	@Override
-	public void setNameMap(
-		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
-
-		model.setNameMap(nameMap, defaultLocale);
-	}
-
-	/**
 	 * Sets the parent container model ID of this remote app entry.
 	 *
 	 * @param parentContainerModelId the parent container model ID of this remote app entry
@@ -745,6 +831,66 @@ public class RemoteAppEntryWrapper
 	@Override
 	public void setRemoteAppEntryId(long remoteAppEntryId) {
 		model.setRemoteAppEntryId(remoteAppEntryId);
+	}
+
+	/**
+	 * Sets the source code url of this remote app entry.
+	 *
+	 * @param sourceCodeURL the source code url of this remote app entry
+	 */
+	@Override
+	public void setSourceCodeURL(String sourceCodeURL) {
+		model.setSourceCodeURL(sourceCodeURL);
+	}
+
+	/**
+	 * Sets the status of this remote app entry.
+	 *
+	 * @param status the status of this remote app entry
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
+	}
+
+	/**
+	 * Sets the status by user ID of this remote app entry.
+	 *
+	 * @param statusByUserId the status by user ID of this remote app entry
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		model.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	 * Sets the status by user name of this remote app entry.
+	 *
+	 * @param statusByUserName the status by user name of this remote app entry
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		model.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	 * Sets the status by user uuid of this remote app entry.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this remote app entry
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+		model.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	 * Sets the status date of this remote app entry.
+	 *
+	 * @param statusDate the status date of this remote app entry
+	 */
+	@Override
+	public void setStatusDate(Date statusDate) {
+		model.setStatusDate(statusDate);
 	}
 
 	/**

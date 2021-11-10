@@ -12,16 +12,31 @@
  * details.
  */
 
-package com.liferay.remote.app.uad.constants;
+package com.liferay.remote.app.exception;
+
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-public class RemoteAppUADConstants {
+public class NoSuchRemoteAppEntryLocalizationException
+	extends NoSuchModelException {
 
-	public static final String[] USER_ID_FIELD_NAMES_REMOTE_APP_ENTRY = {
-		"userId", "statusByUserId"
-	};
+	public NoSuchRemoteAppEntryLocalizationException() {
+	}
+
+	public NoSuchRemoteAppEntryLocalizationException(String msg) {
+		super(msg);
+	}
+
+	public NoSuchRemoteAppEntryLocalizationException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
+	}
+
+	public NoSuchRemoteAppEntryLocalizationException(Throwable throwable) {
+		super(throwable);
+	}
 
 }

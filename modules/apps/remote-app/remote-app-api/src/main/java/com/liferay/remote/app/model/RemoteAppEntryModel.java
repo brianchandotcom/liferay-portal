@@ -15,16 +15,14 @@
 package com.liferay.remote.app.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ContainerModel;
-import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 
 import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -42,8 +40,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface RemoteAppEntryModel
-	extends BaseModel<RemoteAppEntry>, ContainerModel, LocalizedModel,
-			MVCCModel, ShardedModel, StagedAuditedModel {
+	extends BaseModel<RemoteAppEntry>, ContainerModel, MVCCModel, ShardedModel,
+			StagedAuditedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -97,6 +95,21 @@ public interface RemoteAppEntryModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the default language ID of this remote app entry.
+	 *
+	 * @return the default language ID of this remote app entry
+	 */
+	@AutoEscape
+	public String getDefaultLanguageId();
+
+	/**
+	 * Sets the default language ID of this remote app entry.
+	 *
+	 * @param defaultLanguageId the default language ID of this remote app entry
+	 */
+	public void setDefaultLanguageId(String defaultLanguageId);
 
 	/**
 	 * Returns the remote app entry ID of this remote app entry.
@@ -307,105 +320,6 @@ public interface RemoteAppEntryModel
 	public void setInstanceable(boolean instanceable);
 
 	/**
-	 * Returns the name of this remote app entry.
-	 *
-	 * @return the name of this remote app entry
-	 */
-	public String getName();
-
-	/**
-	 * Returns the localized name of this remote app entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized name of this remote app entry
-	 */
-	@AutoEscape
-	public String getName(Locale locale);
-
-	/**
-	 * Returns the localized name of this remote app entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this remote app entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
-	@AutoEscape
-	public String getName(Locale locale, boolean useDefault);
-
-	/**
-	 * Returns the localized name of this remote app entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized name of this remote app entry
-	 */
-	@AutoEscape
-	public String getName(String languageId);
-
-	/**
-	 * Returns the localized name of this remote app entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this remote app entry
-	 */
-	@AutoEscape
-	public String getName(String languageId, boolean useDefault);
-
-	@AutoEscape
-	public String getNameCurrentLanguageId();
-
-	@AutoEscape
-	public String getNameCurrentValue();
-
-	/**
-	 * Returns a map of the locales and localized names of this remote app entry.
-	 *
-	 * @return the locales and localized names of this remote app entry
-	 */
-	public Map<Locale, String> getNameMap();
-
-	/**
-	 * Sets the name of this remote app entry.
-	 *
-	 * @param name the name of this remote app entry
-	 */
-	public void setName(String name);
-
-	/**
-	 * Sets the localized name of this remote app entry in the language.
-	 *
-	 * @param name the localized name of this remote app entry
-	 * @param locale the locale of the language
-	 */
-	public void setName(String name, Locale locale);
-
-	/**
-	 * Sets the localized name of this remote app entry in the language, and sets the default locale.
-	 *
-	 * @param name the localized name of this remote app entry
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
-	public void setName(String name, Locale locale, Locale defaultLocale);
-
-	public void setNameCurrentLanguageId(String languageId);
-
-	/**
-	 * Sets the localized names of this remote app entry from the map of locales and localized names.
-	 *
-	 * @param nameMap the locales and localized names of this remote app entry
-	 */
-	public void setNameMap(Map<Locale, String> nameMap);
-
-	/**
-	 * Sets the localized names of this remote app entry from the map of locales and localized names, and sets the default locale.
-	 *
-	 * @param nameMap the locales and localized names of this remote app entry
-	 * @param defaultLocale the default locale
-	 */
-	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
-
-	/**
 	 * Returns the portlet category name of this remote app entry.
 	 *
 	 * @return the portlet category name of this remote app entry
@@ -436,6 +350,21 @@ public interface RemoteAppEntryModel
 	public void setProperties(String properties);
 
 	/**
+	 * Returns the source code url of this remote app entry.
+	 *
+	 * @return the source code url of this remote app entry
+	 */
+	@AutoEscape
+	public String getSourceCodeURL();
+
+	/**
+	 * Sets the source code url of this remote app entry.
+	 *
+	 * @param sourceCodeURL the source code url of this remote app entry
+	 */
+	public void setSourceCodeURL(String sourceCodeURL);
+
+	/**
 	 * Returns the type of this remote app entry.
 	 *
 	 * @return the type of this remote app entry
@@ -449,6 +378,173 @@ public interface RemoteAppEntryModel
 	 * @param type the type of this remote app entry
 	 */
 	public void setType(String type);
+
+	/**
+	 * Returns the status of this remote app entry.
+	 *
+	 * @return the status of this remote app entry
+	 */
+	@Override
+	public int getStatus();
+
+	/**
+	 * Sets the status of this remote app entry.
+	 *
+	 * @param status the status of this remote app entry
+	 */
+	@Override
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this remote app entry.
+	 *
+	 * @return the status by user ID of this remote app entry
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this remote app entry.
+	 *
+	 * @param statusByUserId the status by user ID of this remote app entry
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this remote app entry.
+	 *
+	 * @return the status by user uuid of this remote app entry
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this remote app entry.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this remote app entry
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this remote app entry.
+	 *
+	 * @return the status by user name of this remote app entry
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this remote app entry.
+	 *
+	 * @param statusByUserName the status by user name of this remote app entry
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this remote app entry.
+	 *
+	 * @return the status date of this remote app entry
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this remote app entry.
+	 *
+	 * @param statusDate the status date of this remote app entry
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	public String[] getAvailableLanguageIds();
+
+	public String getDescription();
+
+	public String getDescription(String languageId);
+
+	public String getDescription(String languageId, boolean useDefault);
+
+	public String getDescriptionMapAsXML();
+
+	public Map<String, String> getLanguageIdToDescriptionMap();
+
+	public String getName();
+
+	public String getName(String languageId);
+
+	public String getName(String languageId, boolean useDefault);
+
+	public String getNameMapAsXML();
+
+	public Map<String, String> getLanguageIdToNameMap();
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is approved.
+	 *
+	 * @return <code>true</code> if this remote app entry is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is denied.
+	 *
+	 * @return <code>true</code> if this remote app entry is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is a draft.
+	 *
+	 * @return <code>true</code> if this remote app entry is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is expired.
+	 *
+	 * @return <code>true</code> if this remote app entry is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is inactive.
+	 *
+	 * @return <code>true</code> if this remote app entry is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is incomplete.
+	 *
+	 * @return <code>true</code> if this remote app entry is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is pending.
+	 *
+	 * @return <code>true</code> if this remote app entry is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is scheduled.
+	 *
+	 * @return <code>true</code> if this remote app entry is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
 
 	/**
 	 * Returns the container model ID of this remote app entry.
@@ -489,19 +585,6 @@ public interface RemoteAppEntryModel
 	 */
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);
-
-	@Override
-	public String[] getAvailableLanguageIds();
-
-	@Override
-	public String getDefaultLanguageId();
-
-	@Override
-	public void prepareLocalizedFieldsForImport() throws LocaleException;
-
-	@Override
-	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
-		throws LocaleException;
 
 	@Override
 	public RemoteAppEntry cloneWithOriginalValues();

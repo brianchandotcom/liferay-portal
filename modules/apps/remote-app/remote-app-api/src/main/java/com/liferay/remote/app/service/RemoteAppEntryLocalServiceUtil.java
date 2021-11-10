@@ -48,26 +48,28 @@ public class RemoteAppEntryLocalServiceUtil {
 	public static RemoteAppEntry addCustomElementRemoteAppEntry(
 			long userId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
+			Map<java.util.Locale, String> descriptionMap,
 			String friendlyURLMapping, boolean instanceable,
 			Map<java.util.Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		return getService().addCustomElementRemoteAppEntry(
 			userId, customElementCSSURLs, customElementHTMLElementName,
-			customElementURLs, friendlyURLMapping, instanceable, nameMap,
-			portletCategoryName, properties);
+			customElementURLs, descriptionMap, friendlyURLMapping, instanceable,
+			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	public static RemoteAppEntry addIFrameRemoteAppEntry(
-			long userId, String friendlyURLMapping, String iFrameURL,
-			boolean instanceable, Map<java.util.Locale, String> nameMap,
-			String portletCategoryName, String properties)
+			long userId, Map<java.util.Locale, String> descriptionMap,
+			String friendlyURLMapping, String iFrameURL, boolean instanceable,
+			Map<java.util.Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		return getService().addIFrameRemoteAppEntry(
-			userId, friendlyURLMapping, iFrameURL, instanceable, nameMap,
-			portletCategoryName, properties);
+			userId, descriptionMap, friendlyURLMapping, iFrameURL, instanceable,
+			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	/**
@@ -258,6 +260,14 @@ public class RemoteAppEntryLocalServiceUtil {
 			uuid, companyId);
 	}
 
+	public static com.liferay.remote.app.model.RemoteAppEntryLocalization
+		fetchRemoteAppEntryLocalization(
+			long remoteAppEntryId, String languageId) {
+
+		return getService().fetchRemoteAppEntryLocalization(
+			remoteAppEntryId, languageId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -350,6 +360,21 @@ public class RemoteAppEntryLocalServiceUtil {
 			uuid, companyId);
 	}
 
+	public static com.liferay.remote.app.model.RemoteAppEntryLocalization
+			getRemoteAppEntryLocalization(
+				long remoteAppEntryId, String languageId)
+		throws PortalException {
+
+		return getService().getRemoteAppEntryLocalization(
+			remoteAppEntryId, languageId);
+	}
+
+	public static List<com.liferay.remote.app.model.RemoteAppEntryLocalization>
+		getRemoteAppEntryLocalizations(long remoteAppEntryId) {
+
+		return getService().getRemoteAppEntryLocalizations(remoteAppEntryId);
+	}
+
 	public static List<RemoteAppEntry> search(
 			long companyId, String keywords, int start, int end,
 			com.liferay.portal.kernel.search.Sort sort)
@@ -371,25 +396,28 @@ public class RemoteAppEntryLocalServiceUtil {
 	public static RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
+			Map<java.util.Locale, String> descriptionMap,
 			String friendlyURLMapping, Map<java.util.Locale, String> nameMap,
-			String portletCategoryName, String properties)
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException {
 
 		return getService().updateCustomElementRemoteAppEntry(
 			remoteAppEntryId, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, friendlyURLMapping,
-			nameMap, portletCategoryName, properties);
+			customElementHTMLElementName, customElementURLs, descriptionMap,
+			friendlyURLMapping, nameMap, portletCategoryName, properties,
+			sourceCodeURL);
 	}
 
 	public static RemoteAppEntry updateIFrameRemoteAppEntry(
-			long remoteAppEntryId, String friendlyURLMapping, String iFrameURL,
+			long remoteAppEntryId, Map<java.util.Locale, String> descriptionMap,
+			String friendlyURLMapping, String iFrameURL,
 			Map<java.util.Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		return getService().updateIFrameRemoteAppEntry(
-			remoteAppEntryId, friendlyURLMapping, iFrameURL, nameMap,
-			portletCategoryName, properties);
+			remoteAppEntryId, descriptionMap, friendlyURLMapping, iFrameURL,
+			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	/**
@@ -406,6 +434,33 @@ public class RemoteAppEntryLocalServiceUtil {
 		RemoteAppEntry remoteAppEntry) {
 
 		return getService().updateRemoteAppEntry(remoteAppEntry);
+	}
+
+	public static com.liferay.remote.app.model.RemoteAppEntryLocalization
+			updateRemoteAppEntryLocalization(
+				RemoteAppEntry remoteAppEntry, String languageId,
+				String description, String name)
+		throws PortalException {
+
+		return getService().updateRemoteAppEntryLocalization(
+			remoteAppEntry, languageId, description, name);
+	}
+
+	public static List<com.liferay.remote.app.model.RemoteAppEntryLocalization>
+			updateRemoteAppEntryLocalizations(
+				RemoteAppEntry remoteAppEntry,
+				Map<String, String> descriptionMap, Map<String, String> nameMap)
+		throws PortalException {
+
+		return getService().updateRemoteAppEntryLocalizations(
+			remoteAppEntry, descriptionMap, nameMap);
+	}
+
+	public static RemoteAppEntry updateStatus(
+			long userId, long remoteAppEntryId, int status)
+		throws PortalException {
+
+		return getService().updateStatus(userId, remoteAppEntryId, status);
 	}
 
 	public static RemoteAppEntryLocalService getService() {

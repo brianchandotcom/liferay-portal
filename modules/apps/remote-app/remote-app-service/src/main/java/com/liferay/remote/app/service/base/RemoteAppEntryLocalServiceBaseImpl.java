@@ -17,6 +17,8 @@ package com.liferay.remote.app.service.base;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -26,12 +28,17 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
@@ -44,16 +51,22 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.model.RemoteAppEntryLocalization;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.remote.app.service.RemoteAppEntryLocalServiceUtil;
+import com.liferay.remote.app.service.persistence.RemoteAppEntryLocalizationPersistence;
 import com.liferay.remote.app.service.persistence.RemoteAppEntryPersistence;
 
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -362,8 +375,43 @@ public abstract class RemoteAppEntryLocalServiceBaseImpl
 
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(
-						dynamicQuery, "modifiedDate");
+					Criterion modifiedDateCriterion =
+						portletDataContext.getDateRangeCriteria("modifiedDate");
+
+					Criterion statusDateCriterion =
+						portletDataContext.getDateRangeCriteria("statusDate");
+
+					if ((modifiedDateCriterion != null) &&
+						(statusDateCriterion != null)) {
+
+						Disjunction disjunction =
+							RestrictionsFactoryUtil.disjunction();
+
+						disjunction.add(modifiedDateCriterion);
+						disjunction.add(statusDateCriterion);
+
+						dynamicQuery.add(disjunction);
+					}
+
+					Property workflowStatusProperty =
+						PropertyFactoryUtil.forName("status");
+
+					if (portletDataContext.isInitialPublication()) {
+						dynamicQuery.add(
+							workflowStatusProperty.ne(
+								WorkflowConstants.STATUS_IN_TRASH));
+					}
+					else {
+						StagedModelDataHandler<?> stagedModelDataHandler =
+							StagedModelDataHandlerRegistryUtil.
+								getStagedModelDataHandler(
+									RemoteAppEntry.class.getName());
+
+						dynamicQuery.add(
+							workflowStatusProperty.in(
+								stagedModelDataHandler.
+									getExportableStatuses()));
+					}
 				}
 
 			});
@@ -486,6 +534,178 @@ public abstract class RemoteAppEntryLocalServiceBaseImpl
 		return remoteAppEntryPersistence.update(remoteAppEntry);
 	}
 
+	@Override
+	public RemoteAppEntryLocalization fetchRemoteAppEntryLocalization(
+		long remoteAppEntryId, String languageId) {
+
+		return remoteAppEntryLocalizationPersistence.
+			fetchByRemoteAppEntryId_LanguageId(remoteAppEntryId, languageId);
+	}
+
+	@Override
+	public RemoteAppEntryLocalization getRemoteAppEntryLocalization(
+			long remoteAppEntryId, String languageId)
+		throws PortalException {
+
+		return remoteAppEntryLocalizationPersistence.
+			findByRemoteAppEntryId_LanguageId(remoteAppEntryId, languageId);
+	}
+
+	@Override
+	public List<RemoteAppEntryLocalization> getRemoteAppEntryLocalizations(
+		long remoteAppEntryId) {
+
+		return remoteAppEntryLocalizationPersistence.findByRemoteAppEntryId(
+			remoteAppEntryId);
+	}
+
+	@Override
+	public RemoteAppEntryLocalization updateRemoteAppEntryLocalization(
+			RemoteAppEntry remoteAppEntry, String languageId,
+			String description, String name)
+		throws PortalException {
+
+		remoteAppEntry = remoteAppEntryPersistence.findByPrimaryKey(
+			remoteAppEntry.getPrimaryKey());
+
+		RemoteAppEntryLocalization remoteAppEntryLocalization =
+			remoteAppEntryLocalizationPersistence.
+				fetchByRemoteAppEntryId_LanguageId(
+					remoteAppEntry.getRemoteAppEntryId(), languageId);
+
+		return _updateRemoteAppEntryLocalization(
+			remoteAppEntry, remoteAppEntryLocalization, languageId, description,
+			name);
+	}
+
+	@Override
+	public List<RemoteAppEntryLocalization> updateRemoteAppEntryLocalizations(
+			RemoteAppEntry remoteAppEntry, Map<String, String> descriptionMap,
+			Map<String, String> nameMap)
+		throws PortalException {
+
+		remoteAppEntry = remoteAppEntryPersistence.findByPrimaryKey(
+			remoteAppEntry.getPrimaryKey());
+
+		Map<String, String[]> localizedValuesMap =
+			new HashMap<String, String[]>();
+
+		for (Map.Entry<String, String> entry : descriptionMap.entrySet()) {
+			String languageId = entry.getKey();
+
+			String[] localizedValues = localizedValuesMap.get(languageId);
+
+			if (localizedValues == null) {
+				localizedValues = new String[2];
+
+				localizedValuesMap.put(languageId, localizedValues);
+			}
+
+			localizedValues[0] = entry.getValue();
+		}
+
+		for (Map.Entry<String, String> entry : nameMap.entrySet()) {
+			String languageId = entry.getKey();
+
+			String[] localizedValues = localizedValuesMap.get(languageId);
+
+			if (localizedValues == null) {
+				localizedValues = new String[2];
+
+				localizedValuesMap.put(languageId, localizedValues);
+			}
+
+			localizedValues[1] = entry.getValue();
+		}
+
+		List<RemoteAppEntryLocalization> remoteAppEntryLocalizations =
+			new ArrayList<RemoteAppEntryLocalization>(
+				localizedValuesMap.size());
+
+		for (RemoteAppEntryLocalization remoteAppEntryLocalization :
+				remoteAppEntryLocalizationPersistence.findByRemoteAppEntryId(
+					remoteAppEntry.getRemoteAppEntryId())) {
+
+			String[] localizedValues = localizedValuesMap.remove(
+				remoteAppEntryLocalization.getLanguageId());
+
+			if (localizedValues == null) {
+				remoteAppEntryLocalizationPersistence.remove(
+					remoteAppEntryLocalization);
+			}
+			else {
+				remoteAppEntryLocalization.setCompanyId(
+					remoteAppEntry.getCompanyId());
+
+				remoteAppEntryLocalization.setDescription(localizedValues[0]);
+				remoteAppEntryLocalization.setName(localizedValues[1]);
+
+				remoteAppEntryLocalizations.add(
+					remoteAppEntryLocalizationPersistence.update(
+						remoteAppEntryLocalization));
+			}
+		}
+
+		long batchCounter =
+			counterLocalService.increment(
+				RemoteAppEntryLocalization.class.getName(),
+				localizedValuesMap.size()) - localizedValuesMap.size();
+
+		for (Map.Entry<String, String[]> entry :
+				localizedValuesMap.entrySet()) {
+
+			String languageId = entry.getKey();
+			String[] localizedValues = entry.getValue();
+
+			RemoteAppEntryLocalization remoteAppEntryLocalization =
+				remoteAppEntryLocalizationPersistence.create(++batchCounter);
+
+			remoteAppEntryLocalization.setRemoteAppEntryId(
+				remoteAppEntry.getRemoteAppEntryId());
+			remoteAppEntryLocalization.setCompanyId(
+				remoteAppEntry.getCompanyId());
+
+			remoteAppEntryLocalization.setLanguageId(languageId);
+
+			remoteAppEntryLocalization.setDescription(localizedValues[0]);
+			remoteAppEntryLocalization.setName(localizedValues[1]);
+
+			remoteAppEntryLocalizations.add(
+				remoteAppEntryLocalizationPersistence.update(
+					remoteAppEntryLocalization));
+		}
+
+		return remoteAppEntryLocalizations;
+	}
+
+	private RemoteAppEntryLocalization _updateRemoteAppEntryLocalization(
+			RemoteAppEntry remoteAppEntry,
+			RemoteAppEntryLocalization remoteAppEntryLocalization,
+			String languageId, String description, String name)
+		throws PortalException {
+
+		if (remoteAppEntryLocalization == null) {
+			long remoteAppEntryLocalizationId = counterLocalService.increment(
+				RemoteAppEntryLocalization.class.getName());
+
+			remoteAppEntryLocalization =
+				remoteAppEntryLocalizationPersistence.create(
+					remoteAppEntryLocalizationId);
+
+			remoteAppEntryLocalization.setRemoteAppEntryId(
+				remoteAppEntry.getRemoteAppEntryId());
+			remoteAppEntryLocalization.setLanguageId(languageId);
+		}
+
+		remoteAppEntryLocalization.setCompanyId(remoteAppEntry.getCompanyId());
+
+		remoteAppEntryLocalization.setDescription(description);
+		remoteAppEntryLocalization.setName(name);
+
+		return remoteAppEntryLocalizationPersistence.update(
+			remoteAppEntryLocalization);
+	}
+
 	@Deactivate
 	protected void deactivate() {
 		_setLocalServiceUtilService(null);
@@ -572,5 +792,9 @@ public abstract class RemoteAppEntryLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
+
+	@Reference
+	protected RemoteAppEntryLocalizationPersistence
+		remoteAppEntryLocalizationPersistence;
 
 }

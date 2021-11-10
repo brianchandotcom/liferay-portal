@@ -4,6 +4,7 @@
 	<model name="com.liferay.remote.app.model.RemoteAppEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
+		<field name="defaultLanguageId" type="String" />
 		<field name="remoteAppEntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -19,16 +20,12 @@
 		<field name="customElementURLs" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field localized="true" name="description" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
 		<field name="friendlyURLMapping" type="String" />
 		<field name="iFrameURL" type="String">
 			<hint-collection name="URL" />
 			<hint name="method-name">IFrameURL</hint>
 		</field>
 		<field name="instanceable" type="boolean" />
-		<field localized="true" name="name" type="String" />
 		<field name="portletCategoryName" type="String" />
 		<field name="properties" type="String">
 			<hint-collection name="CLOB" />
@@ -37,6 +34,10 @@
 			<hint-collection name="URL" />
 		</field>
 		<field name="type" type="String" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.remote.app.model.RemoteAppEntryLocalization">
 		<field name="mvccVersion" type="long" />

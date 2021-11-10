@@ -55,7 +55,7 @@ public abstract class BaseRemoteAppEntryUADExporter
 
 	@Override
 	protected String toXmlString(RemoteAppEntry remoteAppEntry) {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.remote.app.model.RemoteAppEntry");
@@ -64,6 +64,14 @@ public abstract class BaseRemoteAppEntryUADExporter
 		sb.append(
 			"<column><column-name>remoteAppEntryId</column-name><column-value><![CDATA[");
 		sb.append(remoteAppEntry.getRemoteAppEntryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
+		sb.append(remoteAppEntry.getStatusByUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(remoteAppEntry.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");

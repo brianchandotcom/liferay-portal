@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.model.RemoteAppEntryLocalization;
 
 import java.io.Serializable;
 
@@ -73,16 +74,17 @@ public interface RemoteAppEntryLocalService
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			long userId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			String friendlyURLMapping, boolean instanceable,
-			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			Map<Locale, String> descriptionMap, String friendlyURLMapping,
+			boolean instanceable, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry addIFrameRemoteAppEntry(
-			long userId, String friendlyURLMapping, String iFrameURL,
-			boolean instanceable, Map<Locale, String> nameMap,
-			String portletCategoryName, String properties)
+			long userId, Map<Locale, String> descriptionMap,
+			String friendlyURLMapping, String iFrameURL, boolean instanceable,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
 		throws PortalException;
 
 	/**
@@ -241,6 +243,10 @@ public interface RemoteAppEntryLocalService
 		String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public RemoteAppEntryLocalization fetchRemoteAppEntryLocalization(
+		long remoteAppEntryId, String languageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -312,6 +318,15 @@ public interface RemoteAppEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public RemoteAppEntryLocalization getRemoteAppEntryLocalization(
+			long remoteAppEntryId, String languageId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<RemoteAppEntryLocalization> getRemoteAppEntryLocalizations(
+		long remoteAppEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<RemoteAppEntry> search(
 			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException;
@@ -327,15 +342,17 @@ public interface RemoteAppEntryLocalService
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			String friendlyURLMapping, Map<Locale, String> nameMap,
-			String portletCategoryName, String properties)
+			Map<Locale, String> descriptionMap, String friendlyURLMapping,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
-			long remoteAppEntryId, String friendlyURLMapping, String iFrameURL,
+			long remoteAppEntryId, Map<Locale, String> descriptionMap,
+			String friendlyURLMapping, String iFrameURL,
 			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			String properties, String sourceCodeURL)
 		throws PortalException;
 
 	/**
@@ -350,5 +367,20 @@ public interface RemoteAppEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry updateRemoteAppEntry(RemoteAppEntry remoteAppEntry);
+
+	public RemoteAppEntryLocalization updateRemoteAppEntryLocalization(
+			RemoteAppEntry remoteAppEntry, String languageId,
+			String description, String name)
+		throws PortalException;
+
+	public List<RemoteAppEntryLocalization> updateRemoteAppEntryLocalizations(
+			RemoteAppEntry remoteAppEntry, Map<String, String> descriptionMap,
+			Map<String, String> nameMap)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public RemoteAppEntry updateStatus(
+			long userId, long remoteAppEntryId, int status)
+		throws PortalException;
 
 }

@@ -46,6 +46,7 @@ import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.model.RemoteAppEntryTable;
 import com.liferay.remote.app.model.impl.RemoteAppEntryImpl;
 import com.liferay.remote.app.model.impl.RemoteAppEntryModelImpl;
+import com.liferay.remote.app.service.persistence.RemoteAppEntryLocalizationPersistence;
 import com.liferay.remote.app.service.persistence.RemoteAppEntryPersistence;
 import com.liferay.remote.app.service.persistence.RemoteAppEntryUtil;
 import com.liferay.remote.app.service.persistence.impl.constants.RemoteAppPersistenceConstants;
@@ -2261,6 +2262,9 @@ public class RemoteAppEntryPersistenceImpl
 
 	@Override
 	protected RemoteAppEntry removeImpl(RemoteAppEntry remoteAppEntry) {
+		remoteAppEntryLocalizationPersistence.removeByRemoteAppEntryId(
+			remoteAppEntry.getRemoteAppEntryId());
+
 		Session session = null;
 
 		try {
@@ -2745,6 +2749,10 @@ public class RemoteAppEntryPersistenceImpl
 
 	@Reference
 	protected FinderCache finderCache;
+
+	@Reference
+	protected RemoteAppEntryLocalizationPersistence
+		remoteAppEntryLocalizationPersistence;
 
 	private static final String _SQL_SELECT_REMOTEAPPENTRY =
 		"SELECT remoteAppEntry FROM RemoteAppEntry remoteAppEntry";

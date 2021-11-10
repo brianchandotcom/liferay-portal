@@ -12,16 +12,11 @@
  * details.
  */
 
-package com.liferay.remote.app.uad.constants;
+package com.liferay.remote.app.model.impl;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-public class RemoteAppUADConstants {
-
-	public static final String[] USER_ID_FIELD_NAMES_REMOTE_APP_ENTRY = {
-		"userId", "statusByUserId"
-	};
-
+public class RemoteAppEntryLocalizationImpl
+	extends RemoteAppEntryLocalizationBaseImpl {
 }

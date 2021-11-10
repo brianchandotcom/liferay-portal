@@ -15,6 +15,7 @@
 .DS_Store
 .ant-targets-build.xml
 .ant_targets
+.classpath
 .gh.json
 .sass-cache
 .sass_cache_*.css
@@ -58,7 +59,10 @@
 /portal-client/src
 /portal-impl/*.ipr
 /portal-impl/*.iws
+/portal-impl/.classpath
+/portal-impl/.project
 /portal-impl/ServiceBuilder.temp
+/portal-impl/bin/
 /portal-impl/build
 /portal-impl/classes
 /portal-impl/portal-impl*.asc
@@ -75,6 +79,8 @@
 /portal-impl/woven-classes
 /portal-kernel/*.ipr
 /portal-kernel/*.iws
+/portal-kernel/.project
+/portal-kernel/bin/
 /portal-kernel/build
 /portal-kernel/classes
 /portal-kernel/portal-kernel*.asc
@@ -85,6 +91,8 @@
 /portal-kernel/woven-classes
 /portal-test/*.ipr
 /portal-test/*.iws
+/portal-test/.project
+/portal-test/bin/
 /portal-test/build
 /portal-test/classes
 /portal-test/portal-test*.asc
@@ -142,6 +150,8 @@
 /sql/velocity.log*
 /support-tomcat/*.ipr
 /support-tomcat/*.iws
+/support-tomcat/.project
+/support-tomcat/bin/
 /support-tomcat/classes
 /support-tomcat/support-tomcat*.jar
 /svn-revision
@@ -164,12 +174,16 @@
 /tunnel-web/tunnel-web.war
 /util-bridges/*.ipr
 /util-bridges/*.iws
+/util-bridges/.project
+/util-bridges/bin/
 /util-bridges/build
 /util-bridges/classes
 /util-bridges/util-bridges*.asc
 /util-bridges/util-bridges*.jar
 /util-java/*.ipr
 /util-java/*.iws
+/util-java/.project
+/util-java/bin/
 /util-java/build
 /util-java/classes
 /util-java/test-classes
@@ -179,6 +193,8 @@
 /util-java/util-java*.jar
 /util-slf4j/*.ipr
 /util-slf4j/*.iws
+/util-slf4j/.project
+/util-slf4j/bin/
 /util-slf4j/build
 /util-slf4j/classes
 /util-slf4j/test-classes
@@ -187,6 +203,8 @@
 /util-slf4j/util-slf4j*.jar
 /util-taglib/*.ipr
 /util-taglib/*.iws
+/util-taglib/.project
+/util-taglib/bin/
 /util-taglib/build
 /util-taglib/classes
 /util-taglib/test-classes

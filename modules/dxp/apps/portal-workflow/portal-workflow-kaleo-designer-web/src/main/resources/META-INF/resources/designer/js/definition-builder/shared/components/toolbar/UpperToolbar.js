@@ -109,7 +109,12 @@ export default function UpperToolbar({
 						</ClayToolbar.Item>
 					)}
 					<ClayToolbar.Item>
-						<ClayButton displayType="secondary">
+						<ClayButton
+							displayType="secondary"
+							onClick={() => {
+								window.history.back();
+							}}
+						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 					</ClayToolbar.Item>

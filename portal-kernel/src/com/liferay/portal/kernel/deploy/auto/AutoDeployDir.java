@@ -52,17 +52,15 @@ public class AutoDeployDir {
 	public static void deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 
-		if (_serviceTrackerList != null) {
-			for (AutoDeployListener autoDeployListener : _serviceTrackerList) {
-				if (autoDeployListener.isDeployable(autoDeploymentContext)) {
-					autoDeployListener.deploy(autoDeploymentContext);
+		for (AutoDeployListener autoDeployListener : _serviceTrackerList) {
+			if (autoDeployListener.isDeployable(autoDeploymentContext)) {
+				autoDeployListener.deploy(autoDeploymentContext);
 
-					File file = autoDeploymentContext.getFile();
+				File file = autoDeploymentContext.getFile();
 
-					file.delete();
+				file.delete();
 
-					return;
-				}
+				return;
 			}
 		}
 

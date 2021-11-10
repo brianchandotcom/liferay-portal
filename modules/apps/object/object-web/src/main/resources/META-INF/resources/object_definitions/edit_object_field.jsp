@@ -37,9 +37,9 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 
 					<aui:input disabled="<%= !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="label" required="<%= true %>" value="<%= objectField.getLabel(themeDisplay.getLocale()) %>" />
 
-					<aui:input disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="name" required="<%= true %>" value="<%= objectField.getName() %>" />
+					<aui:input disabled="<%= Validator.isNotNull(objectField.getRelationshipType()) || objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="name" required="<%= true %>" value="<%= objectField.getName() %>" />
 
-					<aui:select disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="type" required="<%= true %>">
+					<aui:select disabled="<%= Validator.isNotNull(objectField.getRelationshipType()) || objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="type" required="<%= true %>">
 						<aui:option label="BigDecimal" selected='<%= Objects.equals(objectField.getType(), "BigDecimal") %>' value="BigDecimal" />
 						<aui:option label="Boolean" selected='<%= Objects.equals(objectField.getType(), "Boolean") %>' value="Boolean" />
 						<aui:option label="Date" selected='<%= Objects.equals(objectField.getType(), "Date") %>' value="Date" />

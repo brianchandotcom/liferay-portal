@@ -17,6 +17,7 @@ package com.liferay.object.service.impl;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldNameException;
+import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectFieldTypeException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
@@ -232,7 +233,11 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
-		_validateName(objectFieldId, objectDefinition, name);
+		_validateRelationshipType(objectField, name, type);
+		_validateName(
+			objectFieldId,
+			Validator.isNotNull(objectField.getRelationshipType()),
+			objectDefinition, name);
 		validateType(type);
 
 		objectField.setListTypeDefinitionId(listTypeDefinitionId);
@@ -266,7 +271,7 @@ public class ObjectFieldLocalServiceImpl
 
 		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
 		_validateLabel(labelMap);
-		_validateName(0, objectDefinition, name);
+		_validateName(0, false, objectDefinition, name);
 		validateType(type);
 
 		ObjectField objectField = objectFieldPersistence.create(
@@ -324,7 +329,8 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	private void _validateName(
-			long objectFieldId, ObjectDefinition objectDefinition, String name)
+			long objectFieldId, boolean relationshipField,
+			ObjectDefinition objectDefinition, String name)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -334,7 +340,9 @@ public class ObjectFieldLocalServiceImpl
 		char[] nameCharArray = name.toCharArray();
 
 		for (char c : nameCharArray) {
-			if (!Validator.isChar(c) && !Validator.isDigit(c)) {
+			if (!Validator.isChar(c) && !Validator.isDigit(c) &&
+				!(relationshipField && (c == '_'))) {
+
 				throw new ObjectFieldNameException.
 					MustOnlyContainLettersAndDigits();
 			}
@@ -362,6 +370,19 @@ public class ObjectFieldLocalServiceImpl
 			(objectField.getObjectFieldId() != objectFieldId)) {
 
 			throw new ObjectFieldNameException.MustNotBeDuplicate(name);
+		}
+	}
+
+	private void _validateRelationshipType(
+			ObjectField objectField, String name, String type)
+		throws ObjectFieldRelationshipTypeException {
+
+		if (Validator.isNotNull(objectField.getRelationshipType()) &&
+			(!Objects.equals(objectField.getName(), name) ||
+			 !Objects.equals(objectField.getType(), type))) {
+
+			throw new ObjectFieldRelationshipTypeException(
+				"Cannot change name and type of object relationship field");
 		}
 	}
 

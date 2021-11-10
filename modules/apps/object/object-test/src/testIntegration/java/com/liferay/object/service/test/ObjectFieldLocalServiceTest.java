@@ -16,14 +16,17 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldNameException;
+import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectFieldTypeException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -513,6 +517,9 @@ public class ObjectFieldLocalServiceTest {
 		Assert.assertTrue(objectField.isRequired());
 		Assert.assertEquals("String", objectField.getType());
 
+		_testUpdateCustomObjectFieldThrowsObjectFieldRelationshipTypeException(
+			objectDefinition);
+
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
 	}
@@ -563,10 +570,66 @@ public class ObjectFieldLocalServiceTest {
 		return objectDefinitionName;
 	}
 
+	private void
+			_testUpdateCustomObjectFieldThrowsObjectFieldRelationshipTypeException(
+				ObjectDefinition objectDefinition1)
+		throws Exception {
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				Collections.<ObjectField>emptyList());
+
+		String name = StringUtil.randomId();
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			objectDefinition1.getObjectDefinitionId(),
+			objectDefinition2.getObjectDefinitionId(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			name, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		try {
+			String objectFieldNamePrefix = "r_" + name + "_";
+
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				objectDefinition2.getObjectDefinitionId(),
+				objectFieldNamePrefix +
+					objectDefinition1.getPKObjectFieldName());
+
+			_objectFieldLocalService.updateCustomObjectField(
+				objectField.getObjectFieldId(),
+				objectField.getListTypeDefinitionId(), objectField.isIndexed(),
+				objectField.isIndexedAsKeyword(),
+				objectField.getIndexedLanguageId(), objectField.getLabelMap(),
+				"able", objectField.isRequired(), "String");
+
+			Assert.fail();
+		}
+		catch (ObjectFieldRelationshipTypeException
+					objectFieldRelationshipTypeException) {
+
+			Assert.assertEquals(
+				"Cannot change name and type of object relationship field",
+				objectFieldRelationshipTypeException.getMessage());
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition2);
+		}
+	}
+
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

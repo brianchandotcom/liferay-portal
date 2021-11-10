@@ -279,7 +279,7 @@ definition {
 	@description = "COMMERCE-6335. As a buyer, I want to edit the quantity of an bundled product in the mini-cart using it's quantity selector and I want to view the changes applied to the mini-cart summary and the bundled items to change their quantity"
 	@priority = "3"
 	test EditBundledProductQuantityFromMiniCart {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		// TODO Review
 

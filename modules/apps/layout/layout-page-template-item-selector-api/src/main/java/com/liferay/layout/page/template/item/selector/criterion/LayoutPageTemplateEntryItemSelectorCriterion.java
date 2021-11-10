@@ -24,26 +24,26 @@ public class LayoutPageTemplateEntryItemSelectorCriterion
 
 	public LayoutPageTemplateEntryItemSelectorCriterion() {
 		_groupId = 0;
-		_layoutType = 0;
+		_layoutTypes = new int[0];
 	}
 
 	public long getGroupId() {
 		return _groupId;
 	}
 
-	public int getLayoutType() {
-		return _layoutType;
+	public int[] getLayoutTypes() {
+		return _layoutTypes;
 	}
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 	}
 
-	public void setLayoutType(int layoutType) {
-		_layoutType = layoutType;
+	public void setLayoutTypes(int... layoutTypes) {
+		_layoutTypes = layoutTypes;
 	}
 
 	private long _groupId;
-	private int _layoutType;
+	private int[] _layoutTypes;
 
 }

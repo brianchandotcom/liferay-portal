@@ -393,7 +393,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 						getLayoutPageTemplateEntries(
 							_getGroupId(),
 							_layoutPageTemplateEntryItemSelectorCriterion.
-								getLayoutType(),
+								getLayoutTypes(),
 							searchContainer.getStart(),
 							searchContainer.getEnd(),
 							searchContainer.getOrderByComparator()));
@@ -402,7 +402,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 						getLayoutPageTemplateEntriesCount(
 							_getGroupId(),
 							_layoutPageTemplateEntryItemSelectorCriterion.
-								getLayoutType()));
+								getLayoutTypes()));
 			}
 			else {
 				searchContainer.setResults(
@@ -410,7 +410,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 						getLayoutPageTemplateEntries(
 							_getGroupId(), keywords,
 							_layoutPageTemplateEntryItemSelectorCriterion.
-								getLayoutType(),
+								getLayoutTypes(),
 							searchContainer.getStart(),
 							searchContainer.getEnd(),
 							searchContainer.getOrderByComparator()));
@@ -419,7 +419,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 						getLayoutPageTemplateEntriesCount(
 							_getGroupId(), keywords,
 							_layoutPageTemplateEntryItemSelectorCriterion.
-								getLayoutType()));
+								getLayoutTypes()));
 			}
 
 			return searchContainer;

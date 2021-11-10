@@ -140,6 +140,27 @@ public class SXPElement implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public Boolean getReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(Boolean readOnly) {
+		this.readOnly = readOnly;
+	}
+
+	public void setReadOnly(
+		UnsafeSupplier<Boolean, Exception> readOnlyUnsafeSupplier) {
+
+		try {
+			readOnly = readOnlyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean readOnly;
+
 	public String getTitle() {
 		return title;
 	}
@@ -182,6 +203,25 @@ public class SXPElement implements Cloneable, Serializable {
 	}
 
 	protected Map<String, String> title_i18n;
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public void setType(UnsafeSupplier<Integer, Exception> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer type;
 
 	@Override
 	public SXPElement clone() throws CloneNotSupportedException {

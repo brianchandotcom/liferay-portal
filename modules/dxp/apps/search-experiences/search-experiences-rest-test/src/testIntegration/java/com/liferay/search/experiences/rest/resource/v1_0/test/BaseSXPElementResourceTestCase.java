@@ -544,6 +544,14 @@ public abstract class BaseSXPElementResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("readOnly", additionalAssertFieldName)) {
+				if (sxpElement.getReadOnly() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (sxpElement.getTitle() == null) {
 					valid = false;
@@ -554,6 +562,14 @@ public abstract class BaseSXPElementResourceTestCase {
 
 			if (Objects.equals("title_i18n", additionalAssertFieldName)) {
 				if (sxpElement.getTitle_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (sxpElement.getType() == null) {
 					valid = false;
 				}
 
@@ -706,6 +722,16 @@ public abstract class BaseSXPElementResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("readOnly", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sxpElement1.getReadOnly(), sxpElement2.getReadOnly())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sxpElement1.getTitle(), sxpElement2.getTitle())) {
@@ -720,6 +746,16 @@ public abstract class BaseSXPElementResourceTestCase {
 				if (!equals(
 						(Map)sxpElement1.getTitle_i18n(),
 						(Map)sxpElement2.getTitle_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sxpElement1.getType(), sxpElement2.getType())) {
 
 					return false;
 				}
@@ -852,6 +888,11 @@ public abstract class BaseSXPElementResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("readOnly")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("title")) {
 			sb.append("'");
 			sb.append(String.valueOf(sxpElement.getTitle()));
@@ -861,6 +902,11 @@ public abstract class BaseSXPElementResourceTestCase {
 		}
 
 		if (entityFieldName.equals("title_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("type")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -913,7 +959,9 @@ public abstract class BaseSXPElementResourceTestCase {
 					RandomTestUtil.randomString());
 				hidden = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
+				readOnly = RandomTestUtil.randomBoolean();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				type = RandomTestUtil.randomInt();
 			}
 		};
 	}

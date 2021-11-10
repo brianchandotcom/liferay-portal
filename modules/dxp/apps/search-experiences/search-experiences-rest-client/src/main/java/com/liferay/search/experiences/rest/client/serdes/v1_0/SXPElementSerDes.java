@@ -107,6 +107,16 @@ public class SXPElementSerDes {
 			sb.append(sxpElement.getId());
 		}
 
+		if (sxpElement.getReadOnly() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"readOnly\": ");
+
+			sb.append(sxpElement.getReadOnly());
+		}
+
 		if (sxpElement.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -129,6 +139,16 @@ public class SXPElementSerDes {
 			sb.append("\"title_i18n\": ");
 
 			sb.append(_toJSON(sxpElement.getTitle_i18n()));
+		}
+
+		if (sxpElement.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append(sxpElement.getType());
 		}
 
 		sb.append("}");
@@ -188,6 +208,13 @@ public class SXPElementSerDes {
 			map.put("id", String.valueOf(sxpElement.getId()));
 		}
 
+		if (sxpElement.getReadOnly() == null) {
+			map.put("readOnly", null);
+		}
+		else {
+			map.put("readOnly", String.valueOf(sxpElement.getReadOnly()));
+		}
+
 		if (sxpElement.getTitle() == null) {
 			map.put("title", null);
 		}
@@ -200,6 +227,13 @@ public class SXPElementSerDes {
 		}
 		else {
 			map.put("title_i18n", String.valueOf(sxpElement.getTitle_i18n()));
+		}
+
+		if (sxpElement.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(sxpElement.getType()));
 		}
 
 		return map;
@@ -253,6 +287,11 @@ public class SXPElementSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "readOnly")) {
+				if (jsonParserFieldValue != null) {
+					sxpElement.setReadOnly((Boolean)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
 					sxpElement.setTitle((String)jsonParserFieldValue);
@@ -263,6 +302,12 @@ public class SXPElementSerDes {
 					sxpElement.setTitle_i18n(
 						(Map)SXPElementSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					sxpElement.setType(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 		}

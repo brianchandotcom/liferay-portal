@@ -68,17 +68,10 @@ definition {
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertNotificationsAfterMFADisabledOrEnabled";
 
 		task ("Add CP able.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			PortalInstances.viewCP(virtualHost = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Login at able.com") {
@@ -237,17 +230,10 @@ definition {
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#CheckOrderOfMFAVerifier";
 
 		task ("Add CP able.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			PortalInstances.viewCP(virtualHost = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Login at able.com and enable OTP") {
@@ -314,17 +300,10 @@ definition {
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#DisabledBasicAuthenticationOnInstanceLevel";
 
 		task ("Add CP able.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			PortalInstances.viewCP(virtualHost = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Login at able.com and enable OTP") {
@@ -381,17 +360,10 @@ definition {
 		}
 
 		task ("Add CP able.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			PortalInstances.viewCP(virtualHost = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Login at able.com") {
@@ -529,17 +501,10 @@ definition {
 		}
 
 		task ("Add CP able.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			PortalInstances.viewCP(virtualHost = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Login into able.com") {
@@ -904,17 +869,10 @@ definition {
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithIPBasedVerifierFailedOnInstanceLevel";
 
 		task ("Add CP able.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			PortalInstances.viewCP(virtualHost = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Login at able.com") {
@@ -1164,17 +1122,10 @@ definition {
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#RemoveAndAutoGenerateTOTP";
 
 		task ("Add CP able.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			PortalInstances.viewCP(virtualHost = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Login at able.com") {
@@ -1430,17 +1381,10 @@ definition {
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewOrderOfOTPVerifier";
 
 		task ("Add CP able.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			PortalInstances.viewCP(virtualHost = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Login at able.com") {
@@ -1534,17 +1478,10 @@ definition {
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewResourceActionsOfTOTPVerificationAttempts";
 
 		task ("Add CP able.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			PortalInstances.viewCP(virtualHost = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Login at able.com") {

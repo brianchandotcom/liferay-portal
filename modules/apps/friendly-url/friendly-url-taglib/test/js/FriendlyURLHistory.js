@@ -21,16 +21,14 @@ import {
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import FriendlyURLHistory from '../../../src/main/resources/META-INF/resources/js/friendly_url_history/FriendlyURLHistory';
+import FriendlyURLHistory from '../../src/main/resources/META-INF/resources/js/FriendlyURLHistory';
 
 const activeUrl = '/test';
 
 const defaultProps = {
 	defaultLanguageId: 'en_US',
-	deleteFriendlyURLEntryLocalizationURL: '/delete/friendly_url_history',
-	friendlyURLEntryLocalizationsURL: '/get/friendly_url_history',
-	portletNamespace: 'portletNamespace',
-	restoreFriendlyURLEntryLocalizationURL: '/restore/friendly_url_history',
+	elementId: 'elementId',
+	friendlyURLEntryURL: 'friendly_url_history',
 };
 
 const fetchResponse = {

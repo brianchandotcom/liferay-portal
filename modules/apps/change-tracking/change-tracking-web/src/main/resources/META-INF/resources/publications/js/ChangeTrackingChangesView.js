@@ -118,11 +118,11 @@ export default ({
 	const CHANGE_TYPE_ADDITION = 0;
 	const CHANGE_TYPE_DELETION = 1;
 	const CHANGE_TYPE_MODIFICATION = 2;
-	const COLUMN_CHANGE_TYPE = 'CHANGE_TYPE';
-	const COLUMN_MODIFIED_DATE = 'MODIFIED_DATE';
-	const COLUMN_SITE = 'SITE';
-	const COLUMN_TITLE = 'TITLE';
-	const COLUMN_USER = 'USER';
+	const COLUMN_CHANGE_TYPE = 'changeType';
+	const COLUMN_MODIFIED_DATE = 'modifiedDate';
+	const COLUMN_SITE = 'site';
+	const COLUMN_TITLE = 'title';
+	const COLUMN_USER = 'user';
 	const GLOBAL_SITE_NAME = Liferay.Language.get('global');
 	const MENU_CHANGE_TYPES = 'MENU_CHANGE_TYPES';
 	const MENU_ROOT = 'MENU_ROOT';
@@ -131,15 +131,21 @@ export default ({
 	const MENU_USERS = 'MENU_USERS';
 	const MVC_RENDER_COMMAND_NAME = '/change_tracking/view_changes';
 	const PARAM_CHANGE_TYPES = namespace + 'changeTypes';
+	const PARAM_COLUMN = namespace + 'column';
+	const PARAM_DELTA = namespace + 'delta';
 	const PARAM_CT_COLLECTION_ID = namespace + 'ctCollectionId';
 	const PARAM_ENTRY = namespace + 'entry';
 	const PARAM_KEYWORDS = namespace + 'keywords';
 	const PARAM_MVC_RENDER_COMMAND_NAME = namespace + 'mvcRenderCommandName';
+	const PARAM_ORDER_BY_TYPE = namespace + 'orderByType';
+	const PARAM_PAGE = namespace + 'page';
 	const PARAM_SHOW_HIDEABLE = namespace + 'showHideable';
 	const PARAM_SITES = namespace + 'sites';
 	const PARAM_TYPES = namespace + 'types';
 	const PARAM_USERS = namespace + 'users';
 	const POP_STATE = 'popstate';
+	const ORDER_BY_TYPE_ASC = 'asc';
+	const ORDER_BY_TYPE_DESC = 'desc';
 
 	const isWithinApp = useCallback(
 		(params) => {
@@ -192,8 +198,12 @@ export default ({
 	}
 
 	params.delete(PARAM_CHANGE_TYPES);
+	params.delete(PARAM_COLUMN);
+	params.delete(PARAM_DELTA);
 	params.delete(PARAM_ENTRY);
 	params.delete(PARAM_KEYWORDS);
+	params.delete(PARAM_ORDER_BY_TYPE);
+	params.delete(PARAM_PAGE);
 	params.delete(PARAM_SHOW_HIDEABLE);
 	params.delete(PARAM_SITES);
 	params.delete(PARAM_TYPES);
@@ -716,9 +726,40 @@ export default ({
 	};
 
 	const getPath = useCallback(
-		(filters, entryParam, keywords, showHideable) => {
+		(
+			ascending,
+			column,
+			delta,
+			entryParam,
+			filters,
+			keywords,
+			page,
+			showHideable
+		) => {
+			let orderByType = ORDER_BY_TYPE_DESC;
+
+			if (ascending) {
+				orderByType = ORDER_BY_TYPE_ASC;
+			}
+
 			let path =
 				basePath.current +
+				'&' +
+				PARAM_COLUMN +
+				'=' +
+				column +
+				'&' +
+				PARAM_DELTA +
+				'=' +
+				delta.toString() +
+				'&' +
+				PARAM_ORDER_BY_TYPE +
+				'=' +
+				orderByType +
+				'&' +
+				PARAM_PAGE +
+				'=' +
+				page.toString() +
 				'&' +
 				PARAM_SHOW_HIDEABLE +
 				'=' +
@@ -765,8 +806,12 @@ export default ({
 		},
 		[
 			PARAM_CHANGE_TYPES,
+			PARAM_COLUMN,
+			PARAM_DELTA,
 			PARAM_ENTRY,
 			PARAM_KEYWORDS,
+			PARAM_ORDER_BY_TYPE,
+			PARAM_PAGE,
 			PARAM_SHOW_HIDEABLE,
 			PARAM_SITES,
 			PARAM_TYPES,
@@ -787,9 +832,13 @@ export default ({
 			const node = getNode(nodeId);
 
 			const path = getPath(
-				filtersState,
+				ascendingState,
+				columnState,
+				renderState.delta,
 				getEntryParam(node),
+				filtersState,
 				resultsKeywords,
+				renderState.page,
 				showHideable
 			);
 
@@ -818,6 +867,8 @@ export default ({
 			window.scrollTo(0, 0);
 		},
 		[
+			ascendingState,
+			columnState,
 			filtersState,
 			filterNodes,
 			getNode,
@@ -1551,9 +1602,13 @@ export default ({
 
 	const handleFiltersUpdate = (filters, keywords) => {
 		const path = getPath(
-			filters,
+			ascendingState,
+			columnState,
+			renderState.delta,
 			getEntryParam(renderState.node),
+			filters,
 			keywords,
+			renderState.page,
 			renderState.showHideable
 		);
 
@@ -1594,9 +1649,13 @@ export default ({
 		}
 
 		const path = getPath(
-			filters,
+			ascendingState,
+			columnState,
+			renderState.delta,
 			getEntryParam(renderState.node),
+			filters,
 			resultsKeywords,
+			renderState.page,
 			showHideable
 		);
 

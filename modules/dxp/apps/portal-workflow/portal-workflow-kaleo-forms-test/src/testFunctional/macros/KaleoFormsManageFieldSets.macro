@@ -51,25 +51,37 @@ definition {
     }
 
     macro clickFilterById {
+	macro clickFilterById {
 		var filterOption = "ID";
 
-        Click(
+		Click(
 			locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
 			value1 = "Filter and Order");
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-    macro viewUpDirectionOfSortButton {
-        if (IsElementPresent(locator1 = "KaleoFormsManageFieldSets#SORTED_UP_ICON")) {
-            
-            AssertElementPresent(locator1 = "KaleoFormsManageFieldSets#SORTED_UP_ICON");
-        }
+	macro viewFieldSetOrder {
+		var rowNumber = "1";
 
-        else {
-            Workflow.clickRevertSortDirection();
-        }
+		for (var nameFieldset : list "${fieldSetList}") {
+			AssertElementPresent(
+				key_nameFieldset = "${nameFieldset}",
+				key_rowNumber = "${rowNumber}",
+				locator1 = "KaleoFormsManageFieldSets#NAME_ROW_FROM_MANAGE_FIELD");
 
-    }
+			var rowNumber = MathUtil.sum("${rowNumber}", "1");
+		}
+	}
+
+	macro viewUpDirectionOfSortButton {
+		if (IsElementPresent(locator1 = "KaleoFormsManageFieldSets#SORTED_UP_ICON")) {
+			AssertElementPresent(locator1 = "KaleoFormsManageFieldSets#SORTED_UP_ICON");
+		}
+
+		else {
+			Workflow.clickRevertSortDirection();
+		}
+	}
 
 }

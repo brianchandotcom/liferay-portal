@@ -126,11 +126,8 @@ definition {
 		KaleoFormsManageFieldSets.viewFieldSetOrder(fieldSetList = "Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do");
 
 		Workflow.clickRevertSortDirection();
-		
+
 		KaleoFormsManageFieldSets.viewFieldSetOrder(fieldSetList = "To Do,Meeting Minutes,Issues Tracking,Inventory,Events,Contacts");
-
-
-
 	}
 
 	@description = "Verify that the user can search for a field set on manage field set page."

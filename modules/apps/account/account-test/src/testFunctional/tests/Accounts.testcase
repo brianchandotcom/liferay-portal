@@ -1130,6 +1130,52 @@ definition {
 		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 	}
 
+	@description = "Assert that the pagination is changable when assigning organizations to an account."
+	@priority = "4"
+	test CanChangePaginationInAssignOrganizations {
+		task ("Setting up an account with organizations.") {
+			for (var organizationNumber : list "1,2,3,4,5,6,7") {
+				JSONOrganization.addOrganization(
+					organizationName = "Organization ${organizationNumber}",
+					organizationSite = "true");
+			}
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account with Organization",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account with Organization");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+		}
+
+		task ("Changing the numbers assigned to a page on the Assign Organizations to Account with Organization modal and checking them.") {
+			LexiconEntry.gotoAdd();
+
+			SelectFrame(
+				key_title = "Assign Organizations to Account with Organization",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Pagination.changePagination(itemsPerPage = "4");
+
+			for (var organizationNumber : list "1,2,3,4") {
+				LexiconEntry.viewEntryName(rowEntry = "Organization ${organizationNumber}");
+			}
+
+			Pagination.viewResults(results = "Showing 1 to 4 of 7 entries.");
+
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			for (var organizationNumber : list "5,6,7") {
+				LexiconEntry.viewEntryName(rowEntry = "Organization ${organizationNumber}");
+			}
+
+			Pagination.viewResults(results = "Showing 5 to 7 of 7 entries.");
+		}
+	}
+
 	@description = "This test asserts that pagination can be changed in the Assign Users Modal."
 	@priority = "4"
 	test CanChangePaginationInAssignUsersModal {
@@ -1163,85 +1209,6 @@ definition {
 			SelectFrame(
 				key_title = "Assign Users to Business Account",
 				locator1 = "IFrame#MODAL_ANY");
-		}
-
-		@description = "Assert that the pagination is changable when assigning organizations to an account."
-		@priority = "4"
-		test CanChangePaginationInAssignOrganizations {
-			task ("Setting up an account with organizations.") {
-				for (var organizationNumber : list "1,2,3,4,5,6,7") {
-					JSONOrganization.addOrganization(
-						organizationName = "Organization ${organizationNumber}",
-						organizationSite = "true");
-				}
-
-				JSONAccountEntry.addAccountEntry(
-					accountEntryName = "Account with Organization",
-					accountEntryType = "Business");
-
-				Accounts.openAccountsAdmin();
-
-				LexiconEntry.gotoEntry(rowEntry = "Account with Organization");
-
-				Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
-			}
-
-			task ("Changing the numbers assigned to a page on the Assign Organizations to Account with Organization modal and checking them.") {
-				LexiconEntry.gotoAdd();
-
-				SelectFrame(
-					key_title = "Assign Organizations to Account with Organization",
-					locator1 = "IFrame#MODAL_ANY");
-
-				Pagination.changePagination(itemsPerPage = "4");
-
-				for (var organizationNumber : list "1,2,3,4") {
-					LexiconEntry.viewEntryName(rowEntry = "Organization ${organizationNumber}");
-				}
-
-				Pagination.viewResults(results = "Showing 1 to 4 of 7 entries.");
-
-				Click(locator1 = "Pagination#NEXT_LINK");
-
-				for (var organizationNumber : list "5,6,7") {
-					LexiconEntry.viewEntryName(rowEntry = "Organization ${organizationNumber}");
-				}
-
-				Pagination.viewResults(results = "Showing 5 to 7 of 7 entries.");
-			}
-		}
-
-		task ("Assert pagination can be changed and correct entries and amount are displayed") {
-			for (var listEntries : list "4,8,20") {
-				Pagination.changePagination(itemsPerPage = "${listEntries}");
-
-				if ("${listEntries}" == "4") {
-					Pagination.viewResults(results = "Showing 1 to 4 of 5 entries.");
-
-					LexiconEntry.viewNoEntry(rowEntry = "userfn5 userln5");
-
-					for (var accountUsers : list "userfn1 userln1,userfn2 userln2,userfn3 userln3,userfn4 userln4") {
-						LexiconEntry.viewEntryName(rowEntry = "${accountUsers}");
-					}
-
-					Click(locator1 = "Pagination#NEXT_LINK");
-
-					Pagination.viewResults(results = "Showing 5 to 5 of 5 entries.");
-
-					LexiconEntry.viewEntryName(rowEntry = "userfn5 userln5");
-
-					for (var accountUsers : list "userfn1 userln1,userfn2 userln2,userfn3 userln3,userfn4 userln4") {
-						LexiconEntry.viewNoEntry(rowEntry = "${accountUsers}");
-					}
-				}
-				else {
-					Pagination.viewResults(results = "Showing 1 to 5 of 5 entries.");
-
-					for (var allUsers : list "userfn1 userln1,userfn2 userln2,userfn3 userln3,userfn4 userln4,userfn5 userln5") {
-						LexiconEntry.viewEntryName(rowEntry = "${allUsers}");
-					}
-				}
-			}
 		}
 	}
 

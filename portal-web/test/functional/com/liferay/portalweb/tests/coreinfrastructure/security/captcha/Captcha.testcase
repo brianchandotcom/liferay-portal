@@ -50,10 +50,7 @@ definition {
 		task ("go to reCAPTCHA setting") {
 			User.firstLoginPG();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Security Tools",

@@ -1409,6 +1409,8 @@ definition {
 
 			Button.clickSave();
 
+			WaitForElementPresent(locator1 = "NavBar#CONTAINER");
+
 			AssertElementPresent(
 				key_permissionDefinitionValue = "All Sites and Asset Libraries",
 				key_permissionNavigationValue = "Account Management: Permissions",

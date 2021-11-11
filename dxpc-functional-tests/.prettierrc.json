@@ -1,0 +1,7 @@
+{
+	"jsdocDescriptionWithDot": true,
+	"jsdocParser": true,
+	"jsdocVerticalAlignment": true,
+	"tabWidth": 2,
+	"singleQuote": true
+}

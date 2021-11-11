@@ -1,0 +1,40 @@
+{
+  "name": "dxpc-functional-tests",
+  "version": "1.0.0",
+  "scripts": {
+    "format": "node node_modules/prettier/bin-prettier.js --write tests",
+    "eslint": "node node_modules/eslint/bin/eslint.js tests",
+    "eslint:fix": "npm run eslint --fix",
+    "test": "testcafe chrome"
+  },
+  "author": "Christie Yoo",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "downloads-folder": "^3.0.1",
+    "form-data": "3.0.0",
+    "moment": "2.29.1",
+    "testcafe": "1.16.0"
+  },
+  "devDependencies": {
+    "dotenv": "8.2.0",
+    "eslint": "7.9.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-no-only-tests": "^2.6.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.1",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "eslint-plugin-testcafe": "^0.2.1",
+    "import-sort-style-module": "^6.0.0",
+    "prettier": "^2.4.1",
+    "prettier-plugin-import-sort": "0.0.7",
+    "testcafe-reporter-html": "^1.4.6"
+  },
+  "importSort": {
+    ".js": {
+      "style": "module"
+    }
+  }
+}

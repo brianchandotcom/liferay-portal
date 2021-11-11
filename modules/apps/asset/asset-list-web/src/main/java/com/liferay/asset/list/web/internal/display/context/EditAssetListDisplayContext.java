@@ -600,6 +600,9 @@ public class EditAssetListDisplayContext {
 		PortletURL segmentsPortletURL = PortalUtil.getControlPanelPortletURL(
 			_httpServletRequest, _themeDisplay.getScopeGroup(),
 			SegmentsPortletKeys.SEGMENTS, 0, 0, PortletRequest.RENDER_PHASE);
+		PortletURL assetListPortletURL = PortalUtil.getControlPanelPortletURL(
+			_httpServletRequest, _themeDisplay.getScopeGroup(),
+			AssetListPortletKeys.ASSET_LIST, 0, 0, PortletRequest.RENDER_PHASE);
 
 		return HashMapBuilder.<String, Object>put(
 			"assetEntryListSegmentsEntryRels",
@@ -627,7 +630,7 @@ public class EditAssetListDisplayContext {
 		).put(
 			"updateVariationsPriorityURL",
 			PortletURLBuilder.create(
-				segmentsPortletURL
+				assetListPortletURL
 			).setMVCRenderCommandName(
 				"/asset_list/update_variations_priority", false
 			).buildString()

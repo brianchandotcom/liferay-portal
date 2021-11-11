@@ -81,10 +81,10 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 
 	<liferay-ui:error embed="<%= false %>" exception="<%= CommerceOrderImporterTypeException.class %>" message="the-import-process-failed" />
 
-	<liferay-ui:error embed="<%= false %>" key="commerceOrderImporterTypeKey">
+	<liferay-ui:error embed="<%= false %>" exception="<%= CommerceOrderImporterTypeException.class %>">
 
 		<%
-		String commerceOrderImporterTypeKey = (String)SessionErrors.get(renderRequest, "commerceOrderImporterTypeKey");
+		String commerceOrderImporterTypeKey = (String)SessionErrors.get(renderRequest, CommerceOrderImporterTypeException.class);
 		%>
 
 		<c:choose>

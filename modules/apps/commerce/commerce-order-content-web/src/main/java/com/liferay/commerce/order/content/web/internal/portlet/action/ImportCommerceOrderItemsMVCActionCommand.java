@@ -130,7 +130,7 @@ public class ImportCommerceOrderItemsMVCActionCommand
 		catch (Exception exception) {
 			if (exception instanceof CommerceOrderImporterTypeException) {
 				SessionErrors.add(
-					actionRequest, "commerceOrderImporterTypeKey",
+					actionRequest, CommerceOrderImporterTypeException.class,
 					commerceOrderImporterTypeKey);
 
 				sendRedirect(

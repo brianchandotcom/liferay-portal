@@ -18,10 +18,10 @@
 
 <liferay-ui:error-header />
 
-<liferay-ui:error exception="<%= CommerceOrderImporterTypeException.class %>" key="commerceOrderImporterTypeKey">
+<liferay-ui:error exception="<%= CommerceOrderImporterTypeException.class %>">
 
 	<%
-	String commerceOrderImporterTypeKey = (String)SessionErrors.get(renderRequest, "commerceOrderImporterTypeKey");
+	String commerceOrderImporterTypeKey = (String)SessionErrors.get(renderRequest, CommerceOrderImporterTypeException.class);
 	%>
 
 	<c:choose>

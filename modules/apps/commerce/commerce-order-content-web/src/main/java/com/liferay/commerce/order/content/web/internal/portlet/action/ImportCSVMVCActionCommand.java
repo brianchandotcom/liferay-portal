@@ -96,7 +96,7 @@ public class ImportCSVMVCActionCommand extends BaseMVCActionCommand {
 				hideDefaultErrorMessage(actionRequest);
 
 				SessionErrors.add(
-					actionRequest, "commerceOrderImporterTypeKey",
+					actionRequest, CommerceOrderImporterTypeException.class,
 					ParamUtil.getString(
 						actionRequest, "commerceOrderImporterTypeKey"));
 

@@ -36,10 +36,10 @@
 		<aui:input name="fileEntryId" type="hidden" />
 		<aui:input name="commerceOrderImporterTypeKey" type="hidden" value="<%= CSVCommerceOrderImporterTypeImpl.KEY %>" />
 
-		<liferay-ui:error embed="<%= false %>" key="commerceOrderImporterTypeKey">
+		<liferay-ui:error embed="<%= false %>" exception="<%= CommerceOrderImporterTypeException.class %>">
 
 			<%
-			String commerceOrderImporterTypeKey = (String)SessionErrors.get(renderRequest, "commerceOrderImporterTypeKey");
+			String commerceOrderImporterTypeKey = (String)SessionErrors.get(renderRequest, CommerceOrderImporterTypeException.class);
 			%>
 
 			<c:choose>

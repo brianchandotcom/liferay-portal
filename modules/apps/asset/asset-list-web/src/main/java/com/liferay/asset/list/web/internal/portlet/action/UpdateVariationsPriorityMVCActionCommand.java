@@ -18,6 +18,7 @@ import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -36,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + AssetListPortletKeys.ASSET_LIST,
 		"mvc.command.name=/asset_list/update_variations_priority"
 	},
-	service = MVCResourceCommand.class
+	service = MVCActionCommand.class
 )
 public class UpdateVariationsPriorityMVCActionCommand
 	extends BaseMVCActionCommand {

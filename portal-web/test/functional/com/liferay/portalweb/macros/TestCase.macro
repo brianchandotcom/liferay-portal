@@ -19,20 +19,28 @@ definition {
 
 	macro getDependenciesDirPath {
 		var projectDir = PropsUtil.get("project.dir");
-		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
+		var testBaseDir = PropsUtil.get("test.base.dir.name");
+		var testDependenciesDir = PropsUtil.get("test.dependencies.dir.name");
 
-		var testName = PropsUtil.get("test.name");
+		var testName = selenium.getTestName();
 		var testName = StringUtil.extractLast("${testName}", ".");
 		var testName = StringUtil.extractFirst("${testName}", "#");
 		var testFileName = StringUtil.split("**/${testName}.testcase");
 		var testFilePath = FileUtil.getIncludedResourceURLs("${testFileName}", "${projectDir}");
 		var testFilePath = StringUtil.valueOf("${testFilePath}");
 		var testFilePath = RegexUtil.replace("${testFilePath}", "\[(.*)\]", "1");
-		var testFilePath = StringUtil.extractLast("${testFilePath}", "file:/");
+		var testFilePath = StringUtil.extractLast("${testFilePath}", "file:");
 		var testFileParentDir = StringUtil.extractFirst("${testFilePath}", "${testName}.testcase");
-		var dependenciesDir = "${testFileParentDir}${dependenciesDir}";
+		var dependenciesDir = "${testFileParentDir}${testDependenciesDir}";
 
-		return "${dependenciesDir}";
+		var dependencyFilePath = "${dependenciesDir}/${fileName}";
+		var fileExists = FileUtil.exists("${dependencyFilePath}");
+
+		if (("${fileExists}" != "true") || ("${fromGlobalDependency}" == "true")) {
+			dependencyFilePath = "${testBaseDir}${testDependenciesDir}/${fileName}";
+		}
+
+		return "${dependencyFilePath}";
 	}
 
 	macro getDownloadedTempFileName {

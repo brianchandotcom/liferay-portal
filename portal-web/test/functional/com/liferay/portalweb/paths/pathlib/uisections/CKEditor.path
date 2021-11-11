@@ -103,6 +103,11 @@
 </tr>
 <!--TOOLBAR-->
 <tr>
+	<td>TOOLBAR</td>
+	<td>//span[contains(@class,'cke_toolbox') ]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HYPERLINK_BROWSE_SRVR_BTN</td>
 	<td>//a[contains(@class,'cke_button') and contains(@title,'Browse Server')]</td>
 	<td></td>

@@ -15,15 +15,8 @@
 package com.liferay.commerce.util;
 
 import aQute.bnd.annotation.ProviderType;
-import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.Dimensions;
-import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.portal.kernel.exception.PortalException;
 
-import java.io.OutputStream;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,6 +25,7 @@ import java.util.Map;
 @ProviderType
 public interface JasperReportHelper {
 
-	public byte[]  exportPdf(Collection<?> beanCollection, Map<String, Object> parameters);
+	public byte[] exportPdf(
+		Collection<?> beanCollection, Map<String, Object> parameters);
 
 }

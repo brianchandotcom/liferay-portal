@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.FragmentEntryTestUtil;
@@ -116,6 +117,66 @@ public class FragmentEntryLinkStagingTest {
 					_stagingGroup.getGroupId());
 
 		Assert.assertNotNull(stagingFragmentEntryLink);
+	}
+
+	@Test
+	public void testPublishFragmentEntryDeletionWithPreviousFragmentEntryName()
+		throws PortalException {
+
+		FragmentCollection liveFragmentCollection =
+			FragmentTestUtil.addFragmentCollection(_liveGroup.getGroupId());
+
+		FragmentEntry liveFragmentEntry =
+			FragmentEntryTestUtil.addFragmentEntry(
+				liveFragmentCollection.getFragmentCollectionId());
+
+		FragmentEntryLink liveFragmentEntryLink =
+			FragmentTestUtil.addFragmentEntryLink(
+				_liveGroup.getGroupId(), liveFragmentEntry.getFragmentEntryId(),
+				_layout.getPlid());
+
+		_stagingGroup = FragmentStagingTestUtil.enableLocalStaging(_liveGroup);
+
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(
+			_stagingGroup.getGroupId());
+
+		FragmentEntry stagingFragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntryByUuidAndGroupId(
+				liveFragmentEntry.getUuid(), _stagingGroup.getGroupId());
+
+		_fragmentEntryLocalService.deleteFragmentEntry(stagingFragmentEntry);
+
+		FragmentCollection stagingFragmentCollection =
+			FragmentCollectionLocalServiceUtil.
+				getFragmentCollectionByUuidAndGroupId(
+					liveFragmentCollection.getUuid(),
+					_stagingGroup.getGroupId());
+
+		FragmentEntry newStagingFragmentEntry =
+			FragmentEntryTestUtil.addFragmentEntry(
+				stagingFragmentCollection.getFragmentCollectionId(),
+				liveFragmentEntry.getName());
+
+		Layout stagingLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+			_layout.getUuid(), _stagingGroup.getGroupId(), false);
+
+		FragmentTestUtil.addFragmentEntryLink(
+			_stagingGroup.getGroupId(),
+			newStagingFragmentEntry.getFragmentEntryId(),
+			stagingLayout.getPlid());
+
+		FragmentStagingTestUtil.publishLayouts(_stagingGroup, _liveGroup);
+
+		liveFragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				liveFragmentEntryLink.getFragmentEntryLinkId());
+
+		Assert.assertNull(liveFragmentEntryLink);
+
+		liveFragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
+			liveFragmentEntry.getFragmentEntryId());
+
+		Assert.assertNull(liveFragmentEntry);
 	}
 
 	@Test

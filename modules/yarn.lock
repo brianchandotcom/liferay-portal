@@ -9652,10 +9652,10 @@ liferay-ckeditor@4.16.2-liferay.1:
   resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.16.2-liferay.1.tgz#f78cdb74d3f8802d691acb072e1f026c196a1aa1"
   integrity sha512-k6M0sNJbx+sWOBDwgTBUcwuROfkopBb5QXvR/tLtZ4aWGTI6prqX/LKAe4gSvGy0p9Q/AyYQU7SMzeb+WlgJzQ==
 
-liferay-font-awesome@3.4.2:
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/liferay-font-awesome/-/liferay-font-awesome-3.4.2.tgz#346556045e5d9a6168592ef5c10f2ed3e49e5382"
-  integrity sha512-kO7/22o6tPyF+WMZUvbPtAmaRETxoKCv47tPglsRnck62sOyIM8wh/Chxysv/Z18YOrmKFru1LbC7kBeRPY+pQ==
+liferay-font-awesome@3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/liferay-font-awesome/-/liferay-font-awesome-3.5.0.tgz#817e0be9a5522d3583a6fc80f064f7f980539091"
+  integrity sha512-RnF2hTLOlMgl/92Fo9tGH/DsogLoYgfJWMxczIq5ntv00h/iy+6mYqsIJsnlnEQgfiuoxWcT3fav5mZS/k4pzg==
 
 liferay-frontend-common-css@1.0.4, liferay-frontend-common-css@^1.0.4:
   version "1.0.4"

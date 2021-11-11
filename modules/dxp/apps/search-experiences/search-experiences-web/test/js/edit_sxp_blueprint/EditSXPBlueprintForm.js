@@ -17,7 +17,6 @@ const Toasts = require('../../../src/main/resources/META-INF/resources/sxp_bluep
 import {getSXPElementOutput} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
 import {
 	ENTITY_JSON,
-	INDEX_FIELDS,
 	INITIAL_CONFIGURATION,
 	SELECTED_SXP_ELEMENTS,
 } from '../mocks/data';
@@ -60,7 +59,6 @@ function renderEditSXPBlueprintForm(props) {
 	return render(
 		<EditSXPBlueprintForm
 			entityJSON={ENTITY_JSON}
-			indexFields={INDEX_FIELDS}
 			initialConfiguration={INITIAL_CONFIGURATION}
 			initialDescription={{}}
 			initialSXPElementInstances={{

@@ -54,7 +54,6 @@ export default function ({
 				<ErrorBoundary>
 					<EditSXPBlueprintForm
 						entityJSON={resource.entityJSON}
-						indexFields={resource.indexFields}
 						initialConfiguration={resource.configuration}
 						initialDescription={
 							resource.description_i18n || {

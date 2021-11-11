@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {QUERY_SXP_ELEMENTS, mockClassNames} from './data';
+import {INDEX_FIELDS, QUERY_SXP_ELEMENTS, mockClassNames} from './data';
 
 async function mockFetch(url) {
 	switch (url) {
@@ -19,6 +19,17 @@ async function mockFetch(url) {
 					items: QUERY_SXP_ELEMENTS,
 					page: 1,
 					totalCount: QUERY_SXP_ELEMENTS.length,
+				}),
+				ok: true,
+				status: 200,
+			};
+		}
+		case '/o/search-experiences-rest/v1.0/field-mapping-infos': {
+			return {
+				json: async () => ({
+					items: INDEX_FIELDS,
+					page: 1,
+					totalCount: INDEX_FIELDS.length,
 				}),
 				ok: true,
 				status: 200,

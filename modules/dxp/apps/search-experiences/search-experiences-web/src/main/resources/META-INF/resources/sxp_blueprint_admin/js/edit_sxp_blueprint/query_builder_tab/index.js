@@ -28,7 +28,6 @@ function QueryBuilderTab({
 	entityJSON,
 	errors = [],
 	frameworkConfig = {},
-	indexFields,
 	isSubmitting,
 	onBlur,
 	onChange,
@@ -44,6 +43,7 @@ function QueryBuilderTab({
 
 	const [collapseAll, setCollapseAll] = useState(false);
 	const [searchableTypes, setSearchableTypes] = useState(null);
+	const [indexFields, setIndexFields] = useState(null);
 
 	useEffect(() => {
 		fetchData(
@@ -52,9 +52,16 @@ function QueryBuilderTab({
 			(responseContent) => setSearchableTypes(responseContent.items),
 			() => setSearchableTypes([])
 		);
+
+		fetchData(
+			`/o/search-experiences-rest/v1.0/field-mapping-infos`,
+			{method: 'GET'},
+			(responseContent) => setIndexFields(responseContent.items),
+			() => setIndexFields([])
+		);
 	}, []); //eslint-disable-line
 
-	if (!searchableTypes) {
+	if (!searchableTypes || !indexFields) {
 		return null;
 	}
 
@@ -218,7 +225,6 @@ QueryBuilderTab.propTypes = {
 	entityJSON: PropTypes.object,
 	errors: PropTypes.arrayOf(PropTypes.object),
 	frameworkConfig: PropTypes.object,
-	indexFields: PropTypes.arrayOf(PropTypes.object),
 	isSubmitting: PropTypes.bool,
 	onBlur: PropTypes.func,
 	onChange: PropTypes.func,

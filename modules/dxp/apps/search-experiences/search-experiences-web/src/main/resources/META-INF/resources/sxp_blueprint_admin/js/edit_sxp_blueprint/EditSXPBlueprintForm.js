@@ -52,7 +52,6 @@ const TABS = {
 
 function EditSXPBlueprintForm({
 	entityJSON,
-	indexFields,
 	initialConfiguration = {},
 	initialDescription = {},
 	initialSXPElementInstances = {},
@@ -618,7 +617,6 @@ function EditSXPBlueprintForm({
 								entityJSON={entityJSON}
 								errors={formik.errors.selectedQuerySXPElements}
 								frameworkConfig={formik.values.frameworkConfig}
-								indexFields={indexFields}
 								isSubmitting={
 									formik.isSubmitting || previewInfo.loading
 								}
@@ -710,7 +708,6 @@ function EditSXPBlueprintForm({
 
 EditSXPBlueprintForm.propTypes = {
 	entityJSON: PropTypes.object,
-	indexFields: PropTypes.arrayOf(PropTypes.object),
 	initialConfiguration: PropTypes.object,
 	initialDescription: PropTypes.object,
 	initialSXPElementInstances: PropTypes.object,

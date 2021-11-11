@@ -12,12 +12,14 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/remoteapp.remoteappentry/add-i-frame-remote-app-entry \
 				  -u test@liferay.com:test \
+				  -d description= \
 				  -d friendlyURLMapping= \
 				  -d iFrameURL=${iFrameURLModified} \
 				  -d instanceable=true \
 				  -d nameMap='{\"en_US\":\"${nameModified}\"}' \
 				  -d portletCategoryName=RemoteApps \
-				  -d properties=
+				  -d properties= \
+				  -d sourceCodeURL=
 		''';
 
 		var remoteAppEntryID = JSONCurlUtil.post("${curl}","$.['remoteAppEntryId']");

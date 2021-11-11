@@ -22,22 +22,6 @@ definition {
 		}
 	}
 
-	@description = "Verify remote app can be created"
-	@priority = "5"
-	test CanBeCreated {
-		property portal.acceptance = "true";
-
-		var remoteAppName = "Test Remote App";
-
-		RemoteApps.goToRemoteAppsPortlet();
-
-		RemoteApps.addApp(
-			entryName = "${remoteAppName}",
-			entryURL = "http://www.liferay.com");
-
-		RemoteApps.viewTableEntryName(entryName = "${remoteAppName}");
-	}
-
 	@description = "Verify remote app can be deleted"
 	@priority = "5"
 	@refactordone
@@ -78,6 +62,22 @@ definition {
 			entryName = "${customElementName}",
 			entryType = "${customElementType}");
 	}
+
+	@description = "Verify an iframe remote app can be created"
+    @priority = "5"
+    test IFrameCanBeCreated {
+    	property portal.acceptance = "true";
+
+    	var remoteAppName = "Test Remote App";
+
+    	RemoteApps.goToRemoteAppsPortlet();
+
+    	RemoteApps.addApp(
+    		entryName = "${remoteAppName}",
+    		entryURL = "http://www.liferay.com");
+
+        RemoteApps.viewTableEntryName(entryName = "${remoteAppName}");
+    }
 
 	@description = "Verify that remote app type IFrame can display property fields"
 	@priority = "4"

@@ -12,7 +12,8 @@ definition {
 			value1 = "${entryHTMLName}");
 
 		Type(
-			locator1 = "RemoteAppsEntry#CUSTOM_ELEMENT_URL",
+			key_id = "customElementURLs",
+			locator1 = "RemoteAppsEntry#URL",
 			value1 = "${entryURL}");
 	}
 
@@ -23,8 +24,8 @@ definition {
 			value1 = "${entryName}");
 
 		Type(
-			key_text = "URL",
-			locator1 = "TextInput#ANY",
+			key_id = "iFrameURL",
+			locator1 = "RemoteAppsEntry#URL",
 			value1 = "${entryURL}");
 	}
 

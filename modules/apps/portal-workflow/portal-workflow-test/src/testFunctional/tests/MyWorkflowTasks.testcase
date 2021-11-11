@@ -822,15 +822,6 @@ definition {
 			title = "Blogs Entry 2");
 	}
 
-	@description = "Verify that the user can assign a task to another user in the Assigned to Me tab"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanReassignTask {
-
-		// TODO LRQA-68850 CanReassignTask pending implementation
-
-	}
-
 	@description = "Verify that the user is able to Reverse Sort Direction by clicking the icon"
 	@priority = "2"
 	test CanReverseSortDirection {

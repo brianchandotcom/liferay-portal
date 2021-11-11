@@ -291,6 +291,8 @@ definition {
 				mbAttachmentFile = "Document_1.doc",
 				threadAttachmentRemove = "true",
 				threadBodyEdit = "MB Body Edit");
+
+			PortletEntry.publish();
 		}
 
 		task ("View attachement is removed") {

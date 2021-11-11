@@ -319,6 +319,8 @@ definition {
 			threadBodyEdit = "MB Thread Message Body Edit",
 			threadSubjectEdit = "MB Thread Message Subject Edit");
 
+		PortletEntry.publish();
+
 		JSONPublications.addPublication(publicationName = "Publication Name 2");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 2");

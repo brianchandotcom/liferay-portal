@@ -1649,6 +1649,8 @@ definition {
 			threadBodyEdit = "Question Body 1 Edit",
 			threadSubjectEdit = "Question 1 Edit");
 
+		PortletEntry.publish();
+
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
 			siteURLKey = "guest",

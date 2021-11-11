@@ -3716,13 +3716,20 @@ tell application "Safari" to quit
 					sb.append(cmisRepositoryType);
 
 					while (true) {
-						JSONObject jsonObject = toJSONObject(sb.toString());
+						JSONObject jsonObject = null;
+
+						try {
+							jsonObject = toJSONObject(sb.toString());
+						}
+						catch (Exception exception) {
+							System.out.println("Unable to create JSON object");
+						}
 
 						if (minutes >= 30) {
 							throw new Exception("No available CMIS servers");
 						}
 
-						if (!jsonObject.has("hostname")) {
+						if ((jsonObject == null) || !jsonObject.has("hostname")) {
 							System.out.println("Waiting for next available CMIS server: " + cmisRepositoryType);
 
 							Thread.sleep(60000);

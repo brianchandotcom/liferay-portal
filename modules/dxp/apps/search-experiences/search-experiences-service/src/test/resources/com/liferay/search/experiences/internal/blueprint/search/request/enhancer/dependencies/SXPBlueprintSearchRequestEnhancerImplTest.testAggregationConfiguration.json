@@ -1,172 +1,170 @@
 {
-	"aggregationConfiguration": {
-		"aggs": {
-			"avg-test": {
-				"avg": {
-					"field": "grade",
-					"missing": 10
-				}
-			},
-			"cardinality-test": {
-				"cardinality": {
-					"field": "type",
-					"precision_threshold": 100
-				}
-			},
-			"filters-test": {
-				"filters": {
-					"filters": {
-						"blog-entries": {
-							"term": {
-								"entryClassName": "com.liferay.blogs.model.BlogsEntry;"
-							}
-						},
-						"journal-articles": {
-							"term": {
-								"entryClassName": "com.liferay.journal.model.JournalArticle"
-							}
-						}
-					},
-					"other_bucket": true,
-					"other_bucket_key": "other_messages"
-				}
-			},
-			"geo_distance-test": {
-				"geo_distance": {
-					"field": "expando__keyword__custom_fields__location_geolocation",
-					"keyed": true,
-					"origin": "41.8781,87.6298",
-					"ranges": [
-						{
-							"key": "a",
-							"to": 8500
-						},
-						{
-							"from": 8500,
-							"key": "b",
-							"to": 11000
-						},
-						{
-							"from": 11000,
-							"key": "c"
-						}
-					],
-					"unit": "mi"
-				}
-			},
-			"geohash_grid-test": {
-				"geohash_grid": {
-					"field": "expando__keyword__custom_fields__location_geolocation",
-					"precision": 3,
-					"shard_size": 100,
-					"size": 10000
-				}
-			},
-			"nested-test": {
-				"aggs": {
-					"nested-terms": {
-						"terms": {
-							"field": "ddmFieldArray.ddmFieldName"
-						}
+	"configuration": {
+		"aggregationConfiguration": {
+			"aggs": {
+				"avg-test": {
+					"avg": {
+						"field": "grade",
+						"missing": 10
 					}
 				},
-				"nested": {
-					"description": "Number of unique nested field values",
-					"enabled": true,
-					"path": "ddmFieldArray"
-				}
-			},
-			"reverse_nested-test": {
-				"aggs": {
-					"reverse_nested-top_field_names": {
-						"aggs": {
-							"reverse_nested-tags_to_content": {
-								"aggs": {
-									"reverse_nested-tags_per_content": {
-										"terms": {
-											"field": "assetTagNames.raw"
-										}
-									}
-								},
-								"reverse_nested": {
+				"cardinality-test": {
+					"cardinality": {
+						"field": "type",
+						"precision_threshold": 100
+					}
+				},
+				"filters-test": {
+					"filters": {
+						"filters": {
+							"blog-entries": {
+								"term": {
+									"entryClassName": "com.liferay.blogs.model.BlogsEntry;"
+								}
+							},
+							"journal-articles": {
+								"term": {
+									"entryClassName": "com.liferay.journal.model.JournalArticle"
 								}
 							}
 						},
-						"terms": {
-							"field": "ddmFieldArray.ddmFieldName"
-						}
+						"other_bucket": true,
+						"other_bucket_key": "other_messages"
 					}
 				},
-				"nested": {
-					"path": "ddmFieldArray"
-				}
-			},
-			"scripted_metric-test": {
-				"scripted_metric": {
-					"combine_script": "int length = 0; for (t in state.lengths) { length += t } return length",
-					"description": "Metrics: scripted metric",
-					"enabled": true,
-					"init_script": "state.lengths = []",
-					"map_script": "state.lengths.add(doc.content_en_US_length_sortable.value)",
-					"params": {
-					},
-					"reduce_script": "int length = 0; for (a in states) { length += a } return length"
-				}
-			},
-			"serial_differencing-test": {
-				"aggs": {
-					"content_lengths": {
-						"sum": {
-							"field": "content_en_US_length_sortable"
-						}
-					},
-					"serial_differencing": {
-						"serial_differencing": {
-							"buckets_path": "content_lengths",
-							"lag": 30
-						}
-					}
-				},
-				"date_histogram": {
-					"date_histogram_interval": "minute",
-					"description": "Modifications histogram",
-					"field": "modified"
-				}
-			},
-			"top_hits-test": {
-				"aggs": {
-					"top-hits": {
-						"top_hits": {
-							"_source": {
-								"includes": [
-									"title_en_US",
-									"articleId"
-								]
+				"geo_distance-test": {
+					"geo_distance": {
+						"field": "expando__keyword__custom_fields__location_geolocation",
+						"keyed": true,
+						"origin": "41.8781,87.6298",
+						"ranges": [
+							{
+								"key": "a",
+								"to": 8500
 							},
-							"doc_value_fields": [
-								"articleId"
-							],
-							"explain": true,
-							"from": 0,
-							"highlight": {
-								"fields": {
-									"content${context.language_id}": {
+							{
+								"from": 8500,
+								"key": "b",
+								"to": 11000
+							},
+							{
+								"from": 11000,
+								"key": "c"
+							}
+						],
+						"unit": "mi"
+					}
+				},
+				"geohash_grid-test": {
+					"geohash_grid": {
+						"field": "expando__keyword__custom_fields__location_geolocation",
+						"precision": 3,
+						"shard_size": 100,
+						"size": 10000
+					}
+				},
+				"nested-test": {
+					"aggs": {
+						"nested-terms": {
+							"terms": {
+								"field": "ddmFieldArray.ddmFieldName"
+							}
+						}
+					},
+					"nested": {
+						"description": "Number of unique nested field values",
+						"enabled": true,
+						"path": "ddmFieldArray"
+					}
+				},
+				"reverse_nested-test": {
+					"aggs": {
+						"reverse_nested-top_field_names": {
+							"aggs": {
+								"reverse_nested-tags_to_content": {
+									"aggs": {
+										"reverse_nested-tags_per_content": {
+											"terms": {
+												"field": "assetTagNames.raw"
+											}
+										}
 									},
-									"title${context.language_id}": {
-									}
-								},
-								"fragment_size": 50,
-								"require_field_match": true
+									"reverse_nested": {}
+								}
 							},
-							"size": 3,
-							"track_scores": false,
-							"version": false
+							"terms": {
+								"field": "ddmFieldArray.ddmFieldName"
+							}
 						}
+					},
+					"nested": {
+						"path": "ddmFieldArray"
 					}
 				},
-				"terms": {
-					"field": "assetTagNames.raw",
-					"size": 3
+				"scripted_metric-test": {
+					"scripted_metric": {
+						"combine_script": "int length = 0; for (t in state.lengths) { length += t } return length",
+						"description": "Metrics: scripted metric",
+						"enabled": true,
+						"init_script": "state.lengths = []",
+						"map_script": "state.lengths.add(doc.content_en_US_length_sortable.value)",
+						"params": {},
+						"reduce_script": "int length = 0; for (a in states) { length += a } return length"
+					}
+				},
+				"serial_differencing-test": {
+					"aggs": {
+						"content_lengths": {
+							"sum": {
+								"field": "content_en_US_length_sortable"
+							}
+						},
+						"serial_differencing": {
+							"serial_differencing": {
+								"buckets_path": "content_lengths",
+								"lag": 30
+							}
+						}
+					},
+					"date_histogram": {
+						"date_histogram_interval": "minute",
+						"description": "Modifications histogram",
+						"field": "modified"
+					}
+				},
+				"top_hits-test": {
+					"aggs": {
+						"top-hits": {
+							"top_hits": {
+								"_source": {
+									"includes": [
+										"title_en_US",
+										"articleId"
+									]
+								},
+								"doc_value_fields": [
+									"articleId"
+								],
+								"explain": true,
+								"from": 0,
+								"highlight": {
+									"fields": {
+										"content${context.language_id}": {},
+										"title${context.language_id}": {}
+									},
+									"fragment_size": 50,
+									"require_field_match": true
+								},
+								"size": 3,
+								"track_scores": false,
+								"version": false
+							}
+						}
+					},
+					"terms": {
+						"field": "assetTagNames.raw",
+						"size": 3
+					}
 				}
 			}
 		}

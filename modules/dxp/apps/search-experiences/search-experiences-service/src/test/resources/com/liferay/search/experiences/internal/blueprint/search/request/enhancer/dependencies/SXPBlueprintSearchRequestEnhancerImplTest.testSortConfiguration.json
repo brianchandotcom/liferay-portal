@@ -1,90 +1,92 @@
 {
-	"sortConfiguration": {
-		"sorts": [
-			{
-				"post_date": {
-					"format": "strict_date_optional_time_nanos",
-					"order": "asc"
-				}
-			},
-			"user",
-			{
-				"name": "desc"
-			},
-			"_score",
-			{
-				"parent.child.age": {
-					"mode": "min",
-					"nested": {
-						"filter": {
-							"range": {
-								"parent.age": {
-									"gte": 21
-								}
-							}
-						},
+	"configuration": {
+		"sortConfiguration": {
+			"sorts": [
+				{
+					"post_date": {
+						"format": "strict_date_optional_time_nanos",
+						"order": "asc"
+					}
+				},
+				"user",
+				{
+					"name": "desc"
+				},
+				"_score",
+				{
+					"parent.child.age": {
+						"mode": "min",
 						"nested": {
 							"filter": {
-								"match": {
-									"parent.child.name": "matt"
+								"range": {
+									"parent.age": {
+										"gte": 21
+									}
 								}
 							},
-							"path": "parent.child"
+							"nested": {
+								"filter": {
+									"match": {
+										"parent.child.name": "matt"
+									}
+								},
+								"path": "parent.child"
+							},
+							"path": "parent"
 						},
-						"path": "parent"
-					},
-					"order": "asc"
-				}
-			},
-			{
-				"_geo_distance": {
-					"order": "asc",
-					"pin.location": [
-						[
+						"order": "asc"
+					}
+				},
+				{
+					"_geo_distance": {
+						"order": "asc",
+						"pin.location": [
+							[
+								-70,
+								40
+							],
+							[
+								-71,
+								42
+							]
+						],
+						"unit": "km"
+					}
+				},
+				{
+					"_geo_distance": {
+						"order": "asc",
+						"pin.location": [
 							-70,
 							40
 						],
-						[
-							-71,
-							42
-						]
-					],
-					"unit": "km"
-				}
-			},
-			{
-				"_geo_distance": {
-					"order": "asc",
-					"pin.location": [
-						-70,
-						40
-					],
-					"unit": "km"
-				}
-			},
-			{
-				"_geo_distance": {
-					"order": "asc",
-					"pin.location": {
-						"lat": 40,
-						"lon": -70
-					},
-					"unit": "km"
-				}
-			},
-			{
-				"_script": {
-					"order": "asc",
-					"script": {
-						"lang": "painless",
-						"params": {
-							"factor": 1.1
+						"unit": "km"
+					}
+				},
+				{
+					"_geo_distance": {
+						"order": "asc",
+						"pin.location": {
+							"lat": 40,
+							"lon": -70
 						},
-						"source": "doc['field_name'].value * params.factor"
-					},
-					"type": "number"
+						"unit": "km"
+					}
+				},
+				{
+					"_script": {
+						"order": "asc",
+						"script": {
+							"lang": "painless",
+							"params": {
+								"factor": 1.1
+							},
+							"source": "doc['field_name'].value * params.factor"
+						},
+						"type": "number"
+					}
 				}
-			}
-		]
+			]
+		}
 	}
 }

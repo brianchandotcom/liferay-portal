@@ -35,6 +35,66 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-128810. The user can not modify experiences via dropdown menu when previewing a draft."
+	@priority = "4"
+	test CannotEditExperiencesViaDropdownWhenPreviewDraft {
+		property osgi.module.configuration.file.names = "com.liferay.product.navigation.control.menu.web.internal.configuration.FFProductNavigationControlMenuConfiguration.config:com.liferay.segments.web.internal.configuration.FFSegmentsConfiguration.config";
+
+		task ("Add a button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Add a new experience") {
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+		}
+
+		task ("Add a heading fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
+		}
+
+		task ("Preview the draft page in a new tab") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Preview Draft",
+				pageName = "Test Page Name");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertVisible(
+				key_text = "Draft",
+				locator1 = "Home#PAGE_CUSTOMIZATION_MESSAGE_INFO");
+		}
+
+		task ("View cannot change order of experiences") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ContentPages.openExperienceMenu();
+
+			DragAndDrop.dragAndDropReorganizeObjects(
+				locator1 = "//ul[contains(@class,'dropdown-menu')]/li[2][contains(.,'New Experience')]",
+				locator2 = "//ul[contains(@class,'dropdown-menu')]/li[1][contains(.,'Default')]",
+				position = "0,-4");
+		}
+
+		task ("View default order of experiences") {
+			ContentPages.viewExperienceOrder(experienceOrderList = "Default,New Experience");
+		}
+	}
+
 	@description = "This is a test for LPS-128810. View collection items on content page when select segment."
 	@priority = "4"
 	test ViewCollectionItemsOnContentPageWhenSelectSegment {

@@ -158,14 +158,14 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 	}
 
 	private String _renderFragmentEntry(
-			FragmentEntryLink fragmentEntryLink, String fragmentId,
+			FragmentEntryLink fragmentEntryLink, String fragmentElementId,
 			Map<String, Object> data, HttpServletRequest httpServletRequest)
 		throws IOException {
 
 		StringBundler sb = new StringBundler(9);
 
 		sb.append("<div id=\"");
-		sb.append(fragmentId);
+		sb.append(fragmentElementId);
 		sb.append("\" >");
 		sb.append(fragmentEntryLink.getHtml());
 

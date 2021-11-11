@@ -115,9 +115,10 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			FragmentEntryLink fragmentEntryLink =
 				fragmentRendererContext.getFragmentEntryLink();
 
-			String fragmentId = fragmentRendererContext.getFragmentElementId();
+			String fragmentElementId =
+				fragmentRendererContext.getFragmentElementId();
 
-			printWriter.write("<div id=\"" + fragmentId + "\">");
+			printWriter.write("<div id=\"" + fragmentElementId + "\">");
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
@@ -130,7 +131,8 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 					themeDisplay.getScopeGroupId());
 
 			_writeCss(
-				fragmentId, menuDisplayFragmentConfiguration, printWriter);
+				fragmentElementId, menuDisplayFragmentConfiguration,
+				printWriter);
 
 			NavigationMenuTag navigationMenuTag = _getNavigationMenuTag(
 				themeDisplay.getCompanyId(), menuDisplayFragmentConfiguration);
@@ -261,7 +263,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	}
 
 	private void _writeCss(
-			String fragmentId,
+			String fragmentElementId,
 			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration,
 			PrintWriter printWriter)
 		throws IOException {
@@ -273,7 +275,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 					"/dependencies/styles.tmpl"),
 			"${", "}",
 			HashMapBuilder.put(
-				"fragmentId", fragmentId
+				"fragmentElementId", fragmentElementId
 			).put(
 				"hoveredItemColor",
 				() -> {

@@ -1,5 +1,21 @@
 # Poshi Runner Change Log
 
+## 1.0.319
+
+### Resources
+
+* [POSHI-209](https://issues.liferay.com/browse/POSHI-209) - Update function files to poshi script
+* [POSHI-210](https://issues.liferay.com/browse/POSHI-210) - Update allowable resource jar names to include default resource jar
+
+### Script
+
+* [POSHI-203](https://issues.liferay.com/browse/POSHI-203) - Fix poshi script parsing for annotations that contain double quotation mark
+
+### WebDriver
+
+* [POSHI-208](https://issues.liferay.com/browse/POSHI-208) - Update Ocular for use and replacement within Poshi
+* [POSHI-213](https://issues.liferay.com/browse/POSHI-213) - Update typeKeys method to accept shortcut keys
+
 ## 1.0.316
 
 ### Other

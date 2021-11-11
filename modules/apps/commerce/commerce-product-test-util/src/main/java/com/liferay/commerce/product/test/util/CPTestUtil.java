@@ -84,7 +84,7 @@ import java.util.Objects;
  */
 public class CPTestUtil {
 
-	public static void addCatalogBaseCommercePriceList(
+	public static void addBaseCommerceCatalogCommercePriceList(
 			long groupId, String currencyCode, String type,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -770,12 +770,12 @@ public class CPTestUtil {
 
 		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
 
-		addCatalogBaseCommercePriceList(
+		addBaseCommerceCatalogCommercePriceList(
 			commerceCatalog.getGroupId(),
 			commerceCatalog.getCommerceCurrencyCode(),
 			CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
 
-		addCatalogBaseCommercePriceList(
+		addBaseCommerceCatalogCommercePriceList(
 			commerceCatalog.getGroupId(),
 			commerceCatalog.getCommerceCurrencyCode(),
 			CommercePriceListConstants.TYPE_PROMOTION, serviceContext);
@@ -898,12 +898,12 @@ public class CPTestUtil {
 
 		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
 
-		addCatalogBaseCommercePriceList(
+		addBaseCommerceCatalogCommercePriceList(
 			commerceCatalog.getGroupId(),
 			commerceCatalog.getCommerceCurrencyCode(),
 			CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
 
-		addCatalogBaseCommercePriceList(
+		addBaseCommerceCatalogCommercePriceList(
 			commerceCatalog.getGroupId(),
 			commerceCatalog.getCommerceCurrencyCode(),
 			CommercePriceListConstants.TYPE_PROMOTION, serviceContext);

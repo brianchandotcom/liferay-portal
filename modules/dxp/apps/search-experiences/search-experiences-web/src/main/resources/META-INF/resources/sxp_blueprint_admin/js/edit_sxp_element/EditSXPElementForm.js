@@ -62,7 +62,18 @@ function EditSXPElementForm({
 	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);
 	const [expandAllVariables, setExpandAllVariables] = useState(false);
 
-	const [variables, setVariables] = useState(predefinedVariables);
+	const filteredCategories = {};
+
+	predefinedVariables.map((variable) => {
+		const category = variable.templateVariable.match(/\w+/g)[0];
+
+		filteredCategories[category] = [
+			...(filteredCategories[category] || []),
+			variable,
+		];
+	});
+
+	const [variables, setVariables] = useState(filteredCategories);
 
 	if (!initialConfiguration.sxpElementTemplateJSON) {
 		initialConfiguration.sxpElementTemplateJSON = {};
@@ -96,21 +107,18 @@ function EditSXPElementForm({
 
 	const _handleSearchFilter = useCallback(
 		(value) => {
-			const filteredParameterDefinitions = predefinedVariables.map(
-				(category) => ({
-					...category,
-					parameterDefinitions: category.parameterDefinitions.filter(
-						({description = ''}) =>
-							description
-								.toLowerCase()
-								.includes(value.toLowerCase())
-					),
-				})
-			);
+			const filteredCategories = {};
 
-			const filteredCategories = filteredParameterDefinitions.filter(
-				({parameterDefinitions}) => parameterDefinitions.length
-			);
+			predefinedVariables.map((variable) => {
+				const category = variable.templateVariable.match(/\w+/g)[0];
+
+				if (variable.description.toLowerCase().includes(value)) {
+					filteredCategories[category] = [
+						...(filteredCategories[category] || []),
+						variable,
+					];
+				}
+			});
 
 			setVariables(filteredCategories);
 			setExpandAllVariables(!!value);
@@ -602,34 +610,29 @@ function EditSXPElementForm({
 
 										<div className="container-fluid">
 											<dl className="sidebar-dl">
-												{variables.length ? (
-													variables
-														.filter(
-															(item) =>
-																item
-																	.parameterDefinitions
-																	.length
-														)
-														.map((item) => (
-															<SidebarPanel
-																categoryName={
-																	item.categoryName
-																}
-																expand={
-																	expandAllVariables
-																}
-																item={item}
-																key={
-																	item.categoryName
-																}
-																onVariableClick={
-																	_handleVariableClick
-																}
-																parameterDefinitions={
-																	item.parameterDefinitions
-																}
-															/>
-														))
+												{Object.keys(variables)
+													.length ? (
+													Object.keys(
+														variables
+													).map((category) => (
+														<SidebarPanel
+															categoryName={
+																category
+															}
+															expand={
+																expandAllVariables
+															}
+															key={category}
+															onVariableClick={
+																_handleVariableClick
+															}
+															parameterDefinitions={
+																variables[
+																	category
+																]
+															}
+														/>
+													))
 												) : (
 													<div className="empty-list-message">
 														<ClayEmptyState

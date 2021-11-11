@@ -14,7 +14,7 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useEffect, useState} from 'react';
 
-const SXP_ELEMENT_CLASSNAME_SUFFIX = 'Parameter';
+const SXP_ELEMENT_CLASSNAME_SUFFIX = 'SXPParameter';
 
 const sxpElementClassNameRegex = new RegExp(
 	`([\\w\\.]+\\.)(\\w+)(${SXP_ELEMENT_CLASSNAME_SUFFIX})`
@@ -54,18 +54,20 @@ function SidebarPanel({
 
 			{showList &&
 				parameterDefinitions.map((entry) => (
-					<dd className="sidebar-dd" key={entry.variable}>
+					<dd className="sidebar-dd" key={entry.templateVariable}>
 						<ClayTooltipProvider>
 							<ClayButton
 								className="nav-link"
 								displayType="unstyled"
-								onClick={() => onVariableClick(entry.variable)}
+								onClick={() =>
+									onVariableClick(entry.templateVariable)
+								}
 								title={`${Liferay.Language.get(
 									'type'
 								)}: ${extractType(
 									entry.className
 								)}\n${Liferay.Language.get('variable')}: ${
-									entry.variable
+									entry.templateVariable
 								}`}
 							>
 								{entry.description}

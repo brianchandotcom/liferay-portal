@@ -16,7 +16,12 @@ package com.liferay.search.experiences.rest.dto.v1_0.util;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+<<<<<<< HEAD
 import com.liferay.portal.kernel.util.ArrayUtil;
+=======
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
+>>>>>>> 1ad3ba6 (LPS-142391 search-experiences-rest-api: Blueprint and Element post: accept simple title and description without localization)
 import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
@@ -26,11 +31,15 @@ import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 public class ElementDefinitionUtil {
 
 	public static ElementDefinition toElementDefinition(String json) {
+		if (Validator.isNull(json)) {
+			return null;
+		}
+
 		return unpack(ElementDefinition.unsafeToDTO(json));
 	}
 
 	public static ElementDefinition[] toElementDefinitions(String json) {
-		if (json == null) {
+		if (Validator.isNull(json)) {
 			return null;
 		}
 
@@ -65,8 +74,13 @@ public class ElementDefinitionUtil {
 	public static ElementDefinition[] unpack(
 		ElementDefinition[] elementDefinitions) {
 
-		ArrayUtil.isNotEmptyForEach(
-			elementDefinitions, elementDefinition -> unpack(elementDefinition));
+		if (elementDefinitions == null) {
+			return null;
+		}
+
+		for (int i = 0; i < elementDefinitions.length; i++) {
+			elementDefinitions[i] = unpack(elementDefinitions[i]);
+		}
 
 		return elementDefinitions;
 	}

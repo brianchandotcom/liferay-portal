@@ -13,10 +13,18 @@ definition {
 			var parentCommentId = "0";
 		}
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-postings/${entryId}/comments \
 			-H 'Content-Type: application/json' \
-			-u 'test@liferay.com:test'
+			-u '${userEmailAddress}:${userPassword}'
 			-d '{
 				"creator": {},
 				"parentCommentId": "${parentCommentId}",

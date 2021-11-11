@@ -27,12 +27,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.display-name=Instance Tracker",
+		"javax.portlet.display-name=Workflow Instance Tracker",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + WorkflowInstanceTrackerPortletKeys.INSTANCE_TRACKER
+		"javax.portlet.name=" + WorkflowInstanceTrackerPortletKeys.WORKFLOW_INSTANCE_TRACKER
 	},
 	service = Portlet.class
 )
-public class InstanceTrackerPortlet extends MVCPortlet {
+public class WorkflowInstanceTrackerPortlet extends MVCPortlet {
 }

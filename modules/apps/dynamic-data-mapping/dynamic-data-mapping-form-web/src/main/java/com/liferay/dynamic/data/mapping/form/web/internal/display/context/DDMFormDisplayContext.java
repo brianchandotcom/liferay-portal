@@ -627,6 +627,17 @@ public class DDMFormDisplayContext {
 		return ddmFormInstanceSettings.limitToOneSubmissionPerUser();
 	}
 
+	public boolean isLoggedUser() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay.isSignedIn()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isPreview() throws PortalException {
 		ThemeDisplay themeDisplay = getThemeDisplay();
 

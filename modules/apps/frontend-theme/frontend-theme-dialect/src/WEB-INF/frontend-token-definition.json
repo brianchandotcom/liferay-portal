@@ -1827,7 +1827,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "1.125rem",
+							"defaultValue": "0.875rem",
 							"label": "text-small-caps-font-size",
 							"mappings": [
 								{

@@ -144,7 +144,7 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 
 			if (Validator.isNotNull(customElementCSSURLs)) {
 				dictionary.put(
-					"com.liferay.portlet.footer-portlet-css",
+					"com.liferay.portlet.footer-portal-css",
 					customElementCSSURLs.split(StringPool.NEW_LINE));
 			}
 		}

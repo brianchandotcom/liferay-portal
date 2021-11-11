@@ -42,17 +42,13 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.search.experiences.constants.SXPActionKeys" %><%@
-page import="com.liferay.search.experiences.model.SXPBlueprint" %><%@
 page import="com.liferay.search.experiences.model.SXPElement" %><%@
+page import="com.liferay.search.experiences.web.internal.blueprint.admin.constants.SXPBlueprintAdminClayDataSetDisplayNames" %><%@
 page import="com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPBlueprintsDisplayContext" %><%@
-page import="com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPBlueprintsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPElementsDisplayContext" %><%@
 page import="com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPElementsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.search.experiences.web.internal.constants.SXPWebKeys" %><%@
-page import="com.liferay.search.experiences.web.internal.security.permission.resource.SXPBlueprintPermission" %><%@
 page import="com.liferay.search.experiences.web.internal.security.permission.resource.SXPElementPermission" %>
-
-<%@ page import="java.util.Date" %>
 
 <liferay-frontend:defineObjects />
 

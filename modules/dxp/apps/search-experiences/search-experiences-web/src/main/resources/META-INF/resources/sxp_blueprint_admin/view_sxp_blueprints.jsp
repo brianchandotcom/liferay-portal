@@ -20,55 +20,14 @@
 ViewSXPBlueprintsDisplayContext viewSXPBlueprintsDisplayContext = (ViewSXPBlueprintsDisplayContext)request.getAttribute(SXPWebKeys.VIEW_SXP_BLUEPRINTS_DISPLAY_CONTEXT);
 %>
 
-<clay:management-toolbar
-	additionalProps='<%=
-		HashMapBuilder.<String, Object>put(
-			"deleteSXPBlueprintURL",
-			PortletURLBuilder.createActionURL(
-				renderResponse
-			).setActionName(
-				"/sxp_blueprint_admin/delete_sxp_blueprint"
-			).setRedirect(
-				currentURL
-			).buildString()
-		).put(
-			"editSXPBlueprintURL",
-			PortletURLBuilder.createRenderURL(
-				renderResponse
-			).setMVCRenderCommandName(
-				"/sxp_blueprint_admin/edit_sxp_blueprint"
-			).setRedirect(
-				currentURL
-			).buildString()
-		).build()
-	%>'
-	managementToolbarDisplayContext="<%= (ViewSXPBlueprintsManagementToolbarDisplayContext)request.getAttribute(SXPWebKeys.VIEW_SXP_BLUEPRINTS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT) %>"
-	propsTransformer="sxp_blueprint_admin/js/view_sxp_blueprints/SXPBlueprintEntriesManagementToolbarPropsTransformer"
-	searchContainerId="sxpBlueprintEntries"
-	supportsBulkActions="<%= true %>"
+<clay:headless-data-set-display
+	apiURL="<%= viewSXPBlueprintsDisplayContext.getAPIURL() %>"
+	clayDataSetActionDropdownItems="<%= viewSXPBlueprintsDisplayContext.getClayDataSetActionDropdownItems() %>"
+	formName="fm"
+	id="<%= SXPBlueprintAdminClayDataSetDisplayNames.SXP_BLUEPRINTS %>"
+	itemsPerPage="<%= 20 %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
+	pageNumber="<%= 1 %>"
+	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
+	style="fluid"
 />
-
-<clay:container-fluid>
-	<aui:form method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-		<liferay-ui:search-container
-			cssClass="sxp-blueprints-search-container"
-			id="sxpBlueprintEntries"
-			searchContainer="<%= viewSXPBlueprintsDisplayContext.getSearchContainer() %>"
-		>
-			<liferay-ui:search-container-row
-				className="com.liferay.search.experiences.model.SXPBlueprint"
-				keyProperty="sxpBlueprintId"
-				modelVar="sxpBlueprint"
-			>
-				<%@ include file="/sxp_blueprint_admin/sxp_blueprint_search_columns.jspf" %>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator
-				displayStyle="<%= viewSXPBlueprintsDisplayContext.getDisplayStyle() %>"
-				markupView="lexicon"
-			/>
-		</liferay-ui:search-container>
-	</aui:form>
-</clay:container-fluid>

@@ -14,98 +14,108 @@
 
 package com.liferay.search.experiences.web.internal.blueprint.admin.display.context;
 
-import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
-import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.search.sort.Sorts;
+import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.model.SXPBlueprint;
-import com.liferay.search.experiences.service.SXPBlueprintService;
-import com.liferay.search.experiences.web.internal.security.permission.resource.SXPBlueprintPermission;
+import com.liferay.search.experiences.web.internal.display.context.util.SXPRequestHelper;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
- * @author Petteri Karttunen
+ * @author Kevin Tan
  */
-public class ViewSXPBlueprintsDisplayContext
-	extends BaseDisplayContext<SXPBlueprint> {
+public class ViewSXPBlueprintsDisplayContext {
 
 	public ViewSXPBlueprintsDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, Queries queries,
-		Searcher searcher,
-		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
-		SXPBlueprintService sxpBlueprintService) {
+		HttpServletRequest httpServletRequest,
+		ModelResourcePermission<SXPBlueprint>
+			sxpBlueprintModelResourcePermission) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, queries, searcher,
-			searchRequestBuilderFactory, sorts);
+		_sxpBlueprintModelResourcePermission =
+			sxpBlueprintModelResourcePermission;
 
-		_sxpBlueprintService = sxpBlueprintService;
+		_sxpRequestHelper = new SXPRequestHelper(httpServletRequest);
 	}
 
-	public List<String> getAvailableActions(SXPBlueprint sxpBlueprint)
-		throws PortalException {
+	public String getAPIURL() {
+		return "/o/search-experiences-rest/v1.0/sxp-blueprints";
+	}
 
-		if (SXPBlueprintPermission.contains(
-				themeDisplay.getPermissionChecker(), sxpBlueprint,
-				ActionKeys.DELETE)) {
+	public List<ClayDataSetActionDropdownItem>
+			getClayDataSetActionDropdownItems()
+		throws Exception {
 
-			return Collections.singletonList("deleteSXPBlueprints");
+		return Arrays.asList(
+			new ClayDataSetActionDropdownItem(
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setMVCRenderCommandName(
+					"/sxp_blueprint_admin/edit_sxp_blueprint"
+				).setParameter(
+					"sxpBlueprintId", "{id}"
+				).buildString(),
+				"pencil", "edit",
+				LanguageUtil.get(_sxpRequestHelper.getRequest(), "edit"), "get",
+				null, null),
+			new ClayDataSetActionDropdownItem(
+				LanguageUtil.get(
+					_sxpRequestHelper.getRequest(),
+					"are-you-sure-you-want-to-delete-this-entry"),
+				getAPIURL() + "/{id}", "trash", "delete",
+				LanguageUtil.get(_sxpRequestHelper.getRequest(), "delete"),
+				"delete", null, "async"));
+	}
+
+	public CreationMenu getCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
+
+		if (!_hasAddSXPBlueprintPermission()) {
+			return creationMenu;
 		}
 
-		return Collections.emptyList();
+		creationMenu.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("addSXPBlueprint");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_sxpRequestHelper.getRequest(), "add-blueprint"));
+				dropdownItem.setTarget("event");
+			});
+
+		return creationMenu;
 	}
 
-	public SearchContainer<SXPBlueprint> getSearchContainer()
-		throws PortalException {
-
-		return getSearchContainer(
-			"no-blueprints-were-found", SXPBlueprint.class);
+	public PortletURL getPortletURL() throws PortletException {
+		return PortletURLUtil.clone(
+			PortletURLUtil.getCurrent(
+				_sxpRequestHelper.getLiferayPortletRequest(),
+				_sxpRequestHelper.getLiferayPortletResponse()),
+			_sxpRequestHelper.getLiferayPortletResponse());
 	}
 
-	@Override
-	protected String getDisplayStylePreferenceName() {
-		return "sxp-blueprints-display-style";
+	private boolean _hasAddSXPBlueprintPermission() {
+		PortletResourcePermission portletResourcePermission =
+			_sxpBlueprintModelResourcePermission.getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			_sxpRequestHelper.getPermissionChecker(), null,
+			SXPActionKeys.ADD_SXP_BLUEPRINT);
 	}
 
-	@Override
-	protected String getMVCRenderCommandName() {
-		return "/sxp_blueprint_admin/view_sxp_blueprints";
-	}
-
-	@Override
-	protected void processBooleanQuery(BooleanQuery booleanQuery) {
-	}
-
-	@Override
-	protected SXPBlueprint toBaseModel(long entryClassPK) {
-		try {
-			return _sxpBlueprintService.getSXPBlueprint(entryClassPK);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get search experiences blueprint " +
-						entryClassPK);
-			}
-		}
-
-		return null;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ViewSXPBlueprintsDisplayContext.class);
-
-	private final SXPBlueprintService _sxpBlueprintService;
+	private final ModelResourcePermission<SXPBlueprint>
+		_sxpBlueprintModelResourcePermission;
+	private final SXPRequestHelper _sxpRequestHelper;
 
 }

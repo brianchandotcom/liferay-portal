@@ -297,7 +297,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 					"continueAsGuest", Boolean.TRUE.toString());
 
 				Cookie cookie = new Cookie(
-					"continueAsGuest", Boolean.TRUE.toString());
+					CookieKeys.COMMERCE_CONTINUE_AS_GUEST,
+					Boolean.TRUE.toString());
 
 				String domain = CookieKeys.getDomain(httpServletRequest);
 

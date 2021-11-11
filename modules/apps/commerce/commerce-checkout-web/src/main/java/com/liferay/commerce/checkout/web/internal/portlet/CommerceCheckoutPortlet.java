@@ -121,7 +121,7 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 				boolean continueAsGuest = GetterUtil.getBoolean(
 					CookieKeys.getCookie(
 						_portal.getHttpServletRequest(renderRequest),
-						"continueAsGuest"));
+						CookieKeys.COMMERCE_CONTINUE_AS_GUEST));
 
 				if ((commerceOrder.getCommerceAccountId() ==
 						CommerceAccountConstants.ACCOUNT_ID_GUEST) &&
@@ -150,7 +150,7 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 					CookieKeys.deleteCookies(
 						httpServletRequest, httpServletResponse,
 						CookieKeys.getDomain(httpServletRequest),
-						"continueAsGuest");
+						CookieKeys.COMMERCE_CONTINUE_AS_GUEST);
 				}
 
 				renderRequest.setAttribute(

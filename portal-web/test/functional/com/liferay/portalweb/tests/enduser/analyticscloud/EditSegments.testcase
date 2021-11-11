@@ -103,6 +103,8 @@ definition {
 	@description = "Edit a dynamic segment and check the edits are saved"
 	@priority = "5"
 	test CanEditDynamicSegmentCheckEditSaved {
+		property portal.acceptance = "true";
+
 		ACUtils.createBlogsAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

@@ -355,6 +355,16 @@ definition {
 	}
 
 	macro translateFragmentField {
+		if ("${experienceName}" == "${experienceName}") {
+			AssertElementPresent(
+				experienceName = "Default",
+				locator1 = "Translation#EXPERIENCE_OPTION");
+
+			Select(
+				locator1 = "Translation#EXPERIENCE_SELECTOR",
+				value1 = "${experienceName}");
+		}
+
 		if ("${fieldName}" == "HTML") {
 			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.text.Format;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -279,7 +280,7 @@ public class InputFieldTag extends IncludeTag {
 	private static final String _PAGE = "/html/taglib/ui/input_field/page.jsp";
 
 	private List<String> _activeLanguageIds = new ArrayList<>();
-	private boolean _adminMode = false;
+	private boolean _adminMode;
 	private String _autoComplete;
 	private boolean _autoFocus;
 	private boolean _autoSize;

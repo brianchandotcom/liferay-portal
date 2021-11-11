@@ -117,11 +117,19 @@ definition {
 	}
 
 	@description = "Verify that user can Reverse sort Direction and if the elements reverse position."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanReverseSortDirectionTheElement {
+		KaleoFormsManageFieldSets.clickFilterById();
 
-		// TODO LRQA-70710 CanReverseSortDirectionTheElement pending implementation
+		KaleoFormsManageFieldSets.viewUpDirectionOfSortButton();
+
+		KaleoFormsManageFieldSets.viewFieldSetOrder(fieldSetList = "Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do");
+
+		Workflow.clickRevertSortDirection();
+		
+		KaleoFormsManageFieldSets.viewFieldSetOrder(fieldSetList = "To Do,Meeting Minutes,Issues Tracking,Inventory,Events,Contacts");
+
+
 
 	}
 

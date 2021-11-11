@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>KaleoFormsManageFieldSets</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">KaleoFormsManageFieldSets</td></tr>
+</thead>
+
+<tbody>
+<!--PROCESS_TABLE-->
+<tr>
+	<td>NAME_ROW_FROM_MANAGE_FIELD</td>
+	<td>//tr[${key_rowNumber}]//td[contains(@class, 'table-title')]//a[contains(.,'${key_nameFieldset}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORTED_UP_ICON</td>
+	<td>//*[name()='svg'][contains(@class,'lexicon-icon-order-list-up')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

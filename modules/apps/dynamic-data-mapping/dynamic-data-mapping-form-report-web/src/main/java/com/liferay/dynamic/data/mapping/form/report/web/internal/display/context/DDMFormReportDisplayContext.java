@@ -14,34 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.form.report.web.internal.display.context;
 
-import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
+import com.liferay.dynamic.data.mapping.util.DDMFormReportDataUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Date;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -66,50 +44,7 @@ public class DDMFormReportDisplayContext {
 	}
 
 	public JSONArray getFieldsJSONArray() throws PortalException {
-		JSONArray fieldsJSONArray = JSONFactoryUtil.createJSONArray();
-
-		if (_ddmFormInstanceReport == null) {
-			return fieldsJSONArray;
-		}
-
-		DDMFormInstance ddmFormInstance =
-			_ddmFormInstanceReport.getFormInstance();
-
-		DDMForm ddmForm = ddmFormInstance.getDDMForm();
-
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(true);
-
-		Set<String> set = ddmFormFieldsMap.keySet();
-
-		Stream<String> stream = set.stream();
-
-		stream.map(
-			ddmFormFieldName -> ddmFormFieldsMap.get(ddmFormFieldName)
-		).filter(
-			ddmFormField -> !StringUtil.equals(
-				ddmFormField.getType(), "fieldset")
-		).forEach(
-			ddmFormField -> fieldsJSONArray.put(
-				JSONUtil.put(
-					"columns",
-					_getPropertyLabelsJSONObject(ddmFormField, "columns")
-				).put(
-					"label", _getLabel(ddmFormField)
-				).put(
-					"name", ddmFormField.getName()
-				).put(
-					"options",
-					_getDDMFormFieldOptionLabelsJSONObject(
-						ddmFormField.getDDMFormFieldOptions())
-				).put(
-					"rows", _getPropertyLabelsJSONObject(ddmFormField, "rows")
-				).put(
-					"type", ddmFormField.getType()
-				))
-		);
-
-		return fieldsJSONArray;
+		return DDMFormReportDataUtil.getFieldsJSONArray(_ddmFormInstanceReport);
 	}
 
 	public String getFormReportRecordsFieldValuesURL() {
@@ -122,126 +57,16 @@ public class DDMFormReportDisplayContext {
 	}
 
 	public String getLastModifiedDate() {
-		if (_ddmFormInstanceReport == null) {
-			return StringPool.BLANK;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String languageKey = "the-last-entry-was-sent-on-x";
-
-		Date modifiedDate = _ddmFormInstanceReport.getModifiedDate();
-
-		int daysBetween = DateUtil.getDaysBetween(
-			new Date(modifiedDate.getTime()), new Date(),
+		return DDMFormReportDataUtil.getLastModifiedDate(
+			_ddmFormInstanceReport, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
-
-		if (daysBetween < 2) {
-			languageKey = "the-last-entry-was-sent-x";
-		}
-
-		String relativeTimeDescription = StringUtil.removeSubstring(
-			Time.getRelativeTimeDescription(
-				modifiedDate, themeDisplay.getLocale(),
-				themeDisplay.getTimeZone()),
-			StringPool.PERIOD);
-
-		if (daysBetween < 2) {
-			relativeTimeDescription = StringUtil.toLowerCase(
-				relativeTimeDescription);
-		}
-
-		return LanguageUtil.format(
-			themeDisplay.getLocale(), languageKey, relativeTimeDescription,
-			false);
 	}
 
 	public int getTotalItems() throws PortalException {
-		if (_ddmFormInstanceReport == null) {
-			return 0;
-		}
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_ddmFormInstanceReport.getData());
-
-		return jsonObject.getInt("totalItems");
-	}
-
-	private JSONObject _getDDMFormFieldOptionLabelsJSONObject(
-		DDMFormFieldOptions ddmFormFieldOptions) {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		int index = 0;
-
-		for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
-			jsonObject.put(
-				optionValue,
-				JSONUtil.put(
-					"index", index++
-				).put(
-					"value",
-					_getValue(ddmFormFieldOptions.getOptionLabels(optionValue))
-				));
-		}
-
-		return jsonObject;
-	}
-
-	private String _getLabel(DDMFormField ddmFormField) {
-		if (StringUtil.equals(
-				ddmFormField.getType(),
-				DDMFormFieldTypeConstants.SEARCH_LOCATION)) {
-
-			JSONObject jsonObject = JSONUtil.put(
-				"place", _getValue(ddmFormField.getLabel()));
-
-			LocalizedValue visibleFields =
-				(LocalizedValue)ddmFormField.getProperty("visibleFields");
-
-			Stream.of(
-				StringUtil.split(
-					StringUtil.removeChars(
-						GetterUtil.getString(
-							visibleFields.getString(
-								visibleFields.getDefaultLocale())),
-						CharPool.CLOSE_BRACKET, CharPool.OPEN_BRACKET,
-						CharPool.QUOTE))
-			).map(
-				String::trim
-			).forEach(
-				visibleField -> jsonObject.put(
-					visibleField,
-					LanguageUtil.get(
-						ResourceBundleUtil.getModuleAndPortalResourceBundle(
-							visibleFields.getDefaultLocale(), getClass()),
-						visibleField))
-			);
-
-			return jsonObject.toString();
-		}
-
-		return _getValue(ddmFormField.getLabel());
-	}
-
-	private JSONObject _getPropertyLabelsJSONObject(
-		DDMFormField ddmFormField, String propertyName) {
-
-		Object property = ddmFormField.getProperty(propertyName);
-
-		if (property instanceof DDMFormFieldOptions) {
-			DDMFormFieldOptions ddmFormFieldOptions =
-				(DDMFormFieldOptions)property;
-
-			return _getDDMFormFieldOptionLabelsJSONObject(ddmFormFieldOptions);
-		}
-
-		return JSONFactoryUtil.createJSONObject();
-	}
-
-	private String _getValue(Value value) {
-		return value.getString(value.getDefaultLocale());
+		return DDMFormReportDataUtil.getTotalItems(_ddmFormInstanceReport);
 	}
 
 	private final DDMFormInstanceReport _ddmFormInstanceReport;

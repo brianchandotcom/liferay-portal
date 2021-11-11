@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -407,46 +406,15 @@ public class BundleSiteInitializerTest {
 		UnicodeProperties privateLayoutSetUnicodeProperties =
 			privateLayoutSet.getSettingsProperties();
 
-		String privateLayoutSetSettingShowFooter =
-			privateLayoutSetUnicodeProperties.getProperty(
-				"lfr-theme:regular:show-footer");
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				privateLayoutSetUnicodeProperties.getProperty(
+					"lfr-theme:regular:show-footer")));
 
 		Assert.assertFalse(
 			GetterUtil.getBoolean(
-				PropsUtil.get(privateLayoutSetSettingShowFooter)));
-
-		String privateLayoutSetSettingShowHeader =
-			privateLayoutSetUnicodeProperties.getProperty(
-				"lfr-theme:regular:show-header");
-
-		Assert.assertFalse(
-			GetterUtil.getBoolean(
-				PropsUtil.get(privateLayoutSetSettingShowHeader)));
-
-		String privateLayoutSetSettingShowHeaderSearch =
-			privateLayoutSetUnicodeProperties.getProperty(
-				"lfr-theme:regular:show-header-search");
-
-		Assert.assertFalse(
-			GetterUtil.getBoolean(
-				PropsUtil.get(privateLayoutSetSettingShowHeaderSearch)));
-
-		String privateLayoutSetSettingShowMaximizeMinimizeApplicationLinks =
-			privateLayoutSetUnicodeProperties.getProperty(
-				"lfr-theme:regular:show-maximize-minimize-application-links");
-
-		Assert.assertFalse(
-			GetterUtil.getBoolean(
-				PropsUtil.get(
-					privateLayoutSetSettingShowMaximizeMinimizeApplicationLinks)));
-
-		String privateLayoutSetSettingWrapWidgetPageContent =
-			privateLayoutSetUnicodeProperties.getProperty(
-				"lfr-theme:regular:wrap-widget-page-content");
-
-		Assert.assertFalse(
-			GetterUtil.getBoolean(
-				PropsUtil.get(privateLayoutSetSettingWrapWidgetPageContent)));
+				privateLayoutSetUnicodeProperties.getProperty(
+					"lfr-theme:regular:show-header")));
 
 		LayoutSet publicLayoutSet = _layoutSetLocalService.fetchLayoutSet(
 			group.getGroupId(), false);
@@ -460,46 +428,15 @@ public class BundleSiteInitializerTest {
 		UnicodeProperties publicLayoutSetUnicodeProperties =
 			publicLayoutSet.getSettingsProperties();
 
-		String publicLayoutSetSettingShowFooter =
-			publicLayoutSetUnicodeProperties.getProperty(
-				"lfr-theme:regular:show-footer");
-
 		Assert.assertFalse(
 			GetterUtil.getBoolean(
-				PropsUtil.get(publicLayoutSetSettingShowFooter)));
+				publicLayoutSetUnicodeProperties.getProperty(
+					"lfr-theme:regular:show-footer")));
 
-		String publicLayoutSetSettingShowHeader =
-			publicLayoutSetUnicodeProperties.getProperty(
-				"lfr-theme:regular:show-header");
-
-		Assert.assertFalse(
+		Assert.assertTrue(
 			GetterUtil.getBoolean(
-				PropsUtil.get(publicLayoutSetSettingShowHeader)));
-
-		String publicLayoutSetSettingShowHeaderSearch =
-			publicLayoutSetUnicodeProperties.getProperty(
-				"lfr-theme:regular:show-header-search");
-
-		Assert.assertFalse(
-			GetterUtil.getBoolean(
-				PropsUtil.get(publicLayoutSetSettingShowHeaderSearch)));
-
-		String publicLayoutSetSettingShowMaximizeMinimizeApplicationLinks =
-			publicLayoutSetUnicodeProperties.getProperty(
-				"lfr-theme:regular:show-maximize-minimize-application-links");
-
-		Assert.assertFalse(
-			GetterUtil.getBoolean(
-				PropsUtil.get(
-					publicLayoutSetSettingShowMaximizeMinimizeApplicationLinks)));
-
-		String publicLayoutSetSettingWrapWidgetPageContent =
-			publicLayoutSetUnicodeProperties.getProperty(
-				"lfr-theme:regular:wrap-widget-page-content");
-
-		Assert.assertFalse(
-			GetterUtil.getBoolean(
-				PropsUtil.get(publicLayoutSetSettingWrapWidgetPageContent)));
+				publicLayoutSetUnicodeProperties.getProperty(
+					"lfr-theme:regular:show-header")));
 	}
 
 	private void _assertObjectDefinition(Group group) throws Exception {

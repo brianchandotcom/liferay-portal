@@ -51,6 +51,7 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -58,6 +59,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -147,7 +149,7 @@ public class BundleSiteInitializerTest {
 			_assertLayouts(group);
 			_assertLayoutSets(group);
 			_assertObjectDefinition(group);
-			_assertRoles(group);
+			_assertPermissions(group);
 			_assertStyleBookEntry(group);
 		}
 		finally {
@@ -500,6 +502,24 @@ public class BundleSiteInitializerTest {
 				group.getGroupId(), objectDefinition.getObjectDefinitionId()));
 	}
 
+	private void _assertPermissions(Group group) throws Exception {
+		_assertRoles(group);
+
+		_assertResourcePermissions(group);
+	}
+
+	private void _assertResourcePermissions(Group group) throws Exception {
+		Role role = _roleLocalService.fetchRole(
+			group.getCompanyId(), "Test Role 4");
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				group.getCompanyId(), "com.liferay.commerce.product", 3, "0",
+				role.getRoleId());
+
+		Assert.assertNotNull(resourcePermission);
+	}
+
 	private void _assertRoles(Group group) {
 		Role role1 = _roleLocalService.fetchRole(
 			group.getCompanyId(), "Test Role 1");
@@ -607,6 +627,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

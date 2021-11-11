@@ -19,6 +19,22 @@
 	{
 		"name": "Footer Navigation",
 		"pages": [
+			{
+				"friendlyURL": "/contact-us",
+				"privateLayout": false
+			}
+		],
+		"urls": [
+			{
+				"name": "Privacy Policy",
+				"url": "https://www.liferay.com/privacy-policy",
+				"useNewTab": true
+			},
+			{
+				"name": "Manage Account",
+				"url": "https://login.liferay.com/",
+				"useNewTab": true
+			}
 		]
 	}
 ]

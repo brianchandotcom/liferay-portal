@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ANY_DISABLED</td>
+	<td>//button[@disabled='']//span[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIKE</td>
 	<td>//div[contains(@class,'ratings-like')]//button[contains(@title,'Like This') or contains(@data-title,'Like This')]</td>
 	<td></td>

@@ -63,9 +63,11 @@ import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -512,6 +514,17 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 		throws PortalException {
 
 		LayoutFriendlyURLsException layoutFriendlyURLsException = null;
+
+		Set<String> friendlyURLSet = new HashSet<>(friendlyURLMap.values());
+
+		if (friendlyURLSet.size() != friendlyURLMap.size()) {
+			LayoutFriendlyURLException layoutFriendlyURLException =
+				new LayoutFriendlyURLException(
+					LayoutFriendlyURLException.DUPLICATE);
+
+			layoutFriendlyURLsException = new LayoutFriendlyURLsException(
+				layoutFriendlyURLException);
+		}
 
 		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
 			try {

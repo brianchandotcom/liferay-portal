@@ -27,14 +27,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -82,35 +80,23 @@ public class
 					0);
 			}
 
-			List<FrequentPatternCommerceMLRecommendation>
-				frequentPatternCommerceMLRecommendationList = ListUtil.subList(
-					frequentPatternCommerceMLRecommendations,
-					pagination.getStart(), pagination.getEnd());
-
-			Stream<FrequentPatternCommerceMLRecommendation> stream =
-				frequentPatternCommerceMLRecommendationList.stream();
-
 			return InfoPage.of(
-				stream.map(
-					FrequentPatternCommerceMLRecommendation::
-						getRecommendedEntryClassPK
-				).map(
-					cpDefinitionId -> {
+				TransformUtil.transform(
+					ListUtil.subList(
+						frequentPatternCommerceMLRecommendations,
+						pagination.getStart(), pagination.getEnd()),
+					frequentPatternCommerceMLRecommendation -> {
 						try {
 							return _cpDefinitionService.fetchCPDefinition(
-								cpDefinitionId);
+								frequentPatternCommerceMLRecommendation.
+									getRecommendedEntryClassPK());
 						}
 						catch (PortalException portalException) {
 							_log.error(portalException, portalException);
 						}
 
 						return null;
-					}
-				).filter(
-					Objects::nonNull
-				).collect(
-					Collectors.toList()
-				),
+					}),
 				collectionQuery.getPagination(),
 				frequentPatternCommerceMLRecommendations.size());
 		}

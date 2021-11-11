@@ -671,9 +671,9 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		int position = 0;
 
-		for (long fragmentId : fragmentEntryIds) {
+		for (long fragmentEntryId : fragmentEntryIds) {
 			FragmentEntry fragmentEntry =
-				_fragmentEntryPersistence.fetchByPrimaryKey(fragmentId);
+				_fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
 
 			addFragmentEntryLink(
 				userId, groupId, 0, fragmentEntry.getFragmentEntryId(),

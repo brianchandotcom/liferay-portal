@@ -74,7 +74,7 @@ public class GetCommentsStrutsAction implements StrutsAction {
 			"liferay-comment:discussion:index", String.valueOf(index));
 
 		String portletId = ParamUtil.getString(
-			namespacedHttpServletRequest, "portletId");
+			namespacedHttpServletRequest, "p_p_id");
 
 		namespacedHttpServletRequest.setAttribute(
 			WebKeys.PORTLET_ID, portletId);

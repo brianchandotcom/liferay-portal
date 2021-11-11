@@ -143,7 +143,7 @@ public class DiscussionTag extends IncludeTag {
 			themeDisplay.getPathMain(),
 			"/portal/comment/discussion/get_editor?p_p_isolated=1&",
 			"doAsUserId=", URLCodec.encodeURL(themeDisplay.getDoAsUserId()),
-			"&portletId=", portletId);
+			"&p_p_id=", portletId, "&p_l_id=", themeDisplay.getPlid());
 	}
 
 	protected String getFormAction(HttpServletRequest httpServletRequest) {
@@ -155,10 +155,15 @@ public class DiscussionTag extends IncludeTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletId = portletDisplay.getId();
+
 		return StringBundler.concat(
 			themeDisplay.getPathMain(),
 			"/portal/comment/discussion/edit?doAsUserId=",
-			URLCodec.encodeURL(themeDisplay.getDoAsUserId()));
+			URLCodec.encodeURL(themeDisplay.getDoAsUserId()), "&p_p_id=",
+			portletId, "&p_l_id=", themeDisplay.getPlid());
 	}
 
 	@Override
@@ -179,7 +184,7 @@ public class DiscussionTag extends IncludeTag {
 			themeDisplay.getPathMain(),
 			"/portal/comment/discussion/get_comments?p_p_isolated=1&",
 			"doAsUserId=", URLCodec.encodeURL(themeDisplay.getDoAsUserId()),
-			"&portletId=", portletId);
+			"&p_p_id=", portletId, "&p_l_id=", themeDisplay.getPlid());
 	}
 
 	@Override

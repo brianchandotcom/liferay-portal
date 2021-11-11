@@ -16,11 +16,13 @@ package com.liferay.mentions.web.internal.editor.configuration;
 
 import com.liferay.mentions.constants.MentionsPortletKeys;
 import com.liferay.mentions.matcher.MentionsMatcherUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -106,8 +108,20 @@ public class BaseMentionsEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		return requestBackedPortletURLFactory.createResourceURL(
-			MentionsPortletKeys.MENTIONS);
+		String discussionPortletId = themeDisplay.getPpid();
+
+		if (Validator.isBlank(discussionPortletId)) {
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			discussionPortletId = portletDisplay.getId();
+		}
+
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createResourceURL(
+				MentionsPortletKeys.MENTIONS)
+		).setParameter(
+			"discussionPortletId", discussionPortletId
+		).buildPortletURL();
 	}
 
 }

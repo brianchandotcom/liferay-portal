@@ -3076,6 +3076,10 @@ public class JenkinsResultsParserUtil {
 		return false;
 	}
 
+	public static boolean isOSX() {
+		return SystemUtils.IS_OS_MAC_OSX;
+	}
+
 	public static boolean isReachable(String hostname) {
 		try {
 			InetAddress inetAddress = InetAddress.getByName(hostname);

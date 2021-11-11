@@ -15,8 +15,11 @@
 package com.liferay.search.experiences.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPBlueprint;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +46,14 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 	@Override
 	@Test
 	public void testPatchSXPBlueprint() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testPostSXPBlueprint() throws Exception {
+		super.testPostSXPBlueprint();
+
+		_testPostSXPBlueprintMissingI18N();
 	}
 
 	@Override
@@ -93,6 +104,25 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 		throws Exception {
 
 		return sxpBlueprintResource.postSXPBlueprint(sxpBlueprint);
+	}
+
+	private void _testPostSXPBlueprintMissingI18N() throws Exception {
+		SXPBlueprint sxpBlueprint = SXPBlueprint.toDTO(
+			JSONUtil.put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toJSONString());
+
+		SXPBlueprint postSXPBlueprint = testPostSXPBlueprint_addSXPBlueprint(
+			sxpBlueprint);
+
+		sxpBlueprint.setId(postSXPBlueprint.getId());
+
+		Assert.assertEquals(
+			sxpBlueprint.toString(), postSXPBlueprint.toString());
+
+		assertValid(postSXPBlueprint);
 	}
 
 }

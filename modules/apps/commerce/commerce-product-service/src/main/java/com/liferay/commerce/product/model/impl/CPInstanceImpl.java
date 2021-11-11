@@ -59,7 +59,9 @@ public class CPInstanceImpl extends CPInstanceBaseImpl {
 		else if (!isOverrideSubscriptionInfo()) {
 			CPDefinition cpDefinition = getCPDefinition();
 
-			if (cpDefinition.isSubscriptionEnabled()) {
+			if (cpDefinition.isSubscriptionEnabled() ||
+				cpDefinition.isDeliverySubscriptionEnabled()) {
+
 				return new CPSubscriptionInfo(
 					cpDefinition.getSubscriptionLength(),
 					cpDefinition.getSubscriptionType(),

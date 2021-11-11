@@ -1,0 +1,7 @@
+html:not(#__):not(#___) .label .page-editor__editable {
+	min-height: 0;
+}
+
+.label-root {
+	line-height: 1;
+}

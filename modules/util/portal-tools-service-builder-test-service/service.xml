@@ -337,6 +337,22 @@
 		<column name="leftNestedSetsTreeEntryId" type="long" />
 		<column name="rightNestedSetsTreeEntryId" type="long" />
 	</entity>
+	<entity cache-enabled="false" local-service="true" name="NullConvertibleEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="nullConvertibleEntryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column convert-null="true" name="name" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="Name" return-type="NullConvertibleEntry" unique="true">
+			<finder-column name="name" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="UADPartialEntry" remote-service="false">
 
 		<!-- PK fields -->

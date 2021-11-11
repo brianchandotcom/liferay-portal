@@ -38,6 +38,9 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalFolderService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -139,6 +142,7 @@ public class BundleSiteInitializerTest {
 			_assertDDMTemplate(group);
 			_assertDLFileEntry(group);
 			_assertFragmentEntries(group);
+			_assertJournalArticles(group);
 			_assertLayoutPageTemplateEntry(group);
 			_assertLayouts(group);
 			_assertLayoutSets(group);
@@ -354,6 +358,52 @@ public class BundleSiteInitializerTest {
 			"Test Fragment Entry 2", testFragmentEntry2.getName());
 	}
 
+	private void _assertJournalArticles(Group group) throws Exception {
+		JournalArticle tipJournalArticle =
+			_journalArticleLocalService.fetchArticle(
+				group.getGroupId(), "test-journal-article-tip-id");
+
+		Assert.assertNotNull(tipJournalArticle);
+		Assert.assertEquals("Test Tip", tipJournalArticle.getTitle());
+		Assert.assertEquals(
+			"TEST DDM STRUCTURE NAME", tipJournalArticle.getDDMStructureKey());
+		Assert.assertEquals(
+			"TEST DDM TEMPLATE KEY", tipJournalArticle.getDDMTemplateKey());
+
+		DDMStructure tipDDMStructure = tipJournalArticle.getDDMStructure();
+
+		Assert.assertTrue(tipDDMStructure.hasField("aField"));
+
+		JournalArticle quoteJournalArticle =
+			_journalArticleLocalService.fetchArticle(
+				group.getGroupId(), "test-journal-article-quote-id");
+
+		Assert.assertNotNull(quoteJournalArticle);
+		Assert.assertEquals("Test Quote", quoteJournalArticle.getTitle());
+		Assert.assertEquals(
+			"TEST DDM STRUCTURE NAME",
+			quoteJournalArticle.getDDMStructureKey());
+		Assert.assertEquals(
+			"TEST DDM TEMPLATE KEY", quoteJournalArticle.getDDMTemplateKey());
+
+		DDMStructure quoteDDMStructure = quoteJournalArticle.getDDMStructure();
+
+		Assert.assertTrue(quoteDDMStructure.hasField("aField"));
+
+		List<JournalFolder> journalFolders = _journalFolderService.getFolders(
+			group.getGroupId());
+
+		Assert.assertTrue(journalFolders.size() == 2);
+
+		JournalFolder quoteJournalFolder = journalFolders.get(0);
+
+		Assert.assertEquals("Quote", quoteJournalFolder.getName());
+
+		JournalFolder tipJournalFolder = journalFolders.get(1);
+
+		Assert.assertEquals("Tip", tipJournalFolder.getName());
+	}
+
 	private void _assertLayoutPageTemplateEntry(Group group) throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
@@ -543,6 +593,12 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
+	private JournalFolderService _journalFolderService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

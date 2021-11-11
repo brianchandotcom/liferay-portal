@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.instance.tracker.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
+import com.liferay.portal.workflow.instance.tracker.web.internal.constants.WorkflowInstanceTrackerPortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Instance Tracker",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + WorkflowPortletKeys.INSTANCE_TRACKER
+		"javax.portlet.name=" + WorkflowInstanceTrackerPortletKeys.INSTANCE_TRACKER
 	},
 	service = Portlet.class
 )

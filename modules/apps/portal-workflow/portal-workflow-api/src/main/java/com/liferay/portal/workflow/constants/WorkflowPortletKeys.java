@@ -26,10 +26,6 @@ public class WorkflowPortletKeys {
 		"com_liferay_portal_workflow_web_internal_portlet_" +
 			"ControlPanelWorkflowInstancePortlet";
 
-	public static final String INSTANCE_TRACKER =
-		"com_liferay_portal_workflow_instance_tracker_web_internal_portlet" +
-			"InstanceTrackerPortlet";
-
 	public static final String SITE_ADMINISTRATION_WORKFLOW =
 		"com_liferay_portal_workflow_web_internal_portlet_" +
 			"SiteAdministrationWorkflowPortlet";

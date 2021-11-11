@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.instance.tracker.util;
+package com.liferay.portal.workflow.instance.tracker.url.provider;
 
 import javax.servlet.http.HttpServletRequest;
 

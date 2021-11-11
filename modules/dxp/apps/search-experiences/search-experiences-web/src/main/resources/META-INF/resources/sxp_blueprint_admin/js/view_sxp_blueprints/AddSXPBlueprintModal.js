@@ -188,7 +188,8 @@ const AddModal = ({
 				if (isMounted()) {
 					if (responseContent.error) {
 						handleFormError(responseContent);
-					} else {
+					}
+					else {
 						setVisible(false);
 
 						closeModal();
@@ -202,7 +203,8 @@ const AddModal = ({
 							);
 
 							navigate(url);
-						} else {
+						}
+						else {
 							navigate(redirectURL);
 						}
 					}

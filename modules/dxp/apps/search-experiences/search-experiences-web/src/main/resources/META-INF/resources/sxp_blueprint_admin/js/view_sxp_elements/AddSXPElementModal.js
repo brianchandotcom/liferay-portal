@@ -83,7 +83,8 @@ const AddSXPElementModal = ({
 				if (isMounted()) {
 					if (responseContent.error) {
 						_handleFormError(responseContent);
-					} else {
+					}
+					else {
 						setVisible(false);
 
 						closeModal();
@@ -97,7 +98,8 @@ const AddSXPElementModal = ({
 							);
 
 							navigate(url);
-						} else {
+						}
+						else {
 							navigate(redirectURL);
 						}
 					}

@@ -148,13 +148,13 @@ definition {
 				layoutName = "Test Private Page");
 		}
 
-		task ("Add a widget page") {
+		task ("Add a public page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name");
 		}
 
-		task ("Add a Blogs and Message Boards widget to page") {
+		task ("Add a Blogs and Message Boards widgets to public page") {
 			for (var widgetName : list "Blogs,Message Boards") {
 				JSONLayout.addWidgetToPublicLayout(
 					groupName = "Test Site Name",

@@ -108,11 +108,15 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 	protected String getBuildStartProperty(String propertyName) {
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 
-		Properties startProperties = buildDatabase.getProperties(
-			"start.properties");
+		if (buildDatabase.hasProperties("start.properties")) {
+			Properties startProperties = buildDatabase.getProperties(
+				"start.properties");
 
-		return JenkinsResultsParserUtil.getProperty(
-			startProperties, propertyName);
+			return JenkinsResultsParserUtil.getProperty(
+				startProperties, propertyName);
+		}
+
+		return null;
 	}
 
 	protected final List<TestClassGroup.TestClass> testClasses =

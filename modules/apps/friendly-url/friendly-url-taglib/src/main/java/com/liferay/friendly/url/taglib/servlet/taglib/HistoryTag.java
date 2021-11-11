@@ -121,7 +121,7 @@ public class HistoryTag extends IncludeTag {
 			getClassName(), StringPool.SLASH, getClassPK());
 	}
 
-	private static final String _PAGE = "/page.jsp";
+	private static final String _PAGE = "/history/page.jsp";
 
 	private String _className;
 	private long _classPK;

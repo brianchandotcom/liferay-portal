@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/history/init.jsp" %>
 
 <%
 String defaultLanguageId = (String)request.getAttribute("liferay-friendly-url:history:defaultLanguageId");

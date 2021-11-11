@@ -1,0 +1,20 @@
+{
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "node": true
+    },
+    "extends": ["eslint:recommended", "plugin:testcafe/recommended"],
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "plugins": ["import", "no-only-tests", "simple-import-sort", "testcafe"],
+    "rules": {
+      "import/newline-after-import": ["error", { "count": 1 }],
+      "no-only-tests/no-only-tests": ["error", { "block": ["fixture", "test"] }],
+      "quotes": ["error", "single", { "avoidEscape": true }],
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error"
+    }
+  }

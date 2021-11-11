@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 
 import javax.sql.DataSource;
 
@@ -29,7 +30,9 @@ import javax.sql.DataSource;
  */
 public class DataSourceUtil {
 
-	public static DataSource getDataSource(ClassLoader extendeeClassLoader) {
+	public static DataSource getProviderDataSource(
+		ClassLoader extendeeClassLoader) {
+
 		DataSource dataSource = _dataSources.get(extendeeClassLoader);
 
 		if (dataSource != null) {
@@ -50,13 +53,49 @@ public class DataSourceUtil {
 		return InfrastructureUtil.getDataSource();
 	}
 
-	public static void setDataSource(
+	public static DataSource getSpringDataSource(
+		ClassLoader extendeeClassLoader) {
+
+		DataSource dataSource = _dataSources.get(extendeeClassLoader);
+
+		if (dataSource != null) {
+			return dataSource;
+		}
+
+		CountDownLatch countDownLatch =
+			_dataSourcesCountDownLatchMap.computeIfAbsent(
+				extendeeClassLoader, key -> new CountDownLatch(1));
+
+		try {
+			countDownLatch.await();
+		}
+		catch (InterruptedException interruptedException) {
+		}
+
+		return _dataSources.get(extendeeClassLoader);
+	}
+
+	public static void setSpringDataSource(
 		ClassLoader extendeeClassLoader, DataSource dataSource) {
+
+		_dataSourcesCountDownLatchMap.computeIfPresent(
+			extendeeClassLoader,
+			(key, countDownLatch) -> {
+				countDownLatch.countDown();
+
+				return null;
+			});
 
 		_dataSources.put(extendeeClassLoader, dataSource);
 	}
 
+	public static void unsetSpringDataSource(ClassLoader extendeeClassLoader) {
+		_dataSources.remove(extendeeClassLoader);
+	}
+
 	private static final Map<ClassLoader, DataSource> _dataSources =
 		new ConcurrentHashMap<>();
+	private static final Map<ClassLoader, CountDownLatch>
+		_dataSourcesCountDownLatchMap = new ConcurrentHashMap<>();
 
 }

@@ -220,8 +220,8 @@ public class GetDataMVCResourceCommandTest {
 					viewURLJSONObject.getString("languageId"));
 				Assert.assertEquals(
 					StringBundler.concat(
-						locale.getDisplayLanguage(), StringPool.SPACE,
-						StringPool.OPEN_PARENTHESIS, locale.getDisplayCountry(),
+						locale.getDisplayLanguage(_locale), StringPool.SPACE,
+						StringPool.OPEN_PARENTHESIS, locale.getDisplayCountry(_locale),
 						StringPool.CLOSE_PARENTHESIS),
 					viewURLJSONObject.getString("languageLabel"));
 

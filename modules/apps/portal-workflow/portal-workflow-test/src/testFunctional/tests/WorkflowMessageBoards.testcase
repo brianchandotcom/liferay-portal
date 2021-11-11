@@ -390,7 +390,6 @@ definition {
 		MessageboardsThread.gotoCP(threadSubject = "Thread Message Subject");
 
 		Workflow.viewNotPresentWorkflowStatus(statusNotPresent = "Pending");
-
 	}
 
 	@description = "This is a test for LRQA-70150. Verify that the user can edit an approved thread and the status returns to Pending."
@@ -431,7 +430,6 @@ definition {
 		PortletEntry.submitForPublication();
 
 		Workflow.viewWorkflowStatus(status = "Pending");
-
 	}
 
 	@description = "This is a test for LRQA-69694. Verify that the process status is Pending when the user creates a new thread with workflow associated."
@@ -459,6 +457,5 @@ definition {
 
 		Workflow.viewWorkflowStatus(status = "Pending");
 	}
-
 
 }

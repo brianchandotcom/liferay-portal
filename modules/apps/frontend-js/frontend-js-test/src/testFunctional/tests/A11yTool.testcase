@@ -180,17 +180,17 @@ definition {
 		task ("Assert only critical elements are highlighted") {
 			AssertClick(
 				key_index = "1",
-				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_COUNT",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX",
 				value1 = "");
 
 			AssertClick(
 				key_index = "2",
-				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_COUNT",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX",
 				value1 = "");
 
 			AssertElementNotPresent(
 				key_index = "3",
-				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_COUNT");
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX");
 
 			AssertElementPresent(
 				key_impact = "critical",
@@ -237,6 +237,69 @@ definition {
 		AssertElementPresent(
 			key_text = "",
 			locator1 = "A11yTool#FILTER_LIST_ITEM");
+
+		takeScreenshot();
+	}
+
+	@description = "LPS-142318. Verifies multiple violations are highlighted with an icon."
+	@priority = "4"
+	test CanHighlightMultipleViolations {
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
+
+		// Workaround for side panel sometimes not displaying LPS-141442
+
+		while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+			Refresh();
+		}
+
+		task ("Verify there are 3 different a11y violations") {
+			VerifyElementPresent(
+				key_index = "1",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX");
+
+			VerifyElementPresent(
+				key_index = "2",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX");
+
+			VerifyElementPresent(
+				key_index = "3",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX");
+		}
+
+		task ("Assert all 3 violations are highlighted") {
+			AssertElementPresent(
+				key_index = "1",
+				key_text = "a11y-backdrop",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
+
+			AssertElementPresent(
+				key_index = "2",
+				key_text = "a11y-backdrop",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
+
+			AssertElementPresent(
+				key_index = "3",
+				key_text = "a11y-backdrop",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
+		}
+
+		task ("Assert all 3 violations have an icon") {
+			AssertElementPresent(
+				key_index = "1",
+				key_text = "a11y-indicator",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
+
+			AssertElementPresent(
+				key_index = "2",
+				key_text = "a11y-indicator",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
+
+			AssertElementPresent(
+				key_index = "3",
+				key_text = "a11y-indicator",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
+		}
 
 		takeScreenshot();
 	}

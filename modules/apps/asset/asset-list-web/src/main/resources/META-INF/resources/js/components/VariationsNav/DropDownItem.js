@@ -22,7 +22,7 @@ const DropDownItem = ({
 	cssClasses = '',
 	deleteAction = false,
 	direction,
-	disabled = false,
+	disabled,
 	icon,
 	index,
 	onClick,

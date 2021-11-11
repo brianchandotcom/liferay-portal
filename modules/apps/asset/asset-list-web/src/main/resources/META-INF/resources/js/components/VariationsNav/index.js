@@ -25,6 +25,8 @@ const VariationsNav = ({
 	availableSegmentsEntries,
 	createNewSegmentURL,
 	openSelectSegmentsEntryDialogMethod,
+	portletNamespace,
+	updateVariationsPriorityURL,
 	validAssetListEntry,
 }) => {
 	const showVariationsList = assetEntryListSegmentsEntryRels.length > 1;
@@ -73,7 +75,11 @@ const VariationsNav = ({
 			)}
 
 			{showVariationsList && (
-				<SortableList items={assetEntryListSegmentsEntryRels} />
+				<SortableList
+					items={assetEntryListSegmentsEntryRels}
+					namespace={portletNamespace}
+					savePriorityURL={updateVariationsPriorityURL}
+				/>
 			)}
 		</>
 	);
@@ -84,6 +90,7 @@ VariationsNav.propTypes = {
 	availableSegmentsEntries: PropTypes.bool.isRequired,
 	createNewSegmentURL: PropTypes.string.isRequired,
 	openSelectSegmentsEntryDialogMethod: PropTypes.string.isRequired,
+	updateVariationsPriorityURL: PropTypes.string.isRequired,
 	validAssetListEntry: PropTypes.bool.isRequired,
 };
 

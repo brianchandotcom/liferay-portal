@@ -390,6 +390,7 @@ definition {
 	}
 
 	@description = "LPS-108138 - Verify that users can filter the tasks to be transitioned by steps"
+	@ignore = "true"
 	@priority = "3"
 	test OnChooseTransitionPerStepCanFilterByStep {
 		ApplicationsMenu.gotoPortlet(

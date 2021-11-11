@@ -67,6 +67,7 @@ definition {
 	}
 
 	@description = "LPS-105498 - Verify that the user can filter the tasks by Assignee on Select Tasks to Update step"
+	@ignore = "true"
 	@priority = "3"
 	test CanFilterTasksByAssignee {
 		ApplicationsMenu.gotoPortlet(

@@ -59,6 +59,7 @@ const TypographyGuide = () => {
 			>
 				{FONT_FAMILIES.map((item) => (
 					<TokenItem
+						border={true}
 						className={item}
 						key={item}
 						label={item}
@@ -76,6 +77,7 @@ const TypographyGuide = () => {
 			>
 				{FONT_WEIGHTS.map((item) => (
 					<TokenItem
+						border={true}
 						className={item}
 						key={item}
 						label={item}
@@ -89,6 +91,7 @@ const TypographyGuide = () => {
 			<TokenGroup group="texts" title={Liferay.Language.get('displays')}>
 				{DISPLAYS.map((item) => (
 					<TokenItem
+						border={true}
 						className={item}
 						key={item}
 						label={item}
@@ -102,6 +105,7 @@ const TypographyGuide = () => {
 			<TokenGroup group="texts" title={Liferay.Language.get('headings')}>
 				{HEADINGS.map((item) => (
 					<TokenItem
+						border={true}
 						className={item}
 						key={item}
 						label={item}
@@ -118,6 +122,7 @@ const TypographyGuide = () => {
 			>
 				{PARAGRAPHS.map((item) => (
 					<TokenItem
+						border={true}
 						className={item}
 						key={item}
 						label={item}
@@ -134,6 +139,7 @@ const TypographyGuide = () => {
 			>
 				{SMALL_CAPS.map((item) => (
 					<TokenItem
+						border={true}
 						className={item}
 						key={item}
 						label={item}
@@ -147,6 +153,7 @@ const TypographyGuide = () => {
 			<TokenGroup group="texts" title={Liferay.Language.get('links')}>
 				{LINKS.map((item) => (
 					<TokenItem
+						border={true}
 						className={item}
 						key={item}
 						label={item}

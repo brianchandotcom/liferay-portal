@@ -57,6 +57,7 @@ const GeneralGuide = () => {
 			<TokenGroup group="spacers" title={Liferay.Language.get('spacers')}>
 				{SPACERS.map((item) => (
 					<TokenItem
+						border={true}
 						className={item.replace('spacer', 'pr')}
 						key={item}
 						label={item}
@@ -67,7 +68,12 @@ const GeneralGuide = () => {
 
 			<TokenGroup group="borders" title={Liferay.Language.get('borders')}>
 				{BORDERS.map((item) => (
-					<TokenItem className={item} key={item} label={item} />
+					<TokenItem
+						border={true}
+						className={item}
+						key={item}
+						label={item}
+					/>
 				))}
 			</TokenGroup>
 
@@ -85,7 +91,12 @@ const GeneralGuide = () => {
 				title={Liferay.Language.get('aspect-ratios')}
 			>
 				{RATIOS.map((item) => (
-					<TokenItem key={item} label={item} size="medium">
+					<TokenItem
+						border={true}
+						key={item}
+						label={item}
+						size="medium"
+					>
 						<span
 							className={classNames('aspect-ratio', item)}
 						></span>

@@ -21,6 +21,7 @@ import ButtonGuide from './guides/ButtonGuide';
 import ColorGuide from './guides/ColorGuide';
 import FormGuide from './guides/FormGuide';
 import GeneralGuide from './guides/GeneralGuide';
+import LabelGuide from './guides/LabelGuide';
 import TypographyGuide from './guides/TypographyGuide';
 
 const TABS = [
@@ -43,6 +44,10 @@ const TABS = [
 	{
 		content: <FormGuide />,
 		label: Liferay.Language.get('forms'),
+	},
+	{
+		content: <LabelGuide />,
+		label: Liferay.Language.get('labels'),
 	},
 ];
 

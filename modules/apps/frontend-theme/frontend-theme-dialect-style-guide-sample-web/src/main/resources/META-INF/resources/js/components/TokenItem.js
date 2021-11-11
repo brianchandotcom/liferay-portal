@@ -40,7 +40,13 @@ const SIZES_MAP = {
 };
 
 const TokenItem = (props) => {
-	const {children, className, label, size = 'smaller'} = props;
+	const {
+		border = false,
+		children,
+		className,
+		label,
+		size = 'smaller',
+	} = props;
 
 	return (
 		<ClayLayout.Col
@@ -49,7 +55,11 @@ const TokenItem = (props) => {
 			md={SIZES_MAP[size]['colMd']}
 			sm={SIZES_MAP[size]['colSm']}
 		>
-			<div className={classNames('token-sample', className)}>
+			<div
+				className={classNames('token-sample', className, {
+					'token-border': border,
+				})}
+			>
 				{children}
 			</div>
 

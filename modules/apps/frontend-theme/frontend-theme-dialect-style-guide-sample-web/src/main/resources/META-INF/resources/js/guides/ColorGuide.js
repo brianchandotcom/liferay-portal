@@ -89,6 +89,7 @@ const ColorGuide = () => {
 			>
 				{BRAND_PRIMARY_COLORS.map((item) => (
 					<TokenItem
+						border={true}
 						className={`bg-${item}`}
 						key={item}
 						label={`bg-${item}`}
@@ -102,6 +103,7 @@ const ColorGuide = () => {
 			>
 				{BRAND_SECONDARY_COLORS.map((item) => (
 					<TokenItem
+						border={true}
 						className={`bg-${item}`}
 						key={item}
 						label={`bg-${item}`}
@@ -115,6 +117,7 @@ const ColorGuide = () => {
 			>
 				{NEUTRAL_COLORS.map((item) => (
 					<TokenItem
+						border={true}
 						className={`bg-${item}`}
 						key={item}
 						label={`bg-${item}`}
@@ -128,6 +131,7 @@ const ColorGuide = () => {
 			>
 				{ACCENT_COLORS.map((item) => (
 					<TokenItem
+						border={true}
 						className={`bg-${item}`}
 						key={item}
 						label={`bg-${item}`}
@@ -141,6 +145,7 @@ const ColorGuide = () => {
 			>
 				{STATE_COLORS.map((item) => (
 					<TokenItem
+						border={true}
 						className={`bg-${item}`}
 						key={item}
 						label={`bg-${item}`}
@@ -154,6 +159,7 @@ const ColorGuide = () => {
 			>
 				{BRAND_PRIMARY_COLORS.map((item) => (
 					<TokenItem
+						border={true}
 						className={`text-${item}`}
 						key={item}
 						label={`text-${item}`}
@@ -169,6 +175,7 @@ const ColorGuide = () => {
 			>
 				{BRAND_SECONDARY_COLORS.map((item) => (
 					<TokenItem
+						border={true}
 						className={`text-${item}`}
 						key={item}
 						label={`text-${item}`}
@@ -184,6 +191,7 @@ const ColorGuide = () => {
 			>
 				{NEUTRAL_COLORS.map((item) => (
 					<TokenItem
+						border={true}
 						className={`text-${item}`}
 						key={item}
 						label={`text-${item}`}
@@ -199,6 +207,7 @@ const ColorGuide = () => {
 			>
 				{ACCENT_COLORS.map((item) => (
 					<TokenItem
+						border={true}
 						className={`text-${item}`}
 						key={item}
 						label={`text-${item}`}
@@ -214,6 +223,7 @@ const ColorGuide = () => {
 			>
 				{STATE_COLORS.map((item) => (
 					<TokenItem
+						border={true}
 						className={`text-${item}`}
 						key={item}
 						label={`text-${item}`}

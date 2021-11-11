@@ -558,9 +558,9 @@ export const getSXPBlueprintForm = ({
 		category: elementDefinition?.category,
 		description,
 		description_i18n,
-		enabled: true,
 		icon: elementDefinition?.icon,
-		sxpBlueprint: elementDefinition?.sxpBlueprint,
+		...elementDefinition?.sxpBlueprint?.configuration?.queryConfiguration
+			?.queryEntries[0],
 		title,
 		title_i18n,
 	},

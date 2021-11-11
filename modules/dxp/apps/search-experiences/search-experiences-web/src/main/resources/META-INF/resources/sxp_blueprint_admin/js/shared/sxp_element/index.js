@@ -105,7 +105,9 @@ function SXPElement({
 	const _handleToggle = () => {
 		setFieldValue(
 			`selectedQuerySXPElements[${index}].sxpElementTemplateJSON.enabled`,
-			!sxpElementTemplateJSON.enabled
+			isDefined(sxpElementTemplateJSON.enabled)
+				? !sxpElementTemplateJSON.enabled
+				: false
 		);
 	};
 
@@ -114,7 +116,10 @@ function SXPElement({
 		!!error.uiConfigurationValues?.[config.name];
 
 	const _renderInput = (config) => {
-		const disabled = !sxpElementTemplateJSON.enabled || isSubmitting;
+		const disabled =
+			(isDefined(sxpElementTemplateJSON.enabled) &&
+				!sxpElementTemplateJSON.enabled) ||
+			isSubmitting;
 		const inputId = _getInputId(id, config.name);
 		const inputName = _getInputName(config.name);
 		const typeOptions = config.typeOptions || {};
@@ -284,7 +289,9 @@ function SXPElement({
 	return (
 		<div
 			className={getCN('sxp-element', 'sheet', {
-				disabled: !sxpElementTemplateJSON.enabled,
+				disabled:
+					isDefined(sxpElementTemplateJSON.enabled) &&
+					!sxpElementTemplateJSON.enabled,
 			})}
 			id={prefixedId}
 		>
@@ -315,12 +322,16 @@ function SXPElement({
 
 					<ClayToggle
 						aria-label={
+							!isDefined(sxpElementTemplateJSON.enabled) ||
 							sxpElementTemplateJSON.enabled
 								? Liferay.Language.get('enabled')
 								: Liferay.Language.get('disabled')
 						}
 						onToggle={_handleToggle}
-						toggled={sxpElementTemplateJSON.enabled}
+						toggled={
+							!isDefined(sxpElementTemplateJSON.enabled) ||
+							sxpElementTemplateJSON.enabled
+						}
 					/>
 
 					<ClayDropDown

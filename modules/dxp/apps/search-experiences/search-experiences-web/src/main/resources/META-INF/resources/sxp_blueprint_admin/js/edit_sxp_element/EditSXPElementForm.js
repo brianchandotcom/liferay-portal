@@ -161,6 +161,16 @@ function EditSXPElementForm({
 			return;
 		}
 
+		const {
+			category,
+			description,
+			description_i18n,
+			icon,
+			title,
+			title_i18n,
+			...partialSXPBlueprint
+		} = parseSXPElementTemplateJSON;
+
 		try {
 
 			// If the warning modal is already open, assume the form was submitted
@@ -174,19 +184,20 @@ function EditSXPElementForm({
 					'/o/search-experiences-rest/v1.0/sxp-elements/validate',
 					{
 						body: JSON.stringify({
-							description:
-								parseSXPElementTemplateJSON.description,
-							description_i18n:
-								parseSXPElementTemplateJSON.description_i18n,
+							description,
+							description_i18n,
 							elementDefinition: {
-								category: parseSXPElementTemplateJSON.category,
-								icon: parseSXPElementTemplateJSON.icon,
-								sxpBlueprint:
-									parseSXPElementTemplateJSON.sxpBlueprint,
+								category,
+								icon,
+								sxpBlueprint: {
+									queryConfiguration: {
+										queryEntries: [partialSXPBlueprint],
+									},
+								},
 								uiConfiguration: parseUIConfigurationJSON,
 							},
-							title: parseSXPElementTemplateJSON.title,
-							title_i18n: parseSXPElementTemplateJSON.title_i18n,
+							title,
+							title_i18n,
 							type,
 						}),
 						method: 'POST',
@@ -206,18 +217,20 @@ function EditSXPElementForm({
 				`/o/search-experiences-rest/v1.0/sxp-elements/${sxpElementId}`,
 				{
 					body: JSON.stringify({
-						description: parseSXPElementTemplateJSON.description,
-						description_i18n:
-							parseSXPElementTemplateJSON.description_i18n,
+						description,
+						description_i18n,
 						elementDefinition: {
-							category: parseSXPElementTemplateJSON.category,
-							icon: parseSXPElementTemplateJSON.icon,
-							sxpBlueprint:
-								parseSXPElementTemplateJSON.sxpBlueprint,
+							category,
+							icon,
+							sxpBlueprint: {
+								queryConfiguration: {
+									queryEntries: [partialSXPBlueprint],
+								},
+							},
 							uiConfiguration: parseUIConfigurationJSON,
 						},
-						title: parseSXPElementTemplateJSON.title,
-						title_i18n: parseSXPElementTemplateJSON.title_i18n,
+						title,
+						title_i18n,
 						type,
 					}),
 					headers: new Headers({
@@ -262,17 +275,20 @@ function EditSXPElementForm({
 			`/o/search-experiences-rest/v1.0/sxp-elements/${sxpElementId}`,
 			{
 				body: JSON.stringify({
-					description: parseSXPElementTemplateJSON.description,
-					description_i18n:
-						parseSXPElementTemplateJSON.description_i18n,
+					description,
+					description_i18n,
 					elementDefinition: {
-						category: parseSXPElementTemplateJSON.category,
-						icon: parseSXPElementTemplateJSON.icon,
-						sxpBlueprint: parseSXPElementTemplateJSON.sxpBlueprint,
+						category,
+						icon,
+						sxpBlueprint: {
+							queryConfiguration: {
+								queryEntries: [partialSXPBlueprint],
+							},
+						},
 						uiConfiguration: parseUIConfigurationJSON,
 					},
-					title: parseSXPElementTemplateJSON.title,
-					title_i18n: parseSXPElementTemplateJSON.title_i18n,
+					title,
+					title_i18n,
 					type,
 				}),
 				headers: new Headers({

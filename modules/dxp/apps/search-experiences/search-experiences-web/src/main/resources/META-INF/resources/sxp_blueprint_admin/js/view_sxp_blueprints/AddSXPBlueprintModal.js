@@ -158,6 +158,7 @@ const AddModal = ({
 			body: JSON.stringify({
 				configuration: _getConfiguration(),
 				description: descriptionInputValue,
+				description_i18n: {[defaultLocale]: descriptionInputValue},
 				elementInstances: {
 					queryConfiguration: {
 						queryEntries:
@@ -167,6 +168,7 @@ const AddModal = ({
 					},
 				},
 				title: inputValue,
+				title_i18n: {[defaultLocale]: inputValue},
 			}),
 
 			headers: new Headers({

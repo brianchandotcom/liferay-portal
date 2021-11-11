@@ -18,7 +18,8 @@ import {fetch, navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {DEFAULT_ERROR} from '../utils/constants';
-import {DEFAULT_EDIT_SXP_ELEMENT, isDefined} from '../utils/utils';
+import {DEFAULT_EDIT_SXP_ELEMENT} from '../utils/data';
+import {isDefined} from '../utils/utils';
 
 /**
  * A slightly modified version of frontend-js-web module's SimpleInputModal
@@ -26,19 +27,12 @@ import {DEFAULT_EDIT_SXP_ELEMENT, isDefined} from '../utils/utils';
  */
 const AddSXPElementModal = ({
 	closeModal,
-
-	// TODO Update title and description to accept map of locales.
-	// defaultLocale,
-
+	defaultLocale,
 	dialogTitle,
 	editSXPElementURL,
 	initialVisible,
 	portletNamespace,
 	submitButtonLabel = Liferay.Language.get('create'),
-
-	// TODO The property "type" is not defined in SXPElement.
-	// type,
-
 	redirectURL = '',
 }) => {
 	const isMounted = useIsMounted();
@@ -68,12 +62,10 @@ const AddSXPElementModal = ({
 		fetch('/o/search-experiences-rest/v1.0/sxp-elements', {
 			body: JSON.stringify({
 				description: descriptionInputValue,
-				elementDefinition: DEFAULT_EDIT_SXP_ELEMENT,
+				description_i18n: {[defaultLocale]: descriptionInputValue},
+				elementDefinition: DEFAULT_EDIT_SXP_ELEMENT.elementDefinition,
 				title: titleInputValue,
-
-				// TODO The property "type" is not defined in SXPElement.
-
-				// type,
+				title_i18n: {[defaultLocale]: titleInputValue},
 			}),
 			headers: new Headers({
 				'Content-Type': 'application/json',

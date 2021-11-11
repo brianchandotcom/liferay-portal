@@ -16,9 +16,12 @@ package com.liferay.portal.workflow.instance.tracker.url.provider;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Feliphe Marinho
  */
+@ProviderType
 public interface WorkflowInstanceTrackerURLProvider {
 
 	public String getURL(

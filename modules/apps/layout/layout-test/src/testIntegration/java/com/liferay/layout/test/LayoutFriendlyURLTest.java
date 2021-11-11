@@ -427,17 +427,6 @@ public class LayoutFriendlyURLTest {
 		).build();
 
 		try {
-			addLayout(_group.getGroupId(), false, friendlyURLMap);
-			Assert.fail();
-		}
-		catch (LayoutFriendlyURLsException layoutFriendlyURLsException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					layoutFriendlyURLsException, layoutFriendlyURLsException);
-			}
-		}
-
-		try {
 			addLayout(_group.getGroupId(), true, friendlyURLMap);
 			Assert.fail();
 		}

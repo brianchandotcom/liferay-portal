@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HEADING_LABEL</td>
+	<td>//*[@data-qa-id='headerTitle']//following-sibling::span//span[contains(@class,'label-item')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MERGE</td>
 	<td>//*[@data-qa-id='controlMenu']//*[name()='svg'][contains(@class,'lexicon-icon-merge')]</td>
 	<td></td>

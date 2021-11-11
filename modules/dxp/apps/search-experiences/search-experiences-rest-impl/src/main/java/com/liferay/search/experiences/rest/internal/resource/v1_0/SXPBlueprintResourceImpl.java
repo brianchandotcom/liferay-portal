@@ -32,6 +32,8 @@ import com.liferay.search.experiences.service.SXPBlueprintService;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -108,14 +110,38 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			_sxpBlueprintService.addSXPBlueprint(
-				String.valueOf(sxpBlueprint.getConfiguration()),
-				LocalizedMapUtil.getLocalizedMap(
+				_getConfigurationJSON(sxpBlueprint),
+				_getLocalizedMap(
+					sxpBlueprint.getDescription(),
 					sxpBlueprint.getDescription_i18n()),
-				Arrays.toString(
-					ElementDefinitionUtil.unpack(
-						sxpBlueprint.getElementDefinitions())),
-				LocalizedMapUtil.getLocalizedMap(sxpBlueprint.getTitle_i18n()),
+				_getElementInstancesJSON(sxpBlueprint),
+				_getLocalizedMap(
+					sxpBlueprint.getTitle(), sxpBlueprint.getTitle_i18n()),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+	}
+
+	private String _getConfigurationJSON(SXPBlueprint sxpBlueprint) {
+		if (sxpBlueprint.getConfiguration() == null) {
+			return null;
+		}
+
+		return String.valueOf(sxpBlueprint.getConfiguration());
+	}
+
+	private String _getElementInstancesJSON(SXPBlueprint sxpBlueprint) {
+		if (sxpBlueprint.getElementDefinitions() == null) {
+			return null;
+		}
+
+		return Arrays.toString(
+			ElementDefinitionUtil.unpack(sxpBlueprint.getElementDefinitions()));
+	}
+
+	private Map<Locale, String> _getLocalizedMap(
+		String defaultValue, Map<String, String> i18nMap) {
+
+		return LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(), defaultValue, i18nMap);
 	}
 
 	@Reference

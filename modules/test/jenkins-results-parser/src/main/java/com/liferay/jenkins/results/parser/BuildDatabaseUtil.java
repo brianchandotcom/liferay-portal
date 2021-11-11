@@ -123,27 +123,47 @@ public class BuildDatabaseUtil {
 				String distNode = JenkinsResultsParserUtil.getRandomString(
 					Arrays.asList(distNodes.split(",")));
 
-				String command = JenkinsResultsParserUtil.combine(
-					"time rsync -Iq --timeout=1200 \"", distNode, ":", distPath,
-					"/", BuildDatabase.FILE_NAME_BUILD_DATABASE, "\" ",
-					JenkinsResultsParserUtil.getCanonicalPath(
-						buildDatabaseFile));
+				String[] commands = new String[2];
 
-				if (JenkinsResultsParserUtil.isWindows()) {
-					distPath = distPath.replace("C:/Windows/TEMP/", "/tmp/");
-
-					command = JenkinsResultsParserUtil.combine(
-						"time scp \"", distNode, ":", distPath, "/",
-						BuildDatabase.FILE_NAME_BUILD_DATABASE, "\" ",
+				commands[0] = JenkinsResultsParserUtil.combine(
+					"mkdir -p ",
+					JenkinsResultsParserUtil.escapeForBash(
 						JenkinsResultsParserUtil.getCanonicalPath(
-							buildDatabaseFile));
+							buildDatabaseFile.getParentFile())));
+
+				if (JenkinsResultsParserUtil.isOSX()) {
+					commands[1] = JenkinsResultsParserUtil.combine(
+						"rsync -Iq --timeout=1200 root@", distNode, ":",
+						JenkinsResultsParserUtil.escapeForBash(distPath), "/",
+						BuildDatabase.FILE_NAME_BUILD_DATABASE, " ",
+						JenkinsResultsParserUtil.escapeForBash(
+							JenkinsResultsParserUtil.getCanonicalPath(
+								buildDatabaseFile)));
+				}
+				else if (JenkinsResultsParserUtil.isWindows()) {
+					distPath = distPath.replaceAll(
+						"C:.*TEMP/dist", "/tmp/dist");
+
+					commands[1] = JenkinsResultsParserUtil.combine(
+						"scp ", distNode, ":",
+						JenkinsResultsParserUtil.escapeForBash(distPath), "/",
+						BuildDatabase.FILE_NAME_BUILD_DATABASE, " ",
+						JenkinsResultsParserUtil.escapeForBash(
+							JenkinsResultsParserUtil.getCanonicalPath(
+								buildDatabaseFile)));
+				}
+				else {
+					commands[1] = JenkinsResultsParserUtil.combine(
+						"rsync -Iq --timeout=1200 ", distNode, ":",
+						JenkinsResultsParserUtil.escapeForBash(distPath), "/",
+						BuildDatabase.FILE_NAME_BUILD_DATABASE, " ",
+						JenkinsResultsParserUtil.escapeForBash(
+							JenkinsResultsParserUtil.getCanonicalPath(
+								buildDatabaseFile)));
 				}
 
-				command = command.replaceAll("\\(", "\\\\(");
-				command = command.replaceAll("\\)", "\\\\)");
-
 				Process process = JenkinsResultsParserUtil.executeBashCommands(
-					true, new File("."), 10 * 60 * 1000, command);
+					true, new File("."), 10 * 60 * 1000, commands);
 
 				if (process.exitValue() != 0) {
 					throw new RuntimeException(

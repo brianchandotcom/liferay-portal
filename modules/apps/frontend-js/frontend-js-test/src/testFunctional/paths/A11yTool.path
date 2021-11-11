@@ -69,13 +69,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HIGHLIGHTED_ELEMENT_COUNT</td>
+	<td>HIGHLIGHTED_ELEMENT_INDEX</td>
 	<td>//*[contains(@id, 'a11yContainer')]//*[contains(@class, 'a11y-overlay')][${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HIGHLIGHTED_ELEMENT_ICON</td>
 	<td>//*[contains(@class,'a11y-overlay')]//*[*[name()='svg'][contains(@class,'info-circle')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIGHLIGHTED_ELEMENT_OVERLAY</td>
+	<td>//*[contains(@id, 'a11yContainer')]//*[contains(@class, 'a11y-overlay')][${key_index}]//*[contains(@class, '${key_text}')]</td>
 	<td></td>
 </tr>
 <!--POPOVERS-->

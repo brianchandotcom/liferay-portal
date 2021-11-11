@@ -275,6 +275,24 @@ PortletURL embeddedPlayerURL = PortletURLBuilder.createRenderURL(
 		}
 	};
 
+	// LPS-141384
+
+	var onKeydownDefaultFn = imageViewer._onKeydown;
+	imageViewer._onKeydown = function (event) {
+		onKeydownDefaultFn.call(this, event);
+
+		var target = document.activeElement;
+
+		if (
+			!this.get('visible') &&
+			event.isKey('ENTER') &&
+			target.classList.contains('image-link')
+		) {
+			this.show();
+			this.set('currentIndex', this.get('links').indexOf(target));
+		}
+	};
+
 	imageViewer.render();
 
 	Liferay.on('<portlet:namespace />Video:play', function () {

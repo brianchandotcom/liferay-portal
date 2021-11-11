@@ -1046,6 +1046,8 @@ definition {
 		}
 
 		task ("Enable OTP") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
+
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
 
@@ -1115,7 +1117,7 @@ definition {
 		}
 
 		task ("Enable TOTP") {
-			MultiFactorAuthentication.openToConfigInInstanceSettings(portlet = "IP Address");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(portlet = "Time-Based OTP");
 
 			MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
 		}
@@ -1372,6 +1374,8 @@ definition {
 		}
 
 		task ("Enable OTP") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
+
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
 

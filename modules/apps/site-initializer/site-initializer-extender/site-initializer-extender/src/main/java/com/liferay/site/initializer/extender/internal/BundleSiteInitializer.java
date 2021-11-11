@@ -759,6 +759,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		Channel channel = _addCommerceChannel(serviceContext);
 
+		if (channel == null) {
+			return;
+		}
+
 		_addCommerceCatalogs(
 			channel, _addCommerceInventoryWarehouses(serviceContext),
 			serviceContext);

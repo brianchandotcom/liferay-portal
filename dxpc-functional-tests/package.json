@@ -5,7 +5,7 @@
     "format": "node node_modules/prettier/bin-prettier.js --write tests",
     "eslint": "node node_modules/eslint/bin/eslint.js tests",
     "eslint:fix": "npm run eslint --fix",
-    "test": "testcafe chrome"
+    "test": "testcafe \"chrome '--window-size=1400,1050'\" tests '--window-size=1400,1050'"
   },
   "author": "Christie Yoo",
   "dependencies": {
@@ -30,7 +30,8 @@
     "import-sort-style-module": "^6.0.0",
     "prettier": "^2.4.1",
     "prettier-plugin-import-sort": "0.0.7",
-    "testcafe-reporter-html": "^1.4.6"
+    "testcafe-reporter-html": "^1.4.6",
+    "testcafe-reporter-junit": "^3.0.2"
   },
   "importSort": {
     ".js": {

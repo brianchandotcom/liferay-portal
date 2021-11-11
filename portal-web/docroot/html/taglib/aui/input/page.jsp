@@ -235,6 +235,8 @@ boolean choiceField = checkboxField || radioField;
 	</c:when>
 	<c:when test="<%= (model != null) && Validator.isNull(type) %>">
 		<liferay-ui:input-field
+			activeLanguageIds="<%= activeLanguageIds %>"
+			adminMode="<%= adminMode %>"
 			autoComplete='<%= GetterUtil.getString(dynamicAttributes.get("autocomplete")) %>'
 			autoFocus="<%= autoFocus %>"
 			bean="<%= bean %>"

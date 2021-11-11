@@ -15,3 +15,31 @@
 --%>
 
 <%@ include file="/input/init.jsp" %>
+
+<%
+int friendlyURLMaxLength = (int)request.getAttribute("liferay-friendly-url:input:friendlyURLMaxLength");
+String friendlyURLXML = (String)request.getAttribute("liferay-friendly-url:input:friendlyURLXML");
+String name = (String)request.getAttribute("liferay-friendly-url:input:name");
+%>
+
+<liferay-friendly-url:history
+	className='<%= (String)request.getAttribute("liferay-friendly-url:input:className") %>'
+	classPK='<%= (long)request.getAttribute("liferay-friendly-url:input:classPK") %>'
+	elementId="<%= portletDisplay.getNamespace() + name %>"
+/>
+
+<div class="form-group friendly-url">
+	<label for="<portlet:namespace /><%= name %>">
+		<liferay-ui:message key="friendly-url" />
+
+		<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "there-is-a-limit-of-x-characters-in-encoded-format-for-friendly-urls-(e.g.-x)", new String[] {String.valueOf(friendlyURLMaxLength), "<em>/news</em>"}, false) %>' />
+	</label>
+
+	<liferay-ui:input-localized
+		defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
+		ignoreRequestValue="<%= SessionErrors.isEmpty(request) %>"
+		inputAddon='<%= (String)request.getAttribute("liferay-friendly-url:input:inputAddon") %>'
+		name="<%= name %>"
+		xml="<%= HttpUtil.decodeURL(friendlyURLXML) %>"
+	/>
+</div>

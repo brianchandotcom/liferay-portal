@@ -14,7 +14,12 @@
 
 package com.liferay.friendly.url.taglib.servlet.taglib;
 
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.friendly.url.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,12 +38,28 @@ public class InputTag extends IncludeTag {
 		return _classPK;
 	}
 
+	public String getInputAddon() {
+		return _inputAddon;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
 
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
+	}
+
+	public void setInputAddon(String inputAddon) {
+		_inputAddon = inputAddon;
+	}
+
+	public void setName(String name) {
+		_name = name;
 	}
 
 	@Override
@@ -54,6 +75,8 @@ public class InputTag extends IncludeTag {
 
 		_className = null;
 		_classPK = 0;
+		_inputAddon = null;
+		_name = _DEFAULT_NAME;
 	}
 
 	@Override
@@ -69,11 +92,39 @@ public class InputTag extends IncludeTag {
 			"liferay-friendly-url:input:className", getClassName());
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:classPK", getClassPK());
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:input:friendlyURLMaxLength",
+			_FRIENDLY_URL_MAX_LENGTH);
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:input:friendlyURLXML", _getFriendlyURLXML());
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:input:inputAddon", getInputAddon());
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:input:name", getName());
 	}
+
+	private String _getFriendlyURLXML() {
+		try {
+			FriendlyURLEntry mainFriendlyURLEntry =
+				FriendlyURLEntryLocalServiceUtil.getMainFriendlyURLEntry(
+					PortalUtil.getClassNameId(getClassName()), getClassPK());
+
+			return mainFriendlyURLEntry.getUrlTitleMapAsXML();
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
+	}
+
+	private static final String _DEFAULT_NAME = "friendlyURL";
+
+	private static final int _FRIENDLY_URL_MAX_LENGTH = 255;
 
 	private static final String _PAGE = "/input/page.jsp";
 
 	private String _className;
 	private long _classPK;
+	private String _inputAddon;
+	private String _name = _DEFAULT_NAME;
 
 }

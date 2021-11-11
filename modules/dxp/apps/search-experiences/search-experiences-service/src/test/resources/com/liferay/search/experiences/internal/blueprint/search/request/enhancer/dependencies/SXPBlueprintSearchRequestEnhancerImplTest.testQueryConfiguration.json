@@ -1,60 +1,62 @@
 {
-	"queryConfiguration": {
-		"applyIndexerClauses": true,
-		"queryEntries": [
-			{
-				"clauses": [
-					{
-						"occur": "must",
-						"query": {
-							"term": {
-								"version": {
-									"boost": 142857,
-									"value": "7.4"
+	"configuration": {
+		"queryConfiguration": {
+			"applyIndexerClauses": true,
+			"queryEntries": [
+				{
+					"clauses": [
+						{
+							"occur": "must",
+							"query": {
+								"term": {
+									"version": {
+										"boost": 142857,
+										"value": "7.4"
+									}
+								}
+							}
+						},
+						{
+							"occur": "should",
+							"query": {
+								"match": {
+									"ranking": 5
 								}
 							}
 						}
-					},
-					{
-						"occur": "should",
-						"query": {
-							"match": {
-								"ranking": 5
+					],
+					"enabled": true
+				},
+				{
+					"enabled": true,
+					"postFilterClauses": [
+						{
+							"occur": "must_not",
+							"query": {
+								"term": {
+									"status": 0
+								}
 							}
 						}
-					}
-				],
-				"enabled": true
-			},
-			{
-				"enabled": true,
-				"postFilterClauses": [
-					{
-						"occur": "must_not",
-						"query": {
-							"term": {
-								"status": 0
-							}
+					]
+				},
+				{
+					"enabled": true,
+					"rescores": [
+						{
+							"query": {
+								"exists": {
+									"field": "priority"
+								}
+							},
+							"queryWeight": 2.3,
+							"rescoreQueryWeight": 0.7,
+							"scoreMode": "multiply",
+							"windowSize": 6
 						}
-					}
-				]
-			},
-			{
-				"enabled": true,
-				"rescores": [
-					{
-						"query": {
-							"exists": {
-								"field": "priority"
-							}
-						},
-						"queryWeight": 2.3,
-						"rescoreQueryWeight": 0.7,
-						"scoreMode": "multiply",
-						"windowSize": 6
-					}
-				]
-			}
-		]
+					]
+				}
+			]
+		}
 	}
 }

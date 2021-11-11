@@ -542,7 +542,6 @@ export default ({
 
 	const [ascendingState, setAscendingState] = useState(true);
 	const [columnState, setColumnState] = useState(COLUMN_TITLE);
-	const [deltaState, setDeltaState] = useState(20);
 	const [drilldownDirection, setDrilldownDirection] = useState(
 		DIRECTION_NEXT
 	);
@@ -700,6 +699,7 @@ export default ({
 			initialShowHideable
 		),
 		children: initialNode.children,
+		delta: 20,
 		id: initialNode.nodeId,
 		node: initialNode,
 		page: 1,
@@ -807,6 +807,7 @@ export default ({
 					showHideable
 				),
 				children: node.children,
+				delta: renderState.delta,
 				id: nodeId,
 				node,
 				page: 1,
@@ -900,6 +901,7 @@ export default ({
 			setRenderState({
 				changes: filterNodes(filters, keywords, showHideable),
 				children: node.children,
+				delta: renderState.delta,
 				id: node.nodeId,
 				node,
 				page: 1,
@@ -1143,8 +1145,8 @@ export default ({
 
 		if (nodes.length > 5) {
 			return nodes.slice(
-				deltaState * (renderState.page - 1),
-				deltaState * renderState.page
+				renderState.delta * (renderState.page - 1),
+				renderState.delta * renderState.page
 			);
 		}
 
@@ -1567,6 +1569,7 @@ export default ({
 		setRenderState({
 			changes: filterNodes(filters, keywords, renderState.showHideable),
 			children: renderState.children,
+			delta: renderState.delta,
 			id: renderState.id,
 			node: renderState.node,
 			page: renderState.page,
@@ -1608,6 +1611,7 @@ export default ({
 		setRenderState({
 			changes: filterNodes(filters, resultsKeywords, showHideable),
 			children: renderState.children,
+			delta: renderState.delta,
 			id: renderState.id,
 			node: renderState.node,
 			page: renderState.page,
@@ -2086,17 +2090,17 @@ export default ({
 				</ClayTable>
 				{renderState.changes.length > 5 && (
 					<ClayPaginationBarWithBasicItems
-						activeDelta={deltaState}
+						activeDelta={renderState.delta}
 						activePage={renderState.page}
 						deltas={[4, 8, 20, 40, 60].map((size) => ({
 							label: size,
 						}))}
 						ellipsisBuffer={3}
 						onDeltaChange={(delta) => {
-							setDeltaState(delta);
 							setRenderState({
 								changes: renderState.changes,
 								children: renderState.children,
+								delta,
 								id: renderState.id,
 								node: renderState.node,
 								page: 1,
@@ -2108,6 +2112,7 @@ export default ({
 							setRenderState({
 								changes: renderState.changes,
 								children: renderState.children,
+								delta: renderState.delta,
 								id: renderState.id,
 								node: renderState.node,
 								page,

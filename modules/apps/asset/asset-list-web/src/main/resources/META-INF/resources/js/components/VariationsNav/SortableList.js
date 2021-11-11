@@ -14,28 +14,69 @@
 
 import ClayList from '@clayui/list';
 import PropTypes from 'prop-types';
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
+import {saveVariationsListPriorityService} from '../../api/index';
 import SortableListItem from './SortableListItem';
+import {buildItemsPriorityURL} from './utils/index';
 
-const SortableList = ({items}) => {
+const savePriority = async ({url}) => {
+	try {
+		const {ok, status} = await saveVariationsListPriorityService({url});
+
+		if (!ok || status !== 200) {
+			throw new Error();
+		}
+
+		Liferay.Util.openToast({
+			message: Liferay.Language.get(
+				'your-request-completed-successfully'
+			),
+			type: 'success',
+		});
+	}
+	catch (error) {
+		Liferay.Util.openToast({
+			message: Liferay.Language.get('an-unexpected-error-occurred'),
+			type: 'danger',
+		});
+	}
+};
+
+const SortableList = ({items, namespace, savePriorityURL}) => {
 	const [listItems, setListItems] = useState(items);
 
-	const handleItemMove = useCallback(
-		({direction = 0, hoverIndex = null, index}) => {
-			const start = hoverIndex || index + direction;
-			const tempList = [...listItems];
+	const handleItemMove = ({
+		direction = 0,
+		hoverIndex = null,
+		index,
+		saveAfterMove = false,
+	}) => {
+		const start = hoverIndex ?? index + direction;
+		const tempList = [...listItems];
 
-			tempList.splice(index, 1);
+		tempList.splice(index, 1);
 
-			tempList.splice(start, 0, listItems[index]);
+		tempList.splice(start, 0, listItems[index]);
 
-			setListItems(tempList);
-		},
-		[listItems]
-	);
+		setListItems(tempList);
+
+		if (saveAfterMove) {
+			handleSavePriority(tempList);
+		}
+	};
+
+	const handleSavePriority = (items = listItems) => {
+		savePriority({
+			url: buildItemsPriorityURL({
+				items,
+				namespace,
+				url: savePriorityURL,
+			}),
+		});
+	};
 
 	const handleItemDelete = ({deleteURL}) => {
 		if (!deleteURL) {
@@ -53,25 +94,30 @@ const SortableList = ({items}) => {
 
 	return (
 		<DndProvider backend={HTML5Backend}>
-			<ClayList className="mt-4">
-				{listItems.map((item, index) => (
-					<SortableListItem
-						handleItemDelete={handleItemDelete}
-						handleItemMove={handleItemMove}
-						id={`sortableListItem-${item.editAssetListEntryURL}`}
-						index={index}
-						key={item.editAssetListEntryURL}
-						sortableListItem={item}
-						totalItems={listItems.length}
-					/>
-				))}
-			</ClayList>
+			<nav role="navigation">
+				<ClayList className="mt-4" role="list">
+					{listItems.map((item, index) => (
+						<SortableListItem
+							handleItemDelete={handleItemDelete}
+							handleItemMove={handleItemMove}
+							handleSavePriority={handleSavePriority}
+							id={`sortableListItem-id-${item.assetListEntrySegmentsEntryRelId}`}
+							index={index}
+							key={item.editAssetListEntryURL}
+							role="listitem"
+							sortableListItem={item}
+							totalItems={listItems.length}
+						/>
+					))}
+				</ClayList>
+			</nav>
 		</DndProvider>
 	);
 };
 
 SortableList.propTypes = {
 	items: PropTypes.array.isRequired,
+	savePriorityURL: PropTypes.string.isRequired,
 };
 
 export default SortableList;

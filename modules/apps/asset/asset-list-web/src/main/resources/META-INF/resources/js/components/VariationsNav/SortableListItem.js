@@ -24,6 +24,7 @@ import SortableListItemMoreActions from './SortableListItemMoreActions';
 const SortableListItem = ({
 	handleItemDelete,
 	handleItemMove,
+	handleSavePriority,
 	id,
 	index,
 	sortableListItem,
@@ -33,7 +34,12 @@ const SortableListItem = ({
 
 	const [, drop] = useDrop({
 		accept: 'sortableListItem',
-		hover(item, monitor) {
+
+		drop: () => {
+			handleSavePriority();
+		},
+
+		hover: (item, monitor) => {
 			const dragIndex = item.index;
 
 			const hoverIndex = index;
@@ -72,7 +78,12 @@ const SortableListItem = ({
 			isDragging: monitor.isDragging(),
 			itemBeingDragged: monitor.getItem() || {id: 0},
 		}),
-		item: {id, index, type: 'sortableListItem'},
+
+		item: {
+			id,
+			index,
+			type: 'sortableListItem',
+		},
 	});
 
 	const isItemBeingDragged = itemBeingDragged.id === id;
@@ -86,12 +97,16 @@ const SortableListItem = ({
 		opacity: isDragging ? 0 : 1,
 	};
 
+	const handleReorder = ({direction, index}) => {
+		handleItemMove({direction, index, saveAfterMove: true});
+	};
+
 	return (
 		<ClayList.Item
 			active={sortableListItem.active}
 			className="align-items-center justify-content-between"
 			flex
-			id={`sortableListItem${sortableListItem.editAssetListEntryURL}`}
+			id={`sortableListItem-id-${sortableListItem.assetListEntrySegmentsEntryRelId}`}
 			ref={ref}
 			style={style}
 		>
@@ -119,7 +134,7 @@ const SortableListItem = ({
 								sortableListItem.deleteAssetListEntryVariationURL,
 						})
 					}
-					onReorder={handleItemMove}
+					onReorder={handleReorder}
 					totalItems={totalItems}
 				/>
 			</ClayList.ItemField>
@@ -130,6 +145,7 @@ const SortableListItem = ({
 SortableListItem.propTypes = {
 	handleItemDelete: PropTypes.func.isRequired,
 	handleItemMove: PropTypes.func.isRequired,
+	handleSavePriority: PropTypes.func.isRequired,
 	id: PropTypes.string.isRequired,
 	index: PropTypes.number.isRequired,
 	sortableListItem: PropTypes.object.isRequired,

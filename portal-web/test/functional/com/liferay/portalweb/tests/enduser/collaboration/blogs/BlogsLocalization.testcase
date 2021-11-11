@@ -9,6 +9,16 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 	}
 
 	tearDown {
@@ -25,16 +35,6 @@ definition {
 	@description = "This is a test for LPS-136776. It checks that a blog can be properly displayed in Arabic in the Blogs widget."
 	@priority = "3"
 	test CanViewBlogInArabic {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
 		JSONBlog.addEntry(
 			entryContent = "محتوى دخول المدونات",
 			entryTitle = "عنوان إدخال المدونات");
@@ -49,16 +49,6 @@ definition {
 	@description = "This is a test for LPS-136774. It checks that a blog can be properly displayed in Arabic in the Blogs Aggregator."
 	@priority = "3"
 	test CanViewBlogInArabicViaBlogsAggregator {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Guest",
@@ -79,16 +69,6 @@ definition {
 	@description = "This is a test for LPS-136777. It checks that a blog can be properly displayed in Japanese in the Blogs widget."
 	@priority = "3"
 	test CanViewBlogInJapanese {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
 		JSONBlog.addEntry(
 			entryContent = "ブログエントリコンテンツ",
 			entryTitle = "ブログエントリタイトル");
@@ -103,16 +83,6 @@ definition {
 	@description = "This is a test for LPS-136775. It checks that a blog can be properly displayed in Japanese in the Blogs Aggregator."
 	@priority = "3"
 	test CanViewBlogInJapaneseViaBlogsAggregator {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Guest",

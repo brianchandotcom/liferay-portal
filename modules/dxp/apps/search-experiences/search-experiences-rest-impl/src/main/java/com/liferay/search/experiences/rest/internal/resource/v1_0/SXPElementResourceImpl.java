@@ -32,6 +32,8 @@ import com.liferay.search.experiences.service.SXPElementService;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -108,13 +110,13 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				contextUriInfo, contextUser),
 			_sxpElementService.updateSXPElement(
 				sxpElementId,
-				LocalizedMapUtil.getLocalizedMap(
+				_getLocalizedMap(
+					sxpElement.getDescription(),
 					sxpElement.getDescription_i18n()),
-				String.valueOf(
-					ElementDefinitionUtil.unpack(
-						sxpElement.getElementDefinition())),
-				sxpElement.getHidden(),
-				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()),
+				_getElementDefinitionJSON(sxpElement),
+				GetterUtil.getBoolean(sxpElement.getHidden()),
+				_getLocalizedMap(
+					sxpElement.getTitle(), sxpElement.getTitle_i18n()),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
@@ -127,14 +129,13 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				sxpElement.getId(), contextAcceptLanguage.getPreferredLocale(),
 				contextUriInfo, contextUser),
 			_sxpElementService.addSXPElement(
-				LocalizedMapUtil.getLocalizedMap(
+				_getLocalizedMap(
+					sxpElement.getDescription(),
 					sxpElement.getDescription_i18n()),
-				String.valueOf(
-					ElementDefinitionUtil.unpack(
-						sxpElement.getElementDefinition())),
-				false,
-				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()),
-				sxpElement.getType(),
+				_getElementDefinitionJSON(sxpElement), false,
+				_getLocalizedMap(
+					sxpElement.getTitle(), sxpElement.getTitle_i18n()),
+				GetterUtil.getInteger(sxpElement.getType()),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
@@ -156,6 +157,22 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				TitleMapUtil.copy(sxpElement.getTitleMap()),
 				sxpElement.getType(),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+	}
+
+	private String _getElementDefinitionJSON(SXPElement sxpElement) {
+		if (sxpElement.getElementDefinition() == null) {
+			return null;
+		}
+
+		return String.valueOf(
+			ElementDefinitionUtil.unpack(sxpElement.getElementDefinition()));
+	}
+
+	private Map<Locale, String> _getLocalizedMap(
+		String defaultValue, Map<String, String> i18nMap) {
+
+		return LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(), defaultValue, i18nMap);
 	}
 
 	@Reference

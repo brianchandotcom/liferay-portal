@@ -17,6 +17,7 @@ package com.liferay.site.initializer.extender.internal;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.initializer.util.CPDefinitionsImporter;
+import com.liferay.commerce.initializer.util.CPOptionsImporter;
 import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
@@ -61,5 +62,8 @@ public class CommerceReferencesHolder {
 
 	@Reference
 	public CPMeasurementUnitLocalService cpMeasurementUnitLocalService;
+
+	@Reference
+	public CPOptionsImporter cpOptionsImporter;
 
 }

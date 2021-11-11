@@ -40,21 +40,19 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -67,7 +65,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.File;
-import java.io.InputStream;
 
 import java.math.BigDecimal;
 
@@ -75,10 +72,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -86,6 +81,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @RunWith(Arquillian.class)
 @Sync
@@ -97,19 +93,9 @@ public class CommerceOrderImporterTypeTest {
 		new LiferayIntegrationTestRule(),
 		PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		CompanyLocalServiceUtil.deleteCompany(_company);
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		_user = UserTestUtil.addUser(_company);
+		_user = UserTestUtil.addUser();
 
 		PrincipalThreadLocal.setName(_user.getUserId());
 
@@ -117,14 +103,14 @@ public class CommerceOrderImporterTypeTest {
 			PermissionCheckerFactoryUtil.create(_user));
 
 		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(),
+			_user.getCompanyId(), _user.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			_company.getCompanyId());
+			_user.getCompanyId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
+			_user.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
 		_commerceChannel = CommerceChannelLocalServiceUtil.addCommerceChannel(
 			null, _group.getGroupId(), "Test Channel",
@@ -168,13 +154,13 @@ public class CommerceOrderImporterTypeTest {
 			_commerceOrderImporterTypeRegistry.getCommerceOrderImporterType(
 				"csv");
 
-		String fileName = "testFailCSVImport.csv";
+		String fileName = "test_fail_csv_import.csv";
 
-		InputStream inputStream =
-			CommerceOrderImporterTypeTest.class.getResourceAsStream(
-				"dependencies/" + fileName);
+		String fileContent = StringBundler.concat(
+			"skuId,skuExternalReferenceCode,quantity", StringPool.NEW_LINE,
+			",erc-test-fail,1", StringPool.NEW_LINE, ",erc-test,0");
 
-		File file = FileUtil.createTempFile(inputStream);
+		File file = FileUtil.createTempFile(fileContent.getBytes());
 
 		List<CommerceOrderImporterItem> commerceOrderImporterItems =
 			commerceOrderImporterType.getCommerceOrderImporterItems(
@@ -228,11 +214,11 @@ public class CommerceOrderImporterTypeTest {
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
 			100);
 
-		CPTestUtil.addCatalogBaseCommercePriceList(
+		CPTestUtil.addBaseCommerceCatalogCommercePriceList(
 			commerceCatalog.getGroupId(), _commerceCurrency.getCode(),
 			CommercePriceListConstants.TYPE_PRICE_LIST, _serviceContext);
 
-		CPTestUtil.addCatalogBaseCommercePriceList(
+		CPTestUtil.addBaseCommerceCatalogCommercePriceList(
 			commerceCatalog.getGroupId(), _commerceCurrency.getCode(),
 			CommercePriceListConstants.TYPE_PROMOTION, _serviceContext);
 
@@ -240,13 +226,13 @@ public class CommerceOrderImporterTypeTest {
 			_commerceOrderImporterTypeRegistry.getCommerceOrderImporterType(
 				"csv");
 
-		String fileName = "testSuccessfulCSVImport.csv";
+		String fileName = "test_successful_csv_import.csv";
 
-		InputStream inputStream =
-			CommerceOrderImporterTypeTest.class.getResourceAsStream(
-				"dependencies/" + fileName);
+		String fileContent = StringBundler.concat(
+			"skuId,skuExternalReferenceCode,quantity", StringPool.NEW_LINE,
+			",erc-test,1");
 
-		File file = FileUtil.createTempFile(inputStream);
+		File file = FileUtil.createTempFile(fileContent.getBytes());
 
 		List<CommerceOrderImporterItem> commerceOrderImporterItems =
 			commerceOrderImporterType.getCommerceOrderImporterItems(
@@ -276,7 +262,6 @@ public class CommerceOrderImporterTypeTest {
 	private static CommerceOrderImporterTypeRegistry
 		_commerceOrderImporterTypeRegistry;
 
-	private static Company _company;
 	private static User _user;
 
 	private CommerceAccount _commerceAccount;
@@ -297,7 +282,9 @@ public class CommerceOrderImporterTypeTest {
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
 
+	@DeleteAfterTestRun
 	private Group _group;
+
 	private ServiceContext _serviceContext;
 
 }

@@ -392,8 +392,6 @@ definition {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Details",
 			kfProgressStep = "1");
-
-
 	}
 
 	@description = "Verify that the user can select permissions option."

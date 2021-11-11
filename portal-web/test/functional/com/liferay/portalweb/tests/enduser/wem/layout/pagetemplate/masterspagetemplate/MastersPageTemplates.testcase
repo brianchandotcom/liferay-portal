@@ -1950,6 +1950,10 @@ definition {
 
 			ContentPages.gotoPageEditor();
 
+			// Workaround until LPS-141214 is resolved
+
+			Refresh();
+
 			AssertVisible(
 				key_tab = "Google",
 				locator1 = "NavTab#TAB_LINK");
@@ -1964,6 +1968,12 @@ definition {
 				item = "Edit",
 				pageTemplateName = "Page Template Name");
 
+			// Workaround until LPS-141214 is resolved
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			Refresh();
+
 			AssertVisible(
 				key_tab = "Google",
 				locator1 = "NavTab#TAB_LINK");
@@ -1975,6 +1985,12 @@ definition {
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
 				item = "Edit");
+
+			// Workaround until LPS-141214 is resolved
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			Refresh();
 
 			AssertVisible(
 				key_tab = "Google",

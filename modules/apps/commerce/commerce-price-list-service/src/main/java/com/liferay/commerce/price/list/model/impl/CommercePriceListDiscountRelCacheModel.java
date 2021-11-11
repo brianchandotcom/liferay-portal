@@ -18,6 +18,7 @@ import com.liferay.commerce.price.list.model.CommercePriceListDiscountRel;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,8 @@ import java.util.Date;
  * @generated
  */
 public class CommercePriceListDiscountRelCacheModel
-	implements CacheModel<CommercePriceListDiscountRel>, Externalizable {
+	implements CacheModel<CommercePriceListDiscountRel>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +51,11 @@ public class CommercePriceListDiscountRelCacheModel
 			commercePriceListDiscountRelCacheModel =
 				(CommercePriceListDiscountRelCacheModel)object;
 
-		if (commercePriceListDiscountRelId ==
+		if ((commercePriceListDiscountRelId ==
 				commercePriceListDiscountRelCacheModel.
-					commercePriceListDiscountRelId) {
+					commercePriceListDiscountRelId) &&
+			(mvccVersion ==
+				commercePriceListDiscountRelCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +65,28 @@ public class CommercePriceListDiscountRelCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commercePriceListDiscountRelId);
+		int hashCode = HashUtil.hash(0, commercePriceListDiscountRelId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", commercePriceListDiscountRelId=");
 		sb.append(commercePriceListDiscountRelId);
@@ -99,6 +117,8 @@ public class CommercePriceListDiscountRelCacheModel
 	public CommercePriceListDiscountRel toEntityModel() {
 		CommercePriceListDiscountRelImpl commercePriceListDiscountRelImpl =
 			new CommercePriceListDiscountRelImpl();
+
+		commercePriceListDiscountRelImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			commercePriceListDiscountRelImpl.setUuid("");
@@ -156,6 +176,7 @@ public class CommercePriceListDiscountRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		commercePriceListDiscountRelId = objectInput.readLong();
@@ -177,6 +198,8 @@ public class CommercePriceListDiscountRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -208,6 +231,7 @@ public class CommercePriceListDiscountRelCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long commercePriceListDiscountRelId;
 	public long companyId;

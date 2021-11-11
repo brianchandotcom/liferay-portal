@@ -34,6 +34,9 @@ public class CommercePriceListAccountRelTable
 	public static final CommercePriceListAccountRelTable INSTANCE =
 		new CommercePriceListAccountRelTable();
 
+	public final Column<CommercePriceListAccountRelTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommercePriceListAccountRelTable, String> uuid =
 		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommercePriceListAccountRelTable, Long>

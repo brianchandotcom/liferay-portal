@@ -78,10 +78,10 @@ public class CommercePriceListOrderTypeRelModelImpl
 	public static final String TABLE_NAME = "CommercePriceListOrderTypeRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"CPriceListOrderTypeRelId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"CPriceListOrderTypeRelId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"commercePriceListId", Types.BIGINT},
 		{"commerceOrderTypeId", Types.BIGINT}, {"priority", Types.INTEGER},
 		{"lastPublishDate", Types.TIMESTAMP}
@@ -91,6 +91,7 @@ public class CommercePriceListOrderTypeRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPriceListOrderTypeRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -105,7 +106,7 @@ public class CommercePriceListOrderTypeRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePriceListOrderTypeRel (uuid_ VARCHAR(75) null,CPriceListOrderTypeRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceListId LONG,commerceOrderTypeId LONG,priority INTEGER,lastPublishDate DATE null)";
+		"create table CommercePriceListOrderTypeRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPriceListOrderTypeRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceListId LONG,commerceOrderTypeId LONG,priority INTEGER,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommercePriceListOrderTypeRel";
@@ -189,6 +190,7 @@ public class CommercePriceListOrderTypeRelModelImpl
 		CommercePriceListOrderTypeRel model =
 			new CommercePriceListOrderTypeRelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommercePriceListOrderTypeRelId(
 			soapModel.getCommercePriceListOrderTypeRelId());
@@ -367,6 +369,12 @@ public class CommercePriceListOrderTypeRelModelImpl
 					<String, BiConsumer<CommercePriceListOrderTypeRel, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommercePriceListOrderTypeRel::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommercePriceListOrderTypeRel, Long>)
+				CommercePriceListOrderTypeRel::setMvccVersion);
+		attributeGetterFunctions.put(
 			"uuid", CommercePriceListOrderTypeRel::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -442,6 +450,21 @@ public class CommercePriceListOrderTypeRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -747,6 +770,7 @@ public class CommercePriceListOrderTypeRelModelImpl
 		CommercePriceListOrderTypeRelImpl commercePriceListOrderTypeRelImpl =
 			new CommercePriceListOrderTypeRelImpl();
 
+		commercePriceListOrderTypeRelImpl.setMvccVersion(getMvccVersion());
 		commercePriceListOrderTypeRelImpl.setUuid(getUuid());
 		commercePriceListOrderTypeRelImpl.setCommercePriceListOrderTypeRelId(
 			getCommercePriceListOrderTypeRelId());
@@ -773,6 +797,8 @@ public class CommercePriceListOrderTypeRelModelImpl
 		CommercePriceListOrderTypeRelImpl commercePriceListOrderTypeRelImpl =
 			new CommercePriceListOrderTypeRelImpl();
 
+		commercePriceListOrderTypeRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commercePriceListOrderTypeRelImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		commercePriceListOrderTypeRelImpl.setCommercePriceListOrderTypeRelId(
@@ -882,6 +908,8 @@ public class CommercePriceListOrderTypeRelModelImpl
 		CommercePriceListOrderTypeRelCacheModel
 			commercePriceListOrderTypeRelCacheModel =
 				new CommercePriceListOrderTypeRelCacheModel();
+
+		commercePriceListOrderTypeRelCacheModel.mvccVersion = getMvccVersion();
 
 		commercePriceListOrderTypeRelCacheModel.uuid = getUuid();
 
@@ -1042,6 +1070,7 @@ public class CommercePriceListOrderTypeRelModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _commercePriceListOrderTypeRelId;
 	private long _companyId;
@@ -1084,6 +1113,7 @@ public class CommercePriceListOrderTypeRelModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"CPriceListOrderTypeRelId", _commercePriceListOrderTypeRelId);
@@ -1121,27 +1151,29 @@ public class CommercePriceListOrderTypeRelModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("uuid_", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("CPriceListOrderTypeRelId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("CPriceListOrderTypeRelId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("commercePriceListId", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("commerceOrderTypeId", 256L);
+		columnBitmasks.put("commercePriceListId", 256L);
 
-		columnBitmasks.put("priority", 512L);
+		columnBitmasks.put("commerceOrderTypeId", 512L);
 
-		columnBitmasks.put("lastPublishDate", 1024L);
+		columnBitmasks.put("priority", 1024L);
+
+		columnBitmasks.put("lastPublishDate", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

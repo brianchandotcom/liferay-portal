@@ -36,6 +36,7 @@ public class CommercePriceListAccountRelSoap implements Serializable {
 		CommercePriceListAccountRelSoap soapModel =
 			new CommercePriceListAccountRelSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCommercePriceListAccountRelId(
 			model.getCommercePriceListAccountRelId());
@@ -108,6 +109,14 @@ public class CommercePriceListAccountRelSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommercePriceListAccountRelId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -200,6 +209,7 @@ public class CommercePriceListAccountRelSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _commercePriceListAccountRelId;
 	private long _companyId;

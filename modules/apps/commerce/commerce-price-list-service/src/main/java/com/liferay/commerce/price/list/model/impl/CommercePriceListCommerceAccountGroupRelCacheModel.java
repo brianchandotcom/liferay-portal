@@ -18,6 +18,7 @@ import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGro
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +35,7 @@ import java.util.Date;
  */
 public class CommercePriceListCommerceAccountGroupRelCacheModel
 	implements CacheModel<CommercePriceListCommerceAccountGroupRel>,
-			   Externalizable {
+			   Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -52,9 +53,12 @@ public class CommercePriceListCommerceAccountGroupRelCacheModel
 			commercePriceListCommerceAccountGroupRelCacheModel =
 				(CommercePriceListCommerceAccountGroupRelCacheModel)object;
 
-		if (commercePriceListCommerceAccountGroupRelId ==
+		if ((commercePriceListCommerceAccountGroupRelId ==
 				commercePriceListCommerceAccountGroupRelCacheModel.
-					commercePriceListCommerceAccountGroupRelId) {
+					commercePriceListCommerceAccountGroupRelId) &&
+			(mvccVersion ==
+				commercePriceListCommerceAccountGroupRelCacheModel.
+					mvccVersion)) {
 
 			return true;
 		}
@@ -64,14 +68,29 @@ public class CommercePriceListCommerceAccountGroupRelCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commercePriceListCommerceAccountGroupRelId);
+		int hashCode = HashUtil.hash(
+			0, commercePriceListCommerceAccountGroupRelId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", commercePriceListCommerceAccountGroupRelId=");
 		sb.append(commercePriceListCommerceAccountGroupRelId);
@@ -103,6 +122,9 @@ public class CommercePriceListCommerceAccountGroupRelCacheModel
 		CommercePriceListCommerceAccountGroupRelImpl
 			commercePriceListCommerceAccountGroupRelImpl =
 				new CommercePriceListCommerceAccountGroupRelImpl();
+
+		commercePriceListCommerceAccountGroupRelImpl.setMvccVersion(
+			mvccVersion);
 
 		if (uuid == null) {
 			commercePriceListCommerceAccountGroupRelImpl.setUuid("");
@@ -162,6 +184,7 @@ public class CommercePriceListCommerceAccountGroupRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		commercePriceListCommerceAccountGroupRelId = objectInput.readLong();
@@ -183,6 +206,8 @@ public class CommercePriceListCommerceAccountGroupRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -214,6 +239,7 @@ public class CommercePriceListCommerceAccountGroupRelCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long commercePriceListCommerceAccountGroupRelId;
 	public long companyId;

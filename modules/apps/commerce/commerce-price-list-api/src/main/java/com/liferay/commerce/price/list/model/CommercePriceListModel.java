@@ -16,6 +16,7 @@ package com.liferay.commerce.price.list.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
@@ -37,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommercePriceListModel
-	extends BaseModel<CommercePriceList>, ShardedModel, StagedGroupedModel,
-			WorkflowedModel {
+	extends BaseModel<CommercePriceList>, MVCCModel, ShardedModel,
+			StagedGroupedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -59,6 +60,22 @@ public interface CommercePriceListModel
 	 * @param primaryKey the primary key of this commerce price list
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce price list.
+	 *
+	 * @return the mvcc version of this commerce price list
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce price list.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce price list
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this commerce price list.

@@ -127,6 +127,8 @@ public class CommercePriceListPersistenceTest {
 
 		CommercePriceList newCommercePriceList = _persistence.create(pk);
 
+		newCommercePriceList.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommercePriceList.setUuid(RandomTestUtil.randomString());
 
 		newCommercePriceList.setExternalReferenceCode(
@@ -179,6 +181,9 @@ public class CommercePriceListPersistenceTest {
 		CommercePriceList existingCommercePriceList =
 			_persistence.findByPrimaryKey(newCommercePriceList.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommercePriceList.getMvccVersion(),
+			newCommercePriceList.getMvccVersion());
 		Assert.assertEquals(
 			existingCommercePriceList.getUuid(),
 			newCommercePriceList.getUuid());
@@ -410,15 +415,16 @@ public class CommercePriceListPersistenceTest {
 
 	protected OrderByComparator<CommercePriceList> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommercePriceList", "uuid", true, "externalReferenceCode", true,
-			"commercePriceListId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "commerceCurrencyId", true,
-			"parentCommercePriceListId", true, "catalogBasePriceList", true,
-			"netPrice", true, "type", true, "name", true, "priority", true,
-			"displayDate", true, "expirationDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"CommercePriceList", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "commercePriceListId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true,
+			"commerceCurrencyId", true, "parentCommercePriceListId", true,
+			"catalogBasePriceList", true, "netPrice", true, "type", true,
+			"name", true, "priority", true, "displayDate", true,
+			"expirationDate", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -754,6 +760,8 @@ public class CommercePriceListPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommercePriceList commercePriceList = _persistence.create(pk);
+
+		commercePriceList.setMvccVersion(RandomTestUtil.nextLong());
 
 		commercePriceList.setUuid(RandomTestUtil.randomString());
 

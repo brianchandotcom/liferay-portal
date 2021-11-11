@@ -36,6 +36,9 @@ public class CommercePriceEntryTable
 	public static final CommercePriceEntryTable INSTANCE =
 		new CommercePriceEntryTable();
 
+	public final Column<CommercePriceEntryTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommercePriceEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommercePriceEntryTable, String> externalReferenceCode =

@@ -16,7 +16,8 @@
 					},
 					"fragmentStyle": {
 						"borderWidth": "0",
-						"opacity": "100"
+						"opacity": "100",
+						"textAlign": ""
 					},
 					"layout": {
 						"borderWidth": 0,

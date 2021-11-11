@@ -164,8 +164,10 @@ public class DDMFormPortlet extends MVCPortlet {
 					renderRequest, ddmFormDisplayContext);
 			}
 
-			if (ddmFormDisplayContext.isRequireAuthentication() &&
-				ddmFormDisplayContext.isSharedURL()) {
+			if ((ddmFormDisplayContext.isLimitToOneSubmissionPerUserEnabled() &&
+				 !ddmFormDisplayContext.isLoggedUser()) ||
+				(ddmFormDisplayContext.isRequireAuthentication() &&
+				 ddmFormDisplayContext.isSharedURL())) {
 
 				HttpServletResponse httpServletResponse =
 					_portal.getHttpServletResponse(renderResponse);

@@ -492,8 +492,6 @@ definition {
 
 			SelectFrameTop();
 		}
-
-		PortletEntry.publish();
 	}
 
 	macro editPG {
@@ -872,12 +870,10 @@ definition {
 			value1 = "${threadReplyBody}");
 
 		SelectFrame.selectFrameTop();
+	}
 
-		PortletEntry.publish();
-
-		if ("${markAsAnswer}" == "true") {
-			MessageboardsThread.markAsAnswerCP(threadReplyBody = "${threadReplyBody}");
-		}
+	macro replyNotPresent {
+		AssertElementNotPresent(locator1 = "Button#REPLY");
 	}
 
 	macro replyPG {

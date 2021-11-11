@@ -104,9 +104,6 @@ public class CSVCommerceOrderImporterTypeImpl
 		return null;
 	}
 
-	@Reference
-	private DLAppLocalService _dlAppLocalService;
-
 	@Override
 	public String getCommerceOrderImporterItemParamName() {
 		return "fileEntryId";
@@ -325,6 +322,9 @@ public class CSVCommerceOrderImporterTypeImpl
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

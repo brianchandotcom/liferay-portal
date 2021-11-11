@@ -345,6 +345,8 @@ public class ViewChangesDisplayContext {
 				return deleteCTCommentURL.toString();
 			}
 		).put(
+			"deltaFromURL", ParamUtil.getString(_renderRequest, "delta")
+		).put(
 			"discardURL",
 			PortletURLBuilder.createRenderURL(
 				_renderResponse
@@ -394,6 +396,8 @@ public class ViewChangesDisplayContext {
 			}
 		).put(
 			"namespace", _renderResponse.getNamespace()
+		).put(
+			"pageFromURL", ParamUtil.getString(_renderRequest, "page")
 		).put(
 			"rootDisplayClasses",
 			() -> {

@@ -97,6 +97,7 @@ export default ({
 	dataURL,
 	defaultLocale,
 	deleteCTCommentURL,
+	deltaFromURL,
 	discardURL,
 	entryFromURL,
 	expired,
@@ -104,6 +105,7 @@ export default ({
 	keywordsFromURL,
 	modelData,
 	namespace,
+	pageFromURL,
 	rootDisplayClasses,
 	showHideableFromURL,
 	siteNames,
@@ -709,10 +711,10 @@ export default ({
 			initialShowHideable
 		),
 		children: initialNode.children,
-		delta: 20,
+		delta: deltaFromURL ? Number(deltaFromURL) : 20,
 		id: initialNode.nodeId,
 		node: initialNode,
-		page: 1,
+		page: pageFromURL ? Number(pageFromURL) : 1,
 		parents: initialNode.parents,
 		showHideable: initialShowHideable,
 	});
@@ -914,10 +916,28 @@ export default ({
 
 			const node = getNode(params.get(PARAM_ENTRY));
 
+			let delta = params.get(PARAM_DELTA);
+
+			if (delta) {
+				delta = Number(delta);
+			}
+			else {
+				delta = 20;
+			}
+
 			let keywords = params.get(PARAM_KEYWORDS);
 
 			if (!keywords) {
 				keywords = '';
+			}
+
+			let page = params.get(PARAM_PAGE);
+
+			if (page) {
+				page = Number(page);
+			}
+			else {
+				page = 1;
 			}
 
 			const filters = getFilters(
@@ -952,10 +972,10 @@ export default ({
 			setRenderState({
 				changes: filterNodes(filters, keywords, showHideable),
 				children: node.children,
-				delta: renderState.delta,
+				delta,
 				id: node.nodeId,
 				node,
-				page: 1,
+				page,
 				parents: node.parents,
 				showHideable,
 			});
@@ -964,8 +984,12 @@ export default ({
 		},
 		[
 			PARAM_CHANGE_TYPES,
+			PARAM_COLUMN,
+			PARAM_DELTA,
 			PARAM_ENTRY,
 			PARAM_KEYWORDS,
+			PARAM_ORDER_BY_TYPE,
+			PARAM_PAGE,
 			PARAM_SHOW_HIDEABLE,
 			PARAM_SITES,
 			PARAM_TYPES,
@@ -2156,6 +2180,32 @@ export default ({
 						}))}
 						ellipsisBuffer={3}
 						onDeltaChange={(delta) => {
+							const path = getPath(
+								ascendingState,
+								columnState,
+								delta,
+								getEntryParam(renderState.node),
+								filtersState,
+								resultsKeywords,
+								1,
+								renderState.showHideable
+							);
+
+							if (delta === renderState.delta) {
+								return;
+							}
+
+							const state = {
+								path,
+								senna: true,
+							};
+
+							window.history.pushState(
+								state,
+								document.title,
+								path
+							);
+
 							setRenderState({
 								changes: renderState.changes,
 								children: renderState.children,
@@ -2167,7 +2217,29 @@ export default ({
 								showHideable: renderState.showHideable,
 							});
 						}}
-						onPageChange={(page) =>
+						onPageChange={(page) => {
+							const path = getPath(
+								ascendingState,
+								columnState,
+								renderState.delta,
+								getEntryParam(renderState.node),
+								filtersState,
+								resultsKeywords,
+								page,
+								renderState.showHideable
+							);
+
+							const state = {
+								path,
+								senna: true,
+							};
+
+							window.history.pushState(
+								state,
+								document.title,
+								path
+							);
+
 							setRenderState({
 								changes: renderState.changes,
 								children: renderState.children,
@@ -2177,8 +2249,8 @@ export default ({
 								page,
 								parents: renderState.parents,
 								showHideable: renderState.showHideable,
-							})
-						}
+							});
+						}}
 						totalItems={renderState.changes.length}
 					/>
 				)}

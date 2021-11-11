@@ -74,28 +74,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
-	When the value is Desktop
-	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are NOT retrieved"
-	@ignore = "true"
-	@priority = "4"
-	test DesktopStrategyAtSystemSettings {
-
-		// TODO LPS-125851 AdditionalChecksForDesktopValue pending implementation
-
-	}
-
-	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
-	When the value is Mobile
-	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
-	@ignore = "true"
-	@priority = "4"
-	test MobileStrategyAtSystemSettings {
-
-		// TODO LPS-125851 AdditionalChecksForMobileValue pending implementation
-
-	}
-
 	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Site Scope section
 	When the Enable Google PageSpeed Insights check is unchecked
 	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"

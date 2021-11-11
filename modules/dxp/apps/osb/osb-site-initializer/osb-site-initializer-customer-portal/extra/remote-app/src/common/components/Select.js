@@ -1,36 +1,45 @@
-import ClayForm, { ClaySelectWithOption } from "@clayui/form";
-import { useField } from "formik";
-import { required, validate } from "../utils/validations.form";
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import {useField} from 'formik';
+import {required, validate} from '../utils/validations.form';
 
-const Select = ({ groupStyle, helper, label, validations, ...props }) => {
-    if (props.required) {
-        validations = validations ? [...validations, (value) => required(value)] : [(value) => required(value)];
-    }
+const Select = ({groupStyle, helper, label, validations, ...props}) => {
+	if (props.required) {
+		validations = validations
+			? [...validations, (value) => required(value)]
+			: [(value) => required(value)];
+	}
 
-    const [field, meta] = useField({
-        ...props,
-        validate: (value) => validate(validations, value)
-    });
+	const [field, meta] = useField({
+		...props,
+		validate: (value) => validate(validations, value),
+	});
 
-    const getStyleStatus = () => {
-        if (meta.touched) {
-            return meta.error ? " has-error" : " has-success";
-        }
+	const getStyleStatus = () => {
+		if (meta.touched) {
+			return meta.error ? ' has-error' : ' has-success';
+		}
 
-        return "";
-    };
+		return '';
+	};
 
-    return (
-        <ClayForm.Group className={`w-100${getStyleStatus()} ${groupStyle ? groupStyle : ""}`}>
-            <label>
-                {label} {props.required && <span className="ml-n1 text-danger text-paragraph-sm">*</span>}
-                <ClaySelectWithOption {...field} {...props} />
-            </label>
-            {helper && <div>
-                {helper}
-            </div>}
-        </ClayForm.Group>
-    );
+	return (
+		<ClayForm.Group
+			className={`w-100${getStyleStatus()} ${
+				groupStyle ? groupStyle : ''
+			}`}
+		>
+			<label>
+				{label}{' '}
+				{props.required && (
+					<span className="ml-n1 text-danger text-paragraph-sm">
+						*
+					</span>
+				)}
+				<ClaySelectWithOption {...field} {...props} />
+			</label>
+			{helper && <div>{helper}</div>}
+		</ClayForm.Group>
+	);
 };
 
 export default Select;

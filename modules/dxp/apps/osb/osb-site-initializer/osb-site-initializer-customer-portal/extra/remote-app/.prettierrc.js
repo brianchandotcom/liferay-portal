@@ -15,14 +15,14 @@
 let config = {};
 
 try {
-    config = require('@liferay/npm-scripts/src/config/prettier.json');
+	config = require('@liferay/npm-scripts/src/config/prettier.json');
 }
 catch (error) {
-    throw new Error(
-        '@liferay/npm-scripts is not installed; please run "ant setup-sdk"',
-    );
+	throw new Error(
+		'@liferay/npm-scripts is not installed; please run "ant setup-sdk"'
+	);
 }
 
 module.exports = {
-    ...config,
+	...config,
 };

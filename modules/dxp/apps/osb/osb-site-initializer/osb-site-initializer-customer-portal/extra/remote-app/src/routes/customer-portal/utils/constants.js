@@ -1,6 +1,6 @@
 const status = {
-    active: 1,
-    expired: 2
-}
+	active: 1,
+	expired: 2,
+};
 
-export { status };
+export {status};

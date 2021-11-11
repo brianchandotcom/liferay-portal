@@ -1,11 +1,7 @@
-import ClayProvider from "./ClayProvider";
+import ClayProvider from './ClayProvider';
 
-const Providers = ({ children }) => {
-    return (
-        <ClayProvider>
-            {children}
-        </ClayProvider>
-    );
-}
+const Providers = ({children}) => {
+	return <ClayProvider>{children}</ClayProvider>;
+};
 
 export default Providers;

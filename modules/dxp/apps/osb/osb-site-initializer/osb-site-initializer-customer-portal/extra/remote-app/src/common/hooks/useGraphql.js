@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { REACT_APP_LIFERAY_API } from '../utils';
+import {useEffect, useState} from 'react';
+import {REACT_APP_LIFERAY_API} from '../utils';
 
 const getData = (data) => {
 	const currentData = {};
@@ -11,21 +11,24 @@ const getData = (data) => {
 
 				if (Object.keys(cObject)[0] === 'items') {
 					currentData[cObjectKey] = cObject['items'];
-				} else {
+				}
+				else {
 					currentData[cObjectKey] = cObject;
 				}
 			});
-		} else {
+		}
+		else {
 			if (Object.keys(data[key])[0] === 'items') {
 				currentData[key] = data[key]['items'];
-			} else {
+			}
+			else {
 				currentData[key] = data[key];
 			}
 		}
 	});
 
 	return currentData;
-}
+};
 
 const useGraphQL = (queries) => {
 	const [isLoading, setLoading] = useState(true);
@@ -33,7 +36,7 @@ const useGraphQL = (queries) => {
 	const [error, setError] = useState();
 
 	const queryString = JSON.stringify({
-		query: `{${queries.join('\n')}}`
+		query: `{${queries.join('\n')}}`,
 	});
 
 	const doFetch = async () => {
@@ -50,14 +53,15 @@ const useGraphQL = (queries) => {
 				method: 'POST',
 			});
 
-			const { data } = await response.json();
+			const {data} = await response.json();
 
 			setData(getData(data));
 			setLoading(false);
-		} catch (error) {
+		}
+		catch (error) {
 			setError(error.message);
 		}
-	}
+	};
 
 	useEffect(() => {
 		if (queryString) {
@@ -70,8 +74,8 @@ const useGraphQL = (queries) => {
 	return {
 		data,
 		error,
-		isLoading
+		isLoading,
 	};
-}
+};
 
 export default useGraphQL;

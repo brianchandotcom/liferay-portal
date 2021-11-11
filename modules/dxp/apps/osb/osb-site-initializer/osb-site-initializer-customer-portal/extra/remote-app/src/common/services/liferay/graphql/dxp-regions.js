@@ -1,6 +1,5 @@
-
 const getDXPRegions = () => {
-  return `c {
+	return `c {
             dXPCDataCenterRegions {
               items {
                 dxpcDataCenterRegionId,
@@ -10,4 +9,4 @@ const getDXPRegions = () => {
           }`;
 };
 
-export { getDXPRegions };
+export {getDXPRegions};

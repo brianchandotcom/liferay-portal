@@ -1,5 +1,5 @@
 const getUserAccountById = (id) => {
-  return `userAccount(userAccountId: ${id}) {
+	return `userAccount(userAccountId: ${id}) {
                 id
                 name
                 image
@@ -13,6 +13,6 @@ const getUserAccountById = (id) => {
                   name
                 }
               }`;
-}
+};
 
-export { getUserAccountById };
+export {getUserAccountById};

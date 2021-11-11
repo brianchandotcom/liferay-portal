@@ -46,7 +46,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
 				boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 
-				String imagePreviewURL = null;
 				String imageURL = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
 				int playerHeight = 500;
 
@@ -65,16 +64,13 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 							dataOptions += "&" + audioContainer + "PreviewURL=" + HtmlUtil.escapeURL(DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedAudio=1&audioPreview=1&type=" + audioContainer));
 						}
 
-						imagePreviewURL = DLURLHelperUtil.getImagePreviewURL(fileEntry, fileVersion, themeDisplay);
 						imageURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, HtmlUtil.escapeURL("&audioPreview=1") + "&supportedAudio=1&mediaGallery=1");
 						playerHeight = 43;
 					}
 					else if (hasImages) {
-						imagePreviewURL = DLURLHelperUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
 						imageURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imagePreview=1");
 					}
 					else if (hasPDFImages) {
-						imagePreviewURL = DLURLHelperUtil.getImagePreviewURL(fileEntry, fileVersion, themeDisplay);
 						imageURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&previewFileIndex=1");
 					}
 					else if (hasVideo) {
@@ -82,10 +78,15 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 							dataOptions += "&" + videoContainer + "PreviewURL=" + HtmlUtil.escapeURL(DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&videoPreview=1&type=" + videoContainer));
 						}
 
-						imagePreviewURL = DLURLHelperUtil.getImagePreviewURL(fileEntry, fileVersion, themeDisplay);
 						imageURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&mediaGallery=1");
 						playerHeight = PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT;
 					}
+				}
+
+				String imagePreviewURL = null;
+
+				if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED) {
+					imagePreviewURL = DLURLHelperUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
 				}
 
 				String title = fileEntry.getTitle();

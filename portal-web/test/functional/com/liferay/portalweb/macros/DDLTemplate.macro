@@ -60,12 +60,11 @@ definition {
 		}
 
 		if (isSet(ddlDisplayTemplateScriptFile)) {
-			var dependenciesDir = TestCase.getDependenciesDirPath();
-			var filePath = "${dependenciesDir}/${ddlDisplayTemplateScriptFile}";
+			var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${ddlDisplayTemplateScriptFile}");
 
 			UploadFile(
 				locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",
-				value1 = "${filePath}");
+				value1 = "${dependencyFilePath}");
 		}
 
 		Pause(locator1 = "3000");

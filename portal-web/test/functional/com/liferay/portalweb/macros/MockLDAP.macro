@@ -3,13 +3,12 @@ definition {
 	macro selectJsonFile {
 		Navigator.gotoNavTab(navTab = "${tabName}");
 
-		var dependenciesDir = TestCase.getDependenciesDirPath();
-		var filePath = "${dependenciesDir}/${fileName}";
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${fileName}");
 
 		UploadFile(
 			key_tab = "${tabName}",
 			locator1 = "MockLDAP#BROWSE_BUTTON",
-			value1 = "${filePath}");
+			value1 = "${dependencyFilePath}");
 
 		AssertClick(
 			key_tab = "${tabName}",

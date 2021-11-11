@@ -44,10 +44,9 @@ definition {
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var deployDir = "${liferayHome}/daploy";
-		var testBaseDirName = PropsUtil.get("test.base.dir.name");
-		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "com.liferay.cluster.test.module.jar");
 
-		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
+		ArchiveUtil.archive("${dependencyFilePath}", "${deployDir}/com.liferay.cluster.test.module.jar");
 
 		Pause(locator1 = "10000");
 
@@ -67,10 +66,9 @@ definition {
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var deployDir = "${liferayHome}/osgi/modules/recurse";
-		var testBaseDirName = PropsUtil.get("test.base.dir.name");
-		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "com.liferay.cluster.test.module.jar");
 
-		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
+		ArchiveUtil.archive("${dependencyFilePath}", "${deployDir}/com.liferay.cluster.test.module.jar");
 
 		Pause(locator1 = "10000");
 
@@ -92,10 +90,9 @@ definition {
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var deployDir = "${liferayHome}/deploy/recurse";
-		var testBaseDirName = PropsUtil.get("test.base.dir.name");
-		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "com.liferay.cluster.test.module.jar");
 
-		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
+		ArchiveUtil.archive("${dependencyFilePath}", "${deployDir}/com.liferay.cluster.test.module.jar");
 
 		Pause(locator1 = "10000");
 

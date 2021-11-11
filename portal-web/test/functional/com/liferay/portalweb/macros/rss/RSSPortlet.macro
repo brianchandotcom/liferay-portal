@@ -24,20 +24,11 @@ definition {
 				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
 				value1 = "file:////");
 
-			var dependenciesDir = TestCase.getDependenciesDirPath();
-			var filePath = "${dependenciesDir}/${feedUrlLink}";
-			var fileExists = FileUtil.exists("${filePath}");
+			var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${feedUrlLink}");
 
-			if ("${fileExists}" == "true") {
-				UploadFile(
-					locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
-					value1 = "${filePath}");
-			}
-			else {
-				UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-					locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
-					value1 = "${feedUrlLink}");
-			}
+			UploadFile(
+				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
+				value1 = "${dependencyFilePath}");
 		}
 		else {
 			Type(

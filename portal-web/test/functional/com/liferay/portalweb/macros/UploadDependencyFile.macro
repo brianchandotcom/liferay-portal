@@ -3,43 +3,29 @@ definition {
 	macro uploadArchiveFile {
 		var tempDir = PropsUtil.get("output.dir.name");
 
-		var dependenciesDir = TestCase.getDependenciesDirPath();
-		var filePath = "${dependenciesDir}/${fileName}";
-		var fileExists = FileUtil.exists("${filePath}");
+		var dependencyFilePath = TestCase.getDependenciesDirPath(
+			fileName = "${fileName}",
+			fromGlobalDependency = "${fromGlobalDependency}");
 
-		if (("${fileExists}" == "true") && ("${globalDependenciesDir}" != "true")) {
-			if (!(isSet(compressedFile))) {
-				ArchiveUtil.archive("${filePath}", "${tempDir}/${fileName}");
+		if (!(isSet(compressedFile))) {
+			ArchiveUtil.archive("${dependencyFilePath}", "${tempDir}/${fileName}");
 
-				var filePath = "${tempDir}/${fileName}";
-			}
-
-			UploadFile(
-				locator1 = "TextInput#FILE",
-				value1 = "${filePath}");
+			var dependencyFilePath = "${tempDir}/${fileName}";
 		}
-		else {
-			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-				locator1 = "TextInput#FILE",
-				value1 = "${fileName}");
-		}
+
+		UploadFile(
+			locator1 = "TextInput#FILE",
+			value1 = "${dependencyFilePath}");
 	}
 
 	macro uploadFile {
-		var dependenciesDir = TestCase.getDependenciesDirPath();
-		var filePath = "${dependenciesDir}/${fileName}";
-		var fileExists = FileUtil.exists("${filePath}");
+		var dependencyFilePath = TestCase.getDependenciesDirPath(
+			fileName = "${fileName}",
+			fromGlobalDependency = "${fromGlobalDependency}");
 
-		if (("${fileExists}" == "true") && ("${globalDependenciesDir}" != "true")) {
-			UploadFile(
-				locator1 = "TextInput#FILE",
-				value1 = "${filePath}");
-		}
-		else {
-			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-				locator1 = "TextInput#FILE",
-				value1 = "${fileName}");
-		}
+		UploadFile(
+			locator1 = "TextInput#FILE",
+			value1 = "${dependencyFilePath}");
 	}
 
 }

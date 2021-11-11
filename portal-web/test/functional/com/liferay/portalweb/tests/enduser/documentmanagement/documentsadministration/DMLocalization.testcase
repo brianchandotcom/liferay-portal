@@ -100,7 +100,6 @@ definition {
 	test CanEditTitleAndNameOfJapaneseFile {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM文書記述",
-			dmDocumentFilePath = "enduser/documentmanagement/documentsadministration",
 			dmDocumentTitle = "これは写真です",
 			groupName = "Guest",
 			mimeType = "image/jpeg",
@@ -148,7 +147,6 @@ definition {
 				dmDocumentDescription = "DM文書記述",
 				dmDocumentFile = "これは写真です.jpg",
 				dmDocumentFileName = '''これは写真です${invalidCharacter}.jpg''',
-				dmDocumentFilePath = "enduser/documentmanagement/documentsadministration",
 				dmDocumentTitle = "これは写真です",
 				groupName = "Guest",
 				siteURLKey = "guest",
@@ -218,7 +216,6 @@ definition {
 		DMDocument.addCP(
 			dmDocumentDescription = "DM文書記述",
 			dmDocumentFile = "これは写真です.jpg",
-			dmDocumentFilePath = "enduser/documentmanagement/documentsadministration",
 			useCurrentTitle = "true");
 
 		DMNavigator.openToEditEntryInSite(
@@ -236,7 +233,6 @@ definition {
 	test CanViewJapaneseTitleInDifferentViews {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM文書記述",
-			dmDocumentFilePath = "enduser/documentmanagement/documentsadministration",
 			dmDocumentTitle = "これは写真です",
 			groupName = "Guest",
 			mimeType = "image/jpeg",

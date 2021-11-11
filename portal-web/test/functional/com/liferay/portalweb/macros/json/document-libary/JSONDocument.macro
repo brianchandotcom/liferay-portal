@@ -118,17 +118,7 @@ definition {
 			var folderId = "0";
 		}
 
-		var baseDir = PropsUtil.get("test.base.dir.name");
-		var globalDependenciesDir = PropsUtil.get("test.dependencies.dir.name");
-		var dependenciesDirPath = TestCase.getDependenciesDirPath();
-		var fileExists = FileUtil.exists("${dependenciesDirPath}/${sourceFileName}");
-
-		if ("${fileExists}" == "true") {
-			var filePath = "${dependenciesDirPath}/${sourceFileName}";
-		}
-		else {
-			var filePath = "${baseDir}${globalDependenciesDir}/${sourceFileName}";
-		}
+		var filePath = TestCase.getDependenciesDirPath(fileName = "${sourceFileName}");
 
 		if (isSet(dmDocumentDescription)) {
 			var description = "${dmDocumentDescription}";

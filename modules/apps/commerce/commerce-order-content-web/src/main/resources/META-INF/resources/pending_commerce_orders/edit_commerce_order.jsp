@@ -397,6 +397,12 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 				message="remove-all-items"
 				url="<%= deleteOrderContentURL %>"
 			/>
+
+			<liferay-ui:icon
+				icon="print"
+				message="print"
+				url="<%= commerceOrderContentDisplayContext.getExportCommerceOrderPdfURLString() %>"
+			/>
 		</c:if>
 	</liferay-ui:icon-menu>
 

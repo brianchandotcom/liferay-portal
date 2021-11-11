@@ -356,13 +356,33 @@ public class LayoutFriendlyURLTest {
 			LocaleUtil.US, "/home"
 		).build();
 
-		addLayout(_group.getGroupId(), false, friendlyURLMap);
+		try {
+			addLayout(_group.getGroupId(), false, friendlyURLMap);
+
+			Assert.fail();
+		}
+		catch (LayoutFriendlyURLsException layoutFriendlyURLsException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					layoutFriendlyURLsException, layoutFriendlyURLsException);
+			}
+		}
 
 		Group group = GroupTestUtil.addGroup();
 
 		_groups.add(group);
 
-		addLayout(group.getGroupId(), false, friendlyURLMap);
+		try {
+			addLayout(group.getGroupId(), false, friendlyURLMap);
+
+			Assert.fail();
+		}
+		catch (LayoutFriendlyURLsException layoutFriendlyURLsException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					layoutFriendlyURLsException, layoutFriendlyURLsException);
+			}
+		}
 	}
 
 	@Test
@@ -406,21 +426,48 @@ public class LayoutFriendlyURLTest {
 			LocaleUtil.US, "/home"
 		).build();
 
-		addLayout(_group.getGroupId(), false, friendlyURLMap);
-		addLayout(_group.getGroupId(), true, friendlyURLMap);
+		try {
+			addLayout(_group.getGroupId(), false, friendlyURLMap);
+			Assert.fail();
+		}
+		catch (LayoutFriendlyURLsException layoutFriendlyURLsException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					layoutFriendlyURLsException, layoutFriendlyURLsException);
+			}
+		}
+
+		try {
+			addLayout(_group.getGroupId(), true, friendlyURLMap);
+			Assert.fail();
+		}
+		catch (LayoutFriendlyURLsException layoutFriendlyURLsException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					layoutFriendlyURLsException, layoutFriendlyURLsException);
+			}
+		}
 	}
 
 	@Test
 	public void testSameFriendlyURLDifferentLocaleSameLayout()
 		throws Exception {
 
-		addLayout(
-			_group.getGroupId(), false,
-			HashMapBuilder.put(
-				LocaleUtil.SPAIN, "/home"
-			).put(
-				LocaleUtil.US, "/home"
-			).build());
+		Map<Locale, String> friendlyURLMap = HashMapBuilder.put(
+			LocaleUtil.SPAIN, "/home"
+		).put(
+			LocaleUtil.US, "/home"
+		).build();
+
+		try {
+			addLayout(_group.getGroupId(), false, friendlyURLMap);
+		}
+		catch (LayoutFriendlyURLsException layoutFriendlyURLsException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					layoutFriendlyURLsException, layoutFriendlyURLsException);
+			}
+		}
 	}
 
 	@Test

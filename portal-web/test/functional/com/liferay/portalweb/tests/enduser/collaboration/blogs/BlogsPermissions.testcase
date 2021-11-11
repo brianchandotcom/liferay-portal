@@ -1204,14 +1204,38 @@ definition {
 		AssertElementNotPresent(locator1 = "Comments#COMMENT_ACTIONS");
 	}
 
-	@description = "This is a test for LPS-136785. It checks that a user cannot rate an entry without permissions."
-	@ignore = "true"
+	@description = "This is a test for LPS-136785. It checks that a guest cannot rate an entry without permissions."
 	@priority = "3"
-	test CannotRateEntryWithoutPermissions {
-		property portal.acceptance = "false";
+	test CannotRateEntryAsGuest {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
 
-		// TODO LPS-136785 CannotRateEntryWithoutPermissions pending implementation
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.signOut();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Ratings.viewRateDisabled();
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Ratings.viewRateDisabled();
 	}
 
 	@description = "This is a test for LPS-136786. It checks that a user cannot reply to a comment without permissions."

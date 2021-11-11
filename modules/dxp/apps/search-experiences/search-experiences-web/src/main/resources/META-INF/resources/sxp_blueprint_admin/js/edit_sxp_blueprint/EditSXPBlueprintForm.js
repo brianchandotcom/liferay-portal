@@ -57,8 +57,9 @@ function EditSXPBlueprintForm({
 	initialDescription = {},
 	initialSXPElementInstances = {},
 	initialTitle = {},
+	sxpBlueprintId,
 }) {
-	const {namespace, redirectURL, sxpBlueprintId} = useContext(ThemeContext);
+	const {namespace, redirectURL} = useContext(ThemeContext);
 
 	const [errors, setErrors] = useState([]);
 	const [previewInfo, setPreviewInfo] = useState(() => ({
@@ -714,6 +715,7 @@ EditSXPBlueprintForm.propTypes = {
 	initialDescription: PropTypes.object,
 	initialSXPElementInstances: PropTypes.object,
 	initialTitle: PropTypes.object,
+	sxpBlueprintId: PropTypes.string,
 };
 
 export default React.memo(EditSXPBlueprintForm);

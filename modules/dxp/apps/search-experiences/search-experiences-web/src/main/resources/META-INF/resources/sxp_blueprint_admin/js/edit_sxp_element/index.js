@@ -46,7 +46,6 @@ export default function ({
 				defaultLocale,
 				namespace,
 				redirectURL,
-				sxpElementId,
 			}}
 		>
 			<div className="edit-sxp-element-root">
@@ -65,6 +64,7 @@ export default function ({
 						}
 						predefinedVariables={resource.predefinedVariables}
 						readOnly={resource.readOnly}
+						sxpElementId={sxpElementId}
 						type={resource.type}
 					/>
 				</ErrorBoundary>

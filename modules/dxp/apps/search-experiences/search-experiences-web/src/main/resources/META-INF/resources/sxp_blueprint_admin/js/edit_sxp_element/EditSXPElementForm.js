@@ -49,8 +49,9 @@ function EditSXPElementForm({
 	predefinedVariables = [],
 	readOnly,
 	type,
+	sxpElementId,
 }) {
-	const {defaultLocale, redirectURL, sxpElementId} = useContext(ThemeContext);
+	const {defaultLocale, redirectURL} = useContext(ThemeContext);
 
 	const form = useRef();
 	const sxpElementTemplateJSONRef = useRef();

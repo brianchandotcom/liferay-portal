@@ -69,6 +69,7 @@ function renderEditSXPBlueprintForm(props) {
 			initialTitle={{
 				en_US: 'Test Title',
 			}}
+			sxpBlueprintId="0"
 			{...props}
 		/>
 	);

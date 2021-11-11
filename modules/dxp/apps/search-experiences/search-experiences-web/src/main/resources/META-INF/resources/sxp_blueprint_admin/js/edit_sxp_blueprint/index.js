@@ -48,7 +48,6 @@ export default function ({
 				locale,
 				namespace,
 				redirectURL,
-				sxpBlueprintId,
 			}}
 		>
 			<div className="edit-sxp-blueprint-root">
@@ -68,6 +67,7 @@ export default function ({
 								[defaultLocale]: resource.title,
 							}
 						}
+						sxpBlueprintId={sxpBlueprintId}
 					/>
 				</ErrorBoundary>
 			</div>

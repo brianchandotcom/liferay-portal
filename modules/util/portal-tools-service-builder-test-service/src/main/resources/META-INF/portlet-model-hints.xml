@@ -193,6 +193,10 @@
 		<field name="leftNestedSetsTreeEntryId" type="long" />
 		<field name="rightNestedSetsTreeEntryId" type="long" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.NullConvertibleEntry">
+		<field name="nullConvertibleEntryId" type="long" />
+		<field name="name" type="String" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.UADPartialEntry">
 		<field name="uadPartialEntryId" type="long" />
 		<field name="userId" type="long" />

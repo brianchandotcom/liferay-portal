@@ -22,6 +22,7 @@
 	<import class="com.liferay.portal.tools.service.builder.test.model.LVEntryVersion" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.ManyColumnsEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry" />
+	<import class="com.liferay.portal.tools.service.builder.test.model.NullConvertibleEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.UADPartialEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.VersionedEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion" />
@@ -274,6 +275,12 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="parentNestedSetsTreeEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="leftNestedSetsTreeEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="rightNestedSetsTreeEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.liferay.portal.tools.service.builder.test.model.impl.NullConvertibleEntryImpl" table="NullConvertibleEntry">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="nullConvertibleEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.UADPartialEntryImpl" table="UADPartialEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="uadPartialEntryId" type="long">

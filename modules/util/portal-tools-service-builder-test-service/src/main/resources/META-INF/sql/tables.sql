@@ -227,6 +227,11 @@ create table NestedSetsTreeEntry (
 	rightNestedSetsTreeEntryId LONG
 );
 
+create table NullConvertibleEntry (
+	nullConvertibleEntryId LONG not null primary key,
+	name VARCHAR(75) null
+);
+
 create table UADPartialEntry (
 	uadPartialEntryId LONG not null primary key,
 	userId LONG,

@@ -157,39 +157,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-119066: Given the Page Audit Panel
-	When the audit is launched (the API is called)
-	Then a progress bar shows and moves forward while retrieving the data until they can be shown"
-	@priority = "3"
-	@uitest
-	test AssertProgressBar {
-		property test.name.skip.portal.instance = "PageAudit#AssertProgressBar";
-
-		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
-		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaSystemSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
-		}
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-		task ("Open Page Audit panel and assert the progress bar") {
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
-
-			AssertElementPresent(locator1 = "PageAudit#PROGRESS_BAR");
-		}
-
-		task ("Reset Google PageSpeed API to default at System Settings") {
-			PageAudit.configurationTeardown();
-		}
-	}
-
 	@description = "LPS-129375: Given the Page Audit panel of a content page
 	When the localized canonical URLs options is not enabled and the user changes the language
 	Then the URL for that language shows and is consulted"
@@ -312,11 +279,44 @@ definition {
 		}
 	}
 
+	@description = "LPS-119066: Given the Page Audit Panel
+	When the audit is launched (the API is called)
+	Then a progress bar shows and moves forward while retrieving the data until they can be shown"
+	@priority = "3"
+	@uitest
+	test AssertProgressBar {
+		property test.name.skip.portal.instance = "PageAudit#AssertProgressBar";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSystemSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+		task ("Open Page Audit panel and assert the progress bar") {
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			AssertElementPresent(locator1 = "PageAudit#PROGRESS_BAR");
+		}
+
+		task ("Reset Google PageSpeed API to default at System Settings") {
+			PageAudit.configurationTeardown();
+		}
+	}
+
 	@description = "LPS-129375: Given the Page Audit panel of a content page
 	When the localized canonical URLs options is enabled and the user changes the language
 	Then the matching canonical URL shows and is consulted"
 	@priority = "4"
-	test CanonicalUrlLocaleInContentPage  {
+	test CanonicalUrlLocaleInContentPage {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
@@ -357,7 +357,7 @@ definition {
 	When the localized canonical URLs options is enabled and the user changes the language
 	Then the matching canonical URL shows and is consulted"
 	@priority = "4"
-	test CanonicalUrlLocaleInWidgetPage  {
+	test CanonicalUrlLocaleInWidgetPage {
 		task ("Create Widget Page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
 

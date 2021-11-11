@@ -124,7 +124,7 @@ public class LiferayServiceExtender
 			ClassLoader extendeeClassLoader =
 				extendeeBundleWiring.getClassLoader();
 
-			DataSource dataSource = DataSourceUtil.getDataSource(
+			DataSource dataSource = DataSourceUtil.getProviderDataSource(
 				extendeeClassLoader);
 
 			BundleContext extendeeBundleContext =

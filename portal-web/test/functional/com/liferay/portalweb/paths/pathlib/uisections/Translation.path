@@ -62,6 +62,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_OPTION</td>
+	<td>//select[contains(@class,'form-control')]/option[.='${experienceName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPERIENCE_SELECTOR</td>
+	<td>//select[contains(@id,'experience-selector')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BASE_LANGUAGE_CONTENT_FIELD</td>
 	<td>//div[contains(@class,'col-md-6') and contains(.,'${key_fieldName}')]//div[contains(.,'${key_content}') and not(@contenteditable)]</td>
 	<td></td>

@@ -23,12 +23,15 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
@@ -112,6 +115,24 @@ public class PortalImplGroupFriendlyURLTest {
 		String expectedURL = StringPool.BLANK;
 
 		_testGroupFriendlyURL("localhost", expectedURL, _group, _publicLayout);
+	}
+
+	@Test
+	public void testGetGroupFriendlyURLFromPublicLayoutLocalhost2()
+		throws Exception {
+
+		User user = UserTestUtil.getAdminUser(_company.getCompanyId());
+
+		Group group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), user.getUserId(), 0);
+
+		Layout layout = LayoutTestUtil.addLayout(group);
+
+		String expectedURL =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				group.getFriendlyURL();
+
+		_testGroupFriendlyURL("localhost", expectedURL, group, layout);
 	}
 
 	private static void _updateLayoutSetVirtualHostname(

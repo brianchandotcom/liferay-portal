@@ -24,6 +24,7 @@ definition {
 
 	@description = "This is a use case for LRQA-29540."
 	@priority = "4"
+	@uitest
 	test ViewCaptchaEnabled {
 		property captcha.enabled = "true";
 
@@ -36,6 +37,7 @@ definition {
 
 	@description = "This is a use case for LPS-84310. This test will deploy an OSGI configuration file."
 	@priority = "4"
+	@uitest
 	test ViewRecaptchaEnabled {
 		property captcha.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.captcha.configuration.CaptchaConfiguration.config";

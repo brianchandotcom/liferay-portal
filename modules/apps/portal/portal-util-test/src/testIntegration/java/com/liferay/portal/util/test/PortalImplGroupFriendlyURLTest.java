@@ -20,13 +20,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -66,18 +64,28 @@ public class PortalImplGroupFriendlyURLTest {
 		_company = CompanyTestUtil.addCompany();
 
 		_group = _groupLocalService.fetchGroup(
-			_company.getCompanyId(), GroupConstants.GUEST);
+			_company.getCompanyId(),
+			PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+
+		if (_group == null) {
+			User user = UserTestUtil.getAdminUser(_company.getCompanyId());
+
+			_group = GroupTestUtil.addGroup(
+				_company.getCompanyId(), user.getUserId(), 0);
+
+			_group.setGroupKey(PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+
+			_groupLocalService.updateGroup(_group);
+		}
 
 		LayoutTestUtil.addLayout(_group, true);
 
-		_privateLayout = _layoutLocalService.fetchDefaultLayout(
-			_group.getGroupId(), true);
+		_privateLayout = LayoutTestUtil.addLayout(_group.getGroupId(), true);
 
 		_updateLayoutSetVirtualHostname(
 			_privateLayout, _PRIVATE_LAYOUT_HOSTNAME);
 
-		_publicLayout = _layoutLocalService.fetchDefaultLayout(
-			_group.getGroupId(), false);
+		_publicLayout = LayoutTestUtil.addLayout(_group.getGroupId(), false);
 
 		_updateLayoutSetVirtualHostname(_publicLayout, _PUBLIC_LAYOUT_HOSTNAME);
 	}
@@ -186,9 +194,6 @@ public class PortalImplGroupFriendlyURLTest {
 
 	@Inject
 	private static GroupLocalService _groupLocalService;
-
-	@Inject
-	private static LayoutLocalService _layoutLocalService;
 
 	private static Layout _privateLayout;
 	private static Layout _publicLayout;

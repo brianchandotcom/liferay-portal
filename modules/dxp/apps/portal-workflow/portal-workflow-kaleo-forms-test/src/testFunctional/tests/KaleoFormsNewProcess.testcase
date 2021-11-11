@@ -93,12 +93,37 @@ definition {
 	}
 
 	@description = "Verify that the user can only choose one Workflow."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanOnlyChooseOneWorkflow {
+		KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70679 CanOnlyChooseOneWorkflow pending implementation
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
 
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "Contacts",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.addWorkflow(
+			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Workflow Test");
+
+		KaleoFormsAdmin.publishWorkflow(workflowDefinitionTitle = "Workflow Test");
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Single Approver");
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Workflow Test");
+
+		KaleoFormsAdmin.viewNotSelectedWorkflow(workflowDefinitionTitle = "Single Approver");
 	}
 
 	@description = "Verify that the name field is required."
@@ -192,30 +217,15 @@ definition {
 
 		KaleoFormsAdmin.publishWorkflow(workflowDefinitionTitle = "Workflow Definition Title");
 
-		KaleoFormsAdmin.chooseWorkflow(
-			kfProcessName = "Kaleo Forms Process",
-			workflowDefinitionTitle = "Workflow Definition Title");
-
-		KaleoFormsAdmin.next();
-
-		KaleoFormsAdmin.assignForm(
-			kfProcessName = "Kaleo Forms Process",
-			workflowTask = "StartNode");
-
-		KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
-
-		KaleoFormsAdmin.saveForm();
-
-		KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form");
-
-		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Process Builder");
 
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Workflow Definition Title");
+
+
+		
 	}
 
 	@description = "Verify that the progress bar is shown correctly."

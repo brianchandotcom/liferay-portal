@@ -782,6 +782,12 @@ definition {
 			value1 = "${key_kfFieldSetName}");
 	}
 
+	macro viewNotSelectedWorkflow {
+		AssertTextNotEquals(
+			locator1 = "KaleoFormsAdminEditProcess#SELECTED_WORKFLOW",
+			value1 = "${workflowDefinitionTitle}");
+	}
+
 	macro viewNoUnpublishedWorkflowDefinitions {
 		KaleoFormsAdmin.viewUnpublishedWorkflowDefinitions();
 

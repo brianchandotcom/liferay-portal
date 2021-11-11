@@ -39,6 +39,7 @@ definition {
 	@priority = "4"
 	test CannotEditExperiencesViaDropdownWhenPreviewDraft {
 		property osgi.module.configuration.file.names = "com.liferay.product.navigation.control.menu.web.internal.configuration.FFProductNavigationControlMenuConfiguration.config:com.liferay.segments.web.internal.configuration.FFSegmentsConfiguration.config";
+		property osgi.module.configurations = "layoutExperienceSelectorEnabled=&quot;true&quot;:layoutExperienceSelectorEnabled=&quot;true&quot;";
 
 		task ("Add a button fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -99,6 +100,7 @@ definition {
 	@priority = "4"
 	test CannotEditExperienceViaDropdownWhenViewPage {
 		property osgi.module.configuration.file.names = "com.liferay.product.navigation.control.menu.web.internal.configuration.FFProductNavigationControlMenuConfiguration.config:com.liferay.segments.web.internal.configuration.FFSegmentsConfiguration.config";
+		property osgi.module.configurations = "layoutExperienceSelectorEnabled=&quot;true&quot;:layoutExperienceSelectorEnabled=&quot;true&quot;";
 
 		task ("Add a button fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -147,6 +149,7 @@ definition {
 	@priority = "4"
 	test ChangeExperienceWhenPreviewDraft {
 		property osgi.module.configuration.file.names = "com.liferay.product.navigation.control.menu.web.internal.configuration.FFProductNavigationControlMenuConfiguration.config:com.liferay.segments.web.internal.configuration.FFSegmentsConfiguration.config";
+		property osgi.module.configurations = "layoutExperienceSelectorEnabled=&quot;true&quot;:layoutExperienceSelectorEnabled=&quot;true&quot;";
 
 		task ("Add a button fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -265,6 +268,7 @@ definition {
 	@priority = "4"
 	test ChangeExperienceWhenViewPage {
 		property osgi.module.configuration.file.names = "com.liferay.product.navigation.control.menu.web.internal.configuration.FFProductNavigationControlMenuConfiguration.config:com.liferay.segments.web.internal.configuration.FFSegmentsConfiguration.config";
+		property osgi.module.configurations = "layoutExperienceSelectorEnabled=&quot;true&quot;:layoutExperienceSelectorEnabled=&quot;true&quot;";
 
 		task ("Add a button fragment to page") {
 			ContentPagesNavigator.openEditContentPage(

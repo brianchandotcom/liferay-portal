@@ -359,49 +359,38 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertJournalArticles(Group group) throws Exception {
-		JournalArticle tipJournalArticle =
+		JournalArticle journalArticle1 =
 			_journalArticleLocalService.fetchArticle(
-				group.getGroupId(), "test-journal-article-tip-id");
+				group.getGroupId(), "test-journal-article-1");
 
-		Assert.assertNotNull(tipJournalArticle);
-		Assert.assertEquals("Test Tip", tipJournalArticle.getTitle());
+		Assert.assertNotNull(journalArticle1);
 		Assert.assertEquals(
-			"TEST DDM STRUCTURE NAME", tipJournalArticle.getDDMStructureKey());
+			"TEST DDM TEMPLATE KEY", journalArticle1.getDDMTemplateKey());
 		Assert.assertEquals(
-			"TEST DDM TEMPLATE KEY", tipJournalArticle.getDDMTemplateKey());
+			"Test Journal Article 1", journalArticle1.getTitle());
 
-		DDMStructure tipDDMStructure = tipJournalArticle.getDDMStructure();
-
-		Assert.assertTrue(tipDDMStructure.hasField("aField"));
-
-		JournalArticle quoteJournalArticle =
+		JournalArticle journalArticle2 =
 			_journalArticleLocalService.fetchArticle(
-				group.getGroupId(), "test-journal-article-quote-id");
+				group.getGroupId(), "test-journal-article-2");
 
-		Assert.assertNotNull(quoteJournalArticle);
-		Assert.assertEquals("Test Quote", quoteJournalArticle.getTitle());
+		Assert.assertNotNull(journalArticle2);
 		Assert.assertEquals(
-			"TEST DDM STRUCTURE NAME",
-			quoteJournalArticle.getDDMStructureKey());
+			"TEST DDM TEMPLATE KEY", journalArticle2.getDDMTemplateKey());
 		Assert.assertEquals(
-			"TEST DDM TEMPLATE KEY", quoteJournalArticle.getDDMTemplateKey());
-
-		DDMStructure quoteDDMStructure = quoteJournalArticle.getDDMStructure();
-
-		Assert.assertTrue(quoteDDMStructure.hasField("aField"));
+			"Test Journal Article 2", journalArticle2.getTitle());
 
 		List<JournalFolder> journalFolders = _journalFolderService.getFolders(
 			group.getGroupId());
 
 		Assert.assertTrue(journalFolders.size() == 2);
 
-		JournalFolder quoteJournalFolder = journalFolders.get(0);
+		JournalFolder journalFolder1 = journalFolders.get(0);
 
-		Assert.assertEquals("Quote", quoteJournalFolder.getName());
+		Assert.assertEquals("Test Journal Article 1", journalFolder1.getName());
 
-		JournalFolder tipJournalFolder = journalFolders.get(1);
+		JournalFolder journalFolder2 = journalFolders.get(1);
 
-		Assert.assertEquals("Tip", tipJournalFolder.getName());
+		Assert.assertEquals("Test Journal Article 2", journalFolder2.getName());
 	}
 
 	private void _assertLayoutPageTemplateEntry(Group group) throws Exception {

@@ -1,0 +1,12 @@
+[
+	{
+		"ddmFormFieldTypeName": "text",
+		"key": "domain",
+		"required": true
+	},
+	{
+		"ddmFormFieldTypeName": "text",
+		"key": "name",
+		"required": true
+	}
+]

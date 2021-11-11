@@ -8,30 +8,11 @@
 					},
 					"widgetInstance": {
 						"widgetConfig": {
-							"cpContentListRendererKey": "list-default",
 							"displayStyle": "ddmTemplate_STARTERKIT-DETAIL",
 							"displayStyleGroupId": "[$GROUP_ID$]",
-							"grouped--cpTypeListEntryRendererKey": "list-entry-default",
-							"paginate": "true",
-							"paginationDelta": "15",
-							"selectionStyle": "adt",
-							"simple--cpTypeListEntryRendererKey": "list-entry-default",
-							"virtual--cpTypeListEntryRendererKey": "list-entry-default"
+							"selectionStyle": "adt"
 						},
-						"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
-					}
-				},
-				"type": "Widget"
-			},
-			{
-				"definition": {
-					"fragmentStyle": {
-						"hidden": true
-					},
-					"widgetInstance": {
-						"widgetConfig": {
-						},
-						"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+						"widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet"
 					}
 				},
 				"type": "Widget"

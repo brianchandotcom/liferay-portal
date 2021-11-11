@@ -51,6 +51,7 @@
 					},
 					"widgetInstance": {
 						"widgetConfig": {
+							"allowEmptySearches": "true"
 						},
 						"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
 					}

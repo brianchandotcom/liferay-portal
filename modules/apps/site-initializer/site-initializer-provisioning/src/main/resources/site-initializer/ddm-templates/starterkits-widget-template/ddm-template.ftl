@@ -20,7 +20,7 @@
 
 <#if entries?has_content>
 	<#assign
-		commerceContext = request.getAttribute("COMMERCE_CONTEXT")
+		commerceContext = renderRequest.getAttribute("COMMERCE_CONTEXT")
 
 		commerceChannelId = commerceContext.getCommerceChannelId()
 

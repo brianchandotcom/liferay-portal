@@ -822,16 +822,10 @@ export default ({
 	);
 
 	const handleNavigationUpdate = useCallback(
-		(json) => {
-			const nodeId = json.nodeId;
-
-			let showHideable = renderState.showHideable;
-
-			if (Object.prototype.hasOwnProperty.call(json, 'showHideable')) {
-				showHideable = json.showHideable;
-			}
-
+		(nodeId, resetPage) => {
 			const node = getNode(nodeId);
+
+			const page = resetPage ? 1 : renderState.page;
 
 			const path = getPath(
 				ascendingState,
@@ -840,8 +834,8 @@ export default ({
 				getEntryParam(node),
 				filtersState,
 				resultsKeywords,
-				renderState.page,
-				showHideable
+				page,
+				renderState.showHideable
 			);
 
 			const state = {
@@ -855,15 +849,15 @@ export default ({
 				changes: filterNodes(
 					filtersState,
 					resultsKeywords,
-					showHideable
+					renderState.showHideable
 				),
 				children: node.children,
 				delta: renderState.delta,
 				id: nodeId,
 				node,
-				page: 1,
+				page,
 				parents: node.parents,
-				showHideable,
+				showHideable: renderState.showHideable,
 			});
 
 			window.scrollTo(0, 0);
@@ -1576,11 +1570,7 @@ export default ({
 			rows.push(
 				<ClayTable.Row
 					className="cursor-pointer"
-					onClick={() =>
-						handleNavigationUpdate({
-							nodeId: node.nodeId,
-						})
-					}
+					onClick={() => handleNavigationUpdate(node.nodeId)}
 				>
 					<ClayTable.Cell>
 						<ClaySticker
@@ -1672,6 +1662,8 @@ export default ({
 			}
 		}
 
+		const page = renderState.id > 0 ? 1 : renderState.page;
+
 		const path = getPath(
 			ascendingState,
 			columnState,
@@ -1679,7 +1671,7 @@ export default ({
 			getEntryParam(renderState.node),
 			filters,
 			resultsKeywords,
-			renderState.page,
+			page,
 			showHideable
 		);
 
@@ -1697,7 +1689,7 @@ export default ({
 			delta: renderState.delta,
 			id: renderState.id,
 			node: renderState.node,
-			page: renderState.page,
+			page,
 			parents: renderState.parents,
 			showHideable,
 		});
@@ -2277,10 +2269,7 @@ export default ({
 		const items = [
 			{
 				label: Liferay.Language.get('all-items'),
-				onClick: () =>
-					handleNavigationUpdate({
-						nodeId: 0,
-					}),
+				onClick: () => handleNavigationUpdate(0),
 			},
 			{
 				active: true,
@@ -2318,9 +2307,7 @@ export default ({
 									]
 								}
 								handleNavigation={(nodeId) =>
-									handleNavigationUpdate({
-										nodeId,
-									})
+									handleNavigationUpdate(nodeId, true)
 								}
 								parentEntries={renderState.parents}
 								showDropdown={

@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -479,6 +480,24 @@ public class CommerceOrderContentDisplayContext {
 			).setLabel(
 				"Second link"
 			).build());
+	}
+
+	public String getExportCommerceOrderPdfURLString() {
+		LiferayPortletResponse liferayPortletResponse =
+			_cpRequestHelper.getLiferayPortletResponse();
+
+		LiferayPortletURL liferayPortletURL =
+			liferayPortletResponse.createResourceURL(
+				CommercePortletKeys.COMMERCE_ORDER_CONTENT);
+
+		liferayPortletURL.setResourceID(
+			"/commerce_order_content/export_commerce_order_pdf");
+
+		return PortletURLBuilder.create(
+			liferayPortletURL
+		).setParameter(
+			"commerceOrderId", getCommerceOrderId()
+		).buildString();
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels()

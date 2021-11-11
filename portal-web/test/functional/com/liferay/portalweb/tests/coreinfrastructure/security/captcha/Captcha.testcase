@@ -22,7 +22,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-29540."
+	@description = "This is a use case for LRQA-29540. Verify CAPTCHA is enabled when creating an account"
 	@priority = "4"
 	@uitest
 	test AssertCaptchaEnabled {
@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-84310. This test will deploy an OSGI configuration file."
+	@description = "This is a use case for LPS-84310. Verify reCAPTCHA is enabled in account creation after deploying a CAPTCHA OSGi config file."
 	@priority = "4"
 	@uitest
 	test AssertRecaptchaEnabled {

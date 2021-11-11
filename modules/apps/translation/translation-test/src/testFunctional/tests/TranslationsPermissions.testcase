@@ -83,9 +83,13 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+		LexiconEntry.openEntryMenu(rowEntry = "WC WebContent Title");
 
-		Alert.viewInfoMessageSpecific(infoMessage = "You do not have permissions to translate to any of the available languages.");
+		for (var menuItem : list "Translate,Export for Translation,Import Translation") {
+			AssertElementNotPresent(
+				key_menuItem = "${menuItem}",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
 	}
 
 	@description = "This ensures that the user can not translate a web content without any languages permissions."
@@ -146,9 +150,13 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+		LexiconEntry.openEntryMenu(rowEntry = "WC WebContent Title");
 
-		Alert.viewInfoMessageSpecific(infoMessage = "You do not have permissions to translate to any of the available languages.");
+		for (var menuItem : list "Translate,Export for Translation,Import Translation") {
+			AssertElementNotPresent(
+				key_menuItem = "${menuItem}",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
 	}
 
 	@description = "This ensures that the user can translate a Web content to the language she has permissions."

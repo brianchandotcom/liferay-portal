@@ -261,6 +261,116 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-128810. The user can switch experiences at view mode."
+	@priority = "4"
+	test ChangeExperienceWhenViewPage {
+		property osgi.module.configuration.file.names = "com.liferay.product.navigation.control.menu.web.internal.configuration.FFProductNavigationControlMenuConfiguration.config:com.liferay.segments.web.internal.configuration.FFSegmentsConfiguration.config";
+
+		task ("Add a button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Add a new experience") {
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+		}
+
+		task ("Add a heading fragment to page and publish") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View Button fragment is shown at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
+		}
+
+		task ("View the default order of experiences") {
+			ContentPages.viewExperienceOrder(experienceOrderList = "Default,New Experience");
+		}
+
+		task ("Select new experience") {
+			ContentPages.selectExperience(
+				experienceName = "New Experience",
+				index = "2");
+		}
+
+		task ("View both Button and Heading fragment are shown") {
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+		}
+
+		task ("Prioritize the new experience and publish") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.prioritizeExperience(experienceName = "New Experience");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View both Button and Heading fragment are shown") {
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+		}
+
+		task ("View the new order of experiences") {
+			ContentPages.viewExperienceOrder(
+				experienceLabel = "New Experience",
+				experienceOrderList = "New Experience,Default");
+		}
+
+		task ("Select default experience") {
+			ContentPages.selectExperience(
+				experienceLabel = "New Experience",
+				experienceName = "Default",
+				index = "2");
+		}
+
+		task ("View only Button fragment is shown") {
+			AssertElementNotPresent(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
+		}
+	}
+
 	@description = "This is a test for LPS-128810. View collection items on content page when select segment."
 	@priority = "4"
 	test ViewCollectionItemsOnContentPageWhenSelectSegment {

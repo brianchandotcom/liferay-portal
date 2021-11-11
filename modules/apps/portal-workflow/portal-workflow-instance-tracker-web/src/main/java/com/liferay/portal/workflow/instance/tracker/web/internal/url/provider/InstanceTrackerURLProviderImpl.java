@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.instance.tracker.web.internal.util;
+package com.liferay.portal.workflow.instance.tracker.web.internal.url.provider;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
-import com.liferay.portal.workflow.instance.tracker.util.InstanceTrackerURLProvider;
+import com.liferay.portal.workflow.instance.tracker.url.provider.InstanceTrackerURLProvider;
 
 import javax.portlet.PortletRequest;
 

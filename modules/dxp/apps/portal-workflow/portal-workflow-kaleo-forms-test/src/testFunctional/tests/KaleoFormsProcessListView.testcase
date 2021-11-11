@@ -375,11 +375,24 @@ definition {
 	}
 
 	@description = "Verify that the user can select edit option."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectEditOption {
+		KaleoFormsAdmin.addProcess();
 
-		// TODO LRQA-70670 CanSelectEditOption pending implementation
+		KaleoFormsAdmin.createKaleoFormsProcess(
+			kfFieldSetName = "Contacts",
+			kfFormName = "Created Task Form",
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Single Approver",
+			workflowTask = "created");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+
+		KaleoFormsAdmin.viewNewProcessProgressBar(
+			kfProgressName = "Details",
+			kfProgressStep = "1");
+
 
 	}
 

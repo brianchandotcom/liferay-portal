@@ -79,7 +79,7 @@ for (int i = 0; Validator.isNull(title) && (i < languageIds.length); i++) {
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-jsp
-			path="/sxp_blueprint_actions.jsp"
+			path="/sxp_blueprint_admin/sxp_blueprint_actions.jsp"
 		/>
 	</c:when>
 	<c:otherwise>

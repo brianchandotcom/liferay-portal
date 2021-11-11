@@ -15,7 +15,7 @@
 --%>
 
 <portlet:renderURL var="editSXPBlueprintURL">
-	<portlet:param name="mvcRenderCommandName" value="/sxp_blueprint_admin/edit_sxp_blueprints" />
+	<portlet:param name="mvcRenderCommandName" value="/sxp_blueprint_admin/edit_sxp_blueprint" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="sxpBlueprintId" value="<%= String.valueOf(sxpBlueprint.getSXPBlueprintId()) %>" />
 </portlet:renderURL>

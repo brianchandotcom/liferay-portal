@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-keycloak" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<macrodef name="start-keycloak-server">
+		<sequential>
+			<property name="liferay.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies" />
+			<property name="keycloak.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies" />
+			<mirrors-get
+				dest="${liferay.dependency.dir}"
+				src="https://github.com/keycloak/keycloak/releases/download/15.0.2/keycloak-15.0.2.tar.gz"
+			/>
+			<decompress
+				dest="${liferay.dependency.dir}"
+				src="${liferay.dependency.dir}/keycloak-15.0.2.tar.gz"
+			/>
+
+			<parallel>
+				<daemons>
+					<exec dir="${liferay.dependency.dir}/keycloak-15.0.2/bin" executable="/bin/bash">
+						<arg value="./standalone.sh" />
+						<arg value="-Djboss.socket.binding.port-offset=10000" />
+						<arg value="-Dkeycloak.migration.action=import" />
+						<arg value="-Dkeycloak.migration.provider=singleFile" />
+						<arg value="-Dkeycloak.migration.file=${keycloak.dependency.dir}/keycloak-liferay-export.json" />
+						<arg value="-Dkeycloak.migration.strategy=OVERWRITE_EXISTING" />
+						<arg value="-b" />
+						<arg value="0.0.0.0" />
+					</exec>
+				</daemons>
+			</parallel>
+
+			<waitfor maxwait="60" maxwaitunit="second">
+				<http url="http://127.0.0.1:18080/" />
+			</waitfor>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-keycloak-server">
+		<sequential>
+			<property name="liferay.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies" />
+
+			<exec dir="${liferay.dependency.dir}/keycloak-15.0.2/bin" executable="/bin/bash">
+				<arg value="./jboss-cli.sh" />
+				<arg value="--connect" />
+				<arg value="--controller=localhost:19990" />
+				<arg value="command=:shutdown" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<target name="prepare-selenium-keycloak-server">
+		<start-keycloak-server/>
+	</target>
+</project>

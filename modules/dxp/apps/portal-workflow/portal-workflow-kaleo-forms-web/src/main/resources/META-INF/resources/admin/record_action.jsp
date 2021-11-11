@@ -61,4 +61,9 @@ DDLRecordVersion ddlRecordVersion = ddlRecord.getLatestRecordVersion();
 			url="<%= deleteDDLRecordURL %>"
 		/>
 	</c:if>
+
+	<liferay-ui:icon
+		message="track-workflow"
+		url="<%= InstanceTrackerURLProviderUtil.getURL(ddlRecord, request, KaleoProcess.class, true) %>"
+	/>
 </liferay-ui:icon-menu>

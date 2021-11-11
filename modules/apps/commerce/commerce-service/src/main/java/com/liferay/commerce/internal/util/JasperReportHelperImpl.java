@@ -81,11 +81,11 @@ public class JasperReportHelperImpl implements JasperReportHelper {
 
 			jasperReport = JasperCompileManager.compileReport(jasperDesign);
 
-			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(
-				beanCollection);
+			JRBeanCollectionDataSource jrBeanCollectionDataSource =
+				new JRBeanCollectionDataSource(beanCollection);
 
 			jasperPrint = JasperFillManager.fillReport(
-				jasperReport, parameters, ds);
+				jasperReport, parameters, jrBeanCollectionDataSource);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

@@ -1,8 +1,11 @@
 // Border Radius
 
-$border-radius: var(--border-radius);
+$border-radius-xxl: var(--border-radius-xxl);
+$border-radius-xl: var(--border-radius-xl);
 $border-radius-lg: var(--border-radius-lg);
+$border-radius: var(--border-radius);
 $border-radius-sm: var(--border-radius-sm);
+$border-radius-xs: var(--border-radius-xs);
 
 $rounded-border-radius: $border-radius;
 $rounded-circle-border-radius: var(--border-radius-circle);

@@ -3709,6 +3709,210 @@
 			],
 			"label": "forms",
 			"name": "forms"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "0.375rem",
+							"label": "label-item-spacer-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-item-spacer-x"
+								}
+							],
+							"name": "labelItemSpacerX",
+							"type": "String"
+						}
+					],
+					"label": "label",
+					"name": "label"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--border-radius-xs)",
+							"label": "label-lg-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-lg-border-radius"
+								}
+							],
+							"name": "labelLgBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-sm-font-size)",
+							"label": "label-lg-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-lg-font-size"
+								}
+							],
+							"name": "labelLgFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-bolder)",
+							"label": "label-lg-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-lg-font-weight"
+								}
+							],
+							"name": "labelLgFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.875rem",
+							"label": "label-lg-icon-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-lg-icon-size"
+								}
+							],
+							"name": "labelLgIconSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-sm-line-height)",
+							"label": "label-lg-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-lg-line-height"
+								}
+							],
+							"name": "labelLgLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-2)",
+							"label": "label-lg-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-lg-padding-x"
+								}
+							],
+							"name": "labelLgPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.125rem",
+							"label": "label-lg-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-lg-padding-y"
+								}
+							],
+							"name": "labelLgPaddingY",
+							"type": "String"
+						}
+					],
+					"label": "label-large",
+					"name": "labelLarge"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--border-radius-xs)",
+							"label": "label-sm-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-sm-border-radius"
+								}
+							],
+							"name": "labelSmBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-xs-font-size)",
+							"label": "label-sm-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-sm-font-size"
+								}
+							],
+							"name": "labelSmFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-bolder)",
+							"label": "label-sm-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-sm-font-weight"
+								}
+							],
+							"name": "labelSmFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.75rem",
+							"label": "label-sm-icon-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-sm-icon-size"
+								}
+							],
+							"name": "labelSmIconSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1rem",
+							"label": "label-sm-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-sm-line-height"
+								}
+							],
+							"name": "labelSmLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-1)",
+							"label": "label-sm-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-sm-padding-x"
+								}
+							],
+							"name": "labelSmPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "label-sm-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "label-sm-padding-y"
+								}
+							],
+							"name": "labelSmPaddingY",
+							"type": "String"
+						}
+					],
+					"label": "label-small",
+					"name": "labelSmall"
+				}
+			],
+			"label": "labels",
+			"name": "labels"
 		}
 	]
 }

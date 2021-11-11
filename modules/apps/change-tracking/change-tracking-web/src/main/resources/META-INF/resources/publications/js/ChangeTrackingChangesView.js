@@ -91,6 +91,7 @@ export default ({
 	activeCTCollection,
 	changeTypesFromURL,
 	changes,
+	columnFromURL,
 	contextView,
 	ctCollectionId,
 	currentUserId,
@@ -105,6 +106,7 @@ export default ({
 	keywordsFromURL,
 	modelData,
 	namespace,
+	orderByTypeFromURL,
 	pageFromURL,
 	rootDisplayClasses,
 	showHideableFromURL,
@@ -552,8 +554,14 @@ export default ({
 		? true
 		: !!showHideableFromURL;
 
-	const [ascendingState, setAscendingState] = useState(true);
-	const [columnState, setColumnState] = useState(COLUMN_TITLE);
+	const [ascendingState, setAscendingState] = useState(
+		orderByTypeFromURL === ORDER_BY_TYPE_DESC
+			? ORDER_BY_TYPE_DESC
+			: ORDER_BY_TYPE_ASC
+	);
+	const [columnState, setColumnState] = useState(
+		columnFromURL ? columnFromURL : COLUMN_TITLE
+	);
 	const [drilldownDirection, setDrilldownDirection] = useState(
 		DIRECTION_NEXT
 	);
@@ -910,6 +918,21 @@ export default ({
 
 			const node = getNode(params.get(PARAM_ENTRY));
 
+			let ascending = params.get(PARAM_ORDER_BY_TYPE);
+
+			if (ascending === ORDER_BY_TYPE_DESC) {
+				ascending = false;
+			}
+			else {
+				ascending = true;
+			}
+
+			let column = params.get(PARAM_COLUMN);
+
+			if (!column) {
+				column = COLUMN_TITLE;
+			}
+
 			let delta = params.get(PARAM_DELTA);
 
 			if (delta) {
@@ -962,6 +985,8 @@ export default ({
 				}
 			}
 
+			setAscendingState(ascending);
+			setColumnState(column);
 			setFiltersState(filters);
 			setRenderState({
 				changes: filterNodes(filters, keywords, showHideable),
@@ -1235,10 +1260,46 @@ export default ({
 				displayType="unstyled"
 				onClick={() => {
 					if (columnState === column) {
+						const path = getPath(
+							!ascendingState,
+							columnState,
+							renderState.delta,
+							getEntryParam(renderState.node),
+							filtersState,
+							resultsKeywords,
+							renderState.page,
+							renderState.showHideable
+						);
+
+						const state = {
+							path,
+							senna: true,
+						};
+
+						window.history.pushState(state, document.title, path);
+
 						setAscendingState(!ascendingState);
 
 						return;
 					}
+
+					const path = getPath(
+						ascendingState,
+						column,
+						renderState.delta,
+						getEntryParam(renderState.node),
+						filtersState,
+						resultsKeywords,
+						renderState.page,
+						renderState.showHideable
+					);
+
+					const state = {
+						path,
+						senna: true,
+					};
+
+					window.history.pushState(state, document.title, path);
 
 					setColumnState(column);
 				}}

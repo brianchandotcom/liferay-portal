@@ -302,6 +302,8 @@ public class ViewChangesDisplayContext {
 			"changeTypesFromURL",
 			ParamUtil.getString(_renderRequest, "changeTypes")
 		).put(
+			"columnFromURL", ParamUtil.getString(_renderRequest, "column")
+		).put(
 			"contextView",
 			_getContextViewJSONObject(
 				ctClosure, modelInfoMap, rootClassNameIds,
@@ -396,6 +398,9 @@ public class ViewChangesDisplayContext {
 			}
 		).put(
 			"namespace", _renderResponse.getNamespace()
+		).put(
+			"orderByTypeFromURL",
+			ParamUtil.getString(_renderRequest, "orderByType")
 		).put(
 			"pageFromURL", ParamUtil.getString(_renderRequest, "page")
 		).put(

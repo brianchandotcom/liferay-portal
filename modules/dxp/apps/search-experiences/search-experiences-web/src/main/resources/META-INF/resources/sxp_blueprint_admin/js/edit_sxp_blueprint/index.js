@@ -59,13 +59,13 @@ export default function ({
 						initialConfiguration={resource.configuration}
 						initialDescription={
 							resource.description_i18n || {
-								[context.defaultLocale]: resource.description,
+								[defaultLocale]: resource.description,
 							}
 						}
 						initialSXPElementInstances={resource.elementInstances}
 						initialTitle={
 							resource.title_i18n || {
-								[context.defaultLocale]: resource.title,
+								[defaultLocale]: resource.title,
 							}
 						}
 					/>

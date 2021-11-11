@@ -35,10 +35,7 @@ definition {
 		}
 
 		task ("Edit the configuration file url of Knowledge Base Article") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Security Tools",
@@ -72,9 +69,7 @@ definition {
 		}
 
 		task ("Add KB article with dynamic attribute and view it as guest") {
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				portlet = "Knowledge Base");
+			KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 			KBArticle.addCP(
 				kbArticleAddViaSource = "true",
@@ -89,9 +84,7 @@ definition {
 		}
 
 		task ("Save KB article as Draft") {
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				portlet = "Knowledge Base");
+			KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 			KBArticle.editCP(
 				kbArticleTitle = "Test AntiSamy",
@@ -108,17 +101,16 @@ definition {
 	@uitest
 	test ScriptInWebContentDisplayPortletShouldBeSanitized {
 		task ("Add public widget page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = "Web Content Display Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Web Content Display Page");
 		}
 
 		task ("Add Web Content Display portlet and insert JS as content") {
-			Navigator.gotoPage(pageName = "Web Content Display Page");
-
-			Portlet.addPG(portletName = "Web Content Display");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Web Content Display Page",
+				widgetName = "Web Content Display");
 
 			var webContentContent = '''
 					<p id='demo'>FAIL</p>
@@ -127,6 +119,8 @@ definition {
 						document.getElementById('demo').innerHTML = 'PASS';
 					</script>
 				''';
+
+			Navigator.gotoPage(pageName = "Web Content Display Page");
 
 			WebContent.addPGViaWCD(
 				webContentContent = "${webContentContent}",
@@ -145,17 +139,16 @@ definition {
 	@uitest
 	test ScriptInWikiPortletShouldBeSanitized {
 		task ("Add public widget page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = "AntiSamy Test Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "AntiSamy Test Page");
 		}
 
 		task ("Add Wiki portlet and insert JS as content") {
-			Navigator.gotoPage(pageName = "AntiSamy Test Page");
-
-			Portlet.addPG(portletName = "Wiki");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "AntiSamy Test Page",
+				widgetName = "Wiki");
 
 			var wikiPageContent = '''
 					<p id='demo'>PASS</p>
@@ -164,6 +157,8 @@ definition {
 						document.getElementById('demo').innerHTML = 'FAIL';
 					</script>
 				''';
+
+			Navigator.gotoPage(pageName = "AntiSamy Test Page");
 
 			WikiPage.addFrontPagePG(
 				htmlSource = "true",

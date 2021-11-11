@@ -969,7 +969,7 @@ definition {
 
 	macro viewPageLocalization {
 		AssertElementPresent(
-			key_text = "Title",
+			key_text = "${fieldName}",
 			locator1 = "TextInput#ANY");
 
 		AssertTextEquals.assertPartialText(

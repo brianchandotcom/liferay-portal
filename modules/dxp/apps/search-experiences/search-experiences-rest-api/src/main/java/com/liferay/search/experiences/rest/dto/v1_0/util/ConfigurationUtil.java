@@ -16,6 +16,7 @@ package com.liferay.search.experiences.rest.dto.v1_0.util;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.Clause;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
@@ -31,6 +32,10 @@ import java.util.Map;
 public class ConfigurationUtil {
 
 	public static Configuration toConfiguration(String json) {
+		if (Validator.isNull(json)) {
+			return null;
+		}
+
 		return unpack(Configuration.unsafeToDTO(json));
 	}
 

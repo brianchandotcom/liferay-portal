@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.dto.v1_0.util;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
 
@@ -23,6 +24,10 @@ import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
 public class ElementDefinitionUtil {
 
 	public static ElementDefinition toElementDefinition(String json) {
+		if (Validator.isNull(json)) {
+			return null;
+		}
+
 		return unpack(ElementDefinition.unsafeToDTO(json));
 	}
 

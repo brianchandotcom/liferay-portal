@@ -48,12 +48,14 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -142,6 +144,7 @@ public class BundleSiteInitializerTest {
 			_assertLayouts(group);
 			_assertLayoutSets(group);
 			_assertObjectDefinition(group);
+			_assertRoles(group);
 			_assertStyleBookEntry(group);
 		}
 		finally {
@@ -521,6 +524,32 @@ public class BundleSiteInitializerTest {
 				group.getGroupId(), objectDefinition.getObjectDefinitionId()));
 	}
 
+	private void _assertRoles(Group group) {
+		Role role1 = _roleLocalService.fetchRole(
+			group.getCompanyId(), "Test Role 1");
+
+		Assert.assertNotNull(role1);
+		Assert.assertEquals(1, role1.getType());
+
+		Role role2 = _roleLocalService.fetchRole(
+			group.getCompanyId(), "Test Role 2");
+
+		Assert.assertNotNull(role2);
+		Assert.assertEquals(1, role2.getType());
+
+		Role role3 = _roleLocalService.fetchRole(
+			group.getCompanyId(), "Test Role 3");
+
+		Assert.assertNotNull(role3);
+		Assert.assertEquals(1, role3.getType());
+
+		Role role4 = _roleLocalService.fetchRole(
+			group.getCompanyId(), "Test Role 4");
+
+		Assert.assertNotNull(role4);
+		Assert.assertEquals(2, role4.getType());
+	}
+
 	private void _assertStyleBookEntry(Group group) {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.fetchStyleBookEntry(
@@ -596,6 +625,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@Inject
 	private ServletContext _servletContext;

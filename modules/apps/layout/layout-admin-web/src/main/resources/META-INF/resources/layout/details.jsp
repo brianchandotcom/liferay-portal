@@ -91,23 +91,12 @@ String friendlyURLBase = StringPool.BLANK;
 
 		<c:choose>
 			<c:when test="<%= selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem() %>">
-				<liferay-friendly-url:history
+				<liferay-friendly-url:input
 					className="<%= Layout.class.getName() %>"
 					classPK="<%= selLayout.getPlid() %>"
-					elementId='<%= portletDisplay.getNamespace() + "friendlyURL" %>'
+					inputAddon="<%= friendlyURLBase %>"
+					name="friendlyURL"
 				/>
-
-				<div class="form-group friendly-url">
-					<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "there-is-a-limit-of-x-characters-in-encoded-format-for-friendly-urls-(e.g.-x)", new String[] {String.valueOf(LayoutConstants.FRIENDLY_URL_MAX_LENGTH), "<em>/news</em>"}, false) %>' /></label>
-
-					<liferay-ui:input-localized
-						defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
-						ignoreRequestValue="<%= SessionErrors.isEmpty(liferayPortletRequest) %>"
-						inputAddon="<%= friendlyURLBase.toString() %>"
-						name="friendlyURL"
-						xml="<%= HttpUtil.decodeURL(selLayout.getFriendlyURLsXML()) %>"
-					/>
-				</div>
 			</c:when>
 			<c:otherwise>
 				<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />

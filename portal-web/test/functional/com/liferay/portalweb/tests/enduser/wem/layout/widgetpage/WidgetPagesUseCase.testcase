@@ -240,7 +240,7 @@ definition {
 		}
 
 		task ("View login page when reaching private page") {
-			Navigator.gotoPrivateSitePage(
+			Navigator.openPrivateSitePageURL(
 				pageName = "Test Private Page",
 				siteName = "Test Site Name");
 

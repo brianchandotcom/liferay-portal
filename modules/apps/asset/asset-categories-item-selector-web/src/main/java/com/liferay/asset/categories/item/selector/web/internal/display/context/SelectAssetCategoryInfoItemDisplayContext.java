@@ -14,6 +14,7 @@
 
 package com.liferay.asset.categories.item.selector.web.internal.display.context;
 
+import com.liferay.asset.categories.item.selector.web.internal.configuration.FFAssetCategoriesItemSelectorConfigurationUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
@@ -85,6 +86,10 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 
 	public Map<String, Object> getData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"categoriesMultipleSelectionEnabled",
+			FFAssetCategoriesItemSelectorConfigurationUtil.
+				categoriesMultipleSelectionEnabled()
+		).put(
 			"itemSelectedEventName", _itemSelectedEventName
 		).put(
 			"namespace", _renderResponse.getNamespace()

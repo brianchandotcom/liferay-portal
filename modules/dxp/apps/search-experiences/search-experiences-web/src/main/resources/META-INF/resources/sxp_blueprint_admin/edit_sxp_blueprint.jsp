@@ -40,11 +40,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-blueprint"));
 		module="sxp_blueprint_admin/js/edit_sxp_blueprint/index"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"contextPath", application.getContextPath()
+			).put(
 				"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
+			).put(
+				"locale", themeDisplay.getLanguageId()
 			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(
-				"redirect", redirect
+				"redirectURL", redirect
 			).put(
 				"sxpBlueprintId", ParamUtil.getLong(renderRequest, "sxpBlueprintId")
 			).build()

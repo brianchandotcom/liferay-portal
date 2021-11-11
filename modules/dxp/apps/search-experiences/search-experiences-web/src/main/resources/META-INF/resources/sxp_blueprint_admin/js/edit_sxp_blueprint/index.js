@@ -16,7 +16,14 @@ import ThemeContext from '../shared/ThemeContext';
 import {fetchData} from '../utils/fetch';
 import EditSXPBlueprintForm from './EditSXPBlueprintForm';
 
-export default function ({defaultLocale, namespace, redirect, sxpBlueprintId}) {
+export default function ({
+	contextPath,
+	defaultLocale,
+	locale,
+	namespace,
+	redirectURL,
+	sxpBlueprintId,
+}) {
 	const [resource, setResource] = useState(null);
 
 	useEffect(() => {
@@ -35,9 +42,12 @@ export default function ({defaultLocale, namespace, redirect, sxpBlueprintId}) {
 	return (
 		<ThemeContext.Provider
 			value={{
+				availableLanguages: Liferay.Language.available,
+				contextPath,
 				defaultLocale,
+				locale,
 				namespace,
-				redirectURL: redirect,
+				redirectURL,
 				sxpBlueprintId,
 			}}
 		>

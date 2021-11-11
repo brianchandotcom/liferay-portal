@@ -16,7 +16,12 @@ import ThemeContext from '../shared/ThemeContext';
 import {fetchData} from '../utils/fetch';
 import EditSXPElementForm from './EditSXPElementForm';
 
-export default function ({defaultLocale, namespace, redirect, sxpElementId}) {
+export default function ({
+	defaultLocale,
+	namespace,
+	redirectURL,
+	sxpElementId,
+}) {
 	const [resource, setResource] = useState(null);
 
 	useEffect(() => {
@@ -39,7 +44,7 @@ export default function ({defaultLocale, namespace, redirect, sxpElementId}) {
 			value={{
 				defaultLocale,
 				namespace,
-				redirectURL: redirect,
+				redirectURL,
 				sxpElementId,
 			}}
 		>

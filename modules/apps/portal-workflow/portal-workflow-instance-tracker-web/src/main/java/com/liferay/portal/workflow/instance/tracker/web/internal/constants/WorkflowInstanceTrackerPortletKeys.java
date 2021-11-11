@@ -19,8 +19,8 @@ package com.liferay.portal.workflow.instance.tracker.web.internal.constants;
  */
 public class WorkflowInstanceTrackerPortletKeys {
 
-	public static final String INSTANCE_TRACKER =
-		"com_liferay_portal_workflow_instance_tracker_web_internal_portlet" +
-			"InstanceTrackerPortlet";
+	public static final String WORKFLOW_INSTANCE_TRACKER =
+		"com_liferay_portal_workflow_instance_tracker_web_internal_portlet_" +
+			"WorkflowInstanceTrackerPortlet";
 
 }

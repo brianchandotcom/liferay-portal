@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Feliphe Marinho
  */
-public interface InstanceTrackerURLProvider {
+public interface WorkflowInstanceTrackerURLProvider {
 
 	public String getURL(
 		Object bean, HttpServletRequest httpServletRequest, Class<?> model,

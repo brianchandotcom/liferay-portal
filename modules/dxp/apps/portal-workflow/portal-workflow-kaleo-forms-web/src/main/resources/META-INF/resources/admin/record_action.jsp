@@ -64,6 +64,6 @@ DDLRecordVersion ddlRecordVersion = ddlRecord.getLatestRecordVersion();
 
 	<liferay-ui:icon
 		message="track-workflow"
-		url="<%= InstanceTrackerURLProviderUtil.getURL(ddlRecord, request, KaleoProcess.class, true) %>"
+		url="<%= WorkflowInstanceTrackerURLProviderUtil.getURL(ddlRecord, request, KaleoProcess.class, true) %>"
 	/>
 </liferay-ui:icon-menu>

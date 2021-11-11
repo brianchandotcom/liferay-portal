@@ -24,24 +24,25 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Feliphe Marinho
  */
-public class InstanceTrackerURLProviderUtil {
+public class WorkflowInstanceTrackerURLProviderUtil {
 
 	public static String getURL(
 			Object bean, HttpServletRequest httpServletRequest, Class<?> model,
 			boolean useDialog)
 		throws Exception {
 
-		InstanceTrackerURLProvider instanceTrackerURLProvider =
+		WorkflowInstanceTrackerURLProvider workflowInstanceTrackerURLProvider =
 			_serviceTracker.getService();
 
-		return instanceTrackerURLProvider.getURL(
+		return workflowInstanceTrackerURLProvider.getURL(
 			bean, httpServletRequest, model, useDialog);
 	}
 
 	private static final ServiceTracker
-		<InstanceTrackerURLProvider, InstanceTrackerURLProvider>
+		<WorkflowInstanceTrackerURLProvider, WorkflowInstanceTrackerURLProvider>
 			_serviceTracker = ServiceTrackerFactory.open(
-				FrameworkUtil.getBundle(InstanceTrackerURLProviderUtil.class),
-				InstanceTrackerURLProvider.class);
+				FrameworkUtil.getBundle(
+					WorkflowInstanceTrackerURLProviderUtil.class),
+				WorkflowInstanceTrackerURLProvider.class);
 
 }

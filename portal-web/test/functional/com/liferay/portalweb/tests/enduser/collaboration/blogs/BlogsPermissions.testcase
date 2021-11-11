@@ -1190,16 +1190,16 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
 		JSONBlog.addComment(
 			commentBody = "Blog Comment",
 			entryTitle = "Blogs Entry Title",
-			groupName = "Guest");
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		AssertElementNotPresent(locator1 = "Comments#COMMENT_ACTIONS");
 	}

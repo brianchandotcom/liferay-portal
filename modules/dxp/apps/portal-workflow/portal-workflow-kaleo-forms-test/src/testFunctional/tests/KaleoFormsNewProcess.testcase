@@ -223,9 +223,6 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Workflow Definition Title");
-
-
-		
 	}
 
 	@description = "Verify that the progress bar is shown correctly."

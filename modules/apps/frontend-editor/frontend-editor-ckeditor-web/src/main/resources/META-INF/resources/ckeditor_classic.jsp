@@ -34,7 +34,7 @@ if (editorData != null) {
 	editorConfigJSONObject = (JSONObject)editorData.get("editorConfig");
 }
 %>
-
+q
 <div>
 	<react:component
 		module="editor/ClassicEditor"

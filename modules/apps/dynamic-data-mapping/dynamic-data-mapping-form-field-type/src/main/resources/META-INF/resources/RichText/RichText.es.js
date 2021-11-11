@@ -48,8 +48,9 @@ const RichText = ({
 
 			editor.config.contentsLanguage = editingLanguageId;
 
-			editor.setData(editor.getData());
+			editor.setData(contents);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [editingLanguageId]);
 
 	return (

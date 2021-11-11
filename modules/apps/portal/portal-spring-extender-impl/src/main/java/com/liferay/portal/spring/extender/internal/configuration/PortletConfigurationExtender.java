@@ -24,9 +24,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -96,13 +94,11 @@ public class PortletConfigurationExtender
 	public class PortletConfigurationExtension {
 
 		public void destroy() {
-			for (ServiceRegistration<?> serviceRegistration :
-					_serviceRegistrations) {
+			if (_configurationServiceRegistration != null) {
+				_configurationServiceRegistration.unregister();
 
-				serviceRegistration.unregister();
+				_configurationServiceRegistration = null;
 			}
-
-			_serviceRegistrations.clear();
 		}
 
 		public void start() {
@@ -130,14 +126,13 @@ public class PortletConfigurationExtender
 
 			BundleContext bundleContext = _bundle.getBundleContext();
 
-			_serviceRegistrations.add(
-				bundleContext.registerService(
-					Configuration.class, _portletConfiguration,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"name", "portlet"
-					).put(
-						"origin.bundle.symbolic.name", _bundle.getSymbolicName()
-					).build()));
+			_configurationServiceRegistration = bundleContext.registerService(
+				Configuration.class, _portletConfiguration,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"name", "portlet"
+				).put(
+					"origin.bundle.symbolic.name", _bundle.getSymbolicName()
+				).build());
 		}
 
 		private PortletConfigurationExtension(
@@ -151,9 +146,9 @@ public class PortletConfigurationExtender
 
 		private final Bundle _bundle;
 		private final ClassLoader _classLoader;
+		private ServiceRegistration<Configuration>
+			_configurationServiceRegistration;
 		private final Configuration _portletConfiguration;
-		private final List<ServiceRegistration<?>> _serviceRegistrations =
-			new ArrayList<>();
 
 	}
 

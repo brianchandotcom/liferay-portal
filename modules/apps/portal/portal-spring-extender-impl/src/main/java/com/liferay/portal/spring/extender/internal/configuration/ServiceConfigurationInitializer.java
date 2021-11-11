@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.internal.loader.ModuleResourceLoader;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import org.osgi.framework.Bundle;
@@ -55,13 +53,11 @@ public class ServiceConfigurationInitializer {
 		_serviceComponentLocalService.destroyServiceComponent(
 			_serviceComponentConfiguration, _classLoader);
 
-		for (ServiceRegistration<?> serviceRegistration :
-				_serviceRegistrations) {
+		if (_configurationServiceRegistration != null) {
+			_configurationServiceRegistration.unregister();
 
-			serviceRegistration.unregister();
+			_configurationServiceRegistration = null;
 		}
-
-		_serviceRegistrations.clear();
 	}
 
 	protected void start() {
@@ -69,14 +65,13 @@ public class ServiceConfigurationInitializer {
 
 		BundleContext bundleContext = _bundle.getBundleContext();
 
-		_serviceRegistrations.add(
-			bundleContext.registerService(
-				Configuration.class, _serviceConfiguration,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"name", "service"
-				).put(
-					"origin.bundle.symbolic.name", _bundle.getSymbolicName()
-				).build()));
+		_configurationServiceRegistration = bundleContext.registerService(
+			Configuration.class, _serviceConfiguration,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"name", "service"
+			).put(
+				"origin.bundle.symbolic.name", _bundle.getSymbolicName()
+			).build());
 	}
 
 	private void _initServiceComponent() {
@@ -119,10 +114,10 @@ public class ServiceConfigurationInitializer {
 
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
+	private ServiceRegistration<Configuration>
+		_configurationServiceRegistration;
 	private final ServiceComponentConfiguration _serviceComponentConfiguration;
 	private final ServiceComponentLocalService _serviceComponentLocalService;
 	private final Configuration _serviceConfiguration;
-	private final List<ServiceRegistration<?>> _serviceRegistrations =
-		new ArrayList<>();
 
 }

@@ -9,7 +9,7 @@
 		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))
 	/>
 
-	${csvFileWriter.write("layout", layoutModel.friendlyURL + "\n")}
+	${csvFileWriter.write("layout", virtualHostModel.hostname + "," + layoutModel.friendlyURL + "\n")}
 
 	<@insertLayout _layoutModel=layoutModel />
 

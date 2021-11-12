@@ -264,25 +264,31 @@ public class PortalInstancesLocalServiceImpl
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			try {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)currentThemeDisplay.clone();
+			ThemeDisplay themeDisplay = null;
 
-				themeDisplay.setCompany(company);
-				themeDisplay.setLayout(controlPanelLayout);
-				themeDisplay.setPermissionChecker(permissionChecker);
-				themeDisplay.setPlid(controlPanelPlid);
-				themeDisplay.setRequest(httpServletRequest);
-				themeDisplay.setScopeGroupId(group.getGroupId());
-				themeDisplay.setSiteGroupId(group.getGroupId());
-				themeDisplay.setUser(user);
+			if (currentThemeDisplay != null) {
+				try {
+					themeDisplay = (ThemeDisplay)currentThemeDisplay.clone();
+				}
+				catch (CloneNotSupportedException cloneNotSupportedException) {
+					_log.error(cloneNotSupportedException);
+				}
+			}
+			else {
+				themeDisplay = new ThemeDisplay();
+			}
 
-				httpServletRequest.setAttribute(
-					WebKeys.THEME_DISPLAY, themeDisplay);
-			}
-			catch (CloneNotSupportedException cloneNotSupportedException) {
-				_log.error(cloneNotSupportedException);
-			}
+			themeDisplay.setCompany(company);
+			themeDisplay.setLayout(controlPanelLayout);
+			themeDisplay.setPermissionChecker(permissionChecker);
+			themeDisplay.setPlid(controlPanelPlid);
+			themeDisplay.setRequest(httpServletRequest);
+			themeDisplay.setScopeGroupId(group.getGroupId());
+			themeDisplay.setSiteGroupId(group.getGroupId());
+			themeDisplay.setUser(user);
+
+			httpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
 		}
 
 		return serviceContext;

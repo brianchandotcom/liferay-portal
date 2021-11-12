@@ -1,14 +1,14 @@
 [
 	{
 		"ddmStructureKey": "TEST DDM STRUCTURE NAME",
-		"title": "Closed Claims",
+		"title": "Test Asset List Entry 1",
 		"unicodeProperties": {
 			"classNameIds": "com.liferay.journal.model.JournalArticle"
 		}
 	},
 	{
 		"ddmStructureKey": "TEST DDM STRUCTURE NAME",
-		"title": "Open Claims",
+		"title": "Test Asset List Entry 2",
 		"unicodeProperties": {
 			"classNameIds": "com.liferay.journal.model.JournalArticle"
 		}

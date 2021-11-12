@@ -78,6 +78,7 @@ public class CommerceShippingFixedOptionRelModelImpl
 	public static final String TABLE_NAME = "CShippingFixedOptionRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"CShippingFixedOptionRelId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -95,6 +96,7 @@ public class CommerceShippingFixedOptionRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CShippingFixedOptionRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -116,7 +118,7 @@ public class CommerceShippingFixedOptionRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CShippingFixedOptionRel (CShippingFixedOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,commerceShippingFixedOptionId LONG,commerceInventoryWarehouseId LONG,countryId LONG,regionId LONG,zip VARCHAR(75) null,weightFrom DOUBLE,weightTo DOUBLE,fixedPrice DECIMAL(30, 16) null,rateUnitWeightPrice DECIMAL(30, 16) null,ratePercentage DOUBLE)";
+		"create table CShippingFixedOptionRel (mvccVersion LONG default 0 not null,CShippingFixedOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,commerceShippingFixedOptionId LONG,commerceInventoryWarehouseId LONG,countryId LONG,regionId LONG,zip VARCHAR(75) null,weightFrom DOUBLE,weightTo DOUBLE,fixedPrice DECIMAL(30, 16) null,rateUnitWeightPrice DECIMAL(30, 16) null,ratePercentage DOUBLE)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CShippingFixedOptionRel";
@@ -188,6 +190,7 @@ public class CommerceShippingFixedOptionRelModelImpl
 		CommerceShippingFixedOptionRel model =
 			new CommerceShippingFixedOptionRelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceShippingFixedOptionRelId(
 			soapModel.getCommerceShippingFixedOptionRelId());
 		model.setGroupId(soapModel.getGroupId());
@@ -378,6 +381,12 @@ public class CommerceShippingFixedOptionRelModelImpl
 					<String, BiConsumer<CommerceShippingFixedOptionRel, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceShippingFixedOptionRel::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceShippingFixedOptionRel, Long>)
+				CommerceShippingFixedOptionRel::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceShippingFixedOptionRelId",
 			CommerceShippingFixedOptionRel::
 				getCommerceShippingFixedOptionRelId);
@@ -500,6 +509,21 @@ public class CommerceShippingFixedOptionRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -888,6 +912,7 @@ public class CommerceShippingFixedOptionRelModelImpl
 		CommerceShippingFixedOptionRelImpl commerceShippingFixedOptionRelImpl =
 			new CommerceShippingFixedOptionRelImpl();
 
+		commerceShippingFixedOptionRelImpl.setMvccVersion(getMvccVersion());
 		commerceShippingFixedOptionRelImpl.setCommerceShippingFixedOptionRelId(
 			getCommerceShippingFixedOptionRelId());
 		commerceShippingFixedOptionRelImpl.setGroupId(getGroupId());
@@ -923,6 +948,8 @@ public class CommerceShippingFixedOptionRelModelImpl
 		CommerceShippingFixedOptionRelImpl commerceShippingFixedOptionRelImpl =
 			new CommerceShippingFixedOptionRelImpl();
 
+		commerceShippingFixedOptionRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceShippingFixedOptionRelImpl.setCommerceShippingFixedOptionRelId(
 			this.<Long>getColumnOriginalValue("CShippingFixedOptionRelId"));
 		commerceShippingFixedOptionRelImpl.setGroupId(
@@ -1048,6 +1075,8 @@ public class CommerceShippingFixedOptionRelModelImpl
 		CommerceShippingFixedOptionRelCacheModel
 			commerceShippingFixedOptionRelCacheModel =
 				new CommerceShippingFixedOptionRelCacheModel();
+
+		commerceShippingFixedOptionRelCacheModel.mvccVersion = getMvccVersion();
 
 		commerceShippingFixedOptionRelCacheModel.
 			commerceShippingFixedOptionRelId =
@@ -1217,6 +1246,7 @@ public class CommerceShippingFixedOptionRelModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceShippingFixedOptionRelId;
 	private long _groupId;
 	private long _companyId;
@@ -1266,6 +1296,7 @@ public class CommerceShippingFixedOptionRelModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"CShippingFixedOptionRelId", _commerceShippingFixedOptionRelId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1312,41 +1343,43 @@ public class CommerceShippingFixedOptionRelModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("CShippingFixedOptionRelId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("groupId", 2L);
+		columnBitmasks.put("CShippingFixedOptionRelId", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("commerceShippingMethodId", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("commerceShippingFixedOptionId", 256L);
+		columnBitmasks.put("commerceShippingMethodId", 256L);
 
-		columnBitmasks.put("commerceInventoryWarehouseId", 512L);
+		columnBitmasks.put("commerceShippingFixedOptionId", 512L);
 
-		columnBitmasks.put("countryId", 1024L);
+		columnBitmasks.put("commerceInventoryWarehouseId", 1024L);
 
-		columnBitmasks.put("regionId", 2048L);
+		columnBitmasks.put("countryId", 2048L);
 
-		columnBitmasks.put("zip", 4096L);
+		columnBitmasks.put("regionId", 4096L);
 
-		columnBitmasks.put("weightFrom", 8192L);
+		columnBitmasks.put("zip", 8192L);
 
-		columnBitmasks.put("weightTo", 16384L);
+		columnBitmasks.put("weightFrom", 16384L);
 
-		columnBitmasks.put("fixedPrice", 32768L);
+		columnBitmasks.put("weightTo", 32768L);
 
-		columnBitmasks.put("rateUnitWeightPrice", 65536L);
+		columnBitmasks.put("fixedPrice", 65536L);
 
-		columnBitmasks.put("ratePercentage", 131072L);
+		columnBitmasks.put("rateUnitWeightPrice", 131072L);
+
+		columnBitmasks.put("ratePercentage", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

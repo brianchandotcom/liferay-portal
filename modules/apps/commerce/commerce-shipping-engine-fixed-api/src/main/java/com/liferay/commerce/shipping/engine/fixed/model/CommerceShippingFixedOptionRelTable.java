@@ -36,6 +36,9 @@ public class CommerceShippingFixedOptionRelTable
 	public static final CommerceShippingFixedOptionRelTable INSTANCE =
 		new CommerceShippingFixedOptionRelTable();
 
+	public final Column<CommerceShippingFixedOptionRelTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceShippingFixedOptionRelTable, Long>
 		commerceShippingFixedOptionRelId = createColumn(
 			"CShippingFixedOptionRelId", Long.class, Types.BIGINT,

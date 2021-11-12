@@ -38,6 +38,7 @@ public class CommerceShippingFixedOptionSoap implements Serializable {
 		CommerceShippingFixedOptionSoap soapModel =
 			new CommerceShippingFixedOptionSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceShippingFixedOptionId(
 			model.getCommerceShippingFixedOptionId());
 		soapModel.setGroupId(model.getGroupId());
@@ -112,6 +113,14 @@ public class CommerceShippingFixedOptionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceShippingFixedOptionId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceShippingFixedOptionId() {
@@ -212,6 +221,7 @@ public class CommerceShippingFixedOptionSoap implements Serializable {
 		_priority = priority;
 	}
 
+	private long _mvccVersion;
 	private long _commerceShippingFixedOptionId;
 	private long _groupId;
 	private long _companyId;

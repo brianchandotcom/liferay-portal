@@ -85,6 +85,7 @@ public class CommerceShippingFixedOptionModelImpl
 	public static final String TABLE_NAME = "CommerceShippingFixedOption";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"commerceShippingFixedOptionId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -98,6 +99,7 @@ public class CommerceShippingFixedOptionModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceShippingFixedOptionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -113,7 +115,7 @@ public class CommerceShippingFixedOptionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceShippingFixedOption (commerceShippingFixedOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,name STRING null,description STRING null,amount DECIMAL(30, 16) null,priority DOUBLE)";
+		"create table CommerceShippingFixedOption (mvccVersion LONG default 0 not null,commerceShippingFixedOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,name STRING null,description STRING null,amount DECIMAL(30, 16) null,priority DOUBLE)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceShippingFixedOption";
@@ -179,6 +181,7 @@ public class CommerceShippingFixedOptionModelImpl
 		CommerceShippingFixedOption model =
 			new CommerceShippingFixedOptionImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceShippingFixedOptionId(
 			soapModel.getCommerceShippingFixedOptionId());
 		model.setGroupId(soapModel.getGroupId());
@@ -360,6 +363,12 @@ public class CommerceShippingFixedOptionModelImpl
 					<String, BiConsumer<CommerceShippingFixedOption, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceShippingFixedOption::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceShippingFixedOption, Long>)
+				CommerceShippingFixedOption::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceShippingFixedOptionId",
 			CommerceShippingFixedOption::getCommerceShippingFixedOptionId);
 		attributeSetterBiConsumers.put(
@@ -438,6 +447,21 @@ public class CommerceShippingFixedOptionModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -994,6 +1018,7 @@ public class CommerceShippingFixedOptionModelImpl
 		CommerceShippingFixedOptionImpl commerceShippingFixedOptionImpl =
 			new CommerceShippingFixedOptionImpl();
 
+		commerceShippingFixedOptionImpl.setMvccVersion(getMvccVersion());
 		commerceShippingFixedOptionImpl.setCommerceShippingFixedOptionId(
 			getCommerceShippingFixedOptionId());
 		commerceShippingFixedOptionImpl.setGroupId(getGroupId());
@@ -1019,6 +1044,8 @@ public class CommerceShippingFixedOptionModelImpl
 		CommerceShippingFixedOptionImpl commerceShippingFixedOptionImpl =
 			new CommerceShippingFixedOptionImpl();
 
+		commerceShippingFixedOptionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceShippingFixedOptionImpl.setCommerceShippingFixedOptionId(
 			this.<Long>getColumnOriginalValue("commerceShippingFixedOptionId"));
 		commerceShippingFixedOptionImpl.setGroupId(
@@ -1130,6 +1157,8 @@ public class CommerceShippingFixedOptionModelImpl
 		CommerceShippingFixedOptionCacheModel
 			commerceShippingFixedOptionCacheModel =
 				new CommerceShippingFixedOptionCacheModel();
+
+		commerceShippingFixedOptionCacheModel.mvccVersion = getMvccVersion();
 
 		commerceShippingFixedOptionCacheModel.commerceShippingFixedOptionId =
 			getCommerceShippingFixedOptionId();
@@ -1286,6 +1315,7 @@ public class CommerceShippingFixedOptionModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceShippingFixedOptionId;
 	private long _groupId;
 	private long _companyId;
@@ -1329,6 +1359,7 @@ public class CommerceShippingFixedOptionModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"commerceShippingFixedOptionId", _commerceShippingFixedOptionId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1356,29 +1387,31 @@ public class CommerceShippingFixedOptionModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("commerceShippingFixedOptionId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("groupId", 2L);
+		columnBitmasks.put("commerceShippingFixedOptionId", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("commerceShippingMethodId", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("name", 256L);
+		columnBitmasks.put("commerceShippingMethodId", 256L);
 
-		columnBitmasks.put("description", 512L);
+		columnBitmasks.put("name", 512L);
 
-		columnBitmasks.put("amount", 1024L);
+		columnBitmasks.put("description", 1024L);
 
-		columnBitmasks.put("priority", 2048L);
+		columnBitmasks.put("amount", 2048L);
+
+		columnBitmasks.put("priority", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -47,6 +47,7 @@ public class CommerceShippingFixedOptionWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceShippingFixedOptionId",
 			getCommerceShippingFixedOptionId());
@@ -68,6 +69,12 @@ public class CommerceShippingFixedOptionWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceShippingFixedOptionId = (Long)attributes.get(
 			"commerceShippingFixedOptionId");
 
@@ -302,6 +309,16 @@ public class CommerceShippingFixedOptionWrapper
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce shipping fixed option.
+	 *
+	 * @return the mvcc version of this commerce shipping fixed option
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -587,6 +604,16 @@ public class CommerceShippingFixedOptionWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce shipping fixed option.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce shipping fixed option
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

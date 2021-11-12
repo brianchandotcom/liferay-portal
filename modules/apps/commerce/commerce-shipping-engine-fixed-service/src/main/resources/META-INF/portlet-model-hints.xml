@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption">
+		<field name="mvccVersion" type="long" />
 		<field name="commerceShippingFixedOptionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -19,6 +20,7 @@
 		<field name="priority" type="double" />
 	</model>
 	<model name="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel">
+		<field name="mvccVersion" type="long" />
 		<field name="commerceShippingFixedOptionRelId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

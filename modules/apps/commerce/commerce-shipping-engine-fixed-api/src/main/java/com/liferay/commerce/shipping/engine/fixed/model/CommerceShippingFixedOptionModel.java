@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.math.BigDecimal;
@@ -43,7 +44,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommerceShippingFixedOptionModel
 	extends BaseModel<CommerceShippingFixedOption>, GroupedModel,
-			LocalizedModel, ShardedModel {
+			LocalizedModel, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -64,6 +65,22 @@ public interface CommerceShippingFixedOptionModel
 	 * @param primaryKey the primary key of this commerce shipping fixed option
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce shipping fixed option.
+	 *
+	 * @return the mvcc version of this commerce shipping fixed option
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce shipping fixed option.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce shipping fixed option
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce shipping fixed option ID of this commerce shipping fixed option.

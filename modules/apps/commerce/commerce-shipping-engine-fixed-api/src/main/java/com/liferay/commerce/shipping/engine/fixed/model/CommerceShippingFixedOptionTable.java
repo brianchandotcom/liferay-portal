@@ -36,6 +36,9 @@ public class CommerceShippingFixedOptionTable
 	public static final CommerceShippingFixedOptionTable INSTANCE =
 		new CommerceShippingFixedOptionTable();
 
+	public final Column<CommerceShippingFixedOptionTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceShippingFixedOptionTable, Long>
 		commerceShippingFixedOptionId = createColumn(
 			"commerceShippingFixedOptionId", Long.class, Types.BIGINT,

@@ -18,6 +18,7 @@ import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOpt
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -35,7 +36,8 @@ import java.util.Date;
  * @generated
  */
 public class CommerceShippingFixedOptionRelCacheModel
-	implements CacheModel<CommerceShippingFixedOptionRel>, Externalizable {
+	implements CacheModel<CommerceShippingFixedOptionRel>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -51,9 +53,11 @@ public class CommerceShippingFixedOptionRelCacheModel
 			commerceShippingFixedOptionRelCacheModel =
 				(CommerceShippingFixedOptionRelCacheModel)object;
 
-		if (commerceShippingFixedOptionRelId ==
+		if ((commerceShippingFixedOptionRelId ==
 				commerceShippingFixedOptionRelCacheModel.
-					commerceShippingFixedOptionRelId) {
+					commerceShippingFixedOptionRelId) &&
+			(mvccVersion ==
+				commerceShippingFixedOptionRelCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -63,14 +67,28 @@ public class CommerceShippingFixedOptionRelCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceShippingFixedOptionRelId);
+		int hashCode = HashUtil.hash(0, commerceShippingFixedOptionRelId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
-		sb.append("{commerceShippingFixedOptionRelId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceShippingFixedOptionRelId=");
 		sb.append(commerceShippingFixedOptionRelId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -116,6 +134,7 @@ public class CommerceShippingFixedOptionRelCacheModel
 		CommerceShippingFixedOptionRelImpl commerceShippingFixedOptionRelImpl =
 			new CommerceShippingFixedOptionRelImpl();
 
+		commerceShippingFixedOptionRelImpl.setMvccVersion(mvccVersion);
 		commerceShippingFixedOptionRelImpl.setCommerceShippingFixedOptionRelId(
 			commerceShippingFixedOptionRelId);
 		commerceShippingFixedOptionRelImpl.setGroupId(groupId);
@@ -177,6 +196,8 @@ public class CommerceShippingFixedOptionRelCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
+		mvccVersion = objectInput.readLong();
+
 		commerceShippingFixedOptionRelId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -210,6 +231,8 @@ public class CommerceShippingFixedOptionRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceShippingFixedOptionRelId);
 
 		objectOutput.writeLong(groupId);
@@ -254,6 +277,7 @@ public class CommerceShippingFixedOptionRelCacheModel
 		objectOutput.writeDouble(ratePercentage);
 	}
 
+	public long mvccVersion;
 	public long commerceShippingFixedOptionRelId;
 	public long groupId;
 	public long companyId;

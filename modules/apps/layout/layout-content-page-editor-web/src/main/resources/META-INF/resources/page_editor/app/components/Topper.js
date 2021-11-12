@@ -202,7 +202,6 @@ function TopperContent({
 					<TopperListItem
 						className="d-inline-block page-editor__topper__title"
 						expand
-						title={name}
 					>
 						{name}
 					</TopperListItem>

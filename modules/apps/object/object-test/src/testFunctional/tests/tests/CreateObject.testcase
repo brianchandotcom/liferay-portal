@@ -3393,12 +3393,40 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object portlet is displayed again on the Site Menu when reactivated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectPortletReappearsSiteMenuWhenReactivated {
 
-		// TODO LPS-140877 ObjectPortletReappearsSiteMenuWhenReactivated pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			panelCategoryKey = "site_administration.content",
+			pluralLabelName = "Custom Objects",
+			scope = "site");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ProductMenuHelper.openProductMenu();
+
+		ProductMenuHelper.expandCategory(category = "Content & Data");
+
+		AssertElementPresent(
+			key_portlet = "Custom Objects",
+			locator1 = "ProductMenu#PORTLET",
+			value1 = "Custom Objects");
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Collection Providers when reactivated"

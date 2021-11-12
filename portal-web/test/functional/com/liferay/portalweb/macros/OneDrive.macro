@@ -71,11 +71,19 @@ definition {
 	macro editTitle {
 		Pause(locator1 = "10000");
 
+		WaitForPageLoad();
+
 		SelectWindow.selectPopUp(locator1 = "null");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
 
 		Click(locator1 = "OneDrive#DOCUMENTS_TITLE");
+
+		if (IsElementNotPresent(locator1 = "OneDrive#DOCUMENTS_TITLE_RENAME")) {
+			while (IsElementNotPresent(locator1 = "OneDrive#DOCUMENTS_TITLE_RENAME")) {
+				Click(locator1 = "OneDrive#DOCUMENTS_TITLE");
+			}
+		}
 
 		Type(
 			locator1 = "OneDrive#DOCUMENTS_TITLE_RENAME",
@@ -84,6 +92,8 @@ definition {
 		KeyPress(
 			locator1 = "OneDrive#DOCUMENTS_TITLE_RENAME",
 			value1 = "\RETURN");
+
+		WaitForPageLoad();
 
 		WaitForElementPresent(locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS");
 

@@ -3384,11 +3384,29 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object portlet is displayed again on the Open Menu when reactivated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectPortletReappearsOpenMenuWhenReactivated {
 
-		// TODO LPS-140876 ObjectPortletReappearsOpenMenuWhenReactivated pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.saveObject();
+
+		ObjectPortlet.assertObjectIsDisplayedOnControlPanel();
 
 	}
 

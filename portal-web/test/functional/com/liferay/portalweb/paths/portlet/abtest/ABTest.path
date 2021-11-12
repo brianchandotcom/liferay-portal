@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_SEGMENT_WITH_EXPERIENCE_MESSAGE</td>
+	<td>//div[contains(@class, 'alert alert-dismissible alert-danger') and contains(.,'The segment cannot be deleted because it is required by one or more experiences.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HIDE_AB_TEST_BUTTON</td>
 	<td>//a[contains(@class,'d-block')]//*[contains(text(),'Do not show me this again.')]</td>
 	<td></td>

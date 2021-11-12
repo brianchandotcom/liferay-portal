@@ -1016,7 +1016,6 @@ definition {
 	}
 
 	@description = "LPS-104203: Validate if in the AB Test, when the user delete the clickable element that was set, the warning alert appears"
-	@ignore = "true"
 	@priority = "4"
 	test DeleteClickableElementWarning {
 		task ("Edit the Content page to add a button fragment") {
@@ -1094,30 +1093,116 @@ definition {
 	}
 
 	@description = "LPS-99225: Validate if the admin can delete a page with an A/B test in terminated status"
-	@ignore = "true"
 	@priority = "3"
 	test DeletePageABTestTerminated {
+		task ("Create page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page 2",
+				type = "content");
 
-		// TODO LPS-137491 DeletePageABTestTerminated pending implementation
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-2");
+		}
 
+		task ("Create AB test, create variant, run test and terminate test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
+
+		task ("Delete the page created") {
+			JSONLayout.deletePublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page 2");
+		}
 	}
 
 	@description = "LPS-99225: Validate if the admin can delete a segment in an experience with an A/B test in the draft status"
-	@ignore = "true"
 	@priority = "3"
 	test DeleteSegmentABTestDraft {
+		task ("Create a segment and an Experience using the segment created") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137491 DeleteSegmentABTestDraft pending implementation
+			ABTest.creatExperienceWithSegment(
+					newSegment = "SegmentForABTestNewExp1",
+					newExperience = "NewExp1");
+			
+			Button.clickPublish();
+		}
 
+		task ("Create a new A/B test with a new experience") {
+			ABTest.openABTestPanel();
+
+			ABTest.changeExperienceABTest(experience = "NewExp1");
+
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+		}
+
+		task ("Assert not being able to delete the segment that was added in an experience") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			Segmentation.deleteSegment(entry = "SegmentForABTest");
+
+			AssertElementPresent(locator1 = "ABTest#DELETE_SEGMENT_WITH_EXPERIENCE_MESSAGE");
+		}
+
+		task ("Delete AB Test") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ABTest.openABTestPanel();
+
+			ABTest.changeExperienceABTest(experience = "NewExp1");
+			
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-99225: Validate if the admin can delete a segment in an experience with an A/B test in terminated status"
-	@ignore = "true"
 	@priority = "3"
 	test DeleteSegmentABTestTerminated {
+		task ("Create a segment and an Experience using the segment created") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137491 DeleteSegmentABTestTerminated pending implementation
+			ABTest.creatExperienceWithSegment(
+					newSegment = "SegmentForABTestNewExp1",
+					newExperience = "NewExp1");
+			
+			Button.clickPublish();
+		}
 
+		task ("Create a new A/B test with a new experience, run and terminate AB Test") {
+			ABTest.openABTestPanel();
+
+			ABTest.changeExperienceABTest(experience = "NewExp1");
+
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
+
+		task ("Assert not being able to delete the segment that was added in an experience") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			Segmentation.deleteSegment(entry = "SegmentForABTest");
+
+			AssertElementPresent(locator1 = "ABTest#DELETE_SEGMENT_WITH_EXPERIENCE_MESSAGE");
+		}
 	}
 
 	@description = "LPS-97195: Validate if a message will appear asking if the user wants to delete a variant for A/B Test and he can delete with success"
@@ -1370,7 +1455,6 @@ definition {
 	}
 
 	@description = "LPS-101341: Validate if when the user will edit some Experience with an AB Test in a Terminated status, the system not will show any information about AB Test"
-	@ignore = "true"
 	@priority = "4"
 	test EditExperienceAfterTerminatedABTest {
 		property portal.acceptance = "true";
@@ -1431,7 +1515,6 @@ definition {
 	}
 
 	@description = "LPS-103334: Validate if the AB Test is in the status draft, the experience about the AB Test is active is in Edition Mode"
-	@ignore = "true"
 	@priority = "5"
 	test EditExperienceWithDraftABTest {
 		property portal.acceptance = "true";
@@ -1465,7 +1548,7 @@ definition {
 			ContentPages.gotoPageEditor();
 		}
 
-		task ("Assert the experience cannot be edited") {
+		task ("Assert the experience can be edited") {
 			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 
 			AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
@@ -2137,30 +2220,153 @@ definition {
 	}
 
 	@description = "LPS-99225: Validate if the admin can reassign a segment in an experience with an A/B test in the draft status"
-	@ignore = "true"
 	@priority = "3"
 	test ReassignSegmentABTestDraft {
+		task ("Create a segment and an Experience using the segment created") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137491 ReassignSegmentABTestDraft pending implementation
+			ABTest.creatExperienceWithSegment(
+					newSegment = "SegmentForABTest",
+					newExperience = "NewExp1");
+			
+			Button.clickPublish();
+		}
 
+		task ("Create a new A/B test with a new experience") {
+			ABTest.openABTestPanel();
+
+			ABTest.changeExperienceABTest(experience = "NewExp1");
+
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+		}
+
+		task ("Go to  edit the content page.") {
+			ContentPages.gotoPageEditor();
+		}
+
+		task ("Assert the experience can be edited") {
+			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+			Click(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
+
+			Select(
+				locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT",
+				value1 = "Anyone");
+
+			Click(locator1 = "Button#SAVE");
+
+			Alert.viewSuccessMessage();
+
+			Button.clickPublish();
+		}
+
+		task ("Delete AB Test") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ABTest.openABTestPanel();
+
+			ABTest.changeExperienceABTest(experience = "NewExp1");
+
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-99225: Validate if the admin cannot reassign a segment in an experience with an A/B test in running status"
-	@ignore = "true"
 	@priority = "4"
 	test ReassignSegmentABTestRunning {
+		property portal.acceptance = "true";
 
-		// TODO LPS-137491 ReassignSegmentABTestRunning pending implementation
+		task ("Create a segment and an Experience using the segment created") {
+			ContentPages.gotoPageEditor();
 
+			ABTest.creatExperienceWithSegment(
+					newSegment = "SegmentForABTest",
+					newExperience = "NewExp1");
+
+			Button.clickPublish();
+		}
+
+		task ("Create a new A/B test with a new experience and run it") {
+			ABTest.openABTestPanel();
+
+			ABTest.changeExperienceABTest(experience = "NewExp1");
+
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+		}
+
+		task ("Go to edit the content page.") {
+			ContentPages.gotoPageEditor();
+		}
+
+		task ("Assert the experience cannot be edited") {
+			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+			AssertElementNotPresent(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
+		}
+
+		task ("Terminate AB Test") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ABTest.changeExperienceABTest(experience = "NewExp1");
+
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-99225: Validate if the admin can rename a segment in an experience with an A/B test in the draft status"
-	@ignore = "true"
 	@priority = "3"
-	test RemaneSegmentABTestDraft {
+	test RenameSegmentABTestDraft {
+		task ("Create a segment and an Experience using the segment created") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137491 RemaneSegmentABTestDraft pending implementation
+			ABTest.creatExperienceWithSegment(
+					newSegment = "SegmentForABTest",
+					newExperience = "NewExp1");
+			
+			Button.clickPublish();
+		}
 
+		task ("Create a new A/B test with a new experience.") {
+			ABTest.openABTestPanel();
+
+			ABTest.changeExperienceABTest(experience = "NewExp1");
+
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+		}
+
+		task ("Go to Segments page and try to rename that segment") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			Segmentation.editSegment(entry = "SegmentForABTest");
+
+			Segmentation.fillTitle(titleField = "SegmentForABTest 2");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Delete AB Test") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ABTest.changeExperienceABTest(experience = "NewExp1");
+
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-96791: Validate if the user can remove the target"
@@ -2220,21 +2426,93 @@ definition {
 	}
 
 	@description = "LPS-99225: Validate if the admin cannot rename a segment in an experience with an A/B test in running status"
-	@ignore = "true"
 	@priority = "3"
 	test RenameSegmentABTestRunning {
+		task ("Create a segment and an Experience using the segment created") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137491 RenameSegmentABTestRunning pending implementation
+			ABTest.creatExperienceWithSegment(
+					newSegment = "SegmentForABTest",
+					newExperience = "NewExp1");
+			
+			Button.clickPublish();
+		}
 
+		task ("Create a new A/B test with a new experience and run it") {
+			ABTest.openABTestPanel();
+
+			ABTest.changeExperienceABTest(experience = "NewExp1");
+
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+		}
+
+		task ("Go to Segments page and try to rename that segment") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			Segmentation.editSegment(entry = "SegmentForABTest");
+
+			Segmentation.fillTitle(titleField = "SegmentForABTest 2");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Terminate AB Test") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ABTest.changeExperienceABTest(experience = "NewExp1");
+			
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-99225: Validate if the admin can rename a segment in an experience with an A/B test in terminated status"
-	@ignore = "true"
 	@priority = "3"
 	test RenameSegmentABTestTerminated {
+		task ("Create a segment and an Experience using the segment created") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-137491 RenameSegmentABTestTerminated pending implementation
+			ABTest.creatExperienceWithSegment(
+					newSegment = "SegmentForABTest",
+					newExperience = "NewExp1");
+			
+			Button.clickPublish();
+		}
 
+		task ("Create a new A/B test with a new experience, run and terminate it") {
+			ABTest.openABTestPanel();
+
+			ABTest.changeExperienceABTest(experience = "NewExp1");
+
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
+
+		task ("Go to Segments page and try to rename that segment") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			Segmentation.editSegment(entry = "SegmentForABTest");
+
+			Segmentation.fillTitle(titleField = "SegmentForABTest 2");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, all data is discarded after the user clicks on cancel button"

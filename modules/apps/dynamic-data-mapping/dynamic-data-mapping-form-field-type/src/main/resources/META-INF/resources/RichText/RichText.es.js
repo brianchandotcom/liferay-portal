@@ -51,7 +51,7 @@ const RichText = ({
 			editor.setData(contents);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [editingLanguageId]);
+	}, [editingLanguageId, predefinedValue]);
 
 	return (
 		<FieldBase

@@ -173,12 +173,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 				</span>
 				<span>
 					<react:component
-						module="js/RunExportTask"
+						module="js/export/Export"
 						props='<%=
 							HashMapBuilder.<String, Object>put(
-								"namespace", liferayPortletResponse.getNamespace()
+								"formExportDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
 							).put(
-								"runExportTaskURL",
+								"formExportURL",
 								ResourceURLBuilder.createResourceURL(
 									renderResponse
 								).setCMD(

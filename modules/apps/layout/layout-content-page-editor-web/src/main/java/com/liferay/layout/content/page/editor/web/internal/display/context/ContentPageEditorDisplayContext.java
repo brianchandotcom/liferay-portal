@@ -872,6 +872,14 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	protected boolean isPreviewPageAsGuestUser() {
+		if (stagingGroupHelper.isLocalStagingGroup(
+				themeDisplay.getScopeGroupId()) ||
+			stagingGroupHelper.isRemoteStagingGroup(
+				themeDisplay.getScopeGroupId())) {
+
+			return false;
+		}
+
 		Layout publishedLayout = _getPublishedLayout();
 
 		return !publishedLayout.isPrivateLayout();

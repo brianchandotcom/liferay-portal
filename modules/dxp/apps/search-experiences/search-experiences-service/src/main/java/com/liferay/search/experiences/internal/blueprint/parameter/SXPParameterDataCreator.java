@@ -135,7 +135,7 @@ public class SXPParameterDataCreator
 				_groupLocalService, _language, _layoutLocalService),
 			new IpstackSXPParameterContributor(_configurationProvider),
 			new OpenWeatherMapSXPParameterContributor(_configurationProvider),
-			new TimeSXPParameterContributor(_language, _userLocalService),
+			new TimeSXPParameterContributor(),
 			new UserSXPParameterContributor(
 				_language, _roleLocalService, _segmentsEntryRetriever,
 				_userGroupGroupRoleLocalService, _userGroupLocalService,

@@ -28,20 +28,9 @@ definition {
 		}
 
 		task ("Add public page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
-
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-			Navigator.openSiteURL(siteName = "${siteName}");
-
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = "landing");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "landing");
 		}
 
 		task ("Logout and login") {
@@ -53,9 +42,7 @@ definition {
 		}
 
 		task ("Assert url value") {
-			var portalURL = PropsUtil.get("portal.url");
-
-			AssertLocation(value1 = "${portalURL}/web/guest/landing");
+			AssertLocation(value1 = "http://localhost:8080/web/guest/landing");
 		}
 	}
 
@@ -68,11 +55,9 @@ definition {
 		task ("Login and add a public page ") {
 			User.firstLoginPG();
 
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = "landing");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "landing");
 		}
 
 		task ("Logout and login") {
@@ -84,9 +69,7 @@ definition {
 		}
 
 		task ("Assert url value") {
-			var portalURL = PropsUtil.get("portal.url");
-
-			AssertLocation(value1 = "${portalURL}/web/guest/landing");
+			AssertLocation(value1 = "http://localhost:8080/web/guest/landing");
 		}
 	}
 
@@ -133,10 +116,7 @@ definition {
 		task ("Enable openID connect CP") {
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",
@@ -147,10 +127,7 @@ definition {
 		}
 
 		task ("Add OpenID connect provider") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",
@@ -322,10 +299,7 @@ definition {
 		task ("Inable OpenID connection CP") {
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",
@@ -336,10 +310,7 @@ definition {
 		}
 
 		task ("Add SSO openID connect provider") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",
@@ -506,10 +477,7 @@ definition {
 
 			PortalSettings.enableOpenIDConnectCP();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",

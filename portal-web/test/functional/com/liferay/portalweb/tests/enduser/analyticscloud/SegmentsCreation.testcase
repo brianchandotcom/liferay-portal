@@ -274,7 +274,7 @@ definition {
 	@priority = "4"
 	test CanCreateDynamicIndividualsSegmentByDate {
 		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateDynamicIndividualsSegmentByDate";
-		
+
 		var fullNameList = "userfn userln,user1 user1";
 
 		task ("Add one more user with a given birth date") {

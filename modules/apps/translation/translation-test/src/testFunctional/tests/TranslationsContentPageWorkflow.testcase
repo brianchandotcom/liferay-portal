@@ -140,6 +140,89 @@ definition {
 			text = "Titulo");
 	}
 
+	@description = "This ensures that a button on a content page can be translated and published properly."
+	@priority = "5"
+	test CanPublishTranslatedHeadingAfterReview {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.clickPublish();
+
+		Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		WaitForPageLoad();
+
+		ContentPagesNavigator.goToTranslation(pageName = "Test Content Page Name");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "ja-JP");
+
+		Translations.translateFragmentField(
+			fieldName = "element-text",
+			fragmentText = "これは見出しです");
+
+		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.changeLocale(
+			currentLocale = "en-US",
+			locale = "ja-JP");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "Heading Example",
+			fragmentName = "Heading",
+			id = "element-text");
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Translation of Test Content Page Name to ja-JP",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Translation of Test Content Page Name to ja-JP",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			locale = "ja",
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "これは見出しです");
+	}
+
 	@description = "This ensures that an imported translation can be resubmitted after being rejected."
 	@priority = "5"
 	test CanResubmitRejectedImportedTranslation {

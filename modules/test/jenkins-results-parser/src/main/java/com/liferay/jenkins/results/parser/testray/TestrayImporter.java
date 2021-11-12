@@ -1222,6 +1222,8 @@ public class TestrayImporter {
 
 			workspace.setUp();
 
+			_setupPortalBundle();
+
 			return;
 		}
 

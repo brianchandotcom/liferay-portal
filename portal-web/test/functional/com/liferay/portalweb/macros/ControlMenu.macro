@@ -7,4 +7,10 @@ definition {
 			value1 = "${headerTitle}");
 	}
 
+	macro viewHeaderTitleLabel {
+		AssertTextEquals(
+			locator1 = "ControlMenu#HEADING_LABEL",
+			value1 = "${headerTitleLabel}");
+	}
+
 }

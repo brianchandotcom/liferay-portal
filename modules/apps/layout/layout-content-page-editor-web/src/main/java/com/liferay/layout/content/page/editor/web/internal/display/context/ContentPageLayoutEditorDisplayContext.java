@@ -119,9 +119,8 @@ public class ContentPageLayoutEditorDisplayContext
 			fragmentEntryConfigurationParser, fragmentRendererController,
 			fragmentRendererTracker, frontendTokenDefinitionRegistry,
 			httpServletRequest, infoItemServiceTracker, itemSelector,
-			pageEditorConfiguration, portletRequest, renderResponse);
-
-		_stagingGroupHelper = stagingGroupHelper;
+			pageEditorConfiguration, portletRequest, renderResponse,
+			stagingGroupHelper);
 	}
 
 	@Override
@@ -619,11 +618,11 @@ public class ContentPageLayoutEditorDisplayContext
 	private long _getStagingAwareGroupId() {
 		long groupId = getGroupId();
 
-		if (_stagingGroupHelper.isStagingGroup(groupId) &&
-			!_stagingGroupHelper.isStagedPortlet(
+		if (stagingGroupHelper.isStagingGroup(groupId) &&
+			!stagingGroupHelper.isStagedPortlet(
 				groupId, SegmentsPortletKeys.SEGMENTS)) {
 
-			Group group = _stagingGroupHelper.fetchLiveGroup(groupId);
+			Group group = stagingGroupHelper.fetchLiveGroup(groupId);
 
 			if (group != null) {
 				groupId = group.getGroupId();
@@ -703,6 +702,5 @@ public class ContentPageLayoutEditorDisplayContext
 	private Long _segmentsEntryId;
 	private Long _segmentsExperienceId;
 	private Boolean _showSegmentsExperiences;
-	private final StagingGroupHelper _stagingGroupHelper;
 
 }

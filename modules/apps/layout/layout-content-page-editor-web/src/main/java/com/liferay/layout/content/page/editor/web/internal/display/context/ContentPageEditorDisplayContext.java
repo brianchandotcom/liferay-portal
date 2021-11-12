@@ -140,6 +140,7 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType;
 import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemSelectorCriterion;
+import com.liferay.staging.StagingGroupHelper;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
@@ -193,7 +194,8 @@ public class ContentPageEditorDisplayContext {
 		InfoItemServiceTracker infoItemServiceTracker,
 		ItemSelector itemSelector,
 		PageEditorConfiguration pageEditorConfiguration,
-		PortletRequest portletRequest, RenderResponse renderResponse) {
+		PortletRequest portletRequest, RenderResponse renderResponse,
+		StagingGroupHelper stagingGroupHelper) {
 
 		_commentManager = commentManager;
 		_contentPageEditorSidebarPanels = contentPageEditorSidebarPanels;
@@ -212,6 +214,7 @@ public class ContentPageEditorDisplayContext {
 		this.httpServletRequest = httpServletRequest;
 		this.infoItemServiceTracker = infoItemServiceTracker;
 		this.portletRequest = portletRequest;
+		this.stagingGroupHelper = stagingGroupHelper;
 
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -877,6 +880,7 @@ public class ContentPageEditorDisplayContext {
 	protected final HttpServletRequest httpServletRequest;
 	protected final InfoItemServiceTracker infoItemServiceTracker;
 	protected final PortletRequest portletRequest;
+	protected final StagingGroupHelper stagingGroupHelper;
 	protected final ThemeDisplay themeDisplay;
 
 	private String _getAssetCategoryTreeNodeItemSelectorURL() {

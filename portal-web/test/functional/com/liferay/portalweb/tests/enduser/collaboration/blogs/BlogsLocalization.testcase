@@ -101,13 +101,17 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136778. It checks that social bookmarks for a Blog can be viewed in Japanese."
-	@ignore = "true"
 	@priority = "3"
 	test CanViewSocialBookmarksInJapanese {
-		property portal.acceptance = "false";
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
-		// TODO LPS-136778 CanViewSocialBookmarksInJapanese pending implementation
+		var portalURL = PropsUtil.get("portal.url");
 
+		Navigator.openSpecificURL(url = "${portalURL}/ja/blogs-page");
+
+		SocialBookmarks.viewDefaultSharableBookmarks();
 	}
 
 }

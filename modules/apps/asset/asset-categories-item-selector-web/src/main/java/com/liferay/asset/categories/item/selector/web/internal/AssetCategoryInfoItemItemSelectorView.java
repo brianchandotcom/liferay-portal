@@ -98,7 +98,8 @@ public class AssetCategoryInfoItemItemSelectorView
 			AssetCategoryItemSelectorWebKeys.
 				SELECT_ASSET_CATEGORY_INFO_ITEM_ITEM_SELECTOR_DISPLAY_CONTEXT,
 			new SelectAssetCategoryInfoItemDisplayContext(
-				(HttpServletRequest)servletRequest, itemSelectedEventName,
+				(HttpServletRequest)servletRequest,
+				infoItemItemSelectorCriterion, itemSelectedEventName,
 				(RenderResponse)servletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE)));
 

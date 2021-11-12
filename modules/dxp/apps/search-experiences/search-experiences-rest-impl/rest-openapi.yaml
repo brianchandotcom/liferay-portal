@@ -112,6 +112,18 @@ components:
                                             properties:
                                                 boost:
                                                     type: boolean
+                                                fieldMappings:
+                                                    items:
+                                                        properties:
+                                                            boost:
+                                                                format: float
+                                                                type: number
+                                                            field:
+                                                                type: string
+                                                            locale:
+                                                                type: string
+                                                        type: object
+                                                    type: array
                                                 helpText:
                                                     type: string
                                                 label:

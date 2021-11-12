@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
@@ -35,6 +34,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.util.PropsImpl;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -96,20 +97,37 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 
 		_ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(_ddmForm);
 
-		LocalizedValue localizedValue =
-			DDMFormValuesTestUtil.createLocalizedValue(
-				"Test", "Teste", LocaleUtil.US);
+		_ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				_FIELD_NAME,
+				DDMFormValuesTestUtil.createLocalizedValue(
+					"Test1", "Teste1", LocaleUtil.US)));
 
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				_FIELD_NAME, localizedValue);
+				RandomTestUtil.randomString(), null);
+
+		ddmFormFieldValue.addNestedDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				_NESTED_FIELD_NAME,
+				DDMFormValuesTestUtil.createLocalizedValue(
+					"Test2", "Teste2", LocaleUtil.US)));
 
 		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
-		Value value = getFieldValue();
+		Value value = getFieldValue(
+			_ddmFormValues.getDDMFormFieldValues(), _FIELD_NAME);
+
+		Assert.assertEquals(
+			StringPool.BLANK, value.getString(LocaleUtil.BRAZIL));
+
+		Assert.assertEquals(StringPool.BLANK, value.getString(LocaleUtil.US));
+
+		value = getFieldValue(
+			_ddmFormValues.getDDMFormFieldValues(), _NESTED_FIELD_NAME);
 
 		Assert.assertEquals(
 			StringPool.BLANK, value.getString(LocaleUtil.BRAZIL));
@@ -126,15 +144,27 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 
 		_ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(_ddmForm);
 
+		_ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(_FIELD_NAME, null));
+
 		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(_FIELD_NAME, null);
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				RandomTestUtil.randomString(), null);
+
+		ddmFormFieldValue.addNestedDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				_NESTED_FIELD_NAME, null));
 
 		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
-		Assert.assertNull(getFieldValue());
+		Assert.assertNull(
+			getFieldValue(_ddmFormValues.getDDMFormFieldValues(), _FIELD_NAME));
+		Assert.assertNull(
+			getFieldValue(
+				_ddmFormValues.getDDMFormFieldValues(), _NESTED_FIELD_NAME));
 	}
 
 	@Test
@@ -150,7 +180,12 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertEquals(
-			new UnlocalizedValue(StringPool.BLANK), getFieldValue());
+			new UnlocalizedValue(StringPool.BLANK),
+			getFieldValue(_ddmFormValues.getDDMFormFieldValues(), _FIELD_NAME));
+		Assert.assertEquals(
+			new UnlocalizedValue(StringPool.BLANK),
+			getFieldValue(
+				_ddmFormValues.getDDMFormFieldValues(), _NESTED_FIELD_NAME));
 		Assert.assertFalse(_ddmFormField.isRequired());
 	}
 
@@ -167,7 +202,12 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertEquals(
-			new UnlocalizedValue(_STRING_VALUE), getFieldValue());
+			new UnlocalizedValue(_STRING_VALUE),
+			getFieldValue(_ddmFormValues.getDDMFormFieldValues(), _FIELD_NAME));
+		Assert.assertEquals(
+			new UnlocalizedValue(_STRING_VALUE),
+			getFieldValue(
+				_ddmFormValues.getDDMFormFieldValues(), _NESTED_FIELD_NAME));
 		Assert.assertFalse(_ddmFormField.isRequired());
 	}
 
@@ -182,7 +222,12 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertEquals(
-			new UnlocalizedValue(StringPool.BLANK), getFieldValue());
+			new UnlocalizedValue(StringPool.BLANK),
+			getFieldValue(_ddmFormValues.getDDMFormFieldValues(), _FIELD_NAME));
+		Assert.assertEquals(
+			new UnlocalizedValue(StringPool.BLANK),
+			getFieldValue(
+				_ddmFormValues.getDDMFormFieldValues(), _NESTED_FIELD_NAME));
 		Assert.assertFalse(_ddmFormField.isRequired());
 	}
 
@@ -197,16 +242,28 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertEquals(
-			new UnlocalizedValue(_STRING_VALUE), getFieldValue());
+			new UnlocalizedValue(_STRING_VALUE),
+			getFieldValue(_ddmFormValues.getDDMFormFieldValues(), _FIELD_NAME));
+		Assert.assertEquals(
+			new UnlocalizedValue(_STRING_VALUE),
+			getFieldValue(
+				_ddmFormValues.getDDMFormFieldValues(), _NESTED_FIELD_NAME));
 		Assert.assertTrue(_ddmFormField.isRequired());
 	}
 
-	protected Value getFieldValue() {
-		for (DDMFormFieldValue ddmFormFieldValue :
-				_ddmFormValues.getDDMFormFieldValues()) {
+	protected Value getFieldValue(
+		List<DDMFormFieldValue> ddmFormFieldValues, String fieldName) {
 
-			if (Objects.equals(ddmFormFieldValue.getName(), _FIELD_NAME)) {
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			if (Objects.equals(ddmFormFieldValue.getName(), fieldName)) {
 				return ddmFormFieldValue.getValue();
+			}
+
+			Value value = getFieldValue(
+				ddmFormFieldValue.getNestedDDMFormFieldValues(), fieldName);
+
+			if (value != null) {
+				return value;
 			}
 		}
 
@@ -217,7 +274,20 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			Map<String, Object> fieldChangesProperties)
 		throws Exception {
 
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			RandomTestUtil.randomString(), null, null, null, false, false,
+			false);
+
+		List<DDMFormField> nestedDDMFormFields =
+			ddmFormField.getNestedDDMFormFields();
+
+		nestedDDMFormFields.add(
+			DDMFormTestUtil.createTextDDMFormField(
+				_NESTED_FIELD_NAME, false, false, false));
+
 		_ddmForm = DDMFormTestUtil.createDDMForm(_FIELD_NAME);
+
+		_ddmForm.addDDMFormField(ddmFormField);
 
 		Map<String, DDMFormField> ddmFormFields = _ddmForm.getDDMFormFieldsMap(
 			true);
@@ -228,20 +298,25 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 
 		_ddmFormField.setRequired(true);
 
-		_ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(_ddmForm);
-
-		DDMFormFieldValue ddmFormFieldValue =
+		DDMFormFieldValue ddmFormFieldValue1 =
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				_FIELD_NAME, _STRING_VALUE);
 
-		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+		DDMFormFieldValue nestedDDMFormFieldValue =
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				_NESTED_FIELD_NAME, _STRING_VALUE);
 
 		DDMFormEvaluatorEvaluateResponse.Builder builder =
 			DDMFormEvaluatorEvaluateResponse.Builder.newBuilder(
 				HashMapBuilder.
 					<DDMFormEvaluatorFieldContextKey, Map<String, Object>>put(
 						new DDMFormEvaluatorFieldContextKey(
-							_FIELD_NAME, ddmFormFieldValue.getInstanceId()),
+							_FIELD_NAME, ddmFormFieldValue1.getInstanceId()),
+						fieldChangesProperties
+					).put(
+						new DDMFormEvaluatorFieldContextKey(
+							_NESTED_FIELD_NAME,
+							nestedDDMFormFieldValue.getInstanceId()),
 						fieldChangesProperties
 					).build());
 
@@ -253,6 +328,18 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		).thenReturn(
 			builder.build()
 		);
+
+		_ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(_ddmForm);
+
+		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue1);
+
+		DDMFormFieldValue ddmFormFieldValue2 =
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				RandomTestUtil.randomString(), null);
+
+		ddmFormFieldValue2.addNestedDDMFormFieldValue(nestedDDMFormFieldValue);
+
+		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue2);
 	}
 
 	protected void mockGetDDMFormLayout() throws Exception {
@@ -335,6 +422,8 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 	}
 
 	private static final String _FIELD_NAME = "field0";
+
+	private static final String _NESTED_FIELD_NAME = "field1";
 
 	private static final String _STRING_VALUE = "string value";
 

@@ -378,6 +378,29 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 	}
 
 	@Test
+	public void testIsLimitToOneSubmissionPerUser() throws Exception {
+		DDMFormInstanceSettings ddmFormInstanceSettings = mock(
+			DDMFormInstanceSettings.class);
+
+		_mockDDMFormInstance(ddmFormInstanceSettings);
+
+		DDMFormDisplayContext ddmFormDisplayContext =
+			_createDDMFormDisplayContext();
+
+		Assert.assertFalse(
+			ddmFormDisplayContext.isLimitToOneSubmissionPerUserEnabled());
+
+		when(
+			ddmFormInstanceSettings.limitToOneSubmissionPerUser()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			ddmFormDisplayContext.isLimitToOneSubmissionPerUserEnabled());
+	}
+
+	@Test
 	public void testIsSharedFormWithoutPortletSession() throws Exception {
 		MockRenderRequest mockRenderRequest = _mockRenderRequest();
 

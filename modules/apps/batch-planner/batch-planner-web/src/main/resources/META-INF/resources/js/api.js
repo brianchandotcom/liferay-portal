@@ -14,11 +14,24 @@
 
 import {fetch} from 'frontend-js-web';
 
+import {EXPORT_PROCESS_COMPLETED, EXPORT_PROCESS_FAILED} from './constants';
+
 const HEADERS = new Headers({
 	'Accept': 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-	'Content-Type': 'application/json',
 });
+
+export const getExportTaskStatusURL = (taskId) =>
+	`/o/headless-batch-engine/v1.0/export-task/${taskId}`;
+
+export const getExportFileURL = async (taskId) => {
+	const response = await fetch(
+		`/o/headless-batch-engine/v1.0/export-task/${taskId}/content`
+	);
+	const blob = await response.blob();
+
+	return URL.createObjectURL(blob);
+};
 
 export const saveTemplateAPI = async (
 	formDataQuerySelector,
@@ -42,6 +55,7 @@ export const exportAPI = async (formDataQuerySelector, url) => {
 	const mainFormData = document.querySelector(formDataQuerySelector);
 
 	const formData = new FormData(mainFormData);
+
 	const response = await fetch(url, {
 		body: formData,
 		headers: HEADERS,
@@ -49,4 +63,46 @@ export const exportAPI = async (formDataQuerySelector, url) => {
 	});
 
 	return await response.json();
+};
+
+export const exportStatusAPI = async (exportTaskId) => {
+	const response = await fetch(getExportTaskStatusURL(exportTaskId), {
+		headers: HEADERS,
+	});
+
+	return await response.json();
+};
+
+export const getPollingExportStatusProcess = async ({
+	onFail,
+	onProgress,
+	onSuccess,
+	taskId,
+}) => {
+	try {
+		const {
+			contentType,
+			errorMessage,
+			executeStatus,
+			processedItemsCount,
+			totalItemsCount,
+		} = await exportStatusAPI(taskId);
+
+		switch (executeStatus) {
+			case EXPORT_PROCESS_FAILED:
+				onFail(errorMessage);
+				break;
+			case EXPORT_PROCESS_COMPLETED:
+				onSuccess(contentType);
+				break;
+			default:
+				onProgress(
+					contentType,
+					Math.round((processedItemsCount / totalItemsCount) * 100)
+				);
+		}
+	}
+	catch (error) {
+		onFail(Liferay.Language.get('unexpected-error'));
+	}
 };

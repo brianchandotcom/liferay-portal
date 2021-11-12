@@ -29,6 +29,7 @@ function Export({
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false),
 	});
+
 	const onButtonClick = useCallback(
 		(event) => {
 			event.preventDefault();

@@ -386,6 +386,12 @@
 	<td>//span[text()='Pending']</td>
 	<td></td>
 </tr>
+<!-- CONFIGURE CSV -->
+<tr>
+	<td>DATA_SOURCE_FIELD_NAME</td>
+	<td>xpath=(//button[contains(@class,'show-caret') and contains(.,'${key_FieldName}')])[${key_index}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

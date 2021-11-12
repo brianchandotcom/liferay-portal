@@ -9,43 +9,44 @@ import {REACT_APP_LIFERAY_API} from '~/common/utils';
 import Banner from '../components/Banner';
 import ProjectCard from '../components/ProjectCard';
 import SearchProject from '../components/SearchProject';
+import ProjectCardSkeleton from '../components/skeleton/ProjectCardSkeleton';
 import {status} from '../utils/constants';
 
 const PROJECT_THRESHOLD_COUNT = 4;
 
 const Home = () => {
 	const [keyword, setKeyword] = useState('');
-	const {data: userAccount} = useGraphQL(
-		getUserAccountById(LiferayTheme.getUserId())
-	);
+	const {data, isLoading: isLoadingUser} = useGraphQL([
+		getUserAccountById(LiferayTheme.getUserId()),
+	]);
 
 	useEffect(() => {
-		if (userAccount) {
+		if (data) {
 			Storage.setItem(
 				STORAGE_KEYS.USER_APPLICATION,
 				JSON.stringify({
-					accountKey: userAccount.accountKey,
+					accountKey: data.userAccount.accountKey,
 					image:
-						userAccount.image &&
-						`${REACT_APP_LIFERAY_API}${userAccount.image}`,
-					name: userAccount.name,
+						data.userAccount.image &&
+						`${REACT_APP_LIFERAY_API}${data.userAccount.image}`,
+					name: data.userAccount.name,
 				})
 			);
 		} else {
 			Storage.removeItem(STORAGE_KEYS.USER_APPLICATION);
 		}
-	}, [userAccount]);
+	}, [data]);
 
-	const accountBriefs = userAccount?.accountBriefs || [];
+	const accountBriefs = data?.userAccount.accountBriefs || [];
 
-	const {data: koroneikiAccounts} =
-		useGraphQL(
+	const {data: koroneikiAccountsData, isLoading: isLoadingKoroneiki} =
+		useGraphQL([
 			getKoroneikiAccountsByFilter({
 				accountKeys: accountBriefs.map(
 					({externalReferenceCode}) => externalReferenceCode
 				),
-			})
-		) || [];
+			}),
+		]) || [];
 
 	const getStatus = (slaCurrent, slaExpired, slaFuture) => {
 		if (slaCurrent.length) {
@@ -58,7 +59,7 @@ const Home = () => {
 	};
 
 	const projects =
-		koroneikiAccounts?.map(
+		koroneikiAccountsData?.koroneikiAccounts.map(
 			({
 				accountKey,
 				code,
@@ -111,7 +112,7 @@ const Home = () => {
 					'pb-2': withManyProjects,
 				})}
 			>
-				<Banner userName={userAccount?.name || ''} />
+				<Banner userName={data?.userAccount.name || ''} />
 			</div>
 			<div
 				className={classNames('mx-auto', {
@@ -132,22 +133,29 @@ const Home = () => {
 							</h5>
 						</div>
 					)}
+					{!isLoadingUser & !isLoadingKoroneiki ? (
+						<div
+							className={classNames('d-flex', 'flex-wrap', {
+								'home-projects': !withManyProjects,
+								'home-projects-sm pt-2': withManyProjects,
+							})}
+						>
+							{projectsFiltered.map((project, index) => (
+								<ProjectCard
+									key={index}
+									onClick={() => nextPage(project)}
+									small={withManyProjects}
+									{...project}
+								/>
+							))}
+						</div>
+					) : (
+						<div className="d-flex flex-wrap home-projects">
+							<ProjectCardSkeleton />
 
-					<div
-						className={classNames('d-flex flex-wrap', {
-							'home-projects': !withManyProjects,
-							'home-projects-sm pt-2': withManyProjects,
-						})}
-					>
-						{projectsFiltered.map((project, index) => (
-							<ProjectCard
-								isSmall={withManyProjects}
-								key={index}
-								onClick={() => nextPage(project)}
-								{...project}
-							/>
-						))}
-					</div>
+							<ProjectCardSkeleton />
+						</div>
+					)}
 				</div>
 			</div>
 		</>

@@ -131,6 +131,8 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 		CPDefinitionGroupedEntry newCPDefinitionGroupedEntry =
 			_persistence.create(pk);
 
+		newCPDefinitionGroupedEntry.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCPDefinitionGroupedEntry.setUuid(RandomTestUtil.randomString());
 
 		newCPDefinitionGroupedEntry.setGroupId(RandomTestUtil.nextLong());
@@ -162,6 +164,9 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCPDefinitionGroupedEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCPDefinitionGroupedEntry.getMvccVersion(),
+			newCPDefinitionGroupedEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingCPDefinitionGroupedEntry.getUuid(),
 			newCPDefinitionGroupedEntry.getUuid());
@@ -276,7 +281,7 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CPDefinitionGroupedEntry", "uuid", true,
+			"CPDefinitionGroupedEntry", "mvccVersion", true, "uuid", true,
 			"CPDefinitionGroupedEntryId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "CPDefinitionId", true, "entryCProductId",
@@ -608,6 +613,8 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 
 		CPDefinitionGroupedEntry cpDefinitionGroupedEntry = _persistence.create(
 			pk);
+
+		cpDefinitionGroupedEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		cpDefinitionGroupedEntry.setUuid(RandomTestUtil.randomString());
 

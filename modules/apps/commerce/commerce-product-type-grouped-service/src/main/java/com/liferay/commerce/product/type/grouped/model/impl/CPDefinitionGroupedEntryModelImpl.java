@@ -78,18 +78,20 @@ public class CPDefinitionGroupedEntryModelImpl
 	public static final String TABLE_NAME = "CPDefinitionGroupedEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"CPDefinitionGroupedEntryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"CPDefinitionId", Types.BIGINT}, {"entryCProductId", Types.BIGINT},
-		{"priority", Types.DOUBLE}, {"quantity", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"CPDefinitionGroupedEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"CPDefinitionId", Types.BIGINT},
+		{"entryCProductId", Types.BIGINT}, {"priority", Types.DOUBLE},
+		{"quantity", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDefinitionGroupedEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -105,7 +107,7 @@ public class CPDefinitionGroupedEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionGroupedEntry (uuid_ VARCHAR(75) null,CPDefinitionGroupedEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,entryCProductId LONG,priority DOUBLE,quantity INTEGER)";
+		"create table CPDefinitionGroupedEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionGroupedEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,entryCProductId LONG,priority DOUBLE,quantity INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionGroupedEntry";
@@ -194,6 +196,7 @@ public class CPDefinitionGroupedEntryModelImpl
 
 		CPDefinitionGroupedEntry model = new CPDefinitionGroupedEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPDefinitionGroupedEntryId(
 			soapModel.getCPDefinitionGroupedEntryId());
@@ -370,6 +373,12 @@ public class CPDefinitionGroupedEntryModelImpl
 				new LinkedHashMap
 					<String, BiConsumer<CPDefinitionGroupedEntry, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", CPDefinitionGroupedEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CPDefinitionGroupedEntry, Long>)
+				CPDefinitionGroupedEntry::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CPDefinitionGroupedEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -447,6 +456,21 @@ public class CPDefinitionGroupedEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -774,6 +798,7 @@ public class CPDefinitionGroupedEntryModelImpl
 		CPDefinitionGroupedEntryImpl cpDefinitionGroupedEntryImpl =
 			new CPDefinitionGroupedEntryImpl();
 
+		cpDefinitionGroupedEntryImpl.setMvccVersion(getMvccVersion());
 		cpDefinitionGroupedEntryImpl.setUuid(getUuid());
 		cpDefinitionGroupedEntryImpl.setCPDefinitionGroupedEntryId(
 			getCPDefinitionGroupedEntryId());
@@ -798,6 +823,8 @@ public class CPDefinitionGroupedEntryModelImpl
 		CPDefinitionGroupedEntryImpl cpDefinitionGroupedEntryImpl =
 			new CPDefinitionGroupedEntryImpl();
 
+		cpDefinitionGroupedEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		cpDefinitionGroupedEntryImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		cpDefinitionGroupedEntryImpl.setCPDefinitionGroupedEntryId(
@@ -906,6 +933,8 @@ public class CPDefinitionGroupedEntryModelImpl
 	public CacheModel<CPDefinitionGroupedEntry> toCacheModel() {
 		CPDefinitionGroupedEntryCacheModel cpDefinitionGroupedEntryCacheModel =
 			new CPDefinitionGroupedEntryCacheModel();
+
+		cpDefinitionGroupedEntryCacheModel.mvccVersion = getMvccVersion();
 
 		cpDefinitionGroupedEntryCacheModel.uuid = getUuid();
 
@@ -1055,6 +1084,7 @@ public class CPDefinitionGroupedEntryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _CPDefinitionGroupedEntryId;
 	private long _groupId;
@@ -1098,6 +1128,7 @@ public class CPDefinitionGroupedEntryModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"CPDefinitionGroupedEntryId", _CPDefinitionGroupedEntryId);
@@ -1134,29 +1165,31 @@ public class CPDefinitionGroupedEntryModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("uuid_", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("CPDefinitionGroupedEntryId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("groupId", 4L);
+		columnBitmasks.put("CPDefinitionGroupedEntryId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("CPDefinitionId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("entryCProductId", 512L);
+		columnBitmasks.put("CPDefinitionId", 512L);
 
-		columnBitmasks.put("priority", 1024L);
+		columnBitmasks.put("entryCProductId", 1024L);
 
-		columnBitmasks.put("quantity", 2048L);
+		columnBitmasks.put("priority", 2048L);
+
+		columnBitmasks.put("quantity", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

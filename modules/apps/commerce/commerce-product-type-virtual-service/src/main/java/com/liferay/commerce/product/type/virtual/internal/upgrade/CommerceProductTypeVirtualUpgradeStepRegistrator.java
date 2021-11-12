@@ -17,6 +17,7 @@ package com.liferay.commerce.product.type.virtual.internal.upgrade;
 import com.liferay.commerce.product.type.virtual.internal.upgrade.v1_1_0.CPDefinitionVirtualSettingUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,6 +46,17 @@ public class CommerceProductTypeVirtualUpgradeStepRegistrator
 			"1.1.0", "1.1.1",
 			new com.liferay.commerce.product.type.virtual.internal.upgrade.
 				v1_1_1.CPDefinitionVirtualSettingUpgradeProcess());
+
+		registry.register(
+			"1.1.1", "1.2.0",
+			new MVCCVersionUpgradeProcess() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {"CPDefinitionVirtualSetting"};
+				}
+
+			});
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

@@ -649,13 +649,49 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136951. It checks that Stacked stars can be added and removed from a wiki entry."
-	@ignore = "true"
 	@priority = "5"
 	test CanRevokeStackedStarsFromWiki {
-		property portal.acceptance = "false";
+		property custom.properties = "default.layout.template.id=1_column";
 
-		// TODO LPS-136951 CanRevokeStackedStarsFromWiki pending implementation
+		Ratings.configureRatingType(
+			applications = "Wiki",
+			portlet = "Ratings",
+			ratingType = "Stacked Stars",
+			siteURLKey = "guest");
 
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Wiki Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Wiki Test Page",
+			widgetName = "Wiki");
+
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page");
+
+		WikiNavigator.openToWikiPage(
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page");
+
+		Ratings.rateStackedStars(ratingStarCount = "3");
+
+		AssertTextEquals(
+			locator1 = "Ratings#AVERAGE_STAR_RESULT",
+			value1 = "(1 Vote)");
+
+		Ratings.revokeStackedStarsRating();
+
+		AssertTextNotPresent(
+			locator1 = "Ratings#AVERAGE_STAR_RESULT",
+			value1 = "(1 Vote)");
 	}
 
 	@description = "This is a test for LPS-136954. It checks that stars can be added and removed from a document."

@@ -26,10 +26,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -103,8 +101,6 @@ public class MDRRuleGroupLocalServiceImpl
 			MDRRuleGroup ruleGroup, long groupId, ServiceContext serviceContext)
 		throws PortalException {
 
-		Group group = _groupLocalService.getGroup(groupId);
-
 		Map<Locale, String> nameMap = ruleGroup.getNameMap();
 
 		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
@@ -125,8 +121,7 @@ public class MDRRuleGroupLocalServiceImpl
 		}
 
 		MDRRuleGroup newRuleGroup = addRuleGroup(
-			group.getGroupId(), nameMap, ruleGroup.getDescriptionMap(),
-			serviceContext);
+			groupId, nameMap, ruleGroup.getDescriptionMap(), serviceContext);
 
 		List<MDRRule> rules = _mdrRulePersistence.findByRuleGroupId(
 			ruleGroup.getRuleGroupId());
@@ -279,9 +274,6 @@ public class MDRRuleGroupLocalServiceImpl
 
 		return mdrRuleGroupPersistence.update(ruleGroup);
 	}
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;

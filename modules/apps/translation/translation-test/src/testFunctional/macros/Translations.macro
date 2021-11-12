@@ -412,6 +412,12 @@ definition {
 			value1 = "Successfully received translations.");
 	}
 
+	macro updateTranslateFileID {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "update-translation-file-id -Dtranslation.file.name=${translationFileName} -Dtranslation.entry.type=${translationEntryType} -Dtranslation.zip.file.name=${translationZipFileName}");
+	}
+
 	macro uploadTranslationsFile {
 		var tempFileDirectory = selenium.getOutputDirName();
 		var filePath = "${tempFileDirectory}/${filePath}/${fileName}";

@@ -13823,6 +13823,16 @@ url=${short.hostname}:8080</echo>
 		<print-file file.name="${osgi.configs.dir}/${osgi.module.configuration.file.names}" />
 	</target>
 
+	<target name="update-translation-file-id">
+		<var name="translation.file.type" value="xlf" />
+
+		<replace
+			file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
+			token="${translation.entry.type}:"
+			value="${translation.entry.type}:1"
+		/>
+	</target>
+
 	<target name="update-translation-file">
 		<var name="translation.file.type" value="xlf" />
 
@@ -13855,7 +13865,6 @@ url=${short.hostname}:8080</echo>
 					token="${contentpage.translation.title.target.original}"
 					value="${contentpage.translation.title.target}"
 				/>
-
 				<replace
 					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
 					token="${contentpage.translation.fragment.target.original}"

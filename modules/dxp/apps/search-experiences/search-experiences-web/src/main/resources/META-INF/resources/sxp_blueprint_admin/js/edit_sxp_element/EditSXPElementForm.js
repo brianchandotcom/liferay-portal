@@ -189,6 +189,9 @@ function EditSXPElementForm({
 			// TODO: Update this once a validation REST endpoint is decided
 
 			if (!showSubmitWarningModal) {
+				const validateErrors = {errors: []};
+
+				/*
 				const validateErrors = await fetch(
 					'/o/search-experiences-rest/v1.0/sxp-elements/validate',
 					{
@@ -210,6 +213,7 @@ function EditSXPElementForm({
 						method: 'POST',
 					}
 				).then((response) => response.json());
+				*/
 
 				if (validateErrors.errors?.length) {
 					setErrors(validateErrors.errors);

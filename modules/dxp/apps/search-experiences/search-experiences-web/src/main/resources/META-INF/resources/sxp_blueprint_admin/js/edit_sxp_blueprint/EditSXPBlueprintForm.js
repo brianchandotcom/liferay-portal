@@ -165,6 +165,9 @@ function EditSXPBlueprintForm({
 			// TODO: Update this once a validation REST endpoint is decided
 
 			if (!showSubmitWarningModal) {
+				const validateErrors = {errors: []};
+
+				/*
 				const validateErrors = await fetch(
 					'/o/search-experiences-rest/v1.0/sxp-blueprints/validate',
 					{
@@ -181,6 +184,7 @@ function EditSXPBlueprintForm({
 						method: 'POST',
 					}
 				).then((response) => response.json());
+			*/
 
 				if (validateErrors.errors?.length) {
 					setErrors(validateErrors.errors);
@@ -431,7 +435,7 @@ function EditSXPBlueprintForm({
 		});
 	};
 
-	const _handleFetchPreviewSearch = (value, delta, page, attributes) => {
+	const _handleFetchPreviewSearch = (value, delta, page /* attributes*/) => {
 		setPreviewInfo((previewInfo) => ({
 			...previewInfo,
 			loading: true,
@@ -481,9 +485,13 @@ function EditSXPBlueprintForm({
 			{
 				body: JSON.stringify({
 					configuration,
-					previewAttributes: attributes.filter(
-						(attribute) => attribute.key
-					),
+
+					// TO DO: Enable when preview attributes available
+
+					// previewAttributes: attributes.filter(
+					// 	(attribute) => attribute.key
+					// ),
+
 				}),
 				headers: new Headers({
 					'Content-Type': 'application/json',

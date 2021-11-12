@@ -1,24 +1,28 @@
 [
 	{
-		"actions": [],
+		"actions": [
+		],
 		"name": "Test Role 1",
 		"scope": 1,
 		"type": 1
 	},
 	{
-		"actions": [],
+		"actions": [
+		],
 		"name": "Test Role 2",
 		"scope": 1,
 		"type": 1
 	},
 	{
-		"actions": [],
+		"actions": [
+		],
 		"name": "Test Role 3",
 		"scope": 1,
 		"type": 1
 	},
 	{
-		"actions": [],
+		"actions": [
+		],
 		"name": "Test Role 4",
 		"scope": 3,
 		"type": 2

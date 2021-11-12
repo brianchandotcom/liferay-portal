@@ -40,6 +40,7 @@ public class VersionUtilTest {
 		Assert.assertTrue(
 			"7.1.10.fp123-456", VersionUtil.isDXPVersion("7.1.10.fp123-456"));
 		Assert.assertTrue("7.3.10.ep4", VersionUtil.isDXPVersion("7.3.10.ep4"));
+		Assert.assertTrue("7.4.13.u1", VersionUtil.isDXPVersion("7.4.13.u1"));
 	}
 
 	@Test
@@ -59,6 +60,9 @@ public class VersionUtilTest {
 		Assert.assertEquals(
 			"7.0.10.fp1",
 			VersionUtil.normalizeTargetPlatformVersion("7.0.10.fp1"));
+		Assert.assertEquals(
+			"7.4.13.u1",
+			VersionUtil.normalizeTargetPlatformVersion("7.4.13.u1"));
 	}
 
 }

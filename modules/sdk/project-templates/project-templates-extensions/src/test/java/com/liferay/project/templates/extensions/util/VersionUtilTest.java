@@ -114,6 +114,8 @@ public class VersionUtilTest {
 		Assert.assertTrue("7.4.1-1", VersionUtil.isLiferayVersion("7.4.1-1"));
 		Assert.assertTrue(
 			"7.4.11.1-1", VersionUtil.isLiferayVersion("7.4.11.1-1"));
+		Assert.assertTrue(
+			"7.4.13.u1", VersionUtil.isLiferayVersion("7.4.13.u1"));
 	}
 
 }

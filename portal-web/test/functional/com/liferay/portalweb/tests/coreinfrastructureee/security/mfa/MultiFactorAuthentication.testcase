@@ -1439,7 +1439,7 @@ definition {
 		}
 
 		task ("Search for Test Test TOTP success verification on browser setup MFA checker") {
-			Audit.openAuditAdmin();
+			Audit.openAuditAdmin(baseURL = "http://www.able.com:8080");
 
 			Audit.searchViaKeywords(
 				resourceName = "TimeBasedOTPBrowserSetupMFAChecker",

@@ -815,7 +815,7 @@ definition {
 
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
-		DMDocument.viewCardTitle(dmDocumentTitle = "${dmDocumentTitle}");
+		LexiconEntry.viewEntryName(rowEntry = "${dmDocumentTitle}");
 	}
 
 	macro assertFileNameFromTempFolder {

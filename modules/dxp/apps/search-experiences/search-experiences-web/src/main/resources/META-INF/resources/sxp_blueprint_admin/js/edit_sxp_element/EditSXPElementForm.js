@@ -638,7 +638,7 @@ function EditSXPElementForm({
 														<ClayEmptyState
 															description=""
 															title={Liferay.Language.get(
-																'no-predefined-variables-found'
+																'no-predefined-variables-were-found'
 															)}
 														/>
 													</div>

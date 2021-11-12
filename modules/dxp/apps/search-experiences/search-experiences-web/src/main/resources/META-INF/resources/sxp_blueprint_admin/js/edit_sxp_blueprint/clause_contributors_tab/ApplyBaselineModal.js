@@ -40,7 +40,7 @@ const ApplyBaselineModal = ({
 
 			<ClayModal.Body>
 				{Liferay.Language.get(
-					'this-will-reset-clause-contributors-to-baseline-setting'
+					'this-will-reset-clause-contributors-to-the-baseline-setting'
 				)}
 			</ClayModal.Body>
 

@@ -534,7 +534,7 @@ public class BundleSiteInitializerTest {
 
 	private void _assertResourcePermissions(Group group) throws Exception {
 		Role role = _roleLocalService.fetchRole(
-			group.getCompanyId(), "Test Role 4");
+			group.getCompanyId(), "Test Role 1");
 
 		ResourcePermission resourcePermission =
 			_resourcePermissionLocalService.fetchResourcePermission(

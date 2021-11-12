@@ -22,7 +22,7 @@ const CustomerPortalApplication = ({liferaywebdavurl, route}) => {
 	}
 };
 
-class DirectToCustomerWebComponent extends WebComponent {
+class CustomerPortalWebComponent extends WebComponent {
 	connectedCallback() {
 		super.connectedCallback(SharedStyle);
 
@@ -41,5 +41,5 @@ class DirectToCustomerWebComponent extends WebComponent {
 const ELEMENT_ID = 'liferay-remote-app-customer-portal';
 
 if (!customElements.get(ELEMENT_ID)) {
-	customElements.define(ELEMENT_ID, DirectToCustomerWebComponent);
+	customElements.define(ELEMENT_ID, CustomerPortalWebComponent);
 }

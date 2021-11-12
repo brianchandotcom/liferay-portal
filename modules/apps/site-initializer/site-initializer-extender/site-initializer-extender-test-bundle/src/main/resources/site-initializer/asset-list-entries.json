@@ -1,0 +1,16 @@
+[
+	{
+		"ddmStructureKey": "TEST DDM STRUCTURE NAME",
+		"title": "Closed Claims",
+		"unicodeProperties": {
+			"classNameIds": "com.liferay.journal.model.JournalArticle"
+		}
+	},
+	{
+		"ddmStructureKey": "TEST DDM STRUCTURE NAME",
+		"title": "Open Claims",
+		"unicodeProperties": {
+			"classNameIds": "com.liferay.journal.model.JournalArticle"
+		}
+	}
+]

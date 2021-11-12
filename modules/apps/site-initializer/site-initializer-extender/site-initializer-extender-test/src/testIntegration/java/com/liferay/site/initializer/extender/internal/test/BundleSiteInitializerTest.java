@@ -19,6 +19,8 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -136,6 +138,7 @@ public class BundleSiteInitializerTest {
 		try {
 			siteInitializer.initialize(group.getGroupId());
 			_assertAssetVocabularies(group);
+			_assertAssetListEntries(group);
 			_assertCommerceCatalogs(group);
 			_assertCommerceChannel(group);
 			_assertCommerceInventoryWarehouse(group);
@@ -215,6 +218,27 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(testAssetCategory4);
 		Assert.assertEquals(
 			"TESTCAT0004", testAssetCategory4.getExternalReferenceCode());
+	}
+
+	private void _assertAssetListEntries(Group group) {
+		List<AssetListEntry> assetEntry =
+			_assetListEntryLocalService.getAssetListEntries(group.getGroupId());
+
+		Assert.assertTrue(assetEntry.size() == 2);
+
+		AssetListEntry assetListEntry1 = assetEntry.get(0);
+
+		Assert.assertEquals("Closed Claims", assetListEntry1.getTitle());
+		Assert.assertEquals(
+			"com.liferay.journal.model.JournalArticle",
+			assetListEntry1.getAssetEntryType());
+
+		AssetListEntry assetListEntry2 = assetEntry.get(1);
+
+		Assert.assertEquals("Open Claims", assetListEntry2.getTitle());
+		Assert.assertEquals(
+			"com.liferay.journal.model.JournalArticle",
+			assetListEntry2.getAssetEntryType());
 	}
 
 	private void _assertAssetVocabularies(Group group) throws Exception {
@@ -571,6 +595,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

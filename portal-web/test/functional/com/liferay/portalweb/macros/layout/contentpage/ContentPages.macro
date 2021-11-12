@@ -230,6 +230,14 @@ definition {
 		PageEditor.viewFragment(fragmentName = "Collection Display");
 	}
 
+	macro changeExperience {
+		ContentPages.openExperienceMenu();
+
+		MenuItem.click(menuItem = "${experienceName}");
+
+		ContentPages.viewCurrentExperience(experienceName = "${experienceName}");
+	}
+
 	macro focusSlide {
 		Click(
 			ariaLabel = "Focus slide ${slideNumber}",
@@ -243,30 +251,9 @@ definition {
 	}
 
 	macro openExperienceMenu {
-		if (!(isSet(experienceLabel))) {
-			var experienceLabel = "Default";
-		}
-
-		AssertVisible(
-			key_content = "${experienceLabel}",
-			locator1 = "Experience#DROPDOWN_LABEL");
-
 		Click(
-			key_text = "${experienceLabel}",
-			locator1 = "Dropdown#ANY_ENABLED");
-	}
-
-	macro selectExperience {
-		ContentPages.openExperienceMenu(experienceLabel = "${experienceLabel}");
-
-		Click(
-			key_content = "${experienceName}",
-			key_index = "${index}",
-			locator1 = "Experience#DROPDOWN_MENU");
-
-		AssertVisible(
-			key_content = "${experienceName}",
-			locator1 = "Experience#DROPDOWN_LABEL");
+			key_text = "caret-double",
+			locator1 = "Icon#ANY");
 	}
 
 	macro viewCurrentExperience {
@@ -276,22 +263,13 @@ definition {
 	}
 
 	macro viewExperienceOrder {
-		ContentPages.openExperienceMenu(experienceLabel = "${experienceLabel}");
+		ContentPages.openExperienceMenu();
 
-		var index = "1";
-
-		for (var experienceOrder : list "${experienceOrderList}") {
-			AssertElementPresent(
-				key_content = "${experienceOrder}",
-				key_index = "${index}",
-				locator1 = "Experience#DROPDOWN_MENU");
-
-			var index = ${index} + 1;
-		}
+		MenuItem.viewOrder(menuItemList = "${experienceNameList}");
 
 		Click(
-			key_content = "${experienceLabel}",
-			locator1 = "Dropdown#ANY_ENABLED");
+			key_text = "caret-double",
+			locator1 = "Icon#ANY");
 	}
 
 	macro viewFragmentBackgroundImage {

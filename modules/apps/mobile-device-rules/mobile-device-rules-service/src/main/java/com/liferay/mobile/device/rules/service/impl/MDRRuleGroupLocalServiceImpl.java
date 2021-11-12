@@ -101,6 +101,8 @@ public class MDRRuleGroupLocalServiceImpl
 			MDRRuleGroup ruleGroup, long groupId, ServiceContext serviceContext)
 		throws PortalException {
 
+		// Rule group
+
 		Map<Locale, String> nameMap = ruleGroup.getNameMap();
 
 		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
@@ -120,8 +122,29 @@ public class MDRRuleGroupLocalServiceImpl
 				locale, StringBundler.concat(name, StringPool.SPACE, postfix));
 		}
 
-		MDRRuleGroup newRuleGroup = addRuleGroup(
-			groupId, nameMap, ruleGroup.getDescriptionMap(), serviceContext);
+		User user = _userLocalService.getUser(serviceContext.getUserId());
+
+		long ruleGroupId = counterLocalService.increment();
+
+		MDRRuleGroup newRuleGroup = createMDRRuleGroup(ruleGroupId);
+
+		newRuleGroup.setUuid(serviceContext.getUuid());
+		newRuleGroup.setGroupId(groupId);
+		newRuleGroup.setCompanyId(serviceContext.getCompanyId());
+		newRuleGroup.setUserId(user.getUserId());
+		newRuleGroup.setUserName(user.getFullName());
+		newRuleGroup.setNameMap(nameMap);
+		newRuleGroup.setDescriptionMap(ruleGroup.getDescriptionMap());
+
+		updateMDRRuleGroup(newRuleGroup);
+
+		// Resources
+
+		_resourceLocalService.copyModelResources(
+			ruleGroup.getCompanyId(), MDRRuleGroup.class.getName(),
+			ruleGroup.getPrimaryKey(), newRuleGroup.getPrimaryKey());
+
+		// Rules
 
 		List<MDRRule> rules = _mdrRulePersistence.findByRuleGroupId(
 			ruleGroup.getRuleGroupId());

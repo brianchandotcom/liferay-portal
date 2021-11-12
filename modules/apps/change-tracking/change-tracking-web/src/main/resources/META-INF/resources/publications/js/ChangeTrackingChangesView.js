@@ -877,9 +877,14 @@ export default ({
 				params.get(PARAM_USERS)
 			);
 
-			let showHideable = node.hideable
-				? true
-				: !!renderState.showHideable;
+			let showHideable = params.get(PARAM_SHOW_HIDEABLE);
+
+			if (showHideable === 'true') {
+				showHideable = true;
+			}
+			else {
+				showHideable = false;
+			}
 
 			if (!showHideable) {
 				const typeIds = filters['types'];
@@ -910,6 +915,7 @@ export default ({
 			PARAM_CHANGE_TYPES,
 			PARAM_ENTRY,
 			PARAM_KEYWORDS,
+			PARAM_SHOW_HIDEABLE,
 			PARAM_SITES,
 			PARAM_TYPES,
 			PARAM_USERS,
@@ -917,7 +923,6 @@ export default ({
 			getFilters,
 			getNode,
 			isWithinApp,
-			renderState,
 		]
 	);
 
@@ -1577,63 +1582,31 @@ export default ({
 	};
 
 	const handleShowHideableToggle = (showHideable) => {
-		const entryParam = getEntryParam(renderState.node);
-
-		const params = new URLSearchParams(window.location.search);
-
-		const oldEntryParam = params.get(PARAM_ENTRY);
-
 		const filters = JSON.parse(JSON.stringify(filtersState));
-
-		let updatedFilters = false;
 
 		if (!showHideable) {
 			const typeIds = filters['types'];
 
 			if (typeIds && typeIds.length > 0) {
-				filters['types'] = typeIds.filter((typeId) => {
-					const type = typesRef.current[typeId];
-
-					if (type.hideable) {
-						updatedFilters = true;
-
-						return false;
-					}
-
-					return true;
-				});
+				filters['types'] = typeIds.filter(
+					(typeId) => !typesRef.current[typeId].hideable
+				);
 			}
 		}
 
-		if (
-			isWithinApp(params) &&
-			(updatedFilters || !oldEntryParam || oldEntryParam === entryParam)
-		) {
-			const path = getPath(
-				filters,
-				entryParam,
-				resultsKeywords,
-				showHideable
-			);
+		const path = getPath(
+			filters,
+			getEntryParam(renderState.node),
+			resultsKeywords,
+			showHideable
+		);
 
-			let newState = {
-				path,
-				senna: true,
-			};
+		const state = {
+			path,
+			senna: true,
+		};
 
-			if (window.history.state) {
-				newState = JSON.parse(JSON.stringify(window.history.state));
-
-				newState.path = path;
-			}
-
-			if (updatedFilters && renderState.id === 0) {
-				window.history.pushState(newState, document.title, path);
-			}
-			else {
-				window.history.replaceState(newState, document.title, path);
-			}
-		}
+		window.history.pushState(state, document.title, path);
 
 		setFiltersState(filters);
 		setRenderState({

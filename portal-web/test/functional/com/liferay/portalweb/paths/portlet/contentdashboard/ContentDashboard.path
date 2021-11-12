@@ -32,12 +32,12 @@
 </tr>
 <tr>
 	<td>AUDIT_GRAPH_CONFIGURATION_LEFT_ARROW_BUTTON</td>
-	<td>//button[contains(@class, 'move-left')]</td>
+	<td>//button[contains(@class, 'transfer-button-rtl')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON</td>
-	<td>//button[contains(@class, 'move-right')]</td>
+	<td>//button[contains(@class, 'transfer-button-ltr')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,22 +47,22 @@
 </tr>
 <tr>
 	<td>AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE</td>
-	<td>//div[contains(@class, 'form-group')]/label[contains(text(), 'In Use')]/../select/option[contains(text(), '${vocabularyName}')]</td>
+	<td>//select[contains(@id, 'currentAssetVocabularyIds')] //option[contains(text(), '${vocabularyName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE</td>
-	<td>//div[contains(@class, 'form-group')]/label[contains(text(), 'Available')]/../select/option[contains(text(), '${vocabularyName}')]</td>
+	<td>//select[contains(@id, 'availableAssetVocabularyIds')] //option[contains(text(), '${vocabularyName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUDIT_GRAPH_CONFIGURATION_UP_ARROW_BUTTON</td>
-	<td>//button[contains(@class, 'reorder-up')]</td>
+	<td>//button[contains(@class, 'reorder-button-up')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUDIT_GRAPH_CONFIGURATION_DOWN_ARROW_BUTTON</td>
-	<td>//button[contains(@class, 'reorder-down')]</td>
+	<td>//button[contains(@class, 'reorder-button-down')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -252,6 +252,11 @@
 <tr>
 	<td>PANEL_INFO_VIEW</td>
 	<td>//*[contains(@class,'link-outline-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REORDER_ACTIVE_BUTTON</td>
+	<td>//div[contains(@class, 'reorder-order-buttons')] //button[not(@disabled)]</td>
 	<td></td>
 </tr>
 <tr>

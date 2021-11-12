@@ -512,7 +512,7 @@ public class ContentPageEditorDisplayContext {
 				"previewPageURL",
 				getResourceURL(
 					"/layout_content_page_editor/get_page_preview",
-					isPublicLayout())
+					isPreviewPageAsGuestUser())
 			).put(
 				"publishURL", getPublishURL()
 			).put(
@@ -871,7 +871,7 @@ public class ContentPageEditorDisplayContext {
 		return _sidebarPanels;
 	}
 
-	protected boolean isPublicLayout() {
+	protected boolean isPreviewPageAsGuestUser() {
 		Layout publishedLayout = _getPublishedLayout();
 
 		return !publishedLayout.isPrivateLayout();

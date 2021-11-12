@@ -187,7 +187,7 @@ definition {
 		var facebookPassword = PropsUtil.get("facebook.password");
 
 		task ("Login and edit facebook authentication") {
-			User.firstLoginUI();
+			User.firstLoginPG();
 
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -225,7 +225,7 @@ definition {
 		property test.name.skip.portal.instance = "Login#LoginWithSpanishOnlyEnabledLocale";
 
 		task ("Login and configure spanish as default and current portal language") {
-			User.firstLoginUI();
+			User.firstLoginPG();
 
 			var portalURL = PropsUtil.get("portal.url");
 
@@ -415,7 +415,7 @@ definition {
 		var userPassword = PropsUtil.get("email.password.2");
 
 		task ("Login and add CP") {
-			User.firstLoginUI();
+			User.firstLoginPG();
 
 			ApplicationsMenu.gotoPortlet(
 				category = "System",
@@ -531,11 +531,7 @@ definition {
 		}
 
 		task ("Logout and login") {
-			User.logoutPG();
-
-			User.loginUserPG(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+			User.logoutAndLoginPG();
 		}
 	}
 
@@ -619,7 +615,7 @@ definition {
 		property test.name.skip.portal.instance = "Login#TokenBasedSSOSmoke";
 
 		task ("Login and reset token based SSO configuration") {
-			User.firstLoginUI();
+			User.firstLoginPG();
 
 			SystemSettings.openSystemSettingsAdmin();
 

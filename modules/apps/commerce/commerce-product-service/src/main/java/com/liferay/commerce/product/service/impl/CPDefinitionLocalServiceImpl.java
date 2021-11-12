@@ -37,6 +37,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
@@ -116,6 +117,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.stream.LongStream;
@@ -627,6 +629,9 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinitionOptionRelPersistence.findByCPDefinitionId(
 				cpDefinitionId);
 
+		List<CPDefinitionOptionRel> newCPDefinitionOptionRels = new ArrayList<>(
+			cpDefinitionOptionRels.size());
+
 		for (CPDefinitionOptionRel cpDefinitionOptionRel :
 				cpDefinitionOptionRels) {
 
@@ -644,6 +649,8 @@ public class CPDefinitionLocalServiceImpl
 
 			newCPDefinitionOptionRel = cpDefinitionOptionRelPersistence.update(
 				newCPDefinitionOptionRel);
+
+			newCPDefinitionOptionRels.add(newCPDefinitionOptionRel);
 
 			// CPDefinitionOptionValueRel
 
@@ -736,6 +743,79 @@ public class CPDefinitionLocalServiceImpl
 			newCPInstance.setCPInstanceId(counterLocalService.increment());
 
 			newCPInstance.setCPDefinitionId(newCPDefinitionId);
+
+			List<CPInstanceOptionValueRel> cpInstanceOptionValueRels =
+				cpInstanceOptionValueRelPersistence.findByCPInstanceId(
+					cpInstance.getCPInstanceId());
+
+			for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
+					cpInstanceOptionValueRels) {
+
+				CPInstanceOptionValueRel newCPInstanceOptionValueRel =
+					(CPInstanceOptionValueRel)cpInstanceOptionValueRel.clone();
+
+				newCPInstanceOptionValueRel.setUuid(PortalUUIDUtil.generate());
+				newCPInstanceOptionValueRel.setCPInstanceOptionValueRelId(
+					counterLocalService.increment());
+				newCPInstanceOptionValueRel.setCPInstanceId(
+					newCPInstance.getCPInstanceId());
+
+				CPDefinitionOptionRel cpDefinitionOptionRel =
+					cpDefinitionOptionRelPersistence.findByPrimaryKey(
+						cpInstanceOptionValueRel.getCPDefinitionOptionRelId());
+
+				Stream<CPDefinitionOptionRel> cpDefinitionOptionRelStream =
+					newCPDefinitionOptionRels.stream();
+
+				Optional<CPDefinitionOptionRel> cpDefinitionOptionRelOptional =
+					cpDefinitionOptionRelStream.filter(
+						curCPDefinitionOptionRel ->
+							cpDefinitionOptionRel.getCPOptionId() ==
+								curCPDefinitionOptionRel.getCPOptionId()
+					).findFirst();
+
+				if (cpDefinitionOptionRelOptional.isPresent()) {
+					CPDefinitionOptionRel newCPDefinitionOptionRel =
+						cpDefinitionOptionRelOptional.get();
+
+					long cpDefinitionOptionRelId =
+						newCPDefinitionOptionRel.getCPDefinitionOptionRelId();
+
+					newCPInstanceOptionValueRel.setCPDefinitionOptionRelId(
+						cpDefinitionOptionRelId);
+
+					List<CPDefinitionOptionValueRel>
+						cpDefinitionOptionValueRels =
+							cpDefinitionOptionRel.
+								getCPDefinitionOptionValueRels();
+
+					Stream<CPDefinitionOptionValueRel>
+						cpDefinitionOptionValueRelsStream =
+							cpDefinitionOptionValueRels.stream();
+
+					Optional<CPDefinitionOptionValueRel>
+						cpDefinitionOptionValueRelOptional =
+							cpDefinitionOptionValueRelsStream.filter(
+								curCPDefinitionOptionValueRel ->
+									cpDefinitionOptionRelId ==
+										curCPDefinitionOptionValueRel.
+											getCPDefinitionOptionRelId()
+							).findFirst();
+
+					if (cpDefinitionOptionValueRelOptional.isPresent()) {
+						CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+							cpDefinitionOptionValueRelOptional.get();
+
+						newCPInstanceOptionValueRel.
+							setCPInstanceOptionValueRelId(
+								cpDefinitionOptionValueRel.
+									getCPDefinitionOptionValueRelId());
+					}
+				}
+
+				cpInstanceOptionValueRelLocalService.
+					updateCPInstanceOptionValueRel(newCPInstanceOptionValueRel);
+			}
 
 			cpInstancePersistence.update(newCPInstance);
 		}

@@ -269,6 +269,12 @@ definition {
 			locator1 = "Experience#DROPDOWN_LABEL");
 	}
 
+	macro viewCurrentExperience {
+		AssertVisible(
+			key_text = "${experienceName}",
+			locator1 = "Button#ANY");
+	}
+
 	macro viewExperienceOrder {
 		ContentPages.openExperienceMenu(experienceLabel = "${experienceLabel}");
 

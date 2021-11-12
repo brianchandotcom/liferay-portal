@@ -131,28 +131,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
-	public void testRemoveDBPartition() throws Exception {
-		addDBPartition();
-
-		List<String> viewNames = _getObjectNames("VIEW");
-
-		Assert.assertNotEquals(0, viewNames.size());
-
-		int tablesCount = _getTablesCount();
-
-		_removeDBPartition();
-
-		Assert.assertEquals(tablesCount + viewNames.size(), _getTablesCount());
-		Assert.assertEquals(0, _getViewsCount());
-
-		for (String viewName : viewNames) {
-			Assert.assertEquals(
-				viewName + " count", _getCount(viewName, true),
-				_getCount(viewName, false));
-		}
-	}
-
-	@Test
 	public void testRemoveDBPartitionRollback() throws Exception {
 		addDBPartition();
 
@@ -167,7 +145,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			createAndPopulateControlTable(fullTestTableName);
 
 			try {
-				_removeDBPartition();
+				_removeDBPartition(true);
 
 				Assert.fail("Should throw an exception");
 			}
@@ -178,6 +156,28 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		}
 		finally {
 			dropTable(TEST_CONTROL_TABLE_NAME);
+		}
+	}
+
+	@Test
+	public void testRemoveDBPartitionWithMigrateEnabled() throws Exception {
+		addDBPartition();
+
+		List<String> viewNames = _getObjectNames("VIEW");
+
+		Assert.assertNotEquals(0, viewNames.size());
+
+		int tablesCount = _getTablesCount();
+
+		_removeDBPartition(true);
+
+		Assert.assertEquals(tablesCount + viewNames.size(), _getTablesCount());
+		Assert.assertEquals(0, _getViewsCount());
+
+		for (String viewName : viewNames) {
+			Assert.assertEquals(
+				viewName + " count", _getCount(viewName, true),
+				_getCount(viewName, false));
 		}
 	}
 
@@ -238,7 +238,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		return viewNames.size();
 	}
 
-	private void _removeDBPartition() throws Exception {
+	private void _removeDBPartition(boolean migrateEnabled) throws Exception {
 		CurrentConnection defaultCurrentConnection =
 			CurrentConnectionUtil.getCurrentConnection();
 
@@ -248,6 +248,10 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			ReflectionTestUtil.setFieldValue(
 				CurrentConnectionUtil.class, "_currentConnection",
 				currentConnection);
+
+			ReflectionTestUtil.setFieldValue(
+				DBPartitionUtil.class, "_DATABASE_PARTITION_MIGRATE_ENABLED",
+				migrateEnabled);
 
 			DBPartitionUtil.removeDBPartition(COMPANY_ID);
 		}

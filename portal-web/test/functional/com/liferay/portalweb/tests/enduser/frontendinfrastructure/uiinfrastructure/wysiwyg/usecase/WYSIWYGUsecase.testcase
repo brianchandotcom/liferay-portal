@@ -466,8 +466,8 @@ definition {
 
 	@description = "Verify that basic CKEditor toolbar is present on DM"
 	@priority = "3"
+	@refactorneeded
 	test DMCanFormatTextWithEditorToolbar {
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "wysiwyg-site-name");
 
 		DMNavigator.gotoDocumentType();
@@ -512,8 +512,7 @@ definition {
 			locator1 = "CKEditor#SOURCE_CODE_DIALOG",
 			value1 = "<p>sample text</p>");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#CODE_PREVIEW_IFRAME");
-
-	   }
+		takeScreenshot();
+	}
 
 }

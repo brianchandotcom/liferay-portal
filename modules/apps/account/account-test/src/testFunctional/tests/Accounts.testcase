@@ -2485,6 +2485,51 @@ definition {
 		}
 	}
 
+	@description = "This test searches for organizations assigned to an account"
+	@priority = "4"
+	test CanSearchForAssignedOrganizations {
+		task ("Add an account and add two organizations") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Business Account",
+				accountEntryType = "Business");
+
+			for (var org : list "Organization Name,New Selection for Search Test") {
+				JSONOrganization.addOrganization(
+					organizationName = "${org}",
+					organizationSite = "true");
+			}
+		}
+
+		task ("Assign both organizations to the account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Business Account");
+
+			for (var org : list "Organization Name,New Selection for Search Test") {
+				Accounts.assignOrganizations(
+					accountName = "Business Account",
+					assigneeName = "${org}");
+			}
+		}
+
+		task ("Search for both organizations and assert only the searched organization is displayed") {
+			for (var searchTerm : list "Organization Name,New Selection for Search Test") {
+				Search.searchCP(searchTerm = "${searchTerm}");
+
+				if ("${searchTerm}" == "Organization Name") {
+					LexiconEntry.viewEntryName(rowEntry = "Organization Name");
+
+					LexiconEntry.viewNoEntry(rowEntry = "New Selection for Search Test");
+				}
+				else if ("${searchTerm}" == "New Selection for Search Test") {
+					LexiconEntry.viewEntryName(rowEntry = "New Selection for Search Test");
+
+					LexiconEntry.viewNoEntry(rowEntry = "Organization Name");
+				}
+			}
+		}
+	}
+
 	@description = "This test sets default shipping and default billing addresses for an account."
 	@priority = "3"
 	test CanSetDefaultAddresses {

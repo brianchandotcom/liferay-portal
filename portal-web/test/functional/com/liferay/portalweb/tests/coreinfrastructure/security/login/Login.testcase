@@ -189,7 +189,7 @@ definition {
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 			PortalSettings.gotoConfiguration(
-				baseURL = "https://localhost:8443",
+				baseURL = "http://localhost:8080",
 				configurationCategory = "SSO",
 				configurationName = "Facebook Connect",
 				configurationScope = "Virtual Instance Scope");

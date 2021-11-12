@@ -1,14 +1,13 @@
 const getUserId = () => {
 	try {
 		// eslint-disable-next-line no-undef
-		if (!themeDisplay) {
+		if (!Liferay.themeDisplay) {
 			new Error('themeDisplay is not defined');
 		}
 
 		// eslint-disable-next-line no-undef
-		return themeDisplay.getUserId();
-	}
-	catch (error) {
+		return Liferay.themeDisplay.getUserId();
+	} catch (error) {
 		console.warn(error.message);
 	}
 };
@@ -25,8 +24,7 @@ const getLiferaySiteName = () => {
 		const {pathname} = new URL(themeDisplay.getCanonicalURL());
 		const pathSplit = pathname.split('/').filter(Boolean);
 		siteName = `/${pathSplit.slice(0, pathSplit.length - 1).join('/')}`;
-	}
-	catch (error) {
+	} catch (error) {
 		console.warn('Not able to find Liferay PathName\n', error);
 	}
 

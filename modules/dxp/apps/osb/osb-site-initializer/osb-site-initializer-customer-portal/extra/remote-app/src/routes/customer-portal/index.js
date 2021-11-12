@@ -1,11 +1,11 @@
 import CustomerPortalStyles from '~/routes/customer-portal/styles/app.scss';
-import Pages from './pages';
+import Home from './pages/Home';
 
 const CustomerPortal = () => {
 	return (
 		<>
 			<style>{CustomerPortalStyles}</style>
-			<Pages />
+			<Home />
 		</>
 	);
 };

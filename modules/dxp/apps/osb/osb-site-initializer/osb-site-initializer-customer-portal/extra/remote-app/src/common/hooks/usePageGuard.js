@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {LiferayTheme} from '../services/liferay';
 import {getAccountFlagByFilter} from '../services/liferay/graphql/account-flags';
 import {getUserAccountById} from '../services/liferay/graphql/user-accounts';
-import useGraphQL from './useGraphql';
+import useGraphQL from './useGraphQL';
 
 const liferaySiteName = LiferayTheme.getLiferaySiteName();
 
@@ -31,7 +31,6 @@ const projectsPageRedirection = (userAccount) => {
 	};
 };
 
-// eslint-disable-next-line no-unused-vars
 const usePageGuard = (
 	externalReferenceCode,
 	pageRedirect,

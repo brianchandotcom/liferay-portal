@@ -1,9 +1,9 @@
 import {useContext} from 'react';
 import {AppContext} from '../context';
 import {steps} from '../utils/constants';
-import Invites from './invites';
-import SetupDXP from './setup.dxp';
-import Welcome from './welcome';
+import Invites from './Invites';
+import SetupDXP from './SetupDXP';
+import Welcome from './Welcome';
 
 const Pages = () => {
 	const [{externalReferenceCode, step}] = useContext(AppContext);

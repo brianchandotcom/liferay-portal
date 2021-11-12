@@ -1,30 +1,18 @@
 const getAccountFlagByFilter = (filter) => {
+	let filters = '';
+
 	if (filter) {
-		let filters = '';
+		const filterKeys = Object.keys(filter);
 
-		if (filter.accountKey) {
-			filters += `accountKey eq '${filter.accountKey}'`;
+		for (const key in filterKeys) {
+			const value = filter[key];
+
+			filters += filters
+				? `${filters ? ' and ' : ''}${key} eq '${value}'`
+				: `${key} eq '${value}'`;
 		}
 
-		if (filter.userUuid) {
-			filters += `${filters.length > 0 ? ' and ' : ''}userUuid eq '${
-				filter.userUuid
-			}'`;
-		}
-
-		if (filter.value) {
-			filters += `${filters.length > 0 ? ' and ' : ''}value eq ${
-				filter.value
-			}`;
-		}
-
-		if (filter.name) {
-			filters += `${filters.length > 0 ? ' and ' : ''}name eq '${
-				filter.name
-			}'`;
-		}
-
-		if (filters.length > 0) {
+		if (filters) {
 			return `c {
                     accountFlags(filter: "${filters}") {
                       items {

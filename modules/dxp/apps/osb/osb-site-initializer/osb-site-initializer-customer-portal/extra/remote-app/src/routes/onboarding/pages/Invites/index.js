@@ -4,10 +4,10 @@ import {useContext} from 'react';
 import BaseButton from '~/common/components/BaseButton';
 import Input from '~/common/components/Input';
 import Select from '~/common/components/Select';
-import {AppContext} from '../context';
-import {changeStep} from '../context/actions';
-import {getInitialInvite, getRoles, steps} from '../utils/constants';
-import Layout from './layout';
+import Layout from '../../components/Layout';
+import {AppContext} from '../../context';
+import {actionTypes} from '../../context/reducer';
+import {getInitialInvite, getRoles, steps} from '../../utils/constants';
 
 const HorizontalInputs = ({id}) => {
 	return (
@@ -48,7 +48,12 @@ const Invites = () => {
 				middleButton: (
 					<BaseButton
 						displayType="primary"
-						onClick={() => dispatch(changeStep(steps.dxp))}
+						onClick={() =>
+							dispatch({
+								payload: steps.dxp,
+								type: actionTypes.CHANGE_STEP,
+							})
+						}
 					>
 						Send Invitations
 					</BaseButton>

@@ -1,4 +1,6 @@
-import {actionTypes} from './actions';
+export const actionTypes = {
+	CHANGE_STEP: 'CHANGE_STEP',
+};
 
 const reducer = (state, action) => {
 	if (!action) {

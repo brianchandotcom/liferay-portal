@@ -6,11 +6,11 @@ import {
 	projectsPageRedirection,
 	usePageGuard,
 } from '~/common/hooks/usePageGuard';
-import {AppContext} from '../context';
-import {changeStep} from '../context/actions';
-import {steps} from '../utils/constants';
-import Layout from './layout';
-import WelcomeSkeleton from './skeleton/welcome-skeleton';
+import Layout from '../../components/Layout';
+import {AppContext} from '../../context';
+import {actionTypes} from '../../context/reducer';
+import {steps} from '../../utils/constants';
+import WelcomeSkeleton from './Skeleton';
 
 const Welcome = ({externalReferenceCode}) => {
 	const [state, dispatch] = useContext(AppContext);
@@ -26,11 +26,17 @@ const Welcome = ({externalReferenceCode}) => {
 
 	return (
 		<Layout
+			className="align-items-center d-flex flex-column pt-4 px-6"
 			footerProps={{
 				middleButton: (
 					<BaseButton
 						displayType="primary"
-						onClick={() => dispatch(changeStep(steps.invites))}
+						onClick={() =>
+							dispatch({
+								payload: steps.invites,
+								type: actionTypes.CHANGE_STEP,
+							})
+						}
 					>
 						Get Started
 					</BaseButton>
@@ -40,7 +46,6 @@ const Welcome = ({externalReferenceCode}) => {
 				greetings: 'Hello Sarah,',
 				title: 'Welcome to Liferay’s Customer Portal',
 			}}
-			mainStyles="align-items-center d-flex flex-column pt-4 px-6"
 		>
 			<img
 				alt="Costumer Service Intro"

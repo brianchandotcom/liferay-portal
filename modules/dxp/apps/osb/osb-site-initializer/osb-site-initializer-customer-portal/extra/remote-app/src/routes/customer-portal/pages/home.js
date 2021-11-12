@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import {useEffect} from 'react';
-import useGraphQL from '~/common/hooks/useGraphql';
+import useGraphQL from '~/common/hooks/useGraphQL';
 import {LiferayTheme} from '~/common/services/liferay';
 import {getKoroneikiAccountsByFilter} from '~/common/services/liferay/graphql/koroneiki-accounts';
 import {getUserAccountById} from '~/common/services/liferay/graphql/user-accounts';
@@ -26,8 +26,7 @@ const Home = () => {
 					name: userAccount.name,
 				})
 			);
-		}
-		else {
+		} else {
 			Storage.removeItem(STORAGE_KEYS.USER_APPLICATION);
 		}
 	}, [userAccount]);

@@ -4,14 +4,13 @@ import React from 'react';
 const getIconSpriteMap = () => {
 	try {
 		// eslint-disable-next-line no-undef
-		if (!themeDisplay) {
+		if (!Liferay.themeDisplay) {
 			new Error('themeDisplay is not defined');
 		}
 
 		// eslint-disable-next-line no-undef
-		return `${themeDisplay.getPathThemeImages()}/clay/icons.svg`;
-	}
-	catch (error) {
+		return `${Liferay.themeDisplay.getPathThemeImages()}/clay/icons.svg`;
+	} catch (error) {
 		console.warn(error.message);
 
 		// eslint-disable-next-line no-undef

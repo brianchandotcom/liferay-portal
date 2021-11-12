@@ -18,40 +18,6 @@ const email = (value) => {
 	}
 };
 
-const isValidField = (key, errors) => {
-	if (errors[key] && Object.keys(errors[key]).length) {
-		return Object.keys(errors[key])
-			.map((k) => {
-				if (typeof errors[key][k] === 'object') {
-					return isValidField(k, errors[key]);
-				}
-				else {
-					return false;
-				}
-			})
-			.every((valid) => valid);
-	}
-
-	return true;
-};
-
-const isDirtyField = (initialValue, value) => {
-	if (Object.keys(initialValue).length) {
-		return Object.keys(initialValue)
-			.map((key) => {
-				if (typeof initialValue[key] === 'object') {
-					return isDirtyField(initialValue[key], value[key]);
-				}
-				else {
-					return initialValue[key] !== value[key];
-				}
-			})
-			.some((diffInitial) => diffInitial);
-	}
-
-	return false;
-};
-
 const validate = (validations, value) => {
 	let error;
 
@@ -68,4 +34,4 @@ const validate = (validations, value) => {
 	return error;
 };
 
-export {required, maxLength, email, validate, isValidField, isDirtyField};
+export {required, maxLength, email, validate};

@@ -4,9 +4,9 @@ import {useContext} from 'react';
 import BaseButton from '~/common/components/BaseButton';
 import Input from '~/common/components/Input';
 import Select from '~/common/components/Select';
-import {AppContext} from '../context';
-import {getInitialDxpAdmin, getRoles} from '../utils/constants';
-import Layout from './layout';
+import Layout from '../../components/Layout';
+import {AppContext} from '../../context';
+import {getInitialDxpAdmin, getRoles} from '../../utils/constants';
 
 const AdminInputs = ({id}) => {
 	return (
@@ -59,6 +59,7 @@ const SetupDXP = () => {
 
 	return (
 		<Layout
+			className="pl-3 pt-1"
 			footerProps={{
 				leftButton: <BaseButton borderless>Skip for now</BaseButton>,
 				middleButton: (
@@ -70,7 +71,6 @@ const SetupDXP = () => {
 					'We’ll need a few details to finish building your DXP environment(s).',
 				title: 'Set up DXP Cloud',
 			}}
-			mainStyles="pl-3 pt-1"
 		>
 			<div className="d-flex justify-content-between mb-2 pb-1 pl-3">
 				<div className="flex-fill">

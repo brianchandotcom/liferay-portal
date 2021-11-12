@@ -52,7 +52,7 @@ const FormSettingsModal = ({
 	}, [dispatch, prevPagesRef, serializedSettingsContext]);
 
 	const {observer, onClose} = useModal({
-		onClose: () => {
+		onClose: async () => {
 			if (undoPagesRef.current) {
 				dispatch({
 					payload: prevPagesRef.current,
@@ -64,7 +64,35 @@ const FormSettingsModal = ({
 				});
 			}
 			else {
-				serializedSettingsContext.value = JSON.stringify({pages});
+				serializedSettingsContext.value = JSON.stringify({
+					pages,
+				});
+			}
+
+			const settingsDDMForm = await Liferay.componentReady(
+				'formSettingsAPI'
+			);
+
+			const showPartialResultsToRespondents = settingsDDMForm.reactComponentRef.current
+				.getFields()
+				.find(
+					({fieldName}) =>
+						fieldName === 'showPartialResultsToRespondents'
+				)?.value;
+
+			const alertElement = document.querySelector(
+				'.lfr-ddm__show-partial-results-alert'
+			);
+
+			if (showPartialResultsToRespondents) {
+				alertElement.classList.remove(
+					'lfr-ddm__show-partial-results-alert--hidden'
+				);
+			}
+			else {
+				alertElement.classList.add(
+					'lfr-ddm__show-partial-results-alert--hidden'
+				);
 			}
 
 			undoPagesRef.current = true;

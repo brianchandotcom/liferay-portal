@@ -214,6 +214,19 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							</clay:container-fluid>
 						</div>
 
+						<clay:container-fluid>
+							<react:component
+								module="admin/js/util/ShowPartialResultsAlert"
+								props='<%=
+									HashMapBuilder.<String, Object>put(
+										"dismissible", true
+									).put(
+										"showPartialResultsToRespondents", ddmFormDisplayContext.isShowPartialResultsToRespondents()
+									).build()
+								%>'
+							/>
+						</clay:container-fluid>
+
 						<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/dynamic_data_mapping_form/get_form_report_data" var="formReportDataURL">
 							<portlet:param name="formInstanceId" value="<%= String.valueOf(formInstanceId) %>" />
 						</liferay-portlet:resourceURL>

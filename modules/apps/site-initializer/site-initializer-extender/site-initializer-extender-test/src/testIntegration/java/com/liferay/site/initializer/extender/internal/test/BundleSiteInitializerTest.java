@@ -221,19 +221,19 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertAssetListEntries(Group group) {
-		List<AssetListEntry> assetEntry =
+		List<AssetListEntry> assetListEntries =
 			_assetListEntryLocalService.getAssetListEntries(group.getGroupId());
 
-		Assert.assertTrue(assetEntry.size() == 2);
+		Assert.assertTrue(assetListEntries.size() == 2);
 
-		AssetListEntry assetListEntry1 = assetEntry.get(0);
+		AssetListEntry assetListEntry1 = assetListEntries.get(0);
 
 		Assert.assertEquals("Closed Claims", assetListEntry1.getTitle());
 		Assert.assertEquals(
 			"com.liferay.journal.model.JournalArticle",
 			assetListEntry1.getAssetEntryType());
 
-		AssetListEntry assetListEntry2 = assetEntry.get(1);
+		AssetListEntry assetListEntry2 = assetListEntries.get(1);
 
 		Assert.assertEquals("Open Claims", assetListEntry2.getTitle());
 		Assert.assertEquals(

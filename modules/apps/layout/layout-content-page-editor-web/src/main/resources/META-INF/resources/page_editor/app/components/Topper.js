@@ -45,29 +45,6 @@ import ItemActions from './ItemActions';
 
 const TOPPER_BAR_HEIGHT = 24;
 
-const TopperListItem = React.forwardRef(
-	({children, className, expand, ...props}, ref) => (
-		<li
-			{...props}
-			className={classNames(
-				'page-editor__topper__item',
-				'tbar-item',
-				{'tbar-item-expand': expand},
-				className
-			)}
-			ref={ref}
-		>
-			{children}
-		</li>
-	)
-);
-
-TopperListItem.displayName = 'TopperListItem';
-
-TopperListItem.propTypes = {
-	expand: PropTypes.bool,
-};
-
 const MemoizedTopperContent = React.memo(TopperContent);
 
 export default function Topper({children, item, ...props}) {
@@ -191,22 +168,19 @@ function TopperContent({
 			<TopperLabel isActive={isActive} itemElement={itemElement}>
 				<ul className="tbar-nav">
 					{canBeDragged && (
-						<TopperListItem className="page-editor__topper__drag-handler">
+						<li className="page-editor__topper__drag-handler page-editor__topper__item tbar-item">
 							<ClayIcon
 								className="page-editor__topper__drag-icon page-editor__topper__icon"
 								symbol="drag"
 							/>
-						</TopperListItem>
+						</li>
 					)}
 
-					<TopperListItem
-						className="d-inline-block page-editor__topper__title"
-						expand
-					>
+					<li className="d-inline-block page-editor__topper__item page-editor__topper__title tbar-item tbar-item-expand">
 						{name}
-					</TopperListItem>
+					</li>
 					{item.type === LAYOUT_DATA_ITEM_TYPES.fragment && (
-						<TopperListItem>
+						<li className="page-editor__topper__item tbar-item">
 							<ClayButton
 								displayType="unstyled"
 								small
@@ -225,12 +199,12 @@ function TopperContent({
 									symbol="comments"
 								/>
 							</ClayButton>
-						</TopperListItem>
+						</li>
 					)}
 					{canUpdatePageStructure && isActive && (
-						<TopperListItem>
+						<li className="page-editor__topper__item tbar-item">
 							<ItemActions item={item} />
-						</TopperListItem>
+						</li>
 					)}
 				</ul>
 			</TopperLabel>

@@ -720,10 +720,6 @@ export default ({
 			let path =
 				basePath.current +
 				'&' +
-				PARAM_ENTRY +
-				'=' +
-				entryParam +
-				'&' +
 				PARAM_SHOW_HIDEABLE +
 				'=' +
 				showHideable.toString();
@@ -737,6 +733,10 @@ export default ({
 					PARAM_CHANGE_TYPES +
 					'=' +
 					changeTypes.join(',');
+			}
+
+			if (entryParam) {
+				path = path + '&' + PARAM_ENTRY + '=' + entryParam;
 			}
 
 			if (keywords) {
@@ -786,11 +786,9 @@ export default ({
 
 			const node = getNode(nodeId);
 
-			const entryParam = getEntryParam(node);
-
 			const path = getPath(
 				filtersState,
-				entryParam,
+				getEntryParam(node),
 				resultsKeywords,
 				showHideable
 			);
@@ -1550,11 +1548,9 @@ export default ({
 	};
 
 	const handleFiltersUpdate = (filters, keywords) => {
-		const entryParam = getEntryParam(renderState.node);
-
 		const path = getPath(
 			filters,
-			entryParam,
+			getEntryParam(renderState.node),
 			keywords,
 			renderState.showHideable
 		);

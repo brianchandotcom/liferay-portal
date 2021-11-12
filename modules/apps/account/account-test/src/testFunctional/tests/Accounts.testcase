@@ -1166,6 +1166,10 @@ definition {
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 7 entries.");
 
+			AssertTextNotEquals(
+				locator1 = "Pagination#RESULTS",
+				value1 = "Showing 1 to 4 of 6 entries.");
+
 			Click(locator1 = "Pagination#NEXT_LINK");
 
 			for (var organizationNumber : list "5,6,7") {
@@ -1173,6 +1177,10 @@ definition {
 			}
 
 			Pagination.viewResults(results = "Showing 5 to 7 of 7 entries.");
+
+			AssertTextNotEquals(
+				locator1 = "Pagination#RESULTS",
+				value1 = "Showing 5 to 5 of 5 entries.");
 		}
 	}
 

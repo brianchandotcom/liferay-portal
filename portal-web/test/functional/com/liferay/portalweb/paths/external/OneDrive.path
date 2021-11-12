@@ -48,7 +48,7 @@
 </tr>
 <tr>
 	<td>DOCUMENTS_TITLE_RENAME</td>
-	<td>//input[@id='CommitNewDocumentTitle']</td>
+	<td>//input[@id='CommitNewDocumentTitle' and not(@readonly)]</td>
 	<td></td>
 </tr>
 <tr>

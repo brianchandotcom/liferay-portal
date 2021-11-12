@@ -91,29 +91,38 @@ const Carousel = ({
 	handleClickNext,
 	handleClickPrevious,
 	showArrows = true,
-}) => (
-	<div className="carousel closed sidenav-container">
-		<InfoPanel metadata={currentItem.metadata} />
+}) => {
+	const isVideo = currentItem.returntype === STR_VIDEO_HTML_RETURN_TYPE;
+	let videoHtml = currentItem?.value?.html;
 
-		<div className="sidenav-content">
-			{showArrows && (
-				<Arrow direction="left" handleClick={handleClickPrevious} />
-			)}
+	if (isVideo && typeof currentItem.value === 'string') {
+		videoHtml = JSON.parse(currentItem.value).html;
+	}
 
-			{currentItem.returntype === STR_VIDEO_HTML_RETURN_TYPE ? (
-				<PreviewVideo html={currentItem.value} />
-			) : (
-				<PreviewImage
-					src={currentItem.url || currentItem.base64}
-					title={currentItem.title}
-				/>
-			)}
+	return (
+		<div className="carousel closed sidenav-container">
+			<InfoPanel metadata={currentItem.metadata} />
 
-			{showArrows && (
-				<Arrow direction="right" handleClick={handleClickNext} />
-			)}
+			<div className="sidenav-content">
+				{showArrows && (
+					<Arrow direction="left" handleClick={handleClickPrevious} />
+				)}
+
+				{isVideo ? (
+					<PreviewVideo html={videoHtml} />
+				) : (
+					<PreviewImage
+						src={currentItem.url || currentItem.base64}
+						title={currentItem.title}
+					/>
+				)}
+
+				{showArrows && (
+					<Arrow direction="right" handleClick={handleClickNext} />
+				)}
+			</div>
 		</div>
-	</div>
-);
+	);
+};
 
 export default Carousel;

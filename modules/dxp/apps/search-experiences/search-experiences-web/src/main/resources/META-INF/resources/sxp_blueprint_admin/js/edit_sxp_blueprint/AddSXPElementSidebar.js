@@ -224,7 +224,7 @@ function SXPElementSidebar({
 			const newSXPElements = sxpElements.filter((sxpElement) => {
 				if (value) {
 					const sxpElementTitle =
-						sxpElement.sxpElementJSON.title ||
+						sxpElement.sxpElementTemplateJSON.title ||
 						getLocalizedText(
 							sxpElement.sxpElementTemplateJSON.title_i18n,
 							locale

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.type.controller.content.internal.product.navigation.control.menu;
 
+import com.liferay.exportimport.kernel.staging.LayoutStaging;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -186,6 +188,15 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			return false;
 		}
 
+		Layout layout = themeDisplay.getLayout();
+
+		LayoutRevision layoutRevision = _layoutStaging.getLayoutRevision(
+			layout);
+
+		if ((layoutRevision != null) && layoutRevision.isIncomplete()) {
+			return false;
+		}
+
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
 
@@ -200,14 +211,9 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			ContentPageEditorWebKeys.CLASS_NAME);
 
 		if (Objects.equals(
-				className, LayoutPageTemplateEntry.class.getName())) {
+				className, LayoutPageTemplateEntry.class.getName()) ||
+			!layout.isTypeContent() || !SitesUtil.isLayoutUpdateable(layout)) {
 
-			return false;
-		}
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (!layout.isTypeContent() || !SitesUtil.isLayoutUpdateable(layout)) {
 			return false;
 		}
 
@@ -245,6 +251,9 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 	@Reference
 	private LayoutPermission _layoutPermission;
+
+	@Reference
+	private LayoutStaging _layoutStaging;
 
 	@Reference
 	private LayoutContentModelResourcePermission _modelResourcePermission;

@@ -105,6 +105,13 @@ public class IGConfigurationDisplayContext {
 		return portletDisplay.getNamespace() + "folderSelected";
 	}
 
+	public long getRepositoryId() throws PortalException {
+		_initFolder();
+		_initRepository();
+
+		return _repositoryId;
+	}
+
 	public long getRootFolderId() throws PortalException {
 		_initFolder();
 
@@ -215,6 +222,8 @@ public class IGConfigurationDisplayContext {
 
 		_folder = folder;
 
+		_initRepository();
+
 		if (_folder.isRepositoryCapabilityProvided(TrashCapability.class)) {
 			TrashCapability trashCapability = _folder.getRepositoryCapability(
 				TrashCapability.class);
@@ -225,6 +234,20 @@ public class IGConfigurationDisplayContext {
 				_folderName = _trashHelper.getOriginalTitle(_folder.getName());
 			}
 		}
+	}
+
+	private void _initRepository() {
+		if (_repositoryId != null) {
+			return;
+		}
+
+		if (_folder == null) {
+			_repositoryId = _themeDisplay.getScopeGroupId();
+		}
+		else {
+			_repositoryId = _folder.getRepositoryId();
+		}
+
 	}
 
 	private final DLAppLocalService _dlAppLocalService;
@@ -242,6 +265,7 @@ public class IGConfigurationDisplayContext {
 	private final PortletPreferencesLocalService
 		_portletPreferencesLocalService;
 	private final RenderRequest _renderRequest;
+	private Long _repositoryId;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
 

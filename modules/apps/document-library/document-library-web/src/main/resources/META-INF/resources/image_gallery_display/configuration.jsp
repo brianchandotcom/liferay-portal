@@ -33,6 +33,7 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = (IGConfigurationDi
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 	<aui:input name="preferences--mimeTypes--" type="hidden" />
+	<aui:input name="preferences--repositoryId--" type="hidden" value="<%= igConfigurationDisplayContext.getRepositoryId() %>" />
 	<aui:input name="preferences--rootFolderId--" type="hidden" value="<%= igConfigurationDisplayContext.getRootFolderId() %>" />
 
 	<liferay-frontend:edit-form-body>

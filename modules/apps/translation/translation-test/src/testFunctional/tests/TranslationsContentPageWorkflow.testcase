@@ -264,4 +264,244 @@ definition {
 			text = "Titulo");
 	}
 
+	@description = "This ensures that a translation with a new experience can be resubmitted after being rejected."
+	@priority = "5"
+	test CanResubmitRejectedTranslationWithExperience {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
+
+		JSONSegmentsentry.addSegment(
+			fieldName = "Email Address",
+			groupName = "Guest",
+			operator = "contains",
+			segmentName = "Segment Email Address",
+			text = "test@liferay.com");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addExperience(
+			experienceName = "Segment Email Experience",
+			segmentName = "Segment Email Address");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		WaitForPageLoad();
+
+		ContentPagesNavigator.goToTranslation(pageName = "Test Content Page Name");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.translateFragmentField(
+			experienceName = "Segment Email Experience",
+			fieldName = "element-text",
+			fragmentText = "esta es la nueva experiencia");
+
+		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Translation",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Translation",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Pending",
+			title = "Translation");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.resubmitTaskByActions(
+			workflowAssetTitle = "Translation",
+			workflowAssetType = "Translation",
+			workflowTask = "Update");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Translation",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Translation",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "guest");
+
+		PageEditor.changeExperience(newExperience = "Segment Email Experience");
+
+		PageEditor.prioritizeExperience(experienceName = "Segment Email Experience");
+
+		PageEditor.changeLocale(
+			currentLocale = "en-US",
+			locale = "es-ES");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "esta es la nueva experiencia",
+			fragmentName = "Heading",
+			id = "element-text");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/guest/test-content-page-name");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "esta es la nueva experiencia");
+	}
+
+	@description = "This ensures that a heading on a content page with a new experience can be translated and published properly after reviewing."
+	@priority = "5"
+	test CanTranslateHeadingWithExperienceAfterReviewing {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
+
+		JSONSegmentsentry.addSegment(
+			fieldName = "Email Address",
+			groupName = "Guest",
+			operator = "contains",
+			segmentName = "Segment Email Address",
+			text = "test@liferay.com");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addExperience(
+			experienceName = "Segment Email Experience",
+			segmentName = "Segment Email Address");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		WaitForPageLoad();
+
+		ContentPagesNavigator.goToTranslation(pageName = "Test Content Page Name");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.translateFragmentField(
+			experienceName = "Segment Email Experience",
+			fieldName = "element-text",
+			fragmentText = "esta es la nueva experiencia");
+
+		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.changeExperience(newExperience = "Segment Email Experience");
+
+		PageEditor.changeLocale(
+			currentLocale = "en-US",
+			locale = "es-ES");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "Heading Example",
+			fragmentName = "Heading",
+			id = "element-text");
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Translation",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Translation",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "guest");
+
+		PageEditor.changeExperience(newExperience = "Segment Email Experience");
+
+		PageEditor.prioritizeExperience(experienceName = "Segment Email Experience");
+
+		PageEditor.changeLocale(
+			currentLocale = "en-US",
+			locale = "es-ES");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "esta es la nueva experiencia",
+			fragmentName = "Heading",
+			id = "element-text");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/guest/test-content-page-name");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "esta es la nueva experiencia");
+	}
+
 }

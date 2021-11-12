@@ -148,11 +148,13 @@ function DiagramContent({product, productBaseURL}) {
 function ExternalContent({product, quantity}) {
 	return (
 		<>
-			<h4 className="mb-1">{product.sku}</h4>
+			<h4 className="mb-1">{product.sku || product.name}</h4>
 
-			<p className="mb-0">
-				{Liferay.Language.get('quantity')}: {quantity}
-			</p>
+			{!!quantity && (
+				<p className="mb-0">
+					{Liferay.Language.get('quantity')}: {quantity}
+				</p>
+			)}
 		</>
 	);
 }
@@ -186,8 +188,8 @@ function StorefrontTooltipContent({
 
 		updateLoading(true);
 
-		getProduct(selectedPin.mappedProduct.productId, channelId).then(
-			(product) => {
+		getProduct(selectedPin.mappedProduct.productId, channelId, accountId)
+			.then((product) => {
 				if (!isMounted()) {
 					return;
 				}
@@ -196,11 +198,17 @@ function StorefrontTooltipContent({
 					type: selectedPin.mappedProduct.type,
 					...product,
 				});
-
+			})
+			.catch(() => {
+				updateProduct({
+					...selectedPin.mappedProduct,
+					type: 'external',
+				});
+			})
+			.finally(() => {
 				updateLoading(false);
-			}
-		);
-	}, [channelId, isMounted, selectedPin]);
+			});
+	}, [accountId, channelId, isMounted, selectedPin]);
 
 	const currentSku = product
 		? product?.skus?.find(

@@ -122,7 +122,7 @@ export const getMappedProducts = (productId, query, page, pageSize) => {
 
 const products = new Map();
 
-export const getProduct = (productId, channelId) => {
+export const getProduct = (productId, channelId, accountId) => {
 	const fetchedProduct = products.get(productId);
 
 	if (fetchedProduct) {
@@ -133,6 +133,10 @@ export const getProduct = (productId, channelId) => {
 		`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}`,
 		themeDisplay.getPortalURL()
 	);
+
+	if (accountId) {
+		productURL.searchParams.set('accountId', accountId);
+	}
 
 	productURL.searchParams.set('nestedFields', 'skus,images,productOptions');
 

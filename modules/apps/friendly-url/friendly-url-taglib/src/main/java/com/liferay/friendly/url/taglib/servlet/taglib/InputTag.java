@@ -18,9 +18,14 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.friendly.url.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -103,11 +108,22 @@ public class InputTag extends IncludeTag {
 			"liferay-friendly-url:input:name", getName());
 	}
 
+	private String _getActualClassName() throws PortalException {
+		if (!Objects.equals(getClassName(), Layout.class.getName())) {
+			return getClassName();
+		}
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(getClassPK());
+
+		return getClassName() + StringPool.DASH + layout.isPrivateLayout();
+	}
+
 	private String _getFriendlyURLXML() {
 		try {
 			FriendlyURLEntry mainFriendlyURLEntry =
 				FriendlyURLEntryLocalServiceUtil.getMainFriendlyURLEntry(
-					PortalUtil.getClassNameId(getClassName()), getClassPK());
+					PortalUtil.getClassNameId(_getActualClassName()),
+					getClassPK());
 
 			return mainFriendlyURLEntry.getUrlTitleMapAsXML();
 		}

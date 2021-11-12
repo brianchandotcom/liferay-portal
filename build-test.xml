@@ -13826,12 +13826,15 @@ url=${short.hostname}:8080</echo>
 	<target name="update-translation-file">
 		<var name="translation.file.type" value="xlf" />
 
-		<unzip
-			dest="${selenium.output.dir.name}"
-			src="${selenium.output.dir.name}/${translation.zip.file.name}"
-		>
-		</unzip>
-
+		<if>
+			<equals arg1="${operation}" arg2="unzip" />
+			<then>
+				<unzip
+					dest="${selenium.output.dir.name}/${translation.zip.file.name}"
+					src="${selenium.output.dir.name}/${translation.zip.file.name}.zip"
+				/>
+			</then>
+		</if>
 		<if>
 			<equals arg1="${translation.file.rename}" arg2="true" />
 			<then>
@@ -13887,6 +13890,16 @@ url=${short.hostname}:8080</echo>
 					file="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}"
 					outputencoding="UTF-8"
 					tofile="${selenium.output.dir.name}/${translation.file.name}_utf8.${translation.file.type}"
+				/>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${operation}" arg2="zip" />
+			<then>
+				<zip
+					basedir="${selenium.output.dir.name}/${translation.zip.file.name}"
+					destfile="${selenium.output.dir.name}/${translation.zip.file.name}_translated.zip"
 				/>
 			</then>
 		</if>

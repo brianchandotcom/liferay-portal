@@ -19,9 +19,12 @@ package com.liferay.content.dashboard.web.internal.portlet.action.test;
  */
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.content.dashboard.web.test.util.ContentDashboardTestUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -42,18 +45,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import java.util.Date;
-import java.util.Iterator;
-
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -85,97 +79,46 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testServeResource() throws Exception {
-		_addFileEntry();
+	public void testServeResourceExcel() throws Exception {
+		FileEntry fileEntry = _addFileEntry();
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		dlFileEntry.setModifiedDate(new Date(1634902652000L));
+
+		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
 
 		ByteArrayOutputStream generatedByteArrayOutputStream = _serveResource(
 			FileEntry.class.getName(), _group.getGroupId());
 
-		byte[] expectedFile = FileUtil.getBytes(getClass(), "expected.xls");
+		byte[] expectedFileByteArray = FileUtil.getBytes(
+			getClass(), "expected.xls");
 
-		ByteArrayOutputStream expectedExcelByteArrayOutputStream =
-			new ByteArrayOutputStream();
+		byte[] generatedFileByteArray =
+			generatedByteArrayOutputStream.toByteArray();
 
-		expectedExcelByteArrayOutputStream.write(expectedFile);
+		ThemeDisplay themeDisplay = ContentDashboardTestUtil.getThemeDisplay(
+			_group);
 
-		Assert.assertTrue(
-			_assertEqualsToExpectedFileCellByCell(
-				generatedByteArrayOutputStream, expectedFile));
+		User user = themeDisplay.getUser();
+
+		Assert.assertEquals(
+			new String(expectedFileByteArray),
+			new String(
+				generatedFileByteArray
+			).replace(
+				user.getFullName(), "Test Test"
+			));
 	}
 
-	private void _addFileEntry() throws Exception {
+	private FileEntry _addFileEntry() throws Exception {
 		Date date = new Date(150000);
 
-		DLAppLocalServiceUtil.addFileEntry(
+		return DLAppLocalServiceUtil.addFileEntry(
 			"Site", TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "fileName.pdf",
 			"application/pdf", new byte[0], date, date,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-	}
-
-	private boolean _assertEqualsToExpectedFileCellByCell(
-			ByteArrayOutputStream byteArrayOutputStream, byte[] expectedFile)
-		throws Exception {
-
-		Workbook workbookExpected = new HSSFWorkbook(
-			new ByteArrayInputStream(expectedFile));
-
-		Workbook workbookGenerated = new HSSFWorkbook(
-			new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
-
-		Sheet datatypeSheetExpected = workbookExpected.getSheetAt(0);
-		Sheet datatypeSheetGenerated = workbookGenerated.getSheetAt(0);
-
-		Iterator<Row> rowExpectedIterator = datatypeSheetExpected.iterator();
-		Iterator<Row> rowGeneratedIterator = datatypeSheetGenerated.iterator();
-
-		while (rowExpectedIterator.hasNext() &&
-			   rowGeneratedIterator.hasNext()) {
-
-			Row currentRowExpected = rowExpectedIterator.next();
-			Row currentRowGenerated = rowGeneratedIterator.next();
-
-			Iterator<Cell> cellExpectedIterator = currentRowExpected.iterator();
-			Iterator<Cell> cellGeneratedIterator =
-				currentRowGenerated.iterator();
-
-			int iterator = 0;
-
-			while (cellExpectedIterator.hasNext() &&
-				   cellGeneratedIterator.hasNext()) {
-
-				iterator++;
-
-				Cell currentExpectedCell = cellExpectedIterator.next();
-				Cell currentGeneratedCell = cellGeneratedIterator.next();
-
-				boolean avoidCheckModificationDate = false;
-
-				if (iterator == 9) {
-					avoidCheckModificationDate = true;
-				}
-
-				if ((currentExpectedCell.getCellType() == CellType.STRING) &&
-					!avoidCheckModificationDate) {
-
-					Assert.assertEquals(
-						currentExpectedCell.getStringCellValue(),
-						currentGeneratedCell.getStringCellValue());
-				}
-			}
-
-			if (cellExpectedIterator.hasNext() ||
-				cellGeneratedIterator.hasNext()) {
-
-				return false;
-			}
-		}
-
-		if (rowExpectedIterator.hasNext() || rowGeneratedIterator.hasNext()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private ByteArrayOutputStream _serveResource(String className, long groupId)

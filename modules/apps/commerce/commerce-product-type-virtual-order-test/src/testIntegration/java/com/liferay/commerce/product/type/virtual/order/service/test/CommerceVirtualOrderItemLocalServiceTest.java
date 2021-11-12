@@ -148,7 +148,9 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 		}
 
 		commerceOrder = _setCommerceOrderStatuses(
-			commerceOrder, CommerceOrderConstants.PAYMENT_STATUS_PAID,
+			_commerceOrderLocalService.getCommerceOrder(
+				commerceOrder.getCommerceOrderId()),
+			CommerceOrderConstants.PAYMENT_STATUS_PAID,
 			CommerceOrderConstants.ORDER_STATUS_PENDING);
 
 		_commerceVirtualOrderItemChecker.checkCommerceVirtualOrderItems(
@@ -239,7 +241,9 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 		}
 
 		commerceOrder = _setCommerceOrderStatuses(
-			commerceOrder, CommerceOrderConstants.PAYMENT_STATUS_PAID,
+			_commerceOrderLocalService.getCommerceOrder(
+				commerceOrder.getCommerceOrderId()),
+			CommerceOrderConstants.PAYMENT_STATUS_PAID,
 			CommerceOrderConstants.ORDER_STATUS_PENDING);
 
 		_commerceSubscriptionEntryHelper.checkCommerceSubscriptions(

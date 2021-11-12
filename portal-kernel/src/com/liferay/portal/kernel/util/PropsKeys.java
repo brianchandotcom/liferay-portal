@@ -2919,9 +2919,6 @@ public interface PropsKeys {
 	public static final String SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA =
 		"search.container.show.pagination.top.delta";
 
-	public static final String SEARCH_EXPERIENCES_POWER_TOOLS_ENABLED =
-		"search.experiences.power.tools.enabled";
-
 	public static final String SERVLET_CONTEXT_CLASS_LOADER_POOL_FALLBACK =
 		"servlet.context.class.loader.pool.fallback";
 

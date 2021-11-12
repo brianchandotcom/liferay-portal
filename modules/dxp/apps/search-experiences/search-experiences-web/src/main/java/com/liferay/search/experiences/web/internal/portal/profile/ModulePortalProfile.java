@@ -16,7 +16,6 @@ package com.liferay.search.experiences.web.internal.portal.profile;
 
 import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.search.experiences.web.internal.power.tools.portlet.SXPPowerToolsPortlet;
 import com.liferay.search.experiences.web.internal.power.tools.portlet.action.ImportGooglePlacesMVCActionCommand;
 import com.liferay.search.experiences.web.internal.power.tools.portlet.action.ImportWikipediaMVCActionCommand;
@@ -39,7 +38,9 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 	protected void activate(ComponentContext componentContext) {
 		List<String> supportedPortalProfileNames = Collections.emptyList();
 
-		if (PropsValues.SEARCH_EXPERIENCES_POWER_TOOLS_ENABLED) {
+		// TODO PropsValues.SEARCH_EXPERIENCES_POWER_TOOLS_ENABLED
+
+		if (false) {
 			supportedPortalProfileNames = Arrays.asList(
 				PortalProfile.PORTAL_PROFILE_NAME_CE,
 				PortalProfile.PORTAL_PROFILE_NAME_DXP);

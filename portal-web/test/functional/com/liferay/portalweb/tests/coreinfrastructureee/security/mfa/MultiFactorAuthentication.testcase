@@ -316,7 +316,7 @@ definition {
 	test DisableOTPForInstanceOnSystemLevel {
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#DisableOTPForInstanceOnSystemLevel";
 
-		task ("Enable MFA") {
+		task ("Assert MFA is not disabled on system level") {
 			MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "false");
 		}
 
@@ -347,6 +347,8 @@ definition {
 		}
 
 		task ("Enable OTP") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
+
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
 
@@ -450,7 +452,7 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#EnableOTPForInstanceAsInstanceAdminUser";
 
-		task ("Enable MFA") {
+		task ("Assert MFA is not disabled on system level") {
 			MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "false");
 		}
 
@@ -481,6 +483,8 @@ definition {
 		}
 
 		task ("Enable OTP") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
+
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
 

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperU
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;
 import java.util.ResourceBundle;
@@ -43,7 +42,7 @@ public class BatchPlannerConfigurationModelListener
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 
-		String importFileMaxSize = GetterUtil.getString(
+		long importFileMaxSize = GetterUtil.getLong(
 			properties.get("importFileMaxSize"));
 
 		if (!_isValid(importFileMaxSize)) {
@@ -61,14 +60,8 @@ public class BatchPlannerConfigurationModelListener
 			LocaleThreadLocal.getThemeDisplayLocale(), getClass());
 	}
 
-	private boolean _isValid(String value) {
-		if (Validator.isNull(value) || (GetterUtil.getLong(value) == 0)) {
-			return true;
-		}
-
-		if (UploadServletRequestConfigurationHelperUtil.getMaxSize() <
-				GetterUtil.getLong(value)) {
-
+	private boolean _isValid(long value) {
+		if (value > UploadServletRequestConfigurationHelperUtil.getMaxSize()) {
 			return false;
 		}
 

@@ -251,24 +251,25 @@ public class AddFormInstanceRecordMVCCommandHelper {
 	protected void removeValue(
 		DDMFormValues ddmFormValues, Set<String> invisibleFields) {
 
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			ddmFormValues.getDDMFormFieldValues();
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap(true);
 
-		Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
+		invisibleFields.forEach(
+			invisibleField -> {
+				List<DDMFormFieldValue> ddmFormFieldValues =
+					ddmFormFieldValuesMap.get(invisibleField);
 
-		stream.filter(
-			ddmFormFieldValue ->
-				invisibleFields.contains(ddmFormFieldValue.getName()) &&
-				(ddmFormFieldValue.getValue() != null)
-		).forEach(
-			ddmFormFieldValue -> {
-				Value value = ddmFormFieldValue.getValue();
+				ddmFormFieldValues.forEach(
+					ddmFormFieldValue -> {
+						Value value = ddmFormFieldValue.getValue();
 
-				removeValue(
-					value.getAvailableLocales(), ddmFormFieldValue,
-					value.getDefaultLocale());
-			}
-		);
+						if (value != null) {
+							removeValue(
+								value.getAvailableLocales(), ddmFormFieldValue,
+								value.getDefaultLocale());
+						}
+					});
+			});
 	}
 
 	protected void removeValue(

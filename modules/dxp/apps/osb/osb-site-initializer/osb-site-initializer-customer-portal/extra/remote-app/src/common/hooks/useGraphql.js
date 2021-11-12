@@ -11,14 +11,17 @@ const getData = (data) => {
 
 				if (Object.keys(cObject)[0] === 'items') {
 					currentData[cObjectKey] = cObject['items'];
-				} else {
+				}
+				else {
 					currentData[cObjectKey] = cObject;
 				}
 			});
-		} else {
+		}
+		else {
 			if (Object.keys(data[key])[0] === 'items') {
 				currentData[key] = data[key]['items'];
-			} else {
+			}
+			else {
 				currentData[key] = data[key];
 			}
 		}
@@ -54,7 +57,8 @@ const useGraphQL = (queries) => {
 
 			setData(getData(data));
 			setLoading(false);
-		} catch (error) {
+		}
+		catch (error) {
 			setError(error.message);
 		}
 	};

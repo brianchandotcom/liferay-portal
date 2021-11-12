@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -9,18 +8,3 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-
-
-
-const userApplicationIdKey = 'customer-portal-user-application';
-const userApplication = sessionStorage.getItem(userApplicationIdKey);
-
-if (userApplication) {
-    var user = JSON.parse(userApplication);
-
-    fragmentElement.querySelector('#select-user-application').textContent = user.name;
-
-    if (user.image) {
-        fragmentElement.querySelector('#user-icon-application').src = user.image;
-    }
-} 

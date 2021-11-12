@@ -17,7 +17,7 @@
  */
 
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;600;700;800&display=swap");
-/* :root { */
+/* ---------- :root { ---------- */
 :host {
   --blue: #4b9fff;
   --indigo: #7785ff;
@@ -49,8 +49,8 @@
   --font-family-monospace: sfmono-regular, menlo, monaco, consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-/* Dialect Style Guide */
-/* :root { */
+/* ---------- Dialect style guide ---------- */
+/* ---------- :root { ---------- */
 :host {
   --color-action-secondary-inverted-disabled: #ffffff80;
   --color-action-neutral-default: #2b3a4b;
@@ -398,7 +398,7 @@ main {
   display: block;
 }
 
-/* body { */
+/* ---------- body { ---------- */
 component {
   background-color: var(--body-bg, #fff);
   color: var(--body-color, #272833);
@@ -657,7 +657,7 @@ h6,
   margin-bottom: 0.5rem;
 }
 
-/* Removed fallback var value */
+/* ---------- Removed fallback var value ---------- */
 
 h1,
 .h1 {
@@ -683,7 +683,7 @@ h6,
 .h6 {
   font-size: var(--h6-font-size);
 }
-/* Removed fallback var value */
+/* ---------- Removed fallback var value ---------- */
 
 .lead {
   font-size: var(--lead-font-size, 1.25rem);
@@ -785,7 +785,7 @@ mark:before,
   font-size: var(--blockquote-small-font-size, 0.875rem);
 }
 .blockquote-footer::before {
-  content: "— ";
+  content: "— ";
 }
 
 b {

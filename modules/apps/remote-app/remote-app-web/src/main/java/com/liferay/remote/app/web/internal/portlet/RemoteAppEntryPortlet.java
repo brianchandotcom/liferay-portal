@@ -23,20 +23,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.model.RemoteAppEntry;
-import org.osgi.service.component.annotations.Reference;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -130,13 +125,13 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		Properties properties = _getProperties(renderRequest);
 
 		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			Group group = GroupLocalServiceUtil.getGroup(
 				themeDisplay.getScopeGroupId());
 
-			StringBundler webDavURLSB = new StringBundler();
+			StringBundler webDavURLSB = new StringBundler(4);
 
 			webDavURLSB.append(themeDisplay.getPortalURL());
 			webDavURLSB.append("/webdav");
@@ -219,4 +214,5 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 
 	private final NPMResolver _npmResolver;
 	private final RemoteAppEntry _remoteAppEntry;
+
 }

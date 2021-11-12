@@ -1,110 +1,109 @@
 {
-    "label": {
-      "en-US": "Account Subscription"
-    },
-    "name": "AccountSubscription",
-    "objectFields": [
-      {
-        "indexed": true,
-        "indexedAsKeyword": false,
-        "indexedLanguageId": "",
-        "label": {
-          "en-US": "Account Key"
-        },
-        "listTypeDefinitionId": 0,
-        "name": "accountKey",
-        "required": false,
-        "type": "String"
-      },
-      {
-        "indexed": true,
-        "indexedAsKeyword": false,
-        "indexedLanguageId": "",
-        "label": {
-          "en-US": "Account Subscription Group ERC"
-        },
-        "listTypeDefinitionId": 0,
-        "name": "accountSubscriptionGroupERC",
-        "required": false,
-        "type": "String"
-      },
-      {
-        "indexed": true,
-        "indexedAsKeyword": false,
-        "indexedLanguageId": "",
-        "label": {
-          "en-US": "End Date"
-        },
-        "listTypeDefinitionId": 0,
-        "name": "endDate",
-        "required": false,
-        "type": "Date"
-      },
-      {
-        "indexed": true,
-        "indexedAsKeyword": false,
-        "indexedLanguageId": "",
-        "label": {
-          "en-US": "Instance Size"
-        },
-        "listTypeDefinitionId": 0,
-        "name": "instanceSize",
-        "required": false,
-        "type": "String"
-      },
-      {
-        "indexed": true,
-        "indexedAsKeyword": false,
-        "indexedLanguageId": "",
-        "label": {
-          "en-US": "Name"
-        },
-        "listTypeDefinitionId": 0,
-        "name": "name",
-        "required": false,
-        "type": "String"
-      },
-      {
-        "indexed": true,
-        "indexedAsKeyword": false,
-        "indexedLanguageId": "",
-        "label": {
-          "en-US": "Quantity"
-        },
-        "listTypeDefinitionId": 0,
-        "name": "quantity",
-        "required": false,
-        "type": "Integer"
-      },
-      {
-        "indexed": true,
-        "indexedAsKeyword": false,
-        "indexedLanguageId": "",
-        "label": {
-          "en-US": "Start Date"
-        },
-        "listTypeDefinitionId": 0,
-        "name": "startDate",
-        "required": false,
-        "type": "Date"
-      },
-      {
-        "indexed": true,
-        "indexedAsKeyword": false,
-        "indexedLanguageId": "",
-        "label": {
-          "en-US": "Status"
-        },
-        "listTypeDefinitionId": 0,
-        "name": "subscriptionStatus",
-        "required": false,
-        "type": "String"
-      }
-    ],
-    "pluralLabel": {
-      "en_US": "Account Subscriptions"
-    },
-    "scope": "company",
-    "system": false
-  }
-  
+	"label": {
+		"en-US": "Account Subscription"
+	},
+	"name": "AccountSubscription",
+	"objectFields": [
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Account Key"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "accountKey",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Account Subscription Group ERC"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "accountSubscriptionGroupERC",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "End Date"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "endDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Instance Size"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "instanceSize",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Name"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "name",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Quantity"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "quantity",
+			"required": false,
+			"type": "Integer"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Start Date"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "startDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Status"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "subscriptionStatus",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Account Subscriptions"
+	},
+	"scope": "company",
+	"system": false
+}

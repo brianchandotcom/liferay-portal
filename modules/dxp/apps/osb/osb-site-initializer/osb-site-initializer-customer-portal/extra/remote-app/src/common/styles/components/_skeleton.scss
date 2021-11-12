@@ -7,9 +7,9 @@
 		#f8f8f8 40%,
 		#f8f8f8 100%
 	);
-	background-size: 450px 400px;
-	background-repeat: no-repeat;
 	animation: shimmer 1s linear infinite;
+	background-repeat: no-repeat;
+	background-size: 450px 400px;
 }
 
 @keyframes shimmer {

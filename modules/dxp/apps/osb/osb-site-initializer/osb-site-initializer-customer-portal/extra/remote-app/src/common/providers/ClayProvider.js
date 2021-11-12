@@ -10,7 +10,8 @@ const getIconSpriteMap = () => {
 
 		// eslint-disable-next-line no-undef
 		return `${Liferay.themeDisplay.getPathThemeImages()}/clay/icons.svg`;
-	} catch (error) {
+	}
+	catch (error) {
 		console.warn(error.message);
 
 		// eslint-disable-next-line no-undef

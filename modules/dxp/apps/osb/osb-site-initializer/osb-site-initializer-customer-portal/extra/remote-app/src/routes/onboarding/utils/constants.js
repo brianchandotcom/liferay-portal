@@ -1,9 +1,3 @@
-const steps = {
-	dxp: 2,
-	invites: 1,
-	welcome: 0,
-};
-
 const roles = {
 	admin: {
 		description:
@@ -40,11 +34,10 @@ const roles = {
 	},
 };
 
-const getInitialInvite = (id = roles.watcher.id) => {
-	return {
-		email: '',
-		roleId: id,
-	};
+const steps = {
+	dxp: 2,
+	invites: 1,
+	welcome: 0,
 };
 
 const getInitialDxpAdmin = () => {
@@ -53,6 +46,13 @@ const getInitialDxpAdmin = () => {
 		firstName: '',
 		github: '',
 		lastName: '',
+	};
+};
+
+const getInitialInvite = (id = roles.watcher.id) => {
+	return {
+		email: '',
+		roleId: id,
 	};
 };
 

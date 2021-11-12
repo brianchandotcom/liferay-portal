@@ -10,6 +10,8 @@ import ProjectCard from '../components/ProjectCard';
 import SearchProject from '../components/SearchProject';
 import {status} from '../utils/constants';
 
+const PROJECT_THRESHOLD_COUNT = 4;
+
 const Home = () => {
 	const {data: userAccount} = useGraphQL(
 		getUserAccountById(LiferayTheme.getUserId())
@@ -26,7 +28,8 @@ const Home = () => {
 					name: userAccount.name,
 				})
 			);
-		} else {
+		}
+		else {
 			Storage.removeItem(STORAGE_KEYS.USER_APPLICATION);
 		}
 	}, [userAccount]);
@@ -71,7 +74,7 @@ const Home = () => {
 			})
 		) || [];
 
-	const isManyProject = projects.length > 4;
+	const withManyProjects = projects.length > PROJECT_THRESHOLD_COUNT;
 
 	const nextPage = (project) => {
 		Storage.setItem(
@@ -84,12 +87,12 @@ const Home = () => {
 		<>
 			<div
 				className={classNames('display-4', 'font-weight-bold', 'mb-5', {
-					'pb-2': isManyProject,
+					'pb-2': withManyProjects,
 				})}
 			>
 				Projects
 			</div>
-			{isManyProject && (
+			{withManyProjects && (
 				<div className="align-items-center d-flex justify-content-between mb-4">
 					<SearchProject placeholder="Find a project" />
 
@@ -100,15 +103,15 @@ const Home = () => {
 			)}
 			<div
 				className={classNames('d-flex', 'flex-wrap', {
-					'home-projects': !isManyProject,
-					'home-projects-sm pt-2': isManyProject,
+					'home-projects': !withManyProjects,
+					'home-projects-sm pt-2': withManyProjects,
 				})}
 			>
 				{projects.map((project, index) => (
 					<ProjectCard
 						key={index}
 						onClick={() => nextPage(project)}
-						small={isManyProject}
+						small={withManyProjects}
 						{...project}
 					/>
 				))}

@@ -90,7 +90,7 @@ definition {
 			operation = "unzip",
 			titleTranslation = "Titulodelcontenidoweb",
 			translationFileName = "WebContentTitle-en_US-es_ES",
-			translationZipFileName = "WebContentTitle-en_US.zip",
+			translationZipFileName = "WebContentTitle-en_US",
 			webContentContent = "WebContent",
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
@@ -139,7 +139,7 @@ definition {
 			operation = "unzip",
 			titleTranslation = "Titulodelcontenidoweb",
 			translationFileName = "WebContentTitle-en_US-es_ES",
-			translationZipFileName = "WebContentTitle-en_US.zip",
+			translationZipFileName = "WebContentTitle-en_US",
 			webContentContent = "WebContent",
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
@@ -184,7 +184,7 @@ definition {
 			operation = "unzip",
 			titleTranslation = "Webコンテンツのタイトル",
 			translationFileName = "WebContentTitle-en_US-ja_JP",
-			translationZipFileName = "WebContentTitle-en_US.zip",
+			translationZipFileName = "WebContentTitle-en_US",
 			webContentContent = "WebContent",
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
@@ -234,7 +234,7 @@ definition {
 			titleTranslation = "TiteldesWebinhalts",
 			translationFileName = "WebContentTitle-en_US-de_DE",
 			translationFileRename = "true",
-			translationZipFileName = "WebContentTitle-en_US.zip",
+			translationZipFileName = "WebContentTitle-en_US",
 			webContentContent = "WebContent",
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");

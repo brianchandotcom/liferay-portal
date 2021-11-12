@@ -11,7 +11,7 @@ exports[`MiniCart Opener by data flow if there are cart items if "displayTotalIt
       role="presentation"
     >
       <use
-        xlink:href="someSpritemap.svg#shopping-cart"
+        xlink:href="#shopping-cart"
       />
     </svg>
   </button>
@@ -29,11 +29,11 @@ exports[`MiniCart Opener by data flow if there are cart items renders a badge wi
       role="presentation"
     >
       <use
-        xlink:href="someSpritemap.svg#shopping-cart"
+        xlink:href="#shopping-cart"
       />
     </svg>
   </button>
 </DocumentFragment>
 `;
 
-exports[`MiniCart Opener by default renders a clickable button with a shopping cart icon to open the MiniCart 1`] = `"<svg class=\\"lexicon-icon lexicon-icon-shopping-cart\\" role=\\"presentation\\"><use xlink:href=\\"someSpritemap.svg#shopping-cart\\"></use></svg>"`;
+exports[`MiniCart Opener by default renders a clickable button with a shopping cart icon to open the MiniCart 1`] = `"<svg class=\\"lexicon-icon lexicon-icon-shopping-cart\\" role=\\"presentation\\"><use xlink:href=\\"#shopping-cart\\"></use></svg>"`;

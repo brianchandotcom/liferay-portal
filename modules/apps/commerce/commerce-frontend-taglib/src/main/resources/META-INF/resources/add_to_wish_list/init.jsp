@@ -32,7 +32,6 @@ CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute("liferay-co
 String large = (String)request.getAttribute("liferay-commerce:add-to-wish-list:large");
 String inWishList = (String)request.getAttribute("liferay-commerce:add-to-wish-list:inWishList");
 String skuId = (String)request.getAttribute("liferay-commerce:add-to-wish-list:skuId");
-String spritemap = (String)request.getAttribute("liferay-commerce:add-to-wish-list:spritemap");
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib") + StringPool.UNDERLINE;
 

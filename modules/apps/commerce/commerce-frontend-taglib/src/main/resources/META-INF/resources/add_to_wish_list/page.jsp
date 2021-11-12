@@ -27,12 +27,7 @@
 		large: <%= large %>,
 		isInWishList: <%= inWishList %>,
 		skuId: <%= skuId %>,
-		spritemap: '<%= spritemap %>',
 	};
 
-	AddToWishList.default(
-		'<%= addToWishListId %>',
-		'<%= addToWishListId %>',
-		initialProps
-	);
+	AddToWishList.default('<%= addToWishListId %>', '<%= addToWishListId %>');
 </aui:script>

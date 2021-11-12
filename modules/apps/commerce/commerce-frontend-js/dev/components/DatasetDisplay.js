@@ -107,7 +107,6 @@ const fluidDataSetProps = {
 		initialTotalItems: 40,
 	},
 	showPagination: true,
-	spritemap: './assets/clay/icons.svg',
 	style: 'fluid',
 	views: [
 		{
@@ -277,7 +276,6 @@ const emailsDataSetProps = {
 		initialDelta: 10,
 	},
 	showPagination: true,
-	spritemap: './assets/clay/icons.svg',
 	style: 'stacked',
 	views: [
 		{
@@ -321,7 +319,6 @@ const selectableTableProps = {
 	},
 	selectedItemsKey: 'countryId',
 	showPagination: true,
-	spritemap: './assets/clay/icons.svg',
 	views: [
 		{
 			contentRenderer: 'selectableTable',
@@ -471,7 +468,6 @@ const ordersDataSetProps = {
 			key: 'createDate',
 		},
 	],
-	spritemap: './assets/clay/icons.svg',
 	views: [
 		{
 			contentRenderer: 'table',
@@ -676,7 +672,6 @@ const productsDataSetProps = {
 			key: 'modifiedDate',
 		},
 	],
-	spritemap: './assets/clay/icons.svg',
 	views: [
 		{
 			contentRenderer: 'table',
@@ -810,7 +805,6 @@ const priceListsDataSetProps = {
 	},
 	selectedItemsKey: 'id',
 	showPagination: true,
-	spritemap: './assets/clay/icons.svg',
 	views: [
 		{
 			contentRenderer: 'table',

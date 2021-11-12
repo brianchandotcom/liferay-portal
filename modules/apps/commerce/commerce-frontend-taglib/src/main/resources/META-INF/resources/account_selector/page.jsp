@@ -33,7 +33,6 @@
 			selectOrderURL: '<%= selectOrderURL %>',
 			setCurrentAccountURL: '<%= setCurrentAccountURL %>',
 			showOrderTypeModal: <%= showOrderTypeModal %>,
-			spritemap: '<%= spritemap %>',
 		}
 	);
 </aui:script>

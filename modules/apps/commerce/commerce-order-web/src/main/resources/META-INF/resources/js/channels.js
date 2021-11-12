@@ -22,7 +22,6 @@ export default function ({
 	datasetId,
 	orderTypeExternalReferenceCode,
 	rootPortletId,
-	spritemap,
 }) {
 	const CommerceOrderTypeChannelsResource = ServiceProvider.AdminOrderAPI(
 		'v1'
@@ -70,7 +69,6 @@ export default function ({
 				fieldName: 'name',
 			},
 		],
-		spritemap,
 		titleLabel: Liferay.Language.get('add-existing-channel'),
 	});
 }

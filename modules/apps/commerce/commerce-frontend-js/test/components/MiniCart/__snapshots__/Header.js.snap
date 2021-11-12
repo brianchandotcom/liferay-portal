@@ -42,7 +42,7 @@ exports[`MiniCart Header by default renders the MiniCart header which includes a
         role="presentation"
       >
         <use
-          xlink:href="someSpritemap.svg#times"
+          xlink:href="#times"
         />
       </svg>
     </button>

@@ -29,7 +29,6 @@ describe('MiniCart Header', () => {
 		cartState: {},
 		closeCart: jest.fn(),
 		labels: DEFAULT_LABELS,
-		spritemap: 'someSpritemap.svg',
 		toggleable: true,
 	};
 

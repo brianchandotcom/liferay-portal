@@ -22,7 +22,6 @@ miniCompareLauncher('miniCompare', 'mini-compare-root', {
 	compareProductsURL: '#',
 	itemsLimit: 4,
 	portletNamespace: 'portletNamespace',
-	spritemap: './assets/clay/icons.svg',
 });
 
 compareCheckboxLauncher('miniCompare1', 'compare-checkbox-root-1', {

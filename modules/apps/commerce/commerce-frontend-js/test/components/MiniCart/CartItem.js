@@ -45,7 +45,6 @@ describe('MiniCart Item', () => {
 		},
 		displayDiscountLevels: false,
 		setIsUpdating: jest.fn(),
-		spritemap: 'someSpritemap.svg',
 		updateCartModel: jest.fn().mockReturnValue(Promise.resolve()),
 	};
 

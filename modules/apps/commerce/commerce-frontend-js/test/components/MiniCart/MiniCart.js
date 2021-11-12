@@ -49,7 +49,6 @@ describe('MiniCart', () => {
 			siteDefaultURL: 'http://site-default.url',
 		},
 		onAddToCart: jest.fn(),
-		spritemap: 'someSpritemap.svg',
 	};
 
 	const CART_WITH_ITEMS_MOCK = getMockedCart(true);

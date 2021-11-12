@@ -25,5 +25,4 @@ launcher('global-search', 'global-search-root', {
 	ordersSearchURLTemplate: '/orders?search={query}',
 	productURLTemplate: '/product-page/{id}',
 	productsSearchURLTemplate: '/products?search={query}',
-	spritemap: './assets/clay/icons.svg',
 });

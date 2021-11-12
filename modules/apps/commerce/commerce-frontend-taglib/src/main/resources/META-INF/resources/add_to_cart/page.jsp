@@ -61,7 +61,6 @@ else {
 			disabled: <%= disabled %>,
 			namespace: '<%= namespace %>',
 		},
-		spritemap: '<%= spritemap %>',
 	};
 
 	<c:if test="<%= productSettingsModel != null %>">

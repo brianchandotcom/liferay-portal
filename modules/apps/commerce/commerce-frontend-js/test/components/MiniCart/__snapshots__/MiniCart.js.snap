@@ -17,7 +17,7 @@ exports[`MiniCart by data flow if the order ID is defined and > 0 if the request
         role="presentation"
       >
         <use
-          xlink:href="someSpritemap.svg#shopping-cart"
+          xlink:href="#shopping-cart"
         />
       </svg>
     </button>
@@ -45,7 +45,7 @@ exports[`MiniCart by data flow if the order ID is defined and > 0 if the request
               role="presentation"
             >
               <use
-                xlink:href="someSpritemap.svg#times"
+                xlink:href="#times"
               />
             </svg>
           </button>
@@ -86,7 +86,7 @@ exports[`MiniCart by default renders the MiniCart in closed state with the defau
         role="presentation"
       >
         <use
-          xlink:href="someSpritemap.svg#shopping-cart"
+          xlink:href="#shopping-cart"
         />
       </svg>
     </button>
@@ -114,7 +114,7 @@ exports[`MiniCart by default renders the MiniCart in closed state with the defau
               role="presentation"
             >
               <use
-                xlink:href="someSpritemap.svg#times"
+                xlink:href="#times"
               />
             </svg>
           </button>

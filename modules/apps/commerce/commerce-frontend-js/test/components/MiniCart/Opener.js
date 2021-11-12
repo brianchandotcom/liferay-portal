@@ -28,7 +28,6 @@ describe('MiniCart Opener', () => {
 		},
 		displayTotalItemsQuantity: false,
 		openCart: jest.fn(),
-		spritemap: 'someSpritemap.svg',
 	};
 
 	const COMPONENT_SELECTOR = '.mini-cart-opener';
@@ -55,13 +54,6 @@ describe('MiniCart Opener', () => {
 		it('renders a clickable button with a shopping cart icon to open the MiniCart', async () => {
 			expect(ComponentElement).toBeInTheDocument();
 			expect(ComponentElement.innerHTML).toMatchSnapshot();
-
-			const iconElement = ComponentElement.querySelector('svg use');
-			const iconPath = iconElement.getAttribute('xlink:href');
-
-			expect(iconPath).toEqual(
-				`${BASE_CONTEXT_MOCK.spritemap}#shopping-cart`
-			);
 
 			await act(async () => {
 				fireEvent.click(ComponentElement);

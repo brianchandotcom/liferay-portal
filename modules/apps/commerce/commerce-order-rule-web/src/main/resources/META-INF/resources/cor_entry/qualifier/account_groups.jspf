@@ -27,8 +27,6 @@
 				"orderRuleId", corEntryId
 			).put(
 				"rootPortletId", portletDisplay.getRootPortletId()
-			).put(
-				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 			).build()
 		%>'
 		module="js/account_groups"

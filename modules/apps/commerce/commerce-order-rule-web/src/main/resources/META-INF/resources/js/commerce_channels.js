@@ -21,7 +21,6 @@ export default function ({
 	orderRuleExternalReferenceCode,
 	orderRuleId,
 	rootPortletId,
-	spritemap,
 }) {
 	const orderRuleChannelsResource = ServiceProvider.AdminOrderAPI('v1');
 
@@ -59,7 +58,6 @@ export default function ({
 				fieldName: 'name',
 			},
 		],
-		spritemap,
 		titleLabel: Liferay.Language.get('add-existing-channel'),
 	});
 }

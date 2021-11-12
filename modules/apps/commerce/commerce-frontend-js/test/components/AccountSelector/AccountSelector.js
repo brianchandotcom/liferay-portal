@@ -64,7 +64,6 @@ describe('AccountSelector', () => {
 					createNewOrderURL="/order-link"
 					selectOrderURL="/test-url/{id}"
 					setCurrentAccountURL="/account-selector/setCurrentAccounts"
-					spritemap="./assets/clay/icons.svg"
 				/>
 			);
 		});
@@ -161,7 +160,6 @@ describe('AccountSelector', () => {
 					}}
 					selectOrderURL="/test-url/{id}"
 					setCurrentAccountURL="/account-selector/setCurrentAccounts"
-					spritemap="./assets/clay/icons.svg"
 				/>
 			);
 		});
@@ -237,7 +235,6 @@ describe('AccountSelector', () => {
 					}}
 					selectOrderURL="/test-url/{id}"
 					setCurrentAccountURL="/account-selector/setCurrentAccounts"
-					spritemap="./assets/clay/icons.svg"
 				/>
 			);
 		});

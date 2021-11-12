@@ -24,7 +24,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
-import com.liferay.search.experiences.rest.dto.v1_0.util.ElementDefinitionUtil;
+import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
 import com.liferay.search.experiences.rest.internal.dto.v1_0.converter.SXPBlueprintDTOConverter;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.service.SXPBlueprintService;
@@ -112,8 +112,8 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				LocalizedMapUtil.getLocalizedMap(
 					sxpBlueprint.getDescription_i18n()),
 				Arrays.toString(
-					ElementDefinitionUtil.unpack(
-						sxpBlueprint.getElementDefinitions())),
+					ElementInstanceUtil.unpack(
+						sxpBlueprint.getElementInstances())),
 				LocalizedMapUtil.getLocalizedMap(sxpBlueprint.getTitle_i18n()),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}

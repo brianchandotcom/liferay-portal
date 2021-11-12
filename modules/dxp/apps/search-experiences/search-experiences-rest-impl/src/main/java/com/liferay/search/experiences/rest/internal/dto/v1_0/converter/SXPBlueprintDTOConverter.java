@@ -19,7 +19,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
-import com.liferay.search.experiences.rest.dto.v1_0.util.ElementDefinitionUtil;
+import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -52,7 +52,7 @@ public class SXPBlueprintDTOConverter
 				description = sxpBlueprint.getDescription();
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					true, sxpBlueprint.getDescriptionMap());
-				elementDefinitions = ElementDefinitionUtil.toElementDefinitions(
+				elementInstances = ElementInstanceUtil.toElementInstances(
 					sxpBlueprint.getElementInstancesJSON());
 				id = sxpBlueprint.getSXPBlueprintId();
 				title = sxpBlueprint.getTitle();
@@ -88,7 +88,7 @@ public class SXPBlueprintDTOConverter
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					sxpBlueprint.getDescriptionMap());
-				elementDefinitions = ElementDefinitionUtil.toElementDefinitions(
+				elementInstances = ElementInstanceUtil.toElementInstances(
 					sxpBlueprint.getElementInstancesJSON());
 				id = sxpBlueprint.getSXPBlueprintId();
 				title = sxpBlueprint.getTitle(dtoConverterContext.getLocale());

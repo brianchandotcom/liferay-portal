@@ -453,6 +453,7 @@ definition {
 	}
 
 	@description = "Automate LPS-102664: [Dashboard] Bulk reassign workflow instances"
+	@ignore = "true"
 	@priority = "5"
 	test BulkReassignWorkflowInstances {
 		property portal.acceptance = "true";
@@ -528,7 +529,6 @@ definition {
 	}
 
 	@description = "LRQA-55451 Exceptions Check"
-	@ignore = "true"
 	@priority = "5"
 	test BulkReassignWorkflowInstancesExceptions {
 		property portal.acceptance = "true";

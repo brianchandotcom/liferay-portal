@@ -16,6 +16,7 @@ package com.liferay.portal.db.partition.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
@@ -128,6 +129,23 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> Assert.assertEquals(
 				companyId, CompanyThreadLocal.getCompanyId()));
+	}
+
+	@Test
+	public void testRemoveDBPartition() throws Exception {
+		addDBPartition();
+
+		_removeDBPartition(false);
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select schema_name from information_schema.schemata ",
+					"where schema_name = '", getSchemaName(COMPANY_ID), "'"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertFalse(resultSet.next());
+		}
 	}
 
 	@Test

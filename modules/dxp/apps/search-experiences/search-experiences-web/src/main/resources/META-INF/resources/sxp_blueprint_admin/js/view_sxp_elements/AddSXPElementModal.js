@@ -61,10 +61,8 @@ const AddSXPElementModal = ({
 
 		fetch('/o/search-experiences-rest/v1.0/sxp-elements', {
 			body: JSON.stringify({
-				description: descriptionInputValue,
 				description_i18n: {[defaultLocale]: descriptionInputValue},
 				elementDefinition: DEFAULT_EDIT_SXP_ELEMENT.elementDefinition,
-				title: titleInputValue,
 				title_i18n: {[defaultLocale]: titleInputValue},
 			}),
 			headers: new Headers({

@@ -328,11 +328,7 @@ definition {
 		}
 	}
 
-	macro reindexAllSearchIndexes {
-		SearchAdministration.executeReindex();
-	}
-
-	macro enableDiagramFeature{
+	macro enableDiagramFeature {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -353,6 +349,10 @@ definition {
 		Button.clickSave();
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
+
+	macro reindexAllSearchIndexes {
+		SearchAdministration.executeReindex();
 	}
 
 }

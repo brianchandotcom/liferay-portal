@@ -114,6 +114,13 @@ public class AccountGroupLocalServiceImpl
 			"This account group is used for guest users.");
 		accountGroup.setName(AccountConstants.ACCOUNT_GROUP_NAME_GUEST);
 
+		// Resources
+
+		_resourceLocalService.addResources(
+			user.getCompanyId(), 0, user.getUserId(),
+			AccountGroup.class.getName(), accountGroup.getAccountGroupId(),
+			false, false, false);
+
 		return accountGroupLocalService.addAccountGroup(accountGroup);
 	}
 

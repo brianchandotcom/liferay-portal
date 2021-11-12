@@ -1,4 +1,5 @@
 create table CommerceVirtualOrderItem (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	commerceVirtualOrderItemId LONG not null primary key,
 	groupId LONG,

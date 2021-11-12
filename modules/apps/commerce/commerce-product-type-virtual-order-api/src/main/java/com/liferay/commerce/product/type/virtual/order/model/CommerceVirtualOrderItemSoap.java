@@ -36,6 +36,7 @@ public class CommerceVirtualOrderItemSoap implements Serializable {
 		CommerceVirtualOrderItemSoap soapModel =
 			new CommerceVirtualOrderItemSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceVirtualOrderItemId(
 			model.getCommerceVirtualOrderItemId());
@@ -116,6 +117,14 @@ public class CommerceVirtualOrderItemSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceVirtualOrderItemId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -266,6 +275,7 @@ public class CommerceVirtualOrderItemSoap implements Serializable {
 		_endDate = endDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceVirtualOrderItemId;
 	private long _groupId;

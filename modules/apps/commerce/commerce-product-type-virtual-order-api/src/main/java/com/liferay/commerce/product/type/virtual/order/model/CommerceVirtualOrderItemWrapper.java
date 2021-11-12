@@ -46,6 +46,7 @@ public class CommerceVirtualOrderItemWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"commerceVirtualOrderItemId", getCommerceVirtualOrderItemId());
@@ -71,6 +72,12 @@ public class CommerceVirtualOrderItemWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -321,6 +328,16 @@ public class CommerceVirtualOrderItemWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this commerce virtual order item.
+	 *
+	 * @return the mvcc version of this commerce virtual order item
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the primary key of this commerce virtual order item.
 	 *
 	 * @return the primary key of this commerce virtual order item
@@ -533,6 +550,16 @@ public class CommerceVirtualOrderItemWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce virtual order item.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce virtual order item
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

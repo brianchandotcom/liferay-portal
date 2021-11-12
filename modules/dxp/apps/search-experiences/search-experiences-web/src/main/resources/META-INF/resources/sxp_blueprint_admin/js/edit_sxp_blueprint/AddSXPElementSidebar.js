@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
@@ -159,7 +158,6 @@ function SXPElementSidebar({
 	onAddSXPElement,
 	onToggle,
 	querySXPElements,
-	refresh,
 	visible,
 }) {
 	const {locale} = useContext(ThemeContext);
@@ -282,38 +280,20 @@ function SXPElementSidebar({
 
 			{!loading ? (
 				filteredSXPElements.length ? (
-					<>
-						{!querySXPElements.length && (
-							<ClayAlert
-								className="no-elements-warning"
-								displayType="warning"
-								title={Liferay.Language.get('warning')}
-								variant="stripe"
-							>
-								{emptyMessage}
-								<ClayButton alert onClick={refresh}>
-									{Liferay.Language.get('refresh')}
-								</ClayButton>
-							</ClayAlert>
-						)}
-
-						<div className="sxp-element-list">
-							{categories.map((category) => (
-								<SXPElementList
-									category={category}
-									expand={
-										expandAll ||
-										DEFAULT_EXPANDED_LIST.includes(category)
-									}
-									key={category}
-									onAddSXPElement={onAddSXPElement}
-									sxpElements={
-										categorizedSXPElements[category]
-									}
-								/>
-							))}
-						</div>
-					</>
+					<div className="sxp-element-list">
+						{categories.map((category) => (
+							<SXPElementList
+								category={category}
+								expand={
+									expandAll ||
+									DEFAULT_EXPANDED_LIST.includes(category)
+								}
+								key={category}
+								onAddSXPElement={onAddSXPElement}
+								sxpElements={categorizedSXPElements[category]}
+							/>
+						))}
+					</div>
 				) : (
 					<div className="empty-list-message">
 						<ClayEmptyState description="" title={emptyMessage} />
@@ -329,7 +309,7 @@ function SXPElementSidebar({
 function AddSXPElementSidebar(props) {
 	const [querySXPElements, setQuerySXPElements] = useState(null);
 
-	const getQuerySXPElements = () => {
+	useEffect(() => {
 		fetchData(
 			'/o/search-experiences-rest/v1.0/sxp-elements',
 			{method: 'GET'},
@@ -339,21 +319,13 @@ function AddSXPElementSidebar(props) {
 				),
 			() => setQuerySXPElements([])
 		);
-	};
-
-	useEffect(() => getQuerySXPElements(), []); //eslint-disable-line
+	}, []); //eslint-disable-line
 
 	if (!querySXPElements) {
 		return null;
 	}
 
-	return (
-		<SXPElementSidebar
-			querySXPElements={querySXPElements}
-			refresh={getQuerySXPElements}
-			{...props}
-		/>
-	);
+	return <SXPElementSidebar querySXPElements={querySXPElements} {...props} />;
 }
 
 AddSXPElementSidebar.propTypes = {

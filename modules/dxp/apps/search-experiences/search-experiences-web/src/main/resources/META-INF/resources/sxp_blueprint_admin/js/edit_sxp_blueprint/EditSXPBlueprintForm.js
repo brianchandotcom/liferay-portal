@@ -58,7 +58,7 @@ function EditSXPBlueprintForm({
 	initialTitle = {},
 	sxpBlueprintId,
 }) {
-	const {namespace, redirectURL} = useContext(ThemeContext);
+	const {defaultLocale, namespace, redirectURL} = useContext(ThemeContext);
 
 	const [errors, setErrors] = useState([]);
 	const [previewInfo, setPreviewInfo] = useState(() => ({
@@ -169,10 +169,11 @@ function EditSXPBlueprintForm({
 					'/o/search-experiences-rest/v1.0/sxp-blueprints/validate',
 					{
 						body: JSON.stringify({
-							configuration,
-							description: _getFormInput('description'),
+							description_i18n: {
+								[defaultLocale]: _getFormInput('description'),
+							},
 							elementInstances,
-							title: _getFormInput('title'),
+							title_i18n: {[defaultLocale]: _getFormInput('title')},
 						}),
 						headers: new Headers({
 							'Content-Type': 'application/json',
@@ -194,9 +195,11 @@ function EditSXPBlueprintForm({
 				{
 					body: JSON.stringify({
 						configuration,
-						description: _getFormInput('description'),
+						description_i18n: {
+							[defaultLocale]: _getFormInput('description'),
+						},
 						elementInstances,
-						title: _getFormInput('title'),
+						title_i18n: {[defaultLocale]: _getFormInput('title')},
 					}),
 					headers: new Headers({
 						'Content-Type': 'application/json',

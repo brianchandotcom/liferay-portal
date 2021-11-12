@@ -157,7 +157,6 @@ const AddModal = ({
 		fetch('/o/search-experiences-rest/v1.0/sxp-blueprints', {
 			body: JSON.stringify({
 				configuration: _getConfiguration(),
-				description: descriptionInputValue,
 				description_i18n: {[defaultLocale]: descriptionInputValue},
 				elementInstances: {
 					queryConfiguration: {
@@ -167,7 +166,6 @@ const AddModal = ({
 								: [],
 					},
 				},
-				title: inputValue,
 				title_i18n: {[defaultLocale]: inputValue},
 			}),
 

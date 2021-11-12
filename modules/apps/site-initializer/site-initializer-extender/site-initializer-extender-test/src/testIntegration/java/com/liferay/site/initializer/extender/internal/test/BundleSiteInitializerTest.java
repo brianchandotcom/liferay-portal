@@ -228,14 +228,16 @@ public class BundleSiteInitializerTest {
 
 		AssetListEntry assetListEntry1 = assetListEntries.get(0);
 
-		Assert.assertEquals("Closed Claims", assetListEntry1.getTitle());
+		Assert.assertEquals(
+			"Test Asset List Entry 1", assetListEntry1.getTitle());
 		Assert.assertEquals(
 			"com.liferay.journal.model.JournalArticle",
 			assetListEntry1.getAssetEntryType());
 
 		AssetListEntry assetListEntry2 = assetListEntries.get(1);
 
-		Assert.assertEquals("Open Claims", assetListEntry2.getTitle());
+		Assert.assertEquals(
+			"Test Asset List Entry 2", assetListEntry2.getTitle());
 		Assert.assertEquals(
 			"com.liferay.journal.model.JournalArticle",
 			assetListEntry2.getAssetEntryType());

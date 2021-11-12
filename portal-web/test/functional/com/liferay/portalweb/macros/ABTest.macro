@@ -92,6 +92,32 @@ definition {
 		Click(locator1 = "ABTest#SAVE_VARIANT_NAME_BUTTON");
 	}
 
+	macro creatExperienceWithSegment {
+		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+		Click(
+			key_text = "New Experience",
+			locator1 = "Button#ANY");
+
+		Click(locator1 = "PageEditor#EXPERIENCE_CREATE_SEGMENT");
+
+		Segmentation.fillTitle(titleField = "${newSegment}");
+
+		Segmentation.addProperties(propertyOption = "Screen Name");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
+
+		Segmentation.fillProperty(propertyField = "test");
+
+		Button.clickSave();
+
+		Type(
+			locator1 = "PageEditor#EXPERIENCE_NAME",
+			value1 = "${newExperience}");
+
+		Click(locator1 = "Button#SAVE");
+	}
+
 	macro deleteVariant {
 		if (!(isSet(key_index))) {
 			key_index = "1";
@@ -147,32 +173,6 @@ definition {
 			Click(locator1 = "ABTest#AB_TEST_BUTTON");
 		}
 		Click(locator1 = "ABTest#AB_TEST_BUTTON");
-	}
-
-	macro creatExperienceWithSegment {
-		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
-
-		Click(
-			key_text = "New Experience",
-			locator1 = "Button#ANY");
-
-		Click(locator1 = "PageEditor#EXPERIENCE_CREATE_SEGMENT");
-
-		Segmentation.fillTitle(titleField = "${newSegment}");
-
-		Segmentation.addProperties(propertyOption = "Screen Name");
-
-		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
-
-		Segmentation.fillProperty(propertyField = "test");
-
-		Button.clickSave();
-
-		Type(
-			locator1 = "PageEditor#EXPERIENCE_NAME",
-			value1 = "${newExperience}");
-
-		Click(locator1 = "Button#SAVE");
 	}
 
 	macro runTest {

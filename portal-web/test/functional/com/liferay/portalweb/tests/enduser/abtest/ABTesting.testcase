@@ -1130,9 +1130,9 @@ definition {
 			ContentPages.gotoPageEditor();
 
 			ABTest.creatExperienceWithSegment(
-					newSegment = "SegmentForABTestNewExp1",
-					newExperience = "NewExp1");
-			
+				newExperience = "NewExp1",
+				newSegment = "SegmentForABTestNewExp1");
+
 			Button.clickPublish();
 		}
 
@@ -1162,7 +1162,7 @@ definition {
 			ABTest.openABTestPanel();
 
 			ABTest.changeExperienceABTest(experience = "NewExp1");
-			
+
 			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
@@ -1174,9 +1174,9 @@ definition {
 			ContentPages.gotoPageEditor();
 
 			ABTest.creatExperienceWithSegment(
-					newSegment = "SegmentForABTestNewExp1",
-					newExperience = "NewExp1");
-			
+				newExperience = "NewExp1",
+				newSegment = "SegmentForABTestNewExp1");
+
 			Button.clickPublish();
 		}
 
@@ -2226,9 +2226,9 @@ definition {
 			ContentPages.gotoPageEditor();
 
 			ABTest.creatExperienceWithSegment(
-					newSegment = "SegmentForABTest",
-					newExperience = "NewExp1");
-			
+				newExperience = "NewExp1",
+				newSegment = "SegmentForABTest");
+
 			Button.clickPublish();
 		}
 
@@ -2284,8 +2284,8 @@ definition {
 			ContentPages.gotoPageEditor();
 
 			ABTest.creatExperienceWithSegment(
-					newSegment = "SegmentForABTest",
-					newExperience = "NewExp1");
+				newExperience = "NewExp1",
+				newSegment = "SegmentForABTest");
 
 			Button.clickPublish();
 		}
@@ -2320,52 +2320,6 @@ definition {
 			ABTest.changeExperienceABTest(experience = "NewExp1");
 
 			ABTest.terminateTest();
-		}
-	}
-
-	@description = "LPS-99225: Validate if the admin can rename a segment in an experience with an A/B test in the draft status"
-	@priority = "3"
-	test RenameSegmentABTestDraft {
-		task ("Create a segment and an Experience using the segment created") {
-			ContentPages.gotoPageEditor();
-
-			ABTest.creatExperienceWithSegment(
-					newSegment = "SegmentForABTest",
-					newExperience = "NewExp1");
-			
-			Button.clickPublish();
-		}
-
-		task ("Create a new A/B test with a new experience.") {
-			ABTest.openABTestPanel();
-
-			ABTest.changeExperienceABTest(experience = "NewExp1");
-
-			ABTest.createABTest(
-				goal = "Bounce Rate",
-				testTitle = "AB test title");
-
-			ABTest.createVariant(variantName = "Variant name");
-		}
-
-		task ("Go to Segments page and try to rename that segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			Segmentation.editSegment(entry = "SegmentForABTest");
-
-			Segmentation.fillTitle(titleField = "SegmentForABTest 2");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Delete AB Test") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ABTest.changeExperienceABTest(experience = "NewExp1");
-
-			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
 
@@ -2425,6 +2379,52 @@ definition {
 		}
 	}
 
+	@description = "LPS-99225: Validate if the admin can rename a segment in an experience with an A/B test in the draft status"
+	@priority = "3"
+	test RenameSegmentABTestDraft {
+		task ("Create a segment and an Experience using the segment created") {
+			ContentPages.gotoPageEditor();
+
+			ABTest.creatExperienceWithSegment(
+				newExperience = "NewExp1",
+				newSegment = "SegmentForABTest");
+
+			Button.clickPublish();
+		}
+
+		task ("Create a new A/B test with a new experience.") {
+			ABTest.openABTestPanel();
+
+			ABTest.changeExperienceABTest(experience = "NewExp1");
+
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+		}
+
+		task ("Go to Segments page and try to rename that segment") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			Segmentation.editSegment(entry = "SegmentForABTest");
+
+			Segmentation.fillTitle(titleField = "SegmentForABTest 2");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Delete AB Test") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ABTest.changeExperienceABTest(experience = "NewExp1");
+
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
+	}
+
 	@description = "LPS-99225: Validate if the admin cannot rename a segment in an experience with an A/B test in running status"
 	@priority = "3"
 	test RenameSegmentABTestRunning {
@@ -2432,9 +2432,9 @@ definition {
 			ContentPages.gotoPageEditor();
 
 			ABTest.creatExperienceWithSegment(
-					newSegment = "SegmentForABTest",
-					newExperience = "NewExp1");
-			
+				newExperience = "NewExp1",
+				newSegment = "SegmentForABTest");
+
 			Button.clickPublish();
 		}
 
@@ -2468,7 +2468,7 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 			ABTest.changeExperienceABTest(experience = "NewExp1");
-			
+
 			ABTest.terminateTest();
 		}
 	}
@@ -2480,9 +2480,9 @@ definition {
 			ContentPages.gotoPageEditor();
 
 			ABTest.creatExperienceWithSegment(
-					newSegment = "SegmentForABTest",
-					newExperience = "NewExp1");
-			
+				newExperience = "NewExp1",
+				newSegment = "SegmentForABTest");
+
 			Button.clickPublish();
 		}
 

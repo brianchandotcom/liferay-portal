@@ -23,10 +23,17 @@ import com.liferay.mentions.util.MentionsNotifier;
 import com.liferay.mentions.util.MentionsUserFinder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -111,6 +118,22 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 				user.getCompanyId(), mentionedUserScreenName);
 
 			if (mentionedUser == null) {
+				continue;
+			}
+
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(mentionedUser);
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			Layout layout = themeDisplay.getLayout();
+
+			if (!LayoutPermissionUtil.contains(
+					permissionChecker, layout, true, ActionKeys.VIEW) ||
+				!PortletPermissionUtil.contains(
+					permissionChecker, layout, themeDisplay.getPpid(),
+					ActionKeys.VIEW)) {
+
 				continue;
 			}
 

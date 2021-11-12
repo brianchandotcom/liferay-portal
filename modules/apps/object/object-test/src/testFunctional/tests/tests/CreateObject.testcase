@@ -3386,7 +3386,6 @@ definition {
 	@description = "LPS-139005 - Verify that the Object portlet is displayed again on the Open Menu when reactivated"
 	@priority = "4"
 	test ObjectPortletReappearsOpenMenuWhenReactivated {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -3407,7 +3406,6 @@ definition {
 		CreateObject.saveObject();
 
 		ObjectPortlet.assertObjectIsDisplayedOnControlPanel();
-
 	}
 
 	@description = "LPS-139005 - Verify that the Object portlet is displayed again on the Site Menu when reactivated"

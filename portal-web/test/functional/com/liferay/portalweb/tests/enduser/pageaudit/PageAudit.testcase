@@ -2946,7 +2946,7 @@ definition {
 	@priority = "3"
 	test DefaultStrategyAtSystemSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckSmallTapTargets";
+		property test.name.skip.portal.instance = "PageAudit#DefaultStrategyAtSystemSettings";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
@@ -2996,7 +2996,7 @@ definition {
 	@priority = "4"
 	test DesktopStrategyAtSystemSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckSmallTapTargets";
+		property test.name.skip.portal.instance = "PageAudit#DesktopStrategyAtSystemSettings";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
@@ -3157,7 +3157,7 @@ definition {
 	@priority = "4"
 	test MobileStrategyAtSystemSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckSmallTapTargets";
+		property test.name.skip.portal.instance = "PageAudit#MobileStrategyAtSystemSettings";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
@@ -3781,7 +3781,7 @@ definition {
 	@priority = "5"
 	test SiteSettingsHierarchyOverSystemSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckSmallTapTargets";
+		property test.name.skip.portal.instance = "PageAudit#SiteSettingsHierarchyOverSystemSettings";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
@@ -3839,7 +3839,7 @@ definition {
 	@priority = "3"
 	test UncheckedSystemSettingsSiteScopeThenUncheckedAtTabSiteSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#PageWithNoIssues";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsSiteScopeThenUncheckedAtTabSiteSettings";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
 			PageAudit.disableGooglePageSpeed(settingsScope = "Site Scope");
@@ -3890,7 +3890,7 @@ definition {
 	@priority = "3"
 	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtSiteScope {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#PageWithNoIssues";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsSystemScopeThenNotVisibleAtSiteScope";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
 			PageAudit.disableGooglePageSpeed(settingsScope = "System Scope");
@@ -3921,7 +3921,7 @@ definition {
 	@priority = "3"
 	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtVirtualInstance {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#PageWithNoIssues";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsSystemScopeThenNotVisibleAtVirtualInstance";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
 			PageAudit.disableGooglePageSpeed(settingsScope = "System Scope");
@@ -3952,7 +3952,7 @@ definition {
 	@priority = "3"
 	test UncheckedSystemSettingsVirtualInstanceThenNotVisibleAtTabSiteSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#PageWithNoIssues";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsVirtualInstanceThenNotVisibleAtTabSiteSettings";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
 			PageAudit.disableGooglePageSpeed();
@@ -4003,7 +4003,7 @@ definition {
 	@priority = "3"
 	test UncheckedSystemSettingsVirtualInstanceThenVisibleAtSiteScope {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#PageWithNoIssues";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsVirtualInstanceThenVisibleAtSiteScope";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
 			PageAudit.disableGooglePageSpeed(settingsScope = "Virtual Instance Scope");

@@ -332,4 +332,27 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
+	macro enableDiagramFeature{
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		Click(
+			key_text = "Catalog",
+			locator1 = "Link#ANY");
+
+		Click(
+			key_text = "Diagram Product Type",
+			locator1 = "Link#ANY");
+
+		Click.clickAtNotVisible(
+			checkboxName = "Enabled",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
+
 }

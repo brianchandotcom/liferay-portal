@@ -26,10 +26,12 @@ import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCri
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -56,12 +58,14 @@ public class IGConfigurationDisplayContext {
 		DLAppLocalService dlAppLocalService, ItemSelector itemSelector,
 		HttpServletRequest httpServletRequest,
 		PortletPreferencesLocalService portletPreferencesLocalService,
+		RepositoryLocalService repositoryLocalService,
 		TrashHelper trashHelper) {
 
 		_dlAppLocalService = dlAppLocalService;
 		_itemSelector = itemSelector;
 		_httpServletRequest = httpServletRequest;
 		_portletPreferencesLocalService = portletPreferencesLocalService;
+		_repositoryLocalService = repositoryLocalService;
 		_trashHelper = trashHelper;
 
 		IGRequestHelper igRequestHelper = new IGRequestHelper(
@@ -248,6 +252,16 @@ public class IGConfigurationDisplayContext {
 			_repositoryId = _folder.getRepositoryId();
 		}
 
+		try {
+			_repository = _repositoryLocalService.getRepository(_repositoryId);
+
+			_repositoryNotFound = false;
+		}
+		catch (Exception exception) {
+			_repositoryNotFound = true;
+
+			_repository = null;
+		}
 	}
 
 	private final DLAppLocalService _dlAppLocalService;
@@ -265,7 +279,10 @@ public class IGConfigurationDisplayContext {
 	private final PortletPreferencesLocalService
 		_portletPreferencesLocalService;
 	private final RenderRequest _renderRequest;
+	private Repository _repository;
 	private Long _repositoryId;
+	private final RepositoryLocalService _repositoryLocalService;
+	private boolean _repositoryNotFound;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
 

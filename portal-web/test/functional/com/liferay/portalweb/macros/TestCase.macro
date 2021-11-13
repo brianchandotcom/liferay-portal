@@ -38,6 +38,12 @@ definition {
 
 		if ("${fileExists}" != "true") {
 			dependencyFilePath = "${testBaseDir}${testDependenciesDir}/${fileName}";
+
+			var globalFileExists = FileUtil.exists("${dependencyFilePath}");
+
+			if ("${globalFileExists}" != "true") {
+				fail("Unable to find dependency file at ${dependenciesDir}/${fileName} or ${dependencyFilePath}");
+			}
 		}
 
 		return "${dependencyFilePath}";

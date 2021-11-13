@@ -36,7 +36,7 @@ definition {
 		var dependencyFilePath = "${dependenciesDir}/${fileName}";
 		var fileExists = FileUtil.exists("${dependencyFilePath}");
 
-		if (("${fileExists}" != "true") || ("${fromGlobalDependency}" == "true")) {
+		if ("${fileExists}" != "true") {
 			dependencyFilePath = "${testBaseDir}${testDependenciesDir}/${fileName}";
 		}
 

@@ -15,6 +15,7 @@
 package com.liferay.commerce.tax.engine.fixed.internal.upgrade;
 
 import com.liferay.commerce.tax.engine.fixed.internal.upgrade.v2_0_0.CommerceTaxFixedRateAddressRelUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,6 +34,19 @@ public class CommerceTaxEngineFixedUpgradeStepRegistrator
 		registry.register(
 			"1.0.0", "2.0.0",
 			new CommerceTaxFixedRateAddressRelUpgradeProcess());
+
+		registry.register(
+			"2.0.0", "2.1.0",
+			new MVCCVersionUpgradeProcess() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {
+						"CommerceTaxFixedRate", "CommerceTaxFixedRateAddressRel"
+					};
+				}
+
+			});
 	}
 
 }

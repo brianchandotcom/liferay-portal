@@ -120,14 +120,8 @@ public class PortalImplGroupFriendlyURLTest {
 	public void testGetGroupFriendlyURLFromPublicLayoutLocalhost()
 		throws Exception {
 
-		String expectedURL = StringPool.BLANK;
-
-		_testGroupFriendlyURL("localhost", expectedURL, _group, _publicLayout);
-	}
-
-	@Test
-	public void testGetGroupFriendlyURLFromPublicLayoutLocalhost2()
-		throws Exception {
+		_testGroupFriendlyURL(
+			"localhost", StringPool.BLANK, _group, _publicLayout);
 
 		User user = UserTestUtil.getAdminUser(_company.getCompanyId());
 
@@ -136,11 +130,11 @@ public class PortalImplGroupFriendlyURLTest {
 
 		Layout layout = LayoutTestUtil.addLayout(group);
 
-		String expectedURL =
+		_testGroupFriendlyURL(
+			"localhost",
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				group.getFriendlyURL();
-
-		_testGroupFriendlyURL("localhost", expectedURL, group, layout);
+				group.getFriendlyURL(),
+			group, layout);
 	}
 
 	private static void _updateLayoutSetVirtualHostname(

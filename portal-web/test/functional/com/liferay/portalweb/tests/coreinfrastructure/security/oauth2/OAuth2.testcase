@@ -637,6 +637,10 @@ definition {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "OAuth2#EditApplicationScopesAndViewLanguageKeys";
 
+		FileInstall.deployFileOnServer(
+			filePath = "coreinfrastructure/security/oauth2",
+			liferayDependencyJars = "com.liferay.oauth2.provider.scope.sample.qa.jar");
+
 		task ("Delete OSGi JAX-RS Default configuration") {
 			var baseURL = PropsUtil.get("portal.url");
 

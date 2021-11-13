@@ -664,9 +664,7 @@ definition {
 
 			Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
 
-			OAuth2.viewResourcePanelCollapsed(scopeList = "Liferay.Bulk.REST,Liferay.Headless.Admin.Taxonomy,Liferay.Headless.Admin.User,Liferay.Headless.Admin.Workflow,Liferay.Headless.Delivery,Liferay.Headless.Form");
-
-			OAuth2.viewResourcePanelCollapsed(scopeList = "Analytics,Bulk Processing,Content Delivery,Dynamic Data Lists,Forms,Portal Services,Taxonomy Administration,User Administration,Workflow Administration");
+			OAuth2.viewResourcePanelCollapsed(scopeList = "Analytics,Liferay.Batch.Planner.REST,Liferay.Bulk.REST,Liferay.Data.Engine.REST,Liferay.Frontend.View.State.REST,Liferay.Headless.Admin.Content");
 		}
 		task ("Edit OAuth application scopes") {
 			Navigator.gotoBack();

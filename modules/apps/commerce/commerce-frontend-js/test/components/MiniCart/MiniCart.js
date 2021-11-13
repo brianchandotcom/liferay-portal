@@ -44,7 +44,7 @@ describe('MiniCart', () => {
 	const BASE_PROPS = {
 		cartActionURLs: {
 			checkoutURL: 'http://checkout.url',
-			orderDetailURL: 'http://order-detail.url',
+			orderDetailURL: 'http://order-detail.url/pending-orders',
 			productURLSeparator: 'p',
 			siteDefaultURL: 'http://site-default.url',
 		},

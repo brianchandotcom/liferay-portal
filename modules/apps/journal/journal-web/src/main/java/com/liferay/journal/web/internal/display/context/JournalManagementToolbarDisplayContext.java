@@ -341,6 +341,8 @@ public class JournalManagementToolbarDisplayContext
 							currentURLObj, liferayPortletResponse)
 					).setNavigation(
 						(String)null
+					).setParameter(
+						"ddmStructureKey", (String)null
 					).buildString());
 
 				labelItem.setCloseable(true);

@@ -712,17 +712,34 @@ export default ({
 		[GLOBAL_SITE_NAME, changes, getModels, siteNames]
 	);
 
+	const initialDelta = deltaFromURL ? Number(deltaFromURL) : 20;
+	const initialNodes = filterNodes(
+		initialFilters,
+		keywordsFromURL,
+		initialShowHideable
+	);
+
+	const calculatePage = (delta, page, total) => {
+		const lastPage = total > 0 ? Math.ceil(total / delta) : 1;
+
+		if (page > lastPage) {
+			return lastPage;
+		}
+
+		return page;
+	};
+
 	const [renderState, setRenderState] = useState({
-		changes: filterNodes(
-			initialFilters,
-			keywordsFromURL,
-			initialShowHideable
-		),
+		changes: initialNodes,
 		children: initialNode.children,
-		delta: deltaFromURL ? Number(deltaFromURL) : 20,
+		delta: initialDelta,
 		id: initialNode.nodeId,
 		node: initialNode,
-		page: pageFromURL ? Number(pageFromURL) : 1,
+		page: calculatePage(
+			initialDelta,
+			pageFromURL ? Number(pageFromURL) : 1,
+			initialNodes.length
+		),
 		parents: initialNode.parents,
 		showHideable: initialShowHideable,
 	});
@@ -985,16 +1002,18 @@ export default ({
 				}
 			}
 
+			const nodes = filterNodes(filters, keywords, showHideable);
+
 			setAscendingState(ascending);
 			setColumnState(column);
 			setFiltersState(filters);
 			setRenderState({
-				changes: filterNodes(filters, keywords, showHideable),
+				changes: nodes,
 				children: node.children,
 				delta,
 				id: node.nodeId,
 				node,
-				page,
+				page: calculatePage(delta, page, nodes.length),
 				parents: node.parents,
 				showHideable,
 			});
@@ -1676,6 +1695,14 @@ export default ({
 	};
 
 	const handleFiltersUpdate = (filters, keywords) => {
+		const nodes = filterNodes(filters, keywords, renderState.showHideable);
+
+		const page = calculatePage(
+			renderState.delta,
+			renderState.page,
+			nodes.length
+		);
+
 		const path = getPath(
 			ascendingState,
 			columnState,
@@ -1683,7 +1710,7 @@ export default ({
 			getEntryParam(renderState.node),
 			filters,
 			keywords,
-			renderState.page,
+			page,
 			renderState.showHideable
 		);
 
@@ -1697,12 +1724,12 @@ export default ({
 		setFiltersState(filters);
 		setResultsKeywords(keywords);
 		setRenderState({
-			changes: filterNodes(filters, keywords, renderState.showHideable),
+			changes: nodes,
 			children: renderState.children,
 			delta: renderState.delta,
 			id: renderState.id,
 			node: renderState.node,
-			page: renderState.page,
+			page,
 			parents: renderState.parents,
 			showHideable: renderState.showHideable,
 		});
@@ -1723,7 +1750,13 @@ export default ({
 			}
 		}
 
-		const page = renderState.id > 0 ? 1 : renderState.page;
+		const nodes = filterNodes(filters, resultsKeywords, showHideable);
+
+		const page = calculatePage(
+			renderState.delta,
+			renderState.id > 0 ? 1 : renderState.page,
+			nodes.length
+		);
 
 		const path = getPath(
 			ascendingState,
@@ -1745,7 +1778,7 @@ export default ({
 
 		setFiltersState(filters);
 		setRenderState({
-			changes: filterNodes(filters, resultsKeywords, showHideable),
+			changes: nodes,
 			children: renderState.children,
 			delta: renderState.delta,
 			id: renderState.id,
@@ -2233,6 +2266,12 @@ export default ({
 						}))}
 						ellipsisBuffer={3}
 						onDeltaChange={(delta) => {
+							const page = calculatePage(
+								delta,
+								renderState.page,
+								renderState.changes.length
+							);
+
 							const path = getPath(
 								ascendingState,
 								columnState,
@@ -2240,7 +2279,7 @@ export default ({
 								getEntryParam(renderState.node),
 								filtersState,
 								resultsKeywords,
-								1,
+								page,
 								renderState.showHideable
 							);
 
@@ -2265,7 +2304,7 @@ export default ({
 								delta,
 								id: renderState.id,
 								node: renderState.node,
-								page: 1,
+								page,
 								parents: renderState.parents,
 								showHideable: renderState.showHideable,
 							});

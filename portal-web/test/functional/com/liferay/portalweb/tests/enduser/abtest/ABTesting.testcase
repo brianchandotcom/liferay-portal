@@ -1159,8 +1159,6 @@ definition {
 		task ("Delete AB Test") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			ABTest.openABTestPanel();
-
 			ABTest.changeExperienceABTest(experience = "NewExp1");
 
 			ABTest.editOrDeleteABTest(value = "Delete");
@@ -1556,8 +1554,6 @@ definition {
 
 		task ("Delete AB Test") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ABTest.openABTestPanel();
 
 			ABTest.changeExperienceABTest(experience = "NewAnyoneExperience");
 
@@ -2266,8 +2262,6 @@ definition {
 
 		task ("Delete AB Test") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ABTest.openABTestPanel();
 
 			ABTest.changeExperienceABTest(experience = "NewExp1");
 

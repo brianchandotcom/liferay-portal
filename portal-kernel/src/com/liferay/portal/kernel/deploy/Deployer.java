@@ -65,40 +65,6 @@ public interface Deployer {
 
 	public PluginPackage readPluginPackage(File file);
 
-	public void setAppServerType(String appServerType);
-
-	public void setAuiTaglibDTD(String auiTaglibDTD);
-
-	public void setBaseDir(String baseDir);
-
-	public void setDestDir(String destDir);
-
-	public void setFilePattern(String filePattern);
-
-	public void setJars(List<String> jars);
-
-	public void setJbossPrefix(String jbossPrefix);
-
-	public void setPortletExtTaglibDTD(String portletExtTaglibDTD);
-
-	public void setPortletTaglibDTD(String portletTaglibDTD);
-
-	public void setSecurityTaglibDTD(String securityTaglibDTD);
-
-	public void setThemeTaglibDTD(String themeTaglibDTD);
-
-	public void setTomcatLibDir(String tomcatLibDir);
-
-	public void setUiTaglibDTD(String uiTaglibDTD);
-
-	public void setUnpackWar(boolean unpackWar);
-
-	public void setUtilTaglibDTD(String utilTaglibDTD);
-
-	public void setWars(List<String> wars);
-
-	public void setWildflyPrefix(String wildflyPrefix);
-
 	public void updateWebXml(
 			File webXml, File srcFile, String displayName,
 			PluginPackage pluginPackage)

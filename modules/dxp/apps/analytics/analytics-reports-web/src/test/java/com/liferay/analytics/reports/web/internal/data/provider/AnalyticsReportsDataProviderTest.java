@@ -453,7 +453,8 @@ public class AnalyticsReportsDataProviderTest {
 		TimeRange timeRange = timeSpan.toTimeRange(0);
 
 		analyticsReportsDataProvider.getTrafficChannels(
-			RandomTestUtil.randomLong(), timeRange, RandomTestUtil.randomString());
+			RandomTestUtil.randomLong(), timeRange,
+			RandomTestUtil.randomString());
 	}
 
 	@Test

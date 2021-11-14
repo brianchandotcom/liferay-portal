@@ -29,7 +29,7 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
 	protected AutoDeployer buildAutoDeployer() {
-		return new ThreadSafeAutoDeployer(new ThemeAutoDeployer());
+		return new ThemeAutoDeployer();
 	}
 
 	@Override

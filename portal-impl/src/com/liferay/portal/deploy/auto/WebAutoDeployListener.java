@@ -27,7 +27,7 @@ public class WebAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
 	protected AutoDeployer buildAutoDeployer() {
-		return new ThreadSafeAutoDeployer(new WebAutoDeployer());
+		return new WebAutoDeployer();
 	}
 
 	@Override

@@ -45,7 +45,7 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 			_log.debug("Using deployer " + clazz.getName());
 		}
 
-		return new ThreadSafeAutoDeployer(autoDeployer);
+		return autoDeployer;
 	}
 
 	@Override

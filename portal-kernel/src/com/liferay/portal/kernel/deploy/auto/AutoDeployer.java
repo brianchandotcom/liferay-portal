@@ -34,8 +34,6 @@ public interface AutoDeployer extends Closeable {
 	public int autoDeploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException;
 
-	public AutoDeployer cloneAutoDeployer() throws AutoDeployException;
-
 	@Override
 	public default void close() throws IOException {
 	}

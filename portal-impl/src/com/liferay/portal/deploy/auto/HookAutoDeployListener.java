@@ -28,7 +28,7 @@ public class HookAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
 	protected AutoDeployer buildAutoDeployer() {
-		return new ThreadSafeAutoDeployer(new HookAutoDeployer());
+		return new HookAutoDeployer();
 	}
 
 	@Override

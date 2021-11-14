@@ -247,38 +247,6 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	}
 
 	@Override
-	public AutoDeployer cloneAutoDeployer() throws AutoDeployException {
-		try {
-			Class<? extends BaseDeployer> clazz = getClass();
-
-			BaseDeployer baseDeployer = (BaseDeployer)clazz.newInstance();
-
-			baseDeployer.setAppServerType(appServerType);
-			baseDeployer.setAuiTaglibDTD(auiTaglibDTD);
-			baseDeployer.setBaseDir(baseDir);
-			baseDeployer.setDestDir(destDir);
-			baseDeployer.setFilePattern(filePattern);
-			baseDeployer.setJars(jars);
-			baseDeployer.setJbossPrefix(jbossPrefix);
-			baseDeployer.setPortletExtTaglibDTD(portletExtTaglibDTD);
-			baseDeployer.setPortletTaglibDTD(portletTaglibDTD);
-			baseDeployer.setSecurityTaglibDTD(securityTaglibDTD);
-			baseDeployer.setThemeTaglibDTD(themeTaglibDTD);
-			baseDeployer.setTomcatLibDir(tomcatLibDir);
-			baseDeployer.setUiTaglibDTD(uiTaglibDTD);
-			baseDeployer.setUnpackWar(unpackWar);
-			baseDeployer.setUtilTaglibDTD(utilTaglibDTD);
-			baseDeployer.setWars(wars);
-			baseDeployer.setWildflyPrefix(wildflyPrefix);
-
-			return (AutoDeployer)baseDeployer;
-		}
-		catch (Exception exception) {
-			throw new AutoDeployException(exception);
-		}
-	}
-
-	@Override
 	public void close() throws IOException {
 		UnsafeConsumer.accept(
 			tempDirPaths, DeployUtil::deletePath, IOException.class);

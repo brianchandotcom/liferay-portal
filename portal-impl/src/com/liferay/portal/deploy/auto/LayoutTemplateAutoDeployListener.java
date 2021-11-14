@@ -29,7 +29,7 @@ public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
 	protected AutoDeployer buildAutoDeployer() {
-		return new ThreadSafeAutoDeployer(new LayoutTemplateAutoDeployer());
+		return new LayoutTemplateAutoDeployer();
 	}
 
 	@Override

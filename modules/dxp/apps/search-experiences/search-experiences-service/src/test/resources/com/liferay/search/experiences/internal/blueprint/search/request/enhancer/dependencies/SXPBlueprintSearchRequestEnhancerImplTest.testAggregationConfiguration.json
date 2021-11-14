@@ -89,7 +89,8 @@
 											}
 										}
 									},
-									"reverse_nested": {}
+									"reverse_nested": {
+									}
 								}
 							},
 							"terms": {
@@ -108,7 +109,8 @@
 						"enabled": true,
 						"init_script": "state.lengths = []",
 						"map_script": "state.lengths.add(doc.content_en_US_length_sortable.value)",
-						"params": {},
+						"params": {
+						},
 						"reduce_script": "int length = 0; for (a in states) { length += a } return length"
 					}
 				},
@@ -149,8 +151,10 @@
 								"from": 0,
 								"highlight": {
 									"fields": {
-										"content${context.language_id}": {},
-										"title${context.language_id}": {}
+										"content${context.language_id}": {
+										},
+										"title${context.language_id}": {
+										}
 									},
 									"fragment_size": 50,
 									"require_field_match": true

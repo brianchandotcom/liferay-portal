@@ -59,8 +59,7 @@ public class SXPBlueprintUtilTest {
 		SXPBlueprint sxpBlueprint = SXPBlueprintUtil.toSXPBlueprint(json);
 
 		Assert.assertEquals(
-			fileName,
-			sxpBlueprint.toString(),
+			fileName, sxpBlueprint.toString(),
 			String.valueOf(
 				SXPBlueprintUtil.toSXPBlueprint(sxpBlueprint.toString())));
 	}

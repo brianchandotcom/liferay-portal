@@ -48,8 +48,7 @@ public class SXPPortalInstanceLifecycleListenerTest {
 			sxpPortalInstanceLifecycleListener.readSXPElement(fileName);
 
 		Assert.assertEquals(
-			fileName,
-			sxpElement.toString(),
+			fileName, sxpElement.toString(),
 			String.valueOf(SXPElementUtil.toSXPElement(sxpElement.toString())));
 	}
 

@@ -55,6 +55,7 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -8602,6 +8603,28 @@ public class JournalArticleLocalServiceImpl
 				_classNameLocalService.getClassNameId(JournalArticle.class),
 				article.getResourcePrimKey(), urlTitleMap, serviceContext);
 
+		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
+			if (Validator.isNull(entry.getValue())) {
+				for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
+					try {
+						friendlyURLEntryLocalService.
+							deleteFriendlyURLLocalizationEntry(
+								friendlyURLEntry.getFriendlyURLEntryId(),
+								entry.getKey());
+					}
+					catch (NoSuchFriendlyURLEntryLocalizationException
+								noSuchFriendlyURLEntryLocalizationException) {
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								noSuchFriendlyURLEntryLocalizationException,
+								noSuchFriendlyURLEntryLocalizationException);
+						}
+					}
+				}
+			}
+		}
+
 		for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
 			if (newFriendlyURLEntry.getFriendlyURLEntryId() ==
 					friendlyURLEntry.getFriendlyURLEntryId()) {
@@ -9012,11 +9035,13 @@ public class JournalArticleLocalServiceImpl
 			String friendlyURL = friendlyURLMap.get(entry.getKey());
 
 			if (Validator.isNull(friendlyURL)) {
-				friendlyURL = titleMap.get(entry.getKey());
-
-				if (Validator.isNull(friendlyURL)) {
-					continue;
+				if (friendlyURL != null) {
+					urlTitleMap.put(
+						LanguageUtil.getLanguageId(entry.getKey()),
+						StringPool.BLANK);
 				}
+
+				continue;
 			}
 
 			String languageId = LanguageUtil.getLanguageId(entry.getKey());

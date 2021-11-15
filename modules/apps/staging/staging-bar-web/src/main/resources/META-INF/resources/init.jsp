@@ -79,6 +79,7 @@ page import="com.liferay.portal.kernel.workflow.WorkflowTask" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.staging.bar.web.internal.display.context.LayoutBranchDisplayContext" %><%@
 page import="com.liferay.staging.bar.web.internal.display.context.LayoutSetBranchDisplayContext" %><%@
+page import="com.liferay.staging.bar.web.internal.display.context.StagingBarDisplayContext" %><%@
 page import="com.liferay.staging.constants.StagingProcessesWebKeys" %>
 
 <%@ page import="java.util.ArrayList" %><%@
@@ -103,6 +104,7 @@ privateLayout = GetterUtil.getBoolean((String)renderRequest.getAttribute(WebKeys
 
 LayoutBranchDisplayContext layoutBranchDisplayContext = new LayoutBranchDisplayContext(request);
 LayoutSetBranchDisplayContext layoutSetBranchDisplayContext = new LayoutSetBranchDisplayContext(request);
+StagingBarDisplayContext stagingBarDisplayContext = new StagingBarDisplayContext(liferayPortletRequest, layout);
 %>
 
 <%!

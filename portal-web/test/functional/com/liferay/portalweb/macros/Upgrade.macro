@@ -1157,6 +1157,20 @@ definition {
 		MessageboardsThread.deletePG(threadSubject = "Message Boards Subject Edit");
 	}
 
+	macro editAndDeleteRedirects {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.editEntry(
+			destinationURLEdit = "${portalURL}/web/test-site-name/test-destination-temporary-page-edit",
+			sourceURL = "test-source-temporary-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.deleteEntry(sourceURL = "test-source-permanent-page");
+	}
+
 	macro editAndDeleteWiki {
 		Navigator.gotoPage(pageName = "Wiki");
 

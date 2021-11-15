@@ -591,7 +591,7 @@ definition {
 
 			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name *");
 		}
 	}
 
@@ -710,7 +710,7 @@ definition {
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
-		ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name");
+		ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name *");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -733,7 +733,7 @@ definition {
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
-		ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name");
+		ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name *");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -755,7 +755,7 @@ definition {
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
-		ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name");
+		ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name *");
 
 		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name*");
 	}
@@ -1093,7 +1093,7 @@ definition {
 			privacy = "Public Pages");
 	}
 
-	@description = "Users can preview draft for a collection page from Pages admin when they exist."
+	@description = "This is a test for LPS-139064. Users can preview draft for a collection page from Pages admin when they exist."
 	@priority = "3"
 	test PreviewDraftCollectionPage {
 		task ("Add a collection page based on Highest Rated Assets collection provider") {
@@ -1116,7 +1116,7 @@ definition {
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -1125,7 +1125,7 @@ definition {
 		}
 	}
 
-	@description = "Users can preview draft for a content page from Pages admin when they exist."
+	@description = "This is a test for LPS-139064. Users can preview draft for a content page from Pages admin when they exist."
 	@priority = "5"
 	test PreviewDraftContentPage {
 		property portal.acceptance = "true";
@@ -1176,7 +1176,7 @@ definition {
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Page Name *");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "button",
@@ -1197,7 +1197,7 @@ definition {
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Page Name *");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",

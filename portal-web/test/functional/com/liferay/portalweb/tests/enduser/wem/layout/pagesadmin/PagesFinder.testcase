@@ -139,7 +139,7 @@ definition {
 		}
 
 		task ("View the page name is shown on control menu") {
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Collection Page Name 1");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Collection Page Name 1 *");
 		}
 
 		task ("View the collection name shown in Heading fragment") {
@@ -178,7 +178,7 @@ definition {
 		}
 
 		task ("View the page name is shown on control menu") {
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Collection Page Name 2");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Collection Page Name 2 *");
 		}
 
 		task ("View the collection name shown in Heading fragment") {
@@ -572,7 +572,7 @@ definition {
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "button",
@@ -606,7 +606,7 @@ definition {
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
 		}
 
 		task ("Close the new tab and select the original tab") {
@@ -640,7 +640,7 @@ definition {
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
 		}
 
 		task ("Close the new tab and select the original tab") {

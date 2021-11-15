@@ -220,7 +220,7 @@ definition {
 
 		PageEditor.assertFragmentSidebarLoaded();
 
-		ControlMenu.viewHeaderTitle(headerTitle = "${pageName}");
+		ControlMenu.viewHeaderTitle(headerTitle = "${pageName} *");
 
 		PageEditor.viewFragmentEditableText(
 			editableText = "${collectionName}",

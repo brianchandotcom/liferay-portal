@@ -33,6 +33,16 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			JSONCategory.deleteCategory(
+				categoryName = "Audience 1",
+				groupName = "Global",
+				vocabularyName = "Audience");
+
+			JSONCategory.deleteCategory(
+				categoryName = "Stage 1",
+				groupName = "Global",
+				vocabularyName = "Stage");
 		}
 	}
 
@@ -274,8 +284,6 @@ definition {
 			category = "Content",
 			panel = "Applications",
 			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
 
 		AssertElementPresent(locator1 = "ContentDashboard#FLIP_AXES_BUTTON_DISABLED");
 	}
@@ -579,13 +587,159 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = "3000");
-
 		ContentDashboard.uncheckCheckbox(auditGraphCheckboxName = "Stage 1");
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#NO_CATEGORIES_SELECTED_TEXT",
 			value1 = "There are no categories selected");
+	}
+
+	@description = "LPS-128990 Given the graphs configuration panel
+	When the user selects a global vocabulary and a site vocabulary
+	Then the vocabularies appear as selected and they will be shown in the Audit graph"
+
+	@priority = "5"
+	test AuditVocabulariesFromGlobalAndSite {
+		property portal.acceptance = "true";
+
+		task ("Create 1 new vocabulary for the site") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name 1");
+		}
+
+		task ("Add a category to the vocabulary") {
+			var categoryNameId1 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category 1",
+				vocabularyName = "Vocabulary Name 1");
+		}
+
+		task ("Add a category to the vocabulary") {
+			var categoryGlobalId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Stage 2",
+				vocabularyName = "Stage");
+		}
+
+		task ("Create a Web Content with the categories") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryNameId1},${categoryGlobalId2}",
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
+
+		task ("Go to Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Move vocabulary from available to in use") {
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
+		}
+
+		task ("Move vocabulary from available to in use") {
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Vocabulary Name 1");
+		}
+
+		task ("Assert the site vocabularies in the graph") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "WC Title",
+				xAxisCtegoryName = "Stage 2");
+
+			ContentDashboard.flipAxesButtonClick();
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "WC Title",
+				xAxisCtegoryName = "Category 1");
+		}
+
+		task ("Delete Stage 2 category") {
+			JSONCategory.deleteCategory(
+				categoryName = "Audience 1",
+				groupName = "Global",
+				vocabularyName = "Audience");
+		}
+	}
+
+	@description = "LPS-128990 Given the graphs configuration panel
+	When the user selects two vocabularies from the same site
+	Then the vocabularies appear as selected and they will be shown in the Audit graph"
+	@priority = "5"
+	test AuditVocabulariesFromSameSite {
+		property portal.acceptance = "true";
+
+		task ("Create 2 new vocabularies") {
+			for (var vocabularyNumber : list "1,2") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name",
+					title = "Vocabulary Name ${vocabularyNumber}");
+			}
+		}
+
+		task ("Create a category for Vocabulary Name 1") {
+			var categoryNameId1 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category 1",
+				vocabularyName = "Vocabulary Name 1");
+		}
+
+		task ("Create a category for Vocabulary Name 2") {
+			var categoryNameId2 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category 2",
+				vocabularyName = "Vocabulary Name 2");
+		}
+
+		task ("Create a Web Content with the categories") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryNameId1},${categoryNameId2}",
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
+
+		task ("Go to Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Move vocabulary from In use to Available") {
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
+		}
+
+		task ("Move vocabulary from available to in use") {
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Vocabulary Name 1");
+		}
+
+		task ("Move vocabulary from In use to Available") {
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Stage");
+		}
+
+		task ("Move vocabulary from available to in use") {
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Vocabulary Name 2");
+		}
+
+		task ("Assert the site vocabularies in the graph") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "WC Title",
+				xAxisCtegoryName = "Category 1");
+
+			ContentDashboard.flipAxesButtonClick();
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "WC Title",
+				xAxisCtegoryName = "Category 2");
+		}
 	}
 
 	@description = "LPS-133797 When the user selects the option Available, the modal lists all the existing Global Vocabularies"

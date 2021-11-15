@@ -266,6 +266,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TITLE</td>
+	<td>//div[contains(@class,'align-items-center autofit-row')]//*[contains(text(),'${key_page_title}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VARIANT_DROPDOWN</td>
 	<td>xpath=(//div[@class='autofit-col']//*[contains(@class, 'dropdown-toggle btn-monospaced btn btn-outline-borderless btn-outline-secondary')])[${key_index}]</td>
 	<td></td>

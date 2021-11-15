@@ -14,10 +14,15 @@
 
 package com.liferay.product.navigation.control.menu.web.internal;
 
+import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -91,7 +96,9 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		sb.append(_getHeaderTitle(httpServletRequest));
 		sb.append("</span>");
 
-		if (_hasDraftLayout(httpServletRequest)) {
+		if (_hasDraftLayout(httpServletRequest) &&
+			_hasEditPermission(httpServletRequest)) {
+
 			sb.append("<sup class=\"flex-shrink-0 small\">*</sup>");
 		}
 
@@ -190,6 +197,34 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		return true;
 	}
 
+	private boolean _hasEditPermission(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		try {
+			if (_layoutPermission.contains(
+					themeDisplay.getPermissionChecker(), layout,
+					ActionKeys.UPDATE) ||
+				_layoutPermission.contains(
+					themeDisplay.getPermissionChecker(), layout,
+					ActionKeys.UPDATE_LAYOUT_CONTENT) ||
+				_layoutContentModelResourcePermission.contains(
+					themeDisplay.getPermissionChecker(), layout.getPlid(),
+					ActionKeys.UPDATE)) {
+
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return false;
+	}
+
 	private boolean _isDraftLayout(HttpServletRequest httpServletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -229,6 +264,16 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutHeaderProductNavigationControlMenuEntry.class);
+
+	@Reference
+	private LayoutContentModelResourcePermission
+		_layoutContentModelResourcePermission;
+
+	@Reference
+	private LayoutPermission _layoutPermission;
 
 	@Reference
 	private Portal _portal;

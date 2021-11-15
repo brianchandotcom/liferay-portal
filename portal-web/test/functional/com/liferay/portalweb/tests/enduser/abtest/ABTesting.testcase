@@ -1892,7 +1892,7 @@ definition {
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
-			
+
 			ACDXPSettings.syncNewContactData();
 		}
 
@@ -1961,7 +1961,7 @@ definition {
 			Notifications.gotoNotifications();
 		}
 
-		task ("Assert there's a notification about the change in the AB test"){
+		task ("Assert there's a notification about the change in the AB test") {
 			Notifications.viewSpecificNotificationDetails(
 				contentBody = "AB test title",
 				notificationsTitle = "A/B test has changed to status terminated");
@@ -1982,7 +1982,7 @@ definition {
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
-			
+
 			ACDXPSettings.syncNewContactData();
 		}
 
@@ -2051,14 +2051,14 @@ definition {
 			Notifications.gotoNotifications();
 		}
 
-		task ("Click on the title and assert the Content Page is displayed"){
+		task ("Click on the title and assert the Content Page is displayed") {
 			Notifications.viewSpecificNotificationDetails(
 				contentBody = "AB test title",
 				notificationsTitle = "A/B test has changed to status terminated");
-			
+
 			AssertClick(
-			locator1 = "Notifications#NOTIFICATIONS_TITLE",
-			value1 = "A/B test has changed to status terminated.");
+				locator1 = "Notifications#NOTIFICATIONS_TITLE",
+				value1 = "A/B test has changed to status terminated.");
 
 			AssertElementPresent(
 				key_page_title = "Test Site Name",

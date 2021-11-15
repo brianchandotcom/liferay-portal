@@ -250,6 +250,14 @@ public class BatchPlannerLogLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.batch.planner.model.BatchPlannerLog fetchBatchPlannerLog(
+		String batchEngineTaskERC, boolean export) {
+
+		return _batchPlannerLogLocalService.fetchBatchPlannerLog(
+			batchEngineTaskERC, export);
+	}
+
+	@Override
 	public com.liferay.batch.planner.model.BatchPlannerLog
 		fetchBatchPlannerPlanBatchPlannerLog(long batchPlannerPlanId) {
 

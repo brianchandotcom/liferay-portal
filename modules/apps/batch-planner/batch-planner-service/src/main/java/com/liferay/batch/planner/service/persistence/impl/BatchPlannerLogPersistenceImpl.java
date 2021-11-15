@@ -816,34 +816,30 @@ public class BatchPlannerLogPersistenceImpl
 		_FINDER_COLUMN_BATCHPLANNERPLANID_BATCHPLANNERPLANID_2 =
 			"batchPlannerLog.batchPlannerPlanId = ?";
 
-	private FinderPath _finderPathFetchByBPPI_BEETERC;
-	private FinderPath _finderPathCountByBPPI_BEETERC;
+	private FinderPath _finderPathFetchByBatchEngineExportTaskERC;
+	private FinderPath _finderPathCountByBatchEngineExportTaskERC;
 
 	/**
-	 * Returns the batch planner log where batchPlannerPlanId = &#63; and batchEngineExportTaskERC = &#63; or throws a <code>NoSuchLogException</code> if it could not be found.
+	 * Returns the batch planner log where batchEngineExportTaskERC = &#63; or throws a <code>NoSuchLogException</code> if it could not be found.
 	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
 	 * @param batchEngineExportTaskERC the batch engine export task erc
 	 * @return the matching batch planner log
 	 * @throws NoSuchLogException if a matching batch planner log could not be found
 	 */
 	@Override
-	public BatchPlannerLog findByBPPI_BEETERC(
-			long batchPlannerPlanId, String batchEngineExportTaskERC)
+	public BatchPlannerLog findByBatchEngineExportTaskERC(
+			String batchEngineExportTaskERC)
 		throws NoSuchLogException {
 
-		BatchPlannerLog batchPlannerLog = fetchByBPPI_BEETERC(
-			batchPlannerPlanId, batchEngineExportTaskERC);
+		BatchPlannerLog batchPlannerLog = fetchByBatchEngineExportTaskERC(
+			batchEngineExportTaskERC);
 
 		if (batchPlannerLog == null) {
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("batchPlannerPlanId=");
-			sb.append(batchPlannerPlanId);
-
-			sb.append(", batchEngineExportTaskERC=");
+			sb.append("batchEngineExportTaskERC=");
 			sb.append(batchEngineExportTaskERC);
 
 			sb.append("}");
@@ -859,32 +855,28 @@ public class BatchPlannerLogPersistenceImpl
 	}
 
 	/**
-	 * Returns the batch planner log where batchPlannerPlanId = &#63; and batchEngineExportTaskERC = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the batch planner log where batchEngineExportTaskERC = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
 	 * @param batchEngineExportTaskERC the batch engine export task erc
 	 * @return the matching batch planner log, or <code>null</code> if a matching batch planner log could not be found
 	 */
 	@Override
-	public BatchPlannerLog fetchByBPPI_BEETERC(
-		long batchPlannerPlanId, String batchEngineExportTaskERC) {
+	public BatchPlannerLog fetchByBatchEngineExportTaskERC(
+		String batchEngineExportTaskERC) {
 
-		return fetchByBPPI_BEETERC(
-			batchPlannerPlanId, batchEngineExportTaskERC, true);
+		return fetchByBatchEngineExportTaskERC(batchEngineExportTaskERC, true);
 	}
 
 	/**
-	 * Returns the batch planner log where batchPlannerPlanId = &#63; and batchEngineExportTaskERC = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the batch planner log where batchEngineExportTaskERC = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
 	 * @param batchEngineExportTaskERC the batch engine export task erc
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching batch planner log, or <code>null</code> if a matching batch planner log could not be found
 	 */
 	@Override
-	public BatchPlannerLog fetchByBPPI_BEETERC(
-		long batchPlannerPlanId, String batchEngineExportTaskERC,
-		boolean useFinderCache) {
+	public BatchPlannerLog fetchByBatchEngineExportTaskERC(
+		String batchEngineExportTaskERC, boolean useFinderCache) {
 
 		batchEngineExportTaskERC = Objects.toString(
 			batchEngineExportTaskERC, "");
@@ -892,24 +884,20 @@ public class BatchPlannerLogPersistenceImpl
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {
-				batchPlannerPlanId, batchEngineExportTaskERC
-			};
+			finderArgs = new Object[] {batchEngineExportTaskERC};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByBPPI_BEETERC, finderArgs);
+				_finderPathFetchByBatchEngineExportTaskERC, finderArgs);
 		}
 
 		if (result instanceof BatchPlannerLog) {
 			BatchPlannerLog batchPlannerLog = (BatchPlannerLog)result;
 
-			if ((batchPlannerPlanId !=
-					batchPlannerLog.getBatchPlannerPlanId()) ||
-				!Objects.equals(
+			if (!Objects.equals(
 					batchEngineExportTaskERC,
 					batchPlannerLog.getBatchEngineExportTaskERC())) {
 
@@ -918,23 +906,21 @@ public class BatchPlannerLogPersistenceImpl
 		}
 
 		if (result == null) {
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(3);
 
 			sb.append(_SQL_SELECT_BATCHPLANNERLOG_WHERE);
-
-			sb.append(_FINDER_COLUMN_BPPI_BEETERC_BATCHPLANNERPLANID_2);
 
 			boolean bindBatchEngineExportTaskERC = false;
 
 			if (batchEngineExportTaskERC.isEmpty()) {
 				sb.append(
-					_FINDER_COLUMN_BPPI_BEETERC_BATCHENGINEEXPORTTASKERC_3);
+					_FINDER_COLUMN_BATCHENGINEEXPORTTASKERC_BATCHENGINEEXPORTTASKERC_3);
 			}
 			else {
 				bindBatchEngineExportTaskERC = true;
 
 				sb.append(
-					_FINDER_COLUMN_BPPI_BEETERC_BATCHENGINEEXPORTTASKERC_2);
+					_FINDER_COLUMN_BATCHENGINEEXPORTTASKERC_BATCHENGINEEXPORTTASKERC_2);
 			}
 
 			String sql = sb.toString();
@@ -948,8 +934,6 @@ public class BatchPlannerLogPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(batchPlannerPlanId);
-
 				if (bindBatchEngineExportTaskERC) {
 					queryPos.add(batchEngineExportTaskERC);
 				}
@@ -959,7 +943,8 @@ public class BatchPlannerLogPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByBPPI_BEETERC, finderArgs, list);
+							_finderPathFetchByBatchEngineExportTaskERC,
+							finderArgs, list);
 					}
 				}
 				else {
@@ -987,63 +972,57 @@ public class BatchPlannerLogPersistenceImpl
 	}
 
 	/**
-	 * Removes the batch planner log where batchPlannerPlanId = &#63; and batchEngineExportTaskERC = &#63; from the database.
+	 * Removes the batch planner log where batchEngineExportTaskERC = &#63; from the database.
 	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
 	 * @param batchEngineExportTaskERC the batch engine export task erc
 	 * @return the batch planner log that was removed
 	 */
 	@Override
-	public BatchPlannerLog removeByBPPI_BEETERC(
-			long batchPlannerPlanId, String batchEngineExportTaskERC)
+	public BatchPlannerLog removeByBatchEngineExportTaskERC(
+			String batchEngineExportTaskERC)
 		throws NoSuchLogException {
 
-		BatchPlannerLog batchPlannerLog = findByBPPI_BEETERC(
-			batchPlannerPlanId, batchEngineExportTaskERC);
+		BatchPlannerLog batchPlannerLog = findByBatchEngineExportTaskERC(
+			batchEngineExportTaskERC);
 
 		return remove(batchPlannerLog);
 	}
 
 	/**
-	 * Returns the number of batch planner logs where batchPlannerPlanId = &#63; and batchEngineExportTaskERC = &#63;.
+	 * Returns the number of batch planner logs where batchEngineExportTaskERC = &#63;.
 	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
 	 * @param batchEngineExportTaskERC the batch engine export task erc
 	 * @return the number of matching batch planner logs
 	 */
 	@Override
-	public int countByBPPI_BEETERC(
-		long batchPlannerPlanId, String batchEngineExportTaskERC) {
+	public int countByBatchEngineExportTaskERC(
+		String batchEngineExportTaskERC) {
 
 		batchEngineExportTaskERC = Objects.toString(
 			batchEngineExportTaskERC, "");
 
-		FinderPath finderPath = _finderPathCountByBPPI_BEETERC;
+		FinderPath finderPath = _finderPathCountByBatchEngineExportTaskERC;
 
-		Object[] finderArgs = new Object[] {
-			batchPlannerPlanId, batchEngineExportTaskERC
-		};
+		Object[] finderArgs = new Object[] {batchEngineExportTaskERC};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+			StringBundler sb = new StringBundler(2);
 
 			sb.append(_SQL_COUNT_BATCHPLANNERLOG_WHERE);
-
-			sb.append(_FINDER_COLUMN_BPPI_BEETERC_BATCHPLANNERPLANID_2);
 
 			boolean bindBatchEngineExportTaskERC = false;
 
 			if (batchEngineExportTaskERC.isEmpty()) {
 				sb.append(
-					_FINDER_COLUMN_BPPI_BEETERC_BATCHENGINEEXPORTTASKERC_3);
+					_FINDER_COLUMN_BATCHENGINEEXPORTTASKERC_BATCHENGINEEXPORTTASKERC_3);
 			}
 			else {
 				bindBatchEngineExportTaskERC = true;
 
 				sb.append(
-					_FINDER_COLUMN_BPPI_BEETERC_BATCHENGINEEXPORTTASKERC_2);
+					_FINDER_COLUMN_BATCHENGINEEXPORTTASKERC_BATCHENGINEEXPORTTASKERC_2);
 			}
 
 			String sql = sb.toString();
@@ -1056,8 +1035,6 @@ public class BatchPlannerLogPersistenceImpl
 				Query query = session.createQuery(sql);
 
 				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(batchPlannerPlanId);
 
 				if (bindBatchEngineExportTaskERC) {
 					queryPos.add(batchEngineExportTaskERC);
@@ -1079,45 +1056,37 @@ public class BatchPlannerLogPersistenceImpl
 	}
 
 	private static final String
-		_FINDER_COLUMN_BPPI_BEETERC_BATCHPLANNERPLANID_2 =
-			"batchPlannerLog.batchPlannerPlanId = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_BPPI_BEETERC_BATCHENGINEEXPORTTASKERC_2 =
+		_FINDER_COLUMN_BATCHENGINEEXPORTTASKERC_BATCHENGINEEXPORTTASKERC_2 =
 			"batchPlannerLog.batchEngineExportTaskERC = ?";
 
 	private static final String
-		_FINDER_COLUMN_BPPI_BEETERC_BATCHENGINEEXPORTTASKERC_3 =
+		_FINDER_COLUMN_BATCHENGINEEXPORTTASKERC_BATCHENGINEEXPORTTASKERC_3 =
 			"(batchPlannerLog.batchEngineExportTaskERC IS NULL OR batchPlannerLog.batchEngineExportTaskERC = '')";
 
-	private FinderPath _finderPathFetchByBPPI_BEITERC;
-	private FinderPath _finderPathCountByBPPI_BEITERC;
+	private FinderPath _finderPathFetchByBatchEngineImportTaskERC;
+	private FinderPath _finderPathCountByBatchEngineImportTaskERC;
 
 	/**
-	 * Returns the batch planner log where batchPlannerPlanId = &#63; and batchEngineImportTaskERC = &#63; or throws a <code>NoSuchLogException</code> if it could not be found.
+	 * Returns the batch planner log where batchEngineImportTaskERC = &#63; or throws a <code>NoSuchLogException</code> if it could not be found.
 	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
 	 * @param batchEngineImportTaskERC the batch engine import task erc
 	 * @return the matching batch planner log
 	 * @throws NoSuchLogException if a matching batch planner log could not be found
 	 */
 	@Override
-	public BatchPlannerLog findByBPPI_BEITERC(
-			long batchPlannerPlanId, String batchEngineImportTaskERC)
+	public BatchPlannerLog findByBatchEngineImportTaskERC(
+			String batchEngineImportTaskERC)
 		throws NoSuchLogException {
 
-		BatchPlannerLog batchPlannerLog = fetchByBPPI_BEITERC(
-			batchPlannerPlanId, batchEngineImportTaskERC);
+		BatchPlannerLog batchPlannerLog = fetchByBatchEngineImportTaskERC(
+			batchEngineImportTaskERC);
 
 		if (batchPlannerLog == null) {
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("batchPlannerPlanId=");
-			sb.append(batchPlannerPlanId);
-
-			sb.append(", batchEngineImportTaskERC=");
+			sb.append("batchEngineImportTaskERC=");
 			sb.append(batchEngineImportTaskERC);
 
 			sb.append("}");
@@ -1133,32 +1102,28 @@ public class BatchPlannerLogPersistenceImpl
 	}
 
 	/**
-	 * Returns the batch planner log where batchPlannerPlanId = &#63; and batchEngineImportTaskERC = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the batch planner log where batchEngineImportTaskERC = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
 	 * @param batchEngineImportTaskERC the batch engine import task erc
 	 * @return the matching batch planner log, or <code>null</code> if a matching batch planner log could not be found
 	 */
 	@Override
-	public BatchPlannerLog fetchByBPPI_BEITERC(
-		long batchPlannerPlanId, String batchEngineImportTaskERC) {
+	public BatchPlannerLog fetchByBatchEngineImportTaskERC(
+		String batchEngineImportTaskERC) {
 
-		return fetchByBPPI_BEITERC(
-			batchPlannerPlanId, batchEngineImportTaskERC, true);
+		return fetchByBatchEngineImportTaskERC(batchEngineImportTaskERC, true);
 	}
 
 	/**
-	 * Returns the batch planner log where batchPlannerPlanId = &#63; and batchEngineImportTaskERC = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the batch planner log where batchEngineImportTaskERC = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
 	 * @param batchEngineImportTaskERC the batch engine import task erc
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching batch planner log, or <code>null</code> if a matching batch planner log could not be found
 	 */
 	@Override
-	public BatchPlannerLog fetchByBPPI_BEITERC(
-		long batchPlannerPlanId, String batchEngineImportTaskERC,
-		boolean useFinderCache) {
+	public BatchPlannerLog fetchByBatchEngineImportTaskERC(
+		String batchEngineImportTaskERC, boolean useFinderCache) {
 
 		batchEngineImportTaskERC = Objects.toString(
 			batchEngineImportTaskERC, "");
@@ -1166,24 +1131,20 @@ public class BatchPlannerLogPersistenceImpl
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {
-				batchPlannerPlanId, batchEngineImportTaskERC
-			};
+			finderArgs = new Object[] {batchEngineImportTaskERC};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByBPPI_BEITERC, finderArgs);
+				_finderPathFetchByBatchEngineImportTaskERC, finderArgs);
 		}
 
 		if (result instanceof BatchPlannerLog) {
 			BatchPlannerLog batchPlannerLog = (BatchPlannerLog)result;
 
-			if ((batchPlannerPlanId !=
-					batchPlannerLog.getBatchPlannerPlanId()) ||
-				!Objects.equals(
+			if (!Objects.equals(
 					batchEngineImportTaskERC,
 					batchPlannerLog.getBatchEngineImportTaskERC())) {
 
@@ -1192,23 +1153,21 @@ public class BatchPlannerLogPersistenceImpl
 		}
 
 		if (result == null) {
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(3);
 
 			sb.append(_SQL_SELECT_BATCHPLANNERLOG_WHERE);
-
-			sb.append(_FINDER_COLUMN_BPPI_BEITERC_BATCHPLANNERPLANID_2);
 
 			boolean bindBatchEngineImportTaskERC = false;
 
 			if (batchEngineImportTaskERC.isEmpty()) {
 				sb.append(
-					_FINDER_COLUMN_BPPI_BEITERC_BATCHENGINEIMPORTTASKERC_3);
+					_FINDER_COLUMN_BATCHENGINEIMPORTTASKERC_BATCHENGINEIMPORTTASKERC_3);
 			}
 			else {
 				bindBatchEngineImportTaskERC = true;
 
 				sb.append(
-					_FINDER_COLUMN_BPPI_BEITERC_BATCHENGINEIMPORTTASKERC_2);
+					_FINDER_COLUMN_BATCHENGINEIMPORTTASKERC_BATCHENGINEIMPORTTASKERC_2);
 			}
 
 			String sql = sb.toString();
@@ -1222,8 +1181,6 @@ public class BatchPlannerLogPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(batchPlannerPlanId);
-
 				if (bindBatchEngineImportTaskERC) {
 					queryPos.add(batchEngineImportTaskERC);
 				}
@@ -1233,7 +1190,8 @@ public class BatchPlannerLogPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByBPPI_BEITERC, finderArgs, list);
+							_finderPathFetchByBatchEngineImportTaskERC,
+							finderArgs, list);
 					}
 				}
 				else {
@@ -1261,63 +1219,57 @@ public class BatchPlannerLogPersistenceImpl
 	}
 
 	/**
-	 * Removes the batch planner log where batchPlannerPlanId = &#63; and batchEngineImportTaskERC = &#63; from the database.
+	 * Removes the batch planner log where batchEngineImportTaskERC = &#63; from the database.
 	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
 	 * @param batchEngineImportTaskERC the batch engine import task erc
 	 * @return the batch planner log that was removed
 	 */
 	@Override
-	public BatchPlannerLog removeByBPPI_BEITERC(
-			long batchPlannerPlanId, String batchEngineImportTaskERC)
+	public BatchPlannerLog removeByBatchEngineImportTaskERC(
+			String batchEngineImportTaskERC)
 		throws NoSuchLogException {
 
-		BatchPlannerLog batchPlannerLog = findByBPPI_BEITERC(
-			batchPlannerPlanId, batchEngineImportTaskERC);
+		BatchPlannerLog batchPlannerLog = findByBatchEngineImportTaskERC(
+			batchEngineImportTaskERC);
 
 		return remove(batchPlannerLog);
 	}
 
 	/**
-	 * Returns the number of batch planner logs where batchPlannerPlanId = &#63; and batchEngineImportTaskERC = &#63;.
+	 * Returns the number of batch planner logs where batchEngineImportTaskERC = &#63;.
 	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
 	 * @param batchEngineImportTaskERC the batch engine import task erc
 	 * @return the number of matching batch planner logs
 	 */
 	@Override
-	public int countByBPPI_BEITERC(
-		long batchPlannerPlanId, String batchEngineImportTaskERC) {
+	public int countByBatchEngineImportTaskERC(
+		String batchEngineImportTaskERC) {
 
 		batchEngineImportTaskERC = Objects.toString(
 			batchEngineImportTaskERC, "");
 
-		FinderPath finderPath = _finderPathCountByBPPI_BEITERC;
+		FinderPath finderPath = _finderPathCountByBatchEngineImportTaskERC;
 
-		Object[] finderArgs = new Object[] {
-			batchPlannerPlanId, batchEngineImportTaskERC
-		};
+		Object[] finderArgs = new Object[] {batchEngineImportTaskERC};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+			StringBundler sb = new StringBundler(2);
 
 			sb.append(_SQL_COUNT_BATCHPLANNERLOG_WHERE);
-
-			sb.append(_FINDER_COLUMN_BPPI_BEITERC_BATCHPLANNERPLANID_2);
 
 			boolean bindBatchEngineImportTaskERC = false;
 
 			if (batchEngineImportTaskERC.isEmpty()) {
 				sb.append(
-					_FINDER_COLUMN_BPPI_BEITERC_BATCHENGINEIMPORTTASKERC_3);
+					_FINDER_COLUMN_BATCHENGINEIMPORTTASKERC_BATCHENGINEIMPORTTASKERC_3);
 			}
 			else {
 				bindBatchEngineImportTaskERC = true;
 
 				sb.append(
-					_FINDER_COLUMN_BPPI_BEITERC_BATCHENGINEIMPORTTASKERC_2);
+					_FINDER_COLUMN_BATCHENGINEIMPORTTASKERC_BATCHENGINEIMPORTTASKERC_2);
 			}
 
 			String sql = sb.toString();
@@ -1330,8 +1282,6 @@ public class BatchPlannerLogPersistenceImpl
 				Query query = session.createQuery(sql);
 
 				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(batchPlannerPlanId);
 
 				if (bindBatchEngineImportTaskERC) {
 					queryPos.add(batchEngineImportTaskERC);
@@ -1353,15 +1303,11 @@ public class BatchPlannerLogPersistenceImpl
 	}
 
 	private static final String
-		_FINDER_COLUMN_BPPI_BEITERC_BATCHPLANNERPLANID_2 =
-			"batchPlannerLog.batchPlannerPlanId = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_BPPI_BEITERC_BATCHENGINEIMPORTTASKERC_2 =
+		_FINDER_COLUMN_BATCHENGINEIMPORTTASKERC_BATCHENGINEIMPORTTASKERC_2 =
 			"batchPlannerLog.batchEngineImportTaskERC = ?";
 
 	private static final String
-		_FINDER_COLUMN_BPPI_BEITERC_BATCHENGINEIMPORTTASKERC_3 =
+		_FINDER_COLUMN_BATCHENGINEIMPORTTASKERC_BATCHENGINEIMPORTTASKERC_3 =
 			"(batchPlannerLog.batchEngineImportTaskERC IS NULL OR batchPlannerLog.batchEngineImportTaskERC = '')";
 
 	private FinderPath _finderPathFetchByBPPI_DTERC;
@@ -1658,19 +1604,13 @@ public class BatchPlannerLogPersistenceImpl
 			batchPlannerLog);
 
 		finderCache.putResult(
-			_finderPathFetchByBPPI_BEETERC,
-			new Object[] {
-				batchPlannerLog.getBatchPlannerPlanId(),
-				batchPlannerLog.getBatchEngineExportTaskERC()
-			},
+			_finderPathFetchByBatchEngineExportTaskERC,
+			new Object[] {batchPlannerLog.getBatchEngineExportTaskERC()},
 			batchPlannerLog);
 
 		finderCache.putResult(
-			_finderPathFetchByBPPI_BEITERC,
-			new Object[] {
-				batchPlannerLog.getBatchPlannerPlanId(),
-				batchPlannerLog.getBatchEngineImportTaskERC()
-			},
+			_finderPathFetchByBatchEngineImportTaskERC,
+			new Object[] {batchPlannerLog.getBatchEngineImportTaskERC()},
 			batchPlannerLog);
 
 		finderCache.putResult(
@@ -1766,24 +1706,24 @@ public class BatchPlannerLogPersistenceImpl
 			batchPlannerLogModelImpl);
 
 		args = new Object[] {
-			batchPlannerLogModelImpl.getBatchPlannerPlanId(),
 			batchPlannerLogModelImpl.getBatchEngineExportTaskERC()
 		};
 
 		finderCache.putResult(
-			_finderPathCountByBPPI_BEETERC, args, Long.valueOf(1));
+			_finderPathCountByBatchEngineExportTaskERC, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByBPPI_BEETERC, args, batchPlannerLogModelImpl);
+			_finderPathFetchByBatchEngineExportTaskERC, args,
+			batchPlannerLogModelImpl);
 
 		args = new Object[] {
-			batchPlannerLogModelImpl.getBatchPlannerPlanId(),
 			batchPlannerLogModelImpl.getBatchEngineImportTaskERC()
 		};
 
 		finderCache.putResult(
-			_finderPathCountByBPPI_BEITERC, args, Long.valueOf(1));
+			_finderPathCountByBatchEngineImportTaskERC, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByBPPI_BEITERC, args, batchPlannerLogModelImpl);
+			_finderPathFetchByBatchEngineImportTaskERC, args,
+			batchPlannerLogModelImpl);
 
 		args = new Object[] {
 			batchPlannerLogModelImpl.getBatchPlannerPlanId(),
@@ -2287,29 +2227,27 @@ public class BatchPlannerLogPersistenceImpl
 			"countByBatchPlannerPlanId", new String[] {Long.class.getName()},
 			new String[] {"batchPlannerPlanId"}, false);
 
-		_finderPathFetchByBPPI_BEETERC = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByBPPI_BEETERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"batchPlannerPlanId", "batchEngineExportTaskERC"},
-			true);
+		_finderPathFetchByBatchEngineExportTaskERC = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByBatchEngineExportTaskERC",
+			new String[] {String.class.getName()},
+			new String[] {"batchEngineExportTaskERC"}, true);
 
-		_finderPathCountByBPPI_BEETERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBPPI_BEETERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"batchPlannerPlanId", "batchEngineExportTaskERC"},
-			false);
+		_finderPathCountByBatchEngineExportTaskERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByBatchEngineExportTaskERC",
+			new String[] {String.class.getName()},
+			new String[] {"batchEngineExportTaskERC"}, false);
 
-		_finderPathFetchByBPPI_BEITERC = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByBPPI_BEITERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"batchPlannerPlanId", "batchEngineImportTaskERC"},
-			true);
+		_finderPathFetchByBatchEngineImportTaskERC = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByBatchEngineImportTaskERC",
+			new String[] {String.class.getName()},
+			new String[] {"batchEngineImportTaskERC"}, true);
 
-		_finderPathCountByBPPI_BEITERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBPPI_BEITERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"batchPlannerPlanId", "batchEngineImportTaskERC"},
-			false);
+		_finderPathCountByBatchEngineImportTaskERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByBatchEngineImportTaskERC",
+			new String[] {String.class.getName()},
+			new String[] {"batchEngineImportTaskERC"}, false);
 
 		_finderPathFetchByBPPI_DTERC = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByBPPI_DTERC",

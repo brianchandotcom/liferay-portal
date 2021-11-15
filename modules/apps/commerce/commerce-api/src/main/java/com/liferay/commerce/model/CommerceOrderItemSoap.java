@@ -48,10 +48,11 @@ public class CommerceOrderItemSoap implements Serializable {
 		soapModel.setCommerceOrderId(model.getCommerceOrderId());
 		soapModel.setCommercePriceListId(model.getCommercePriceListId());
 		soapModel.setCPInstanceId(model.getCPInstanceId());
+		soapModel.setCPMeasurementUnitId(model.getCPMeasurementUnitId());
 		soapModel.setCProductId(model.getCProductId());
 		soapModel.setParentCommerceOrderItemId(
 			model.getParentCommerceOrderItemId());
-		soapModel.setShippingAddressId(model.getShippingAddressId());
+		soapModel.setDecimalQuantity(model.getDecimalQuantity());
 		soapModel.setDeliveryGroup(model.getDeliveryGroup());
 		soapModel.setDeliveryMaxSubscriptionCycles(
 			model.getDeliveryMaxSubscriptionCycles());
@@ -95,6 +96,7 @@ public class CommerceOrderItemSoap implements Serializable {
 			model.getPromoPriceWithTaxAmount());
 		soapModel.setQuantity(model.getQuantity());
 		soapModel.setRequestedDeliveryDate(model.getRequestedDeliveryDate());
+		soapModel.setShippingAddressId(model.getShippingAddressId());
 		soapModel.setShipSeparately(model.isShipSeparately());
 		soapModel.setShippable(model.isShippable());
 		soapModel.setShippedQuantity(model.getShippedQuantity());
@@ -274,6 +276,14 @@ public class CommerceOrderItemSoap implements Serializable {
 		_CPInstanceId = CPInstanceId;
 	}
 
+	public long getCPMeasurementUnitId() {
+		return _CPMeasurementUnitId;
+	}
+
+	public void setCPMeasurementUnitId(long CPMeasurementUnitId) {
+		_CPMeasurementUnitId = CPMeasurementUnitId;
+	}
+
 	public long getCProductId() {
 		return _CProductId;
 	}
@@ -290,12 +300,12 @@ public class CommerceOrderItemSoap implements Serializable {
 		_parentCommerceOrderItemId = parentCommerceOrderItemId;
 	}
 
-	public long getShippingAddressId() {
-		return _shippingAddressId;
+	public BigDecimal getDecimalQuantity() {
+		return _decimalQuantity;
 	}
 
-	public void setShippingAddressId(long shippingAddressId) {
-		_shippingAddressId = shippingAddressId;
+	public void setDecimalQuantity(BigDecimal decimalQuantity) {
+		_decimalQuantity = decimalQuantity;
 	}
 
 	public String getDeliveryGroup() {
@@ -562,6 +572,14 @@ public class CommerceOrderItemSoap implements Serializable {
 		_requestedDeliveryDate = requestedDeliveryDate;
 	}
 
+	public long getShippingAddressId() {
+		return _shippingAddressId;
+	}
+
+	public void setShippingAddressId(long shippingAddressId) {
+		_shippingAddressId = shippingAddressId;
+	}
+
 	public boolean getShipSeparately() {
 		return _shipSeparately;
 	}
@@ -691,9 +709,10 @@ public class CommerceOrderItemSoap implements Serializable {
 	private long _commerceOrderId;
 	private long _commercePriceListId;
 	private long _CPInstanceId;
+	private long _CPMeasurementUnitId;
 	private long _CProductId;
 	private long _parentCommerceOrderItemId;
-	private long _shippingAddressId;
+	private BigDecimal _decimalQuantity;
 	private String _deliveryGroup;
 	private long _deliveryMaxSubscriptionCycles;
 	private int _deliverySubscriptionLength;
@@ -723,6 +742,7 @@ public class CommerceOrderItemSoap implements Serializable {
 	private BigDecimal _promoPriceWithTaxAmount;
 	private int _quantity;
 	private Date _requestedDeliveryDate;
+	private long _shippingAddressId;
 	private boolean _shipSeparately;
 	private boolean _shippable;
 	private int _shippedQuantity;

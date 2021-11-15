@@ -167,9 +167,10 @@
 		<field name="commerceOrderId" type="long" />
 		<field name="commercePriceListId" type="long" />
 		<field name="CPInstanceId" type="long" />
+		<field name="CPMeasurementUnitId" type="long" />
 		<field name="CProductId" type="long" />
 		<field name="parentCommerceOrderItemId" type="long" />
-		<field name="shippingAddressId" type="long" />
+		<field name="decimalQuantity" type="BigDecimal" />
 		<field name="deliveryGroup" type="String" />
 		<field name="deliveryMaxSubscriptionCycles" type="long" />
 		<field name="deliverySubscriptionLength" type="int" />
@@ -203,6 +204,7 @@
 		<field name="promoPriceWithTaxAmount" type="BigDecimal" />
 		<field name="quantity" type="int" />
 		<field name="requestedDeliveryDate" type="Date" />
+		<field name="shippingAddressId" type="long" />
 		<field name="shipSeparately" type="boolean" />
 		<field name="shippable" type="boolean" />
 		<field name="shippedQuantity" type="int" />

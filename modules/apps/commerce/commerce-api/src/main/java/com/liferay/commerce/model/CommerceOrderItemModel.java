@@ -281,6 +281,20 @@ public interface CommerceOrderItemModel
 	public void setCPInstanceId(long CPInstanceId);
 
 	/**
+	 * Returns the cp measurement unit ID of this commerce order item.
+	 *
+	 * @return the cp measurement unit ID of this commerce order item
+	 */
+	public long getCPMeasurementUnitId();
+
+	/**
+	 * Sets the cp measurement unit ID of this commerce order item.
+	 *
+	 * @param CPMeasurementUnitId the cp measurement unit ID of this commerce order item
+	 */
+	public void setCPMeasurementUnitId(long CPMeasurementUnitId);
+
+	/**
 	 * Returns the c product ID of this commerce order item.
 	 *
 	 * @return the c product ID of this commerce order item
@@ -309,18 +323,18 @@ public interface CommerceOrderItemModel
 	public void setParentCommerceOrderItemId(long parentCommerceOrderItemId);
 
 	/**
-	 * Returns the shipping address ID of this commerce order item.
+	 * Returns the decimal quantity of this commerce order item.
 	 *
-	 * @return the shipping address ID of this commerce order item
+	 * @return the decimal quantity of this commerce order item
 	 */
-	public long getShippingAddressId();
+	public BigDecimal getDecimalQuantity();
 
 	/**
-	 * Sets the shipping address ID of this commerce order item.
+	 * Sets the decimal quantity of this commerce order item.
 	 *
-	 * @param shippingAddressId the shipping address ID of this commerce order item
+	 * @param decimalQuantity the decimal quantity of this commerce order item
 	 */
-	public void setShippingAddressId(long shippingAddressId);
+	public void setDecimalQuantity(BigDecimal decimalQuantity);
 
 	/**
 	 * Returns the delivery group of this commerce order item.
@@ -841,6 +855,20 @@ public interface CommerceOrderItemModel
 	 * @param requestedDeliveryDate the requested delivery date of this commerce order item
 	 */
 	public void setRequestedDeliveryDate(Date requestedDeliveryDate);
+
+	/**
+	 * Returns the shipping address ID of this commerce order item.
+	 *
+	 * @return the shipping address ID of this commerce order item
+	 */
+	public long getShippingAddressId();
+
+	/**
+	 * Sets the shipping address ID of this commerce order item.
+	 *
+	 * @param shippingAddressId the shipping address ID of this commerce order item
+	 */
+	public void setShippingAddressId(long shippingAddressId);
 
 	/**
 	 * Returns the ship separately of this commerce order item.

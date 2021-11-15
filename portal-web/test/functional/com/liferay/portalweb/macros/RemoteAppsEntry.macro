@@ -12,9 +12,33 @@ definition {
 			value1 = "${entryHTMLName}");
 
 		Type(
-			key_id = "customElementURLs",
-			locator1 = "RemoteAppsEntry#URL",
+			locator1 = "RemoteAppsEntry#CUSTOM_ELEMENT_URL",
 			value1 = "${entryURL}");
+	}
+
+	macro addCustomElementAllFields {
+		Type(
+			key_text = "Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryName}");
+
+		Type(
+			key_text = "HTML Element Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryHTMLName}");
+
+		Type(
+			locator1 = "RemoteAppsEntry#CUSTOM_ELEMENT_URL",
+			value1 = "${entryURL}");
+
+		Type(
+			key_text = "CSS URL",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryCSSURL}");
+
+		Type(
+			locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES",
+			value1 = "${entryProperties}");
 	}
 
 	macro addEntry {
@@ -24,8 +48,8 @@ definition {
 			value1 = "${entryName}");
 
 		Type(
-			key_id = "iFrameURL",
-			locator1 = "RemoteAppsEntry#URL",
+			key_text = "URL",
+			locator1 = "TextInput#ANY",
 			value1 = "${entryURL}");
 	}
 

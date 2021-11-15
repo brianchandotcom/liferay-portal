@@ -86,6 +86,38 @@ definition {
 		RemoteApps.viewEmptyRemoteTable();
 	}
 
+	macro viewCustomElementFields {
+		 AssertTextEquals(
+			 custom_entryName = "${entryName}",
+			 key_text = "Name",
+			 locator1 = "TextInput#ANY",
+			 value1 = "${entryName}");
+
+		AssertTextEquals(
+			custom_entryHTMLName = "${entryHTMLName}",
+			key_text = "HTML Element Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryHTMLName}");
+
+		AssertTextEquals(
+			custom_entryURL = "${entryURL}",
+			key_text = "URL",
+			locator1 = "RemoteAppsEntry#CUSTOM_ELEMENT_URL",
+			value1 = "${entryURL}");
+
+		AssertTextEquals(
+			custom_entryCSSURL = "${entryCSSURL}",
+			key_text = "URL",
+			locator1 = "RemoteAppsEntry#CUSTOM_ELEMENT_URL",
+			value1 = "${entryURL}");
+
+		AssertTextEquals(
+			custom_entryProperties = "${entryProperties}",
+			key_text = "Properties",
+			locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES",
+			value1 = "${entryProperties}");
+	}
+
 	macro viewEmptyRemoteTable {
 		AssertElementPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE");
 	}

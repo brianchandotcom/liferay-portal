@@ -27,6 +27,8 @@ definition {
 		Upgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title 1");
 
 		Upgrade.viewSharedBlog();
+
+		Upgrade.revokeAndUpdateSharedEntry();
 	}
 
 	@priority = "5"
@@ -38,6 +40,8 @@ definition {
 		Upgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title 1");
 
 		Upgrade.viewSharedBlog();
+
+		Upgrade.revokeAndUpdateSharedEntry();
 	}
 
 }

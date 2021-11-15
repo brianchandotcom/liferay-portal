@@ -210,14 +210,6 @@ definition {
 			locator1 = "Ratings#AVERAGE_STACKED_STAR_RESULT");
 	}
 
-	macro viewRateDisabled {
-		for (var text : list "thumbs-up,thumbs-down") {
-			AssertElementPresent(
-				key_text = "${text}",
-				locator1 = "Ratings#ANY_DISABLED");
-		}
-	}
-
 	macro viewRateLike {
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_LIKE_RESULT");
 
@@ -280,6 +272,14 @@ definition {
 					locator1 = "Ratings#THUMB",
 					value1 = "${voteCount}");
 			}
+		}
+	}
+
+	macro viewRatingsDisabled {
+		for (var text : list "thumbs-up,thumbs-down") {
+			AssertElementPresent(
+				key_text = "${text}",
+				locator1 = "Ratings#ANY_DISABLED");
 		}
 	}
 

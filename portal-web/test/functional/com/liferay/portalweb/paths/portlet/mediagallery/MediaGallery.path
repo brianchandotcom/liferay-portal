@@ -38,7 +38,7 @@
 </tr>
 <tr>
 	<td>ENTRY_THUMBNAIL</td>
-	<td>//a[contains(@title,'${key_mgDocumentTitle}')]//div/img</td>
+	<td>//div[contains(@class,'card')][contains(.,'${key_mgDocumentTitle}')]//img</td>
 	<td></td>
 </tr>
 <tr>

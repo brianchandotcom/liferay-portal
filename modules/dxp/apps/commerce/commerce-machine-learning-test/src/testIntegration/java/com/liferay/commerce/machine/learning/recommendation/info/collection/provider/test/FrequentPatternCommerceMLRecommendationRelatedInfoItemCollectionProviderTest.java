@@ -15,29 +15,15 @@
 package com.liferay.commerce.machine.learning.recommendation.info.collection.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.machine.learning.recommendation.FrequentPatternCommerceMLRecommendation;
 import com.liferay.commerce.machine.learning.recommendation.FrequentPatternCommerceMLRecommendationManager;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
-import com.liferay.info.collection.provider.CollectionQuery;
-import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
-import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.pagination.InfoPage;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -45,13 +31,10 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -59,7 +42,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class
-	FrequentPatternCommerceMLRecommendationRelatedItemCollectionProviderTest {
+	FrequentPatternCommerceMLRecommendationRelatedInfoItemCollectionProviderTest
+		extends BaseItemCollectionProviderTestCase {
 
 	@ClassRule
 	@Rule
@@ -70,14 +54,23 @@ public class
 
 	@Before
 	public void setUp() throws Exception {
-		_commerceCatalog = _addCommerceCatalog();
+		_commerceCatalog = addCommerceCatalog();
 
 		_frequentPatternCommerceMLRecommendations =
 			_addFrequentPatternCommerceMLRecommendations();
 	}
 
-	@Test
-	public void testGetRelatedItemsInfoPage() throws Exception {
+	@Override
+	protected String getInfoItemCollectionProviderName() {
+		return StringBundler.concat(
+			"com.liferay.commerce.machine.learning.internal.recommendation.",
+			"info.collection.provider.",
+			"FrequentPatternCommerceMLRecommendation",
+			"RelatedInfoItemCollectionProvider");
+	}
+
+	@Override
+	protected CPDefinition getRandomRelatedItemObject() throws Exception {
 		FrequentPatternCommerceMLRecommendation
 			frequentPatternCommerceMLRecommendation =
 				_frequentPatternCommerceMLRecommendations.get(
@@ -85,50 +78,8 @@ public class
 						0,
 						_frequentPatternCommerceMLRecommendations.size() - 1));
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
+		return cpDefinitionLocalService.fetchCPDefinition(
 			frequentPatternCommerceMLRecommendation.getAntecedentIds()[0]);
-
-		RelatedInfoItemCollectionProvider<CPDefinition, CPDefinition>
-			relatedInfoItemCollectionProvider =
-				_infoItemServiceTracker.getInfoItemService(
-					RelatedInfoItemCollectionProvider.class,
-					StringBundler.concat(
-						"com.liferay.commerce.machine.learning.internal.",
-						"recommendation.info.collection.provider.",
-						"FrequentPatternCommerceMLRecommendation",
-						"RelatedInfoItemCollectionProvider"));
-
-		Assert.assertNotNull(relatedInfoItemCollectionProvider);
-
-		CollectionQuery collectionQuery = new CollectionQuery();
-
-		collectionQuery.setRelatedItemObject(cpDefinition);
-
-		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS, 5, TimeUnit.SECONDS,
-			() -> {
-				_testGetRelatedItemsInfoPage(
-					relatedInfoItemCollectionProvider, collectionQuery);
-
-				return null;
-			});
-	}
-
-	private CommerceCatalog _addCommerceCatalog() throws Exception {
-		User user = UserTestUtil.addUser();
-
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency(
-				TestPropsValues.getCompanyId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-				user.getUserId());
-
-		return _commerceCatalogLocalService.addCommerceCatalog(
-			null, RandomTestUtil.randomString(), commerceCurrency.getCode(),
-			LocaleUtil.US.getDisplayLanguage(), serviceContext);
 	}
 
 	private List<FrequentPatternCommerceMLRecommendation>
@@ -138,11 +89,11 @@ public class
 		List<FrequentPatternCommerceMLRecommendation>
 			frequentPatternCommerceMLRecommendations = new ArrayList<>();
 
-		for (int i = 0; i < _PRODUCT_COUNT; i++) {
+		for (int i = 0; i < PRODUCT_COUNT; i++) {
 			CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
 				_commerceCatalog.getGroupId());
 
-			for (int j = 0; j < _RECOMMENDATION_COUNT; j++) {
+			for (int j = 0; j < RECOMMENDATION_COUNT; j++) {
 				CPDefinition recommendedCPDefinition =
 					CPTestUtil.addCPDefinition(_commerceCatalog.getGroupId());
 
@@ -174,35 +125,7 @@ public class
 		return frequentPatternCommerceMLRecommendations;
 	}
 
-	private void _testGetRelatedItemsInfoPage(
-		RelatedInfoItemCollectionProvider<CPDefinition, CPDefinition>
-			relatedInfoItemCollectionProvider,
-		CollectionQuery collectionQuery) {
-
-		InfoPage<CPDefinition> relatedItemsInfoPage =
-			relatedInfoItemCollectionProvider.getCollectionInfoPage(
-				collectionQuery);
-
-		Assert.assertNotNull(relatedItemsInfoPage);
-
-		List<? extends CPDefinition> pageItems =
-			relatedItemsInfoPage.getPageItems();
-
-		Assert.assertEquals(
-			pageItems.toString(), _RECOMMENDATION_COUNT, pageItems.size());
-	}
-
-	private static final int _PRODUCT_COUNT = 2;
-
-	private static final int _RECOMMENDATION_COUNT = 3;
-
 	private CommerceCatalog _commerceCatalog;
-
-	@Inject
-	private CommerceCatalogLocalService _commerceCatalogLocalService;
-
-	@Inject
-	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Inject
 	private FrequentPatternCommerceMLRecommendationManager
@@ -210,8 +133,5 @@ public class
 
 	private List<FrequentPatternCommerceMLRecommendation>
 		_frequentPatternCommerceMLRecommendations;
-
-	@Inject
-	private InfoItemServiceTracker _infoItemServiceTracker;
 
 }

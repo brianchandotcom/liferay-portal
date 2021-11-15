@@ -16,6 +16,7 @@ package com.liferay.site.navigation.menu.item.display.page.internal.type;
 
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 
@@ -28,9 +29,11 @@ public class DisplayPageTypeContext {
 
 	public DisplayPageTypeContext(
 		InfoItemClassDetails infoItemClassDetails,
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider,
 		LayoutDisplayPageProvider layoutDisplayPageProvider) {
 
 		_infoItemClassDetails = infoItemClassDetails;
+		_infoItemFormVariationsProvider = infoItemFormVariationsProvider;
 		_layoutDisplayPageProvider = layoutDisplayPageProvider;
 	}
 
@@ -40,6 +43,12 @@ public class DisplayPageTypeContext {
 
 	public InfoItemClassDetails getInfoItemClassDetails() {
 		return _infoItemClassDetails;
+	}
+
+	public InfoItemFormVariationsProvider<?>
+		getInfoItemFormVariationsProvider() {
+
+		return _infoItemFormVariationsProvider;
 	}
 
 	public String getLabel(Locale locale) {
@@ -59,6 +68,8 @@ public class DisplayPageTypeContext {
 	}
 
 	private final InfoItemClassDetails _infoItemClassDetails;
+	private final InfoItemFormVariationsProvider<?>
+		_infoItemFormVariationsProvider;
 	private final LayoutDisplayPageProvider<?> _layoutDisplayPageProvider;
 
 }

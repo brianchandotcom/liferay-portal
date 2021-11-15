@@ -2855,7 +2855,15 @@ definition {
 	}
 
 	macro gotoStyle {
+		if ("${deviceType}" != "Desktop") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+		}
+
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+
+		if ("${deviceType}" != "Desktop") {
+			SelectFrame(value1 = "relative=top");
+		}
 
 		AssertElementPresent(
 			key_nodeName = "${fragmentName}",

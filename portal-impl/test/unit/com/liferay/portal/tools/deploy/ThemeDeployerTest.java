@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.deploy;
 
+import com.liferay.portal.deploy.auto.ThemeAutoDeployer;
 import com.liferay.portal.kernel.deploy.Deployer;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -45,7 +46,7 @@ public class ThemeDeployerTest extends BaseDeployerTestCase {
 
 	@Override
 	public Deployer getDeployer() {
-		return new ThemeDeployer();
+		return new ThemeAutoDeployer();
 	}
 
 	@Test

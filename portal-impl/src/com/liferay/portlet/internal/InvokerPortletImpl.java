@@ -17,6 +17,7 @@ package com.liferay.portlet.internal;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.deploy.auto.PortletAutoDeployer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.tools.deploy.PortletDeployer;
 import com.liferay.portlet.InvokerPortletResponse;
 import com.liferay.portlet.InvokerPortletUtil;
 
@@ -120,7 +120,9 @@ public class InvokerPortletImpl
 
 		Class<? extends Portlet> portletClass = portlet.getClass();
 
-		if (ClassUtil.isSubclass(portletClass, PortletDeployer.JSF_STANDARD)) {
+		if (ClassUtil.isSubclass(
+				portletClass, PortletAutoDeployer.JSF_STANDARD)) {
+
 			facesPortlet = true;
 		}
 		else if (portlet instanceof InvokerPortlet) {

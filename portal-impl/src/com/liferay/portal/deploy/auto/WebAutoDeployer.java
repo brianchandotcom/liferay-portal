@@ -19,9 +19,13 @@ import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Plugin;
+import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.tools.deploy.WebDeployer;
+import com.liferay.portal.tools.deploy.BaseDeployer;
 import com.liferay.portal.util.PropsValues;
+
+import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +33,7 @@ import java.util.List;
 /**
  * @author Jorge Ferrer
  */
-public class WebAutoDeployer extends WebDeployer implements AutoDeployer {
+public class WebAutoDeployer extends BaseDeployer implements AutoDeployer {
 
 	public WebAutoDeployer() {
 		try {
@@ -55,6 +59,21 @@ public class WebAutoDeployer extends WebDeployer implements AutoDeployer {
 		catch (Exception exception) {
 			_log.error(exception, exception);
 		}
+	}
+
+	@Override
+	public void copyXmls(
+			File srcFile, String displayName, PluginPackage pluginPackage)
+		throws Exception {
+
+		super.copyXmls(srcFile, displayName, pluginPackage);
+
+		copyTomcatContextXml(srcFile);
+	}
+
+	@Override
+	public String getPluginType() {
+		return Plugin.TYPE_WEB;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -19,16 +19,13 @@ package com.liferay.site.navigation.menu.item.display.page.internal.constants;
  */
 public class SiteNavigationMenuItemTypeDisplayPageWebKeys {
 
-	public static final String INFO_ITEM_CLASS_DETAILS =
-		"INFO_ITEM_CLASS_DETAILS";
+	public static final String DISPLAY_PAGE_TYPE_CONTEXT =
+		"DISPLAY_PAGE_TYPE_CONTEXT";
 
 	public static final String INFO_ITEM_SERVICE_TRACKER =
 		"INFO_ITEM_SERVICE_TRACKER";
 
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
-
-	public static final String LAYOUT_DISPLAY_PAGE_PROVIDER =
-		"LAYOUT_DISPLAY_PAGE_PROVIDER";
 
 	public static final String LAYOUT_DISPLAY_PAGE_PROVIDER_TRACKER =
 		"LAYOUT_DISPLAY_PAGE_PROVIDER_TRACKER";

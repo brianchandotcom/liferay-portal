@@ -127,7 +127,9 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 		return PortletURLBuilder.createActionURL(
 			renderResponse
 		).setActionName(
-			"/navigation_menu/add_display_page_site_navigation_menu_item"
+			"/navigation_menu/add_display_page_type_site_navigation_menu_item"
+		).setParameter(
+			"siteNavigationMenuItemType", getType()
 		).buildPortletURL();
 	}
 
@@ -325,7 +327,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/edit_display_page.jsp");
+			"/edit_display_page_type.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

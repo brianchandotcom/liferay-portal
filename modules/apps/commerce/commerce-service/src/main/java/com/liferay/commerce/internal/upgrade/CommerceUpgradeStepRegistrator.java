@@ -40,6 +40,7 @@ import com.liferay.commerce.internal.upgrade.v5_0_0.CommerceAddressRestrictionUp
 import com.liferay.commerce.internal.upgrade.v5_0_1.CommercePermissionUpgradeProcess;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.AddressLocalService;
@@ -252,6 +253,12 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 			});
 
+		registry.register(
+			"7.3.0", "8.0.0",
+			new com.liferay.commerce.internal.upgrade.v8_0_0.
+				CommerceOrderItemUpgradeProcess(
+					_cpMeasurementUnitLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}
@@ -284,6 +291,9 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 
 	@Reference
 	private EmailAddressLocalService _emailAddressLocalService;

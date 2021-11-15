@@ -162,7 +162,7 @@ definition {
 			operation = "unzip",
 			titleTranslation = "Titulodelcontenidoweb",
 			translationFileName = "WebContentTitle-en_US-es_ES",
-			translationZipFileName = "WebContentTitle-en_US.zip",
+			translationZipFileName = "WebContentTitle-en_US",
 			webContentContent = "WebContent",
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
@@ -683,7 +683,7 @@ definition {
 			operation = "unzip",
 			titleTranslation = "TitreducontenuWeb",
 			translationFileName = "WebContentTitle-en_US-fr_FR",
-			translationZipFileName = "WebContentTitle-en_US.zip",
+			translationZipFileName = "WebContentTitle-en_US",
 			webContentContent = "WebContent",
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");

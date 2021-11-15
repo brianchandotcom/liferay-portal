@@ -121,7 +121,7 @@ definition {
 			pageName = "TranslationContentPage",
 			pageNameTranslation = "翻訳ページ",
 			translationFileName = "TranslationContentPage-en_US-ja_JP",
-			translationZipFileName = "TranslationContentPage-en_US.zip");
+			translationZipFileName = "TranslationContentPage-en_US");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
@@ -211,7 +211,7 @@ definition {
 			pageName = "TranslationContentPage",
 			pageNameTranslation = "TranslatedContentPage",
 			translationFileName = "TranslationContentPage-en_US-es_ES",
-			translationZipFileName = "TranslationContentPage-en_US.zip");
+			translationZipFileName = "TranslationContentPage-en_US");
 
 		Translations.importTranslation(
 			contentPageTranslation = "true",
@@ -329,7 +329,7 @@ definition {
 			pageName = "TranslationContentPage",
 			pageNameTranslation = "TranslatedContentPage",
 			translationFileName = "TranslationContentPage-en_US-es_ES",
-			translationZipFileName = "TranslationContentPage-en_US.zip");
+			translationZipFileName = "TranslationContentPage-en_US");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
@@ -419,7 +419,7 @@ definition {
 			pageName = "TranslationContentPage",
 			pageNameTranslation = "TranslatedContentPage",
 			translationFileName = "TranslationContentPage-en_US-es_ES",
-			translationZipFileName = "TranslationContentPage-en_US.zip");
+			translationZipFileName = "TranslationContentPage-en_US");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
@@ -551,7 +551,7 @@ definition {
 		for (var language : list "ja-JP,zh-CN") {
 			Translations.viewTranslationEntry(
 				language = "${language}",
-				status = "Pending",
+				status = "Approved",
 				title = "Translation of ContentPage to ${language}");
 		}
 

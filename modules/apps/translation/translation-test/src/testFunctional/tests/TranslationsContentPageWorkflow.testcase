@@ -70,7 +70,7 @@ definition {
 			pageName = "TranslationContentPage",
 			pageNameTranslation = "TranslatedContentPage",
 			translationFileName = "TranslationContentPage-en_US-es_ES",
-			translationZipFileName = "TranslationContentPage-en_US.zip");
+			translationZipFileName = "TranslationContentPage-en_US");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
@@ -441,7 +441,7 @@ definition {
 			pageName = "TranslationContentPage",
 			pageNameTranslation = "TranslatedContentPage",
 			translationFileName = "TranslationContentPage-en_US-es_ES",
-			translationZipFileName = "TranslationContentPage-en_US.zip");
+			translationZipFileName = "TranslationContentPage-en_US");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 

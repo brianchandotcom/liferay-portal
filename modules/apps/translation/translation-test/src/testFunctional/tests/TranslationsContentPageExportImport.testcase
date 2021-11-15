@@ -458,4 +458,147 @@ definition {
 			text = "HTMLTitulo");
 	}
 
+	@description = "This ensures that only the valid translation files can be uploaded from a zip file."
+	@priority = "5"
+	test OnlyValidEntriesAreUploadedFromZip {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "ContentPage",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "ContentPage",
+			siteName = "Guest");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Heading");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(pageName = "ContentPage");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Chinese (China),Japanese (Japan),Spanish (Spain)");
+
+		Translations.translateContentPageFile(
+			contentPageTranslation = "true",
+			encoding = "false",
+			fragmentContent = "Heading",
+			fragmentContentTranslation = "Titulo",
+			operation = "unzip",
+			pageName = "ContentPage",
+			pageNameTranslation = "TranslatedContentPage",
+			translationFileName = "ContentPage-en_US-es_ES",
+			translationZipFileName = "ContentPage-en_US");
+
+		Translations.updateTranslateFileID(
+			translationEntryType = "Layout",
+			translationFileName = "ContentPage-en_US-es_ES",
+			translationZipFileName = "ContentPage-en_US");
+
+		Translations.translateContentPageFile(
+			contentPageTranslation = "true",
+			encoding = "false",
+			fragmentContent = "Heading",
+			fragmentContentTranslation = "标题",
+			operation = "false",
+			pageName = "ContentPage",
+			pageNameTranslation = "TranslatedContent页面",
+			translationFileName = "ContentPage-en_US-zh_CN",
+			translationZipFileName = "ContentPage-en_US");
+
+		Translations.translateContentPageFile(
+			contentPageTranslation = "true",
+			encoding = "false",
+			fragmentContent = "Heading",
+			fragmentContentTranslation = "見出し",
+			operation = "zip",
+			pageName = "ContentPage",
+			pageNameTranslation = "TranslatedContentページ",
+			translationFileName = "ContentPage-en_US-ja_JP",
+			translationZipFileName = "ContentPage-en_US");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.importTranslation(
+			errorMessage = "1 Error: Some files could not be published, check them and upload another file.",
+			errorMessageItem = "The translation file does not correspond to this page.",
+			failFileName = "ContentPage-en_US-es_ES.xlf",
+			fileName = "ContentPage-en_US_translated.zip",
+			filePath = "",
+			pageName = "ContentPage",
+			successFileName = "ContentPage-en_US-ja_JP.xlf",
+			successFileName2 = "ContentPage-en_US-zh_CN.xlf",
+			successFileNumber = "2 Files Published");
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewNoTranslationEntry(title = "Translation of ContentPage to es_ES");
+
+		for (var language : list "ja-JP,zh-CN") {
+			Translations.viewTranslationEntry(
+				language = "${language}",
+				status = "Pending",
+				title = "Translation of ContentPage to ${language}");
+		}
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "ContentPage",
+			siteName = "Guest");
+
+		PageEditor.changeLocale(
+			currentLocale = "en-US",
+			locale = "zh-CN");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "标题",
+			fragmentName = "Heading",
+			id = "element-text");
+
+		PageEditor.changeLocale(
+			currentLocale = "zh-CN",
+			locale = "ja-JP");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "見出し",
+			fragmentName = "Heading",
+			id = "element-text");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "ContentPage",
+			siteName = "Guest");
+
+		Navigator.ensureLocaleURL(locale = "zh");
+
+		Page.viewCurrentPage(pageName = "TranslatedContent页面");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "标题");
+
+		ContentPagesNavigator.openViewContentPage(
+			locale = "ja",
+			pageName = "ContentPage",
+			siteName = "Guest");
+
+		Page.viewCurrentPage(pageName = "TranslatedContentページ");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "見出し");
+	}
+
 }

@@ -230,6 +230,170 @@ definition {
 			text = "これは見出しです");
 	}
 
+	@description = "This ensures that only the translation files can be uploaded and resubmitted from a zip file when enabling Workflow."
+	@priority = "4"
+	test CanResubmitImportedEntryFromZip {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "ContentPage",
+			type = "content");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "ContentPage",
+			siteName = "Guest");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Heading");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(pageName = "ContentPage");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Chinese (China),Spanish (Spain)");
+
+		Translations.translateContentPageFile(
+			contentPageTranslation = "true",
+			encoding = "false",
+			fragmentContent = "Heading",
+			fragmentContentTranslation = "Titulo",
+			operation = "unzip",
+			pageName = "ContentPage",
+			pageNameTranslation = "TranslatedContentPage",
+			translationFileName = "ContentPage-en_US-es_ES",
+			translationZipFileName = "ContentPage-en_US");
+
+		Translations.translateContentPageFile(
+			contentPageTranslation = "true",
+			encoding = "false",
+			fragmentContent = "Heading",
+			fragmentContentTranslation = "标题",
+			operation = "zip",
+			pageName = "ContentPage",
+			pageNameTranslation = "TranslatedContent页面",
+			translationFileName = "ContentPage-en_US-zh_CN",
+			translationZipFileName = "ContentPage-en_US");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.importTranslation(
+			fileName = "ContentPage-en_US_translated.zip",
+			filePath = "",
+			pageName = "ContentPage",
+			successFileName = "ContentPage-en_US-es_ES.xlf",
+			successFileName2 = "ContentPage-en_US-zh_CN.xlf",
+			successFileNumber = "All Files Published");
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		for (var language : list "es-ES,zh-CN") {
+			Translations.viewTranslationEntry(
+				language = "${language}",
+				status = "Pending",
+				title = "Translation of ContentPage to ${language}");
+		}
+
+		for (var language : list "es-ES,zh-CN") {
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Translation of ContentPage to ${language}",
+				workflowAssetType = "Translation",
+				workflowTask = "Review");
+
+			Workflow.rejectTaskByActions(
+				workflowAssetTitle = "Translation of ContentPage to ${language}",
+				workflowAssetType = "Translation",
+				workflowTask = "Review");
+
+			Translations.openTranslationAdmin(siteURLKey = "guest");
+
+			Translations.viewTranslationEntry(
+				language = "${language}",
+				status = "Pending",
+				title = "Translation of ContentPage to ${language}");
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.resubmitTaskByActions(
+				workflowAssetTitle = "Translation of ContentPage to ${language}",
+				workflowAssetType = "Translation",
+				workflowTask = "Update");
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Translation of ContentPage to ${language}",
+				workflowAssetType = "Translation",
+				workflowTask = "Review");
+
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Translation of ContentPage to ${language}",
+				workflowAssetType = "Translation",
+				workflowTask = "Review");
+		}
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		for (var language : list "es-ES,zh-CN") {
+			Translations.viewTranslationEntry(
+				language = "${language}",
+				status = "Approved",
+				title = "Translation of ContentPage to ${language}");
+		}
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "ContentPage",
+			siteName = "Guest");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "ContentPage",
+			siteName = "Guest");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Heading");
+
+		Navigator.ensureLocaleURL(locale = "es");
+
+		Page.viewCurrentPage(pageName = "TranslatedContentPage");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Titulo");
+
+		ContentPagesNavigator.openViewContentPage(
+			locale = "zh",
+			pageName = "ContentPage",
+			siteName = "Guest");
+
+		Page.viewCurrentPage(pageName = "TranslatedContent页面");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "标题");
+	}
+
 	@description = "This ensures that an imported translation can be resubmitted after being rejected."
 	@priority = "5"
 	test CanResubmitRejectedImportedTranslation {

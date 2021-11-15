@@ -323,6 +323,266 @@ definition {
 			webContentTitle = "WC WebContent Título");
 	}
 
+	@description = "This ensures that only the valid translation files can be uploaded and approved from a zip file when enabling Workflow."
+	@priority = "4"
+	@refactordone
+	test CanApproveEntryFromPartiallyImportedZip {
+		JSONWebcontent.addWebContent(
+			content = "WebContent",
+			description = "Description",
+			groupName = "Guest",
+			title = "WebContentTitle");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "German (Germany),Spanish (Spain)");
+
+		Translations.translateFile(
+			contentTranslation = "Internetinhalt",
+			descriptionTranslation = "Beschreibung",
+			encoding = "false",
+			operation = "unzip",
+			titleTranslation = "TiteldesWebinhalts",
+			translationFileName = "WebContentTitle-en_US-de_DE",
+			translationZipFileName = "WebContentTitle-en_US",
+			webContentContent = "WebContent",
+			webContentDescription = "Description",
+			webContentTitle = "WebContentTitle");
+
+		Translations.updateTranslateFileID(
+			translationEntryType = "JournalArticle",
+			translationFileName = "WebContentTitle-en_US-de_DE",
+			translationZipFileName = "WebContentTitle-en_US");
+
+		Translations.translateFile(
+			contentTranslation = "Contenidoweb",
+			descriptionTranslation = "Descripcion",
+			encoding = "false",
+			operation = "zip",
+			titleTranslation = "Titulodelcontenidoweb",
+			translationFileName = "WebContentTitle-en_US-es_ES",
+			translationZipFileName = "WebContentTitle-en_US",
+			webContentContent = "WebContent",
+			webContentDescription = "Description",
+			webContentTitle = "WebContentTitle");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.importTranslation(
+			errorMessage = "1 Error: Some files could not be published, check them and upload another file.",
+			errorMessageItem = "The translation file does not correspond to this web content.",
+			failFileName = "WebContentTitle-en_US-de_DE.xlf",
+			fileName = "WebContentTitle-en_US_translated.zip",
+			filePath = "",
+			successFileName = "WebContentTitle-en_US-es_ES.xlf",
+			successFileNumber = "1 File Published",
+			webContentTitle = "WebContentTitle");
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewNoTranslationEntry(title = "Translation of WebContentTitle to de_DE");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Pending",
+			title = "Translation of WebContentTitle to es-ES");
+
+		Notifications.viewBadgeCount(
+			activePanel = "Notifications",
+			notificationCount = "1");
+
+		WorkflowAsset.gotoViaNotification(
+			assetType = "Translation",
+			user = "Test Test");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Translation of WebContentTitle to es-ES",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Translation of WebContentTitle to es-ES",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation of WebContentTitle to es-ES");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		WebContent.viewCP(
+			webContentContent = "Contenidoweb",
+			webContentDescription = "Descripcion",
+			webContentTitle = "Titulodelcontenidoweb");
+
+		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
+
+		AssertTextEquals(
+			key_localizedLanguage = "es-ES",
+			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
+			value1 = "Translated");
+
+		AssertTextEquals(
+			key_localizedLanguage = "de-DE",
+			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
+			value1 = "Not Translated");
+	}
+
+	@description = "This ensures that only the valid translation files can be uploaded and resubmitted from a zip file when enabling Workflow."
+	@priority = "4"
+	@refactordone
+	test CanResubmitImportedEntryFromZipFile {
+		JSONWebcontent.addWebContent(
+			content = "WebContent",
+			description = "Description",
+			groupName = "Guest",
+			title = "WebContentTitle");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "German (Germany),Spanish (Spain)");
+
+		Translations.translateFile(
+			contentTranslation = "Contenidoweb",
+			descriptionTranslation = "Descripcion",
+			encoding = "false",
+			operation = "unzip",
+			titleTranslation = "Titulodelcontenidoweb",
+			translationFileName = "WebContentTitle-en_US-es_ES",
+			translationZipFileName = "WebContentTitle-en_US",
+			webContentContent = "WebContent",
+			webContentDescription = "Description",
+			webContentTitle = "WebContentTitle");
+
+		Translations.translateFile(
+			contentTranslation = "Internetinhalt",
+			descriptionTranslation = "Beschreibung",
+			encoding = "false",
+			operation = "zip",
+			titleTranslation = "TiteldesWebinhalts",
+			translationFileName = "WebContentTitle-en_US-de_DE",
+			translationZipFileName = "WebContentTitle-en_US",
+			webContentContent = "WebContent",
+			webContentDescription = "Description",
+			webContentTitle = "WebContentTitle");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.importTranslation(
+			fileName = "WebContentTitle-en_US_translated.zip",
+			filePath = "",
+			webContentTitle = "WebContentTitle");
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		for (var language : list "de-DE,es-ES") {
+			Translations.viewTranslationEntry(
+				language = "${language}",
+				status = "Pending",
+				title = "Translation of WebContentTitle to ${language}");
+		}
+
+		for (var language : list "de-DE,es-ES") {
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Translation of WebContentTitle to ${language}",
+				workflowAssetType = "Translation",
+				workflowTask = "Review");
+
+			Workflow.rejectTaskByActions(
+				workflowAssetTitle = "Translation of WebContentTitle to ${language}",
+				workflowAssetType = "Translation",
+				workflowTask = "Review");
+
+			Navigator.openURL();
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.resubmitTaskByActions(
+				workflowAssetTitle = "Translation of WebContentTitle to ${language}",
+				workflowAssetType = "Translation",
+				workflowTask = "Update");
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Translation of WebContentTitle to ${language}",
+				workflowAssetType = "Translation",
+				workflowTask = "Review");
+
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Translation of WebContentTitle to ${language}",
+				workflowAssetType = "Translation",
+				workflowTask = "Review");
+		}
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		for (var language : list "de-DE,es-ES") {
+			Translations.viewTranslationEntry(
+				language = "${language}",
+				status = "Approved",
+				title = "Translation of WebContentTitle to ${language}");
+		}
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
+
+		PortletEntry.changeLocale(locale = "de-DE");
+
+		WebContent.viewCP(
+			webContentContent = "Internetinhalt",
+			webContentDescription = "Beschreibung",
+			webContentTitle = "TiteldesWebinhalts");
+
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Approved");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		WebContent.viewCP(
+			webContentContent = "Contenidoweb",
+			webContentDescription = "Descripcion",
+			webContentTitle = "Titulodelcontenidoweb");
+
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Approved");
+	}
+
 	@description = "This ensures that the translation in the web content will not be retained after deleting the translation in pending status from the app."
 	@priority = "4"
 	@refactorneeded

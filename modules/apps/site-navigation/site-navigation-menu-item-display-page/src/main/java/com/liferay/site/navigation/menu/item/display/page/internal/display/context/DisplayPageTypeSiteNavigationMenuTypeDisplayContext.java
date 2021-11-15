@@ -52,6 +52,10 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public String getClassName() {
+		return _displayPageTypeContext.getClassName();
+	}
+
 	public long getClassNameId() {
 		if (_classNameId != null) {
 			return _classNameId;

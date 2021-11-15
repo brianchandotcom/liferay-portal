@@ -17,24 +17,24 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DisplayPageSiteNavigationMenuTypeDisplayContext displayPageSiteNavigationMenuTypeDisplayContext = new DisplayPageSiteNavigationMenuTypeDisplayContext(request);
+DisplayPageTypeSiteNavigationMenuTypeDisplayContext displayPageTypeSiteNavigationMenuTypeDisplayContext = new DisplayPageTypeSiteNavigationMenuTypeDisplayContext(request);
 %>
 
-<aui:input id="classNameId" name="TypeSettingsProperties--classNameId--" type="hidden" value="<%= displayPageSiteNavigationMenuTypeDisplayContext.getClassNameId() %>">
+<aui:input id="classNameId" name="TypeSettingsProperties--classNameId--" type="hidden" value="<%= displayPageTypeSiteNavigationMenuTypeDisplayContext.getClassNameId() %>">
 	<aui:validator name="required" />
 </aui:input>
 
-<aui:input id="classPK" name="TypeSettingsProperties--classPK--" type="hidden" value="<%= displayPageSiteNavigationMenuTypeDisplayContext.getClassPK() %>">
+<aui:input id="classPK" name="TypeSettingsProperties--classPK--" type="hidden" value="<%= displayPageTypeSiteNavigationMenuTypeDisplayContext.getClassPK() %>">
 	<aui:validator name="required" />
 </aui:input>
 
-<aui:input id="classTypeId" name="TypeSettingsProperties--classTypeId--" type="hidden" value="<%= displayPageSiteNavigationMenuTypeDisplayContext.getClassTypeId() %>" />
+<aui:input id="classTypeId" name="TypeSettingsProperties--classTypeId--" type="hidden" value="<%= displayPageTypeSiteNavigationMenuTypeDisplayContext.getClassTypeId() %>" />
 
-<aui:input id="title" name="TypeSettingsProperties--title--" type="hidden" value="<%= displayPageSiteNavigationMenuTypeDisplayContext.getTitle() %>" />
+<aui:input id="title" name="TypeSettingsProperties--title--" type="hidden" value="<%= displayPageTypeSiteNavigationMenuTypeDisplayContext.getTitle() %>" />
 
-<aui:input id="type" name="TypeSettingsProperties--type--" type="hidden" value="<%= displayPageSiteNavigationMenuTypeDisplayContext.getType() %>" />
+<aui:input id="type" name="TypeSettingsProperties--type--" type="hidden" value="<%= displayPageTypeSiteNavigationMenuTypeDisplayContext.getType() %>" />
 
-<aui:input autoFocus="<%= true %>" disabled="<%= true %>" label="title" localized="<%= false %>" name="originalTitle" placeholder="title" type="text" value="<%= displayPageSiteNavigationMenuTypeDisplayContext.getOriginalTitle() %>" />
+<aui:input autoFocus="<%= true %>" disabled="<%= true %>" label="title" localized="<%= false %>" name="originalTitle" placeholder="title" type="text" value="<%= displayPageTypeSiteNavigationMenuTypeDisplayContext.getOriginalTitle() %>" />
 
 <div>
 	<p class="list-group-title">
@@ -42,12 +42,12 @@ DisplayPageSiteNavigationMenuTypeDisplayContext displayPageSiteNavigationMenuTyp
 	</p>
 
 	<p class="small" id="<portlet:namespace />itemTypeLabel">
-		<%= HtmlUtil.escape(displayPageSiteNavigationMenuTypeDisplayContext.getItemType()) %>
+		<%= HtmlUtil.escape(displayPageTypeSiteNavigationMenuTypeDisplayContext.getItemType()) %>
 	</p>
 </div>
 
 <%
-String itemSubtype = displayPageSiteNavigationMenuTypeDisplayContext.getItemSubtype();
+String itemSubtype = displayPageTypeSiteNavigationMenuTypeDisplayContext.getItemSubtype();
 %>
 
 <div class="<%= Validator.isNull(itemSubtype) ? "d-none" : "" %>" id="<portlet:namespace />itemSubtype">
@@ -70,6 +70,7 @@ ItemSelector itemSelector = (ItemSelector)request.getAttribute(SiteNavigationMen
 InfoItemItemSelectorCriterion itemSelectorCriterion = new InfoItemItemSelectorCriterion();
 
 itemSelectorCriterion.setDesiredItemSelectorReturnTypes(new InfoItemItemSelectorReturnType());
+itemSelectorCriterion.setItemType(displayPageTypeSiteNavigationMenuTypeDisplayContext.getClassName());
 
 PortletURL infoItemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), liferayPortletResponse.getNamespace() + "selectInfoItem", itemSelectorCriterion);
 %>
@@ -79,7 +80,7 @@ PortletURL infoItemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPo
 		HashMapBuilder.<String, Object>put(
 			"eventName", eventName
 		).put(
-			"getItemTypeURL", displayPageSiteNavigationMenuTypeDisplayContext.getItemTypeURL(liferayPortletResponse)
+			"getItemTypeURL", displayPageTypeSiteNavigationMenuTypeDisplayContext.getItemTypeURL(liferayPortletResponse)
 		).put(
 			"itemSelectorURL", infoItemSelectorURL.toString()
 		).build()

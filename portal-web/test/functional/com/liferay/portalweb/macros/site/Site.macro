@@ -825,7 +825,7 @@ definition {
 
 			LexiconList.viewListEntrySubtitle(
 				listEntry = "${siteName}",
-				listEntrySubtitle = "Members: 1");
+				listEntrySubtitle = "1 User");
 
 			LexiconList.clickEllipsisItem(
 				item = "Request Membership",
@@ -852,7 +852,7 @@ definition {
 
 			LexiconList.viewListEntrySubtitle(
 				listEntry = "${siteName}",
-				listEntrySubtitle = "Members: 1");
+				listEntrySubtitle = "1 User");
 
 			LexiconList.clickEllipsisItem(
 				item = "Join",
@@ -865,7 +865,7 @@ definition {
 
 			LexiconList.viewListEntrySubtitle(
 				listEntry = "${siteName}",
-				listEntrySubtitle = "Members: 2");
+				listEntrySubtitle = "2 Users");
 
 			LexiconList.clickEllipsis(
 				listEntry = "${siteName}",
@@ -883,7 +883,7 @@ definition {
 
 		LexiconList.viewListEntrySubtitle(
 			listEntry = "${siteName}",
-			listEntrySubtitle = "Members: 2");
+			listEntrySubtitle = "2 Users");
 
 		Navigator.gotoNavItem(navItem = "Available Sites");
 
@@ -891,7 +891,7 @@ definition {
 
 		LexiconList.viewListEntrySubtitle(
 			listEntry = "${siteName}",
-			listEntrySubtitle = "Members: 2");
+			listEntrySubtitle = "2 Users");
 
 		LexiconList.clickEllipsisItem(
 			item = "Leave",
@@ -904,7 +904,7 @@ definition {
 
 		LexiconList.viewListEntrySubtitle(
 			listEntry = "${siteName}",
-			listEntrySubtitle = "Members: 1");
+			listEntrySubtitle = "1 User");
 
 		LexiconList.clickEllipsis(
 			listEntry = "${siteName}",
@@ -1400,7 +1400,7 @@ definition {
 
 		LexiconList.viewListEntrySubtitle(
 			listEntry = "${siteName}",
-			listEntrySubtitle = "Members: ${memberCount}");
+			listEntrySubtitle = "${memberCount}");
 	}
 
 	macro viewNoMySitesViaMySitesPG {

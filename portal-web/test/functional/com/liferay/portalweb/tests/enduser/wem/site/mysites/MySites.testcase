@@ -234,7 +234,7 @@ definition {
 			UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
 			Site.viewMySitesViaMySitesPG(
-				memberCount = "2",
+				memberCount = "2 Users",
 				siteName = "Site Name");
 		}
 
@@ -328,7 +328,7 @@ definition {
 				searchTerm = "Site Name");
 
 			Site.viewMySitesViaMySitesPG(
-				memberCount = "1",
+				memberCount = "1 User",
 				siteName = "Site Name");
 		}
 	}
@@ -402,7 +402,7 @@ definition {
 				siteName = "Home Site");
 
 			Site.viewMySitesViaMySitesPG(
-				memberCount = "2",
+				memberCount = "2 Users",
 				siteName = "Site Name");
 		}
 	}
@@ -612,7 +612,7 @@ definition {
 
 		task ("View Site tags via My Sites widget") {
 			Site.viewMySitesViaMySitesPG(
-				memberCount = "1",
+				memberCount = "1 User",
 				siteName = "Site Name");
 
 			for (var tagName : list "apple,banana,mango") {

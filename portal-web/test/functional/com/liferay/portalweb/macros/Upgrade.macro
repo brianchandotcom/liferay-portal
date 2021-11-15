@@ -1805,6 +1805,44 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
+	macro revokeAndUpdateSharedEntry {
+		Asset.openTosharedContent(
+			navTab = "Shared by Me",
+			siteURLKey = "guest");
+
+		Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = "DM Document Title 1");
+
+		DMDocumentSharing.removeCollaborator(collaboratorList = "user1fn");
+
+		Asset.openTosharedContent(
+			navTab = "Shared by Me",
+			siteURLKey = "guest");
+
+		Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = "Blogs Entry Title");
+
+		DMDocumentSharing.removeCollaborator(collaboratorList = "user2fn");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user2@liferay.com");
+
+		DMDocumentSharing.editViaSharedwithMe(
+			entryTitle = "Blogs Entry Title Can Update",
+			entryTitleEdit = "Blogs Entry Title Can Update Edit");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user1@liferay.com");
+
+		DMDocumentSharing.editViaSharedwithMe(
+			dmDocumentTitle = "DM Document Title Can Update",
+			entryTitleEdit = "DM Document Title Can Update Edit");
+	}
+
 	macro submitNewWorkflow {
 		Navigator.openURL();
 

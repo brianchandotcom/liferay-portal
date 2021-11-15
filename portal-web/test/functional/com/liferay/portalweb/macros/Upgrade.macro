@@ -4494,6 +4494,12 @@ definition {
 			contentSharingPermission = "View",
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	macro viewSharedDocument {

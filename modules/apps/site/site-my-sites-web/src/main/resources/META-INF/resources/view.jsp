@@ -176,43 +176,46 @@
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-small table-cell-minw-100"
 						name="members"
 					>
 						<span onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="inherited-memberships-are-not-included-in-members-count" unicode="<%= true %>" />');">
+							<div>
 
-							<%
-							int usersCount = siteMySitesDisplayContext.getGroupUsersCounts(group.getGroupId());
-							%>
+								<%
+								int usersCount = siteMySitesDisplayContext.getGroupUsersCounts(group.getGroupId());
+								%>
 
-							<c:if test="<%= usersCount > 0 %>">
-								<div class="user-count">
-									<%= LanguageUtil.format(request, usersCount > 1 ? "x-users" : "x-user", usersCount, false) %>
-								</div>
-							</c:if>
+								<c:if test="<%= usersCount > 0 %>">
+									<div class="user-count">
+										<%= LanguageUtil.format(request, usersCount > 1 ? "x-users" : "x-user", usersCount, false) %>
+									</div>
+								</c:if>
 
-							<%
-							int organizationsCount = siteMySitesDisplayContext.getGroupOrganizationsCount(group.getGroupId());
-							%>
+								<%
+								int organizationsCount = siteMySitesDisplayContext.getGroupOrganizationsCount(group.getGroupId());
+								%>
 
-							<c:if test="<%= organizationsCount > 0 %>">
-								<div class="organization-count">
-									<%= LanguageUtil.format(request, organizationsCount > 1 ? "x-organizations" : "x-organization", organizationsCount, false) %>
-								</div>
-							</c:if>
+								<c:if test="<%= organizationsCount > 0 %>">
+									<div class="organization-count">
+										<%= LanguageUtil.format(request, organizationsCount > 1 ? "x-organizations" : "x-organization", organizationsCount, false) %>
+									</div>
+								</c:if>
 
-							<%
-							int userGroupsCount = siteMySitesDisplayContext.getGroupUserGroupsCount(group.getGroupId());
-							%>
+								<%
+								int userGroupsCount = siteMySitesDisplayContext.getGroupUserGroupsCount(group.getGroupId());
+								%>
 
-							<c:if test="<%= userGroupsCount > 0 %>">
-								<div class="user-group-count">
-									<%= LanguageUtil.format(request, userGroupsCount > 1 ? "x-user-groups" : "x-user-group", userGroupsCount, false) %>
-								</div>
-							</c:if>
+								<c:if test="<%= userGroupsCount > 0 %>">
+									<div class="user-group-count">
+										<%= LanguageUtil.format(request, userGroupsCount > 1 ? "x-user-groups" : "x-user-group", userGroupsCount, false) %>
+									</div>
+								</c:if>
 
-							<c:if test="<%= (usersCount + organizationsCount + userGroupsCount) <= 0 %>">
-								0
-							</c:if>
+								<c:if test="<%= (usersCount + organizationsCount + userGroupsCount) <= 0 %>">
+									0
+								</c:if>
+							</div>
 						</span>
 					</liferay-ui:search-container-column-text>
 

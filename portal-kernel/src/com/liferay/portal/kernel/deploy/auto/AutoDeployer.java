@@ -60,15 +60,6 @@ public interface AutoDeployer extends Closeable {
 			boolean overwrite)
 		throws Exception;
 
-	public void copyJars(File srcFile, PluginPackage pluginPackage)
-		throws Exception;
-
-	public void copyProperties(File srcFile, PluginPackage pluginPackage)
-		throws Exception;
-
-	public void copyTlds(File srcFile, PluginPackage pluginPackage)
-		throws Exception;
-
 	public void copyXmls(
 			File srcFile, String displayName, PluginPackage pluginPackage)
 		throws Exception;
@@ -76,14 +67,5 @@ public interface AutoDeployer extends Closeable {
 	public Map<String, String> processPluginPackageProperties(
 			File srcFile, String displayName, PluginPackage pluginPackage)
 		throws Exception;
-
-	public PluginPackage readPluginPackage(File file);
-
-	public void updateWebXml(
-			File webXml, File srcFile, String displayName,
-			PluginPackage pluginPackage)
-		throws Exception;
-
-	public String wrapCDATA(String string);
 
 }

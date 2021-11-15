@@ -178,7 +178,6 @@ export interface Config {
 		styleBookEntryId: string;
 	}>;
 	themeColorCssClasses: string[];
-	tokenOptimizationEnabled: boolean;
 	toolbarId: string;
 
 	toolbarPlugins: Array<{

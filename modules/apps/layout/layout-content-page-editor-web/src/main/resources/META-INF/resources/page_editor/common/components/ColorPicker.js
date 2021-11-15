@@ -19,7 +19,6 @@ import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
-import {config} from '../../app/config/index';
 import SearchForm from '../../common/components/SearchForm';
 
 const ColorPicker = ({
@@ -80,7 +79,7 @@ const ColorPicker = ({
 
 	const filteredColors = useMemo(
 		() =>
-			config.tokenOptimizationEnabled && searchValue
+			searchValue
 				? getFilteredColors(colors, searchValue.toLowerCase())
 				: colors,
 		[colors, searchValue]
@@ -115,9 +114,7 @@ const ColorPicker = ({
 					<DropDown.Menu
 						active={active}
 						alignElementRef={triggerElementRef}
-						className={classNames('clay-color-dropdown-menu', {
-							'px-0': config.tokenOptimizationEnabled,
-						})}
+						className="clay-color-dropdown-menu px-0"
 						containerProps={{
 							className: 'cadmin',
 						}}
@@ -125,61 +122,33 @@ const ColorPicker = ({
 						onSetActive={setActive}
 						ref={dropdownContainerRef}
 					>
-						{config.tokenOptimizationEnabled ? (
-							active ? (
-								<>
-									<SearchForm
-										className="flex-grow-1 px-3"
-										onChange={setSearchValue}
+						{active ? (
+							<>
+								<SearchForm
+									className="flex-grow-1 px-3"
+									onChange={setSearchValue}
+								/>
+								{Object.keys(filteredColors).length ? (
+									<ColorPalette
+										colors={filteredColors}
+										onSetActive={setActive}
+										onValueChange={onValueChange}
+										splotchRef={splotchRef}
 									/>
-									{Object.keys(filteredColors).length ? (
-										<ColorPalette
-											colors={filteredColors}
-											onSetActive={setActive}
-											onValueChange={onValueChange}
-											splotchRef={splotchRef}
-										/>
-									) : (
-										<ClayEmptyState
-											className="mt-4 page-editor__ColorPicker__empty-result"
-											description={Liferay.Language.get(
-												'try-again-with-a-different-search'
-											)}
-											imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
-											title={Liferay.Language.get(
-												'no-results-found'
-											)}
-										/>
-									)}
-								</>
-							) : null
-						) : (
-							<div className="clay-color-swatch mt-0">
-								{colors.map(({label, name, value}, i) => (
-									<div
-										className="clay-color-swatch-item"
-										key={i}
-									>
-										<Splotch
-											onClick={() => {
-												onValueChange({
-													label,
-													name,
-													value,
-												});
-												setActive((active) => !active);
-
-												if (splotchRef.current) {
-													splotchRef.current.focus();
-												}
-											}}
-											title={label}
-											value={value}
-										/>
-									</div>
-								))}
-							</div>
-						)}
+								) : (
+									<ClayEmptyState
+										className="mt-4 page-editor__ColorPicker__empty-result"
+										description={Liferay.Language.get(
+											'try-again-with-a-different-search'
+										)}
+										imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+										title={Liferay.Language.get(
+											'no-results-found'
+										)}
+									/>
+								)}
+							</>
+						) : null}
 					</DropDown.Menu>
 				</ClayInput.Group>
 			</div>

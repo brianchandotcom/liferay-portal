@@ -52,7 +52,6 @@ jest.mock(
 				},
 			},
 			styleBookEntryId: 0,
-			tokenOptimizationEnabled: true,
 		},
 	})
 );

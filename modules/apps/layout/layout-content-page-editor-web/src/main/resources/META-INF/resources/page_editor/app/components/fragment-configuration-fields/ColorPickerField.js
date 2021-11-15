@@ -21,7 +21,6 @@ import ColorPicker from '../../../common/components/ColorPicker';
 import useControlledState from '../../../core/hooks/useControlledState';
 import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
-import {config} from '../../config/index';
 import {ColorPaletteField} from './ColorPaletteField';
 
 const COLOR_PICKER_TYPE = 'ColorPicker';
@@ -29,44 +28,33 @@ const COLOR_PICKER_TYPE = 'ColorPicker';
 export const ColorPickerField = ({field, onValueSelect, value}) => {
 	const {tokenValues} = useStyleBook();
 	const [color, setColor] = useControlledState(tokenValues[value]?.value);
-	let colors = {};
+	const colors = {};
 
-	if (config.tokenOptimizationEnabled) {
-		Object.values(tokenValues)
-			.filter((token) => token.editorType === COLOR_PICKER_TYPE)
-			.forEach(
-				({
-					label,
-					name,
-					tokenCategoryLabel: category,
-					tokenSetLabel: tokenSet,
-					value,
-				}) => {
-					const color = {label, name, value};
+	Object.values(tokenValues)
+		.filter((token) => token.editorType === COLOR_PICKER_TYPE)
+		.forEach(
+			({
+				label,
+				name,
+				tokenCategoryLabel: category,
+				tokenSetLabel: tokenSet,
+				value,
+			}) => {
+				const color = {label, name, value};
 
-					if (Object.keys(colors).includes(category)) {
-						if (Object.keys(colors[category]).includes(tokenSet)) {
-							colors[category][tokenSet].push(color);
-						}
-						else {
-							colors[category][tokenSet] = [color];
-						}
+				if (Object.keys(colors).includes(category)) {
+					if (Object.keys(colors[category]).includes(tokenSet)) {
+						colors[category][tokenSet].push(color);
 					}
 					else {
-						colors[category] = {[tokenSet]: [color]};
+						colors[category][tokenSet] = [color];
 					}
 				}
-			);
-	}
-	else {
-		colors = Object.values(tokenValues)
-			.filter((token) => token.editorType === COLOR_PICKER_TYPE)
-			.map((token) => ({
-				label: token.label,
-				name: token.name,
-				value: token.value,
-			}));
-	}
+				else {
+					colors[category] = {[tokenSet]: [color]};
+				}
+			}
+		);
 
 	if (!Object.keys(colors).length) {
 		return (

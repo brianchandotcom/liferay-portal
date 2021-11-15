@@ -452,9 +452,7 @@ definition {
 		}
 
 		task ("Assert redirect to widget page in staging site") {
-			AssertTextEquals(
-				locator1 = "ControlMenu#HEADING",
-				value1 = "Test Widget Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Widget Page Name");
 
 			AssertLocation.assertPartialLocation(value1 = "web/test-site-name-staging/test-widget-page-name");
 		}
@@ -471,9 +469,7 @@ definition {
 		}
 
 		task ("Assert redirect to widget page in live site") {
-			AssertTextEquals(
-				locator1 = "ControlMenu#HEADING",
-				value1 = "Test Widget Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Widget Page Name");
 
 			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/test-widget-page-name");
 		}

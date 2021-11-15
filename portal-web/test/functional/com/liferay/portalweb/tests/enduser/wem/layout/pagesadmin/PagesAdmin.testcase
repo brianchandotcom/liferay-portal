@@ -815,9 +815,7 @@ definition {
 
 		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
 
-		AssertTextEquals(
-			locator1 = "ControlMenu#HEADING",
-			value1 = "Test Content Page Name 1");
+		ControlMenu.viewHeaderTitle(headerTitle = "Test Content Page Name 1");
 	}
 
 	@description = "This is for LPS-110108. Move child page to parent page level via drag and drop."

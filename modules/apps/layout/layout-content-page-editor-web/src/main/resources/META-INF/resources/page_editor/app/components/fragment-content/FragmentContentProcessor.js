@@ -75,7 +75,9 @@ export default function FragmentContentProcessor({
 		editable.processor.createEditor(
 			editable.element,
 			(value, config = {}) => {
-				const defaultValue = editableValue.defaultValue?.trim() ?? '';
+				const defaultValue =
+					editableValue.defaultValue?.replace(/\s+/g, ' ').trim() ??
+					'';
 				const previousValue = editableValue[languageId];
 
 				if (

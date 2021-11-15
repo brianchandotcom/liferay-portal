@@ -1,6 +1,7 @@
 @default = "dragAndDropPortletToObject"
 @summary = "Drag and drop portlet to an object"
 definition {
+
 	function dragAndDropPortletToObject {
 		WaitForSPARefresh();
 
@@ -18,4 +19,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

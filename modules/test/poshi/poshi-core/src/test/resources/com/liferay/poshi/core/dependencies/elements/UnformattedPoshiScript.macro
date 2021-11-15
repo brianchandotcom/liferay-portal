@@ -5,6 +5,27 @@ definition {
 		);
 	}
 
+	@prose = "I want to print rows-hash table: ${table}"
+	macro echoRowsHashTable {
+		var RowsHashTable rowsHashTable = new RowsHashTable("${table}");
+
+		for  (var row : table "${rowsHashTable}")
+			{
+			TableEcho.echoTwoVars(
+				v0 = "${row.hash('project_id')}",
+				v1 = "${row.hash('status')}"
+			);
+		}
+		var RawTable rawTable = new RawTable("${table}");
+
+		for (var row : table "${rawTable}")  {
+			TableEcho.echoTwoVars(
+				v0 = "${row[0]}",
+				v1 = "${row[1]}"
+			);
+		}
+	}
+
 	@prose = "I assert the ${breadcrumbName}"
 	macro viewPG {
 		var key_breadcrumbName = "${breadcrumbName}";
@@ -40,26 +61,5 @@ definition {
 		}
 
 		return "${breadcrumbNameUppercase}";
-	}
-
-	@prose = "I want to print rows-hash table: ${table}"
-	macro echoRowsHashTable {
-		var RowsHashTable rowsHashTable = new RowsHashTable("${table}");
-
-		for  (var row : table "${rowsHashTable}")
-			{
-			TableEcho.echoTwoVars(
-				v0 = "${row.hash('project_id')}",
-				v1 = "${row.hash('status')}"
-			);
-		}
-		var RawTable rawTable = new RawTable("${table}");
-
-		for (var row : table "${rawTable}")  {
-			TableEcho.echoTwoVars(
-				v0 = "${row[0]}",
-				v1 = "${row[1]}"
-			);
-		}
 	}
 }

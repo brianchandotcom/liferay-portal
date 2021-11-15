@@ -23,6 +23,43 @@
 		</execute>
 	</tear-down>
 
+	<command name="AddBlogsEntries" priority="4">
+		<description message="Ensure that a user can add multiple Blogs Entries." />
+
+		<property name="testray.component.names" value="Blogs" />
+		<property name="testray.main.component.name" value="Blogs" />
+
+		<task summary="Add a blogs entry called 'Blogs Entry1 Title' with content 'Blogs Entry1 Content'">
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Content" />
+				<var name="panel" value="Site Administration" />
+				<var name="portlet" value="Blogs" />
+			</execute>
+
+			<execute macro="Blogs#addEntry">
+				<var name="entryContent" value="Blogs Entry1 Content" />
+				<var name="entryTitle" value="Blogs Entry1 Title" />
+			</execute>
+		</task>
+
+		<task summary="Add a blogs entry called 'Blogs Entry2 Title' with content 'Blogs Entry2 Content'">
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Content" />
+				<var name="panel" value="Site Administration" />
+				<var name="portlet" value="Blogs" />
+			</execute>
+
+			<execute macro="Blogs#addEntry">
+				<var name="entryContent" value="Blogs Entry2 Content" />
+				<var name="entryTitle" value="Blogs Entry2 Title" />
+			</execute>
+		</task>
+	</command>
+
 	<command name="AddUser" priority="5">
 		<!-- This is a comment -->
 
@@ -102,6 +139,22 @@
 			<var name="userScreenName" value="${userScreenName}" />
 			<var name="userScreenName" value="" />
 		</execute>
+	</command>
+
+	<command ignore="true" name="GotoLinkToPageChildPages">
+		<var name="key_pageName" value="${parentPage}" />
+
+		<if>
+			<not>
+				<or>
+					<equals arg1="true" arg2="true"/>
+					<equals arg1="true" arg2="false"/>
+				</or>
+			</not>
+			<then>
+				<fail message="Allowed values are 'true' or 'false'."/>
+			</then>
+		</if>
 	</command>
 
 	<command name="Smoke" priority="5">
@@ -316,58 +369,5 @@
 			<arg value="one,two,three" />
 			<arg value="," />
 		</execute>
-	</command>
-
-	<command name="AddBlogsEntries" priority="4">
-		<description message="Ensure that a user can add multiple Blogs Entries." />
-
-		<property name="testray.component.names" value="Blogs" />
-		<property name="testray.main.component.name" value="Blogs" />
-
-		<task summary="Add a blogs entry called 'Blogs Entry1 Title' with content 'Blogs Entry1 Content'">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Blogs" />
-			</execute>
-
-			<execute macro="Blogs#addEntry">
-				<var name="entryContent" value="Blogs Entry1 Content" />
-				<var name="entryTitle" value="Blogs Entry1 Title" />
-			</execute>
-		</task>
-
-		<task summary="Add a blogs entry called 'Blogs Entry2 Title' with content 'Blogs Entry2 Content'">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Blogs" />
-			</execute>
-
-			<execute macro="Blogs#addEntry">
-				<var name="entryContent" value="Blogs Entry2 Content" />
-				<var name="entryTitle" value="Blogs Entry2 Title" />
-			</execute>
-		</task>
-	</command>
-
-	<command ignore="true" name="GotoLinkToPageChildPages">
-		<var name="key_pageName" value="${parentPage}" />
-
-		<if>
-			<not>
-				<or>
-					<equals arg1="true" arg2="true"/>
-					<equals arg1="true" arg2="false"/>
-				</or>
-			</not>
-			<then>
-				<fail message="Allowed values are 'true' or 'false'."/>
-			</then>
-		</if>
 	</command>
 </definition>

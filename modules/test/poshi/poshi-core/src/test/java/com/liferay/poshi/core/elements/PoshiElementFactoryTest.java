@@ -93,7 +93,7 @@ public class PoshiElementFactoryTest {
 		PoshiElement rootPoshiElement = _getPoshiElement("PoshiScript.macro");
 
 		int[] expectedLineNumbers = {
-			3, 8, 9, 10, 11, 13, 18, 22, 26, 30, 34, 38, 43, 45, 52, 54
+			4, 9, 11, 17, 19, 28, 29, 30, 31, 33, 37, 41, 45, 49, 53, 57
 		};
 
 		int i = 0;

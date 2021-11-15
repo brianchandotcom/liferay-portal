@@ -1,41 +1,7 @@
 definition {
+
 	macro configureBreadcrumb {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-	}
-
-	@prose = "I assert the ${breadcrumbName}"
-	macro viewPG {
-		var key_breadcrumbName = "${breadcrumbName}";
-		static var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
-		var integer = MathUtil.sum("5", "5");
-		var newInteger = MathUtil.sum("34", "${integer}");
-
-		AssertTextEquals(
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-			value1 = "${breadcrumbNameUppercase}"
-		);
-
-		if (!((IsElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_IN_PROGRESS")) || (IsElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_APPLICATION_IN_PROGRESS")))) {
-			AssertElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_SUCCESSFUL");
-		}
-
-		while (("${allLinksChecked}" == "no") && (maxIterations = "200")) {
-			Navigator.gotoPage(pageName = "Documents and Media Page");
-		}
-
-		while ((!("${videoGenerationTimeCounter}" == "${videoGenerationTimeMaxWaitTime}")) && (IsElementPresent(locator1 = "Message#INFO"))) {
-			Navigator.gotoPage(pageName = "Documents and Media Page");
-		}
-
-		if (!("${url}" == "https://www.google.com/[#]gws_rd=ssl")) {
-			AssertLocation(value1 = "https://www.google.com/?gws_rd=ssl");
-		}
-
-		if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) && ("${check}" == "true") && (isSet(duplicate))) {
-			Alert.viewSuccessMessage();
-		}
-
-		return "${breadcrumbNameUppercase}";
 	}
 
 	@prose = "I want to print rows-hash table: ${table}"
@@ -45,14 +11,50 @@ definition {
 		for (var row : table "${rowsHashTable}") {
 			TableEcho.echoTwoVars(
 				v0 = "${row.hash('project_id')}",
-				v1 = "${row.hash('status')}"
-			);
+				v1 = "${row.hash('status')}");
 		}
 
 		var RawTable rawTable = new RawTable("${table}");
 
 		for (var row : table "${rawTable}") {
-			TableEcho.echoTwoVars(v0 = "${row[0]}", v1 = "${row[1]}");
+			TableEcho.echoTwoVars(
+				v0 = "${row[0]}",
+				v1 = "${row[1]}");
 		}
 	}
+
+	@prose = "I assert the ${breadcrumbName}"
+	macro viewPG {
+		var key_breadcrumbName = "${breadcrumbName}";
+		static var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
+		var integer = 5 + 5;
+		var newInteger = 34 + ${integer};
+
+		AssertTextEquals(
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+			value1 = "${breadcrumbNameUppercase}");
+
+		if (!((IsElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_IN_PROGRESS")) || (IsElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_APPLICATION_IN_PROGRESS")))) {
+			AssertElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_SUCCESSFUL");
+		}
+
+		while (("${allLinksChecked}" == "no") && (maxIterations = "200")) {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+
+		while (("${videoGenerationTimeCounter}" != "${videoGenerationTimeMaxWaitTime}") && (IsElementPresent(locator1 = "Message#INFO"))) {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+
+		if ("${url}" != "https://www.google.com/[#]gws_rd=ssl") {
+			AssertLocation(value1 = "https://www.google.com/?gws_rd=ssl");
+		}
+
+		if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) && ("${check}" == "true") && isSet(duplicate)) {
+			Alert.viewSuccessMessage();
+		}
+
+		return "${breadcrumbNameUppercase}";
+	}
+
 }

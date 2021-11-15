@@ -1,19 +1,29 @@
 <definition>
 	<command name="configureBreadcrumb">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION"/>
 	</command>
-
-	<command name="viewPG" prose="I assert the ${breadcrumbName}">
-		<var name="key_breadcrumbName" value="${breadcrumbName}" />
-
-		<var method="StringUtil#upperCase('${breadcrumbName}')" static="true" name="breadcrumbNameUppercase" />
-
-		<var method="MathUtil#sum('5', '5')" name="integer" />
-
-		<var method="MathUtil#sum('34', '${integer}')" name="newInteger" />
-
-		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}" />
-
+	<command prose="I want to print rows-hash table: ${table}" name="echoRowsHashTable">
+		<var name="rowsHashTable" from="${table}" type="RowsHashTable"/>
+		<for param="row" table="${rowsHashTable}">
+			<execute macro="TableEcho#echoTwoVars">
+				<var name="v0" from="${row}" hash="project_id"/>
+				<var name="v1" from="${row}" hash="status"/>
+			</execute>
+		</for>
+		<var name="rawTable" from="${table}" type="RawTable"/>
+		<for param="row" table="${rawTable}">
+			<execute macro="TableEcho#echoTwoVars">
+				<var name="v0" from="${row}" index="0"/>
+				<var name="v1" from="${row}" index="1"/>
+			</execute>
+		</for>
+	</command>
+	<command prose="I assert the ${breadcrumbName}" name="viewPG">
+		<var name="key_breadcrumbName" value="${breadcrumbName}"/>
+		<var static="true" name="breadcrumbNameUppercase" method="StringUtil#upperCase('${breadcrumbName}')"/>
+		<var name="integer" method="MathUtil#sum('5', '5')"/>
+		<var name="newInteger" method="MathUtil#sum('34', '${integer}')"/>
+		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}"/>
 		<if>
 			<not>
 				<or>
@@ -25,7 +35,6 @@
 				<execute function="AssertElementPresent" locator1="ExportPersonalData#EXPORT_PROCESS_SUCCESSFUL"/>
 			</then>
 		</if>
-
 		<while max-iterations="200">
 			<equals arg1="${allLinksChecked}" arg2="no"/>
 			<then>
@@ -34,7 +43,6 @@
 				</execute>
 			</then>
 		</while>
-
 		<while>
 			<and>
 				<not>
@@ -48,7 +56,6 @@
 				</execute>
 			</then>
 		</while>
-
 		<if>
 			<not>
 				<equals arg1="${url}" arg2="https://www.google.com/[#]gws_rd=ssl"/>
@@ -57,38 +64,16 @@
 				<execute function="AssertLocation" value1="https://www.google.com/?gws_rd=ssl"/>
 			</then>
 		</if>
-
 		<if>
 			<and>
-				<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
-				<equals arg1="${check}" arg2="true" />
-				<isset var="duplicate" />
+				<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY"/>
+				<equals arg1="${check}" arg2="true"/>
+				<isset var="duplicate"/>
 			</and>
 			<then>
-				<execute macro="Alert#viewSuccessMessage" />
+				<execute macro="Alert#viewSuccessMessage"/>
 			</then>
 		</if>
-
-		<return value="${breadcrumbNameUppercase}" />
-	</command>
-
-	<command name="echoRowsHashTable" prose="I want to print rows-hash table: ${table}">
-		<var name="rowsHashTable" type="RowsHashTable" from="${table}" />
-
-		<for param="row" table="${rowsHashTable}" >
-			<execute macro="TableEcho#echoTwoVars" >
-				<var from="${row}" name="v0" hash="project_id" />
-				<var from="${row}" name="v1" hash="status" />
-			</execute>
-		</for>
-
-		<var name="rawTable" type="RawTable" from="${table}" />
-
-		<for param="row" table="${rawTable}" >
-			<execute macro="TableEcho#echoTwoVars" >
-				<var name="v0" index="0" from="${row}" />
-				<var name="v1" index="1" from="${row}" />
-			</execute>
-		</for>
+		<return value="${breadcrumbNameUppercase}"/>
 	</command>
 </definition>

@@ -1,11 +1,12 @@
 @component-name = "portal-acceptance"
 @ignore = "true"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Smoke";
 
-	// This is a comment
+	//This is a comment
 
 	/*This is a multiline
 		comment.*/
@@ -20,23 +21,55 @@ definition {
 	}
 
 	tearDown {
-		PortalInstances.tearDownCP(
-			testPortalInstance = PropsUtil.get("test.portal.instance")
-		);
+		PortalInstances.tearDownCP(testPortalInstance = PropsUtil.get("test.portal.instance"));
+	}
+
+	@description = "Ensure that a user can add multiple Blogs Entries."
+	@priority = "4"
+	test AddBlogsEntries {
+		property testray.component.names = "Blogs";
+		property testray.main.component.name = "Blogs";
+
+		task ("Add a blogs entry called 'Blogs Entry1 Title' with content 'Blogs Entry1 Content'") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs");
+
+			Blogs.addEntry(
+				entryContent = "Blogs Entry1 Content",
+				entryTitle = "Blogs Entry1 Title");
+		}
+
+		task ("Add a blogs entry called 'Blogs Entry2 Title' with content 'Blogs Entry2 Content'") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs");
+
+			Blogs.addEntry(
+				entryContent = "Blogs Entry2 Content",
+				entryTitle = "Blogs Entry2 Title");
+		}
 	}
 
 	@priority = "5"
 	test AddUser {
-		// This is a comment
+
+		//This is a comment
 
 		/*This is a multiline
 			comment.*/
 
-		// End with a ;
-
-		// End with a }
+		//End with a ;
+		//End with a }
 
 		property portal.release = "false";
+
 		var specialCharacters = "&quot;\&quot;";
 		var userEmailAddress = "userea@liferay.com";
 		var userFirstName = "userfn";
@@ -44,8 +77,7 @@ definition {
 
 		FormFields.editText(
 			fieldName = "label",
-			fieldValue = ",-+!@#$%^*()=_.?/;:{}[]\|"
-		);
+			fieldValue = ",-+!@#$%^*()=_.?/;:{}[]\|");
 
 		ProductMenu.gotoControlPanelUsers(portlet = "Users and Organizations");
 
@@ -58,24 +90,21 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "${breadcrumbNameUppercase}"
-			);
+				value1 = "${breadcrumbNameUppercase}");
 
 			for (var breadcrumbName : list "${breadcrumbListVisible}") {
 				AssertTextEquals(
 					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-					value1 = "${breadcrumbNameUppercase}"
-				);
+					value1 = "${breadcrumbNameUppercase}");
 			}
 
 			if (isSet(duplicate)) {
-				Alert.viewErrorMessage(
-					errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
-				);
+				Alert.viewErrorMessage(errorMessage = "A configuration with this ID already exists. Please enter a unique ID.");
 
 				echo("Please enter a unique ID.");
 
-				// This is a comment
+				//This is a comment
+
 			}
 			else if (isSet(duplicate)) {
 				echo("Please enter a unique ID.");
@@ -83,17 +112,18 @@ definition {
 			else {
 				Alert.viewSuccessMessage();
 
-				// This is a comment
+				//This is a comment
+
 			}
 
-			// This is a comment
+			//This is a comment
+
 		}
 
 		for (var breadcrumbName : list "Breadcrumb: 1, Breadcrumb: 2") {
 			AssertTextEquals(
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "${breadcrumbNameUppercase}"
-			);
+				value1 = "${breadcrumbNameUppercase}");
 		}
 
 		User.addCP(
@@ -101,8 +131,16 @@ definition {
 			userFirstName = "${userFirstName}",
 			userLastName = "${userLastName}",
 			userScreenName = "${userScreenName}",
-			userScreenName = ""
-		);
+			userScreenName = "");
+	}
+
+	@ignore = "true"
+	test GotoLinkToPageChildPages {
+		var key_pageName = "${parentPage}";
+
+		if (!(("true" == "true") || ("true" == "false"))) {
+			fail("Allowed values are 'true' or 'false'.");
+		}
 	}
 
 	@description = "Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages."
@@ -112,14 +150,10 @@ definition {
 		property test.assert.warning.exceptions = "true";
 
 		if (isSet(duplicate)) {
-			Alert.viewErrorMessage(
-				errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
-			);
+			Alert.viewErrorMessage(errorMessage = "A configuration with this ID already exists. Please enter a unique ID.");
 
 			if (!(isSet(duplicate))) {
-				Alert.viewErrorMessage(
-					errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
-				);
+				Alert.viewErrorMessage(errorMessage = "A configuration with this ID already exists. Please enter a unique ID.");
 			}
 			else {
 				Alert.viewSuccessMessage();
@@ -129,17 +163,13 @@ definition {
 			Alert.viewSuccessMessage();
 
 			if (isSet(duplicate)) {
-				Alert.viewErrorMessage(
-					errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
-				);
+				Alert.viewErrorMessage(errorMessage = "A configuration with this ID already exists. Please enter a unique ID.");
 
-				AlloyEditor.addSourceContent(
-					content = '''
+				AlloyEditor.addSourceContent(content = '''
 <h2 class="text-center">Space Program 大学生涯教育</h2>
 
 <p class="text-center">地球から、宇宙の果てへ</p>
-'''
-				);
+''');
 			}
 			else {
 				Alert.viewSuccessMessage();
@@ -161,11 +191,11 @@ definition {
 			fail("Element not present");
 		}
 
-		if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) && ("${check}" == "true") && (isSet(duplicate))) {
+		if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) && ("${check}" == "true") && isSet(duplicate)) {
 			Alert.viewSuccessMessage();
 		}
 
-		if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) || ("${check}" == "true") || (isSet(duplicate))) {
+		if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) || ("${check}" == "true") || isSet(duplicate)) {
 			Alert.viewSuccessMessage();
 		}
 
@@ -180,7 +210,7 @@ definition {
 			echo("String contains substring");
 		}
 
-		if (((isSet(A)) && (isSet(B))) || ((!(isSet(B))) && (!(isSet(A))))) {
+		if ((isSet(A) && isSet(B)) || (!(isSet(B)) && !(isSet(A)))) {
 			fail("${failMessage}");
 		}
 
@@ -194,30 +224,26 @@ definition {
 	document.getElementById('demo').innerHTML = 'FAIL';
 </script>''';
 
-		AlloyEditor.addSourceContent(
-			content = '''
+		AlloyEditor.addSourceContent(content = '''
 <h2 class="text-center">Space Program 大学生涯教育</h2>
 
 <p class="text-center">地球から、宇宙の果てへ</p>
-'''
-		);
+''');
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<name>Timer Name</name>''',
-			line = "21"
-		);
+			line = "21");
 
 		User.editDetailsViaMyAccount(
 			userFirstNameEdit = ''''alert(0)'"alert(0)"><img src=x onerror=alert(0)><script>alert(0)</script>''',
 			userLastNameEdit = '''<script>document.write("XSS"); window.stop();</script>''',
-			userMiddleNameEdit = '''<script>document.write("XSS"); window.stop();</script>'''
-		);
+			userMiddleNameEdit = '''<script>document.write("XSS"); window.stop();</script>''');
 
 		Smoke.viewWelcomePage();
 
 		takeScreenshot();
 
-		while (IsElementPresent(locator1 = "AssetCategorization#TAGS_REMOVE_ICON_GENERIC", key_userScreenName = "ldapusercn")) {
+		while (IsElementPresent(key_userScreenName = "ldapusercn", locator1 = "AssetCategorization#TAGS_REMOVE_ICON_GENERIC")) {
 			Click(locator1 = "AssetCategorization#TAGS_REMOVE_ICON_GENERIC");
 		}
 
@@ -227,9 +253,14 @@ definition {
 
 		Smoke.runSmoke();
 
-		AssertElementPresent(locator1 = "Home#PAGE", value1 = "Welcome");
+		AssertElementPresent(
+			locator1 = "Home#PAGE",
+			value1 = "Welcome");
 
-		Type(locator1 = "DDMField#INTEGER", value1 = "5", key_fieldName = "Integer");
+		Type(
+			key_fieldName = "Integer",
+			locator1 = "DDMField#INTEGER",
+			value1 = "5");
 
 		Click(locator1 = "Home#PAGE");
 
@@ -241,55 +272,9 @@ definition {
 
 		AssertElementPresent.assertElementPresent(
 			locator1 = "Home#PAGE",
-			value1 = "Welcome"
-		);
+			value1 = "Welcome");
 
 		com.liferay.poshi.core.util.StringUtil.count("one,two,three", ",");
 	}
 
-	@description = "Ensure that a user can add multiple Blogs Entries."
-	@priority = "4"
-	test AddBlogsEntries {
-		property testray.component.names = "Blogs";
-		property testray.main.component.name = "Blogs";
-
-		task ("Add a blogs entry called 'Blogs Entry1 Title' with content 'Blogs Entry1 Content'") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content",
-				panel = "Site Administration",
-				portlet = "Blogs"
-			);
-
-			Blogs.addEntry(
-				entryContent = "Blogs Entry1 Content",
-				entryTitle = "Blogs Entry1 Title"
-			);
-		}
-
-		task ("Add a blogs entry called 'Blogs Entry2 Title' with content 'Blogs Entry2 Content'") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content",
-				panel = "Site Administration",
-				portlet = "Blogs"
-			);
-
-			Blogs.addEntry(
-				entryContent = "Blogs Entry2 Content",
-				entryTitle = "Blogs Entry2 Title"
-			);
-		}
-	}
-
-	@ignore = "true"
-	test GotoLinkToPageChildPages {
-		var key_pageName = "${parentPage}";
-
-		if (!(("true" == "true") || ("true" == "false"))) {
-			fail("Allowed values are 'true' or 'false'.");
-		}
-	}
 }

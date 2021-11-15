@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -438,6 +440,10 @@ public class DBPartitionUtil {
 			return "utf8";
 		}
 		catch (Exception exception) {
+			_log.error(
+				"Unable to retrieve character set from database session",
+				exception);
+
 			return "utf8";
 		}
 	}
@@ -593,6 +599,9 @@ public class DBPartitionUtil {
 		GetterUtil.get(
 			PropsUtil.get("database.partition.schema.name.prefix"),
 			"lpartition_");
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DBPartitionUtil.class);
 
 	private static final Set<String> _controlTableNames = new HashSet<>(
 		Arrays.asList("Company", "VirtualHost"));

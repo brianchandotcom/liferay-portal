@@ -24,14 +24,8 @@ const HEADERS = new Headers({
 export const getExportTaskStatusURL = (taskId) =>
 	`/o/headless-batch-engine/v1.0/export-task/${taskId}`;
 
-export const getExportFileURL = async (taskId) => {
-	const response = await fetch(
-		`/o/headless-batch-engine/v1.0/export-task/${taskId}/content`
-	);
-	const blob = await response.blob();
-
-	return URL.createObjectURL(blob);
-};
+export const getExportFileURL = (taskId) =>
+	`/o/headless-batch-engine/v1.0/export-task/${taskId}/content`;
 
 export const saveTemplateAPI = async (
 	formDataQuerySelector,
@@ -90,7 +84,9 @@ export const getPollingExportStatusProcess = async ({
 
 		switch (executeStatus) {
 			case EXPORT_PROCESS_FAILED:
-				onFail(errorMessage);
+				onFail(
+					errorMessage || Liferay.Language.get('unexpected-error')
+				);
 				break;
 			case EXPORT_PROCESS_COMPLETED:
 				onSuccess(contentType);
@@ -105,4 +101,11 @@ export const getPollingExportStatusProcess = async ({
 	catch (error) {
 		onFail(Liferay.Language.get('unexpected-error'));
 	}
+};
+
+export const fetchExportedFile = async (taskId) => {
+	const response = await fetch(getExportFileURL(taskId));
+	const blob = await response.blob();
+
+	return URL.createObjectURL(blob);
 };

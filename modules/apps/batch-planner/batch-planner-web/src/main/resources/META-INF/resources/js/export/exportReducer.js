@@ -17,16 +17,18 @@ import {useCallback, useEffect, useReducer} from 'react';
 
 import {
 	exportAPI,
-	getExportFileURL,
+	fetchExportedFile,
 	getPollingExportStatusProcess,
 } from '../api';
-import {POLLING_EXPORT_STATUS_TIMEOUT} from '../constants';
+import {EXPORT_FILE_NAME, POLLING_EXPORT_STATUS_TIMEOUT} from '../constants';
+import {download} from '../utils';
 
 const ERROR = 'ERROR';
 const COMPLETED = 'COMPLETED';
 const LOADING = 'LOADING';
 const PROGRESS = 'PROGRESS';
 const START_POLLING = 'START_POLLING';
+const STOP_LOADING = 'DOWNLOADING';
 
 const initialState = {
 	contentType: null,
@@ -35,6 +37,8 @@ const initialState = {
 	loading: false,
 	percentage: 0,
 	pollingIntervalId: null,
+	readyToDownload: false,
+	taskId: null,
 };
 
 const setError = (error) => ({
@@ -42,14 +46,10 @@ const setError = (error) => ({
 	type: ERROR,
 });
 
-const setExportFileURL = async (contentType, taskId) => {
-	const exportFileURL = await getExportFileURL(taskId);
-
-	return {
-		payload: {contentType, exportFileURL},
-		type: COMPLETED,
-	};
-};
+const setExportFileURL = (contentType, taskId) => ({
+	payload: {contentType, taskId},
+	type: COMPLETED,
+});
 
 const setProgress = (contentType, percentage) => ({
 	payload: {contentType, percentage},
@@ -58,6 +58,11 @@ const setProgress = (contentType, percentage) => ({
 
 const reducer = (state = initialState, {payload, type}) => {
 	switch (type) {
+		case STOP_LOADING:
+			return {
+				...state,
+				loading: false,
+			};
 		case LOADING:
 			return {
 				...state,
@@ -70,6 +75,7 @@ const reducer = (state = initialState, {payload, type}) => {
 				...state,
 				errorMessage: payload,
 				loading: false,
+				pollingIntervalId: null,
 			};
 		case COMPLETED:
 			clearInterval(state.pollingIntervalId);
@@ -77,9 +83,11 @@ const reducer = (state = initialState, {payload, type}) => {
 			return {
 				...state,
 				contentType: payload.contentType,
-				exportFileURL: payload.exportFileURL,
 				loading: false,
 				percentage: 100,
+				pollingIntervalId: null,
+				readyToDownload: true,
+				taskId: payload.taskId,
 			};
 		case PROGRESS:
 			return {
@@ -102,13 +110,27 @@ const usePollingExport = (formDataQuerySelector, formSubmitURL) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	const dispatchIfMounted = useCallback(
-		async (action) => {
+		(action) => {
 			if (isMounted()) {
-				dispatch(await action);
+				dispatch(action);
 			}
 		},
 		[dispatch, isMounted]
 	);
+
+	const downloadFile = useCallback(async () => {
+		dispatchIfMounted({type: LOADING});
+		try {
+			const blobUrl = await fetchExportedFile(state.taskId);
+			download(blobUrl, EXPORT_FILE_NAME);
+
+			dispatchIfMounted({type: STOP_LOADING});
+		}
+		catch (error) {
+			console.error(error);
+			dispatchIfMounted(setError());
+		}
+	}, [dispatchIfMounted, state.taskId]);
 
 	useEffect(() => {
 		let pollingIntervalId;
@@ -150,6 +172,7 @@ const usePollingExport = (formDataQuerySelector, formSubmitURL) => {
 				});
 			}
 			catch (error) {
+				console.error(error);
 				dispatchIfMounted(setError());
 			}
 		}
@@ -165,10 +188,12 @@ const usePollingExport = (formDataQuerySelector, formSubmitURL) => {
 
 	return {
 		contentType: state.contentType,
+		downloadFile,
 		errorMessage: state.errorMessage,
 		exportFileURL: state.exportFileURL,
 		loading: state.loading,
 		percentage: state.percentage,
+		readyToDownload: state.readyToDownload,
 	};
 };
 

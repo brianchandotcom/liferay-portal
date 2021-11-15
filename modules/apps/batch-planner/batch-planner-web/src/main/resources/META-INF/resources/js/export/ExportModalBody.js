@@ -23,14 +23,14 @@ import React from 'react';
 const ExportModalBody = ({
 	contentType,
 	errorMessage,
-	exportFileURL,
 	percentage,
+	readyToDownload,
 }) => {
 	let labelType;
 	let label;
 	let title;
 
-	if (exportFileURL) {
+	if (readyToDownload) {
 		title = Liferay.Language.get(
 			'your-file-has-been-generated-and-is-ready-to-download'
 		);
@@ -68,15 +68,15 @@ const ExportModalBody = ({
 			</div>
 			<div
 				className="progress-container"
-				data-percentage={exportFileURL ? 100 : percentage}
+				data-percentage={readyToDownload ? 100 : percentage}
 				data-title={
-					exportFileURL
+					readyToDownload
 						? Liferay.Language.get('completed')
 						: Liferay.Language.get('in-progress')
 				}
 			>
 				<ClayProgressBar
-					value={exportFileURL ? 100 : percentage}
+					value={readyToDownload ? 100 : percentage}
 					warn={errorMessage !== null}
 				/>
 			</div>
@@ -97,8 +97,13 @@ const ExportModalBody = ({
 ExportModalBody.propTypes = {
 	contentType: PropTypes.string,
 	errorMessage: PropTypes.string,
-	exportFileURL: PropTypes.string,
 	percentage: PropTypes.number,
+	readyToDownload: PropTypes.bool,
+};
+
+ExportModalBody.defaultProps = {
+	percentage: 0,
+	readyToDownload: false,
 };
 
 export default ExportModalBody;

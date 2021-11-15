@@ -14,7 +14,6 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
 import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -30,31 +29,41 @@ const ExportModal = ({
 }) => {
 	const {
 		contentType,
+		downloadFile,
 		errorMessage,
-		exportFileURL,
 		loading,
 		percentage,
+		readyToDownload,
 	} = usePollingExport(formDataQuerySelector, formSubmitURL);
 
+	let modalType;
+	let iconType;
+
+	if (readyToDownload) {
+		modalType = 'modal-success';
+		iconType = 'check-circle-full';
+	}
+	else if (errorMessage) {
+		modalType = 'modal-danger';
+		iconType = 'exclamation-full';
+	}
+	else {
+		modalType = 'modal-info';
+		iconType = 'info-circle';
+	}
+
 	return (
-		<ClayModal
-			className={exportFileURL ? 'modal-success' : 'modal-info'}
-			observer={observer}
-			size="md"
-		>
+		<ClayModal className={modalType} observer={observer} size="md">
 			<ClayModal.Header>
-				<ClayIcon
-					className="mr-2"
-					symbol={exportFileURL ? 'check-circle-full' : 'info-circle'}
-				/>
+				<ClayIcon className="mr-2" symbol={iconType} />
 				{Liferay.Language.get('export-file')}
 			</ClayModal.Header>
 
 			<ExportModalBody
 				contentType={contentType}
 				errorMessage={errorMessage}
-				exportFileURL={exportFileURL}
 				percentage={percentage}
+				readyToDownload={readyToDownload}
 			/>
 
 			<ClayModal.Footer
@@ -68,26 +77,23 @@ const ExportModal = ({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						{!exportFileURL ? (
-							<ClayButton disabled displayType="primary">
+						<ClayButton
+							disabled={!readyToDownload}
+							displayType={
+								readyToDownload ? 'success' : 'primary'
+							}
+							onClick={downloadFile}
+						>
+							{loading && (
 								<span className="inline-item inline-item-before">
 									<span
 										aria-hidden="true"
 										className="loading-animation"
 									></span>
 								</span>
-								{Liferay.Language.get('download')}
-							</ClayButton>
-						) : (
-							<ClayLink
-								className="btn btn-success"
-								download="Export.zip"
-								href={exportFileURL}
-								target="_blank"
-							>
-								{Liferay.Language.get('download')}
-							</ClayLink>
-						)}
+							)}
+							{Liferay.Language.get('download')}
+						</ClayButton>
 					</ClayButton.Group>
 				}
 			/>

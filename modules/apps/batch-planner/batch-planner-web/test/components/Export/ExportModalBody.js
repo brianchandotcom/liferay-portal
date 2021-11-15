@@ -44,13 +44,13 @@ describe('ExportModalBody', () => {
 		const {getByText} = render(
 			<ExportModalBody
 				contentType="CSV"
-				exportFileURL="someurl"
 				percentage={100}
+				readyToDownload={true}
 			/>
 		);
 
 		getByText('Export.csv');
-		getByText('created');
+		getByText(Liferay.Language.get('created'));
 		getByText(
 			Liferay.Language.get(
 				'your-file-has-been-generated-and-is-ready-to-download'

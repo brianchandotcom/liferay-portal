@@ -132,8 +132,6 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
-		<column name="description" type="String" />
 		<column name="active" type="boolean" />
 		<column name="street1" type="String" />
 		<column name="street2" type="String" />
@@ -145,6 +143,13 @@
 		<column name="latitude" type="double" />
 		<column name="longitude" type="double" />
 		<column name="type" type="String" />
+
+		<!-- Localized entity -->
+
+		<localized-entity>
+			<localized-column name="name" />
+			<localized-column name="description" />
+		</localized-entity>
 
 		<!-- Order -->
 

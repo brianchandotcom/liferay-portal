@@ -147,12 +147,6 @@
 		<ant inheritAll="false" target="deploy" />
 
 		<app-server-properties-reset />
-
-		<antcall target="deploy-plugins">
-			<param name="deployer.dest.dir" value="${app.server.jboss.deploy.dir}" />
-			<param name="deployer.app.server.type" value="jboss" />
-			<param name="deployer.app.server.lib.portal.dir" value="${app.server.jboss.portal.dir}/WEB-INF/lib" />
-		</antcall>
 	</target>
 
 	<target name="build-dist-language-hook">
@@ -269,12 +263,6 @@
 		<antcall inheritAll="false" target="all" />
 
 		<app-server-properties-reset />
-
-		<antcall target="deploy-plugins">
-			<param name="deployer.dest.dir" value="${app.server.tcserver.deploy.dir}" />
-			<param name="deployer.app.server.type" value="tomcat" />
-			<param name="deployer.app.server.lib.portal.dir" value="${app.server.tcserver.lib.portal.dir}" />
-		</antcall>
 	</target>
 
 	<target name="build-dist-tomcat">
@@ -290,12 +278,6 @@
 				<app-server-properties-reset />
 			</then>
 		</if>
-
-		<antcall target="deploy-plugins">
-			<param name="deployer.dest.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps" />
-			<param name="deployer.app.server.type" value="tomcat" />
-			<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps/ROOT/WEB-INF/lib" />
-		</antcall>
 	</target>
 
 	<target name="build-dist-tomcat-bare">
@@ -322,12 +304,6 @@
 		<ant inheritAll="false" target="deploy" />
 
 		<app-server-properties-reset />
-
-		<antcall target="deploy-plugins">
-			<param name="deployer.dest.dir" value="${app.server.weblogic.deploy.dir}" />
-			<param name="deployer.app.server.type" value="weblogic" />
-			<param name="deployer.app.server.lib.portal.dir" value="${app.server.weblogic.lib.portal.dir}" />
-		</antcall>
 	</target>
 
 	<target name="build-dist-websphere">
@@ -342,12 +318,6 @@
 		<ant inheritAll="false" target="deploy" />
 
 		<app-server-properties-reset />
-
-		<antcall target="deploy-plugins">
-			<param name="deployer.dest.dir" value="${app.server.websphere.deploy.dir}" />
-			<param name="deployer.app.server.type" value="websphere" />
-			<param name="deployer.app.server.lib.portal.dir" value="${app.server.websphere.portal.dir}/WEB-INF/lib" />
-		</antcall>
 	</target>
 
 	<target name="build-dist-wildfly">
@@ -362,166 +332,6 @@
 		<ant inheritAll="false" target="deploy" />
 
 		<app-server-properties-reset />
-
-		<antcall target="deploy-plugins">
-			<param name="deployer.dest.dir" value="${app.server.parent.dir}/wildfly-${app.server.wildfly.version}/standalone/deployments" />
-			<param name="deployer.app.server.type" value="wildfly" />
-			<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/wildfly-${app.server.wildfly.version}/standalone/deployments/ROOT.war/WEB-INF/lib" />
-		</antcall>
-	</target>
-
-	<target name="deploy-plugins">
-		<delete failonerror="false" includeemptydirs="true">
-			<fileset
-				dir="${deployer.dest.dir}"
-				includes="*-ext/**,*-hook/**,*-layouttpl/**,*-portlet/**,*-theme/**"
-			/>
-		</delete>
-
-		<java
-			classname="com.liferay.portal.tools.deploy.HookDeployer"
-			classpathref="project.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-
-			<!-- Required Arguments -->
-
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<jvmarg value="-Dliferay.lib.portal.dir=${deployer.app.server.lib.portal.dir}" />
-			<jvmarg value="-Ddeployer.base.dir=${lp.plugins.dir}/dist" />
-			<jvmarg value="-Ddeployer.dest.dir=${deployer.dest.dir}" />
-			<jvmarg value="-Ddeployer.app.server.type=${deployer.app.server.type}" />
-			<jvmarg value="-Ddeployer.unpack.war=true" />
-			<jvmarg value="-Ddeployer.file.pattern=*-hook-*.war" />
-
-			<!-- Optional Arguments -->
-
-			<jvmarg value="-Ddeployer.tomcat.lib.dir=${app.server.tomcat.lib.global.dir}" />
-
-			<!-- Dependent Libraries -->
-
-			<arg value="util-bridges/util-bridges.jar" />
-			<arg value="util-java/util-java.jar" />
-			<arg value="util-taglib/util-taglib.jar" />
-		</java>
-
-		<java
-			classname="com.liferay.portal.tools.deploy.LayoutTemplateDeployer"
-			classpathref="project.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-
-			<!-- Required Arguments -->
-
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<jvmarg value="-Dliferay.lib.portal.dir=${deployer.app.server.lib.portal.dir}" />
-			<jvmarg value="-Ddeployer.base.dir=${lp.plugins.dir}/dist" />
-			<jvmarg value="-Ddeployer.dest.dir=${deployer.dest.dir}" />
-			<jvmarg value="-Ddeployer.app.server.type=${deployer.app.server.type}" />
-			<jvmarg value="-Ddeployer.unpack.war=true" />
-			<jvmarg value="-Ddeployer.file.pattern=*-layouttpl-*.war" />
-
-			<!-- Dependent Libraries -->
-
-			<arg value="util-bridges/util-bridges.jar" />
-			<arg value="util-java/util-java.jar" />
-			<arg value="util-taglib/util-taglib.jar" />
-		</java>
-
-		<java
-			classname="com.liferay.portal.tools.deploy.PortletDeployer"
-			classpathref="project.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-
-			<!-- Required Arguments -->
-
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<jvmarg value="-Dliferay.lib.portal.dir=${deployer.app.server.lib.portal.dir}" />
-			<jvmarg value="-Ddeployer.base.dir=${lp.plugins.dir}/dist" />
-			<jvmarg value="-Ddeployer.dest.dir=${deployer.dest.dir}" />
-			<jvmarg value="-Ddeployer.app.server.type=${deployer.app.server.type}" />
-			<jvmarg value="-Ddeployer.aui.taglib.dtd=util-taglib/classes/META-INF/liferay-aui.tld" />
-			<jvmarg value="-Ddeployer.portlet.taglib.dtd=util-taglib/classes/META-INF/liferay-portlet.tld" />
-			<jvmarg value="-Ddeployer.portlet-ext.taglib.dtd=util-taglib/classes/META-INF/liferay-portlet-ext.tld" />
-			<jvmarg value="-Ddeployer.security.taglib.dtd=util-taglib/classes/META-INF/liferay-security.tld" />
-			<jvmarg value="-Ddeployer.theme.taglib.dtd=util-taglib/classes/META-INF/liferay-theme.tld" />
-			<jvmarg value="-Ddeployer.ui.taglib.dtd=util-taglib/classes/META-INF/liferay-ui.tld" />
-			<jvmarg value="-Ddeployer.util.taglib.dtd=util-taglib/classes/META-INF/liferay-util.tld" />
-			<jvmarg value="-Ddeployer.unpack.war=true" />
-			<jvmarg value="-Ddeployer.file.pattern=*-portlet-*.war" />
-
-			<!-- Optional Arguments -->
-
-			<jvmarg value="-Ddeployer.tomcat.lib.dir=${app.server.tomcat.lib.global.dir}" />
-
-			<!-- Dependent Libraries -->
-
-			<arg value="util-bridges/util-bridges.jar" />
-			<arg value="util-java/util-java.jar" />
-			<arg value="util-taglib/util-taglib.jar" />
-		</java>
-
-		<java
-			classname="com.liferay.portal.tools.deploy.ThemeDeployer"
-			classpathref="project.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-
-			<!-- Required Arguments -->
-
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<jvmarg value="-Dliferay.lib.portal.dir=${deployer.app.server.lib.portal.dir}" />
-			<jvmarg value="-Ddeployer.base.dir=${lp.plugins.dir}/dist" />
-			<jvmarg value="-Ddeployer.dest.dir=${deployer.dest.dir}" />
-			<jvmarg value="-Ddeployer.app.server.type=${deployer.app.server.type}" />
-			<jvmarg value="-Ddeployer.theme.taglib.dtd=util-taglib/classes/META-INF/liferay-theme.tld" />
-			<jvmarg value="-Ddeployer.util.taglib.dtd=util-taglib/classes/META-INF/liferay-util.tld" />
-			<jvmarg value="-Ddeployer.unpack.war=true" />
-			<jvmarg value="-Ddeployer.file.pattern=*-theme-*.war" />
-
-			<!-- Optional Arguments -->
-
-			<jvmarg value="-Ddeployer.tomcat.lib.dir=${app.server.tomcat.lib.global.dir}" />
-
-			<!-- Dependent Libraries -->
-
-			<arg value="util-bridges/util-bridges.jar" />
-			<arg value="util-java/util-java.jar" />
-			<arg value="util-taglib/util-taglib.jar" />
-		</java>
-
-		<java
-			classname="com.liferay.portal.tools.deploy.WebDeployer"
-			classpathref="project.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-
-			<!-- Required Arguments -->
-
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<jvmarg value="-Dliferay.lib.portal.dir=${deployer.app.server.lib.portal.dir}" />
-			<jvmarg value="-Ddeployer.base.dir=${lp.plugins.dir}/dist" />
-			<jvmarg value="-Ddeployer.dest.dir=${deployer.dest.dir}" />
-			<jvmarg value="-Ddeployer.app.server.type=${deployer.app.server.type}" />
-			<jvmarg value="-Ddeployer.unpack.war=true" />
-			<jvmarg value="-Ddeployer.file.pattern=*-web-*.war" />
-
-			<!-- Optional Arguments -->
-
-			<jvmarg value="-Ddeployer.tomcat.lib.dir=${app.server.tomcat.lib.global.dir}" />
-
-			<!-- Dependent Libraries -->
-
-			<arg value="util-bridges/util-bridges.jar" />
-			<arg value="util-java/util-java.jar" />
-			<arg value="util-taglib/util-taglib.jar" />
-		</java>
 	</target>
 
 	<target name="dist">

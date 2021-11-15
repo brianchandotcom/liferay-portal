@@ -1227,9 +1227,10 @@ definition {
 
 		Ratings.viewRatingsDisabled();
 
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Ratings.viewRatingsDisabled();
 	}

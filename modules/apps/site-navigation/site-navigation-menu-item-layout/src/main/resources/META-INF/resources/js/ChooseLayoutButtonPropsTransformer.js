@@ -45,6 +45,7 @@ export default function propsTransformer({
 			);
 
 			openSelectionModal({
+				buttonAddLabel: Liferay.Language.get('select'),
 				multiple: true,
 				onSelect: (selectedItem) => {
 					if (selectedItem) {

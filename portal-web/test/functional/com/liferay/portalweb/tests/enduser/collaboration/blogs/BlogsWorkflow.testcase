@@ -40,13 +40,13 @@ definition {
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
 		Navigator.gotoSitePage(
 			pageName = "Blogs Page",
 			siteName = "Guest");
-
-		Blogs.addWithWorkflow(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
 

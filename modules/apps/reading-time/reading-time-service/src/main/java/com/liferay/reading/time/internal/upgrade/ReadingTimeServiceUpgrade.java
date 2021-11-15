@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.reading.time.internal.upgrade.v2_0_0.util.ReadingTimeEntryTable;
 
@@ -46,7 +47,18 @@ public class ReadingTimeServiceUpgrade implements UpgradeStepRegistrator {
 		}
 
 		registry.register(
-			"2.0.0", "2.1.0", new CTModelUpgradeProcess("ReadingTimeEntry"));
+			"2.0.0", "2.1.0",
+			new MVCCVersionUpgradeProcess() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {"ReadingTimeEntry"};
+				}
+
+			});
+
+		registry.register(
+			"2.1.0", "2.2.0", new CTModelUpgradeProcess("ReadingTimeEntry"));
 	}
 
 }

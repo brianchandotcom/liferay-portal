@@ -45,6 +45,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -81,7 +82,7 @@ public class ConfigurationPersistenceManager
 
 	@Override
 	public void delete(String pid) throws IOException {
-		ConfigurationModelListener configurationModelListener = null;
+		List<ConfigurationModelListener> configurationModelListeners = null;
 
 		if (!pid.endsWith("factory")) {
 			Dictionary<?, ?> dictionary = getDictionary(pid);
@@ -98,13 +99,17 @@ public class ConfigurationPersistenceManager
 					pidKey = pid;
 				}
 
-				configurationModelListener = _getConfigurationModelListener(
+				configurationModelListeners = _getConfigurationModelListener(
 					pidKey);
 			}
 		}
 
-		if (configurationModelListener != null) {
-			configurationModelListener.onBeforeDelete(pid);
+		if (configurationModelListeners != null) {
+			for (ConfigurationModelListener configurationModelListener :
+					configurationModelListeners) {
+
+				configurationModelListener.onBeforeDelete(pid);
+			}
 		}
 
 		Lock lock = _readWriteLock.writeLock();
@@ -122,8 +127,12 @@ public class ConfigurationPersistenceManager
 			lock.unlock();
 		}
 
-		if (configurationModelListener != null) {
-			configurationModelListener.onAfterDelete(pid);
+		if (configurationModelListeners != null) {
+			for (ConfigurationModelListener configurationModelListener :
+					configurationModelListeners) {
+
+				configurationModelListener.onAfterDelete(pid);
+			}
 		}
 	}
 
@@ -230,7 +239,7 @@ public class ConfigurationPersistenceManager
 			String pid, @SuppressWarnings("rawtypes") Dictionary dictionary)
 		throws IOException {
 
-		ConfigurationModelListener configurationModelListener = null;
+		List<ConfigurationModelListener> configurationModelListeners = null;
 
 		if (!pid.endsWith("factory") &&
 			(dictionary.get("_felix_.cm.newConfiguration") == null)) {
@@ -247,11 +256,16 @@ public class ConfigurationPersistenceManager
 					pidKey, ".scoped", StringPool.BLANK);
 			}
 
-			configurationModelListener = _getConfigurationModelListener(pidKey);
+			configurationModelListeners = _getConfigurationModelListener(
+				pidKey);
 		}
 
-		if (configurationModelListener != null) {
-			configurationModelListener.onBeforeSave(pid, dictionary);
+		if (configurationModelListeners != null) {
+			for (ConfigurationModelListener configurationModelListener :
+					configurationModelListeners) {
+
+				configurationModelListener.onBeforeSave(pid, dictionary);
+			}
 		}
 
 		Dictionary<Object, Object> newDictionary = _copyDictionary(dictionary);
@@ -282,8 +296,12 @@ public class ConfigurationPersistenceManager
 			lock.unlock();
 		}
 
-		if (configurationModelListener != null) {
-			configurationModelListener.onAfterSave(pid, dictionary);
+		if (configurationModelListeners != null) {
+			for (ConfigurationModelListener configurationModelListener :
+					configurationModelListeners) {
+
+				configurationModelListener.onAfterSave(pid, dictionary);
+			}
 		}
 	}
 
@@ -481,11 +499,11 @@ public class ConfigurationPersistenceManager
 		return configFile.getCanonicalFile();
 	}
 
-	private ConfigurationModelListener _getConfigurationModelListener(
+	private List<ConfigurationModelListener> _getConfigurationModelListener(
 		String configurationModelClassName) {
 
 		if (_serviceTrackerMap == null) {
-			_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 				_bundleContext, ConfigurationModelListener.class,
 				"model.class.name");
 		}
@@ -596,7 +614,7 @@ public class ConfigurationPersistenceManager
 		new ConcurrentHashMap<>();
 	private final ReadWriteLock _readWriteLock = new ReentrantReadWriteLock(
 		true);
-	private ServiceTrackerMap<String, ConfigurationModelListener>
+	private ServiceTrackerMap<String, List<ConfigurationModelListener>>
 		_serviceTrackerMap;
 
 }

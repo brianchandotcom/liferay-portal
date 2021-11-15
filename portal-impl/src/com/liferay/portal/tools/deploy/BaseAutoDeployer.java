@@ -479,56 +479,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 		copyDependencyXml("web.xml", srcFile + "/WEB-INF");
 	}
 
-	public void deploy(String context) throws Exception {
-		try {
-			File baseDirFile = new File(baseDir);
-
-			File[] files = baseDirFile.listFiles();
-
-			if (files == null) {
-				return;
-			}
-
-			files = FileUtil.sortFiles(files);
-
-			for (File srcFile : files) {
-				String fileName = StringUtil.toLowerCase(srcFile.getName());
-
-				boolean deploy = false;
-
-				if (fileName.endsWith(".war") || fileName.endsWith(".zip")) {
-					deploy = true;
-
-					if (!wars.isEmpty()) {
-						if (!wars.contains(srcFile.getName())) {
-							deploy = false;
-						}
-					}
-					else if (Validator.isNotNull(filePattern)) {
-						if (!StringUtil.matchesIgnoreCase(
-								fileName, filePattern)) {
-
-							deploy = false;
-						}
-					}
-				}
-
-				if (deploy) {
-					AutoDeploymentContext autoDeploymentContext =
-						new AutoDeploymentContext();
-
-					autoDeploymentContext.setContext(context);
-					autoDeploymentContext.setFile(srcFile);
-
-					deployFile(autoDeploymentContext);
-				}
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
-	}
-
 	public void deployDirectory(
 			File srcFile, File mergeDir, File deployDir, String displayName,
 			boolean overwrite, PluginPackage pluginPackage)

@@ -133,30 +133,46 @@ public class BuildDatabaseUtil {
 
 				if (JenkinsResultsParserUtil.isOSX()) {
 					commands[1] = JenkinsResultsParserUtil.combine(
-						"rsync -Iq --timeout=1200 root@", distNode, ":",
+						"rsync -Iq --timeout=1200 \"root@", distNode, ":",
 						JenkinsResultsParserUtil.escapeForBash(distPath), "/",
-						BuildDatabase.FILE_NAME_BUILD_DATABASE, " ",
+						BuildDatabase.FILE_NAME_BUILD_DATABASE, "\" ",
 						JenkinsResultsParserUtil.escapeForBash(
 							JenkinsResultsParserUtil.getCanonicalPath(
 								buildDatabaseFile)));
 				}
 				else if (JenkinsResultsParserUtil.isWindows()) {
+					commands[0] = JenkinsResultsParserUtil.combine(
+						"mkdir -p ",
+						JenkinsResultsParserUtil.getCanonicalPath(
+							buildDatabaseFile.getParentFile()));
+
 					distPath = distPath.replaceAll(
 						"C:.*TEMP/dist", "/tmp/dist");
 
-					commands[1] = JenkinsResultsParserUtil.combine(
-						"scp ", distNode, ":",
-						JenkinsResultsParserUtil.escapeForBash(distPath), "/",
-						BuildDatabase.FILE_NAME_BUILD_DATABASE, " ",
-						JenkinsResultsParserUtil.escapeForBash(
-							JenkinsResultsParserUtil.getCanonicalPath(
-								buildDatabaseFile)));
+					File bashFile = new File(
+						"C:/tmp/jenkins/" +
+							JenkinsResultsParserUtil.getCurrentTimeMillis() +
+								".sh");
+
+					JenkinsResultsParserUtil.write(
+						bashFile,
+						JenkinsResultsParserUtil.combine(
+							"#!/bin/sh\nscp \"", distNode, ":",
+							JenkinsResultsParserUtil.escapeForBash(distPath),
+							"/", BuildDatabase.FILE_NAME_BUILD_DATABASE, "\" ",
+							JenkinsResultsParserUtil.escapeForBash(
+								JenkinsResultsParserUtil.getCanonicalPath(
+									buildDatabaseFile))));
+
+					commands[1] =
+						"/bin/sh " +
+							JenkinsResultsParserUtil.getCanonicalPath(bashFile);
 				}
 				else {
 					commands[1] = JenkinsResultsParserUtil.combine(
-						"rsync -Iq --timeout=1200 ", distNode, ":",
+						"rsync -Iq --timeout=1200 \"", distNode, ":",
 						JenkinsResultsParserUtil.escapeForBash(distPath), "/",
-						BuildDatabase.FILE_NAME_BUILD_DATABASE, " ",
+						BuildDatabase.FILE_NAME_BUILD_DATABASE, "\" ",
 						JenkinsResultsParserUtil.escapeForBash(
 							JenkinsResultsParserUtil.getCanonicalPath(
 								buildDatabaseFile)));

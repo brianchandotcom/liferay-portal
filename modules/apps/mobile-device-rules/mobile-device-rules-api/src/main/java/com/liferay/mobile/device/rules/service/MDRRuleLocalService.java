@@ -97,11 +97,11 @@ public interface MDRRuleLocalService
 		throws PortalException;
 
 	public MDRRule copyRule(
-			long ruleId, long ruleGroupId, ServiceContext serviceContext)
+			long oldRuleId, long newRuleGroupId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public MDRRule copyRule(
-			MDRRule rule, long ruleGroupId, ServiceContext serviceContext)
+			MDRRule oldRule, long newRuleGroupId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

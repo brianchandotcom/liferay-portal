@@ -63,23 +63,23 @@ public class MDRRuleGroupLocalServiceWrapper
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
-			long ruleGroupId, long groupId,
+			long oldRuleGroupId, long groupId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _mdrRuleGroupLocalService.copyRuleGroup(
-			ruleGroupId, groupId, serviceContext);
+			oldRuleGroupId, groupId, serviceContext);
 	}
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
-			com.liferay.mobile.device.rules.model.MDRRuleGroup ruleGroup,
+			com.liferay.mobile.device.rules.model.MDRRuleGroup oldRuleGroup,
 			long groupId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _mdrRuleGroupLocalService.copyRuleGroup(
-			ruleGroup, groupId, serviceContext);
+			oldRuleGroup, groupId, serviceContext);
 	}
 
 	/**

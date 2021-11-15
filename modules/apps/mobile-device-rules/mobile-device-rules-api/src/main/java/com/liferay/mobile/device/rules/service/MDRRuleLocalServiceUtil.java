@@ -86,19 +86,19 @@ public class MDRRuleLocalServiceUtil {
 	}
 
 	public static MDRRule copyRule(
-			long ruleId, long ruleGroupId,
+			long oldRuleId, long newRuleGroupId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().copyRule(ruleId, ruleGroupId, serviceContext);
+		return getService().copyRule(oldRuleId, newRuleGroupId, serviceContext);
 	}
 
 	public static MDRRule copyRule(
-			MDRRule rule, long ruleGroupId,
+			MDRRule oldRule, long newRuleGroupId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().copyRule(rule, ruleGroupId, serviceContext);
+		return getService().copyRule(oldRule, newRuleGroupId, serviceContext);
 	}
 
 	/**

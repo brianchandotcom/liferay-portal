@@ -71,19 +71,21 @@ public class MDRRuleGroupLocalServiceUtil {
 	}
 
 	public static MDRRuleGroup copyRuleGroup(
-			long ruleGroupId, long groupId,
+			long oldRuleGroupId, long groupId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().copyRuleGroup(ruleGroupId, groupId, serviceContext);
+		return getService().copyRuleGroup(
+			oldRuleGroupId, groupId, serviceContext);
 	}
 
 	public static MDRRuleGroup copyRuleGroup(
-			MDRRuleGroup ruleGroup, long groupId,
+			MDRRuleGroup oldRuleGroup, long groupId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().copyRuleGroup(ruleGroup, groupId, serviceContext);
+		return getService().copyRuleGroup(
+			oldRuleGroup, groupId, serviceContext);
 	}
 
 	/**

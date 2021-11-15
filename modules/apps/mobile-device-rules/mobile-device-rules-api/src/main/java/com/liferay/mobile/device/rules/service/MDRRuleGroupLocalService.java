@@ -89,11 +89,12 @@ public interface MDRRuleGroupLocalService
 		throws PortalException;
 
 	public MDRRuleGroup copyRuleGroup(
-			long ruleGroupId, long groupId, ServiceContext serviceContext)
+			long oldRuleGroupId, long groupId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public MDRRuleGroup copyRuleGroup(
-			MDRRuleGroup ruleGroup, long groupId, ServiceContext serviceContext)
+			MDRRuleGroup oldRuleGroup, long groupId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

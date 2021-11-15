@@ -26,7 +26,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
@@ -43,7 +42,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
 import com.liferay.site.navigation.menu.item.display.page.internal.constants.SiteNavigationMenuItemTypeDisplayPageWebKeys;
-import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
@@ -166,7 +164,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "display-page");
+		return _infoItemClassDetails.getLabel(locale);
 	}
 
 	@Override
@@ -206,7 +204,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 	public String getSubtitle(
 		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
 
-		return LanguageUtil.get(locale, "display-page");
+		return _infoItemClassDetails.getLabel(locale);
 	}
 
 	@Override
@@ -252,7 +250,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	@Override
 	public String getType() {
-		return SiteNavigationMenuItemTypeConstants.DISPLAY_PAGE;
+		return _infoItemClassDetails.getClassName();
 	}
 
 	@Override

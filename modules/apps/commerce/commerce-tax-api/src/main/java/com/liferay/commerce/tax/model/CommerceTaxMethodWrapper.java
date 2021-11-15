@@ -42,6 +42,7 @@ public class CommerceTaxMethodWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceTaxMethodId", getCommerceTaxMethodId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -60,6 +61,12 @@ public class CommerceTaxMethodWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceTaxMethodId = (Long)attributes.get("commerceTaxMethodId");
 
 		if (commerceTaxMethodId != null) {
@@ -292,6 +299,16 @@ public class CommerceTaxMethodWrapper
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce tax method.
+	 *
+	 * @return the mvcc version of this commerce tax method
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -595,6 +612,16 @@ public class CommerceTaxMethodWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce tax method.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce tax method
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

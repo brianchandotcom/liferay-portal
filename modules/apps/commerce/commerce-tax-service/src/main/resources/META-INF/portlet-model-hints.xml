@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.tax.model.CommerceTaxMethod">
+		<field name="mvccVersion" type="long" />
 		<field name="commerceTaxMethodId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

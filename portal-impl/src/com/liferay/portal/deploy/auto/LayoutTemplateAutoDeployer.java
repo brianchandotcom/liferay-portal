@@ -14,7 +14,6 @@
 
 package com.liferay.portal.deploy.auto;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.log.Log;
@@ -40,7 +39,6 @@ public class LayoutTemplateAutoDeployer
 			destDir = DeployUtil.getAutoDeployDestDir();
 			appServerType = ServerDetector.getServerId();
 			unpackWar = PropsValues.AUTO_DEPLOY_UNPACK_WAR;
-			filePattern = StringPool.BLANK;
 			jbossPrefix = PropsValues.AUTO_DEPLOY_JBOSS_PREFIX;
 			unpackWar = PropsValues.AUTO_DEPLOY_UNPACK_WAR;
 			wildflyPrefix = PropsValues.AUTO_DEPLOY_WILDFLY_PREFIX;

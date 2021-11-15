@@ -677,7 +677,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 	protected String auiTaglibDTD;
 	protected String baseDir;
 	protected String destDir;
-	protected String filePattern;
 	protected List<String> jars;
 	protected String jbossPrefix;
 	protected String portletExtTaglibDTD;

@@ -15,7 +15,6 @@
 package com.liferay.portal.deploy.auto;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
@@ -53,7 +52,6 @@ public class ThemeAutoDeployer
 			utilTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-util.tld");
 			unpackWar = PropsValues.AUTO_DEPLOY_UNPACK_WAR;
-			filePattern = StringPool.BLANK;
 			jbossPrefix = PropsValues.AUTO_DEPLOY_JBOSS_PREFIX;
 			tomcatLibDir = PropsValues.AUTO_DEPLOY_TOMCAT_LIB_DIR;
 			wildflyPrefix = PropsValues.AUTO_DEPLOY_WILDFLY_PREFIX;

@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Frontend Data Set API
+Bundle-SymbolicName: com.liferay.frontend.data.set.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.frontend.data.set.constants,\
+	com.liferay.frontend.data.set.filter,\
+	com.liferay.frontend.data.set.model,\
+	com.liferay.frontend.data.set.view,\
+	com.liferay.frontend.data.set.view.cards,\
+	com.liferay.frontend.data.set.view.list,\
+	com.liferay.frontend.data.set.view.table,\
+	com.liferay.frontend.data.set.view.table.selectable,\
+	com.liferay.frontend.data.set.view.timeline

@@ -28,10 +28,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException;
-import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 
 import javax.portlet.ActionRequest;
@@ -65,8 +65,12 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		long siteNavigationMenuId = ParamUtil.getLong(
 			actionRequest, "siteNavigationMenuId");
+		String siteNavigationMenuItemType = ParamUtil.getString(
+			actionRequest, "siteNavigationMenuItemType");
 
-		if ((classNameId > 0) && (classPK > 0) && (siteNavigationMenuId > 0)) {
+		if ((classNameId > 0) && (classPK > 0) && (siteNavigationMenuId > 0) &&
+			Validator.isNotNull(siteNavigationMenuItemType)) {
+
 			UnicodeProperties curTypeSettingsUnicodeProperties =
 				new UnicodeProperties(true);
 
@@ -92,7 +96,7 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 			try {
 				_siteNavigationMenuItemService.addSiteNavigationMenuItem(
 					themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0,
-					SiteNavigationMenuItemTypeConstants.DISPLAY_PAGE,
+					siteNavigationMenuItemType,
 					curTypeSettingsUnicodeProperties.toString(),
 					serviceContext);
 			}

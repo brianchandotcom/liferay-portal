@@ -83,6 +83,11 @@ BatchPlannerPlanManagementToolbarDisplayContext batchPlannerPlanManagementToolba
 				/>
 
 				<liferay-ui:search-container-column-text
+					name="format"
+					value="<%= batchPlannerPlan.getExternalType() %>"
+				/>
+
+				<liferay-ui:search-container-column-text
 					name="user"
 					value="<%= batchPlannerPlan.getUserName() %>"
 				/>

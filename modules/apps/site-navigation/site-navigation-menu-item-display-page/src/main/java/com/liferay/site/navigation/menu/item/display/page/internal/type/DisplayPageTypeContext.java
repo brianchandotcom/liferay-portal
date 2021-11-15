@@ -1,0 +1,64 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.site.navigation.menu.item.display.page.internal.type;
+
+import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+
+import java.util.Locale;
+
+/**
+ * @author Lourdes Fernández Besada
+ */
+public class DisplayPageTypeContext {
+
+	public DisplayPageTypeContext(
+		InfoItemClassDetails infoItemClassDetails,
+		LayoutDisplayPageProvider layoutDisplayPageProvider) {
+
+		_infoItemClassDetails = infoItemClassDetails;
+		_layoutDisplayPageProvider = layoutDisplayPageProvider;
+	}
+
+	public String getClassName() {
+		return _infoItemClassDetails.getClassName();
+	}
+
+	public InfoItemClassDetails getInfoItemClassDetails() {
+		return _infoItemClassDetails;
+	}
+
+	public String getLabel(Locale locale) {
+		return _infoItemClassDetails.getLabel(locale);
+	}
+
+	public LayoutDisplayPageObjectProvider<?>
+		getLayoutDisplayPageObjectProvider(long classPK) {
+
+		return _layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+			new InfoItemReference(
+				_infoItemClassDetails.getClassName(), classPK));
+	}
+
+	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider() {
+		return _layoutDisplayPageProvider;
+	}
+
+	private final InfoItemClassDetails _infoItemClassDetails;
+	private final LayoutDisplayPageProvider<?> _layoutDisplayPageProvider;
+
+}

@@ -17,13 +17,10 @@ package com.liferay.site.navigation.menu.item.display.page.internal.type;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemReference;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -66,17 +63,15 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	public DisplayPageTypeSiteNavigationMenuItemType(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
-		InfoItemClassDetails infoItemClassDetails, ItemSelector itemSelector,
-		JSPRenderer jspRenderer,
-		LayoutDisplayPageProvider layoutDisplayPageProvider, Portal portal,
+		DisplayPageTypeContext displayPageTypeContext,
+		ItemSelector itemSelector, JSPRenderer jspRenderer, Portal portal,
 		ServletContext servletContext) {
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
-		_infoItemClassDetails = infoItemClassDetails;
+		_displayPageTypeContext = displayPageTypeContext;
 		_itemSelector = itemSelector;
 		_jspRenderer = jspRenderer;
-		_layoutDisplayPageProvider = layoutDisplayPageProvider;
 		_portal = portal;
 		_servletContext = servletContext;
 	}
@@ -97,13 +92,16 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 		try {
 			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-				_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-					new InfoItemReference(
-						_infoItemClassDetails.getClassName(), classPK));
+				_displayPageTypeContext.getLayoutDisplayPageObjectProvider(
+					classPK);
+
+			if (layoutDisplayPageObjectProvider == null) {
+				return false;
+			}
 
 			siteNavigationMenuItemElement.addAttribute(
 				"display-page-class-name",
-				_infoItemClassDetails.getClassName());
+				_displayPageTypeContext.getClassName());
 			siteNavigationMenuItemElement.addAttribute(
 				"display-page-class-pk", String.valueOf(classPK));
 
@@ -149,7 +147,8 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoItemItemSelectorReturnType());
-		itemSelectorCriterion.setItemType(_infoItemClassDetails.getClassName());
+		itemSelectorCriterion.setItemType(
+			_displayPageTypeContext.getClassName());
 
 		PortletURL infoItemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
@@ -165,7 +164,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _infoItemClassDetails.getLabel(locale);
+		return _displayPageTypeContext.getLabel(locale);
 	}
 
 	@Override
@@ -189,7 +188,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 		String friendlyURL =
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				_infoItemClassDetails.getClassName(),
+				_displayPageTypeContext.getClassName(),
 				GetterUtil.getLong(
 					typeSettingsUnicodeProperties.get("classPK")),
 				themeDisplay);
@@ -205,7 +204,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 	public String getSubtitle(
 		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
 
-		return _infoItemClassDetails.getLabel(locale);
+		return _displayPageTypeContext.getLabel(locale);
 	}
 
 	@Override
@@ -236,11 +235,9 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			).build();
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(
-					_infoItemClassDetails.getClassName(),
-					GetterUtil.getLong(
-						typeSettingsUnicodeProperties.get("classPK"))));
+			_displayPageTypeContext.getLayoutDisplayPageObjectProvider(
+				GetterUtil.getLong(
+					typeSettingsUnicodeProperties.get("classPK")));
 
 		if (layoutDisplayPageObjectProvider == null) {
 			return typeSettingsUnicodeProperties.getProperty("title");
@@ -251,7 +248,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	@Override
 	public String getType() {
-		return _infoItemClassDetails.getClassName();
+		return _displayPageTypeContext.getClassName();
 	}
 
 	@Override
@@ -277,14 +274,14 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 				"classNameId",
 				String.valueOf(
 					_portal.getClassNameId(
-						_infoItemClassDetails.getClassName()))
+						_displayPageTypeContext.getClassName()))
 			).put(
 				"classPK",
 				String.valueOf(
 					MapUtil.getLong(
 						(Map<Long, Long>)
 							portletDataContext.getNewPrimaryKeysMap(
-								_infoItemClassDetails.getClassName()),
+								_displayPageTypeContext.getClassName()),
 						classPK, classPK))
 			).buildString());
 
@@ -317,15 +314,11 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 		httpServletRequest.setAttribute(
 			SiteNavigationMenuItemTypeDisplayPageWebKeys.
-				INFO_ITEM_CLASS_DETAILS,
-			_infoItemClassDetails);
+				DISPLAY_PAGE_TYPE_CONTEXT,
+			_displayPageTypeContext);
 		httpServletRequest.setAttribute(
 			SiteNavigationMenuItemTypeDisplayPageWebKeys.ITEM_SELECTOR,
 			_itemSelector);
-		httpServletRequest.setAttribute(
-			SiteNavigationMenuItemTypeDisplayPageWebKeys.
-				LAYOUT_DISPLAY_PAGE_PROVIDER,
-			_layoutDisplayPageProvider);
 		httpServletRequest.setAttribute(
 			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
 			siteNavigationMenuItem);
@@ -340,10 +333,9 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-	private final InfoItemClassDetails _infoItemClassDetails;
+	private final DisplayPageTypeContext _displayPageTypeContext;
 	private final ItemSelector _itemSelector;
 	private final JSPRenderer _jspRenderer;
-	private final LayoutDisplayPageProvider _layoutDisplayPageProvider;
 	private final Portal _portal;
 	private final ServletContext _servletContext;
 

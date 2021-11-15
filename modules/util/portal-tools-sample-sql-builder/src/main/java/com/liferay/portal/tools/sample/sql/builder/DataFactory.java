@@ -2106,7 +2106,7 @@ public class DataFactory {
 						"commerce/commerce_theme_portlet_settings.json"))));
 	}
 
-	public CompanyModel newCompanyModel() {
+	public CompanyModel newCompanyModel(int... index) {
 		CompanyModel companyModel = new CompanyModelImpl();
 
 		// PK fields
@@ -2120,13 +2120,35 @@ public class DataFactory {
 
 		// Other fields
 
-		companyModel.setWebId("liferay.com");
+		if (index.length == 0) {
+			companyModel.setWebId("liferay.com");
+		}
+		else {
+			companyModel.setWebId(
+				StringBundler.concat("liferay", index[0], ".com"));
+		}
+
 		companyModel.setMx("liferay.com");
 		companyModel.setActive(true);
 		companyModel.setName("Liferay");
 		companyModel.setLegalName("Liferay, Inc.");
 
 		return companyModel;
+	}
+
+	public List<CompanyModel> newCompanyModels() {
+		List<CompanyModel> companyModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT + 1);
+
+		companyModels.add(newCompanyModel());
+
+		for (int i = 1; i <= BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT;
+			 i++) {
+
+			companyModels.add(newCompanyModel(i));
+		}
+
+		return companyModels;
 	}
 
 	public ContactModel newContactModel(UserModel userModel) {

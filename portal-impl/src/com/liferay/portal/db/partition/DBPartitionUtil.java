@@ -70,8 +70,7 @@ public class DBPartitionUtil {
 			InfrastructureUtil.getDataSource());
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"create schema if not exists " + _getSchemaName(companyId) +
-					" character set utf8")) {
+				_getCreateSchemaSQL(companyId))) {
 
 			preparedStatement.executeUpdate();
 
@@ -380,6 +379,12 @@ public class DBPartitionUtil {
 		};
 	}
 
+	private static String _getCreateSchemaSQL(long companyId) {
+		return StringBundler.concat(
+			"create schema if not exists ", _getSchemaName(companyId),
+			" character set ", _getSessionCharsetEncoding());
+	}
+
 	private static String _getCreateTableSQL(long companyId, String tableName) {
 		return StringBundler.concat(
 			"create table if not exists ", _getSchemaName(companyId),
@@ -414,6 +419,27 @@ public class DBPartitionUtil {
 		}
 
 		return _DATABASE_PARTITION_SCHEMA_NAME_PREFIX + companyId;
+	}
+
+	private static String _getSessionCharsetEncoding() {
+		Connection connection = CurrentConnectionUtil.getConnection(
+			InfrastructureUtil.getDataSource());
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select variable_value from " +
+					"performance_schema.session_variables where " +
+						"variable_name = 'character_set_client'");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getString("variable_value");
+			}
+
+			return "utf8";
+		}
+		catch (Exception exception) {
+			return "utf8";
+		}
 	}
 
 	private static boolean _isControlTable(

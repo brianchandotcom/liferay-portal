@@ -6,6 +6,8 @@
 <#list dataFactory.newUserModels() as userModel>
 	<#assign userGroupModel = dataFactory.newGroupModel(userModel) />
 
+	${csvFileWriter.write("user", virtualHostModel.hostname + "," + userModel.screenName + "\n")}
+
 	<@insertLayout _layoutModel=dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "") />
 
 	<@insertGroup _groupModel=userGroupModel />

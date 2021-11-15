@@ -544,6 +544,61 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This is a test for LPS-83798. Validate File system can't access using Journal/DDM templates."
+	@priority = "5"
+	test AssertNoFileSystemAccessViaJournalTemplates {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		NavItem.gotoTemplates();
+
+		var os = OSDetector.isWindows();
+
+		if ("${os}" == "true") {
+			var templateScript = '''
+${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().create("file:///C:/boot.ini").toURL())}
+''';
+		}
+
+		else {
+			var templateScript = '''
+${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().create("file:///etc/hosts").toURL())}
+''';
+		}
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			templateScript = "${templateScript}");
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		IFrame.closeFrame();
+
+		AssertTextPresent(value1 = "An error occurred while processing the template.");
+	}
+
 	@priority = "4"
 	test ChangeTemplate {
 		property test.name.skip.portal.instance = "WebContentDisplay#ChangeTemplate";

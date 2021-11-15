@@ -102,43 +102,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 		}
 	}
 
-	public BaseAutoDeployer(List<String> wars, List<String> jars) {
-		this();
-
-		baseDir = System.getProperty("deployer.base.dir");
-		destDir = System.getProperty("deployer.dest.dir");
-		appServerType = System.getProperty("deployer.app.server.type");
-		auiTaglibDTD = System.getProperty("deployer.aui.taglib.dtd");
-		portletTaglibDTD = System.getProperty("deployer.portlet.taglib.dtd");
-		portletExtTaglibDTD = System.getProperty(
-			"deployer.portlet-ext.taglib.dtd");
-		securityTaglibDTD = System.getProperty("deployer.security.taglib.dtd");
-		themeTaglibDTD = System.getProperty("deployer.theme.taglib.dtd");
-		uiTaglibDTD = System.getProperty("deployer.ui.taglib.dtd");
-		utilTaglibDTD = System.getProperty("deployer.util.taglib.dtd");
-		unpackWar = GetterUtil.getBoolean(
-			System.getProperty("deployer.unpack.war"), true);
-		filePattern = System.getProperty("deployer.file.pattern");
-		jbossPrefix = GetterUtil.getString(
-			System.getProperty("deployer.jboss.prefix"));
-		tomcatLibDir = System.getProperty("deployer.tomcat.lib.dir");
-		wildflyPrefix = GetterUtil.getString(
-			System.getProperty("deployer.wildfly.prefix"));
-		this.wars = wars;
-		this.jars = jars;
-
-		checkArguments();
-
-		String context = System.getProperty("deployer.context");
-
-		try {
-			deploy(context);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
-	}
-
 	@Override
 	public void addRequiredJar(List<String> jars, String resource)
 		throws Exception {

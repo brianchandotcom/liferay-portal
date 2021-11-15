@@ -48,39 +48,36 @@ definition {
 			pageName = "Blogs Page",
 			siteName = "Guest");
 
-		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		WorkflowAsset.gotoViaNotification(
-			assetType = "Blogs Entry",
-			user = "Test Test");
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
 
-		Workflow.confirmWorkflowAction();
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reject");
+		Workflow.resubmitTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Update");
 
-		Workflow.confirmWorkflowAction();
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		Refresh();
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Resubmit");
-
-		Workflow.confirmWorkflowAction();
-
-		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
-
-		WorkflowAsset.gotoViaNotification(
-			assetType = "Blogs Entry",
-			user = "Test Test");
-
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
-
-		Workflow.confirmWorkflowAction();
-
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
-
-		Workflow.confirmWorkflowAction();
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 

@@ -78,6 +78,8 @@ public interface SXPElementResource {
 	public SXPElement patchSXPElement(Long sxpElementId, SXPElement sxpElement)
 		throws Exception;
 
+	public SXPElement postSXPElementCopy(Long sxpElementId) throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

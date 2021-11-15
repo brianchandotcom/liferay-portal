@@ -313,6 +313,36 @@ public abstract class BaseSXPBlueprintResourceImpl
 		return new SXPBlueprint();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprints/{sxpBlueprintId}/copy'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "sxpBlueprintId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "SXPBlueprint")}
+	)
+	@javax.ws.rs.Path("/sxp-blueprints/{sxpBlueprintId}/copy")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public SXPBlueprint postSXPBlueprintCopy(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("sxpBlueprintId")
+			Long sxpBlueprintId)
+		throws Exception {
+
+		return new SXPBlueprint();
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(

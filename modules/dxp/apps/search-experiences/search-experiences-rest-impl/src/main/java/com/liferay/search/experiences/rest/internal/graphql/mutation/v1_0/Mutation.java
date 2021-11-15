@@ -142,6 +142,18 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public SXPBlueprint createSXPBlueprintCopy(
+			@GraphQLName("sxpBlueprintId") Long sxpBlueprintId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpBlueprintResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpBlueprintResource -> sxpBlueprintResource.postSXPBlueprintCopy(
+				sxpBlueprintId));
+	}
+
+	@GraphQLField
 	public SXPElement createSXPElement(
 			@GraphQLName("sxpElement") SXPElement sxpElement)
 		throws Exception {
@@ -206,6 +218,18 @@ public class Mutation {
 			this::_populateResourceContext,
 			sxpElementResource -> sxpElementResource.patchSXPElement(
 				sxpElementId, sxpElement));
+	}
+
+	@GraphQLField
+	public SXPElement createSXPElementCopy(
+			@GraphQLName("sxpElementId") Long sxpElementId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpElementResource -> sxpElementResource.postSXPElementCopy(
+				sxpElementId));
 	}
 
 	@GraphQLField

@@ -439,6 +439,25 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testPostSXPBlueprintCopy() throws Exception {
+		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
+
+		SXPBlueprint postSXPBlueprint =
+			testPostSXPBlueprintCopy_addSXPBlueprint(randomSXPBlueprint);
+
+		assertEquals(randomSXPBlueprint, postSXPBlueprint);
+		assertValid(postSXPBlueprint);
+	}
+
+	protected SXPBlueprint testPostSXPBlueprintCopy_addSXPBlueprint(
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected SXPBlueprint testGraphQLSXPBlueprint_addSXPBlueprint()
 		throws Exception {
 

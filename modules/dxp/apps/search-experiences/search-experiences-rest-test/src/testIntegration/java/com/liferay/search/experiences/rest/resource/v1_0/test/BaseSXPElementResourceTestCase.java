@@ -426,6 +426,25 @@ public abstract class BaseSXPElementResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testPostSXPElementCopy() throws Exception {
+		SXPElement randomSXPElement = randomSXPElement();
+
+		SXPElement postSXPElement = testPostSXPElementCopy_addSXPElement(
+			randomSXPElement);
+
+		assertEquals(randomSXPElement, postSXPElement);
+		assertValid(postSXPElement);
+	}
+
+	protected SXPElement testPostSXPElementCopy_addSXPElement(
+			SXPElement sxpElement)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected SXPElement testGraphQLSXPElement_addSXPElement()
 		throws Exception {
 

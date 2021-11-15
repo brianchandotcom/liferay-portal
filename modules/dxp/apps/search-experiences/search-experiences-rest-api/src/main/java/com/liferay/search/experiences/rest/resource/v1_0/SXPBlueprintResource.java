@@ -80,6 +80,9 @@ public interface SXPBlueprintResource {
 			Long sxpBlueprintId, SXPBlueprint sxpBlueprint)
 		throws Exception;
 
+	public SXPBlueprint postSXPBlueprintCopy(Long sxpBlueprintId)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

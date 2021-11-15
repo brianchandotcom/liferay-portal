@@ -176,6 +176,16 @@ definition {
 		else {
 			Button.clickPublish();
 
+			if (isSet(successFileName)) {
+				Translations.viewImportResult(
+					errorMessage = "${errorMessage}",
+					errorMessageItem = "${errorMessageItem}",
+					failFileName = "${failFileName}",
+					successFileName = "${successFileName}",
+					successFileName2 = "${successFileName2}",
+					successFileNumber = "${successFileNumber}");
+			}
+
 			Click(locator1 = "Button#TRANSLATIONS_DONE");
 		}
 	}
@@ -274,7 +284,7 @@ definition {
 	macro translateContentPageFile {
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "update-translation-file -Dcontentpage.translation.fragment.target.original=<![CDATA[${fragmentContent}]]></target> -Dcontentpage.translation.fragment.target=<![CDATA[${fragmentContentTranslation}]]></target> -Dcontentpage.translation.title.target.original=<![CDATA[${pageName}]]></target> -Dcontentpage.translation.title.target=<![CDATA[${pageNameTranslation}]]></target> -Dtranslation.file.encoding=${encoding} -Dtranslation.file.name=${translationFileName} -Dcontentpage.translation.file=${contentPageTranslation} -Dtranslation.zip.file.name=${translationZipFileName}");
+			value1 = "update-translation-file -Doperation=${operation} -Dcontentpage.translation.fragment.target.original=<![CDATA[${fragmentContent}]]></target> -Dcontentpage.translation.fragment.target=<![CDATA[${fragmentContentTranslation}]]></target> -Dcontentpage.translation.title.target.original=<![CDATA[${pageName}]]></target> -Dcontentpage.translation.title.target=<![CDATA[${pageNameTranslation}]]></target> -Dtranslation.file.encoding=${encoding} -Dtranslation.file.name=${translationFileName} -Dcontentpage.translation.file=${contentPageTranslation} -Dtranslation.zip.file.name=${translationZipFileName}");
 	}
 
 	macro translateFields {
@@ -519,8 +529,42 @@ definition {
 			locator1 = "Message#ERROR_IMPORT_TRANSLATIONS",
 			value1 = "${errorMessage}");
 		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR_IMPORT_TRANSLATIONS_ITEM",
+			locator1 = "Message#ERROR_IMPORT_TRANSLATIONS_ITEM_MESSAGE",
 			value1 = "${errorMessageItem}");
+	}
+
+	macro viewImportResult {
+		if (isSet(successFileName)) {
+			AssertTextEquals(
+				locator1 = "Message#SUCCESS_IMPORT_TRANSLATIONS",
+				value1 = "${successFileNumber}");
+
+			AssertTextEquals(
+				locator1 = "Message#SUCCESS_IMPORT_TRANSLATIONS_ITEM",
+				value1 = "${successFileName}");
+
+			if (isSet(successFileName2)) {
+				AssertTextEquals(
+					locator1 = "Message#SUCCESS_IMPORT_TRANSLATIONS_ITEM_2",
+					value1 = "${successFileName2}");
+			}
+		}
+
+		if (isSet(failFileName)) {
+			Translations.viewErrorMessages(
+				errorMessage = "${errorMessage}",
+				errorMessageItem = "${errorMessageItem}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_IMPORT_TRANSLATIONS_ITEM",
+				value1 = "${failFileName}");
+		}
+	}
+
+	macro viewNoTranslationEntry {
+		AssertElementNotPresent(
+			ey_rowEntry = "${title}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 	}
 
 	macro viewTargetFields {

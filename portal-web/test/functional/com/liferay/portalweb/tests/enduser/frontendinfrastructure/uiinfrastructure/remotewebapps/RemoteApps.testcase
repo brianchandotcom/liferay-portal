@@ -22,6 +22,22 @@ definition {
 		}
 	}
 
+	@description = "Verify remote app can be created"
+	@priority = "5"
+	test CanBeCreated {
+		property portal.acceptance = "true";
+
+		var remoteAppName = "Test Remote App";
+
+		RemoteApps.goToRemoteAppsPortlet();
+
+		RemoteApps.addApp(
+			entryName = "${remoteAppName}",
+			entryURL = "http://www.liferay.com");
+
+		RemoteApps.viewTableEntryName(entryName = "${remoteAppName}");
+	}
+
 	@description = "Verify remote app can be deleted"
 	@priority = "5"
 	@refactordone
@@ -243,4 +259,76 @@ definition {
 			locator1 = "TextInput#ANY");
 	}
 
+
+	@description = "Verify that the fields of a Custom Element from a Remote App can be saved"
+	@priority = "5"
+	test CustomElementFieldsCanBeSaved {
+
+		property portal.acceptance = "true";
+
+		var customElementName = "Vanilla Counter";
+		var customElementType = "Custom Element";
+		var customElementHTMLName = "vanilla-counter";
+		var customElementURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js";
+		var customElementCSSURL = "http://remote-component-test.wincent.com/index.css";
+		var customElementProperties = "test-data-user=QAuser";
+
+		RemoteApps.goToRemoteAppsPortlet();
+
+		RemoteApps.addCustomElementAllFields(
+				entryName = "${customElementName}",
+				entryHTMLName = "${customElementHTMLName}",
+				entryURL = "${customElementURL}",
+				entryCSSURL = "${customElementCSSURL}",
+				entryProperties = "${customElementProperties}");
+
+		Click(
+				key_tableEntryName = "${customElementName}",
+				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+
+		RemoteApps.viewCustomElementFields(
+				entryName = "${customElementName}",
+				entryHTMLName = "${customElementHTMLName}",
+				entryURL = "${customElementURL}",
+				entryCSSURL = "${customElementCSSURL}",
+				entryProperties = "${customElementProperties}");
+	}
+
+
+	@description = "Verify that remote app type IFrame can display property fields"
+	@priority = "4"
+	test IframeTypeCanDisplayProperFields {
+		property portal.acceptance = "true";
+
+		var customElementType = "Custom Element";
+		var IFrameType = "IFrame";
+
+		RemoteApps.goToRemoteAppsPortlet();
+
+		LexiconEntry.gotoAdd();
+
+		Select(
+			locator1 = "Select#TYPE",
+			value1 = "${IFrameType}");
+
+		AssertNotVisible(
+			key_text = "HTML Element Name",
+			locator1 = "TextInput#ANY");
+
+		AssertNotVisible(
+			key_text = "CSS URL",
+			locator1 = "TextInput#ANY");
+
+		Select(
+			locator1 = "Select#TYPE",
+			value1 = "${customElementType}");
+
+		AssertVisible(
+			key_text = "HTML Element Name",
+			locator1 = "TextInput#ANY");
+
+		AssertVisible(
+			key_text = "CSS URL",
+			locator1 = "TextInput#ANY");
+	}
 }

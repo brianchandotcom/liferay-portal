@@ -16,8 +16,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>URL</td>
-	<td>//input[(contains(@id,'${key_id}'))]</td>
+	<td>CUSTOM_ELEMENT_URL</td>
+	<td>//input[contains(@id,'customElementURLs')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOTE_APPS_INSTANCEABLE</td>
+	<td>//input[contains(@id,'instanceable')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOTE_APPS_PROPERTIES</td>
+	<td>//textarea[contains(@id,'properties')]</td>
 	<td></td>
 </tr>
 </tbody>

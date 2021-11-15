@@ -45,16 +45,17 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteVerticalCard implements VerticalCard {
 
 	public SiteVerticalCard(
-		BaseModel<?> baseModel, RenderRequest renderRequest,
-		RenderResponse renderResponse, String tabs1, int groupUsersCount,
-		int groupOrganizationsCount, int groupUserGroupsCount) {
+		BaseModel<?> baseModel, int groupOrganizationsCount,
+		int groupUserGroupsCount, int groupUsersCount,
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		String tabs1) {
 
+		_groupOrganizationsCount = groupOrganizationsCount;
+		_groupUserGroupsCount = groupUserGroupsCount;
+		_groupUsersCount = groupUsersCount;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_tabs1 = tabs1;
-		_groupUsersCount = groupUsersCount;
-		_groupOrganizationsCount = groupOrganizationsCount;
-		_groupUserGroupsCount = groupUserGroupsCount;
 
 		_group = (Group)baseModel;
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);

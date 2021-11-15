@@ -126,14 +126,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 	public int autoDeploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 
-		List<String> wars = new ArrayList<>();
-
-		File file = autoDeploymentContext.getFile();
-
-		wars.add(file.getName());
-
-		this.wars = wars;
-
 		try {
 			return _deployFile(autoDeploymentContext);
 		}
@@ -525,7 +517,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 	protected String uiTaglibDTD;
 	protected boolean unpackWar;
 	protected String utilTaglibDTD;
-	protected List<String> wars;
 	protected String wildflyPrefix;
 
 	private void _copyJars(File srcFile) throws Exception {

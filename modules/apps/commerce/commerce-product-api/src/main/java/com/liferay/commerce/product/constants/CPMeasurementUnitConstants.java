@@ -21,6 +21,8 @@ public class CPMeasurementUnitConstants {
 
 	public static final int TYPE_DIMENSION = 0;
 
+	public static final int TYPE_PIECE = 2;
+
 	public static final int TYPE_WEIGHT = 1;
 
 }

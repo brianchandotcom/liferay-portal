@@ -171,7 +171,7 @@ public class CPMeasurementUnitLocalServiceImpl
 			"meters", "m", 0.0254, false, 3,
 			CPMeasurementUnitConstants.TYPE_DIMENSION, serviceContext);
 		_addCPMeasurementUnit(
-			"millimeters", "mm", 25.4, false, 1,
+			"millimeters", "mm", 25.4, false, 4,
 			CPMeasurementUnitConstants.TYPE_DIMENSION, serviceContext);
 
 		_addCPMeasurementUnit(
@@ -186,6 +186,10 @@ public class CPMeasurementUnitLocalServiceImpl
 		_addCPMeasurementUnit(
 			"grams", "g", 453.59237, false, 4,
 			CPMeasurementUnitConstants.TYPE_WEIGHT, serviceContext);
+
+		_addCPMeasurementUnit(
+			"piece", "pc", 1, true, 1, CPMeasurementUnitConstants.TYPE_PIECE,
+			serviceContext);
 	}
 
 	@Override

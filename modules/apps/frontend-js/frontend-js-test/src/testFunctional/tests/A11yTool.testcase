@@ -125,6 +125,65 @@ definition {
 		takeScreenshot();
 	}
 
+	@description = "LPS-142322. Verifies side panel displays information about a violation rule."
+	@priority = "4"
+	test CanDisplayViolationRuleDetails {
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
+
+		// Workaround for side panel sometimes not displaying LPS-141442
+
+		while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+			Refresh();
+		}
+
+		task ("Verify and click on a rule listed on the side panel") {
+			VerifyElementPresent(
+				key_text = "button-name",
+				locator1 = "A11yTool#VIOLATION_PANEL_RULE_LIST_ITEM");
+
+			Click(
+				key_text = "button-name",
+				locator1 = "A11yTool#VIOLATION_PANEL_RULE_LIST_ITEM");
+		}
+
+		task ("Assert the side panel contains info about rule name, impact level, and link to category rule") {
+			AssertElementPresent(
+				key_text = "button-name",
+				locator1 = "A11yTool#VIOLATION_PANEL_COMPONENT_TITLE");
+
+			AssertElementPresent(
+				key_impact = "critical",
+				locator1 = "A11yTool#VIOLATION_PANEL_COMPONENT_IMPACT");
+
+			AssertElementPresent(
+				key_text = "More Info",
+				locator1 = "A11yTool#VIOLATION_PANEL_COMPONENT_LINK");
+		}
+
+		task ("Assert the side panel displays details about the rule violation") {
+			AssertElementPresent(
+				key_header = "Details",
+				locator1 = "A11yTool#VIOLATION_PANEL_COMPONENT_HEADER");
+
+			AssertElementPresent(
+				key_text = "Ensures buttons have discernible text",
+				locator1 = "A11yTool#VIOLATION_PANEL_COMPONENT_BODY");
+		}
+
+		task ("Assert the side panel lists the occurences") {
+			AssertElementPresent(
+				key_header = "Occurrences",
+				locator1 = "A11yTool#VIOLATION_PANEL_COMPONENT_HEADER");
+
+			AssertElementPresent(
+				key_text = "",
+				locator1 = "A11yTool#VIOLATION_PANEL_OCCURRENCE_LIST_ITEM");
+		}
+
+		takeScreenshot();
+	}
+
 	@description = "LPS-141820. Verifies violations can be filtered by 'Critical' only."
 	@priority = "5"
 	test CanFilterViolationsByCriticalImpactOnly {

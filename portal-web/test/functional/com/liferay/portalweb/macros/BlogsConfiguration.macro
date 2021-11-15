@@ -28,8 +28,8 @@ definition {
 		}
 
 		Type(
-			key_fieldName = "displayStyle",
-			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+			key_label = "Display Style",
+			locator1 = "TextArea#ANY_LABELED",
 			value1 = "${displayStyleKey}");
 
 		Button.clickSave();

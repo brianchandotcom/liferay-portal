@@ -95,6 +95,56 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-139064. Users can preview localized draft for a content page."
+	@priority = "3"
+	test PreviewLocalizedDraftContentPage {
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Change the locale to ca-ES") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "ca-ES");
+		}
+
+		task ("Add the localized inline text") {
+			PageEditor.editFragmentText(
+				fragmentName = "Button",
+				id = "link",
+				text = "Aneu a algun lloc");
+		}
+
+		task ("Navigate to the Pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Change the user language to ca-ES") {
+			Navigator.ensureLocaleURL(locale = "ca");
+		}
+
+		task ("Preview the localized draft content page in a new tab") {
+			SitePages.gotoPageMenuItem(
+				menuItem = "Previsualitza l'esborrany",
+				pageName = "Test Page Name");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Content Page Name *");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Aneu a algun lloc");
+		}
+	}
+
 	@description = "This is a test for LPS-122148. Search localized inline text items in Page Content panel."
 	@priority = "4"
 	test SearchLocalizedInlineTextItemsInPageContentPanel {

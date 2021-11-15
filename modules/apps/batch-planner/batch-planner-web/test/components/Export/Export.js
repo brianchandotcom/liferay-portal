@@ -24,7 +24,10 @@ import {
 import fetchMock from 'fetch-mock';
 import React from 'react';
 
-import {getExportTaskStatusURL} from '../../../src/main/resources/META-INF/resources/js/api';
+import {
+	fetchExportedFile,
+	getExportTaskStatusURL,
+} from '../../../src/main/resources/META-INF/resources/js/api';
 import {
 	EXPORT_PROCESS_COMPLETED,
 	EXPORT_PROCESS_FAILED,
@@ -41,16 +44,17 @@ const BASE_PROPS = {
 };
 
 const mockTaskID = 1234;
-const testBlobPathname = '/blobtest';
 let mockApi;
+
+const mockCreateObjectUrl = jest.fn(() => 'test.url/bloburl');
+window.URL.createObjectURL = mockCreateObjectUrl;
+window.URL.revokeObjectURL = jest.fn();
 
 jest.mock('../../../src/main/resources/META-INF/resources/js/api', () => ({
 	...jest.requireActual(
 		'../../../src/main/resources/META-INF/resources/js/api'
 	),
-	getExportFileURL: jest
-		.fn()
-		.mockResolvedValue('https://blobtest.it/blobtest'),
+	fetchExportedFile: jest.fn(),
 }));
 
 describe('Export', () => {
@@ -70,9 +74,12 @@ describe('Export', () => {
 			.mock(BASE_PROPS.formExportURL, () => ({
 				exportTaskId: mockTaskID,
 			}))
-			.once(
+			.mock(
 				`/o/headless-batch-engine/v1.0/export-task/${mockTaskID}/content`,
-				{body: blob},
+				{
+					body: blob,
+					headers: {'Content-Type': 'application/pdf'},
+				},
 				{sendAsJson: false}
 			);
 	});
@@ -202,7 +209,7 @@ describe('Export', () => {
 		jest.useRealTimers();
 	});
 
-	it('must enable the download link when export task is COMPLETED', async () => {
+	it('must enable the download button when export task is COMPLETED', async () => {
 		jest.useFakeTimers();
 
 		const exportTaskStatusURL = getExportTaskStatusURL(mockTaskID);
@@ -222,7 +229,7 @@ describe('Export', () => {
 			},
 		}));
 
-		const {getByRole, getByText} = render(<Export {...BASE_PROPS} />);
+		const {getByText} = render(<Export {...BASE_PROPS} />);
 
 		act(() => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
@@ -231,7 +238,9 @@ describe('Export', () => {
 		await wait(() => {
 			jest.advanceTimersByTime(POLLING_EXPORT_STATUS_TIMEOUT);
 			expect(
-				getByRole('link', {name: Liferay.Language.get('download')})
+				getByText(Liferay.Language.get('download'), {
+					selector: 'button',
+				})
 			).not.toBeDisabled();
 		});
 
@@ -239,31 +248,27 @@ describe('Export', () => {
 		jest.useRealTimers();
 	});
 
-	it('must show progress completed when execureStatus is COMPLETED', async () => {
+	it('must create the blob file and download it when download button pressed', async () => {
 		jest.useFakeTimers();
 
 		const exportTaskStatusURL = getExportTaskStatusURL(mockTaskID);
 
-		fetchMock
-			.mock(BASE_PROPS.formExportURL, () => ({
-				exportTaskId: mockTaskID,
-			}))
-			.mock(exportTaskStatusURL, () => ({
-				body: {
-					className:
-						'com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product',
-					contentType: 'CSV',
-					endTime: null,
-					errorMessage: null,
-					executeStatus: EXPORT_PROCESS_COMPLETED,
-					id: mockTaskID,
-					processedItemsCount: 50,
-					startTime: '2021-11-10T10:36:08Z',
-					totalItemsCount: 50,
-				},
-			}));
+		fetchMock.mock(exportTaskStatusURL, () => ({
+			body: {
+				className:
+					'com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product',
+				contentType: 'CSV',
+				endTime: null,
+				errorMessage: null,
+				executeStatus: EXPORT_PROCESS_COMPLETED,
+				id: mockTaskID,
+				processedItemsCount: 50,
+				startTime: '2021-11-10T10:36:08Z',
+				totalItemsCount: 50,
+			},
+		}));
 
-		const {getByRole, getByText} = render(<Export {...BASE_PROPS} />);
+		const {getByText} = render(<Export {...BASE_PROPS} />);
 
 		act(() => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
@@ -271,10 +276,22 @@ describe('Export', () => {
 
 		await wait(() => {
 			jest.advanceTimersByTime(POLLING_EXPORT_STATUS_TIMEOUT);
-			expect(
-				getByRole('link', {name: Liferay.Language.get('download')})
-					.pathname
-			).toBe(testBlobPathname);
+
+			getByText(Liferay.Language.get('download'), {
+				selector: 'button',
+			});
+		});
+
+		act(() => {
+			fireEvent.click(
+				getByText(Liferay.Language.get('download'), {
+					selector: 'button',
+				})
+			);
+		});
+
+		await wait(() => {
+			expect(fetchExportedFile).toBeCalled();
 		});
 
 		jest.runOnlyPendingTimers();

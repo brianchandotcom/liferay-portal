@@ -12,9 +12,12 @@
  * details.
  */
 
-export const EXPORT_PROCESS_STARTED = 'STARTED';
-export const EXPORT_PROCESS_COMPLETED = 'COMPLETED';
-export const EXPORT_PROCESS_FAILED = 'FAILED';
-
-export const POLLING_EXPORT_STATUS_TIMEOUT = 1000;
-export const EXPORT_FILE_NAME = 'Export.zip';
+export const download = (url, filename) => {
+	var a = document.createElement('a');
+	document.body.appendChild(a);
+	a.style.display = 'none';
+	a.href = url;
+	a.download = filename;
+	a.click();
+	window.URL.revokeObjectURL(url);
+};

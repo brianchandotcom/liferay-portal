@@ -631,7 +631,7 @@ AUI.add(
 					if (languageStatusNode) {
 						languageStatusNode.setHTML(
 							A.Lang.sub(instance.TRANSLATION_STATUS_TEMPLATE, {
-								languageId,
+								languageId: languageId.replace(/_/, '-'),
 								translationStatus,
 								translationStatusCssClass,
 							})

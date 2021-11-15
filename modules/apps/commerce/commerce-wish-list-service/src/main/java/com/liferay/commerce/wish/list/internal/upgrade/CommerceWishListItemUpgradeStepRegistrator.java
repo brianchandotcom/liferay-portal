@@ -19,6 +19,7 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.wish.list.internal.upgrade.v1_1_0.CommerceWishListItemUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,6 +44,19 @@ public class CommerceWishListItemUpgradeStepRegistrator
 			"1.0.0", "1.1.0",
 			new CommerceWishListItemUpgradeProcess(
 				_cpDefinitionLocalService, _cpInstanceLocalService));
+
+		registry.register(
+			"1.1.0", "1.2.0",
+			new MVCCVersionUpgradeProcess() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {
+						"CommerceWishList", "CommerceWishListItem"
+					};
+				}
+
+			});
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce wish list upgrade step registrator finished");

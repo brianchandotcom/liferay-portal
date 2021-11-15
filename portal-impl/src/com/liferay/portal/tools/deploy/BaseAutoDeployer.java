@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
-import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.WebXMLBuilder;
 import com.liferay.portal.tools.deploy.extension.DeploymentExtension;
 import com.liferay.portal.util.PropsUtil;
@@ -93,33 +92,6 @@ import org.apache.oro.io.GlobFilenameFilter;
 public class BaseAutoDeployer implements AutoDeployer {
 
 	public static final String DEPLOY_TO_PREFIX = "DEPLOY_TO__";
-
-	public static void main(String[] args) {
-		ToolDependencies.wireDeployers();
-
-		List<String> wars = new ArrayList<>();
-		List<String> jars = new ArrayList<>();
-
-		for (String arg : args) {
-			String fileName = StringUtil.toLowerCase(arg);
-
-			if (fileName.endsWith(".war")) {
-				wars.add(arg);
-			}
-			else if (fileName.endsWith(".jar")) {
-				jars.add(arg);
-			}
-		}
-
-		try (BaseAutoDeployer baseAutoDeployer = new BaseAutoDeployer(
-				wars, jars)) {
-		}
-		catch (IOException ioException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(ioException, ioException);
-			}
-		}
-	}
 
 	public BaseAutoDeployer() {
 		ServiceLoader<DeploymentExtension> serviceLoader = ServiceLoader.load(

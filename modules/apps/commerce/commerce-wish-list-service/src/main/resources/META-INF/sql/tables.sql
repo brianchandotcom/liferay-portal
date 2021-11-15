@@ -1,4 +1,5 @@
 create table CommerceWishList (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	commerceWishListId LONG not null primary key,
 	groupId LONG,
@@ -12,6 +13,7 @@ create table CommerceWishList (
 );
 
 create table CommerceWishListItem (
+	mvccVersion LONG default 0 not null,
 	commerceWishListItemId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

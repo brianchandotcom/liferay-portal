@@ -35,6 +35,9 @@ public class CommerceWishListItemTable
 	public static final CommerceWishListItemTable INSTANCE =
 		new CommerceWishListItemTable();
 
+	public final Column<CommerceWishListItemTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceWishListItemTable, Long>
 		commerceWishListItemId = createColumn(
 			"commerceWishListItemId", Long.class, Types.BIGINT,

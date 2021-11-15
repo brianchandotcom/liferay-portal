@@ -43,6 +43,7 @@ public class CommerceWishListWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("commerceWishListId", getCommerceWishListId());
 		attributes.put("groupId", getGroupId());
@@ -59,6 +60,12 @@ public class CommerceWishListWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -183,6 +190,16 @@ public class CommerceWishListWrapper
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce wish list.
+	 *
+	 * @return the mvcc version of this commerce wish list
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -325,6 +342,16 @@ public class CommerceWishListWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce wish list.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce wish list
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

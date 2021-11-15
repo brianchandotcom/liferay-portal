@@ -33,6 +33,8 @@ public class CommerceWishListTable extends BaseTable<CommerceWishListTable> {
 	public static final CommerceWishListTable INSTANCE =
 		new CommerceWishListTable();
 
+	public final Column<CommerceWishListTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceWishListTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceWishListTable, Long> commerceWishListId =

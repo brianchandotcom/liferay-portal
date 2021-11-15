@@ -44,6 +44,7 @@ public class CommerceWishListItemWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceWishListItemId", getCommerceWishListItemId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -61,6 +62,12 @@ public class CommerceWishListItemWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceWishListItemId = (Long)attributes.get(
 			"commerceWishListItemId");
 
@@ -253,6 +260,16 @@ public class CommerceWishListItemWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this commerce wish list item.
+	 *
+	 * @return the mvcc version of this commerce wish list item
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the primary key of this commerce wish list item.
 	 *
 	 * @return the primary key of this commerce wish list item
@@ -392,6 +409,16 @@ public class CommerceWishListItemWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce wish list item.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce wish list item
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

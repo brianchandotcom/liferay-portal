@@ -33,6 +33,7 @@ public class CommerceWishListSoap implements Serializable {
 	public static CommerceWishListSoap toSoapModel(CommerceWishList model) {
 		CommerceWishListSoap soapModel = new CommerceWishListSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceWishListId(model.getCommerceWishListId());
 		soapModel.setGroupId(model.getGroupId());
@@ -102,6 +103,14 @@ public class CommerceWishListSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceWishListId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -188,6 +197,7 @@ public class CommerceWishListSoap implements Serializable {
 		_defaultWishList = defaultWishList;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceWishListId;
 	private long _groupId;

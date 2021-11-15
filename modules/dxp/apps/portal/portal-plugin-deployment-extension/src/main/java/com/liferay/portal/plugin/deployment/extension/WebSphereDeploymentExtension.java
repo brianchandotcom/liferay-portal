@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.deploy.BaseDeployer;
+import com.liferay.portal.tools.deploy.BaseAutoDeployer;
 import com.liferay.portal.tools.deploy.extension.DeploymentExtension;
 import com.liferay.portal.util.PropsValues;
 
@@ -42,10 +42,11 @@ import java.util.List;
 public class WebSphereDeploymentExtension implements DeploymentExtension {
 
 	@Override
-	public void copyXmls(BaseDeployer baseDeployer, File srcFile)
+	public void copyXmls(BaseAutoDeployer baseAutoDeployer, File srcFile)
 		throws Exception {
 
-		baseDeployer.copyDependencyXml("ibm-web-ext.xmi", srcFile + "/WEB-INF");
+		baseAutoDeployer.copyDependencyXml(
+			"ibm-web-ext.xmi", srcFile + "/WEB-INF");
 	}
 
 	@Override

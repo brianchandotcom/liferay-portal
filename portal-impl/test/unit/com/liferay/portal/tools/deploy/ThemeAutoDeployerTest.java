@@ -15,7 +15,7 @@
 package com.liferay.portal.tools.deploy;
 
 import com.liferay.portal.deploy.auto.ThemeAutoDeployer;
-import com.liferay.portal.kernel.deploy.Deployer;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -37,7 +37,7 @@ import org.junit.Test;
 /**
  * @author Igor Beslic
  */
-public class ThemeDeployerTest extends BaseDeployerTestCase {
+public class ThemeAutoDeployerTest extends BaseAutoDeployerTestCase {
 
 	@ClassRule
 	@Rule
@@ -45,7 +45,7 @@ public class ThemeDeployerTest extends BaseDeployerTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Override
-	public Deployer getDeployer() {
+	public AutoDeployer getAutoDeployer() {
 		return new ThemeAutoDeployer();
 	}
 
@@ -75,10 +75,11 @@ public class ThemeDeployerTest extends BaseDeployerTestCase {
 		Assert.assertNotNull(pluginPackage);
 		Assert.assertEquals("Test Theme", pluginPackage.getName());
 
-		Deployer deployer = getDeployer();
+		AutoDeployer autoDeployer = getAutoDeployer();
 
-		Map<String, String> filterMap = deployer.processPluginPackageProperties(
-			getRootDir(), displayName, pluginPackage);
+		Map<String, String> filterMap =
+			autoDeployer.processPluginPackageProperties(
+				getRootDir(), displayName, pluginPackage);
 
 		Assert.assertNotNull(filterMap);
 		Assert.assertFalse(filterMap.toString(), filterMap.isEmpty());

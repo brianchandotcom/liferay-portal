@@ -15,7 +15,7 @@
 package com.liferay.portal.plugin.deployment.extension;
 
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.tools.deploy.BaseDeployer;
+import com.liferay.portal.tools.deploy.BaseAutoDeployer;
 import com.liferay.portal.tools.deploy.extension.DeploymentExtension;
 
 import java.io.File;
@@ -26,10 +26,11 @@ import java.io.File;
 public class WebLogicDeploymentExtension implements DeploymentExtension {
 
 	@Override
-	public void copyXmls(BaseDeployer baseDeployer, File srcFile)
+	public void copyXmls(BaseAutoDeployer baseAutoDeployer, File srcFile)
 		throws Exception {
 
-		baseDeployer.copyDependencyXml("weblogic.xml", srcFile + "/WEB-INF");
+		baseAutoDeployer.copyDependencyXml(
+			"weblogic.xml", srcFile + "/WEB-INF");
 	}
 
 	@Override

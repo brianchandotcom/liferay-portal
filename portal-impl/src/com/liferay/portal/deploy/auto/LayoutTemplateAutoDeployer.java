@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.tools.deploy.BaseDeployer;
+import com.liferay.portal.tools.deploy.BaseAutoDeployer;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class LayoutTemplateAutoDeployer
-	extends BaseDeployer implements AutoDeployer {
+	extends BaseAutoDeployer implements AutoDeployer {
 
 	public LayoutTemplateAutoDeployer() {
 		try {

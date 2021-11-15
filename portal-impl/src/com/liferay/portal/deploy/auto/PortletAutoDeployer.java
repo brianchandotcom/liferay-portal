@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.portal.tools.deploy.BaseDeployer;
+import com.liferay.portal.tools.deploy.BaseAutoDeployer;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -45,7 +45,8 @@ import java.util.List;
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
  */
-public class PortletAutoDeployer extends BaseDeployer implements AutoDeployer {
+public class PortletAutoDeployer
+	extends BaseAutoDeployer implements AutoDeployer {
 
 	public static final String JSF_STANDARD =
 		"javax.portlet.faces.GenericFacesPortlet";

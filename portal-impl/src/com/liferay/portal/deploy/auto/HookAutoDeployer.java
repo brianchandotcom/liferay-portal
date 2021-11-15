@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.tools.deploy.BaseDeployer;
+import com.liferay.portal.tools.deploy.BaseAutoDeployer;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class HookAutoDeployer extends BaseDeployer implements AutoDeployer {
+public class HookAutoDeployer extends BaseAutoDeployer implements AutoDeployer {
 
 	public HookAutoDeployer() {
 		try {

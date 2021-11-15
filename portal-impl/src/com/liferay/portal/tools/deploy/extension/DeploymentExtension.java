@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.deploy.extension;
 
-import com.liferay.portal.tools.deploy.BaseDeployer;
+import com.liferay.portal.tools.deploy.BaseAutoDeployer;
 
 import java.io.File;
 
@@ -23,7 +23,7 @@ import java.io.File;
  */
 public interface DeploymentExtension {
 
-	public void copyXmls(BaseDeployer baseDeployer, File srcFile)
+	public void copyXmls(BaseAutoDeployer baseAutoDeployer, File srcFile)
 		throws Exception;
 
 	public String getServerId();

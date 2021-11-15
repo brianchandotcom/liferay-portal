@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.deploy;
 
-import com.liferay.portal.kernel.deploy.Deployer;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -45,9 +45,9 @@ import org.junit.Before;
 /**
  * @author Igor Beslic
  */
-public abstract class BaseDeployerTestCase {
+public abstract class BaseAutoDeployerTestCase {
 
-	public abstract Deployer getDeployer();
+	public abstract AutoDeployer getAutoDeployer();
 
 	@Before
 	public void setUp() throws Exception {
@@ -108,7 +108,7 @@ public abstract class BaseDeployerTestCase {
 
 	protected void setUpLiferayPluginPackageProperties() throws Exception {
 		try (InputStream inputStream =
-				BaseDeployerTestCase.class.getResourceAsStream(
+				BaseAutoDeployerTestCase.class.getResourceAsStream(
 					"dependencies/liferay-plugin-package.properties")) {
 
 			File webInfDir = getWebInfDir();

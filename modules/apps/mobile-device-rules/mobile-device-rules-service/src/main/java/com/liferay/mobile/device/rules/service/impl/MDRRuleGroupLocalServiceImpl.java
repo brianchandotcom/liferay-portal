@@ -87,23 +87,24 @@ public class MDRRuleGroupLocalServiceImpl
 
 	@Override
 	public MDRRuleGroup copyRuleGroup(
-			long ruleGroupId, long groupId, ServiceContext serviceContext)
+			long oldRuleGroupId, long groupId, ServiceContext serviceContext)
 		throws PortalException {
 
-		MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.findByPrimaryKey(
-			ruleGroupId);
+		MDRRuleGroup oldRuleGroup = mdrRuleGroupPersistence.findByPrimaryKey(
+			oldRuleGroupId);
 
-		return copyRuleGroup(ruleGroup, groupId, serviceContext);
+		return copyRuleGroup(oldRuleGroup, groupId, serviceContext);
 	}
 
 	@Override
 	public MDRRuleGroup copyRuleGroup(
-			MDRRuleGroup ruleGroup, long groupId, ServiceContext serviceContext)
+			MDRRuleGroup oldRuleGroup, long groupId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Rule group
 
-		Map<Locale, String> nameMap = ruleGroup.getNameMap();
+		Map<Locale, String> nameMap = oldRuleGroup.getNameMap();
 
 		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
 			String name = entry.getValue();
@@ -134,26 +135,26 @@ public class MDRRuleGroupLocalServiceImpl
 		newRuleGroup.setUserId(user.getUserId());
 		newRuleGroup.setUserName(user.getFullName());
 		newRuleGroup.setNameMap(nameMap);
-		newRuleGroup.setDescriptionMap(ruleGroup.getDescriptionMap());
+		newRuleGroup.setDescriptionMap(oldRuleGroup.getDescriptionMap());
 
 		updateMDRRuleGroup(newRuleGroup);
 
 		// Resources
 
 		_resourceLocalService.copyModelResources(
-			ruleGroup.getCompanyId(), MDRRuleGroup.class.getName(),
-			ruleGroup.getPrimaryKey(), newRuleGroup.getPrimaryKey());
+			oldRuleGroup.getCompanyId(), MDRRuleGroup.class.getName(),
+			oldRuleGroup.getPrimaryKey(), newRuleGroup.getPrimaryKey());
 
 		// Rules
 
-		List<MDRRule> rules = _mdrRulePersistence.findByRuleGroupId(
-			ruleGroup.getRuleGroupId());
+		List<MDRRule> oldRules = _mdrRulePersistence.findByRuleGroupId(
+			oldRuleGroup.getRuleGroupId());
 
-		for (MDRRule rule : rules) {
+		for (MDRRule oldRule : oldRules) {
 			serviceContext.setUuid(PortalUUIDUtil.generate());
 
 			_mdrRuleLocalService.copyRule(
-				rule, newRuleGroup.getRuleGroupId(), serviceContext);
+				oldRule, newRuleGroup.getRuleGroupId(), serviceContext);
 		}
 
 		return newRuleGroup;

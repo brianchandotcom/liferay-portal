@@ -95,26 +95,26 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 
 	@Override
 	public MDRRule copyRule(
-			long ruleId, long ruleGroupId, ServiceContext serviceContext)
+			long oldRuleId, long newRuleGroupId, ServiceContext serviceContext)
 		throws PortalException {
 
-		MDRRule rule = mdrRulePersistence.findByPrimaryKey(ruleId);
+		MDRRule oldRule = mdrRulePersistence.findByPrimaryKey(oldRuleId);
 
-		return copyRule(rule, ruleGroupId, serviceContext);
+		return copyRule(oldRule, newRuleGroupId, serviceContext);
 	}
 
 	@Override
 	public MDRRule copyRule(
-			MDRRule rule, long ruleGroupId, ServiceContext serviceContext)
+			MDRRule oldRule, long newRuleGroupId, ServiceContext serviceContext)
 		throws PortalException {
 
-		MDRRuleGroup ruleGroup = _mdrRuleGroupPersistence.findByPrimaryKey(
-			ruleGroupId);
+		MDRRuleGroup newRuleGroup = _mdrRuleGroupPersistence.findByPrimaryKey(
+			newRuleGroupId);
 
 		return addRule(
-			ruleGroup.getRuleGroupId(), rule.getNameMap(),
-			rule.getDescriptionMap(), rule.getType(), rule.getTypeSettings(),
-			serviceContext);
+			newRuleGroup.getRuleGroupId(), oldRule.getNameMap(),
+			oldRule.getDescriptionMap(), oldRule.getType(),
+			oldRule.getTypeSettings(), serviceContext);
 	}
 
 	@Override

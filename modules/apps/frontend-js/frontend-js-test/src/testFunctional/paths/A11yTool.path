@@ -89,6 +89,37 @@
 	<td>//*[contains(@class, 'clay-popover-bottom show')]//*[contains(@class,'text-secondary') and contains(.,'${key_impact}')]</td>
 	<td></td>
 </tr>
+<!--SIDE PANEL COMPONENT VIEW-->
+<tr>
+	<td>VIOLATION_PANEL_COMPONENT_TITLE</td>
+	<td>//*[contains(@class,'sidebar-header')]//*[contains(@class,'component-title') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIOLATION_PANEL_COMPONENT_IMPACT</td>
+	<td>//*[contains(@class,'sidebar-header')]//*[contains(@class,'component-subtitle') and contains(.,'${key_impact}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIOLATION_PANEL_COMPONENT_LINK</td>
+	<td>//*[contains(@class,'sidebar-header')]//*[contains(@class,'component-subtitle') and contains(.,'More Info')]//*[contains(@href,'')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIOLATION_PANEL_COMPONENT_HEADER</td>
+	<td>//*[contains(@class,'panel-header')]//*[contains(@class,'panel-title') and contains(.,'${key_header}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIOLATION_PANEL_COMPONENT_BODY</td>
+	<td>//*[contains(@class,'panel-body') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIOLATION_PANEL_OCCURRENCE_LIST_ITEM</td>
+	<td>//*[contains(@class,'panel-body')]//ul//*[contains(@class,'list-group-item') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

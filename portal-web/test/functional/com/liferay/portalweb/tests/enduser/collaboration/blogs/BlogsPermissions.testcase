@@ -1225,10 +1225,6 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
 		Ratings.viewRatingsDisabled();
 
 		BlogsNavigator.gotoEntryPG(

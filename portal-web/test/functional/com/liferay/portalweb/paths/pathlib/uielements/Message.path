@@ -211,8 +211,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ERROR_IMPORT_TRANSLATIONS_ITEM</td>
+	<td>ERROR_IMPORT_TRANSLATIONS_ITEM_MESSAGE</td>
 	<td>//li[contains(@class,'list-group-item')]//div[contains(@class,'text-danger')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_IMPORT_TRANSLATIONS_ITEM</td>
+	<td>//div[contains(@class,'text-danger')]/preceding-sibling::div</td>
 	<td></td>
 </tr>
 <tr>
@@ -388,6 +393,21 @@
 <tr>
 	<td>SUCCESS_DISMISSIBLE</td>
 	<td>//div[contains(@class,'alert-success')][contains(@class,'alert-dismissible')] | //div[contains(@class,'alert-success')][contains(@class,'alert-dismissable')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_IMPORT_TRANSLATIONS</td>
+	<td>//h4[contains(@class,'text-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_IMPORT_TRANSLATIONS_ITEM</td>
+	<td>//div[contains(@class,'text-success')]/preceding-sibling::div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_IMPORT_TRANSLATIONS_ITEM_2</td>
+	<td>xpath=(//div[contains(@class,'text-success')]/preceding-sibling::div)[2]</td>
 	<td></td>
 </tr>
 <tr>

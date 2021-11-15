@@ -81,12 +81,12 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		}
 	}
 
-	private String _getFieldNameMapping(
+	private String _getFieldNameMappingString(
 		List<BatchPlannerMapping> batchPlannerMappings) {
 
 		if (batchPlannerMappings.isEmpty()) {
 			throw new IllegalArgumentException(
-				"There are no batch planner mappings");
+				"At least one import export mapping entry is expected");
 		}
 
 		StringBundler sb = new StringBundler(
@@ -174,7 +174,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		try {
 			ImportTask importTask = _importTaskResource.postImportTask(
 				batchPlannerPlan.getInternalClassName(), null,
-				_getFieldNameMapping(
+				_getFieldNameMappingString(
 					_batchPlannerMappingLocalService.getBatchPlannerMappings(
 						batchPlannerPlan.getBatchPlannerPlanId())),
 				batchPlannerPlan.getTaskItemDelegateName(),

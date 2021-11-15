@@ -128,6 +128,7 @@ definition {
 		Translations.importTranslation(
 			contentPageTranslation = "true",
 			fileName = "TranslationContentPage-en_US-ja_JP.xlf",
+			filePath = "/TranslationContentPage-en_US",
 			pageName = "TranslationContentPage");
 
 		Translations.openTranslationAdmin(siteURLKey = "guest");
@@ -216,6 +217,7 @@ definition {
 		Translations.importTranslation(
 			contentPageTranslation = "true",
 			fileName = "TranslationContentPage-en_US-es_ES.xlf",
+			filePath = "/TranslationContentPage-en_US",
 			pageName = "TranslationContentPage");
 
 		ContentPagesNavigator.openEditContentPage(
@@ -281,6 +283,7 @@ definition {
 		Translations.importTranslation(
 			contentPageTranslation = "true",
 			fileName = "TranslationContentPage1-en_US-es_ES.xlf",
+			filePath = "",
 			pageName = "TranslationContentPage2",
 			validateInvalidFile = "true");
 
@@ -336,6 +339,7 @@ definition {
 		Translations.importTranslation(
 			contentPageTranslation = "true",
 			fileName = "TranslationContentPage-en_US-es_ES.xlf",
+			filePath = "/TranslationContentPage-en_US",
 			pageName = "TranslationContentPage");
 
 		Translations.openTranslationAdmin(siteURLKey = "guest");
@@ -426,6 +430,7 @@ definition {
 		Translations.importTranslation(
 			contentPageTranslation = "true",
 			fileName = "TranslationContentPage-en_US-es_ES.xlf",
+			filePath = "/TranslationContentPage-en_US",
 			pageName = "TranslationContentPage");
 
 		ContentPagesNavigator.openEditContentPage(

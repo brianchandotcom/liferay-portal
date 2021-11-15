@@ -171,6 +171,7 @@ definition {
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-es_ES.xlf",
+			filePath = "/WebContentTitle-en_US",
 			webContentTitle = "WebContentTitle",
 			workflow = "true");
 
@@ -692,6 +693,7 @@ definition {
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-fr_FR.xlf",
+			filePath = "/WebContentTitle-en_US",
 			webContentTitle = "WebContentTitle",
 			workflow = "true");
 
@@ -736,6 +738,7 @@ definition {
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-fr_FR.xlf",
+			filePath = "/WebContentTitle-en_US",
 			webContentTitle = "WebContentTitle",
 			workflowResubmit = "true");
 

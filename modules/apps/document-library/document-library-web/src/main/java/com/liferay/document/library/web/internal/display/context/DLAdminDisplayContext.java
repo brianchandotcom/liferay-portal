@@ -251,7 +251,9 @@ public class DLAdminDisplayContext {
 	}
 
 	public long getRepositoryId() {
-		if (_repositoryId != null) {
+		_repositoryId = _dlPortletInstanceSettings.getRepositoryId();
+
+		if (_repositoryId != 0) {
 			return _repositoryId;
 		}
 
@@ -817,7 +819,7 @@ public class DLAdminDisplayContext {
 	private String _orderByType;
 	private final PermissionChecker _permissionChecker;
 	private final PortalPreferences _portalPreferences;
-	private Long _repositoryId;
+	private long _repositoryId;
 	private long _rootFolderId;
 	private boolean _rootFolderInTrash;
 	private String _rootFolderName;

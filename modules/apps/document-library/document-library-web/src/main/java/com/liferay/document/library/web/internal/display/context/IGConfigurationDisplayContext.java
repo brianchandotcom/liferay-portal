@@ -241,15 +241,20 @@ public class IGConfigurationDisplayContext {
 	}
 
 	private void _initRepository() {
-		if (_repositoryId != null) {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_igRequestHelper.getDLPortletInstanceSettings();
+
+		_repositoryId = dlPortletInstanceSettings.getRepositoryId();
+
+		if (_repositoryId != 0) {
 			return;
 		}
 
-		if (_folder == null) {
-			_repositoryId = _themeDisplay.getScopeGroupId();
+		if (_folder != null) {
+			_repositoryId = _folder.getRepositoryId();
 		}
 		else {
-			_repositoryId = _folder.getRepositoryId();
+			_repositoryId = _themeDisplay.getScopeGroupId();
 		}
 
 		try {
@@ -258,9 +263,8 @@ public class IGConfigurationDisplayContext {
 			_repositoryNotFound = false;
 		}
 		catch (Exception exception) {
-			_repositoryNotFound = true;
-
 			_repository = null;
+			_repositoryNotFound = true;
 		}
 	}
 
@@ -280,7 +284,7 @@ public class IGConfigurationDisplayContext {
 		_portletPreferencesLocalService;
 	private final RenderRequest _renderRequest;
 	private Repository _repository;
-	private Long _repositoryId;
+	private long _repositoryId;
 	private final RepositoryLocalService _repositoryLocalService;
 	private boolean _repositoryNotFound;
 	private final ThemeDisplay _themeDisplay;

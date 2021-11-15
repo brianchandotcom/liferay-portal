@@ -2447,7 +2447,8 @@ public class JenkinsResultsParserUtil {
 		String propertyName = null;
 
 		Map<String, Set<String>> propertyOptRegexSets =
-			_getPropertyOptRegexSets(matchingProperties.stringPropertyNames());
+			_getPropertyOptRegexSets(
+				basePropertyName, matchingProperties.stringPropertyNames());
 
 		for (Set<String> targetOptSet : targetOptSets) {
 			for (Map.Entry<String, Set<String>> propertyOptRegexEntry :
@@ -5021,16 +5022,20 @@ public class JenkinsResultsParserUtil {
 	}
 
 	private static Map<String, Set<String>> _getPropertyOptRegexSets(
-		Set<String> propertyNames) {
+		String basePropertyName, Set<String> propertyNames) {
 
 		Map<String, Set<String>> propertyOptSets = new HashMap<>();
 		Map<String, Integer> propertyOptSetSizes = new HashMap<>();
 		Map<String, Integer> propertyRegexCounts = new HashMap<>();
 
+		Set<String> basePropertyOptSet = _getPropertyOptSet(basePropertyName);
+
 		int maxOptCount = 0;
 
 		for (String propertyName : propertyNames) {
 			Set<String> optSet = _getPropertyOptSet(propertyName);
+
+			optSet.removeAll(basePropertyOptSet);
 
 			if (optSet.size() > maxOptCount) {
 				maxOptCount = optSet.size();

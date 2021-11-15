@@ -482,16 +482,13 @@ public abstract class BaseWorkspaceGitRepository
 
 			String propertyName = buildPropertyOptions.get(0);
 
-			List<String> propertyOptions = new ArrayList<>();
-
-			propertyOptions.add(propertyName);
-
-			propertyOptions.addAll(getPropertyOptions());
+			List<String> propertyOptions = new ArrayList<>(
+				getPropertyOptions());
 
 			propertyOptions.removeAll(Collections.singleton(null));
 
 			String propertyValue = JenkinsResultsParserUtil.getProperty(
-				buildProperties, propertyType,
+				buildProperties, propertyType + "[" + propertyName + "]",
 				propertyOptions.toArray(new String[0]));
 
 			if (propertyValue == null) {

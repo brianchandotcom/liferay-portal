@@ -169,6 +169,152 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-141278. The page editor could define Text Align for fragment per viewport."
+	@priority = "5"
+	test CustomizeTextAlignInEachViewport {
+		task ("Add a Heading fragment to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("View the Text Align of Heading is left") {
+			PageEditor.viewFragmentStyle(
+				alignment = "left",
+				fragmentName = "Heading");
+		}
+
+		task ("Change the Text Align of Heading in other viewports") {
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			PageEditor.gotoStyle(
+				deviceType = "Tablet",
+				fragmentName = "Heading");
+
+			PageEditor.configureFragment(alignment = "Center");
+
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+
+			PageEditor.gotoStyle(
+				deviceType = "Landscape Phone",
+				fragmentName = "Heading");
+
+			PageEditor.configureFragment(alignment = "Right");
+
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
+
+			PageEditor.gotoStyle(
+				deviceType = "Portrait Phone",
+				fragmentName = "Heading");
+
+			PageEditor.configureFragment(alignment = "Justify");
+		}
+
+		task ("View the Text Align of Heading in different viewports") {
+			PageEditor.switchViewport(deviceType = "Desktop");
+
+			PageEditor.viewFragmentStyle(
+				alignment = "left",
+				fragmentName = "Heading");
+
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "Heading");
+
+			SelectFrame(value1 = "relative=top");
+
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentStyle(
+				alignment = "right",
+				fragmentName = "Heading");
+
+			SelectFrame(value1 = "relative=top");
+
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentStyle(
+				alignment = "justify",
+				fragmentName = "Heading");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		task ("View the Text Align of Heading in different viewports at preview mode") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Desktop",
+				modal = "true");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				index = "1",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				locator2 = "text-align",
+				value1 = "left");
+
+			SelectFrame(value1 = "relative=top");
+
+			PageEditor.switchViewport(
+				deviceType = "Tablet",
+				modal = "true");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				index = "1",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				locator2 = "text-align",
+				value1 = "center");
+
+			SelectFrame(value1 = "relative=top");
+
+			PageEditor.switchViewport(
+				deviceType = "Landscape Phone",
+				modal = "true");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				index = "1",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				locator2 = "text-align",
+				value1 = "right");
+
+			SelectFrame(value1 = "relative=top");
+
+			PageEditor.switchViewport(
+				deviceType = "Portrait Phone",
+				modal = "true");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				index = "1",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				locator2 = "text-align",
+				value1 = "justify");
+		}
+	}
+
 	@description = "This is a test for LPS-134844. Fragment view options can be reset to parent one."
 	@priority = "4"
 	@uitest

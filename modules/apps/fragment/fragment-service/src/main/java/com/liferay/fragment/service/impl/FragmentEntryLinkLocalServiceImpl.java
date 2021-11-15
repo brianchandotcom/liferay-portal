@@ -159,15 +159,19 @@ public class FragmentEntryLinkLocalServiceImpl
 		fragmentEntryLink.setRendererKey(rendererKey);
 
 		if ((httpServletRequest != null) && (httpServletResponse != null)) {
-			FragmentEntryProcessorContext fragmentEntryProcessorContext =
-				new DefaultFragmentEntryProcessorContext(
-					httpServletRequest, httpServletResponse,
-					FragmentEntryLinkConstants.EDIT,
-					LocaleUtil.getMostRelevantLocale());
+			DefaultFragmentEntryProcessorContext
+				defaultFragmentEntryProcessorContext =
+					new DefaultFragmentEntryProcessorContext(
+						httpServletRequest, httpServletResponse,
+						FragmentEntryLinkConstants.EDIT,
+						LocaleUtil.getMostRelevantLocale());
+
+			defaultFragmentEntryProcessorContext.setFragmentElementId(
+				StringPool.BLANK);
 
 			processedHTML =
 				_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-					fragmentEntryLink, fragmentEntryProcessorContext);
+					fragmentEntryLink, defaultFragmentEntryProcessorContext);
 		}
 
 		if (Validator.isNull(editableValues)) {

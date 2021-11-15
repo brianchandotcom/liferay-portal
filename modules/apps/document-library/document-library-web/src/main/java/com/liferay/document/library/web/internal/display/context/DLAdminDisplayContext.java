@@ -251,9 +251,15 @@ public class DLAdminDisplayContext {
 	}
 
 	public long getRepositoryId() {
-		_repositoryId = _dlPortletInstanceSettings.getRepositoryId();
-
 		if (_repositoryId != 0) {
+			return _repositoryId;
+		}
+
+		long repositoryId = _dlPortletInstanceSettings.getRepositoryId();
+
+		if (repositoryId != 0) {
+			_repositoryId = repositoryId;
+
 			return _repositoryId;
 		}
 

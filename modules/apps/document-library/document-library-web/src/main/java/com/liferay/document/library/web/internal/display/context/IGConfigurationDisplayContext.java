@@ -241,6 +241,10 @@ public class IGConfigurationDisplayContext {
 	}
 
 	private void _initRepository() {
+		if (_repositoryId != 0) {
+			return;
+		}
+
 		DLPortletInstanceSettings dlPortletInstanceSettings =
 			_igRequestHelper.getDLPortletInstanceSettings();
 

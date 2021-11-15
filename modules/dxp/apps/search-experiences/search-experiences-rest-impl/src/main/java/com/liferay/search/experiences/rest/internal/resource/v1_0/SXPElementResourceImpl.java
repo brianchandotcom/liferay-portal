@@ -26,6 +26,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementDefinitionUtil;
 import com.liferay.search.experiences.rest.internal.dto.v1_0.converter.SXPElementDTOConverter;
+import com.liferay.search.experiences.rest.internal.resource.v1_0.util.CopyUtil;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
 import com.liferay.search.experiences.service.SXPElementService;
 
@@ -133,6 +134,26 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 						sxpElement.getElementDefinition())),
 				false,
 				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()),
+				sxpElement.getType(),
+				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+	}
+
+	@Override
+	public SXPElement postSXPElementCopy(Long sxpElementId) throws Exception {
+		com.liferay.search.experiences.model.SXPElement sxpElement =
+			_sxpElementService.getSXPElement(sxpElementId);
+
+		return _sxpElementDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, contextHttpServletRequest,
+				sxpElement.getSXPElementId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			_sxpElementService.addSXPElement(
+				sxpElement.getDescriptionMap(),
+				sxpElement.getElementDefinitionJSON(), false,
+				CopyUtil.createTitleMapCopy(sxpElement.getTitleMap()),
 				sxpElement.getType(),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}

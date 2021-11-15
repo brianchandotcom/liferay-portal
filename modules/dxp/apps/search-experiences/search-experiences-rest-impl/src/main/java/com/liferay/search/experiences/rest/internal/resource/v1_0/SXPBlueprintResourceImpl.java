@@ -26,6 +26,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
 import com.liferay.search.experiences.rest.internal.dto.v1_0.converter.SXPBlueprintDTOConverter;
+import com.liferay.search.experiences.rest.internal.resource.v1_0.util.CopyUtil;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.service.SXPBlueprintService;
 
@@ -115,6 +116,28 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 					ElementInstanceUtil.unpack(
 						sxpBlueprint.getElementInstances())),
 				LocalizedMapUtil.getLocalizedMap(sxpBlueprint.getTitle_i18n()),
+				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+	}
+
+	@Override
+	public SXPBlueprint postSXPBlueprintCopy(Long sxpBlueprintId)
+		throws Exception {
+
+		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint =
+			_sxpBlueprintService.getSXPBlueprint(sxpBlueprintId);
+
+		return _sxpBlueprintDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, contextHttpServletRequest,
+				sxpBlueprint.getSXPBlueprintId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			_sxpBlueprintService.addSXPBlueprint(
+				sxpBlueprint.getConfigurationJSON(),
+				sxpBlueprint.getDescriptionMap(),
+				sxpBlueprint.getElementInstancesJSON(),
+				CopyUtil.createTitleMapCopy(sxpBlueprint.getTitleMap()),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 

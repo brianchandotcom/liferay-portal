@@ -5580,6 +5580,10 @@ public class DataFactory {
 		_companyId = companyId;
 	}
 
+	public void setWebId(String webId) {
+		_webId = webId;
+	}
+
 	public String toInsertSQL(BaseModel<?> baseModel) {
 		try {
 			StringBundler sb = new StringBundler();
@@ -7372,5 +7376,6 @@ public class DataFactory {
 		new HashMap<>();
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
+	private String _webId;
 
 }

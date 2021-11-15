@@ -36,8 +36,10 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
+ * @deprecated As of Athanasius (7.3.x)
  * @author Ricardo Couso
  */
+@Deprecated
 public class FriendlyURLEntryLocalizationUpgradeProcess extends UpgradeProcess {
 
 	@Override

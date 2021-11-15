@@ -17,14 +17,13 @@ package com.liferay.site.navigation.menu.item.display.page.internal.type;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -69,17 +68,17 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	public DisplayPageTypeSiteNavigationMenuItemType(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
-		InfoItemServiceTracker infoItemServiceTracker,
-		ItemSelector itemSelector, JSPRenderer jspRenderer,
-		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker,
-		Portal portal, ServletContext servletContext) {
+		InfoItemClassDetails infoItemClassDetails, ItemSelector itemSelector,
+		JSPRenderer jspRenderer,
+		LayoutDisplayPageProvider layoutDisplayPageProvider, Portal portal,
+		ServletContext servletContext) {
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemClassDetails = infoItemClassDetails;
 		_itemSelector = itemSelector;
 		_jspRenderer = jspRenderer;
-		_layoutDisplayPageProviderTracker = layoutDisplayPageProviderTracker;
+		_layoutDisplayPageProvider = layoutDisplayPageProvider;
 		_portal = portal;
 		_servletContext = servletContext;
 	}
@@ -95,33 +94,18 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 				siteNavigationMenuItem.getTypeSettings()
 			).build();
 
-		long classNameId = GetterUtil.getLong(
-			typeSettingsUnicodeProperties.get("classNameId"));
-
-		if (classNameId <= 0) {
-			return false;
-		}
-
-		String className = _portal.getClassName(classNameId);
-
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderTracker.
-				getLayoutDisplayPageProviderByClassName(className);
-
-		if (layoutDisplayPageProvider == null) {
-			return false;
-		}
-
 		long classPK = GetterUtil.getLong(
 			typeSettingsUnicodeProperties.get("classPK"));
 
 		try {
 			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-					new InfoItemReference(className, classPK));
+				_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+					new InfoItemReference(
+						_infoItemClassDetails.getClassName(), classPK));
 
 			siteNavigationMenuItemElement.addAttribute(
-				"display-page-class-name", className);
+				"display-page-class-name",
+				_infoItemClassDetails.getClassName());
 			siteNavigationMenuItemElement.addAttribute(
 				"display-page-class-pk", String.valueOf(classPK));
 
@@ -206,9 +190,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 		String friendlyURL =
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				_portal.getClassName(
-					GetterUtil.getLong(
-						typeSettingsUnicodeProperties.get("classNameId"))),
+				_infoItemClassDetails.getClassName(),
 				GetterUtil.getLong(
 					typeSettingsUnicodeProperties.get("classPK")),
 				themeDisplay);
@@ -255,7 +237,11 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			).build();
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			_getLayoutDisplayPageObjectProvider(typeSettingsUnicodeProperties);
+			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					_infoItemClassDetails.getClassName(),
+					GetterUtil.getLong(
+						typeSettingsUnicodeProperties.get("classPK"))));
 
 		if (layoutDisplayPageObjectProvider == null) {
 			return typeSettingsUnicodeProperties.getProperty("title");
@@ -278,26 +264,29 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 		Element element = portletDataContext.getImportDataElement(
 			siteNavigationMenuItem);
 
-		String className = element.attributeValue("display-page-class-name");
 		long classPK = GetterUtil.getLong(
 			element.attributeValue("display-page-class-pk"));
 
-		if (Validator.isNull(className) || (classPK <= 0)) {
+		if (classPK <= 0) {
 			return false;
 		}
-
-		Map<Long, Long> newClassPKsMap =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(className);
 
 		importedSiteNavigationMenuItem.setTypeSettings(
 			UnicodePropertiesBuilder.fastLoad(
 				siteNavigationMenuItem.getTypeSettings()
 			).put(
-				"classNameId", String.valueOf(_portal.getClassNameId(className))
+				"classNameId",
+				String.valueOf(
+					_portal.getClassNameId(
+						_infoItemClassDetails.getClassName()))
 			).put(
 				"classPK",
 				String.valueOf(
-					MapUtil.getLong(newClassPKsMap, classPK, classPK))
+					MapUtil.getLong(
+						(Map<Long, Long>)
+							portletDataContext.getNewPrimaryKeysMap(
+								_infoItemClassDetails.getClassName()),
+						classPK, classPK))
 			).buildString());
 
 		return true;
@@ -329,15 +318,15 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 		httpServletRequest.setAttribute(
 			SiteNavigationMenuItemTypeDisplayPageWebKeys.
-				INFO_ITEM_SERVICE_TRACKER,
-			_infoItemServiceTracker);
+				INFO_ITEM_CLASS_DETAILS,
+			_infoItemClassDetails);
 		httpServletRequest.setAttribute(
 			SiteNavigationMenuItemTypeDisplayPageWebKeys.ITEM_SELECTOR,
 			_itemSelector);
 		httpServletRequest.setAttribute(
 			SiteNavigationMenuItemTypeDisplayPageWebKeys.
-				LAYOUT_DISPLAY_PAGE_PROVIDER_TRACKER,
-			_layoutDisplayPageProviderTracker);
+				LAYOUT_DISPLAY_PAGE_PROVIDER,
+			_layoutDisplayPageProvider);
 		httpServletRequest.setAttribute(
 			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
 			siteNavigationMenuItem);
@@ -347,40 +336,15 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			"/edit_display_page.jsp");
 	}
 
-	private LayoutDisplayPageObjectProvider<?>
-		_getLayoutDisplayPageObjectProvider(
-			UnicodeProperties typeSettingsUnicodeProperties) {
-
-		long classNameId = GetterUtil.getLong(
-			typeSettingsUnicodeProperties.get("classNameId"));
-
-		String className = _portal.getClassName(classNameId);
-
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderTracker.
-				getLayoutDisplayPageProviderByClassName(className);
-
-		if (layoutDisplayPageProvider == null) {
-			return null;
-		}
-
-		long classPK = GetterUtil.getLong(
-			typeSettingsUnicodeProperties.get("classPK"));
-
-		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-			new InfoItemReference(className, classPK));
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DisplayPageTypeSiteNavigationMenuItemType.class);
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemClassDetails _infoItemClassDetails;
 	private final ItemSelector _itemSelector;
 	private final JSPRenderer _jspRenderer;
-	private final LayoutDisplayPageProviderTracker
-		_layoutDisplayPageProviderTracker;
+	private final LayoutDisplayPageProvider _layoutDisplayPageProvider;
 	private final Portal _portal;
 	private final ServletContext _servletContext;
 

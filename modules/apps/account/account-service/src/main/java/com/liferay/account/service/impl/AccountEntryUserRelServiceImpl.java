@@ -56,7 +56,7 @@ public class AccountEntryUserRelServiceImpl
 
 		return accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
-			firstName, middleName, lastName, prefixId, suffixId);
+			firstName, middleName, lastName, prefixId, suffixId, null);
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class AccountEntryUserRelServiceImpl
 
 		return accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
-			firstName, middleName, lastName, prefixId, suffixId);
+			firstName, middleName, lastName, prefixId, suffixId, jobTitle);
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class AccountEntryUserRelServiceImpl
 
 		return accountEntryUserRelLocalService.addPersonTypeAccountEntryUserRel(
 				accountEntryId, creatorUserId, screenName, emailAddress, locale,
-				firstName, middleName, lastName, prefixId, suffixId);
+				firstName, middleName, lastName, prefixId, suffixId, jobTitle);
 	}
 
 	@Override

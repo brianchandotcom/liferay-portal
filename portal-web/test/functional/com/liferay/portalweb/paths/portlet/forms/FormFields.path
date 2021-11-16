@@ -651,7 +651,7 @@
 </tr>
 <tr>
 	<td>TEXT_MULTILINE_FIELD</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]</td>
+	<td>//textarea[contains(@name,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

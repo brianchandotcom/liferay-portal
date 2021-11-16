@@ -450,13 +450,92 @@ definition {
 
 	}
 
-	@description = "This test adds an asset and link a related asset."
-	@ignore = "Test Stub"
+	@description = "This test asserts a related asset can be deleted from an application."
 	@priority = "3"
 	test CanDeleteARelatedAsset {
+		task ("Login as user whose data will be deleted and add a blog entry and document to be added as Related Assets") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+			
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+			
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			
+			DMDocument.addCP(
+				dmDocumentFile = "Document_1.txt",
+				dmDocumentTitle = "DM Document Title");
+		}
+			
+		task ("Create a message board thread") {
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
-		// TODO LRQA-50757
+			MessageboardsThread.addCP(
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject");
+		}
 
+		task ("Add the blog entry and document created earlier as Related Assets onto the message board thread") {
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Edit",
+				rowEntry = "MB Thread Message Subject");
+			
+			BlogsEntry.addRelatedAsset(
+				assetType = "Blogs Entry",
+				assetTitle = "Blogs Entry Title");
+			
+			BlogsEntry.addRelatedAsset(
+				assetType = "Basic Document",
+				assetTitle = "DM Document Title");
+			
+			PortletEntry.publish();	
+
+			for (var assetTitle : list "Blogs Entry Title,DM Document Title") {
+				AssertElementPresent(
+					locator1 = "AssetRelatedAssets#ASSET_TITLE",
+					key_relatedAssetTitle = "${assetTitle}");
+			}
+		}
+
+		task ("Log back in as the Super User and begin data erasure process") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			User.openUsersAdmin(); 
+
+			User.deletePersonalDataCP(
+				userFirstName = "userfn",
+				userLastName = "userln");
+		}
+		
+		task ("Delete only the Document Related Asset") {
+			Click.clickNoWaitForVisible(
+				key_selectData = "Documents and Media",
+				locator1 = "DataErasure#REVIEW_DATA_SELECT");
+			
+			GDPR.deleteSingleEntryCP(rowEntry = "Document_1.txt");
+		}
+
+		task ("Assert the Related Asset deleted from previous task no longer appears on the message board and the other asset is still displayed") {
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoEntry(rowEntry = "MB Thread Message Subject");
+
+			AssertElementNotPresent(
+				locator1 = "AssetRelatedAssets#ASSET_TITLE",
+				key_relatedAssetTitle = "DM Document Title");
+
+			AssertElementPresent(
+				locator1 = "AssetRelatedAssets#ASSET_TITLE",
+				key_relatedAssetTitle = "Blogs Entry Title");
+		}
 	}
 
 	@description = "This test deletes a staged and a live entry from an applciation."

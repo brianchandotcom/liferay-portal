@@ -28,443 +28,440 @@ definition {
 
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
-			Site.tearDownCP();
-
 			JSONUser.tearDownNonAdminUsers();
 		}
 	}
 
+	@description = "The user can add a page based in global blog template."
+	@priority = "4"
+	@uitest
+	test AddPageBasedOnGlobalBlogTemplate {
+		task ("Add a page based in global blog template") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicPage(
+				pageName = "Test Page Name",
+				pageTemplateName = "Blog");
+		}
+
+		task ("View portlets are shown in blog template page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			for (var portletName : list "Blogs,Tag Cloud,Recent Bloggers") {
+				Portlet.viewSpecificPG(portletName = "${portletName}");
+			}
+		}
+	}
+
+	@description = "The user can add a page based in global wiki template."
 	@priority = "5"
-	test AddPageFromExistingPage {
+	@uitest
+	test AddPageBasedOnGlobalWikiTemplate {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Site Page");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.addPublicPage(
-			pageName = "Site Page Name",
-			pageTemplateName = "Wiki");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Test Site Name");
-
-		for (var portletName : list "Tags Navigation,Categories Navigation,Wiki") {
-			Portlet.viewSpecificPG(portletName = "${portletName}");
-		}
-	}
-
-	@priority = "4"
-	test AddPagesFullPageApplication {
-		property osgi.app.includes = "hello-soy";
-		property portal.release = "false";
-		property testray.component.names = "Site Pages Administration";
-
-		for (var portlet : list "Blogs,Documents and Media,Wiki,Media Gallery,Message Boards,Form,Application Authorization Request,RSS Publisher,Application Authorization Request") {
+		task ("Add a page based in global wiki template") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			SitePages.addPublicPage(
-				pageName = "${portlet} Full Page Application",
-				sitePageType = "Full Page Application");
+				pageName = "Test Page Name",
+				pageTemplateName = "Wiki");
+		}
 
-			SitePages.configurePage(
-				pageName = "${portlet} Full Page Application",
-				portlet = "${portlet}",
-				privacy = "Public Pages",
-				sitePageType = "Full Page Application");
-
+		task ("View portlets are shown in wiki template page") {
 			Navigator.gotoSitePage(
-				pageName = "${portlet} Full Page Application",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssertTextEquals(
-				key_portletTitleName = "${portlet}",
-				locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
-				value1 = "${portlet}");
-
-			AssertElementNotPresent(locator1 = "ControlMenu#ADD");
+			for (var portletName : list "Tags Navigation,Categories Navigation,Wiki") {
+				Portlet.viewSpecificPG(portletName = "${portletName}");
+			}
 		}
 	}
 
-	@priority = "4"
-	test AddPagesFullPageApplicationForRelease {
-		property portal.upstream = "false";
-		property testray.component.names = "Site Pages Administration";
-
-		for (var portlet : list "Blogs,Documents and Media,Form,Wiki,Media Gallery,Message Boards,RSS Publisher,Application Authorization Request") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			SitePages.addPublicPage(
-				pageName = "${portlet} Full Page Application",
-				sitePageType = "Full Page Application");
-
-			SitePages.configurePage(
-				pageName = "${portlet} Full Page Application",
-				portlet = "${portlet}",
-				privacy = "Public Pages",
-				sitePageType = "Full Page Application");
-
-			Navigator.gotoSitePage(
-				pageName = "${portlet} Full Page Application",
-				siteName = "Test Site Name");
-
-			AssertTextEquals.assertText(
-				key_portletTitleName = "${portlet}",
-				locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
-				value1 = "${portlet}");
-
-			AssertElementNotPresent(locator1 = "ControlMenu#ADD");
-		}
-	}
-
+	@description = "Can add a widget page with escape characters."
 	@priority = "3"
 	test AddPageWithEscapeCharacter {
-		property testray.component.names = "Site Pages Administration";
+		task ("Add a page with escape characters name") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.addPublicPage(pageName = "Tester&apos;s Page");
-	}
-
-	@priority = "3"
-	test AddPageWithMultipleChildPagesToSite {
-		property testray.component.names = "Site Pages Administration";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Site Page");
-
-		for (var childPageName : list "Site Child Page 1,Site Child Page 2,Site Child Page 3") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "${childPageName}",
-				parentLayoutName = "Site Page");
+			SitePages.addPublicPage(pageName = "Test&apos;s Page Name");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("View the alert not shown") {
+			AssertAlertNotPresent();
+		}
+	}
 
-		for (var childPageName : list "Site Child Page 1,Site Child Page 2,Site Child Page 3") {
+	@description "The user can add a widget page with multiple child pages."
+	@priority = "3"
+	test AddPageWithMultipleChildPages {
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add three children pages") {
+			for (var i : list "1,2,3") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Child Page ${i}",
+					parentLayoutName = "Test Page Name");
+			}
+		}
+
+		task ("View parent page is shown") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Page.view(
+				pageName = "Test Page Name",
+				privacy = "Public Pages");
+		}
+
+		task ("View children pages are shwon") {
+			for (var i : list "1,2,3") {
+				Page.view(
+					depth = "2",
+					pageName = "Test Child Page ${i}",
+					privacy = "Public Pages");
+			}
+		}
+	}
+
+	@description = "The user can add a private widget page with a child page."
+	@priority = "4"
+	test AddPrivateChildPage {
+		task ("Add a private widget page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Private Page");
+		}
+
+		task ("Add a child page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Child Page",
+				parentLayoutName = "Test Private Page");
+		}
+
+		task ("View child page is shown") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
 			Page.view(
 				depth = "2",
-				pageName = "${childPageName}",
+				pageName = "Test Child Page",
+				privacy = "Private Pages");
+		}
+	}
+
+	@description = "The user can add a Blogs portlet to private page."
+	@priority = "4"
+	test AddWidgetToPrivatePage {
+		task ("Add a private widget page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Private Page");
+		}
+
+		task ("Add a Blogs portlet to private page") {
+			Navigator.gotoPrivateSitePage(
+				pageName = "Test Private Page",
+				siteName = "Test Site Name");
+
+			Portlet.addPG(portletName = "Blogs");
+		}
+
+		task ("View Blogs portlet is shown") {
+			Portlet.viewPG(portletName = "Blogs");
+		}
+	}
+
+	@description = "The user can add a Blogs portlet to public page."
+	@priority = "4"
+	test AddWidgetToPublicPage {
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a Blogs portlet to public page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.addPG(portletName = "Blogs");
+		}
+
+		task ("View Blogs portlet is shown") {
+			Portlet.viewPG(portletName = "Blogs");
+		}
+	}
+
+	@description = "The user can change the page layout template of a widget page."
+	@priority = "5"
+	test ChangeLayoutTemplate {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("View the default page layout template") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Page.viewPageLayout(pageLayout = "2 Column (30/70)");
+		}
+
+		task ("Change the layout template then view the layout is applied to page") {
+			for (var layoutTemplate : list "1 Column,2 Columns (50/50),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),1-2-1 Columns (50/50),1-2-1 Columns (70/30),1-3-1 Columns,1-3-2 Columns,2-1-2 Columns,2-2 Columns,3-2-3 Columns") {
+				JSONLayout.updateLayoutTemplateOfPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					layoutTemplate = "${layoutTemplate}");
+
+				Navigator.gotoSitePage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
+
+				Page.viewSelectedLayoutColumn(columnName = "${layoutTemplate}");
+			}
+		}
+	}
+
+	@description = "Can configure a full page aplication to use all available portlets on the page."
+	@priority = "4"
+	test ConfigureFullPageApplicationOfPage {
+		property osgi.app.includes = "hello-soy";
+
+		task ("Add a Full Page Application page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "full_page_application");
+		}
+
+		task ("Configure the page with all available portlets then view the portlet is shown") {
+			for (var portletName : list "Blogs,Wiki,Media Gallery,Message Boards,RSS Publisher,Documents and Media,Form,Application Authorization Request") {
+				SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+				SitePages.configurePage(
+					pageName = "Test Page Name",
+					portlet = "${portletName}",
+					privacy = "Public Pages",
+					sitePageType = "Full Page Application");
+
+				Navigator.gotoSitePage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				Portlet.viewPG(portletName = "${portletName}");
+
+				AssertElementNotPresent(locator1 = "ControlMenu#ADD");
+			}
+		}
+	}
+
+	@description = "Delete a widget page via menu item in pages administration."
+	@priority = "5"
+	@uitest
+	test DeleteViaPagesAdmin {
+		property portal.acceptance = "true";
+
+		task ("Add two widget pages") {
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${i}");
+			}
+		}
+
+		task ("Delete the first widget page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.deletePage(pageName = "Test Page Name 1");
+		}
+
+		task ("View first widget page is not shown") {
+			Page.viewNoPage(
+				pageName = "Test Page Name 1",
 				privacy = "Public Pages");
 		}
 	}
 
-	@priority = "4"
-	test AddSitePrivateChildPage {
-		property testray.component.names = "Site Pages Administration";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONLayout.addPrivateLayout(
-			groupName = "Test Site Name",
-			layoutName = "Site Page");
-
-		JSONLayout.addPrivateLayout(
-			groupName = "Test Site Name",
-			layoutName = "Site Child Page",
-			parentLayoutName = "Site Page");
-
-		Navigator.gotoSpecificURLPage(
-			pageName = "Site Page",
-			url = "${portalURL}/group/test-site-name/site-child-page");
-
-		Page.view(
-			depth = "2",
-			pageName = "Site Child Page",
-			privacy = "Private Pages");
-	}
-
-	@priority = "4"
-	test AddSitePrivatePagePortlet {
-		property testray.component.names = "Site Pages Administration";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONLayout.addPrivateLayout(
-			groupName = "Test Site Name",
-			layoutName = "Blogs Page");
-
-		Navigator.gotoSpecificURLPage(
-			pageName = "Blogs Page",
-			url = "${portalURL}/group/test-site-name");
-
-		Portlet.addPG(
-			pageAccess = "Private",
-			pageName = "Blogs Page",
-			portletName = "Blogs",
-			siteName = "Test Site Name",
-			siteURL = "true");
-	}
-
-	@priority = "4"
-	test AddSitePublicPage {
-		property testray.component.names = "Site Pages Administration";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Site Page");
-
-		Navigator.gotoSpecificURLPage(
-			pageName = "Site Page",
-			url = "${portalURL}/web/test-site-name/site-page");
-
-		Page.view(
-			pageName = "Site Page",
-			privacy = "Public Pages");
-	}
-
-	@priority = "4"
-	test AddSitePublicPagePortlet {
-		property testray.component.names = "Site Pages Administration";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Blogs Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
-	}
-
+	@description = "Can edit the page name and layout template via pages administration."
 	@priority = "5"
-	test ChangePageLayout {
+	test EditViaPagesAdmin {
 		property portal.acceptance = "true";
-		property testray.component.names = "Site Pages Administration,Training";
+		property testray.component.names = "Training";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Site Page Name");
+		task ("Add two widget pages") {
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${i}");
+			}
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Test Site Name");
+		task ("Edit the name of the first page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		Page.viewPageLayout(pageLayout = "2 Column (30/70)");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name 1");
 
-		for (var layoutTemplate : list "1 Column,2 Columns (50/50),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),1-2-1 Columns (50/50),1-2-1 Columns (70/30),1-3-1 Columns,1-3-2 Columns,2-1-2 Columns,2-2 Columns,3-2-3 Columns") {
+			Page.editName(pageNameEdit = "Test Page Name 1 Edited");
+		}
+
+		task ("View the edited name is shown") {
+			Page.view(
+				pageName = "Test Page Name 1 Edited",
+				privacy = "Public Pages");
+		}
+
+		task ("Change the layout template of the second page") {
 			JSONLayout.updateLayoutTemplateOfPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Site Page Name",
-				layoutTemplate = "${layoutTemplate}");
+				layoutName = "Test Page Name 2",
+				layoutTemplate = "1 Column");
+		}
 
-			Navigator.gotoSitePage(
-				pageName = "Site Page Name",
-				siteName = "Test Site Name");
+		task ("View the edited layout template is shown") {
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name 2");
 
-			Pause(locator1 = "3000");
+			Page.viewSelectedLayoutColumn(columnName = "1 Column");
+		}
 
-			Navigator.gotoEditPageViaControlMenu(pageName = "Site Page Name");
+		task ("Edit the name of the second page") {
+			Page.editName(pageNameEdit = "Test Page Name 2 Edited");
+		}
 
-			Page.viewSelectedLayoutColumn(columnName = "${layoutTemplate}");
+		task ("View the edited name is shown") {
+			Page.view(
+				pageName = "Test Page Name 2 Edited",
+				privacy = "Public Pages");
 		}
 	}
 
-	@priority = "5"
-	test DeleteSitePages {
-		property portal.acceptance = "true";
-		property testray.component.names = "Site Pages Administration";
-
-		for (var pageName : list "Site Page 1,Site Page 2,Site Page 3") {
+	@description = "This is a use case for LPS-123143. View the languageId shown in configuration page."
+	@priority = "3"
+	test ViewLanguageIdInConfigurationPage {
+		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "${pageName}");
+				layoutName = "Test Page Name");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("View default locale is shown") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		SitePages.deletePage(pageName = "Site Page 2");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			PortletEntry.viewLocale(locale = "en-US");
+		}
 	}
 
-	@priority = "5"
-	test EditSitePage {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WidgetPages#EditSitePage";
-		property testray.component.names = "Site Pages Administration,Training";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Site Page");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Site Page");
-
-		Page.editName(pageNameEdit = "Site Page Edit");
-
-		Page.view(
-			pageName = "Site Page Edit",
-			privacy = "Public Pages");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Page");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Page",
-			layoutTemplate = "1 Column");
-
-		SitePages.openPagesAdmin(siteURLKey = "guest");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page");
-
-		Page.viewSelectedLayoutColumn(columnName = "1 Column");
-
-		Page.editName(pageNameEdit = "Test Page Edit");
-
-		Navigator.gotoPage(pageName = "Test Page Edit");
-
-		Page.view(
-			pageName = "Test Page Edit",
-			privacy = "Public Pages");
-	}
-
-	@priority = "4"
-	test SaveEmbeddedPageType {
-		property testray.component.names = "Site Pages Administration";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.addPublicPage(
-			pageName = "Site Page",
-			pageTypeURL = "https://www.google.com",
-			sitePageType = "Embedded");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Test Site Name");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.configurePage(
-			pageName = "Site Page",
-			pageTypeURL = "https://www.liferay.com",
-			privacy = "Public Pages",
-			sitePageType = "Embedded");
-
-		Navigator.gotoSpecificURLPage(
-			pageName = "Site Page",
-			url = "${portalURL}/web/test-site-name");
-
-		Page.viewEmbeddedPagePG();
-	}
-
-	@priority = "4"
-	test SavePortletPageType {
-		property testray.component.names = "Site Pages Administration";
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.addPublicPage(
-			pageName = "Site Page",
-			pageTemplateName = "Blog");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Test Site Name");
-
-		Blogs.viewControlsPG();
-	}
-
-	@description = "This is a use case for LPS-123143."
-	@priority = "3"
-	test ViewLanguageNameOfLanguageButtonInWidgetConfigurationPage {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(
-			pageName = "Test Page Name",
-			sitePageType = "Widget Page");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
-
-		PortletEntry.viewLocale(locale = "en-US");
-	}
-
+	@description = "View no information message displayed to non admin user."
 	@priority = "3"
 	test ViewNoInfoMessageWhenChangingSiteTemplateAsUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Site and Page Templates,Site Pages Administration";
+		property testray.component.names = "Site and Page Templates";
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		task ("Add a site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		task ("Add a site based on template") {
+			Site.openSitesAdmin();
 
-		Site.addCP(
-			siteName = "Site Name",
-			siteTemplateName = "Site Template Name",
-			siteType = "Site Template");
+			Site.addCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name",
+				siteType = "Site Template");
+		}
 
-		JSONUser.addUserToSite(
-			groupName = "Site Name",
-			userEmailAddress = "userea@liferay.com");
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		task ("View Home page is shown") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Site Name");
 
-		Page.viewDefaultSiteTemplatePagesPG(
-			pageName = "Home",
-			siteName = "Site Name");
+			Page.viewDefaultSiteTemplatePagesPG(
+				pageName = "Home",
+				siteName = "Site Name");
+		}
 
-		User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+		task ("Sign in as Test Test") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Home",
-			siteName = "Site Name");
+		task ("Add a Blogs widget to home page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = "Site Name");
 
-		ContentPages.gotoPageEditor();
+			PageEditor.addWidget(portletName = "Blogs");
+		}
 
-		PageEditor.addWidget(portletName = "Blogs");
+		task ("Publish the page") {
+			PageEditor.clickPublish();
+		}
 
-		PageEditor.clickPublish();
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
 
-		User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		task ("View information message is not shown") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Home",
-			siteName = "Site Name");
+			SiteTemplates.viewNoInfoMessage();
+		}
 
-		SiteTemplates.viewNoInfoMessage();
+		task ("Sign in as Test Test") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+		}
 
-		User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+		task ("Delete new site") {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
 	}
 
 }

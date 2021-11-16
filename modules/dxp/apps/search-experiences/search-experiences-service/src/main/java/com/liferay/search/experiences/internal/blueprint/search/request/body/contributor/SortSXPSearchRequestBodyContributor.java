@@ -97,13 +97,9 @@ public class SortSXPSearchRequestBodyContributor
 	}
 
 	private boolean _hasSorts(SearchRequestBuilder searchRequestBuilder) {
-		return searchRequestBuilder.withSearchContextGet(
-			searchContext -> {
-				SearchRequest searchRequest =
-					(SearchRequest)searchContext.getAttribute("search.request");
+		SearchRequest searchRequest = searchRequestBuilder.build();
 
-				return !ListUtil.isEmpty(searchRequest.getSorts());
-			});
+		return ListUtil.isNotEmpty(searchRequest.getSorts());
 	}
 
 	private void _processGeoDistanceType(

@@ -11,8 +11,8 @@
 </style>
 
 <#if entries?has_content>
-<div class="container">
-<div class="d-flex label-container label-provisioning">
+	<div class="container">
+		<div class="d-flex label-container label-provisioning">
 			<#list entries as entry>
 				<button
 					class="btn btn-sm facet-term term-name mr-2 ${(entry.isSelected())?then('btn-dark', 'btn-light')}"
@@ -21,7 +21,7 @@
 					onClick="Liferay.Search.FacetUtil.changeSelection(event);"
 					type="button"
 			>
-<span class="label-item label-item-expand">
+					<span class="label-item label-item-expand">
 						${htmlUtil.escape(entry.getDisplayName())}
 					</span>
 				</button>
@@ -34,7 +34,7 @@
 					disabled
 					onClick="Liferay.Search.FacetUtil.clearSelections(event);"
 					type="button"
-			>
+				>
 					<@liferay_aui.icon
 						cssClass="mr-1"
 						image="times"

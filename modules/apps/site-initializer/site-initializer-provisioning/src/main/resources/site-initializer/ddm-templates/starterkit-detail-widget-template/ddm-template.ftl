@@ -23,6 +23,8 @@
 		cpInstanceId = cpSku.getCPInstanceId()
 
 		group_id = commerceContext.getCommerceChannelGroupId()
+
+		publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
 	/>
 
 	<div class="d-flex mb-6">
@@ -39,7 +41,7 @@
 		</div>
 
 		<div>
-			<a class="btn btn-primary" href="javascript:openItem(${cpInstanceId},${commerceChannelId},${commerceAccountId},${group_id})">
+			<a class="btn btn-primary" href="javascript:openItem(${cpInstanceId},${commerceChannelId},${commerceAccountId},${group_id},'${publicFriendlyURL}/my-site')">
 				Start with this starterkit
 			</a>
 		</div>

@@ -48,6 +48,8 @@
 					cpInstanceId = cpSku.getCPInstanceId()
 
 					group_id = commerceContext.getCommerceChannelGroupId()
+
+					publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
 				/>
 
 				<div class="col-md-4 mb-5">
@@ -65,7 +67,7 @@
 								</div>
 
 								<div class="mt-1">
-									<a class="btn btn-primary" href="javascript:openItem(${cpInstanceId},${commerceChannelId},${commerceAccountId},${group_id})">
+									<a class="btn btn-primary" href="javascript:openItem(${cpInstanceId},${commerceChannelId},${commerceAccountId},${group_id},'${publicFriendlyURL}/my-site')">
 										Select
 									</a>
 								</div>

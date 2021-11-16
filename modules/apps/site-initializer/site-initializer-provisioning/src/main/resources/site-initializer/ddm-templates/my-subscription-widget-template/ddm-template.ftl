@@ -1,4 +1,4 @@
-<h1 class="pb-3 pb-lg-6">My subscription</h1>
+<h2 class="pb-3 pb-lg-6">My subscription</h2>
 
 <#if entries?has_content>
 	<#assign
@@ -6,28 +6,20 @@
 		commerceOrderItems = commerceOrder.getCommerceOrderItems()
 	/>
 
-	<#if serviceLocator??>
-		<#assign
-			commerceSubscriptionEntryService = serviceLocator.findService("com.liferay.commerce.service.CommerceSubscriptionEntryService")
-
-			commerceSubscriptionEntries = commerceSubscriptionEntryService.getCommerceSubscriptionEntries(commerceOrder.getCompanyId(), commerceOrder.getGroupId(), themeDisplay.getUserId(), 0, 1, null)
-		/>
-	</#if>
-
 	<#if commerceOrderItems?has_content>
 		<#assign
 			commerceOrderItem = commerceOrderItems?first
-			json = commerceOrderItem.getJson()
 			cpInstance = commerceOrderItem.fetchCPInstance()
 			cpDefinition = cpInstance.getCPDefinition()
-			commerceSubscriptionEntry = commerceSubscriptionEntries?first
-
-			nextIterationDate = dateUtil.getDate(commerceSubscriptionEntry.getNextIterationDate(),"dd MMM yyyy - HH:mm:ss", locale)
-			startDate = dateUtil.getDate(commerceSubscriptionEntry.getStartDate(),"dd MMM yyyy - HH:mm:ss", locale)
-			subscriptionStatusMap = {"-1": "inactive", "0": "active", "1": "suspended", "2": "cancelled", "3": "completed"}
-
-			subscriptionStatus = subscriptionStatusMap[commerceSubscriptionEntry.getSubscriptionStatus()?string]
 		/>
+
+		<#if serviceLocator??>
+			<#assign
+				commerceSubscriptionEntryService = serviceLocator.findService("com.liferay.commerce.service.CommerceSubscriptionEntryService")
+				commerceSubscriptionEntries = commerceSubscriptionEntryService.getCommerceSubscriptionEntries(commerceOrder.getCompanyId(), commerceOrder.getGroupId(), themeDisplay.getUserId(), 0, 1, null)
+				commerceSubscriptionEntry = commerceSubscriptionEntries?first
+			/>
+		</#if>
 
 		<table class="table">
 			<thead>
@@ -35,7 +27,7 @@
 					<th>Starter kit:</th>
 					<th>Domain name:</th>
 
-					<#if serviceLocator??>
+					<#if commerceSubscriptionEntry??>
 						<th>Started date:</th>
 						<th>Next iteration date:</th>
 						<th>Subscription status:</th>
@@ -49,16 +41,23 @@
 						<img src="${cpDefinition.getDefaultImageThumbnailSrc()}" title="${commerceOrderItem.getName(locale)}" width="80" />
 					</td>
 					<td class="border-0">
-						${getJsonKeyValue(json, "domain")}
+						${getJsonKeyValue(commerceOrderItem.getJson(), "domain")}
 					</td>
 
-					<#if serviceLocator??>
+					<#if commerceSubscriptionEntry??>
 						<td class="border-0">
-							${startDate}
+							${dateUtil.getDate(commerceSubscriptionEntry.getStartDate(),"dd MMM yyyy - HH:mm:ss", locale)}
 						</td>
 						<td class="border-0">
-							${nextIterationDate}
+							${dateUtil.getDate(commerceSubscriptionEntry.getNextIterationDate(),"dd MMM yyyy - HH:mm:ss", locale)}
 						</td>
+
+						<#assign
+							subscriptionStatusMap = {"-1": "inactive", "0": "active", "1": "suspended", "2": "cancelled", "3": "completed"}
+
+							subscriptionStatus = subscriptionStatusMap[commerceSubscriptionEntry.getSubscriptionStatus()?string]
+						/>
+
 						<td class="border-0">
 							${subscriptionStatus}
 						</td>

@@ -254,9 +254,6 @@ definition {
 				key_publicationName = "${publicationName}",
 				locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 		}
-		else {
-			PublicationsChanges.changeDisplayStyle(displayStyle = "Changes");
-		}
 
 		WaitForElementPresent(locator1 = "PublicationsChanges#CHANGE_HEADER");
 

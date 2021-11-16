@@ -34,7 +34,6 @@ public class LayoutTemplateAutoDeployer
 
 	public LayoutTemplateAutoDeployer() {
 		try {
-			baseDir = PropsValues.AUTO_DEPLOY_DEPLOY_DIR;
 			appServerType = ServerDetector.getServerId();
 			unpackWar = PropsValues.AUTO_DEPLOY_UNPACK_WAR;
 			jbossPrefix = PropsValues.AUTO_DEPLOY_JBOSS_PREFIX;

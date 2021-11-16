@@ -35,7 +35,6 @@ public class WebAutoDeployer extends BaseAutoDeployer implements AutoDeployer {
 
 	public WebAutoDeployer() {
 		try {
-			baseDir = PropsValues.AUTO_DEPLOY_DEPLOY_DIR;
 			appServerType = ServerDetector.getServerId();
 			unpackWar = PropsValues.AUTO_DEPLOY_UNPACK_WAR;
 			jbossPrefix = PropsValues.AUTO_DEPLOY_JBOSS_PREFIX;

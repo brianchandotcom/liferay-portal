@@ -44,7 +44,6 @@ public class ThemeAutoDeployer
 
 	public ThemeAutoDeployer() {
 		try {
-			baseDir = PropsValues.AUTO_DEPLOY_DEPLOY_DIR;
 			appServerType = ServerDetector.getServerId();
 			themeTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-theme.tld");

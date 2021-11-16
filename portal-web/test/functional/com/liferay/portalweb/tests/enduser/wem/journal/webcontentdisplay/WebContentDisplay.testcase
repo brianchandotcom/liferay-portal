@@ -440,64 +440,74 @@ definition {
 		property portal.acceptance = "false";
 		property testray.component.names = "Web Content Display,Training";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a web content structure with a single line Text field and a multiple lines Text field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoStructures();
+			NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text Box",
-			fieldLocation = "2",
-			fieldName = "Text",
-			fieldType = "Multiple Lines");
+			DataEngine.addField(
+				fieldFieldLabel = "Text Box",
+				fieldLocation = "2",
+				fieldName = "Text",
+				fieldType = "Multiple Lines");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
+		}
 
-		NavItem.gotoTemplates();
+		task ("Add a template for new structure") {
+			NavItem.gotoTemplates();
 
-		WebContentTemplates.addCP(
-			structureName = "WC Structure Name",
-			templateFile = "wc_template.ftl",
-			templateName = "WC Template Name");
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name",
+				templateFile = "wc_template.ftl",
+				templateName = "WC Template Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
+		task ("Add a web content based on new structure via Web Content Display") {
+			Navigator.gotoSitePage(
+				pageName = "Web Content Display Page",
+				siteName = "Test Site Name");
 
-		var content = '''Hello World
+			var content = '''Hello World
 Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
-		WebContent.addStructuredPGViaWCD(
-			fieldLabelList = "Text,Text Box",
-			structureName = "WC Structure Name",
-			text = "WC WebContent Text",
-			textBox = "${content}",
-			webContentTitle = "WC WebContent Title");
+			WebContent.addStructuredPGViaWCD(
+				fieldLabelList = "Text,Text Box",
+				structureName = "WC Structure Name",
+				text = "WC WebContent Text",
+				textBox = "${content}",
+				webContentTitle = "WC WebContent Title");
+		}
 
-		AssertTextEquals(
-			locator1 = "//div[contains(@class,journal-content-article)]//h1[contains(@class,'text')]",
-			value1 = "WC WebContent Text");
+		task ("View the displayed content in Web Content Display") {
+			AssertTextEquals(
+				locator1 = "//div[contains(@class,journal-content-article)]//h1[contains(@class,'text')]",
+				value1 = "WC WebContent Text");
 
-		AssertTextEquals(
-			locator1 = "//div[contains(@class,journal-content-article)]//h2[contains(@class,'text-box')]",
-			value1 = "Hello World Welcome to Liferay Community Edition Portal 7.4.0 CE GA1");
+			AssertTextEquals(
+				locator1 = "//div[contains(@class,journal-content-article)]//h2[contains(@class,'text-box')]",
+				value1 = "Hello World Welcome to Liferay Community Edition Portal 7.4.0 CE GA1");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("View defined contents in web content editor") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContent.viewWithStructureCP(
-			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title");
+			WebContent.viewWithStructureCP(
+				webContentText = "WC WebContent Text",
+				webContentTitle = "WC WebContent Title");
 
-		WebContent.viewWithStructureCP(
-			fieldType = "Multiple Lines",
-			predefinedValue = "true",
-			webContentText = "${content}",
-			webContentTextFieldLabel = "Text Box");
+			WebContent.viewWithStructureCP(
+				fieldType = "Multiple Lines",
+				predefinedValue = "true",
+				webContentText = "${content}",
+				webContentTextFieldLabel = "Text Box");
+		}
 	}
 
 	@priority = "4"

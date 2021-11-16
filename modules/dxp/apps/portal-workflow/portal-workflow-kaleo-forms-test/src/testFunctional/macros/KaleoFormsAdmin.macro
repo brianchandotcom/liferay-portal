@@ -64,8 +64,8 @@ definition {
 			locator1 = "FormFields#TEXT_FIELD",
 			value1 = "${kfProcessName}");
 
-		FormFields.editTextMultiline(
-			fieldName = "description",
+		KaleoFormsAdmin.editDescription(
+			fieldName = "Description",
 			fieldValue = "${kfProcessDescription}");
 	}
 
@@ -335,6 +335,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editDescription {
+		Pause(locator1 = "1000");
+
+		Type(
+			key_fieldName = "${fieldName}",
+			locator1 = "KaleoFormsAdmin#DESCRIPTION_FIELD",
+			value1 = "${fieldValue}");
+	}
+
 	macro editFieldSet {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfFieldSetName = "${kfFieldSetName}",
@@ -402,8 +411,8 @@ definition {
 		}
 
 		if (isSet(kfProcessDescriptionEdit)) {
-			FormFields.editTextMultiline(
-				fieldName = "description",
+			KaleoFormsAdmin.editDescription(
+				fieldName = "Description",
 				fieldValue = "${kfProcessDescriptionEdit}");
 		}
 
@@ -823,10 +832,10 @@ definition {
 			locator1 = "FormFields#TEXT_FIELD",
 			value1 = "${kfProcessName}");
 
-		var key_fieldName = "description";
+		var key_fieldName = "Description";
 
 		AssertTextEquals(
-			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+			locator1 = "KaleoFormsAdmin#DESCRIPTION_FIELD",
 			value1 = "${kfProcessDescription}");
 
 		KaleoFormsAdmin.next();

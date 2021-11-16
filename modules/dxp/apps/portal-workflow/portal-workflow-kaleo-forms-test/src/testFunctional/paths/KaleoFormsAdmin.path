@@ -26,6 +26,12 @@
 	<td>//div[contains(@class,'empty-result')]//div[contains(text(),'There are no unpublished definitions.')]</td>
 	<td></td>
 </tr>
+<!--PROCESS_DETAILS-->
+<tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(text(), '${key_fieldName}')]/following-sibling::div[contains(@class, 'input-group')]//textarea</td>
+	<td></td>
+</tr>
 <!--WORKFLOW_MODAL-->
 <tr>
 	<td>CLOSE_BUTTON</td>

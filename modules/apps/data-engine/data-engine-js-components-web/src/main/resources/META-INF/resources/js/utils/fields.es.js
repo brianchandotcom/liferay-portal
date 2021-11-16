@@ -56,18 +56,13 @@ export function getFields(pages) {
 	const fields = [];
 	const visitor = new PagesVisitor(pages);
 
-	visitor.visitFields(
-		(field) => {
-			fields.push(field);
-		},
-		true,
-		true,
-		true
-	);
+	visitor.visitFields((field) => {
+		fields.push(field);
+	});
 
 	return fields;
 }
 
 export function hasFieldSet(field) {
-	return field && field.type === 'fieldset' && field.ddmStructureId;
+	return field?.type === 'fieldset' && field.ddmStructureId;
 }

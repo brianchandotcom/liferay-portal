@@ -1254,6 +1254,14 @@ definition {
 	macro editAndDeleteWiki {
 		Navigator.gotoPage(pageName = "Wiki");
 
+		Ratings.revokeStarsRating();
+
+		Ratings.rateStar(ratingStarCount = "3");
+
+		Ratings.viewRateStar(
+			averageRatingStarCount = "3.0",
+			ratingStarCount = "3");
+
 		WikiPage.editFrontPagePG(wikiPageContentEdit = "Wiki FrontPage Content Edit");
 
 		Navigator.gotoPage(pageName = "Wiki");

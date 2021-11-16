@@ -1,0 +1,13 @@
+definition {
+
+	macro addMasterclassSite {
+	    ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addCustomCP(
+			siteName = "${siteName}",
+			siteTemplateName = "Masterclass");
+    }
+}

@@ -14,14 +14,7 @@ definition {
 		}
 
 		task ("Create a new Masterclass Site") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
-
-			Site.addCustomCP(
-				siteName = "Test Masterclass Name",
-				siteTemplateName = "Masterclass");
+			Masterclass.addMasterclassSite(siteName = "Test Masterclass Name");
 		}
 	}
 
@@ -437,9 +430,7 @@ definition {
 
 		task ("Assert the Stylebook Classic Theme and Modern Theme are present") {
 			for (var styleBookName : list "Masterclass Classic,Masterclass Modern") {
-				AssertElementPresent(
-					key_card = "${styleBookName}",
-					locator1 = "Card#CARD_TITLE");
+				StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "${styleBookName}");
 			}
 		}
 	}

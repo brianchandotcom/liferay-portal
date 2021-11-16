@@ -16,11 +16,11 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {useCallback, useEffect, useReducer} from 'react';
 
 import {
-	startExport,
 	fetchExportedFile,
 	getExportStatus,
+	startExport,
 } from '../BatchPlannerExport';
-import {EXPORT_FILE_NAME, POLLING_EXPORT_STATUS_TIMEOUT} from '../constants';
+import {EXPORT_FILE_NAME, EXPORT_POLL_INTERVAL} from '../constants';
 
 const ERROR = 'ERROR';
 const COMPLETED = 'COMPLETED';
@@ -104,7 +104,7 @@ const reducer = (state = initialState, {payload, type}) => {
 	}
 };
 
-const poll = (formDataQuerySelector, formSubmitURL) => {
+const ExportPoller = (formDataQuerySelector, formSubmitURL) => {
 	const isMounted = useIsMounted();
 	const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -117,15 +117,15 @@ const poll = (formDataQuerySelector, formSubmitURL) => {
 		[dispatch, isMounted]
 	);
 
-    const download = (url, filename) => {
-        var a = document.createElement('a');
-        document.body.appendChild(a);
-        a.style.display = 'none';
-        a.href = url;
-        a.download = filename;
-        a.click();
-        window.URL.revokeObjectURL(url);
-    };
+	const download = (url, filename) => {
+		var a = document.createElement('a');
+		document.body.appendChild(a);
+		a.style.display = 'none';
+		a.href = url;
+		a.download = filename;
+		a.click();
+		window.URL.revokeObjectURL(url);
+	};
 
 	const downloadFile = useCallback(async () => {
 		dispatchIfMounted({type: LOADING});
@@ -172,7 +172,7 @@ const poll = (formDataQuerySelector, formSubmitURL) => {
 								),
 							taskId: exportTaskId,
 						}),
-					POLLING_EXPORT_STATUS_TIMEOUT
+					EXPORT_POLL_INTERVAL
 				);
 
 				dispatchIfMounted({
@@ -206,4 +206,4 @@ const poll = (formDataQuerySelector, formSubmitURL) => {
 	};
 };
 
-export default poll;
+export default ExportPoller;

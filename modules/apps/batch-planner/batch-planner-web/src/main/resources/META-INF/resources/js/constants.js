@@ -16,5 +16,5 @@ export const EXPORT_PROCESS_STARTED = 'STARTED';
 export const EXPORT_PROCESS_COMPLETED = 'COMPLETED';
 export const EXPORT_PROCESS_FAILED = 'FAILED';
 
-export const POLLING_EXPORT_STATUS_TIMEOUT = 1000;
+export const EXPORT_POLL_INTERVAL = 1000;
 export const EXPORT_FILE_NAME = 'Export.zip';

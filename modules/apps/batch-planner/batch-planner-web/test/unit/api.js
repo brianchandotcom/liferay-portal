@@ -15,8 +15,8 @@
 import fetchMock from 'fetch-mock';
 
 import {
-	getExportTaskStatusURL,
 	getExportStatus,
+	getExportTaskStatusURL,
 } from '../../src/main/resources/META-INF/resources/js/BatchPlannerExport';
 import {
 	EXPORT_PROCESS_COMPLETED,

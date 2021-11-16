@@ -29,10 +29,10 @@ import {
 	getExportTaskStatusURL,
 } from '../../../src/main/resources/META-INF/resources/js/BatchPlannerExport';
 import {
+	EXPORT_POLL_INTERVAL,
 	EXPORT_PROCESS_COMPLETED,
 	EXPORT_PROCESS_FAILED,
 	EXPORT_PROCESS_STARTED,
-	POLLING_EXPORT_STATUS_TIMEOUT,
 } from '../../../src/main/resources/META-INF/resources/js/constants';
 import Export from '../../../src/main/resources/META-INF/resources/js/export/Export';
 
@@ -161,7 +161,7 @@ describe('Export', () => {
 		});
 
 		await wait(() => {
-			jest.advanceTimersByTime(POLLING_EXPORT_STATUS_TIMEOUT);
+			jest.advanceTimersByTime(EXPORT_POLL_INTERVAL);
 			expect(getByText('50%')).toBeInTheDocument();
 		});
 
@@ -201,7 +201,7 @@ describe('Export', () => {
 		});
 
 		await wait(() => {
-			jest.advanceTimersByTime(POLLING_EXPORT_STATUS_TIMEOUT);
+			jest.advanceTimersByTime(EXPORT_POLL_INTERVAL);
 			expect(getByText(error)).toBeInTheDocument();
 		});
 
@@ -236,7 +236,7 @@ describe('Export', () => {
 		});
 
 		await wait(() => {
-			jest.advanceTimersByTime(POLLING_EXPORT_STATUS_TIMEOUT);
+			jest.advanceTimersByTime(EXPORT_POLL_INTERVAL);
 			expect(
 				getByText(Liferay.Language.get('download'), {
 					selector: 'button',
@@ -275,7 +275,7 @@ describe('Export', () => {
 		});
 
 		await wait(() => {
-			jest.advanceTimersByTime(POLLING_EXPORT_STATUS_TIMEOUT);
+			jest.advanceTimersByTime(EXPORT_POLL_INTERVAL);
 
 			getByText(Liferay.Language.get('download'), {
 				selector: 'button',

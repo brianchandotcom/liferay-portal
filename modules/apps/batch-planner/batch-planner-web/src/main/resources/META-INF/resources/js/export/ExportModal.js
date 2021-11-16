@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import ExportModalBody from './ExportModalBody';
-import poll from './exportReducer';
+import ExportPoller from './ExportPoller';
 
 const ExportModal = ({
 	closeModal,
@@ -34,7 +34,7 @@ const ExportModal = ({
 		loading,
 		percentage,
 		readyToDownload,
-	} = poll(formDataQuerySelector, formSubmitURL);
+	} = ExportPoller(formDataQuerySelector, formSubmitURL);
 
 	let modalType;
 	let iconType;

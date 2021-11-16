@@ -16,18 +16,51 @@ import ReactFlow, {
 	ReactFlowProvider,
 } from 'react-flow-renderer';
 
+import EndNode from './components/nodes/state/EndNode';
+import StartNode from './components/nodes/state/StartNode';
+import StateNode from './components/nodes/state/StateNode';
 import Sidebar from './components/sidebar/Sidebar';
 
 const onLoad = (reactFlowInstance) => {
 	reactFlowInstance.fitView();
 };
 
+const nodeTypes = {
+	end: EndNode,
+	start: StartNode,
+	state: StateNode,
+};
+
 export default function DiagramBuilder() {
+	const startNode = {
+		data: {
+			description: 'Your flow starts here',
+		},
+		id: '0',
+		position: {x: 100, y: 100},
+		type: 'start',
+	};
+	const endNode = {
+		data: {
+			description: 'Your flow ends here',
+		},
+		id: '1',
+		position: {x: 100, y: 400},
+		type: 'end',
+	};
+
+	const elements = [startNode, endNode];
+
 	return (
 		<div className="diagram-builder">
 			<div className="diagram-area">
 				<ReactFlowProvider>
-					<ReactFlow elements={[]} minZoom="0.1" onLoad={onLoad} />
+					<ReactFlow
+						elements={elements}
+						minZoom="0.1"
+						nodeTypes={nodeTypes}
+						onLoad={onLoad}
+					/>
 					<Controls showInteractive={false} />
 					<Background size={1} />
 				</ReactFlowProvider>

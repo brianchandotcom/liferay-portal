@@ -1,7 +1,7 @@
 definition {
 
 	macro addMasterclassSite {
-	    ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -9,5 +9,6 @@ definition {
 		Site.addCustomCP(
 			siteName = "${siteName}",
 			siteTemplateName = "Masterclass");
-    }
+	}
+
 }

@@ -431,24 +431,24 @@ definition {
 		Translations.viewTranslationEntry(
 			language = "es-ES",
 			status = "Pending",
-			title = "Translation");
+			title = "Translation of Test Content Page Name to es-ES");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.resubmitTaskByActions(
-			workflowAssetTitle = "Translation",
+			workflowAssetTitle = "Translation of Test Content Page Name to es-ES",
 			workflowAssetType = "Translation",
 			workflowTask = "Update");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Translation",
+			workflowAssetTitle = "Translation of Test Content Page Name to es-ES",
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
-			workflowAssetTitle = "Translation",
+			workflowAssetTitle = "Translation of Test Content Page Name to es-ES",
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
@@ -554,12 +554,12 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Translation",
+			workflowAssetTitle = "Translation of Test Content Page Name to es-ES",
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
-			workflowAssetTitle = "Translation",
+			workflowAssetTitle = "Translation of Test Content Page Name to es-ES",
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
@@ -568,7 +568,7 @@ definition {
 		Translations.viewTranslationEntry(
 			language = "es-ES",
 			status = "Approved",
-			title = "Translation");
+			title = "Translation of Test Content Page Name to es-ES");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",

@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -164,10 +165,25 @@ public class ExecutePoshiElement extends PoshiElement {
 			boolean functionAttributeAdded = false;
 
 			for (String functionAttributeName : _functionAttributeNames) {
-				if (parameter.startsWith(functionAttributeName)) {
-					String name = getNameFromAssignment(parameter);
+				String name = getNameFromAssignment(parameter);
 
-					String value = getDoubleQuotedContent(parameter);
+				if (name.equals(functionAttributeName)) {
+					String value = getValueFromAssignment(parameter);
+
+					Matcher matcher = quotedPattern.matcher(value);
+
+					if (!matcher.matches()) {
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("Invalid function parameter syntax, must ");
+						sb.append("match: (locator|value)(1|2) = \".*\"");
+
+						throw new PoshiScriptParserException(
+							sb.toString(), parameter,
+							(PoshiElement)getParent());
+					}
+
+					value = getDoubleQuotedContent(value);
 
 					value = StringEscapeUtils.unescapeXml(value);
 

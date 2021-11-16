@@ -1101,6 +1101,8 @@ public abstract class PoshiElement
 
 	protected static final String PARAMETER_REGEX = "\\(.*\\)";
 
+	protected static final String QUOTED_REGEX = "\".*\"";
+
 	protected static final String STATEMENT_END_REGEX = ";$";
 
 	protected static final String VAR_NAME_REGEX =
@@ -1113,6 +1115,8 @@ public abstract class PoshiElement
 			"@[\\w-]*[\\s]*?(\n|=[\\s]\".*?\"(?=\\n))", Pattern.DOTALL);
 	protected static final Pattern poshiScriptBlockPattern = Pattern.compile(
 		"^[^{]*\\{[\\s\\S]*\\}$");
+	protected static final Pattern quotedPattern = Pattern.compile(
+		QUOTED_REGEX);
 
 	private void _addAttributes(Element element) {
 		for (Attribute attribute :

@@ -450,8 +450,7 @@ public class ModulesStructureTest {
 							 Files.exists(dirPath.resolve("gulpfile.js")) &&
 							 !Files.exists(
 								 dirPath.resolve(".lfrbuild-releng-ignore")) &&
-							 !StringUtil.equals(
-								 dirName,"frontend-theme-dialect")) {
+							 !_excludedThemeModules.contains(dirName)) {
 
 						_testThemeIgnoreFiles(
 							dirPath, themeGitIgnoreTemplate,
@@ -1686,6 +1685,8 @@ public class ModulesStructureTest {
 	private static final Set<String> _excludedDirNames = SetUtil.fromList(
 		Arrays.asList(
 			"bin", "build", "classes", "node_modules", "test-classes", "tmp"));
+	private static final Set<String> _excludedThemeModules = SetUtil.fromList(
+		Arrays.asList("frontend-theme-dialect"));
 	private static final Pattern _gitRepoGradleProjectGroupPattern =
 		Pattern.compile("com\\.liferay(?:\\.[a-z]+)+");
 	private static final Set<String> _gitRepoGradlePropertiesKeys =

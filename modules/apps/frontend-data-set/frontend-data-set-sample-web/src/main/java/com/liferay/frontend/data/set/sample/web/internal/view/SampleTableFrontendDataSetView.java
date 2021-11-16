@@ -47,13 +47,10 @@ public class SampleTableFrontendDataSetView
 			_clayTableSchemaBuilderFactory.create();
 
 		clayTableSchemaBuilder.addFrontendDataSetTableSchemaField("id", "id");
-
 		clayTableSchemaBuilder.addFrontendDataSetTableSchemaField(
 			"title", "Title");
-
 		clayTableSchemaBuilder.addFrontendDataSetTableSchemaField(
 			"description", "Description");
-
 		clayTableSchemaBuilder.addFrontendDataSetTableSchemaField(
 			"date", "Date");
 

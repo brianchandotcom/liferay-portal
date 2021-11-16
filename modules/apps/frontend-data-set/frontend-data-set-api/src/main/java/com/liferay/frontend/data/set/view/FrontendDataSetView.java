@@ -30,18 +30,10 @@ public interface FrontendDataSetView {
 		return null;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getFrontendDataSetTableSchema(Locale)}
-	 */
-	@Deprecated
-	public default FrontendDataSetTableSchema getFrontendDataSetTableSchema() {
-		return null;
-	}
-
 	public default FrontendDataSetTableSchema getFrontendDataSetTableSchema(
 		Locale locale) {
 
-		return getFrontendDataSetTableSchema();
+		return null;
 	}
 
 	public String getLabel();

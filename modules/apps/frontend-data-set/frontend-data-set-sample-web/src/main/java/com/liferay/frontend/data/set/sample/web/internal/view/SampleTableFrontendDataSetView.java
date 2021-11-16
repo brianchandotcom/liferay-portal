@@ -22,6 +22,8 @@ import com.liferay.frontend.data.set.view.table.FrontendDataSetTableSchemaBuilde
 import com.liferay.frontend.data.set.view.table.FrontendDataSetTableSchemaBuilderFactory;
 import com.liferay.frontend.data.set.view.table.FrontendDataSetTableSchemaField;
 
+import java.util.Locale;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -38,7 +40,9 @@ public class SampleTableFrontendDataSetView
 	extends BaseTableFrontendDataSetView {
 
 	@Override
-	public FrontendDataSetTableSchema getFrontendDataSetTableSchema() {
+	public FrontendDataSetTableSchema getFrontendDataSetTableSchema(
+		Locale locale) {
+
 		FrontendDataSetTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 

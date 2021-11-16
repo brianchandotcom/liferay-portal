@@ -38,7 +38,7 @@ if (addURL == null) {
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenuItemType.getLabel(locale)));
+renderResponse.setTitle(siteNavigationMenuItemType.getAddTitle(locale));
 %>
 
 <liferay-ui:error exception="<%= SiteNavigationMenuItemNameException.class %>">

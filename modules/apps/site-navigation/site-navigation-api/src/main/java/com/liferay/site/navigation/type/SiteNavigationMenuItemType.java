@@ -17,6 +17,7 @@ package com.liferay.site.navigation.type;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -48,6 +49,10 @@ public interface SiteNavigationMenuItemType {
 		throws PortalException {
 
 		return true;
+	}
+
+	public default String getAddTitle(Locale locale) {
+		return LanguageUtil.format(locale, "add-x", getLabel(locale));
 	}
 
 	public default PortletURL getAddURL(

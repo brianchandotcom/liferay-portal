@@ -136,6 +136,11 @@ public class DisplayPageSiteNavigationMenuItemType
 	}
 
 	@Override
+	public String getAddTitle(Locale locale) {
+		return LanguageUtil.get(locale, "select-item");
+	}
+
+	@Override
 	public PortletURL getAddURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 

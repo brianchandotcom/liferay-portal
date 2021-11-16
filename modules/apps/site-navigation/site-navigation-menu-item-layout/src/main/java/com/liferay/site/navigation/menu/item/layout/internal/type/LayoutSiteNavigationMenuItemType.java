@@ -123,6 +123,10 @@ public class LayoutSiteNavigationMenuItemType
 		return true;
 	}
 
+	public String getAddTitle(Locale locale) {
+		return LanguageUtil.format(locale, "select-x", "pages");
+	}
+
 	@Override
 	public PortletURL getAddURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {

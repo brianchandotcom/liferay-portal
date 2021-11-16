@@ -16,7 +16,7 @@ import fetchMock from 'fetch-mock';
 
 import {
 	getExportTaskStatusURL,
-	getPollingExportStatusProcess,
+	getExportStatus,
 } from '../../src/main/resources/META-INF/resources/js/BatchPlannerExport';
 import {
 	EXPORT_PROCESS_COMPLETED,
@@ -52,7 +52,7 @@ describe('Polling Export Status Process', () => {
 			totalItemsCount: 50,
 		});
 
-		await getPollingExportStatusProcess({
+		await getExportStatus({
 			onProgress,
 			taskId,
 		});
@@ -75,7 +75,7 @@ describe('Polling Export Status Process', () => {
 			totalItemsCount: 50,
 		});
 
-		await getPollingExportStatusProcess({
+		await getExportStatus({
 			onFail,
 			taskId,
 		});
@@ -97,7 +97,7 @@ describe('Polling Export Status Process', () => {
 			totalItemsCount: 50,
 		});
 
-		await getPollingExportStatusProcess({
+		await getExportStatus({
 			onSuccess,
 			taskId,
 		});

@@ -67,7 +67,7 @@ export const exportStatus = async (exportTaskId) => {
 	return await response.json();
 };
 
-export const getPollingExportStatusProcess = async ({
+export const getExportStatus = async ({
 	onFail,
 	onProgress,
 	onSuccess,

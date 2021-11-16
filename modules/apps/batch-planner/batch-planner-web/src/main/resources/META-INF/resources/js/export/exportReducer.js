@@ -18,7 +18,7 @@ import {useCallback, useEffect, useReducer} from 'react';
 import {
 	startExport,
 	fetchExportedFile,
-	getPollingExportStatusProcess,
+	getExportStatus,
 } from '../BatchPlannerExport';
 import {EXPORT_FILE_NAME, POLLING_EXPORT_STATUS_TIMEOUT} from '../constants';
 
@@ -159,7 +159,7 @@ const usePollingExport = (formDataQuerySelector, formSubmitURL) => {
 
 				pollingIntervalId = setInterval(
 					() =>
-						getPollingExportStatusProcess({
+						getExportStatus({
 							onFail: (error) =>
 								dispatchIfMounted(setError(error)),
 							onProgress: (contentType, percent) =>

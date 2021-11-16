@@ -16,6 +16,7 @@ package com.liferay.batch.planner.internal.batch.engine.broker;
 
 import com.liferay.batch.planner.batch.engine.broker.BatchEngineBroker;
 import com.liferay.batch.planner.constants.BatchPlannerLogConstants;
+import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 import com.liferay.batch.planner.internal.jaxrs.uri.EmptyUriInfo;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerMappingModel;
@@ -81,7 +82,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		}
 	}
 
-	private String _getFieldNameMappingString(
+	private String _getFieldNameMapping(
 		List<BatchPlannerMapping> batchPlannerMappings) {
 
 		if (batchPlannerMappings.isEmpty()) {
@@ -174,7 +175,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		try {
 			ImportTask importTask = _importTaskResource.postImportTask(
 				batchPlannerPlan.getInternalClassName(), null,
-				_getFieldNameMappingString(
+				_getFieldNameMapping(
 					_batchPlannerMappingLocalService.getBatchPlannerMappings(
 						batchPlannerPlan.getBatchPlannerPlanId())),
 				batchPlannerPlan.getTaskItemDelegateName(),
@@ -182,8 +183,10 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 					Collections.singletonMap(
 						"file",
 						new BinaryFile(
-							"text/csv", file.getName(),
-							new FileInputStream(file), file.length())),
+							BatchPlannerPlanConstants.contentTypes.get(
+								batchPlannerPlan.getExternalType()),
+							file.getName(), new FileInputStream(file),
+							file.length())),
 					null, Collections.emptyMap()));
 
 			_batchPlannerLogLocalService.addBatchPlannerLog(

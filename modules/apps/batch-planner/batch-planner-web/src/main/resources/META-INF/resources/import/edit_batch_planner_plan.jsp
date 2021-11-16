@@ -59,6 +59,8 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 
 					<aui:select bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="externalType">
 						<aui:option label="CSV" value="CSV" />
+						<aui:option label="JSON" value="JSON" />
+						<aui:option label="JSONL" value="JSONL" />
 						<aui:option label="TXT" value="TXT" />
 						<aui:option label="XLS" value="XLS" />
 						<aui:option label="XML" value="XML" />

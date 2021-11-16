@@ -198,6 +198,14 @@ definition {
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
 	}
 
+	macro viewDisabledRatings {
+		for (var text : list "thumbs-up,thumbs-down") {
+			AssertElementPresent(
+				key_text = "${text}",
+				locator1 = "Ratings#ANY_DISABLED");
+		}
+	}
+
 	macro viewNoRateStackedStar {
 		for (var ratingStarCount : list "1,2,3,4,5") {
 			AssertElementNotPresent(
@@ -272,14 +280,6 @@ definition {
 					locator1 = "Ratings#THUMB",
 					value1 = "${voteCount}");
 			}
-		}
-	}
-
-	macro viewRatingsDisabled {
-		for (var text : list "thumbs-up,thumbs-down") {
-			AssertElementPresent(
-				key_text = "${text}",
-				locator1 = "Ratings#ANY_DISABLED");
 		}
 	}
 

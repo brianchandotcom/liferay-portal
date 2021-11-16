@@ -47,24 +47,6 @@ public class SXPParameterData {
 		return null;
 	}
 
-	public SXPParameter getSXPParameterByTemplateVariable(
-		String templateVariable) {
-
-		if (templateVariable == null) {
-			return null;
-		}
-
-		for (SXPParameter sxpParameter : _sxpParameters) {
-			if (Objects.equals(
-					sxpParameter.getTemplateVariable(), templateVariable)) {
-
-				return sxpParameter;
-			}
-		}
-
-		return null;
-	}
-
 	public Set<SXPParameter> getSXPParameters() {
 		return _sxpParameters;
 	}

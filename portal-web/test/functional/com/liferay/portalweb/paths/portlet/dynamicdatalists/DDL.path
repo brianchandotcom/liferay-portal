@@ -114,11 +114,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIST_TABLE_NAME_STATUS</td>
-	<td>//span[@class='workflow-status']//*[contains(.,'${key_status}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

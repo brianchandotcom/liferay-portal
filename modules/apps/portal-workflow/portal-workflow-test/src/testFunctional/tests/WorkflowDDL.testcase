@@ -46,7 +46,9 @@ definition {
 
 		DDLList.viewCP(ddlListName = "DDL List");
 
-		DDLRecord.addNewContacts(
+		LexiconEntry.gotoAdd();
+
+		KaleoFormsNewSubmissions.addNewContacts(
 			ddlCompany = "Liferay",
 			ddlEmail = "qa@liferay.com",
 			ddlFirstName = "Test",
@@ -56,7 +58,7 @@ definition {
 			ddlPhoneMobile = "12345678",
 			ddlPhoneOffice = "12345678");
 
-		PortletEntry.submitForPublication();
+		DDLRecord.submitForPublication();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -77,7 +79,7 @@ definition {
 
 		DDLList.viewCP(ddlListName = "DDL List");
 
-		DDLList.viewStatusDDL(key_status = "Approved");
+		KaleoFormsNewSubmissions.viewStatusDDL(status = "Approved");
 	}
 
 	@description = "This is a test for LRQA-69474. Verify that if it is possible to create a Dynamic Data List."
@@ -99,7 +101,9 @@ definition {
 
 		DDLList.viewCP(ddlListName = "DDL List");
 
-		DDLRecord.addNewContacts(
+		LexiconEntry.gotoAdd();
+
+		KaleoFormsNewSubmissions.addNewContacts(
 			ddlCompany = "Liferay",
 			ddlEmail = "qa@liferay.com",
 			ddlFirstName = "Test",
@@ -109,9 +113,11 @@ definition {
 			ddlPhoneMobile = "12345678",
 			ddlPhoneOffice = "12345678");
 
-		PortletEntry.submitForPublication();
+		DDLRecord.submitForPublication();
 
-		DDLList.viewStatusDDL(key_status = "Pending");
+		KaleoFormsNewSubmissions.viewStatusDDL(status = "Pending");
+
+		
 	}
 
 	@description = "Verify that the user can Publish a Entry after Save as Draft"
@@ -142,7 +148,9 @@ definition {
 
 		DDLList.viewCP(ddlListName = "DDL List");
 
-		DDLRecord.addNewContacts(
+		LexiconEntry.gotoAdd();
+
+		KaleoFormsNewSubmissions.addNewContacts(
 			ddlCompany = "Liferay",
 			ddlEmail = "qa@liferay.com",
 			ddlFirstName = "Test",
@@ -154,7 +162,7 @@ definition {
 
 		DDLRecord.saveAsDraftCP();
 
-		DDLList.viewStatusDDL(key_status = "Draft");
+		KaleoFormsNewSubmissions.viewStatusDDL(status = "Draft");
 	}
 
 	@description = "Verify that the Entry is not displayed on My Workflow Tasks when the user Delete a DDL with Pending entry"
@@ -176,7 +184,9 @@ definition {
 
 		DDLList.viewCP(ddlListName = "DDL List");
 
-		DDLRecord.addNewContacts(
+		LexiconEntry.gotoAdd();
+
+		KaleoFormsNewSubmissions.addNewContacts(
 			ddlCompany = "Liferay",
 			ddlEmail = "qa@liferay.com",
 			ddlFirstName = "Test",
@@ -186,7 +196,7 @@ definition {
 			ddlPhoneMobile = "12345678",
 			ddlPhoneOffice = "12345678");
 
-		PortletEntry.submitForPublication();
+		DDLRecord.submitForPublication();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -226,7 +236,9 @@ definition {
 
 		DDLList.viewCP(ddlListName = "DDL List");
 
-		DDLRecord.addNewContacts(
+		LexiconEntry.gotoAdd();
+
+		KaleoFormsNewSubmissions.addNewContacts(
 			ddlCompany = "Liferay",
 			ddlEmail = "qa@liferay.com",
 			ddlFirstName = "Test",
@@ -262,7 +274,9 @@ definition {
 
 		DDLList.viewCP(ddlListName = "DDL List");
 
-		DDLRecord.addNewContacts(
+		LexiconEntry.gotoAdd();
+
+		KaleoFormsNewSubmissions.addNewContacts(
 			ddlCompany = "Liferay",
 			ddlEmail = "qa@liferay.com",
 			ddlFirstName = "Test",
@@ -272,7 +286,7 @@ definition {
 			ddlPhoneMobile = "12345678",
 			ddlPhoneOffice = "12345678");
 
-		PortletEntry.submitForPublication();
+		DDLRecord.submitForPublication();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -293,16 +307,16 @@ definition {
 
 		DDLList.viewCP(ddlListName = "DDL List");
 
-		DDLList.viewStatusDDL(key_status = "Approved");
+		KaleoFormsNewSubmissions.viewStatusDDL(status = "Approved");
 
-		DDLRecord.editDLLRecordContacts(
+		KaleoFormsNewSubmissions.editDLLRecordContacts(
 			ddlCompanyEdit = "Liferay Edit",
 			ddlFirstNameEdit = "Test Edit",
 			ddlListName = "DDL List");
 
-		PortletEntry.submitForPublication();
+		DDLRecord.submitForPublication();
 
-		DDLList.viewStatusDDL(key_status = "Pending");
+		KaleoFormsNewSubmissions.viewStatusDDL(status = "Pending");
 	}
 
 	@description = "This is a use case for LPS-61212."
@@ -438,7 +452,9 @@ definition {
 
 		DDLList.viewCP(ddlListName = "DDL List");
 
-		DDLRecord.addNewContacts(
+		LexiconEntry.gotoAdd();
+
+		KaleoFormsNewSubmissions.addNewContacts(
 			ddlCompany = "Liferay",
 			ddlEmail = "qa@liferay.com",
 			ddlFirstName = "Test",
@@ -448,13 +464,13 @@ definition {
 			ddlPhoneMobile = "12345678",
 			ddlPhoneOffice = "12345678");
 
-		PortletEntry.submitForPublication();
+		DDLRecord.submitForPublication();
 
-		DDLList.viewStatusDDL(key_status = "Pending");
+		KaleoFormsNewSubmissions.viewStatusDDL(status = "Pending");
 
 		DDLRecord.editPG(ddlListName = "${ddlListName}");
 
-		DDLList.viewWorkflowInProcessMessage(errorMessage = "There is a publication workflow in process. Some actions may be disabled depending on the status and your role through this process.");
+		KaleoFormsNewSubmissions.viewWorkflowInProcessMessage(errorMessage = "There is a publication workflow in process. Some actions may be disabled depending on the status and your role through this process.");
 	}
 
 	@priority = "4"
@@ -594,7 +610,9 @@ definition {
 
 		DDLList.viewCP(ddlListName = "DDL List");
 
-		DDLRecord.addNewContacts(
+		LexiconEntry.gotoAdd();
+
+		KaleoFormsNewSubmissions.addNewContacts(
 			ddlCompany = "Liferay",
 			ddlEmail = "qa@liferay.com",
 			ddlFirstName = "Test",
@@ -604,18 +622,18 @@ definition {
 			ddlPhoneMobile = "12345678",
 			ddlPhoneOffice = "12345678");
 
-		PortletEntry.submitForPublication();
+		DDLRecord.submitForPublication();
 
-		DDLList.viewStatusDDL(key_status = "Pending");
+		KaleoFormsNewSubmissions.viewStatusDDL(status = "Pending");
 
-		DDLRecord.editDLLRecordContacts(
+		KaleoFormsNewSubmissions.editDLLRecordContacts(
 			ddlCompanyEdit = "Liferay Edit",
 			ddlFirstNameEdit = "Test Edit",
 			ddlListName = "DDL List");
 
 		PortletEntry.save();
 
-		DDLList.viewStatusDDL(key_status = "Pending");
+		KaleoFormsNewSubmissions.viewStatusDDL(status = "Pending");
 	}
 
 }

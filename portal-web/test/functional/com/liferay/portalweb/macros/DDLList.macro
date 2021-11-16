@@ -196,23 +196,10 @@ definition {
 		MenuItem.viewPresent(menuItem = "Delete");
 	}
 
-	macro viewStatusDDL {
-		AssertElementPresent(
-			key_status = "${key_status}",
-			locator1 = "DDL#LIST_TABLE_NAME_STATUS");
-	}
-
 	macro viewViaDDLDisplayPG {
 		AssertTextEquals(
 			locator1 = "Portlet#H2_HEADER",
 			value1 = "${ddlListName}");
-	}
-
-	macro viewWorkflowInProcessMessage {
-		AssertTextEquals(
-			key_errorMessage = "${errorMessage}",
-			locator1 = "DDLRecord#ERROR_MESSAGE",
-			value1 = "${errorMessage}");
 	}
 
 }

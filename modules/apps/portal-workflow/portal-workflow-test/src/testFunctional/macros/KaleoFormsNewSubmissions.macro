@@ -1,0 +1,88 @@
+definition {
+
+	macro addNewContacts {
+		if (isSet(ddlCompany)) {
+			Type(
+				key_field = "company",
+				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
+				value1 = "${ddlCompany}");
+		}
+
+		if (isSet(ddlEmail)) {
+			Type(
+				key_field = "email",
+				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
+				value1 = "${ddlEmail}");
+		}
+
+		if (isSet(ddlFirstName)) {
+			Type(
+				key_field = "firstName",
+				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
+				value1 = "${ddlFirstName}");
+		}
+
+		if (isSet(ddlInstantMesseger)) {
+			Type(
+				key_field = "imUserName",
+				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
+				value1 = "${ddlInstantMesseger}");
+		}
+
+		if (isSet(ddlJobTitle)) {
+			Type(
+				key_field = "jobTitle",
+				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
+				value1 = "${ddlJobTitle}");
+		}
+
+		if (isSet(ddlLastName)) {
+			Type(
+				key_field = "lastName",
+				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
+				value1 = "${ddlLastName}");
+		}
+
+		if (isSet(ddlPhoneMobile)) {
+			Type(
+				key_field = "phoneMobile",
+				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
+				value1 = "${ddlPhoneMobile}");
+		}
+
+		if (isSet(ddlPhoneOffice)) {
+			Type(
+				key_field = "phoneOffice",
+				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
+				value1 = "${ddlPhoneOffice}");
+		}
+	}
+
+    macro viewStatusDDL {
+		AssertElementPresent(
+			key_status = "${status}",
+			locator1 = "KaleoFormsNewSubmissions#LIST_TABLE_NAME_STATUS");
+	}
+
+	macro editDLLRecordContacts {
+		DDLRecord.editPG(ddlListName = "${ddlListName}");
+
+		Type(
+			key_field = "company",
+			locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
+			value1 = "${ddlCompanyEdit}");
+
+		Type(
+			key_field = "firstName",
+			locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
+			value1 = "${ddlFirstNameEdit}");
+	}
+
+	macro viewWorkflowInProcessMessage {
+		AssertTextEquals(
+			key_errorMessage = "${errorMessage}",
+			locator1 = "KaleoFormsNewSubmissions#ERROR_MESSAGE",
+			value1 = "${errorMessage}");
+	}
+
+}

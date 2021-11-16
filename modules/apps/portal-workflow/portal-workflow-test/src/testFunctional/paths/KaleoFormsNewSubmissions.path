@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>KaleoFormsNewSubmissions</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">KaleoFormsNewSubmissions</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>LIST_TABLE_NAME_STATUS</td>
+	<td>//span[@class='workflow-status']//*[contains(.,'${key_status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_DEFINITION</td>
+	<td>//input[contains(@id,'${key_field}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE</td>
+	<td>//div[contains(text(), '${key_errorMessage}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

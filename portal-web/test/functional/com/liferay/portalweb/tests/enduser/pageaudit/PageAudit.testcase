@@ -79,7 +79,7 @@ definition {
 	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"
 	@ignore = "true"
 	@priority = "3"
-	test APIVisibleInSites {
+	test UncheckedInstanceSettingsSiteScopeThenUncheckedAtSiteSettings {
 
 		// TODO LPS-128383 APIVisibleInSites pending implementation
 
@@ -3082,7 +3082,7 @@ definition {
 	Then the call is made for Google Page Speed default value - desktop"
 	@ignore = "true"
 	@priority = "3"
-	test ChooseAnOptionEqualToDesktop {
+	test DefaultStrategyAtInstanceSettings {
 
 		// TODO LPS-128383 ChooseAnOptionEqualToDesktop pending implementation
 
@@ -3274,7 +3274,7 @@ definition {
 	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
 	@ignore = "true"
 	@priority = "4"
-	test ErrorsForMobileValue {
+	test MobileStrategyAtInstanceSettings {
 
 		// TODO LPS-128383 ErrorsForMobileValue pending implementation
 
@@ -3285,7 +3285,7 @@ definition {
 	Then the 'Google PageSpeed Insights' tab won't be visible in the 'SITE SCOPE' section"
 	@ignore = "true"
 	@priority = "3"
-	test GooglePagespeedInvisible {
+	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteScope {
 
 		// TODO LPS-128383 GooglePagespeedInvisible pending implementation
 
@@ -3295,7 +3295,7 @@ definition {
 	Then all sites shows the same value (also void fields)"
 	@ignore = "true"
 	@priority = "5"
-	test HierarchyOfInstanceSettings {
+	test InstanceSettingsHierarchy {
 
 		// TODO LPS-128383 HierarchyOfInstanceSettings pending implementation
 
@@ -3814,7 +3814,7 @@ definition {
 	Then the Page Audit icon won't be visible from the view mode of the pages of any of the sites in the instance"
 	@ignore = "true"
 	@priority = "3"
-	test PageAuditInvisible {
+	test PageAuUncheckedInstanceSettingsVirtualInstanceThenNotVisiblePageAuditIconditInvisible {
 
 		// TODO LPS-128383 PageAuditInvisible pending implementation
 
@@ -3894,7 +3894,7 @@ definition {
 	Then the 'Google PageSpeed Insights' tab won't be visible from the Site settings of any of the sites in the instance"
 	@ignore = "true"
 	@priority = "3"
-	test PageSpeedInvisibleInSites {
+	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteSettings {
 
 		// TODO LPS-128383 PageSpeedInvisibleInSites pending implementation
 
@@ -4057,7 +4057,7 @@ definition {
 	Then the tab Google PageSpeed Insights is not visible from Instance settings"
 	@ignore = "true"
 	@priority = "4"
-	test TabGoogleSpeedInvisibleInSites {
+	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtInstanceSettings {
 
 		// TODO LPS-128383 TabGoogleSpeedInvisibleInSites pending implementation
 
@@ -4265,7 +4265,7 @@ definition {
 	Then the value in the site prevails over any changes in the Instance settings"
 	@ignore = "true"
 	@priority = "5"
-	test ValuesOverWrittenInSites {
+	test SiteSettingsHierarchyOverInstanceSettings {
 
 		// TODO LPS-128383 ValuesOverWrittenInSites pending implementation
 

@@ -45,7 +45,7 @@ export const saveTemplateAPI = async (
 	return await response.json();
 };
 
-export const exportAPI = async (formDataQuerySelector, url) => {
+export const startExport = async (formDataQuerySelector, url) => {
 	const mainFormData = document.querySelector(formDataQuerySelector);
 
 	const formData = new FormData(mainFormData);

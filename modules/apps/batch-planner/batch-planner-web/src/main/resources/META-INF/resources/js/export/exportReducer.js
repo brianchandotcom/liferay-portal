@@ -16,7 +16,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {useCallback, useEffect, useReducer} from 'react';
 
 import {
-	exportAPI,
+	startExport,
 	fetchExportedFile,
 	getPollingExportStatusProcess,
 } from '../BatchPlannerExport';
@@ -148,7 +148,7 @@ const usePollingExport = (formDataQuerySelector, formSubmitURL) => {
 			dispatchIfMounted({type: LOADING});
 
 			try {
-				const {error, exportTaskId} = await exportAPI(
+				const {error, exportTaskId} = await startExport(
 					formDataQuerySelector,
 					formSubmitURL
 				);

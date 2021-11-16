@@ -31,10 +31,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -51,9 +51,8 @@ import java.util.Locale;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hpsf.SummaryInformation;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -83,15 +82,22 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		throws Exception {
 
 		Workbook workbook = new HSSFWorkbook();
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)resourceRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
-		String authorFullName = themeDisplay.getUser().getFullName();
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		User user = themeDisplay.getUser();
 
 		Sheet sheet = workbook.createSheet("Content Dashboard Data");
-		((HSSFWorkbook)workbook).createInformationProperties();
-		((HSSFWorkbook)workbook).getSummaryInformation().setAuthor(authorFullName);
+
+		HSSFWorkbook hssfWorkbook = (HSSFWorkbook)workbook;
+
+		hssfWorkbook.createInformationProperties();
+
+		SummaryInformation summaryInformation =
+			hssfWorkbook.getSummaryInformation();
+
+		summaryInformation.setAuthor(user.getFullName());
 
 		Locale locale = _portal.getLocale(resourceRequest);
 

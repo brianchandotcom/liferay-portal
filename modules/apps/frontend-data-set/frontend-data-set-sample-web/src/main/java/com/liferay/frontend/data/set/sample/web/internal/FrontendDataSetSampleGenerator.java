@@ -42,6 +42,21 @@ import org.osgi.service.component.annotations.Reference;
 public class FrontendDataSetSampleGenerator {
 
 	public void generateFrontendDataSetSample(long companyId) {
+		try {
+			_generateFrontendDataSetSample(companyId);
+		}
+		catch (Exception exception) {
+			_generated = null;
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+	}
+
+	private void _generateFrontendDataSetSample(long companyId)
+		throws Exception {
+
 		if (_isFrontendDataSetSampleGenerated(companyId)) {
 			return;
 		}
@@ -53,61 +68,49 @@ public class FrontendDataSetSampleGenerator {
 			return;
 		}
 
-		try {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					companyId, "C_FrontendDataSetSample");
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				companyId, "C_FrontendDataSetSample");
 
-			if (objectDefinition == null) {
-				objectDefinition =
-					_objectDefinitionLocalService.addCustomObjectDefinition(
-						user.getUserId(),
-						LocalizedMapUtil.getLocalizedMap(
-							"Frontend Data Set Sample"),
-						"FrontendDataSetSample", "100", null,
-						LocalizedMapUtil.getLocalizedMap(
-							"Frontend Data Set Samples"),
-						ObjectDefinitionConstants.SCOPE_COMPANY,
-						Arrays.asList(
-							ObjectFieldUtil.createObjectField(
-								true, false, null, "Title", "title", false,
-								"String"),
-							ObjectFieldUtil.createObjectField(
-								true, false, null, "Description", "description",
-								false, "String"),
-							ObjectFieldUtil.createObjectField(
-								true, false, null, "Date", "date", false,
-								"Date")));
+		if (objectDefinition == null) {
+			objectDefinition =
+				_objectDefinitionLocalService.addCustomObjectDefinition(
+					user.getUserId(),
+					LocalizedMapUtil.getLocalizedMap(
+						"Frontend Data Set Sample"),
+					"FrontendDataSetSample", "100", null,
+					LocalizedMapUtil.getLocalizedMap(
+						"Frontend Data Set Samples"),
+					ObjectDefinitionConstants.SCOPE_COMPANY,
+					Arrays.asList(
+						ObjectFieldUtil.createObjectField(
+							true, false, null, "Title", "title", false,
+							"String"),
+						ObjectFieldUtil.createObjectField(
+							true, false, null, "Description", "description",
+							false, "String"),
+						ObjectFieldUtil.createObjectField(
+							true, false, null, "Date", "date", false, "Date")));
 
-				objectDefinition =
-					_objectDefinitionLocalService.publishCustomObjectDefinition(
-						user.getUserId(),
-						objectDefinition.getObjectDefinitionId());
-			}
-
-			for (int i = 1; i <= 100; i++) {
-				_objectEntryLocalService.addObjectEntry(
-					user.getUserId(), 0,
-					objectDefinition.getObjectDefinitionId(),
-					HashMapBuilder.<String, Serializable>put(
-						"date", new Date()
-					).put(
-						"description", "Description of the sample " + i
-					).put(
-						"title", "Sample" + i
-					).build(),
-					new ServiceContext());
-			}
-
-			_generated = true;
+			objectDefinition =
+				_objectDefinitionLocalService.publishCustomObjectDefinition(
+					user.getUserId(), objectDefinition.getObjectDefinitionId());
 		}
-		catch (Exception exception) {
-			_generated = null;
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
+		for (int i = 1; i <= 100; i++) {
+			_objectEntryLocalService.addObjectEntry(
+				user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"date", new Date()
+				).put(
+					"description", "Description of the sample " + i
+				).put(
+					"title", "Sample" + i
+				).build(),
+				new ServiceContext());
 		}
+
+		_generated = true;
 	}
 
 	private boolean _isFrontendDataSetSampleGenerated(long companyId) {

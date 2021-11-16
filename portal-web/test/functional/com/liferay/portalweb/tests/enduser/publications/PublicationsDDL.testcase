@@ -108,14 +108,14 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
 			changeSite = "Guest",
 			changeTitle = "Data Definition",
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Asset",
 			changeSite = "Guest",
 			changeTitle = "New Data Definition for List: List Name",
@@ -123,21 +123,21 @@ definition {
 			changeUser = "Test Test",
 			showAllItems = "true");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Lists Record",
 			changeSite = "Guest",
 			changeTitle = "${changeTitle}",
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Lists Record Set",
 			changeSite = "Guest",
 			changeTitle = "List Name",
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
 			changeSite = "Guest",
 			changeTitle = "Data Definition",
@@ -242,7 +242,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Template",
 			changeSite = "Guest",
 			changeTitle = "Display Template Name",
@@ -364,7 +364,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
 			changeSite = "Guest",
 			changeTitle = "Data Definition",
@@ -375,7 +375,7 @@ definition {
 			ddlListName = "List Name Edit",
 			groupName = "Guest");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Lists Record",
 			changeSite = "Guest",
 			changeTitle = "${changeTitle}",
@@ -517,7 +517,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Template",
 			changeSite = "Guest",
 			changeTitle = "Form Template Name",
@@ -591,14 +591,14 @@ definition {
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
 			changeSite = "Guest",
 			changeTitle = "Data Definition",
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Asset",
 			changeOrder = "2",
 			changeSite = "Guest",
@@ -611,21 +611,21 @@ definition {
 			ddlListName = "List Name",
 			groupName = "Guest");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Lists Record",
 			changeSite = "Guest",
 			changeTitle = "${changeTitle}",
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Lists Record Set",
 			changeSite = "Guest",
 			changeTitle = "List Name",
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
 			changeSite = "Guest",
 			changeTitle = "Data Definition",

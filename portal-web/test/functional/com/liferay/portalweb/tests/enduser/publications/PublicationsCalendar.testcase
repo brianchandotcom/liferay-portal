@@ -62,21 +62,21 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Calendar",
 			changeSite = "Site Name",
 			changeTitle = "Site Name",
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Calendar Event",
 			changeSite = "Site Name",
 			changeTitle = "Publication Calendar Event Title",
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Calendar Resource",
 			changeSite = "Site Name",
 			changeTitle = "Site Name",
@@ -131,7 +131,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Calendar Event",
 			changeSite = "Guest",
 			changeTitle = "Publication Calendar Event Title Edit",
@@ -154,7 +154,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name 2");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Calendar Event",
 			changeSite = "Guest",
 			changeTitle = "Publication Calendar Event Title",

@@ -46,7 +46,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Tag",
 			changeSite = "Guest",
 			changeTitle = "tag name",
@@ -63,7 +63,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Page",
 			changeSite = "Guest",
 			changeTitle = "Test Page",

@@ -190,7 +190,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name 2");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
 			changeSite = "Guest",
 			changeTitle = "Element Set Name",
@@ -265,7 +265,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name 1");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
 			changeSite = "Guest",
 			changeTitle = "Created Form Name Edited",
@@ -286,7 +286,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name 2");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
 			changeSite = "Guest",
 			changeTitle = "Created Form Name",
@@ -473,14 +473,14 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Form Instance",
 			changeSite = "Guest",
 			changeTitle = "Created Form Name",
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Form Record",
 			changeSite = "Guest",
 			changeTitle = "${changeTitle}",

@@ -216,39 +216,7 @@ definition {
 		}
 	}
 
-	macro viewChangesResultNotPresent {
-		var key_changeCategory = "${changeCategory}";
-		var key_changeTitle = "${changeTitle}";
-
-		if (isSet(changeOrder)) {
-			var changeOrder = "${changeOrder}";
-		}
-		else {
-			var changeOrder = "1";
-		}
-
-		AssertElementNotPresent(
-			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
-			value1 = "${changeTitle}");
-	}
-
-	macro viewChangesResultsOrder {
-		var changeOrder = "0";
-
-		for (var changeTitle : list "${changesList}") {
-			var changeOrder = ${changeOrder} + 1;
-
-			var key_changeCategory = "${changeCategory}";
-			var key_changeTitle = "${changeTitle}";
-
-			AssertTextEquals(
-				changeOrder = "${changeOrder}",
-				locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
-				value1 = "${changeTitle}");
-		}
-	}
-
-	macro viewChangesViaChangesStyle {
+	macro viewChanges {
 		if ("${publishedPublication}" == "true") {
 			Click(
 				key_publicationName = "${publicationName}",
@@ -289,6 +257,38 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TYPE",
 			value1 = "${changeType}");
+	}
+
+	macro viewChangesResultNotPresent {
+		var key_changeCategory = "${changeCategory}";
+		var key_changeTitle = "${changeTitle}";
+
+		if (isSet(changeOrder)) {
+			var changeOrder = "${changeOrder}";
+		}
+		else {
+			var changeOrder = "1";
+		}
+
+		AssertElementNotPresent(
+			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
+			value1 = "${changeTitle}");
+	}
+
+	macro viewChangesResultsOrder {
+		var changeOrder = "0";
+
+		for (var changeTitle : list "${changesList}") {
+			var changeOrder = ${changeOrder} + 1;
+
+			var key_changeCategory = "${changeCategory}";
+			var key_changeTitle = "${changeTitle}";
+
+			AssertTextEquals(
+				changeOrder = "${changeOrder}",
+				locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
+				value1 = "${changeTitle}");
+		}
 	}
 
 	macro viewDDLRecordChangeDiff {

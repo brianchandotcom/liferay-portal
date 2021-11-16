@@ -97,7 +97,7 @@ definition {
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Documents Folder",
 			changeSite = "Guest",
 			changeTitle = "DM Folder 1 Name",
@@ -112,7 +112,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Documents Folder",
 			changeSite = "Guest",
 			changeTitle = "DM Folder 1 Name",
@@ -125,7 +125,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Documents Folder",
 			changeSite = "Guest",
 			changeTitle = "DM Folder 1 Name",
@@ -171,14 +171,14 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Document",
 			changeSite = "Guest",
 			changeTitle = "DM Document Title Edit",
 			changeType = "Modified",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Documents Folder",
 			changeSite = "Guest",
 			changeTitle = "DM Folder Name",
@@ -230,14 +230,14 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Document",
 			changeSite = "Guest",
 			changeTitle = "DM Document Title",
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
 			changeSite = "Guest",
 			changeTitle = "DM Document Type Name",
@@ -295,14 +295,14 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Document",
 			changeSite = "Site Name",
 			changeTitle = "Document_1.jpg",
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Shortcut",
 			changeSite = "Guest",
 			changeTitle = "Document_1.jpg",

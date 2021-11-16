@@ -60,7 +60,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Folder",
 			changeSite = "Site Name",
 			changeTitle = "WC Folder Name Edited",
@@ -85,7 +85,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Folder",
 			changeSite = "Site Name",
 			changeTitle = "WC Folder Name",
@@ -195,14 +195,14 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Category Vocabulary",
 			changeSite = "Guest",
 			changeTitle = "Vocabulary Name",
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Category",
 			changeSite = "Guest",
 			changeTitle = "Category Name",
@@ -297,28 +297,28 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
 			changeSite = "Guest",
 			changeTitle = "WC Structure Name",
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Template",
 			changeSite = "Guest",
 			changeTitle = "WC Template Name",
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Document",
 			changeSite = "Guest",
 			changeTitle = "DM Document Title",
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Document",
 			changeOrder = "2",
 			changeSite = "Guest",
@@ -388,7 +388,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Widget",
 			changeSite = "Site Name",
 			changeTitle = "Asset Publisher on Test Page",

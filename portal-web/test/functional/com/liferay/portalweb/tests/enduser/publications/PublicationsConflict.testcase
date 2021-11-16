@@ -311,7 +311,7 @@ definition {
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication 1 Name");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
 			changeSite = "Guest",
 			changeTitle = "WC WebContent Title",
@@ -324,7 +324,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "History");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
 			changeSite = "Guest",
 			changeTitle = "WC WebContent Title",
@@ -347,7 +347,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication 2 Name");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
 			changeSite = "Guest",
 			changeTitle = "WC WebContent Title 2 Edit",

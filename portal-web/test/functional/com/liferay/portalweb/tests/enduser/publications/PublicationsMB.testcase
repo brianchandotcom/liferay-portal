@@ -46,7 +46,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Category",
 			changeSite = "Guest",
 			changeTitle = "Message Boards Category",
@@ -115,7 +115,7 @@ definition {
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Message",
 			changeSite = "Site Name",
 			changeTitle = "RE: MB Thread Message Subject Edit",
@@ -156,14 +156,14 @@ definition {
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Message",
 			changeSite = "Guest",
 			changeTitle = "MB Thread Message Subject",
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Message",
 			changeOrder = "2",
 			changeSite = "Guest",
@@ -171,7 +171,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Thread",
 			changeSite = "Guest",
 			changeTitle = "MB Thread Message Subject",
@@ -240,14 +240,14 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Message",
 			changeSite = "Guest",
 			changeTitle = "MB Thread Split Subject",
 			changeType = "Modified",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Message",
 			changeOrder = "2",
 			changeSite = "Guest",
@@ -255,14 +255,14 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Thread",
 			changeSite = "Guest",
 			changeTitle = "MB Thread Message Subject",
 			changeType = "Modified",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Thread",
 			changeOrder = "2",
 			changeSite = "Guest",

@@ -58,7 +58,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Site",
 			changeSite = "Site Name",
 			changeTitle = "Child Site Name",
@@ -94,7 +94,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChangesViaChangesStyle(
+		PublicationsChanges.viewChanges(
 			changeCategory = "Site",
 			changeSite = "Global",
 			changeTitle = "Site Name",

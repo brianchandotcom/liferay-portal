@@ -246,11 +246,15 @@ definition {
 	}
 
 	macro viewEntryDetails {
-		Click(
-			key_entry = "${entry}",
-			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+		key_entry = "${entry}";
 
-		Click(locator1 = "ObjectPortlet#VIEW_ENTRY_BUTTON");
+		if (IsElementPresent(locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU")) {
+			Click(locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+			Click(locator1 = "ObjectPortlet#VIEW_ENTRY_BUTTON");
+		}
+		else {
+			Click(locator1 = "ObjectPortlet#VIEW_ENTRY_EYE_BUTTON");
+		}
 
 		WaitForPageLoad();
 	}

@@ -1029,12 +1029,12 @@ definition {
 
 		ObjectPortlet.updateEntry(
 			entry = "Text test",
-			updateEntry = "Update Text test");
+			updateEntry = "Update test");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "Text test");
-		ObjectPortlet.viewEntry(entry = "Update Text test");
+		ObjectPortlet.viewEntry(entry = "Update test");
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to view and access the Custom Object portlet without the Access in Control Panel permission"

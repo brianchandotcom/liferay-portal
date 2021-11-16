@@ -44,7 +44,9 @@ definition {
 
 		Button.clickSave();
 
-		WaitForPageLoad();
+		WaitForElementNotPresent(
+			key_text = "Save",
+			locator1 = "Button#ANY");
 	}
 
 	macro addObjectFieldViaAPI {
@@ -175,7 +177,9 @@ definition {
 
 		Button.clickSave();
 
-		WaitForPageLoad();
+		WaitForElementNotPresent(
+			key_text = "Save",
+			locator1 = "Button#ANY");
 	}
 
 	macro addObjectViaAPI {

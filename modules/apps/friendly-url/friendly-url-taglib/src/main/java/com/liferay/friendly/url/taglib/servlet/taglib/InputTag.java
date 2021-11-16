@@ -59,6 +59,10 @@ public class InputTag extends IncludeTag {
 		return _localizable;
 	}
 
+	public boolean isShowLabel() {
+		return _showLabel;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -90,6 +94,10 @@ public class InputTag extends IncludeTag {
 		setServletContext(ServletContextUtil.getServletContext());
 	}
 
+	public void setShowLabel(boolean showLabel) {
+		_showLabel = showLabel;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -100,6 +108,7 @@ public class InputTag extends IncludeTag {
 		_inputAddon = null;
 		_localizable = true;
 		_name = _DEFAULT_NAME;
+		_showLabel = true;
 	}
 
 	@Override
@@ -126,6 +135,8 @@ public class InputTag extends IncludeTag {
 			"liferay-friendly-url:input:localizable", isLocalizable());
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:name", getName());
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:input:showLabel", isShowLabel());
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:value", _getValue());
 	}
@@ -174,5 +185,6 @@ public class InputTag extends IncludeTag {
 	private String _inputAddon;
 	private boolean _localizable = true;
 	private String _name = _DEFAULT_NAME;
+	private boolean _showLabel = true;
 
 }

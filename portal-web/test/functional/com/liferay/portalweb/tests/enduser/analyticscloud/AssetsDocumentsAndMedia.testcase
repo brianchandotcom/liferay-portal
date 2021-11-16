@@ -140,7 +140,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8402 | Test Summary: Documents audience card shows expected amount of know and anonymous individuals"
-	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInDM {
 		property portal.upstream = "quarantine";
@@ -221,7 +220,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8403 | Test Summary: Documents audience card shows expected amount of segmented and unsegmented individuals"
-	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInDM {
 		property portal.upstream = "quarantine";
@@ -620,7 +618,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8118 | Test Summary: Document known individuals list shows the individuals who have viewed the documents"
-	@ignore = "true"
 	@priority = "5"
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedDocuments {
 
@@ -696,7 +693,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8115 | Test Summary: Assert document list shows all of the documents and media assets in a list"
-	@ignore = "true"
 	@priority = "5"
 	test ViewAllDocumentsAndMediaShownInAssetList {
 		property portal.upstream = "quarantine";

@@ -814,12 +814,6 @@ definition {
 			locator1 = "NavBar#GO_TO_HOME_PAGE_LINK");
 	}
 
-	macro viewEmbeddedPagePG {
-		AssertTextPresent(
-			locator1 = "Home#EMBEDDED_SITE_LIFERAY_BANNER_LOGO",
-			value1 = "Liferay");
-	}
-
 	macro viewFriendlyURL {
 		AssertTextEquals(
 			locator1 = "SitePages#DETAILS_FRIENDLY_BASE_URL",

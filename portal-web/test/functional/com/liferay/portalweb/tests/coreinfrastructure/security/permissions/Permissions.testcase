@@ -46,7 +46,7 @@ definition {
 
 			Portlet.addPG(portletName = "Blogs");
 
-			Blogs.viewControlsPG();
+			Portlet.viewSpecificPG(portletName = "Blogs");
 		}
 
 		task ("Logout and go to blogs page") {

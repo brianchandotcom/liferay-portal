@@ -684,24 +684,6 @@ definition {
 			value1 = "${descriptionValue}");
 	}
 
-	macro viewControlsPG {
-		var key_text = "New Entry";
-
-		AssertTextEquals(
-			locator1 = "Button#ANY",
-			value1 = "New Entry");
-
-		AssertTextEquals(
-			locator1 = "Blogs#SUBSCRIBE_LINK",
-			value1 = "Subscribe");
-
-		var key_text = "RSS";
-
-		AssertTextEquals(
-			locator1 = "Button#ANY",
-			value1 = "RSS");
-	}
-
 	macro viewEntryNotPresent {
 		LexiconList.viewListEntryNotPresent(listEntry = "${entryTitle}");
 	}

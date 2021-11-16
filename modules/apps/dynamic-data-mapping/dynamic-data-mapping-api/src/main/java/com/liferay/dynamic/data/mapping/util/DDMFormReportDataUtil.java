@@ -19,9 +19,12 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +40,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -96,6 +100,40 @@ public class DDMFormReportDataUtil {
 		);
 
 		return fieldsJSONArray;
+	}
+
+	public static JSONArray getFieldValuesJSONArray(
+			List<DDMFormInstanceRecord> ddmFormInstanceRecords,
+			String fieldName)
+		throws Exception {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (DDMFormInstanceRecord ddmFormInstanceRecord :
+				ddmFormInstanceRecords) {
+
+			DDMFormValues ddmFormValues =
+				ddmFormInstanceRecord.getDDMFormValues();
+
+			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+				ddmFormValues.getDDMFormFieldValuesMap(false);
+
+			List<DDMFormFieldValue> ddmFormFieldValues =
+				ddmFormFieldValuesMap.get(fieldName);
+
+			if (ddmFormFieldValues == null) {
+				continue;
+			}
+
+			ddmFormFieldValues.forEach(
+				ddmFormFieldValue -> {
+					Value value = ddmFormFieldValue.getValue();
+
+					jsonArray.put(value.getString(value.getDefaultLocale()));
+				});
+		}
+
+		return jsonArray;
 	}
 
 	public static String getLastModifiedDate(

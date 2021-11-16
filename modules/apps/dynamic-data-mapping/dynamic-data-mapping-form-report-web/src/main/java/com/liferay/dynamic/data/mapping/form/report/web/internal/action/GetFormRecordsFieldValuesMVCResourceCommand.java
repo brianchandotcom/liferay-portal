@@ -16,13 +16,10 @@ package com.liferay.dynamic.data.mapping.form.report.web.internal.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
-import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormReportDataUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -31,20 +28,15 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,23 +72,14 @@ public class GetFormRecordsFieldValuesMVCResourceCommand
 				themeDisplay.getUserId());
 		}
 
-		JSONArray fieldValuesJSONArray = _getFieldValuesJSONArray(
-			httpServletRequest);
-
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(resourceResponse);
-
-		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, fieldValuesJSONArray);
+			resourceRequest, resourceResponse,
+			_getFieldValuesJSONArray(httpServletRequest));
 	}
 
 	private JSONArray _getFieldValuesJSONArray(
 			HttpServletRequest httpServletRequest)
 		throws Exception {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		String fieldName = ParamUtil.getString(httpServletRequest, "fieldName");
 
@@ -114,34 +97,8 @@ public class GetFormRecordsFieldValuesMVCResourceCommand
 				WorkflowConstants.STATUS_APPROVED, start, end,
 				new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, true));
 
-		List<DDMFormInstanceRecord> ddmFormInstanceRecords =
-			baseModelSearchResult.getBaseModels();
-
-		for (DDMFormInstanceRecord ddmFormInstanceRecord :
-				ddmFormInstanceRecords) {
-
-			DDMFormValues ddmFormValues =
-				ddmFormInstanceRecord.getDDMFormValues();
-
-			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-				ddmFormValues.getDDMFormFieldValuesMap(false);
-
-			List<DDMFormFieldValue> ddmFormFieldValues =
-				ddmFormFieldValuesMap.get(fieldName);
-
-			if (ddmFormFieldValues == null) {
-				continue;
-			}
-
-			ddmFormFieldValues.forEach(
-				ddmFormFieldValue -> {
-					Value value = ddmFormFieldValue.getValue();
-
-					jsonArray.put(value.getString(value.getDefaultLocale()));
-				});
-		}
-
-		return jsonArray;
+		return DDMFormReportDataUtil.getFieldValuesJSONArray(
+			baseModelSearchResult.getBaseModels(), fieldName);
 	}
 
 	@Reference

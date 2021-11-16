@@ -207,6 +207,10 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							</clay:container-fluid>
 						</div>
 
+						<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/dynamic_data_mapping_form/get_form_report_data" var="formReportDataURL">
+							<portlet:param name="formInstanceId" value="<%= String.valueOf(formInstanceId) %>" />
+						</liferay-portlet:resourceURL>
+
 						<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/dynamic_data_mapping_form/validate_csrf_token" var="validateCSRFTokenURL" />
 
 						<clay:container-fluid
@@ -217,6 +221,8 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 								module="admin/js/FormView.link.es"
 								props='<%=
 									HashMapBuilder.<String, Object>put(
+										"formReportDataURL", formReportDataURL.toString()
+									).put(
 										"validateCSRFTokenURL", validateCSRFTokenURL.toString()
 									).putAll(
 										ddmFormDisplayContext.getDDMFormContext()

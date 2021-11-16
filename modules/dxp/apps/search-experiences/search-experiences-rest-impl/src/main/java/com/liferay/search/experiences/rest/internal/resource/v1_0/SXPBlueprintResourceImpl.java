@@ -16,6 +16,7 @@ package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -100,6 +101,29 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 	}
 
 	@Override
+	public SXPBlueprint patchSXPBlueprint(
+			Long sxpBlueprintId, SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		return _sxpBlueprintDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, contextHttpServletRequest,
+				sxpBlueprint.getId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			_sxpBlueprintService.updateSXPBlueprint(
+				sxpBlueprintId, _getConfigurationJSON(sxpBlueprint),
+				_getLocalizedMap(
+					sxpBlueprint.getDescription(),
+					sxpBlueprint.getDescription_i18n()),
+				_getElementInstancesJSON(sxpBlueprint),
+				_getLocalizedMap(
+					sxpBlueprint.getTitle(), sxpBlueprint.getTitle_i18n()),
+				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+	}
+
+	@Override
 	public SXPBlueprint postSXPBlueprint(SXPBlueprint sxpBlueprint)
 		throws Exception {
 
@@ -152,7 +176,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 	}
 
 	private String _getElementInstancesJSON(SXPBlueprint sxpBlueprint) {
-		if (sxpBlueprint.getElementInstances() == null) {
+		if (ArrayUtil.isEmpty(sxpBlueprint.getElementInstances())) {
 			return null;
 		}
 

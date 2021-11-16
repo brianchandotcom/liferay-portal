@@ -104,6 +104,7 @@ import javax.net.ssl.SSLContext;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.logging.Log;
@@ -4449,6 +4450,10 @@ public class JenkinsResultsParserUtil {
 
 		@Override
 		public int compare(String propertyName1, String propertyName2) {
+			if ((propertyName1 == null) || (propertyName2 == null)) {
+				return ObjectUtils.compare(propertyName1, propertyName2);
+			}
+
 			Set<String> propertyOptSet1 = _getPropertyOptSet(propertyName1);
 			Set<String> propertyOptSet2 = _getPropertyOptSet(propertyName2);
 

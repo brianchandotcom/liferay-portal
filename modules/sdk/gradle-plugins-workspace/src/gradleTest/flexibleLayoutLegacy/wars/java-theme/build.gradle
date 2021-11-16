@@ -20,5 +20,5 @@ dependencies {
 
 	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common"
 
-	themeBuilder group: "com.liferay", name: "com.liferay.portal.tools.theme.builder", version: "1.1.8"
+	themeBuilder group: "com.liferay", name: "com.liferay.portal.tools.theme.builder", version: "1.1.9"
 }

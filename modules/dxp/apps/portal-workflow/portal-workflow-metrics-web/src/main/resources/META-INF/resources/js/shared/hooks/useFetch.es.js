@@ -33,27 +33,22 @@ const useFetch = ({
 		}
 	});
 
-	const fetchData = useCallback(
-		() =>
-			fetch(fetchURL, {
-				headers,
-				method: 'GET',
-			})
-				.then((response) => {
-					if (plainText) {
-						return response.text();
-					}
-					else {
-						return response.json();
-					}
-				})
-				.then((data) => {
-					setData(data);
+	const fetchData = useCallback(async () => {
+		const response = await fetch(fetchURL, {
+			headers,
+			method: 'GET',
+		});
 
-					return callback(data);
-				}),
-		[callback, fetchURL, plainText]
-	);
+		const data = plainText ? await response.text() : await response.json();
+
+		if (response.ok) {
+			setData(data);
+
+			return callback(data);
+		}
+
+		throw data;
+	}, [callback, fetchURL, plainText]);
 
 	return {
 		data,

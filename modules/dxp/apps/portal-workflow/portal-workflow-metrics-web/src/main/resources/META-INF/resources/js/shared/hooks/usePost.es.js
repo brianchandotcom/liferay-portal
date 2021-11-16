@@ -33,22 +33,24 @@ const usePost = ({
 		}
 	});
 
-	const postData = useCallback(
-		() =>
-			fetch(fetchURL, {
-				body: JSON.stringify(body),
-				headers: {...headers, 'Content-Type': 'application/json'},
-				method: 'POST',
-				params,
-			})
-				.then((response) => response.json())
-				.then((data) => {
-					setData(data);
+	const postData = useCallback(async () => {
+		const response = await fetch(fetchURL, {
+			body: JSON.stringify(body),
+			headers: {...headers, 'Content-Type': 'application/json'},
+			method: 'POST',
+			params,
+		});
 
-					return callback(data);
-				}),
-		[body, callback, fetchURL, params]
-	);
+		const data = await response.json();
+
+		if (response.ok) {
+			setData(data);
+
+			return callback(data);
+		}
+
+		throw data;
+	}, [body, callback, fetchURL, params]);
 
 	return {
 		data,

@@ -19,16 +19,19 @@ const usePut = ({body = {}, admin = false, url}) => {
 		? `${adminBaseURL}${url}`
 		: `${metricsBaseURL}${url}`;
 
-	return useCallback(
-		() =>
-			fetch(fetchURL, {
-				body: JSON.stringify(body),
-				headers: {...headers, 'Content-Type': 'application/json'},
-				method: 'PUT',
-			}),
+	return useCallback(async () => {
+		const response = await fetch(fetchURL, {
+			body: JSON.stringify(body),
+			headers: {...headers, 'Content-Type': 'application/json'},
+			method: 'PUT',
+		});
 
-		[body, fetchURL]
-	);
+		if (response.ok) {
+			return true;
+		}
+
+		throw await response.json();
+	}, [body, fetchURL]);
 };
 
 export {usePut};

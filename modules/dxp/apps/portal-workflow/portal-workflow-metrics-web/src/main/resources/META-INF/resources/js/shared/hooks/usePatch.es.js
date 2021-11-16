@@ -20,12 +20,23 @@ const usePatch = ({admin = false, body = {}, callback = () => {}, url}) => {
 		: `${metricsBaseURL}${url}`;
 
 	const patchData = useCallback(
-		(patchBody) =>
-			fetch(fetchURL, {
+		async (patchBody) => {
+			const response = await fetch(fetchURL, {
 				body: JSON.stringify(patchBody) || JSON.stringify(body),
 				headers: {...headers, 'Content-Type': 'application/json'},
 				method: 'PATCH',
-			}).then(callback),
+			});
+
+			if (response.ok) {
+				return callback();
+			}
+
+			const requestFailedMessage = Liferay.Language.get(
+				'your-request-has-failed'
+			);
+
+			throw new Error(requestFailedMessage);
+		},
 		[fetchURL, body, callback]
 	);
 

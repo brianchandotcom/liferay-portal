@@ -212,7 +212,7 @@
 </tr>
 <tr>
 	<td>ERROR_IMPORT_TRANSLATIONS_ITEM_MESSAGE</td>
-	<td>//li[contains(@class,'list-group-item')]//div[contains(@class,'text-danger')]</td>
+	<td>//*[contains(@class,'list-group-item')]//div[contains(@class,'text-danger')]</td>
 	<td></td>
 </tr>
 <tr>

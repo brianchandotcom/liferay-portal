@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>ASSET_LIST_ENTRY_TITLE</td>
-	<td>//li[contains(@class,'list-group-item')]//a[contains(.,'${key_title}')] | //li[contains(@class,'list-group-item')]//p[contains(.,'${key_title}')]</td>
+	<td>//*[contains(@class,'list-group-item')]//a[contains(.,'${key_title}')] | //*[contains(@class,'list-group-item')]//p[contains(.,'${key_title}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>ASSET_LIST_ENTRY_TYPE</td>
-	<td>//li[contains(@class,'list-group-item')]//h6[contains(.,'${key_type}')]</td>
+	<td>//*[contains(@class,'list-group-item')]//h6[contains(.,'${key_type}')]</td>
 	<td></td>
 </tr>
 <tr>

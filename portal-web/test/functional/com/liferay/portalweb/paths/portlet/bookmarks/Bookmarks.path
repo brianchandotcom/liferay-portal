@@ -34,12 +34,12 @@
 <!--DESCRIPTIVE_ENTRY-->
 <tr>
 	<td>DESCRIPTIVE_ENTRY_TITLE</td>
-	<td>//li[contains(@class,'list-group-item')]//a[contains(.,'${key_assetName}')]</td>
+	<td>//*[contains(@class,'list-group-item')]//a[contains(.,'${key_assetName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTIVE_ENTRY_DESCRIPTION</td>
-	<td>//li[contains(@class,'list-group-item')]//div/h5[contains(.,'${key_assetDescription}')]</td>
+	<td>//*[contains(@class,'list-group-item')]//div/h5[contains(.,'${key_assetDescription}')]</td>
 	<td></td>
 </tr>
 <tr>

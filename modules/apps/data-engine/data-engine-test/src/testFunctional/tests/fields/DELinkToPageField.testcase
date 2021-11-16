@@ -80,7 +80,7 @@ definition {
 			fieldName = "Link to Page");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-70110. This test verifies that is possible to clear the link"
 	@priority = "5"
 	test CanClearInput {
 		JSONLayout.addPublicLayout(
@@ -117,8 +117,8 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		DERenderer.assertLinktoPageNotPresent(
-			linkToPageContent = "Public Pages > Test Page Name",
+		DERenderer.assertLinktoPageIsClear(
+			index = "1",
 			linkToPageFieldLabel = "Link to Page");
 	}
 
@@ -159,16 +159,59 @@ definition {
 			fieldName = "Link to Page");
 	}
 
-	@description = "This is a stubbed description"
-	@ignore = "true"
+	@description = "This is a test for LRQA-70110. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"
 	@priority = "5"
 	test CanInputDataOnDuplicatedField {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
 
-		// TODO LRQA-70110	Refactor of Renderer Link to Page Field
+		NavItem.gotoStructures();
 
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Link to Page",
+			fieldName = "Link to Page");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Link to Page");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Link to Page");
+
+		DERenderer.inputDataInLinkToPageField(
+			index = "1",
+			linkToPageContent = "Test Page Name",
+			linkToPageFieldLabel = "Link to Page");
+
+		DERenderer.inputDataInLinkToPageField(
+			index = "2",
+			linkToPageContent = "Test Page Name",
+			linkToPageFieldLabel = "Link to Page");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertContentInLinktoPageField(
+			index = "1",
+			linkToPageContent = "Public Pages > Test Page Name",
+			linkToPageFieldLabel = "Link to Page");
+
+		DERenderer.assertContentInLinktoPageField(
+			index = "2",
+			linkToPageContent = "Public Pages > Test Page Name",
+			linkToPageFieldLabel = "Link to Page");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-70110. This test verifies that the Link to Page persists"
 	@priority = "5"
 	test CanInputLink {
 		JSONLayout.addPublicLayout(
@@ -204,7 +247,7 @@ definition {
 			linkToPageFieldLabel = "Link to Page");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-70110. This test verifies that is not possible to publish the Web Content with a required field blank"
 	@priority = "4"
 	test CanNotPublishBlankRequiredField {
 		NavItem.gotoStructures();
@@ -230,7 +273,7 @@ definition {
 		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-70110. This test verifies that is possible to remove a duplicated field (repeatable)"
 	@priority = "4"
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();

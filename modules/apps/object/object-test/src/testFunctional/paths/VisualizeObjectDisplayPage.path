@@ -22,7 +22,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_ENTRY</td>
-		<td>//li[@data-qa-id='row']</td>
+		<td>//*[@data-qa-id='row']</td>
 		<td></td>
 	</tr>
 	<tr>

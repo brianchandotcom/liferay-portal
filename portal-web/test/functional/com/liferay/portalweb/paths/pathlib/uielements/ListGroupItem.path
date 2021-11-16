@@ -12,22 +12,22 @@
 <tbody>
 <tr>
 	<td>CONFIGURATION_ITEM_LINK</td>
-	<td>//ul[contains(@class,'list-group')]//a[contains(@href,'${key_url}')]</td>
+	<td>//dl[contains(@class,'list-group')]//a[contains(@href,'${key_url}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ITEM_NAME_LINK</td>
-	<td>//ul[contains(@class,'list-group')]/*[contains(@data-qa-id,'row')]//h5/a[normalize-space(text())='${key_itemName}']</td>
+	<td>//dl[contains(@class,'list-group')]/*[contains(@data-qa-id,'row')]//h5/a[normalize-space(text())='${key_itemName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ITEM_SUB_INFO</td>
-	<td>//ul[contains(@class,'list-group')]/*[contains(@data-qa-id,'row')]//h5[contains(.,'${key_itemName}')]/../h6[2]</td>
+	<td>//dl[contains(@class,'list-group')]/*[contains(@data-qa-id,'row')]//h5[contains(.,'${key_itemName}')]/../h6[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ITEM_TEXT</td>
-	<td>//ul[contains(@class,'list-group')]//*[@class='list-group-card-item-text' and normalize-space(./text())='${key_itemName}']</td>
+	<td>//dl[contains(@class,'list-group')]//*[@class='list-group-card-item-text' and normalize-space(./text())='${key_itemName}']</td>
 	<td></td>
 </tr>
 </tbody>

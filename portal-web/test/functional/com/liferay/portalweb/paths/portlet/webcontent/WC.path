@@ -63,7 +63,7 @@
 <!--ENTRY_CARDS-->
 <tr>
 	<td>ENTRY_CARDS_THUMBNAIL</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[contains(@class,'card')]//a[contains(.,'${key_webContentTitle}')]</td>
+	<td>//*[contains(@data-title,'${key_webContentTitle}')]//div[contains(@class,'card')]//a[contains(.,'${key_webContentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -74,7 +74,7 @@
 <!--ENTRY_LIST-->
 <tr>
 	<td>ENTRY_LIST_THUMBNAIL</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']/div</td>
+	<td>//*[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -84,27 +84,27 @@
 </tr>
 <tr>
 	<td>ENTRY_LIST_MENULIST_ICON</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[contains(@class,'dropdown-toggle')]</td>
+	<td>//*[contains(@data-title,'${key_webContentTitle}')]//*[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_LIST_CHECKBOX</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//input</td>
+	<td>//*[contains(@data-title,'${key_webContentTitle}')]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_LIST_TITLE</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a</td>
+	<td>//*[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_LIST_TITLE_NAME</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a[contains(text(),'${key_webContentTitle}')]</td>
+	<td>//*[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a[contains(text(),'${key_webContentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_LIST_TITLE_ON_LIVE</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//p</td>
+	<td>//*[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//p</td>
 	<td></td>
 </tr>
 <tr>
@@ -114,12 +114,12 @@
 </tr>
 <tr>
 	<td>ENTRY_LIST_WORKFLOW_STATUS</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'label')]</td>
+	<td>//*[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'label')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_LIST_WORKFLOW_TRANSLATIONE_STATUS</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'label-info')]</td>
+	<td>//*[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'label-info')]</td>
 	<td></td>
 </tr>
 <tr>

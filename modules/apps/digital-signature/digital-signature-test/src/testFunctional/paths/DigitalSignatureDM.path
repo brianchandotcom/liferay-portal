@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>DIGITAL_SIGNATURE_SELECT_DOCUMENT</td>
-	<td>//li[contains(@data-title, '${dmDocumentTitle}')]</td>
+	<td>//*[contains(@data-title, '${dmDocumentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

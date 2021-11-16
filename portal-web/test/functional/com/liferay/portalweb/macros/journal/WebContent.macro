@@ -1542,13 +1542,13 @@ definition {
 
 	macro getAssetId {
 		if (isSet(webContentAsset)) {
-			var webContentId = selenium.getAttribute("//li[contains(@data-title,'${webContentAsset}')]//input@value");
+			var webContentId = selenium.getAttribute("//*[contains(@data-title,'${webContentAsset}')]//input@value");
 
 			return "${webContentId}";
 		}
 
 		if (isSet(folderAsset)) {
-			var folderId = selenium.getAttribute("//li[contains(@data-title,'${folderAsset}')]@data-folder-id");
+			var folderId = selenium.getAttribute("//*[contains(@data-title,'${folderAsset}')]@data-folder-id");
 
 			return "${folderId}";
 		}

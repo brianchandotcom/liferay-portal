@@ -379,7 +379,7 @@
 </tr>
 <tr>
 	<td>VIDEO_SHORTCUT_THUMBNAIL_LIST</td>
-	<td>//li[@data-qa-id='row'][contains(.,'${key_list}')]//div[contains(@class,'bg-cover')]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_list}')]//div[contains(@class,'bg-cover')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -12,37 +12,37 @@
 <tbody>
 <tr>
 	<td>LIST_ENTRY</td>
-	<td>//li[@data-qa-id='row'][contains(.,'${key_listEntry}')]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_ENTRY_CHECKBOX</td>
-	<td>//li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//input[@type='checkbox']</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_ENTRY_TITLE</td>
-	<td>//li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h5 | //li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h2 | //li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//p[contains(@class,'h5')]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h5 | //*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h2 | //*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//p[contains(@class,'h5')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_ENTRY_TITLE_LINK</td>
-	<td>//li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//a</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_ENTRY_TITLE_LINK_SPECIFIC</td>
-	<td>//li[@data-qa-id='row'][${key_position}][contains(.,'${key_listEntry}')]//a</td>
+	<td>//*[@data-qa-id='row'][${key_position}][contains(.,'${key_listEntry}')]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_ENTRY_SUBTITLE</td>
-	<td>//li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h6[contains(.,'${key_listEntrySubtitle}')]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h6[contains(.,'${key_listEntrySubtitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_ENTRY_LABEL</td>
-	<td>//li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//span[contains(@class,'label')][contains(.,'${key_listEntryLabel}')]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//span[contains(@class,'label')][contains(.,'${key_listEntryLabel}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -57,12 +57,12 @@
 </tr>
 <tr>
 	<td>LIST_ENTRY_ELLIPSIS</td>
-	<td>//li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_CUSTOM_LOGO</td>
-	<td>//li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//div[contains(@class,'bg-cover')]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//div[contains(@class,'bg-cover')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -53,14 +53,12 @@ import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.tools.WebXMLBuilder;
 import com.liferay.portal.tools.deploy.extension.DeploymentExtension;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.webserver.DynamicResourceServlet;
 import com.liferay.util.ant.CopyTask;
 import com.liferay.util.ant.DeleteTask;
 import com.liferay.util.ant.ExpandTask;
 import com.liferay.util.ant.UpToDateTask;
-import com.liferay.util.ant.WarTask;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -194,9 +192,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 			else if (appServerType.equals(ServerDetector.TOMCAT_ID) ||
 					 appServerType.equals(ServerDetector.WEBLOGIC_ID)) {
 
-				if (unpackWar) {
-					deployDir = deployDir.substring(0, deployDir.length() - 4);
-				}
+				deployDir = deployDir.substring(0, deployDir.length() - 4);
 			}
 
 			String destDir = autoDeploymentContext.getDestDir();
@@ -293,10 +289,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 				appServerType + " is not a valid application server type");
 		}
 
-		if (appServerType.equals(ServerDetector.WEBSPHERE_ID)) {
-			unpackWar = false;
-		}
-
 		if (Validator.isNotNull(jbossPrefix) &&
 			!Validator.isNumber(jbossPrefix)) {
 
@@ -355,14 +347,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 		String contextPath = DeployUtil.getResourcePath(
 			tempDirPaths, "context.xml");
 
-		String content = FileUtil.read(contextPath);
-
-		if (!PropsValues.AUTO_DEPLOY_UNPACK_WAR) {
-			content = StringUtil.removeSubstring(
-				content, "antiResourceLocking=\"true\"");
-		}
-
-		FileUtil.write(targetFile, content);
+		FileUtil.write(targetFile, FileUtil.read(contextPath));
 	}
 
 	@Override
@@ -650,7 +635,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 	protected String themeTaglibDTD;
 	protected String tomcatLibDir;
 	protected String uiTaglibDTD;
-	protected boolean unpackWar;
 	protected String utilTaglibDTD;
 	protected String wildflyPrefix;
 
@@ -952,81 +936,31 @@ public class BaseAutoDeployer implements AutoDeployer {
 			_log.debug("Excludes " + excludes);
 		}
 
-		if (!unpackWar) {
-			Path tempDirPath = Files.createTempDirectory(
-				Paths.get(SystemProperties.get(SystemProperties.TMP_DIR)),
-				null);
+		// The deployer might only copy files that have been modified.
+		// However, the deployer always copies and overwrites web.xml after
+		// the other files have been copied because application servers
+		// usually detect that a WAR has been modified based on the web.xml
+		// timestamp.
 
-			File tempDir = tempDirPath.toFile();
+		excludes += "**/WEB-INF/web.xml";
 
-			excludes += "/WEB-INF/web.xml";
+		CopyTask.copyDirectory(
+			srcFile, deployDir, StringPool.BLANK, excludes, overwrite, true);
 
-			File tempFile = new File(tempDir, displayName + ".war");
+		CopyTask.copyDirectory(
+			srcFile, deployDir, "**/WEB-INF/web.xml", StringPool.BLANK, true,
+			false);
 
-			WarTask.war(srcFile, tempFile, excludes, webXml);
+		if (appServerType.equals(ServerDetector.TOMCAT_ID)) {
 
-			if (_isJEEDeploymentEnabled()) {
-				File tempWarDir = new File(
-					tempDir.getParent(), deployDir.getName());
+			// See org.apache.catalina.startup.HostConfig to see how Tomcat
+			// checks to make sure that web.xml was modified 5 seconds after
+			// WEB-INF
 
-				if (tempWarDir.exists()) {
-					tempWarDir.delete();
-				}
+			File deployWebXml = new File(deployDir + "/WEB-INF/web.xml");
 
-				if (!tempDir.renameTo(tempWarDir)) {
-					tempWarDir = tempDir;
-				}
-
-				DeploymentHandler deploymentHandler = _getDeploymentHandler();
-
-				deploymentHandler.deploy(tempWarDir, displayName);
-
-				deploymentHandler.releaseDeploymentManager();
-
-				DeleteTask.deleteDirectory(tempWarDir);
-			}
-			else {
-				if (!tempFile.renameTo(deployDir)) {
-					WarTask.war(srcFile, deployDir, excludes, webXml);
-				}
-
-				if (tempDir.isDirectory()) {
-					DeleteTask.deleteDirectory(tempDir);
-				}
-				else {
-					tempDir.delete();
-				}
-			}
-		}
-		else {
-
-			// The deployer might only copy files that have been modified.
-			// However, the deployer always copies and overwrites web.xml after
-			// the other files have been copied because application servers
-			// usually detect that a WAR has been modified based on the web.xml
-			// timestamp.
-
-			excludes += "**/WEB-INF/web.xml";
-
-			CopyTask.copyDirectory(
-				srcFile, deployDir, StringPool.BLANK, excludes, overwrite,
-				true);
-
-			CopyTask.copyDirectory(
-				srcFile, deployDir, "**/WEB-INF/web.xml", StringPool.BLANK,
-				true, false);
-
-			if (appServerType.equals(ServerDetector.TOMCAT_ID)) {
-
-				// See org.apache.catalina.startup.HostConfig to see how Tomcat
-				// checks to make sure that web.xml was modified 5 seconds after
-				// WEB-INF
-
-				File deployWebXml = new File(deployDir + "/WEB-INF/web.xml");
-
-				deployWebXml.setLastModified(
-					System.currentTimeMillis() + (Time.SECOND * 6));
-			}
+			deployWebXml.setLastModified(
+				System.currentTimeMillis() + (Time.SECOND * 6));
 		}
 	}
 
@@ -1065,17 +999,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 		}
 
 		return portalJar;
-	}
-
-	private DeploymentHandler _getDeploymentHandler() {
-		String prefix = "auto.deploy." + ServerDetector.getServerId() + ".jee.";
-
-		String dmId = PropsUtil.get(prefix + "dm.id");
-		String dmUser = PropsUtil.get(prefix + "dm.user");
-		String dmPassword = PropsUtil.get(prefix + "dm.passwd");
-		String dfClassName = PropsUtil.get(prefix + "df.classname");
-
-		return new DeploymentHandler(dmId, dmUser, dmPassword, dfClassName);
 	}
 
 	private String _getDisplayName(File srcFile) {
@@ -1361,13 +1284,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 		).put(
 			"tags", _getPluginPackageTagsXml(pluginPackage.getTags())
 		).build();
-	}
-
-	private boolean _isJEEDeploymentEnabled() {
-		return GetterUtil.getBoolean(
-			PropsUtil.get(
-				"auto.deploy." + ServerDetector.getServerId() +
-					".jee.deployment.enabled"));
 	}
 
 	private void _mergeDirectory(File mergeDir, File targetDir) {

@@ -67,7 +67,6 @@ public class PortletAutoDeployer
 				tempDirPaths, "liferay-ui.tld");
 			utilTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-util.tld");
-			unpackWar = PropsValues.AUTO_DEPLOY_UNPACK_WAR;
 			jbossPrefix = PropsValues.AUTO_DEPLOY_JBOSS_PREFIX;
 			tomcatLibDir = PropsValues.AUTO_DEPLOY_TOMCAT_LIB_DIR;
 			wildflyPrefix = PropsValues.AUTO_DEPLOY_WILDFLY_PREFIX;

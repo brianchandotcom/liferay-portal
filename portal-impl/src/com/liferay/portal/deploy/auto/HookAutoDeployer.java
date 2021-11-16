@@ -33,7 +33,6 @@ public class HookAutoDeployer extends BaseAutoDeployer implements AutoDeployer {
 	public HookAutoDeployer() {
 		try {
 			appServerType = ServerDetector.getServerId();
-			unpackWar = PropsValues.AUTO_DEPLOY_UNPACK_WAR;
 			jbossPrefix = PropsValues.AUTO_DEPLOY_JBOSS_PREFIX;
 			tomcatLibDir = PropsValues.AUTO_DEPLOY_TOMCAT_LIB_DIR;
 			wildflyPrefix = PropsValues.AUTO_DEPLOY_WILDFLY_PREFIX;

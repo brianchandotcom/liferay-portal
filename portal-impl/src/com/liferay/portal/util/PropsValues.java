@@ -299,9 +299,6 @@ public class PropsValues {
 	public static final String AUTO_DEPLOY_TOMCAT_LIB_DIR = PropsUtil.get(
 		PropsKeys.AUTO_DEPLOY_TOMCAT_LIB_DIR);
 
-	public static final boolean AUTO_DEPLOY_UNPACK_WAR = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.AUTO_DEPLOY_UNPACK_WAR));
-
 	public static final String
 		AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_MANAGER_INSTALL_OPTIONS =
 			PropsUtil.get(

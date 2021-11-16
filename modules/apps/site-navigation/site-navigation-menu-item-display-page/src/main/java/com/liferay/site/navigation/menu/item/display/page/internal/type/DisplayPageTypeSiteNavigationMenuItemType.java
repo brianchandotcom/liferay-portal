@@ -151,6 +151,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			new InfoItemItemSelectorReturnType());
 		itemSelectorCriterion.setItemType(
 			_displayPageTypeContext.getClassName());
+		itemSelectorCriterion.setMultiSelection(isMultiSelection());
 
 		PortletURL infoItemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),

@@ -484,6 +484,8 @@ public class SiteNavigationAdminDisplayContext {
 			).put(
 				"itemSelector", siteNavigationMenuItemType.isItemSelector()
 			).put(
+				"multiSelection", siteNavigationMenuItemType.isMultiSelection()
+			).put(
 				"siteNavigationMenuId", getSiteNavigationMenuId()
 			).build()
 		).setLabel(

@@ -187,6 +187,10 @@ public interface SiteNavigationMenuItemType {
 		return false;
 	}
 
+	public default boolean isMultiSelection() {
+		return false;
+	}
+
 	public default boolean isSelected(
 			boolean selectable, SiteNavigationMenuItem siteNavigationMenuItem,
 			Layout curLayout)

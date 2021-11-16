@@ -3094,7 +3094,7 @@ definition {
 	@priority = "3"
 	test DefaultStrategyAtSiteSettings {
 		property portal.acceptance = "true";
-		
+
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
 		}

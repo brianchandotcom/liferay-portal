@@ -59,7 +59,7 @@ export const exportAPI = async (formDataQuerySelector, url) => {
 	return await response.json();
 };
 
-export const exportStatusAPI = async (exportTaskId) => {
+export const exportStatus = async (exportTaskId) => {
 	const response = await fetch(getExportTaskStatusURL(exportTaskId), {
 		headers: HEADERS,
 	});
@@ -80,7 +80,7 @@ export const getPollingExportStatusProcess = async ({
 			executeStatus,
 			processedItemsCount,
 			totalItemsCount,
-		} = await exportStatusAPI(taskId);
+		} = await exportStatus(taskId);
 
 		switch (executeStatus) {
 			case EXPORT_PROCESS_FAILED:

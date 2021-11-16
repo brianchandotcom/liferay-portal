@@ -1129,7 +1129,7 @@ definition {
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
 
-			ABTest.creatExperienceWithSegment(
+			Segmentation.createExperienceWithSegment(
 				newExperience = "NewExp1",
 				newSegment = "SegmentForABTestNewExp1");
 
@@ -1171,7 +1171,7 @@ definition {
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
 
-			ABTest.creatExperienceWithSegment(
+			Segmentation.createExperienceWithSegment(
 				newExperience = "NewExp1",
 				newSegment = "SegmentForABTestNewExp1");
 
@@ -2221,7 +2221,7 @@ definition {
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
 
-			ABTest.creatExperienceWithSegment(
+			Segmentation.createExperienceWithSegment(
 				newExperience = "NewExp1",
 				newSegment = "SegmentForABTest");
 
@@ -2277,7 +2277,7 @@ definition {
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
 
-			ABTest.creatExperienceWithSegment(
+			Segmentation.createExperienceWithSegment(
 				newExperience = "NewExp1",
 				newSegment = "SegmentForABTest");
 
@@ -2379,7 +2379,7 @@ definition {
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
 
-			ABTest.creatExperienceWithSegment(
+			Segmentation.createExperienceWithSegment(
 				newExperience = "NewExp1",
 				newSegment = "SegmentForABTest");
 
@@ -2425,7 +2425,7 @@ definition {
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
 
-			ABTest.creatExperienceWithSegment(
+			Segmentation.createExperienceWithSegment(
 				newExperience = "NewExp1",
 				newSegment = "SegmentForABTest");
 
@@ -2473,7 +2473,7 @@ definition {
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
 
-			ABTest.creatExperienceWithSegment(
+			Segmentation.createExperienceWithSegment(
 				newExperience = "NewExp1",
 				newSegment = "SegmentForABTest");
 

@@ -30,6 +30,32 @@ definition {
 			value1 = "${tagName}");
 	}
 
+	macro createExperienceWithSegment {
+		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+		Click(
+			key_text = "New Experience",
+			locator1 = "Button#ANY");
+
+		Click(locator1 = "PageEditor#EXPERIENCE_CREATE_SEGMENT");
+
+		Segmentation.fillTitle(titleField = "${newSegment}");
+
+		Segmentation.addProperties(propertyOption = "Screen Name");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
+
+		Segmentation.fillProperty(propertyField = "test");
+
+		Button.clickSave();
+
+		Type(
+			locator1 = "PageEditor#EXPERIENCE_NAME",
+			value1 = "${newExperience}");
+
+		Click(locator1 = "Button#SAVE");
+	}
+
 	macro changeCriterionConjunction {
 		Click(locator1 = "Segmentation#CRITERION_CONJUNCTION");
 

@@ -708,6 +708,27 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SXPBlueprint"
             tags: ["SXPBlueprint"]
+    /sxp-blueprints/validate:
+        post:
+            operationId: postSXPBlueprintValidate
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: string
+                    application/xml:
+                        schema:
+                            type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SXPBlueprint"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SXPBlueprint"
+            tags: ["SXPBlueprint"]
     /sxp-blueprints/{sxpBlueprintId}:
         delete:
             operationId: deleteSXPBlueprint
@@ -830,6 +851,27 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/SXPElement"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SXPElement"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SXPElement"
+            tags: ["SXPElement"]
+    /sxp-elements/validate:
+        post:
+            operationId: postSXPElementValidate
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: string
+                    application/xml:
+                        schema:
+                            type: string
             responses:
                 200:
                     content:

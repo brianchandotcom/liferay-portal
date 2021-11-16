@@ -1,0 +1,51 @@
+.node {
+	align-items: center;
+	background: #fff;
+	border: 1px solid #cdced9;
+	border-radius: 8px;
+	display: flex;
+	height: 74px;
+	padding: 18px 16px;
+	width: 254px;
+
+	.node-description {
+		size: 12px;
+	}
+
+	.node-icon {
+		align-items: center;
+		background: #f7f8f9;
+		border-radius: 4px;
+		display: flex;
+		height: 40px;
+		justify-content: center;
+		width: 40px;
+
+		svg {
+			height: 20px;
+			width: 20px;
+		}
+	}
+
+	.node-info {
+		display: inline-grid;
+	}
+
+	.node-label {
+		font-weight: 600;
+		size: 14px;
+	}
+
+	&.end-node,
+	&.start-node {
+		svg {
+			fill: #4b9bff;
+		}
+	}
+
+	&.state-node {
+		svg {
+			fill: #ffb46e;
+		}
+	}
+}

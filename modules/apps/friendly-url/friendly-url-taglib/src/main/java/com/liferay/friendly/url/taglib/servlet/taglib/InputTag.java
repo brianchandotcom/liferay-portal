@@ -145,6 +145,10 @@ public class InputTag extends IncludeTag {
 
 	private String _getFriendlyURLValue() {
 		try {
+			if (getClassPK() == 0) {
+				return null;
+			}
+
 			FriendlyURLEntry mainFriendlyURLEntry =
 				FriendlyURLEntryLocalServiceUtil.getMainFriendlyURLEntry(
 					PortalUtil.getClassNameId(_getActualClassName()),
@@ -159,6 +163,10 @@ public class InputTag extends IncludeTag {
 
 	private String _getFriendlyURLXML() {
 		try {
+			if (getClassPK() == 0) {
+				return null;
+			}
+
 			FriendlyURLEntry mainFriendlyURLEntry =
 				FriendlyURLEntryLocalServiceUtil.getMainFriendlyURLEntry(
 					PortalUtil.getClassNameId(_getActualClassName()),

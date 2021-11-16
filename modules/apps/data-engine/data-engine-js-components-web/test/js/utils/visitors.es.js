@@ -13,137 +13,162 @@
  */
 
 import {PagesVisitor} from '../../../src/main/resources/META-INF/resources/js/utils/visitors.es';
-import mockPages from '../__mock__/mockPages.es';
-
-let visitor;
 
 describe('PagesVisitor', () => {
+	let field;
+	let nestedField;
+	let pages;
+	const visitor = new PagesVisitor([]);
+
 	beforeEach(() => {
-		visitor = new PagesVisitor(mockPages);
+		nestedField = {fieldName: 'B'};
+		field = {fieldName: 'A', nestedFields: [nestedField]};
+		pages = [{rows: [{columns: [{fields: [field]}]}]}];
+		visitor.setPages(pages);
 	});
 
-	afterEach(() => {
-		if (visitor) {
-			visitor.dispose();
-		}
-	});
-
-	it('does not multate the fields of the original array', () => {
-		const newPages = visitor.mapFields((field) => {
-			if (field.fieldName === 'radio') {
-				field.fieldName = 'liferay';
-			}
-
-			return field;
+	describe('mapFields(mapper, merge, includeNestedFields)', () => {
+		it('creates new field instances', () => {
+			const newPages = visitor.mapFields(() => ({fieldName: 'Z'}));
+			const [
+				{
+					rows: [
+						{
+							columns: [
+								{
+									fields: [newField],
+								},
+							],
+						},
+					],
+				},
+			] = newPages;
+			expect(newField.fieldName).toEqual('Z');
 		});
 
-		expect(mockPages).not.toBe(newPages);
-	});
-
-	it('is able to change pages', () => {
-		expect(
-			visitor.mapPages((page, index) => ({
-				...page,
-				title: `New title ${index}`,
-			}))
-		).toMatchSnapshot();
-	});
-
-	it('is able to change rows', () => {
-		expect(
-			visitor.mapRows((row) => ({
-				...row,
-				columns: [],
-			}))
-		).toMatchSnapshot();
-	});
-
-	it('is able to change columns', () => {
-		expect(
-			visitor.mapColumns((column) => ({
-				...column,
-				size: 6,
-			}))
-		).toMatchSnapshot();
-	});
-
-	it('is able to change fields', () => {
-		expect(
-			visitor.mapFields((field, index) => ({
-				...field,
-				label: `New label ${index}`,
-			}))
-		).toMatchSnapshot();
-	});
-
-	it('is able to visit fields and stop when required', () => {
-		const visitedFieldNames = [];
-
-		const visitor = new PagesVisitor([
-			{
-				rows: [
-					{
-						columns: [
-							{
-								fields: [
-									{
-										fieldName: 'fieldA',
-									},
-									{
-										fieldName: 'fieldB',
-										nestedFields: [{fieldName: 'fieldC'}],
-									},
-								],
-							},
-							{
-								fields: [
-									{
-										fieldName: 'fieldD',
-									},
-								],
-							},
-						],
-					},
-					{
-						columns: [
-							{
-								fields: [
-									{
-										fieldName: 'fieldE',
-									},
-								],
-							},
-						],
-					},
-				],
-			},
-			{
-				rows: [
-					{
-						columns: [
-							{
-								fields: [
-									{
-										fieldName: 'fieldF',
-									},
-								],
-							},
-						],
-					},
-				],
-			},
-		]);
-
-		visitor.visitFields(({fieldName}) => {
-			visitedFieldNames.push(fieldName);
-
-			if (fieldName.indexOf('C') > -1) {
-				return true; // stop
-			}
-
-			return false; // continue;
+		it('does not mutate the fields into the original pages', () => {
+			visitor.mapFields(() => ({fieldName: 'Z'}));
+			expect(field.fieldName).toEqual('A');
 		});
 
-		expect(visitedFieldNames).toEqual(['fieldA', 'fieldB', 'fieldC']);
+		it('passes index as a callback parameters', () => {
+			const mapper = jest.fn();
+			visitor.mapFields(mapper);
+			expect(mapper).toHaveBeenCalledWith(
+				field,
+				0, // pages index
+				0, // rows index
+				0, // columns index
+				0 // fields index
+			);
+		});
+
+		it('merges field properties by default', () => {
+			const newPages = visitor.mapFields(() => ({fieldName: 'Z'}));
+			const [
+				{
+					rows: [
+						{
+							columns: [
+								{
+									fields: [newField],
+								},
+							],
+						},
+					],
+				},
+			] = newPages;
+			expect(newField).toEqual({
+				fieldName: 'Z',
+				nestedFields: [nestedField],
+			});
+		});
+
+		it('not merges field properties if merge set to false', () => {
+			const newPages = visitor.mapFields(() => ({fieldName: 'Z'}), false);
+			const [
+				{
+					rows: [
+						{
+							columns: [
+								{
+									fields: [newField],
+								},
+							],
+						},
+					],
+				},
+			] = newPages;
+			expect(newField).toEqual({fieldName: 'Z'});
+		});
+
+		it('iterates over nested fields', () => {
+			const mapper = jest.fn();
+			visitor.mapFields(mapper, true, true);
+			expect(mapper).toHaveBeenCalledTimes(2);
+			expect(mapper).toHaveBeenLastCalledWith(
+				nestedField,
+				0, // pages index
+				0, // rows index
+				0, // columns index
+				0, // fields index
+				field
+			);
+		});
+
+		it('not iterates over nested fields if merge is false', () => {
+			const mapper = jest.fn();
+			visitor.mapFields(mapper, false, true);
+			expect(mapper).toHaveBeenLastCalledWith(
+				field,
+				0, // pages index
+				0, // rows index
+				0, // columns index
+				0 // fields index
+			);
+		});
+	});
+
+	describe('mapPages(mapper)', () => {
+		it('is able to change pages', () => {
+			expect(visitor.mapPages((_page, index) => ({index}))).toEqual([
+				{index: 0, rows: [{columns: [{fields: [field]}]}]},
+			]);
+		});
+	});
+
+	describe('mapRows(mapper)', () => {
+		it('is able to change rows', () => {
+			expect(visitor.mapRows((_row, index) => ({index}))).toEqual([
+				{rows: [{columns: [{fields: [field]}], index: 0}]},
+			]);
+		});
+	});
+
+	describe('mapColumns(mapper)', () => {
+		it('is able to change columns', () => {
+			expect(visitor.mapColumns((_column, index) => ({index}))).toEqual([
+				{rows: [{columns: [{fields: [field], index: 0}]}]},
+			]);
+		});
+	});
+
+	describe('visitFields(evaluateField)', () => {
+		it('stops on first evaluateField return true', () => {
+			const evaluateField = jest.fn(() => true);
+
+			visitor.visitFields(evaluateField);
+
+			expect(evaluateField).toHaveBeenCalledTimes(1);
+		});
+
+		it('iterates over nested fields', () => {
+			const evaluateField = jest.fn();
+
+			visitor.visitFields(evaluateField);
+
+			expect(evaluateField).toHaveBeenCalledTimes(2);
+			expect(evaluateField).toHaveBeenLastCalledWith(nestedField);
+		});
 	});
 });

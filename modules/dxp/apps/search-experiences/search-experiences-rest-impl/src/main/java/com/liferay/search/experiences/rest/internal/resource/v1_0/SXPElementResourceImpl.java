@@ -25,6 +25,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementDefinitionUtil;
+import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
 import com.liferay.search.experiences.rest.internal.dto.v1_0.converter.SXPElementDTOConverter;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.util.TitleMapUtil;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
@@ -159,6 +160,11 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				TitleMapUtil.copy(sxpElement.getTitleMap()),
 				sxpElement.getType(),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+	}
+
+	@Override
+	public SXPElement postSXPElementValidate(String json) throws Exception {
+		return SXPElementUtil.toSXPElement(json);
 	}
 
 	private String _getElementDefinitionJSON(SXPElement sxpElement) {

@@ -26,6 +26,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
+import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
 import com.liferay.search.experiences.rest.internal.dto.v1_0.converter.SXPBlueprintDTOConverter;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.util.TitleMapUtil;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
@@ -167,6 +168,11 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				sxpBlueprint.getElementInstancesJSON(),
 				TitleMapUtil.copy(sxpBlueprint.getTitleMap()),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+	}
+
+	@Override
+	public SXPBlueprint postSXPBlueprintValidate(String json) throws Exception {
+		return SXPBlueprintUtil.toSXPBlueprint(json);
 	}
 
 	private String _getConfigurationJSON(SXPBlueprint sxpBlueprint) {

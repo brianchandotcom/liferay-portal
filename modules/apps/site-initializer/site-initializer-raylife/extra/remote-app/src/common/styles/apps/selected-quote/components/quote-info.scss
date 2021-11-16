@@ -1,0 +1,19 @@
+.quote-info {
+	padding: 0 20px;
+
+	.policy-id {
+		font-weight: bold;
+		margin-top: 30px;
+	}
+
+	#quote-comparison {
+		height: 504px;
+		margin-left: 0;
+		margin-top: 24px;
+
+		button {
+			margin-bottom: 18px;
+			padding-top: 0 !important;
+		}
+	}
+}

@@ -1,0 +1,148 @@
+.create-account {
+	margin: $spacer-6 $spacer-0 $spacer-5 $spacer-5;
+
+	&__subtitle {
+		font-size: 18px;
+		font-weight: $font-weight-bolder;
+		margin: $spacer-5 $spacer-0;
+	}
+
+	&__alert-create {
+		background-color: $color-state-error-lighten-1;
+		border-radius: 8px;
+		margin-top: $spacer-5;
+		padding: $spacer-2 $spacer-0;
+		vertical-align: middle;
+		width: 100%;
+	}
+
+	&__form {
+		width: 28.5rem;
+
+		&__content-input {
+			margin-top: $spacer-4;
+			position: relative;
+
+			.email {
+				background-color: $background;
+				border: solid 1px $color-action-neutral-default;
+			}
+
+			.email + label {
+				background-color: $background;
+				color: $color-action-neutral-default;
+				font-size: 13px;
+				transform: translate(0, -21px) scale(1);
+			}
+
+			input {
+				background-color: $color-brand-primary-lighten-6;
+				border: none;
+				height: $spacer-5;
+				width: 100%;
+			}
+
+			input:valid {
+				background-color: $background;
+				border: solid 1px $color-neutral-black;
+			}
+
+			input:valid + label {
+				background-color: $background;
+				color: $color-neutral-black;
+				font-size: 13px;
+				transform: translate(0, -21px) scale(1);
+			}
+
+			input:focus {
+				background-color: $background;
+				border: solid 1px $color-action-primary-default;
+			}
+
+			input:focus + label {
+				background-color: $background;
+				color: $color-action-primary-default;
+				font-size: 13px;
+				transform: translate(0, -21px) scale(1);
+			}
+
+			::placeholder {
+				color: $color-neutral-black;
+				font-weight: $font-weight-bolder;
+			}
+
+			input:focus::placeholder {
+				color: transparent;
+			}
+
+			label {
+				color: transparent;
+				font-size: 16px;
+				font-weight: $font-weight-bolder;
+				left: 12px;
+				margin: $spacer-2 $spacer-0;
+				padding: $spacer-0 $spacer-1;
+				pointer-events: none;
+				position: absolute;
+				top: 2px;
+				transition: 0.2s;
+			}
+		}
+	}
+
+	&__align-right {
+		display: flex;
+		justify-content: end;
+
+		button {
+			background: $color-action-primary-default;
+			color: $background;
+			margin: $spacer-8 $spacer-0 $spacer-0;
+		}
+	}
+
+	&__list-rules {
+		margin-top: 12px;
+
+		ul {
+			list-style: none;
+		}
+	}
+
+	&__rule {
+		&.checked {
+			color: $color-state-success;
+
+			.create-account__rule__icon {
+				background-color: $color-state-success;
+				border: $color-state-success;
+			}
+		}
+
+		&.unchecked {
+			color: $color-state-error;
+
+			.create-account__rule__icon {
+				background-color: $color-state-error;
+				border: $color-state-error;
+			}
+		}
+
+		&.neutral {
+			color: $color-neutral-7;
+
+			.create-account__rule__icon {
+				border-color: $color-neutral-7;
+				fill: $color-neutral-7;
+			}
+		}
+
+		&__icon {
+			border: solid 1.2px;
+			border-radius: $spacer-2;
+			fill: $background;
+			margin-right: $spacer-1;
+			padding: 1px;
+		}
+	}
+}

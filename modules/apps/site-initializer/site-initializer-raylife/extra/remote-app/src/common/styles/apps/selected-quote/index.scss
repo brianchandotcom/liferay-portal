@@ -1,0 +1,16 @@
+@import './components/panel';
+@import './components/quote-info';
+@import './components/steps/create-account';
+@import './components/steps/payment-method';
+@import './components/steps/upload-documents';
+
+.selected-quote {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+
+	.selected-quote-right-page {
+		margin-left: 36px;
+		width: 100%;
+	}
+}

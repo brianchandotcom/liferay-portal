@@ -1,0 +1,148 @@
+.payment-method-container {
+	margin: 42px 22px;
+
+	.payment-method-row {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 48px;
+
+		.payment-method {
+			align-items: center;
+			display: flex;
+			flex-direction: row;
+			height: 27px;
+			margin-top: 16px;
+			width: 40px;
+
+			.radio-button-container {
+				border: 1px solid transparent;
+				box-sizing: border-box;
+				cursor: pointer;
+				display: flex;
+				flex-direction: row;
+				padding: 8px 12px;
+
+				&.selected {
+					border-color: $color-action-primary-default;
+					border-radius: 4px;
+					background-color: $color-brand-primary-lighten-6;
+				}
+
+				input {
+					height: 16px;
+					margin-right: 12px;
+					width: 16px;
+				}
+
+				.image {
+					align-items: center;
+					border-radius: 4px;
+					border: 1px solid $color-neutral-2;
+					display: flex;
+					height: 27px;
+					justify-content: center;
+					margin-right: 4px;
+					width: 40px;
+
+					div {
+						display: flex;
+					}
+				}
+
+				p {
+					align-self: center;
+					color: $color-neutral-black;
+					font-size: 13px;
+					font-weight: 500;
+				}
+			}
+		}
+
+		.payment-method-options {
+			display: flex;
+			flex-direction: row;
+
+			.payment-method-option {
+				box-sizing: border-box;
+				margin: 12px 16px 0 0;
+				border: 1px solid $color-action-neutral-default;
+				border-radius: 4px;
+				width: 208px;
+				height: 84px;
+				cursor: pointer;
+				background-color: $color-neutral-white;
+
+				&.selected {
+					border: 1px solid $color-action-primary-default;
+					border-bottom: 4px solid $color-action-primary-default;
+					filter: drop-shadow(0 3px 12px rgba(9, 16, 29, 0.2));
+
+					.card-description {
+						color: #39c38d !important;
+						font-size: 11px !important;
+						font-weight: 700 !important;
+					}
+				}
+
+				.card-container {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					padding: 16px 16px 0;
+
+					.card-content {
+						text-align: center;
+
+						.card-title {
+							font-weight: 700;
+							font-size: 14px;
+						}
+
+						.card-description {
+							font-weight: 500;
+							font-size: 11px;
+							color: $color-action-neutral-default;
+						}
+					}
+				}
+			}
+		}
+
+		.no-options {
+			font-weight: 500;
+			font-size: 11px;
+			color: $color-action-neutral-default;
+		}
+
+		.agree-check {
+			margin-top: 12px;
+			display: flex;
+			align-items: center;
+
+			input {
+				margin-right: 12px;
+				width: 16px;
+				height: 16px;
+			}
+		}
+
+		.payment-button {
+			display: flex;
+			justify-content: flex-end;
+
+			a {
+				width: 163px;
+				height: 48px;
+			}
+		}
+
+		.option-message {
+			text-align: end;
+			font-size: 11px;
+			font-weight: 500;
+			color: #606167;
+			margin-top: 8px !important;
+		}
+	}
+}

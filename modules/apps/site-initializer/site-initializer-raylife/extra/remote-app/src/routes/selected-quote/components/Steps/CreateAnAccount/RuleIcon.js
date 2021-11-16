@@ -13,12 +13,17 @@ export const RuleIcon = ({label, status}) => {
 	const ruleConfig = COLORS[status] || {};
 
 	return (
-		<a className={classNames('ca-rule-anchor', ruleConfig.className)}>
+		<span
+			className={classNames('create-account__rule', ruleConfig.className)}
+		>
 			<ClayIcon
-				className={classNames('ca-icon-rule', ruleConfig.className)}
+				className={classNames(
+					'create-account__rule__icon',
+					ruleConfig.className
+				)}
 				symbol={ruleConfig.symbol}
 			/>
 			{label}
-		</a>
+		</span>
 	);
 };

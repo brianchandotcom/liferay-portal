@@ -1260,6 +1260,7 @@ definition {
 			contentTranslation = "Webコンテンツ",
 			descriptionTranslation = "",
 			encoding = "utf8",
+			operation = "unzip",
 			titleTranslation = "Webコンテンツのタイトル",
 			translationFileName = "WebContentTitle-en_US-ja_JP",
 			translationZipFileName = "WebContentTitle-en_US.zip",
@@ -1271,6 +1272,7 @@ definition {
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-ja_JP.xlf",
+			folderName = "WebContentTitle-en_US",
 			webContentTitle = "WebContentTitle");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");

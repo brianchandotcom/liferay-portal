@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -460,6 +461,27 @@ public class EditStyleBookEntryDisplayContext {
 		Theme theme = layoutSet.getTheme();
 
 		return theme.getName();
+	}
+
+	private boolean _isExcludedLayout(Layout layout) {
+		if (!layout.isTypeContent()) {
+			return false;
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout != null) {
+			boolean published = GetterUtil.getBoolean(
+				draftLayout.getTypeSettingsProperty("published"));
+
+			return !published;
+		}
+
+		if (layout.isApproved() && !layout.isHidden() && !layout.isSystem()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private void _setViewAttributes() {

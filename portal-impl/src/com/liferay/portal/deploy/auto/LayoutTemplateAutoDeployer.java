@@ -14,7 +14,6 @@
 
 package com.liferay.portal.deploy.auto;
 
-import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,7 +35,6 @@ public class LayoutTemplateAutoDeployer
 	public LayoutTemplateAutoDeployer() {
 		try {
 			baseDir = PropsValues.AUTO_DEPLOY_DEPLOY_DIR;
-			destDir = DeployUtil.getAutoDeployDestDir();
 			appServerType = ServerDetector.getServerId();
 			unpackWar = PropsValues.AUTO_DEPLOY_UNPACK_WAR;
 			jbossPrefix = PropsValues.AUTO_DEPLOY_JBOSS_PREFIX;

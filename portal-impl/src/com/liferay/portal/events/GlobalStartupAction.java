@@ -15,7 +15,6 @@
 package com.liferay.portal.events;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
@@ -87,11 +86,10 @@ public class GlobalStartupAction extends SimpleAction {
 
 		try {
 			File deployDir = new File(PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
-			File destDir = new File(DeployUtil.getAutoDeployDestDir());
 			long interval = PropsValues.AUTO_DEPLOY_INTERVAL;
 
 			AutoDeployDir autoDeployDir = new AutoDeployDir(
-				AutoDeployDir.DEFAULT_NAME, deployDir, destDir, interval);
+				AutoDeployDir.DEFAULT_NAME, deployDir, interval);
 
 			if (PropsValues.AUTO_DEPLOY_ENABLED) {
 				if (_log.isInfoEnabled()) {

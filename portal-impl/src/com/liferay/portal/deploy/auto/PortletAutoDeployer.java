@@ -54,7 +54,6 @@ public class PortletAutoDeployer
 	public PortletAutoDeployer() {
 		try {
 			baseDir = PropsValues.AUTO_DEPLOY_DEPLOY_DIR;
-			destDir = DeployUtil.getAutoDeployDestDir();
 			appServerType = ServerDetector.getServerId();
 			auiTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-aui.tld");

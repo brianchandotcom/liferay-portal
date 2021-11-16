@@ -129,21 +129,14 @@ public class AutoDeployDir {
 		FileUtil.move(file, new File(dirName, fileName));
 	}
 
-	public AutoDeployDir(
-		String name, File deployDir, File destDir, long interval) {
-
+	public AutoDeployDir(String name, File deployDir, long interval) {
 		_name = name;
 		_deployDir = deployDir;
-		_destDir = destDir;
 		_interval = interval;
 	}
 
 	public File getDeployDir() {
 		return _deployDir;
-	}
-
-	public File getDestDir() {
-		return _destDir;
 	}
 
 	public long getInterval() {
@@ -356,7 +349,6 @@ public class AutoDeployDir {
 
 	private final Map<String, Long> _blacklistFileTimestamps = new HashMap<>();
 	private final File _deployDir;
-	private final File _destDir;
 	private final long _interval;
 	private final String _name;
 

@@ -218,13 +218,9 @@ public class BaseAutoDeployer implements AutoDeployer {
 				}
 			}
 
-			String destDir1 = destDir;
+			String destDir = autoDeploymentContext.getDestDir();
 
-			if (autoDeploymentContext.getDestDir() != null) {
-				destDir1 = autoDeploymentContext.getDestDir();
-			}
-
-			File deployDirFile = new File(destDir1 + "/" + deployDir);
+			File deployDirFile = new File(destDir + "/" + deployDir);
 
 			try {
 				PluginPackage previousPluginPackage = _readPluginPackage(
@@ -284,7 +280,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 						PluginPackageUtil.endPluginPackageInstallation(context);
 					}
 					else {
-						_postDeploy(destDir1, deployDir);
+						_postDeploy(destDir, deployDir);
 					}
 				}
 
@@ -309,11 +305,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 		if (Validator.isNull(baseDir)) {
 			throw new IllegalArgumentException(
 				"The system property deployer.base.dir is not set");
-		}
-
-		if (Validator.isNull(destDir)) {
-			throw new IllegalArgumentException(
-				"The system property deployer.dest.dir is not set");
 		}
 
 		if (Validator.isNull(appServerType)) {
@@ -676,7 +667,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 	protected String appServerType;
 	protected String auiTaglibDTD;
 	protected String baseDir;
-	protected String destDir;
 	protected List<String> jars;
 	protected String jbossPrefix;
 	protected String portletExtTaglibDTD;
@@ -918,7 +908,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 		_updateWebXml(webXml, srcFile, displayName);
 
-		if ((deployDir == null) || baseDir.equals(destDir)) {
+		if (deployDir == null) {
 			return;
 		}
 

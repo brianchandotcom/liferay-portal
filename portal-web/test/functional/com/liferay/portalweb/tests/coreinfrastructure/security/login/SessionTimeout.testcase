@@ -112,9 +112,7 @@ definition {
 		}
 
 		task ("Logout and login") {
-			User.logoutPG();
-
-			User.loginPG();
+			User.logoutAndLoginPG();
 		}
 
 		task ("Open portal, assert session expired message and user sign in not present") {

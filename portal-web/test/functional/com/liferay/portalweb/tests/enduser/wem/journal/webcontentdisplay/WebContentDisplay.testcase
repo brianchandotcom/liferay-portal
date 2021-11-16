@@ -502,6 +502,8 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				webContentText = "WC WebContent Text",
 				webContentTitle = "WC WebContent Title");
 
+			takeScreenshot();
+
 			WebContent.viewWithStructureCP(
 				fieldType = "Multiple Lines",
 				predefinedValue = "true",

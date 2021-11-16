@@ -449,7 +449,9 @@ public class ModulesStructureTest {
 								dirName, "frontend-theme-") &&
 							 Files.exists(dirPath.resolve("gulpfile.js")) &&
 							 !Files.exists(
-								 dirPath.resolve(".lfrbuild-releng-ignore"))) {
+								 dirPath.resolve(".lfrbuild-releng-ignore")) &&
+							 !StringUtil.equals(
+								 dirName,"frontend-theme-dialect")) {
 
 						_testThemeIgnoreFiles(
 							dirPath, themeGitIgnoreTemplate,

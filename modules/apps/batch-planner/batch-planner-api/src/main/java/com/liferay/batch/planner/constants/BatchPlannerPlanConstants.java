@@ -14,6 +14,11 @@
 
 package com.liferay.batch.planner.constants;
 
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.Map;
+
 /**
  * @author Igor Beslic
  */
@@ -38,5 +43,21 @@ public class BatchPlannerPlanConstants {
 		EXTERNAL_TYPE_TXT, EXTERNAL_TYPE_XLS, EXTERNAL_TYPE_XLSX,
 		EXTERNAL_TYPE_XML
 	};
+
+	public static final Map<String, String> contentTypes = HashMapBuilder.put(
+		EXTERNAL_TYPE_CSV, ContentTypes.TEXT_CSV
+	).put(
+		EXTERNAL_TYPE_JSON, ContentTypes.APPLICATION_JSON
+	).put(
+		EXTERNAL_TYPE_JSONL, "application/x-ndjson"
+	).put(
+		EXTERNAL_TYPE_TXT, ContentTypes.TEXT_PLAIN
+	).put(
+		EXTERNAL_TYPE_XLS, EXTERNAL_TYPE_XLS
+	).put(
+		EXTERNAL_TYPE_XLSX, EXTERNAL_TYPE_XLSX
+	).put(
+		EXTERNAL_TYPE_XML, ContentTypes.TEXT_XML
+	).build();
 
 }

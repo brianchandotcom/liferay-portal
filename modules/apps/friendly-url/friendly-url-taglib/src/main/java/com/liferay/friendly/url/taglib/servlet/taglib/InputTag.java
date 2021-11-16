@@ -121,16 +121,13 @@ public class InputTag extends IncludeTag {
 			"liferay-friendly-url:input:friendlyURLMaxLength",
 			_FRIENDLY_URL_MAX_LENGTH);
 		httpServletRequest.setAttribute(
-			"liferay-friendly-url:input:friendlyURLValue",
-			_getFriendlyURLValue());
-		httpServletRequest.setAttribute(
-			"liferay-friendly-url:input:friendlyURLXML", _getFriendlyURLXML());
-		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:inputAddon", getInputAddon());
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:localizable", isLocalizable());
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:name", getName());
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:input:value", _getValue());
 	}
 
 	private String _getActualClassName() throws PortalException {
@@ -143,7 +140,7 @@ public class InputTag extends IncludeTag {
 		return getClassName() + StringPool.DASH + layout.isPrivateLayout();
 	}
 
-	private String _getFriendlyURLValue() {
+	private String _getValue() {
 		try {
 			if (getClassPK() == 0) {
 				return null;
@@ -154,25 +151,10 @@ public class InputTag extends IncludeTag {
 					PortalUtil.getClassNameId(_getActualClassName()),
 					getClassPK());
 
+			if (isLocalizable()) {
+				return mainFriendlyURLEntry.getUrlTitleMapAsXML();
+			}
 			return mainFriendlyURLEntry.getUrlTitle();
-		}
-		catch (PortalException portalException) {
-			return ReflectionUtil.throwException(portalException);
-		}
-	}
-
-	private String _getFriendlyURLXML() {
-		try {
-			if (getClassPK() == 0) {
-				return null;
-			}
-
-			FriendlyURLEntry mainFriendlyURLEntry =
-				FriendlyURLEntryLocalServiceUtil.getMainFriendlyURLEntry(
-					PortalUtil.getClassNameId(_getActualClassName()),
-					getClassPK());
-
-			return mainFriendlyURLEntry.getUrlTitleMapAsXML();
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);

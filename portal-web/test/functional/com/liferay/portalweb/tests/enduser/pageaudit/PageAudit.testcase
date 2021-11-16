@@ -3088,6 +3088,40 @@ definition {
 
 	}
 
+	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
+	When the value is void ('Choose an option')
+	Then the call is made for Google Page Speed default value - desktop"
+	@priority = "3"
+	test DefaultStrategyAtSiteSettings {
+		property portal.acceptance = "true";
+		
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSiteSettings(
+				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
+				preferredStrategy = "Choose an Option");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Assert if a mobile failure is not shown") {
+			AssertElementNotPresent(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
+			AssertElementPresent(
+				failingCheckName = "Invalid Canonical URL",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+		}
+	}
+
 	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
 	When the value is void ('Choose an option')
 	Then the call is made for Google Page Speed default value - desktop"
@@ -3128,12 +3162,12 @@ definition {
 	}
 
 	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
-	When the value is void ('Choose an option')
-	Then the call is made for Google Page Speed default value - desktop"
-	@priority = "3"
-	test DefaultStrategyAtSiteSettings {
+	When the value is Desktop
+	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are NOT retrieved"
+	@priority = "4"
+	test DesktopStrategyAtSiteSettings {
 		property portal.acceptance = "true";
-		
+
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
 		}
@@ -3141,7 +3175,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			PageAudit.setAPIViaSiteSettings(
 				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Choose an Option");
+				preferredStrategy = "Desktop");
 		}
 
 		task ("Open Page Audit panel and run it") {
@@ -3150,7 +3184,7 @@ definition {
 			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
 		}
 
-		task ("Assert if a mobile failure is not shown") {
+		task ("Assert if mobile failure are shown") {
 			AssertElementNotPresent(
 				failingCheckName = "Small Tap Targets",
 				locator1 = "PageAudit#FAILING_CHECK_NAME");
@@ -3320,6 +3354,40 @@ definition {
 
 		// TODO LPS-130636 LanguageCacheData pending implementation
 
+	}
+
+	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
+	When the value is Mobile
+	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
+	@priority = "4"
+	test MobileStrategyAtSiteSettings {
+		property portal.acceptance = "true";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSiteSettings(
+				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
+				preferredStrategy = "Mobile");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Assert if mobile failure are shown") {
+			AssertElementPresent(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
+			AssertElementPresent(
+				failingCheckName = "Illegible Font Sizes",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+		}
 	}
 
 	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
@@ -3867,74 +3935,6 @@ definition {
 
 		task ("Reset Google PageSpeed API to default at System Settings") {
 			PageAudit.configurationTeardown();
-		}
-	}
-
-	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
-	When the value is Desktop
-	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are NOT retrieved"
-	@priority = "4"
-	test DesktopStrategyAtSiteSettings {
-		property portal.acceptance = "true";
-
-		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaSiteSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Desktop");
-		}
-
-		task ("Open Page Audit panel and run it") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
-		}
-
-		task ("Assert if mobile failure are shown") {
-			AssertElementNotPresent(
-				failingCheckName = "Small Tap Targets",
-				locator1 = "PageAudit#FAILING_CHECK_NAME");
-
-			AssertElementPresent(
-				failingCheckName = "Invalid Canonical URL",
-				locator1 = "PageAudit#FAILING_CHECK_NAME");
-		}
-	}
-
-	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
-	When the value is Mobile
-	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
-	@priority = "4"
-	test MobileStrategyAtSiteSettings {
-		property portal.acceptance = "true";
-
-		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaSiteSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Mobile");
-		}
-
-		task ("Open Page Audit panel and run it") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
-		}
-
-		task ("Assert if mobile failure are shown") {
-			AssertElementPresent(
-				failingCheckName = "Small Tap Targets",
-				locator1 = "PageAudit#FAILING_CHECK_NAME");
-
-			AssertElementPresent(
-				failingCheckName = "Illegible Font Sizes",
-				locator1 = "PageAudit#FAILING_CHECK_NAME");
 		}
 	}
 

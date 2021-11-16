@@ -107,18 +107,16 @@ definition {
 		ManagementBar.setFilterAndOrder(filterBy = "Modified Date");
 
 		KaleoFormsManageFieldSets.viewFieldSetOrder(fieldSetList = "Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do");
-		
+
 		KaleoFormsManageFieldSets.editFieldSets(
 			nameFieldset = "Contacts",
-			newNameFieldset= "Contacts Test");
+			newNameFieldset = "Contacts Test");
 
 		Button.clickSave();
 
 		ManagementBar.setFilterAndOrder(filterBy = "Modified Date");
 
 		KaleoFormsManageFieldSets.viewFieldSetOrder(fieldSetList = "Events,Inventory,Issues Tracking,Meeting Minutes,To Do,Contacts Test");
-
-
 	}
 
 	@description = "Verify that the user can not delete a field set that is required by one or more templates."

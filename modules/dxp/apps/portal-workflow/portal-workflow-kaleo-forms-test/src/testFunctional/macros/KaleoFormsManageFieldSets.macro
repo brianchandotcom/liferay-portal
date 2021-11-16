@@ -50,7 +50,6 @@ definition {
         }
     }
 
-<<<<<<< HEAD
     macro clickFilterById {
 	macro clickFilterById {
 		var filterOption = "ID";
@@ -85,15 +84,26 @@ definition {
 		}
 	}
 
-}
-=======
-    macro editFieldSets {
+	macro editFieldSets {
+
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",
 			rowEntry = "${nameFieldset}");
 
 		PortletEntry.inputName(name = "${newNameFieldset}");
+	}
 
-    }
-} 
->>>>>>> 5d1bb06 (LRQA-70711 Add CanFilterByModifiedDate test)
+	macro viewFieldSetOrder {
+		var rowNumber = "1";
+
+		for (var nameFieldset : list "${fieldSetList}") {
+			AssertElementPresent(
+				key_nameFieldset = "${nameFieldset}",
+				key_rowNumber = "${rowNumber}",
+				locator1 = "KaleoFormsManageFieldSets#NAME_ROW_FROM_MANAGE_FIELD");
+
+			var rowNumber = MathUtil.sum("${rowNumber}", "1");
+		}
+	}
+
+}

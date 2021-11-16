@@ -25,7 +25,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface WorkflowInstanceTrackerURLProvider {
 
 	public String getURL(
-		Object bean, HttpServletRequest httpServletRequest, Class<?> model,
+		Object bean, HttpServletRequest httpServletRequest, Class<?> modelClass,
 		boolean useDialog);
 
 }

@@ -42,8 +42,8 @@ public class WorkflowStatusTag extends IncludeTag {
 		return _id;
 	}
 
-	public Class<?> getModel() {
-		return _model;
+	public Class<?> getModelClass() {
+		return _modelClass;
 	}
 
 	public Integer getStatus() {
@@ -74,8 +74,8 @@ public class WorkflowStatusTag extends IncludeTag {
 		_id = id;
 	}
 
-	public void setModel(Class<?> model) {
-		_model = model;
+	public void setModelClass(Class<?> modelClass) {
+		_modelClass = modelClass;
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class WorkflowStatusTag extends IncludeTag {
 
 		_bean = null;
 		_id = null;
-		_model = null;
+		_modelClass = null;
 		_showInstanceTracker = false;
 		_showStatusLabel = true;
 		_status = null;
@@ -140,14 +140,14 @@ public class WorkflowStatusTag extends IncludeTag {
 		setNamespacedAttribute(httpServletRequest, "bean", bean);
 		setNamespacedAttribute(httpServletRequest, "id", _id);
 
-		Class<?> model = getModel();
+		Class<?> modelClass = getModelClass();
 
-		if (model == null) {
-			model = (Class<?>)pageContext.getAttribute(
+		if (modelClass == null) {
+			modelClass = (Class<?>)pageContext.getAttribute(
 				"aui:model-context:model");
 		}
 
-		setNamespacedAttribute(httpServletRequest, "model", model);
+		setNamespacedAttribute(httpServletRequest, "modelClass", modelClass);
 		setNamespacedAttribute(
 			httpServletRequest, "showInstanceTracker", _showInstanceTracker);
 		setNamespacedAttribute(
@@ -160,7 +160,7 @@ public class WorkflowStatusTag extends IncludeTag {
 
 	private Object _bean;
 	private String _id;
-	private Class<?> _model;
+	private Class<?> _modelClass;
 	private boolean _showInstanceTracker;
 	private boolean _showStatusLabel = true;
 	private Integer _status;

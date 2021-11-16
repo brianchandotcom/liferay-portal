@@ -123,16 +123,16 @@ public class WorkflowStatusDisplayContext {
 
 	private Long _getInstanceId(HttpServletRequest httpServletRequest) {
 		Object bean = _getBean(httpServletRequest);
-		Class<?> model = _getModel(httpServletRequest);
+		Class<?> modelClass = _getModelClass(httpServletRequest);
 
-		if ((bean != null) && (model != null)) {
+		if ((bean != null) && (modelClass != null)) {
 			try {
 				WorkflowInstanceLink workflowInstanceLink =
 					WorkflowInstanceLinkLocalServiceUtil.
 						getWorkflowInstanceLink(
 							BeanPropertiesUtil.getLong(bean, "companyId"),
 							BeanPropertiesUtil.getLong(bean, "groupId"),
-							model.getName(),
+							modelClass.getName(),
 							BeanPropertiesUtil.getLong(bean, "primaryKey"));
 
 				return workflowInstanceLink.getWorkflowInstanceId();
@@ -147,8 +147,8 @@ public class WorkflowStatusDisplayContext {
 		return null;
 	}
 
-	private Class<?> _getModel(HttpServletRequest httpServletRequest) {
-		return (Class<?>)_getAttribute("model", httpServletRequest);
+	private Class<?> _getModelClass(HttpServletRequest httpServletRequest) {
+		return (Class<?>)_getAttribute("modelClass", httpServletRequest);
 	}
 
 	private String _getVersion(HttpServletRequest httpServletRequest) {

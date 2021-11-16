@@ -44,7 +44,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "view-x", kaleoProcess.getN
 		<div class="panel text-center">
 			<liferay-portal-workflow:status
 				bean="<%= ddlRecord %>"
-				model="<%= KaleoProcess.class %>"
+				modelClass="<%= KaleoProcess.class %>"
 				showInstanceTracker="<%= true %>"
 				showStatusLabel="<%= false %>"
 				version="<%= ddlRecordVersion.getVersion() %>"

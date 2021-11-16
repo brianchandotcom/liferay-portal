@@ -29,7 +29,7 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[A class for the bean object.]]></description>
-			<name>model</name>
+			<name>modelClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Class</type>

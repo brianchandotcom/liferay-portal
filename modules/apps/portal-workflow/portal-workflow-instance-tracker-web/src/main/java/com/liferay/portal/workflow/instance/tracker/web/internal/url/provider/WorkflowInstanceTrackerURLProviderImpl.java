@@ -44,7 +44,7 @@ public class WorkflowInstanceTrackerURLProviderImpl
 
 	@Override
 	public String getURL(
-		Object bean, HttpServletRequest httpServletRequest, Class<?> model,
+		Object bean, HttpServletRequest httpServletRequest, Class<?> modelClass,
 		boolean useDialog) {
 
 		String portletURL = PortletURLBuilder.create(
@@ -61,7 +61,7 @@ public class WorkflowInstanceTrackerURLProviderImpl
 							getWorkflowInstanceLink(
 								BeanPropertiesUtil.getLong(bean, "companyId"),
 								BeanPropertiesUtil.getLong(bean, "groupId"),
-								model.getName(),
+								modelClass.getName(),
 								BeanPropertiesUtil.getLong(bean, "primaryKey"));
 
 					return workflowInstanceLink.getWorkflowInstanceId();

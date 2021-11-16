@@ -237,7 +237,8 @@ public class AccountEntryUserRelLocalServiceImpl
 	public AccountEntryUserRel addPersonTypeAccountEntryUserRel(
 			long accountEntryId, long creatorUserId, String screenName,
 			String emailAddress, Locale locale, String firstName,
-			String middleName, String lastName, long prefixId, long suffixId)
+			String middleName, String lastName, long prefixId, long suffixId,
+			String jobTitle)
 		throws PortalException {
 
 		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
@@ -254,7 +255,7 @@ public class AccountEntryUserRelLocalServiceImpl
 
 		return addAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
-			firstName, middleName, lastName, prefixId, suffixId);
+			firstName, middleName, lastName, prefixId, suffixId, jobTitle);
 	}
 
 	@Override

@@ -22,9 +22,6 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.tools.deploy.BaseAutoDeployer;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
@@ -39,14 +36,6 @@ public class LayoutTemplateAutoDeployer
 			jbossPrefix = PropsValues.AUTO_DEPLOY_JBOSS_PREFIX;
 			unpackWar = PropsValues.AUTO_DEPLOY_UNPACK_WAR;
 			wildflyPrefix = PropsValues.AUTO_DEPLOY_WILDFLY_PREFIX;
-
-			List<String> jars = new ArrayList<>();
-
-			addRequiredJar(jars, "util-bridges.jar");
-			addRequiredJar(jars, "util-java.jar");
-			addRequiredJar(jars, "util-taglib.jar");
-
-			this.jars = jars;
 
 			checkArguments();
 		}

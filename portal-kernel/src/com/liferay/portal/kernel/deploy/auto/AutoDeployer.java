@@ -21,7 +21,6 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,9 +34,6 @@ public interface AutoDeployer extends Closeable {
 	public static final int CODE_NOT_APPLICABLE = 0;
 
 	public static final int CODE_SKIP_NEWER_VERSION = 2;
-
-	public void addRequiredJar(List<String> jars, String resource)
-		throws Exception;
 
 	public int autoDeploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException;

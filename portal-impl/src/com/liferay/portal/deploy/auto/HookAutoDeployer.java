@@ -25,9 +25,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -40,14 +37,6 @@ public class HookAutoDeployer extends BaseAutoDeployer implements AutoDeployer {
 			jbossPrefix = PropsValues.AUTO_DEPLOY_JBOSS_PREFIX;
 			tomcatLibDir = PropsValues.AUTO_DEPLOY_TOMCAT_LIB_DIR;
 			wildflyPrefix = PropsValues.AUTO_DEPLOY_WILDFLY_PREFIX;
-
-			List<String> jars = new ArrayList<>();
-
-			addRequiredJar(jars, "util-bridges.jar");
-			addRequiredJar(jars, "util-java.jar");
-			addRequiredJar(jars, "util-taglib.jar");
-
-			this.jars = jars;
 
 			checkArguments();
 		}

@@ -72,6 +72,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -100,26 +101,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 		for (DeploymentExtension deploymentExtension : serviceLoader) {
 			_deploymentExtensions.add(deploymentExtension);
 		}
-	}
-
-	@Override
-	public void addRequiredJar(List<String> jars, String resource)
-		throws Exception {
-
-		String path = DeployUtil.getResourcePath(tempDirPaths, resource);
-
-		if (path == null) {
-			throw new RuntimeException(
-				"Resource " + resource + " does not exist");
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Resource ", resource, " is available at ", path));
-		}
-
-		jars.add(path);
 	}
 
 	@Override
@@ -661,7 +642,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 	protected String appServerType;
 	protected String auiTaglibDTD;
-	protected List<String> jars;
 	protected String jbossPrefix;
 	protected String portletExtTaglibDTD;
 	protected String portletTaglibDTD;
@@ -675,7 +655,9 @@ public class BaseAutoDeployer implements AutoDeployer {
 	protected String wildflyPrefix;
 
 	private void _copyJars(File srcFile) throws Exception {
-		for (String jarFullName : jars) {
+		for (String jar : _jars) {
+			String jarFullName = DeployUtil.getResourcePath(tempDirPaths, jar);
+
 			String jarName = jarFullName.substring(
 				jarFullName.lastIndexOf("/") + 1);
 
@@ -1908,6 +1890,9 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAutoDeployer.class);
+
+	private static final List<String> _jars = Arrays.asList(
+		"util-bridges.jar", "util-java.jar", "util-taglib.jar");
 
 	private final List<DeploymentExtension> _deploymentExtensions =
 		new ArrayList<>();

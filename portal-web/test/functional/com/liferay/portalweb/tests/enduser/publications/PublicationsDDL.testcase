@@ -371,6 +371,13 @@ definition {
 			changeType = "Modified",
 			changeUser = "Test Test");
 
+		PublicationsChanges.viewChanges(
+			changeCategory = "Dynamic Data Lists Record Set",
+			changeSite = "Guest",
+			changeTitle = "List Name Edit",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
 		var changeTitle = JSONDDL.getRecordId(
 			ddlListName = "List Name Edit",
 			groupName = "Guest");
@@ -398,20 +405,6 @@ definition {
 			fieldName = "Date",
 			fieldValueInPublication = "3/30/21",
 			publicationName = "Publication Name");
-
-		PublicationsChanges.viewChangesViaChangesStyle(
-			changeCategory = "Dynamic Data Lists Record Set",
-			changeSite = "Guest",
-			changeTitle = "List Name Edit",
-			changeType = "Modified",
-			changeUser = "Test Test");
-
-		PublicationsChanges.viewChangesViaChangesStyle(
-			changeCategory = "Dynamic Data Mapping Structure",
-			changeSite = "Guest",
-			changeTitle = "Data Definition",
-			changeType = "Modified",
-			changeUser = "Test Test");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 

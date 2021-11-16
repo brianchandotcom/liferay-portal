@@ -29,6 +29,7 @@ dependencies {
 	compileOnly project(":apps:export-import:export-import-changeset-taglib")
 	compileOnly project(":apps:flags:flags-taglib")
 	compileOnly project(":apps:friendly-url:friendly-url-api")
+	compileOnly project(":apps:friendly-url:friendly-url-taglib")
 	compileOnly project(":apps:frontend-editor:frontend-editor-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")

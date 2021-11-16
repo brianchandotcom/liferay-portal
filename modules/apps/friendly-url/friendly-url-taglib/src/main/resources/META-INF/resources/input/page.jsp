@@ -17,6 +17,7 @@
 <%@ include file="/input/init.jsp" %>
 
 <%
+boolean disabled = (boolean)request.getAttribute("liferay-friendly-url:input:disabled");
 int friendlyURLMaxLength = (int)request.getAttribute("liferay-friendly-url:input:friendlyURLMaxLength");
 String name = (String)request.getAttribute("liferay-friendly-url:input:name");
 String value = (String)request.getAttribute("liferay-friendly-url:input:value");
@@ -39,6 +40,7 @@ String value = (String)request.getAttribute("liferay-friendly-url:input:value");
 		<c:when test='<%= (boolean)request.getAttribute("liferay-friendly-url:input:localizable") %>'>
 			<liferay-ui:input-localized
 				defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
+				disabled="<%= disabled %>"
 				ignoreRequestValue="<%= SessionErrors.isEmpty(request) %>"
 				inputAddon='<%= (String)request.getAttribute("liferay-friendly-url:input:inputAddon") %>'
 				name="<%= name %>"
@@ -50,7 +52,7 @@ String value = (String)request.getAttribute("liferay-friendly-url:input:value");
 				<%= (String)request.getAttribute("liferay-friendly-url:input:inputAddon") %>
 			</div>
 
-			<aui:input cssClass="input-medium" disabled='<%= (boolean)request.getAttribute("liferay-friendly-url:input:disabled") %>' ignoreRequestValue="<%= true %>" label="" name="<%= name %>" type="text" value='<%= value %>' />
+			<aui:input cssClass="input-medium" disabled="<%= disabled %>" ignoreRequestValue="<%= true %>" label="" name="<%= name %>" type="text" value="<%= value %>" />
 		</c:otherwise>
 	</c:choose>
 </div>

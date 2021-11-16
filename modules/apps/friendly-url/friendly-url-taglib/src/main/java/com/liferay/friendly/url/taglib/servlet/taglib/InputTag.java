@@ -154,6 +154,7 @@ public class InputTag extends IncludeTag {
 			if (isLocalizable()) {
 				return mainFriendlyURLEntry.getUrlTitleMapAsXML();
 			}
+
 			return mainFriendlyURLEntry.getUrlTitle();
 		}
 		catch (PortalException portalException) {

@@ -33,11 +33,9 @@ definition {
 		task ("Add public page") {
 			Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = "Session Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Session Page");
 		}
 
 		task ("Assert expired session error message and user sign in not present ") {

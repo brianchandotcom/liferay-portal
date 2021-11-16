@@ -16,9 +16,11 @@ package com.liferay.layout.internal.util;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -552,8 +555,23 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 			String layoutName = layout.getName(themeDisplay.getLocale());
 
-			if (draftLayout != null) {
-				layoutName = layoutName + StringPool.STAR;
+			try {
+				if ((draftLayout != null) &&
+					(_layoutContentModelResourcePermission.contains(
+						themeDisplay.getPermissionChecker(), layout.getPlid(),
+						ActionKeys.UPDATE) ||
+					 _layoutPermission.contains(
+						 themeDisplay.getPermissionChecker(), layout,
+						 ActionKeys.UPDATE) ||
+					 _layoutPermission.contains(
+						 themeDisplay.getPermissionChecker(), layout,
+						 ActionKeys.UPDATE_LAYOUT_CONTENT))) {
+
+					layoutName = layoutName + StringPool.STAR;
+				}
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
 			}
 
 			jsonObject.put(
@@ -674,7 +692,14 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private LayoutContentModelResourcePermission
+		_layoutContentModelResourcePermission;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPermission _layoutPermission;
 
 	@Reference
 	private LayoutRevisionLocalService _layoutRevisionLocalService;

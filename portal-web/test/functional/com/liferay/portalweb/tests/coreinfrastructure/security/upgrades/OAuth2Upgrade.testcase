@@ -165,10 +165,7 @@ definition {
 		property portal.version = "7.1.3";
 
 		task ("View OAuth2 application information") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "OAuth 2 Administration");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Application",
@@ -194,10 +191,7 @@ definition {
 		property portal.version = "7.2.0";
 
 		task ("View OAuth2 application information") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "OAuth 2 Administration");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Application",
@@ -222,10 +216,7 @@ definition {
 		property portal.version = "7.1.10.3";
 
 		task ("View OAuth2 application information") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "OAuth 2 Administration");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Application",
@@ -250,10 +241,7 @@ definition {
 		property portal.version = "7.2.10.1";
 
 		task ("View OAuth2 application information") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "OAuth 2 Administration");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Application",

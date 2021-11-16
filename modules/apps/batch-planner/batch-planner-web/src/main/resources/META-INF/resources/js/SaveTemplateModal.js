@@ -18,7 +18,7 @@ import ClayModal from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import React, {useState} from 'react';
 
-import {saveTemplateAPI} from './api';
+import {saveTemplateAPI} from './BatchPlannerExport';
 
 const SaveTemplateModal = ({
 	closeModal,

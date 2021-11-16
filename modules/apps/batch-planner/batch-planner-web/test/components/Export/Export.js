@@ -27,7 +27,7 @@ import React from 'react';
 import {
 	fetchExportedFile,
 	getExportTaskStatusURL,
-} from '../../../src/main/resources/META-INF/resources/js/api';
+} from '../../../src/main/resources/META-INF/resources/js/BatchPlannerExport';
 import {
 	EXPORT_PROCESS_COMPLETED,
 	EXPORT_PROCESS_FAILED,

@@ -19,7 +19,7 @@ import {
 	exportAPI,
 	fetchExportedFile,
 	getPollingExportStatusProcess,
-} from '../api';
+} from '../BatchPlannerExport';
 import {EXPORT_FILE_NAME, POLLING_EXPORT_STATUS_TIMEOUT} from '../constants';
 import {download} from '../utils';
 

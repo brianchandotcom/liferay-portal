@@ -458,6 +458,66 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-67974 for user available time zones restricted by instance available time zones."
+	@priority = "3"
+	test RestrictInstanceAvailableTimeZones {
+		property custom.properties = "time.zones=America/Los_Angeles,UTC,Asia/Tokyo";
+		property test.name.skip.portal.instance = "Locale#RestrictInstanceAvailableTimeZones";
+
+		User.firstLoginPG();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Time Zone",
+			configurationScope = "Virtual Instance Scope");
+
+		task ("Assert some default available time zones for instances and users") {
+			Click(locator1 = "Select#TIME_ZONE");
+
+			for (var timeZone : list "(UTC -11:00) Samoa Standard Time,(UTC -07:00) Mountain Standard Time (America/Phoenix),(UTC +09:30) Australian Central Standard Time (Northern Territory)") {
+				AssertTextNotPresent(
+					locator1 = "Select#TIME_ZONE",
+					value1 = "${timeZone}");
+			}
+
+			for (var timeZone : list "(UTC -08:00) Pacific Standard Time,(UTC) Coordinated Universal Time,(UTC +09:00) Japan Standard Time") {
+				AssertTextPresent(
+					locator1 = "Select#TIME_ZONE",
+					value1 = "${timeZone}");
+			}
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.gotoEditCP(userScreenName = "test");
+
+		UserNavigator.gotoDisplaySettings();
+
+		task ("Assert some default available time zones for instances and users") {
+			Click(locator1 = "Select#TIME_ZONE");
+
+			for (var timeZone : list "(UTC -11:00) Samoa Standard Time,(UTC -07:00) Mountain Standard Time (America/Phoenix),(UTC +09:30) Australian Central Standard Time (Northern Territory)") {
+				AssertTextNotPresent(
+					locator1 = "Select#TIME_ZONE",
+					value1 = "${timeZone}");
+			}
+
+			for (var timeZone : list "(UTC -08:00) Pacific Standard Time,(UTC) Coordinated Universal Time,(UTC +09:00) Japan Standard Time") {
+				AssertTextPresent(
+					locator1 = "Select#TIME_ZONE",
+					value1 = "${timeZone}");
+			}
+		}
+	}
+
 	@priority = "3"
 	test UserLockoutShowsTimezoneInformation {
 		property test.name.skip.portal.instance = "Locale#UserLockoutShowsTimezoneInformation";

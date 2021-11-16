@@ -198,12 +198,41 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "4"
 	test CanRemoveDuplicatedField {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-70110	Refactor of Renderer Link to Page Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Link to Page",
+			fieldName = "Link to Page");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Link to Page");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Link to Page");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.removeRepeatableField(fieldLabel = "Link to Page");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DEBuilder.assertFieldNotPresent(
+			fieldLabel = "Link to Page",
+			index = "2");
 	}
 
 	@description = "This is a test for LRQA-68680. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked"

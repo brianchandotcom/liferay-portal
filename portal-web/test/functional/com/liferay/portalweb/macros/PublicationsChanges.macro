@@ -27,12 +27,6 @@ definition {
 		PublicationsChanges.deleteComment(commentValue = "It is not ready to Publish");
 	}
 
-	macro changeDisplayStyle {
-		Click(locator1 = "PublicationsChanges#CURRENT_DISPLAY_STYLE");
-
-		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter("${displayStyle}"));
-	}
-
 	macro deleteComment {
 		Click.mouseOverClick(
 			key_commentValue = "${commentValue}",
@@ -298,28 +292,6 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TYPE",
 			value1 = "${changeType}");
-	}
-
-	macro viewChangesViaContextStyle {
-		PublicationsChanges.changeDisplayStyle(displayStyle = "Context");
-
-		if ("${showAllItems}" == "true") {
-			Check.checkToggleSwitch(locator1 = "PublicationsChanges#SHOW_ALL_ITEMS_TOGGLE_SWITCH");
-		}
-
-		var key_changeCategory = "${changeCategory}";
-		var key_changeDescription = "${changeDescription}";
-		var key_changeTitle = "${changeTitle}";
-
-		Click.javaScriptClick(locator1 = "PublicationsChanges#CONTEXT_CHANGE_CATEGORY_RADIO");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PublicationsChanges#CONTEXT_CHANGE_TITLE",
-			value1 = "${changeTitle}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PublicationsChanges#CONTEXT_CHANGE_DESCRIPTION",
-			value1 = "${changeDescription}");
 	}
 
 	macro viewDDLRecordChangeDiff {

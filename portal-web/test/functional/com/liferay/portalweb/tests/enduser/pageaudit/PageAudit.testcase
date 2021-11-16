@@ -3105,7 +3105,7 @@ definition {
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "Instance Settings");
-			
+
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Pages",
 				configurationName = "Google PageSpeed Insights",
@@ -3326,7 +3326,7 @@ definition {
 			AssertTextEquals(
 				locator1 = "PageAudit#API_FIELD",
 				value1 = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
-			
+
 			AssertTextEquals(
 				locator1 = "PageAudit#PREFERRED_STRATEGY_OPTION_SELECTED",
 				value1 = "Mobile");
@@ -3337,7 +3337,7 @@ definition {
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "Instance Settings");
-			
+
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Pages",
 				configurationName = "Google PageSpeed Insights",
@@ -3475,7 +3475,7 @@ definition {
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "Instance Settings");
-			
+
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Pages",
 				configurationName = "Google PageSpeed Insights",
@@ -3973,39 +3973,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
-	When the Enable Google PageSpeed Insights check is unchecked
-	Then the Page Audit icon won't be visible from the view mode of the pages of any of the sites in the instance"
-	@priority = "3"
-	test UncheckedInstanceSettingsVirtualInstanceThenNotVisiblePageAuditIcon {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsVirtualInstanceThenNotVisiblePageAuditIcon";
-
-		task ("Uncheck PageSpeed at Instance Settings") {
-			PageAudit.disableGooglePageSpeedViaInstanceSettings();
-		}
-
-		task ("Navigate to Site and check if icon is not visible") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Reset Instance Settings to default") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-			
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "Virtual Instance Scope");
-
-			PageAudit.resetDefaultValues();
-		}
-	}
-
 	@description = "LPS-132232: Given the Page Audit Panel
 	When the user opens it and there are no failing elements retrieved for any of the checks
 	Then a message "Your page has no issues" and the matching image show, the two sections SEO and Accessibility show and they are collapsed by default"
@@ -4158,7 +4125,7 @@ definition {
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "Instance Settings");
-			
+
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Pages",
 				configurationName = "Google PageSpeed Insights",
@@ -4249,7 +4216,7 @@ definition {
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "Instance Settings");
-			
+
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Pages",
 				configurationName = "Google PageSpeed Insights",
@@ -4304,7 +4271,40 @@ definition {
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "Instance Settings");
-			
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "Virtual Instance Scope");
+
+			PageAudit.resetDefaultValues();
+		}
+	}
+
+	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the Page Audit icon won't be visible from the view mode of the pages of any of the sites in the instance"
+	@priority = "3"
+	test UncheckedInstanceSettingsVirtualInstanceThenNotVisiblePageAuditIcon {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsVirtualInstanceThenNotVisiblePageAuditIcon";
+
+		task ("Uncheck PageSpeed at Instance Settings") {
+			PageAudit.disableGooglePageSpeedViaInstanceSettings();
+		}
+
+		task ("Navigate to Site and check if icon is not visible") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Reset Instance Settings to default") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Pages",
 				configurationName = "Google PageSpeed Insights",
@@ -4393,7 +4393,7 @@ definition {
 				key_configurationName = "Google PageSpeed Insights",
 				key_configurationScope = "Virtual Instance Scope",
 				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-			
+
 			AssertElementNotPresent(
 				key_configurationName = "Google PageSpeed Insights",
 				key_configurationScope = "Site Scope",

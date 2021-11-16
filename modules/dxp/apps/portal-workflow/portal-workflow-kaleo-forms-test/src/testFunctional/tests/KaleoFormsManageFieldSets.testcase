@@ -102,11 +102,22 @@ definition {
 	}
 
 	@description = "Verify that user can filter by modified date and ID."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanFilterByModifiedDate {
+		ManagementBar.setFilterAndOrder(filterBy = "Modified Date");
 
-		// TODO LRQA-70711 CanFilterByModifiedDate pending implementation
+		KaleoFormsManageFieldSets.viewFieldSetOrder(fieldSetList = "Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do");
+		
+		KaleoFormsManageFieldSets.editFieldSets(
+			nameFieldset = "Contacts",
+			newNameFieldset= "Contacts Test");
+
+		Button.clickSave();
+
+		ManagementBar.setFilterAndOrder(filterBy = "Modified Date");
+
+		KaleoFormsManageFieldSets.viewFieldSetOrder(fieldSetList = "Events,Inventory,Issues Tracking,Meeting Minutes,To Do,Contacts Test");
+
 
 	}
 

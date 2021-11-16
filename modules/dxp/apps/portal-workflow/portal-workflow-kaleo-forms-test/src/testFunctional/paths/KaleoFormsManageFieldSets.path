@@ -16,6 +16,7 @@
 	<td>//tr[${key_rowNumber}]//td[contains(@class, 'table-title')]//a[contains(.,'${key_nameFieldset}')]</td>
 	<td></td>
 </tr>
+<<<<<<< HEAD
 <tr>
 	<td>SORTED_UP_ICON</td>
 	<td>//*[name()='svg'][contains(@class,'lexicon-icon-order-list-up')]</td>
@@ -25,3 +26,9 @@
 </table>
 </body>
 </html>
+=======
+</tbody>
+</table>
+</body>
+</html> 
+>>>>>>> 5d1bb06 (LRQA-70711 Add CanFilterByModifiedDate test)

@@ -50,6 +50,7 @@ definition {
         }
     }
 
+<<<<<<< HEAD
     macro clickFilterById {
 	macro clickFilterById {
 		var filterOption = "ID";
@@ -85,3 +86,14 @@ definition {
 	}
 
 }
+=======
+    macro editFieldSets {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Edit",
+			rowEntry = "${nameFieldset}");
+
+		PortletEntry.inputName(name = "${newNameFieldset}");
+
+    }
+} 
+>>>>>>> 5d1bb06 (LRQA-70711 Add CanFilterByModifiedDate test)

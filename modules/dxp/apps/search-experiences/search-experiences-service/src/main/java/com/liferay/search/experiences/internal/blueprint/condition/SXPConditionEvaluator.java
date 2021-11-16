@@ -161,8 +161,7 @@ public class SXPConditionEvaluator {
 	}
 
 	private SXPParameter _getSXPParameter(String templateVariable) {
-		return _sxpParameterData.getSXPParameterByTemplateVariable(
-			templateVariable);
+		return _sxpParameterData.getSXPParameterByName(templateVariable);
 	}
 
 	private final SXPParameterData _sxpParameterData;

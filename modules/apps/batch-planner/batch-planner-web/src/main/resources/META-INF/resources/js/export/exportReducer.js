@@ -144,7 +144,7 @@ const usePollingExport = (formDataQuerySelector, formSubmitURL) => {
 	useEffect(() => {
 		let pollingIntervalId;
 
-		async function callAPI() {
+		async function callStartExport() {
 			dispatchIfMounted({type: LOADING});
 
 			try {
@@ -186,7 +186,7 @@ const usePollingExport = (formDataQuerySelector, formSubmitURL) => {
 			}
 		}
 
-		callAPI();
+		callStartExport();
 
 		return () => {
 			if (pollingIntervalId) {

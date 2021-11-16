@@ -906,18 +906,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 				excludes += "**/WEB-INF/lib/" + lib + ",";
 			}
 
-			File contextXml = new File(srcFile + "/META-INF/context.xml");
-
-			if (contextXml.exists()) {
-				String content = FileUtil.read(contextXml);
-
-				if (content.contains(_PORTAL_CLASS_LOADER)) {
-					excludes += "**/WEB-INF/lib/util-bridges.jar,";
-					excludes += "**/WEB-INF/lib/util-java.jar,";
-					excludes += "**/WEB-INF/lib/util-taglib.jar,";
-				}
-			}
-
 			try {
 
 				// LEP-2990
@@ -1884,9 +1872,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 	private String _wrapCDATA(String string) {
 		return StringPool.CDATA_OPEN + string + StringPool.CDATA_CLOSE;
 	}
-
-	private static final String _PORTAL_CLASS_LOADER =
-		"com.liferay.support.tomcat.loader.PortalClassLoader";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAutoDeployer.class);

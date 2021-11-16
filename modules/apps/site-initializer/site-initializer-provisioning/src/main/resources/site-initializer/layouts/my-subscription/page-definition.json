@@ -3,36 +3,6 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragment": {
-						"key": "BASIC_COMPONENT-heading"
-					},
-					"fragmentConfig": {
-						"headingLevel": "h2"
-					},
-					"fragmentFields": [
-						{
-							"id": "element-text",
-							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
-								"text": {
-									"value_i18n": {
-										"en_US": "My Subscription"
-									}
-								}
-							}
-						}
-					],
-					"fragmentStyle": {
-						"marginBottom": "5"
-					}
-				},
-				"type": "Fragment"
-			},
-			{
-				"definition": {
 					"widgetInstance": {
 						"widgetConfig": {
 							"displayStyle": "ddmTemplate_MY-SUBSCRIPTION",

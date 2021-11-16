@@ -23,6 +23,12 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(editRemoteAppEntryDisplayContext.getRedirect());
 
 renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
+
+String publishButtonLabel = "publish";
+
+if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), 0L, RemoteAppEntry.class.getName())) {
+	publishButtonLabel = "submit-for-publication";
+}
 %>
 
 <portlet:actionURL name="/remote_app_admin/edit_remote_app_entry" var="editRemoteAppEntryURL" />
@@ -52,6 +58,17 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 					xml="<%= editRemoteAppEntryDisplayContext.getName() %>"
 				/>
 			</aui:field-wrapper>
+
+			<aui:field-wrapper label="description" name="description">
+				<liferay-ui:input-localized
+					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+					name="description"
+					type="editor"
+					xml="<%= editRemoteAppEntryDisplayContext.getDescription() %>"
+				/>
+			</aui:field-wrapper>
+
+			<aui:input label="sourceCodeURL" name="sourceCodeURL" type="text" />
 
 			<clay:select
 				disabled="<%= editRemoteAppEntryDisplayContext.isTypeDisabled() %>"
@@ -139,7 +156,7 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 
 	<liferay-frontend:edit-form-footer>
 		<clay:button
-			label="save"
+			label="<%= publishButtonLabel %>"
 			type="submit"
 		/>
 

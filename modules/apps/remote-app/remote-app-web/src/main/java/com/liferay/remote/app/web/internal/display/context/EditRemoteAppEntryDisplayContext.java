@@ -111,10 +111,7 @@ public class EditRemoteAppEntryDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
-		return _remoteAppEntry.getDescription(
-			LanguageUtil.getLanguageId(themeDisplay.getLocale()));
+		return _remoteAppEntry.getDescriptionMapAsXML();
 	}
 
 	public String getName() {
@@ -122,10 +119,7 @@ public class EditRemoteAppEntryDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
-		return _remoteAppEntry.getName(
-			LanguageUtil.getLanguageId(themeDisplay.getLocale()));
+		return _remoteAppEntry.getNameMapAsXML();
 	}
 
 	public List<SelectOption> getPortletCategoryNameSelectOptions()
@@ -199,6 +193,10 @@ public class EditRemoteAppEntryDisplayContext {
 	public long getRemoteAppEntryId() {
 		return BeanParamUtil.getLong(
 			_remoteAppEntry, _portletRequest, "remoteAppEntryId");
+	}
+
+	public String getSourceCodeURL() {
+		return ParamUtil.getString(_portletRequest, "sourceCodeURL");
 	}
 
 	public String getTitle() {

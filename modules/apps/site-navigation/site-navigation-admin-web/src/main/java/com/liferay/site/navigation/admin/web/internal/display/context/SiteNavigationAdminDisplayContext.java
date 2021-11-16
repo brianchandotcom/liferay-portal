@@ -15,7 +15,7 @@
 package com.liferay.site.navigation.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -56,8 +56,11 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -97,25 +100,39 @@ public class SiteNavigationAdminDisplayContext {
 			new DefaultSiteNavigationMenuItemTypeContext(
 				themeDisplay.getScopeGroup());
 
-		return new DropdownItemList() {
-			{
-				for (SiteNavigationMenuItemType siteNavigationMenuItemType :
-						_siteNavigationMenuItemTypeRegistry.
-							getSiteNavigationMenuItemTypes()) {
+		DropdownItemListBuilder.DropdownItemListWrapper
+			dropdownItemListWrapper =
+				new DropdownItemListBuilder.DropdownItemListWrapper();
 
-					if (!siteNavigationMenuItemType.isAvailable(
-							siteNavigationMenuItemTypeContext)) {
+		List<SiteNavigationMenuItemType> siteNavigationMenuItemTypes =
+			_siteNavigationMenuItemTypeRegistry.
+				getSiteNavigationMenuItemTypes();
 
-						continue;
-					}
+		Stream<SiteNavigationMenuItemType> siteNavigationMenuItemTypesStream =
+			siteNavigationMenuItemTypes.stream();
 
-					add(
-						dropdownItem -> _applyDropdownItem(
-							dropdownItem, siteNavigationMenuItemType,
-							themeDisplay));
-				}
-			}
-		};
+		siteNavigationMenuItemTypes = siteNavigationMenuItemTypesStream.filter(
+			siteNavigationMenuItemType ->
+				siteNavigationMenuItemType.isAvailable(
+					siteNavigationMenuItemTypeContext)
+		).sorted(
+			Comparator.comparing(
+				siteNavigationMenuItemType ->
+					siteNavigationMenuItemType.getLabel(
+						themeDisplay.getLocale()))
+		).collect(
+			Collectors.toList()
+		);
+
+		for (SiteNavigationMenuItemType siteNavigationMenuItemType :
+				siteNavigationMenuItemTypes) {
+
+			dropdownItemListWrapper = dropdownItemListWrapper.add(
+				dropdownItem -> _applyDropdownItem(
+					dropdownItem, siteNavigationMenuItemType, themeDisplay));
+		}
+
+		return dropdownItemListWrapper.build();
 	}
 
 	public String getDisplayStyle() {

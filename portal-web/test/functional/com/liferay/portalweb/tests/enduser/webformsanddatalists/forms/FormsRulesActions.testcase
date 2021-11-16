@@ -1054,7 +1054,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Postal code");
 
-		FormFields.enableSwitcher(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -1064,7 +1064,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Prefectures");
 
-		FormFields.enableSwitcher(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -1074,7 +1074,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Postal code",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(

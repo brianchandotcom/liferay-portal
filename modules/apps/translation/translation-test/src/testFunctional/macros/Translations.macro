@@ -156,9 +156,9 @@ definition {
 				value1 = "${uploadInvalidFile}");
 		}
 		else {
-			UploadTempFile.uploadTempFileHiddenNoMouseOver(
-				locator1 = "TextInput#FILE",
-				value1 = "${fileName}");
+			Translations.uploadTranslationsFile(
+				fileName = "${fileName}",
+				filePath = "${filePath}");
 		}
 
 		if ("${workflow}" == "true") {
@@ -351,7 +351,7 @@ definition {
 	macro translateFile {
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "update-translation-file -Dtranslation.content.target.original=<![CDATA[<p>${webContentContent}</p>]]></target> -Dtranslation.content.target=<![CDATA[<p>${contentTranslation}</p>]]></target> -Dtranslation.description.target.original=<![CDATA[<p>${webContentDescription}</p>]]></target> -Dtranslation.description.target=<![CDATA[<p>${descriptionTranslation}</p>]]></target> -Dtranslation.file.encoding=${encoding} -Dtranslation.title.target.original=<![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
+			value1 = "update-translation-file -Doperation=${operation} -Dtranslation.content.target.original=<![CDATA[<p>${webContentContent}</p>]]></target> -Dtranslation.content.target=<![CDATA[<p>${contentTranslation}</p>]]></target> -Dtranslation.description.target.original=<![CDATA[<p>${webContentDescription}</p>]]></target> -Dtranslation.description.target=<![CDATA[<p>${descriptionTranslation}</p>]]></target> -Dtranslation.file.encoding=${encoding} -Dtranslation.title.target.original=<![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
 	}
 
 	macro translateFragmentField {

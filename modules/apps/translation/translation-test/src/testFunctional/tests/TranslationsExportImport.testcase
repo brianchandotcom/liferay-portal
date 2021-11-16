@@ -98,6 +98,7 @@ definition {
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-es_ES.xlf",
+			filePath = "/WebContentTitle-en_US",
 			webContentTitle = "WebContentTitle");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
@@ -143,6 +144,7 @@ definition {
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-es_ES.xlf",
+			filePath = "/WebContentTitle-en_US",
 			webContentTitle = "WebContentTitle");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
@@ -188,6 +190,7 @@ definition {
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-ja_JP_utf8.xlf",
+			filePath = "/WebContentTitle-en_US",
 			webContentTitle = "WebContentTitle");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
@@ -236,6 +239,7 @@ definition {
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-de_DE.xliff",
+			filePath = "/WebContentTitle-en_US",
 			webContentTitle = "WebContentTitle");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");

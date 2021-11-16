@@ -9034,12 +9034,14 @@ public class JournalArticleLocalServiceImpl
 		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
 			String friendlyURL = friendlyURLMap.get(entry.getKey());
 
+			if (friendlyURL == null) {
+				continue;
+			}
+
 			if (Validator.isNull(friendlyURL)) {
-				if (friendlyURL != null) {
-					urlTitleMap.put(
-						LanguageUtil.getLanguageId(entry.getKey()),
-						StringPool.BLANK);
-				}
+				urlTitleMap.put(
+					LanguageUtil.getLanguageId(entry.getKey()),
+					StringPool.BLANK);
 
 				continue;
 			}

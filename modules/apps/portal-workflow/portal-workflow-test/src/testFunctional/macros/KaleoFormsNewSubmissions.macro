@@ -58,12 +58,6 @@ definition {
 		}
 	}
 
-    macro viewStatusDDL {
-		AssertElementPresent(
-			key_status = "${status}",
-			locator1 = "KaleoFormsNewSubmissions#LIST_TABLE_NAME_STATUS");
-	}
-
 	macro editDLLRecordContacts {
 		DDLRecord.editPG(ddlListName = "${ddlListName}");
 
@@ -76,6 +70,12 @@ definition {
 			key_field = "firstName",
 			locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
 			value1 = "${ddlFirstNameEdit}");
+	}
+
+	macro viewStatusDDL {
+		AssertElementPresent(
+			key_status = "${status}",
+			locator1 = "KaleoFormsNewSubmissions#LIST_TABLE_NAME_STATUS");
 	}
 
 	macro viewWorkflowInProcessMessage {

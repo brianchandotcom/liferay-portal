@@ -116,8 +116,6 @@ definition {
 		DDLRecord.submitForPublication();
 
 		KaleoFormsNewSubmissions.viewStatusDDL(status = "Pending");
-
-		
 	}
 
 	@description = "Verify that the user can Publish a Entry after Save as Draft"

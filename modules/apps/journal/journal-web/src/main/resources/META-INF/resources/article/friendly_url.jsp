@@ -26,15 +26,9 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 
 <p class="text-secondary"><liferay-ui:message key="the-friendly-url-may-be-modified-to-ensure-uniqueness" /></p>
 
-<p class="mb-2 text-secondary">
-	<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>
-</p>
-
-<liferay-ui:input-localized
-	availableLocales="<%= journalEditArticleDisplayContext.getAvailableLocales() %>"
-	defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"
-	maxLength='<%= String.valueOf(ModelHintsUtil.getMaxLength(JournalArticle.class.getName(), "urlTitle")) %>'
+<liferay-friendly-url:input
+	className="<%= JournalArticle.class.getName() %>"
+	classPK="<%= (article == null) ? 0 : article.getResourcePrimKey() %>"
+	inputAddon="<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>"
 	name="friendlyURL"
-	selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>"
-	xml="<%= (article != null) ? HttpUtil.decodeURL(article.getFriendlyURLsXML()) : StringPool.BLANK %>"
 />

@@ -51,6 +51,14 @@ public class InputTag extends IncludeTag {
 		return _name;
 	}
 
+	public boolean isDisabled() {
+		return _disabled;
+	}
+
+	public boolean isLocalizable() {
+		return _localizable;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -59,8 +67,16 @@ public class InputTag extends IncludeTag {
 		_classPK = classPK;
 	}
 
+	public void setDisabled(boolean disabled) {
+		_disabled = disabled;
+	}
+
 	public void setInputAddon(String inputAddon) {
 		_inputAddon = inputAddon;
+	}
+
+	public void setLocalizable(boolean localizable) {
+		_localizable = localizable;
 	}
 
 	public void setName(String name) {
@@ -80,7 +96,9 @@ public class InputTag extends IncludeTag {
 
 		_className = null;
 		_classPK = 0;
+		_disabled = false;
 		_inputAddon = null;
+		_localizable = true;
 		_name = _DEFAULT_NAME;
 	}
 
@@ -98,12 +116,19 @@ public class InputTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:classPK", getClassPK());
 		httpServletRequest.setAttribute(
+			"liferay-friendly-url:input:disabled", isDisabled());
+		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:friendlyURLMaxLength",
 			_FRIENDLY_URL_MAX_LENGTH);
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:input:friendlyURLValue",
+			_getFriendlyURLValue());
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:friendlyURLXML", _getFriendlyURLXML());
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:inputAddon", getInputAddon());
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:input:localizable", isLocalizable());
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:name", getName());
 	}
@@ -116,6 +141,20 @@ public class InputTag extends IncludeTag {
 		Layout layout = LayoutLocalServiceUtil.getLayout(getClassPK());
 
 		return getClassName() + StringPool.DASH + layout.isPrivateLayout();
+	}
+
+	private String _getFriendlyURLValue() {
+		try {
+			FriendlyURLEntry mainFriendlyURLEntry =
+				FriendlyURLEntryLocalServiceUtil.getMainFriendlyURLEntry(
+					PortalUtil.getClassNameId(_getActualClassName()),
+					getClassPK());
+
+			return mainFriendlyURLEntry.getUrlTitle();
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
 	}
 
 	private String _getFriendlyURLXML() {
@@ -140,7 +179,9 @@ public class InputTag extends IncludeTag {
 
 	private String _className;
 	private long _classPK;
+	private boolean _disabled;
 	private String _inputAddon;
+	private boolean _localizable = true;
 	private String _name = _DEFAULT_NAME;
 
 }

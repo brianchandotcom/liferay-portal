@@ -35,11 +35,22 @@ String name = (String)request.getAttribute("liferay-friendly-url:input:name");
 		<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "there-is-a-limit-of-x-characters-in-encoded-format-for-friendly-urls-(e.g.-x)", new String[] {String.valueOf(friendlyURLMaxLength), "<em>/news</em>"}, false) %>' />
 	</label>
 
-	<liferay-ui:input-localized
-		defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
-		ignoreRequestValue="<%= SessionErrors.isEmpty(request) %>"
-		inputAddon='<%= (String)request.getAttribute("liferay-friendly-url:input:inputAddon") %>'
-		name="<%= name %>"
-		xml="<%= HttpUtil.decodeURL(friendlyURLXML) %>"
-	/>
+	<c:choose>
+		<c:when test='<%= (boolean)request.getAttribute("liferay-friendly-url:input:localizable") %>'>
+			<liferay-ui:input-localized
+				defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
+				ignoreRequestValue="<%= SessionErrors.isEmpty(request) %>"
+				inputAddon='<%= (String)request.getAttribute("liferay-friendly-url:input:inputAddon") %>'
+				name="<%= name %>"
+				xml="<%= HttpUtil.decodeURL(friendlyURLXML) %>"
+			/>
+		</c:when>
+		<c:otherwise>
+			<div class="form-text">
+				<%= (String)request.getAttribute("liferay-friendly-url:input:inputAddon") %>
+			</div>
+
+			<aui:input cssClass="input-medium" disabled='<%= (boolean)request.getAttribute("liferay-friendly-url:input:disabled") %>' ignoreRequestValue="<%= true %>" label="" name="<%= name %>" type="text" value='<%= (String)request.getAttribute("liferay-friendly-url:input:friendlyURLValue") %>' />
+		</c:otherwise>
+	</c:choose>
 </div>

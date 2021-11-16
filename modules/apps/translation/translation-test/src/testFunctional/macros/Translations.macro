@@ -87,6 +87,24 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
+		if (isSet(experienceList)) {
+			var position = "1";
+
+			while (IsElementNotPresent(locator1 = "Button#EXPORT_MODAL_DISABLED")) {
+				Click.clickNoWaitForVisible(
+					key_position = "${position}",
+					locator1 = "Translation#EXPERIENCE_CHECKBOX_POSITION");
+
+				var position = ${position} + 1;
+			}
+
+			for (var experienceName : list "${experienceList}") {
+				Click.clickNoWaitForVisible(
+					key_fieldName = "${experienceName}",
+					locator1 = "FormFields#CHECKBOX");
+			}
+		}
+
 		Click(locator1 = "Button#EXPORT_MODAL");
 
 		DownloadTempFile();

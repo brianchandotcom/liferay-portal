@@ -252,7 +252,7 @@ definition {
 
 		Picklist.assertPicklistItemNotPresent(
 			picklistItemKey = "ItemTest1",
-			picklistItemName = "Test 1");
+			picklistItemName = "Picklist Item 1");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to set a different language for Picklists item's name"

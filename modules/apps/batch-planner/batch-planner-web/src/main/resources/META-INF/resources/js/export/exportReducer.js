@@ -21,7 +21,6 @@ import {
 	getPollingExportStatusProcess,
 } from '../BatchPlannerExport';
 import {EXPORT_FILE_NAME, POLLING_EXPORT_STATUS_TIMEOUT} from '../constants';
-import {download} from '../utils';
 
 const ERROR = 'ERROR';
 const COMPLETED = 'COMPLETED';
@@ -117,6 +116,16 @@ const usePollingExport = (formDataQuerySelector, formSubmitURL) => {
 		},
 		[dispatch, isMounted]
 	);
+
+    const download = (url, filename) => {
+        var a = document.createElement('a');
+        document.body.appendChild(a);
+        a.style.display = 'none';
+        a.href = url;
+        a.download = filename;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    };
 
 	const downloadFile = useCallback(async () => {
 		dispatchIfMounted({type: LOADING});

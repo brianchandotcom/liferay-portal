@@ -21,6 +21,7 @@ export default function Hint({message, position = 'top', secondary, title}) {
 	return (
 		<ClayPopover
 			alignPosition={position}
+			className="position-fixed"
 			header={title}
 			onShowChange={setShowPopover}
 			show={showPopover}

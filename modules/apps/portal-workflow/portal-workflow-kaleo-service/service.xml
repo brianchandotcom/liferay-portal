@@ -255,6 +255,7 @@
 		<column name="kaleoDefinitionName" type="String" />
 		<column name="kaleoDefinitionVersion" type="int" />
 		<column name="rootKaleoInstanceTokenId" type="long" />
+		<column name="active" type="boolean" />
 		<column name="className" type="String" />
 		<column name="classPK" type="long" />
 		<column name="completed" type="boolean" />

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -56,8 +57,10 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -97,25 +100,39 @@ public class SiteNavigationAdminDisplayContext {
 			new DefaultSiteNavigationMenuItemTypeContext(
 				themeDisplay.getScopeGroup());
 
-		return new DropdownItemList() {
-			{
-				for (SiteNavigationMenuItemType siteNavigationMenuItemType :
-						_siteNavigationMenuItemTypeRegistry.
-							getSiteNavigationMenuItemTypes()) {
+		List<SiteNavigationMenuItemType> siteNavigationMenuItemTypes =
+			_siteNavigationMenuItemTypeRegistry.
+				getSiteNavigationMenuItemTypes();
 
-					if (!siteNavigationMenuItemType.isAvailable(
-							siteNavigationMenuItemTypeContext)) {
+		siteNavigationMenuItemTypes = ListUtil.filter(
+			siteNavigationMenuItemTypes,
+			siteNavigationMenuItemType ->
+				siteNavigationMenuItemType.isAvailable(
+					siteNavigationMenuItemTypeContext));
 
-						continue;
-					}
+		siteNavigationMenuItemTypes = ListUtil.sort(
+			siteNavigationMenuItemTypes,
+			Comparator.comparing(
+				siteNavigationMenuItemType ->
+					siteNavigationMenuItemType.getLabel(
+						themeDisplay.getLocale())));
 
-					add(
-						dropdownItem -> _applyDropdownItem(
-							dropdownItem, siteNavigationMenuItemType,
-							themeDisplay));
+		Stream<SiteNavigationMenuItemType> stream =
+			siteNavigationMenuItemTypes.stream();
+
+		return DropdownItemList.of(
+			stream.map(
+				siteNavigationMenuItemType -> {
+					DropdownItem dropdownItem = new DropdownItem();
+
+					_applyDropdownItem(
+						dropdownItem, siteNavigationMenuItemType, themeDisplay);
+
+					return dropdownItem;
 				}
-			}
-		};
+			).toArray(
+				DropdownItem[]::new
+			));
 	}
 
 	public String getDisplayStyle() {

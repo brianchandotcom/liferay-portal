@@ -50,9 +50,9 @@ const mockCreateObjectUrl = jest.fn(() => 'test.url/bloburl');
 window.URL.createObjectURL = mockCreateObjectUrl;
 window.URL.revokeObjectURL = jest.fn();
 
-jest.mock('../../../src/main/resources/META-INF/resources/js/api', () => ({
+jest.mock('../../../src/main/resources/META-INF/resources/js/BatchPlannerExport', () => ({
 	...jest.requireActual(
-		'../../../src/main/resources/META-INF/resources/js/api'
+		'../../../src/main/resources/META-INF/resources/js/BatchPlannerExport'
 	),
 	fetchExportedFile: jest.fn(),
 }));

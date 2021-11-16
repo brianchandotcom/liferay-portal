@@ -4592,18 +4592,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/deployment.jar</file-name>
-				<version>1.2-rev-1</version>
-				<project-name>J2EE Application Deployment Library</project-name>
-				<project-url>http://java.sun.com/j2ee/tools/deployment</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.0</license-name>
-						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/dtddoc.jar</file-name>
 				<version>1.1.0</version>
 				<project-name>DTDDoc</project-name>

@@ -68,6 +68,9 @@ public interface SXPBlueprintResource {
 			SXPBlueprint sxpBlueprint, String callbackURL, Object object)
 		throws Exception;
 
+	public SXPBlueprint postSXPBlueprintValidate(String string)
+		throws Exception;
+
 	public void deleteSXPBlueprint(Long sxpBlueprintId) throws Exception;
 
 	public Response deleteSXPBlueprintBatch(

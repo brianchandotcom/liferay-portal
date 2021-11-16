@@ -289,6 +289,25 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	@Test
+	public void testPostSXPElementValidate() throws Exception {
+		SXPElement randomSXPElement = randomSXPElement();
+
+		SXPElement postSXPElement = testPostSXPElementValidate_addSXPElement(
+			randomSXPElement);
+
+		assertEquals(randomSXPElement, postSXPElement);
+		assertValid(postSXPElement);
+	}
+
+	protected SXPElement testPostSXPElementValidate_addSXPElement(
+			SXPElement sxpElement)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteSXPElement() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SXPElement sxpElement = testDeleteSXPElement_addSXPElement();

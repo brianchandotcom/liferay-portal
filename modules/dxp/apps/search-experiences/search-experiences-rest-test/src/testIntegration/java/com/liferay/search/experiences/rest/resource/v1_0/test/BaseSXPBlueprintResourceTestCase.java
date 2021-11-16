@@ -293,6 +293,25 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	}
 
 	@Test
+	public void testPostSXPBlueprintValidate() throws Exception {
+		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
+
+		SXPBlueprint postSXPBlueprint =
+			testPostSXPBlueprintValidate_addSXPBlueprint(randomSXPBlueprint);
+
+		assertEquals(randomSXPBlueprint, postSXPBlueprint);
+		assertValid(postSXPBlueprint);
+	}
+
+	protected SXPBlueprint testPostSXPBlueprintValidate_addSXPBlueprint(
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteSXPBlueprint() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SXPBlueprint sxpBlueprint = testDeleteSXPBlueprint_addSXPBlueprint();

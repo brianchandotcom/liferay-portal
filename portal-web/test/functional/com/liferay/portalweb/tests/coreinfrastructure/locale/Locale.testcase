@@ -461,7 +461,7 @@ definition {
 	@description = "This is a use case for LRQA-67974 for user available time zones restricted by instance available time zones."
 	@priority = "3"
 	test RestrictInstanceAvailableTimeZones {
-		property custom.properties = "time.zones=America/Los_Angeles,UTC,Asia/Tokyo";
+		property custom.properties = "time.zones=America/Phoenix,UTC,Asia/Tokyo";
 		property test.name.skip.portal.instance = "Locale#RestrictInstanceAvailableTimeZones";
 
 		User.firstLoginPG();
@@ -479,13 +479,13 @@ definition {
 		task ("Assert some default available time zones for instances and users") {
 			Click(locator1 = "Select#TIME_ZONE");
 
-			for (var timeZone : list "(UTC -11:00) Samoa Standard Time,(UTC -07:00) Mountain Standard Time (America/Phoenix),(UTC +09:30) Australian Central Standard Time (Northern Territory)") {
+			for (var timeZone : list "(UTC -11:00) Samoa Standard Time,(UTC -10:00) Hawaii Standard Time") {
 				AssertTextNotPresent(
 					locator1 = "Select#TIME_ZONE",
 					value1 = "${timeZone}");
 			}
 
-			for (var timeZone : list "(UTC -08:00) Pacific Standard Time,(UTC) Coordinated Universal Time,(UTC +09:00) Japan Standard Time") {
+			for (var timeZone : list "(UTC -07:00) Mountain Standard Time (America/Phoenix),(UTC) Coordinated Universal Time,(UTC +09:00) Japan Standard Time") {
 				AssertTextPresent(
 					locator1 = "Select#TIME_ZONE",
 					value1 = "${timeZone}");
@@ -504,13 +504,13 @@ definition {
 		task ("Assert some default available time zones for instances and users") {
 			Click(locator1 = "Select#TIME_ZONE");
 
-			for (var timeZone : list "(UTC -11:00) Samoa Standard Time,(UTC -07:00) Mountain Standard Time (America/Phoenix),(UTC +09:30) Australian Central Standard Time (Northern Territory)") {
+			for (var timeZone : list "(UTC -11:00) Samoa Standard Time,(UTC -10:00) Hawaii Standard Time") {
 				AssertTextNotPresent(
 					locator1 = "Select#TIME_ZONE",
 					value1 = "${timeZone}");
 			}
 
-			for (var timeZone : list "(UTC -08:00) Pacific Standard Time,(UTC) Coordinated Universal Time,(UTC +09:00) Japan Standard Time") {
+			for (var timeZone : list "(UTC -07:00) Mountain Standard Time (America/Phoenix),(UTC) Coordinated Universal Time,(UTC +09:00) Japan Standard Time") {
 				AssertTextPresent(
 					locator1 = "Select#TIME_ZONE",
 					value1 = "${timeZone}");

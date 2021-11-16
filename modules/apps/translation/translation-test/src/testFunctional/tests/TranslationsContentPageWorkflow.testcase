@@ -232,7 +232,7 @@ definition {
 			text = "これは見出しです");
 	}
 
-	@description = "This ensures that only the translation files can be uploaded and resubmitted from a zip file when enabling Workflow."
+	@description = "This ensures that translation files can be uploaded and resubmitted from a zip file after workflow is enabled."
 	@priority = "4"
 	test CanResubmitImportedEntryFromZip {
 		JSONLayout.addPublicLayout(

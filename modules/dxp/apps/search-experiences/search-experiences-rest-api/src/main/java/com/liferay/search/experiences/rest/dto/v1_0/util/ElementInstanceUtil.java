@@ -16,6 +16,7 @@ package com.liferay.search.experiences.rest.dto.v1_0.util;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 
@@ -29,7 +30,7 @@ public class ElementInstanceUtil {
 	}
 
 	public static ElementInstance[] toElementInstances(String json) {
-		if (json == null) {
+		if (Validator.isNull(json)) {
 			return null;
 		}
 

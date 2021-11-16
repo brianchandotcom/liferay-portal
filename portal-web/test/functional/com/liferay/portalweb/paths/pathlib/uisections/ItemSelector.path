@@ -100,7 +100,7 @@
 </tr>
 <tr>
 	<td>SELECT_FILE_WEB_CONTENT</td>
-	<td>//li[@data-qa-id='row']/*[@data-qa-id='rowItemContent']/p[contains(.,'${key_contentName}')]</td>
+	<td>//*[@data-qa-id='row']/*[@data-qa-id='rowItemContent']/p[contains(.,'${key_contentName}')]</td>
 	<td></td>
 </tr>
 <tr>

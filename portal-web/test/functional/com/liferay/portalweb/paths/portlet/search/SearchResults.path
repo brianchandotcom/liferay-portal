@@ -134,32 +134,32 @@
 <!--CLASSIC_ASSET_ENTRY_TABLE-->
 <tr>
 	<td>CLASSIC_ASSET_ENTRY_TABLE_TITLE</td>
-	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//a</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CLASSIC_ASSET_ENTRY_TABLE_TITLE_SPECIFIC</td>
-	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div[contains(.,'${key_searchAssetType}')]/..//a</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div[contains(.,'${key_searchAssetType}')]/..//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CLASSIC_ASSET_ENTRY_TABLE_TYPE</td>
-	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div[1]</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CLASSIC_ASSET_ENTRY_TABLE_TYPE_SPECIFIC</td>
-	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div[contains(.,'${key_searchAssetType}')]</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div[contains(.,'${key_searchAssetType}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CLASSIC_ASSET_ENTRY_TABLE_SUMMARY</td>
-	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div)[2]</td>
+	<td>xpath=(//*[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CLASSIC_ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC</td>
-	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div[contains(.,'${key_searchAssetType}')]/../div[2]</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div[contains(.,'${key_searchAssetType}')]/../div[2]</td>
 	<td></td>
 </tr>
 <tr>

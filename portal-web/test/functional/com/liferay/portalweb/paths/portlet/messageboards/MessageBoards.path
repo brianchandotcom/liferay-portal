@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>VERTICAL_ELLIPSIS</td>
-	<td>//li[contains(.,'${key_threadSubject}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]] | //div[contains(@class,'heading')]//div[contains(@class,'dropdown')]//a</td>
+	<td>//dd[contains(.,'${key_threadSubject}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]] | //div[contains(@class,'heading')]//div[contains(@class,'dropdown')]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -116,7 +116,7 @@
 <!--CATEGORY_LIST-->
 <tr>
 	<td>CATEGORY_LIST_ACTIONS</td>
-	<td>//li[contains(.,'${key_categoryName}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//dd[contains(.,'${key_categoryName}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -136,7 +136,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_LIST_CHECKBOX</td>
-	<td>//li[contains(.,'${key_categoryName}')]//div[contains(@class,'checkbox')]/label/input[contains(@type,'checkbox')]</td>
+	<td>//dd[contains(.,'${key_categoryName}')]//div[contains(@class,'checkbox')]/label/input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -163,7 +163,7 @@
 <!--THREAD_LIST-->
 <tr>
 	<td>THREAD_LIST_ACTIONS</td>
-	<td>//li[contains(.,'${key_threadSubject}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//dd[contains(.,'${key_threadSubject}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -173,7 +173,7 @@
 </tr>
 <tr>
 	<td>THREAD_LIST_CHECKBOX</td>
-	<td>//li[contains(.,'${key_threadSubject}')]/div/label/input[contains(@type,'checkbox')]</td>
+	<td>//dd[contains(.,'${key_threadSubject}')]/div/label/input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -183,7 +183,7 @@
 </tr>
 <tr>
 	<td>THREAD_LIST_LAST_POST</td>
-	<td>//div[contains(.,'${key_threadSubject}')]//div[contains(@data-qa-id,'rowItemContent') and contains(.,'${key_userName}')] | //li[contains(.,'${key_threadSubject}')]//div[contains(@data-qa-id,'rowItemContent') and contains(.,'${key_userName}')]</td>
+	<td>//div[contains(.,'${key_threadSubject}')]//div[contains(@data-qa-id,'rowItemContent') and contains(.,'${key_userName}')] | //dd[contains(.,'${key_threadSubject}')]//div[contains(@data-qa-id,'rowItemContent') and contains(.,'${key_userName}')]</td>
 	<td></td>
 </tr>
 <tr>

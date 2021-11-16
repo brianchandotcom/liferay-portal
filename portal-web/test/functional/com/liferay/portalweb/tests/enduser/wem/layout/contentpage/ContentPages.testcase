@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-134599. The fragmentElementId variable will have the same value with the id of wrapping div in a fragment on page."
-	@priority = "4"
+	@priority = "5"
 	test AddFragmentWithFreemarkerVariableToContentPage {
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(

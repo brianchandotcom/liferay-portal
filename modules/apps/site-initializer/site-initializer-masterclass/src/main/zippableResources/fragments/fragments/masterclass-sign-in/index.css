@@ -18,6 +18,10 @@
 	height: 100%;
 }
 
+.sign-in-form .form-control {
+	background-color: var(--white) !important;
+}
+
 .sign-in-form .sign-in-text {
 	font-family: var(--font-family-base);
 	line-height: 1.25;

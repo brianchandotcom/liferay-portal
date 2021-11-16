@@ -87,17 +87,12 @@ a:hover {
 
 /*Form Controls*/
 
-
 .form-control {
 	background-color: var(--white);
 	border: var(--white);
 	border-radius: 0;
 	font-family: var(--font-family-sans-serif);
 	height: auto;
-}
-
-.dialog-iframe-popup .form-control {
-	background-color: var(--gray-200);
 }
 
 .form-control-nm {
@@ -127,6 +122,10 @@ a:hover {
 	top: -2px;
 }
 
+.portlet-login .form-control {
+	background-color: var(--gray-200);
+}
+
 .portlet-login .form button {
 	font-size: 12px;
 	margin-bottom: var(--spacer-5);
@@ -140,12 +139,7 @@ a:hover {
 	font-weight: var(--font-weight-bold);
 }
 
-.modal-header {
-	font-family: var(--font-family-sans-serif);
-}
-
-.dialog-iframe-popup .portlet-icon-back,
-.dialog-iframe-popup .navigation {
+.portlet-login .portlet-icon-back {
 	display: none;
 }
 

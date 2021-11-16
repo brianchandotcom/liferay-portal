@@ -105,8 +105,7 @@ public class FrontendDataSetSampleGenerator {
 			_generated = null;
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Error generating Frontend Data Set sample", exception);
+				_log.debug(exception, exception);
 			}
 		}
 	}

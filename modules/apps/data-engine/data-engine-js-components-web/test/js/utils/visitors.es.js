@@ -170,5 +170,29 @@ describe('PagesVisitor', () => {
 			expect(evaluateField).toHaveBeenCalledTimes(2);
 			expect(evaluateField).toHaveBeenLastCalledWith(nestedField);
 		});
+
+		it('iterates over multiple pages', () => {
+			const evaluateField = jest.fn();
+			const newField = {fieldName: 'C'};
+			pages.push({rows: [{columns: [{fields: [newField]}]}]});
+			visitor.setPages(pages);
+
+			visitor.visitFields(evaluateField);
+
+			expect(evaluateField).toHaveBeenCalledTimes(3);
+			expect(evaluateField).toHaveBeenLastCalledWith(newField);
+		});
+	});
+
+	describe('findField(condition)', () => {
+		it('returns undefined if no condition evaluate to true', () => {
+			const fieldFound = visitor.findField(() => false);
+			expect(fieldFound).toEqual(undefined);
+		});
+
+		it('returns the field on the first condition evaluating to true', () => {
+			const fieldFound = visitor.findField(() => true);
+			expect(fieldFound).toBe(field);
+		});
 	});
 });

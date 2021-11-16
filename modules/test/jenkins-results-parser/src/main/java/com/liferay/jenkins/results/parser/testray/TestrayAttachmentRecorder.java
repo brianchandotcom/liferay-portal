@@ -534,11 +534,13 @@ public class TestrayAttachmentRecorder {
 						String content = JenkinsResultsParserUtil.read(
 							poshiReportHTMLFile);
 
+						String regex = JenkinsResultsParserUtil.combine(
+							"(screenshots/(?:after|before|screenshot)" +
+								"\\d+).jpg");
+
 						JenkinsResultsParserUtil.write(
 							poshiReportHTMLFile,
-							content.replaceAll(
-								"(screenshots/(?:after|before)\\d+).jpg",
-								"$1.jpg.gz"));
+							content.replaceAll(regex, "$1.jpg.gz"));
 					}
 					catch (IOException ioException) {
 						throw new RuntimeException(ioException);

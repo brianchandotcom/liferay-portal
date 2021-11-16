@@ -96,7 +96,7 @@ if (stageableGroup.isLayout()) {
 							continue;
 						}
 
-						String viewURL = assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
+						String viewURL = HttpUtil.addParameter(assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet()), liferayPortletResponse.getNamespace() + "viewSingleAsset", true);
 
 						request.setAttribute("view.jsp-assetEntry", assetEntry);
 						request.setAttribute("view.jsp-assetRenderer", assetRenderer);

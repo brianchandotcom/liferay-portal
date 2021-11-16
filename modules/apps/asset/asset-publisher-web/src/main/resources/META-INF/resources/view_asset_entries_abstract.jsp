@@ -62,7 +62,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 	try {
 		String title = assetRenderer.getTitle(LocaleUtil.fromLanguageId(LanguageUtil.getLanguageId(request)));
 
-		String viewURL = assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
+		String viewURL = HttpUtil.addParameter(assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet()), liferayPortletResponse.getNamespace() + "viewSingleAsset", true);
 
 		Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 			"fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK()

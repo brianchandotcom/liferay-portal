@@ -43,6 +43,7 @@ long previewClassNameId = ParamUtil.getLong(request, "previewClassNameId");
 long previewClassPK = ParamUtil.getLong(request, "previewClassPK");
 
 boolean print = GetterUtil.getBoolean(request.getAttribute("view.jsp-print"));
+boolean viewSingleAsset = ParamUtil.get(request, "viewSingleAsset", false);
 
 assetPublisherDisplayContext.setLayoutAssetEntry(assetEntry);
 
@@ -56,7 +57,7 @@ if (print) {
 	viewFullContentURL.setParameter("viewMode", Constants.PRINT);
 }
 
-String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, HttpUtil.setParameter(viewFullContentURL.toString(), "redirect", currentURL));
+String viewInContextURL = HttpUtil.addParameter(assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, HttpUtil.setParameter(viewFullContentURL.toString(), "redirect", currentURL)), liferayPortletResponse.getNamespace() + "viewSingleAsset", true);
 
 Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 	"fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK()
@@ -255,7 +256,15 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 	</c:if>
 
 	<%
-	boolean showContextLink = assetPublisherDisplayContext.isShowContextLink() && !print && assetEntry.isVisible();
+	boolean showContextLink = false;
+
+	if (viewSingleAsset) {
+		showContextLink = assetPublisherDisplayContext.isShowContextLink(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) && !print && assetEntry.isVisible();
+	}
+	else {
+		showContextLink = assetPublisherDisplayContext.isShowContextLink() && !print && assetEntry.isVisible();
+	}
+
 	boolean showRatings = assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable();
 	%>
 

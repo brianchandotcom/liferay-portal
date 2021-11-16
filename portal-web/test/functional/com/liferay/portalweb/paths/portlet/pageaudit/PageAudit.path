@@ -136,6 +136,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREFERRED_STRATEGY_OPTION_SELECTED</td>
+	<td>//*[contains(.,'Preferred Strategy')] //div[contains(@class, 'form-builder-select-field')] //div[@class='option-selected']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROGRESS_BAR</td>
 	<td>//*[contains(@class, 'progress-bar')]</td>
 	<td></td>

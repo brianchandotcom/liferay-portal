@@ -57,7 +57,13 @@ function copySiteName() {
 	}
 }
 
-function openItem(cpInstanceId, commerceChannelId, commerceAccountId, groupId) {
+function openItem(
+	cpInstanceId,
+	commerceChannelId,
+	commerceAccountId,
+	groupId,
+	redirectURL
+) {
 	Liferay.Util.openModal({
 		bodyHTML: `<div class="form-group" id="snGroup">
 				 <label for="sn">Site name
@@ -102,7 +108,8 @@ function openItem(cpInstanceId, commerceChannelId, commerceAccountId, groupId) {
 						commerceAccountId,
 						domainName,
 						siteName,
-						groupId
+						groupId,
+						redirectURL
 					);
 				},
 			},
@@ -122,7 +129,8 @@ function createOrder(
 	commerceAccountId,
 	domainName,
 	siteName,
-	groupId
+	groupId,
+	redirectURL
 ) {
 	var cartsURL =
 		themeDisplay.getPortalURL() +
@@ -196,7 +204,8 @@ function createOrder(
 						groupId +
 						'&uuid=' +
 						orderUUID +
-						'&nextStep=http%3A//localhost%3A8080/web/blank/my-site';
+						'&nextStep=' +
+						redirectURL;
 
 					alert(
 						'Order completed! you will be redirected to your dashboard'

@@ -34,7 +34,7 @@
 
 						<ul aria-labelledby="${fragmentEntryLinkNamespace}_dropdown_menu" class="dropdown-menu right">
 							<li>
-								<a class="dropdown-item" href="http://localhost:8080/en/web">
+								<a class="dropdown-item" href="${privateUserFriendlyURL}">
 									Dashboard
 								</a>
 							</li>
@@ -52,7 +52,7 @@
 					</li>
 				[#else]
 					<li class="nav-item">
-						<a class="nav-link" href="/web/provisioning/sign-in">
+						<a class="nav-link" href="${themeDisplay.getURLSignIn()}">
 							<img alt="" class="btn btn-monospaced p-2" src="[resources:icon_user_not_logged.svg]" />
 
 							<span class="text-uppercase small">Sign In</span>

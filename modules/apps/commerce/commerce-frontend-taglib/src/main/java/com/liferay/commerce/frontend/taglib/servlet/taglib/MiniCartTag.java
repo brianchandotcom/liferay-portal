@@ -97,7 +97,17 @@ public class MiniCartTag extends IncludeTag {
 				}
 			}
 			else {
-				_orderDetailURL = StringPool.BLANK;
+				PortletURL commerceCartPortletURL =
+					_commerceOrderHttpHelper.getCommerceCartPortletURL(
+						httpServletRequest, null);
+
+				if (commerceCartPortletURL != null) {
+					_orderDetailURL = String.valueOf(commerceCartPortletURL);
+				}
+				else {
+					_orderDetailURL = StringPool.BLANK;
+				}
+
 				_orderId = 0;
 			}
 

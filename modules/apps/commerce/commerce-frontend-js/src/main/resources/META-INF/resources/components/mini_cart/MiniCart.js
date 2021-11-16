@@ -97,7 +97,7 @@ function MiniCart({
 						latestActionURLs = {
 							...currentURLs,
 							orderDetailURL:
-								orderDetailURL == null ||
+								!orderDetailURL ||
 								orderDetailURL.includes(ORDER_DETAILS_ENDPOINT)
 									? regenerateOrderDetailURL(
 											orderUUID,

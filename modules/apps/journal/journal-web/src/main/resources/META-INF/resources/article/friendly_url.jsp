@@ -31,4 +31,5 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	classPK="<%= (article == null) ? 0 : article.getResourcePrimKey() %>"
 	inputAddon="<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>"
 	name="friendlyURL"
+	showLabel="<%= false %>"
 />

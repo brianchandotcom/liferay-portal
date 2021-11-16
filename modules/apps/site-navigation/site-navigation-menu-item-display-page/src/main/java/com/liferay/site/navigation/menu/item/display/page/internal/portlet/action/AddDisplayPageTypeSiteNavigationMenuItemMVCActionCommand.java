@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.portlet.action;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -115,6 +116,22 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 						_portal.getHttpServletRequest(actionRequest),
 						"an-unexpected-error-occurred"));
 			}
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to add SiteNavigationMenuItem for classNameId ",
+						classNameId, ", classPK ", classPK,
+						" siteNavigationMenuId ", siteNavigationMenuId,
+						" and type ", siteNavigationMenuItemType));
+			}
+
+			jsonObject.put(
+				"errorMessage",
+				LanguageUtil.get(
+					_portal.getHttpServletRequest(actionRequest),
+					"an-unexpected-error-occurred"));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

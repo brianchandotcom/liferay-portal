@@ -49,7 +49,6 @@ import com.liferay.search.experiences.rest.dto.v1_0.HighlightField;
 import com.liferay.search.experiences.rest.dto.v1_0.Parameter;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.ValueDefinition;
-import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
 
 import java.io.InputStream;
@@ -74,10 +73,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 	@Test
 	public void testAggregationConfiguration() throws Exception {
-		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
-
-		sxpBlueprint.setConfiguration(
-			ConfigurationUtil.toConfiguration(_read()));
+		SXPBlueprint sxpBlueprint = SXPBlueprintUtil.toSXPBlueprint(_read());
 
 		SearchRequest searchRequest = _toSearchRequest(sxpBlueprint);
 
@@ -167,10 +163,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 	@Test
 	public void testQueryConfiguration() throws Exception {
-		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
-
-		sxpBlueprint.setConfiguration(
-			ConfigurationUtil.toConfiguration(_read()));
+		SXPBlueprint sxpBlueprint = SXPBlueprintUtil.toSXPBlueprint(_read());
 
 		SearchRequest searchRequest = _toSearchRequest(sxpBlueprint);
 
@@ -231,10 +224,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 	@Test
 	public void testSortConfiguration() throws Exception {
-		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
-
-		sxpBlueprint.setConfiguration(
-			ConfigurationUtil.toConfiguration(_read()));
+		SXPBlueprint sxpBlueprint = SXPBlueprintUtil.toSXPBlueprint(_read());
 
 		SearchRequest searchRequest = _toSearchRequest(sxpBlueprint);
 

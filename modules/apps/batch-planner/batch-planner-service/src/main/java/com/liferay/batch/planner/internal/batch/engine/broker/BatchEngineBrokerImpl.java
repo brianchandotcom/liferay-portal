@@ -15,6 +15,7 @@
 package com.liferay.batch.planner.internal.batch.engine.broker;
 
 import com.liferay.batch.planner.batch.engine.broker.BatchEngineBroker;
+import com.liferay.batch.planner.constants.BatchPlannerLogConstants;
 import com.liferay.batch.planner.exception.BatchPlannerMappingExternalFieldNameException;
 import com.liferay.batch.planner.internal.jaxrs.uri.EmptyUriInfo;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
@@ -174,7 +175,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		_batchPlannerLogLocalService.addBatchPlannerLog(
 			batchPlannerPlan.getUserId(),
 			batchPlannerPlan.getBatchPlannerPlanId(),
-			String.valueOf(exportTask.getId()), null, null, 0, 1);
+			String.valueOf(exportTask.getId()), null, null, 0,
+			BatchPlannerLogConstants.STATUS_QUEUED);
 	}
 
 	private void _submitImportTask(BatchPlannerPlan batchPlannerPlan)
@@ -211,7 +213,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 				batchPlannerPlan.getUserId(),
 				batchPlannerPlan.getBatchPlannerPlanId(), null,
 				String.valueOf(importTask.getId()), null,
-				(int)jsonlFile.length(), 1);
+				(int)jsonlFile.length(),
+				BatchPlannerLogConstants.STATUS_QUEUED);
 		}
 		finally {
 			FileUtil.delete(jsonlFile);

@@ -39,7 +39,8 @@ public class ListTypedefinitionEntityModel implements EntityModel {
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
 			new IntegerEntityField("userId", locale -> Field.USER_ID),
-			new StringEntityField("name", locale -> Field.NAME));
+			new StringEntityField(
+				"name", locale -> Field.getSortableFieldName(Field.NAME)));
 	}
 
 	@Override

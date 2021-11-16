@@ -37,6 +37,9 @@ public class ListTypeDefinitionModelDocumentContributor
 		Document document, ListTypeDefinition listTypeDefinition) {
 
 		document.addLocalizedText(Field.NAME, listTypeDefinition.getNameMap());
+		document.addLocalizedKeyword(
+			Field.getSortableFieldName(Field.NAME),
+			listTypeDefinition.getNameMap(), true);
 		document.remove(Field.USER_NAME);
 	}
 

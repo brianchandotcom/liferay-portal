@@ -5,7 +5,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {
 	chooseIcon,
 	validateExtensions,
-} from '../Steps/UploadDocuments/upload.util';
+} from '../Steps/UploadDocuments/utils/upload';
 
 const BASE_WIDTH = '176px';
 const BASE_HEIGHT = '176px';
@@ -55,71 +55,73 @@ const DropArea = ({
 	const showFile = (currentFiles) => {
 		const countFiles = filesRef.current.length + currentFiles.length;
 
-		if (countFiles <= limitFiles) {
-			for (let i = 0; i < currentFiles.length; i++) {
-				const fileType = currentFiles[i].type;
+		if (countFiles > limitFiles) {
+			return setShowBadgeInfo(true);
+		}
 
-				if (validateExtensions(fileType, type)) {
-					const fileReader = new FileReader();
-					fileReader.onload = () => {
-						let fileURL = '';
+		for (const currentFile of currentFiles) {
+			const fileName = currentFile.name;
+			const fileType = currentFile.type;
 
-						if (type === 'image') {
-							fileURL = fileReader.result;
-						} else {
-							const json = JSON.stringify({
-								dataURL: fileReader.result,
-							});
+			if (!validateExtensions(fileType, type)) {
+				alert('Invalid file! ' + fileName);
 
-							fileURL = JSON.parse(json).dataURL;
-						}
-
-						currentFiles[i].icon = chooseIcon(fileType);
-						currentFiles[i].id = `${
-							currentFiles[i].name
-						}-${Math.random()}`;
-						currentFiles[i].fileURL = fileURL;
-
-						_setFiles([...filesRef.current, currentFiles[i]]);
-					};
-
-					fileReader.readAsDataURL(currentFiles[i]);
-				} else {
-					alert('Invalid file!');
-				}
+				continue;
 			}
-		} else {
-			setShowBadgeInfo(true);
+
+			const fileReader = new FileReader();
+
+			fileReader.onload = () => {
+				const fileURL = fileReader.result;
+
+				currentFile.icon = chooseIcon(fileType);
+				currentFile.id = `${fileName}-${Math.random()}`;
+				currentFile.fileURL = fileURL;
+
+				_setFiles([...filesRef.current, currentFile]);
+			};
+
+			fileReader.readAsDataURL(currentFile);
 		}
 	};
 
 	useEffect(() => {
-		const dropArea = dropAreaRef.current,
-			button = buttonRef.current,
-			input = inputRef.current;
-
-		button.onclick = () => {
-			input.click();
-		};
-
-		input.addEventListener('change', function () {
-			showFile(this.files);
-		});
-
-		dropArea.addEventListener('dragover', (event) => {
-			event.preventDefault();
-		});
-
-		dropArea.addEventListener('drop', (event) => {
-			event.preventDefault();
-
-			showFile(event.dataTransfer.files);
-		});
+		const button = buttonRef.current;
+		const dropArea = dropAreaRef.current;
+		const input = inputRef.current;
 
 		if (type === 'image') {
 			_setWidth(BASE_WIDTH);
 			_setHeight(BASE_HEIGHT);
 		}
+
+		button.onclick = () => {
+			input.click();
+		};
+
+		const onChangeFile = function () {
+			showFile(this.files);
+		};
+
+		const onDragOverFile = (event) => {
+			event.preventDefault();
+		};
+
+		const onDropFile = (event) => {
+			event.preventDefault();
+
+			showFile(event.dataTransfer.files);
+		};
+
+		dropArea.addEventListener('dragover', onDragOverFile);
+		dropArea.addEventListener('drop', onDropFile);
+		input.addEventListener('change', onChangeFile);
+
+		return () => {
+			dropArea.removeEventListener('dragover', onDragOverFile);
+			dropArea.removeEventListener('drop', onDropFile);
+			input.removeEventListener('change', onChangeFile);
+		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

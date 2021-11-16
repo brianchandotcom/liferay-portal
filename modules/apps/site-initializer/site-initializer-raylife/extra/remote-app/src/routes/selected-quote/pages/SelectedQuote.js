@@ -1,51 +1,18 @@
-import React, {useState} from 'react';
-
+import React, {useContext} from 'react';
+import Panel from '../components/Panel';
+import CheckButton from '../components/Panel/CheckButton';
+import ViewFilesPanel from '../components/Panel/ViewFilesPanel';
+import QuoteInfo from '../components/QuoteInfo';
 import {CreateAnAccount} from '../components/Steps/CreateAnAccount';
-import Panel from '../components/Steps/Panel';
+import PaymentMethod from '../components/Steps/PaymentMethod';
 import UploadDocuments from '../components/Steps/UploadDocuments';
-import QuoteInfo from '../components/quote-info';
+import DiscardChanges from '../components/Steps/UploadDocuments/DiscardChanges';
+import SelectedQuoteContextProvider, {
+	SelectedQuoteContext,
+} from '../context/SelectedQuoteContextProvider';
 
 const SelectedQuote = () => {
-	const [panel, setPanel] = useState({
-		createAnAccount: {
-			checked: false,
-			expanded: true,
-		},
-		selectPaymentMethod: {
-			checked: false,
-			expanded: false,
-		},
-		uploadDocuments: {
-			checked: false,
-			expanded: false,
-		},
-	});
-
-	const [sections, setSections] = useState(null);
-	const [discardChanges, setDiscardChanges] = useState(false);
-
-	const _setPanel = (panelKey, panelKeyProperty, value) => {
-		const newPanel = {...panel};
-
-		newPanel[panelKey][panelKeyProperty] =
-			value ?? !newPanel[panelKey][panelKeyProperty];
-
-		setPanel(newPanel);
-	};
-
-	const setExpanded = (panelKey) => {
-		_setPanel(panelKey, 'expanded');
-	};
-
-	const setStepChecked = (panelKey, value) => {
-		_setPanel(panelKey, 'checked', value);
-	};
-
-	const hasUploadError = () => {
-		const hasError = sections?.some(({error}) => error);
-
-		return hasError;
-	};
+	const [{sections}] = useContext(SelectedQuoteContext);
 
 	return (
 		<div className="selected-quote">
@@ -53,44 +20,44 @@ const SelectedQuote = () => {
 
 			<div className="selected-quote-right-page">
 				<Panel
-					defaultExpanded={panel.createAnAccount.expanded}
-					stepChecked={panel.createAnAccount.checked}
+					PanelRight={CheckButton}
+					id="createAnAccount"
 					title="1. Create an Account"
 				>
-					<CreateAnAccount
-						setExpanded={setExpanded}
-						setStepChecked={setStepChecked}
-					/>
+					<CreateAnAccount />
 				</Panel>
 
 				<Panel
+					PanelMiddle={({checked, expanded}) => (
+						<div className="panel-middle">
+							{!expanded && checked && (
+								<ViewFilesPanel sections={sections} />
+							)}
+						</div>
+					)}
+					PanelRight={DiscardChanges}
 					changeable
-					defaultExpanded={panel.uploadDocuments.expanded}
-					hasError={hasUploadError()}
-					sections={sections}
-					setDiscardChanges={() => setDiscardChanges(!discardChanges)}
-					stepChecked={panel.uploadDocuments.checked}
+					id="uploadDocuments"
 					title="2. Upload Documents"
 				>
-					<UploadDocuments
-						discardChanges={discardChanges}
-						setDiscardChanges={() => setDiscardChanges(false)}
-						setExpanded={setExpanded}
-						setSection={(sections) => setSections(sections)}
-						setStepChecked={setStepChecked}
-					/>
+					<UploadDocuments />
 				</Panel>
 
 				<Panel
-					defaultExpanded={panel.selectPaymentMethod.expanded}
-					stepChecked={panel.selectPaymentMethod.checked}
+					id="selectPaymentMethod"
 					title="3. Select Payment Method"
 				>
-					Select Payment Method...
+					<PaymentMethod />
 				</Panel>
 			</div>
 		</div>
 	);
 };
 
-export default SelectedQuote;
+const SelectedQuoteWithProvider = () => (
+	<SelectedQuoteContextProvider>
+		<SelectedQuote />
+	</SelectedQuoteContextProvider>
+);
+
+export default SelectedQuoteWithProvider;

@@ -3,10 +3,8 @@ import React, {useState} from 'react';
 
 import {InfoBadge} from '~/common/components/fragments/Badges/Info';
 import {removeDocumentById} from '~/routes/selected-quote/services/DocumentsAndMedia';
-
-import DropArea from '../../drop-area';
-
-import ViewFiles from './ViewFiles';
+import DropArea from '../../DropArea';
+import PreviewDocuments from './PreviewDocuments';
 
 const UploadFiles = ({dropAreaProps, files, setFiles, title}) => {
 	const [showBadgeInfo, setShowBadgeInfo] = useState(false);
@@ -17,9 +15,9 @@ const UploadFiles = ({dropAreaProps, files, setFiles, title}) => {
 				removeDocumentById(documentId);
 			}
 
-			const newList = files.filter((file) => file.id !== id);
+			const filteredFiles = files.filter((file) => file.id !== id);
 
-			setFiles(newList);
+			setFiles(filteredFiles);
 		}
 		catch (error) {
 			console.error(error);
@@ -29,7 +27,7 @@ const UploadFiles = ({dropAreaProps, files, setFiles, title}) => {
 	return (
 		<>
 			<div className="upload-file">
-				<ViewFiles
+				<PreviewDocuments
 					files={files}
 					onRemoveFile={onRemoveFile}
 					type={dropAreaProps.type}

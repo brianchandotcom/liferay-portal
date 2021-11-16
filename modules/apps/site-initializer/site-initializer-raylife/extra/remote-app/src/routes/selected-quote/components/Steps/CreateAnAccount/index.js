@@ -1,10 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {WarningBadge} from '~/common/components/fragments/Badges/Warning';
 import {EMAIL_REGEX} from '~/common/utils/patterns';
 import {
 	SendAccountRequest,
 	validadePassword,
 } from '~/routes/selected-quote/utils/CreateAccount';
+import {
+	ACTIONS,
+	SelectedQuoteContext,
+} from '../../../context/SelectedQuoteContextProvider';
 import {ListRules} from '../CreateAnAccount/ListRules';
 import {
 	CHECK_VALUE,
@@ -19,7 +23,8 @@ const _isEmailValid = (email) => {
 	return regex.test(email);
 };
 
-export const CreateAnAccount = ({setExpanded, setStepChecked}) => {
+export const CreateAnAccount = () => {
+	const [, dispatch] = useContext(SelectedQuoteContext);
 	const [alert, setAlert] = useState(NATURAL_VALUE);
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [email, setEmail] = useState('');
@@ -32,14 +37,33 @@ export const CreateAnAccount = ({setExpanded, setStepChecked}) => {
 
 	const onCreateAccount = () => {
 		if (isMatchingAllRules) {
-			const response = SendAccountRequest(email, password);
+			SendAccountRequest(email, password).then((response) => {
+				dispatch({
+					payload: {
+						panelKey: 'uploadDocuments',
+						value: true,
+					},
+					type: ACTIONS.SET_EXPANDED,
+				});
 
-			if (response === CHECK_VALUE) {
-				setExpanded('uploadDocuments');
-				setStepChecked('createAnAccount', true);
-			}
+				dispatch({
+					payload: {
+						panelKey: 'createAnAccount',
+						value: false,
+					},
+					type: ACTIONS.SET_EXPANDED,
+				});
 
-			setAlert(response);
+				dispatch({
+					payload: {
+						panelKey: 'createAnAccount',
+						value: true,
+					},
+					type: ACTIONS.SET_STEP_CHECKED,
+				});
+
+				dispatch({payload: response.id, type: ACTIONS.SET_ACCOUNT_ID});
+			});
 		}
 	};
 
@@ -58,17 +82,16 @@ export const CreateAnAccount = ({setExpanded, setStepChecked}) => {
 	const matchAllRules = isMatchingAllRules();
 
 	return (
-		<div id="ca">
-			<div className="ca-sub-title">
+		<div className="create-account">
+			<div className="create-account__subtitle">
 				Create a Raylife account to continue. This will be used to login
 				to your dashboard.
 			</div>
 
-			<div className="ca-width-div">
-				<div id="ca-content-input">
+			<div className="create-account__form">
+				<div className="create-account__form__content-input">
 					<input
-						className="ca-input"
-						id="ca-input-email"
+						className="email"
 						onChange={(event) => {
 							setEmail(event.target.value);
 						}}
@@ -77,7 +100,7 @@ export const CreateAnAccount = ({setExpanded, setStepChecked}) => {
 						type="text"
 					/>
 
-					<label className="ca-label">Email</label>
+					<label>Email</label>
 				</div>
 
 				<div>
@@ -88,9 +111,8 @@ export const CreateAnAccount = ({setExpanded, setStepChecked}) => {
 					)}
 				</div>
 
-				<div id="ca-content-input">
+				<div className="create-account__form__content-input">
 					<input
-						className="ca-input"
 						onChange={(event) => {
 							setPassword(event.target.value);
 							setObjValidate(
@@ -105,12 +127,11 @@ export const CreateAnAccount = ({setExpanded, setStepChecked}) => {
 						type="password"
 					/>
 
-					<label className="ca-label">Password</label>
+					<label>Password</label>
 				</div>
 
-				<div id="ca-content-input">
+				<div className="create-account__form__content-input">
 					<input
-						className="ca-input"
 						onChange={(event) => {
 							setConfirmPassword(event.target.value);
 							setObjValidate(
@@ -122,15 +143,15 @@ export const CreateAnAccount = ({setExpanded, setStepChecked}) => {
 						type="password"
 					/>
 
-					<label className="ca-label">Re-enter Password</label>
+					<label>Re-enter Password</label>
 				</div>
 
 				<ListRules objValidate={objValidate} />
 			</div>
 
-			<div className="ca-align-right">
+			<div className="create-account__align-right">
 				<button
-					className="btn ca-btn"
+					className="btn"
 					disabled={!matchAllRules}
 					onClick={onCreateAccount}
 				>
@@ -139,7 +160,7 @@ export const CreateAnAccount = ({setExpanded, setStepChecked}) => {
 			</div>
 
 			{email && alert === UNCHECKED_VALUE && (
-				<div className="ca-alert-create">
+				<div className="create-account__alert-create">
 					<WarningBadge>
 						Unable to create your account. Please try again
 					</WarningBadge>

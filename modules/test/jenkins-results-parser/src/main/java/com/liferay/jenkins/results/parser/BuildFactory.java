@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.IOException;
 import java.io.StringReader;
 
-import java.util.Objects;
 import java.util.Properties;
 import java.util.regex.Matcher;
 
@@ -100,21 +99,6 @@ public class BuildFactory {
 		}
 
 		if (jobName.startsWith("test-portal-acceptance-pullrequest")) {
-			String testSuite = null;
-
-			try {
-				testSuite = JenkinsResultsParserUtil.getBuildParameter(
-					url, "CI_TEST_SUITE");
-			}
-			catch (RuntimeException runtimeException) {
-				System.out.println(runtimeException.getMessage());
-			}
-
-			if (Objects.equals(testSuite, "bundle")) {
-				return new StandaloneTopLevelBuild(
-					url, (TopLevelBuild)parentBuild);
-			}
-
 			return new PullRequestPortalTopLevelBuild(
 				url, (TopLevelBuild)parentBuild);
 		}

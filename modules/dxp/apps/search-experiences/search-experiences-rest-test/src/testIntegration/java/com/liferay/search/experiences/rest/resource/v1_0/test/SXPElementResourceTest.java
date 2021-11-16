@@ -72,6 +72,11 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 	}
 
 	@Override
+	public void testPostSXPElementValidate() throws Exception {
+		sxpElementResource.postSXPElementValidate("{}");
+	}
+
+	@Override
 	protected SXPElement randomSXPElement() throws Exception {
 		SXPElement sxpElement = super.randomSXPElement();
 

@@ -70,6 +70,11 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 	}
 
 	@Override
+	public void testPostSXPBlueprintValidate() throws Exception {
+		sxpBlueprintResource.postSXPBlueprintValidate("{}");
+	}
+
+	@Override
 	protected SXPBlueprint randomSXPBlueprint() throws Exception {
 		SXPBlueprint sxpBlueprint = super.randomSXPBlueprint();
 

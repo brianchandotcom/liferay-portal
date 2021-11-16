@@ -80,7 +80,8 @@ public class AddFormInstanceRecordMVCCommandHelper {
 
 		invisibleFields.addAll(fieldsFromDisabledPages);
 
-		removeValue(ddmFormValues, invisibleFields);
+		removeValue(
+			ddmFormValues.getDDMFormFieldValuesMap(true), invisibleFields);
 
 		removeDDMValidationExpression(
 			ddmForm.getDDMFormFields(), invisibleFields);
@@ -248,40 +249,16 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		);
 	}
 
-	protected void removeValue(
-		DDMFormValues ddmFormValues, Set<String> invisibleFields) {
-
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-			ddmFormValues.getDDMFormFieldValuesMap(true);
-
-		invisibleFields.forEach(
-			invisibleField -> {
-				List<DDMFormFieldValue> ddmFormFieldValues =
-					ddmFormFieldValuesMap.get(invisibleField);
-
-				ddmFormFieldValues.forEach(
-					ddmFormFieldValue -> {
-						Value value = ddmFormFieldValue.getValue();
-
-						if (value != null) {
-							removeValue(
-								value.getAvailableLocales(), ddmFormFieldValue,
-								value.getDefaultLocale());
-						}
-					});
-			});
-	}
-
-	protected void removeValue(
-		Set<Locale> availableLocales, DDMFormFieldValue ddmFormFieldValue,
-		Locale defaultLocale) {
-
+	protected void removeValue(DDMFormFieldValue ddmFormFieldValue) {
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
 		if (ddmFormField.isLocalizable()) {
-			LocalizedValue localizedValue = new LocalizedValue(defaultLocale);
+			Value value = ddmFormFieldValue.getValue();
 
-			for (Locale availableLocale : availableLocales) {
+			LocalizedValue localizedValue = new LocalizedValue(
+				value.getDefaultLocale());
+
+			for (Locale availableLocale : value.getAvailableLocales()) {
 				localizedValue.addString(availableLocale, StringPool.BLANK);
 			}
 
@@ -290,6 +267,23 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		else {
 			ddmFormFieldValue.setValue(new UnlocalizedValue(StringPool.BLANK));
 		}
+	}
+
+	protected void removeValue(
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
+		Set<String> invisibleFields) {
+
+		Stream<String> stream = invisibleFields.stream();
+
+		stream.map(
+			ddmFormFieldValuesMap::get
+		).flatMap(
+			List::stream
+		).filter(
+			ddmFormFieldValue -> ddmFormFieldValue.getValue() != null
+		).forEach(
+			this::removeValue
+		);
 	}
 
 	private String _getTimeZoneId(ActionRequest actionRequest) {

@@ -301,7 +301,6 @@ public class EditStyleBookEntryDisplayContext {
 
 				layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 					new LayoutItemSelectorReturnType());
-				layoutItemSelectorCriterion.setShowDraftPages(true);
 				layoutItemSelectorCriterion.setShowHiddenPages(true);
 
 				PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
@@ -322,7 +321,9 @@ public class EditStyleBookEntryDisplayContext {
 				Stream<Layout> layoutsStream = layouts.stream();
 
 				return JSONUtil.putAll(
-					layoutsStream.map(
+					layoutsStream.filter(
+						layout -> !_isExcludedLayout(layout)
+					).map(
 						layout -> JSONUtil.put(
 							"name", layout.getName(_themeDisplay.getLocale())
 						).put(

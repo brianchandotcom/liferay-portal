@@ -3412,6 +3412,10 @@ definition {
 
 		CreateObject.saveObject();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
 		CreateObject.checkToggleActive();
 
 		CreateObject.saveObject();

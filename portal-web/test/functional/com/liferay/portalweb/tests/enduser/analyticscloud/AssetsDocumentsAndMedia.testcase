@@ -146,7 +146,7 @@ definition {
 
 		// AC Refactor: More than one document is being created in the assets list because of the bug
 		// AC Bug ticket: LRAC-7890
-		// AC Refactor ticket: LRAC-9400
+		// AC Quarantine ticket: LRAC-9805
 
 		var usernameList = "ac,liferay";
 
@@ -225,7 +225,8 @@ definition {
 		property portal.upstream = "quarantine";
 
 		// This test relies on the test LRAC-7890
-		// AC Refactor ticket: LRAC-8774
+		// AC Bug ticket: LRAC-7890
+		// AC Quarantine ticket: LRAC-9806
 
 		var userNames = "ac,ac2,ac3";
 
@@ -620,10 +621,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8118 | Test Summary: Document known individuals list shows the individuals who have viewed the documents"
 	@priority = "5"
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedDocuments {
+		property portal.upstream = "quarantine";
 
-		// AC Remove deactivated: LRAC-9671
 		// AC Deactivated Reason: The name of the document do not show in the proper way in AC
 		// AC Deactivated Ticket: Test blocked by LRAC-7890
+		// AC Quarantine ticket: LRAC-9807
 
 		var usernameList = "ac,liferay";
 
@@ -698,8 +700,8 @@ definition {
 		property portal.upstream = "quarantine";
 
 		// AC Refactor: The name of the documents do not show in the proper way in AC
-		// AC Bug ticket : LRAC-7890
-		// AC Refactor ticket: LRAC-9626
+		// AC Bug ticket: LRAC-7890
+		// AC Quarantine ticket: LRAC-9808
 
 		var assetName = "DM AC Title,DM AC Title 2,DM AC Title 3,DM AC Title 4";
 

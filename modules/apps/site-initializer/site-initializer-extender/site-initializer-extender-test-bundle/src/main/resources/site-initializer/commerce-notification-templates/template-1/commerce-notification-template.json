@@ -1,0 +1,15 @@
+{
+	"action": "create",
+	"description": "",
+	"enabled": true,
+	"from": "test-integration@liferay.com",
+	"fromName": {
+		"en-US": "Test Integration"
+	},
+	"name": "Test Notification Template",
+	"objectDefinitionName": "C_TestBundleSiteInitializer",
+	"subject": {
+		"en-US": "Test subject Notification Template"
+	},
+	"to": "test@liferay.com"
+}

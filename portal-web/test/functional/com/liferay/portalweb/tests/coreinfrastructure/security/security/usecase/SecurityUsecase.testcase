@@ -48,10 +48,7 @@ definition {
 		task ("Assert user created in users page") {
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			var key_userScreenName = "testui";
 
@@ -70,10 +67,7 @@ definition {
 		property test.name.skip.portal.instance = "SecurityUsecase#EscapeUrlRedirectWithGroovyScript";
 
 		task ("Escape url redirect with groovy script") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Server Administration");
+			ServerAdministration.openServerAdmin();
 
 			ServerAdministration.executeScript(
 				language = "Groovy",
@@ -95,12 +89,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		property test.name.skip.portal.instance = "SecurityUsecase#NoPermissionFromUnauthorizedURLAsPowerUser";
 
 		task ("Add new user") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.addCP(
+			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
 				userLastName = "userln",
@@ -108,25 +97,16 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Assign power user to new user") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.assignRegularRoleCP(
+			JSONRole.assignRoleToUser(
 				roleTitle = "Power User",
-				userScreenName = "usersn");
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Edit user password") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.editPasswordCP(
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Logout and login with new user") {
@@ -162,10 +142,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Define user permissions view control panel menu") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			Role.definePermissionsCP(
 				permissionDefinitionKeys = "CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL_CHECKBOX",
@@ -174,10 +151,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Define user permissions") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			Role.definePermissionsCP(
 				permissionDefinitionKeys = "CONTROL_PANEL_SITES_SITES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX,CONTROL_PANEL_SITES_SITES_GENERAL_PERMISSIONS_VIEW_CHECKBOX",
@@ -185,12 +159,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Add user") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.addCP(
+			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
 				userLastName = "userln",
@@ -198,14 +167,10 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Edit user password") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.editPasswordCP(
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Add calendar") {
@@ -261,14 +226,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add new user") {
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.addCP(
+			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
 				userLastName = "userln",
@@ -276,14 +234,10 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Edit user password") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.editPasswordCP(
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Logout, login and assert forbiden error message when trying to access admin account") {
@@ -301,14 +255,12 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@priority = "5"
 	test ValidateCraftedOrCorruptedFilesCannotCauseOutOfMemoryErrors {
 		task ("Add new document") {
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				portlet = "Documents and Media");
-
-			DMDocument.addCP(
+			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "tika.mp3",
-				dmDocumentTitle = "DM Document Title");
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Guest",
+				mimeType = "audio/x-mpeg",
+				sourceFileName = "tika.mp3");
 		}
 
 		task ("Assert out of memmory error message") {
@@ -341,11 +293,9 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Add public page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = "Test");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test");
 		}
 
 		task ("Assert test present in home page") {
@@ -359,9 +309,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@priority = "5"
 	test ValidateNoLARRemoteCodeExecution {
 		task ("Assert remote-code-execution.lar dependency is forbidden") {
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				portlet = "Blogs");
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 			LAR.importPortlet(
 				failureExpected = "true",
@@ -381,10 +329,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		property test.name.skip.portal.instance = "SecurityUsecase#ValidateViewPermissionCanNotUpdateOtherUsersPassword";
 
 		task ("Define user permission") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			Role.definePermissionCmdCP(
 				permissionDefinitionKeys = "CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_RESOURCE_PERMISSIONS_USER_VIEW_CHECKBOX",
@@ -393,12 +338,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Add new user") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.addCP(
+			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
 				userLastName = "userln",
@@ -406,22 +346,18 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Edit user password") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.editPasswordCP(
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Logout and login") {
 			User.logoutPG();
 
-			User.loginUserPG(
-				password = "test",
-				userEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 		}
 
 		task ("Assert cannot view other organizations info message") {
@@ -470,9 +406,10 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Add Iframe") {
-			Navigator.gotoPage(pageName = "Test Widget Page");
-
-			Portlet.addPG(portletName = "IFrame");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Widget Page",
+				widgetName = "IFrame");
 		}
 
 		task ("Assert test widget page not present") {

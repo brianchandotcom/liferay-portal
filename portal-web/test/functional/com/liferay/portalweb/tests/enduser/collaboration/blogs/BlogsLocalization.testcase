@@ -107,9 +107,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		var portalURL = PropsUtil.get("portal.url");
-
-		Navigator.openSpecificURL(url = "${portalURL}/ja/blogs-page");
+		Navigator.openWithAppendToBaseURL(urlAppend = "ja/blogs-page");
 
 		SocialBookmarks.viewDefaultSharableBookmarks();
 	}

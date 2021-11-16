@@ -16,6 +16,25 @@ definition {
 		AssertElementPresent(locator1 = "DataEngineRenderer#TOOLBAR_BOLD_BUTTON_ON");
 	}
 
+	macro assertContent {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertTextEquals(
+			key_fieldLabel = "${linkToPageFieldLabel}",
+			key_index = "${index}",
+			locator1 = "DataEngineRenderer#SELECTOR_INPUT_INDEXED",
+			value1 = "${linkToPageContent}");
+	}
+
+	macro assertContentInLinktoPageField {
+		DERenderer.assertContent(
+			index = "${index}",
+			linkToPageContent = "${linkToPageContent}",
+			linkToPageFieldLabel = "${linkToPageFieldLabel}");
+	}
+
 	macro assertDataInColorField {
 		if (!(isSet(index))) {
 			var index = "1";
@@ -197,6 +216,13 @@ definition {
 			key_fieldLabel = "${fieldLabel}",
 			key_image = "${imageField}",
 			locator1 = "DataEngineRenderer#IMAGE_PICKER_PREVIEW_INDEXED");
+	}
+
+	macro assertLinktoPageIsClear {
+		DERenderer.assertContent(
+			index = "${index}",
+			linkToPageContent = "",
+			linkToPageFieldLabel = "${linkToPageFieldLabel}");
 	}
 
 	macro assertMultipleSelectionOptionIsUnchecked {
@@ -393,6 +419,31 @@ definition {
 				locator1 = "DataEngineRenderer#IMAGE_DESCRIPTION_INDEXED",
 				value1 = "${imageDescription}");
 		}
+	}
+
+	macro inputDataInLinkToPageField {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		Click(
+			key_fieldLabel = "${linkToPageFieldLabel}",
+			key_index = "${index}",
+			key_text = "Select",
+			locator1 = "DataEngineRenderer#BUTTON_LABEL_INDEXED");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Portlet.expandTree();
+
+		AssertClick.assertPartialTextClickAt(
+			key_nodeName = "${linkToPageContent}",
+			locator1 = "Treeview#NODE_UNSELECTED",
+			value1 = "${linkToPageContent}");
+
+		SelectFrameTop();
 	}
 
 	macro inputDataInMultipleSelectionField {

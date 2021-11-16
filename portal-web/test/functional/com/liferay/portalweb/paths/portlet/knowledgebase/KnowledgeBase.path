@@ -34,7 +34,7 @@
 <!--ARTICLE_DESCRIPTIVE-->
 <tr>
 	<td>ARTICLE_DESCRIPTIVE_ARTICLE_TITLE</td>
-	<td>//li[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]/h2/a[contains(.,'${key_kbArticleTitle}')]</td>
+	<td>//*[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]/h2/a[contains(.,'${key_kbArticleTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -145,7 +145,7 @@
 <!--FOLDER_DESCRIPTIVE-->
 <tr>
 	<td>FOLDER_DESCRIPTIVE_FOLDER_NAME</td>
-	<td>//li[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]/h2/a[contains(.,'${key_kbFolderName}')]</td>
+	<td>//*[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]/h2/a[contains(.,'${key_kbFolderName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>REVISION_HISTORY_ITEM</td>
-	<td>//li[contains(@class,'list-group-item')][${key_ruleNumber}]</td>
+	<td>//*[contains(@class,'list-group-item')][${key_ruleNumber}]</td>
 	<td></td>
 </tr>
 <tr>

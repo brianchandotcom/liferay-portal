@@ -66,7 +66,7 @@
 <!--LIST_GROUP_ITEM-->
 <tr>
 	<td>LIST_GROUP_ITEM</td>
-	<td>//li[contains(@class,'list-group-item')][contains(.,'${key_itemName}')]/a</td>
+	<td>//*[contains(@class,'list-group-item')][contains(.,'${key_itemName}')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -101,7 +101,7 @@
 </tr>
 <tr>
 	<td>LIST_GROUP_ITEM_ENTRY_TITLE_LINK</td>
-	<td>//li[contains(@class,'list-group-item')]//a[normalize-space(text())='${key_pageName}']</td>
+	<td>//*[contains(@class,'list-group-item')]//a[normalize-space(text())='${key_pageName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -111,7 +111,7 @@
 </tr>
 <tr>
 	<td>LIST_GROUP_ITEM_PAGE_TYPE</td>
-	<td>//li[contains(@class,'list-group-item')]//h5[contains(.,'${key_pageType}')]/../ h4[contains(.,'${key_pageName}')]</td>
+	<td>//*[contains(@class,'list-group-item')]//h5[contains(.,'${key_pageType}')]/../ h4[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -126,7 +126,7 @@
 </tr>
 <tr>
 	<td>LIST_GROUP_ITEM_ROW_ELLIPSIS</td>
-	<td>xpath=(//li[contains(@class,'list-group-item')])[${key_index}]//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td>xpath=(//*[contains(@class,'list-group-item')])[${key_index}]//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <!--SEO-->

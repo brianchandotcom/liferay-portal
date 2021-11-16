@@ -124,7 +124,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_RELATED_ASSETS_TITLE</td>
-	<td>//div[contains(@class,'sidebar-body')]//li[contains(@class,'list-group-item')]//a</td>
+	<td>//div[contains(@class,'sidebar-body')]//*[contains(@class,'list-group-item')]//a</td>
 	<td></td>
 </tr>
 <tr>

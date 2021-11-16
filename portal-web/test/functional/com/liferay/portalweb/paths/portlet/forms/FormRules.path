@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_ROW_VERTICAL_ELLIPSIS</td>
-	<td>//div[contains(@class,'form-rule-list')]//li[contains(@class,'list-group-item')][${key_ruleNumber}]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//div[contains(@class,'form-rule-list')]//*[contains(@class,'list-group-item')][${key_ruleNumber}]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -33,7 +33,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_BROKEN</td>
-	<td>//li[contains(@class, 'list-group-item')][${key_ruleNumber}]//div[contains(@class,'form-rule-list-invalid-rule')]//div[contains(text(), 'Broken Rule')]</td>
+	<td>//*[contains(@class,'list-group-item')][${key_ruleNumber}]//div[contains(@class,'form-rule-list-invalid-rule')]//div[contains(text(), 'Broken Rule')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -171,32 +171,32 @@
 <!--RULE_BUILDER_SUMMARY-->
 <tr>
 	<td>RULE_BUILDER_SUMMARY_CONDITION</td>
-	<td>//li[contains(@class, 'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand') and //div[text()='${key_conditionField}'] and //em[text()='${key_conditionOperator}']]</td>
+	<td>//*[contains(@class,'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand') and //div[text()='${key_conditionField}'] and //em[text()='${key_conditionOperator}']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_SUMMARY_CONDITION_FIELD</td>
-	<td>//li[contains(@class, 'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//span[contains(@class,'inline-item')]//div[contains(text(),'${key_conditionField}')]</td>
+	<td>//*[contains(@class,'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//span[contains(@class,'inline-item')]//div[contains(text(),'${key_conditionField}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_SUMMARY_CONDITION_FIELD_CONSTANT</td>
-	<td>//li[contains(@class, 'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//b[contains(@class, 'text-lowercase')]/following-sibling::span//div[contains(text(),'${key_conditionFieldConstant}')]</td>
+	<td>//*[contains(@class,'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//b[contains(@class, 'text-lowercase')]/following-sibling::span//div[contains(text(),'${key_conditionFieldConstant}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_SUMMARY_CONDITION_OPERATOR</td>
-	<td>//li[contains(@class, 'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//b[contains(@class,'inline-item')]//em[contains(text(),'${key_conditionOperator}')]</td>
+	<td>//*[contains(@class,'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//b[contains(@class,'inline-item')]//em[contains(text(),'${key_conditionOperator}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_SUMMARY_ACTION</td>
-	<td>//li[contains(@class, 'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//b[contains(@class, 'text-lowercase')]/following-sibling::span[contains(.,'${key_action}')]</td>
+	<td>//*[contains(@class,'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//b[contains(@class, 'text-lowercase')]/following-sibling::span[contains(.,'${key_action}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_SUMMARY_ACTION_TARGET</td>
-	<td>//li[contains(@class, 'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//b[contains(@class, 'text-lowercase')]/following-sibling::span[contains(.,'${key_action}')]//div[contains(text(), '${key_actionTarget}')]</td>
+	<td>//*[contains(@class,'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//b[contains(@class, 'text-lowercase')]/following-sibling::span[contains(.,'${key_action}')]//div[contains(text(), '${key_actionTarget}')]</td>
 	<td></td>
 </tr>
 <tr>

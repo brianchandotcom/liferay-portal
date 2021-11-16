@@ -23,7 +23,7 @@ export default function ({
 	redirectURL,
 	sxpElementId,
 }) {
-	const [sxpElements, setSXPElements] = useState(null);
+	const [sxpElement, setSXPElement] = useState(null);
 	const [predefinedVariables, setPredefinedVariables] = useState(null);
 
 	useEffect(() => {
@@ -32,8 +32,8 @@ export default function ({
 			{
 				method: 'GET',
 			},
-			(responseContent) => setSXPElements(responseContent),
-			() => setSXPElements({})
+			(responseContent) => setSXPElement(responseContent),
+			() => setSXPElement({})
 		);
 
 		fetchData(
@@ -46,7 +46,7 @@ export default function ({
 		);
 	}, []); //eslint-disable-line
 
-	if (!sxpElements || !predefinedVariables) {
+	if (!sxpElement || !predefinedVariables) {
 		return null;
 	}
 
@@ -61,21 +61,21 @@ export default function ({
 			<div className="edit-sxp-element-root">
 				<ErrorBoundary>
 					<EditSXPElementForm
-						initialConfiguration={getSXPBlueprintForm(sxpElements)}
+						initialConfiguration={getSXPBlueprintForm(sxpElement)}
 						initialDescription={
-							sxpElements.description_i18n || {
-								[defaultLocale]: sxpElements.description,
+							sxpElement.description_i18n || {
+								[defaultLocale]: sxpElement.description,
 							}
 						}
 						initialTitle={
-							sxpElements.title_i18n || {
-								[defaultLocale]: sxpElements.title,
+							sxpElement.title_i18n || {
+								[defaultLocale]: sxpElement.title,
 							}
 						}
 						predefinedVariables={predefinedVariables}
-						readOnly={sxpElements.readOnly}
+						readOnly={sxpElement.readOnly}
 						sxpElementId={sxpElementId}
-						type={sxpElements.type}
+						type={sxpElement.type}
 					/>
 				</ErrorBoundary>
 			</div>

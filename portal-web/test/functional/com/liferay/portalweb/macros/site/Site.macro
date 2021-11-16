@@ -1262,7 +1262,9 @@ definition {
 
 		if ("${siteMember}" == "User") {
 			AssertTextEquals(
-				locator1 = "Sites#SITE_TABLE_MEMBERS_USERS",
+				key_columnName = "members",
+				key_tableEntry = "${siteName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
 				value1 = "1 ${siteMember}");
 		}
 

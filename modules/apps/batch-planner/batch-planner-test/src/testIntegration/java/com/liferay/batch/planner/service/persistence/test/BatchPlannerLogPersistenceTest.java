@@ -214,21 +214,21 @@ public class BatchPlannerLogPersistenceTest {
 	}
 
 	@Test
-	public void testCountByBPPI_BEETERC() throws Exception {
-		_persistence.countByBPPI_BEETERC(RandomTestUtil.nextLong(), "");
+	public void testCountByBatchEngineExportTaskERC() throws Exception {
+		_persistence.countByBatchEngineExportTaskERC("");
 
-		_persistence.countByBPPI_BEETERC(0L, "null");
+		_persistence.countByBatchEngineExportTaskERC("null");
 
-		_persistence.countByBPPI_BEETERC(0L, (String)null);
+		_persistence.countByBatchEngineExportTaskERC((String)null);
 	}
 
 	@Test
-	public void testCountByBPPI_BEITERC() throws Exception {
-		_persistence.countByBPPI_BEITERC(RandomTestUtil.nextLong(), "");
+	public void testCountByBatchEngineImportTaskERC() throws Exception {
+		_persistence.countByBatchEngineImportTaskERC("");
 
-		_persistence.countByBPPI_BEITERC(0L, "null");
+		_persistence.countByBatchEngineImportTaskERC("null");
 
-		_persistence.countByBPPI_BEITERC(0L, (String)null);
+		_persistence.countByBatchEngineImportTaskERC((String)null);
 	}
 
 	@Test
@@ -547,21 +547,11 @@ public class BatchPlannerLogPersistenceTest {
 				new Class<?>[] {String.class}, "batchPlannerPlanId"));
 
 		Assert.assertEquals(
-			Long.valueOf(batchPlannerLog.getBatchPlannerPlanId()),
-			ReflectionTestUtil.<Long>invoke(
-				batchPlannerLog, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "batchPlannerPlanId"));
-		Assert.assertEquals(
 			batchPlannerLog.getBatchEngineExportTaskERC(),
 			ReflectionTestUtil.invoke(
 				batchPlannerLog, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "batchEngineExportTaskERC"));
 
-		Assert.assertEquals(
-			Long.valueOf(batchPlannerLog.getBatchPlannerPlanId()),
-			ReflectionTestUtil.<Long>invoke(
-				batchPlannerLog, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "batchPlannerPlanId"));
 		Assert.assertEquals(
 			batchPlannerLog.getBatchEngineImportTaskERC(),
 			ReflectionTestUtil.invoke(

@@ -18,8 +18,8 @@
 
 <%
 int friendlyURLMaxLength = (int)request.getAttribute("liferay-friendly-url:input:friendlyURLMaxLength");
-String friendlyURLXML = (String)request.getAttribute("liferay-friendly-url:input:friendlyURLXML");
 String name = (String)request.getAttribute("liferay-friendly-url:input:name");
+String value = (String)request.getAttribute("liferay-friendly-url:input:value");
 %>
 
 <liferay-friendly-url:history
@@ -42,7 +42,7 @@ String name = (String)request.getAttribute("liferay-friendly-url:input:name");
 				ignoreRequestValue="<%= SessionErrors.isEmpty(request) %>"
 				inputAddon='<%= (String)request.getAttribute("liferay-friendly-url:input:inputAddon") %>'
 				name="<%= name %>"
-				xml="<%= HttpUtil.decodeURL(friendlyURLXML) %>"
+				xml="<%= HttpUtil.decodeURL(value) %>"
 			/>
 		</c:when>
 		<c:otherwise>
@@ -50,7 +50,7 @@ String name = (String)request.getAttribute("liferay-friendly-url:input:name");
 				<%= (String)request.getAttribute("liferay-friendly-url:input:inputAddon") %>
 			</div>
 
-			<aui:input cssClass="input-medium" disabled='<%= (boolean)request.getAttribute("liferay-friendly-url:input:disabled") %>' ignoreRequestValue="<%= true %>" label="" name="<%= name %>" type="text" value='<%= (String)request.getAttribute("liferay-friendly-url:input:friendlyURLValue") %>' />
+			<aui:input cssClass="input-medium" disabled='<%= (boolean)request.getAttribute("liferay-friendly-url:input:disabled") %>' ignoreRequestValue="<%= true %>" label="" name="<%= name %>" type="text" value='<%= value %>' />
 		</c:otherwise>
 	</c:choose>
 </div>

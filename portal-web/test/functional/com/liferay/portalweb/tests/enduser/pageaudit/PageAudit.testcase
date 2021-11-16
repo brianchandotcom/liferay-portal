@@ -3130,12 +3130,35 @@ definition {
 	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
 	When the value is void ('Choose an option')
 	Then the call is made for Google Page Speed default value - desktop"
-	@ignore = "true"
 	@priority = "3"
-	test DesktopDefaultValue {
+	test DefaultStrategyAtSiteSettings {
+		property portal.acceptance = "true";
+		
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
 
-		// TODO LPS-128385 DesktopDefaultValue pending implementation
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSiteSettings(
+				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
+				preferredStrategy = "Choose an Option");
+		}
 
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Assert if a mobile failure is not shown") {
+			AssertElementNotPresent(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
+			AssertElementPresent(
+				failingCheckName = "Invalid Canonical URL",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+		}
 	}
 
 	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
@@ -3697,12 +3720,25 @@ definition {
 	@description = "LPS-128385: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
 	When the Enable Google PageSpeed Insights check is unchecked
 	Then the Page Audit icon won't be visible from the view mode of the pages in the site"
-	@ignore = "true"
 	@priority = "3"
 	test PageAuditIconInvisible {
+		task ("Check that Page Audit icon is visible") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-		// TODO LPS-128385 PageAuditIconInvisible pending implementation
+			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
 
+		task ("Disable Google PageSpeed") {
+			PageAudit.disableGooglePageSpeedViaSiteSettings();
+		}
+
+		task ("Go to site") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Check that Page Audit icon is not visible") {
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
 	}
 
 	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
@@ -3837,23 +3873,69 @@ definition {
 	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
 	When the value is Desktop
 	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are NOT retrieved"
-	@ignore = "true"
 	@priority = "4"
-	test PreferredStrategyForDesktopValue {
+	test DesktopStrategyAtSiteSettings {
+		property portal.acceptance = "true";
 
-		// TODO LPS-128385 PreferredStrategyForDesktopValue pending implementation
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
 
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSiteSettings(
+				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
+				preferredStrategy = "Desktop");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Assert if mobile failure are shown") {
+			AssertElementNotPresent(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
+			AssertElementPresent(
+				failingCheckName = "Invalid Canonical URL",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+		}
 	}
 
 	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
 	When the value is Mobile
 	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
-	@ignore = "true"
 	@priority = "4"
-	test PreferredStrategyForMobileValue {
+	test MobileStrategyAtSiteSettings {
+		property portal.acceptance = "true";
 
-		// TODO LPS-128385 PreferredStrategyForMobileValue pending implementation
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
 
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSiteSettings(
+				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
+				preferredStrategy = "Mobile");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Assert if mobile failure are shown") {
+			AssertElementPresent(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
+			AssertElementPresent(
+				failingCheckName = "Illegible Font Sizes",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+		}
 	}
 
 	@description = "LPS-132234: Given the detail view of the page audit panel

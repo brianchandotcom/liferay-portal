@@ -72,6 +72,37 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro disableGooglePageSpeedViaSiteSettings {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed Insights",
+			configurationScope = "Site Scope");
+
+		if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable")) {
+			Click.javaScriptClick(
+				checkboxName = "Enable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "Enable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if (IsElementPresent(locator1 = "Button#SAVE")) {
+			Click(locator1 = "Button#SAVE");
+		}
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Click(locator1 = "Button#UPDATE");
+		}
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro enableGooglePageSpeed {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

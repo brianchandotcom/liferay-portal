@@ -396,6 +396,53 @@ definition {
 			value1 = "No accounts were found.");
 	}
 
+	@description = "This is for COMMERCE-2658. Can be Drag and Drop fragments on a Minium site page."
+	@priority = "4"
+	test FragmentsCanBeAdd {
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Minium",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Minium");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Heading Example 1");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "HTML",
+			targetFragmentName = "Heading");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Minium");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Heading Example 1");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "html",
+			id = "element-html",
+			text = "HTML Example A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
+	}
+
 	test InitializeNewMiniumSite {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";

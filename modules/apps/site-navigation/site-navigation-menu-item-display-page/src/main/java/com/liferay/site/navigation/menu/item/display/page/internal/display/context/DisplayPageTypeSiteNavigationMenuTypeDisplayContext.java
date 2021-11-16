@@ -21,6 +21,7 @@ import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -101,6 +102,11 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 
 				return infoItemSelectorURL.toString();
 			}
+		).put(
+			"modalTitle",
+			LanguageUtil.format(
+				_themeDisplay.getLocale(), "select-x",
+				_displayPageTypeContext.getLabel(_themeDisplay.getLocale()))
 		).build();
 	}
 

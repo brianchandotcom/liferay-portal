@@ -15,7 +15,7 @@
 import {fetch, objectToFormData, openSelectionModal} from 'frontend-js-web';
 
 export default function propsTransformer({
-	additionalProps: {eventName, getItemTypeURL, itemSelectorURL},
+	additionalProps: {eventName, getItemTypeURL, itemSelectorURL, modalTitle},
 	portletNamespace,
 	...props
 }) {
@@ -119,7 +119,7 @@ export default function propsTransformer({
 					}
 				},
 				selectEventName: eventName,
-				title: Liferay.Language.get('select-item'),
+				title: modalTitle,
 				url: url.href,
 			});
 		},

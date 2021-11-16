@@ -69,6 +69,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -4444,6 +4445,49 @@ public class JenkinsResultsParserUtil {
 
 	}
 
+	public static class PropertyNameComparator implements Comparator<String> {
+
+		@Override
+		public int compare(String propertyName1, String propertyName2) {
+			Set<String> propertyOptSet1 = _getPropertyOptSet(propertyName1);
+			Set<String> propertyOptSet2 = _getPropertyOptSet(propertyName2);
+
+			if (propertyOptSet1.size() != propertyOptSet2.size()) {
+				return Integer.compare(
+					propertyOptSet2.size(), propertyOptSet1.size());
+			}
+
+			int propertyOptRegexCount1 = 0;
+
+			for (String propertyOpt : propertyOptSet1) {
+				if (propertyOpt.contains(".+")) {
+					propertyOptRegexCount1++;
+				}
+			}
+
+			int propertyOptRegexCount2 = 0;
+
+			for (String propertyOpt : propertyOptSet2) {
+				if (propertyOpt.contains(".+")) {
+					propertyOptRegexCount2++;
+				}
+			}
+
+			if (propertyOptRegexCount1 != propertyOptRegexCount2) {
+				return Integer.compare(
+					propertyOptRegexCount1, propertyOptRegexCount2);
+			}
+
+			if (propertyName1.length() != propertyName2.length()) {
+				return Integer.compare(
+					propertyName2.length(), propertyName1.length());
+			}
+
+			return propertyName2.compareTo(propertyName1);
+		}
+
+	}
+
 	public static class TokenHTTPAuthorization extends HTTPAuthorization {
 
 		public TokenHTTPAuthorization(String token) {
@@ -5024,55 +5068,20 @@ public class JenkinsResultsParserUtil {
 	private static Map<String, Set<String>> _getPropertyOptRegexSets(
 		String basePropertyName, Set<String> propertyNames) {
 
-		Map<String, Set<String>> propertyOptSets = new HashMap<>();
-		Map<String, Integer> propertyOptSetSizes = new HashMap<>();
-		Map<String, Integer> propertyRegexCounts = new HashMap<>();
+		Map<String, Set<String>> propertyOptRegexSets = new LinkedHashMap<>();
+
+		List<String> orderedPropertyNames = new ArrayList<>(propertyNames);
+
+		Collections.sort(orderedPropertyNames, new PropertyNameComparator());
 
 		Set<String> basePropertyOptSet = _getPropertyOptSet(basePropertyName);
 
-		int maxOptCount = 0;
+		for (String propertyName : orderedPropertyNames) {
+			Set<String> propertyOptSet = _getPropertyOptSet(propertyName);
 
-		for (String propertyName : propertyNames) {
-			Set<String> optSet = _getPropertyOptSet(propertyName);
+			propertyOptSet.removeAll(basePropertyOptSet);
 
-			optSet.removeAll(basePropertyOptSet);
-
-			if (optSet.size() > maxOptCount) {
-				maxOptCount = optSet.size();
-			}
-
-			propertyOptSetSizes.put(propertyName, optSet.size());
-			propertyOptSets.put(propertyName, optSet);
-
-			int regexCount = 0;
-
-			for (String opt : optSet) {
-				if (opt.contains(".+")) {
-					regexCount++;
-				}
-			}
-
-			propertyRegexCounts.put(propertyName, regexCount);
-		}
-
-		Map<String, Set<String>> propertyOptRegexSets = new LinkedHashMap<>();
-
-		for (int i = maxOptCount; i >= 0; i--) {
-			for (int j = 0; j <= i; j++) {
-				for (Map.Entry<String, Set<String>> entry :
-						propertyOptSets.entrySet()) {
-
-					String propertyName = entry.getKey();
-
-					int optSetSize = propertyOptSetSizes.get(propertyName);
-					int regexCount = propertyRegexCounts.get(propertyName);
-
-					if ((optSetSize == i) && (regexCount == j)) {
-						propertyOptRegexSets.put(
-							propertyName, entry.getValue());
-					}
-				}
-			}
+			propertyOptRegexSets.put(propertyName, propertyOptSet);
 		}
 
 		return propertyOptRegexSets;

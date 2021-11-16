@@ -2855,13 +2855,13 @@ definition {
 	}
 
 	macro gotoStyle {
-		if ("${deviceType}" != "Desktop") {
+		if ((isSet(deviceType)) && ("${deviceType}" != "Desktop")) {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 		}
 
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
-		if ("${deviceType}" != "Desktop") {
+		if ((isSet(deviceType)) && ("${deviceType}" != "Desktop")) {
 			SelectFrame(value1 = "relative=top");
 		}
 

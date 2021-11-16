@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPElement;
 
+import java.util.Collections;
+
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -42,18 +44,25 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 	public void testGraphQLGetSXPElementNotFound() throws Exception {
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPatchSXPElement() throws Exception {
-	}
-
 	@Override
 	@Test
 	public void testPostSXPElement() throws Exception {
 		super.testPostSXPElement();
 
 		_testPostSXPElementMissingI18N();
+	}
+
+	@Override
+	protected SXPElement randomSXPElement() throws Exception {
+		SXPElement sxpElement = super.randomSXPElement();
+
+		sxpElement.setTitle_i18n(
+			Collections.singletonMap("en_US", sxpElement.getTitle()));
+
+		sxpElement.setDescription_i18n(
+			Collections.singletonMap("en_US", sxpElement.getDescription()));
+
+		return sxpElement;
 	}
 
 	@Override
@@ -93,6 +102,14 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 		return _addSXPElement(sxpElement);
 	}
 
+	@Override
+	protected SXPElement testPostSXPElementCopy_addSXPElement(
+			SXPElement sxpElement)
+		throws Exception {
+
+		return _addSXPElement(sxpElement);
+	}
+
 	private SXPElement _addSXPElement(SXPElement sxpElement) throws Exception {
 		return sxpElementResource.postSXPElement(sxpElement);
 	}
@@ -109,6 +126,7 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 			sxpElement);
 
 		sxpElement.setId(postSXPElement.getId());
+
 		sxpElement.setReadOnly(false);
 		sxpElement.setType(0);
 

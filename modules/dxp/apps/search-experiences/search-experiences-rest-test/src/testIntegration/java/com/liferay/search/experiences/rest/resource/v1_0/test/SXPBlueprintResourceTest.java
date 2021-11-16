@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPBlueprint;
 
+import java.util.Collections;
+
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -42,18 +44,25 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 	public void testGraphQLGetSXPBlueprintNotFound() throws Exception {
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPatchSXPBlueprint() throws Exception {
-	}
-
 	@Override
 	@Test
 	public void testPostSXPBlueprint() throws Exception {
 		super.testPostSXPBlueprint();
 
 		_testPostSXPBlueprintMissingI18N();
+	}
+
+	@Override
+	protected SXPBlueprint randomSXPBlueprint() throws Exception {
+		SXPBlueprint sxpBlueprint = super.randomSXPBlueprint();
+
+		sxpBlueprint.setTitle_i18n(
+			Collections.singletonMap("en_US", sxpBlueprint.getTitle()));
+
+		sxpBlueprint.setDescription_i18n(
+			Collections.singletonMap("en_US", sxpBlueprint.getDescription()));
+
+		return sxpBlueprint;
 	}
 
 	@Override
@@ -94,6 +103,14 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 
 	@Override
 	protected SXPBlueprint testPostSXPBlueprint_addSXPBlueprint(
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		return _addSXPBlueprint(sxpBlueprint);
+	}
+
+	@Override
+	protected SXPBlueprint testPostSXPBlueprintCopy_addSXPBlueprint(
 			SXPBlueprint sxpBlueprint)
 		throws Exception {
 

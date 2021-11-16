@@ -48,11 +48,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_TABLE_MEMBERS_USERS</td>
-	<td>//tr[contains(.,'${key_siteName}')]//td//span/div[@class='user-count']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_TABLE_ACTIVE</td>
 	<td>//table[contains(@class,'table-autofit')]//tr[contains(.,'${key_siteName}')]/td[6]</td>
 	<td></td>

@@ -1225,14 +1225,14 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		Ratings.viewDisabledRatings();
+		Ratings.viewDisabledRatings(ratingTypes = "thumbs-up,thumbs-down");
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
 			siteURLKey = "guest");
 
-		Ratings.viewDisabledRatings();
+		Ratings.viewDisabledRatings(ratingTypes = "thumbs-up,thumbs-down");
 	}
 
 	@description = "This is a test for LPS-136786. It checks that a user cannot reply to a comment without permissions."

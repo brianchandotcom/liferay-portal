@@ -199,7 +199,7 @@ definition {
 	}
 
 	macro viewDisabledRatings {
-		for (var text : list "thumbs-up,thumbs-down") {
+		for (var text : list "${ratingTypes}") {
 			AssertElementPresent(
 				key_text = "${text}",
 				locator1 = "Ratings#ANY_DISABLED");

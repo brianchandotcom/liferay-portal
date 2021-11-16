@@ -74,17 +74,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Site Scope section
-	When the Enable Google PageSpeed Insights check is unchecked
-	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"
-	@ignore = "true"
-	@priority = "3"
-	test UncheckedInstanceSettingsSiteScopeThenUncheckedAtSiteSettings {
-
-		// TODO LPS-128383 APIVisibleInSites pending implementation
-
-	}
-
 	@description = "LPS-119066: Given the Page Audit Panel
 	When the user clicks on the language selector and selects other language
 	Then the title of the page shows the matching translation (if existing), the URL changes (if localized URLs is enabled) and the API is called so the progress bar shows"
@@ -3269,28 +3258,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-128383: Given the preferred strategy dropdown in the Site Scope section
-	When the value is Mobile
-	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
-	@ignore = "true"
-	@priority = "4"
-	test MobileStrategyAtInstanceSettings {
-
-		// TODO LPS-128383 ErrorsForMobileValue pending implementation
-
-	}
-
-	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
-	When the Enable Google PageSpeed Insights check is unchecked
-	Then the 'Google PageSpeed Insights' tab won't be visible in the 'SITE SCOPE' section"
-	@ignore = "true"
-	@priority = "3"
-	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteScope {
-
-		// TODO LPS-128383 GooglePagespeedInvisible pending implementation
-
-	}
-
 	@description = "LPS-128383: Given any value in the Instance settings Site scope section
 	Then all sites shows the same value (also void fields)"
 	@ignore = "true"
@@ -3388,6 +3355,17 @@ definition {
 				failingCheckName = "Illegible Font Sizes",
 				locator1 = "PageAudit#FAILING_CHECK_NAME");
 		}
+	}
+
+	@description = "LPS-128383: Given the preferred strategy dropdown in the Site Scope section
+	When the value is Mobile
+	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
+	@ignore = "true"
+	@priority = "4"
+	test MobileStrategyAtInstanceSettings {
+
+		// TODO LPS-128383 ErrorsForMobileValue pending implementation
+
 	}
 
 	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
@@ -3809,17 +3787,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
-	When the Enable Google PageSpeed Insights check is unchecked
-	Then the Page Audit icon won't be visible from the view mode of the pages of any of the sites in the instance"
-	@ignore = "true"
-	@priority = "3"
-	test PageAuUncheckedInstanceSettingsVirtualInstanceThenNotVisiblePageAuditIconditInvisible {
-
-		// TODO LPS-128383 PageAuditInvisible pending implementation
-
-	}
-
 	@description = "LPS-132406: Given the Page Audit Panel
 	When the users leave the page using any of the internal links in the panel (to navigate to System, instance, site or page settings) and return to the page using the 'back' button
 	Then they find the panel open"
@@ -3891,12 +3858,12 @@ definition {
 
 	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
 	When the Enable Google PageSpeed Insights check is unchecked
-	Then the 'Google PageSpeed Insights' tab won't be visible from the Site settings of any of the sites in the instance"
+	Then the Page Audit icon won't be visible from the view mode of the pages of any of the sites in the instance"
 	@ignore = "true"
 	@priority = "3"
-	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteSettings {
+	test PageAuUncheckedInstanceSettingsVirtualInstanceThenNotVisiblePageAuditIconditInvisible {
 
-		// TODO LPS-128383 PageSpeedInvisibleInSites pending implementation
+		// TODO LPS-128383 PageAuditInvisible pending implementation
 
 	}
 
@@ -4005,6 +3972,17 @@ definition {
 		}
 	}
 
+	@description = "LPS-128383: Given any value in the Instance settings Site scope section
+	When the same value has been overwritten in any of the sites
+	Then the value in the site prevails over any changes in the Instance settings"
+	@ignore = "true"
+	@priority = "5"
+	test SiteSettingsHierarchyOverInstanceSettings {
+
+		// TODO LPS-128383 ValuesOverWrittenInSites pending implementation
+
+	}
+
 	@description = "LPS-125851: Given any value in the Site Scope section
 	When that value has been overwritten in any of the sites
 	Then the value in the site prevails over any changes in the System Settings Site Scope section"
@@ -4052,14 +4030,36 @@ definition {
 		}
 	}
 
-	@description = "LPS-128383: Given the PageSpeed Insights settings in the System Settings
-	When Google PageSpeed Insights is not enabled (unchecked)
-	Then the tab Google PageSpeed Insights is not visible from Instance settings"
+	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Site Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"
 	@ignore = "true"
-	@priority = "4"
-	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtInstanceSettings {
+	@priority = "3"
+	test UncheckedInstanceSettingsSiteScopeThenUncheckedAtSiteSettings {
 
-		// TODO LPS-128383 TabGoogleSpeedInvisibleInSites pending implementation
+		// TODO LPS-128383 APIVisibleInSites pending implementation
+
+	}
+
+	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab won't be visible in the 'SITE SCOPE' section"
+	@ignore = "true"
+	@priority = "3"
+	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteScope {
+
+		// TODO LPS-128383 GooglePagespeedInvisible pending implementation
+
+	}
+
+	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab won't be visible from the Site settings of any of the sites in the instance"
+	@ignore = "true"
+	@priority = "3"
+	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteSettings {
+
+		// TODO LPS-128383 PageSpeedInvisibleInSites pending implementation
 
 	}
 
@@ -4112,6 +4112,17 @@ definition {
 				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
+	}
+
+	@description = "LPS-128383: Given the PageSpeed Insights settings in the System Settings
+	When Google PageSpeed Insights is not enabled (unchecked)
+	Then the tab Google PageSpeed Insights is not visible from Instance settings"
+	@ignore = "true"
+	@priority = "4"
+	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtInstanceSettings {
+
+		// TODO LPS-128383 TabGoogleSpeedInvisibleInSites pending implementation
+
 	}
 
 	@description = "LPS-125851: Given the Google PageSpeed settings tab in the System Scope section
@@ -4258,17 +4269,6 @@ definition {
 				key_configurationScope = "Site Scope",
 				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 		}
-	}
-
-	@description = "LPS-128383: Given any value in the Instance settings Site scope section
-	When the same value has been overwritten in any of the sites
-	Then the value in the site prevails over any changes in the Instance settings"
-	@ignore = "true"
-	@priority = "5"
-	test SiteSettingsHierarchyOverInstanceSettings {
-
-		// TODO LPS-128383 ValuesOverWrittenInSites pending implementation
-
 	}
 
 }

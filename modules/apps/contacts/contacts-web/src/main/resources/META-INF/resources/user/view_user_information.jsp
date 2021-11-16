@@ -31,7 +31,7 @@ if (assetTags.isEmpty() || Validator.isNull(user2.getComments())) {
 %>
 
 <c:if test="<%= showComments && Validator.isNotNull(user2.getComments()) %>">
-	<div class="field-group lfr-user-comments section" data-title="<%= LanguageUtil.get(request, "introduction") %>">
+	<div class="lfr-field-group lfr-user-comments section" data-title="<%= LanguageUtil.get(request, "introduction") %>">
 
 		<%
 		PortletURL editCommentsURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
@@ -62,7 +62,7 @@ if (phones.isEmpty()) {
 %>
 
 <c:if test="<%= showPhones && !phones.isEmpty() %>">
-	<div class="field-group lfr-user-phones section" data-title="<%= LanguageUtil.get(request, "phone-numbers") %>">
+	<div class="lfr-field-group lfr-user-phones section" data-title="<%= LanguageUtil.get(request, "phone-numbers") %>">
 
 		<%
 		PortletURL editPhonesURL = PortletURLBuilder.create(
@@ -110,7 +110,7 @@ if (emailAddresses.isEmpty()) {
 %>
 
 <c:if test="<%= showAdditionalEmailAddresses && !emailAddresses.isEmpty() %>">
-	<div class="field-group lfr-user-email-addresses section" data-title="<%= LanguageUtil.get(request, "additional-email-addresses") %>">
+	<div class="lfr-field-group lfr-user-email-addresses section" data-title="<%= LanguageUtil.get(request, "additional-email-addresses") %>">
 
 		<%
 		PortletURL editAdditionalEmailAddressesURL = PortletURLBuilder.create(
@@ -160,7 +160,7 @@ if (Validator.isNull(jabberSn) && Validator.isNull(skypeSn)) {
 %>
 
 <c:if test="<%= showInstantMessenger && (Validator.isNotNull(jabberSn) || Validator.isNotNull(skypeSn)) %>">
-	<div class="field-group section" data-title="<%= LanguageUtil.get(request, "instant-messenger") %>">
+	<div class="lfr-field-group section" data-title="<%= LanguageUtil.get(request, "instant-messenger") %>">
 		<liferay-ui:icon
 			icon="pencil"
 			markupView="lexicon"
@@ -206,7 +206,7 @@ if (addresses.isEmpty()) {
 %>
 
 <c:if test="<%= showAddresses && !addresses.isEmpty() %>">
-	<div class="field-group lfr-user-addresses section" data-title="<%= LanguageUtil.get(request, "addresses") %>">
+	<div class="lfr-field-group lfr-user-addresses section" data-title="<%= LanguageUtil.get(request, "addresses") %>">
 
 		<%
 		PortletURL editAddressesURL = PortletURLBuilder.create(
@@ -258,7 +258,7 @@ if (websites.isEmpty()) {
 %>
 
 <c:if test="<%= showWebsites && !websites.isEmpty() %>">
-	<div class="field-group lfr-user-websites section" data-title="<%= LanguageUtil.get(request, "websites") %>">
+	<div class="lfr-field-group lfr-user-websites section" data-title="<%= LanguageUtil.get(request, "websites") %>">
 
 		<%
 		PortletURL editWebsitesURL = PortletURLBuilder.create(
@@ -309,7 +309,7 @@ if (Validator.isNull(facebook) && Validator.isNull(twitter)) {
 %>
 
 <c:if test="<%= showSocialNetwork && (Validator.isNotNull(facebook) || Validator.isNotNull(twitter)) %>">
-	<div class="field-group lfr-user-social-network section" data-title="<%= LanguageUtil.get(request, "social-network") %>">
+	<div class="lfr-field-group lfr-user-social-network section" data-title="<%= LanguageUtil.get(request, "social-network") %>">
 
 		<%
 		PortletURL editSocialNetworkURL = PortletURLBuilder.create(
@@ -356,7 +356,7 @@ if (Validator.isNull(contact2.getSmsSn())) {
 %>
 
 <c:if test="<%= showSMS && Validator.isNotNull(contact2.getSmsSn()) %>">
-	<div class="field-group lfr-user-sms section" data-title="<%= LanguageUtil.get(request, "sms") %>">
+	<div class="lfr-field-group lfr-user-sms section" data-title="<%= LanguageUtil.get(request, "sms") %>">
 
 		<%
 		PortletURL editSmsURL = PortletURLBuilder.create(

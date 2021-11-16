@@ -34,7 +34,7 @@ definition {
 		}
 
 		task ("Click on the button") {
-			Click (locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
+			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
 		}
 
 		task ("Assert that the Content Performance panel button disappears") {

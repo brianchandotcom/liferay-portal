@@ -150,12 +150,7 @@ definition {
 			locator1 = "Button#SELECT_FILE",
 			value1 = "Select File");
 
-		if (isSet(uploadInvalidFile)) {
-			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-				locator1 = "TextInput#FILE",
-				value1 = "${uploadInvalidFile}");
-		}
-		else if (isSet(dependencyfile)) {
+		if (isSet(dependencyfile)) {
 			UploadDependencyFile.uploadFile(fileName = "${fileName}");
 		}
 		else {

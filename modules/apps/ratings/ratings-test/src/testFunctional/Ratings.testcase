@@ -101,7 +101,7 @@ definition {
 			pageName = "Staging Blogs Page",
 			siteName = "Site Name");
 
-		LAR.exportPortlet(larFileName = "Blogs.portlet.lar");
+		LAR.exportPortlet(larFileName = "Export.Blogs.With.Comment.Rate.portlet.lar");
 
 		JSONGroup.addGroup(groupName = "Second Site");
 
@@ -117,7 +117,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Second Site");
 
-		LAR.importPortlet(larFileName = "Blogs.portlet.lar");
+		LAR.importPortlet(larFileName = "Export.Blogs.With.Comment.Rate.portlet.lar");
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",

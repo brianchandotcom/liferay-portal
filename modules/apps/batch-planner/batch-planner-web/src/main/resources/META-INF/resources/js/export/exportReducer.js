@@ -104,7 +104,7 @@ const reducer = (state = initialState, {payload, type}) => {
 	}
 };
 
-const usePollingExport = (formDataQuerySelector, formSubmitURL) => {
+const poll = (formDataQuerySelector, formSubmitURL) => {
 	const isMounted = useIsMounted();
 	const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -206,4 +206,4 @@ const usePollingExport = (formDataQuerySelector, formSubmitURL) => {
 	};
 };
 
-export default usePollingExport;
+export default poll;
